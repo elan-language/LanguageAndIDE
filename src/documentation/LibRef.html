@@ -210,13 +210,12 @@ Its type is <code>Float</code>.
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
-<!-- Temporarily commented-out as code not parsing-->
-<!-- <div class="accordion">  
+<div class="accordion">  
 <h4 class="no-TOC acc-title" tabindex="0">Examples of standalone dot methods on a <code>Float</code></h4>
 <div class="acc-body">
 <p>Test assertions using dot methods on a <code>Float</code>:</p>
 <p>
-  test test_floor
+test test_floor
   variable p set to pi
   variable mp set to -pi
   assert p.floor() is 3
@@ -231,7 +230,7 @@ Its type is <code>Float</code>.
 end test
 </p>
 <hr>
-</div></div> -->
+</div></div>
 
 <h2 id="Boolean">Boolean</h2>
 <p>A <b>Boolean</b> value is either <code>true</code> or <code>false</code>.</p>
@@ -525,8 +524,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
   <code>valueType</code> may be any type</td>
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
-  <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
-  <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
+  <td><code>Stack&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
+  <td><code>Queue>&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
  </tr>
  <tr>
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
@@ -899,7 +898,7 @@ that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 end main
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d, kvp  =&gt; d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d, kvp  => d.withSet(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
@@ -2475,8 +2474,8 @@ end main
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><code>print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
- <tr><td><code>print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
 </ol>
 
@@ -2592,7 +2591,7 @@ end main
   variable tab set to 10
   for i in range(1, tab)
     variable j set to pow(9, i).floor()
-    variable f set to (lambda j as Int =&gt; j.toString().length())
+    variable f set to (lambda j as Int => j.toString().length())
     call printTab(tab - f(j), $"{j}\n")
   end for
 end main
@@ -2898,15 +2897,17 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <th>argument<br>types</th>
   <th>return<br>types</th>
   <th>returns</th>
- </tr><tr id="copy">
+ </tr>
+ <tr id="copy">
   <td><el-method>copy</el-method></td>
   <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
- </tr><tr id="createDictionary">
+ </tr>
+ <tr id="createDictionary">
   <td><el-method>createDictionary</el-method></td>
   <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
-  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
+  <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code></td>
   <td>a Dictionary containing the specified key:value pairs</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
@@ -2966,7 +2967,7 @@ end main
 end main
 function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
   # returns primes from the list assuming it starts with a prime (e.g. 2)
-  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int =&gt; (n mod li.head()) &gt; 0))))
+  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) &gt; 0))))
 end function
 </codeblock>
 <hr>
@@ -3003,7 +3004,7 @@ The subset is chosen by a <code>lambda</code> that tests list item values and re
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
 <codeblock>function getNodeFor(p as Point) returns Node
-  variable matches set to this.nodes.filter(lambda n as Node =&gt; n.point.equals(p))
+  variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
   return if_(matches.length() is 1,  matches.head(), emptyNode())
 end function
 </codeblock>
@@ -3025,7 +3026,7 @@ The <b>function</b> to be applied is usually specified as a <code>lambda</code> 
  <td>
 <codeblock>main
   variable li set to [1, 2, 3, 4, 5]
-  print(li.map(lambda n as Int =&gt; pow(n, 3)))
+  print(li.map(lambda n as Int => pow(n, 3)))
 end main
 </codeblock>
 </td>
@@ -3039,7 +3040,7 @@ end main
  <td>
 <codeblock>main
   variable names set to ["Tom", "Dick", "Harriet"]
-  print(names.map(lambda s as String =&gt; s.upperCase()))
+  print(names.map(lambda s as String => s.upperCase()))
 end main
 </codeblock>
 </td>
@@ -3052,7 +3053,7 @@ end main
 <tr>
  <td>
 <codeblock>main
-  print(names.map(lambda s as String =&gt; reverse(s)))
+  print(names.map(lambda s as String => reverse(s)))
 end main
 function reverse(s as String) returns String
   variable sReturn set to ""
@@ -3068,7 +3069,7 @@ end function
 </table>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <code>maze-generator</code>:</p>
-<codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point =&gt; getValue(p, g))
+<codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
 </codeblock>
 <hr>
 </div></div>
@@ -3113,7 +3114,7 @@ end function
  <td>
 <codeblock>main
   variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
-  print(n.reduce(0.0, lambda sum as Float, m as Float =&gt; (sum + m).round(2)))
+  print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
 end main
 </codeblock>
 </td>
@@ -3135,7 +3136,7 @@ end main
   variable n set to [2, 3, 5, 7, 11, 13]
   variable nR set to new List&lt;of Int&gt;()
   variable eL set to new List&lt;of Int&gt;()
-  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int =&gt; nR.withPrepend(m)))
+  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
@@ -3152,7 +3153,7 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String =&gt; sR.withPrepend(word)).join(" ")
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>
@@ -3191,7 +3192,7 @@ They take a <b>function</b> as an argument, and return the list item correspondi
  <td>
 <codeblock>main
   variable a set to [33, 4, 0, 92, 89, 55, 102]
-  print(a.maxBy(lambda x as Int =&gt; x mod 10))
+  print(a.maxBy(lambda x as Int => x mod 10))
 end main
 </codeblock>
 </td>
@@ -3205,7 +3206,7 @@ end main
  <td>
 <codeblock>main
   variable fruit set to ["apple", "orange", "pear"]
-  print(fruit.minBy(lambda x as String =&gt; x.length()))
+  print(fruit.minBy(lambda x as String => x.length()))
 end main
 </codeblock>
 </td>
@@ -3227,7 +3228,7 @@ end main
 <tr>
  <td>
 <codeblock>  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
-  variable ordered set to numbers.orderBy(lambda x as Int, y as Int =&gt; x &gt; y)
+  variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
   print(ordered)
 </codeblock>
 </td>
@@ -3241,7 +3242,7 @@ end main
  <td>
 <codeblock>main
   variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
-  print(names.orderBy(lambda x as String, y as String =&gt; x.isBefore(y)))
+  print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
 end main
 </codeblock>
 </td>
