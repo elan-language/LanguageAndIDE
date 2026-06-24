@@ -321,24 +321,24 @@ or by calling one of the available procedure methods on on it such as:
 </codeblock>
 
 but in FP this is not permitted. Data structures are never to be mutated. Instead, you may call a function that returns
-a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:
+a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:</p>
 
-<b>
+<codeblock>
   let myNewSubjects be mySubjects.withSet(3, "Geography")
-</b>
-or
-<b>
+</codeblock>
+<p>or</p>
+<codeblock>
   let myNewSubjects be mySubjects.withAppend("Music")
-</b>
-</p>
+</codeblock>
+
 
 <p>At first sight this may seem awkward, strange and certainly inefficient.
   But though you might never have thought about it in these terms, this is what you have always done when manipulating a <code>String</code>.
   You can never actually mutate a string, such as converting it to upper case or trimming off the leading spaces. You have to write, for example:</p>
 
-<b>
+<codeblock>
   let myNewString be myString.upperCase()
-</b>
+</codeblock>
 
 <p>When you want to apply operations to all items in a List you need to use iteration, which means using
   either <a href="#FP_recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#FP_HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
