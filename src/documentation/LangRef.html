@@ -96,11 +96,11 @@ together with this seventh best practice that is supported and encouraged by Ela
 <p>Static typing means that the <i>type</i> of every variable, parameter, or value returned by a function, is known at <i>compile</i> time,
  and that type never changes, even though the value may change. VB, C#, and Java, are  statically typed. but Python is inherently dynamically typed.
  Python 3.5 offers the option to add 'type hints' that assist working in a statically typed manner.</p>
-<o> While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that
+<p>While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that
  dynamic typing does not work well when building large, complex systems. Moreover, in a purely educational context, using static typing gives a stronger
  understanding that, in all modern languages (with static or dynamic types) all data items always have an associated type, and static typing helps
- you to understand the nature of those types.
- <span class="Python">When entering and editing Python, Elan therefore <i>enforces</i> the use of type hints.</span></p>
+ you to understand the nature of those types.</p>
+  <p class="Python">When entering and editing Python, Elan therefore <i>enforces</i> the use of type hints.</p>
 <p>Elan does not require the type to be specified explicitly for any variable (or constant) because its type is <i>inferred</i> from the
 initial value given to it.</p>
 
@@ -724,7 +724,7 @@ This avoids rounding errors and is easier to read. For example:</p>
 end test
 </codeblock>
 
-<h4 class="no-TOC">Testing for runtime errors</h3>
+<h4 class="no-TOC">Testing for runtime errors</h4>
 <p>If the expression you are testing causes a runtime error, then the error will be displayed in the red <b>fail</b> message.</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 
@@ -757,8 +757,7 @@ end test
 <p>If you do create such code without realising it, then when the tests are executed the test runner will time out after a few seconds
    (most tests will pass in milliseconds), and an error message will appear.
   Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the test.</p>
-</p>
-</div></div>
+</div>
 </div>
 
 <div id="constant">
@@ -963,7 +962,7 @@ of a program: the main routine, functions, and procedures.</p>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
-    inline within the print instruction:</code></p>
+    inline within the print instruction:</p>
 
 <codeblock>main
   variable reply set to ""
@@ -986,7 +985,7 @@ of a program: the main routine, functions, and procedures.</p>
 end main
 </codeblock>
 
-<p>From the <b>Ripple sort</b> demo, printing a list:</code></p>
+<p>From the <b>Ripple sort</b> demo, printing a list:</p>
 
   <codeblock>main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
@@ -1144,7 +1143,7 @@ end procedure
     <el-method>directionByKey</el-method>, which is passed a keypress that has been read from the keyboard using the <el-method>getKey</el-method>
   system method:</p>
 
-<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&lg;, body as List&lt;of List&lt;of Int&gt;&gt;)
+<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1216,7 +1215,7 @@ which offer several advantages, including:</p>
 
 <p>In all these cases, if the user input does not match the specified rules, the user will be advised, and asked to input a value response.</p>
 
-<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system method</a>.</p>
+<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system method.</p>
 </div></div>
 </div>
 
@@ -1737,7 +1736,7 @@ then an empty string or list is returned.</p>
 end main
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><el-code><br><br>o</el-type><br>o world!<br>Hello w</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+  <td><br><br>o<br>o world!<br>Hello w< &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
 </tr>
 </table>
 
@@ -1998,8 +1997,7 @@ end procedure
 <div id="Miscellaneous">
 <h1>Miscellaneous</h1>
 
-<div id="dotSyntax">
-<h2>Dot syntax</h2>
+<h2 id="dotSyntax">Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
  <li>To apply a function method to a named value, e.g. to obtain the length of <code>String</code> <el-id>s</el-id> using a library method:<br>
@@ -2020,7 +2018,6 @@ variable x set to point.item_0
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
  nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
-</div>
 
 <h2>Field help</h2>
 
@@ -2106,6 +2103,7 @@ variable x set to point.item_0
  <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
 <!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutable</code>e <i class="fa">&#xf08e;</i></a> or-->
  <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
+</div>
 </div>
 
 </body>

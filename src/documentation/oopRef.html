@@ -20,8 +20,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<div>
-
+<div id="getting-started">
 <h1>Getting started</h1>
 <h2>Select the object-oriented programming paradigm</h2> <!-- to balance the ToC -->
 
@@ -42,7 +41,7 @@ This will still allow you to do procedural programming, but changes two things: 
 </ul>
 
 <p>In the following section we will describe 10 principles that define the essence of OOP, illustrated with example code - where possible from the demo programs.</p>
-
+</div>
 
 <div id="oop_principles">
 <h1>Principles of object-oriented programming</h1>
@@ -588,16 +587,15 @@ end class
     <li>You create an instance of the class using the class name and providing any require arguments (as specified by the class' constructor) for example:
       <code>variable apple set to new Apple()</code> or <code> variable start set to new Point(5, 5)</code>.</li>
     <li>All properties must be initialised within the constructor (except for numeric or Boolean properties which have the default value for their type until changed) </li>
-    <li>Function methods provide information derived from the properties of the instance, and or from parameters provided to it.</p>
+    <li>Function methods provide information derived from the properties of the instance, and or from parameters provided to it.</li>
     <li><el-method>toString</el-method> is an ordinary function method but with a specific name; it is called if an instance of the class is printed,
     or inserted into an interpolated string; typically <el-method>toString</el-method> will include one or more of the object's properties. </li>
-    <li>Procedure methods make changes to the properties of the instance and/or depend on the system in some way.</p>
+    <li>Procedure methods make changes to the properties of the instance and/or depend on the system in some way.</li>
     <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may ony be accessed by
     code within the same class.</li>
     <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
     <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li> 
-    <li>A class may <i>optionally</i> inherit from a single <a href="#abstract_class">abstract class.</li>
-</li>
+    <li>A class may <i>optionally</i> inherit from a single <a href="#abstract_class">abstract class</a>.</li>
   </ul>
 
 </div></div>
@@ -774,9 +772,9 @@ end class
     <li>The subclass <code>Dealer</code> defines a more complex implementation of <el-method>newHand</el-method> with five instructions, but these include <code>call this.newHandHelper()</code>
     to do the common part of the task.</li>
   </ul>
-</p>
-
 </div></div>
+</div>
+</div>
 </div>
 
 <div id="StatementInstructions">
@@ -784,7 +782,6 @@ end class
 
 <p>Coding with Elan using the <b>object-oriented</b> paradigm offers the same
   <a href="LangRef.html#StatementInstructions">statement instructions used in the <b>procedural</b> paradigm</a>.
-
 </div>
 
 <div id="MemberInstructions" >
@@ -826,7 +823,7 @@ and assigns these parameters to the corresponding properties of the object.</p>
 class Game
   constructor(dealerStartPoints as Int)
     reassign this.dealer to new Dealer(dealerStartPoints)
-    reassign this.players to new List<of Player>()
+    reassign this.players to new List&lt;of Player&gt;()
     reassign this.message to ""
   end constructor
 
@@ -852,10 +849,10 @@ end class
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
       the default values for those types).</li>
     <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>reassign this.x to x</code> &ndash; 
-      the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</ul>
+      the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
-</ul>
+  </ul>
 </div></div>
 </div>
 
@@ -869,7 +866,7 @@ end class
   <p>From the <b>Snake - object-oriented</b> demo, where the <code>Game</code> class defines these properties:
 
   <codeblock>property dealer as Dealer</codeblock>
-  <codeblock>property players as List&let;of Player&gt;</codeblock>
+  <codeblock>property players as List&lt;of Player&gt;</codeblock>
   <codeblock>property message as String</codeblock>
 
 </div></div>
@@ -1045,7 +1042,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   </codeblock>
 </div></div>
 
-<p>which makes use of a method <el-method></el-method>getMessageHelper()</el-method> that is defined as (private) concrete function method on the superclass (<code>Player</code>).</p>
+<p>which makes use of a method <el-method>getMessageHelper()</el-method> that is defined as (private) concrete function method on the superclass (<code>Player</code>).</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title">What you need to know about p abstract functions</h4>
@@ -1083,7 +1080,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   end procedure
   </codeblock>
 
-  <p>and on the subclass <code>HumanPlayer</code> by code that usesinput/output methods to obtain the next action from the user:</p>
+  <p>and on the subclass <code>HumanPlayer</code> by code that uses input/output methods to obtain the next action from the user:</p>
 
   <codeblock>
   procedure nextAction(dealerFaceCard as Card)
