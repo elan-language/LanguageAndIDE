@@ -27,6 +27,7 @@ import {
   minByHelper,
   orderByHelper,
   reduceHelper,
+  sumByHelper,
   withAppendHelper,
   withAppendListHelper,
   withInsertHelper,
@@ -206,6 +207,14 @@ export class List<T1> {
     predicate: (a: T1, b: T1) => Promise<boolean>,
   ): Promise<List<T1>> {
     return this.newList(await orderByHelper(this.contents, predicate, this.system!));
+  }
+
+    @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanFloat)
+    async sumBy(
+    @elanFuncType([ElanT1], ElanFloat)
+    predicate: (value: T1) => Promise<number>,
+  ): Promise<number> {
+    return await sumByHelper(this.contents, predicate);
   }
 
   @elanFunction([], FunctionOptions.pure, ElanT1)
