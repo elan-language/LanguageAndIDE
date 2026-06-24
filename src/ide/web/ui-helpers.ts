@@ -541,7 +541,7 @@ export async function handleMenuKey(
 }
 
 export function changeCss(stylesheet: string) {
-  console.log("css to: " + stylesheet);
+  // console.log("css to: " + stylesheet);
   const links = document.getElementsByTagName("link");
   for (const link of links) {
     if (link.rel === "stylesheet" && link.href.includes("colourScheme")) {

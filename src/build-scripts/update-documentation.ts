@@ -1,4 +1,5 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resetFile } from "../tools/codeParser";
 import { processCode } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
@@ -28,19 +29,24 @@ function updatePaths(contents: string) {
 }
 
 async function updateFile(fileName: string) {
+  const ms = Date.now();
+  console.log(`Processing: ${fileName}`);
+
   let contents = loadFile(fileName);
   contents = updatePaths(contents);
   contents = await processCode(contents, codeTag, codeEndTag);
   contents = await processCode(contents, codeBlockTag, codeBlockEndTag);
+  console.log(`Finished Processing: ${fileName} in ${Date.now() - ms}ms`);
   saveFile(fileName, contents);
+  // console.log(`Saved: ${fileName} in ${Date.now() - ms}ms`);
 }
 
 export async function processDocumentation() {
-  // for (const fn of getDocs(docs)) {
-  //   await updateFile(`${docs}${fn}`);
-  // }
-
-  Promise.all(getDocs(docs).map(fn => updateFile(`${docs}${fn}`)));
+  //Promise.all(getDocs(docs).map(fn => updateFile(`${docs}${fn}`)));
+  for (const fn of getDocs(docs)) {
+    resetFile();
+    await updateFile(`${docs}${fn}`);
+  }
 }
 
 processDocumentation();
