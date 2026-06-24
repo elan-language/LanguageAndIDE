@@ -1909,7 +1909,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <h4 class="no-TOC acc-title" tabindex="0">Example using <code>Random</code></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code>:
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code></p>:
 <codeblock>
 main
   variable rnd set to new Random()
@@ -1919,9 +1919,7 @@ main
     reassign rnd to randomThrow(rnd).item_1
   end for
 end main
-</codeblock>
 
-<codeblock>
 function randomThrow(rnd as Random) returns (Int, Random)
   return (rnd.asInt(1, 6), rnd.nextGen())
 end function
