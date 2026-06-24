@@ -1,10 +1,10 @@
 // C# with Elan 2.0.0-beta
 
 static (double, double) bestFitLine(List<Point> points) { // function
-  var sumX = points.reduce(0.0, double s, Point p => s + p.x); // let
-  var sumXsq = points.reduce(0.0, double s, Point p => s + pow(p.x, 2)); // let
-  var sumY = points.reduce(0.0, double s, Point p => s + p.y); // let
-  var sumXY = points.reduce(0.0, double s, Point p => s + p.x*p.y); // let
+  var sumX = points.sumBy(Point p => p.x); // let
+  var sumXsq = points.sumBy(Point p => p.x*p.x); // let
+  var sumY = points.sumBy(Point p => p.y); // let
+  var sumXY = points.sumBy(Point p => p.x*p.y); // let
   var n = points.length(); // let
   var a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX); // let
   var b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX); // let
