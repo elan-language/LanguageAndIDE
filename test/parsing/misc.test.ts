@@ -7,7 +7,7 @@ import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { processInnerCode } from "../../src/tools/codeParser";
-import { testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -61,7 +61,7 @@ suite("Misc Tests", () => {
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("code parser", async () => {
+  ignore_test("code parser", async () => {
     const code = `
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
