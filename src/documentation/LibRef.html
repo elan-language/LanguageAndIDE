@@ -206,11 +206,12 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br><codeblock>able hour set to 3.0</code></li>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:
+  <codeblock>hoursWorked set to 3.0</codeblock></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
-<div class="accordion">  
+<!-- <div class="accordion">  <!-- Commented out as code is not parsing - unclear why -->
 <h4 class="no-TOC acc-title" tabindex="0">Examples of standalone dot methods on a <code>Float</code></h4>
 <div class="acc-body">
 <p>Test assertions using dot methods on a <code>Float</code>:</p>
@@ -230,7 +231,7 @@ test test_floor
 end test
 </p>
 <hr>
-</div></div>
+</div></div> -->
 
 <h2 id="Boolean">Boolean</h2>
 <p>A <b>Boolean</b> value is either <code>true</code> or <code>false</code>.</p>
@@ -1898,7 +1899,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
   <td>random <code>Int</code> value in the range of the arguments</td>
  </tr><tr id="nextGen">
   <td><el-method>nextGen</el-method></td>
-  <td>(none)</code></td>
+  <td>(none)</td>
   <td><code>Random</code></td>
   <td>a new instance of <code>Random</code> for subsequent use</td>
  </tr>
@@ -1909,7 +1910,8 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code>:
-<codeblock>main
+<codeblock>
+main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
@@ -1917,7 +1919,9 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
     reassign rnd to randomThrow(rnd).item_1
   end for
 end main
+</codeblock>
 
+<codeblock>
 function randomThrow(rnd as Random) returns (Int, Random)
   return (rnd.asInt(1, 6), rnd.nextGen())
 end function
@@ -2795,22 +2799,7 @@ end test
 <hr>
 </div></div>
 
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Single bit operations
-</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A reminder of single bit operations.<br>As noted in the example tests above, these methods act on 32-bit signed integers rather than on values of only one or a few bits,
-so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here:</p>
-<table>
- <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
- <tr><th></th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
- <tr><td><code>bitAnd(p,q)</code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
- <tr><td><code>bitOr(p,q)</code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
- <tr><td><code>bitNot(p)</code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
- <tr><td><code>bitXor(p,q)</code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
-</table>
-<hr>
-</div></div>
+<!-- section on single bit operations removed as it was incorrect and adding no value-->
 
 <h2 id="RegExp">RegExp functions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions <i class="fa">&#xf14c;</i></a>.</p>
@@ -2876,7 +2865,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr id="random">
+ </tr><tr>
   <td><el-method>random</el-method></td>
   <td>(none)</td>
   <td><code>Float</code></td>
@@ -3044,7 +3033,7 @@ end main
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><code>[TOM, DICK, HARRIET]</td>
+<td><br><br>&#x27f6;</td><td><br><br>[TOM, DICK, HARRIET]</td>
 </tr>
 </table>
 
@@ -3064,7 +3053,7 @@ function reverse(s as String) returns String
 end function
 </codeblock>
 </td>
-<td><br>&#x27f6;</td><td><br><code>[moT, kciD, teirraH]</td>
+<td><br>&#x27f6;</td><td><br>[moT, kciD, teirraH]</td>
 </tr>
 </table>
 
@@ -3178,11 +3167,6 @@ They take a <b>function</b> as an argument, and return the list item correspondi
 <a href="#max"><el-method>max</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#min"><el-method>min</el-method> <i class="fa">&#xf14c;</i></a>.</p>
 
-<div id="sumBy">
-<h3 class="no-TOC">sumBy</h3>
-<p><el-method>sumBy</el-method> calculates the numerical sum of the items generated by the specified lambda (or named function).</p>
-</div>
-
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>
 <div class="acc-body">
@@ -3215,6 +3199,34 @@ end main
 </table>
 <hr>
 </div></div>
+
+<div id="sumBy">
+<h3 class="no-TOC">sumBy</h3>
+<p><el-method>sumBy</el-method> calculates the numerical sum of the items generated by the specified lambda (or named function)
+  <i>which must return a floating point value. This does <i>not</i> mean that the list on which <el-method>sumBy</el-method>
+  has to be of type <code>List&lt;of Float&gt;</code>. However, the lambda must process each element in a way that returns a <code>Float</code>.
+</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>sumBy</el-method></h4>
+<div class="acc-body">
+
+<p>This example is taken from the <b>Best Fit</b> demo (offered when the paradigm is set to <b>functional</b>) -
+to calculate the various 'sigma' (sum of) terms needed to calculate the best fit line:</p>
+<codeblock>
+function bestFitLine(points as List&lt;of Point&gt;) returns (Float, Float)
+  let sumX be points.sumBy(lambda p as Point => p.x)
+  let sumXsq be points.sumBy(lambda p as Point => p.x*p.x)
+  let sumY be points.sumBy(lambda p as Point => p.y)
+  let sumXY be points.sumBy(lambda p as Point => p.x*p.y)
+  let n be points.length()
+  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  return (a, b)
+end function
+</codeblock>
+</div></div>
+</div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
 <p><el-method>orderBy</el-method> takes a <code>lambda</code> that has two arguments of the same type as that of the <code>List</code> items to be re-ordered
