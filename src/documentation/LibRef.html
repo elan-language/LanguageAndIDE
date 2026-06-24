@@ -524,8 +524,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
   <code>valueType</code> may be any type</td>
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
-  <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
-  <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
+  <td><code>Stack&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
+  <td><code>Queue>&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
  </tr>
  <tr>
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
@@ -2474,8 +2474,8 @@ end main
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><code>print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
- <tr><td><code>print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
 </ol>
 
@@ -2897,15 +2897,17 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <th>argument<br>types</th>
   <th>return<br>types</th>
   <th>returns</th>
- </tr><tr id="copy">
+ </tr>
+ <tr id="copy">
   <td><el-method>copy</el-method></td>
   <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
- </tr><tr id="createDictionary">
+ </tr>
+ <tr id="createDictionary">
   <td><el-method>createDictionary</el-method></td>
   <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
-  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
+  <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code></td>
   <td>a Dictionary containing the specified key:value pairs</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
