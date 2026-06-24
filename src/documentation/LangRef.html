@@ -22,6 +22,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
+<div id="getting-started">
 <h1>Getting started</h1>
 
 <h2>Select the procedural programming paradigm</h2>
@@ -37,7 +38,9 @@
    </ul>
   </li>
 </ul>
+</div>
 
+<div id="elan-differences">
 <h1>Why coding with Elan is different</h1>
 
 <p>To start programming with Elan, first familiarise yourself with using the Elan IDE, especially for
@@ -110,13 +113,12 @@ initial value given to it.</p>
   of 'null' as a <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/">Billion Dollar Mistake</a>.</p>
 
 <p>All the supported programming languages inherently permit null reference errors, though when you are coding in Elan it is impossible for one
-  to arise because:
+  to arise because:</p>
   <ul>
     <li>Every variable definition must specify an initial value</li>
     <li>It may never be reassigned to null</li>
     <li>(Additional, related rules are enforced in object-oriented programming)</li>
   </ul>
-</p>
 
 <h3 class="no-TOC" id="noEarlyBreaks">No breaking out of loops before they have completed</h3>
 
@@ -268,14 +270,14 @@ where you might encounter one, <i>you will get a clear error message that gives 
   <li>Passing by reference is done by wrapping a parameter of type <code>Int</code>, say, in <code>AsRef&lt;of Int&gt;</code>.</li>
 </ul>
 </div>
+</div>
 
 <div id="globalInstructions">
 <h1>Global instructions</h1>
 <p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
   and are therefore not indented.</p>
-<div class="java"><img src="images/icon_java.png" height=30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor
+<div class="java"><img src="images/icon_java.png" height="30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor
 generates a non-editable class named Global, and all global instructions are created directly within that (and automatically indented).</p></div>
-</div>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -437,11 +439,11 @@ end procedure
 <div class="acc-body">
 
 <h4 class="no-TOC" id="CallByRef">Call by reference</h4>
-<p>To change the value in named value <el-id>arg</el-id> supplied as an argument in a procedure call, both the call argument and the procedure parameter
+<p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
- as in this example where <el-id>argRef</el-id> is a pointer to variable <el-id>arg</el-id> in <b>main</b>,
- so that <el-id>arg</el-id> can be accessed elsewhere <i>by reference</i>:</p>
+ as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in <b>main</b>,
+ so that <code>arg</code> can be accessed elsewhere <i>by reference</i>:</p>
 
 <codeblock>main
   variable arg set to "abc"
@@ -461,13 +463,13 @@ end procedure
   In the following example is from the <b>Turtle Snowflake</b> demo, you can see that the <el-method>drawSide</el-method>
   procedure calls itself from four separate places within its body &ndash; in order to achieve the 'fractal' effect, where
   a basic shape repeats itself at different levels of scale. You can also observe two very important principles of
-  recursion here:
+  recursion here:</p>
+
   <ul>
-    <li>Calls back into itself are with a smaller version of the problem &ndash; in this case one third of the <el-id>length</el-id>
+    <li>Calls back into itself are with a smaller version of the problem &ndash; in this case one third of the <code>length</code>
     that the procedure was given.</li>
     <li>There is a terminating condition where the recursion 'bottoms out' &ndash; in this when the side length gets down to 1.</li>
   </ul>
-</p>
 
 <codeblock>procedure drawSide(length as Float, t as Turtle)
   if (length > 1) then
@@ -568,13 +570,14 @@ end function
   all the work needed.</li>
   <li>More generally, the <code>return</code> instruction will be preceded by other instructions that determine the result in several steps.</li>
   <li>While many languages treat functions as a procedure that returns a value, this is unhelpful. Elan enforces &ndash; for each of the supported
-    languages &ndash; that functions are kept 'pure', like all functions used in mathematics. Specifically:</li>
+    languages &ndash; that functions are kept 'pure', like all functions used in mathematics. Specifically:
   <ul>
     <li>a function cannot undertake any input/output, or create any other side effect (i.e. change to the system that can be observed outside the function).</li>
     <li>prohibited side effects including changing any of the values passed in as parameters.</li>
     <li>the returned result must depend solely, and deterministically, on the values provided as parameters &ndash; just as <code>sqrt(2)</code>
     always produces the same result, irrespective of whatever else might be occurring in the program.</li>
   </ul>
+  </li>
 </ul>
 </div></div>
 
@@ -585,7 +588,7 @@ end function
 <h3 class="no-TOC">Recursive function references</h3>
 <p>A function may reference itself, directly or indirectly (referencing another function that then calls back to the first one).
 <p>The same two principles discussed above under Recursive procedure calls apply equally to recursive functions.</p>
-<p>In this example of factorial calculation, each call is on a smaller value of input, and the process stops when <el-id>n</el-id> reaches <el-lit>1</el-lit>:</p>
+<p>In this example of factorial calculation, each call is on a smaller value of input, and the process stops when <code>n</code> reaches <el-lit>1</el-lit>:</p>
 
 <codeblock>function factorial(n as Int) returns Int
   return (if(n > 1, n*factorial(n - 1), 1))
@@ -759,6 +762,7 @@ end test
   Your priority should then be to identify the cause of the timeout and attempt to fix it before then unghosting the test.</p>
 </div>
 </div>
+</div>
 
 <div id="constant">
 <h2>Constant</h2>
@@ -836,7 +840,7 @@ end function
 </div></div>
 </div>
 
-<div id="enum"
+<div id="enum">
 <div id="enumValue"></div>
 <h2>Enum</h2>
 
@@ -946,6 +950,7 @@ end procedure
   This comment is known as the 'file header'.</li>
 </ul>
 </div></div>
+</div>
 </div>
 
 <div id="statementInstructions">
@@ -1280,12 +1285,13 @@ end if
   <ul>
     <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
     <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value &ndash; <code>true</code> or <code>false</code>.</li>
-    <li>That expression might take any of the following forms:</li>
+    <li>That expression might take any of the following forms:
     <ul>
       <li>comparing two values using one of the Boolean operators e.g. <code>random() < 0.05</code> or <code>direction is 0</code></li>
       <li>a single existing variable that is of Boolean type</li>
       <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
     </ul>
+    </li>
     <li>Within the body of an <b>if</b> instruction you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
     <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> instruction body</li>
   </ul>
@@ -1430,19 +1436,21 @@ end procedure
     <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable &ndash; which is defined in the first editable field when you create a new for instruction.</li>
     <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
-    <li>The sequence of values may be specified:</li>
-    <ul>
-      <li>as a literal list (of any kind), or a variable of type list</li>
-      <li>as a string value, in which case each single character that makes up the string is assigned to the variable in succession</li>
-      <li>as any expression that generates a List</li>
-    </ul>
-    <li>When a sequence of consecutive integer values is needed the most common way to do this is by calling one of these two functions</li>
+    <li>The sequence of values may be specified:
+      <ul>
+        <li>as a literal list (of any kind), or a variable of type list</li>
+        <li>as a string value, in which case each single character that makes up the string is assigned to the variable in succession</li>
+        <li>as any expression that generates a List</li>
+      </ul>
+    </li>
+    <li>When a sequence of consecutive integer values is needed the most common way to do this is by calling one of these two functions:
     <ul>
       <li><el-method>range</el-method> requires two arguments: the lower and upper bound; the upper bound is 'exclusive' so that <code>range(1,11)</code>
       creates the sequence 1,2,3,4,5,6,7,8,9,10</li>
       <li><el-method>rangeInSteps</el-method> requires three arguments: lower bound, upper bound (exclusive), and the 'step' or increment value, which can
       be negative provided that the upper bound is then less than the lower bound.</li>
     </ul>
+    </li>
     <li>The variable is updated each pass around the loop; you should <i>not</i> attempt to modify the variable defined in the loop's signature from within the loop.</li>
   </ul>
 </div></div>
@@ -1499,17 +1507,17 @@ is a procedure method on the type <code>List</code>, which is the type of the <c
 <h3 class="no-TOC acc-title">What you need to know about procedure calls</h3>
 <div class="acc-body">
 
-  <ul>
+<ul>
 <li>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
-<p>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; if there are no parameters, leave the brackets empty.</p>
-<p>Procedures may have side effects, for example input/output or changing a data value in an object.
-
+<li>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; 
+  if there are no parameters, leave the brackets empty.</li>
+<li>Procedures may have side effects, for example input/output or changing a data value in an object.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
-  To enforce this, <b>call procedure</b> instructions are not allowed in functions.</p>
-<p>There is a limit to the complexity of a <b>call procedure</b> instruction.
+  To enforce this, <b>call procedure</b> instructions are not allowed in functions.</li>
+<li>There is a limit to the complexity of a <b>call procedure</b> instruction.
  Only one dot is allowed in the procedure name field, or two dots if the first word is <b>property</b>.
  If you need anything more complicated, use a <b>change variable</b> instruction on the line above.
-  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</p>
+  See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
 </div></div>
 
@@ -1570,11 +1578,12 @@ end main
   <li class="python">'except' is Python's word for 'catch'</li>
   <li>When you add a new <b>try</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
   <li>Underneath the catch clause you may instructions to handle the exception, for example by advising the user to try again.</li>
-  <li>The catch clause must specify the <i>type</i> of the exception to be caught. When working in Elan, only two types are permitted:</li>
+  <li>The catch clause must specify the <i>type</i> of the exception to be caught. When working in Elan, only two types are permitted:
     <ul>
     <li><code>ElanRuntimeError</code> which covers all errors thrown by the Elan system, including, for example 'Out of range index ...'</li>
     <li><code>CustomError</code> an exception explicitly thrown by code by a <b>throw</b> instruction in your own code (see below).</li>
     </ul>
+  </li>
   <li><i>Currently</i> Elan permits only one catch clause to be associated with each <b>try</b></li>
 </ul>
 <p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
@@ -1660,7 +1669,7 @@ end test
 <ul>
   <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
   result values in a single case that returns a data structure.</li>
-  <li>The assert defines two fields that the user must specify:</li>
+  <li>The assert defines two fields that the user must specify:
   <ul>
     <li>The <i>actual</i> value as returned by a call to the function being tested.</li>
     <li>The expected value, which will typically be a literal value of the same type as the actual.</li>
@@ -1676,6 +1685,7 @@ end test
     <li>The required <i>order</i> of the actual and expected fields varies between the supported languages;
     Elan handles this automatically when translating between languages.</li>
   </ul>
+  </li>
 </ul>
 </div></div>
 </div>
@@ -1705,7 +1715,7 @@ end test
 <tr><th>type</th><th>Example of literal</th></tr>
 <tr><td><a href="LibRef.html#Int">Int <i class="fa">&#xf08e;</i></a></td><td><code>3</code></td></tr>
 <tr><td><a href="LibRef.html#Float">Float <i class="fa">&#xf08e;</i></a></td><td><code>2.0</code></td></tr>
-<tr><td><a href="LibRef.html#Boolean">Boolean <i class="fa">&#xf08e;</i></a></td><td><el-id>true</el-id></td></tr>
+<tr><td><a href="LibRef.html#Boolean">Boolean <i class="fa">&#xf08e;</i></a></td><td><code>true</code></td></tr>
 <tr><td><a href="LibRef.html#String">String <i class="fa">&#xf08e;</i></a></td><td><code>"Hello"</code></td></tr>
 <tr><td><a href="LibRef.html#Tuple">Tuple <i class="fa">&#xf08e;</i></a></td><td><code>(3, "banana")</code></td></tr>
 <tr><td><a href="LibRef.html#List">List <i class="fa">&#xf08e;</i></a></td><td><code>["lemon", "lime", "orange"]</code></td></tr>
@@ -1758,7 +1768,7 @@ end main
 </table>
 </div>
 
-<div
+<div>
 <div id="operator">
 <h2>Operators</h2>
 
@@ -1841,9 +1851,9 @@ end function
 <p>Equality testing of these Value Types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
 <ul>
  <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
- <li><code>(a is b)</code> returns <b><el-id>true</el-id></b>, if <el-id>a</el-id> and <el-lit>b</el-lit> are both of the same type and their values are equal.
+ <li><code>(a is b)</code> returns <b><code>true</code></b>, if <code>a</code> and <el-lit>b</el-lit> are both of the same type and their values are equal.
  The only exception is that if one argument is of type <code>Float</code> and the other is of type <code>Int</code>,
-  then <b>is</b> will return <el-id>true</el-id> (and <b>isnt</b> will return <el-id>false</el-id>) if their values are the same,
+  then <b>is</b> will return <code>true</code> (and <b>isnt</b> will return <code>false</code>) if their values are the same,
   i.e. they are the same whole number.</li>
  <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
 </ul>
@@ -1914,14 +1924,38 @@ See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08
 <p>You can use a lambda only as an argument to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a>.</p>
 <p>You would typically define a <b>lambda</b> when the functionality it defines is needed in only one location,
 e.g. in a particular call to a Higher-order Function.</p>
-<!-- when you need to capture a local variable in the implementation: this is called 'closing around a variable'. -->
-<p>The syntax for a <b>lambda</b> is as follows:</p>
+
+<p>A lambda may be thought of as a one-line function that is defined where it is used. Like a function it defines
+  one or more parameters, and an expression that depends on the parameter value(s). Thus, the lambda:</p>
+
+  <codeblock>lambda x as Float => x.round(8)</codeblock>
+
+<p>is equivalent to defining a function:</p>
+
+<codeblock>
+  function someName( x as Float) returns Float
+    return x.round(8)
+  end function
+</codeblock>
+
+<p>The lambda above is usually verbalised as 'lambda x returns x.round(8)`</p>
+
+<p>The advantages of using a lambda (where one would be allowed) <i>instead</i> of defining a function are:</p>
+
 <ul>
-<li>Start with the word <b>lambda</b>.</li>
-<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
-<li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
+  <li>It is more succinct.</li>
+  <li>It is defined exactly where it is used, so you don't need to navigate to the function to see what it does.</li>
+  <li>The expression </i></li>
 </ul>
+
+<p>Here are some more examples of the syntax for a lambda:</p>
+<codeblock>lambda n as Node => n.point.equals(p)</codeblock>
+<codeblock>lambda dd as Dictionary&lt;of String, Int&gt;, answer as String => incrementCount(dd, answer, attempt)</codeblock>
+
+<p>b>Note:</b> currently, 
+it is necessary to specify the type of each parameter in a lambda explicitly. We hope to remove this requirement in a 
+future version - to make the syntax for a lambda much cleaner.</p>
+
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
 </div>
 
@@ -1948,7 +1982,7 @@ e.g. in a particular call to a Higher-order Function.</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
   <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
-<p>in which variable <el-id>d</el-id> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
+<p>in which variable <code>d</code> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
 <p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
 
 <p>Why do we refer to <el-method>if_</el-method> as a 'pseudo function'. At first glance it looks to operate like any function: it requires three arguments and returns a result that depends on them.
@@ -2000,11 +2034,11 @@ end procedure
 <h2 id="dotSyntax">Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
- <li>To apply a function method to a named value, e.g. to obtain the length of <code>String</code> <el-id>s</el-id> using a library method:<br>
+ <li>To apply a function method to a named value, e.g. to obtain the length of <code>String</code> <code>s</code> using a library method:<br>
  <code>variable n set to s.length()</code></li>
- <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <el-id>li</el-id> using a library procedure:<br>
+ <li>To apply a procedure to a named value, e.g. to initialise <code>List</code> <code>li</code> using a library procedure:<br>
  <code>call  li.initialise(10,0)</code></li>
- <li>To refer to the property (<el-id>body</el-id>) of an instance (<el-id>game</el-id>) of a class and, in this example to get the length of the property's current string value, using
+ <li>To refer to the property (<code>body</code>) of an instance (<code>game</code>) of a class and, in this example to get the length of the property's current string value, using
  library methods:<br>
  <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
@@ -2103,6 +2137,7 @@ variable x set to point.item_0
  <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
 <!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutable</code>e <i class="fa">&#xf08e;</i></a> or-->
  <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
+</div>
 </div>
 </div>
 

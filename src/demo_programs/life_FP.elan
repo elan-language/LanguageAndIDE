@@ -1,4 +1,4 @@
-# aeddfa5e10ee01a8bdd3c5dcdfaa6eb86cc1a22a17e5cf2ab4a5e02958fa7ddd Elan 2.0.0-beta valid
+# 7daf514b3bd26b2d37b8f2ac81962c73b5b0fe30e898f62340eb5ad87007a260 Elan 2.0.0-beta1 valid
 
 main
   variable rng set to new Random()
