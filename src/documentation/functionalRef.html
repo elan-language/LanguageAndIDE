@@ -20,6 +20,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
+<div id="getting-started">
 <h1>Getting started</h1>
 <h2>Select functional programming paradigm</h2> <!-- to balance the ToC -->
 
@@ -43,7 +44,9 @@ This changes two things: </p>
     The rationale for disallowing some of the instructions you are used to in PP or OOP, and how to use the new instructions, will become clear as you read through this document.
 </ol>
 <p>In the following sections we will describe 10 principles that define the essence of FP, illustrated with example code - where possible from the demo programs.</p>
+</div>
 
+<div id="principles">
 <h1>Principles of functional programming</h1>
 <p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, and every language that supports FP differs in the rules that it enforces.
   The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages 
@@ -52,7 +55,6 @@ This changes two things: </p>
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
   Elan will result in better code and fewer problems.<p>
-</div>
 
 <h2>Functions must be pure</h2>
 
@@ -83,10 +85,12 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   (which also, inherently, use procedural programming to manage input/output and other system operations).
   But this second principle of FP implies that the <b>main</b> together with any necessary <b>procedure</b>s should
   be kept as small as possible:
-  <ul><i>Any code within the main routine or procedures that performs calculation, evaluates logic, or
-    transforms data in any way, should be delegated to functions</i>.
-  </ul> Most procedural programs contain <i>some</i> functions,
-    but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</p>
+  <ul>
+    <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or
+    transforms data in any way, should be delegated to functions</li>.
+    <li> Most procedural programs contain <i>some</i> functions,
+      but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</li>
+  </ul>
 
   <p>This may seem logical when a program is obviously heavily dependent upon calculation, logic, or data transformation
     &ndash; as, for example, the <b>Best Fit</b> demo program. But what about an interactive game, where
@@ -590,7 +594,6 @@ understand the following:</p>
   of argument values, a function must always return the same result. Its result cannot be dependent upon the current date, time
   or what the system has done previously. A function that was given all such information in its parameters would make it extremely
   complicated and unwieldy!</li>
-</li>
 </ul>
 
 <p>The 'functional Random' pattern, works within these constraints. If you want to <i>generate</i> one or more random numbers within a function,
@@ -666,7 +669,6 @@ end function
 </codeblock>
 
 <p>In <b>Life - functional</b> you can find this pattern employed to create a randomised initial grid of random black or white blocks.</p>
-
 </div>
 
 <div id="GlobalInstructions">
@@ -677,7 +679,7 @@ end function
   <a href="oopRef.html#GlobalInstructions">global instructions as offered in the <b>object-oriented</b> paradigm</a>.</p>
 </div>
 
-<div id="StatementInstructions"
+<div id="StatementInstructions">
 <h1>Statement instructions</h1>
 
 

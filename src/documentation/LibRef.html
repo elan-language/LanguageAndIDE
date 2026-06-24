@@ -206,17 +206,17 @@ Its type is <code>Float</code>.
  <li>A variable that has been defined as being of type <code>Float</code> may not be passed as an argument into a method that requires an <code>Int</code>,
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
- <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:<br><codeblock>able hour set to 3.0</code></li>
+ <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:
+  <codeblock>hoursWorked set to 3.0</codeblock></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
-<!-- Temporarily commented-out as code not parsing-->
-<!-- <div class="accordion">  
+<!-- <div class="accordion">  <!-- Commented out as code is not parsing - unclear why -->
 <h4 class="no-TOC acc-title" tabindex="0">Examples of standalone dot methods on a <code>Float</code></h4>
 <div class="acc-body">
 <p>Test assertions using dot methods on a <code>Float</code>:</p>
 <p>
-  test test_floor
+test test_floor
   variable p set to pi
   variable mp set to -pi
   assert p.floor() is 3
@@ -525,8 +525,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
   <code>valueType</code> may be any type</td>
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
-  <td><code>Stack&lt;of Type&gt;<br>The type of the item must be immutable</td>
-  <td><code>Queue>&lt;of Type&gt;<br>The type of the item must be immutable</td>
+  <td><code>Stack&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
+  <td><code>Queue>&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
  </tr>
  <tr>
   <td>size</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td><td>Dynamic</td>
@@ -899,7 +899,7 @@ that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 end main
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d, kvp  =&gt; d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d, kvp  => d.withSet(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
@@ -1899,7 +1899,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
   <td>random <code>Int</code> value in the range of the arguments</td>
  </tr><tr id="nextGen">
   <td><el-method>nextGen</el-method></td>
-  <td>(none)</code></td>
+  <td>(none)</td>
   <td><code>Random</code></td>
   <td>a new instance of <code>Random</code> for subsequent use</td>
  </tr>
@@ -1910,7 +1910,8 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code>:
-<codeblock>main
+<codeblock>
+main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
@@ -1918,7 +1919,9 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
     reassign rnd to randomThrow(rnd).item_1
   end for
 end main
+</codeblock>
 
+<codeblock>
 function randomThrow(rnd as Random) returns (Int, Random)
   return (rnd.asInt(1, 6), rnd.nextGen())
 end function
@@ -2475,8 +2478,8 @@ end main
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
   done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
- <tr><td><code>print (di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
- <tr><td><code>print (di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
+ <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
 </ol>
 
@@ -2592,7 +2595,7 @@ end main
   variable tab set to 10
   for i in range(1, tab)
     variable j set to pow(9, i).floor()
-    variable f set to (lambda j as Int =&gt; j.toString().length())
+    variable f set to (lambda j as Int => j.toString().length())
     call printTab(tab - f(j), $"{j}\n")
   end for
 end main
@@ -2796,22 +2799,7 @@ end test
 <hr>
 </div></div>
 
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Single bit operations
-</h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; A reminder of single bit operations.<br>As noted in the example tests above, these methods act on 32-bit signed integers rather than on values of only one or a few bits,
-so the effect of <el-method>bitNot</el-method> is not just the simple bit reversal shown here:</p>
-<table>
- <tr><th rowspan="2"></th><th colspan="4">p,q</th></tr>
- <tr><th></th><th>0,0</th><th>0,1</th><th>1,0</th><th>1,1</th></tr>
- <tr><td><code>bitAnd(p,q)</code></td><td>0</td><td>0</td><td>0</td><td>1</td></tr>
- <tr><td><code>bitOr(p,q)</code> </td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
- <tr><td><code>bitNot(p)</code>  </td><td>1</td><td>1</td><td>0</td><td>0</td></tr>
- <tr><td><code>bitXor(p,q)</code></td><td>0</td><td>1</td><td>1</td><td>0</td></tr>
-</table>
-<hr>
-</div></div>
+<!-- section on single bit operations removed as it was incorrect and adding no value-->
 
 <h2 id="RegExp">RegExp functions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions <i class="fa">&#xf14c;</i></a>.</p>
@@ -2877,7 +2865,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr id="random">
+ </tr><tr>
   <td><el-method>random</el-method></td>
   <td>(none)</td>
   <td><code>Float</code></td>
@@ -2898,15 +2886,17 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <th>argument<br>types</th>
   <th>return<br>types</th>
   <th>returns</th>
- </tr><tr id="copy">
+ </tr>
+ <tr id="copy">
   <td><el-method>copy</el-method></td>
   <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
- </tr><tr id="createDictionary">
+ </tr>
+ <tr id="createDictionary">
   <td><el-method>createDictionary</el-method></td>
   <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
-  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
+  <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code></td>
   <td>a Dictionary containing the specified key:value pairs</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
@@ -2966,7 +2956,7 @@ end main
 end main
 function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
   # returns primes from the list assuming it starts with a prime (e.g. 2)
-  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int =&gt; (n mod li.head()) &gt; 0))))
+  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) &gt; 0))))
 end function
 </codeblock>
 <hr>
@@ -3003,7 +2993,7 @@ The subset is chosen by a <code>lambda</code> that tests list item values and re
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
 <codeblock>function getNodeFor(p as Point) returns Node
-  variable matches set to this.nodes.filter(lambda n as Node =&gt; n.point.equals(p))
+  variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
   return if_(matches.length() is 1,  matches.head(), emptyNode())
 end function
 </codeblock>
@@ -3025,7 +3015,7 @@ The <b>function</b> to be applied is usually specified as a <code>lambda</code> 
  <td>
 <codeblock>main
   variable li set to [1, 2, 3, 4, 5]
-  print(li.map(lambda n as Int =&gt; pow(n, 3)))
+  print(li.map(lambda n as Int => pow(n, 3)))
 end main
 </codeblock>
 </td>
@@ -3039,11 +3029,11 @@ end main
  <td>
 <codeblock>main
   variable names set to ["Tom", "Dick", "Harriet"]
-  print(names.map(lambda s as String =&gt; s.upperCase()))
+  print(names.map(lambda s as String => s.upperCase()))
 end main
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><code>[TOM, DICK, HARRIET]</td>
+<td><br><br>&#x27f6;</td><td><br><br>[TOM, DICK, HARRIET]</td>
 </tr>
 </table>
 
@@ -3052,7 +3042,7 @@ end main
 <tr>
  <td>
 <codeblock>main
-  print(names.map(lambda s as String =&gt; reverse(s)))
+  print(names.map(lambda s as String => reverse(s)))
 end main
 function reverse(s as String) returns String
   variable sReturn set to ""
@@ -3063,12 +3053,12 @@ function reverse(s as String) returns String
 end function
 </codeblock>
 </td>
-<td><br>&#x27f6;</td><td><br><code>[moT, kciD, teirraH]</td>
+<td><br>&#x27f6;</td><td><br>[moT, kciD, teirraH]</td>
 </tr>
 </table>
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <code>maze-generator</code>:</p>
-<codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point =&gt; getValue(p, g))
+<codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
 </codeblock>
 <hr>
 </div></div>
@@ -3113,7 +3103,7 @@ end function
  <td>
 <codeblock>main
   variable n set to [0.1, 2, 2.5, 0.3, 5.75, 0.29]
-  print(n.reduce(0.0, lambda sum as Float, m as Float =&gt; (sum + m).round(2)))
+  print(n.reduce(0.0, lambda sum as Float, m as Float => (sum + m).round(2)))
 end main
 </codeblock>
 </td>
@@ -3135,7 +3125,7 @@ end main
   variable n set to [2, 3, 5, 7, 11, 13]
   variable nR set to new List&lt;of Int&gt;()
   variable eL set to new List&lt;of Int&gt;()
-  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int =&gt; nR.withPrepend(m)))
+  print(n.reduce(eL, lambda nR as List&lt;of Int&gt;, m as Int => nR.withPrepend(m)))
 end main
 </codeblock>
 </td>
@@ -3152,7 +3142,7 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String =&gt; sR.withPrepend(word)).join(" ")
+  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>
@@ -3177,11 +3167,6 @@ They take a <b>function</b> as an argument, and return the list item correspondi
 <a href="#max"><el-method>max</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#min"><el-method>min</el-method> <i class="fa">&#xf14c;</i></a>.</p>
 
-<div id="sumBy">
-<h3 class="no-TOC">sumBy</h3>
-<p><el-method>sumBy</el-method> calculates the numerical sum of the items generated by the specified lambda (or named function).</p>
-</div>
-
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>
 <div class="acc-body">
@@ -3191,7 +3176,7 @@ They take a <b>function</b> as an argument, and return the list item correspondi
  <td>
 <codeblock>main
   variable a set to [33, 4, 0, 92, 89, 55, 102]
-  print(a.maxBy(lambda x as Int =&gt; x mod 10))
+  print(a.maxBy(lambda x as Int => x mod 10))
 end main
 </codeblock>
 </td>
@@ -3205,7 +3190,7 @@ end main
  <td>
 <codeblock>main
   variable fruit set to ["apple", "orange", "pear"]
-  print(fruit.minBy(lambda x as String =&gt; x.length()))
+  print(fruit.minBy(lambda x as String => x.length()))
 end main
 </codeblock>
 </td>
@@ -3214,6 +3199,34 @@ end main
 </table>
 <hr>
 </div></div>
+
+<div id="sumBy">
+<h3 class="no-TOC">sumBy</h3>
+<p><el-method>sumBy</el-method> calculates the numerical sum of the items generated by the specified lambda (or named function)
+  <i>which must return a floating point value. This does <i>not</i> mean that the list on which <el-method>sumBy</el-method>
+  has to be of type <code>List&lt;of Float&gt;</code>. However, the lambda must process each element in a way that returns a <code>Float</code>.
+</p>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>sumBy</el-method></h4>
+<div class="acc-body">
+
+<p>This example is taken from the <b>Best Fit</b> demo (offered when the paradigm is set to <b>functional</b>) -
+to calculate the various 'sigma' (sum of) terms needed to calculate the best fit line:</p>
+<codeblock>
+function bestFitLine(points as List&lt;of Point&gt;) returns (Float, Float)
+  let sumX be points.sumBy(lambda p as Point => p.x)
+  let sumXsq be points.sumBy(lambda p as Point => p.x*p.x)
+  let sumY be points.sumBy(lambda p as Point => p.y)
+  let sumXY be points.sumBy(lambda p as Point => p.x*p.y)
+  let n be points.length()
+  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  return (a, b)
+end function
+</codeblock>
+</div></div>
+</div>
 
 <h3 class="no-TOC" id="orderBy">orderBy</h3>
 <p><el-method>orderBy</el-method> takes a <code>lambda</code> that has two arguments of the same type as that of the <code>List</code> items to be re-ordered
@@ -3227,7 +3240,7 @@ end main
 <tr>
  <td>
 <codeblock>  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
-  variable ordered set to numbers.orderBy(lambda x as Int, y as Int =&gt; x &gt; y)
+  variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
   print(ordered)
 </codeblock>
 </td>
@@ -3241,7 +3254,7 @@ end main
  <td>
 <codeblock>main
   variable names set to ["Simon", "Pauline", "Jason", "Zelda", "Edith", "Lance", "Alice", "Paul"]
-  print(names.orderBy(lambda x as String, y as String =&gt; x.isBefore(y)))
+  print(names.orderBy(lambda x as String, y as String => x.isBefore(y)))
 end main
 </codeblock>
 </td>
