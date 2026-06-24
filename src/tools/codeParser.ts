@@ -117,6 +117,28 @@ async function parseAsFunctionStatement(code: string, l: Language) {
   }
 }
 
+async function parseAsMain(code: string, l: Language) {
+  const codeSource = new CodeSourceFromString(code + " ");
+  const file = await newFileImpl();
+
+  try {
+    const c = file.getFirstChild();
+    file.removeChild(c);
+    const gf = new GlobalFunction(file);
+    const ss = new StatementSelector(gf);
+    ss.parseFrom(codeSource);
+
+    if (file.parseError) {
+      return "";
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+    file.setLanguage(l);
+    return gf.getChildren()[0].renderAsHtml();
+  } catch (_e) {
+    return "";
+  }
+}
 
 async function parseAsMember(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
@@ -201,10 +223,11 @@ export async function processInnerCode(code: string, l: Language) {
     (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
     (await parseAsStatement(code, l)) ||
     (await parseAsFunctionStatement(code, l)) ||
+    (await parseAsMain(code, l)) ||
     (await parseAsMember(code, l)) ||
     (await parseAsExpression(code, l)) ||
     (await parseAsType(code, l)) ||
-    `${code} Code does not parse as Elan.`
+    `Code does not parse as Elan.`
   );
 }
 

@@ -71,6 +71,17 @@ end constructor`;
     assert.strictEqual(actual.startsWith("<el-id"), true);
   });
 
+  test("process main", async () => {
+    const code = `main 
+  variable r set to 2.0
+  print($"area = {(pi*r*r).round(2)}")
+end main`;
+
+    const actual = await processInnerCode(code, LanguageElan.Instance);
+
+    assert.strictEqual(actual.startsWith("<el-main"), true);
+  });
+
    test("process let", async () => {
     const code = `let a be 1`;
 
