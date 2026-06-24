@@ -86,8 +86,8 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   But this second principle of FP implies that the <b>main</b> together with any necessary <b>procedure</b>s should
   be kept as small as possible:
   <ul>
-    <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or
-    transforms data in any way, should be delegated to functions</li>.
+    <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or 
+      transforms data in any way, should be delegated to functions.</li>.
     <li> Most procedural programs contain <i>some</i> functions,
       but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</li>
   </ul>
@@ -261,8 +261,8 @@ end function
 
 <ol>
   <li>The condition, which may compare two values, or it may call another function that returns a Boolean value</li>
-  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <el-id>true</el-id></li>
-  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <el-id>false</el-id></li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <code>true</code></li>
+  <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <code>false</code></li>
 </ol>
 
 <p>Thus the <el-method>if</el-method> function performs a role somewhat similar to an <b>if</b> <i>instruction</i>,
@@ -686,7 +686,7 @@ end function
 <p><i>Within the main routine or any procedure</i> coding with Elan using the <b>functional</b> paradigm offers the same
   <a href="oopRef.html#StatementInstructions">statement instructions as offered in the <b>object-oriented</b> paradigm</a>.</p>
 
-<p>However, <i>within a function</i> coding with Elan using the <b>functional</b> paradigm allows only the <code>return</code> statement</p> -
+<p>However, <i>within a function</i> coding with Elan using the <b>functional</b> paradigm allows only the return statement -
 which forms part of the function template, plus the option to precede this with one or more ...</p>
 
 <div id="let">

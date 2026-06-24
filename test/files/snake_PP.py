@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta
+# Python with Elan 2.0.0-beta1
 
 # Use the w,a,s,d keys to change snake's direction
 
