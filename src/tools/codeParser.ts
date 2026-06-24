@@ -7,9 +7,9 @@ import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
-import { Language } from "../ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
+import { GlobalSelector } from "../ide/frames/globals/global-selector";
 import { MainFrame } from "../ide/frames/globals/main-frame";
 import { LanguageCS } from "../ide/frames/language-cs";
 import { LanguageElan } from "../ide/frames/language-elan";
@@ -38,12 +38,12 @@ export function resetFile() {
   fileImpl = undefined;
 }
 
-let resetCount = 0;
+//let resetCount = 0;
 
 function newFileImpl(): FileImpl {
-  if (resetCount++ > 50) {
-    resetFile();
-  }
+  // if (resetCount++ > 75) {
+  //   resetFile();
+  // }
 
   if (!fileImpl) {
     fileImpl = new FileImpl(hash, new Profile(""), "guest", transforms(), stdLib, false, true);
@@ -58,7 +58,17 @@ function newFileImpl(): FileImpl {
   return fileImpl;
 }
 
-async function parseAsFileWithHeader(code: string, l: Language) {
+const languages = [
+  LanguageElan.Instance,
+  LanguagePython.Instance,
+  LanguageCS.Instance,
+  LanguageVB.Instance,
+  LanguageJava.Instance,
+];
+
+async function parseAsFileWithHeader(
+  code: string,
+): Promise<[string, string, string, string, string] | undefined> {
   // const ms = Date.now();
   // console.log(`    Parse as File with header '${code.trim()}'`);
 
@@ -68,16 +78,26 @@ async function parseAsFileWithHeader(code: string, l: Language) {
   file.parseFrom(codeSource);
 
   if (file.parseError) {
-    return "";
+    // console.log(`    Parse as File with header failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
   file.removeAllSelectorsThatCanBe();
   file.deselectAll();
 
-  file.setLanguage(l);
-  return await file.renderAsHtml(true);
+  const allCode: string[] = [];
+
+  for (const l of languages) {
+    file.setLanguage(l);
+    allCode.push(await file.renderAsHtml(false));
+  }
+
+  // console.log(`    Parse as File with header succeeded after ${Date.now() - ms}ms`);
+  return allCode as [string, string, string, string, string];
 }
 
-export async function parseAsFile(code: string, l: Language) {
+export async function parseAsFile(
+  code: string,
+): Promise<[string, string, string, string, string] | undefined> {
   // const ms = Date.now();
   // console.log(`    Parse as File '${code.trim()}'`);
 
@@ -87,16 +107,24 @@ export async function parseAsFile(code: string, l: Language) {
   file.parseBodyFrom(codeSource);
 
   if (file.parseError) {
-    return "";
+    // console.log(`    Parse as File failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
   file.removeAllSelectorsThatCanBe();
   file.deselectAll();
 
-  file.setLanguage(l);
-  return await file.renderAsHtml(false);
+  const allCode: string[] = [];
+
+  for (const l of languages) {
+    file.setLanguage(l);
+    allCode.push(await file.renderAsHtml(false));
+  }
+
+  // console.log(`    Parse as File succeeded after ${Date.now() - ms}ms`);
+  return allCode as [string, string, string, string, string];
 }
 
-function parseAsStatement(code: string, l: Language) {
+function parseAsStatement(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Statement '${code.trim()}'`);
 
@@ -109,18 +137,30 @@ function parseAsStatement(code: string, l: Language) {
     ss.parseFrom(codeSource);
 
     if (file.parseError) {
-      return "";
+      // console.log(`    Parse as Statement failed after ${Date.now() - ms}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
-    file.setLanguage(l);
-    return mf.getChildren()[0].renderAsHtml();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(mf.getChildren()[0].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Statement succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    return "";
+    // console.log(`    Parse as Statement failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
 }
 
-function parseAsFunctionStatement(code: string, l: Language) {
+function parseAsFunctionStatement(
+  code: string,
+): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Function '${code.trim()}'`);
 
@@ -133,18 +173,28 @@ function parseAsFunctionStatement(code: string, l: Language) {
     ss.parseFrom(codeSource);
 
     if (file.parseError) {
-      return "";
+      // console.log(`    Parse as Function failed after ${Date.now() - ms}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
-    file.setLanguage(l);
-    return gf.getChildren()[0].renderAsHtml();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(gf.getChildren()[0].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Function succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    return "";
+    // console.log(`    Parse as Function failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
 }
 
-function parseAsMain(code: string, l: Language) {
+function parseAsMain(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Main '${code.trim()}'`);
 
@@ -152,26 +202,33 @@ function parseAsMain(code: string, l: Language) {
   const file = newFileImpl();
 
   try {
-    const c = file.getFirstChild();
-    file.removeChild(c);
-    const gf = new GlobalFunction(file);
-    const ss = new StatementSelector(gf);
+    const ss = new GlobalSelector(file);
     ss.parseFrom(codeSource);
 
     if (file.parseError) {
-      return "";
+      // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
-    file.setLanguage(l);
-    return gf.getChildren()[0].renderAsHtml();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(file.getChildren()[0].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Main succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    return "";
+    // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
 }
 
-function parseAsMember(code: string, l: Language) {
-  // const ms = Date.now();
+function parseAsMember(code: string): [string, string, string, string, string] | undefined {
+  // const mss = Date.now();
   // console.log(`    Parse as Member '${code.trim()}'`);
 
   const codeSource = new CodeSourceFromString(code);
@@ -183,19 +240,28 @@ function parseAsMember(code: string, l: Language) {
     ms.parseFrom(codeSource);
 
     if (file.parseError) {
-      return "";
+      // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
 
-    file.setLanguage(l);
-    return cc.getChildren()[0].renderAsHtml();
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(cc.getChildren()[0].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Member succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    return "";
+    // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
+    return undefined;
   }
 }
 
-function parseAsExpression(code: string, l: Language) {
+function parseAsExpression(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Expression '${code.trim()}'`);
 
@@ -209,19 +275,28 @@ function parseAsExpression(code: string, l: Language) {
     expr.parseFrom(codeSource);
 
     if (expr.readParseStatus() !== ParseStatus.valid) {
-      return "";
+      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
 
-    file.setLanguage(l);
-    return expr.textAsHtml();
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(expr.textAsHtml());
+    }
+
+    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    return "";
+    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
 }
 
-function parseAsType(code: string, l: Language) {
+function parseAsType(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Type '${code.trim()}'`);
 
@@ -234,47 +309,66 @@ function parseAsType(code: string, l: Language) {
     expr.parseFrom(codeSource);
 
     if (expr.readParseStatus() !== ParseStatus.valid) {
-      // console.log(`    Parse as Type failed after ${Date.now() -ms}ms`);
-      return "";
+      // console.log(`    Parse as Type failed after ${Date.now() - ms}ms`);
+      return undefined;
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
-    file.setLanguage(l);
-    const txt = expr.textAsHtml();
-    // console.log(`    Parse as Type succeeded after ${Date.now() -ms}ms`);
-    return txt;
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(expr.textAsHtml());
+    }
+
+    // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
   } catch (_e) {
-    // console.log(`    Parse as Type failed after ${Date.now() -ms}ms`);
-    return "";
+    // console.log(`    Parse as Type failed after ${Date.now() - ms}ms`);
+    return undefined;
   }
 }
 
-function parseAsKeyword(code: string) {
+function parseAsKeyword(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   const trimmed = code.trim();
   // console.log(`    Parse as keyword '${trimmed}'`);
   if (matchesElanKeyword(trimmed)) {
-    // console.log(`    Parse as keyword succeeded after ${Date.now() -ms}ms`);
-    return `<el-kw>${trimmed}</el-kw>`;
+    // console.log(`    Parse as keyword succeeded after ${Date.now() - ms}ms`);
+    return [
+      `<el-kw>${trimmed}</el-kw>`,
+      `<el-kw>${trimmed}</el-kw>`,
+      `<el-kw>${trimmed}</el-kw>`,
+      `<el-kw>${trimmed}</el-kw>`,
+      `<el-kw>${trimmed}</el-kw>`,
+    ];
   }
-  // console.log(`    Parse as keyword failed after ${Date.now() -ms}ms`);
-  return "";
+  // console.log(`    Parse as keyword failed after ${Date.now() - ms}ms`);
+  return undefined;
 }
 
-export async function processInnerCode(code: string, l: Language) {
+export async function processInnerCode(
+  code: string,
+): Promise<[string, string, string, string, string]> {
   code = code.trim() + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
   const hasHeader = code.includes("guest default_profile valid");
   return (
     parseAsKeyword(code) ||
-    parseAsType(code, l) ||
-    parseAsStatement(code, l) ||
-    parseAsFunctionStatement(code, l) ||
-    parseAsMain(code, l) ||
-    parseAsMember(code, l) ||
-    parseAsExpression(code, l) ||
-    (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
-    `Code does not parse as Elan.`
+    parseAsType(code) ||
+    parseAsStatement(code) ||
+    parseAsFunctionStatement(code) ||
+    parseAsMain(code) ||
+    parseAsMember(code) ||
+    parseAsExpression(code) ||
+    (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) || [
+      `Code does not parse as Elan.`,
+      `Code does not parse as Elan.`,
+      `Code does not parse as Elan.`,
+      `Code does not parse as Elan.`,
+      `Code does not parse as Elan.`,
+    ]
   );
 }
 
@@ -304,7 +398,7 @@ function lt(tag: string, start: boolean) {
 
 export async function processElanCode(codeAndTag: string, startTag: string, endTag: string) {
   // const ms = Date.now();
-  // console.log(`Processing Elan Code`)
+  // console.log(`Processing Elan Code`);
 
   const s = codeAndTag.indexOf(startTag) + startTag.length;
   const e = codeAndTag.indexOf(endTag);
@@ -312,38 +406,33 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
 
   // (`  Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
 
-  const languages = [
-    LanguageElan.Instance,
-    LanguagePython.Instance,
-    LanguageCS.Instance,
-    LanguageVB.Instance,
-    LanguageJava.Instance,
-  ];
+  const processed: string[] = [];
 
-  // const processed: string[] = [];
-
-  // for (const l of languages) {
-  //   const cc = await processInnerCode(code, l);
-  //   processed.push(
-  //     `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
-  //   );
-  // }
-
-  const codeAndLanguage = languages.map(
-    (l) => [processInnerCode(code, l), l] as [Promise<string>, Language],
-  );
-  const processedCode = await Promise.all(codeAndLanguage.map((c) => c[0]));
-  const matchLanguage = codeAndLanguage.map((c) => c[1]);
-
+  const pCode = await processInnerCode(code);
   let index = 0;
-  const processed = processedCode.map(
-    (cc) =>
-      `${lt(startTag, true)} class="${matchLanguage[index++].languageHtmlClass}">${cc}${lt(startTag, false)}`,
-  );
+
+  for (const l of languages) {
+    const cc = pCode[index++];
+    processed.push(
+      `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
+    );
+  }
+
+  // const codeAndLanguage = languages.map(
+  //   (l) => [processInnerCode(code, l), l] as [Promise<string>, Language],
+  // );
+  // const processedCode = await Promise.all(codeAndLanguage.map((c) => c[0]));
+  // const matchLanguage = codeAndLanguage.map((c) => c[1]);
+
+  // let index = 0;
+  // const processed = processedCode.map(
+  //   (cc) =>
+  //     `${lt(startTag, true)} class="${matchLanguage[index++].languageHtmlClass}">${cc}${lt(startTag, false)}`,
+  // );
 
   const joiner = startTag === codeBlockTag ? "\n" : "";
 
-  // console.log(`  Complete Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
+  // console.log(`  Complete Processing Elan Code '${code}' after ${Date.now() - ms}ms`);
 
   return `${ct(startTag)}${processed.join(joiner)}${ct(endTag)}`;
 }

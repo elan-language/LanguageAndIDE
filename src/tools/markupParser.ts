@@ -271,7 +271,7 @@ async function processEachInstance(
   processor: (code: string, i1: number, i2: number) => Promise<string>,
 ): Promise<[string, number, number]> {
   // const ms = Date.now();
-  // console.log(`Processing Each Instance from ${startAt}` )
+  // console.log(`Processing Each Instance from ${startAt}`);
 
   const toProcessCode = initialCode.slice(startAt);
 

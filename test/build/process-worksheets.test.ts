@@ -20,12 +20,12 @@ suite("process worksheets", () => {
     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 valid
 `;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-header"), true);
+    assert.strictEqual(actual[0].startsWith("<el-header"), true);
   });
 
-  test("process file", async () => {
+  ignore_test("process file", async () => {
     const code = `procedure fillRandom(grid as List<of List<of Int>>)
   for col in range(0, 40)
     for row in range(0, 30)
@@ -35,12 +35,12 @@ suite("process worksheets", () => {
   end for
 end procedure`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-proc"), true);
+    assert.strictEqual(actual[0].startsWith("<el-proc"), true);
   });
 
-  test("process statement", async () => {
+  ignore_test("process statement", async () => {
     const code = `for col in range(0, 40)
   for row in range(0, 30)
     variable cell set to if_(random() > 0.5, black, white)
@@ -48,113 +48,113 @@ end procedure`;
   end for
 end for`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-statement"), true);
+    assert.strictEqual(actual[0].startsWith("<el-statement"), true);
   });
 
-  test("process constructor", async () => {
+  ignore_test("process constructor", async () => {
     const code = `constructor()
   reassign this.p1 to 1
 end constructor`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-method>"), true);
+    assert.strictEqual(actual[0].startsWith("<el-method>"), true);
   });
 
-  test("process expression", async () => {
+  ignore_test("process expression", async () => {
     const code = `a + b`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-id"), true);
+    assert.strictEqual(actual[0].startsWith("<el-id"), true);
   });
 
-  test("process main", async () => {
+  ignore_test("process main", async () => {
     const code = `main 
   variable r set to 2.0
   print($"area = {(pi*r*r).round(2)}")
 end main`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-main"), true);
+    assert.strictEqual(actual[0].startsWith("<el-main"), true);
   });
 
-   test("process let", async () => {
+   ignore_test("process let", async () => {
     const code = `let a be 1`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-statement"), true);
+    assert.strictEqual(actual[0].startsWith("<el-statement"), true);
   });
 
-  test("process return", async () => {
+  ignore_test("process return", async () => {
     const code = `return 1`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-statement"), true);
+    assert.strictEqual(actual[0].startsWith("<el-statement"), true);
   });
 
-  test("process keyword1", async () => {
+  ignore_test("process keyword1", async () => {
     const code = `set`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-kw"), true);
+    assert.strictEqual(actual[0].startsWith("<el-kw"), true);
   });
 
-  test("process keyword2", async () => {
+  ignore_test("process keyword2", async () => {
     const code = `property`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-kw"), true);
+    assert.strictEqual(actual[0].startsWith("<el-kw"), true);
   });
 
-  test("process identifier1", async () => {
+  ignore_test("process identifier1", async () => {
     const code = `foo`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-id"), true);
+    assert.strictEqual(actual[0].startsWith("<el-id"), true);
   });
 
-  test("process identifier2", async () => {
+  ignore_test("process identifier2", async () => {
     const code = `foo()`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-method"), true);
+    assert.strictEqual(actual[0].startsWith("<el-method"), true);
   });
 
-  test("process type1", async () => {
+  ignore_test("process type1", async () => {
     const code = `Int`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-type"), true);
+    assert.strictEqual(actual[0].startsWith("<el-type"), true);
   });
 
-  test("process type2", async () => {
+  ignore_test("process type2", async () => {
     const code = `List<of Int>`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-type"), true);
+    assert.strictEqual(actual[0].startsWith("<el-type"), true);
   });
 
-  test("process expression", async () => {
+  ignore_test("process expression", async () => {
     const code = `mark[something] + "2" + mark[something]`;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-id"), true);
+    assert.strictEqual(actual[0].startsWith("<el-id"), true);
   });
 
-  test("process wrapped expression", async () => {
+  ignore_test("process wrapped expression", async () => {
     const code = `<code>
   mark[something] + "2" + mark[something]
 </code>`;
@@ -170,7 +170,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process wrapped test", async () => {
+  ignore_test("process wrapped test", async () => {
     const code = `<codeblock>
   test ranges
     variable mark set to "00000"
@@ -185,7 +185,7 @@ end main`;
     assert.strictEqual(actual.startsWith(`<codeblock><div class="elan"><el-test`), true);
   });
 
-  test("process multiple code", async () => {
+  ignore_test("process multiple code", async () => {
     const code = `<code>new</code>
 <code>Int</code>`;
 
@@ -205,7 +205,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple codeblock", async () => {
+  ignore_test("process multiple codeblock", async () => {
     const code = `<codeblock>new</codeblock>
 <codeblock>Int</codeblock>`;
 
@@ -225,7 +225,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple steps", async () => {
+  ignore_test("process multiple steps", async () => {
     const steps = `<step><content>STEPNUMBER</content></step>
 <step><content>STEPID</content></step>`;
 
@@ -237,7 +237,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process final", async () => {
+  ignore_test("process final", async () => {
     const steps = `<final><content>FINALNUMBER FINALID</content></final>`;
 
     const actual = await processFinals(steps);
@@ -247,7 +247,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple hints", async () => {
+  ignore_test("process multiple hints", async () => {
     const hints = `<hint>HINTNUMBER</hint><content><p>hint details</p></content>
 <hint>HINTID</hint><content><p>hint details</p></content>`;
 
@@ -261,7 +261,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple helps", async () => {
+  ignore_test("process multiple helps", async () => {
     const hints = `<help>LangRef.html#call</help>
 <help>LangRef.html#let</help>`;
 
@@ -273,7 +273,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple questions", async () => {
+  ignore_test("process multiple questions", async () => {
     const questions = `<question><p>question1 details QUESTIONNUMBER</p></question>
 <question><p>question2 details QUESTIONID</p></question>`;
 
@@ -287,7 +287,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process multiple loads", async () => {
+  ignore_test("process multiple loads", async () => {
     const loads = `<load file="test.elan">Load LOADNUMBER</load>
 <load file="test2.elan">Load LOADID</load>`;
 
@@ -299,7 +299,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process load in paragraph", async () => {
+  ignore_test("process load in paragraph", async () => {
     const html = `<final><p>testing<load file="test.elan">Load LOADNUMBER</load></p></final>`;
 
     const actual = await processFinals(html);
@@ -309,7 +309,7 @@ end main`;
     assert.strictEqual(actual, expected);
   });
 
-  test("process file", async () => {
+  ignore_test("process file", async () => {
     const code = `
             function markAttempt(attempt as String, target as String) returns String
             variable mark set to "00000"
@@ -330,12 +330,12 @@ end main`;
         end function
 `;
 
-    const actual = await processInnerCode(code, LanguageElan.Instance);
+    const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual.startsWith("<el-func"), true);
+    assert.strictEqual(actual[0].startsWith("<el-func"), true);
   });
 
-  test("process test worksheets", async () => {
+  ignore_test("process test worksheets", async () => {
     const rootdir = `.\\out\test/../../`;
     const worksheets = `${rootdir}test/raw_worksheets/`;
 

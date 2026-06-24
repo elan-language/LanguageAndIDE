@@ -69,7 +69,7 @@ main
   print(li)
 end main
 `;
-    const htmlElan = await processInnerCode(code, LanguageElan.Instance);
-    assert.equal(htmlElan.startsWith("<el-main"), true);
+    const htmlElan = await processInnerCode(code);
+    assert.equal(htmlElan[0].startsWith("<el-main"), true);
   });
 });

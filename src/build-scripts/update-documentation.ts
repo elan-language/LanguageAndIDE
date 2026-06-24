@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
+import { resetFile } from "../tools/codeParser";
 import { processCode } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
-import { resetFile } from "../tools/codeParser";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -38,7 +38,7 @@ async function updateFile(fileName: string) {
   contents = await processCode(contents, codeBlockTag, codeBlockEndTag);
   console.log(`Finished Processing: ${fileName} in ${Date.now() - ms}ms`);
   saveFile(fileName, contents);
-  console.log(`Saved: ${fileName} in ${Date.now() - ms}ms`);
+  // console.log(`Saved: ${fileName} in ${Date.now() - ms}ms`);
 }
 
 export async function processDocumentation() {
