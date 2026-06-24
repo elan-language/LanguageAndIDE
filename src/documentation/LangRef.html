@@ -1924,14 +1924,38 @@ See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08
 <p>You can use a lambda only as an argument to a <a href="LibRef.html#HoFs">Higher-order Function <i class="fa">&#xf08e;</i></a>.</p>
 <p>You would typically define a <b>lambda</b> when the functionality it defines is needed in only one location,
 e.g. in a particular call to a Higher-order Function.</p>
-<!-- when you need to capture a local variable in the implementation: this is called 'closing around a variable'. -->
-<p>The syntax for a <b>lambda</b> is as follows:</p>
+
+<p>A lambda may be thought of as a one-line function that is defined where it is used. Like a function it defines
+  one or more parameters, and an expression that depends on the parameter value(s). Thus, the lambda:</p>
+
+  <codeblock>lambda x as Float => x.round(8)</codeblock>
+
+<p>is equivalent to defining a function:</p>
+
+<codeblock>
+  function someName( x as Float) returns Float
+    return x.round(8)
+  end function
+</codeblock>
+
+<p>The lambda above is usually verbalised as 'lambda x returns x.round(8)`</p>
+
+<p>The advantages of using a lambda (where one would be allowed) <i>instead</i> of defining a function are:</p>
+
 <ul>
-<li>Start with the word <b>lambda</b>.</li>
-<li>Parameter definitions, comma-separated, follow the same form as parameter definitions in a function or procedure, but without surrounding brackets.</li>
-<li>The =&gt; symbol, which is usually articulated as 'returns', 'yields' or 'fat arrow'.</li>
-<li>An expression that makes use of the parameters, and may also make use of other variables that are in scope. </li>
+  <li>It is more succinct.</li>
+  <li>It is defined exactly where it is used, so you don't need to navigate to the function to see what it does.</li>
+  <li>The expression </i></li>
 </ul>
+
+<p>Here are some more examples of the syntax for a lambda:</p>
+<codeblock>lambda n as Node => n.point.equals(p)</codeblock>
+<codeblock>lambda dd as Dictionary&lt;of String, Int&gt;, answer as String => incrementCount(dd, answer, attempt)</codeblock>
+
+<p>b>Note:</b> currently, 
+it is necessary to specify the type of each parameter in a lambda explicitly. We hope to remove this requirement in a 
+future version - to make the syntax for a lambda much cleaner.</p>
+
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
 </div>
 

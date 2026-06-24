@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta
+' VB.NET with Elan 2.0.0-beta1
 
 Function bestFitLine(points As List(Of Point)) As (Double, Double)
   Dim sumX = points.sumBy(Function (p As Point) p.x) ' let

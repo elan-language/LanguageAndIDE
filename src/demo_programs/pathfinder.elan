@@ -1,4 +1,4 @@
-# 98ca7c415220315a2cc0abe6c952a235f07598d79a08fe73f8a14f50c2ec8e1d Elan 2.0.0-beta valid
+# d0e6b547f49e30f7ba158cfcaf7a995847297e91f612624653bca5e655645b32 Elan 2.0.0-beta1 valid
 
 main
   variable start set to new Point(5, 5)

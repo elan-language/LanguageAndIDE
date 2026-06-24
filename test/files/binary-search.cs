@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta
+// C# with Elan 2.0.0-beta1
 
 static void main() {
   var fruit = new [] {"apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"};
