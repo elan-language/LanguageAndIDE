@@ -1,10 +1,10 @@
 ' VB.NET with Elan 2.0.0-beta
 
 Function bestFitLine(points As List(Of Point)) As (Double, Double)
-  Dim sumX = points.reduce(0.0, Function (s As Double, p As Point) s + p.x) ' let
-  Dim sumXsq = points.reduce(0.0, Function (s As Double, p As Point) s + pow(p.x, 2)) ' let
-  Dim sumY = points.reduce(0.0, Function (s As Double, p As Point) s + p.y) ' let
-  Dim sumXY = points.reduce(0.0, Function (s As Double, p As Point) s + p.x*p.y) ' let
+  Dim sumX = points.sumBy(Function (p As Point) p.x) ' let
+  Dim sumXsq = points.sumBy(Function (p As Point) p.x*p.x) ' let
+  Dim sumY = points.sumBy(Function (p As Point) p.y) ' let
+  Dim sumXY = points.sumBy(Function (p As Point) p.x*p.y) ' let
   Dim n = points.length() ' let
   Dim a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX) ' let
   Dim b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) ' let

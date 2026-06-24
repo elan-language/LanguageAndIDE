@@ -38,7 +38,6 @@ import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
-
 // flag to update test files
 const updateTestFiles = false;
 

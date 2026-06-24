@@ -822,4 +822,74 @@ end function`;
       "Argument types. Expected: lambdaOrFunctionRef (lambda or function name that takes parameter - String - returning a Float), Provided: lambda or function name that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
     ]);
   });
+
+  test("Pass_sumByList", async () => {
+    const code = `${testHeader}
+
+
+main
+  variable source set to [2.3, 3.4, 5.6, 7.8]
+  call printNoLine(source.sumBy(lambda x as Float => x).round(2))
+  call printNoLine(source.sumBy(lambda x as Float => x*x).round(2))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list([2.3, 3.4, 5.6, 7.8]);
+  await _stdlib.printNoLine(_stdlib.round((await source.sumBy(async (x) => x)), 2));
+  await _stdlib.printNoLine(_stdlib.round((await source.sumBy(async (x) => x * x)), 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "19.1109.05");
+  });
+
+  test("Pass_sumByListOfStringLengths", async () => {
+    const code = `${testHeader}
+
+
+main
+  variable source set to ["a","bb","ccc"]
+  call printNoLine(source.sumBy(lambda x as String => x.length()))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let source = system.list(["a", "bb", "ccc"]);
+  await _stdlib.printNoLine((await source.sumBy(async (x) => _stdlib.length(x))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
 });

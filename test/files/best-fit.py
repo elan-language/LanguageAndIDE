@@ -1,10 +1,10 @@
 # Python with Elan 2.0.0-beta
 
 def bestFitLine(points: list[Point]) -> tuple[float, float]: # function
-  sumX = points.reduce(0.0, lambda s: float, p: Point: s + p.x) # let
-  sumXsq = points.reduce(0.0, lambda s: float, p: Point: s + pow(p.x, 2)) # let
-  sumY = points.reduce(0.0, lambda s: float, p: Point: s + p.y) # let
-  sumXY = points.reduce(0.0, lambda s: float, p: Point: s + p.x*p.y) # let
+  sumX = points.sumBy(lambda p: Point: p.x) # let
+  sumXsq = points.sumBy(lambda p: Point: p.x*p.x) # let
+  sumY = points.sumBy(lambda p: Point: p.y) # let
+  sumXY = points.sumBy(lambda p: Point: p.x*p.y) # let
   n = points.length() # let
   a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX) # let
   b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) # let

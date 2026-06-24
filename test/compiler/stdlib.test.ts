@@ -5,19 +5,19 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Profile } from "../../src/ide/frames/profile";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
-    assertCompiles,
-    assertDoesNotCompile,
-    assertDoesNotParse,
-    assertGraphicsContains,
-    assertObjectCodeDoesNotExecute,
-    assertObjectCodeExecutes,
-    assertObjectCodeIs,
-    assertParses,
-    assertStatusIsValid,
-    assertTestObjectCodeExecutes,
-    testHash,
-    testHeader,
-    transforms,
+  assertCompiles,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  testHash,
+  testHeader,
+  transforms,
 } from "./compiler-test-helpers";
 
 suite("StdLib", () => {
