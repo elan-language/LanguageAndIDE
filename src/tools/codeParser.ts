@@ -38,7 +38,13 @@ export function resetFile() {
   fileImpl = undefined;
 }
 
+let resetCount = 0;
+
 function newFileImpl(): FileImpl {
+  if (resetCount++ > 50) {
+    resetFile();
+  }
+
   if (!fileImpl) {
     fileImpl = new FileImpl(hash, new Profile(""), "guest", transforms(), stdLib, false, true);
   }
@@ -262,12 +268,12 @@ export async function processInnerCode(code: string, l: Language) {
   return (
     parseAsKeyword(code) ||
     parseAsType(code, l) ||
-    (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
     parseAsStatement(code, l) ||
     parseAsFunctionStatement(code, l) ||
     parseAsMain(code, l) ||
     parseAsMember(code, l) ||
     parseAsExpression(code, l) ||
+    (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
     `Code does not parse as Elan.`
   );
 }
