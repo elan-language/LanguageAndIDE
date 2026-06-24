@@ -3,17 +3,21 @@ import { processWorksheetsInDirectory } from "../../src/build-scripts/preprocess
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { processInnerCode } from "../../src/tools/codeParser";
 import {
-    processCode,
-    processFinals,
-    processHelps,
-    processHints,
-    processLoads,
-    processQuestions,
-    processSteps,
+  processCode,
+  processFinals,
+  processHelps,
+  processHints,
+  processLoads,
+  processQuestions,
+  processSteps,
 } from "../../src/tools/markupParser";
-import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../../src/tools/parserConstants";
+import {
+  codeBlockEndTag,
+  codeBlockTag,
+  codeEndTag,
+  codeTag,
+} from "../../src/tools/parserConstants";
 import { ignore_test } from "../compiler/compiler-test-helpers";
-
 
 suite("process worksheets", () => {
   ignore_test("process file with header", async () => {
@@ -82,7 +86,7 @@ end main`;
     assert.strictEqual(actual[0].startsWith("<el-main"), true);
   });
 
-   ignore_test("process let", async () => {
+  ignore_test("process let", async () => {
     const code = `let a be 1`;
 
     const actual = await processInnerCode(code);
