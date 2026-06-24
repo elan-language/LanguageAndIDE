@@ -209,8 +209,8 @@ export class List<T1> {
     return this.newList(await orderByHelper(this.contents, predicate, this.system!));
   }
 
-    @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanFloat)
-    async sumBy(
+  @elanFunction(["lambdaOrFunctionRef"], FunctionOptions.pureAsync, ElanFloat)
+  async sumBy(
     @elanFuncType([ElanT1], ElanFloat)
     predicate: (value: T1) => Promise<number>,
   ): Promise<number> {

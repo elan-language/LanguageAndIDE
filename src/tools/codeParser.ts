@@ -31,19 +31,31 @@ function transforms(): Transforms {
   };
 }
 
+const stdLib = new StdLib(new StubInputOutput());
+let fileImpl: FileImpl | undefined = undefined;
+
+export function resetFile() {
+  fileImpl = undefined;
+}
+
 function newFileImpl(): FileImpl {
-  return new FileImpl(
-    hash,
-    new Profile(""),
-    "guest",
-    transforms(),
-    new StdLib(new StubInputOutput()),
-    false,
-    true,
-  );
+  if (!fileImpl) {
+    fileImpl = new FileImpl(hash, new Profile(""), "guest", transforms(), stdLib, false, true);
+  }
+
+  const cc = fileImpl.getChildren();
+
+  for (const c of cc) {
+    fileImpl.removeChild(c);
+  }
+
+  return fileImpl;
 }
 
 async function parseAsFileWithHeader(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as File with header '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
@@ -60,6 +72,9 @@ async function parseAsFileWithHeader(code: string, l: Language) {
 }
 
 export async function parseAsFile(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as File '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
@@ -76,6 +91,9 @@ export async function parseAsFile(code: string, l: Language) {
 }
 
 function parseAsStatement(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Statement '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code + " ");
   const file = newFileImpl();
 
@@ -97,6 +115,9 @@ function parseAsStatement(code: string, l: Language) {
 }
 
 function parseAsFunctionStatement(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Function '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code + " ");
   const file = newFileImpl();
 
@@ -118,6 +139,9 @@ function parseAsFunctionStatement(code: string, l: Language) {
 }
 
 function parseAsMain(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Main '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code + " ");
   const file = newFileImpl();
 
@@ -141,6 +165,9 @@ function parseAsMain(code: string, l: Language) {
 }
 
 function parseAsMember(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Member '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
@@ -163,6 +190,9 @@ function parseAsMember(code: string, l: Language) {
 }
 
 function parseAsExpression(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Expression '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
@@ -186,6 +216,9 @@ function parseAsExpression(code: string, l: Language) {
 }
 
 function parseAsType(code: string, l: Language) {
+  // const ms = Date.now();
+  // console.log(`    Parse as Type '${code.trim()}'`);
+
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
@@ -195,22 +228,30 @@ function parseAsType(code: string, l: Language) {
     expr.parseFrom(codeSource);
 
     if (expr.readParseStatus() !== ParseStatus.valid) {
+      // console.log(`    Parse as Type failed after ${Date.now() -ms}ms`);
       return "";
     }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
     file.setLanguage(l);
-    return expr.textAsHtml();
+    const txt = expr.textAsHtml();
+    // console.log(`    Parse as Type succeeded after ${Date.now() -ms}ms`);
+    return txt;
   } catch (_e) {
+    // console.log(`    Parse as Type failed after ${Date.now() -ms}ms`);
     return "";
   }
 }
 
 function parseAsKeyword(code: string) {
+  // const ms = Date.now();
   const trimmed = code.trim();
+  // console.log(`    Parse as keyword '${trimmed}'`);
   if (matchesElanKeyword(trimmed)) {
+    // console.log(`    Parse as keyword succeeded after ${Date.now() -ms}ms`);
     return `<el-kw>${trimmed}</el-kw>`;
   }
+  // console.log(`    Parse as keyword failed after ${Date.now() -ms}ms`);
   return "";
 }
 
@@ -220,13 +261,13 @@ export async function processInnerCode(code: string, l: Language) {
   const hasHeader = code.includes("guest default_profile valid");
   return (
     parseAsKeyword(code) ||
+    parseAsType(code, l) ||
     (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
     parseAsStatement(code, l) ||
     parseAsFunctionStatement(code, l) ||
     parseAsMain(code, l) ||
     parseAsMember(code, l) ||
     parseAsExpression(code, l) ||
-    parseAsType(code, l) ||
     `Code does not parse as Elan.`
   );
 }
@@ -256,9 +297,15 @@ function lt(tag: string, start: boolean) {
 }
 
 export async function processElanCode(codeAndTag: string, startTag: string, endTag: string) {
+  // const ms = Date.now();
+  // console.log(`Processing Elan Code`)
+
   const s = codeAndTag.indexOf(startTag) + startTag.length;
   const e = codeAndTag.indexOf(endTag);
   const code = codeAndTag.slice(s, e);
+
+  // (`  Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
+
   const languages = [
     LanguageElan.Instance,
     LanguagePython.Instance,
@@ -289,5 +336,8 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
   );
 
   const joiner = startTag === codeBlockTag ? "\n" : "";
+
+  // console.log(`  Complete Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
+
   return `${ct(startTag)}${processed.join(joiner)}${ct(endTag)}`;
 }

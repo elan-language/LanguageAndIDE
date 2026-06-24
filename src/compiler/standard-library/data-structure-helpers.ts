@@ -121,7 +121,7 @@ export async function sumByHelper<T>(
   contents: T[],
   predicate: (value: T) => Promise<number>,
 ): Promise<number> {
-    const list = [...contents];
+  const list = [...contents];
   let acc = 0;
   for (const i of list) {
     acc += await predicate(i);
@@ -148,5 +148,3 @@ export async function orderByHelper<T>(
     a === b ? 0 : (await predicate(a, b)) ? 1 : -1;
   return await system.quickSort(clone, requiredPredicate);
 }
-
-

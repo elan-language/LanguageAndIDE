@@ -270,6 +270,9 @@ async function processEachInstance(
   outerInstance: number,
   processor: (code: string, i1: number, i2: number) => Promise<string>,
 ): Promise<[string, number, number]> {
+  // const ms = Date.now();
+  // console.log(`Processing Each Instance from ${startAt}` )
+
   const toProcessCode = initialCode.slice(startAt);
 
   const codeStart = toProcessCode.indexOf(startTag);
@@ -279,9 +282,11 @@ async function processEachInstance(
     const code = toProcessCode.slice(codeStart, codeEnd);
     const htmlCode = await processor(code, innerInstance, outerInstance);
 
+    // console.log(`Ongoing Processing Each Instance after ${Date.now() - ms}ms`);
     return [htmlCode, startAt + codeStart, startAt + codeEnd];
   }
 
+  // console.log(`Complete Processing Each Instance after ${Date.now() - ms}ms`);
   return ["", -1, -1];
 }
 
