@@ -20,7 +20,7 @@
     "update-elan-files-script": "node ./out/src/build-scripts/update-elan-files.js",
     "copy-web-files": "cpr ./src/ide/web-content ./out/website -o && cpr ./src/ide/styles ./out/website/styles -o",
     "fast-copy-static-files": "npm run copy-web-files && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o",
-    "copy-static-files": "npm run update-elan-files-script && npm run preprocess-worksheets && npm run copy-web-files && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o && npm run update-documentation",
+    "copy-static-files": "npm run update-elan-files-script  && npm run copy-web-files && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o && npm run update-documentation",
     "fast-build-website": "npm run fast-copy-static-files && npm run compile-web",
     "build-website": "npm run copy-static-files && npm run compile-web",
     "compile-test-api": "esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/test/elan-api.js",
