@@ -36,9 +36,11 @@ async function updateFile(fileName: string) {
 }
 
 export async function processDocumentation() {
-  for (const fn of getDocs(docs)) {
-    await updateFile(`${docs}${fn}`);
-  }
+  // for (const fn of getDocs(docs)) {
+  //   await updateFile(`${docs}${fn}`);
+  // }
+
+  Promise.all(getDocs(docs).map(fn => updateFile(`${docs}${fn}`)));
 }
 
 processDocumentation();

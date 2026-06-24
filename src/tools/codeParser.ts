@@ -31,7 +31,7 @@ function transforms(): Transforms {
   };
 }
 
-async function newFileImpl(): Promise<FileImpl> {
+function newFileImpl(): FileImpl {
   return new FileImpl(
     hash,
     new Profile(""),
@@ -45,7 +45,7 @@ async function newFileImpl(): Promise<FileImpl> {
 
 async function parseAsFileWithHeader(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   file.parseFrom(codeSource);
 
@@ -61,7 +61,7 @@ async function parseAsFileWithHeader(code: string, l: Language) {
 
 export async function parseAsFile(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   file.parseBodyFrom(codeSource);
 
@@ -75,9 +75,9 @@ export async function parseAsFile(code: string, l: Language) {
   return await file.renderAsHtml(false);
 }
 
-async function parseAsStatement(code: string, l: Language) {
+function parseAsStatement(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code + " ");
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const mf = new MainFrame(file);
@@ -96,9 +96,9 @@ async function parseAsStatement(code: string, l: Language) {
   }
 }
 
-async function parseAsFunctionStatement(code: string, l: Language) {
+function parseAsFunctionStatement(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code + " ");
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const gf = new GlobalFunction(file);
@@ -117,9 +117,9 @@ async function parseAsFunctionStatement(code: string, l: Language) {
   }
 }
 
-async function parseAsMain(code: string, l: Language) {
+function parseAsMain(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code + " ");
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const c = file.getFirstChild();
@@ -140,9 +140,9 @@ async function parseAsMain(code: string, l: Language) {
   }
 }
 
-async function parseAsMember(code: string, l: Language) {
+function parseAsMember(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const cc = new ConcreteClass(file);
@@ -162,9 +162,9 @@ async function parseAsMember(code: string, l: Language) {
   }
 }
 
-async function parseAsExpression(code: string, l: Language) {
+function parseAsExpression(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const mf = new MainFrame(file);
@@ -185,9 +185,9 @@ async function parseAsExpression(code: string, l: Language) {
   }
 }
 
-async function parseAsType(code: string, l: Language) {
+function parseAsType(code: string, l: Language) {
   const codeSource = new CodeSourceFromString(code);
-  const file = await newFileImpl();
+  const file = newFileImpl();
 
   try {
     const f = new GlobalFunction(file);
@@ -206,7 +206,7 @@ async function parseAsType(code: string, l: Language) {
   }
 }
 
-async function parseAsKeyword(code: string) {
+function parseAsKeyword(code: string) {
   const trimmed = code.trim();
   if (matchesElanKeyword(trimmed)) {
     return `<el-kw>${trimmed}</el-kw>`;
@@ -219,14 +219,14 @@ export async function processInnerCode(code: string, l: Language) {
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
   const hasHeader = code.includes("guest default_profile valid");
   return (
-    (await parseAsKeyword(code)) ||
+    parseAsKeyword(code) ||
     (hasHeader ? await parseAsFileWithHeader(code, l) : await parseAsFile(code, l)) ||
-    (await parseAsStatement(code, l)) ||
-    (await parseAsFunctionStatement(code, l)) ||
-    (await parseAsMain(code, l)) ||
-    (await parseAsMember(code, l)) ||
-    (await parseAsExpression(code, l)) ||
-    (await parseAsType(code, l)) ||
+    parseAsStatement(code, l) ||
+    parseAsFunctionStatement(code, l) ||
+    parseAsMain(code, l) ||
+    parseAsMember(code, l) ||
+    parseAsExpression(code, l) ||
+    parseAsType(code, l) ||
     `Code does not parse as Elan.`
   );
 }
@@ -267,14 +267,26 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
     LanguageJava.Instance,
   ];
 
-  const processed: string[] = [];
+  // const processed: string[] = [];
 
-  for (const l of languages) {
-    const cc = await processInnerCode(code, l);
-    processed.push(
-      `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
-    );
-  }
+  // for (const l of languages) {
+  //   const cc = await processInnerCode(code, l);
+  //   processed.push(
+  //     `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
+  //   );
+  // }
+
+  const codeAndLanguage = languages.map(
+    (l) => [processInnerCode(code, l), l] as [Promise<string>, Language],
+  );
+  const processedCode = await Promise.all(codeAndLanguage.map((c) => c[0]));
+  const matchLanguage = codeAndLanguage.map((c) => c[1]);
+
+  let index = 0;
+  const processed = processedCode.map(
+    (cc) =>
+      `${lt(startTag, true)} class="${matchLanguage[index++].languageHtmlClass}">${cc}${lt(startTag, false)}`,
+  );
 
   const joiner = startTag === codeBlockTag ? "\n" : "";
   return `${ct(startTag)}${processed.join(joiner)}${ct(endTag)}`;
