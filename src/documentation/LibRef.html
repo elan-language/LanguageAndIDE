@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+�<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html lang="en-GB">
 <head>
 <meta charset="utf-8" name="viewport" content="width=device-width, initial-scale=1.0">
@@ -127,12 +127,11 @@ end main
 </div></div>
 
 <h2 id="Float">Floating point</h2>
-<p>A <b>floating point number</b> is a decimal number (also known as a <b>Real number</b>) that may have both integer and fractional parts. </p>
-
+<p>A <b>floating point number</b> is a decimal number (also known as a <b>Real number</b>) that may have both integer and fractional parts.</p>
+Its type is <code>Float</code>.
 <p>It may be written using exponential (scientific) notation, e.g.
  <code>120.0</code> can be written as  <code>1.20e2</code>, and
  <code>0.012</code> as <code>1.20e-2</code></p>
-Its type is <code>Float</code>.
 <table class="tableType">
  <tr>
   <th>name<br>of type</th>
@@ -192,7 +191,7 @@ Its type is <code>Float</code>.
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>a string representing the argument's floating point value</td>
+  <td>a string of decimal digits and decimal point representing the argument's floating point value</td>
  </tr>
 </table>
 
@@ -235,6 +234,7 @@ end test
 
 <h2 id="Boolean">Boolean</h2>
 <p>A <b>Boolean</b> value is either <code>true</code> or <code>false</code>.</p>
+<p>Its type is <code>Boolean</code>.</p>
 <p>The words <code>true</code> and <code>false</code> must be written in lower case.</p>
 <table class="tableType">
  <tr>
@@ -274,7 +274,7 @@ end test
 <h1 id="ReferenceTypes">Reference data types</h1>
 
 <h2 id="String">String</h2>
-<p>A <code>String</code> represents text,  i.e. a sequence of zero or more characters.</p>
+<p>The data type <code>String</code> represents text, i.e. a sequence of zero or more characters.</p>
 <table class="tableType">
  <tr>
   <th>name<br>of type</th>
@@ -316,7 +316,8 @@ end test
 </tr>
 </table>
 
-<p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it (see <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i></a>).</p>
+<p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it.
+Ssee <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i></a>).</p>
 
 <h3 class="no-TOC">Manipulating strings</h3>
 
@@ -469,7 +470,7 @@ end test
  <td><code>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </code>
   <code>print(message) </code>
  </td>
- <td><br>&#x27f6;</td><td>LANDED SAFELY AT SPEED 300 FUEL 50</td>
+ <td><br><br><br>&#x27f6;</td><td><br>LANDED SAFELY AT SPEED 300 FUEL 50</td>
 </tr>
 </table>
 <p>And for the area of a circle:</p>
@@ -856,7 +857,7 @@ i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
 whose keys are names and whose values are birth year, you might refer to <code>birthdays["Shakespeare"]</code> and retrieve the value 1564.</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Dictionary</code></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Example using <code>Dictionary</code></h4>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program:</p>
 <p>Procedure greekLetters sets up the key:value pairs, procedure printD shows how a procedure can use the Dictionary,
@@ -989,36 +990,17 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <codeblock>  variable st set to new HashSet&lt;of Int&gt;()
   reassign st to st.addFromList([3, 5, 7])
   print(st.length())
-  </codeblock>
+  reassign st to st.add(7)
+  reassign st to st.remove(3)
+  print(st.length())
+  reassign st to st.remove(3)
+  print(st.length())
+  print(st)
+</codeblock>
   </td><td>
-  <br><br>&#x27f6;
-  </td><td><br><br>3
+  <br><br>&#x27f6;<br><br><br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;
+  </td><td><br><br>3<br><br><br>2<br><br>2<br>[5, 7]
  </td>
-</tr><tr>
- <td>
-  <codeblock>  reassign st to st.add(7)
-  print(st.length())
-  </codeblock>
- </td><td>
- <br>&#x27f6;
- </td><td>
- <br>3
- </td>
-</tr><tr>
- <td>
-  <codeblock>  reassign st to st.remove(3)
-  print(st.length())
-  </codeblock>
-<td><br>&#x27f6;</td><td><br>2</td>
-</tr><tr>
- <td>
-  <codeblock>  reassign st to st.remove(3)
-  print(st.length())
-  </codeblock>
- <td><br>&#x27f6;</td><td><br>2</td>
-</tr><tr>
- <td><code>print(st)</code></td>
- <td>&#x27f6;</td><td>[5, 7]</td>
 </tr>
 </table>
 
@@ -1304,13 +1286,11 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>main
-  variable t set to (3, "apple", true)
+<codeblock>  variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
   print(t.item_1)
   print(t.item_2)
-end main
 </codeblock>
  </td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -2295,8 +2275,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="ceiling"><el-method>ceiling</el-method></td>
-  <td><a href="#ceiling_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#ceiling_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#ceiling_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#ceiling_Float"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2310,29 +2290,29 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#contains_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#contains_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 4.</td>
-  <td><a href="#contains_Set"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#contains_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#contains_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#keys_Dictionary"> <i class="fa">&#xf14c;</i></a> note 4.</td>
+  <td><a href="#contains_Set"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
  </tr><tr><!---->
   <td id="equals"><el-method>equals</el-method></td>
-  <td><a href="#equals_Int"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Boolean"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Set"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Stack"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Queue"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Tuple"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Int"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Boolean"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Stack"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="floor"><el-method>floor</el-method></td>
-  <td><a href="#floor_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#floor_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#floor_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#floor_Float"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2346,8 +2326,8 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#indexOf_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#indexOf_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#indexOf_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#indexOf_List"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2355,8 +2335,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isInfinite"><el-method>isInfinite</el-method></td>
-  <td><a href="#isInfinite_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#isInfinite_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#isInfinite_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#isInfinite_Float"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2367,8 +2347,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isNan"><el-method>isNan</el-method></td>
-  <td><a href="#isNaN_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#isNaN_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#isNaN_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#isNaN_Float"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2382,25 +2362,25 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#length_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#length_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#keys_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 3.</td>
-  <td><a href="#length_Set"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#length_Stack"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#length_Queue"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#length_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#length_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#keys_Dictionary"> <i class="fa">&#xf14c;</i></a> note 3.</td>
+  <td><a href="#length_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#length_Stack"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#length_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
-  <td><a href="#notEqualTo_Int"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Boolean"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Set"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Stack"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Queue"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Tuple"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Int"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Boolean"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Stack"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="peek"><el-method>peek</el-method></td>
   <td></td>
@@ -2410,13 +2390,13 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#peek_Stack"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#peek_Queue"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#peek_Stack"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#peek_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="round"><el-method>round</el-method></td>
-  <td><a href="#round_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#round_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#round_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#round_Float"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2427,24 +2407,24 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="toString"><el-method>toString</el-method> note 1.</td>
-  <td><a href="#toString_Int"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Float"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Boolean"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_String"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Set"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Stack"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Queue"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Tuple"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Int"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Boolean"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_String"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Stack"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="withSet"><el-method>withSet</el-method></td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withSet_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#withSet_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withSet_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withSet_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2455,8 +2435,8 @@ end main
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withRemoveAt_List"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#withRemoveAt_Dictionary"><i class="fa">&#xf14c;</i> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withRemoveAt_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withRemoveAt_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2989,7 +2969,7 @@ The subset is chosen by a <code>lambda</code> that tests list item values and re
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <code>pathfinder</code> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <b>pathfinder</b> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
 <codeblock>function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
   return if_(matches.length() is 1,  matches.head(), emptyNode())
@@ -3055,7 +3035,7 @@ end function
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <code>maze-generator</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; And this example from demo program <b>maze-generator</b>:</p>
 <codeblock>variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
 </codeblock>
 <hr>
@@ -3209,10 +3189,9 @@ end main
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>sumBy</el-method></h4>
 <div class="acc-body">
 
-<p>This example is taken from the <b>Best Fit</b> demo (offered when the paradigm is set to <b>functional</b>) -
-to calculate the various 'sigma' (sum of) terms needed to calculate the best fit line:</p>
-<codeblock>
-function bestFitLine(points as List&lt;of Point&gt;) returns (Float, Float)
+<p>This example is taken from the <b>Best Fit</b> demo (offered when the paradigm is set to <b>functional</b>)
+to calculate the various 'sigma' (sum of) terms needed to estimate the best fit line:</p>
+<codeblock>function bestFitLine(points as List&lt;of Point&gt;) returns (Float, Float)
   let sumX be points.sumBy(lambda p as Point => p.x)
   let sumXsq be points.sumBy(lambda p as Point => p.x*p.x)
   let sumY be points.sumBy(lambda p as Point => p.y)
@@ -3242,7 +3221,7 @@ end function
   print(ordered)
 </codeblock>
 </td>
-<td><br><br>&#x27f6;</td><td><br><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
+<td><br>&#x27f6;</td><td><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
 </tr>
 </table>
 
@@ -3347,12 +3326,12 @@ end function
 </table>
 <p>A colour is specified as an <code>Int</code> value using one of these methods:</p>
 <ul>
- <li>the limited colours defined as library constants as in the above table.</li>
+ <li>the limited colour names defined as library constants as in the above table.</li>
  <li>an integer in the decimal range 0 (<code>black</code>) to 2<sup>24-1</sup> (<code>white</code>).</li>
  <li>a six digit hexadecimal value in the range <code>0x000000</code> &ndash; <code>0xffffff</code>
     using the same 'RGB' format as used in Html style, for example <code>0xff0000</code> for red.</li>
- <li id="transparent"><code>transparent</code> is used only for filling <a href="#VectorGraphics">vector graphics <i class="fa">&#xf14c;</i></a> shapes.
 </ul>
+<p id="transparent"><code>transparent</code> is used only for filling <a href="#VectorGraphics">vector graphics <i class="fa">&#xf14c;</i></a> shapes.</p>
 
 <hr>
 <p><b>Elan Library Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>

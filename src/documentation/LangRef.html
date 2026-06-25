@@ -435,10 +435,11 @@ end procedure
 <div id="Parameter_reference"></div>
 
 <div class="accordion">
-<h3 class="no-TOC">More advanced techniques</h3>
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<h4 class="no-TOC" id="CallByRef">Call by reference</h4>
+<div id="CallByRef"></div>
+<h4 class="no-TOC">Call by reference</h4>
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
@@ -585,7 +586,7 @@ end function
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<h3 class="no-TOC">Recursive function references</h3>
+<h4 class="no-TOC">Recursive function references</h4>
 <p>A function may reference itself, directly or indirectly (referencing another function that then calls back to the first one).
 <p>The same two principles discussed above under Recursive procedure calls apply equally to recursive functions.</p>
 <p>In this example of factorial calculation, each call is on a smaller value of input, and the process stops when <code>n</code> reaches <el-lit>1</el-lit>:</p>
@@ -2024,7 +2025,7 @@ end procedure
 <h2><b>new</b></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
    or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
-  of a more complex expression. Example of use from demo program snake_PP.elan:</p>
+  of a more complex expression. Example of use from demo program <b>snake &ndash; procedural</b>:</p>
 <code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 </div>
 
