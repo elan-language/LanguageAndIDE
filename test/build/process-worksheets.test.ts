@@ -142,6 +142,39 @@ end main`;
     assert.strictEqual(actual[0].startsWith("<el-type"), true);
   });
 
+  test("process function1", async () => {
+    const code = `function hex(n as Int) returns String
+  return ""
+end function`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-func"), true);
+  });
+
+  test("process function", async () => {
+    const code = `function hex(n as Int) returns String
+  variable h set to ""
+  if (n &lt; 1) then
+    reassign h to "0"
+  else
+    variable m set to n
+    while m &gt; 0
+      reassign h to hexDigit(m mod 16) + h
+      reassign m to divAsInt(m, 16)
+    end while
+  end if
+  return h
+end function
+function hexDigit(i as Int) returns String
+  return "0123456789abcdef".subString(i, i + 1)
+end function`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-func"), true);
+  });
+
   ignore_test("process type2", async () => {
     const code = `List<of Int>`;
 

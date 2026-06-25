@@ -56,6 +56,8 @@ function newFileImpl(): FileImpl {
   }
 
   fileImpl.setLanguage(LanguageElan.Instance);
+  fileImpl.updateAllParseStatus();
+  fileImpl.parseError = undefined;
 
   return fileImpl;
 }
@@ -192,6 +194,43 @@ function parseAsFunctionStatement(
     return allCode as [string, string, string, string, string];
   } catch (_e) {
     // console.log(`    Parse as Function failed after ${Date.now() - ms}ms`);
+    return undefined;
+  }
+}
+
+function parseAsFunction(code: string): [string, string, string, string, string] | undefined {
+  // const ms = Date.now();
+  // console.log(`    Parse as Main '${code.trim()}'`);
+
+  const codeSource = new CodeSourceFromString(code + " ");
+  const file = newFileImpl();
+
+  try {
+    // const mf = new MainFrame(file);
+    // file.getChildren().push(mf);
+    const gs = new GlobalSelector(file);
+    file.getChildren().push(gs);
+    const ss = file.getFirstSelectorAsDirectChild();
+    ss.parseFrom(codeSource);
+
+    if (file.parseError) {
+      // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
+      return undefined;
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(file.getChildren()[0].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Main succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
+  } catch (_e) {
+    // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
     return undefined;
   }
 }
@@ -361,6 +400,7 @@ export async function processInnerCode(
     parseAsType(code) ||
     parseAsStatement(code) ||
     parseAsFunctionStatement(code) ||
+    parseAsFunction(code) ||
     parseAsMain(code) ||
     parseAsMember(code) ||
     parseAsExpression(code) ||
