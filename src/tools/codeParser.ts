@@ -305,7 +305,6 @@ function parseAsType(code: string): [string, string, string, string, string] | u
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
-
   try {
     const f = new GlobalFunction(file);
     const expr = new TypeField(f);
