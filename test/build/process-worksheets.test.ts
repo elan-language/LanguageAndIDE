@@ -134,7 +134,7 @@ end main`;
     assert.strictEqual(actual[0].startsWith("<el-method"), true);
   });
 
-  ignore_test("process type1", async () => {
+  test("process type1", async () => {
     const code = `Int`;
 
     const actual = await processInnerCode(code);
