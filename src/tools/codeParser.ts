@@ -55,6 +55,8 @@ function newFileImpl(): FileImpl {
     fileImpl.removeChild(c);
   }
 
+  fileImpl.setLanguage(LanguageElan.Instance);
+
   return fileImpl;
 }
 
@@ -302,6 +304,7 @@ function parseAsType(code: string): [string, string, string, string, string] | u
 
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
+
 
   try {
     const f = new GlobalFunction(file);
