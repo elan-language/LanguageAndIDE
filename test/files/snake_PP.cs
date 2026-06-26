@@ -104,11 +104,13 @@ static Direction directionByKey(Direction current, string key) { // function
 
 enum Direction {up, down, left, right}
 
+[TestClass] class Test_getTailColour
 [TestMethod] static void test_getTailColour() {
   Assert.AreEqual(green, getTailColour(new [] {3, 4}, new [] {new [] {3, 4}, new [] {3, 5}}));
   Assert.AreEqual(white, getTailColour(new [] {3, 4}, new [] {new [] {3, 5}, new [] {3, 6}}));
-} // end test
+}} // end test
 
+[TestClass] class Test_hasHitEdge
 [TestMethod] static void test_hasHitEdge() {
   Assert.AreEqual(false, hasHitEdge(0, 0));
   Assert.AreEqual(false, hasHitEdge(0, 29));
@@ -118,8 +120,9 @@ enum Direction {up, down, left, right}
   Assert.AreEqual(true, hasHitEdge(5, 30));
   Assert.AreEqual(true, hasHitEdge(40, 5));
   Assert.AreEqual(true, hasHitEdge(5, -1));
-} // end test
+}} // end test
 
+[TestClass] class Test_getAdjacentSquare
 [TestMethod] static void test_getAdjacentSquare() {
   var sq = new [] {20, 15};
   Assert.AreEqual(new [] {20, 14}, getAdjacentSquare(sq, Direction.up));
@@ -128,8 +131,9 @@ enum Direction {up, down, left, right}
   Assert.AreEqual(new [] {21, 15}, getAdjacentSquare(sq, Direction.right));
   // boundary
   Assert.AreEqual(new [] {-1, 15}, getAdjacentSquare(new [] {0, 15}, Direction.left));
-} // end test
+}} // end test
 
+[TestClass] class Test_directionByKey
 [TestMethod] static void test_directionByKey() {
   var current = Direction.up;
   Assert.AreEqual(Direction.up, directionByKey(current, ""));
@@ -139,4 +143,4 @@ enum Direction {up, down, left, right}
   Assert.AreEqual(Direction.left, directionByKey(current, "a"));
   Assert.AreEqual(Direction.right, directionByKey(current, "d"));
   Assert.AreEqual(Direction.up, directionByKey(current, "D"));
-} // end test
+}} // end test

@@ -89,15 +89,17 @@ static int flip01(int v) { // function
   return if_(v == 0, 1, 0);
 } // end function
 
+class Test_flip01 {
 @Test static void test_flip01() {
   assertEquals(1, flip01(0));
   assertEquals(0, flip01(1));
-} // end test
+}} // end test
 
 static boolean isValidQuadrant(int q) { // function
   return (q % 5) != 0;
 } // end function
 
+class Test_isValidQuadrant {
 @Test static void test_isValidQuadrant() {
   assertEquals(false, isValidQuadrant(0));
   assertEquals(true, isValidQuadrant(1));
@@ -115,7 +117,7 @@ static boolean isValidQuadrant(int q) { // function
   assertEquals(true, isValidQuadrant(13));
   assertEquals(true, isValidQuadrant(14));
   assertEquals(false, isValidQuadrant(15));
-} // end test
+}} // end test
 
 class Point {
 
@@ -141,10 +143,11 @@ class Point {
 
 } // end class
 
+class Test_neighbouringPoints {
 @Test static void test_neighbouringPoints() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = list(new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1));
   assertEquals(expected, n);
-} // end test
+}} // end test
 } // end Global

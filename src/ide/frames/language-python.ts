@@ -176,7 +176,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.DEF}</el-kw> <el-method>${frame.testName.renderAsHtml()}</el-method>(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof While) {

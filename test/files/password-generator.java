@@ -52,24 +52,26 @@ static boolean isValid(String password, boolean mustHaveUpper, boolean mustHaveL
   return validForUpper && validForLower && validForDigits && validForSymbols;
 } // end function
 
+class Test_isValid {
 @Test static void test_isValid() {
   assertEquals(true, isValid("$4De", true, true, true, true));
   assertEquals(false, isValid("$4de", true, true, true, true));
   assertEquals(true, isValid("$4de", false, true, true, true));
   assertEquals(true, isValid("eD$4", true, true, true, true));
   assertEquals(true, isValid("$4De$4De", true, true, true, true));
-} // end test
+}} // end test
 
 static boolean passesRule(boolean rule, String charSet, String password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
 } // end function
 
+class Test_passesRule {
 @Test static void test_passesRule() {
   assertEquals(true, passesRule(true, "12A", "ABC"));
   assertEquals(true, passesRule(false, "12A", "ABC"));
   assertEquals(false, passesRule(true, "12", "ABCD"));
   assertEquals(true, passesRule(false, "12", "ABCD"));
-} // end test
+}} // end test
 
 static boolean hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
@@ -79,9 +81,10 @@ static boolean hasAtLeastOneFrom(String fromChars, String password) { // functio
   return hasOne;
 } // end function
 
+class Test_hasAtLeastOneFrom {
 @Test static void test_hasAtLeastOneFrom() {
   assertEquals(true, hasAtLeastOneFrom("12A", "ABC"));
   assertEquals(true, hasAtLeastOneFrom("C12", "ABC"));
   assertEquals(false, hasAtLeastOneFrom("12", "ABCD"));
-} // end test
+}} // end test
 } // end Global

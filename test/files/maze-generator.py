@@ -87,7 +87,8 @@ def flip01(v: int) -> int: # function
   return if_(v == 0, 1, 0)
 # end function
 
-def test_flip01(self) -> None:
+class Test_flip01(unittest.TestCase):
+ def test_flip01(self) -> None:
   self.assertEqual(flip01(0), 1)
   self.assertEqual(flip01(1), 0)
 # end test
@@ -96,7 +97,8 @@ def isValidQuadrant(q: int) -> bool: # function
   return (q % 5) != 0
 # end function
 
-def test_isValidQuadrant(self) -> None:
+class Test_isValidQuadrant(unittest.TestCase):
+ def test_isValidQuadrant(self) -> None:
   self.assertEqual(isValidQuadrant(0), False)
   self.assertEqual(isValidQuadrant(1), True)
   self.assertEqual(isValidQuadrant(2), True)
@@ -139,7 +141,8 @@ class Point: # concrete class
 
 # end class
 
-def test_neighbouringPoints(self) -> None:
+class Test_neighbouringPoints(unittest.TestCase):
+ def test_neighbouringPoints(self) -> None:
   p = Point(0, 0) # variable definition
   n = p.neighbouringPoints() # variable definition
   expected = [Point(-1, -1), Point(0, -1), Point(1, -1), Point(-1, 0), Point(1, 0), Point(-1, 1), Point(0, 1), Point(1, 1)] # variable definition

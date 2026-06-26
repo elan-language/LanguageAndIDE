@@ -81,7 +81,8 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
   return playerOutcome
 # end function
 
-def test_determinePlayerOutcome(self) -> None:
+class Test_determinePlayerOutcome(unittest.TestCase):
+ def test_determinePlayerOutcome(self) -> None:
   dbj = (Dealer(0)).withStatus(Status.blackjack) # let
   self.assertEqual(dbj.status, Status.blackjack)
   d21 = (Dealer(0)).withStatus(Status.standing).withHandTotal(21) # let
@@ -113,7 +114,8 @@ def dealCard(random: float) -> Card: # function
   return Card(rank, intAsSuit(suit), False)
 # end function
 
-def test_dealCard(self) -> None:
+class Test_dealCard(unittest.TestCase):
+ def test_dealCard(self) -> None:
   c1 = dealCard(0) # let
   self.assertEqual(c1.rank, "2")
   self.assertEqual(c1.suit, Suit.clubs)
@@ -140,7 +142,8 @@ def intAsSuit(n: int) -> Suit: # function
   return suit
 # end function
 
-def test_intAsSuit(self) -> None:
+class Test_intAsSuit(unittest.TestCase):
+ def test_intAsSuit(self) -> None:
   self.assertEqual(intAsSuit(0), Suit.clubs)
   self.assertEqual(intAsSuit(1), Suit.diamonds)
   self.assertEqual(intAsSuit(2), Suit.hearts)
@@ -157,7 +160,8 @@ def htmlForGame(game: Game) -> str: # function
   return html + "</div>"
 # end function
 
-def test_htmlForGame(self) -> None:
+class Test_htmlForGame(unittest.TestCase):
+ def test_htmlForGame(self) -> None:
   c1 = Card("3", Suit.clubs, False) # let
   c2 = Card("K", Suit.spades, True) # let
   p = (HumanPlayer("fred", 10)).withCards([c1, c2]) # let
@@ -178,7 +182,8 @@ def htmlForPlayer(player: Player) -> str: # function
   return html + "</div></div>"
 # end function
 
-def test_htmlForPlayer(self) -> None:
+class Test_htmlForPlayer(unittest.TestCase):
+ def test_htmlForPlayer(self) -> None:
   c1 = Card("3", Suit.clubs, False) # let
   c2 = Card("K", Suit.spades, True) # let
   p = (HumanPlayer("charlie", 10)).withCards([c1, c2]) # let
@@ -210,7 +215,8 @@ def htmlForCard(card: Card) -> str: # function
   return html + "</div>"
 # end function
 
-def test_htmlForCard(self) -> None:
+class Test_htmlForCard(unittest.TestCase):
+ def test_htmlForCard(self) -> None:
   c1 = Card("3", Suit.clubs, False) # variable definition
   self.assertEqual(htmlForCard(c1), "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>")
   c2 = Card("K", Suit.spades, True) # variable definition
@@ -221,7 +227,8 @@ def htmlForSpot(id: str, content: str) -> str: # function
   return f"<div class='{id}'>{content}</div>"
 # end function
 
-def test_htmlForSpot(self) -> None:
+class Test_htmlForSpot(unittest.TestCase):
+ def test_htmlForSpot(self) -> None:
   self.assertEqual(htmlForSpot("c", "&hearts;"), "<div class='c'>&hearts;</div>")
   self.assertEqual(htmlForSpot("u", "10"), "<div class='u'>10</div>")
 # end test

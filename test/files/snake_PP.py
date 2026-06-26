@@ -108,12 +108,14 @@ class Direction(Enum):
   left = 3
   right = 4
 
-def test_getTailColour(self) -> None:
+class Test_getTailColour(unittest.TestCase):
+ def test_getTailColour(self) -> None:
   self.assertEqual(getTailColour([3, 4], [[3, 4], [3, 5]]), green)
   self.assertEqual(getTailColour([3, 4], [[3, 5], [3, 6]]), white)
 # end test
 
-def test_hasHitEdge(self) -> None:
+class Test_hasHitEdge(unittest.TestCase):
+ def test_hasHitEdge(self) -> None:
   self.assertEqual(hasHitEdge(0, 0), False)
   self.assertEqual(hasHitEdge(0, 29), False)
   self.assertEqual(hasHitEdge(39, 0), False)
@@ -124,7 +126,8 @@ def test_hasHitEdge(self) -> None:
   self.assertEqual(hasHitEdge(5, -1), True)
 # end test
 
-def test_getAdjacentSquare(self) -> None:
+class Test_getAdjacentSquare(unittest.TestCase):
+ def test_getAdjacentSquare(self) -> None:
   sq = [20, 15] # variable definition
   self.assertEqual(getAdjacentSquare(sq, Direction.up), [20, 14])
   self.assertEqual(getAdjacentSquare(sq, Direction.down), [20, 16])
@@ -134,7 +137,8 @@ def test_getAdjacentSquare(self) -> None:
   self.assertEqual(getAdjacentSquare([0, 15], Direction.left), [-1, 15])
 # end test
 
-def test_directionByKey(self) -> None:
+class Test_directionByKey(unittest.TestCase):
+ def test_directionByKey(self) -> None:
   current = Direction.up # variable definition
   self.assertEqual(directionByKey(current, ""), Direction.up)
   self.assertEqual(directionByKey(current, "x"), Direction.up)

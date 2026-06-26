@@ -169,7 +169,8 @@ class Square: # concrete class
 
 # end class
 
-def test_clockTick(self) -> None:
+class Test_clockTick(unittest.TestCase):
+ def test_clockTick(self) -> None:
   g1 = Game(Random()) # let
   g2 = g1.withNewApple() # let
   g3 = clockTick(g2, "s") # let
@@ -187,7 +188,8 @@ def test_clockTick(self) -> None:
   self.assertEqual(g7.isOn, False)
 # end test
 
-def test_updateGraphics(self) -> None:
+class Test_updateGraphics(unittest.TestCase):
+ def test_updateGraphics(self) -> None:
   blocks = createBlockGraphics(white) # let
   g1 = Game(Random()) # let
   blocks2 = updateGraphics(g1, blocks) # let
@@ -201,7 +203,8 @@ def test_updateGraphics(self) -> None:
   self.assertEqual(blocks3[23][15], green)
 # end test
 
-def test_testnewApple(self) -> None:
+class Test_testnewApple(unittest.TestCase):
+ def test_testnewApple(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(g1.apple, Square(12, 15))
   g2 = g1.withNewApple() # let
@@ -215,7 +218,8 @@ def test_testnewApple(self) -> None:
   self.assertEqual(g4.apple, Square(12, 15))
 # end test
 
-def test_score(self) -> None:
+class Test_score(unittest.TestCase):
+ def test_score(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(score(g1), 0)
   g2 = g1.withBody([Square(4, 4), Square(5, 4)]) # let
@@ -226,7 +230,8 @@ def test_score(self) -> None:
   self.assertEqual(score(g4), 2)
 # end test
 
-def test_moveSnake(self) -> None:
+class Test_moveSnake(unittest.TestCase):
+ def test_moveSnake(self) -> None:
   g1 = Game(Random()) # let
   g2 = g1.withKey("a") # let
   g3 = moveSnake(g2) # let
@@ -242,7 +247,8 @@ def test_moveSnake(self) -> None:
   self.assertEqual(g9.head, Square(22, 16))
 # end test
 
-def test_eatAppleIfPoss(self) -> None:
+class Test_eatAppleIfPoss(unittest.TestCase):
+ def test_eatAppleIfPoss(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(g1.body.length(), 2)
   # negative case
@@ -259,7 +265,8 @@ def test_eatAppleIfPoss(self) -> None:
   self.assertEqual(g5.priorTail, g1.priorTail)
 # end test
 
-def test_overApple(self) -> None:
+class Test_overApple(unittest.TestCase):
+ def test_overApple(self) -> None:
   g1 = Game(Random()) # let
   g2 = g1.withApple(Square(23, 15)) # let
   self.assertEqual(headOverApple(g2), False)
@@ -267,7 +274,8 @@ def test_overApple(self) -> None:
   self.assertEqual(headOverApple(g3), True)
 # end test
 
-def test_gameOver(self) -> None:
+class Test_gameOver(unittest.TestCase):
+ def test_gameOver(self) -> None:
   g1 = Game((Random())) # let
   self.assertEqual(gameOver(g1), False)
   g2 = g1.withHead(Square(0, 0)) # let
@@ -278,7 +286,8 @@ def test_gameOver(self) -> None:
   self.assertEqual(gameOver(g4), True)
 # end test
 
-def test_headIsAtEdge(self) -> None:
+class Test_headIsAtEdge(unittest.TestCase):
+ def test_headIsAtEdge(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(hasHitEdge(g1), False)
   g2 = g1.withHead(Square(40, 15)) # let
@@ -291,13 +300,15 @@ def test_headIsAtEdge(self) -> None:
   self.assertEqual(hasHitEdge(g5), True)
 # end test
 
-def test_newSquare(self) -> None:
+class Test_newSquare(unittest.TestCase):
+ def test_newSquare(self) -> None:
   sq = Square(3, 4) # let
   self.assertEqual(sq.x, 3)
   self.assertEqual(sq.y, 4)
 # end test
 
-def test_newGame(self) -> None:
+class Test_newGame(unittest.TestCase):
+ def test_newGame(self) -> None:
   rnd = Random() # let
   game = Game(rnd) # let
   totest = game.rnd.equals(rnd) # let

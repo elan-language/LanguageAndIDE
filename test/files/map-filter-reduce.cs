@@ -1,5 +1,6 @@
 // C# with Elan 2.0.0-beta1
 
+[TestClass] class Test_Map_Filter_Reduce
 [TestMethod] static void test_Map_Filter_Reduce() {
   var nums = new [] {2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5}; // let
   Assert.AreEqual(new [] {2.22, 2.5}, nums.filter(lessThan5));
@@ -7,7 +8,7 @@
   Assert.AreEqual(81480107, nums.reduce(1.0, product).floor());
   Assert.AreEqual(new [] {0.45, 0.4}, nums.filter(lessThan5).map(inverse));
   Assert.AreEqual("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat));
-} // end test
+}} // end test
 
 static bool lessThan5(double n) { // function
   return n < 5;

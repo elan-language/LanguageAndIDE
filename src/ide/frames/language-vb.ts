@@ -170,7 +170,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})${this.implements(frame)}`;
     } else if (frame instanceof TestFrame) {
-      html = `&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
+      html = `&lt;<el-type>TestClass</el-type> <el-kw>${this.CLASS}</el-kw> ${this.testClassNameAsHtml(frame)}<br>&nbsp;&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof While) {
@@ -210,7 +210,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof MainFrame) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
+      html = `<el-punc>&nbsp;</el-punc><el-kw>${this.END} ${this.SUB}</el-kw><br><el-kw>${this.END} ${this.CLASS}</el-kw><br>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.END} ${this.TRY}</el-kw>`;
     } else if (frame instanceof While) {

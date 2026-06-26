@@ -164,7 +164,8 @@ Enum Direction
   right = 3
 End Enum
 
-<TestMethod> Sub test_snake()
+<TestClass Class Test_snake
+ <TestMethod> Sub test_snake()
   Dim snake = New Snake() ' variable definition
   ' bodyCovers
   Assert.AreEqual(True, snake.bodyCovers(New Square(20, 15)))
@@ -172,13 +173,19 @@ End Enum
   ' gameOver, score - can only test test_for default - which is not thorough test
   Assert.AreEqual(False, snake.gameOver())
   Assert.AreEqual(0, snake.score())
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_apple()
+
+<TestClass Class Test_apple
+ <TestMethod> Sub test_apple()
   ' no tests
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_square()
+
+<TestClass Class Test_square
+ <TestMethod> Sub test_square()
   ' constructor - not testable as properties are private
   ' getAdjacentSquare
   Dim sq1 = New Square(3, 4) ' variable definition
@@ -196,4 +203,6 @@ End Sub
   Assert.AreEqual(True, (New Square(3, -1)).hasHitEdge())
   Assert.AreEqual(True, (New Square(40, 3)).hasHitEdge())
   Assert.AreEqual(True, (New Square(3, 30)).hasHitEdge())
-End Sub
+ End Sub
+End Class
+

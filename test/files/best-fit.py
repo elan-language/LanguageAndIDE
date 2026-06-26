@@ -32,7 +32,8 @@ def newPoint(x: float, y: float) -> Point: # function
   return Point(x, y)
 # end function
 
-def test_bestFit(self) -> None:
+class Test_bestFit(unittest.TestCase):
+ def test_bestFit(self) -> None:
   l1 = [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)] # let
   a_b = bestFitLine(l1) # let
   a = a_b.item_0 # let
@@ -41,7 +42,8 @@ def test_bestFit(self) -> None:
   self.assertEqual(b.round(3), 1.093)
 # end test
 
-def test_bestFit_empty(self) -> None:
+class Test_bestFit_empty(unittest.TestCase):
+ def test_bestFit_empty(self) -> None:
   l1 = list[Point]() # let
   a_b = bestFitLine(l1) # let
   # NaN means 'Not A Number"

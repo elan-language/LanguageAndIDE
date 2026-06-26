@@ -159,6 +159,7 @@ class Square {
 
 enum Direction {up, down, left, right}
 
+[TestClass] class Test_snake
 [TestMethod] static void test_snake() {
   var snake = new Snake();
   // bodyCovers
@@ -167,12 +168,14 @@ enum Direction {up, down, left, right}
   // gameOver, score - can only test test_for default - which is not thorough test
   Assert.AreEqual(false, snake.gameOver());
   Assert.AreEqual(0, snake.score());
-} // end test
+}} // end test
 
+[TestClass] class Test_apple
 [TestMethod] static void test_apple() {
   // no tests
-} // end test
+}} // end test
 
+[TestClass] class Test_square
 [TestMethod] static void test_square() {
   // constructor - not testable as properties are private
   // getAdjacentSquare
@@ -191,4 +194,4 @@ enum Direction {up, down, left, right}
   Assert.AreEqual(true, (new Square(3, -1)).hasHitEdge());
   Assert.AreEqual(true, (new Square(40, 3)).hasHitEdge());
   Assert.AreEqual(true, (new Square(3, 30)).hasHitEdge());
-} // end test
+}} // end test

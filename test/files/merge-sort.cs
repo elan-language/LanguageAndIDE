@@ -43,6 +43,7 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   return if_(aHead.isBefore(bHead), new [] {aHead}.withAppendList(merge(aTail, b)), new [] {bHead}.withAppendList(merge(a, bTail)));
 } // end function
 
+[TestClass] class Test_sort
 [TestMethod] static void test_sort() {
   // Edge case: empty
   var l1 = new List<string>(); // let
@@ -61,8 +62,9 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   // Edge case: already sorted
   var li5 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"}; // let
   Assert.AreEqual(li5, sort(li5));
-} // end test
+}} // end test
 
+[TestClass] class Test_sortedFrontHalf
 [TestMethod] static void test_sortedFrontHalf() {
   // Edge case: one item - so front half is empty
   var li1 = new [] {"plum"}; // let
@@ -76,8 +78,9 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   // Edge case: already sorted
   var li4 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"}; // let
   Assert.AreEqual(new [] {"apple", "apricot", "lemon"}, sortedFrontHalf(li4));
-} // end test
+}} // end test
 
+[TestClass] class Test_sortedBackHalf
 [TestMethod] static void test_sortedBackHalf() {
   // Edge case: one item - so back half is whole list
   var li1 = new [] {"plum"}; // let
@@ -91,8 +94,9 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   // Edge case: already sorted
   var li4 = new [] {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"}; // let
   Assert.AreEqual(new [] {"lime", "melon", "orange", "pear"}, sortedBackHalf(li4));
-} // end test
+}} // end test
 
+[TestClass] class Test_merge
 [TestMethod] static void test_merge() {
   // Happy cases:
   var l1 = new [] {"apple", "lime", "pear"}; // let
@@ -111,8 +115,9 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   var lu = new [] {"lime", "pear", "apple"}; // let
   Assert.AreEqual(new [] {"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2));
   Assert.AreEqual(new [] {"lime", "pear", "apple"}, merge(lu, le));
-} // end test
+}} // end test
 
+[TestClass] class Test_mergeNonEmpty
 [TestMethod] static void test_mergeNonEmpty() {
   var l1 = new [] {"apple", "lime", "pear"}; // let
   var l2 = new [] {"apricot", "lemon", "plum", "watermelon"}; // let
@@ -130,4 +135,4 @@ static List<string> mergeNonEmpty(List<string> a, List<string> b) { // function
   //  Error case unsorted list
   var lu = new [] {"lime", "pear", "apple"}; // let
   Assert.AreEqual(new [] {"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2));
-} // end test
+}} // end test

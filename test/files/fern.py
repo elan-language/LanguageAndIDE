@@ -98,7 +98,8 @@ class State: # concrete class
 
 # end class
 
-def test_one(self) -> None:
+class Test_one(unittest.TestCase):
+ def test_one(self) -> None:
   self.assertEqual(roundtuple2(onestep(0.0, 0.16, 0.5)), [0.0064, 1.736])
   self.assertEqual(roundtuple2(onestep(0.0, 0.16, 0.9)), [-0.0416, 1.6352])
   s = onepoint(State(RectangleVG(), 0.0, 0.16, Random())) # let

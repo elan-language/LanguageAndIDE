@@ -106,11 +106,13 @@ static Direction directionByKey(Direction current, String key) { // function
 
 enum Direction {up, down, left, right}
 
+class Test_getTailColour {
 @Test static void test_getTailColour() {
   assertEquals(green, getTailColour(list(3, 4), list(list(3, 4), list(3, 5))));
   assertEquals(white, getTailColour(list(3, 4), list(list(3, 5), list(3, 6))));
-} // end test
+}} // end test
 
+class Test_hasHitEdge {
 @Test static void test_hasHitEdge() {
   assertEquals(false, hasHitEdge(0, 0));
   assertEquals(false, hasHitEdge(0, 29));
@@ -120,8 +122,9 @@ enum Direction {up, down, left, right}
   assertEquals(true, hasHitEdge(5, 30));
   assertEquals(true, hasHitEdge(40, 5));
   assertEquals(true, hasHitEdge(5, -1));
-} // end test
+}} // end test
 
+class Test_getAdjacentSquare {
 @Test static void test_getAdjacentSquare() {
   var sq = list(20, 15);
   assertEquals(list(20, 14), getAdjacentSquare(sq, Direction.up));
@@ -130,8 +133,9 @@ enum Direction {up, down, left, right}
   assertEquals(list(21, 15), getAdjacentSquare(sq, Direction.right));
   // boundary
   assertEquals(list(-1, 15), getAdjacentSquare(list(0, 15), Direction.left));
-} // end test
+}} // end test
 
+class Test_directionByKey {
 @Test static void test_directionByKey() {
   var current = Direction.up;
   assertEquals(Direction.up, directionByKey(current, ""));
@@ -141,5 +145,5 @@ enum Direction {up, down, left, right}
   assertEquals(Direction.left, directionByKey(current, "a"));
   assertEquals(Direction.right, directionByKey(current, "d"));
   assertEquals(Direction.up, directionByKey(current, "D"));
-} // end test
+}} // end test
 } // end Global

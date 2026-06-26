@@ -1,6 +1,7 @@
 # Python with Elan 2.0.0-beta1
 
-def test_Map_Filter_Reduce(self) -> None:
+class Test_Map_Filter_Reduce(unittest.TestCase):
+ def test_Map_Filter_Reduce(self) -> None:
   nums = [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5] # let
   self.assertEqual(nums.filter(lessThan5), [2.22, 2.5])
   self.assertEqual(nums.map(cube), [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63])

@@ -130,11 +130,14 @@ Class Coords
 
 End Class
 
-<TestMethod> Sub test_one()
+<TestClass Class Test_one
+ <TestMethod> Sub test_one()
   Dim p = New Coords() ' variable definition
   Assert.AreEqual(100, onepoint(0, 0, 100, p))
   Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p))
-End Sub
+ End Sub
+End Class
+
 
 Const width = 200
 

@@ -163,7 +163,8 @@ class Direction(Enum):
   left = 3
   right = 4
 
-def test_snake(self) -> None:
+class Test_snake(unittest.TestCase):
+ def test_snake(self) -> None:
   snake = Snake() # variable definition
   # bodyCovers
   self.assertEqual(snake.bodyCovers(Square(20, 15)), True)
@@ -173,11 +174,13 @@ def test_snake(self) -> None:
   self.assertEqual(snake.score(), 0)
 # end test
 
-def test_apple(self) -> None:
+class Test_apple(unittest.TestCase):
+ def test_apple(self) -> None:
   # no tests
 # end test
 
-def test_square(self) -> None:
+class Test_square(unittest.TestCase):
+ def test_square(self) -> None:
   # constructor - not testable as properties are private
   # getAdjacentSquare
   sq1 = Square(3, 4) # variable definition

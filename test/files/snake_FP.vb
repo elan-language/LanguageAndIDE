@@ -169,7 +169,8 @@ Class Square
 
 End Class
 
-<TestMethod> Sub test_clockTick()
+<TestClass Class Test_clockTick
+ <TestMethod> Sub test_clockTick()
   Dim g1 = New Game(New Random()) ' let
   Dim g2 = g1.withNewApple() ' let
   Dim g3 = clockTick(g2, "s") ' let
@@ -185,9 +186,12 @@ End Class
   Dim g6 = g5.withHead(New Square(22, 29)) ' let
   Dim g7 = clockTick(g6, "s") ' let
   Assert.AreEqual(False, g7.isOn)
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_updateGraphics()
+
+<TestClass Class Test_updateGraphics
+ <TestMethod> Sub test_updateGraphics()
   Dim blocks = createBlockGraphics(white) ' let
   Dim g1 = New Game(New Random()) ' let
   Dim blocks2 = updateGraphics(g1, blocks) ' let
@@ -199,9 +203,12 @@ End Sub
   Assert.AreEqual(red, blocks3(12)(15))
   Assert.AreEqual(green, blocks3(22)(15))
   Assert.AreEqual(green, blocks3(23)(15))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_testnewApple()
+
+<TestClass Class Test_testnewApple
+ <TestMethod> Sub test_testnewApple()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(New Square(12, 15), g1.apple)
   Dim g2 = g1.withNewApple() ' let
@@ -213,9 +220,12 @@ End Sub
   Dim g5 = g4.withBody({New Square(10, 12)}) ' let
   Dim g6 = g5.withNewApple() ' let
   Assert.AreEqual(New Square(12, 15), g4.apple)
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_score()
+
+<TestClass Class Test_score
+ <TestMethod> Sub test_score()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(0, score(g1))
   Dim g2 = g1.withBody({New Square(4, 4), New Square(5, 4)}) ' let
@@ -224,9 +234,12 @@ End Sub
   Assert.AreEqual(1, score(g3))
   Dim g4 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4), New Square(5, 5)}) ' let
   Assert.AreEqual(2, score(g4))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_moveSnake()
+
+<TestClass Class Test_moveSnake
+ <TestMethod> Sub test_moveSnake()
   Dim g1 = New Game(New Random()) ' let
   Dim g2 = g1.withKey("a") ' let
   Dim g3 = moveSnake(g2) ' let
@@ -240,9 +253,12 @@ End Sub
   Dim g8 = g1.withKey("s") ' let
   Dim g9 = moveSnake(g8) ' let
   Assert.AreEqual(New Square(22, 16), g9.head)
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_eatAppleIfPoss()
+
+<TestClass Class Test_eatAppleIfPoss
+ <TestMethod> Sub test_eatAppleIfPoss()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(2, g1.body.length())
   ' negative case
@@ -257,17 +273,23 @@ End Sub
   Assert.AreEqual(2, g5.body.length())
   Assert.AreEqual(New Square(12, 15), g5.apple)
   Assert.AreEqual(g1.priorTail, g5.priorTail)
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_overApple()
+
+<TestClass Class Test_overApple
+ <TestMethod> Sub test_overApple()
   Dim g1 = New Game(New Random()) ' let
   Dim g2 = g1.withApple(New Square(23, 15)) ' let
   Assert.AreEqual(False, headOverApple(g2))
   Dim g3 = g2.withHead(New Square(23, 15)) ' let
   Assert.AreEqual(True, headOverApple(g3))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_gameOver()
+
+<TestClass Class Test_gameOver
+ <TestMethod> Sub test_gameOver()
   Dim g1 = New Game((New Random())) ' let
   Assert.AreEqual(False, gameOver(g1))
   Dim g2 = g1.withHead(New Square(0, 0)) ' let
@@ -276,9 +298,12 @@ End Sub
   Assert.AreEqual(True, gameOver(g3))
   Dim g4 = g1.withHead(New Square(21, 15)) ' let
   Assert.AreEqual(True, gameOver(g4))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_headIsAtEdge()
+
+<TestClass Class Test_headIsAtEdge
+ <TestMethod> Sub test_headIsAtEdge()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(False, hasHitEdge(g1))
   Dim g2 = g1.withHead(New Square(40, 15)) ' let
@@ -289,15 +314,21 @@ End Sub
   Assert.AreEqual(True, hasHitEdge(g4))
   Dim g5 = g1.withHead(New Square(20, -1)) ' let
   Assert.AreEqual(True, hasHitEdge(g5))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_newSquare()
+
+<TestClass Class Test_newSquare
+ <TestMethod> Sub test_newSquare()
   Dim sq = New Square(3, 4) ' let
   Assert.AreEqual(3, sq.x)
   Assert.AreEqual(4, sq.y)
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_newGame()
+
+<TestClass Class Test_newGame
+ <TestMethod> Sub test_newGame()
   Dim rnd = New Random() ' let
   Dim game = New Game(rnd) ' let
   Dim totest = game.rnd.equals(rnd) ' let
@@ -310,4 +341,6 @@ End Sub
   Assert.AreEqual(New Square(0, 0), game.priorTail)
   Assert.AreEqual("d", game.key)
   Assert.AreEqual(True, game.isOn)
-End Sub
+ End Sub
+End Class
+

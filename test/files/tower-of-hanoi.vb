@@ -59,7 +59,8 @@ Function createDisc(disc As Integer, peg As Integer, vertical As Integer) As Rec
   Return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
 End Function
 
-<TestMethod> Sub test_createDisc()
+<TestClass Class Test_createDisc
+ <TestMethod> Sub test_createDisc()
   ' Normal cases
   Dim d = createDisc(5, 2, 4) ' variable definition
   Assert.AreEqual(green, d.fillColour)
@@ -77,7 +78,9 @@ End Function
   Assert.AreEqual(19, d2.x)
   Assert.AreEqual(50, d2.y)
   ' Error cases - none identified
-End Sub
+ End Sub
+End Class
+
 
 Function create3Stacks(nDiscs As Integer) As List(Of List(Of Integer))
   Dim s0 = rangeInSteps(nDiscs, 0, -1) ' variable definition
@@ -86,7 +89,8 @@ Function create3Stacks(nDiscs As Integer) As List(Of List(Of Integer))
   Return {s0, s1, s2}
 End Function
 
-<TestMethod> Sub test_create3Stacks()
+<TestClass Class Test_create3Stacks
+ <TestMethod> Sub test_create3Stacks()
   Dim emptyStack = New List(Of Integer)() ' variable definition
   ' Normal case(s)
   Assert.AreEqual({{7, 6, 5, 4, 3, 2, 1}, emptyStack, emptyStack}, create3Stacks(7))
@@ -95,14 +99,17 @@ End Function
   Assert.AreEqual({emptyStack, emptyStack, emptyStack}, create3Stacks(0))
   ' Error case(s)
   Assert.AreEqual("Loop will not terminate when start < end start with negative step", create3Stacks(-1))
-End Sub
+ End Sub
+End Class
+
 
 Function colour(disc As Integer) As Integer
   Dim colours = {red, yellow, blue, brown, green, &HFF9900, &H6600FF, &H00CC00, &H3399FF, &HFF99CC} ' variable definition
   Return colours(disc - 1)
 End Function
 
-<TestMethod> Sub test_colour()
+<TestClass Class Test_colour
+ <TestMethod> Sub test_colour()
   ' Normal cases
   Assert.AreEqual(green, colour(5))
   ' Edge cases
@@ -110,17 +117,22 @@ End Function
   Assert.AreEqual(&HFF99CC, colour(10))
   ' Error cases
   Assert.AreEqual("Out of range index: 10 size: 10", colour(11))
-End Sub
+ End Sub
+End Class
+
 
 Function top(s As List(Of Integer)) As Integer
   Return s(s.length() - 1)
 End Function
 
-<TestMethod> Sub test_top()
+<TestClass Class Test_top
+ <TestMethod> Sub test_top()
   ' Normal cases
   Assert.AreEqual(1, top({3, 2, 1}))
   ' Edge cases
   Assert.AreEqual(7, top({7}))
   ' Error cases
   Assert.AreEqual("Out of range index: -1 size: 0", top(New List(Of Integer)()))
-End Sub
+ End Sub
+End Class
+

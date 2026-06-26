@@ -161,6 +161,7 @@ class Square {
 
 enum Direction {up, down, left, right}
 
+class Test_snake {
 @Test static void test_snake() {
   var snake = new Snake();
   // bodyCovers
@@ -169,12 +170,14 @@ enum Direction {up, down, left, right}
   // gameOver, score - can only test test_for default - which is not thorough test
   assertEquals(false, snake.gameOver());
   assertEquals(0, snake.score());
-} // end test
+}} // end test
 
+class Test_apple {
 @Test static void test_apple() {
   // no tests
-} // end test
+}} // end test
 
+class Test_square {
 @Test static void test_square() {
   // constructor - not testable as properties are private
   // getAdjacentSquare
@@ -193,5 +196,5 @@ enum Direction {up, down, left, right}
   assertEquals(true, (new Square(3, -1)).hasHitEdge());
   assertEquals(true, (new Square(40, 3)).hasHitEdge());
   assertEquals(true, (new Square(3, 30)).hasHitEdge());
-} // end test
+}} // end test
 } // end Global

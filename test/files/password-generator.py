@@ -50,7 +50,8 @@ def isValid(password: str, mustHaveUpper: bool, mustHaveLower: bool, mustHaveDig
   return validForUpper and validForLower and validForDigits and validForSymbols
 # end function
 
-def test_isValid(self) -> None:
+class Test_isValid(unittest.TestCase):
+ def test_isValid(self) -> None:
   self.assertEqual(isValid("$4De", True, True, True, True), True)
   self.assertEqual(isValid("$4de", True, True, True, True), False)
   self.assertEqual(isValid("$4de", False, True, True, True), True)
@@ -62,7 +63,8 @@ def passesRule(rule: bool, charSet: str, password: str) -> bool: # function
   return (not rule) or hasAtLeastOneFrom(charSet, password)
 # end function
 
-def test_passesRule(self) -> None:
+class Test_passesRule(unittest.TestCase):
+ def test_passesRule(self) -> None:
   self.assertEqual(passesRule(True, "12A", "ABC"), True)
   self.assertEqual(passesRule(False, "12A", "ABC"), True)
   self.assertEqual(passesRule(True, "12", "ABCD"), False)
@@ -77,7 +79,8 @@ def hasAtLeastOneFrom(fromChars: str, password: str) -> bool: # function
   return hasOne
 # end function
 
-def test_hasAtLeastOneFrom(self) -> None:
+class Test_hasAtLeastOneFrom(unittest.TestCase):
+ def test_hasAtLeastOneFrom(self) -> None:
   self.assertEqual(hasAtLeastOneFrom("12A", "ABC"), True)
   self.assertEqual(hasAtLeastOneFrom("C12", "ABC"), True)
   self.assertEqual(hasAtLeastOneFrom("12", "ABCD"), False)

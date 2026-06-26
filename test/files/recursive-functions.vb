@@ -4,7 +4,8 @@ Function factorial(n As Integer) As Integer
   Return if_(n < 2, 1, n*factorial(n - 1))
 End Function
 
-<TestMethod> Sub test_factorial()
+<TestClass Class Test_factorial
+ <TestMethod> Sub test_factorial()
   Assert.AreEqual(2, factorial(2))
   Assert.AreEqual(6, factorial(3))
   Assert.AreEqual(5040, factorial(7))
@@ -12,13 +13,16 @@ End Function
   ' edge cases:
   Assert.AreEqual(1, factorial(1))
   Assert.AreEqual(1, factorial(0))
-End Sub
+ End Sub
+End Class
+
 
 Function sum(li As List(Of Double)) As Double
   Return if_(li.length() = 0, 0.0, li.head() + sum(li.tail()))
 End Function
 
-<TestMethod> Sub test_sum()
+<TestClass Class Test_sum
+ <TestMethod> Sub test_sum()
   Dim li = {3.1, 5.02, 4, 7.73, 9.9} ' let
   Assert.AreEqual(29.75, sum(li).round(2))
   ' edge cases: empty, and one element lists
@@ -26,13 +30,16 @@ End Function
   Assert.AreEqual(0, sum(le))
   Dim l1 = {0.6} ' let
   Assert.AreEqual(0.6, sum(l1))
-End Sub
+ End Sub
+End Class
+
 
 Function reverse(li As List(Of Double)) As List(Of Double)
   Return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 End Function
 
-<TestMethod> Sub test_reverse()
+<TestClass Class Test_reverse
+ <TestMethod> Sub test_reverse()
   Dim l = {3.1, 5.02, 4, 7.73, 9.9} ' let
   Assert.AreEqual({9.9, 7.73, 4, 5.02, 3.1}, reverse(l))
   ' edge cases: empty, and one element lists
@@ -40,4 +47,6 @@ End Function
   Assert.AreEqual(le, reverse(le))
   Dim l1 = {0.6} ' let
   Assert.AreEqual(l1, reverse(l1))
-End Sub
+ End Sub
+End Class
+

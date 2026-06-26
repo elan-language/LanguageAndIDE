@@ -59,6 +59,7 @@ static RectangleVG createDisc(int disc, int peg, int vertical) { // function
   return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25);
 } // end function
 
+[TestClass] class Test_createDisc
 [TestMethod] static void test_createDisc() {
   // Normal cases
   var d = createDisc(5, 2, 4);
@@ -77,7 +78,7 @@ static RectangleVG createDisc(int disc, int peg, int vertical) { // function
   Assert.AreEqual(19, d2.x);
   Assert.AreEqual(50, d2.y);
   // Error cases - none identified
-} // end test
+}} // end test
 
 static List<List<int>> create3Stacks(int nDiscs) { // function
   var s0 = rangeInSteps(nDiscs, 0, -1);
@@ -86,6 +87,7 @@ static List<List<int>> create3Stacks(int nDiscs) { // function
   return new [] {s0, s1, s2};
 } // end function
 
+[TestClass] class Test_create3Stacks
 [TestMethod] static void test_create3Stacks() {
   var emptyStack = new List<int>();
   // Normal case(s)
@@ -95,13 +97,14 @@ static List<List<int>> create3Stacks(int nDiscs) { // function
   Assert.AreEqual(new [] {emptyStack, emptyStack, emptyStack}, create3Stacks(0));
   // Error case(s)
   Assert.AreEqual("Loop will not terminate when start < end start with negative step", create3Stacks(-1));
-} // end test
+}} // end test
 
 static int colour(int disc) { // function
   var colours = new [] {red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC};
   return colours[disc - 1];
 } // end function
 
+[TestClass] class Test_colour
 [TestMethod] static void test_colour() {
   // Normal cases
   Assert.AreEqual(green, colour(5));
@@ -110,12 +113,13 @@ static int colour(int disc) { // function
   Assert.AreEqual(0xFF99CC, colour(10));
   // Error cases
   Assert.AreEqual("Out of range index: 10 size: 10", colour(11));
-} // end test
+}} // end test
 
 static int top(List<int> s) { // function
   return s[s.length() - 1];
 } // end function
 
+[TestClass] class Test_top
 [TestMethod] static void test_top() {
   // Normal cases
   Assert.AreEqual(1, top(new [] {3, 2, 1}));
@@ -123,4 +127,4 @@ static int top(List<int> s) { // function
   Assert.AreEqual(7, top(new [] {7}));
   // Error cases
   Assert.AreEqual("Out of range index: -1 size: 0", top(new List<int>()));
-} // end test
+}} // end test

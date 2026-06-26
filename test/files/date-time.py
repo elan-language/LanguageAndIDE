@@ -45,7 +45,8 @@ def getDate(unixSecs: int) -> str: # function
   return f"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 # end function
 
-def test_getDate(self) -> None:
+class Test_getDate(unittest.TestCase):
+ def test_getDate(self) -> None:
   self.assertEqual(getDate(1774946991), "Tue, 31 Mar 2026 08:49:51 UTC")
 # end test
 
@@ -65,7 +66,8 @@ def dateTime(unixSecs: int) -> tuple[int, int, int, int, int, int]: # function
   return (hour, minute, second, day, year, weekday)
 # end function
 
-def test_dateTime(self) -> None:
+class Test_dateTime(unittest.TestCase):
+ def test_dateTime(self) -> None:
   self.assertEqual(dateTime(1774946991), (8, 49, 51, 90, 2026, 2))
 # end test
 
@@ -85,7 +87,8 @@ def dayInYear(year: int, unixDays: int) -> int: # function
   return dayNumber
 # end function
 
-def test_dayInYear(self) -> None:
+class Test_dayInYear(unittest.TestCase):
+ def test_dayInYear(self) -> None:
   self.assertEqual(dayInYear(2025, 1), -20087)
 # end test
 
@@ -93,7 +96,8 @@ def leap(year: int) -> bool: # function
   return (((year % 4) == 0) and ((year % 100) != 0)) or ((year % 400) == 0)
 # end function
 
-def test_leap(self) -> None:
+class Test_leap(unittest.TestCase):
+ def test_leap(self) -> None:
   # normal cases
   self.assertEqual(leap(2025), False)
   self.assertEqual(leap(2024), True)
@@ -144,7 +148,8 @@ def getWeekdayName(weekDay: int) -> str: # function
   return names[weekDay]
 # end function
 
-def test_getWeekdayName(self) -> None:
+class Test_getWeekdayName(unittest.TestCase):
+ def test_getWeekdayName(self) -> None:
   self.assertEqual(getWeekdayName(0), "Sun")
   self.assertEqual(getWeekdayName(6), "Sat")
 # end test
@@ -154,7 +159,8 @@ def getMonthName(month: int) -> str: # function
   return names[month - 1]
 # end function
 
-def test_getMonthName(self) -> None:
+class Test_getMonthName(unittest.TestCase):
+ def test_getMonthName(self) -> None:
   self.assertEqual(getMonthName(1), "Jan")
   self.assertEqual(getMonthName(12), "Dec")
 # end test
@@ -167,7 +173,8 @@ def padLwithZero(i: int) -> str: # function
   return pad("L", "00", i.toString())
 # end function
 
-def test_padLwithZero(self) -> None:
+class Test_padLwithZero(unittest.TestCase):
+ def test_padLwithZero(self) -> None:
   self.assertEqual(padLwithZero(1), "01")
   self.assertEqual(padLwithZero(10), "10")
   self.assertEqual(padLwithZero(0), "00")

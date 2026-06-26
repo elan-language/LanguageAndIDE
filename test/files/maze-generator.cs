@@ -89,15 +89,17 @@ static int flip01(int v) { // function
   return if_(v == 0, 1, 0);
 } // end function
 
+[TestClass] class Test_flip01
 [TestMethod] static void test_flip01() {
   Assert.AreEqual(1, flip01(0));
   Assert.AreEqual(0, flip01(1));
-} // end test
+}} // end test
 
 static bool isValidQuadrant(int q) { // function
   return (q % 5) != 0;
 } // end function
 
+[TestClass] class Test_isValidQuadrant
 [TestMethod] static void test_isValidQuadrant() {
   Assert.AreEqual(false, isValidQuadrant(0));
   Assert.AreEqual(true, isValidQuadrant(1));
@@ -115,7 +117,7 @@ static bool isValidQuadrant(int q) { // function
   Assert.AreEqual(true, isValidQuadrant(13));
   Assert.AreEqual(true, isValidQuadrant(14));
   Assert.AreEqual(false, isValidQuadrant(15));
-} // end test
+}} // end test
 
 class Point {
 
@@ -141,9 +143,10 @@ class Point {
 
 } // end class
 
+[TestClass] class Test_neighbouringPoints
 [TestMethod] static void test_neighbouringPoints() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = new [] {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)};
   Assert.AreEqual(expected, n);
-} // end test
+}} // end test

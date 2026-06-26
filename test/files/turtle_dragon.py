@@ -57,14 +57,16 @@ def reflect(s: str) -> str: # function
   return sR
 # end function
 
-def test_setTurns(self) -> None:
+class Test_setTurns(unittest.TestCase):
+ def test_setTurns(self) -> None:
   self.assertEqual(setTurns("1"), "11")
   self.assertEqual(setTurns("11"), "1110")
   self.assertEqual(setTurns("110"), "110110")
   self.assertEqual(setTurns("1101100"), "11011001110010")
 # end test
 
-def test_reflect(self) -> None:
+class Test_reflect(unittest.TestCase):
+ def test_reflect(self) -> None:
   self.assertEqual(reflect("110"), "100")
   self.assertEqual(reflect("00001"), "01111")
 # end test

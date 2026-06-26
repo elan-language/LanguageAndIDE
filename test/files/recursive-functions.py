@@ -4,7 +4,8 @@ def factorial(n: int) -> int: # function
   return if_(n < 2, 1, n*factorial(n - 1))
 # end function
 
-def test_factorial(self) -> None:
+class Test_factorial(unittest.TestCase):
+ def test_factorial(self) -> None:
   self.assertEqual(factorial(2), 2)
   self.assertEqual(factorial(3), 6)
   self.assertEqual(factorial(7), 5040)
@@ -18,7 +19,8 @@ def sum(li: list[float]) -> float: # function
   return if_(li.length() == 0, 0.0, li.head() + sum(li.tail()))
 # end function
 
-def test_sum(self) -> None:
+class Test_sum(unittest.TestCase):
+ def test_sum(self) -> None:
   li = [3.1, 5.02, 4, 7.73, 9.9] # let
   self.assertEqual(sum(li).round(2), 29.75)
   # edge cases: empty, and one element lists
@@ -32,7 +34,8 @@ def reverse(li: list[float]) -> list[float]: # function
   return if_(li.length() < 2, li, reverse(li.tail()).withAppend(li.head()))
 # end function
 
-def test_reverse(self) -> None:
+class Test_reverse(unittest.TestCase):
+ def test_reverse(self) -> None:
   l = [3.1, 5.02, 4, 7.73, 9.9] # let
   self.assertEqual(reverse(l), [9.9, 7.73, 4, 5.02, 3.1])
   # edge cases: empty, and one element lists
