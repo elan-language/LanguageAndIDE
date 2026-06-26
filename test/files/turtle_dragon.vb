@@ -57,14 +57,20 @@ Function reflect(s As String) As String
   Return sR
 End Function
 
-<TestMethod> Sub test_setTurns()
+<TestClass Class Test_setTurns
+ <TestMethod> Sub test_setTurns()
   Assert.AreEqual("11", setTurns("1"))
   Assert.AreEqual("1110", setTurns("11"))
   Assert.AreEqual("110110", setTurns("110"))
   Assert.AreEqual("11011001110010", setTurns("1101100"))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_reflect()
+
+<TestClass Class Test_reflect
+ <TestMethod> Sub test_reflect()
   Assert.AreEqual("100", reflect("110"))
   Assert.AreEqual("01111", reflect("00001"))
-End Sub
+ End Sub
+End Class
+

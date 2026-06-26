@@ -132,35 +132,40 @@ def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   return colour
 # end function
 
-def test_north(self) -> None:
+class Test_north(unittest.TestCase):
+ def test_north(self) -> None:
   self.assertEqual(north((3, 4)), (3, 3))
   self.assertEqual(north((39, 0)), (39, 29))
   self.assertEqual(north((0, 29)), (0, 28))
   self.assertEqual(north((39, 29)), (39, 28))
 # end test
 
-def test_south(self) -> None:
+class Test_south(unittest.TestCase):
+ def test_south(self) -> None:
   self.assertEqual(south((3, 4)), (3, 5))
   self.assertEqual(south((39, 0)), (39, 1))
   self.assertEqual(south((0, 29)), (0, 0))
   self.assertEqual(south((39, 29)), (39, 0))
 # end test
 
-def test_east(self) -> None:
+class Test_east(unittest.TestCase):
+ def test_east(self) -> None:
   self.assertEqual(east((10, 2)), (11, 2))
   self.assertEqual(east((39, 0)), (0, 0))
   self.assertEqual(east((0, 1)), (1, 1))
   self.assertEqual(east((39, 29)), (0, 29))
 # end test
 
-def test_west(self) -> None:
+class Test_west(unittest.TestCase):
+ def test_west(self) -> None:
   self.assertEqual(west((3, 4)), (2, 4))
   self.assertEqual(west((39, 0)), (38, 0))
   self.assertEqual(west((0, 0)), (39, 0))
   self.assertEqual(west((0, 29)), (39, 29))
 # end test
 
-def test_northEast(self) -> None:
+class Test_northEast(unittest.TestCase):
+ def test_northEast(self) -> None:
   self.assertEqual(northEast((3, 4)), (4, 3))
   self.assertEqual(northEast((0, 0)), (1, 29))
   self.assertEqual(northEast((39, 0)), (0, 29))
@@ -168,7 +173,8 @@ def test_northEast(self) -> None:
   self.assertEqual(northEast((39, 29)), (0, 28))
 # end test
 
-def test_southEast(self) -> None:
+class Test_southEast(unittest.TestCase):
+ def test_southEast(self) -> None:
   self.assertEqual(southEast((3, 4)), (4, 5))
   self.assertEqual(southEast((0, 0)), (1, 1))
   self.assertEqual(southEast((39, 0)), (0, 1))
@@ -176,7 +182,8 @@ def test_southEast(self) -> None:
   self.assertEqual(southEast((39, 29)), (0, 0))
 # end test
 
-def test_northWest(self) -> None:
+class Test_northWest(unittest.TestCase):
+ def test_northWest(self) -> None:
   self.assertEqual(northWest((3, 4)), (2, 3))
   self.assertEqual(northWest((0, 0)), (39, 29))
   self.assertEqual(northWest((39, 0)), (38, 29))
@@ -184,7 +191,8 @@ def test_northWest(self) -> None:
   self.assertEqual(northWest((39, 29)), (38, 28))
 # end test
 
-def test_southWest(self) -> None:
+class Test_southWest(unittest.TestCase):
+ def test_southWest(self) -> None:
   self.assertEqual(southWest((3, 4)), (2, 5))
   self.assertEqual(southWest((0, 0)), (39, 1))
   self.assertEqual(southWest((39, 0)), (38, 1))
@@ -192,7 +200,8 @@ def test_southWest(self) -> None:
   self.assertEqual(southWest((39, 29)), (38, 0))
 # end test
 
-def test_blackOrWhite(self) -> None:
+class Test_blackOrWhite(unittest.TestCase):
+ def test_blackOrWhite(self) -> None:
   self.assertEqual(blackOrWhite(0), black)
   self.assertEqual(blackOrWhite(0.499), black)
   self.assertEqual(blackOrWhite(0.5), black)
@@ -200,11 +209,13 @@ def test_blackOrWhite(self) -> None:
   self.assertEqual(blackOrWhite(1), white)
 # end test
 
-def test_neighbourCells(self) -> None:
+class Test_neighbourCells(unittest.TestCase):
+ def test_neighbourCells(self) -> None:
   self.assertEqual(neighbourCells(3, 4), [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)])
 # end test
 
-def test_willLive(self) -> None:
+class Test_willLive(unittest.TestCase):
+ def test_willLive(self) -> None:
   self.assertEqual(willLive(white, 0), False)
   self.assertEqual(willLive(white, 1), False)
   self.assertEqual(willLive(white, 2), False)

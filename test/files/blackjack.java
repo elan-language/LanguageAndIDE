@@ -83,6 +83,7 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
   return playerOutcome;
 } // end function
 
+class Test_determinePlayerOutcome {
 @Test static void test_determinePlayerOutcome() {
   var dbj = (new Dealer(0)).withStatus(Status.blackjack); // let
   assertEquals(Status.blackjack, dbj.status);
@@ -106,7 +107,7 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
   assertEquals(Outcome.winDouble, determinePlayerOutcome(dbu, pbj));
   assertEquals(Outcome.win, determinePlayerOutcome(dbu, p17));
   assertEquals(Outcome.lose, determinePlayerOutcome(dbu, pbu));
-} // end test
+}} // end test
 
 static Card dealCard(double random) { // function
   var number = (random*52).floor();
@@ -115,6 +116,7 @@ static Card dealCard(double random) { // function
   return new Card(rank, intAsSuit(suit), false);
 } // end function
 
+class Test_dealCard {
 @Test static void test_dealCard() {
   var c1 = dealCard(0); // let
   assertEquals("2", c1.rank);
@@ -128,7 +130,7 @@ static Card dealCard(double random) { // function
   var c4 = dealCard(0.24); // let
   assertEquals("5", c4.rank);
   assertEquals(Suit.clubs, c4.suit);
-} // end test
+}} // end test
 
 static Suit intAsSuit(int n) { // function
   var suit = Suit.clubs;
@@ -142,12 +144,13 @@ static Suit intAsSuit(int n) { // function
   return suit;
 } // end function
 
+class Test_intAsSuit {
 @Test static void test_intAsSuit() {
   assertEquals(Suit.clubs, intAsSuit(0));
   assertEquals(Suit.diamonds, intAsSuit(1));
   assertEquals(Suit.hearts, intAsSuit(2));
   assertEquals(Suit.spades, intAsSuit(3));
-} // end test
+}} // end test
 
 static String htmlForGame(Game game) { // function
   var html = "<div class='game'>";
@@ -159,6 +162,7 @@ static String htmlForGame(Game game) { // function
   return html + "</div>";
 } // end function
 
+class Test_htmlForGame {
 @Test static void test_htmlForGame() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
@@ -166,7 +170,7 @@ static String htmlForGame(Game game) { // function
   var players = (new List<Player>()).withAppend(p); // let
   var g2 = (new Game(1)).withPlayers(players); // let
   assertEquals("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
-} // end test
+}} // end test
 
 static String htmlForPlayer(Player player) { // function
   var html = "<div class='player'>";
@@ -180,12 +184,13 @@ static String htmlForPlayer(Player player) { // function
   return html + "</div></div>";
 } // end function
 
+class Test_htmlForPlayer {
 @Test static void test_htmlForPlayer() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
   var p = (new HumanPlayer("charlie", 10)).withCards(list(c1, c2)); // let
   assertEquals("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
-} // end test
+}} // end test
 
 static String htmlForCard(Card card) { // function
   var html = "";
@@ -212,21 +217,23 @@ static String htmlForCard(Card card) { // function
   return html + "</div>";
 } // end function
 
+class Test_htmlForCard {
 @Test static void test_htmlForCard() {
   var c1 = new Card("3", Suit.clubs, false);
   assertEquals("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1));
   var c2 = new Card("K", Suit.spades, true);
   assertEquals("<div class='card reversed'></div>", htmlForCard(c2));
-} // end test
+}} // end test
 
 static String htmlForSpot(String id, String content) { // function
   return String.format("<div class='%'>%</div>", id, content);
 } // end function
 
+class Test_htmlForSpot {
 @Test static void test_htmlForSpot() {
   assertEquals("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"));
   assertEquals("<div class='u'>10</div>", htmlForSpot("u", "10"));
-} // end test
+}} // end test
 
 class Game {
 

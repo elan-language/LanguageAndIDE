@@ -89,16 +89,20 @@ Function flip01(v As Integer) As Integer
   Return if_(v = 0, 1, 0)
 End Function
 
-<TestMethod> Sub test_flip01()
+<TestClass Class Test_flip01
+ <TestMethod> Sub test_flip01()
   Assert.AreEqual(1, flip01(0))
   Assert.AreEqual(0, flip01(1))
-End Sub
+ End Sub
+End Class
+
 
 Function isValidQuadrant(q As Integer) As Boolean
   Return (q Mod 5) <> 0
 End Function
 
-<TestMethod> Sub test_isValidQuadrant()
+<TestClass Class Test_isValidQuadrant
+ <TestMethod> Sub test_isValidQuadrant()
   Assert.AreEqual(False, isValidQuadrant(0))
   Assert.AreEqual(True, isValidQuadrant(1))
   Assert.AreEqual(True, isValidQuadrant(2))
@@ -115,7 +119,9 @@ End Function
   Assert.AreEqual(True, isValidQuadrant(13))
   Assert.AreEqual(True, isValidQuadrant(14))
   Assert.AreEqual(False, isValidQuadrant(15))
-End Sub
+ End Sub
+End Class
+
 
 Class Point
 
@@ -141,9 +147,12 @@ Class Point
 
 End Class
 
-<TestMethod> Sub test_neighbouringPoints()
+<TestClass Class Test_neighbouringPoints
+ <TestMethod> Sub test_neighbouringPoints()
   Dim p = New Point(0, 0) ' variable definition
   Dim n = p.neighbouringPoints() ' variable definition
   Dim expected = {New Point(-1, -1), New Point(0, -1), New Point(1, -1), New Point(-1, 0), New Point(1, 0), New Point(-1, 1), New Point(0, 1), New Point(1, 1)} ' variable definition
   Assert.AreEqual(expected, n)
-End Sub
+ End Sub
+End Class
+

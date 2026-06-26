@@ -49,7 +49,8 @@ def createDisc(disc: int, peg: int, vertical: int) -> RectangleVG: # function
   return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
 # end function
 
-def test_createDisc(self) -> None:
+class Test_createDisc(unittest.TestCase):
+ def test_createDisc(self) -> None:
   # Normal cases
   d = createDisc(5, 2, 4) # variable definition
   self.assertEqual(d.fillColour, green)
@@ -76,7 +77,8 @@ def create3Stacks(nDiscs: int) -> list[list[int]]: # function
   return [s0, s1, s2]
 # end function
 
-def test_create3Stacks(self) -> None:
+class Test_create3Stacks(unittest.TestCase):
+ def test_create3Stacks(self) -> None:
   emptyStack = list[int]() # variable definition
   # Normal case(s)
   self.assertEqual(create3Stacks(7), [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack])
@@ -92,7 +94,8 @@ def colour(disc: int) -> int: # function
   return colours[disc - 1]
 # end function
 
-def test_colour(self) -> None:
+class Test_colour(unittest.TestCase):
+ def test_colour(self) -> None:
   # Normal cases
   self.assertEqual(colour(5), green)
   # Edge cases
@@ -106,7 +109,8 @@ def top(s: list[int]) -> int: # function
   return s[s.length() - 1]
 # end function
 
-def test_top(self) -> None:
+class Test_top(unittest.TestCase):
+ def test_top(self) -> None:
   # Normal cases
   self.assertEqual(top([3, 2, 1]), 1)
   # Edge cases

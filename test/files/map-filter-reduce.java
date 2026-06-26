@@ -2,6 +2,7 @@
 
 public class Global {
 
+class Test_Map_Filter_Reduce {
 @Test static void test_Map_Filter_Reduce() {
   var nums = list(2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5); // let
   assertEquals(list(2.22, 2.5), nums.filter(lessThan5));
@@ -9,7 +10,7 @@ public class Global {
   assertEquals(81480107, nums.reduce(1.0, product).floor());
   assertEquals(list(0.45, 0.4), nums.filter(lessThan5).map(inverse));
   assertEquals("results: 0.45|0.4|", nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat));
-} // end test
+}} // end test
 
 static boolean lessThan5(double n) { // function
   return n < 5;

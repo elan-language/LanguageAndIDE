@@ -32,18 +32,24 @@ Function newPoint(x As Double, y As Double) As Point
   Return New Point(x, y)
 End Function
 
-<TestMethod> Sub test_bestFit()
+<TestClass Class Test_bestFit
+ <TestMethod> Sub test_bestFit()
   Dim l1 = {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)} ' let
   Dim a_b = bestFitLine(l1) ' let
   Dim a = a_b.item_0 ' let
   Dim b = a_b.item_1 ' let
   Assert.AreEqual(0.766, a.round(3))
   Assert.AreEqual(1.093, b.round(3))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_bestFit_empty()
+
+<TestClass Class Test_bestFit_empty
+ <TestMethod> Sub test_bestFit_empty()
   Dim l1 = New List(Of Point)() ' let
   Dim a_b = bestFitLine(l1) ' let
   ' NaN means 'Not A Number"
   Assert.AreEqual("(NaN, NaN)", a_b.toString())
-End Sub
+ End Sub
+End Class
+

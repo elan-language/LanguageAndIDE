@@ -326,13 +326,15 @@ def getAlgFromLetter(letter: str) -> Algorithm: # function
   return alg
 # end function
 
-def test_getAlgFromLetter(self) -> None:
+class Test_getAlgFromLetter(unittest.TestCase):
+ def test_getAlgFromLetter(self) -> None:
   self.assertEqual(getAlgFromLetter("a"), Algorithm.aStar)
   self.assertEqual(getAlgFromLetter("h"), Algorithm.heuristic)
   self.assertEqual(getAlgFromLetter("d"), Algorithm.dijkstra)
 # end test
 
-def test_point(self) -> None:
+class Test_point(unittest.TestCase):
+ def test_point(self) -> None:
   p = Point(0, 0) # variable definition
   n = p.neighbouringPoints() # variable definition
   expected = [Point(-1, -1), Point(0, -1), Point(1, -1), Point(-1, 0), Point(1, 0), Point(-1, 1), Point(0, 1), Point(1, 1)] # variable definition

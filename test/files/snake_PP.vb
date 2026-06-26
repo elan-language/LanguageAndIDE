@@ -109,12 +109,16 @@ Enum Direction
   right = 3
 End Enum
 
-<TestMethod> Sub test_getTailColour()
+<TestClass Class Test_getTailColour
+ <TestMethod> Sub test_getTailColour()
   Assert.AreEqual(green, getTailColour({3, 4}, {{3, 4}, {3, 5}}))
   Assert.AreEqual(white, getTailColour({3, 4}, {{3, 5}, {3, 6}}))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_hasHitEdge()
+
+<TestClass Class Test_hasHitEdge
+ <TestMethod> Sub test_hasHitEdge()
   Assert.AreEqual(False, hasHitEdge(0, 0))
   Assert.AreEqual(False, hasHitEdge(0, 29))
   Assert.AreEqual(False, hasHitEdge(39, 0))
@@ -123,9 +127,12 @@ End Sub
   Assert.AreEqual(True, hasHitEdge(5, 30))
   Assert.AreEqual(True, hasHitEdge(40, 5))
   Assert.AreEqual(True, hasHitEdge(5, -1))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_getAdjacentSquare()
+
+<TestClass Class Test_getAdjacentSquare
+ <TestMethod> Sub test_getAdjacentSquare()
   Dim sq = {20, 15} ' variable definition
   Assert.AreEqual({20, 14}, getAdjacentSquare(sq, Direction.up))
   Assert.AreEqual({20, 16}, getAdjacentSquare(sq, Direction.down))
@@ -133,9 +140,12 @@ End Sub
   Assert.AreEqual({21, 15}, getAdjacentSquare(sq, Direction.right))
   ' boundary
   Assert.AreEqual({-1, 15}, getAdjacentSquare({0, 15}, Direction.left))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_directionByKey()
+
+<TestClass Class Test_directionByKey
+ <TestMethod> Sub test_directionByKey()
   Dim current = Direction.up ' variable definition
   Assert.AreEqual(Direction.up, directionByKey(current, ""))
   Assert.AreEqual(Direction.up, directionByKey(current, "x"))
@@ -144,4 +154,6 @@ End Sub
   Assert.AreEqual(Direction.left, directionByKey(current, "a"))
   Assert.AreEqual(Direction.right, directionByKey(current, "d"))
   Assert.AreEqual(Direction.up, directionByKey(current, "D"))
-End Sub
+ End Sub
+End Class
+

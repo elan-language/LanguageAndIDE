@@ -50,24 +50,30 @@ Function isValid(password As String, mustHaveUpper As Boolean, mustHaveLower As 
   Return validForUpper And validForLower And validForDigits And validForSymbols
 End Function
 
-<TestMethod> Sub test_isValid()
+<TestClass Class Test_isValid
+ <TestMethod> Sub test_isValid()
   Assert.AreEqual(True, isValid("$4De", True, True, True, True))
   Assert.AreEqual(False, isValid("$4de", True, True, True, True))
   Assert.AreEqual(True, isValid("$4de", False, True, True, True))
   Assert.AreEqual(True, isValid("eD$4", True, True, True, True))
   Assert.AreEqual(True, isValid("$4De$4De", True, True, True, True))
-End Sub
+ End Sub
+End Class
+
 
 Function passesRule(rule As Boolean, charSet As String, password As String) As Boolean
   Return (Not rule) Or hasAtLeastOneFrom(charSet, password)
 End Function
 
-<TestMethod> Sub test_passesRule()
+<TestClass Class Test_passesRule
+ <TestMethod> Sub test_passesRule()
   Assert.AreEqual(True, passesRule(True, "12A", "ABC"))
   Assert.AreEqual(True, passesRule(False, "12A", "ABC"))
   Assert.AreEqual(False, passesRule(True, "12", "ABCD"))
   Assert.AreEqual(True, passesRule(False, "12", "ABCD"))
-End Sub
+ End Sub
+End Class
+
 
 Function hasAtLeastOneFrom(fromChars As String, password As String) As Boolean
   Dim hasOne = False ' variable definition
@@ -77,8 +83,11 @@ Function hasAtLeastOneFrom(fromChars As String, password As String) As Boolean
   Return hasOne
 End Function
 
-<TestMethod> Sub test_hasAtLeastOneFrom()
+<TestClass Class Test_hasAtLeastOneFrom
+ <TestMethod> Sub test_hasAtLeastOneFrom()
   Assert.AreEqual(True, hasAtLeastOneFrom("12A", "ABC"))
   Assert.AreEqual(True, hasAtLeastOneFrom("C12", "ABC"))
   Assert.AreEqual(False, hasAtLeastOneFrom("12", "ABCD"))
-End Sub
+ End Sub
+End Class
+

@@ -47,9 +47,12 @@ Function getDate(unixSecs As Integer) As String
   Return $"{dayName}, {d} {monthName} {year} {h}:{m}:{s} UTC"
 End Function
 
-<TestMethod> Sub test_getDate()
+<TestClass Class Test_getDate
+ <TestMethod> Sub test_getDate()
   Assert.AreEqual("Tue, 31 Mar 2026 08:49:51 UTC", getDate(1774946991))
-End Sub
+ End Sub
+End Class
+
 
 Function dateTime(unixSecs As Integer) As (Integer, Integer, Integer, Integer, Integer, Integer)
   ' get separate values from Unix time
@@ -67,9 +70,12 @@ Function dateTime(unixSecs As Integer) As (Integer, Integer, Integer, Integer, I
   Return (hour, minute, second, day, year, weekday)
 End Function
 
-<TestMethod> Sub test_dateTime()
+<TestClass Class Test_dateTime
+ <TestMethod> Sub test_dateTime()
   Assert.AreEqual((8, 49, 51, 90, 2026, 2), dateTime(1774946991))
-End Sub
+ End Sub
+End Class
+
 
 Function dayInYear(year As Integer, unixDays As Integer) As Integer
   ' unixDays start at 0, months, day numbers start at 1
@@ -87,22 +93,28 @@ Function dayInYear(year As Integer, unixDays As Integer) As Integer
   Return dayNumber
 End Function
 
-<TestMethod> Sub test_dayInYear()
+<TestClass Class Test_dayInYear
+ <TestMethod> Sub test_dayInYear()
   Assert.AreEqual(-20087, dayInYear(2025, 1))
-End Sub
+ End Sub
+End Class
+
 
 Function leap(year As Integer) As Boolean
   Return (((year Mod 4) = 0) And ((year Mod 100) <> 0)) Or ((year Mod 400) = 0)
 End Function
 
-<TestMethod> Sub test_leap()
+<TestClass Class Test_leap
+ <TestMethod> Sub test_leap()
   ' normal cases
   Assert.AreEqual(False, leap(2025))
   Assert.AreEqual(True, leap(2024))
   ' boundary cases
   Assert.AreEqual(False, leap(1900))
   Assert.AreEqual(True, leap(2000))
-End Sub
+ End Sub
+End Class
+
 
 Function monthDay(startDays As List(Of Integer), dayNumber As Integer) As (Integer, Integer)
   ' get month (1-12) & day (1-31) from dayNumber (1-365 or 1-366)
@@ -146,20 +158,26 @@ Function getWeekdayName(weekDay As Integer) As String
   Return names(weekDay)
 End Function
 
-<TestMethod> Sub test_getWeekdayName()
+<TestClass Class Test_getWeekdayName
+ <TestMethod> Sub test_getWeekdayName()
   Assert.AreEqual("Sun", getWeekdayName(0))
   Assert.AreEqual("Sat", getWeekdayName(6))
-End Sub
+ End Sub
+End Class
+
 
 Function getMonthName(month As Integer) As String
   Dim names = {"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"} ' variable definition
   Return names(month - 1)
 End Function
 
-<TestMethod> Sub test_getMonthName()
+<TestClass Class Test_getMonthName
+ <TestMethod> Sub test_getMonthName()
   Assert.AreEqual("Jan", getMonthName(1))
   Assert.AreEqual("Dec", getMonthName(12))
-End Sub
+ End Sub
+End Class
+
 
 Function getStartDays() As List(Of Integer)
   Return {1, 32, 60, 91, 121, 152, 182, 213, 244, 274, 305, 335, 366}
@@ -169,11 +187,14 @@ Function padLwithZero(i As Integer) As String
   Return pad("L", "00", i.toString())
 End Function
 
-<TestMethod> Sub test_padLwithZero()
+<TestClass Class Test_padLwithZero
+ <TestMethod> Sub test_padLwithZero()
   Assert.AreEqual("01", padLwithZero(1))
   Assert.AreEqual("10", padLwithZero(10))
   Assert.AreEqual("00", padLwithZero(0))
-End Sub
+ End Sub
+End Class
+
 
 Function pad(d As String, p As String, s As String) As String
   ' d: L or R for pad left or right

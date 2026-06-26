@@ -34,7 +34,8 @@ def binarySearch(li: list[str], item: str) -> bool: # function
   return result
 # end function
 
-def test_binarySearch(self) -> None:
+class Test_binarySearch(unittest.TestCase):
+ def test_binarySearch(self) -> None:
   li1 = ["lemon", "lime", "orange"] # variable definition
   self.assertEqual(binarySearch(li1, "lemon"), True)
   self.assertEqual(binarySearch(li1, "lime"), True)

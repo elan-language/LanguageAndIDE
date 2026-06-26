@@ -50,24 +50,26 @@ static bool isValid(string password, bool mustHaveUpper, bool mustHaveLower, boo
   return validForUpper && validForLower && validForDigits && validForSymbols;
 } // end function
 
+[TestClass] class Test_isValid
 [TestMethod] static void test_isValid() {
   Assert.AreEqual(true, isValid("$4De", true, true, true, true));
   Assert.AreEqual(false, isValid("$4de", true, true, true, true));
   Assert.AreEqual(true, isValid("$4de", false, true, true, true));
   Assert.AreEqual(true, isValid("eD$4", true, true, true, true));
   Assert.AreEqual(true, isValid("$4De$4De", true, true, true, true));
-} // end test
+}} // end test
 
 static bool passesRule(bool rule, string charSet, string password) { // function
   return (!rule) || hasAtLeastOneFrom(charSet, password);
 } // end function
 
+[TestClass] class Test_passesRule
 [TestMethod] static void test_passesRule() {
   Assert.AreEqual(true, passesRule(true, "12A", "ABC"));
   Assert.AreEqual(true, passesRule(false, "12A", "ABC"));
   Assert.AreEqual(false, passesRule(true, "12", "ABCD"));
   Assert.AreEqual(true, passesRule(false, "12", "ABCD"));
-} // end test
+}} // end test
 
 static bool hasAtLeastOneFrom(string fromChars, string password) { // function
   var hasOne = false;
@@ -77,8 +79,9 @@ static bool hasAtLeastOneFrom(string fromChars, string password) { // function
   return hasOne;
 } // end function
 
+[TestClass] class Test_hasAtLeastOneFrom
 [TestMethod] static void test_hasAtLeastOneFrom() {
   Assert.AreEqual(true, hasAtLeastOneFrom("12A", "ABC"));
   Assert.AreEqual(true, hasAtLeastOneFrom("C12", "ABC"));
   Assert.AreEqual(false, hasAtLeastOneFrom("12", "ABCD"));
-} // end test
+}} // end test

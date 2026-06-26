@@ -45,6 +45,7 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   return if_(aHead.isBefore(bHead), list(aHead).withAppendList(merge(aTail, b)), list(bHead).withAppendList(merge(a, bTail)));
 } // end function
 
+class Test_sort {
 @Test static void test_sort() {
   // Edge case: empty
   var l1 = new List<String>(); // let
@@ -63,8 +64,9 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li5 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"); // let
   assertEquals(li5, sort(li5));
-} // end test
+}} // end test
 
+class Test_sortedFrontHalf {
 @Test static void test_sortedFrontHalf() {
   // Edge case: one item - so front half is empty
   var li1 = list("plum"); // let
@@ -78,8 +80,9 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
   assertEquals(list("apple", "apricot", "lemon"), sortedFrontHalf(li4));
-} // end test
+}} // end test
 
+class Test_sortedBackHalf {
 @Test static void test_sortedBackHalf() {
   // Edge case: one item - so back half is whole list
   var li1 = list("plum"); // let
@@ -93,8 +96,9 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   // Edge case: already sorted
   var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
   assertEquals(list("lime", "melon", "orange", "pear"), sortedBackHalf(li4));
-} // end test
+}} // end test
 
+class Test_merge {
 @Test static void test_merge() {
   // Happy cases:
   var l1 = list("apple", "lime", "pear"); // let
@@ -113,8 +117,9 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   var lu = list("lime", "pear", "apple"); // let
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
   assertEquals(list("lime", "pear", "apple"), merge(lu, le));
-} // end test
+}} // end test
 
+class Test_mergeNonEmpty {
 @Test static void test_mergeNonEmpty() {
   var l1 = list("apple", "lime", "pear"); // let
   var l2 = list("apricot", "lemon", "plum", "watermelon"); // let
@@ -132,5 +137,5 @@ static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
   //  Error case unsorted list
   var lu = list("lime", "pear", "apple"); // let
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
-} // end test
+}} // end test
 } // end Global

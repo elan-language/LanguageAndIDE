@@ -98,6 +98,7 @@ class State {
 
 } // end class
 
+[TestClass] class Test_one
 [TestMethod] static void test_one() {
   Assert.AreEqual(new [] {0.0064, 1.736}, roundtuple2(onestep(0.0, 0.16, 0.5)));
   Assert.AreEqual(new [] {-0.0416, 1.6352}, roundtuple2(onestep(0.0, 0.16, 0.9)));
@@ -108,7 +109,7 @@ class State {
   Assert.AreEqual(p1, getparams(0.005, new [] {p1, p2}, 0.0));
   Assert.AreEqual(p2, getparams(0.03, new [] {p1, p2}, 0.0));
   Assert.AreEqual(p2, getparams(0.03, new [] {p2}, 0.01));
-} // end test
+}} // end test
 
 // two approaches to rounding a tuple to N decimal places
 

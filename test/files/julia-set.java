@@ -132,11 +132,12 @@ class Coords {
 
 } // end class
 
+class Test_one {
 @Test static void test_one() {
   var p = new Coords();
   assertEquals(100, onepoint(0, 0, 100, p));
   assertEquals(3, onepoint(0.5, 0.5, 100, p));
-} // end test
+}} // end test
 
 static final Int width = 200; // constant
 

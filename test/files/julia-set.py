@@ -130,7 +130,8 @@ class Coords: # concrete class
 
 # end class
 
-def test_one(self) -> None:
+class Test_one(unittest.TestCase):
+ def test_one(self) -> None:
   p = Coords() # variable definition
   self.assertEqual(onepoint(0, 0, 100, p), 100)
   self.assertEqual(onepoint(0.5, 0.5, 100, p), 3)

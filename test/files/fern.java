@@ -100,6 +100,7 @@ class State {
 
 } // end class
 
+class Test_one {
 @Test static void test_one() {
   assertEquals(list(0.0064, 1.736), roundtuple2(onestep(0.0, 0.16, 0.5)));
   assertEquals(list(-0.0416, 1.6352), roundtuple2(onestep(0.0, 0.16, 0.9)));
@@ -110,7 +111,7 @@ class State {
   assertEquals(p1, getparams(0.005, list(p1, p2), 0.0));
   assertEquals(p2, getparams(0.03, list(p1, p2), 0.0));
   assertEquals(p2, getparams(0.03, list(p2), 0.01));
-} // end test
+}} // end test
 
 // two approaches to rounding a tuple to N decimal places
 

@@ -130,11 +130,12 @@ class Coords {
 
 } // end class
 
+[TestClass] class Test_one
 [TestMethod] static void test_one() {
   var p = new Coords();
   Assert.AreEqual(100, onepoint(0, 0, 100, p));
   Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p));
-} // end test
+}} // end test
 
 const Int width = 200;
 

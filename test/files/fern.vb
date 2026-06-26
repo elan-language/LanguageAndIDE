@@ -98,7 +98,8 @@ Class State
 
 End Class
 
-<TestMethod> Sub test_one()
+<TestClass Class Test_one
+ <TestMethod> Sub test_one()
   Assert.AreEqual({0.0064, 1.736}, roundtuple2(onestep(0.0, 0.16, 0.5)))
   Assert.AreEqual({-0.0416, 1.6352}, roundtuple2(onestep(0.0, 0.16, 0.9)))
   Dim s = onepoint(New State(New RectangleVG(), 0.0, 0.16, New Random())) ' let
@@ -108,7 +109,9 @@ End Class
   Assert.AreEqual(p1, getparams(0.005, {p1, p2}, 0.0))
   Assert.AreEqual(p2, getparams(0.03, {p1, p2}, 0.0))
   Assert.AreEqual(p2, getparams(0.03, {p2}, 0.01))
-End Sub
+ End Sub
+End Class
+
 
 ' two approaches to rounding a tuple to N decimal places
 

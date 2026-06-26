@@ -132,79 +132,110 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
   Return colour
 End Function
 
-<TestMethod> Sub test_north()
+<TestClass Class Test_north
+ <TestMethod> Sub test_north()
   Assert.AreEqual((3, 3), north((3, 4)))
   Assert.AreEqual((39, 29), north((39, 0)))
   Assert.AreEqual((0, 28), north((0, 29)))
   Assert.AreEqual((39, 28), north((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_south()
+
+<TestClass Class Test_south
+ <TestMethod> Sub test_south()
   Assert.AreEqual((3, 5), south((3, 4)))
   Assert.AreEqual((39, 1), south((39, 0)))
   Assert.AreEqual((0, 0), south((0, 29)))
   Assert.AreEqual((39, 0), south((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_east()
+
+<TestClass Class Test_east
+ <TestMethod> Sub test_east()
   Assert.AreEqual((11, 2), east((10, 2)))
   Assert.AreEqual((0, 0), east((39, 0)))
   Assert.AreEqual((1, 1), east((0, 1)))
   Assert.AreEqual((0, 29), east((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_west()
+
+<TestClass Class Test_west
+ <TestMethod> Sub test_west()
   Assert.AreEqual((2, 4), west((3, 4)))
   Assert.AreEqual((38, 0), west((39, 0)))
   Assert.AreEqual((39, 0), west((0, 0)))
   Assert.AreEqual((39, 29), west((0, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_northEast()
+
+<TestClass Class Test_northEast
+ <TestMethod> Sub test_northEast()
   Assert.AreEqual((4, 3), northEast((3, 4)))
   Assert.AreEqual((1, 29), northEast((0, 0)))
   Assert.AreEqual((0, 29), northEast((39, 0)))
   Assert.AreEqual((1, 28), northEast((0, 29)))
   Assert.AreEqual((0, 28), northEast((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_southEast()
+
+<TestClass Class Test_southEast
+ <TestMethod> Sub test_southEast()
   Assert.AreEqual((4, 5), southEast((3, 4)))
   Assert.AreEqual((1, 1), southEast((0, 0)))
   Assert.AreEqual((0, 1), southEast((39, 0)))
   Assert.AreEqual((1, 0), southEast((0, 29)))
   Assert.AreEqual((0, 0), southEast((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_northWest()
+
+<TestClass Class Test_northWest
+ <TestMethod> Sub test_northWest()
   Assert.AreEqual((2, 3), northWest((3, 4)))
   Assert.AreEqual((39, 29), northWest((0, 0)))
   Assert.AreEqual((38, 29), northWest((39, 0)))
   Assert.AreEqual((39, 28), northWest((0, 29)))
   Assert.AreEqual((38, 28), northWest((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_southWest()
+
+<TestClass Class Test_southWest
+ <TestMethod> Sub test_southWest()
   Assert.AreEqual((2, 5), southWest((3, 4)))
   Assert.AreEqual((39, 1), southWest((0, 0)))
   Assert.AreEqual((38, 1), southWest((39, 0)))
   Assert.AreEqual((39, 0), southWest((0, 29)))
   Assert.AreEqual((38, 0), southWest((39, 29)))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_blackOrWhite()
+
+<TestClass Class Test_blackOrWhite
+ <TestMethod> Sub test_blackOrWhite()
   Assert.AreEqual(black, blackOrWhite(0))
   Assert.AreEqual(black, blackOrWhite(0.499))
   Assert.AreEqual(black, blackOrWhite(0.5))
   Assert.AreEqual(white, blackOrWhite(0.501))
   Assert.AreEqual(white, blackOrWhite(1))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_neighbourCells()
+
+<TestClass Class Test_neighbourCells
+ <TestMethod> Sub test_neighbourCells()
   Assert.AreEqual({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_willLive()
+
+<TestClass Class Test_willLive
+ <TestMethod> Sub test_willLive()
   Assert.AreEqual(False, willLive(white, 0))
   Assert.AreEqual(False, willLive(white, 1))
   Assert.AreEqual(False, willLive(white, 2))
@@ -223,4 +254,6 @@ End Sub
   Assert.AreEqual(False, willLive(black, 6))
   Assert.AreEqual(False, willLive(black, 7))
   Assert.AreEqual(False, willLive(black, 8))
-End Sub
+ End Sub
+End Class
+

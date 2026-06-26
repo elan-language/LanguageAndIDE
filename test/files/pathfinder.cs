@@ -323,15 +323,17 @@ static Algorithm getAlgFromLetter(string letter) { // function
   return alg;
 } // end function
 
+[TestClass] class Test_getAlgFromLetter
 [TestMethod] static void test_getAlgFromLetter() {
   Assert.AreEqual(Algorithm.aStar, getAlgFromLetter("a"));
   Assert.AreEqual(Algorithm.heuristic, getAlgFromLetter("h"));
   Assert.AreEqual(Algorithm.dijkstra, getAlgFromLetter("d"));
-} // end test
+}} // end test
 
+[TestClass] class Test_point
 [TestMethod] static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = new [] {new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)};
   Assert.AreEqual(expected, n);
-} // end test
+}} // end test

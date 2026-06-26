@@ -81,7 +81,8 @@ Function determinePlayerOutcome(dealer As Dealer, player As Player) As Outcome
   Return playerOutcome
 End Function
 
-<TestMethod> Sub test_determinePlayerOutcome()
+<TestClass Class Test_determinePlayerOutcome
+ <TestMethod> Sub test_determinePlayerOutcome()
   Dim dbj = (New Dealer(0)).withStatus(Status.blackjack) ' let
   Assert.AreEqual(Status.blackjack, dbj.status)
   Dim d21 = (New Dealer(0)).withStatus(Status.standing).withHandTotal(21) ' let
@@ -104,7 +105,9 @@ End Function
   Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(dbu, pbj))
   Assert.AreEqual(Outcome.win, determinePlayerOutcome(dbu, p17))
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbu, pbu))
-End Sub
+ End Sub
+End Class
+
 
 Function dealCard(random As Double) As Card
   Dim number = (random*52).floor() ' variable definition
@@ -113,7 +116,8 @@ Function dealCard(random As Double) As Card
   Return New Card(rank, intAsSuit(suit), False)
 End Function
 
-<TestMethod> Sub test_dealCard()
+<TestClass Class Test_dealCard
+ <TestMethod> Sub test_dealCard()
   Dim c1 = dealCard(0) ' let
   Assert.AreEqual("2", c1.rank)
   Assert.AreEqual(Suit.clubs, c1.suit)
@@ -126,7 +130,9 @@ End Function
   Dim c4 = dealCard(0.24) ' let
   Assert.AreEqual("5", c4.rank)
   Assert.AreEqual(Suit.clubs, c4.suit)
-End Sub
+ End Sub
+End Class
+
 
 Function intAsSuit(n As Integer) As Suit
   Dim suit = Suit.clubs ' variable definition
@@ -140,12 +146,15 @@ Function intAsSuit(n As Integer) As Suit
   Return suit
 End Function
 
-<TestMethod> Sub test_intAsSuit()
+<TestClass Class Test_intAsSuit
+ <TestMethod> Sub test_intAsSuit()
   Assert.AreEqual(Suit.clubs, intAsSuit(0))
   Assert.AreEqual(Suit.diamonds, intAsSuit(1))
   Assert.AreEqual(Suit.hearts, intAsSuit(2))
   Assert.AreEqual(Suit.spades, intAsSuit(3))
-End Sub
+ End Sub
+End Class
+
 
 Function htmlForGame(game As Game) As String
   Dim html = "<div class='game'>" ' variable definition
@@ -157,14 +166,17 @@ Function htmlForGame(game As Game) As String
   Return html + "</div>"
 End Function
 
-<TestMethod> Sub test_htmlForGame()
+<TestClass Class Test_htmlForGame
+ <TestMethod> Sub test_htmlForGame()
   Dim c1 = New Card("3", Suit.clubs, False) ' let
   Dim c2 = New Card("K", Suit.spades, True) ' let
   Dim p = (New HumanPlayer("fred", 10)).withCards({c1, c2}) ' let
   Dim players = (New List(Of Player)()).withAppend(p) ' let
   Dim g2 = (New Game(1)).withPlayers(players) ' let
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2))
-End Sub
+ End Sub
+End Class
+
 
 Function htmlForPlayer(player As Player) As String
   Dim html = "<div class='player'>" ' variable definition
@@ -178,12 +190,15 @@ Function htmlForPlayer(player As Player) As String
   Return html + "</div></div>"
 End Function
 
-<TestMethod> Sub test_htmlForPlayer()
+<TestClass Class Test_htmlForPlayer
+ <TestMethod> Sub test_htmlForPlayer()
   Dim c1 = New Card("3", Suit.clubs, False) ' let
   Dim c2 = New Card("K", Suit.spades, True) ' let
   Dim p = (New HumanPlayer("charlie", 10)).withCards({c1, c2}) ' let
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p))
-End Sub
+ End Sub
+End Class
+
 
 Function htmlForCard(card As Card) As String
   Dim html = "" ' variable definition
@@ -210,21 +225,27 @@ Function htmlForCard(card As Card) As String
   Return html + "</div>"
 End Function
 
-<TestMethod> Sub test_htmlForCard()
+<TestClass Class Test_htmlForCard
+ <TestMethod> Sub test_htmlForCard()
   Dim c1 = New Card("3", Suit.clubs, False) ' variable definition
   Assert.AreEqual("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1))
   Dim c2 = New Card("K", Suit.spades, True) ' variable definition
   Assert.AreEqual("<div class='card reversed'></div>", htmlForCard(c2))
-End Sub
+ End Sub
+End Class
+
 
 Function htmlForSpot(id As String, content As String) As String
   Return $"<div class='{id}'>{content}</div>"
 End Function
 
-<TestMethod> Sub test_htmlForSpot()
+<TestClass Class Test_htmlForSpot
+ <TestMethod> Sub test_htmlForSpot()
   Assert.AreEqual("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"))
   Assert.AreEqual("<div class='u'>10</div>", htmlForSpot("u", "10"))
-End Sub
+ End Sub
+End Class
+
 
 Class Game
 

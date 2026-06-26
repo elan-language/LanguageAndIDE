@@ -59,15 +59,17 @@ static String reflect(String s) { // function
   return sR;
 } // end function
 
+class Test_setTurns {
 @Test static void test_setTurns() {
   assertEquals("11", setTurns("1"));
   assertEquals("1110", setTurns("11"));
   assertEquals("110110", setTurns("110"));
   assertEquals("11011001110010", setTurns("1101100"));
-} // end test
+}} // end test
 
+class Test_reflect {
 @Test static void test_reflect() {
   assertEquals("100", reflect("110"));
   assertEquals("01111", reflect("00001"));
-} // end test
+}} // end test
 } // end Global

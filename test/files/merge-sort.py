@@ -43,7 +43,8 @@ def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
   return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
 # end function
 
-def test_sort(self) -> None:
+class Test_sort(unittest.TestCase):
+ def test_sort(self) -> None:
   # Edge case: empty
   l1 = list[str]() # let
   self.assertEqual(sort(l1), l1)
@@ -63,7 +64,8 @@ def test_sort(self) -> None:
   self.assertEqual(sort(li5), li5)
 # end test
 
-def test_sortedFrontHalf(self) -> None:
+class Test_sortedFrontHalf(unittest.TestCase):
+ def test_sortedFrontHalf(self) -> None:
   # Edge case: one item - so front half is empty
   li1 = ["plum"] # let
   self.assertEqual(sortedFrontHalf(li1), list[str]())
@@ -78,7 +80,8 @@ def test_sortedFrontHalf(self) -> None:
   self.assertEqual(sortedFrontHalf(li4), ["apple", "apricot", "lemon"])
 # end test
 
-def test_sortedBackHalf(self) -> None:
+class Test_sortedBackHalf(unittest.TestCase):
+ def test_sortedBackHalf(self) -> None:
   # Edge case: one item - so back half is whole list
   li1 = ["plum"] # let
   self.assertEqual(sortedBackHalf(li1), ["plum"])
@@ -93,7 +96,8 @@ def test_sortedBackHalf(self) -> None:
   self.assertEqual(sortedBackHalf(li4), ["lime", "melon", "orange", "pear"])
 # end test
 
-def test_merge(self) -> None:
+class Test_merge(unittest.TestCase):
+ def test_merge(self) -> None:
   # Happy cases:
   l1 = ["apple", "lime", "pear"] # let
   l2 = ["apricot", "lemon", "plum", "watermelon"] # let
@@ -113,7 +117,8 @@ def test_merge(self) -> None:
   self.assertEqual(merge(lu, le), ["lime", "pear", "apple"])
 # end test
 
-def test_mergeNonEmpty(self) -> None:
+class Test_mergeNonEmpty(unittest.TestCase):
+ def test_mergeNonEmpty(self) -> None:
   l1 = ["apple", "lime", "pear"] # let
   l2 = ["apricot", "lemon", "plum", "watermelon"] # let
   self.assertEqual(mergeNonEmpty(["orange"], ["melon"]), ["melon", "orange"])

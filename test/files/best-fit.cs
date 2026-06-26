@@ -32,6 +32,7 @@ static Point newPoint(double x, double y) { // function
   return new Point(x, y);
 } // end function
 
+[TestClass] class Test_bestFit
 [TestMethod] static void test_bestFit() {
   var l1 = new [] {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)}; // let
   var a_b = bestFitLine(l1); // let
@@ -39,11 +40,12 @@ static Point newPoint(double x, double y) { // function
   var b = a_b.item_1; // let
   Assert.AreEqual(0.766, a.round(3));
   Assert.AreEqual(1.093, b.round(3));
-} // end test
+}} // end test
 
+[TestClass] class Test_bestFit_empty
 [TestMethod] static void test_bestFit_empty() {
   var l1 = new List<Point>(); // let
   var a_b = bestFitLine(l1); // let
   // NaN means 'Not A Number"
   Assert.AreEqual("(NaN, NaN)", a_b.toString());
-} // end test
+}} // end test

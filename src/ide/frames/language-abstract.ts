@@ -11,6 +11,7 @@ import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
+import { TestFrame } from "./globals/test-frame";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
 import { Lambda } from "./parse-nodes/lambda";
@@ -192,6 +193,13 @@ export abstract class LanguageAbstract implements Language {
   }
 
   abstract postProcessHtml(html: string): string;
+
+  protected testClassNameAsHtml(frame: TestFrame) {
+    return `<el-type>Test_${frame.testName.text.substring(5)}</el-type>`;
+  }
+  protected testMethodNameAsHtml(frame: TestFrame) {
+    return `<el-method>${frame.testName.renderAsHtml()}</el-method>`;
+  }
 
   abstract MOD: string;
   abstract EQUAL: string;

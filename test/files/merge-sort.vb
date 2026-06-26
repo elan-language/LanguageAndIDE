@@ -43,7 +43,8 @@ Function mergeNonEmpty(a As List(Of String), b As List(Of String)) As List(Of St
   Return if_(aHead.isBefore(bHead), {aHead}.withAppendList(merge(aTail, b)), {bHead}.withAppendList(merge(a, bTail)))
 End Function
 
-<TestMethod> Sub test_sort()
+<TestClass Class Test_sort
+ <TestMethod> Sub test_sort()
   ' Edge case: empty
   Dim l1 = New List(Of String)() ' let
   Assert.AreEqual(l1, sort(l1))
@@ -61,9 +62,12 @@ End Function
   ' Edge case: already sorted
   Dim li5 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"} ' let
   Assert.AreEqual(li5, sort(li5))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_sortedFrontHalf()
+
+<TestClass Class Test_sortedFrontHalf
+ <TestMethod> Sub test_sortedFrontHalf()
   ' Edge case: one item - so front half is empty
   Dim li1 = {"plum"} ' let
   Assert.AreEqual(New List(Of String)(), sortedFrontHalf(li1))
@@ -76,9 +80,12 @@ End Sub
   ' Edge case: already sorted
   Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' let
   Assert.AreEqual({"apple", "apricot", "lemon"}, sortedFrontHalf(li4))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_sortedBackHalf()
+
+<TestClass Class Test_sortedBackHalf
+ <TestMethod> Sub test_sortedBackHalf()
   ' Edge case: one item - so back half is whole list
   Dim li1 = {"plum"} ' let
   Assert.AreEqual({"plum"}, sortedBackHalf(li1))
@@ -91,9 +98,12 @@ End Sub
   ' Edge case: already sorted
   Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' let
   Assert.AreEqual({"lime", "melon", "orange", "pear"}, sortedBackHalf(li4))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_merge()
+
+<TestClass Class Test_merge
+ <TestMethod> Sub test_merge()
   ' Happy cases:
   Dim l1 = {"apple", "lime", "pear"} ' let
   Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' let
@@ -111,9 +121,12 @@ End Sub
   Dim lu = {"lime", "pear", "apple"} ' let
   Assert.AreEqual({"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2))
   Assert.AreEqual({"lime", "pear", "apple"}, merge(lu, le))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_mergeNonEmpty()
+
+<TestClass Class Test_mergeNonEmpty
+ <TestMethod> Sub test_mergeNonEmpty()
   Dim l1 = {"apple", "lime", "pear"} ' let
   Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' let
   Assert.AreEqual({"melon", "orange"}, mergeNonEmpty({"orange"}, {"melon"}))
@@ -130,4 +143,6 @@ End Sub
   '  Error case unsorted list
   Dim lu = {"lime", "pear", "apple"} ' let
   Assert.AreEqual({"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2))
-End Sub
+ End Sub
+End Class
+

@@ -36,6 +36,7 @@ static boolean binarySearch(List<String> li, String item) { // function
   return result;
 } // end function
 
+class Test_binarySearch {
 @Test static void test_binarySearch() {
   var li1 = list("lemon", "lime", "orange");
   assertEquals(true, binarySearch(li1, "lemon"));
@@ -51,5 +52,5 @@ static boolean binarySearch(List<String> li, String item) { // function
   assertEquals(false, binarySearch(li3, "lime"));
   var li4 = new List<String>();
   assertEquals(false, binarySearch(li4, "pear"));
-} // end test
+}} // end test
 } // end Global

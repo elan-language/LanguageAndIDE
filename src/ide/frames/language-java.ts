@@ -83,7 +83,7 @@ export class LanguageJava extends LanguageCfamily {
   renderTopAsHtml(frame: Frame): string {
     let html = "";
     if (frame instanceof TestFrame) {
-      html = `@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}() {`;
+      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)} {<br>@<el-type>Test</el-type> <el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.testName.renderAsHtml()}() {`;
     } else {
       html = this.common_renderTopAsHtml(frame);
     }
@@ -115,7 +115,11 @@ export class LanguageJava extends LanguageCfamily {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return this.common_renderBottomAsHtml(frame);
+    let html = this.common_renderBottomAsHtml(frame);
+    if(frame instanceof TestFrame) {
+      html = `<el-punc>}</el-punc>${html}`;
+    }
+    return html;
   }
 
   renderFileImportsAsHtml(): string {

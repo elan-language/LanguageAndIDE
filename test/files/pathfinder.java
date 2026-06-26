@@ -325,16 +325,18 @@ static Algorithm getAlgFromLetter(String letter) { // function
   return alg;
 } // end function
 
+class Test_getAlgFromLetter {
 @Test static void test_getAlgFromLetter() {
   assertEquals(Algorithm.aStar, getAlgFromLetter("a"));
   assertEquals(Algorithm.heuristic, getAlgFromLetter("h"));
   assertEquals(Algorithm.dijkstra, getAlgFromLetter("d"));
-} // end test
+}} // end test
 
+class Test_point {
 @Test static void test_point() {
   var p = new Point(0, 0);
   var n = p.neighbouringPoints();
   var expected = list(new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1));
   assertEquals(expected, n);
-} // end test
+}} // end test
 } // end Global

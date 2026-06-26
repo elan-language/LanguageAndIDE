@@ -81,6 +81,7 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
   return playerOutcome;
 } // end function
 
+[TestClass] class Test_determinePlayerOutcome
 [TestMethod] static void test_determinePlayerOutcome() {
   var dbj = (new Dealer(0)).withStatus(Status.blackjack); // let
   Assert.AreEqual(Status.blackjack, dbj.status);
@@ -104,7 +105,7 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
   Assert.AreEqual(Outcome.winDouble, determinePlayerOutcome(dbu, pbj));
   Assert.AreEqual(Outcome.win, determinePlayerOutcome(dbu, p17));
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbu, pbu));
-} // end test
+}} // end test
 
 static Card dealCard(double random) { // function
   var number = (random*52).floor();
@@ -113,6 +114,7 @@ static Card dealCard(double random) { // function
   return new Card(rank, intAsSuit(suit), false);
 } // end function
 
+[TestClass] class Test_dealCard
 [TestMethod] static void test_dealCard() {
   var c1 = dealCard(0); // let
   Assert.AreEqual("2", c1.rank);
@@ -126,7 +128,7 @@ static Card dealCard(double random) { // function
   var c4 = dealCard(0.24); // let
   Assert.AreEqual("5", c4.rank);
   Assert.AreEqual(Suit.clubs, c4.suit);
-} // end test
+}} // end test
 
 static Suit intAsSuit(int n) { // function
   var suit = Suit.clubs;
@@ -140,12 +142,13 @@ static Suit intAsSuit(int n) { // function
   return suit;
 } // end function
 
+[TestClass] class Test_intAsSuit
 [TestMethod] static void test_intAsSuit() {
   Assert.AreEqual(Suit.clubs, intAsSuit(0));
   Assert.AreEqual(Suit.diamonds, intAsSuit(1));
   Assert.AreEqual(Suit.hearts, intAsSuit(2));
   Assert.AreEqual(Suit.spades, intAsSuit(3));
-} // end test
+}} // end test
 
 static string htmlForGame(Game game) { // function
   var html = "<div class='game'>";
@@ -157,6 +160,7 @@ static string htmlForGame(Game game) { // function
   return html + "</div>";
 } // end function
 
+[TestClass] class Test_htmlForGame
 [TestMethod] static void test_htmlForGame() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
@@ -164,7 +168,7 @@ static string htmlForGame(Game game) { // function
   var players = (new List<Player>()).withAppend(p); // let
   var g2 = (new Game(1)).withPlayers(players); // let
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
-} // end test
+}} // end test
 
 static string htmlForPlayer(Player player) { // function
   var html = "<div class='player'>";
@@ -178,12 +182,13 @@ static string htmlForPlayer(Player player) { // function
   return html + "</div></div>";
 } // end function
 
+[TestClass] class Test_htmlForPlayer
 [TestMethod] static void test_htmlForPlayer() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
   var p = (new HumanPlayer("charlie", 10)).withCards(new [] {c1, c2}); // let
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
-} // end test
+}} // end test
 
 static string htmlForCard(Card card) { // function
   var html = "";
@@ -210,21 +215,23 @@ static string htmlForCard(Card card) { // function
   return html + "</div>";
 } // end function
 
+[TestClass] class Test_htmlForCard
 [TestMethod] static void test_htmlForCard() {
   var c1 = new Card("3", Suit.clubs, false);
   Assert.AreEqual("<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>", htmlForCard(c1));
   var c2 = new Card("K", Suit.spades, true);
   Assert.AreEqual("<div class='card reversed'></div>", htmlForCard(c2));
-} // end test
+}} // end test
 
 static string htmlForSpot(string id, string content) { // function
   return $"<div class='{id}'>{content}</div>";
 } // end function
 
+[TestClass] class Test_htmlForSpot
 [TestMethod] static void test_htmlForSpot() {
   Assert.AreEqual("<div class='c'>&hearts;</div>", htmlForSpot("c", "&hearts;"));
   Assert.AreEqual("<div class='u'>10</div>", htmlForSpot("u", "10"));
-} // end test
+}} // end test
 
 class Game {
 

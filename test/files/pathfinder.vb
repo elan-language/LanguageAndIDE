@@ -327,15 +327,21 @@ Function getAlgFromLetter(letter As String) As Algorithm
   Return alg
 End Function
 
-<TestMethod> Sub test_getAlgFromLetter()
+<TestClass Class Test_getAlgFromLetter
+ <TestMethod> Sub test_getAlgFromLetter()
   Assert.AreEqual(Algorithm.aStar, getAlgFromLetter("a"))
   Assert.AreEqual(Algorithm.heuristic, getAlgFromLetter("h"))
   Assert.AreEqual(Algorithm.dijkstra, getAlgFromLetter("d"))
-End Sub
+ End Sub
+End Class
 
-<TestMethod> Sub test_point()
+
+<TestClass Class Test_point
+ <TestMethod> Sub test_point()
   Dim p = New Point(0, 0) ' variable definition
   Dim n = p.neighbouringPoints() ' variable definition
   Dim expected = {New Point(-1, -1), New Point(0, -1), New Point(1, -1), New Point(-1, 0), New Point(1, 0), New Point(-1, 1), New Point(0, 1), New Point(1, 1)} ' variable definition
   Assert.AreEqual(expected, n)
-End Sub
+ End Sub
+End Class
+

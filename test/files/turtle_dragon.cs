@@ -57,14 +57,16 @@ static string reflect(string s) { // function
   return sR;
 } // end function
 
+[TestClass] class Test_setTurns
 [TestMethod] static void test_setTurns() {
   Assert.AreEqual("11", setTurns("1"));
   Assert.AreEqual("1110", setTurns("11"));
   Assert.AreEqual("110110", setTurns("110"));
   Assert.AreEqual("11011001110010", setTurns("1101100"));
-} // end test
+}} // end test
 
+[TestClass] class Test_reflect
 [TestMethod] static void test_reflect() {
   Assert.AreEqual("100", reflect("110"));
   Assert.AreEqual("01111", reflect("00001"));
-} // end test
+}} // end test
