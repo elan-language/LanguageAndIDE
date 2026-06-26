@@ -69,7 +69,7 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof InputStatement) {
       html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>(${frame.prompt.renderAsHtml()});`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println(${frame.args.renderAsHtml()});`;
+      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println</el-method>(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else if (frame instanceof AbstractProperty) {
@@ -116,7 +116,7 @@ export class LanguageJava extends LanguageCfamily {
 
   renderBottomAsHtml(frame: Frame): string {
     let html = this.common_renderBottomAsHtml(frame);
-    if(frame instanceof TestFrame) {
+    if (frame instanceof TestFrame) {
       html = `<el-punc>}</el-punc>${html}`;
     }
     return html;
@@ -144,7 +144,7 @@ export class LanguageJava extends LanguageCfamily {
 
   public STRING_NAME: string = "String";
 
-  INTERPOLATED_STRING_PREFIX: string = ""; // No prefix because of custom processing
+  INTERPOLATED_STRING_PREFIX: string = "S"; // because of String.format
 
   addNodesForParamDef(node: ParamDefNode): void {
     this.c_langs_addNodesForParamDef(node);
@@ -211,7 +211,7 @@ export class LanguageJava extends LanguageCfamily {
     return this.c_langs_enumValues(field);
   }
 
-  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
+  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
     const f = node.file;
     const java = new Sequence(f, []);
     const numFields = text.split("%").length - 1; // if 0 occurrences then parseStatus.error
@@ -223,16 +223,16 @@ export class LanguageJava extends LanguageCfamily {
     java.addElement(csvExpr);
     java.addElement(new PunctuationNode(f, CLOSE_BRACKET));
     java.parseText(text);
-    let standardised = "";
+
+    let toParse = text;
     if (java.status === ParseStatus.valid) {
-      let elan = `$${str.matchedText}`;
+      toParse = `$${str.matchedText}`;
       const contents = this.justTheExpressions(csvExpr);
       for (let i = 0; i < numFields; i++) {
-        elan = elan.replace("%", "{" + contents[i].renderAsElanSource() + "}");
+        toParse = toParse.replace("%", "{" + contents[i].renderAsElanSource() + "}");
       }
-      standardised = elan;
     }
-    return standardised;
+    this.default_parseInterpolatedString(node, "$", toParse);
   }
 
   private justTheExpressions(csv: CSV): ExprNode[] {

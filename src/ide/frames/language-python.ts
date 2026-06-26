@@ -383,8 +383,9 @@ export class LanguagePython extends LanguageAbstract {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }
-  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
-    return this.default_standardiseInterpolatedString(node, text);
+
+  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
+    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
   }
 
   addNodesForTypeTuple(node: TypeTupleNode): void {

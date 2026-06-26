@@ -41,6 +41,7 @@ export interface Language {
   addNodesForTypeTuple(node: TypeTupleNode): void;
   addNodesForLambda(node: Lambda): void;
   addNodesForList(node: ListNode): void;
+  parseInterpolatedString(node: LitStringInterpolated, text: string): void;
 
   paramDefAsHtml(node: ParamDefNode): string;
   typeGenericAsHtml(node: TypeGenericNode): string;
@@ -51,8 +52,6 @@ export interface Language {
   inheritsFromTextAsHtml(field: InheritsFromField): string;
   lambdaAsHtml(node: Lambda): string;
   listAsHtml(node: ListNode): string;
-
-  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
 
   postProcessHtml(html: string): string;
 
