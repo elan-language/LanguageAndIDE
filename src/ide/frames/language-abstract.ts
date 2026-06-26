@@ -12,11 +12,15 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
+import { Alternatives } from "./parse-nodes/alternatives";
 import { ArgListNode } from "./parse-nodes/arg-list-node";
 import { CSV } from "./parse-nodes/csv";
 import { Lambda } from "./parse-nodes/lambda";
 import { ListNode } from "./parse-nodes/list-node";
 import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
+import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
+import { LitStringText } from "./parse-nodes/lit-string-text";
+import { Multiple } from "./parse-nodes/multiple";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -32,7 +36,7 @@ import { LetStatement } from "./statements/let-statement";
 import { ReAssignVariable } from "./statements/reassign-variable";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
+import { CLOSE_BRACKET, DOUBLE_QUOTES, OPEN_BRACKET } from "./symbols";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -79,6 +83,7 @@ export abstract class LanguageAbstract implements Language {
   abstract addNodesForTypeTuple(node: TypeTupleNode): void;
   abstract addNodesForLambda(node: Lambda): void;
   abstract addNodesForList(node: ListNode): void;
+  abstract parseInterpolatedString(node: LitStringInterpolated, text: string): void;
 
   abstract paramDefAsHtml(node: ParamDefNode): string;
   abstract typeGenericAsHtml(node: TypeGenericNode): string;
@@ -90,7 +95,17 @@ export abstract class LanguageAbstract implements Language {
   abstract lambdaAsHtml(node: Lambda): string;
   abstract listAsHtml(node: ListNode): string;
 
-  abstract standardiseInterpolatedString(node: LitStringInterpolated, text: string): string;
+  default_parseInterpolatedString(node: LitStringInterpolated, prefix: string, text: string): void {
+    const field = () => new LitStringInterpolatedInsert(node.file);
+    const plainText = () => new LitStringText(node.file, /^[^%"\{]+/);
+    const segment = () => new Alternatives(node.file, [field, plainText]);
+    node.segments = new Multiple(node.file, segment, 1);
+    node.addElement(new PunctuationNode(node.file, prefix));
+    node.addElement(new PunctuationNode(node.file, DOUBLE_QUOTES));
+    node.addElement(node.segments);
+    node.addElement(new PunctuationNode(node.file, DOUBLE_QUOTES));
+    node.defaultParse(text);
+  }
 
   default_addNodesForList(node: ListNode): void {
     node.addElement(new PunctuationNode(node.file, this.LIST_START));
@@ -110,10 +125,6 @@ export abstract class LanguageAbstract implements Language {
 
   default_typeTupleAsHtml(node: TypeTupleNode): string {
     return `(${node.types?.renderAsHtml()})`;
-  }
-
-  default_standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
-    return text.startsWith(this.INTERPOLATED_STRING_PREFIX) ? "$" + text.substring(1) : text;
   }
 
   protected addCommonElementsForNewInstance(node: NewInstance): void {

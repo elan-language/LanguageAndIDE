@@ -1387,7 +1387,7 @@ suite("Parsing Nodes", () => {
       new LitStringInterpolated(fileWithPython()),
       `f"<p>{2 + 3}</p>"`,
       ParseStatus.valid,
-      `$"<p>{2 + 3}</p>"`,
+      `f"<p>{2 + 3}</p>"`,
       "",
       `$"<p>{2 + 3}</p>"`,
       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,

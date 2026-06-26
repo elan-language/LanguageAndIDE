@@ -369,6 +369,10 @@ export class LanguageElan extends LanguageAbstract {
     this.default_addNodesForList(node);
   }
 
+  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
+    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
+  }
+
   listAsHtml(node: ListNode): string {
     return this.default_listAsHtml(node);
   }
@@ -377,9 +381,6 @@ export class LanguageElan extends LanguageAbstract {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 
-  standardiseInterpolatedString(_node: LitStringInterpolated, text: string): string {
-    return text; //If valid, it will already be in standard form
-  }
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
   }

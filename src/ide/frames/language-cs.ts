@@ -62,7 +62,7 @@ export class LanguageCS extends LanguageCfamily {
       html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.prompt.renderAsHtml()});<br>
       <el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>();`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-type>Console</el-type>.<el-method>WriteLine(${frame.args.renderAsHtml()});`;
+      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()} {<el-kw>${this.GET}</el-kw>; <el-kw>${this.PRIVATE} ${this.SET}</el-kw>;}`;
     } else if (frame instanceof AbstractProperty) {
@@ -95,7 +95,7 @@ export class LanguageCS extends LanguageCfamily {
 
   renderBottomAsHtml(frame: Frame): string {
     let html = this.common_renderBottomAsHtml(frame);
-    if(frame instanceof TestFrame) {
+    if (frame instanceof TestFrame) {
       html = `<el-punc>}</el-punc>${html}`;
     }
     return html;
@@ -159,6 +159,10 @@ export class LanguageCS extends LanguageCfamily {
     this.default_addNodesForList(node);
   }
 
+  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
+    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
+  }
+
   listAsHtml(node: ListNode): string {
     return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> [] ${this.default_listAsHtml(node)}`;
   }
@@ -173,9 +177,6 @@ export class LanguageCS extends LanguageCfamily {
 
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
     return this.default_litStringInterpolatedAsHtml(node);
-  }
-  standardiseInterpolatedString(node: LitStringInterpolated, text: string): string {
-    return this.default_standardiseInterpolatedString(node, text);
   }
 
   postProcessHtml(html: string): string {

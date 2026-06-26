@@ -1,13 +1,8 @@
 import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
-import { DOUBLE_QUOTES } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { Alternatives } from "./alternatives";
-import { LitStringInterpolatedInsert } from "./lit-string-interpolated-insert";
-import { LitStringText } from "./lit-string-text";
 import { Multiple } from "./multiple";
-import { PunctuationNode } from "./punctuation-node";
 
 export class LitStringInterpolated extends AbstractSequence {
   segments: Multiple | undefined;
@@ -20,22 +15,18 @@ export class LitStringInterpolated extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       const lang = this.file.language();
-      const standardisedText = lang.standardiseInterpolatedString(this, text);
-      if (standardisedText.length > 0) {
-        const field = () => new LitStringInterpolatedInsert(this.file);
-        const plainText = () => new LitStringText(this.file, /^[^%"\{]+/);
-        const segment = () => new Alternatives(this.file, [field, plainText]);
-        this.segments = new Multiple(this.file, segment, 1);
-        this.addElement(new PunctuationNode(this.file, "$"));
-        this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-        this.addElement(this.segments);
-        this.addElement(new PunctuationNode(this.file, DOUBLE_QUOTES));
-        super.parseText(standardisedText);
+      if (text.startsWith(lang.INTERPOLATED_STRING_PREFIX)) {
+        //TODO: Don't just add nodes, delegate the  parsing to lang - because of peculiarity of Java
+        this.file.language().parseInterpolatedString(this, text);
       } else {
         this.status = ParseStatus.invalid;
         this.remainingText = text;
       }
     }
+  }
+
+  defaultParse(text: string) {
+    super.parseText(text);
   }
 
   renderAsHtml(): string {
