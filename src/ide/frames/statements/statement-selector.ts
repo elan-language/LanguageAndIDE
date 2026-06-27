@@ -1,5 +1,6 @@
 import {
   assertKeyword,
+  assignKeyword,
   callKeyword,
   catchKeyword,
   commentMarker,
@@ -10,7 +11,6 @@ import {
   inputKeyword,
   letKeyword,
   printKeyword,
-  reassignKeyword,
   throwKeyword,
   tryKeyword,
   variableKeyword,
@@ -37,7 +37,7 @@ export class StatementSelector extends AbstractSelector {
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
       [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
-      [printKeyword, "p", "<b>p</b>rint", (parent: Parent) => this.factory.newPrint(parent)],
+      [printKeyword, "p", "<b>p</b>rint statement", (parent: Parent) => this.factory.newPrint(parent)],
       [
         letKeyword,
         "l",
@@ -51,9 +51,9 @@ export class StatementSelector extends AbstractSelector {
         (parent: Parent) => this.factory.newVar(parent),
       ],
       [
-        reassignKeyword,
+        assignKeyword,
         "r",
-        "<b>r</b>eassign variable",
+        "<b>a</b>ssignment",
         (parent: Parent) => this.factory.newSet(parent),
       ],
       [inputKeyword, "n", "i<b>n</b>put", (parent: Parent) => this.factory.newInput(parent)],

@@ -8,10 +8,10 @@ def main() -> None:
   rnd.initialiseFromClock() # call procedure
   game = (Game(rnd)).withNewApple() # variable definition
   while game.isOn:
-    blocks = updateGraphics(game, blocks) # reassign variable
+    blocks = updateGraphics(game, blocks) # assignment
     displayBlocks(blocks) # call procedure
     sleep_ms(150) # call procedure
-    game = clockTick(game, getKey()) # reassign variable
+    game = clockTick(game, getKey()) # assignment
   # end while
   print(f"Game Over! Score: {score(game)}")
 # end main
@@ -85,13 +85,13 @@ class Game: # concrete class
   key: str # property
 
   def __init__(self: Game, rnd: Random) -> None:
-    self.head = Square(22, 15) # reassign variable
-    self.body = [Square(20, 15), Square(21, 15)] # reassign variable
-    self.priorTail = Square(0, 0) # reassign variable
-    self.key = "d" # reassign variable
-    self.isOn = True # reassign variable
-    self.apple = Square(12, 15) # reassign variable
-    self.rnd = rnd # reassign variable
+    self.head = Square(22, 15) # assignment
+    self.body = [Square(20, 15), Square(21, 15)] # assignment
+    self.priorTail = Square(0, 0) # assignment
+    self.key = "d" # assignment
+    self.isOn = True # assignment
+    self.apple = Square(12, 15) # assignment
+    self.rnd = rnd # assignment
   # end constructor
 
   def toString(self: Game) -> str: # function method
@@ -110,43 +110,43 @@ class Game: # concrete class
 
   def withHead(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.head = value # reassign variable
+    copyOfThis.head = value # assignment
     return copyOfThis
   # end function method
 
   def withBody(self: Game, value: list[Square]) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.body = value # reassign variable
+    copyOfThis.body = value # assignment
     return copyOfThis
   # end function method
 
   def withPriorTail(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.priorTail = value # reassign variable
+    copyOfThis.priorTail = value # assignment
     return copyOfThis
   # end function method
 
   def withApple(self: Game, value: Square) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.apple = value # reassign variable
+    copyOfThis.apple = value # assignment
     return copyOfThis
   # end function method
 
   def withIsOn(self: Game, value: bool) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.isOn = value # reassign variable
+    copyOfThis.isOn = value # assignment
     return copyOfThis
   # end function method
 
   def withRnd(self: Game, value: Random) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.rnd = value # reassign variable
+    copyOfThis.rnd = value # assignment
     return copyOfThis
   # end function method
 
   def withKey(self: Game, value: str) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.key = value # reassign variable
+    copyOfThis.key = value # assignment
     return copyOfThis
   # end function method
 
@@ -159,8 +159,8 @@ class Square: # concrete class
   y: int # property
 
   def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # reassign variable
-    self.y = y # reassign variable
+    self.x = x # assignment
+    self.y = y # assignment
   # end constructor
 
   def toString(self: Square) -> str: # function method

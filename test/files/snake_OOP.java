@@ -16,17 +16,17 @@ static void main() {
     sleep_ms(150); // call procedure
     snake.clockTick(getKey(), apple); // call procedure
   } // end while
-  System.out.println(String.format("Game Over! Score: %", snake.score())); // print
+  System.out.println(String.format("Game Over! Score: %", snake.score())); // print statement
 } // end main
 
 class Snake {
 
   public Snake() {
     var tail = new Square(20, 15);
-    this.currentDir = Direction.right; // reassign variable
-    this.body = list(tail); // reassign variable
-    this.head = tail.getAdjacentSquare(this.currentDir); // reassign variable
-    this.priorTail = tail; // reassign variable
+    this.currentDir = Direction.right; // assignment
+    this.body = list(tail); // assignment
+    this.head = tail.getAdjacentSquare(this.currentDir); // assignment
+    this.priorTail = tail; // assignment
   } // end constructor
 
   private Direction currentDir; // private property
@@ -39,21 +39,21 @@ class Snake {
 
   public void clockTick(String key, Apple apple) { // procedure method
     this.setDirection(key); // call procedure
-    this.priorTail = this.body[0]; // reassign variable
+    this.priorTail = this.body[0]; // assignment
     var body = this.body;
     body.append(this.head); // call procedure
-    this.head = this.head.getAdjacentSquare(this.currentDir); // reassign variable
+    this.head = this.head.getAdjacentSquare(this.currentDir); // assignment
     if (this.head.equals(apple.location)) {
       apple.newRandomPosition(this); // call procedure
     } else {
-      this.body = this.body.subList(1, this.body.length()); // reassign variable
+      this.body = this.body.subList(1, this.body.length()); // assignment
     } // end if
   } // end procedure method
 
   public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.head.x][this.head.y] = green; // reassign variable
+    blocks[this.head.x][this.head.y] = green; // assignment
     if (!this.body[0].equals(this.priorTail)) {
-      blocks[this.priorTail.x][this.priorTail.y] = white; // reassign variable
+      blocks[this.priorTail.x][this.priorTail.y] = white; // assignment
     } // end if
   } // end procedure method
 
@@ -65,7 +65,7 @@ class Snake {
     var result = false;
     foreach (var seg in this.body) {
       if ((seg.equals(sq))) {
-        result = true; // reassign variable
+        result = true; // assignment
       } // end if
     } // end foreach
     return result;
@@ -77,13 +77,13 @@ class Snake {
 
   private void setDirection(String key) { // private procedure method
     if (key.equals("w")) {
-      this.currentDir = Direction.up; // reassign variable
+      this.currentDir = Direction.up; // assignment
     } else if (key.equals("s")) {
-      this.currentDir = Direction.down; // reassign variable
+      this.currentDir = Direction.down; // assignment
     } else if (key.equals("a")) {
-      this.currentDir = Direction.left; // reassign variable
+      this.currentDir = Direction.left; // assignment
     } else if (key.equals("d")) {
-      this.currentDir = Direction.right; // reassign variable
+      this.currentDir = Direction.right; // assignment
     } // end if
   } // end procedure method
 
@@ -96,7 +96,7 @@ class Snake {
 class Apple {
 
   public Apple() {
-    this.location = new Square(0, 0); // reassign variable
+    this.location = new Square(0, 0); // assignment
   } // end constructor
 
   public Square location; // property
@@ -106,15 +106,15 @@ class Apple {
     while (changePosition) {
       var ranX = randint(0, 39);
       var ranY = randint(0, 29);
-      this.location = new Square(ranX, ranY); // reassign variable
+      this.location = new Square(ranX, ranY); // assignment
       if (!snake.bodyCovers(this.location)) {
-        changePosition = false; // reassign variable
+        changePosition = false; // assignment
       } // end if
     } // end while
   } // end procedure method
 
   public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.location.x][this.location.y] = red; // reassign variable
+    blocks[this.location.x][this.location.y] = red; // assignment
   } // end procedure method
 
   public String toString() { // function method
@@ -126,8 +126,8 @@ class Apple {
 class Square {
 
   public Square(int x, int y) {
-    this.x = x; // reassign variable
-    this.y = y; // reassign variable
+    this.x = x; // assignment
+    this.y = y; // assignment
   } // end constructor
 
   public int x; // property
@@ -138,13 +138,13 @@ class Square {
     var newX = this.x;
     var newY = this.y;
     if (d == Direction.left) {
-      newX = this.x - 1; // reassign variable
+      newX = this.x - 1; // assignment
     } else if (d == Direction.right) {
-      newX = this.x + 1; // reassign variable
+      newX = this.x + 1; // assignment
     } else if (d == Direction.up) {
-      newY = this.y - 1; // reassign variable
+      newY = this.y - 1; // assignment
     } else if (d == Direction.down) {
-      newY = this.y + 1; // reassign variable
+      newY = this.y + 1; // assignment
     } // end if
     return new Square(newX, newY);
   } // end function method

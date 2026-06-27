@@ -18,7 +18,7 @@ suite("SymbolCompletionDropDown", () => {
 main
   variable foo set to 1
   variable foobar set to 2
-  reassign f to 1
+  assign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -46,7 +46,7 @@ end main`;
 main
   variable foo set to 1
   variable foobar set to 2
-  reassign f to 1
+  assign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -169,7 +169,7 @@ end main`;
 main
   variable foo set to 1
   variable fooBar set to 2
-  reassign foo to 1
+  assign foo to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -194,7 +194,7 @@ end main`;
 main
   variable foo set to 1
   variable foobar set to 2
-  reassign f to 1
+  assign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -229,7 +229,7 @@ class Foo
   end function
 
   procedure pp1()
-    reassign a to 2
+    assign a to 2
   end procedure
 
   property aa2 as Int
@@ -260,7 +260,7 @@ end class`;
 
 class Foo
   constructor()
-    reassign a to 0
+    assign a to 0
   end constructor
   function toString() returns String
     return ""
@@ -301,7 +301,7 @@ class Foo
 
   procedure pp()
     variable a set to 0
-    reassign a to 0
+    assign a to 0
   end procedure
 
   property aa2 as Int
@@ -340,7 +340,7 @@ class Foo
 
   procedure pp(aa4 as Int)
     variable a set to 0
-    reassign a to 0
+    assign a to 0
   end procedure
 
   property aa2 as Int
@@ -373,7 +373,7 @@ end class`;
 main
   variable foo set to 1
   variable foobar set to 2
-  reassign foo to 1
+  assign foo to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -400,7 +400,7 @@ constant fooyon set to 3
 main
   variable foo set to 1
   variable foobar set to 2
-  reassign f to 1
+  assign f to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -784,7 +784,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign f to 0
+    assign f to 0
   end procedure
 
   property foo as Int
@@ -829,7 +829,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign f to 0
+    assign f to 0
   end procedure
 
   property foo as Int
@@ -871,7 +871,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign f to 0
+    assign f to 0
   end procedure
 
   property foo as Int
@@ -917,7 +917,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign t to 0
+    assign t to 0
   end procedure
 
   property foo as Int
@@ -963,7 +963,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign f to 0
+    assign f to 0
   end procedure
 
   property foo as Int
@@ -1004,7 +1004,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign f to 0
+    assign f to 0
   end procedure
 
   property foo as Int
@@ -1049,7 +1049,7 @@ class Foo
     variable f set to 0
     variable p set to 0
     variable bar set to 0
-    reassign b to 0
+    assign b to 0
   end procedure
 
   property foo as Int
@@ -2355,10 +2355,10 @@ main
   for i in range(1, 1001)
     variable pacesThisAttempt set to 0
     while true
-      reassign pacesThisAttempt to pacesThisAttempt + 1
+      assign pacesThisAttempt to pacesThisAttempt + 1
     end while
     variable totalPaces set to 0
-    reassign totalPaces to totalPaces + pacesThisAttempt
+    assign totalPaces to totalPaces + pacesThisAttempt
   end for
 end main`;
 

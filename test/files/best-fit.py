@@ -18,8 +18,8 @@ class Point: # concrete class
   y: float # property
 
   def __init__(self: Point, x: float, y: float) -> None:
-    self.x = x # reassign variable
-    self.y = y # reassign variable
+    self.x = x # assignment
+    self.y = y # assignment
   # end constructor
 
   def toString(self: Point) -> str: # function method

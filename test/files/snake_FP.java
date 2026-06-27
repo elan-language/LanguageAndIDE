@@ -10,12 +10,12 @@ static void main() {
   rnd.initialiseFromClock(); // call procedure
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
-    blocks = updateGraphics(game, blocks); // reassign variable
+    blocks = updateGraphics(game, blocks); // assignment
     displayBlocks(blocks); // call procedure
     sleep_ms(150); // call procedure
-    game = clockTick(game, getKey()); // reassign variable
+    game = clockTick(game, getKey()); // assignment
   } // end while
-  System.out.println(String.format("Game Over! Score: %", score(game))); // print
+  System.out.println(String.format("Game Over! Score: %", score(game))); // print statement
 } // end main
 
 static Game clockTick(Game g, String k) { // function
@@ -87,13 +87,13 @@ class Game {
   public String key; // property
 
   public Game(Random rnd) {
-    this.head = new Square(22, 15); // reassign variable
-    this.body = list(new Square(20, 15), new Square(21, 15)); // reassign variable
-    this.priorTail = new Square(0, 0); // reassign variable
-    this.key = "d"; // reassign variable
-    this.isOn = true; // reassign variable
-    this.apple = new Square(12, 15); // reassign variable
-    this.rnd = rnd; // reassign variable
+    this.head = new Square(22, 15); // assignment
+    this.body = list(new Square(20, 15), new Square(21, 15)); // assignment
+    this.priorTail = new Square(0, 0); // assignment
+    this.key = "d"; // assignment
+    this.isOn = true; // assignment
+    this.apple = new Square(12, 15); // assignment
+    this.rnd = rnd; // assignment
   } // end constructor
 
   public String toString() { // function method
@@ -112,43 +112,43 @@ class Game {
 
   public Game withHead(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.head = value; // reassign variable
+    copyOfThis.head = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withBody(List<Square> value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.body = value; // reassign variable
+    copyOfThis.body = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withPriorTail(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.priorTail = value; // reassign variable
+    copyOfThis.priorTail = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withApple(Square value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.apple = value; // reassign variable
+    copyOfThis.apple = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withIsOn(boolean value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.isOn = value; // reassign variable
+    copyOfThis.isOn = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withRnd(Random value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.rnd = value; // reassign variable
+    copyOfThis.rnd = value; // assignment
     return copyOfThis;
   } // end function method
 
   public Game withKey(String value) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.key = value; // reassign variable
+    copyOfThis.key = value; // assignment
     return copyOfThis;
   } // end function method
 
@@ -161,8 +161,8 @@ class Square {
   public int y; // property
 
   public Square(int x, int y) {
-    this.x = x; // reassign variable
-    this.y = y; // reassign variable
+    this.x = x; // assignment
+    this.y = y; // assignment
   } // end constructor
 
   public String toString() { // function method

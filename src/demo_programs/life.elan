@@ -1,4 +1,4 @@
-# 78c74da2922d6e9740e496a80986a5de299e1c626e47c26d0f6205398e7dbe56 Elan 2.0.0-beta1 valid
+# 98a220654bace35ed4b79415a6d000370c9825d3e191014fbeb6f1a00333e1f9 Elan 2.0.0-beta1 valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -7,7 +7,7 @@ main
     call displayBlocks(grid)
     variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
     call nextGeneration(gridRef)
-    reassign grid to gridRef.value()
+    assign grid to gridRef.value()
     call sleep_ms(50)
   end while
 end main
@@ -15,7 +15,7 @@ end main
 procedure fillRandom(grid as List<of List<of Int>>)
   for col in range(0, 40)
     for row in range(0, 30)
-      reassign grid[col][row] to blackOrWhite(random())
+      assign grid[col][row] to blackOrWhite(random())
     end for
   end for
 end procedure
@@ -26,7 +26,7 @@ procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
   for x in range(0, 40)
     for y in range(0, 30)
       variable colour set to nextCellValue(grid, x, y)
-      reassign nextGen[x][y] to colour
+      assign nextGen[x][y] to colour
     end for
   end for
   call gridRef.set(nextGen)
@@ -35,7 +35,7 @@ end procedure
 function blackOrWhite(random as Float) returns Int
   variable result set to black
   if random > 0.5 then
-    reassign result to white
+    assign result to white
   end if
   return result
 end function
@@ -45,7 +45,7 @@ function north(cell as (Int, Int)) returns (Int, Int)
   variable y set to cell.item_1
   variable y2 set to y - 1
   if y2 is -1 then
-    reassign y2 to 29
+    assign y2 to 29
   end if
   return (x, y2)
 end function
@@ -55,7 +55,7 @@ function south(cell as (Int, Int)) returns (Int, Int)
   variable y set to cell.item_1
   variable y2 set to y + 1
   if y2 is 30 then
-    reassign y2 to 0
+    assign y2 to 0
   end if
   return (x, y2)
 end function
@@ -65,7 +65,7 @@ function east(cell as (Int, Int)) returns (Int, Int)
   variable y set to cell.item_1
   variable x2 set to x + 1
   if x2 is 40 then
-    reassign x2 to 0
+    assign x2 to 0
   end if
   return (x2, y)
 end function
@@ -75,7 +75,7 @@ function west(cell as (Int, Int)) returns (Int, Int)
   variable y set to cell.item_1
   variable x2 set to x - 1
   if x2 is -1 then
-    reassign x2 to 39
+    assign x2 to 39
   end if
   return (x2, y)
 end function
@@ -107,7 +107,7 @@ function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) retur
     variable cx set to cell.item_0
     variable cy set to cell.item_1
     if grid[cx][cy] is black then
-      reassign count to count + 1
+      assign count to count + 1
     end if
   end for
   return count
@@ -116,9 +116,9 @@ end function
 function willLive(cell as Int, liveNeighbours as Int) returns Boolean
   variable result set to false
   if cell is black then
-    reassign result to (liveNeighbours > 1) and (liveNeighbours < 4)
+    assign result to (liveNeighbours > 1) and (liveNeighbours < 4)
   else
-    reassign result to liveNeighbours is 3
+    assign result to liveNeighbours is 3
   end if
   return result
 end function
@@ -127,7 +127,7 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
   variable colour set to white
   variable live set to willLive(grid[x][y], liveNeighbours(grid, x, y))
   if live then
-    reassign colour to black
+    assign colour to black
   end if
   return colour
 end function

@@ -10,7 +10,7 @@ import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
-import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { ReturnStatement } from "../../src/ide/frames/statements/return-statement";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
@@ -171,7 +171,7 @@ suite("Editing Frames", () => {
   });
   test("Cannot remove selector that is only statement", () => {
     const file = emptyMainOnly();
-    const main = file.getById("elan_main1") as MainFrame;
+    const main = file.getById("elan_main1") as MainRoutine;
     const sel = file.getById("elan_select2") as StatementSelector;
     sel.processKey(del());
     assert.equal(main.getFirstChild(), sel);
@@ -216,7 +216,7 @@ suite("Editing Frames", () => {
     const select6 = file.getById("elan_select6");
     var3.select();
     var3.processKey(ctrl_x());
-    const main = file.getById("elan_main1") as MainFrame;
+    const main = file.getById("elan_main1") as MainRoutine;
     assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
   test("#666 able to move a frame past a selector", async () => {
@@ -229,7 +229,7 @@ suite("Editing Frames", () => {
     const select6 = file.getById("elan_select6");
     var3.select();
     var3.processKey(ctrl_down());
-    const main = file.getById("elan_main1") as MainFrame;
+    const main = file.getById("elan_main1") as MainRoutine;
     assert.equal(main.getChildren()[0].renderAsElanSource(), select6.renderAsElanSource());
     var3.processKey(ctrl_up());
     assert.equal(main.getChildren()[0].renderAsElanSource(), var3.renderAsElanSource());

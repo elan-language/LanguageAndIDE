@@ -19,16 +19,16 @@ Sub main()
   While Not tm.isHalted()
     Dim rule = tm.findMatchingRule() ' variable definition
     tm.singleStep() ' call procedure
-    steps = steps + 1 ' reassign variable
+    steps = steps + 1 ' assignment
     clearPrintedText() ' call procedure
-    Console.WriteLine(tm.tape) ' print
+    Console.WriteLine(tm.tape) ' print statement
     printTab(tm.headPosition - 1, "^") ' call procedure
-    Console.WriteLine($"Step: {steps}") ' print
-    Console.WriteLine($"State: {tm.currentState}") ' print
-    Console.WriteLine($"Rule applied: {rule.toString()}") ' print
+    Console.WriteLine($"Step: {steps}") ' print statement
+    Console.WriteLine($"State: {tm.currentState}") ' print statement
+    Console.WriteLine($"Rule applied: {rule.toString()}") ' print statement
     sleep_ms(40) ' call procedure
   End While
-  Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}") ' print
+  Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}") ' print statement
 End Sub
 
 Const initState = "init"
@@ -38,12 +38,12 @@ Const haltState = "halt"
 Class TuringMachine
 
   Sub New(initialState As String, haltState As String)
-    Me.tape = "" ' reassign variable
-    Me.initialState = initialState ' reassign variable
-    Me.haltState = haltState ' reassign variable
-    Me.rules = New List(Of Rule)() ' reassign variable
-    Me.currentState = initialState ' reassign variable
-    Me.headPosition = 0 ' reassign variable
+    Me.tape = "" ' assignment
+    Me.initialState = initialState ' assignment
+    Me.haltState = haltState ' assignment
+    Me.rules = New List(Of Rule)() ' assignment
+    Me.currentState = initialState ' assignment
+    Me.headPosition = 0 ' assignment
   End Sub
 
   Function toString() As String
@@ -63,11 +63,11 @@ Class TuringMachine
   Property tape As String
 
   Sub setTape(tape As String) ' procedure method
-    Me.tape = tape ' reassign variable
+    Me.tape = tape ' assignment
   End Sub
 
   Sub append(rule As Rule) ' procedure method
-    Me.rules = Me.rules.withAppend(rule) ' reassign variable
+    Me.rules = Me.rules.withAppend(rule) ' assignment
   End Sub
 
   Sub singleStep() ' procedure method
@@ -89,22 +89,22 @@ Class TuringMachine
 
   Sub write(newSymbol As String) ' procedure method
     Dim hp = Me.headPosition ' variable definition
-    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' reassign variable
+    Me.tape = Me.tape.subString(0, hp) + newSymbol + Me.tape.subString(hp + 1, Me.tape.length()) ' assignment
   End Sub
 
   Sub execute(rule As Rule) ' procedure method
-    Me.currentState = rule.nextState ' reassign variable
+    Me.currentState = rule.nextState ' assignment
     Me.write(rule.writeSymbol) ' call procedure
     If rule.move = Dir.right Then
-      Me.headPosition = Me.headPosition + 1 ' reassign variable
+      Me.headPosition = Me.headPosition + 1 ' assignment
       If Me.headPosition >= Me.tape.length() Then
-        Me.tape = Me.tape + " " ' reassign variable
+        Me.tape = Me.tape + " " ' assignment
       End If
     Else
-      Me.headPosition = Me.headPosition - 1 ' reassign variable
+      Me.headPosition = Me.headPosition - 1 ' assignment
       If Me.headPosition < 0 Then
-        Me.tape = " " + Me.tape ' reassign variable
-        Me.headPosition = 0 ' reassign variable
+        Me.tape = " " + Me.tape ' assignment
+        Me.headPosition = 0 ' assignment
       End If
     End If
   End Sub
@@ -124,11 +124,11 @@ Class Rule
   Property move As Dir
 
   Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
-    Me.currentState = currentState ' reassign variable
-    Me.currentSymbol = currentSymbol ' reassign variable
-    Me.nextState = nextState ' reassign variable
-    Me.writeSymbol = writeSymbol ' reassign variable
-    Me.move = move ' reassign variable
+    Me.currentState = currentState ' assignment
+    Me.currentSymbol = currentSymbol ' assignment
+    Me.nextState = nextState ' assignment
+    Me.writeSymbol = writeSymbol ' assignment
+    Me.move = move ' assignment
   End Sub
 
   Function toString() As String

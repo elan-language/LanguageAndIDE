@@ -358,10 +358,10 @@ return [main, _tests];}`;
 main
   variable a set to 1.0
   variable b set to 1.1
-  reassign a to pow(2, 2)
-  reassign b to pow(2, 2)
-  reassign b to pow(2, 0.5)
-  reassign b to pow(0.5, 2)
+  assign a to pow(2, 2)
+  assign b to pow(2, 2)
+  assign b to pow(2, 0.5)
+  assign b to pow(0.5, 2)
   call printNoLine(a)
   call printNoLine(b)
 end main`;
@@ -402,7 +402,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  reassign a to a + 1
+  assign a to a + 1
   call printNoLine(a)
 end main`;
 
@@ -685,7 +685,7 @@ end main`;
 
 main
   variable x set to 1
-  reassign x to pow(2, 0.5)
+  assign x to pow(2, 0.5)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -711,7 +711,7 @@ end main`;
 
 main
   variable x set to 1
-  reassign x to pow(0.5, 2)
+  assign x to pow(0.5, 2)
 end main`;
 
     const fileImpl = new FileImpl(

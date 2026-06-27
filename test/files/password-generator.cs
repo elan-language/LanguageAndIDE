@@ -29,10 +29,10 @@ static void main() {
   while (!valid) {
     var pwRef = new AsRef<string>("");
     populatePassword(pwRef, all); // call procedure
-    password = pwRef.value(); // reassign variable
-    valid = isValid(password, upper, lower, digit, symbol); // reassign variable
+    password = pwRef.value(); // assignment
+    valid = isValid(password, upper, lower, digit, symbol); // assignment
   } // end while
-  Console.WriteLine(password); // print
+  Console.WriteLine(password); // print statement
 } // end main
 
 static void populatePassword(AsRef<string> password, string all) { // procedure
@@ -74,7 +74,7 @@ static bool passesRule(bool rule, string charSet, string password) { // function
 static bool hasAtLeastOneFrom(string fromChars, string password) { // function
   var hasOne = false;
   foreach (var ch in password) {
-    hasOne = hasOne || fromChars.contains(ch); // reassign variable
+    hasOne = hasOne || fromChars.contains(ch); // assignment
   } // end foreach
   return hasOne;
 } // end function

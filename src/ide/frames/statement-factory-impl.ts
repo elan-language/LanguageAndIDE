@@ -2,6 +2,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
+import { Assignment } from "./statements/assignment";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
@@ -12,7 +13,6 @@ import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ReAssignVariable } from "./statements/reassign-variable";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -54,7 +54,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new PrintStatement(parent);
   }
   public newSet(parent: Parent): Frame {
-    return new ReAssignVariable(parent);
+    return new Assignment(parent);
   }
   public newThrow(parent: Parent): Frame {
     return new Throw(parent);

@@ -91,8 +91,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [[""],[""],[""]]
-  reassign a[0] to ["bar", "foo"]
-  reassign a[2] to ["yon", "xan"]
+  assign a[0] to ["bar", "foo"]
+  assign a[2] to ["yon", "xan"]
   call printNoLine(a[0][1])
   call printNoLine(a[2][0])
 end main`;
@@ -130,8 +130,8 @@ return [main, _tests];}`;
 
 main
   variable a set to [["",""],["",""],["",""]]
-  reassign a[0] to ["bar", "foo"]
-  reassign a[0][1] to "yon"
+  assign a[0] to ["bar", "foo"]
+  assign a[0][1] to "yon"
   call printNoLine(a[0][1])
 end main`;
 
@@ -642,7 +642,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2],[3,4]]
-  reassign a[0][0] to 0
+  assign a[0][0] to 0
   call printNoLine(a[0][0])
 end main`;
 
@@ -677,7 +677,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[[1,2],[3,4]],[[5,6],[7,8]]]
-  reassign a[0][0][0] to 0
+  assign a[0][0][0] to 0
   call printNoLine(a[0][0][0])
 end main`;
 
@@ -712,7 +712,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[[1,2],[3,4]],[[5,6],[7,8]]]
-  reassign a[0][0] to [9,10]
+  assign a[0][0] to [9,10]
   call printNoLine(a[0][0][0])
 end main`;
 
@@ -747,7 +747,7 @@ return [main, _tests];}`;
 
 main
   variable a set to [[1,2],[3,4]]
-  reassign a[0][0] to ""
+  assign a[0][0] to ""
   call printNoLine(a[0][0])
 end main`;
 
@@ -773,7 +773,7 @@ end main`;
 
 main
   variable a set to new List<of List<of Int>>()
-  reassign a[0] to [3]
+  assign a[0] to [3]
 end main`;
 
     const fileImpl = new FileImpl(
@@ -821,7 +821,7 @@ end main
 
 main
   variable a set to createList(3, "")
-  reassign a[0][0] to "foo"
+  assign a[0][0] to "foo"
 end main
 `;
 
@@ -868,7 +868,7 @@ end main
 
 main
   variable a set to createPopulatedList(3, new List<of String>())
-  reassign a[0] to "foo"
+  assign a[0] to "foo"
 end main
 `;
 
@@ -894,7 +894,7 @@ end main
 
 main
   variable a set to [[""],[""]]
-  reassign a[0] to new List<of String>()
+  assign a[0] to new List<of String>()
   variable b set to a[0][0]
 end main
 `;
@@ -920,7 +920,7 @@ end main
 
 main
   variable a set to createPopulatedList(3, new List<of String>())
-  reassign a[0] to true
+  assign a[0] to true
 end main
 `;
 
@@ -998,7 +998,7 @@ end main
 
 main
   variable a set to [[1,2],[3,4]]
-  reassign a[0]["b"] to 5
+  assign a[0]["b"] to 5
 end main
 `;
 

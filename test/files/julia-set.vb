@@ -22,7 +22,7 @@ Sub main()
     Dim vg = allpoints(p) ' variable definition
     displayVectorGraphics(vg) ' call procedure
     p.checkkeys() ' call procedure
-    Console.WriteLine($"x = {p.jx} y = {p.jy}") ' print
+    Console.WriteLine($"x = {p.jx} y = {p.jy}") ' print statement
   End While
 End Sub
 
@@ -35,7 +35,7 @@ Function allpoints(p As Coords) As List(Of VectorGraphic)
       ' colour depends on how many iterations were done for that point
       Dim col = if_(n = nmax, &Hffffff, ((n*&H010201) Mod &Hffffff)) ' variable definition
       Dim rect = (New RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25) ' variable definition
-      vg2 = vg2.withAppend(rect) ' reassign variable
+      vg2 = vg2.withAppend(rect) ' assignment
     Next yp
   Next xp
   Return vg2
@@ -48,11 +48,11 @@ Function onepoint(x As Double, y As Double, maxnum As Integer, p As Coords) As I
   Dim i = 0 ' variable definition
   While Not done
     Dim c = 2*a*b ' variable definition
-    a = (a*a - b*b) + p.jx ' reassign variable
-    b = c + p.jy ' reassign variable
-    i = i + 1 ' reassign variable
+    a = (a*a - b*b) + p.jx ' assignment
+    b = c + p.jy ' assignment
+    i = i + 1 ' assignment
     If (i >= maxnum) Or ((a*a + b*b) > 4) Then
-      done = True ' reassign variable
+      done = True ' assignment
     End If
   End While
   Return i
@@ -62,13 +62,13 @@ Class Coords
 
   Sub New()
     ' number of cells per unit distance on complex plane
-    Me.scale = 100 ' reassign variable
+    Me.scale = 100 ' assignment
     ' centered on the screen to start
-    Me.xoff = 0 ' reassign variable
-    Me.yoff = 0 ' reassign variable
+    Me.xoff = 0 ' assignment
+    Me.yoff = 0 ' assignment
     ' Julia set parameters
-    Me.jx = -0.512 ' reassign variable
-    Me.jy = 0.521 ' reassign variable
+    Me.jx = -0.512 ' assignment
+    Me.jy = 0.521 ' assignment
   End Sub
 
   Function toString() As String
@@ -97,32 +97,32 @@ Class Coords
       ' loop because more than one key may have been pressed
       While Not k.equals("")
         If k.equals("z") Then
-          Me.scale = Me.scale*1.2 ' reassign variable
+          Me.scale = Me.scale*1.2 ' assignment
         ElseIf k.equals("x") Then
-          Me.scale = Me.scale/1.2 ' reassign variable
+          Me.scale = Me.scale/1.2 ' assignment
         ElseIf k.equals("ArrowUp") Then
-          Me.yoff = Me.yoff + panstep ' reassign variable
+          Me.yoff = Me.yoff + panstep ' assignment
         ElseIf k.equals("ArrowDown") Then
-          Me.yoff = Me.yoff - panstep ' reassign variable
+          Me.yoff = Me.yoff - panstep ' assignment
         ElseIf k.equals("ArrowLeft") Then
-          Me.xoff = Me.xoff + panstep ' reassign variable
+          Me.xoff = Me.xoff + panstep ' assignment
         ElseIf k.equals("ArrowRight") Then
-          Me.xoff = Me.xoff - panstep ' reassign variable
+          Me.xoff = Me.xoff - panstep ' assignment
         ElseIf k.equals("g") Then
-          Me.jx = Me.jx + jstep ' reassign variable
+          Me.jx = Me.jx + jstep ' assignment
         ElseIf k.equals("j") Then
-          Me.jx = Me.jx - jstep ' reassign variable
+          Me.jx = Me.jx - jstep ' assignment
         ElseIf k.equals("y") Then
-          Me.jy = Me.jy + jstep ' reassign variable
+          Me.jy = Me.jy + jstep ' assignment
         ElseIf k.equals("h") Then
-          Me.jy = Me.jy - jstep ' reassign variable
+          Me.jy = Me.jy - jstep ' assignment
         Else
           ' ignore erroneous key presses
         End If
         ' there is no harm in recalculating even if an invalid key was pressed
-        changed = True ' reassign variable
+        changed = True ' assignment
         ' another key may have been pressed
-        k = getKey() ' reassign variable
+        k = getKey() ' assignment
       End While
       sleep_ms(10) ' call procedure
     End While

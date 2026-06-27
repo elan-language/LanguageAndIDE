@@ -174,7 +174,7 @@ return [main, _tests];}`;
 
 main
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
-  reassign i to i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar")
+  assign i to i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar")
   call printNoLine(i)
 end main`;
 

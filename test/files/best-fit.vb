@@ -18,8 +18,8 @@ Class Point
   Property y As Double
 
   Sub New(x As Double, y As Double)
-    Me.x = x ' reassign variable
-    Me.y = y ' reassign variable
+    Me.x = x ' assignment
+    Me.y = y ' assignment
   End Sub
 
   Function toString() As String

@@ -1,6 +1,5 @@
 import assert from "assert";
 import { processWorksheetsInDirectory } from "../../src/build-scripts/preprocess-worksheets";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { processInnerCode } from "../../src/tools/codeParser";
 import {
   processCode,
@@ -34,7 +33,7 @@ suite("process worksheets", () => {
   for col in range(0, 40)
     for row in range(0, 30)
       variable cell set to if_(random() > 0.5, black, white)
-      reassign grid[col][row] to cell
+      assign grid[col][row] to cell
     end for
   end for
 end procedure`;
@@ -48,7 +47,7 @@ end procedure`;
     const code = `for col in range(0, 40)
   for row in range(0, 30)
     variable cell set to if_(random() > 0.5, black, white)
-    reassign grid[col][row] to cell
+    assign grid[col][row] to cell
   end for
 end for`;
 
@@ -59,7 +58,7 @@ end for`;
 
   ignore_test("process constructor", async () => {
     const code = `constructor()
-  reassign this.p1 to 1
+  assign this.p1 to 1
 end constructor`;
 
     const actual = await processInnerCode(code);
@@ -156,12 +155,12 @@ end function`;
     const code = `function hex(n as Int) returns String
   variable h set to ""
   if (n &lt; 1) then
-    reassign h to "0"
+    assign h to "0"
   else
     variable m set to n
     while m &gt; 0
-      reassign h to hexDigit(m mod 16) + h
-      reassign m to divAsInt(m, 16)
+      assign h to hexDigit(m mod 16) + h
+      assign m to divAsInt(m, 16)
     end while
   end if
   return h
@@ -353,14 +352,14 @@ end function`;
             variable unused set to something
             for n in range(0, 5)
               if attempt[n] is unused[n] then
-                reassign mark to setChar(mark, n, "2")
-                reassign unused to something
+                assign mark to setChar(mark, n, "2")
+                assign unused to something
               end if
             end for
             for n in range(0, 5)
               if (mark[n] isnt "2") and unused.contains(attempt[n]) then
-                reassign mark to setChar(mark, n, "1")
-                reassign unused to something
+                assign mark to setChar(mark, n, "1")
+                assign unused to something
               end if
             end for
             return mark

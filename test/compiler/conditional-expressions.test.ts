@@ -102,7 +102,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70
-  reassign score to score + if_(score is 70, 1, 2)
+  assign score to score + if_(score is 70, 1, 2)
   call printNoLine(score)
 end main
 `;
@@ -138,7 +138,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  reassign score to if_(true, 60.1, 60)
+  assign score to if_(true, 60.1, 60)
   call printNoLine(score)
 end main
 `;
@@ -174,7 +174,7 @@ return [main, _tests];}`;
 
 main
   variable score set to 70.1
-  reassign score to if_(false, 60, 60.1)
+  assign score to if_(false, 60, 60.1)
   call printNoLine(score)
 end main
 `;
@@ -210,7 +210,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  reassign score to if_(false, new Bar(), cast(new Bar()))
+  assign score to if_(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -284,7 +284,7 @@ return [main, _tests];}`;
 
 main
   variable score set to cast(new Bar())
-  reassign score to if_(false, cast(new Bar()), new Bar())
+  assign score to if_(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 
@@ -439,7 +439,7 @@ end main`;
 
 main
  variable a set to 10
- reassign a to if_(true, 0.5, 10)
+ assign a to if_(true, 0.5, 10)
  call printNoLine(a)
 end main`;
 
@@ -466,7 +466,7 @@ end main`;
 
 main
  variable a set to 10
- reassign a to if_(true, 10, 0.5)
+ assign a to if_(true, 10, 0.5)
  call printNoLine(a)
 end main`;
 
@@ -493,7 +493,7 @@ end main`;
 
 main
   variable score set to new Bar()
-  reassign score to if_(false, new Foo(), new Bar())
+  assign score to if_(false, new Foo(), new Bar())
   call printNoLine(score)
 end main
 
@@ -527,7 +527,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  reassign score to if_(false, new Bar(), new Foo())
+  assign score to if_(false, new Bar(), new Foo())
   call printNoLine(score)
 end main
 
@@ -560,7 +560,7 @@ end class`;
 
 main
   variable score set to new Bar()
-  reassign score to if_(false, new Bar(), cast(new Bar()))
+  assign score to if_(false, new Bar(), cast(new Bar()))
   call printNoLine(score)
 end main
 
@@ -597,7 +597,7 @@ end function`;
 
 main
   variable score set to new Bar()
-  reassign score to if_(false, cast(new Bar()), new Bar())
+  assign score to if_(false, cast(new Bar()), new Bar())
   call printNoLine(score)
 end main
 

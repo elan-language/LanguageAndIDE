@@ -3,12 +3,12 @@
 Sub main()
   Dim order = inputIntBetween("Enter order of dragon (1..12): ", 1, 12) ' variable definition
   clearPrintedText() ' call procedure
-  Console.WriteLine($"Dragon of order {order}") ' print
+  Console.WriteLine($"Dragon of order {order}") ' print statement
   Dim side = (75/pow(sqrt(2), order)) ' variable definition
   Dim corner = side/12.0/cos(45) ' variable definition
   Dim turns = left ' variable definition
   For Each i In range(1, order + 1)
-    turns = setTurns(turns) ' reassign variable
+    turns = setTurns(turns) ' assignment
   Next i
   Dim t = New Turtle() ' variable definition
   setupTurtle(t, order) ' call procedure
@@ -23,7 +23,7 @@ Sub drawDragon(t As Turtle, order As Integer, turns As String, side As Double, c
   Dim p = (200.0/order).floor() ' variable definition
   Dim turnI = 0 ' variable definition
   For Each turn In turns
-    turnI = (if_(turn.equals(left), 1, -1)) ' reassign variable
+    turnI = (if_(turn.equals(left), 1, -1)) ' assignment
     t.turn(-45*turnI) ' call procedure
     t.move(corner) ' call procedure
     t.turn(-45*turnI) ' call procedure
@@ -52,7 +52,7 @@ End Function
 Function reflect(s As String) As String
   Dim sR = "" ' variable definition
   For Each i In range(1, s.length() + 1)
-    sR = if_((s(i - 1)).equals(left), right, left) + sR ' reassign variable
+    sR = if_((s(i - 1)).equals(left), right, left) + sR ' assignment
   Next i
   Return sR
 End Function

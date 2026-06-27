@@ -21,16 +21,16 @@ static void main() {
   while (!tm.isHalted()) {
     var rule = tm.findMatchingRule();
     tm.singleStep(); // call procedure
-    steps = steps + 1; // reassign variable
+    steps = steps + 1; // assignment
     clearPrintedText(); // call procedure
-    System.out.println(tm.tape); // print
+    System.out.println(tm.tape); // print statement
     printTab(tm.headPosition - 1, "^"); // call procedure
-    System.out.println(String.format("Step: %", steps)); // print
-    System.out.println(String.format("State: %", tm.currentState)); // print
-    System.out.println(String.format("Rule applied: %", rule.toString())); // print
+    System.out.println(String.format("Step: %", steps)); // print statement
+    System.out.println(String.format("State: %", tm.currentState)); // print statement
+    System.out.println(String.format("Rule applied: %", rule.toString())); // print statement
     sleep_ms(40); // call procedure
   } // end while
-  System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print
+  System.out.println(String.format("The roman numeral equivalent for % is %", dec, tm.tape.trim())); // print statement
 } // end main
 
 static final String initState = "init"; // constant
@@ -40,12 +40,12 @@ static final String haltState = "halt"; // constant
 class TuringMachine {
 
   public TuringMachine(String initialState, String haltState) {
-    this.tape = ""; // reassign variable
-    this.initialState = initialState; // reassign variable
-    this.haltState = haltState; // reassign variable
-    this.rules = new List<Rule>(); // reassign variable
-    this.currentState = initialState; // reassign variable
-    this.headPosition = 0; // reassign variable
+    this.tape = ""; // assignment
+    this.initialState = initialState; // assignment
+    this.haltState = haltState; // assignment
+    this.rules = new List<Rule>(); // assignment
+    this.currentState = initialState; // assignment
+    this.headPosition = 0; // assignment
   } // end constructor
 
   public String toString() { // function method
@@ -65,11 +65,11 @@ class TuringMachine {
   public String tape; // property
 
   public void setTape(String tape) { // procedure method
-    this.tape = tape; // reassign variable
+    this.tape = tape; // assignment
   } // end procedure method
 
   public void append(Rule rule) { // procedure method
-    this.rules = this.rules.withAppend(rule); // reassign variable
+    this.rules = this.rules.withAppend(rule); // assignment
   } // end procedure method
 
   public void singleStep() { // procedure method
@@ -91,22 +91,22 @@ class TuringMachine {
 
   public void write(String newSymbol) { // procedure method
     var hp = this.headPosition;
-    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // reassign variable
+    this.tape = this.tape.subString(0, hp) + newSymbol + this.tape.subString(hp + 1, this.tape.length()); // assignment
   } // end procedure method
 
   public void execute(Rule rule) { // procedure method
-    this.currentState = rule.nextState; // reassign variable
+    this.currentState = rule.nextState; // assignment
     this.write(rule.writeSymbol); // call procedure
     if (rule.move == Dir.right) {
-      this.headPosition = this.headPosition + 1; // reassign variable
+      this.headPosition = this.headPosition + 1; // assignment
       if (this.headPosition >= this.tape.length()) {
-        this.tape = this.tape + " "; // reassign variable
+        this.tape = this.tape + " "; // assignment
       } // end if
     } else {
-      this.headPosition = this.headPosition - 1; // reassign variable
+      this.headPosition = this.headPosition - 1; // assignment
       if (this.headPosition < 0) {
-        this.tape = " " + this.tape; // reassign variable
-        this.headPosition = 0; // reassign variable
+        this.tape = " " + this.tape; // assignment
+        this.headPosition = 0; // assignment
       } // end if
     } // end if
   } // end procedure method
@@ -126,11 +126,11 @@ class Rule {
   public Dir move; // property
 
   public Rule(String currentState, String currentSymbol, String nextState, String writeSymbol, Dir move) {
-    this.currentState = currentState; // reassign variable
-    this.currentSymbol = currentSymbol; // reassign variable
-    this.nextState = nextState; // reassign variable
-    this.writeSymbol = writeSymbol; // reassign variable
-    this.move = move; // reassign variable
+    this.currentState = currentState; // assignment
+    this.currentSymbol = currentSymbol; // assignment
+    this.nextState = nextState; // assignment
+    this.writeSymbol = writeSymbol; // assignment
+    this.move = move; // assignment
   } // end constructor
 
   public String toString() { // function method

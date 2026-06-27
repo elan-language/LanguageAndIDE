@@ -5,12 +5,12 @@ public class Global {
 static void main() {
   var order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12);
   clearPrintedText(); // call procedure
-  System.out.println(String.format("Dragon of order %", order)); // print
+  System.out.println(String.format("Dragon of order %", order)); // print statement
   var side = (75/pow(sqrt(2), order));
   var corner = side/12.0/cos(45);
   var turns = left;
   foreach (var i in range(1, order + 1)) {
-    turns = setTurns(turns); // reassign variable
+    turns = setTurns(turns); // assignment
   } // end foreach
   var t = new Turtle();
   setupTurtle(t, order); // call procedure
@@ -25,7 +25,7 @@ static void drawDragon(Turtle t, int order, String turns, double side, double co
   var p = (200.0/order).floor();
   var turnI = 0;
   foreach (var turn in turns) {
-    turnI = (if_(turn.equals(left), 1, -1)); // reassign variable
+    turnI = (if_(turn.equals(left), 1, -1)); // assignment
     t.turn(-45*turnI); // call procedure
     t.move(corner); // call procedure
     t.turn(-45*turnI); // call procedure
@@ -54,7 +54,7 @@ static String setTurns(String turns) { // function
 static String reflect(String s) { // function
   var sR = "";
   foreach (var i in range(1, s.length() + 1)) {
-    sR = if_((s[i - 1]).equals(left), right, left) + sR; // reassign variable
+    sR = if_((s[i - 1]).equals(left), right, left) + sR; // assignment
   } // end foreach
   return sR;
 } // end function

@@ -2,7 +2,7 @@
 
 Sub main()
   Dim blocks = createBlockGraphics(black) ' variable definition
-  blocks = createStart(blocks) ' reassign variable
+  blocks = createStart(blocks) ' assignment
   For Each i In range(0, displayWidth + 1)
     Dim x = randint(0, 39) ' variable definition
     Dim y = randint(0, 29) ' variable definition
@@ -11,7 +11,7 @@ Sub main()
     Dim setTo = (random() + 0.7).floor() ' variable definition
     If okToSet(p, setTo, blocks) Then
       Dim colour = if_(setTo = 1, white, black) ' variable definition
-      blocks(p.x)(p.y) = colour ' reassign variable
+      blocks(p.x)(p.y) = colour ' assignment
     End If
   Next i
   displayBlocks(blocks) ' call procedure
@@ -32,7 +32,7 @@ Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
     For Each col In range(0, 40)
       Dim colour = b(col)(row) ' variable definition
       Dim symbol = if_(colour = white, " ", "X") ' variable definition
-      line = line + symbol ' reassign variable
+      line = line + symbol ' assignment
     Next col
     file.writeLine(line) ' call procedure
   Next row
@@ -42,7 +42,7 @@ End Sub
 Function createStart(b As List(Of List(Of Integer))) As List(Of List(Of Integer))
   Dim b2 = b ' variable definition
   For Each i In rangeInSteps(0, 16, 2)
-    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) ' reassign variable
+    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) ' assignment
   Next i
   Return b2
 End Function
@@ -51,12 +51,12 @@ Function addRectangle(b As List(Of List(Of Integer)), startX As Integer, startY 
   Dim paint = white ' variable definition
   Dim b2 = b ' variable definition
   For Each x In range(startX, startX + width + 1)
-    b2 = withPut(b2, x, startY, paint) ' reassign variable
-    b2 = withPut(b2, x, startY + depth, paint) ' reassign variable
+    b2 = withPut(b2, x, startY, paint) ' assignment
+    b2 = withPut(b2, x, startY + depth, paint) ' assignment
   Next x
   For Each y In range(startY, startY + depth + 1)
-    b2 = withPut(b2, startX, y, paint) ' reassign variable
-    b2 = withPut(b2, startX + width, y, paint) ' reassign variable
+    b2 = withPut(b2, startX, y, paint) ' assignment
+    b2 = withPut(b2, startX + width, y, paint) ' assignment
   Next y
   Return b2
 End Function
@@ -80,7 +80,7 @@ Function getValue(p As Point, b As List(Of List(Of Integer))) As Integer
   Dim result = 0 ' variable definition
   If (p.x > -1) And (p.x < 40) And (p.y > -1) And (p.y < 30) Then
     Dim colour = b(p.x)(p.y) ' variable definition
-    result = if_(colour = black, 0, 1) ' reassign variable
+    result = if_(colour = black, 0, 1) ' assignment
   End If
   Return result
 End Function
@@ -130,8 +130,8 @@ Class Point
   Property y As Integer
 
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' reassign variable
-    Me.y = y ' reassign variable
+    Me.x = x ' assignment
+    Me.y = y ' assignment
   End Sub
 
   Function toString() As String

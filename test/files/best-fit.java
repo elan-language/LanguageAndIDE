@@ -20,8 +20,8 @@ class Point {
   public double y; // property
 
   public Point(double x, double y) {
-    this.x = x; // reassign variable
-    this.y = y; // reassign variable
+    this.x = x; // assignment
+    this.y = y; // assignment
   } // end constructor
 
   public String toString() { // function method

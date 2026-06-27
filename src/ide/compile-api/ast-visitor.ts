@@ -102,7 +102,7 @@ import { GlobalComment } from "../frames/globals/global-comment";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { InterfaceFrame } from "../frames/globals/interface-frame";
-import { MainFrame } from "../frames/globals/main-frame";
+import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Index } from "../frames/parse-nodes";
 import { AbstractAlternatives } from "../frames/parse-nodes/abstract-alternatives";
@@ -163,6 +163,7 @@ import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
+import { Assignment } from "../frames/statements/assignment";
 import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
@@ -173,7 +174,6 @@ import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
-import { ReAssignVariable } from "../frames/statements/reassign-variable";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";
@@ -230,7 +230,7 @@ export function transform(
     return astRoot;
   }
 
-  if (node instanceof MainFrame) {
+  if (node instanceof MainRoutine) {
     const mainAsn = new MainAsn(node.getHtmlId(), scope);
     mainAsn.breakpointStatus = node.breakpointStatus;
 
@@ -366,7 +366,7 @@ export function transform(
     return letAsn;
   }
 
-  if (node instanceof ReAssignVariable) {
+  if (node instanceof Assignment) {
     const setAsn = new SetAsn(node.getHtmlId(), scope);
     setAsn.breakpointStatus = node.breakpointStatus;
 

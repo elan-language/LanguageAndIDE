@@ -40,7 +40,7 @@ main
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  reassign a to 2
+  assign a to 2
 end main`;
 
     const fileImpl = new FileImpl(
@@ -74,7 +74,7 @@ procedure pp(e as Int)
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  reassign a to 2
+  assign a to 2
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -109,7 +109,7 @@ function ff(e as Int) returns Int
   variable a set to 1
   variable b set to [1, 2]
   variable c set to "fred"
-  reassign a to 2
+  assign a to 2
   return a
 end function`;
 
@@ -150,7 +150,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    reassign a to 2
+    assign a to 2
   end procedure
 
   constructor()
@@ -200,7 +200,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    reassign a to 2
+    assign a to 2
     return a
   end function
 
@@ -248,7 +248,7 @@ class Foo
     variable a set to 1
     variable b set to [1, 2]
     variable c set to "fred"
-    reassign a to 2
+    assign a to 2
   end constructor
   function toString() returns String
     return ""
@@ -286,7 +286,7 @@ end class`;
 main
   variable tot set to 0
   for i in range(1, 11)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -318,7 +318,7 @@ main
   variable n set to 0
    for x in a
     variable z set to 101
-    reassign n to n + x
+    assign n to n + x
   end for
   call printNoLine(n)
 end main`;
@@ -353,10 +353,10 @@ main
   while x < 3
     variable y set to 0
       while y < 4
-        reassign y to y + 1
-        reassign t to t + 1
+        assign y to y + 1
+        assign t to t + 1
       end while
-      reassign x to x + 1
+      assign x to x + 1
   end while
   call printNoLine(t)
 end main`;
@@ -387,7 +387,7 @@ end main`;
 main
   try
     variable a set to 1
-    reassign a to 2
+    assign a to 2
     throw ElanRuntimeError "error"
   catch ElanRuntimeError
     call printNoLine("error")
@@ -416,7 +416,7 @@ end main`;
 main
   try
     variable a set to 1
-    reassign a to 2
+    assign a to 2
     throw ElanRuntimeError "error"
   catch ElanRuntimeError
     variable b set to 1
@@ -449,10 +449,10 @@ main
   variable a set to true
   if a then
     variable b set to 1
-    reassign b to 2
+    assign b to 2
   else
     variable c set to 1
-    reassign c to 2
+    assign c to 2
   end if
 end main`;
 
@@ -482,10 +482,10 @@ main
   variable a set to false
   if a then
     variable b set to 1
-    reassign b to 2
+    assign b to 2
   else
     variable c set to 1
-    reassign c to 2
+    assign c to 2
   end if
 end main`;
 
@@ -515,10 +515,10 @@ main
   variable a set to false
   if a then
     variable b set to 1
-    reassign b to 2
+    assign b to 2
   elif a is false then 
     variable c set to 1
-    reassign c to 2
+    assign c to 2
   end if
 end main`;
 
@@ -584,9 +584,9 @@ end class
 
 class Foo
   constructor()
-    reassign this.a to 1
-    reassign this.b to new Bar()
-    reassign this.c to [1,2]
+    assign this.a to 1
+    assign this.b to new Bar()
+    assign this.c to [1,2]
   end constructor
   function toString() returns String
     return ""
@@ -684,7 +684,7 @@ end function
 
 class Foo
   constructor(f as Func<of Foo => Int>)
-    reassign this.ff to f
+    assign this.ff to f
   end constructor
   function toString() returns String
     return ""

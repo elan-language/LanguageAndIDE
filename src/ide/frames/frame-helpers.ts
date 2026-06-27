@@ -14,7 +14,7 @@ import { PossiblyPrivateMember } from "./frame-interfaces/possibly-private-membe
 import { Selectable } from "./frame-interfaces/selectable";
 import { Statement } from "./frame-interfaces/statement";
 import { ClassFrame } from "./globals/class-frame";
-import { MainFrame } from "./globals/main-frame";
+import { MainRoutine } from "./globals/main-routine";
 import { ReturnStatement } from "./statements/return-statement";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
@@ -26,7 +26,7 @@ export function isFile(f?: Parent | File): f is File {
   return !!f && "isFile" in f;
 }
 
-export function isMain(f?: Frame): f is MainFrame {
+export function isMain(f?: Frame): f is MainRoutine {
   return !!f && "isMain" in f;
 }
 

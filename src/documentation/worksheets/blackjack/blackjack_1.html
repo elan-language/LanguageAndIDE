@@ -69,7 +69,7 @@ main
     if k.equals("y") then
       call game.setMessage("")
     else
-      reassign anotherRound to false
+      assign anotherRound to false
     end if
   end while
 end main
@@ -115,24 +115,24 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
   variable draw set to Outcome.draw
   variable playerOutcome set to draw
   if p is bust then
-    reassign playerOutcome to lose
+    assign playerOutcome to lose
   elif (p is bj) and (d isnt bj) then
-    reassign playerOutcome to winDouble
+    assign playerOutcome to winDouble
   elif d is bust then
-    reassign playerOutcome to win
+    assign playerOutcome to win
   elif (d is bj) and (p is bj) then
-    reassign playerOutcome to draw
+    assign playerOutcome to draw
   elif p is bj then
-    reassign playerOutcome to winDouble
+    assign playerOutcome to winDouble
   elif d is bj then
-    reassign playerOutcome to lose
+    assign playerOutcome to lose
   elif pTotal &gt; dTotal then
-    reassign playerOutcome to win
+    assign playerOutcome to win
   elif pTotal &lt; dTotal then
-    reassign playerOutcome to lose
+    assign playerOutcome to lose
   else
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
-    reassign playerOutcome to draw
+    assign playerOutcome to draw
   end if
   return playerOutcome
 end function
@@ -187,11 +187,11 @@ end test
 function intAsSuit(n as Int) returns Suit
   variable suit set to Suit.clubs
   if n is 1 then
-    reassign suit to Suit.diamonds
+    assign suit to Suit.diamonds
   elif n is 2 then
-    reassign suit to Suit.hearts
+    assign suit to Suit.hearts
   elif n is 3 then
-    reassign suit to Suit.spades
+    assign suit to Suit.spades
   end if
   return suit
 end function
@@ -205,11 +205,11 @@ end test
 
 function htmlForGame(game as Game) returns String
   variable html set to "&lt;div class='game'&gt;"
-  reassign html to html + htmlForPlayer(game.dealer)
+  assign html to html + htmlForPlayer(game.dealer)
   for player in game.players
-    reassign html to html + htmlForPlayer(player)
+    assign html to html + htmlForPlayer(player)
   end for
-  reassign html to html + $"&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
+  assign html to html + $"&lt;div class='message'&gt;{game.message}&lt;/div&gt;"
   return html + "&lt;/div&gt;"
 end function
 
@@ -224,12 +224,12 @@ end test
 
 function htmlForPlayer(player as Player) returns String
   variable html set to "&lt;div class='player'&gt;"
-  reassign html to html + $"&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
-  reassign html to html + "&lt;div class='hand'&gt;"
+  assign html to html + $"&lt;div class='details'&gt;{player.name} - {player.points} points {player.getMessage()}&lt;/div&gt;"
+  assign html to html + "&lt;div class='hand'&gt;"
   for card in player.cards
     variable suit set to card.suit
     variable rank set to card.rank
-    reassign html to html + htmlForCard(card)
+    assign html to html + htmlForCard(card)
   end for
   return html + "&lt;/div&gt;&lt;/div&gt;"
 end function
@@ -244,24 +244,24 @@ end test
 function htmlForCard(card as Card) returns String
   variable html set to ""
   if card.faceDown then
-    reassign html to "&lt;div class='card reversed'&gt;"
+    assign html to "&lt;div class='card reversed'&gt;"
   else
     variable rank set to card.rank
     variable suit set to card.suit
     variable colour set to colourForSuit(suit)
     variable symbol set to symbolForSuit(suit)
-    reassign html to $"&lt;div class='card {colour}'&gt;"
+    assign html to $"&lt;div class='card {colour}'&gt;"
     variable u set to htmlForSpot("u", rank)
     variable v set to htmlForSpot("v", symbol)
     variable grid set to ""
     for location in gridForRank(rank)
       if location.equals("royal") then
-        reassign grid to grid + htmlForSpot(location, rank)
+        assign grid to grid + htmlForSpot(location, rank)
       else
-        reassign grid to grid + htmlForSpot(location, symbol)
+        assign grid to grid + htmlForSpot(location, symbol)
       end if
     end for
-    reassign html to html + $"{u}{v}{grid}"
+    assign html to html + $"{u}{v}{grid}"
   end if
   return html + "&lt;/div&gt;"
 end function
@@ -284,9 +284,9 @@ end test
 
 class Game
   constructor(dealerStartPoints as Int)
-    reassign this.dealer to new Dealer(dealerStartPoints)
-    reassign this.players to new List&lt;of Player&gt;()
-    reassign this.message to ""
+    assign this.dealer to new Dealer(dealerStartPoints)
+    assign this.players to new List&lt;of Player&gt;()
+    assign this.message to ""
   end constructor
 
   property dealer as Dealer
@@ -297,7 +297,7 @@ class Game
 
   function withPlayers(p as List&lt;of Player&gt;) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.players to p
+    assign copyOfThis.players to p
     return copyOfThis
   end function
 
@@ -321,7 +321,7 @@ class Game
   end procedure
 
   procedure setMessage(message as String)
-    reassign this.message to message
+    assign this.message to message
   end procedure
 
   function toString() returns String
@@ -338,17 +338,17 @@ class Card
   property faceDown as Boolean
 
   constructor(rank as String, suit as Suit, facedown as Boolean)
-    reassign this.rank to rank
-    reassign this.suit to suit
-    reassign this.faceDown to facedown
+    assign this.rank to rank
+    assign this.suit to suit
+    assign this.faceDown to facedown
   end constructor
 
   procedure turnFaceUp()
-    reassign this.faceDown to false
+    assign this.faceDown to false
   end procedure
 
   procedure turnFaceDown()
-    reassign this.faceDown to true
+    assign this.faceDown to true
   end procedure
 
   function toString() returns String
@@ -374,7 +374,7 @@ abstract class Player
 
   procedure startTurn()
     if this.status is Status.active then
-      reassign this.hasTurn to true
+      assign this.hasTurn to true
     end if
   end procedure
 
@@ -394,23 +394,23 @@ abstract class Player
 
   procedure evaluateStatus(newCard as Card)
     if (this.cardCount() is 2) and (this.handTotal is 21) then
-      reassign this.status to Status.blackjack
+      assign this.status to Status.blackjack
     elif (this.handTotal &gt; 21) and (this.softAce) then
-      reassign this.handTotal to this.handTotal - 10
-      reassign this.softAce to false
+      assign this.handTotal to this.handTotal - 10
+      assign this.softAce to false
     elif this.handTotal &gt; 21 then
-      reassign this.status to Status.bust
+      assign this.status to Status.bust
     elif this.handTotal is 21 then
-      reassign this.status to Status.standing
+      assign this.status to Status.standing
     end if
     if this.status isnt Status.active then
-      reassign this.hasTurn to false
+      assign this.hasTurn to false
     end if
   end procedure
 
   procedure stand()
-    reassign this.status to Status.standing
-    reassign this.hasTurn to false
+    assign this.status to Status.standing
+    assign this.hasTurn to false
   end procedure
 
   procedure draw()
@@ -420,17 +420,17 @@ abstract class Player
     if newCard.rank.equals("A") then
       call this.addAce()
     else
-      reassign this.handTotal to this.handTotal + rankValue()[newCard.rank]
+      assign this.handTotal to this.handTotal + rankValue()[newCard.rank]
     end if
     call this.evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
     if this.softAce then
-      reassign this.handTotal to this.handTotal + 1
+      assign this.handTotal to this.handTotal + 1
     else
-      reassign this.handTotal to this.handTotal + 11
-      reassign this.softAce to true
+      assign this.handTotal to this.handTotal + 11
+      assign this.softAce to true
     end if
   end procedure
 
@@ -439,17 +439,17 @@ abstract class Player
   end function
 
   procedure changePointsBy(amount as Int)
-    reassign this.points to this.points + amount
+    assign this.points to this.points + amount
   end procedure
 
   abstract procedure newHand()
 
   procedure newHandHelper()
-    reassign this.hasTurn to false
-    reassign this.softAce to false
-    reassign this.cards to new List&lt;of Card&gt;()
-    reassign this.handTotal to 0
-    reassign this.status to Status.active
+    assign this.hasTurn to false
+    assign this.softAce to false
+    assign this.cards to new List&lt;of Card&gt;()
+    assign this.handTotal to 0
+    assign this.status to Status.active
     call this.draw()
     call this.draw()
   end procedure
@@ -460,13 +460,13 @@ abstract class Player
     variable msg set to ""
     variable status set to this.status
     if this.hasTurn then
-      reassign msg to msg + " - PLAYING"
+      assign msg to msg + " - PLAYING"
     elif status is Status.standing then
-      reassign msg to msg + " - STANDING"
+      assign msg to msg + " - STANDING"
     elif status is Status.blackjack then
-      reassign msg to msg + " - BLACKJACK"
+      assign msg to msg + " - BLACKJACK"
     elif status is Status.bust then
-      reassign msg to msg + " - BUST"
+      assign msg to msg + " - BUST"
     end if
     return msg
   end function
@@ -477,10 +477,10 @@ end class
 
 class Dealer inherits Player
   constructor(startingPoints as Int)
-    reassign this.name to "Dealer"
-    reassign this.points to startingPoints
-    reassign this.cards to new List&lt;of Card&gt;()
-    reassign this.faceCard to new Card("2", Suit.clubs, true)
+    assign this.name to "Dealer"
+    assign this.points to startingPoints
+    assign this.cards to new List&lt;of Card&gt;()
+    assign this.faceCard to new Card("2", Suit.clubs, true)
   end constructor
 
   property faceCard as Card
@@ -489,13 +489,13 @@ class Dealer inherits Player
 
   function withStatus(status as Status) returns Dealer
     let copyOfThis be copy(this)
-    reassign copyOfThis.status to status
+    assign copyOfThis.status to status
     return copyOfThis
   end function
 
   function withHandTotal(ht as Int) returns Dealer
     let copyOfThis be copy(this)
-    reassign copyOfThis.handTotal to ht
+    assign copyOfThis.handTotal to ht
     return copyOfThis
   end function
 
@@ -503,13 +503,13 @@ class Dealer inherits Player
     call this.startTurn()
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceUp()
-    reassign this.hasPlayed to true
+    assign this.hasPlayed to true
   end procedure
 
   procedure newHand()
-    reassign this.hasPlayed to false
+    assign this.hasPlayed to false
     call this.newHandHelper()
-    reassign this.faceCard to this.cards[0]
+    assign this.faceCard to this.cards[0]
     variable hiddenCard set to this.cards[1]
     call hiddenCard.turnFaceDown()
   end procedure
@@ -525,7 +525,7 @@ class Dealer inherits Player
   function getMessage() returns String
     variable msg set to ""
     if this.hasPlayed then
-      reassign msg to this.statusAsString() + $" - hand total: {this.handTotal}"
+      assign msg to this.statusAsString() + $" - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -538,26 +538,26 @@ end class
 
 class HumanPlayer inherits Player
   constructor(name as String, startingPoints as Int)
-    reassign this.name to name
-    reassign this.points to startingPoints
-    reassign this.cards to new List&lt;of Card&gt;()
+    assign this.name to name
+    assign this.points to startingPoints
+    assign this.cards to new List&lt;of Card&gt;()
   end constructor
 
   function withStatus(status as Status) returns HumanPlayer
     let copyOfThis be copy(this)
-    reassign copyOfThis.status to status
+    assign copyOfThis.status to status
     return copyOfThis
   end function
 
   function withHandTotal(ht as Int) returns HumanPlayer
     let copyOfThis be copy(this)
-    reassign copyOfThis.handTotal to ht
+    assign copyOfThis.handTotal to ht
     return copyOfThis
   end function
 
   function withCards(c as List&lt;of Card&gt;) returns HumanPlayer
     let copyOfThis be copy(this)
-    reassign copyOfThis.cards to c
+    assign copyOfThis.cards to c
     return copyOfThis
   end function
 
@@ -569,13 +569,13 @@ class HumanPlayer inherits Player
     variable key set to ""
     call clearKeyBuffer()
     while key.equals("")
-      reassign key to waitForKey()
+      assign key to waitForKey()
       if key.equals("d") then
         call this.draw()
       elif key.equals("s") then
         call this.stand()
       else
-        reassign key to ""
+        assign key to ""
       end if
     end while
   end procedure
@@ -583,7 +583,7 @@ class HumanPlayer inherits Player
   function getMessage() returns String
     variable msg set to this.statusAsString() + $"- hand total: {this.handTotal}"
     if this.hasTurn then
-      reassign msg to msg + " - press 'd' to draw, 's' to stand"
+      assign msg to msg + " - press 'd' to draw, 's' to stand"
     end if
     return msg
   end function

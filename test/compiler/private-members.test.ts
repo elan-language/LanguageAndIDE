@@ -24,8 +24,8 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
-        reassign this.p2 to "Apple"
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -101,7 +101,7 @@ class Foo
   property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
   procedure testSetP1(a as Int)
@@ -242,8 +242,8 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
-        reassign this.p2 to "Apple"
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
     end constructor
   function toString() returns String
     return ""
@@ -290,7 +290,7 @@ end class
 
 class Foo inherits Bar
     constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -334,7 +334,7 @@ class Foo
   property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
 end class`;
@@ -406,8 +406,8 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
-        reassign this.p2 to "Apple"
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
     end constructor
   function toString() returns String
     return ""

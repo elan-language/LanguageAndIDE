@@ -29,10 +29,10 @@ Sub main()
   While Not valid
     Dim pwRef = New AsRef(Of String)("") ' variable definition
     populatePassword(pwRef, all) ' call procedure
-    password = pwRef.value() ' reassign variable
-    valid = isValid(password, upper, lower, digit, symbol) ' reassign variable
+    password = pwRef.value() ' assignment
+    valid = isValid(password, upper, lower, digit, symbol) ' assignment
   End While
-  Console.WriteLine(password) ' print
+  Console.WriteLine(password) ' print statement
 End Sub
 
 Sub populatePassword(password As AsRef(Of String), all As String) ' procedure
@@ -78,7 +78,7 @@ End Class
 Function hasAtLeastOneFrom(fromChars As String, password As String) As Boolean
   Dim hasOne = False ' variable definition
   For Each ch In password
-    hasOne = hasOne Or fromChars.contains(ch) ' reassign variable
+    hasOne = hasOne Or fromChars.contains(ch) ' assignment
   Next ch
   Return hasOne
 End Function

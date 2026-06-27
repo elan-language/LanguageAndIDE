@@ -27,8 +27,8 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to 5
-    reassign this.p2 to ""
+    assign this.p1 to 5
+    assign this.p2 to ""
   end constructor
 
   property p1 as Float
@@ -98,8 +98,8 @@ end main
 
 class Foo
     constructor(p_1 as Float,  p_2 as String)
-        reassign this.p1 to p_1
-        reassign this.p2 to p_2
+        assign this.p1 to p_1
+        assign this.p2 to p_2
     end constructor
 
     property p1 as Float
@@ -167,7 +167,7 @@ end main
 class Foo
     constructor()
       variable bar set to new Bar()
-      reassign this.b to bar
+      assign this.b to bar
     end constructor
   function toString() returns String
     return ""
@@ -179,7 +179,7 @@ end class
 
 class Bar
     constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -279,7 +279,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.bar to new Bar()
+    assign this.bar to new Bar()
   end constructor
 
   property bar as Bar
@@ -292,8 +292,8 @@ end class
 
 class Bar
   constructor()
-    reassign this.p2 to ""
-    reassign this.foo to new Maybe<of Foo>()
+    assign this.p2 to ""
+    assign this.foo to new Maybe<of Foo>()
   end constructor
 
   property p1 as Int
@@ -401,7 +401,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.strArr to ["apple", "orange", "pair"]
+    assign this.strArr to ["apple", "orange", "pair"]
   end constructor
   function toString() returns String
     return ""
@@ -538,7 +538,7 @@ class Foo
   property p1 as Int
 
   procedure updateP1()
-    reassign this.p1 to 0
+    assign this.p1 to 0
   end procedure
 end class
 
@@ -607,7 +607,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop_1 to ""
+    assign this.prop_1 to ""
   end constructor
 
   function toString() returns String
@@ -698,7 +698,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to this.ff()
+    assign this.p1 to this.ff()
   end constructor
   function toString() returns String
     return ""
@@ -761,7 +761,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(1)
+  assign f to f.withP1(1)
   call printNoLine(f.p1)
 end main
 
@@ -776,7 +776,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    reassign copyOfThis.p1 to p
+    assign copyOfThis.p1 to p
     return copyOfThis
   end function
 end class`;
@@ -846,8 +846,8 @@ end main
 
 class Foo
   constructor()
-    reassign this.p2 to ""
-    reassign this.p3 to ""
+    assign this.p2 to ""
+    assign this.p3 to ""
   end constructor
 
   property p1 as Int
@@ -858,20 +858,20 @@ class Foo
 
   function withP1(p as Int) returns Foo
     let copyOfThis be copy(this)
-    reassign copyOfThis.p1 to p
+    assign copyOfThis.p1 to p
     return copyOfThis
   end function
 
   function withP2(p as String) returns Foo
      let copyOfThis be copy(this)
-    reassign copyOfThis.p2 to p
+    assign copyOfThis.p2 to p
     return copyOfThis
   end function
 
   procedure setup(pI as Int, pS as String)
-    reassign this.p1 to pI
-    reassign this.p2 to pS
-    reassign this.p3 to "unchanged"
+    assign this.p1 to pI
+    assign this.p2 to pS
+    assign this.p3 to "unchanged"
   end procedure
 
   function toString() returns String
@@ -964,7 +964,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to new List<of Int>()
+    assign this.p1 to new List<of Int>()
   end constructor
   function toString() returns String
     return ""
@@ -1059,7 +1059,7 @@ end class`;
 
 main
   variable x set to new Foo()
-  reassign x.p1 to 3
+  assign x.p1 to 3
 end main
 
 class Foo
@@ -1104,7 +1104,7 @@ class Foo
   end function
 
   constructor(val as Int)
-      reassign this.p1 to val
+      assign this.p1 to val
   end constructor
   function toString() returns String
     return ""
@@ -1141,7 +1141,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      reassign this.p1 to val
+      assign this.p1 to val
   end constructor
   function toString() returns String
     return ""
@@ -1181,7 +1181,7 @@ end main
 
 class Foo
   constructor(val as Int)
-      reassign this.p1 to val
+      assign this.p1 to val
   end constructor
   function toString() returns String
     return ""
@@ -1263,7 +1263,7 @@ end main
 
 class Foo
   constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -1422,7 +1422,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to new Bar()
+    assign this.p1 to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -1498,7 +1498,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to ""
+    assign this.p1 to ""
   end constructor
   function toString() returns String
     return ""
@@ -1729,7 +1729,7 @@ class Foo
   end function
 
     procedure setP1(a as Int)
-      reassign this.b to a
+      assign this.b to a
     end procedure
     
     property b as Int
@@ -1869,7 +1869,7 @@ end main
 
 class Foo
     constructor()
-      reassign this.vg to new CircleVG()
+      assign this.vg to new CircleVG()
     end constructor
   function toString() returns String
     return ""
@@ -1878,7 +1878,7 @@ class Foo
     property vg as CircleVG
 
     procedure bar()
-      reassign this.vg to this.vg.noSuch
+      assign this.vg to this.vg.noSuch
     end procedure
 
 end class`;
@@ -2074,7 +2074,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(f, 1)
+  assign f to f.withP1(f, 1)
   call printNoLine(f.p1)
 end main
 
@@ -2088,7 +2088,7 @@ class Foo
   property p1 as Int
 
   function withP1(nf as Foo, p as Int) returns Foo
-    reassign nf.p1 to p
+    assign nf.p1 to p
     return nf
   end function
 end class`;
@@ -2115,7 +2115,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(1)
+  assign f to f.withP1(1)
   call printNoLine(f.p1)
 end main
 
@@ -2129,7 +2129,7 @@ class Foo
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    reassign this.p1 to p
+    assign this.p1 to p
     return this
   end function
 end class`;
@@ -2181,7 +2181,7 @@ class Foo
 
   function withP1(p as Int) returns Bar
     variable nb set to new Bar()
-    reassign nb.p1 to p
+    assign nb.p1 to p
     return nb
   end function
 end class`;
@@ -2208,7 +2208,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(f, 1)
+  assign f to f.withP1(f, 1)
   call printNoLine(f.p1)
 end main
 
@@ -2223,7 +2223,7 @@ class Foo
 
   function withP1(nff as Foo, p as Int) returns Foo
     variable nf set to nff
-    reassign nf.p1 to p
+    assign nf.p1 to p
     return nf
   end function
 end class`;
@@ -2250,7 +2250,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(1)
+  assign f to f.withP1(1)
   call printNoLine(f.p1)
 end main
 
@@ -2264,7 +2264,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     variable copyOfThis set to new Foo()
-    reassign copyOfThis.p1 to p
+    assign copyOfThis.p1 to p
     return copyOfThis
   end function
 end class`;
@@ -2291,7 +2291,7 @@ end class`;
 
 main
   variable f set to new Foo()
-  reassign f to f.withP1(1)
+  assign f to f.withP1(1)
   call printNoLine(f.p1)
 end main
 
@@ -2305,7 +2305,7 @@ class Foo
 
   function withP1(p as Int) returns Foo
     variable cpy set to copy(this)
-    reassign cpy.p1 to p
+    assign cpy.p1 to p
     return cpy
   end function
 end class`;
@@ -2345,7 +2345,7 @@ class Foo
 
   procedure withP1(p as Int)
     let copyOfThis be copy(this)
-    reassign cpy.p1 to p
+    assign cpy.p1 to p
   end procedure
 end class`;
 

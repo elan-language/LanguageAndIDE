@@ -12,13 +12,13 @@ import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
 import {
-  expandCollapseAll,
-  helper_compileStatusAsDisplayStatus,
-  helper_parseStatusAsDisplayColour,
-  helper_testStatusAsDisplayStatus,
-  isMain,
-  isSelector,
-  removeHtmlTagsAndEscChars,
+    expandCollapseAll,
+    helper_compileStatusAsDisplayStatus,
+    helper_parseStatusAsDisplayColour,
+    helper_testStatusAsDisplayStatus,
+    isMain,
+    isSelector,
+    removeHtmlTagsAndEscChars,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -38,7 +38,7 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
-import { MainFrame } from "./globals/main-frame";
+import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Profile } from "./profile";
 
 import { TestFrame } from "./globals/test-frame";
@@ -48,29 +48,29 @@ import { LanguageJava } from "./language-java";
 import { LanguagePython } from "./language-python";
 import { LanguageVB } from "./language-vb";
 import {
-  parentHelper_addChildAfter,
-  parentHelper_addChildBefore,
-  parentHelper_copySelectedChildren,
-  parentHelper_deleteSelectedChildren,
-  parentHelper_exportSelectedChildren,
-  parentHelper_getChildAfter,
-  parentHelper_getChildBefore,
-  parentHelper_getChildRange,
-  parentHelper_getFirstChild,
-  parentHelper_getLastChild,
-  parentHelper_insertOrGotoChildSelector,
-  parentHelper_moveSelectedChildrenDownOne,
-  parentHelper_moveSelectedChildrenUpOne,
-  parentHelper_readWorstCompileStatusOfChildren,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_removeChild,
-  parentHelper_renderChildrenAsElanSource,
-  parentHelper_renderChildrenAsExport,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_resetFieldTextOnChildren,
-  parentHelper_updateBreakpoints,
-  setGhostOnSelectedChildren,
-  worstParseStatus,
+    parentHelper_addChildAfter,
+    parentHelper_addChildBefore,
+    parentHelper_copySelectedChildren,
+    parentHelper_deleteSelectedChildren,
+    parentHelper_exportSelectedChildren,
+    parentHelper_getChildAfter,
+    parentHelper_getChildBefore,
+    parentHelper_getChildRange,
+    parentHelper_getFirstChild,
+    parentHelper_getLastChild,
+    parentHelper_insertOrGotoChildSelector,
+    parentHelper_moveSelectedChildrenDownOne,
+    parentHelper_moveSelectedChildrenUpOne,
+    parentHelper_readWorstCompileStatusOfChildren,
+    parentHelper_readWorstParseStatusOfChildren,
+    parentHelper_removeChild,
+    parentHelper_renderChildrenAsElanSource,
+    parentHelper_renderChildrenAsExport,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_resetFieldTextOnChildren,
+    parentHelper_updateBreakpoints,
+    setGhostOnSelectedChildren,
+    worstParseStatus,
 } from "./parent-helpers";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
@@ -130,7 +130,7 @@ export class FileImpl implements File {
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     if (withMain) {
-      const main = new MainFrame(this);
+      const main = new MainRoutine(this);
       this.getChildren().push(main);
       const selector = main.getFirstChild();
       selector.select(true, false);
@@ -589,7 +589,7 @@ export class FileImpl implements File {
   }
 
   createMain(): Frame {
-    return new MainFrame(this);
+    return new MainRoutine(this);
   }
   createFunction(): Frame {
     return new GlobalFunction(this);

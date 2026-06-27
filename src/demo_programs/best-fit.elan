@@ -1,4 +1,4 @@
-# 3dd45296065ad8fc9b707f1b7f49343258a7776bc8e6867f2e9bdc2ace614ece Elan 2.0.0-beta1 valid
+# a33e54adb4a39d06322bfdb42ca8f4ef57fd3754929a94dae3df911b6f2e0a79 Elan 2.0.0-beta1 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.sumBy(lambda p as Point => p.x)
@@ -17,8 +17,8 @@ class Point
   property y as Float
 
   constructor(x as Float, y as Float)
-    reassign this.x to x
-    reassign this.y to y
+    assign this.x to x
+    assign this.y to y
   end constructor
 
   function toString() returns String

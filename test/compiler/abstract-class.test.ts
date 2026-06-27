@@ -33,7 +33,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -142,7 +142,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -226,7 +226,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -306,7 +306,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -398,7 +398,7 @@ end class
 
 class Bar inherits Foo2
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -515,7 +515,7 @@ end class
 
 class Bar inherits Foo2
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -859,7 +859,7 @@ end class
 
 class Bar
   constructor()
-    reassign this.foo to new Maybe<of Foo>()
+    assign this.foo to new Maybe<of Foo>()
   end constructor
   function toString() returns String
     return ""
@@ -1176,7 +1176,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1223,7 +1223,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1637,7 +1637,7 @@ end class
 
 class Bar inherits Foo, Foo1, Foo2
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""

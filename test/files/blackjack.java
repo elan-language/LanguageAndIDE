@@ -15,7 +15,7 @@ static void main() {
     if (k.equals("y")) {
       game.setMessage(""); // call procedure
     } else {
-      anotherRound = false; // reassign variable
+      anotherRound = false; // assignment
     } // end if
   } // end while
 } // end main
@@ -61,24 +61,24 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
   var draw = Outcome.draw;
   var playerOutcome = draw;
   if (p == bust) {
-    playerOutcome = lose; // reassign variable
+    playerOutcome = lose; // assignment
   } else if ((p == bj) && (d != bj)) {
-    playerOutcome = winDouble; // reassign variable
+    playerOutcome = winDouble; // assignment
   } else if (d == bust) {
-    playerOutcome = win; // reassign variable
+    playerOutcome = win; // assignment
   } else if ((d == bj) && (p == bj)) {
-    playerOutcome = draw; // reassign variable
+    playerOutcome = draw; // assignment
   } else if (p == bj) {
-    playerOutcome = winDouble; // reassign variable
+    playerOutcome = winDouble; // assignment
   } else if (d == bj) {
-    playerOutcome = lose; // reassign variable
+    playerOutcome = lose; // assignment
   } else if (pTotal > dTotal) {
-    playerOutcome = win; // reassign variable
+    playerOutcome = win; // assignment
   } else if (pTotal < dTotal) {
-    playerOutcome = lose; // reassign variable
+    playerOutcome = lose; // assignment
   } else {
     // strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
-    playerOutcome = draw; // reassign variable
+    playerOutcome = draw; // assignment
   } // end if
   return playerOutcome;
 } // end function
@@ -135,11 +135,11 @@ class Test_dealCard {
 static Suit intAsSuit(int n) { // function
   var suit = Suit.clubs;
   if (n == 1) {
-    suit = Suit.diamonds; // reassign variable
+    suit = Suit.diamonds; // assignment
   } else if (n == 2) {
-    suit = Suit.hearts; // reassign variable
+    suit = Suit.hearts; // assignment
   } else if (n == 3) {
-    suit = Suit.spades; // reassign variable
+    suit = Suit.spades; // assignment
   } // end if
   return suit;
 } // end function
@@ -154,11 +154,11 @@ class Test_intAsSuit {
 
 static String htmlForGame(Game game) { // function
   var html = "<div class='game'>";
-  html = html + htmlForPlayer(game.dealer); // reassign variable
+  html = html + htmlForPlayer(game.dealer); // assignment
   foreach (var player in game.players) {
-    html = html + htmlForPlayer(player); // reassign variable
+    html = html + htmlForPlayer(player); // assignment
   } // end foreach
-  html = html + String.format("<div class='message'>%</div>", game.message); // reassign variable
+  html = html + String.format("<div class='message'>%</div>", game.message); // assignment
   return html + "</div>";
 } // end function
 
@@ -174,12 +174,12 @@ class Test_htmlForGame {
 
 static String htmlForPlayer(Player player) { // function
   var html = "<div class='player'>";
-  html = html + String.format("<div class='details'>% - % points %</div>", player.name, player.points, player.getMessage()); // reassign variable
-  html = html + "<div class='hand'>"; // reassign variable
+  html = html + String.format("<div class='details'>% - % points %</div>", player.name, player.points, player.getMessage()); // assignment
+  html = html + "<div class='hand'>"; // assignment
   foreach (var card in player.cards) {
     var suit = card.suit;
     var rank = card.rank;
-    html = html + htmlForCard(card); // reassign variable
+    html = html + htmlForCard(card); // assignment
   } // end foreach
   return html + "</div></div>";
 } // end function
@@ -195,24 +195,24 @@ class Test_htmlForPlayer {
 static String htmlForCard(Card card) { // function
   var html = "";
   if (card.faceDown) {
-    html = "<div class='card reversed'>"; // reassign variable
+    html = "<div class='card reversed'>"; // assignment
   } else {
     var rank = card.rank;
     var suit = card.suit;
     var colour = colourForSuit(suit);
     var symbol = symbolForSuit(suit);
-    html = String.format("<div class='card %'>", colour); // reassign variable
+    html = String.format("<div class='card %'>", colour); // assignment
     var u = htmlForSpot("u", rank);
     var v = htmlForSpot("v", symbol);
     var grid = "";
     foreach (var location in gridForRank(rank)) {
       if (location.equals("royal")) {
-        grid = grid + htmlForSpot(location, rank); // reassign variable
+        grid = grid + htmlForSpot(location, rank); // assignment
       } else {
-        grid = grid + htmlForSpot(location, symbol); // reassign variable
+        grid = grid + htmlForSpot(location, symbol); // assignment
       } // end if
     } // end foreach
-    html = html + String.format("%%%", u, v, grid); // reassign variable
+    html = html + String.format("%%%", u, v, grid); // assignment
   } // end if
   return html + "</div>";
 } // end function
@@ -238,9 +238,9 @@ class Test_htmlForSpot {
 class Game {
 
   public Game(int dealerStartPoints) {
-    this.dealer = new Dealer(dealerStartPoints); // reassign variable
-    this.players = new List<Player>(); // reassign variable
-    this.message = ""; // reassign variable
+    this.dealer = new Dealer(dealerStartPoints); // assignment
+    this.players = new List<Player>(); // assignment
+    this.message = ""; // assignment
   } // end constructor
 
   public Dealer dealer; // property
@@ -251,7 +251,7 @@ class Game {
 
   public Game withPlayers(List<Player> p) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.players = p; // reassign variable
+    copyOfThis.players = p; // assignment
     return copyOfThis;
   } // end function method
 
@@ -275,7 +275,7 @@ class Game {
   } // end procedure method
 
   public void setMessage(String message) { // procedure method
-    this.message = message; // reassign variable
+    this.message = message; // assignment
   } // end procedure method
 
   public String toString() { // function method
@@ -293,17 +293,17 @@ class Card {
   public boolean faceDown; // property
 
   public Card(String rank, Suit suit, boolean facedown) {
-    this.rank = rank; // reassign variable
-    this.suit = suit; // reassign variable
-    this.faceDown = facedown; // reassign variable
+    this.rank = rank; // assignment
+    this.suit = suit; // assignment
+    this.faceDown = facedown; // assignment
   } // end constructor
 
   public void turnFaceUp() { // procedure method
-    this.faceDown = false; // reassign variable
+    this.faceDown = false; // assignment
   } // end procedure method
 
   public void turnFaceDown() { // procedure method
-    this.faceDown = true; // reassign variable
+    this.faceDown = true; // assignment
   } // end procedure method
 
   public String toString() { // function method
@@ -330,7 +330,7 @@ abstract class Player {
 
   public void startTurn() { // procedure method
     if (this.status == Status.active) {
-      this.hasTurn = true; // reassign variable
+      this.hasTurn = true; // assignment
     } // end if
   } // end procedure method
 
@@ -350,23 +350,23 @@ abstract class Player {
 
   public void evaluateStatus(Card newCard) { // procedure method
     if ((this.cardCount() == 2) && (this.handTotal == 21)) {
-      this.status = Status.blackjack; // reassign variable
+      this.status = Status.blackjack; // assignment
     } else if ((this.handTotal > 21) && (this.softAce)) {
-      this.handTotal = this.handTotal - 10; // reassign variable
-      this.softAce = false; // reassign variable
+      this.handTotal = this.handTotal - 10; // assignment
+      this.softAce = false; // assignment
     } else if (this.handTotal > 21) {
-      this.status = Status.bust; // reassign variable
+      this.status = Status.bust; // assignment
     } else if (this.handTotal == 21) {
-      this.status = Status.standing; // reassign variable
+      this.status = Status.standing; // assignment
     } // end if
     if (this.status != Status.active) {
-      this.hasTurn = false; // reassign variable
+      this.hasTurn = false; // assignment
     } // end if
   } // end procedure method
 
   public void stand() { // procedure method
-    this.status = Status.standing; // reassign variable
-    this.hasTurn = false; // reassign variable
+    this.status = Status.standing; // assignment
+    this.hasTurn = false; // assignment
   } // end procedure method
 
   public void draw() { // procedure method
@@ -376,17 +376,17 @@ abstract class Player {
     if (newCard.rank.equals("A")) {
       this.addAce(); // call procedure
     } else {
-      this.handTotal = this.handTotal + valueForRank(newCard.rank); // reassign variable
+      this.handTotal = this.handTotal + valueForRank(newCard.rank); // assignment
     } // end if
     this.evaluateStatus(newCard); // call procedure
   } // end procedure method
 
   public void addAce() { // procedure method
     if (this.softAce) {
-      this.handTotal = this.handTotal + 1; // reassign variable
+      this.handTotal = this.handTotal + 1; // assignment
     } else {
-      this.handTotal = this.handTotal + 11; // reassign variable
-      this.softAce = true; // reassign variable
+      this.handTotal = this.handTotal + 11; // assignment
+      this.softAce = true; // assignment
     } // end if
   } // end procedure method
 
@@ -395,17 +395,17 @@ abstract class Player {
   } // end function method
 
   public void changePointsBy(int amount) { // procedure method
-    this.points = this.points + amount; // reassign variable
+    this.points = this.points + amount; // assignment
   } // end procedure method
 
   abstract void newHand(); // abstract procedure
 
   protected void newHandHelper() { // private procedure method
-    this.hasTurn = false; // reassign variable
-    this.softAce = false; // reassign variable
-    this.cards = new List<Card>(); // reassign variable
-    this.handTotal = 0; // reassign variable
-    this.status = Status.active; // reassign variable
+    this.hasTurn = false; // assignment
+    this.softAce = false; // assignment
+    this.cards = new List<Card>(); // assignment
+    this.handTotal = 0; // assignment
+    this.status = Status.active; // assignment
     this.draw(); // call procedure
     this.draw(); // call procedure
   } // end procedure method
@@ -416,13 +416,13 @@ abstract class Player {
     var msg = "";
     var status = this.status;
     if (this.hasTurn) {
-      msg = msg + " - PLAYING"; // reassign variable
+      msg = msg + " - PLAYING"; // assignment
     } else if (status == Status.standing) {
-      msg = msg + " - STANDING"; // reassign variable
+      msg = msg + " - STANDING"; // assignment
     } else if (status == Status.blackjack) {
-      msg = msg + " - BLACKJACK"; // reassign variable
+      msg = msg + " - BLACKJACK"; // assignment
     } else if (status == Status.bust) {
-      msg = msg + " - BUST"; // reassign variable
+      msg = msg + " - BUST"; // assignment
     } // end if
     return msg;
   } // end function method
@@ -434,10 +434,10 @@ abstract class Player {
 class Dealer extends Player {
 
   public Dealer(int startingPoints) {
-    this.name = "Dealer"; // reassign variable
-    this.points = startingPoints; // reassign variable
-    this.cards = new List<Card>(); // reassign variable
-    this.faceCard = new Card("2", Suit.clubs, true); // reassign variable
+    this.name = "Dealer"; // assignment
+    this.points = startingPoints; // assignment
+    this.cards = new List<Card>(); // assignment
+    this.faceCard = new Card("2", Suit.clubs, true); // assignment
   } // end constructor
 
   public Card faceCard; // property
@@ -446,13 +446,13 @@ class Dealer extends Player {
 
   public Dealer withStatus(Status status) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.status = status; // reassign variable
+    copyOfThis.status = status; // assignment
     return copyOfThis;
   } // end function method
 
   public Dealer withHandTotal(int ht) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.handTotal = ht; // reassign variable
+    copyOfThis.handTotal = ht; // assignment
     return copyOfThis;
   } // end function method
 
@@ -460,13 +460,13 @@ class Dealer extends Player {
     this.startTurn(); // call procedure
     var hiddenCard = this.cards[1];
     hiddenCard.turnFaceUp(); // call procedure
-    this.hasPlayed = true; // reassign variable
+    this.hasPlayed = true; // assignment
   } // end procedure method
 
   public  void newHand() { // procedure method
-    this.hasPlayed = false; // reassign variable
+    this.hasPlayed = false; // assignment
     this.newHandHelper(); // call procedure
-    this.faceCard = this.cards[0]; // reassign variable
+    this.faceCard = this.cards[0]; // assignment
     var hiddenCard = this.cards[1];
     hiddenCard.turnFaceDown(); // call procedure
   } // end procedure method
@@ -482,7 +482,7 @@ class Dealer extends Player {
   public  String getMessage() { // function method
     var msg = "";
     if (this.hasPlayed) {
-      msg = this.getMessageHelper() + String.format(" - hand total: %", this.handTotal); // reassign variable
+      msg = this.getMessageHelper() + String.format(" - hand total: %", this.handTotal); // assignment
     } // end if
     return msg;
   } // end function method
@@ -496,26 +496,26 @@ class Dealer extends Player {
 class HumanPlayer extends Player {
 
   public HumanPlayer(String name, int startingPoints) {
-    this.name = name; // reassign variable
-    this.points = startingPoints; // reassign variable
-    this.cards = new List<Card>(); // reassign variable
+    this.name = name; // assignment
+    this.points = startingPoints; // assignment
+    this.cards = new List<Card>(); // assignment
   } // end constructor
 
   public HumanPlayer withStatus(Status status) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.status = status; // reassign variable
+    copyOfThis.status = status; // assignment
     return copyOfThis;
   } // end function method
 
   public HumanPlayer withHandTotal(int ht) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.handTotal = ht; // reassign variable
+    copyOfThis.handTotal = ht; // assignment
     return copyOfThis;
   } // end function method
 
   public HumanPlayer withCards(List<Card> c) { // function method
     var copyOfThis = copy(this); // let
-    copyOfThis.cards = c; // reassign variable
+    copyOfThis.cards = c; // assignment
     return copyOfThis;
   } // end function method
 
@@ -527,13 +527,13 @@ class HumanPlayer extends Player {
     var key = "";
     clearKeyBuffer(); // call procedure
     while (key.equals("")) {
-      key = waitForKey(); // reassign variable
+      key = waitForKey(); // assignment
       if (key.equals("d")) {
         this.draw(); // call procedure
       } else if (key.equals("s")) {
         this.stand(); // call procedure
       } else {
-        key = ""; // reassign variable
+        key = ""; // assignment
       } // end if
     } // end while
   } // end procedure method
@@ -541,7 +541,7 @@ class HumanPlayer extends Player {
   public  String getMessage() { // function method
     var msg = this.getMessageHelper() + String.format("- hand total: %", this.handTotal);
     if (this.hasTurn) {
-      msg = msg + " - press 'd' to draw, 's' to stand"; // reassign variable
+      msg = msg + " - press 'd' to draw, 's' to stand"; // assignment
     } // end if
     return msg;
   } // end function method

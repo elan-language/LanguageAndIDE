@@ -21,7 +21,7 @@ suite("While Loop", () => {
 main
   variable x set to 0
   while x < 10
-    reassign x to x + 1
+    assign x to x + 1
   end while
   call printNoLine(x)
 end main`;
@@ -63,10 +63,10 @@ main
   while x < 3
     variable y set to 0
       while y < 4
-        reassign y to y + 1
-        reassign t to t + 1
+        assign y to y + 1
+        assign t to t + 1
       end while
-      reassign x to x + 1
+      assign x to x + 1
   end while
   call printNoLine(t)
 end main`;
@@ -111,7 +111,7 @@ return [main, _tests];}`;
 main
   let x = 0
   while x < 10
-    reassign x to x + 1
+    assign x to x + 1
  end main
 `;
 
@@ -134,7 +134,7 @@ main
 
 main
   while x < 10
-    reassign x to x + 1
+    assign x to x + 1
   end while
  end main
 `;
@@ -159,7 +159,7 @@ main
 
 main
   while variable x < 10
-    reassign x to x + 1
+    assign x to x + 1
   end while
  end main
 `;
@@ -184,7 +184,7 @@ main
 main
   variable x set to 0
   while
-    reassign x to x + 1
+    assign x to x + 1
   end while
  end main
 `;
@@ -209,7 +209,7 @@ main
 main
   variable x set to 0
   while x < 10
-    reassign x to x + 1
+    assign x to x + 1
   do
  end main
 `;

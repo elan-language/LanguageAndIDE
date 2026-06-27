@@ -24,7 +24,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
-import { MainFrame } from "./globals/main-frame";
+import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
@@ -48,6 +48,7 @@ import { TypeNameUse } from "./parse-nodes/type-name-use";
 import { TypeNode } from "./parse-nodes/type-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
+import { Assignment } from "./statements/assignment";
 import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
@@ -58,7 +59,6 @@ import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ReAssignVariable } from "./statements/reassign-variable";
 import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -89,7 +89,7 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ElseIf ||
       frame instanceof ProcedureFrame ||
       frame instanceof CallStatement ||
-      frame instanceof ReAssignVariable ||
+      frame instanceof Assignment ||
       frame instanceof CatchStatement ||
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
@@ -141,7 +141,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof ReAssignVariable) {
+    } else if (frame instanceof Assignment) {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Throw) {
       html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
@@ -169,7 +169,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
-    } else if (frame instanceof MainFrame) {
+    } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof FunctionMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
@@ -223,7 +223,7 @@ export class LanguagePython extends LanguageAbstract {
       html += "procedure";
     } else if (frame instanceof IfStatement) {
       html += "if";
-    } else if (frame instanceof MainFrame) {
+    } else if (frame instanceof MainRoutine) {
       html += "main";
     } else if (frame instanceof TryStatement) {
       html += this.TRY;

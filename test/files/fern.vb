@@ -13,11 +13,11 @@ Sub main()
   ' don't set the count limit too high
   ' or the browser will run out of memory
   For Each count In range(0, 1000)
-    s = onepoint(s) ' reassign variable
+    s = onepoint(s) ' assignment
     vg.append(s.rect) ' call procedure
     displayVectorGraphics(vg) ' call procedure
   Next count
-  Console.WriteLine("Finished") ' print
+  Console.WriteLine("Finished") ' print statement
 End Sub
 
 ' The State class is used as a convenient way to pass multiple
@@ -78,10 +78,10 @@ End Function
 Class State
 
   Sub New(rect As RectangleVG, x As Double, y As Double, r As Random)
-    Me.rect = rect ' reassign variable
-    Me.x = x ' reassign variable
-    Me.y = y ' reassign variable
-    Me.r = r ' reassign variable
+    Me.rect = rect ' assignment
+    Me.x = x ' assignment
+    Me.y = y ' assignment
+    Me.r = r ' assignment
   End Sub
 
   Property rect As RectangleVG

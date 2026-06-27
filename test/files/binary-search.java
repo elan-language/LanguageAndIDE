@@ -8,13 +8,13 @@ static void main() {
   while (!done) {
     var wanted = Console.ReadLine("What type of fruit do you want ('x' to exit)? "); // input
     if (wanted.equals("x")) {
-      done = true; // reassign variable
+      done = true; // assignment
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        System.out.println(String.format("\nWe can supply a %", wanted)); // print
+        System.out.println(String.format("\nWe can supply a %", wanted)); // print statement
       } else {
-        System.out.println(String.format("\nSorry, we cannot supply a %", wanted)); // print
+        System.out.println(String.format("\nSorry, we cannot supply a %", wanted)); // print statement
       } // end if
     } // end if
   } // end while
@@ -26,11 +26,11 @@ static boolean binarySearch(List<String> li, String item) { // function
     var mid = divAsInt(li.length(), 2);
     var value = li[mid];
     if (item.equals(value)) {
-      result = true; // reassign variable
+      result = true; // assignment
     } else if (item.isBefore(value)) {
-      result = binarySearch(li.subList(0, mid), item); // reassign variable
+      result = binarySearch(li.subList(0, mid), item); // assignment
     } else {
-      result = binarySearch(li.subList(mid + 1, li.length()), item); // reassign variable
+      result = binarySearch(li.subList(mid + 1, li.length()), item); // assignment
     } // end if
   } // end if
   return result;

@@ -8,13 +8,13 @@ Sub main()
 
       Dim wanted = Console.ReadLine() ' input
     If wanted.equals("x") Then
-      done = True ' reassign variable
+      done = True ' assignment
     Else
       Dim result = binarySearch(fruit, wanted) ' variable definition
       If result Then
-        Console.WriteLine($"\nWe can supply a {wanted}") ' print
+        Console.WriteLine($"\nWe can supply a {wanted}") ' print statement
       Else
-        Console.WriteLine($"\nSorry, we cannot supply a {wanted}") ' print
+        Console.WriteLine($"\nSorry, we cannot supply a {wanted}") ' print statement
       End If
     End If
   End While
@@ -26,11 +26,11 @@ Function binarySearch(li As List(Of String), item As String) As Boolean
     Dim mid = divAsInt(li.length(), 2) ' variable definition
     Dim value = li(mid) ' variable definition
     If item.equals(value) Then
-      result = True ' reassign variable
+      result = True ' assignment
     ElseIf item.isBefore(value) Then
-      result = binarySearch(li.subList(0, mid), item) ' reassign variable
+      result = binarySearch(li.subList(0, mid), item) ' assignment
     Else
-      result = binarySearch(li.subList(mid + 1, li.length()), item) ' reassign variable
+      result = binarySearch(li.subList(mid + 1, li.length()), item) ' assignment
     End If
   End If
   Return result

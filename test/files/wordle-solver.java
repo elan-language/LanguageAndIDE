@@ -24,9 +24,9 @@ static void main() {
   var attempt = "RAISE";
   while (!mark.equals("*****")) {
     var inp = Console.ReadLine("" + attempt); // input
-    mark = inp; // reassign variable
-    possible = possibleAnswersAfterAttempt(possible, attempt, mark); // reassign variable
-    attempt = bestAttempt(possible); // reassign variable
+    mark = inp; // assignment
+    possible = possibleAnswersAfterAttempt(possible, attempt, mark); // assignment
+    attempt = bestAttempt(possible); // assignment
   } // end while
 } // end main
 
@@ -113,8 +113,8 @@ static String bestAttempt(List<String> possAnswers) { // function
 class WordCount {
 
   public WordCount(String word, int count) {
-    this.word = word; // reassign variable
-    this.count = count; // reassign variable
+    this.word = word; // assignment
+    this.count = count; // assignment
   } // end constructor
 
   public String word; // property

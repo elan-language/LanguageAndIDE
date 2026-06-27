@@ -1,4 +1,4 @@
-# 55c7cd07d5603028e12b1ddfac3a567dedea0a130a315b95055a376f28cb6e18 Elan 2.0.0-beta1 valid
+# 2fe28132b9fd47353af101e23f0ecca84bdb721ef23e3daf49f3a14bc265808d Elan 2.0.0-beta1 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -11,7 +11,7 @@ main
   # don't set the count limit too high
   # or the browser will run out of memory
   for count in range(0, 1000)
-    reassign s to onepoint(s)
+    assign s to onepoint(s)
     call vg.append(s.rect)
     call displayVectorGraphics(vg)
   end for
@@ -63,10 +63,10 @@ end function
 # class to hold the working data passed in and out of onepoint()
 class State
   constructor(rect as RectangleVG, x as Float, y as Float, r as Random)
-    reassign this.rect to rect
-    reassign this.x to x
-    reassign this.y to y
-    reassign this.r to r
+    assign this.rect to rect
+    assign this.x to x
+    assign this.y to y
+    assign this.r to r
   end constructor
 
   property rect as RectangleVG

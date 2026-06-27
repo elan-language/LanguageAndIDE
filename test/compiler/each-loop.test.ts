@@ -22,7 +22,7 @@ main
   variable a set to [7,8,9]
   variable n set to 0
    for x in a
-      reassign n to n + x
+      assign n to n + x
   end for
   call printNoLine(n)
 end main`;
@@ -64,7 +64,7 @@ main
   variable a set to [7,8,9]
   variable n set to 0
    for x in a
-    reassign n to n + x
+    assign n to n + x
   end for
   call printNoLine(n)
 end main`;
@@ -336,7 +336,7 @@ end main
 class Bar
   private property l as List<of Int>
   constructor(li as List<of Int>)
-    reassign this.l to li
+    assign this.l to li
   end constructor
   function toString() returns String
     return ""
@@ -540,7 +540,7 @@ main
   variable s set to "hello"
    for ch in s
     call printNoLine(ch)
-    reassign s to "fred"
+    assign s to "fred"
   end for
 end main
 `;
@@ -580,7 +580,7 @@ return [main, _tests];}`;
 main
   variable a set to [1, 2, 3, 4, 5]
    for x in a
-    reassign a to a.withAppend(x)
+    assign a to a.withAppend(x)
     call printNoLine(x)
   end for
 end main

@@ -8,13 +8,13 @@ static void main() {
 
       var wanted = Console.ReadLine(); // input
     if (wanted.equals("x")) {
-      done = true; // reassign variable
+      done = true; // assignment
     } else {
       var result = binarySearch(fruit, wanted);
       if (result) {
-        Console.WriteLine($"\nWe can supply a {wanted}"); // print
+        Console.WriteLine($"\nWe can supply a {wanted}"); // print statement
       } else {
-        Console.WriteLine($"\nSorry, we cannot supply a {wanted}"); // print
+        Console.WriteLine($"\nSorry, we cannot supply a {wanted}"); // print statement
       } // end if
     } // end if
   } // end while
@@ -26,11 +26,11 @@ static bool binarySearch(List<string> li, string item) { // function
     var mid = divAsInt(li.length(), 2);
     var value = li[mid];
     if (item.equals(value)) {
-      result = true; // reassign variable
+      result = true; // assignment
     } else if (item.isBefore(value)) {
-      result = binarySearch(li.subList(0, mid), item); // reassign variable
+      result = binarySearch(li.subList(0, mid), item); // assignment
     } else {
-      result = binarySearch(li.subList(mid + 1, li.length()), item); // reassign variable
+      result = binarySearch(li.subList(mid + 1, li.length()), item); // assignment
     } // end if
   } // end if
   return result;

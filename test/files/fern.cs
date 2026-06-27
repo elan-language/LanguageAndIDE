@@ -13,11 +13,11 @@ static void main() {
   // don't set the count limit too high
   // or the browser will run out of memory
   foreach (var count in range(0, 1000)) {
-    s = onepoint(s); // reassign variable
+    s = onepoint(s); // assignment
     vg.append(s.rect); // call procedure
     displayVectorGraphics(vg); // call procedure
   } // end foreach
-  Console.WriteLine("Finished"); // print
+  Console.WriteLine("Finished"); // print statement
 } // end main
 
 // The State class is used as a convenient way to pass multiple
@@ -78,10 +78,10 @@ static List<double> getparams(double r, List<List<double>> prms, double cumuprob
 class State {
 
   public State(RectangleVG rect, double x, double y, Random r) {
-    this.rect = rect; // reassign variable
-    this.x = x; // reassign variable
-    this.y = y; // reassign variable
-    this.r = r; // reassign variable
+    this.rect = rect; // assignment
+    this.x = x; // assignment
+    this.y = y; // assignment
+    this.r = r; // assignment
   } // end constructor
 
   public RectangleVG rect {get; private set;} // property

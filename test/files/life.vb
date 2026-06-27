@@ -7,7 +7,7 @@ Sub main()
     displayBlocks(grid) ' call procedure
     Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition
     nextGeneration(gridRef) ' call procedure
-    grid = gridRef.value() ' reassign variable
+    grid = gridRef.value() ' assignment
     sleep_ms(50) ' call procedure
   End While
 End Sub
@@ -15,7 +15,7 @@ End Sub
 Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
   For Each col In range(0, 40)
     For Each row In range(0, 30)
-      grid(col)(row) = blackOrWhite(random()) ' reassign variable
+      grid(col)(row) = blackOrWhite(random()) ' assignment
     Next row
   Next col
 End Sub
@@ -26,7 +26,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
   For Each x In range(0, 40)
     For Each y In range(0, 30)
       Dim colour = nextCellValue(grid, x, y) ' variable definition
-      nextGen(x)(y) = colour ' reassign variable
+      nextGen(x)(y) = colour ' assignment
     Next y
   Next x
   gridRef.set(nextGen) ' call procedure
@@ -35,7 +35,7 @@ End Sub
 Function blackOrWhite(random As Double) As Integer
   Dim result = black ' variable definition
   If random > 0.5 Then
-    result = white ' reassign variable
+    result = white ' assignment
   End If
   Return result
 End Function
@@ -45,7 +45,7 @@ Function north(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim y2 = y - 1 ' variable definition
   If y2 = -1 Then
-    y2 = 29 ' reassign variable
+    y2 = 29 ' assignment
   End If
   Return (x, y2)
 End Function
@@ -55,7 +55,7 @@ Function south(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim y2 = y + 1 ' variable definition
   If y2 = 30 Then
-    y2 = 0 ' reassign variable
+    y2 = 0 ' assignment
   End If
   Return (x, y2)
 End Function
@@ -65,7 +65,7 @@ Function east(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim x2 = x + 1 ' variable definition
   If x2 = 40 Then
-    x2 = 0 ' reassign variable
+    x2 = 0 ' assignment
   End If
   Return (x2, y)
 End Function
@@ -75,7 +75,7 @@ Function west(cell As (Integer, Integer)) As (Integer, Integer)
   Dim y = cell.item_1 ' variable definition
   Dim x2 = x - 1 ' variable definition
   If x2 = -1 Then
-    x2 = 39 ' reassign variable
+    x2 = 39 ' assignment
   End If
   Return (x2, y)
 End Function
@@ -107,7 +107,7 @@ Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As In
     Dim cx = cell.item_0 ' variable definition
     Dim cy = cell.item_1 ' variable definition
     If grid(cx)(cy) = black Then
-      count = count + 1 ' reassign variable
+      count = count + 1 ' assignment
     End If
   Next cell
   Return count
@@ -116,9 +116,9 @@ End Function
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
   Dim result = False ' variable definition
   If cell = black Then
-    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' reassign variable
+    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' assignment
   Else
-    result = liveNeighbours = 3 ' reassign variable
+    result = liveNeighbours = 3 ' assignment
   End If
   Return result
 End Function
@@ -127,7 +127,7 @@ Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Int
   Dim colour = white ' variable definition
   Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' variable definition
   If live Then
-    colour = black ' reassign variable
+    colour = black ' assignment
   End If
   Return colour
 End Function

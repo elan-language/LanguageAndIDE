@@ -21,14 +21,14 @@ suite("Impure Function", () => {
 main
   variable k set to getKey()
   variable r set to randint(1, 6)
-  reassign r to randint(1, 6) * 10
+  assign r to randint(1, 6) * 10
   call bar(randint(1,6))
 end main
 
 procedure foo()
   variable k set to getKey()
   variable r set to randint(1, 6)
-  reassign r to randint(1, 6) * 10
+  assign r to randint(1, 6) * 10
 end procedure
 
 procedure bar(x as Int)

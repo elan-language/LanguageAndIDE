@@ -170,7 +170,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to "z"
-  reassign b to b + a[0]
+  assign b to b + a[0]
   call printNoLine(b)
 end main`;
 
@@ -207,7 +207,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to "z"
-  reassign b to a[0]
+  assign b to a[0]
   call printNoLine(b)
 end main`;
 
@@ -365,7 +365,7 @@ return [main, _tests];}`;
 main
   variable a set to "abcde"
   variable b set to 2.1 + 3.4
-  reassign a to b.toString()
+  assign a to b.toString()
   call printNoLine(a)
 end main`;
 
@@ -578,7 +578,7 @@ end main
 
 main
   variable a set to "abcde"
-  reassign a to 2.1 + 3.4
+  assign a to 2.1 + 3.4
   call printNoLine(a)
 end main
 `;

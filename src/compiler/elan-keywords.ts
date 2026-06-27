@@ -3,6 +3,7 @@ export const abstractKeyword = "abstract";
 export const andKeyword = "and";
 export const asKeyword = "as";
 export const assertKeyword = "assert";
+export const assignKeyword = "assign";
 export const beKeyword = "be";
 export const callKeyword = "call";
 export const catchKeyword = "catch";
@@ -35,7 +36,6 @@ export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
-export const reassignKeyword = "reassign";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
@@ -102,7 +102,7 @@ const elanKeywords: string[] = [
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
-  reassignKeyword,
+  assignKeyword,
   returnKeyword,
   returnsKeyword,
   stepKeyword,

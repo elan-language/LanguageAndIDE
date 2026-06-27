@@ -24,33 +24,33 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import {
-  parentHelper_addChildAfter,
-  parentHelper_addChildBefore,
-  parentHelper_copySelectedChildren,
-  parentHelper_deleteSelectedChildren,
-  parentHelper_exportSelectedChildren,
-  parentHelper_getChildAfter,
-  parentHelper_getChildBefore,
-  parentHelper_getChildRange,
-  parentHelper_getFirstChild,
-  parentHelper_getFirstSelectorAsDirectChild,
-  parentHelper_getLastChild,
-  parentHelper_insertOrGotoChildSelector,
-  parentHelper_moveSelectedChildrenDownOne,
-  parentHelper_moveSelectedChildrenUpOne,
-  parentHelper_readWorstCompileStatusOfChildren,
-  parentHelper_readWorstParseStatusOfChildren,
-  parentHelper_removeChild,
-  parentHelper_renderChildrenAsExport,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_resetFieldTextOnChildren,
-  parentHelper_updateBreakpoints,
-  setGhostOnSelectedChildren,
+    parentHelper_addChildAfter,
+    parentHelper_addChildBefore,
+    parentHelper_copySelectedChildren,
+    parentHelper_deleteSelectedChildren,
+    parentHelper_exportSelectedChildren,
+    parentHelper_getChildAfter,
+    parentHelper_getChildBefore,
+    parentHelper_getChildRange,
+    parentHelper_getFirstChild,
+    parentHelper_getFirstSelectorAsDirectChild,
+    parentHelper_getLastChild,
+    parentHelper_insertOrGotoChildSelector,
+    parentHelper_moveSelectedChildrenDownOne,
+    parentHelper_moveSelectedChildrenUpOne,
+    parentHelper_readWorstCompileStatusOfChildren,
+    parentHelper_readWorstParseStatusOfChildren,
+    parentHelper_removeChild,
+    parentHelper_renderChildrenAsExport,
+    parentHelper_renderChildrenAsHtml,
+    parentHelper_resetFieldTextOnChildren,
+    parentHelper_updateBreakpoints,
+    setGhostOnSelectedChildren,
 } from "../parent-helpers";
 import { Profile } from "../profile";
+import { Assignment } from "../statements/assignment";
 import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
-import { ReAssignVariable } from "../statements/reassign-variable";
 import { ReturnStatement } from "../statements/return-statement";
 import { CompileStatus } from "../status-enums";
 
@@ -239,7 +239,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
     letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
     wm.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new ReAssignVariable(this);
+    const firstProp = new Assignment(this);
     firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
     wm.addChildBefore(firstProp, defaultSelector);
     const ret = wm.getLastChild() as ReturnStatement;

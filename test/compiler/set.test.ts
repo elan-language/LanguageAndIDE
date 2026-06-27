@@ -19,13 +19,13 @@ suite("Set", () => {
 
 main
   variable st set to new HashSet<of Int>()
-  reassign st to st.add(3).add(7).add(5)
+  assign st to st.add(3).add(7).add(5)
   call printNoLine(st.length())
-  reassign st to st.add(7)
+  assign st to st.add(7)
   call printNoLine(st.length())
-  reassign st to st.remove(3)
+  assign st to st.remove(3)
   call printNoLine(st.length())
-  reassign st to st.remove(3)
+  assign st to st.remove(3)
   call printNoLine(st.length())
   call printNoLine(st)
 end main`;
@@ -69,8 +69,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  reassign st1 to st1.add(2).add(4).add(6)
-  reassign st2 to st2.add(1).add(4).add(9)
+  assign st1 to st1.add(2).add(4).add(6)
+  assign st2 to st2.add(1).add(4).add(9)
   variable st3 set to st1.union(st2)
   call printNoLine(st3)
 end main`;
@@ -110,8 +110,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  reassign st1 to st1.add(2).add(4).add(6).add(3)
-  reassign st2 to st2.add(3).add(1).add(4).add(9)
+  assign st1 to st1.add(2).add(4).add(6).add(3)
+  assign st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.intersection(st2)
   call printNoLine(st3)
 end main`;
@@ -151,8 +151,8 @@ return [main, _tests];}`;
 main
   variable st1 set to new HashSet<of Int>()
   variable st2 set to new HashSet<of Int>()
-  reassign st1 to st1.add(2).add(4).add(6).add(3)
-  reassign st2 to st2.add(3).add(1).add(4).add(9)
+  assign st1 to st1.add(2).add(4).add(6).add(3)
+  assign st2 to st2.add(3).add(1).add(4).add(9)
   variable st3 set to st1.difference(st2)
   call printNoLine(st3)
 end main`;
@@ -321,7 +321,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new HashSet<of String>()
-  reassign a to a.add("foo")
+  assign a to a.add("foo")
   call printNoLine(a.contains("foo"))
 end main`;
 
@@ -356,7 +356,7 @@ return [main, _tests];}`;
 
 main
   variable a set to new HashSet<of String>()
-  reassign a to a.add("bar")
+  assign a to a.add("bar")
   call printNoLine(a.contains("foo"))
 end main`;
 

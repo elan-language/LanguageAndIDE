@@ -21,7 +21,7 @@ import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
 import { Language } from "../src/ide/frames/frame-interfaces/language";
 import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
-import { MainFrame } from "../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../src/ide/frames/globals/main-routine";
 import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
@@ -39,7 +39,7 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 // flag to update test files
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   const runner = await createTestRunner();
@@ -610,7 +610,7 @@ function fileWithLanguage(language: Language): FileImpl {
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainFrame(new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
+  const main = new MainRoutine(new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);

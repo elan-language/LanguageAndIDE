@@ -31,10 +31,10 @@ static void main() {
   while (!valid) {
     var pwRef = new AsRef<String>("");
     populatePassword(pwRef, all); // call procedure
-    password = pwRef.value(); // reassign variable
-    valid = isValid(password, upper, lower, digit, symbol); // reassign variable
+    password = pwRef.value(); // assignment
+    valid = isValid(password, upper, lower, digit, symbol); // assignment
   } // end while
-  System.out.println(password); // print
+  System.out.println(password); // print statement
 } // end main
 
 static void populatePassword(AsRef<String> password, String all) { // procedure
@@ -76,7 +76,7 @@ class Test_passesRule {
 static boolean hasAtLeastOneFrom(String fromChars, String password) { // function
   var hasOne = false;
   foreach (var ch in password) {
-    hasOne = hasOne || fromChars.contains(ch); // reassign variable
+    hasOne = hasOne || fromChars.contains(ch); // assignment
   } // end foreach
   return hasOne;
 } // end function

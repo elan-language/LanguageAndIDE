@@ -5,7 +5,7 @@ def main() -> None:
   while not quit:
     reply = input("t - for time now, q - to quit, or an integer value to convert") # input
     if reply.upperCase().equals("Q"):
-      quit = True # reassign variable
+      quit = True # assignment
     elif reply.upperCase().equals("T"): # else if
       now = divAsInt(clock(), 1000) # variable definition
       print(now)
@@ -76,11 +76,11 @@ def dayInYear(year: int, unixDays: int) -> int: # function
   dayNumber = unixDays + 1 # variable definition
   if year > unixYear:
     # discount previous nominal years
-    dayNumber = dayNumber - 365*(year - unixYear) # reassign variable
+    dayNumber = dayNumber - 365*(year - unixYear) # assignment
     # discount previous leap days
     for y in range(unixYear, year):
       if leap(y):
-        dayNumber = dayNumber - 1 # reassign variable
+        dayNumber = dayNumber - 1 # assignment
       # end if
     # end for
   # end if
@@ -113,10 +113,10 @@ def monthDay(startDays: list[int], dayNumber: int) -> tuple[int, int]: # functio
   monthFound = False # variable definition
   while monthFound == False:
     if (dayNumber < startDays[month]):
-      monthFound = True # reassign variable
-      day = dayNumber - startDays[month - 1] + 1 # reassign variable
+      monthFound = True # assignment
+      day = dayNumber - startDays[month - 1] + 1 # assignment
     else:
-      month = month + 1 # reassign variable
+      month = month + 1 # assignment
     # end if
   # end while
   return (month, day)
@@ -127,7 +127,7 @@ def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
   startDaysL = getStartDays() # variable definition
   if leap(year):
     for m in range(2, 13):
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # reassign variable
+      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # assignment
     # end for
   # end if
   return startDaysL
@@ -188,9 +188,9 @@ def pad(d: str, p: str, s: str) -> str: # function
   if p.length() > s.length():
     if d.upperCase().equals("L"):
       ps = p + s # variable definition
-      sR = ps.subString(ps.length() - p.length(), ps.length()) # reassign variable
+      sR = ps.subString(ps.length() - p.length(), ps.length()) # assignment
     elif d.upperCase().equals("R"): # else if
-      sR = (s + p).subString(0, p.length()) # reassign variable
+      sR = (s + p).subString(0, p.length()) # assignment
     # end if
   # end if
   return sR

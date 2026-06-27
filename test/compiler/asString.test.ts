@@ -106,7 +106,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to new Maybe<of Foo>()
+    assign this.p1 to new Maybe<of Foo>()
   end constructor
   function toString() returns String
     return ""
@@ -179,7 +179,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to new Maybe<of Foo>()
+    assign this.p1 to new Maybe<of Foo>()
   end constructor
 
   property p1 as Maybe<of Foo>
@@ -251,8 +251,8 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
-        reassign this.p2 to "Apple"
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
     end constructor
 
     property p1 as Float
@@ -320,8 +320,8 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
-        reassign this.p2 to "Apple"
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
     end constructor
 
     property p1 as Float

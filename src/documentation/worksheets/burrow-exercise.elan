@@ -28,7 +28,7 @@
 # stop when it reaches an edge with an error. Note carefully the error (shown in System info)
 # and make sure you understand why this error has occcured.
 # 11.Ensure the animal does not go over the edge of the screen by modifying each of the four
-#    reassign instructions, using the functions min & max to keep the values within bounds,
+#    assign instructions, using the functions min & max to keep the values within bounds,
 #    Since min & max expect a list of integers as the only argument,
 #    you can just render a pair of values as a literal list e.g. min([x_1,39])
 # 12.Slow down the simulation slightly by calling pause within the loop

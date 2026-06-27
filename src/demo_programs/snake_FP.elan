@@ -1,4 +1,4 @@
-# 1f0e59cd65d1be99ab40d5a1605e7eedfa38fd9fe959218fd488ada70caf3330 Elan 2.0.0-beta1 valid
+# f6489423eb4e952e74f1329523b91c6601d570d3ea3fa7908bcdd591693ae878 Elan 2.0.0-beta1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -7,10 +7,10 @@ main
   call rnd.initialiseFromClock()
   variable game set to (new Game(rnd)).withNewApple()
   while game.isOn
-    reassign blocks to updateGraphics(game, blocks)
+    assign blocks to updateGraphics(game, blocks)
     call displayBlocks(blocks)
     call sleep_ms(150)
-    reassign game to clockTick(game, getKey())
+    assign game to clockTick(game, getKey())
   end while
   print($"Game Over! Score: {score(game)}")
 end main
@@ -83,13 +83,13 @@ class Game
   property key as String
 
   constructor(rnd as Random)
-    reassign this.head to new Square(22, 15)
-    reassign this.body to [new Square(20, 15), new Square(21, 15)]
-    reassign this.priorTail to new Square(0, 0)
-    reassign this.key to "d"
-    reassign this.isOn to true
-    reassign this.apple to new Square(12, 15)
-    reassign this.rnd to rnd
+    assign this.head to new Square(22, 15)
+    assign this.body to [new Square(20, 15), new Square(21, 15)]
+    assign this.priorTail to new Square(0, 0)
+    assign this.key to "d"
+    assign this.isOn to true
+    assign this.apple to new Square(12, 15)
+    assign this.rnd to rnd
   end constructor
 
   function toString() returns String
@@ -108,43 +108,43 @@ class Game
 
   function withHead(value as Square) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.head to value
+    assign copyOfThis.head to value
     return copyOfThis
   end function
 
   function withBody(value as List<of Square>) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.body to value
+    assign copyOfThis.body to value
     return copyOfThis
   end function
 
   function withPriorTail(value as Square) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.priorTail to value
+    assign copyOfThis.priorTail to value
     return copyOfThis
   end function
 
   function withApple(value as Square) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.apple to value
+    assign copyOfThis.apple to value
     return copyOfThis
   end function
 
   function withIsOn(value as Boolean) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.isOn to value
+    assign copyOfThis.isOn to value
     return copyOfThis
   end function
 
   function withRnd(value as Random) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.rnd to value
+    assign copyOfThis.rnd to value
     return copyOfThis
   end function
 
   function withKey(value as String) returns Game
     let copyOfThis be copy(this)
-    reassign copyOfThis.key to value
+    assign copyOfThis.key to value
     return copyOfThis
   end function
 
@@ -156,8 +156,8 @@ class Square
   property y as Int
 
   constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
+    assign this.x to x
+    assign this.y to y
   end constructor
 
   function toString() returns String

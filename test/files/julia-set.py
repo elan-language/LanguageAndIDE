@@ -35,7 +35,7 @@ def allpoints(p: Coords) -> list[VectorGraphic]: # function
       # colour depends on how many iterations were done for that point
       col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff)) # variable definition
       rect = (RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25) # variable definition
-      vg2 = vg2.withAppend(rect) # reassign variable
+      vg2 = vg2.withAppend(rect) # assignment
     # end for
   # end for
   return vg2
@@ -48,11 +48,11 @@ def onepoint(x: float, y: float, maxnum: int, p: Coords) -> int: # function
   i = 0 # variable definition
   while not done:
     c = 2*a*b # variable definition
-    a = (a*a - b*b) + p.jx # reassign variable
-    b = c + p.jy # reassign variable
-    i = i + 1 # reassign variable
+    a = (a*a - b*b) + p.jx # assignment
+    b = c + p.jy # assignment
+    i = i + 1 # assignment
     if (i >= maxnum) or ((a*a + b*b) > 4):
-      done = True # reassign variable
+      done = True # assignment
     # end if
   # end while
   return i
@@ -62,13 +62,13 @@ class Coords: # concrete class
 
   def __init__(self: Coords) -> None:
     # number of cells per unit distance on complex plane
-    self.scale = 100 # reassign variable
+    self.scale = 100 # assignment
     # centered on the screen to start
-    self.xoff = 0 # reassign variable
-    self.yoff = 0 # reassign variable
+    self.xoff = 0 # assignment
+    self.yoff = 0 # assignment
     # Julia set parameters
-    self.jx = -0.512 # reassign variable
-    self.jy = 0.521 # reassign variable
+    self.jx = -0.512 # assignment
+    self.jy = 0.521 # assignment
   # end constructor
 
   def toString(self: Coords) -> str: # function method
@@ -97,32 +97,32 @@ class Coords: # concrete class
       # loop because more than one key may have been pressed
       while not k.equals(""):
         if k.equals("z"):
-          self.scale = self.scale*1.2 # reassign variable
+          self.scale = self.scale*1.2 # assignment
         elif k.equals("x"): # else if
-          self.scale = self.scale/1.2 # reassign variable
+          self.scale = self.scale/1.2 # assignment
         elif k.equals("ArrowUp"): # else if
-          self.yoff = self.yoff + panstep # reassign variable
+          self.yoff = self.yoff + panstep # assignment
         elif k.equals("ArrowDown"): # else if
-          self.yoff = self.yoff - panstep # reassign variable
+          self.yoff = self.yoff - panstep # assignment
         elif k.equals("ArrowLeft"): # else if
-          self.xoff = self.xoff + panstep # reassign variable
+          self.xoff = self.xoff + panstep # assignment
         elif k.equals("ArrowRight"): # else if
-          self.xoff = self.xoff - panstep # reassign variable
+          self.xoff = self.xoff - panstep # assignment
         elif k.equals("g"): # else if
-          self.jx = self.jx + jstep # reassign variable
+          self.jx = self.jx + jstep # assignment
         elif k.equals("j"): # else if
-          self.jx = self.jx - jstep # reassign variable
+          self.jx = self.jx - jstep # assignment
         elif k.equals("y"): # else if
-          self.jy = self.jy + jstep # reassign variable
+          self.jy = self.jy + jstep # assignment
         elif k.equals("h"): # else if
-          self.jy = self.jy - jstep # reassign variable
+          self.jy = self.jy - jstep # assignment
         else:
           # ignore erroneous key presses
         # end if
         # there is no harm in recalculating even if an invalid key was pressed
-        changed = True # reassign variable
+        changed = True # assignment
         # another key may have been pressed
-        k = getKey() # reassign variable
+        k = getKey() # assignment
       # end while
       sleep_ms(10) # call procedure
     # end while
