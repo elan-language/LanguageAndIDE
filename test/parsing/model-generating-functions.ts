@@ -11,13 +11,13 @@ import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
 import { Else } from "../../src/ide/frames/statements/else";
 import { ElseIf } from "../../src/ide/frames/statements/elseIf";
 import { For } from "../../src/ide/frames/statements/for";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { Assignment } from "../../src/ide/frames/statements/assignment";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
 import { TryStatement } from "../../src/ide/frames/statements/try";
@@ -42,7 +42,7 @@ export function T01_helloWorld() {
   const comment = new CommentStatement(m);
   comment.text.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
-  const pr = new CallStatement(m);
+  const pr = new ProcedureCall(m);
   pr.proc.setFieldToKnownValidText('printNoLine')
   pr.args.setFieldToKnownValidText(`"Hello World!"`);
   m.addChildBefore(pr, ss);
@@ -80,7 +80,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(s, ssm);
   const t = new Throw(m);
   m.addChildBefore(t, ssm);
-  const ca = new CallStatement(m);
+  const ca = new ProcedureCall(m);
   ca.proc.setFieldToKnownValidText("signIn");
   ca.args.setFieldToKnownValidText(`rwp, password`);
   m.addChildBefore(ca, ssm);

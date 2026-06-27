@@ -46,11 +46,11 @@ def main() -> None:
   hodge = AsRef[list[list[int]]](createBlockGraphics(healthy)) # variable definition
   blank = createBlockGraphics(healthy) # variable definition
   # initial colours of grid
-  updateGrid(hodge, podge, True) # call procedure
+  updateGrid(hodge, podge, True) # procedure call
   while not uniform(hodge.value()):
     # successive updates to grid in blank podge
     podge = blank # assignment
-    updateGrid(hodge, podge, False) # call procedure
+    updateGrid(hodge, podge, False) # procedure call
   # end while
 # end main
 
@@ -67,9 +67,9 @@ def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: b
     # end for
   # end for
   a = 0 # variable definition
-  hodge.set(podge) # call procedure
-  displayBlocks(hodge.value()) # call procedure
-  sleep_ms(50) # call procedure
+  hodge.set(podge) # procedure call
+  displayBlocks(hodge.value()) # procedure call
+  sleep_ms(50) # procedure call
 # end procedure
 
 def uniform(grid: list[list[int]]) -> bool: # function

@@ -35,7 +35,6 @@ import { TypeNameUse } from "./parse-nodes/type-name-use";
 import { TypeNode } from "./parse-nodes/type-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
@@ -45,6 +44,7 @@ import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
+import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
@@ -70,7 +70,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     if (
       frame instanceof ProcedureFrame ||
       frame instanceof FunctionFrame ||
-      frame instanceof CallStatement ||
+      frame instanceof ProcedureCall ||
       frame instanceof LetStatement ||
       frame instanceof Assignment ||
       frame instanceof Property ||
@@ -87,7 +87,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   common_renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
-    if (frame instanceof CallStatement) {
+    if (frame instanceof ProcedureCall) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof CatchStatement) {
       html = `} <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;

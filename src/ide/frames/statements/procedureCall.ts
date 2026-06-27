@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class CallStatement extends SingleLineFrame implements Statement {
+export class ProcedureCall extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
   proc: ProcRefField;
@@ -41,7 +41,7 @@ export class CallStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return this.proc.text === "print" ? "" : "call procedure";
+    return this.proc.text === "print" ? "" : "procedure call";
   }
 
   override renderAsElanSource(): string {

@@ -46,11 +46,11 @@ Sub main()
   Dim hodge = New AsRef(Of List(Of List(Of Integer)))(createBlockGraphics(healthy)) ' variable definition
   Dim blank = createBlockGraphics(healthy) ' variable definition
   ' initial colours of grid
-  updateGrid(hodge, podge, True) ' call procedure
+  updateGrid(hodge, podge, True) ' procedure call
   While Not uniform(hodge.value())
     ' successive updates to grid in blank podge
     podge = blank ' assignment
-    updateGrid(hodge, podge, False) ' call procedure
+    updateGrid(hodge, podge, False) ' procedure call
   End While
 End Sub
 
@@ -67,9 +67,9 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
     Next i
   Next j
   Dim a = 0 ' variable definition
-  hodge.set(podge) ' call procedure
-  displayBlocks(hodge.value()) ' call procedure
-  sleep_ms(50) ' call procedure
+  hodge.set(podge) ' procedure call
+  displayBlocks(hodge.value()) ' procedure call
+  sleep_ms(50) ' procedure call
 End Sub
 
 Function uniform(grid As List(Of List(Of Integer))) As Boolean

@@ -7,8 +7,8 @@ import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
 import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
@@ -132,7 +132,7 @@ suite("Field Parsing Tests", () => {
           false,
         ),
       );
-      const call = new CallStatement(main);
+      const call = new ProcedureCall(main);
       const argList = call.args;
       argList.setFieldToKnownValidText("3,4,5");
       argList.parseCurrentText();
@@ -159,7 +159,7 @@ suite("Field Parsing Tests", () => {
           false,
         ),
       );
-      const call = new CallStatement(main);
+      const call = new ProcedureCall(main);
       const argList = call.args;
       argList.setFieldToKnownValidText("");
       argList.parseCurrentText();
@@ -323,7 +323,7 @@ suite("Field Parsing Tests", () => {
           false,
         ),
       );
-      const call = new CallStatement(main);
+      const call = new ProcedureCall(main);
       const args = call.args;
       args.setFieldToKnownValidText(`a)`);
       args.parseCurrentText();

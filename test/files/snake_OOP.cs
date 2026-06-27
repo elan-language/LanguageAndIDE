@@ -6,13 +6,13 @@ static void main() {
   var blocks = createBlockGraphics(white);
   var snake = new Snake();
   var apple = new Apple();
-  apple.newRandomPosition(snake); // call procedure
+  apple.newRandomPosition(snake); // procedure call
   while (!snake.gameOver()) {
-    snake.updateBlocks(blocks); // call procedure
-    apple.updateBlocks(blocks); // call procedure
-    displayBlocks(blocks); // call procedure
-    sleep_ms(150); // call procedure
-    snake.clockTick(getKey(), apple); // call procedure
+    snake.updateBlocks(blocks); // procedure call
+    apple.updateBlocks(blocks); // procedure call
+    displayBlocks(blocks); // procedure call
+    sleep_ms(150); // procedure call
+    snake.clockTick(getKey(), apple); // procedure call
   } // end while
   Console.WriteLine($"Game Over! Score: {snake.score()}"); // print statement
 } // end main
@@ -36,13 +36,13 @@ class Snake {
   private Square priorTail {get; private set;} // private property
 
   public void clockTick(string key, Apple apple) { // procedure method
-    this.setDirection(key); // call procedure
+    this.setDirection(key); // procedure call
     this.priorTail = this.body[0]; // assignment
     var body = this.body;
-    body.append(this.head); // call procedure
+    body.append(this.head); // procedure call
     this.head = this.head.getAdjacentSquare(this.currentDir); // assignment
     if (this.head.equals(apple.location)) {
-      apple.newRandomPosition(this); // call procedure
+      apple.newRandomPosition(this); // procedure call
     } else {
       this.body = this.body.subList(1, this.body.length()); // assignment
     } // end if

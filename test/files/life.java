@@ -4,13 +4,13 @@ public class Global {
 
 static void main() {
   var grid = createBlockGraphics(white);
-  fillRandom(grid); // call procedure
+  fillRandom(grid); // procedure call
   while (true) {
-    displayBlocks(grid); // call procedure
+    displayBlocks(grid); // procedure call
     var gridRef = new AsRef<List<List<int>>>(grid);
-    nextGeneration(gridRef); // call procedure
+    nextGeneration(gridRef); // procedure call
     grid = gridRef.value(); // assignment
-    sleep_ms(50); // call procedure
+    sleep_ms(50); // procedure call
   } // end while
 } // end main
 
@@ -31,7 +31,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
       nextGen[x][y] = colour; // assignment
     } // end foreach
   } // end foreach
-  gridRef.set(nextGen); // call procedure
+  gridRef.set(nextGen); // procedure call
 } // end procedure
 
 static int blackOrWhite(double random) { // function

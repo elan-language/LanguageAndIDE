@@ -46,11 +46,11 @@ static void main() {
   var hodge = new AsRef<List<List<int>>>(createBlockGraphics(healthy));
   var blank = createBlockGraphics(healthy);
   // initial colours of grid
-  updateGrid(hodge, podge, true); // call procedure
+  updateGrid(hodge, podge, true); // procedure call
   while (!uniform(hodge.value())) {
     // successive updates to grid in blank podge
     podge = blank; // assignment
-    updateGrid(hodge, podge, false); // call procedure
+    updateGrid(hodge, podge, false); // procedure call
   } // end while
 } // end main
 
@@ -67,9 +67,9 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
     } // end foreach
   } // end foreach
   var a = 0;
-  hodge.set(podge); // call procedure
-  displayBlocks(hodge.value()); // call procedure
-  sleep_ms(50); // call procedure
+  hodge.set(podge); // procedure call
+  displayBlocks(hodge.value()); // procedure call
+  sleep_ms(50); // procedure call
 } // end procedure
 
 static bool uniform(List<List<int>> grid) { // function

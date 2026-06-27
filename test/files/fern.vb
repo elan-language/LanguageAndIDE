@@ -9,13 +9,13 @@ Sub main()
   Dim s = New State(New RectangleVG(), 0.0, 0.16, New Random()) ' variable definition
   ' can't call s.r.initialiseFromClock() directly
   Dim t = s.r ' variable definition
-  t.initialiseFromClock() ' call procedure
+  t.initialiseFromClock() ' procedure call
   ' don't set the count limit too high
   ' or the browser will run out of memory
   For Each count In range(0, 1000)
     s = onepoint(s) ' assignment
-    vg.append(s.rect) ' call procedure
-    displayVectorGraphics(vg) ' call procedure
+    vg.append(s.rect) ' procedure call
+    displayVectorGraphics(vg) ' procedure call
   Next count
   Console.WriteLine("Finished") ' print statement
 End Sub

@@ -14,12 +14,12 @@ Sub main()
       blocks(p.x)(p.y) = colour ' assignment
     End If
   Next i
-  displayBlocks(blocks) ' call procedure
+  displayBlocks(blocks) ' procedure call
   Console.WriteLine("File name to save: ")
 
       Dim name = Console.ReadLine() ' input statement
   If Not name.equals("x") Then
-    saveAsFile(name, blocks) ' call procedure
+    saveAsFile(name, blocks) ' procedure call
   End If
 End Sub
 
@@ -34,9 +34,9 @@ Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
       Dim symbol = if_(colour = white, " ", "X") ' variable definition
       line = line + symbol ' assignment
     Next col
-    file.writeLine(line) ' call procedure
+    file.writeLine(line) ' procedure call
   Next row
-  file.saveAndClose() ' call procedure
+  file.saveAndClose() ' procedure call
 End Sub
 
 Function createStart(b As List(Of List(Of Integer))) As List(Of List(Of Integer))

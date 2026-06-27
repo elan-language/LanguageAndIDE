@@ -2,16 +2,16 @@
 
 Sub main()
   Dim game = New Game(1000) ' variable definition
-  game.addPlayer(New HumanPlayer("Player A", 1000)) ' call procedure
+  game.addPlayer(New HumanPlayer("Player A", 1000)) ' procedure call
   Dim anotherRound = True ' variable definition
   While anotherRound
-    playOneRound(game) ' call procedure
-    game.setMessage("Points updated. Do you want to play another round? (press y or n)") ' call procedure
-    clearKeyBuffer() ' call procedure
-    display(game) ' call procedure
+    playOneRound(game) ' procedure call
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)") ' procedure call
+    clearKeyBuffer() ' procedure call
+    display(game) ' procedure call
     Dim k = waitForKey().lowerCase() ' variable definition
     If k.equals("y") Then
-      game.setMessage("") ' call procedure
+      game.setMessage("") ' procedure call
     Else
       anotherRound = False ' assignment
     End If
@@ -19,31 +19,31 @@ Sub main()
 End Sub
 
 Sub playOneRound(game As Game) ' procedure
-  game.newRound() ' call procedure
-  display(game) ' call procedure
+  game.newRound() ' procedure call
+  display(game) ' procedure call
   Dim dealer = game.dealer ' variable definition
   Dim faceCard = dealer.faceCard ' variable definition
   For Each player In game.players
-    player.startTurn() ' call procedure
-    display(game) ' call procedure
+    player.startTurn() ' procedure call
+    display(game) ' procedure call
     While player.status = Status.active
-      player.nextAction(faceCard) ' call procedure
-      display(game) ' call procedure
+      player.nextAction(faceCard) ' procedure call
+      display(game) ' procedure call
     End While
   Next player
-  dealer.play() ' call procedure
-  display(game) ' call procedure
+  dealer.play() ' procedure call
+  display(game) ' procedure call
   While dealer.status = Status.active
-    dealer.nextAction(faceCard) ' call procedure
-    display(game) ' call procedure
+    dealer.nextAction(faceCard) ' procedure call
+    display(game) ' procedure call
   End While
-  game.updatePoints() ' call procedure
+  game.updatePoints() ' procedure call
 End Sub
 
 Sub display(game As Game) ' procedure
   Dim html = $"<style>{styleSheet}</style>{htmlForGame(game)}" ' variable definition
-  displayHtml(html) ' call procedure
-  sleep(1.5) ' call procedure
+  displayHtml(html) ' procedure call
+  sleep(1.5) ' procedure call
 End Sub
 
 Function determinePlayerOutcome(dealer As Dealer, player As Player) As Outcome
@@ -269,21 +269,21 @@ Class Game
 
   Sub newRound() ' procedure method
     Dim dealer = Me.dealer ' variable definition
-    dealer.newHand() ' call procedure
+    dealer.newHand() ' procedure call
     For Each player In Me.players
-      player.newHand() ' call procedure
+      player.newHand() ' procedure call
     Next player
   End Sub
 
   Sub updatePoints() ' procedure method
     For Each player In Me.players
-      player.determineOutcomeAndUpdatePoints(Me.dealer) ' call procedure
+      player.determineOutcomeAndUpdatePoints(Me.dealer) ' procedure call
     Next player
   End Sub
 
   Sub addPlayer(player As Player) ' procedure method
     Dim players = Me.players ' variable definition
-    players.append(player) ' call procedure
+    players.append(player) ' procedure call
   End Sub
 
   Sub setMessage(message As String) ' procedure method
@@ -349,14 +349,14 @@ MustInherit Class Player
   Sub determineOutcomeAndUpdatePoints(dealer As Dealer) ' procedure method
     Dim playerOutcome = determinePlayerOutcome(dealer, Me) ' variable definition
     If playerOutcome = Outcome.winDouble Then
-      Me.changePointsBy(2) ' call procedure
-      dealer.changePointsBy(-2) ' call procedure
+      Me.changePointsBy(2) ' procedure call
+      dealer.changePointsBy(-2) ' procedure call
     ElseIf playerOutcome = Outcome.win Then
-      Me.changePointsBy(1) ' call procedure
-      dealer.changePointsBy(-1) ' call procedure
+      Me.changePointsBy(1) ' procedure call
+      dealer.changePointsBy(-1) ' procedure call
     ElseIf playerOutcome = Outcome.lose Then
-      Me.changePointsBy(-1) ' call procedure
-      dealer.changePointsBy(1) ' call procedure
+      Me.changePointsBy(-1) ' procedure call
+      dealer.changePointsBy(1) ' procedure call
     End If
   End Sub
 
@@ -384,13 +384,13 @@ MustInherit Class Player
   Sub draw() ' procedure method
     Dim newCard = dealCard(random()) ' variable definition
     Dim cards = Me.cards ' variable definition
-    cards.append(newCard) ' call procedure
+    cards.append(newCard) ' procedure call
     If newCard.rank.equals("A") Then
-      Me.addAce() ' call procedure
+      Me.addAce() ' procedure call
     Else
       Me.handTotal = Me.handTotal + valueForRank(newCard.rank) ' assignment
     End If
-    Me.evaluateStatus(newCard) ' call procedure
+    Me.evaluateStatus(newCard) ' procedure call
   End Sub
 
   Sub addAce() ' procedure method
@@ -418,8 +418,8 @@ MustInherit Class Player
     Me.cards = New List(Of Card)() ' assignment
     Me.handTotal = 0 ' assignment
     Me.status = Status.active ' assignment
-    Me.draw() ' call procedure
-    Me.draw() ' call procedure
+    Me.draw() ' procedure call
+    Me.draw() ' procedure call
   End Sub
 
   MustOverride Function getMessage() As String
@@ -471,25 +471,25 @@ Class Dealer
   End Function
 
   Sub play() ' procedure method
-    Me.startTurn() ' call procedure
+    Me.startTurn() ' procedure call
     Dim hiddenCard = Me.cards(1) ' variable definition
-    hiddenCard.turnFaceUp() ' call procedure
+    hiddenCard.turnFaceUp() ' procedure call
     Me.hasPlayed = True ' assignment
   End Sub
 
   Overrides Sub newHand() ' procedure method
     Me.hasPlayed = False ' assignment
-    Me.newHandHelper() ' call procedure
+    Me.newHandHelper() ' procedure call
     Me.faceCard = Me.cards(0) ' assignment
     Dim hiddenCard = Me.cards(1) ' variable definition
-    hiddenCard.turnFaceDown() ' call procedure
+    hiddenCard.turnFaceDown() ' procedure call
   End Sub
 
   Overrides Sub nextAction(faceCard As Card) ' procedure method
     If Me.handTotal < 17 Then
-      Me.draw() ' call procedure
+      Me.draw() ' procedure call
     Else
-      Me.stand() ' call procedure
+      Me.stand() ' procedure call
     End If
   End Sub
 
@@ -536,18 +536,18 @@ Class HumanPlayer
   End Function
 
   Overrides Sub newHand() ' procedure method
-    Me.newHandHelper() ' call procedure
+    Me.newHandHelper() ' procedure call
   End Sub
 
   Overrides Sub nextAction(dealerFaceCard As Card) ' procedure method
     Dim key = "" ' variable definition
-    clearKeyBuffer() ' call procedure
+    clearKeyBuffer() ' procedure call
     While key.equals("")
       key = waitForKey() ' assignment
       If key.equals("d") Then
-        Me.draw() ' call procedure
+        Me.draw() ' procedure call
       ElseIf key.equals("s") Then
-        Me.stand() ' call procedure
+        Me.stand() ' procedure call
       Else
         key = "" ' assignment
       End If

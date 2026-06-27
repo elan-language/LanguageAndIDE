@@ -7,8 +7,8 @@ import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { Profile } from "../../src/ide/frames/profile";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
@@ -300,7 +300,7 @@ suite("Editing Fields Tests", () => {
       false,
     );
     const main = new MainRoutine(file);
-    const c = new CallStatement(main);
+    const c = new ProcedureCall(main);
     const proc = c.proc;
     const args = c.args;
     proc.select(true, false);

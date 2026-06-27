@@ -28,7 +28,7 @@ Sub main()
   Dim valid = False ' variable definition
   While Not valid
     Dim pwRef = New AsRef(Of String)("") ' variable definition
-    populatePassword(pwRef, all) ' call procedure
+    populatePassword(pwRef, all) ' procedure call
     password = pwRef.value() ' assignment
     valid = isValid(password, upper, lower, digit, symbol) ' assignment
   End While
@@ -38,7 +38,7 @@ End Sub
 Sub populatePassword(password As AsRef(Of String), all As String) ' procedure
   For Each i In range(1, length + 1)
     Dim rnd = randint(0, all.length() - 1) ' variable definition
-    password.set(password.value() + all(rnd)) ' call procedure
+    password.set(password.value() + all(rnd)) ' procedure call
   Next i
 End Sub
 

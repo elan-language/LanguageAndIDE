@@ -6,7 +6,7 @@ Sub main()
   Dim y = 15 ' variable definition
   While True
     blocks(x)(y) = red ' assignment
-    displayBlocks(blocks) ' call procedure
+    displayBlocks(blocks) ' procedure call
     blocks(x)(y) = black ' assignment
     Dim direction = randint(0, 3) ' variable definition
     If direction = 0 Then

@@ -6,13 +6,13 @@ def main() -> None:
   blocks = createBlockGraphics(white) # variable definition
   snake = Snake() # variable definition
   apple = Apple() # variable definition
-  apple.newRandomPosition(snake) # call procedure
+  apple.newRandomPosition(snake) # procedure call
   while not snake.gameOver():
-    snake.updateBlocks(blocks) # call procedure
-    apple.updateBlocks(blocks) # call procedure
-    displayBlocks(blocks) # call procedure
-    sleep_ms(150) # call procedure
-    snake.clockTick(getKey(), apple) # call procedure
+    snake.updateBlocks(blocks) # procedure call
+    apple.updateBlocks(blocks) # procedure call
+    displayBlocks(blocks) # procedure call
+    sleep_ms(150) # procedure call
+    snake.clockTick(getKey(), apple) # procedure call
   # end while
   print(f"Game Over! Score: {snake.score()}")
 # end main
@@ -36,13 +36,13 @@ class Snake: # concrete class
   priorTail: Square # private property
 
   def clockTick(self: Snake, key: str, apple: Apple) -> None: # procedure method
-    self.setDirection(key) # call procedure
+    self.setDirection(key) # procedure call
     self.priorTail = self.body[0] # assignment
     body = self.body # variable definition
-    body.append(self.head) # call procedure
+    body.append(self.head) # procedure call
     self.head = self.head.getAdjacentSquare(self.currentDir) # assignment
     if self.head.equals(apple.location):
-      apple.newRandomPosition(self) # call procedure
+      apple.newRandomPosition(self) # procedure call
     else:
       self.body = self.body.subList(1, self.body.length()) # assignment
     # end if

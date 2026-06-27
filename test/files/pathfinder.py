@@ -4,39 +4,39 @@ def main() -> None:
   start = Point(5, 5) # variable definition
   destination = Point(34, 24) # variable definition
   percentRocks = inputIntBetween("Enter % rocks (0-100): ", 0, 100) # variable definition
-  clearPrintedText() # call procedure
+  clearPrintedText() # procedure call
   rocks = list[Point]() # variable definition
   nodes = list[Node]() # variable definition
-  createRocksAndNodes(percentRocks, rocks, nodes, start, destination) # call procedure
+  createRocksAndNodes(percentRocks, rocks, nodes, start, destination) # procedure call
   gr = initialiseGraphics(start, destination, rocks) # variable definition
-  displayBlocks(gr) # call procedure
+  displayBlocks(gr) # procedure call
   solver = Solver(nodes, start, destination) # variable definition
   while True:
     k = inputStringFromOptions(algPrompt, ["a", "d", "h"]) # variable definition
-    clearPrintedText() # call procedure
+    clearPrintedText() # procedure call
     alg = getAlgFromLetter(k) # variable definition
-    runSolver(gr, start, destination, rocks, solver, alg) # call procedure
+    runSolver(gr, start, destination, rocks, solver, alg) # procedure call
   # end while
 # end main
 
 def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list[Point], solver: Solver, alg: Algorithm) -> None: # procedure
-  solver.initialise(alg) # call procedure
+  solver.initialise(alg) # procedure call
   gr2 = initialiseGraphics(start, destination, rocks) # variable definition
   while solver.running:
-    solver.visitNextPoint() # call procedure
+    solver.visitNextPoint() # procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) # assignment
-    displayBlocks(gr2) # call procedure
-    sleep_ms(0) # call procedure
+    displayBlocks(gr2) # procedure call
+    sleep_ms(0) # procedure call
   # end while
   if solver.getLastVisited().equals(destination):
     rl = solver.getRouteAndLength() # variable definition
     route = rl.item_0 # variable definition
     length = rl.item_1 # variable definition
     gr2 = addRoute(gr2, route) # assignment
-    displayBlocks(gr2) # call procedure
-    printNoLine(f"Length of route: {length.round(2)} ") # call procedure
+    displayBlocks(gr2) # procedure call
+    printNoLine(f"Length of route: {length.round(2)} ") # procedure call
   else:
-    printNoLine("No path found. ") # call procedure
+    printNoLine("No path found. ") # procedure call
   # end if
 # end procedure
 
@@ -45,13 +45,13 @@ def createRocksAndNodes(percentRocks: int, rocks: list[Point], nodes: list[Node]
     for y in range(1, 30):
       p = Point(x, y) # variable definition
       if p.equals(start):
-        nodes.append(Node(p, 0, p.minDistTo(dest))) # call procedure
+        nodes.append(Node(p, 0, p.minDistTo(dest))) # procedure call
       elif p.equals(dest): # else if
-        nodes.append(Node(p, infinity, 0)) # call procedure
+        nodes.append(Node(p, infinity, 0)) # procedure call
       elif random() < divAsFloat(percentRocks, 100): # else if
-        rocks.append(p) # call procedure
+        rocks.append(p) # procedure call
       else:
-        nodes.append(Node(p, infinity, p.minDistTo(dest))) # call procedure
+        nodes.append(Node(p, infinity, p.minDistTo(dest))) # procedure call
       # end if
     # end for
   # end for
@@ -118,20 +118,20 @@ class Solver: # concrete class
     self.current = Node(self.start, 0, infinity) # assignment
     self.running = True # assignment
     for node in self.nodes:
-      node.setDistanceFromStart(infinity) # call procedure
-      node.setVia(emptyPoint()) # call procedure
-      node.setVisited(False) # call procedure
+      node.setDistanceFromStart(infinity) # procedure call
+      node.setVia(emptyPoint()) # procedure call
+      node.setVisited(False) # procedure call
     # end for
   # end procedure method
 
   def visitNextPoint(self: Solver) -> None: # procedure method
-    self.updateNeighbours() # call procedure
+    self.updateNeighbours() # procedure call
     self.current = self.nextNodeToVisit() # assignment
     if (self.current.isEmpty or (self.current.point.equals(self.destination))):
       self.running = False # assignment
     else:
       current = self.current # variable definition
-      current.setVisited(True) # call procedure
+      current.setVisited(True) # procedure call
     # end if
   # end procedure method
 
@@ -141,8 +141,8 @@ class Solver: # concrete class
     for neighbour in self.currentNeighbours():
       distViaCurrent = distToCurrent + currentPoint.minDistTo(neighbour.point) # variable definition
       if distViaCurrent < neighbour.distFromStart:
-        neighbour.setVia(currentPoint) # call procedure
-        neighbour.setDistanceFromStart(distViaCurrent) # call procedure
+        neighbour.setVia(currentPoint) # procedure call
+        neighbour.setDistanceFromStart(distViaCurrent) # procedure call
       # end if
     # end for
   # end procedure method

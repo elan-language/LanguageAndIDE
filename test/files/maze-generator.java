@@ -16,10 +16,10 @@ static void main() {
       blocks[p.x][p.y] = colour; // assignment
     } // end if
   } // end foreach
-  displayBlocks(blocks); // call procedure
+  displayBlocks(blocks); // procedure call
   var name = Console.ReadLine("File name to save: "); // input statement
   if (!name.equals("x")) {
-    saveAsFile(name, blocks); // call procedure
+    saveAsFile(name, blocks); // procedure call
   } // end if
 } // end main
 
@@ -34,9 +34,9 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
       var symbol = if_(colour == white, " ", "X");
       line = line + symbol; // assignment
     } // end foreach
-    file.writeLine(line); // call procedure
+    file.writeLine(line); // procedure call
   } // end foreach
-  file.saveAndClose(); // call procedure
+  file.saveAndClose(); // procedure call
 } // end procedure
 
 static List<List<int>> createStart(List<List<int>> b) { // function

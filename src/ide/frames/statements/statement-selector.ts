@@ -52,7 +52,7 @@ export class StatementSelector extends AbstractSelector {
       ],
       [
         assignKeyword,
-        "r",
+        "a",
         "<b>a</b>ssignment",
         (parent: Parent) => this.factory.newSet(parent),
       ],
@@ -65,7 +65,7 @@ export class StatementSelector extends AbstractSelector {
       [
         callKeyword,
         "c",
-        "<b>c</b>all procedure",
+        "procedure <b>c</b>all",
         (parent: Parent) => this.factory.newCall(parent, ""),
       ],
       [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],

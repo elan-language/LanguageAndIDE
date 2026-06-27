@@ -22,15 +22,15 @@ Sub main()
       If x > max Then
         max = x ' assignment
       End If
-      p.append(x) ' call procedure
+      p.append(x) ' procedure call
       ' draw what we have got so far, scaled to the canvas
       Dim vg = createVectorGraphics() ' variable definition
       For Each i In range(0, p.length() - 1)
         vg = vg.withAppend((New LineVG()).withX1(scx(i, p)).withY1(scy(p(i), max)).withX2(scx(i + 1, p)).withY2(scy(p(i + 1), max)).withStrokeWidth(1)) ' assignment
       Next i
-      displayVectorGraphics(vg) ' call procedure
+      displayVectorGraphics(vg) ' procedure call
       Console.WriteLine(x) ' print statement
-      sleep_ms(100) ' call procedure
+      sleep_ms(100) ' procedure call
     End While
   End While
   Console.WriteLine("Finished") ' print statement

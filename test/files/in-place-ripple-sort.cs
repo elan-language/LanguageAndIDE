@@ -3,7 +3,7 @@
 static void main() {
   var li = new [] {7, 1, 0, 4, 8, 3, 6};
   Console.WriteLine(li); // print statement
-  inPlaceRippleSort(li); // call procedure
+  inPlaceRippleSort(li); // procedure call
   Console.WriteLine(li); // print statement
 } // end main
 

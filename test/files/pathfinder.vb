@@ -4,39 +4,39 @@ Sub main()
   Dim start = New Point(5, 5) ' variable definition
   Dim destination = New Point(34, 24) ' variable definition
   Dim percentRocks = inputIntBetween("Enter % rocks (0-100): ", 0, 100) ' variable definition
-  clearPrintedText() ' call procedure
+  clearPrintedText() ' procedure call
   Dim rocks = New List(Of Point)() ' variable definition
   Dim nodes = New List(Of Node)() ' variable definition
-  createRocksAndNodes(percentRocks, rocks, nodes, start, destination) ' call procedure
+  createRocksAndNodes(percentRocks, rocks, nodes, start, destination) ' procedure call
   Dim gr = initialiseGraphics(start, destination, rocks) ' variable definition
-  displayBlocks(gr) ' call procedure
+  displayBlocks(gr) ' procedure call
   Dim solver = New Solver(nodes, start, destination) ' variable definition
   While True
     Dim k = inputStringFromOptions(algPrompt, {"a", "d", "h"}) ' variable definition
-    clearPrintedText() ' call procedure
+    clearPrintedText() ' procedure call
     Dim alg = getAlgFromLetter(k) ' variable definition
-    runSolver(gr, start, destination, rocks, solver, alg) ' call procedure
+    runSolver(gr, start, destination, rocks, solver, alg) ' procedure call
   End While
 End Sub
 
 Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Point, rocks As List(Of Point), solver As Solver, alg As Algorithm) ' procedure
-  solver.initialise(alg) ' call procedure
+  solver.initialise(alg) ' procedure call
   Dim gr2 = initialiseGraphics(start, destination, rocks) ' variable definition
   While solver.running
-    solver.visitNextPoint() ' call procedure
+    solver.visitNextPoint() ' procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) ' assignment
-    displayBlocks(gr2) ' call procedure
-    sleep_ms(0) ' call procedure
+    displayBlocks(gr2) ' procedure call
+    sleep_ms(0) ' procedure call
   End While
   If solver.getLastVisited().equals(destination) Then
     Dim rl = solver.getRouteAndLength() ' variable definition
     Dim route = rl.item_0 ' variable definition
     Dim length = rl.item_1 ' variable definition
     gr2 = addRoute(gr2, route) ' assignment
-    displayBlocks(gr2) ' call procedure
-    printNoLine($"Length of route: {length.round(2)} ") ' call procedure
+    displayBlocks(gr2) ' procedure call
+    printNoLine($"Length of route: {length.round(2)} ") ' procedure call
   Else
-    printNoLine("No path found. ") ' call procedure
+    printNoLine("No path found. ") ' procedure call
   End If
 End Sub
 
@@ -45,13 +45,13 @@ Sub createRocksAndNodes(percentRocks As Integer, rocks As List(Of Point), nodes 
     For Each y In range(1, 30)
       Dim p = New Point(x, y) ' variable definition
       If p.equals(start) Then
-        nodes.append(New Node(p, 0, p.minDistTo(dest))) ' call procedure
+        nodes.append(New Node(p, 0, p.minDistTo(dest))) ' procedure call
       ElseIf p.equals(dest) Then
-        nodes.append(New Node(p, infinity, 0)) ' call procedure
+        nodes.append(New Node(p, infinity, 0)) ' procedure call
       ElseIf random() < divAsFloat(percentRocks, 100) Then
-        rocks.append(p) ' call procedure
+        rocks.append(p) ' procedure call
       Else
-        nodes.append(New Node(p, infinity, p.minDistTo(dest))) ' call procedure
+        nodes.append(New Node(p, infinity, p.minDistTo(dest))) ' procedure call
       End If
     Next y
   Next x
@@ -118,20 +118,20 @@ Class Solver
     Me.current = New Node(Me.start, 0, infinity) ' assignment
     Me.running = True ' assignment
     For Each node In Me.nodes
-      node.setDistanceFromStart(infinity) ' call procedure
-      node.setVia(emptyPoint()) ' call procedure
-      node.setVisited(False) ' call procedure
+      node.setDistanceFromStart(infinity) ' procedure call
+      node.setVia(emptyPoint()) ' procedure call
+      node.setVisited(False) ' procedure call
     Next node
   End Sub
 
   Sub visitNextPoint() ' procedure method
-    Me.updateNeighbours() ' call procedure
+    Me.updateNeighbours() ' procedure call
     Me.current = Me.nextNodeToVisit() ' assignment
     If (Me.current.isEmpty Or (Me.current.point.equals(Me.destination))) Then
       Me.running = False ' assignment
     Else
       Dim current = Me.current ' variable definition
-      current.setVisited(True) ' call procedure
+      current.setVisited(True) ' procedure call
     End If
   End Sub
 
@@ -141,8 +141,8 @@ Class Solver
     For Each neighbour In Me.currentNeighbours()
       Dim distViaCurrent = distToCurrent + currentPoint.minDistTo(neighbour.point) ' variable definition
       If distViaCurrent < neighbour.distFromStart Then
-        neighbour.setVia(currentPoint) ' call procedure
-        neighbour.setDistanceFromStart(distViaCurrent) ' call procedure
+        neighbour.setVia(currentPoint) ' procedure call
+        neighbour.setDistanceFromStart(distViaCurrent) ' procedure call
       End If
     Next neighbour
   End Sub

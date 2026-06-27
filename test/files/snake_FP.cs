@@ -5,12 +5,12 @@
 static void main() {
   var blocks = createBlockGraphics(white);
   var rnd = new Random();
-  rnd.initialiseFromClock(); // call procedure
+  rnd.initialiseFromClock(); // procedure call
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
     blocks = updateGraphics(game, blocks); // assignment
-    displayBlocks(blocks); // call procedure
-    sleep_ms(150); // call procedure
+    displayBlocks(blocks); // procedure call
+    sleep_ms(150); // procedure call
     game = clockTick(game, getKey()); // assignment
   } // end while
   Console.WriteLine($"Game Over! Score: {score(game)}"); // print statement

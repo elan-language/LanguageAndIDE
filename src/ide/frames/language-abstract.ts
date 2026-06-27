@@ -32,8 +32,8 @@ import { TypeSimpleOrGeneric } from "./parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CallStatement } from "./statements/call-statement";
 import { LetStatement } from "./statements/let-statement";
+import { ProcedureCall } from "./statements/procedureCall";
 import { VariableStatement } from "./statements/variable-statement";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, DOUBLE_QUOTES, OPEN_BRACKET } from "./symbols";
@@ -57,7 +57,7 @@ export abstract class LanguageAbstract implements Language {
       frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
       frame instanceof ProcedureFrame ||
-      frame instanceof CallStatement ||
+      frame instanceof ProcedureCall ||
       frame instanceof Assignment
     ) {
       annotation = frame.frameSpecificAnnotation();

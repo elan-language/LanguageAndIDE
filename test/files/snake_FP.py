@@ -5,12 +5,12 @@
 def main() -> None:
   blocks = createBlockGraphics(white) # variable definition
   rnd = Random() # variable definition
-  rnd.initialiseFromClock() # call procedure
+  rnd.initialiseFromClock() # procedure call
   game = (Game(rnd)).withNewApple() # variable definition
   while game.isOn:
     blocks = updateGraphics(game, blocks) # assignment
-    displayBlocks(blocks) # call procedure
-    sleep_ms(150) # call procedure
+    displayBlocks(blocks) # procedure call
+    sleep_ms(150) # procedure call
     game = clockTick(game, getKey()) # assignment
   # end while
   print(f"Game Over! Score: {score(game)}")

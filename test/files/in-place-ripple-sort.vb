@@ -3,7 +3,7 @@
 Sub main()
   Dim li = {7, 1, 0, 4, 8, 3, 6} ' variable definition
   Console.WriteLine(li) ' print statement
-  inPlaceRippleSort(li) ' call procedure
+  inPlaceRippleSort(li) ' procedure call
   Console.WriteLine(li) ' print statement
 End Sub
 

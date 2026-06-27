@@ -10,23 +10,23 @@ Sub main()
   Dim currentDir = Direction.right ' variable definition
   Dim gameOn = True ' variable definition
   Dim apple = {0, 0} ' variable definition
-  setAppleToRandomPosition(apple, body) ' call procedure
+  setAppleToRandomPosition(apple, body) ' procedure call
   While gameOn
-    updateDisplay(blocks, head, tail, body, apple) ' call procedure
+    updateDisplay(blocks, head, tail, body, apple) ' procedure call
     Dim currentDirRef = New AsRef(Of Direction)(currentDir) ' variable definition
     Dim headRef = New AsRef(Of List(Of Integer))(head) ' variable definition
     Dim tailRef = New AsRef(Of List(Of Integer))(tail) ' variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) ' call procedure
+    updateSnake(currentDirRef, tailRef, headRef, body) ' procedure call
     head = headRef.value() ' assignment
     tail = tailRef.value() ' assignment
     currentDir = currentDirRef.value() ' assignment
     gameOn = Not hasHitEdge(head(0), head(1)) And Not body.contains(head) ' assignment
     If head.equals(apple) Then
-      setAppleToRandomPosition(apple, body) ' call procedure
+      setAppleToRandomPosition(apple, body) ' procedure call
     Else
-      body.removeAt(0) ' call procedure
+      body.removeAt(0) ' procedure call
     End If
-    sleep_ms(150) ' call procedure
+    sleep_ms(150) ' procedure call
   End While
   Console.WriteLine($"Game Over! Score: {body.length() - 1}") ' print statement
 End Sub
@@ -36,10 +36,10 @@ Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(O
   Dim tail = tailRef.value() ' variable definition
   Dim currentDir = currentDirRef.value() ' variable definition
   currentDir = directionByKey(currentDir, getKey()) ' assignment
-  tailRef.set(body(0)) ' call procedure
-  body.append(head) ' call procedure
-  headRef.set(getAdjacentSquare(head, currentDir)) ' call procedure
-  currentDirRef.set(currentDir) ' call procedure
+  tailRef.set(body(0)) ' procedure call
+  body.append(head) ' procedure call
+  headRef.set(getAdjacentSquare(head, currentDir)) ' procedure call
+  currentDirRef.set(currentDir) ' procedure call
 End Sub
 
 Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer), tail As List(Of Integer), body As List(Of List(Of Integer)), apple As List(Of Integer)) ' procedure
@@ -47,7 +47,7 @@ Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer),
   Dim tailColour = getTailColour(tail, body) ' variable definition
   blocks(tail(0))(tail(1)) = tailColour ' assignment
   blocks(apple(0))(apple(1)) = red ' assignment
-  displayBlocks(blocks) ' call procedure
+  displayBlocks(blocks) ' procedure call
 End Sub
 
 Sub setAppleToRandomPosition(apple As List(Of Integer), body As List(Of List(Of Integer))) ' procedure

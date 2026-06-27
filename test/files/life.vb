@@ -2,13 +2,13 @@
 
 Sub main()
   Dim grid = createBlockGraphics(white) ' variable definition
-  fillRandom(grid) ' call procedure
+  fillRandom(grid) ' procedure call
   While True
-    displayBlocks(grid) ' call procedure
+    displayBlocks(grid) ' procedure call
     Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition
-    nextGeneration(gridRef) ' call procedure
+    nextGeneration(gridRef) ' procedure call
     grid = gridRef.value() ' assignment
-    sleep_ms(50) ' call procedure
+    sleep_ms(50) ' procedure call
   End While
 End Sub
 
@@ -29,7 +29,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
       nextGen(x)(y) = colour ' assignment
     Next y
   Next x
-  gridRef.set(nextGen) ' call procedure
+  gridRef.set(nextGen) ' procedure call
 End Sub
 
 Function blackOrWhite(random As Double) As Integer

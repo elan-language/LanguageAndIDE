@@ -5,7 +5,7 @@ public class Global {
 static void main() {
   var li = list(7, 1, 0, 4, 8, 3, 6);
   System.out.println(li); // print statement
-  inPlaceRippleSort(li); // call procedure
+  inPlaceRippleSort(li); // procedure call
   System.out.println(li); // print statement
 } // end main
 

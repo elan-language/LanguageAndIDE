@@ -20,8 +20,8 @@ Sub main()
   Dim p = New Coords() ' variable definition
   While True
     Dim vg = allpoints(p) ' variable definition
-    displayVectorGraphics(vg) ' call procedure
-    p.checkkeys() ' call procedure
+    displayVectorGraphics(vg) ' procedure call
+    p.checkkeys() ' procedure call
     Console.WriteLine($"x = {p.jx} y = {p.jy}") ' print statement
   End While
 End Sub
@@ -124,7 +124,7 @@ Class Coords
         ' another key may have been pressed
         k = getKey() ' assignment
       End While
-      sleep_ms(10) ' call procedure
+      sleep_ms(10) ' procedure call
     End While
   End Sub
 

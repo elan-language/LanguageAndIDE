@@ -2,13 +2,13 @@
 
 def main() -> None:
   grid = createBlockGraphics(white) # variable definition
-  fillRandom(grid) # call procedure
+  fillRandom(grid) # procedure call
   while True:
-    displayBlocks(grid) # call procedure
+    displayBlocks(grid) # procedure call
     gridRef = AsRef[list[list[int]]](grid) # variable definition
-    nextGeneration(gridRef) # call procedure
+    nextGeneration(gridRef) # procedure call
     grid = gridRef.value() # assignment
-    sleep_ms(50) # call procedure
+    sleep_ms(50) # procedure call
   # end while
 # end main
 
@@ -29,7 +29,7 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
       nextGen[x][y] = colour # assignment
     # end for
   # end for
-  gridRef.set(nextGen) # call procedure
+  gridRef.set(nextGen) # procedure call
 # end procedure
 
 def blackOrWhite(random: float) -> int: # function

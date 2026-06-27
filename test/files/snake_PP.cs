@@ -10,23 +10,23 @@ static void main() {
   var currentDir = Direction.right;
   var gameOn = true;
   var apple = new [] {0, 0};
-  setAppleToRandomPosition(apple, body); // call procedure
+  setAppleToRandomPosition(apple, body); // procedure call
   while (gameOn) {
-    updateDisplay(blocks, head, tail, body, apple); // call procedure
+    updateDisplay(blocks, head, tail, body, apple); // procedure call
     var currentDirRef = new AsRef<Direction>(currentDir);
     var headRef = new AsRef<List<int>>(head);
     var tailRef = new AsRef<List<int>>(tail);
-    updateSnake(currentDirRef, tailRef, headRef, body); // call procedure
+    updateSnake(currentDirRef, tailRef, headRef, body); // procedure call
     head = headRef.value(); // assignment
     tail = tailRef.value(); // assignment
     currentDir = currentDirRef.value(); // assignment
     gameOn = !hasHitEdge(head[0], head[1]) && !body.contains(head); // assignment
     if (head.equals(apple)) {
-      setAppleToRandomPosition(apple, body); // call procedure
+      setAppleToRandomPosition(apple, body); // procedure call
     } else {
-      body.removeAt(0); // call procedure
+      body.removeAt(0); // procedure call
     } // end if
-    sleep_ms(150); // call procedure
+    sleep_ms(150); // procedure call
   } // end while
   Console.WriteLine($"Game Over! Score: {body.length() - 1}"); // print statement
 } // end main
@@ -36,10 +36,10 @@ static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef
   var tail = tailRef.value();
   var currentDir = currentDirRef.value();
   currentDir = directionByKey(currentDir, getKey()); // assignment
-  tailRef.set(body[0]); // call procedure
-  body.append(head); // call procedure
-  headRef.set(getAdjacentSquare(head, currentDir)); // call procedure
-  currentDirRef.set(currentDir); // call procedure
+  tailRef.set(body[0]); // procedure call
+  body.append(head); // procedure call
+  headRef.set(getAdjacentSquare(head, currentDir)); // procedure call
+  currentDirRef.set(currentDir); // procedure call
 } // end procedure
 
 static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
@@ -47,7 +47,7 @@ static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail
   var tailColour = getTailColour(tail, body);
   blocks[tail[0]][tail[1]] = tailColour; // assignment
   blocks[apple[0]][apple[1]] = red; // assignment
-  displayBlocks(blocks); // call procedure
+  displayBlocks(blocks); // procedure call
 } // end procedure
 
 static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure

@@ -8,7 +8,7 @@ static void main() {
   var y = 15;
   while (true) {
     blocks[x][y] = red; // assignment
-    displayBlocks(blocks); // call procedure
+    displayBlocks(blocks); // procedure call
     blocks[x][y] = black; // assignment
     var direction = randint(0, 3);
     if (direction == 0) {

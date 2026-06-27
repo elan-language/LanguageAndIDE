@@ -28,7 +28,7 @@ def main() -> None:
   valid = False # variable definition
   while not valid:
     pwRef = AsRef[str]("") # variable definition
-    populatePassword(pwRef, all) # call procedure
+    populatePassword(pwRef, all) # procedure call
     password = pwRef.value() # assignment
     valid = isValid(password, upper, lower, digit, symbol) # assignment
   # end while
@@ -38,7 +38,7 @@ def main() -> None:
 def populatePassword(password: AsRef[str], all: str) -> None: # procedure
   for i in range(1, length + 1):
     rnd = randint(0, all.length() - 1) # variable definition
-    password.set(password.value() + all[rnd]) # call procedure
+    password.set(password.value() + all[rnd]) # procedure call
   # end for
 # end procedure
 

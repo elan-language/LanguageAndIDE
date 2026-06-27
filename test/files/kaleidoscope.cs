@@ -10,6 +10,6 @@ static void main() {
     blocks[20 + x][15 + y] = colour; // assignment
     blocks[20 - x][15 - y] = colour; // assignment
     blocks[20 - x][15 + y] = colour; // assignment
-    displayBlocks(blocks); // call procedure
+    displayBlocks(blocks); // procedure call
   } // end while
 } // end main

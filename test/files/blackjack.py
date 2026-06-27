@@ -2,16 +2,16 @@
 
 def main() -> None:
   game = Game(1000) # variable definition
-  game.addPlayer(HumanPlayer("Player A", 1000)) # call procedure
+  game.addPlayer(HumanPlayer("Player A", 1000)) # procedure call
   anotherRound = True # variable definition
   while anotherRound:
-    playOneRound(game) # call procedure
-    game.setMessage("Points updated. Do you want to play another round? (press y or n)") # call procedure
-    clearKeyBuffer() # call procedure
-    display(game) # call procedure
+    playOneRound(game) # procedure call
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)") # procedure call
+    clearKeyBuffer() # procedure call
+    display(game) # procedure call
     k = waitForKey().lowerCase() # variable definition
     if k.equals("y"):
-      game.setMessage("") # call procedure
+      game.setMessage("") # procedure call
     else:
       anotherRound = False # assignment
     # end if
@@ -19,31 +19,31 @@ def main() -> None:
 # end main
 
 def playOneRound(game: Game) -> None: # procedure
-  game.newRound() # call procedure
-  display(game) # call procedure
+  game.newRound() # procedure call
+  display(game) # procedure call
   dealer = game.dealer # variable definition
   faceCard = dealer.faceCard # variable definition
   for player in game.players:
-    player.startTurn() # call procedure
-    display(game) # call procedure
+    player.startTurn() # procedure call
+    display(game) # procedure call
     while player.status == Status.active:
-      player.nextAction(faceCard) # call procedure
-      display(game) # call procedure
+      player.nextAction(faceCard) # procedure call
+      display(game) # procedure call
     # end while
   # end for
-  dealer.play() # call procedure
-  display(game) # call procedure
+  dealer.play() # procedure call
+  display(game) # procedure call
   while dealer.status == Status.active:
-    dealer.nextAction(faceCard) # call procedure
-    display(game) # call procedure
+    dealer.nextAction(faceCard) # procedure call
+    display(game) # procedure call
   # end while
-  game.updatePoints() # call procedure
+  game.updatePoints() # procedure call
 # end procedure
 
 def display(game: Game) -> None: # procedure
   html = f"<style>{styleSheet}</style>{htmlForGame(game)}" # variable definition
-  displayHtml(html) # call procedure
-  sleep(1.5) # call procedure
+  displayHtml(html) # procedure call
+  sleep(1.5) # procedure call
 # end procedure
 
 def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # function
@@ -255,21 +255,21 @@ class Game: # concrete class
 
   def newRound(self: Game) -> None: # procedure method
     dealer = self.dealer # variable definition
-    dealer.newHand() # call procedure
+    dealer.newHand() # procedure call
     for player in self.players:
-      player.newHand() # call procedure
+      player.newHand() # procedure call
     # end for
   # end procedure method
 
   def updatePoints(self: Game) -> None: # procedure method
     for player in self.players:
-      player.determineOutcomeAndUpdatePoints(self.dealer) # call procedure
+      player.determineOutcomeAndUpdatePoints(self.dealer) # procedure call
     # end for
   # end procedure method
 
   def addPlayer(self: Game, player: Player) -> None: # procedure method
     players = self.players # variable definition
-    players.append(player) # call procedure
+    players.append(player) # procedure call
   # end procedure method
 
   def setMessage(self: Game, message: str) -> None: # procedure method
@@ -335,14 +335,14 @@ class Player(ABC): # abstract class
   def determineOutcomeAndUpdatePoints(self: Player, dealer: Dealer) -> None: # procedure method
     playerOutcome = determinePlayerOutcome(dealer, self) # variable definition
     if playerOutcome == Outcome.winDouble:
-      self.changePointsBy(2) # call procedure
-      dealer.changePointsBy(-2) # call procedure
+      self.changePointsBy(2) # procedure call
+      dealer.changePointsBy(-2) # procedure call
     elif playerOutcome == Outcome.win: # else if
-      self.changePointsBy(1) # call procedure
-      dealer.changePointsBy(-1) # call procedure
+      self.changePointsBy(1) # procedure call
+      dealer.changePointsBy(-1) # procedure call
     elif playerOutcome == Outcome.lose: # else if
-      self.changePointsBy(-1) # call procedure
-      dealer.changePointsBy(1) # call procedure
+      self.changePointsBy(-1) # procedure call
+      dealer.changePointsBy(1) # procedure call
     # end if
   # end procedure method
 
@@ -370,13 +370,13 @@ class Player(ABC): # abstract class
   def draw(self: Player) -> None: # procedure method
     newCard = dealCard(random()) # variable definition
     cards = self.cards # variable definition
-    cards.append(newCard) # call procedure
+    cards.append(newCard) # procedure call
     if newCard.rank.equals("A"):
-      self.addAce() # call procedure
+      self.addAce() # procedure call
     else:
       self.handTotal = self.handTotal + valueForRank(newCard.rank) # assignment
     # end if
-    self.evaluateStatus(newCard) # call procedure
+    self.evaluateStatus(newCard) # procedure call
   # end procedure method
 
   def addAce(self: Player) -> None: # procedure method
@@ -406,8 +406,8 @@ class Player(ABC): # abstract class
     self.cards = list[Card]() # assignment
     self.handTotal = 0 # assignment
     self.status = Status.active # assignment
-    self.draw() # call procedure
-    self.draw() # call procedure
+    self.draw() # procedure call
+    self.draw() # procedure call
   # end procedure method
 
   @abstractmethod
@@ -461,25 +461,25 @@ class Dealer(Player): # concrete class
   # end function method
 
   def play(self: Dealer) -> None: # procedure method
-    self.startTurn() # call procedure
+    self.startTurn() # procedure call
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceUp() # call procedure
+    hiddenCard.turnFaceUp() # procedure call
     self.hasPlayed = True # assignment
   # end procedure method
 
   def newHand(self: Dealer) -> None: # procedure method
     self.hasPlayed = False # assignment
-    self.newHandHelper() # call procedure
+    self.newHandHelper() # procedure call
     self.faceCard = self.cards[0] # assignment
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceDown() # call procedure
+    hiddenCard.turnFaceDown() # procedure call
   # end procedure method
 
   def nextAction(self: Dealer, faceCard: Card) -> None: # procedure method
     if self.handTotal < 17:
-      self.draw() # call procedure
+      self.draw() # procedure call
     else:
-      self.stand() # call procedure
+      self.stand() # procedure call
     # end if
   # end procedure method
 
@@ -524,18 +524,18 @@ class HumanPlayer(Player): # concrete class
   # end function method
 
   def newHand(self: HumanPlayer) -> None: # procedure method
-    self.newHandHelper() # call procedure
+    self.newHandHelper() # procedure call
   # end procedure method
 
   def nextAction(self: HumanPlayer, dealerFaceCard: Card) -> None: # procedure method
     key = "" # variable definition
-    clearKeyBuffer() # call procedure
+    clearKeyBuffer() # procedure call
     while key.equals(""):
       key = waitForKey() # assignment
       if key.equals("d"):
-        self.draw() # call procedure
+        self.draw() # procedure call
       elif key.equals("s"): # else if
-        self.stand() # call procedure
+        self.stand() # procedure call
       else:
         key = "" # assignment
       # end if

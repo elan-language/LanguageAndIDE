@@ -3,7 +3,7 @@
 def main() -> None:
   li = [7, 1, 0, 4, 8, 3, 6] # variable definition
   print(li)
-  inPlaceRippleSort(li) # call procedure
+  inPlaceRippleSort(li) # procedure call
   print(li)
 # end main
 

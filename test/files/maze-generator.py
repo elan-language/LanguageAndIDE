@@ -14,10 +14,10 @@ def main() -> None:
       blocks[p.x][p.y] = colour # assignment
     # end if
   # end for
-  displayBlocks(blocks) # call procedure
+  displayBlocks(blocks) # procedure call
   name = input("File name to save: ") # input statement
   if not name.equals("x"):
-    saveAsFile(name, blocks) # call procedure
+    saveAsFile(name, blocks) # procedure call
   # end if
 # end main
 
@@ -32,9 +32,9 @@ def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
       symbol = if_(colour == white, " ", "X") # variable definition
       line = line + symbol # assignment
     # end for
-    file.writeLine(line) # call procedure
+    file.writeLine(line) # procedure call
   # end for
-  file.saveAndClose() # call procedure
+  file.saveAndClose() # procedure call
 # end procedure
 
 def createStart(b: list[list[int]]) -> list[list[int]]: # function

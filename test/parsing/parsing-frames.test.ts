@@ -7,10 +7,10 @@ import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { InputStatement } from "../../src/ide/frames/statements/input-statement";
 import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
-import { Assignment } from "../../src/ide/frames/statements/assignment";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { Throw } from "../../src/ide/frames/statements/throw";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
@@ -201,7 +201,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainRoutine(fl);
-    const setTo = new CallStatement(m);
+    const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -219,7 +219,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainRoutine(fl);
-    const setTo = new CallStatement(m);
+    const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);

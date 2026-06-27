@@ -4,39 +4,39 @@ static void main() {
   var start = new Point(5, 5);
   var destination = new Point(34, 24);
   var percentRocks = inputIntBetween("Enter % rocks (0-100): ", 0, 100);
-  clearPrintedText(); // call procedure
+  clearPrintedText(); // procedure call
   var rocks = new List<Point>();
   var nodes = new List<Node>();
-  createRocksAndNodes(percentRocks, rocks, nodes, start, destination); // call procedure
+  createRocksAndNodes(percentRocks, rocks, nodes, start, destination); // procedure call
   var gr = initialiseGraphics(start, destination, rocks);
-  displayBlocks(gr); // call procedure
+  displayBlocks(gr); // procedure call
   var solver = new Solver(nodes, start, destination);
   while (true) {
     var k = inputStringFromOptions(algPrompt, new [] {"a", "d", "h"});
-    clearPrintedText(); // call procedure
+    clearPrintedText(); // procedure call
     var alg = getAlgFromLetter(k);
-    runSolver(gr, start, destination, rocks, solver, alg); // call procedure
+    runSolver(gr, start, destination, rocks, solver, alg); // procedure call
   } // end while
 } // end main
 
 static void runSolver(List<List<int>> gr, Point start, Point destination, List<Point> rocks, Solver solver, Algorithm alg) { // procedure
-  solver.initialise(alg); // call procedure
+  solver.initialise(alg); // procedure call
   var gr2 = initialiseGraphics(start, destination, rocks);
   while (solver.running) {
-    solver.visitNextPoint(); // call procedure
+    solver.visitNextPoint(); // procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()); // assignment
-    displayBlocks(gr2); // call procedure
-    sleep_ms(0); // call procedure
+    displayBlocks(gr2); // procedure call
+    sleep_ms(0); // procedure call
   } // end while
   if (solver.getLastVisited().equals(destination)) {
     var rl = solver.getRouteAndLength();
     var route = rl.item_0;
     var length = rl.item_1;
     gr2 = addRoute(gr2, route); // assignment
-    displayBlocks(gr2); // call procedure
-    printNoLine($"Length of route: {length.round(2)} "); // call procedure
+    displayBlocks(gr2); // procedure call
+    printNoLine($"Length of route: {length.round(2)} "); // procedure call
   } else {
-    printNoLine("No path found. "); // call procedure
+    printNoLine("No path found. "); // procedure call
   } // end if
 } // end procedure
 
@@ -45,13 +45,13 @@ static void createRocksAndNodes(int percentRocks, List<Point> rocks, List<Node> 
     foreach (var y in range(1, 30)) {
       var p = new Point(x, y);
       if (p.equals(start)) {
-        nodes.append(new Node(p, 0, p.minDistTo(dest))); // call procedure
+        nodes.append(new Node(p, 0, p.minDistTo(dest))); // procedure call
       } else if (p.equals(dest)) {
-        nodes.append(new Node(p, infinity, 0)); // call procedure
+        nodes.append(new Node(p, infinity, 0)); // procedure call
       } else if (random() < divAsFloat(percentRocks, 100)) {
-        rocks.append(p); // call procedure
+        rocks.append(p); // procedure call
       } else {
-        nodes.append(new Node(p, infinity, p.minDistTo(dest))); // call procedure
+        nodes.append(new Node(p, infinity, p.minDistTo(dest))); // procedure call
       } // end if
     } // end foreach
   } // end foreach
@@ -118,20 +118,20 @@ class Solver {
     this.current = new Node(this.start, 0, infinity); // assignment
     this.running = true; // assignment
     foreach (var node in this.nodes) {
-      node.setDistanceFromStart(infinity); // call procedure
-      node.setVia(emptyPoint()); // call procedure
-      node.setVisited(false); // call procedure
+      node.setDistanceFromStart(infinity); // procedure call
+      node.setVia(emptyPoint()); // procedure call
+      node.setVisited(false); // procedure call
     } // end foreach
   } // end procedure method
 
   public void visitNextPoint() { // procedure method
-    this.updateNeighbours(); // call procedure
+    this.updateNeighbours(); // procedure call
     this.current = this.nextNodeToVisit(); // assignment
     if ((this.current.isEmpty || (this.current.point.equals(this.destination)))) {
       this.running = false; // assignment
     } else {
       var current = this.current;
-      current.setVisited(true); // call procedure
+      current.setVisited(true); // procedure call
     } // end if
   } // end procedure method
 
@@ -141,8 +141,8 @@ class Solver {
     foreach (var neighbour in this.currentNeighbours()) {
       var distViaCurrent = distToCurrent + currentPoint.minDistTo(neighbour.point);
       if (distViaCurrent < neighbour.distFromStart) {
-        neighbour.setVia(currentPoint); // call procedure
-        neighbour.setDistanceFromStart(distViaCurrent); // call procedure
+        neighbour.setVia(currentPoint); // procedure call
+        neighbour.setDistanceFromStart(distViaCurrent); // procedure call
       } // end if
     } // end foreach
   } // end procedure method

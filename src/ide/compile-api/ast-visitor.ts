@@ -164,7 +164,6 @@ import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { Assignment } from "../frames/statements/assignment";
-import { CallStatement } from "../frames/statements/call-statement";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
 import { Else } from "../frames/statements/else";
@@ -174,6 +173,7 @@ import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
+import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";
@@ -402,7 +402,7 @@ export function transform(
     return printAsn;
   }
 
-  if (node instanceof CallStatement) {
+  if (node instanceof ProcedureCall) {
     const callAsn = new CallAsn(node.getHtmlId(), scope);
     callAsn.breakpointStatus = node.breakpointStatus;
 

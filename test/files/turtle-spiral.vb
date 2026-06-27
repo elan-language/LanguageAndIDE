@@ -2,11 +2,11 @@
 
 Sub main()
   Dim t = New Turtle() ' variable definition
-  t.placeAt(-100, 75) ' call procedure
-  t.turnToHeading(90) ' call procedure
+  t.placeAt(-100, 75) ' procedure call
+  t.turnToHeading(90) ' procedure call
   For Each i In rangeInSteps(150, -1, -5)
-    t.move(i) ' call procedure
-    t.turn(90) ' call procedure
-    sleep_ms(300) ' call procedure
+    t.move(i) ' procedure call
+    t.turn(90) ' procedure call
+    sleep_ms(300) ' procedure call
   Next i
 End Sub

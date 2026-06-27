@@ -22,15 +22,15 @@ def main() -> None:
       if x > max:
         max = x # assignment
       # end if
-      p.append(x) # call procedure
+      p.append(x) # procedure call
       # draw what we have got so far, scaled to the canvas
       vg = createVectorGraphics() # variable definition
       for i in range(0, p.length() - 1):
         vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # assignment
       # end for
-      displayVectorGraphics(vg) # call procedure
+      displayVectorGraphics(vg) # procedure call
       print(x)
-      sleep_ms(100) # call procedure
+      sleep_ms(100) # procedure call
     # end while
   # end while
   print("Finished")

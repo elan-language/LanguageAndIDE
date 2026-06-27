@@ -20,8 +20,8 @@ def main() -> None:
   p = Coords() # variable definition
   while True:
     vg = allpoints(p) # variable definition
-    displayVectorGraphics(vg) # call procedure
-    p.checkkeys() # call procedure
+    displayVectorGraphics(vg) # procedure call
+    p.checkkeys() # procedure call
     print(f"x = {p.jx} y = {p.jy}")
   # end while
 # end main
@@ -124,7 +124,7 @@ class Coords: # concrete class
         # another key may have been pressed
         k = getKey() # assignment
       # end while
-      sleep_ms(10) # call procedure
+      sleep_ms(10) # procedure call
     # end while
   # end procedure method
 

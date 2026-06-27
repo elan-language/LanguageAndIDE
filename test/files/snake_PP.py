@@ -10,23 +10,23 @@ def main() -> None:
   currentDir = Direction.right # variable definition
   gameOn = True # variable definition
   apple = [0, 0] # variable definition
-  setAppleToRandomPosition(apple, body) # call procedure
+  setAppleToRandomPosition(apple, body) # procedure call
   while gameOn:
-    updateDisplay(blocks, head, tail, body, apple) # call procedure
+    updateDisplay(blocks, head, tail, body, apple) # procedure call
     currentDirRef = AsRef[Direction](currentDir) # variable definition
     headRef = AsRef[list[int]](head) # variable definition
     tailRef = AsRef[list[int]](tail) # variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) # call procedure
+    updateSnake(currentDirRef, tailRef, headRef, body) # procedure call
     head = headRef.value() # assignment
     tail = tailRef.value() # assignment
     currentDir = currentDirRef.value() # assignment
     gameOn = not hasHitEdge(head[0], head[1]) and not body.contains(head) # assignment
     if head.equals(apple):
-      setAppleToRandomPosition(apple, body) # call procedure
+      setAppleToRandomPosition(apple, body) # procedure call
     else:
-      body.removeAt(0) # call procedure
+      body.removeAt(0) # procedure call
     # end if
-    sleep_ms(150) # call procedure
+    sleep_ms(150) # procedure call
   # end while
   print(f"Game Over! Score: {body.length() - 1}")
 # end main
@@ -36,10 +36,10 @@ def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], head
   tail = tailRef.value() # variable definition
   currentDir = currentDirRef.value() # variable definition
   currentDir = directionByKey(currentDir, getKey()) # assignment
-  tailRef.set(body[0]) # call procedure
-  body.append(head) # call procedure
-  headRef.set(getAdjacentSquare(head, currentDir)) # call procedure
-  currentDirRef.set(currentDir) # call procedure
+  tailRef.set(body[0]) # procedure call
+  body.append(head) # procedure call
+  headRef.set(getAdjacentSquare(head, currentDir)) # procedure call
+  currentDirRef.set(currentDir) # procedure call
 # end procedure
 
 def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure
@@ -47,7 +47,7 @@ def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], bod
   tailColour = getTailColour(tail, body) # variable definition
   blocks[tail[0]][tail[1]] = tailColour # assignment
   blocks[apple[0]][apple[1]] = red # assignment
-  displayBlocks(blocks) # call procedure
+  displayBlocks(blocks) # procedure call
 # end procedure
 
 def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: # procedure

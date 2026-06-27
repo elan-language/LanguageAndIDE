@@ -2,12 +2,12 @@
 
 Sub main()
   Dim rng = New Random() ' variable definition
-  rng.initialiseFromClock() ' call procedure
+  rng.initialiseFromClock() ' procedure call
   Dim grid = initialGrid(rng) ' variable definition
   While True
-    displayBlocks(grid) ' call procedure
+    displayBlocks(grid) ' procedure call
     grid = nextGeneration(grid) ' assignment
-    sleep_ms(50) ' call procedure
+    sleep_ms(50) ' procedure call
   End While
 End Sub
 

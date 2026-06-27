@@ -6,41 +6,41 @@ Const delay_ms = 300
 
 Sub main()
   Dim stacks = create3Stacks(nDiscs) ' variable definition
-  display(stacks) ' call procedure
-  moveMultiple(nDiscs, stacks, 0, 2, 1) ' call procedure
+  display(stacks) ' procedure call
+  moveMultiple(nDiscs, stacks, 0, 2, 1) ' procedure call
 End Sub
 
 Sub moveMultiple(n As Integer, stacks As List(Of List(Of Integer)), fromStack As Integer, toStack As Integer, spare As Integer) ' procedure
   If n = 1 Then
-    moveOne(stacks, fromStack, toStack) ' call procedure
+    moveOne(stacks, fromStack, toStack) ' procedure call
   Else
-    moveMultiple(n - 1, stacks, fromStack, spare, toStack) ' call procedure
-    moveOne(stacks, fromStack, toStack) ' call procedure
-    moveMultiple(n - 1, stacks, spare, toStack, fromStack) ' call procedure
+    moveMultiple(n - 1, stacks, fromStack, spare, toStack) ' procedure call
+    moveOne(stacks, fromStack, toStack) ' procedure call
+    moveMultiple(n - 1, stacks, spare, toStack, fromStack) ' procedure call
   End If
 End Sub
 
 Sub moveOne(stacks As List(Of List(Of Integer)), fromStack As Integer, toStack As Integer) ' procedure
   Dim disc = top(stacks(fromStack)) ' variable definition
-  stacks(fromStack).removeFirst(disc) ' call procedure
-  stacks(toStack).append(disc) ' call procedure
-  display(stacks) ' call procedure
+  stacks(fromStack).removeFirst(disc) ' procedure call
+  stacks(toStack).append(disc) ' procedure call
+  display(stacks) ' procedure call
 End Sub
 
 Sub display(stacks As List(Of List(Of Integer))) ' procedure
-  clearAllDisplays() ' call procedure
+  clearAllDisplays() ' procedure call
   Dim vg = createVectorGraphics() ' variable definition
-  drawStack(stacks(0), 1, vg) ' call procedure
-  drawStack(stacks(1), 2, vg) ' call procedure
-  drawStack(stacks(2), 3, vg) ' call procedure
-  displayVectorGraphics(vg) ' call procedure
-  sleep_ms(delay_ms) ' call procedure
+  drawStack(stacks(0), 1, vg) ' procedure call
+  drawStack(stacks(1), 2, vg) ' procedure call
+  drawStack(stacks(2), 3, vg) ' procedure call
+  displayVectorGraphics(vg) ' procedure call
+  sleep_ms(delay_ms) ' procedure call
 End Sub
 
 Sub drawStack(s As List(Of Integer), peg As Integer, vg As List(Of VectorGraphic)) ' procedure
   For Each n In range(0, s.length())
     Dim discVG = createDisc(s(n), peg, n) ' variable definition
-    vg.append(discVG) ' call procedure
+    vg.append(discVG) ' procedure call
   Next n
 End Sub
 

@@ -6,7 +6,7 @@ def main() -> None:
   y = 15 # variable definition
   while True:
     blocks[x][y] = red # assignment
-    displayBlocks(blocks) # call procedure
+    displayBlocks(blocks) # procedure call
     blocks[x][y] = black # assignment
     direction = randint(0, 3) # variable definition
     if direction == 0:

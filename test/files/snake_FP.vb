@@ -5,12 +5,12 @@
 Sub main()
   Dim blocks = createBlockGraphics(white) ' variable definition
   Dim rnd = New Random() ' variable definition
-  rnd.initialiseFromClock() ' call procedure
+  rnd.initialiseFromClock() ' procedure call
   Dim game = (New Game(rnd)).withNewApple() ' variable definition
   While game.isOn
     blocks = updateGraphics(game, blocks) ' assignment
-    displayBlocks(blocks) ' call procedure
-    sleep_ms(150) ' call procedure
+    displayBlocks(blocks) ' procedure call
+    sleep_ms(150) ' procedure call
     game = clockTick(game, getKey()) ' assignment
   End While
   Console.WriteLine($"Game Over! Score: {score(game)}") ' print statement

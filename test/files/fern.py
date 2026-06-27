@@ -9,13 +9,13 @@ def main() -> None:
   s = State(RectangleVG(), 0.0, 0.16, Random()) # variable definition
   # can't call s.r.initialiseFromClock() directly
   t = s.r # variable definition
-  t.initialiseFromClock() # call procedure
+  t.initialiseFromClock() # procedure call
   # don't set the count limit too high
   # or the browser will run out of memory
   for count in range(0, 1000):
     s = onepoint(s) # assignment
-    vg.append(s.rect) # call procedure
-    displayVectorGraphics(vg) # call procedure
+    vg.append(s.rect) # procedure call
+    displayVectorGraphics(vg) # procedure call
   # end for
   print("Finished")
 # end main

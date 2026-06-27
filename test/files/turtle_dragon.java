@@ -4,7 +4,7 @@ public class Global {
 
 static void main() {
   var order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12);
-  clearPrintedText(); // call procedure
+  clearPrintedText(); // procedure call
   System.out.println(String.format("Dragon of order %", order)); // print statement
   var side = (75/pow(sqrt(2), order));
   var corner = side/12.0/cos(45);
@@ -13,8 +13,8 @@ static void main() {
     turns = setTurns(turns); // assignment
   } // end foreach
   var t = new Turtle();
-  setupTurtle(t, order); // call procedure
-  drawDragon(t, order, turns, side, corner); // call procedure
+  setupTurtle(t, order); // procedure call
+  drawDragon(t, order, turns, side, corner); // procedure call
 } // end main
 
 static final String left = "1"; // constant
@@ -26,23 +26,23 @@ static void drawDragon(Turtle t, int order, String turns, double side, double co
   var turnI = 0;
   foreach (var turn in turns) {
     turnI = (if_(turn.equals(left), 1, -1)); // assignment
-    t.turn(-45*turnI); // call procedure
-    t.move(corner); // call procedure
-    t.turn(-45*turnI); // call procedure
-    t.move(side); // call procedure
-    sleep_ms(p); // call procedure
+    t.turn(-45*turnI); // procedure call
+    t.move(corner); // procedure call
+    t.turn(-45*turnI); // procedure call
+    t.move(side); // procedure call
+    sleep_ms(p); // procedure call
   } // end foreach
-  t.penUp(); // call procedure
-  t.hide(); // call procedure
+  t.penUp(); // procedure call
+  t.hide(); // procedure call
 } // end procedure
 
 static void setupTurtle(Turtle t, int order) { // procedure
-  t.turnToHeading(180 + order*45); // call procedure
-  t.placeAt(-40, 20); // call procedure
-  t.penColour(red); // call procedure
-  t.penWidth(10.0/order); // call procedure
-  t.penDown(); // call procedure
-  t.show(); // call procedure
+  t.turnToHeading(180 + order*45); // procedure call
+  t.placeAt(-40, 20); // procedure call
+  t.penColour(red); // procedure call
+  t.penWidth(10.0/order); // procedure call
+  t.penDown(); // procedure call
+  t.show(); // procedure call
 } // end procedure
 
 static String setTurns(String turns) { // function

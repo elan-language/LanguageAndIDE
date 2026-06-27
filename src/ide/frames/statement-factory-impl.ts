@@ -3,7 +3,6 @@ import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CallStatement } from "./statements/call-statement";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
@@ -13,6 +12,7 @@ import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
+import { ProcedureCall } from "./statements/procedureCall";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
@@ -23,7 +23,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new AssertStatement(parent);
   }
   public newCall(parent: Parent, procName = ""): Frame {
-    const call = new CallStatement(parent);
+    const call = new ProcedureCall(parent);
     if (procName !== "") {
       call.proc.setFieldToKnownValidText(procName);
     }

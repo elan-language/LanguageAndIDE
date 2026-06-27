@@ -4,16 +4,16 @@ public class Global {
 
 static void main() {
   var game = new Game(1000);
-  game.addPlayer(new HumanPlayer("Player A", 1000)); // call procedure
+  game.addPlayer(new HumanPlayer("Player A", 1000)); // procedure call
   var anotherRound = true;
   while (anotherRound) {
-    playOneRound(game); // call procedure
-    game.setMessage("Points updated. Do you want to play another round? (press y or n)"); // call procedure
-    clearKeyBuffer(); // call procedure
-    display(game); // call procedure
+    playOneRound(game); // procedure call
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)"); // procedure call
+    clearKeyBuffer(); // procedure call
+    display(game); // procedure call
     var k = waitForKey().lowerCase();
     if (k.equals("y")) {
-      game.setMessage(""); // call procedure
+      game.setMessage(""); // procedure call
     } else {
       anotherRound = false; // assignment
     } // end if
@@ -21,31 +21,31 @@ static void main() {
 } // end main
 
 static void playOneRound(Game game) { // procedure
-  game.newRound(); // call procedure
-  display(game); // call procedure
+  game.newRound(); // procedure call
+  display(game); // procedure call
   var dealer = game.dealer;
   var faceCard = dealer.faceCard;
   foreach (var player in game.players) {
-    player.startTurn(); // call procedure
-    display(game); // call procedure
+    player.startTurn(); // procedure call
+    display(game); // procedure call
     while (player.status == Status.active) {
-      player.nextAction(faceCard); // call procedure
-      display(game); // call procedure
+      player.nextAction(faceCard); // procedure call
+      display(game); // procedure call
     } // end while
   } // end foreach
-  dealer.play(); // call procedure
-  display(game); // call procedure
+  dealer.play(); // procedure call
+  display(game); // procedure call
   while (dealer.status == Status.active) {
-    dealer.nextAction(faceCard); // call procedure
-    display(game); // call procedure
+    dealer.nextAction(faceCard); // procedure call
+    display(game); // procedure call
   } // end while
-  game.updatePoints(); // call procedure
+  game.updatePoints(); // procedure call
 } // end procedure
 
 static void display(Game game) { // procedure
   var html = String.format("<style>%</style>%", styleSheet, htmlForGame(game));
-  displayHtml(html); // call procedure
-  sleep(1.5); // call procedure
+  displayHtml(html); // procedure call
+  sleep(1.5); // procedure call
 } // end procedure
 
 static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // function
@@ -257,21 +257,21 @@ class Game {
 
   public void newRound() { // procedure method
     var dealer = this.dealer;
-    dealer.newHand(); // call procedure
+    dealer.newHand(); // procedure call
     foreach (var player in this.players) {
-      player.newHand(); // call procedure
+      player.newHand(); // procedure call
     } // end foreach
   } // end procedure method
 
   public void updatePoints() { // procedure method
     foreach (var player in this.players) {
-      player.determineOutcomeAndUpdatePoints(this.dealer); // call procedure
+      player.determineOutcomeAndUpdatePoints(this.dealer); // procedure call
     } // end foreach
   } // end procedure method
 
   public void addPlayer(Player player) { // procedure method
     var players = this.players;
-    players.append(player); // call procedure
+    players.append(player); // procedure call
   } // end procedure method
 
   public void setMessage(String message) { // procedure method
@@ -337,14 +337,14 @@ abstract class Player {
   public void determineOutcomeAndUpdatePoints(Dealer dealer) { // procedure method
     var playerOutcome = determinePlayerOutcome(dealer, this);
     if (playerOutcome == Outcome.winDouble) {
-      this.changePointsBy(2); // call procedure
-      dealer.changePointsBy(-2); // call procedure
+      this.changePointsBy(2); // procedure call
+      dealer.changePointsBy(-2); // procedure call
     } else if (playerOutcome == Outcome.win) {
-      this.changePointsBy(1); // call procedure
-      dealer.changePointsBy(-1); // call procedure
+      this.changePointsBy(1); // procedure call
+      dealer.changePointsBy(-1); // procedure call
     } else if (playerOutcome == Outcome.lose) {
-      this.changePointsBy(-1); // call procedure
-      dealer.changePointsBy(1); // call procedure
+      this.changePointsBy(-1); // procedure call
+      dealer.changePointsBy(1); // procedure call
     } // end if
   } // end procedure method
 
@@ -372,13 +372,13 @@ abstract class Player {
   public void draw() { // procedure method
     var newCard = dealCard(random());
     var cards = this.cards;
-    cards.append(newCard); // call procedure
+    cards.append(newCard); // procedure call
     if (newCard.rank.equals("A")) {
-      this.addAce(); // call procedure
+      this.addAce(); // procedure call
     } else {
       this.handTotal = this.handTotal + valueForRank(newCard.rank); // assignment
     } // end if
-    this.evaluateStatus(newCard); // call procedure
+    this.evaluateStatus(newCard); // procedure call
   } // end procedure method
 
   public void addAce() { // procedure method
@@ -406,8 +406,8 @@ abstract class Player {
     this.cards = new List<Card>(); // assignment
     this.handTotal = 0; // assignment
     this.status = Status.active; // assignment
-    this.draw(); // call procedure
-    this.draw(); // call procedure
+    this.draw(); // procedure call
+    this.draw(); // procedure call
   } // end procedure method
 
   abstract String getMessage(); // abstract function
@@ -457,25 +457,25 @@ class Dealer extends Player {
   } // end function method
 
   public void play() { // procedure method
-    this.startTurn(); // call procedure
+    this.startTurn(); // procedure call
     var hiddenCard = this.cards[1];
-    hiddenCard.turnFaceUp(); // call procedure
+    hiddenCard.turnFaceUp(); // procedure call
     this.hasPlayed = true; // assignment
   } // end procedure method
 
   public  void newHand() { // procedure method
     this.hasPlayed = false; // assignment
-    this.newHandHelper(); // call procedure
+    this.newHandHelper(); // procedure call
     this.faceCard = this.cards[0]; // assignment
     var hiddenCard = this.cards[1];
-    hiddenCard.turnFaceDown(); // call procedure
+    hiddenCard.turnFaceDown(); // procedure call
   } // end procedure method
 
   public  void nextAction(Card faceCard) { // procedure method
     if (this.handTotal < 17) {
-      this.draw(); // call procedure
+      this.draw(); // procedure call
     } else {
-      this.stand(); // call procedure
+      this.stand(); // procedure call
     } // end if
   } // end procedure method
 
@@ -520,18 +520,18 @@ class HumanPlayer extends Player {
   } // end function method
 
   public  void newHand() { // procedure method
-    this.newHandHelper(); // call procedure
+    this.newHandHelper(); // procedure call
   } // end procedure method
 
   public  void nextAction(Card dealerFaceCard) { // procedure method
     var key = "";
-    clearKeyBuffer(); // call procedure
+    clearKeyBuffer(); // procedure call
     while (key.equals("")) {
       key = waitForKey(); // assignment
       if (key.equals("d")) {
-        this.draw(); // call procedure
+        this.draw(); // procedure call
       } else if (key.equals("s")) {
-        this.stand(); // call procedure
+        this.stand(); // procedure call
       } else {
         key = ""; // assignment
       } // end if

@@ -54,7 +54,7 @@ return [main, _tests];}`;
 
 Sub main()
   Dim a = {4, 5, 6, 7, 8} ' variable definition
-  printNoLine(a) ' call procedure
+  printNoLine(a) ' procedure call
 End Sub
 `;
     await assertExportedVBis(fileImpl, vbCode);

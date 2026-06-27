@@ -11,13 +11,13 @@ static void main() {
   var s = new State(new RectangleVG(), 0.0, 0.16, new Random());
   // can't call s.r.initialiseFromClock() directly
   var t = s.r;
-  t.initialiseFromClock(); // call procedure
+  t.initialiseFromClock(); // procedure call
   // don't set the count limit too high
   // or the browser will run out of memory
   foreach (var count in range(0, 1000)) {
     s = onepoint(s); // assignment
-    vg.append(s.rect); // call procedure
-    displayVectorGraphics(vg); // call procedure
+    vg.append(s.rect); // procedure call
+    displayVectorGraphics(vg); // procedure call
   } // end foreach
   System.out.println("Finished"); // print statement
 } // end main

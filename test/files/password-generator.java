@@ -30,7 +30,7 @@ static void main() {
   var valid = false;
   while (!valid) {
     var pwRef = new AsRef<String>("");
-    populatePassword(pwRef, all); // call procedure
+    populatePassword(pwRef, all); // procedure call
     password = pwRef.value(); // assignment
     valid = isValid(password, upper, lower, digit, symbol); // assignment
   } // end while
@@ -40,7 +40,7 @@ static void main() {
 static void populatePassword(AsRef<String> password, String all) { // procedure
   foreach (var i in range(1, length + 1)) {
     var rnd = randint(0, all.length() - 1);
-    password.set(password.value() + all[rnd]); // call procedure
+    password.set(password.value() + all[rnd]); // procedure call
   } // end foreach
 } // end procedure
 

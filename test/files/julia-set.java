@@ -22,8 +22,8 @@ static void main() {
   var p = new Coords();
   while (true) {
     var vg = allpoints(p);
-    displayVectorGraphics(vg); // call procedure
-    p.checkkeys(); // call procedure
+    displayVectorGraphics(vg); // procedure call
+    p.checkkeys(); // procedure call
     System.out.println(String.format("x = % y = %", p.jx, p.jy)); // print statement
   } // end while
 } // end main
@@ -126,7 +126,7 @@ class Coords {
         // another key may have been pressed
         k = getKey(); // assignment
       } // end while
-      sleep_ms(10); // call procedure
+      sleep_ms(10); // procedure call
     } // end while
   } // end procedure method
 

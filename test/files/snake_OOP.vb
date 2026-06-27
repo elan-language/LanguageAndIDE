@@ -6,13 +6,13 @@ Sub main()
   Dim blocks = createBlockGraphics(white) ' variable definition
   Dim snake = New Snake() ' variable definition
   Dim apple = New Apple() ' variable definition
-  apple.newRandomPosition(snake) ' call procedure
+  apple.newRandomPosition(snake) ' procedure call
   While Not snake.gameOver()
-    snake.updateBlocks(blocks) ' call procedure
-    apple.updateBlocks(blocks) ' call procedure
-    displayBlocks(blocks) ' call procedure
-    sleep_ms(150) ' call procedure
-    snake.clockTick(getKey(), apple) ' call procedure
+    snake.updateBlocks(blocks) ' procedure call
+    apple.updateBlocks(blocks) ' procedure call
+    displayBlocks(blocks) ' procedure call
+    sleep_ms(150) ' procedure call
+    snake.clockTick(getKey(), apple) ' procedure call
   End While
   Console.WriteLine($"Game Over! Score: {snake.score()}") ' print statement
 End Sub
@@ -36,13 +36,13 @@ Class Snake
   Private Property priorTail As Square
 
   Sub clockTick(key As String, apple As Apple) ' procedure method
-    Me.setDirection(key) ' call procedure
+    Me.setDirection(key) ' procedure call
     Me.priorTail = Me.body(0) ' assignment
     Dim body = Me.body ' variable definition
-    body.append(Me.head) ' call procedure
+    body.append(Me.head) ' procedure call
     Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' assignment
     If Me.head.equals(apple.location) Then
-      apple.newRandomPosition(Me) ' call procedure
+      apple.newRandomPosition(Me) ' procedure call
     Else
       Me.body = Me.body.subList(1, Me.body.length()) ' assignment
     End If
