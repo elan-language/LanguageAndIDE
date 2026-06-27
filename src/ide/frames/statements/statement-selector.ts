@@ -68,9 +68,9 @@ export class StatementSelector extends AbstractSelector {
         "procedure <b>c</b>all",
         (parent: Parent) => this.factory.newCall(parent, ""),
       ],
-      [tryKeyword, "y", "tr<b>y</b>", (parent: Parent) => this.factory.newTryCatch(parent)],
+      [tryKeyword, "y", "tr<b>y</b> statement", (parent: Parent) => this.factory.newTryCatch(parent)],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
-      [throwKeyword, "t", "<b>t</b>hrow", (parent: Parent) => this.factory.newThrow(parent)],
+      [throwKeyword, "t", "<b>t</b>hrow statement", (parent: Parent) => this.factory.newThrow(parent)],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),

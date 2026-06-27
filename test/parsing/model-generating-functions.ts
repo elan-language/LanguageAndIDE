@@ -19,8 +19,8 @@ import { ForLoop } from "../../src/ide/frames/statements/forLoop";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { Throw } from "../../src/ide/frames/statements/throw";
-import { TryStatement } from "../../src/ide/frames/statements/try";
+import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
+import { TryStatement } from "../../src/ide/frames/statements/try-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 
@@ -78,7 +78,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   s.assignable.setFieldToKnownValidText("a");
   s.expr.setFieldToKnownValidText("3 + 4");
   m.addChildBefore(s, ssm);
-  const t = new Throw(m);
+  const t = new ThrowStatement(m);
   m.addChildBefore(t, ssm);
   const ca = new ProcedureCall(m);
   ca.proc.setFieldToKnownValidText("signIn");

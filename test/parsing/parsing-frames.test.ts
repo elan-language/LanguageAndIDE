@@ -12,7 +12,7 @@ import { InputStatement } from "../../src/ide/frames/statements/input-statement"
 import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { Throw } from "../../src/ide/frames/statements/throw";
+import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { testHeader, transforms } from "../compiler/compiler-test-helpers";
@@ -129,7 +129,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainRoutine(fl);
-    const setTo = new Throw(m);
+    const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -147,7 +147,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainRoutine(fl);
-    const setTo = new Throw(m);
+    const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);

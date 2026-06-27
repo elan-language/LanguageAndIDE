@@ -56,8 +56,8 @@ import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
-import { Throw } from "./statements/throw";
-import { TryStatement } from "./statements/try";
+import { ThrowStatement } from "./statements/throw-statement";
+import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
 import { TokenType } from "./symbol-completion-helpers";
@@ -115,7 +115,7 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
       html = `<el-kw>${this.REASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof Throw) {
+    } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;

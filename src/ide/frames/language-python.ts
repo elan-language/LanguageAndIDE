@@ -60,8 +60,8 @@ import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
-import { Throw } from "./statements/throw";
-import { TryStatement } from "./statements/try";
+import { ThrowStatement } from "./statements/throw-statement";
+import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
 import { ParseStatus } from "./status-enums";
@@ -143,7 +143,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof Throw) {
+    } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;

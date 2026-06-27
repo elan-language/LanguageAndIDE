@@ -175,8 +175,8 @@ import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
-import { Throw } from "../frames/statements/throw";
-import { TryStatement } from "../frames/statements/try";
+import { ThrowStatement } from "../frames/statements/throw-statement";
+import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
@@ -622,7 +622,7 @@ export function transform(
     return catchAsn;
   }
 
-  if (node instanceof Throw) {
+  if (node instanceof ThrowStatement) {
     const type = node.type.text;
     const msg = transform(node.text, node.getHtmlId(), scope)!;
 

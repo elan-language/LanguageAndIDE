@@ -33,8 +33,8 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "procedure call",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -191,8 +191,8 @@ suite("Selector tests", () => {
       "if statement",
       "while loop",
       "for loop",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -231,8 +231,8 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "procedure call",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -257,8 +257,8 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "procedure call",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -330,8 +330,8 @@ suite("Selector tests", () => {
       "while loop",
       "for loop",
       "procedure call",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });

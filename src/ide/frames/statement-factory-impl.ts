@@ -13,8 +13,8 @@ import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
-import { Throw } from "./statements/throw";
-import { TryStatement } from "./statements/try";
+import { ThrowStatement } from "./statements/throw-statement";
+import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
 
@@ -57,7 +57,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new Assignment(parent);
   }
   public newThrow(parent: Parent): Frame {
-    return new Throw(parent);
+    return new ThrowStatement(parent);
   }
   public newTryCatch(parent: Parent): Frame {
     return new TryStatement(parent);

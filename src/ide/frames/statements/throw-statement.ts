@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class Throw extends SingleLineFrame implements Statement {
+export class ThrowStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   type: ExceptionTypeField;
   text: ExceptionMessageField;
@@ -35,7 +35,7 @@ export class Throw extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "throw";
+    return "throw statement";
   }
 
   renderAsElanSource(): string {
