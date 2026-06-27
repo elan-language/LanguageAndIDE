@@ -5,8 +5,8 @@ import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Else } from "./statements/else";
-import { ElseIf } from "./statements/elseIf";
+import { ElseClause } from "./statements/else-clause";
+import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
@@ -33,10 +33,10 @@ export class StatementFactoryImpl implements StatementFactory {
     return new CatchStatement(parent);
   }
   public newElif(parent: Parent): Frame {
-    return new ElseIf(parent);
+    return new ElseIfClause(parent);
   }
   public newElse(parent: Parent): Frame {
-    return new Else(parent);
+    return new ElseClause(parent);
   }
   public newFor(parent: Parent): Frame {
     return new ForLoop(parent);

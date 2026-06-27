@@ -51,8 +51,8 @@ import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Else } from "./statements/else";
-import { ElseIf } from "./statements/elseIf";
+import { ElseClause } from "./statements/else-clause";
+import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
@@ -86,7 +86,7 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ConstantGlobal ||
       frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
-      frame instanceof ElseIf ||
+      frame instanceof ElseIfClause ||
       frame instanceof ProcedureFrame ||
       frame instanceof ProcedureCall ||
       frame instanceof Assignment ||
@@ -123,9 +123,9 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}</el-top> = ${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ElseIf) {
+    } else if (frame instanceof ElseIfClause) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof Else) {
+    } else if (frame instanceof ElseClause) {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;

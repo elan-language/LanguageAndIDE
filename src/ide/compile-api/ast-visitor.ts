@@ -166,8 +166,8 @@ import { AssertStatement } from "../frames/statements/assert-statement";
 import { Assignment } from "../frames/statements/assignment";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
-import { Else } from "../frames/statements/else";
-import { ElseIf } from "../frames/statements/elseIf";
+import { ElseClause } from "../frames/statements/else-clause";
+import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
@@ -584,7 +584,7 @@ export function transform(
     return ifAsn;
   }
 
-  if (node instanceof ElseIf) {
+  if (node instanceof ElseIfClause) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
@@ -592,7 +592,7 @@ export function transform(
     return elseAsn;
   }
 
-  if (node instanceof Else) {
+  if (node instanceof ElseClause) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = EmptyAsn.Instance;
