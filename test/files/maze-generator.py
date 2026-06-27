@@ -15,7 +15,7 @@ def main() -> None:
     # end if
   # end for
   displayBlocks(blocks) # call procedure
-  name = input("File name to save: ") # input
+  name = input("File name to save: ") # input statement
   if not name.equals("x"):
     saveAsFile(name, blocks) # call procedure
   # end if

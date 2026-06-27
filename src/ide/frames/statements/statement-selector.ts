@@ -56,7 +56,7 @@ export class StatementSelector extends AbstractSelector {
         "<b>a</b>ssignment",
         (parent: Parent) => this.factory.newSet(parent),
       ],
-      [inputKeyword, "n", "i<b>n</b>put", (parent: Parent) => this.factory.newInput(parent)],
+      [inputKeyword, "n", "i<b>n</b>put statement", (parent: Parent) => this.factory.newInput(parent)],
       [ifKeyword, "i", "<b>i</b>f", (parent: Parent) => this.factory.newIf(parent)],
       [elifKeyword, "s", "el<b>s</b>e if", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "e", "<b>e</b>lse", (parent: Parent) => this.factory.newElse(parent)],

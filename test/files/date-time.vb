@@ -5,7 +5,7 @@ Sub main()
   While Not quit
     Console.WriteLine("t - for time now, q - to quit, or an integer value to convert")
 
-      Dim reply = Console.ReadLine() ' input
+      Dim reply = Console.ReadLine() ' input statement
     If reply.upperCase().equals("Q") Then
       quit = True ' assignment
     ElseIf reply.upperCase().equals("T") Then

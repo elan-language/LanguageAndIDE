@@ -6,7 +6,7 @@ Sub main()
   While Not done
     Console.WriteLine("What type of fruit do you want ('x' to exit)? ")
 
-      Dim wanted = Console.ReadLine() ' input
+      Dim wanted = Console.ReadLine() ' input statement
     If wanted.equals("x") Then
       done = True ' assignment
     Else

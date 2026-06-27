@@ -5,7 +5,7 @@ public class Global {
 static void main() {
   var quit = false;
   while (!quit) {
-    var reply = Console.ReadLine("t - for time now, q - to quit, or an integer value to convert"); // input
+    var reply = Console.ReadLine("t - for time now, q - to quit, or an integer value to convert"); // input statement
     if (reply.upperCase().equals("Q")) {
       quit = true; // assignment
     } else if (reply.upperCase().equals("T")) {

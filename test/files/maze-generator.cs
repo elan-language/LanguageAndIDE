@@ -17,7 +17,7 @@ static void main() {
   displayBlocks(blocks); // call procedure
   Console.WriteLine("File name to save: ");
 
-      var name = Console.ReadLine(); // input
+      var name = Console.ReadLine(); // input statement
   if (!name.equals("x")) {
     saveAsFile(name, blocks); // call procedure
   } // end if

@@ -5,7 +5,7 @@ static void main() {
   while (!quit) {
     Console.WriteLine("t - for time now, q - to quit, or an integer value to convert");
 
-      var reply = Console.ReadLine(); // input
+      var reply = Console.ReadLine(); // input statement
     if (reply.upperCase().equals("Q")) {
       quit = true; // assignment
     } else if (reply.upperCase().equals("T")) {

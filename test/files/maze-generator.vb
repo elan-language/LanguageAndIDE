@@ -17,7 +17,7 @@ Sub main()
   displayBlocks(blocks) ' call procedure
   Console.WriteLine("File name to save: ")
 
-      Dim name = Console.ReadLine() ' input
+      Dim name = Console.ReadLine() ' input statement
   If Not name.equals("x") Then
     saveAsFile(name, blocks) ' call procedure
   End If

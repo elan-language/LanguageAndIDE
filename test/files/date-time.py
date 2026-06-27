@@ -3,7 +3,7 @@
 def main() -> None:
   quit = False # variable definition
   while not quit:
-    reply = input("t - for time now, q - to quit, or an integer value to convert") # input
+    reply = input("t - for time now, q - to quit, or an integer value to convert") # input statement
     if reply.upperCase().equals("Q"):
       quit = True # assignment
     elif reply.upperCase().equals("T"): # else if

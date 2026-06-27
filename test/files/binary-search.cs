@@ -6,7 +6,7 @@ static void main() {
   while (!done) {
     Console.WriteLine("What type of fruit do you want ('x' to exit)? ");
 
-      var wanted = Console.ReadLine(); // input
+      var wanted = Console.ReadLine(); // input statement
     if (wanted.equals("x")) {
       done = true; // assignment
     } else {

@@ -23,7 +23,7 @@ Sub main()
   While Not mark.equals("*****")
     Console.WriteLine("" + attempt)
 
-      Dim inp = Console.ReadLine() ' input
+      Dim inp = Console.ReadLine() ' input statement
     mark = inp ' assignment
     possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' assignment
     attempt = bestAttempt(possible) ' assignment

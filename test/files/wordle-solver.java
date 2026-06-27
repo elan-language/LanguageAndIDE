@@ -23,7 +23,7 @@ static void main() {
   var mark = "";
   var attempt = "RAISE";
   while (!mark.equals("*****")) {
-    var inp = Console.ReadLine("" + attempt); // input
+    var inp = Console.ReadLine("" + attempt); // input statement
     mark = inp; // assignment
     possible = possibleAnswersAfterAttempt(possible, attempt, mark); // assignment
     attempt = bestAttempt(possible); // assignment
