@@ -168,7 +168,7 @@ import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
 import { Else } from "../frames/statements/else";
 import { ElseIf } from "../frames/statements/elseIf";
-import { For } from "../frames/statements/for";
+import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
@@ -178,7 +178,7 @@ import { ReturnStatement } from "../frames/statements/return-statement";
 import { Throw } from "../frames/statements/throw";
 import { TryStatement } from "../frames/statements/try";
 import { VariableStatement } from "../frames/statements/variable-statement";
-import { While } from "../frames/statements/while";
+import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
 
 export function transformMany(
@@ -544,7 +544,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof For) {
+  if (node instanceof ForLoop) {
     const eachAsn = new EachAsn(node.getHtmlId(), scope);
     eachAsn.breakpointStatus = node.breakpointStatus;
     eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
@@ -558,7 +558,7 @@ export function transform(
     return eachAsn;
   }
 
-  if (node instanceof While) {
+  if (node instanceof WhileLoop) {
     const whileAsn = new WhileAsn(node.getHtmlId(), scope);
     whileAsn.breakpointStatus = node.breakpointStatus;
     whileAsn.condition = transform(node.condition, node.getHtmlId(), whileAsn) ?? EmptyAsn.Instance;

@@ -39,7 +39,7 @@ import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
@@ -49,7 +49,7 @@ import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 import { TokenType } from "./symbol-completion-helpers";
 import { GT, LT } from "./symbols";
 
@@ -143,7 +143,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.VOID} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOREACH} </el-kw>(<el-kw>${this.VAR}</el-kw> <${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}</el-kw>) {`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.STATIC} </el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
@@ -157,7 +157,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method>() {`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw> {`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
     }
     return html;
@@ -173,7 +173,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html += "function method";
     } else if (frame instanceof ProcedureMethod) {
       html += "procedure method";
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html += this.FOREACH;
     } else if (frame instanceof GlobalFunction) {
       html += "function";
@@ -187,7 +187,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html += "main";
     } else if (frame instanceof TryStatement) {
       html += this.TRY;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html += this.WHILE;
     } else if (frame instanceof TestFrame) {
       html += "test";

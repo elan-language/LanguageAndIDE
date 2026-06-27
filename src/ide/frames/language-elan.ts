@@ -49,7 +49,7 @@ import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
@@ -59,7 +59,7 @@ import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 import { TokenType } from "./symbol-completion-helpers";
 import { ARROW, GT, LT } from "./symbols";
 
@@ -141,7 +141,7 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
@@ -161,7 +161,7 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;

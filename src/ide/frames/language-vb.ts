@@ -50,7 +50,7 @@ import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
@@ -60,7 +60,7 @@ import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
@@ -153,7 +153,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw>(${frame.params.renderAsHtml()})`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
@@ -173,7 +173,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `&lt;<el-type>TestClass</el-type> <el-kw>${this.CLASS}</el-kw> ${this.testClassNameAsHtml(frame)}<br>&nbsp;&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
@@ -197,7 +197,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
     } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
@@ -213,7 +213,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-punc>&nbsp;</el-punc><el-kw>${this.END} ${this.SUB}</el-kw><br><el-kw>${this.END} ${this.CLASS}</el-kw><br>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.END} ${this.TRY}</el-kw>`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.END} ${this.WHILE}</el-kw>`;
     }
     return html;

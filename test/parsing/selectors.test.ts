@@ -13,7 +13,7 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { While } from "../../src/ide/frames/statements/while";
+import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { transforms } from "../compiler/compiler-test-helpers";
@@ -302,7 +302,7 @@ suite("Selector tests", () => {
     );
     const func = new GlobalFunction(fl);
     const if1 = new IfStatement(func);
-    const wh = new While(if1);
+    const wh = new WhileLoop(if1);
     const s = new StatementSelector(wh);
     assertOptions(s, ["let statement", "# comment"]);
   });

@@ -5,7 +5,7 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class While extends FrameWithStatements {
+export class WhileLoop extends FrameWithStatements {
   isStatement = false;
   condition: ExpressionField;
   constructor(parent: Parent) {

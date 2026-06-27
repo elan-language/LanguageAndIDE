@@ -7,7 +7,7 @@ import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
@@ -16,7 +16,7 @@ import { ProcedureCall } from "./statements/procedureCall";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 
 export class StatementFactoryImpl implements StatementFactory {
   public newAssert(parent: Parent): Frame {
@@ -39,7 +39,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new Else(parent);
   }
   public newFor(parent: Parent): Frame {
-    return new For(parent);
+    return new ForLoop(parent);
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
@@ -66,7 +66,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new VariableStatement(parent);
   }
   public newWhile(parent: Parent): Frame {
-    return new While(parent);
+    return new WhileLoop(parent);
   }
   public newComment(parent: Parent): Frame {
     return new CommentStatement(parent);

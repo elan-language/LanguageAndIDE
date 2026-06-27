@@ -53,7 +53,7 @@ import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
 import { Else } from "./statements/else";
 import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
@@ -63,7 +63,7 @@ import { ReturnStatement } from "./statements/return-statement";
 import { Throw } from "./statements/throw";
 import { TryStatement } from "./statements/try";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
@@ -159,7 +159,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:`;
@@ -179,7 +179,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw>:`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
     }
     return html;
@@ -215,7 +215,7 @@ export class LanguagePython extends LanguageAbstract {
       html += "function method";
     } else if (frame instanceof ProcedureMethod) {
       html += "procedure method";
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html += this.FOR;
     } else if (frame instanceof GlobalFunction) {
       html += "function";
@@ -227,7 +227,7 @@ export class LanguagePython extends LanguageAbstract {
       html += "main";
     } else if (frame instanceof TryStatement) {
       html += this.TRY;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html += this.WHILE;
     } else if (frame instanceof TestFrame) {
       html += "test";
