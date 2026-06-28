@@ -1,35 +1,45 @@
 import {
   endKeyword,
   functionKeyword,
-  privateKeyword,
-  returnsKeyword,
+  returnsKeyword
 } from "../../../compiler/elan-keywords";
 import {
-  addPrivateToggleToContextMenu,
-  modifierAsElanSource,
-  singleIndent,
-  togglePrivatePublic,
+  singleIndent
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
-import { editorEvent } from "../frame-interfaces/editor-event";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
-import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { AbstractClass } from "../globals/abstract-class";
 import { FunctionFrame } from "../globals/function-frame";
+import { LetStatement } from "../statements/let-statement";
+import { ReAssignVariable } from "../statements/reassign-variable";
+import { ReturnStatement } from "../statements/return-statement";
 
-export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
+export class WithMethod extends FunctionFrame {
   isMember: boolean = true;
-  isPrivate: boolean;
   isAbstract = false;
+  isPrivate = false;
   file: File;
-  help: string = "functionMethod";
-  document: string = "oopRef.html";
+  help: string = "with-method";
+  document: string = "functionalRef.html";
 
-  constructor(parent: Parent, priv = false) {
+  constructor(parent: Parent) {
     super(parent);
     this.file = parent.getFile();
-    this.isPrivate = priv;
+    this.name.setPlaceholder("<i>withPropertyName</i>");
+    const className: string = this.name.text;
+    this.returnType.setFieldToKnownValidText(className);
+    const defaultSelector = this.getFirstSelectorAsDirectChild();
+    const letCopyOfThis = new LetStatement(this);
+    letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
+    letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
+    this.addChildBefore(letCopyOfThis, defaultSelector);
+    const firstProp = new ReAssignVariable(this);
+    firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
+    this.addChildBefore(firstProp, defaultSelector);
+    const ret = this.getLastChild() as ReturnStatement;
+    ret.expr.setFieldToKnownValidText("copyOfThis");
+    this.removeChild(defaultSelector);
   }
 
   isOnAbstractClass(): boolean {
@@ -44,10 +54,6 @@ export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
     return this.document;
   }
 
-  setHelpId(id: string) {
-    this.help = id;
-  }
-
   helpId(): string {
     return this.help;
   }
@@ -57,12 +63,11 @@ export class WithMethod extends FunctionFrame implements PossiblyPrivateMember {
   }
 
   frameSpecificAnnotation(): string {
-    const priv = this.isPrivate ? "private " : "";
-    return `${priv}function method`;
+    return `with method`;
   }
 
   public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
 ${this.indent()}${endKeyword} ${functionKeyword}\r
 `;
@@ -70,38 +75,10 @@ ${this.indent()}${endKeyword} ${functionKeyword}\r
 
   parseTop(source: CodeSource): void {
     source.removeIndent();
-    const priv = `${privateKeyword} `;
-    if (source.isMatch(priv)) {
-      source.remove(priv);
-      this.isPrivate = true;
-    }
     super.parseTop(source);
   }
   parseBottom(source: CodeSource): boolean {
     return super.parseBottom(source);
-  }
-
-  makePublic = () => {
-    this.isPrivate = false;
-    return true;
-  };
-  makePrivate = () => {
-    this.isPrivate = true;
-    return true;
-  };
-
-  getContextMenuItems() {
-    const map = super.getContextMenuItems();
-    addPrivateToggleToContextMenu(this, map);
-    return map;
-  }
-
-  processKey(e: editorEvent): boolean {
-    if (e.modKey.control && e.key === "p") {
-      return togglePrivatePublic(this);
-    }
-
-    return super.processKey(e);
   }
 
   renderAsExport(): string {

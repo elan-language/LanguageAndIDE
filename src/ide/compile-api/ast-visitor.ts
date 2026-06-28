@@ -528,6 +528,8 @@ export function transform(
     return functionAsn;
   }
 
+
+
   if (node instanceof ProcedureMethod) {
     const procedureAsn = new ProcedureMethodAsn(node.getHtmlId(), scope);
     procedureAsn.breakpointStatus = node.breakpointStatus;

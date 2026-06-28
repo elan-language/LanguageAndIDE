@@ -50,9 +50,6 @@ import {
 } from "../parent-helpers";
 import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
-import { LetStatement } from "../statements/let-statement";
-import { ReAssignVariable } from "../statements/reassign-variable";
-import { ReturnStatement } from "../statements/return-statement";
 import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
@@ -230,23 +227,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new FunctionMethod(this, priv);
   }
   createWithMethod(): Frame {
-    const wm = new WithMethod(this, false);
-    wm.setHelpId("with-method");
-    wm.name.setPlaceholder("<i>withPropertyName</i>");
-    const className: string = this.name.text;
-    wm.returnType.setFieldToKnownValidText(className);
-    const defaultSelector = wm.getFirstSelectorAsDirectChild();
-    const letCopyOfThis = new LetStatement(this);
-    letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
-    letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
-    wm.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new ReAssignVariable(this);
-    firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
-    wm.addChildBefore(firstProp, defaultSelector);
-    const ret = wm.getLastChild() as ReturnStatement;
-    ret.expr.setFieldToKnownValidText("copyOfThis");
-    wm.removeChild(defaultSelector);
-    return wm;
+    return new WithMethod(this);
   }
   createProperty(priv: boolean = false): Frame {
     return new Property(this, priv);
