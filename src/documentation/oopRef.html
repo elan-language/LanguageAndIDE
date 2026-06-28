@@ -466,7 +466,7 @@ two new ones: <b>concrete class</b> and <b>abstract class</b></p>
 <h2>Concrete class</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of concrete classes</h4>
+<h3 class="no-TOC acc-title">Examples of a concrete class</h3>
 <div class="acc-body">
 
   <p>From the <b>Snake - object-oriented</b> demo:</p>
@@ -575,7 +575,7 @@ end class
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about a <b>concrete class</b></h4>
+<h3 class="no-TOC acc-title">What you need to know about a concrete class</h3>
 <div class="acc-body">
 
   <ul>
@@ -605,11 +605,11 @@ end class
 <h2>Abstract class</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Example of an <b>abstract class</b></h4>
+<h3 class="no-TOC acc-title">Example of an abstract class</h3>
 <div class="acc-body">
 
   <p>From the <b>Blackjack</b> demo, the abstract class <code>Player</code> - which is inherited by the concrete classes <code>HumanPlayer</code>
-  and <class>Dealer</class> - defines public concrete properties, public concrete methods, plus three abstract methods, 
+  and <code>Dealer</code> - defines public concrete properties, public concrete methods, plus three abstract methods, 
   two of which are accompanied by private 'helper' methods to which subclasses may delegate part or all of their implementations.</p>
 
 <codeblock>
@@ -733,7 +733,7 @@ end class
 </codeblock>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about as <b>abstract class</b></h4>
+<h3 class="no-TOC acc-title">What you need to know about an abstract class</h3>
 <div class="acc-body">
 
 <ul>
@@ -755,7 +755,7 @@ end class
 </div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More advanced techniques</h4>
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
   <h4 class="no-TOC">Delegation</h4>
@@ -795,7 +795,7 @@ end class
 <h2>Constructor</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of constructors</h4>
+<h3 class="no-TOC acc-title">Examples of a constructor</h3>
 <div class="acc-body">
 
 <p>From the <b>Snake - object-oriented demo</b>, where the <code>Square</code> class defines this constructor:</p>
@@ -841,7 +841,7 @@ end class
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about constructors</h4>
+<h3 class="no-TOC acc-title">What you need to know about a constructor</h3>
 <div class="acc-body">
 
   <ul>
@@ -860,7 +860,7 @@ end class
 <h2>Property</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of properties</h4>
+<h3 class="no-TOC acc-title">Examples of a property</h3>
 <div class="acc-body">
 
   <p>From the <b>Snake - object-oriented</b> demo, where the <code>Game</code> class defines these properties:
@@ -872,7 +872,7 @@ end class
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about properties</h4>
+<h3 class="no-TOC acc-title">What you need to know about a property</h3>
 <div class="acc-body">
 
 <ul>
@@ -889,7 +889,7 @@ end class
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">More advanced techniques</h4>
+<h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
   <h3>Optional ('Maybe') associations</h3>
 
@@ -934,7 +934,7 @@ end class
 <h2 >Function method</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of function methods</h4>
+<h3 class="no-TOC acc-title">Examples of a function method</h3>
 <div class="acc-body">
 
   <p>From the <b>Roman Numerals Turing Machine</b> demo, where the <code>Turing Machine</code> class defines these two function methods:</p>
@@ -956,7 +956,7 @@ end class
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about function methods</h4>
+<h3 class="no-TOC acc-title">What you need to know about a function method</h3>
 <div class="acc-body">
 
 <ul>
@@ -976,7 +976,7 @@ end class
 <h2>Procedure method</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of procedure methods</h4>
+<h3 class="no-TOC acc-title">Examples of a procedure method</h3>
 <div class="acc-body">
 
   <p>From the <b>Roman Numerals Turing Machine</b> demo, where the <code>Turing Machine</code> defines these procedure methods (among others):</p>
@@ -1002,7 +1002,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about procedure methods</h4>
+<h3 class="no-TOC acc-title">What you need to know about a procedure method</h3>
 <div class="acc-body">
 
 <ul>
@@ -1011,7 +1011,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   <li>However, a procedure method may <i>read</i>, and hence depend upon, the properties of the object on which it is defined.</li>
   <li>A procedure method is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
   action on the context menu (or reverted to public with <b>make public</b>).</li>
-  <li>A procedure method may be called (using a <b>call procedure</b> instruction) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
+  <li>A procedure method may be called (using a <b>procedure call/b>) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
   <li>A procedure method may be called from within another method <i>inside</i> the class using, for example <code>call this.methodName()</code>.</li>
 </ul>
 
@@ -1022,7 +1022,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <h2>Abstract function</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of abstract functions</h4>
+<h3 class="no-TOC acc-title">Examples of an abstract function</h3>
 <div class="acc-body">
 
   <p>From the <b>Blackjack</b> demo, where the abstract class <code>Player</code> defines this abstract function:</p>
@@ -1045,7 +1045,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <p>which makes use of a method <el-method>getMessageHelper()</el-method> that is defined as (private) concrete function method on the superclass (<code>Player</code>).</p>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about p abstract functions</h4>
+<h3 class="no-TOC acc-title">What you need to know about an abstract function</h3>
 <div class="acc-body">
 
 <ul>
@@ -1060,7 +1060,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <h2>Abstract procedure</h2>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of abstract procedure</h4>
+<h3 class="no-TOC acc-title">Examples of an abstract procedure</h3>
 <div class="acc-body">
 
   <p>From the <b>Blackjack</b> demo, where the abstract class <code>Player</code> defines this abstract function:</p>
@@ -1102,7 +1102,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 </div></div>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about p abstract procedures</h4>
+<h3 class="no-TOC acc-title">What you need to know about an abstract procedure</h3>
 <div class="acc-body">
 
 <ul>

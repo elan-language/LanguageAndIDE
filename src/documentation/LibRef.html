@@ -493,7 +493,7 @@ three immutable data structure types <code>HashSet</code>, <code>Stack</code> an
 <p>The values of items in a <i>mutable</i> structure may be changed directly by calling the various procedure dot methods defined for each structure type.</p>
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no procedure dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
-<p>Since procedure methods may be called only from within the <b>main</b> routine or a <b>procedure</b>,
+<p>Since procedure methods may be called only from within the <b>main routine</b> or a <b>procedure</b>,
 it is also possible to make changes via <b>function</b> dot methods,  which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
@@ -1839,7 +1839,7 @@ end main
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods <i class="fa">&#xf14c;</i></a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
 <p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case <code>R</code> required for a type name).</p>
-<p>You start by getting a seed random number in your <b>main</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
+<p>You start by getting a seed random number in your <b>main routine</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 <code>variable rnd set to new Random()</code><br>
 <code>call rnd.initialiseFromClock()</code>
 <p>Then, in a <b>function</b>, apply dot method <el-method>asFloat</el-method> or <el-method>asInt</el-method> as appropriate to the <code>Random</code> passed in,
@@ -1945,7 +1945,7 @@ end function
   <td><el-method>input</el-method></td>
   <td><code>String</code></td>
   <td><code>String</code></td>
-  <td>prints the string as a prompt, and returns the typed input when Enter is pressed, similar to the <b>input</b> <i>instruction</i>.</td>
+  <td>prints the string as a prompt, and returns the typed input when Enter is pressed, similar to the <b>input statement</b>.</td>
  </tr><tr id="inputStringWithLimits">
   <td><el-method>inputStringWithLimits</el-method></td>
   <td><code>String</code>, <code>Int</code>, <code>Int</code></td>
@@ -2017,7 +2017,7 @@ end main
  <code>"ArrowUp"</code> etc., function key <code>"Fn"</code>, <code>"AltGraph"</code>, <code>"Meta"</code>, <code>"ContextMenu"</code>, as well as most others.</li>
  <li>Pressing <i>just</i> control keys <b>Shift</b>, <b>Ctrl</b> (<b>&#x2318; Command</b> under macOS) or <b>Alt</b> keys will not be detected by <el-method>getKey</el-method>.</li>
  <li>If no key has been pressed (since the last time the method was called), it will return the empty string.</li>
- <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <b>procedure</b> or in <b>main</b>.</li>
+ <li>All these  methods are system methods because they have a dependency on the system and so may be used only within a <b>procedure</b> or in <b>main routine</b>.</li>
  <li>Use the procedure method <el-method>clearKeyBuffer</el-method> if you want to enforce that the user cannot get too far ahead of the program by hitting keys in rapid succession.</li>
  <li>Method <el-method>waitForKey</el-method> waits for a key to be pressed, and returns it.</li>
  <li>Procedure method<el-method>pressAnyKeyToContinue</el-method> gives an optional prompt and is used when you don't need to know which key was pressed. Its argument is a Boolean value:<br>
@@ -2097,7 +2097,7 @@ end main
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
 <li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
-To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <b>try</b> instruction like this (where <code>CustomError</code> is a Class provided by Elan for this purpose):
+To guard against this possibility (it might mean the loss of important data),  you should perform the save and close within a <b>try statement</b> like this (where <code>CustomError</code> is a Class provided by Elan for this purpose):
 <codeblock>main
   variable file set to createFileForWriting("squares.txt")
   for i in range(1, (101))
@@ -2818,7 +2818,7 @@ end test
  <li>they may have a dependency on data that is not provided in an argument</li>
  <li>they may generate side effects, such as changing the screen display or writing to a file</li>
 </ul>
-<p>Because of these properties, system methods may be used only within the <b>main</b> routine or a <b>procedure</b>.
+<p>Because of these properties, system methods may be used only within the <b>main routine</b> or a <b>procedure</b>.
 They may not be used inside a <b>function</b> that you have defined, because to do so would prevent the <b>function</b> from being pure.</p>
 <p>You cannot write a system method yourself.</p>
 

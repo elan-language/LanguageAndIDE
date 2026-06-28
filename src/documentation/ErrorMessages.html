@@ -53,18 +53,18 @@
  <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 
 <h2 id="CannotCallAFunction" class="no-TOC">Cannot call a function as a procedure</h2>
- <p>A function (or function method) is to be used within an expression, not via a <b>call procedure</b> instruction.</p>
+ <p>A function (or function method) is to be used within an expression, not via a <b>procedure call</b>.</p>
 
 <h2 id="CannotUseSystemMethodInAFunction" class="no-TOC">Cannot use a system method in a function</h2>
  <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
- either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <b>main</b> routine.</p>
+ either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <b>main routine</b>.</p>
 
 <h2 id="IsDeprecated" class="no-TOC">Code change required ...</h2>
  <p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
  message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
 
 <h2 id="CannotUseLikeAFunction" class="no-TOC">Cannot call procedure ... within an expression</h2>
- <p>A procedure may be used only within a <b>call procedure</b> instruction.</p>
+ <p>A procedure may be used only within a <b>procedure call</b> instruction.</p>
 
 <h2 id="CannotCallAsAMethod" class="no-TOC">Cannot invoke ... as a method</h2>
  <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
@@ -77,8 +77,8 @@
  <p>A range may be applied only to certain data structure Types: <code>String</code> and <code>List</code>.</p>
 
 <h2 id="NotNewableCompileError" class="no-TOC">Cannot new ...</h2>
- <p>The type specified after the <b>call procedure</b> instruction cannot be instantiated. Either the type is inapplicable,
- or it is an <b>abstract class</b>.</p>
+ <p>The type specified cannot be instantiated. Either the type is a standard language value type,
+ or it is a user-defined <b>abstract class</b>.</p>
 <!--
 <h2 id="InvalidSourceForEachCompileError" class="no-TOC">Source for 'each' must be a List or String.</h2>
 -->
@@ -105,7 +105,7 @@
 <h2 id="OutParameterCompileError" class="no-TOC">Cannot pass ... as an out parameter</h2>
  <p>If a parameter of a procedure is marked with <b>out</b> then this means that the parameter may be
  reassigned within the procedure. Therefore you must pass in a variable that can be reassigned. You cannot pass in: a
- constant, a literal value, or a named value that is defined by a <b>let</b> instruction.</p>
+ constant, a literal value, or a named value that is defined by a <b>let statement</b>.</p>
 -->
 
 <h2 id="ExtensionCompileError" class="no-TOC">Cannot call extension method directly</h2>
@@ -193,7 +193,7 @@
  <p>You cannot defined an <b>out</b> parameter in a function (because that would
  imply the possibility of creating a side effect).</p>
 
-<h2 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one <b>main</b> in a program.</h2>
+<h2 id="mustNotHaveDuplicateMain" class="no-TOC">There can only be one <b>main routine</b> in a program.</h2>
 
 <h2 id="mustNotBeTwoUnaryExpressions" class="no-TOC">Unsupported operation.</h2>
  <p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
