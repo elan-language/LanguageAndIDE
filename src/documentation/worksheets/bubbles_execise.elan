@@ -7,7 +7,7 @@
 #    to create 20 small bubbles spread across the bottom of the display
 # 3. Within the loop create a new CircleVG named 'c' using a 'let' statement,
 #    adding a 'with' clause that sets these initial values for c: 
-#    centreX reassign to i*5 + 2, centreY set to 75, radius set to 1, 
+#    centreX assign to i*5 + 2, centreY set to 75, radius set to 1, 
 #    fillColour set to transparent.withFillColour(randint(black), white)
 #    Note that randint(0, white) creates a random number somewhere within the
 #    full 24-bit colour space from black (0x000000) to white (0xFFFFFF)

@@ -8,21 +8,21 @@ import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
-import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
-import { Else } from "../../src/ide/frames/statements/else";
-import { ElseIf } from "../../src/ide/frames/statements/elseIf";
-import { For } from "../../src/ide/frames/statements/for";
+import { ElseClause } from "../../src/ide/frames/statements/else-clause";
+import { ElseIfClause } from "../../src/ide/frames/statements/elseIf-clause";
+import { ForLoop } from "../../src/ide/frames/statements/forLoop";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { Throw } from "../../src/ide/frames/statements/throw";
-import { TryStatement } from "../../src/ide/frames/statements/try";
+import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
+import { TryStatement } from "../../src/ide/frames/statements/try-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
-import { While } from "../../src/ide/frames/statements/while";
+import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -36,13 +36,13 @@ export function T00_emptyFile() {
 export function T01_helloWorld() {
   const f = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
-  const m = new MainFrame(f);
+  const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const comment = new CommentStatement(m);
   comment.text.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
-  const pr = new CallStatement(m);
+  const pr = new ProcedureCall(m);
   pr.proc.setFieldToKnownValidText('printNoLine')
   pr.args.setFieldToKnownValidText(`"Hello World!"`);
   m.addChildBefore(pr, ss);
@@ -56,7 +56,7 @@ export function T02_comments() {
   const gc = new GlobalComment(f);
   gc.text.setFieldToKnownValidText("Comment 1");
   f.addChildBefore(gc, gs);
-  const m = new MainFrame(f);
+  const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const sc2 = new CommentStatement(m);
@@ -69,25 +69,25 @@ export function T02_comments() {
 export function T03_mainWithAllStatements(): FileImpl {
   const f = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
-  const m = new MainFrame(f);
+  const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ssm = m.getFirstSelectorAsDirectChild();
   const v = new VariableStatement(m);
   m.addChildBefore(v, ssm);
-  const s = new ReAssignVariable(m);
+  const s = new Assignment(m);
   s.assignable.setFieldToKnownValidText("a");
   s.expr.setFieldToKnownValidText("3 + 4");
   m.addChildBefore(s, ssm);
-  const t = new Throw(m);
+  const t = new ThrowStatement(m);
   m.addChildBefore(t, ssm);
-  const ca = new CallStatement(m);
+  const ca = new ProcedureCall(m);
   ca.proc.setFieldToKnownValidText("signIn");
   ca.args.setFieldToKnownValidText(`rwp, password`);
   m.addChildBefore(ca, ssm);
-  const w = new While(m);
+  const w = new WhileLoop(m);
   w.condition.setFieldToKnownValidText("newGame");
   m.addChildBefore(w, ssm);
-  const ea = new For(m);
+  const ea = new ForLoop(m);
   ea.variable.setFieldToKnownValidText("letter");
   ea.iter.setFieldToKnownValidText(`"Charlie Duke"`);
   m.addChildBefore(ea, ssm);
@@ -98,18 +98,18 @@ export function T03_mainWithAllStatements(): FileImpl {
   m.addChildBefore(if2, ssm);
   if2.condition.setFieldToKnownValidText("y > 4");
   const ss2 = if2.getFirstSelectorAsDirectChild();
-  const el1 = new Else(if2);
+  const el1 = new ElseClause(if2);
   if2.addChildBefore(el1, ss2);
   if2.addChildBefore(new StatementSelector(if2), el1);
   const if3 = new IfStatement(m);
   m.addChildBefore(if3, ssm);
   const ss_if3 = if3.getFirstSelectorAsDirectChild();
   if3.condition.setFieldToKnownValidText("y > 4");
-  const el2 = new ElseIf(if3);
+  const el2 = new ElseIfClause(if3);
   el2.hasIf = true;
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);
-  if3.addChildBefore(new Else(if3), ss_if3);
+  if3.addChildBefore(new ElseClause(if3), ss_if3);
   const tr = new TryStatement(m);
   m.addChildBefore(tr, ssm);
   f.updateAllParseStatus();
@@ -139,7 +139,7 @@ export function T04_allGlobalsExceptClass(): FileImpl {
   con.name.setFieldToKnownValidText("phi");
   con.value.setFieldToKnownValidText("1.618");
   f.addChildBefore(con, gs);
-  const main = new MainFrame(f);
+  const main = new MainRoutine(f);
   f.addChildBefore(main, gs);
   const proc = new GlobalProcedure(f);
   proc.name.setFieldToKnownValidText("signIn");
@@ -194,7 +194,7 @@ export function T05_classes() {
 export function T09_emptyMainAndClassWithGlobalSelector() {
   const f = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
-  f.addChildBefore(new MainFrame(f), gs);
+  f.addChildBefore(new MainRoutine(f), gs);
   f.addChildBefore(new ConcreteClass(f), gs);
   f.updateAllParseStatus();
   return f;
@@ -222,7 +222,7 @@ export function oneConstant(): FileImpl {
 export function emptyMainOnly(prof = ""): FileImpl {
   const file = new FileImpl(hash, new Profile(prof), "", transforms(), new StdLib(new StubInputOutput()), false);
   const globSel = file.getFirstChild();
-  const main = new MainFrame(file);
+  const main = new MainRoutine(file);
   file.addChildBefore(main, globSel);
   file.updateAllParseStatus();
   return file;

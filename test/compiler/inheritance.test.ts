@@ -36,15 +36,15 @@ end class
 
 class Bar inherits Foo
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to 4
+        assign this.p1 to 3
+        assign this.p2 to 4
     end constructor
 
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        reassign this.p1 to p1
+        assign this.p1 to p1
     end procedure
 
     function product() returns Float
@@ -154,8 +154,8 @@ end class
 
 class Yon inherits Bar
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to "apple"
+        assign this.p1 to 3
+        assign this.p2 to "apple"
     end constructor
   function toString() returns String
     return ""
@@ -507,7 +507,7 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
   private function ff() returns Int
@@ -517,7 +517,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -601,7 +601,7 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
   private function ff() returns Int
@@ -613,7 +613,7 @@ abstract class Yon inherits Foo
   private property p2 as Int
 
   private procedure setP2(a as Int)
-    reassign this.p2 to a
+    assign this.p2 to a
   end procedure
 
   private function ff2() returns Int
@@ -726,7 +726,7 @@ abstract class Foo
   private property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
   private function ff() returns Int
@@ -738,7 +738,7 @@ abstract class Yon inherits Foo
   private property p2 as Int
 
   private procedure setP2(a as Int)
-    reassign this.p2 to a
+    assign this.p2 to a
   end procedure
 
   private function ff2() returns Int
@@ -853,7 +853,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -861,7 +861,7 @@ class Bar inherits Foo
 
   procedure testPrivate(a as Int)
     call printNoLine(this.p1)
-    reassign this.p1 to a
+    assign this.p1 to a
     call printNoLine(this.p1)
   end procedure
 end class`;
@@ -929,14 +929,14 @@ abstract class Foo
   abstract property p1 as Int
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
 end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -1029,7 +1029,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -1043,7 +1043,7 @@ class Bar inherits Foo
   end procedure
 
   procedure setP(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 end class`;
 
@@ -1127,7 +1127,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -1222,7 +1222,7 @@ end class
 abstract class Foo inherits Yon
 
   private procedure setP1(a as Int)
-    reassign this.p1 to a
+    assign this.p1 to a
   end procedure
 
 end class
@@ -1506,7 +1506,7 @@ end class
 
 class Bar inherits Foo, Yon
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1601,7 +1601,7 @@ end class
 
 class Bar inherits Foo
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1696,7 +1696,7 @@ end class
 
 class Bar inherits Foo, Yon
   constructor()
-    reassign this.prop to 3
+    assign this.prop to 3
   end constructor
   function toString() returns String
     return ""
@@ -1823,7 +1823,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      reassign this.p1 to 3
+      assign this.p1 to 3
     end constructor
   function toString() returns String
     return ""
@@ -1919,7 +1919,7 @@ end class
 
 class Bar inherits Foo
     constructor()
-      reassign this.p1 to 3
+      assign this.p1 to 3
     end constructor
   function toString() returns String
     return ""
@@ -1977,8 +1977,8 @@ end class
 
 class Bar inherits Foo
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to 4
+        assign this.p1 to 3
+        assign this.p2 to 4
     end constructor
   function toString() returns String
     return ""
@@ -1987,7 +1987,7 @@ class Bar inherits Foo
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        reassign this.p1 to p1
+        assign this.p1 to p1
     end procedure
 
     function product() returns Float
@@ -2028,7 +2028,7 @@ abstract class Foo
     abstract property p2 as Int
 
     abstract procedure setP1(v as Int)
-        reassign this.p1 to p1
+        assign this.p1 to p1
     end procedure
 
     abstract function product() returns Int
@@ -2890,7 +2890,7 @@ end class
 
 class Bar inherits Yon
   constructor()
-    reassign this.p1 to 0
+    assign this.p1 to 0
   end constructor
   function toString() returns String
     return ""
@@ -2931,7 +2931,7 @@ end class
 
 class Bar inherits Yon
   constructor()
-    reassign this.p1 to 0
+    assign this.p1 to 0
   end constructor
   function toString() returns String
     return ""
@@ -3149,7 +3149,7 @@ end class
 
 class Bar inherits Yon
   constructor()
-    reassign this.p1 to 0
+    assign this.p1 to 0
   end constructor
   function toString() returns String
     return ""
@@ -3190,7 +3190,7 @@ end class
 
 class Bar inherits Yon
   constructor()
-    reassign this.p1 to ""
+    assign this.p1 to ""
   end constructor
   function toString() returns String
     return ""
@@ -3294,8 +3294,8 @@ end class
 
 class Yon inherits Foo, Bar
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to "apple"
+        assign this.p1 to 3
+        assign this.p2 to "apple"
     end constructor
   function toString() returns String
     return ""
@@ -3347,8 +3347,8 @@ end class
 
 class Bar inherits Yon
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to 4
+        assign this.p1 to 3
+        assign this.p2 to 4
     end constructor
   function toString() returns String
     return ""
@@ -3357,7 +3357,7 @@ class Bar inherits Yon
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        reassign this.p1 to p1
+        assign this.p1 to p1
     end procedure
 
     function product() returns Float
@@ -3412,15 +3412,15 @@ end interface
 
 class Bar inherits Foo, Yon
     constructor()
-        reassign this.p1 to 3
-        reassign this.p2 to 4
+        assign this.p1 to 3
+        assign this.p2 to 4
     end constructor
 
     property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
-        reassign this.p1 to p1
+        assign this.p1 to p1
     end procedure
 
     function product() returns Float

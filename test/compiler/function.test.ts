@@ -190,9 +190,9 @@ end main
 function factorial(a as Int) returns Int
     variable result set to 0
     if a > 2 then
-        reassign result to a * factorial(a - 1)
+        assign result to a * factorial(a - 1)
       else 
-        reassign result to a
+        assign result to a
     end if
     return result
 end function`;
@@ -529,7 +529,7 @@ end main`;
 
 main
   variable a set to ""
-  reassign a to foo(3,4)
+  assign a to foo(3,4)
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -718,7 +718,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  reassign a to 1
+  assign a to 1
   return a * b
 end function`;
 
@@ -748,7 +748,7 @@ main
 end main
 
 function foo(a as Int, b as Int) returns Int
-  reassign a to a + 1
+  assign a to a + 1
   return a * b
 end function`;
 
@@ -1234,7 +1234,7 @@ end function`;
 
 main
   variable d set to p1
-  reassign d to p3
+  assign d to p3
 end main
 
 function p1() returns Int
@@ -1494,7 +1494,7 @@ end main
 
 function p1() returns Int
   variable a set to [1, 2]
-  reassign a[0] to 2
+  assign a[0] to 2
   return a[0]
 end function`;
 

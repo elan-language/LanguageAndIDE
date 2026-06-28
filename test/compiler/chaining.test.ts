@@ -95,7 +95,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.a to [1]
+    assign this.a to [1]
   end constructor
   function toString() returns String
     return ""
@@ -152,13 +152,13 @@ return [main, _tests];}`;
 main 
   variable f set to new Foo()
   variable b set to 0
-  reassign b to f.b.y.z
+  assign b to f.b.y.z
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    reassign this.b to new Bar()
+    assign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -169,7 +169,7 @@ end class
 
 class Bar
   constructor()
-    reassign this.y to new Yon()
+    assign this.y to new Yon()
   end constructor
   function toString() returns String
     return ""
@@ -180,7 +180,7 @@ end class
 
 class Yon
   constructor()
-    reassign this.z to 2
+    assign this.z to 2
   end constructor
   function toString() returns String
     return ""
@@ -282,13 +282,13 @@ return [main, _tests];}`;
 main 
   variable f set to [new Foo()]
   variable b set to 0
-  reassign b to f[0].b.ff()
+  assign b to f[0].b.ff()
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    reassign this.b to new Bar()
+    assign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -382,13 +382,13 @@ return [main, _tests];}`;
 main 
   variable f set to [new Foo()]
   variable b set to 0
-  reassign b to f[0].b.ff()
+  assign b to f[0].b.ff()
   call printNoLine(b)
 end main
 
 class Foo
   constructor()
-    reassign this.b to new Bar()
+    assign this.b to new Bar()
   end constructor
   function toString() returns String
     return ""
@@ -481,7 +481,7 @@ return [main, _tests];}`;
 
 main 
   variable s set to ""
-  reassign s to "Hello World!".lowerCase().subString(0, 1).upperCase()
+  assign s to "Hello World!".lowerCase().subString(0, 1).upperCase()
   call printNoLine(s)
 end main`;
 
@@ -517,7 +517,7 @@ return [main, _tests];}`;
 main 
   variable aStringVar set to "abcdexefg"
   variable s set to ""
-  reassign s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString()
+  assign s to aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString()
   call printNoLine(s)
 end main`;
 
@@ -552,13 +552,13 @@ return [main, _tests];}`;
 
 main 
   variable a set to ""
-  reassign a to (new Bar()).strArr[0].upperCase()[0]
+  assign a to (new Bar()).strArr[0].upperCase()[0]
   call printNoLine(a)
 end main
 
 class Bar
   constructor()
-    reassign this.strArr to ["apple", "orange", "pair"]
+    assign this.strArr to ["apple", "orange", "pair"]
   end constructor
   function toString() returns String
     return ""
@@ -615,7 +615,7 @@ return [main, _tests];}`;
 main 
   variable aFoo set to new Foo()
   variable b set to 0
-  reassign b to aFoo.createLst(10).subList(1, 5).length() + 3
+  assign b to aFoo.createLst(10).subList(1, 5).length() + 3
   call printNoLine(b)
 end main
 
@@ -683,13 +683,13 @@ return [main, _tests];}`;
 main 
   variable aBar set to new Bar()
   variable b set to 0
-  reassign b to 5 + aBar.foo.create2DList()[2][1] - 2
+  assign b to 5 + aBar.foo.create2DList()[2][1] - 2
   call printNoLine(b)
 end main
 
 class Bar
   constructor()
-    reassign this.foo to new Foo()
+    assign this.foo to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -853,7 +853,7 @@ return [main, _tests];}`;
 main 
   variable a set to [[1,2], [3,4]]
   variable b set to ""
-  reassign b to a[1][1]
+  assign b to a[1][1]
   call printNoLine(b)
 end main`;
 

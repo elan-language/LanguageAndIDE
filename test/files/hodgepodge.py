@@ -46,11 +46,11 @@ def main() -> None:
   hodge = AsRef[list[list[int]]](createBlockGraphics(healthy)) # variable definition
   blank = createBlockGraphics(healthy) # variable definition
   # initial colours of grid
-  updateGrid(hodge, podge, True) # call procedure
+  updateGrid(hodge, podge, True) # procedure call
   while not uniform(hodge.value()):
     # successive updates to grid in blank podge
-    podge = blank # reassign variable
-    updateGrid(hodge, podge, False) # call procedure
+    podge = blank # assignment
+    updateGrid(hodge, podge, False) # procedure call
   # end while
 # end main
 
@@ -59,17 +59,17 @@ def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: b
   for j in range(0, gH):
     for i in range(0, gW):
       if initial:
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)] # reassign variable
-        podge[1][1] = 0x1a001a # reassign variable
+        podge[i][j] = colours[randint(0, (colours.length()) - 1)] # assignment
+        podge[1][1] = 0x1a001a # assignment
       else:
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) # reassign variable
+        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) # assignment
       # end if
     # end for
   # end for
   a = 0 # variable definition
-  hodge.set(podge) # call procedure
-  displayBlocks(hodge.value()) # call procedure
-  sleep_ms(50) # call procedure
+  hodge.set(podge) # procedure call
+  displayBlocks(hodge.value()) # procedure call
+  sleep_ms(50) # procedure call
 # end procedure
 
 def uniform(grid: list[list[int]]) -> bool: # function
@@ -91,7 +91,7 @@ def getNeighbourColours(grid: list[list[int]], i: int, j: int) -> list[int]: # f
     sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH] # variable definition
     sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
     sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
-    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # reassign variable
+    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # assignment
   # end if
   return neighbourColours
 # end function
@@ -102,11 +102,11 @@ def newColour(neighbourColours: list[int], nowColour: int) -> int: # function
   nIll = 0 # variable definition
   sumStates = colours.indexOf(nowColour) # variable definition
   for colour in neighbourColours:
-    sumStates = sumStates + colours.indexOf(colour) # reassign variable
+    sumStates = sumStates + colours.indexOf(colour) # assignment
     if colour < healthy:
-      nInfected = nInfected + 1 # reassign variable
+      nInfected = nInfected + 1 # assignment
       if colour == ill:
-        nIll = nIll + 1 # reassign variable
+        nIll = nIll + 1 # assignment
       # end if
     # end if
   # end for
@@ -117,9 +117,9 @@ def updateColour(nowColour: int, sumStates: int, nInfected: int, nIll: int) -> i
   colours = getColours() # variable definition
   state = 0 # variable definition
   if nowColour == healthy:
-    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # reassign variable
+    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # assignment
   elif nowColour != ill: # else if
-    state = divAsInt(sumStates, (nInfected + 1)) + iR # reassign variable
+    state = divAsInt(sumStates, (nInfected + 1)) + iR # assignment
   # end if
   return if_(state > (colours.length() - 1), ill, colours[state])
 # end function

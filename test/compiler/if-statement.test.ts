@@ -324,7 +324,7 @@ return [main, _tests];}`;
 main
   variable a set to 3
   if a is 1 then
-    reassign a to 2
+    assign a to 2
   end if
 end main`;
 
@@ -362,7 +362,7 @@ main
   variable a set to 3
   if a is 1 then
     variable b set to a
-    reassign b to 2
+    assign b to 2
     call printNoLine(b)
   end if
 end main`;
@@ -404,7 +404,7 @@ main
   if a is 1 then
     call printNoLine("")
   else
-    reassign a to 3
+    assign a to 3
   end if
 end main`;
 
@@ -446,7 +446,7 @@ main
     call printNoLine("")
   else
     variable b set to a
-    reassign b to 2
+    assign b to 2
     call printNoLine(b)
   end if
 end main`;
@@ -535,7 +535,7 @@ main
   if a is 1 then
     call printNoLine("")
   elif a is 2 then 
-    reassign a to 3
+    assign a to 3
   end if
 end main`;
 
@@ -577,7 +577,7 @@ main
     call printNoLine("")
   elif a is 2 then
     variable b set to a
-    reassign b to 2
+    assign b to 2
     call printNoLine(b)
   end if
 end main`;
@@ -664,7 +664,7 @@ main
   elif a is 2 then
     variable b set to a
     for i in range(0, 6)
-      reassign b to b + i
+      assign b to b + i
     end for
     call printNoLine(b)
   end if

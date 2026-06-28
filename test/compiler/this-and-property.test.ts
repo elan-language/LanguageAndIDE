@@ -25,7 +25,7 @@ end main
 
 class Foo
   constructor(p1 as Float)
-    reassign this.p1 to p1
+    assign this.p1 to p1
   end constructor
 
   property p1 as Float
@@ -91,7 +91,7 @@ end function
 
 class Foo
     constructor()
-        reassign this.p1 to 3
+        assign this.p1 to 3
     end constructor
 
     property p1 as Float
@@ -166,7 +166,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to 1
+    assign this.p1 to 1
   end constructor
   function toString() returns String
     return ""
@@ -336,7 +336,7 @@ end main
 
 class Foo
     constructor(p1 as Float)
-        reassign this.p to p1
+        assign this.p to p1
     end constructor
   function toString() returns String
     return ""
@@ -375,7 +375,7 @@ end main
 
 class Foo
     constructor(p1 as Float)
-        reassign p1 to p1
+        assign p1 to p1
     end constructor
   function toString() returns String
     return ""

@@ -37,7 +37,7 @@ main
         print($"Sorry, we cannot supply a {wanted}")
       end if
     else
-      reassign exit to true
+      assign exit to true
     end if
   end while
 end main

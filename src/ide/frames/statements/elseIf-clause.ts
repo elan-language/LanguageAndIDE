@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class ElseIf extends SingleLineFrame implements Statement {
+export class ElseIfClause extends SingleLineFrame implements Statement {
   isStatement: boolean = true;
   hasIf: boolean = true;
   condition: ExpressionField;

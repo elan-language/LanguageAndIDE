@@ -237,7 +237,7 @@ return [main, _tests];}`;
 
 main
   variable x set to (3,"Apple")
-  reassign x to (4,"Pear")
+  assign x to (4,"Pear")
   call printNoLine(x)
 end main
 `;
@@ -324,7 +324,7 @@ return [main, _tests];}`;
 main
   variable x set to (3,"Apple")
   variable y set to 4
-  reassign y to x.item_1
+  assign y to x.item_1
   call printNoLine(y)
 end main
 `;
@@ -352,7 +352,7 @@ end main
 
 main
   variable x set to (3, "Apple")
-  reassign x.item_0 to 4
+  assign x.item_0 to 4
 end main
 `;
 
@@ -376,7 +376,7 @@ end main
 
 main
   variable x set to (3, "Apple")
-  reassign x to ("4", "Pear")
+  assign x to ("4", "Pear")
 end main
 `;
 
@@ -403,7 +403,7 @@ end main
 
 main
   variable x set to (3, "Apple", 4)
-  reassign x to (4, "Pear")
+  assign x to (4, "Pear")
 end main
 `;
 
@@ -430,7 +430,7 @@ end main
 
 main
   variable x set to (3, "Apple")
-  reassign x to (4, "Pear", 3)
+  assign x to (4, "Pear", 3)
 end main
 `;
 

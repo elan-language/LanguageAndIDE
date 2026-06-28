@@ -6,25 +6,25 @@ Sub main()
   Dim blocks = createBlockGraphics(white) ' variable definition
   Dim snake = New Snake() ' variable definition
   Dim apple = New Apple() ' variable definition
-  apple.newRandomPosition(snake) ' call procedure
+  apple.newRandomPosition(snake) ' procedure call
   While Not snake.gameOver()
-    snake.updateBlocks(blocks) ' call procedure
-    apple.updateBlocks(blocks) ' call procedure
-    displayBlocks(blocks) ' call procedure
-    sleep_ms(150) ' call procedure
-    snake.clockTick(getKey(), apple) ' call procedure
+    snake.updateBlocks(blocks) ' procedure call
+    apple.updateBlocks(blocks) ' procedure call
+    displayBlocks(blocks) ' procedure call
+    sleep_ms(150) ' procedure call
+    snake.clockTick(getKey(), apple) ' procedure call
   End While
-  Console.WriteLine($"Game Over! Score: {snake.score()}") ' print
+  Console.WriteLine($"Game Over! Score: {snake.score()}") ' print statement
 End Sub
 
 Class Snake
 
   Sub New()
     Dim tail = New Square(20, 15) ' variable definition
-    Me.currentDir = Direction.right ' reassign variable
-    Me.body = {tail} ' reassign variable
-    Me.head = tail.getAdjacentSquare(Me.currentDir) ' reassign variable
-    Me.priorTail = tail ' reassign variable
+    Me.currentDir = Direction.right ' assignment
+    Me.body = {tail} ' assignment
+    Me.head = tail.getAdjacentSquare(Me.currentDir) ' assignment
+    Me.priorTail = tail ' assignment
   End Sub
 
   Private Property currentDir As Direction
@@ -36,22 +36,22 @@ Class Snake
   Private Property priorTail As Square
 
   Sub clockTick(key As String, apple As Apple) ' procedure method
-    Me.setDirection(key) ' call procedure
-    Me.priorTail = Me.body(0) ' reassign variable
+    Me.setDirection(key) ' procedure call
+    Me.priorTail = Me.body(0) ' assignment
     Dim body = Me.body ' variable definition
-    body.append(Me.head) ' call procedure
-    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' reassign variable
+    body.append(Me.head) ' procedure call
+    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' assignment
     If Me.head.equals(apple.location) Then
-      apple.newRandomPosition(Me) ' call procedure
+      apple.newRandomPosition(Me) ' procedure call
     Else
-      Me.body = Me.body.subList(1, Me.body.length()) ' reassign variable
+      Me.body = Me.body.subList(1, Me.body.length()) ' assignment
     End If
   End Sub
 
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.head.x)(Me.head.y) = green ' reassign variable
+    blocks(Me.head.x)(Me.head.y) = green ' assignment
     If Not Me.body(0).equals(Me.priorTail) Then
-      blocks(Me.priorTail.x)(Me.priorTail.y) = white ' reassign variable
+      blocks(Me.priorTail.x)(Me.priorTail.y) = white ' assignment
     End If
   End Sub
 
@@ -63,7 +63,7 @@ Class Snake
     Dim result = False ' variable definition
     For Each seg In Me.body
       If (seg.equals(sq)) Then
-        result = True ' reassign variable
+        result = True ' assignment
       End If
     Next seg
     Return result
@@ -75,13 +75,13 @@ Class Snake
 
   Private Sub setDirection(key As String) ' private procedure method
     If key.equals("w") Then
-      Me.currentDir = Direction.up ' reassign variable
+      Me.currentDir = Direction.up ' assignment
     ElseIf key.equals("s") Then
-      Me.currentDir = Direction.down ' reassign variable
+      Me.currentDir = Direction.down ' assignment
     ElseIf key.equals("a") Then
-      Me.currentDir = Direction.left ' reassign variable
+      Me.currentDir = Direction.left ' assignment
     ElseIf key.equals("d") Then
-      Me.currentDir = Direction.right ' reassign variable
+      Me.currentDir = Direction.right ' assignment
     End If
   End Sub
 
@@ -94,7 +94,7 @@ End Class
 Class Apple
 
   Sub New()
-    Me.location = New Square(0, 0) ' reassign variable
+    Me.location = New Square(0, 0) ' assignment
   End Sub
 
   Property location As Square
@@ -104,15 +104,15 @@ Class Apple
     While changePosition
       Dim ranX = randint(0, 39) ' variable definition
       Dim ranY = randint(0, 29) ' variable definition
-      Me.location = New Square(ranX, ranY) ' reassign variable
+      Me.location = New Square(ranX, ranY) ' assignment
       If Not snake.bodyCovers(Me.location) Then
-        changePosition = False ' reassign variable
+        changePosition = False ' assignment
       End If
     End While
   End Sub
 
   Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.location.x)(Me.location.y) = red ' reassign variable
+    blocks(Me.location.x)(Me.location.y) = red ' assignment
   End Sub
 
   Function toString() As String
@@ -124,8 +124,8 @@ End Class
 Class Square
 
   Sub New(x As Integer, y As Integer)
-    Me.x = x ' reassign variable
-    Me.y = y ' reassign variable
+    Me.x = x ' assignment
+    Me.y = y ' assignment
   End Sub
 
   Property x As Integer
@@ -136,13 +136,13 @@ Class Square
     Dim newX = Me.x ' variable definition
     Dim newY = Me.y ' variable definition
     If d = Direction.left Then
-      newX = Me.x - 1 ' reassign variable
+      newX = Me.x - 1 ' assignment
     ElseIf d = Direction.right Then
-      newX = Me.x + 1 ' reassign variable
+      newX = Me.x + 1 ' assignment
     ElseIf d = Direction.up Then
-      newY = Me.y - 1 ' reassign variable
+      newY = Me.y - 1 ' assignment
     ElseIf d = Direction.down Then
-      newY = Me.y + 1 ' reassign variable
+      newY = Me.y + 1 ' assignment
     End If
     Return New Square(newX, newY)
   End Function

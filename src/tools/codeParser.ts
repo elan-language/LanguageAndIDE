@@ -10,7 +10,7 @@ import { FileImpl } from "../ide/frames/file-impl";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { GlobalSelector } from "../ide/frames/globals/global-selector";
-import { MainFrame } from "../ide/frames/globals/main-frame";
+import { MainRoutine } from "../ide/frames/globals/main-routine";
 import { LanguageCS } from "../ide/frames/language-cs";
 import { LanguageElan } from "../ide/frames/language-elan";
 import { LanguageJava } from "../ide/frames/language-java";
@@ -136,7 +136,7 @@ function parseAsStatement(code: string): [string, string, string, string, string
   const file = newFileImpl();
 
   try {
-    const mf = new MainFrame(file);
+    const mf = new MainRoutine(file);
     const ss = new StatementSelector(mf);
     ss.parseFrom(codeSource);
 
@@ -310,7 +310,7 @@ function parseAsExpression(code: string): [string, string, string, string, strin
   const file = newFileImpl();
 
   try {
-    const mf = new MainFrame(file);
+    const mf = new MainRoutine(file);
     const ls = new VariableStatement(mf);
     const expr = new ExpressionField(ls);
     expr.parseFrom(codeSource);

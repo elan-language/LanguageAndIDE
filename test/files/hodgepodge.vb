@@ -46,11 +46,11 @@ Sub main()
   Dim hodge = New AsRef(Of List(Of List(Of Integer)))(createBlockGraphics(healthy)) ' variable definition
   Dim blank = createBlockGraphics(healthy) ' variable definition
   ' initial colours of grid
-  updateGrid(hodge, podge, True) ' call procedure
+  updateGrid(hodge, podge, True) ' procedure call
   While Not uniform(hodge.value())
     ' successive updates to grid in blank podge
-    podge = blank ' reassign variable
-    updateGrid(hodge, podge, False) ' call procedure
+    podge = blank ' assignment
+    updateGrid(hodge, podge, False) ' procedure call
   End While
 End Sub
 
@@ -59,17 +59,17 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
   For Each j In range(0, gH)
     For Each i In range(0, gW)
       If initial Then
-        podge(i)(j) = colours(randint(0, (colours.length()) - 1)) ' reassign variable
-        podge(1)(1) = &H1a001a ' reassign variable
+        podge(i)(j) = colours(randint(0, (colours.length()) - 1)) ' assignment
+        podge(1)(1) = &H1a001a ' assignment
       Else
-        podge(i)(j) = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()(i)(j)) ' reassign variable
+        podge(i)(j) = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()(i)(j)) ' assignment
       End If
     Next i
   Next j
   Dim a = 0 ' variable definition
-  hodge.set(podge) ' call procedure
-  displayBlocks(hodge.value()) ' call procedure
-  sleep_ms(50) ' call procedure
+  hodge.set(podge) ' procedure call
+  displayBlocks(hodge.value()) ' procedure call
+  sleep_ms(50) ' procedure call
 End Sub
 
 Function uniform(grid As List(Of List(Of Integer))) As Boolean
@@ -91,7 +91,7 @@ Function getNeighbourColours(grid As List(Of List(Of Integer)), i As Integer, j 
     Dim sRA = grid((i + 1 + gW) Mod gW)((j - 1 + gH) Mod gH) ' variable definition
     Dim sLB = grid((i - 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
     Dim sRB = grid((i + 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
-    neighbourColours = {sL, sR, sA, sB, sLA, sRA, sLB, sRB} ' reassign variable
+    neighbourColours = {sL, sR, sA, sB, sLA, sRA, sLB, sRB} ' assignment
   End If
   Return neighbourColours
 End Function
@@ -102,11 +102,11 @@ Function newColour(neighbourColours As List(Of Integer), nowColour As Integer) A
   Dim nIll = 0 ' variable definition
   Dim sumStates = colours.indexOf(nowColour) ' variable definition
   For Each colour In neighbourColours
-    sumStates = sumStates + colours.indexOf(colour) ' reassign variable
+    sumStates = sumStates + colours.indexOf(colour) ' assignment
     If colour < healthy Then
-      nInfected = nInfected + 1 ' reassign variable
+      nInfected = nInfected + 1 ' assignment
       If colour = ill Then
-        nIll = nIll + 1 ' reassign variable
+        nIll = nIll + 1 ' assignment
       End If
     End If
   Next colour
@@ -117,9 +117,9 @@ Function updateColour(nowColour As Integer, sumStates As Integer, nInfected As I
   Dim colours = getColours() ' variable definition
   Dim state = 0 ' variable definition
   If nowColour = healthy Then
-    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) ' reassign variable
+    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) ' assignment
   ElseIf nowColour <> ill Then
-    state = divAsInt(sumStates, (nInfected + 1)) + iR ' reassign variable
+    state = divAsInt(sumStates, (nInfected + 1)) + iR ' assignment
   End If
   Return if_(state > (colours.length() - 1), ill, colours(state))
 End Function

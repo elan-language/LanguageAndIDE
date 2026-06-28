@@ -20,9 +20,9 @@ static void main() {
   var p = new Coords();
   while (true) {
     var vg = allpoints(p);
-    displayVectorGraphics(vg); // call procedure
-    p.checkkeys(); // call procedure
-    Console.WriteLine($"x = {p.jx} y = {p.jy}"); // print
+    displayVectorGraphics(vg); // procedure call
+    p.checkkeys(); // procedure call
+    Console.WriteLine($"x = {p.jx} y = {p.jy}"); // print statement
   } // end while
 } // end main
 
@@ -35,7 +35,7 @@ static List<VectorGraphic> allpoints(Coords p) { // function
       // colour depends on how many iterations were done for that point
       var col = if_(n == nmax, 0xffffff, ((n*0x010201) % 0xffffff));
       var rect = (new RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25);
-      vg2 = vg2.withAppend(rect); // reassign variable
+      vg2 = vg2.withAppend(rect); // assignment
     } // end foreach
   } // end foreach
   return vg2;
@@ -48,11 +48,11 @@ static int onepoint(double x, double y, int maxnum, Coords p) { // function
   var i = 0;
   while (!done) {
     var c = 2*a*b;
-    a = (a*a - b*b) + p.jx; // reassign variable
-    b = c + p.jy; // reassign variable
-    i = i + 1; // reassign variable
+    a = (a*a - b*b) + p.jx; // assignment
+    b = c + p.jy; // assignment
+    i = i + 1; // assignment
     if ((i >= maxnum) || ((a*a + b*b) > 4)) {
-      done = true; // reassign variable
+      done = true; // assignment
     } // end if
   } // end while
   return i;
@@ -62,13 +62,13 @@ class Coords {
 
   public Coords() {
     // number of cells per unit distance on complex plane
-    this.scale = 100; // reassign variable
+    this.scale = 100; // assignment
     // centered on the screen to start
-    this.xoff = 0; // reassign variable
-    this.yoff = 0; // reassign variable
+    this.xoff = 0; // assignment
+    this.yoff = 0; // assignment
     // Julia set parameters
-    this.jx = -0.512; // reassign variable
-    this.jy = 0.521; // reassign variable
+    this.jx = -0.512; // assignment
+    this.jy = 0.521; // assignment
   } // end constructor
 
   public string toString() { // function method
@@ -97,34 +97,34 @@ class Coords {
       // loop because more than one key may have been pressed
       while (!k.equals("")) {
         if (k.equals("z")) {
-          this.scale = this.scale*1.2; // reassign variable
+          this.scale = this.scale*1.2; // assignment
         } else if (k.equals("x")) {
-          this.scale = this.scale/1.2; // reassign variable
+          this.scale = this.scale/1.2; // assignment
         } else if (k.equals("ArrowUp")) {
-          this.yoff = this.yoff + panstep; // reassign variable
+          this.yoff = this.yoff + panstep; // assignment
         } else if (k.equals("ArrowDown")) {
-          this.yoff = this.yoff - panstep; // reassign variable
+          this.yoff = this.yoff - panstep; // assignment
         } else if (k.equals("ArrowLeft")) {
-          this.xoff = this.xoff + panstep; // reassign variable
+          this.xoff = this.xoff + panstep; // assignment
         } else if (k.equals("ArrowRight")) {
-          this.xoff = this.xoff - panstep; // reassign variable
+          this.xoff = this.xoff - panstep; // assignment
         } else if (k.equals("g")) {
-          this.jx = this.jx + jstep; // reassign variable
+          this.jx = this.jx + jstep; // assignment
         } else if (k.equals("j")) {
-          this.jx = this.jx - jstep; // reassign variable
+          this.jx = this.jx - jstep; // assignment
         } else if (k.equals("y")) {
-          this.jy = this.jy + jstep; // reassign variable
+          this.jy = this.jy + jstep; // assignment
         } else if (k.equals("h")) {
-          this.jy = this.jy - jstep; // reassign variable
+          this.jy = this.jy - jstep; // assignment
         } else {
           // ignore erroneous key presses
         } // end if
         // there is no harm in recalculating even if an invalid key was pressed
-        changed = true; // reassign variable
+        changed = true; // assignment
         // another key may have been pressed
-        k = getKey(); // reassign variable
+        k = getKey(); // assignment
       } // end while
-      sleep_ms(10); // call procedure
+      sleep_ms(10); // procedure call
     } // end while
   } // end procedure method
 

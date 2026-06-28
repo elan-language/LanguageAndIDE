@@ -180,14 +180,14 @@ end main
 
 class Foo
   constructor()
-    reassign this.p1 to lambda x => 0
+    assign this.p1 to lambda x => 0
   end constructor
   function toString() returns String
     return ""
   end function
 
   procedure setP1(p as Func<of Int => Int>)
-    reassign this.p1 to ref p
+    assign this.p1 to ref p
   end procedure
 
   property p1 as Func<of Int => Int>

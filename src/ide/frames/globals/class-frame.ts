@@ -48,9 +48,9 @@ import {
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
 import { Profile } from "../profile";
+import { Assignment } from "../statements/assignment";
 import { CommentStatement } from "../statements/comment-statement";
 import { LetStatement } from "../statements/let-statement";
-import { ReAssignVariable } from "../statements/reassign-variable";
 import { ReturnStatement } from "../statements/return-statement";
 import { CompileStatus } from "../status-enums";
 
@@ -239,7 +239,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
     letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
     wm.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new ReAssignVariable(this);
+    const firstProp = new Assignment(this);
     firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
     wm.addChildBefore(firstProp, defaultSelector);
     const ret = wm.getLastChild() as ReturnStatement;

@@ -45,7 +45,7 @@ export class InputStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "input";
+    return "input statement";
   }
 
   override renderAsElanSource(): string {

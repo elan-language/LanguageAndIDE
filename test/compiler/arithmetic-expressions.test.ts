@@ -215,8 +215,8 @@ return [main, _tests];}`;
 main
   variable x set to 0.0
   variable y set to 0
-  reassign x to - 4.7
-  reassign y to 5 * -3
+  assign x to - 4.7
+  assign y to 5 * -3
   call printNoLine(x)
   call printNoLine(y)
 end main`;

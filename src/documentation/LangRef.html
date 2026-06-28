@@ -88,7 +88,7 @@ together with this seventh best practice that is supported and encouraged by Ela
 <h3 class="no-TOC" id="noGlobalVars">No global variables</h3>
  <p>It is widely recognised that global variables are a bad idea: they encourage poor program structure and lead to unexpected
   behaviour. Although most programming languages permit them, the Elan editor solves this by offering the <a href="#variableDefinition"><b>variable definition</b> <i class="fa">&#xf14c;</i></a>
-  instruction only within the <b>main</b> routine, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
+  instruction only within the <b>main routine</b>, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
   is a <a href="#constant"><b>constant</b></a> and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
 
   <p class="java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <b>Global</b> to adhere to this rule,
@@ -142,7 +142,7 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <ul>
  <li>You cannot jump <i>into</i> the middle of a procedure or function, nor should you be able to jump out of it in the middle,</li>
  <li>They lead to poorly structured code,</li>
- <li>They make it harder to debug code because you may need to find, and put separate breakpoints on, every return instruction,</li>
+ <li>They make it harder to debug code because you may need to find, and put separate breakpoints on, every <b>return statement</b>,</li>
  <li>When you change the requirements of the function &ndash; for example so that a returned string is always
   upper case &ndash; you would need to enforce this in several places, running the risk of overlooking some.
   (Some languages offer a 'finally' clause to make that easier, but this is just a kludge to paper over
@@ -284,7 +284,7 @@ generates a non-editable class named Global, and all global instructions are cre
 <h2>Main routine</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of main routines</h3>
+<h3 class="no-TOC acc-title">Examples of a main routine</h3>
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
@@ -294,18 +294,18 @@ generates a non-editable class named Global, and all global instructions are cre
   variable x set to 20
   variable y set to 15
   while true
-    reassign blocks[x][y] to red
+    assign blocks[x][y] to red
     call displayBlocks(blocks)
-    reassign blocks[x][y] to black
+    assign blocks[x][y] to black
     variable direction set to randint(0, 3)
     if direction is 0 then
-      reassign x to min([x + 1, 39])
+      assign x to min([x + 1, 39])
     elif direction is 1 then
-      reassign x to max([x - 1, 0])
+      assign x to max([x - 1, 0])
     elif direction is 2 then
-      reassign y to min([y + 1, 29])
+      assign y to min([y + 1, 29])
     elif direction is 3 then
-      reassign y to max([y - 1, 0])
+      assign y to max([y - 1, 0])
     end if
   end while
 end main
@@ -331,7 +331,7 @@ It is good practice to <i>keep the main routine small</i>.</p>
     call displayBlocks(grid)
     variable gridRef set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(grid)
     call nextGeneration(gridRef)
-    reassign grid to gridRef.value()
+    assign grid to gridRef.value()
     call sleep_ms(50)
   end while
 end main
@@ -339,7 +339,7 @@ end main
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about the main routine</h3>
+<h3 class="no-TOC acc-title">What you need to know about a main routine</h3>
 <div class="acc-body">
 <ul>
   <li>The first instruction added <i>within</i> the main routine, is always the first instruction to be executed when the program is run.</li>
@@ -356,7 +356,7 @@ end main
 <h2>Procedure</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of procedures</h3>
+<h3 class="no-TOC acc-title">Examples of a procedure</h3>
 <div class="acc-body">
 <p>From the <b>Bubbles</b> demo, this procedure changes the vertical position, and the size, of each bubble in the provided list:</p>
 
@@ -381,7 +381,7 @@ end procedure
 <code>call moveGrowBurst(bubbles)</code>
 
 <p>From the <b>Turtle Dragon</b> demo, this procedure defines two parameters of different types. The body of this procedure consists
-of a straight sequence of <b>call procedure</b> instructions, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
+of a straight sequence of <b>procedure call</b>s, but all the procedures are defined on the turtle (the parameter named <code>t</code>)
 using 'dot syntax':</p>
 
 <codeblock>procedure setupTurtle(t as Turtle, order as Int)
@@ -399,7 +399,7 @@ end procedure
 <codeblock>procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   for col in range(0, 40)
     for row in range(0, 30)
-      reassign grid[col][row] to blackOrWhite(random())
+      assign grid[col][row] to blackOrWhite(random())
     end for
   end for
 end procedure
@@ -407,7 +407,7 @@ end procedure
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about procedures</h3>
+<h3 class="no-TOC acc-title">What you need to know about a procedure</h3>
 <div class="acc-body">
 
 <div id="Parameter"></div>
@@ -421,7 +421,7 @@ end procedure
   <li>It may optionally define one or more parameters (one in moveGrowBurst, two in setupTurtle), comma-separated if more than one.</li>
   <li>Each parameter specifies a name, starting lower case (<code>bubbles</code> above) and a type (<code>List&lt;of CircleVG&gt;</code> above) using the syntax
     <code>bubbles as List&lt;of CircleVG&gt;</code></li>
-  <li>The procedure is called from elsewhere using a <b>call procedure</b> instruction,
+  <li>The procedure is called from elsewhere using a <b>procedure call</b>,
   which specifies the name of the procedure to be called and includes values or expressions (known as <i>arguments</i>) that match the types of the parameters.</li>
   <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
     is located.</li>
@@ -445,7 +445,7 @@ end procedure
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
 This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
- as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in <b>main</b>,
+ as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in the <b>main routine</b>,
  so that <code>arg</code> can be accessed elsewhere <i>by reference</i>:</p>
 
 <codeblock>main
@@ -497,7 +497,7 @@ end procedure
 <h2>Function</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of functions</h3>
+<h3 class="no-TOC acc-title">Examples of a function</h3>
 <div class="acc-body">
 <p>From the <b>Snake &ndash; procedural</b> demo. Given the coordinates of the snake's head, determines
 whether or not the head has gone outside the bounds of the 40x30 grid:</p>
@@ -525,7 +525,7 @@ the single parameter and return value are 2-tuples, where both items are of type
   variable y set to cell.item_1
   variable y2 set to y - 1
   if y2 is -1 then
-    reassign y2 to 29
+    assign y2 to 29
   end if
   return (x, y2)
 end function
@@ -539,11 +539,11 @@ end function
     variable mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     if item.equals(value) then
-      reassign result to true
+      assign result to true
     elif item.isBefore(value) then
-      reassign result to binarySearch(li.subList(0, mid), item)
+      assign result to binarySearch(li.subList(0, mid), item)
     else
-      reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
+      assign result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
   end if
   return result
@@ -552,7 +552,7 @@ end function
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about functions</h3>
+<h3 class="no-TOC acc-title">What you need to know about a function</h3>
 <div class="acc-body">
 <ul>
   <li>A function defines a mechanism to transform input data (passed as parameters) into a single returned value that may be  of any type including a data structure.</li>
@@ -605,7 +605,7 @@ end function
 <h2>Test</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of tests</h3>
+<h3 class="no-TOC acc-title">Examples of a test</h3>
 <div class="acc-body">
 
 <p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year.
@@ -662,7 +662,7 @@ end test
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about tests</h3>
+<h3 class="no-TOC acc-title">What you need to know about a test</h3>
 <div class="acc-body">
 
 <ul>
@@ -697,7 +697,7 @@ end test
 
 <h4 class="no-TOC" id="ignore">Ghosting tests</h4>
 <p>To prevent a particular test from running, you can use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when a <b>test</b> or <b>assert</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
+<p>Even when a <b>test</b> or <b>assert statement</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status only only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <p>You can ghost an entire test:</p>
@@ -735,7 +735,7 @@ end test
 <p>If the expression you are testing causes a runtime error, then the error will be displayed in the red <b>fail</b> message.</p>
 <p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 
-<p>This <b>assert</b> shows how to test for an <i>expected</i> error message:</p>
+<p>This <b>assert statement</b> shows how to test for an <i>expected</i> error message:</p>
 <codeblock>test test_message
   variable a set to [5, 1, 7]
   assert a[4] is 0
@@ -772,7 +772,7 @@ end test
 <h2>Constant</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of constants</h3>
+<h3 class="no-TOC acc-title">Examples of a constant</h3>
 <div class="acc-body">
 
 <p>From the <b>Turtle Snowflake</b> demo. The constant value <code>side</code> is defined like this:</p>
@@ -796,7 +796,7 @@ constant warningMsg set to "Limit reached"
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about constants</h3>
+<h3 class="no-TOC acc-title">What you need to know about a constant</h3>
 <div class="acc-body">
 
 <ul>
@@ -849,7 +849,7 @@ end function
 <h2>Enum</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of enums</h3>
+<h3 class="no-TOC acc-title">Examples of an enum</h3>
 <div class="acc-body">
 <p>From the <b>Snake &ndash; procedural</b> demo, this <code>enum</code> is defined:</p>
 
@@ -862,13 +862,13 @@ end function
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is Direction.left then
-    reassign newX to newX - 1
+    assign newX to newX - 1
   elif dir is Direction.right then
-    reassign newX to newX + 1
+    assign newX to newX + 1
   elif dir is Direction.up then
-    reassign newY to newY - 1
+    assign newY to newY - 1
   elif dir is Direction.down then
-    reassign newY to newY + 1
+    assign newY to newY + 1
   end if
   return [newX, newY]
 end function
@@ -882,7 +882,7 @@ enum Outcome undecided, win, lose, draw, winDouble
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about enums</h3>
+<h3 class="no-TOC acc-title">What you need to know about an enum</h3>
 <div class="acc-body">
 
 <ul>
@@ -912,7 +912,7 @@ enum Outcome undecided, win, lose, draw, winDouble
 <h2>Comment</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of comments</h3>
+<h3 class="no-TOC acc-title">Examples of a comment</h3>
 <div class="acc-body">
   <p>From the <b>Snake &ndash; procedural</b> demo, where a comment at global level describes how to use the program:</p>
 
@@ -940,7 +940,7 @@ end procedure
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about comments</h3>
+<h3 class="no-TOC acc-title">What you need to know about a comment</h3>
 <div class="acc-body">
 
 <ul>
@@ -967,7 +967,7 @@ of a program: the main routine, functions, and procedures.</p>
 <h2>Print</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of print instructions</h3>
+<h3 class="no-TOC acc-title">Examples of a print statement</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
@@ -976,7 +976,7 @@ of a program: the main routine, functions, and procedures.</p>
 <codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
@@ -1021,10 +1021,10 @@ end main
     variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
     variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
-    reassign head to headRef.value()
-    reassign tail to tailRef.value()
-    reassign currentDir to currentDirRef.value()
-    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    assign head to headRef.value()
+    assign tail to tailRef.value()
+    assign currentDir to currentDirRef.value()
+    assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head.equals(apple) then
       call setAppleToRandomPosition(apple, body)
     else
@@ -1038,11 +1038,11 @@ end main
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about print instructions</h3>
+<h3 class="no-TOC acc-title">What you need to know about a print statement</h3>
 <div class="acc-body">
 
 <ul>
-<li>The <b>print</b> instruction writes a value to <b>display</b>.</li>
+<li>The <b>print statement</b> writes a value to <b>display</b>.</li>
 <li>It automatically prints a new line after the value.</li>
 <li>The value can be any expression.</li>
 <li>You must provide a value; if you just want to print a blank line, just set the value to "".</li>
@@ -1053,14 +1053,14 @@ end main
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
-<p>As an alternative to using the <b>print</b> instruction you call one of these standard library procedures Using
-the <b>call procedure</b> instruction:</p>
+<p>As an alternative to using the <b>print statement</b> you call one of these standard library procedures using
+<b>procedure call</b> instruction:</p>
 <ul>
   <li><el-method>printNoLine</el-method></li>
   <li><el-method>printWithTab</el-method></li>
 </ul>
 <p>which offer more flexible options. These library methods work when running any of the supported languages within Elan but,
-  unlike when using the normal the <b>print</b> instruction, the library procedures do not correspond directly to
+  unlike when using the normal the <b>print statement</b>, the library procedures do not correspond directly to
   print methods in the native libraries for those languages.</p>
 </div></div>
 
@@ -1077,7 +1077,7 @@ the <b>call procedure</b> instruction:</p>
 <h2>Variable definition</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of variable definitions</h3>
+<h3 class="no-TOC acc-title">Examples of a variable definition</h3>
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo, where variables named <code>x</code> and <code>y</code> represent the current
@@ -1101,7 +1101,7 @@ case a function call:</p>
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about variable definitions</h3>
+<h3 class="no-TOC acc-title">What you need to know about a variable definition</h3>
 <div class="acc-body">
 
 <ul>
@@ -1123,7 +1123,7 @@ case a function call:</p>
 <h2>Reassign variable</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of variable reassignment</h3>
+<h3 class="no-TOC acc-title">Examples of an assignment</h3>
 <div class="acc-body">
 
   <p>From the <b>Ripple sort</b> demo, where the <code>hasChanged</code> variable, having been <i>defined</i> higher up,
@@ -1134,16 +1134,16 @@ case a function call:</p>
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
-    reassign hasChanged to false
+    assign hasChanged to false
     for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
+        assign li[i] to li[i + 1]
+        assign li[i + 1] to temp
+        assign hasChanged to true
       end if
     end for
-    reassign lastComp to lastComp - 1
+    assign lastComp to lastComp - 1
   end while
 end procedure
   </codeblock>
@@ -1156,7 +1156,7 @@ end procedure
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
-  reassign currentDir to directionByKey(currentDir, getKey())
+  assign currentDir to directionByKey(currentDir, getKey())
   call tailRef.set(body[0])
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
@@ -1167,7 +1167,7 @@ end procedure
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about reassigning a variable</h3>
+<h3 class="no-TOC acc-title">What you need to know about an assignment</h3>
 <div class="acc-body">
 
 <ul>
@@ -1179,23 +1179,23 @@ end procedure
 </div>
 
 <div id="input_instruction">
-<h2>Input</h2>
+<h2>Input statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Example of input instructions</h3>
+<h3 class="no-TOC acc-title">Examples of an input statement</h3>
 <div class="acc-body">
 
-<p>From the <b>Binary Search</b> demo, showing an <b>input</b> instruction with a clear user-prompt:</p>
+<p>From the <b>Binary Search</b> demo, showing an <b>input statement</b> with a clear user-prompt:</p>
 
 <codeblock>input wanted set to inputString("What type of fruit do you want ('x' to exit)? ")</codeblock>
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about input instructions</h3>
+<h3 class="no-TOC acc-title">What you need to know about an input statement</h3>
 <div class="acc-body">
 
 <ul>
-  <li>The <b>input</b> instruction is the simplest way to read a string value typed in by the user (followed by <b>Enter</b>.</li>
+  <li>The <b>input statement</b> is the simplest way to read a string value typed in by the user (followed by <b>Enter</b>.</li>
   <li>You must specify a user-prompt string, though this may be an empty string &ndash; <code>""</code>.</li>
   <li>When working in Elan, the user entry will <i>always</i> be on the line below the displayed prompt.</li>
   <li>The entered value is put into a <i>new</i> variable &ndash; equivalent to if it was a <b>variable definition</b>.</li>
@@ -1212,7 +1212,7 @@ end procedure
 <div class="acc-body">
 
 <h4 class="no-TOC">System methods for keyboard input</h4>
-<p>As an alternative to using the <b>input</b> <i>instruction</i> you may also use a range of system methods from the standard Elan library,
+<p>As an alternative to using the <b>input statement</b> you may also use a range of system methods from the standard Elan library,
 which offer several advantages, including:</p>
 
 <ul>
@@ -1232,10 +1232,10 @@ which offer several advantages, including:</p>
 <div id="then"></div>
 <div id="else"></div>
 <div id="elif"></div>
-<h2>If</h2>
+<h2>If statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of <b>if</b> instructions</h3>
+<h3 class="no-TOC acc-title">Examples of an if statement</h3>
 <div class="acc-body">
 
 <p>From the <b>Life &ndash; procedural</b> demo, where the <code>result</code> is changed from black to white <i>if</i> a given
@@ -1244,13 +1244,13 @@ random value (expected to be in the range 0 to 1) is greater than 0.5:</p>
 <codeblock>function blackOrWhite(random as Float) returns Int
   variable result set to black
   if random > 0.5 then
-    reassign result to white
+    assign result to white
   end if
   return result
 end function
 </codeblock>
 
-<p>From the <b>Bubbles</b> demo where the <b>if</b> instruction includes an <b>else</b> clause,
+<p>From the <b>Bubbles</b> demo where the <b>if statement</b> includes an <b>else clause</b>,
   so that one of two separate blocks of instructions is always executed depending on the value of a randomly-generated number.</p>
 
 <codeblock>if random() < 0.05 then
@@ -1264,29 +1264,29 @@ else
 end if
 </codeblock>
 
-<p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if</b> (shortened to 'elif' in some languages) clauses, such that depending
+<p>From the <b>Burrow</b> demo, where the if includes multiple <b>else if clause</b> (shortened to 'elif' in some languages) clauses, such that depending
 on the value of the <code>direction</code> variable, one of four different instructions is executed:</p>
 
 <codeblock>if direction is 0 then
-  reassign x to min([x + 1, 39])
+  assign x to min([x + 1, 39])
 elif direction is 1 then
-  reassign x to max([x - 1, 0])
+  assign x to max([x - 1, 0])
 elif direction is 2 then
-  reassign y to min([y + 1, 29])
+  assign y to min([y + 1, 29])
 elif direction is 3 then
-  reassign y to max([y - 1, 0])
+  assign y to max([y - 1, 0])
 end if
 </codeblock>
 
-<p>(Note: the <i>last</i> <b>else if</b> clause <i>could</i> have been written as an <b>else</b> clause,
-  but writing it as an <b>else if</b> makes the intention clearer to a human reader).</p>
+<p>(Note: the <i>last</i> <b>else if clause</b> <i>could</i> have been written as an <b>else clause</b>,
+  but writing it as an <b>else if clause</b> makes the intention clearer to a human reader).</p>
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about an <b>if</b> instruction</h3>
+<h3 class="no-TOC acc-title">What you need to know about an if statement</h3>
 <div class="acc-body">
   <ul>
-    <li>The <b>if</b> instruction specifies which of several blocks of instructions is to be executed next.</li>
+    <li>The <b>if statement</b> specifies which of several blocks of instructions is to be executed next.</li>
     <li>It requires a <i>condition</i> to be specified, which must evaluate to a Boolean value &ndash; <code>true</code> or <code>false</code>.</li>
     <li>That expression might take any of the following forms:
     <ul>
@@ -1295,15 +1295,15 @@ end if
       <li>a function call, or any more complex expression, that evaluates to a Boolean value</li>
     </ul>
     </li>
-    <li>Within the body of an <b>if</b> instruction you may add one or more <b>else if</b> clauses and/or a single <b>else</b> clause</li>
-    <li>If you specify an <b>else</b> clause it must be the final clause within the <b>if</b> instruction body</li>
+    <li>Within the body of an <b>if statement</b> you may add one or more <b>else if clause</b>s and/or a single <b>else clause</b></li>
+    <li>If you specify an <b>else clause</b> it must be the final clause within the <b>if statement</b> body</li>
   </ul>
 </div></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body">
-  <p><a href="#ifExpression"><b>if</b> <i>expression</i></a>. This is an alternative way to implement conditions. Although
+  <p><a href="#ifExpression"><b><el-method>if_</el-method> function</a>. This is an alternative way to implement conditions. Although
     that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> paradigm.</p>
 </div></div>
 </div>
@@ -1312,22 +1312,22 @@ end if
 <h2>While loop</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of while loops</h3>
+<h3 class="no-TOC acc-title">Examples of a while loop</h3>
 <div class="acc-body">
   <p>From the <b>Ripple Sort</b> demo, where the loop is executed until a pass right through the loop has left the <code>hasChanged</code>
   variable as <code>false (meaning that no more swaps have occurred):</code></p>
 
   <codeblock>while hasChanged is true
-  reassign hasChanged to false
+  assign hasChanged to false
   for i in range(0, lastComp + 1)
     if li[i] > li[i + 1] then
       variable temp set to li[i]
-      reassign li[i] to li[i + 1]
-      reassign li[i + 1] to temp
-      reassign hasChanged to true
+      assign li[i] to li[i + 1]
+      assign li[i + 1] to temp
+      assign hasChanged to true
     end if
   end for
-  reassign lastComp to lastComp - 1
+  assign lastComp to lastComp - 1
 end while
   </codeblock>
 
@@ -1363,7 +1363,7 @@ end while
 <ul>
   <li>The <b>while loop</b> specifies that a block of instructions is to be repeated (or 'iterated') for as long as a specified condition is true.</li>
   <li>It should be used when you which to repeat something, but you <i>don't</i> know, in advance, how many times you need it to be repeated.</li>
-  <li>As on an <b>if</b> instruction, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
+  <li>As on an <b>if statement</b>, the condition in a while loop may be any expression that evaluates to a Boolean value.</li>
   <li>The condition is evaluated at the beginning of each pass through the loop.</li>
   <li>If the condition makes use of one or more variables (most do) then the variables must be defined before the start of the loop.</li>
   <li>It is possible that the condition could evaluate to false even on the first pass, in which case the instructions within the loop are
@@ -1386,7 +1386,7 @@ end while
 <h2>For loop</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of for loops</h3>
+<h3 class="no-TOC acc-title">Examples of a for loop</h3>
 <div class="acc-body">
 
   <p>From the <b>Bubbles</b> demo, where the loop is designed to execute exactly 20 times (the upped bound of the <el-method>range</el-method>
@@ -1406,7 +1406,7 @@ end while
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
-    reassign turnI to (if_(turn.equals(left), 1, -1))
+    assign turnI to (if_(turn.equals(left), 1, -1))
     call t.turn(-45*turnI)
     call t.move(corner)
     call t.turn(-45*turnI)
@@ -1424,14 +1424,14 @@ end procedure
   <codeblock>for x in range(0, 40)
     for y in range(0, 30)
       variable colour set to nextCellValue(grid, x, y)
-      reassign nextGen[x][y] to colour
+      assign nextGen[x][y] to colour
     end for
   end for
   </codeblock>
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about for loops</h3>
+<h3 class="no-TOC acc-title">What you need to know about a for loop</h3>
 <div class="acc-body">
   <ul>
     <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
@@ -1468,10 +1468,10 @@ end procedure
 </div>
 
 <div id="call">
-<h2>Call procedure</h2>
+<h2>Procedure call</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of procedure calls</h3>
+<h3 class="no-TOC acc-title">Examples of a procedure call</h3>
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>,
@@ -1492,7 +1492,7 @@ which is defined immediately below the main routine at the same (global) level.
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
-  reassign currentDir to directionByKey(currentDir, getKey())
+  assign currentDir to directionByKey(currentDir, getKey())
   call tailRef.set(body[0])
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
@@ -1507,17 +1507,17 @@ is a procedure method on the type <code>List</code>, which is the type of the <c
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about procedure calls</h3>
+<h3 class="no-TOC acc-title">What you need to know about a procedure call</h3>
 <div class="acc-body">
 
 <ul>
-<li>The <b>call procedure</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
+<li>The <b>procedure call</b> instruction is used when you want to run a <a href="#procedure">procedure <i class="fa">&#xf14c;</i></a>.</li>
 <li>The arguments provided must match the number and type of the parameters specified in the definition of the procedure; 
   if there are no parameters, leave the brackets empty.</li>
 <li>Procedures may have side effects, for example input/output or changing a data value in an object.
   For this reason, procedures cannot be called from functions, which are not allowed to have side effects.
-  To enforce this, <b>call procedure</b> instructions are not allowed in functions.</li>
-<li>There is a limit to the complexity of a <b>call procedure</b> instruction.
+  To enforce this, <b>procedure call</b>s are not allowed in functions.</li>
+<li>There is a limit to the complexity allowed in a <b>procedure call</b> instruction.
  Only one dot is allowed in the procedure name field, or two dots if the first word is <b>property</b>.
  If you need anything more complicated, use a <b>change variable</b> instruction on the line above.
   See the error message explanation for <a href="#ProcRefField">'procedureName' in a call instruction <i class="fa">&#xf14c;</i></a>.</li>
@@ -1535,21 +1535,21 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 <div id="catch"></div>
 <div id="CustomError"></div>
 <div id="ElanRuntimeError"></div>
-<h2>Try</h2>
+<h2>Try statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of <b>try</b> instructions</h3>
+<h3 class="no-TOC acc-title">Examples of a try statement</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string
     (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code>
-  attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try</b> instruction
+  attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try statement</b>
 is used to intercept (or 'catch') this exception and just ignore that input:</p>
 
 <codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
@@ -1569,39 +1569,39 @@ end main
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about <b>try</b> instructions</h3>
+<h3 class="no-TOC acc-title">What you need to know about a try statement</h3>
 <div class="acc-body">
 
 <ul>
-  <li>The <b>try</b> instruction is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
+  <li>The <b>try statement</b> is a mechanism to execute code that <i>might</i> result in an 'exception' (called an 'error' in some languages),
     and to <i>catch</i> that exception without the program being automatically halted.</li>
-  <li>The <b>try</b> instruction is often referred to as a `try-catch` &ndash; because it makes no sense to have
-  a <b>try</b> instruction <i>without</i> a 'catch' clause.</li>
-  <li>When you add a <b>try</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
+  <li>The <b>try statement</b> instruction is sometimes referred to as a `try-catch` &ndash; because it makes no sense to have
+  a <b>try statement</b> <i>without</i> a <b>catch clause</b>.</li>
+  <li>When you add a <b>try statement</b> instruction in Elan, the 'catch' clause is automatically included in the instruction frame (template).</li>
   <li class="python">'except' is Python's word for 'catch'</li>
-  <li>When you add a new <b>try</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
+  <li>When you add a new <b>try statement</b> the instructions that you want to <i>try</i> to execute are specified immediately underneath the first line.</li>
   <li>Underneath the catch clause you may instructions to handle the exception, for example by advising the user to try again.</li>
   <li>The catch clause must specify the <i>type</i> of the exception to be caught. When working in Elan, only two types are permitted:
     <ul>
     <li><code>ElanRuntimeError</code> which covers all errors thrown by the Elan system, including, for example 'Out of range index ...'</li>
-    <li><code>CustomError</code> an exception explicitly thrown by code by a <b>throw</b> instruction in your own code (see below).</li>
+    <li><code>CustomError</code> an exception explicitly thrown by code by a <b>throw statement</b> in your own code (see below).</li>
     </ul>
   </li>
-  <li><i>Currently</i> Elan permits only one catch clause to be associated with each <b>try</b></li>
+  <li><i>Currently</i> Elan currently permits only one <b>catch clause</b> to be associated with each <b>try statement</b></li>
 </ul>
-<p>You can enclose code in a <b>try</b> construction when you want it to be able, at execution, to throw an exception that you handle.</p>
+<p>You can enclose code in a <b>try statement</b> when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
  such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
-<p>The <b>try</b> construction automatically provides a <b>catch</b> clause in which you provide a String for an message.</p>
-<p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try</b> instruction.</p>
+<p>The <b>try statement</b> automatically provides a <b>catch clause</b> in which you provide a String for an message.</p>
+<p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try statement</b>.</p>
 </div></div>
 </div>
 
 <div id="throw">
-<h2>Throw</h2>
+<h2>Throw statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Example of a throwing an exception</h3>
+<h3 class="no-TOC acc-title">Examples of a throw statement</h3>
 <div class="acc-body">
 
 <p>The following function to calculate factorials <i>deliberately</i> 'throws' an exception (error) if it is given
@@ -1610,7 +1610,7 @@ end main
 <codeblock>function factorial(n as Int) returns Int
   variable result set to 1
   if n > 1 then
-    reassign result to n*factorial(n - 1)
+    assign result to n*factorial(n - 1)
   elif n < 0 then
     throw CustomError "Factorial cannot be called with a negative argument"
   end if
@@ -1620,23 +1620,23 @@ end function
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about throwing an exception</h3>
+<h3 class="no-TOC acc-title">What you need to know about a throw statement</h3>
 <div class="acc-body">
 
 <ul>
-  <li>The <b>throw</b> instruction will cause an 'exception' to be 'thrown' (or 'raised' in some languages).</li>
-  <li>Unless the <b>throw</b> instruction is directly or indirectly within a <b>Try</b> instruction (see above),
-  program execution will be halted and the message defined in the <b>throw</b> instruction printed on the <b>display</b>.</li>
+  <li>The <b>throw statement</b> will cause an 'exception' to be 'thrown' (or 'raised' in some languages).</li>
+  <li>Unless the <b>throw statement</b> is directly or indirectly within a <b>Try statement</b> (see above),
+  program execution will be halted and the message defined in the <b>throw statement</b> printed on the <b>display</b>.</li>
   <li>Because of this drastic effect it is recommended <i>not</i> to throw exceptions only in rare circumstances.</li>
 </ul>
 </div></div>
 </div>
 
 <div id="assert">
-<h2>Assert</h2>
+<h2>Assert statement</h2>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples of asserts</h3>
+<h3 class="no-TOC acc-title">Examples of an assert statement</h3>
 <div class="acc-body">
 
   <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
@@ -1667,7 +1667,7 @@ end test
 </div></div>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about asserts</h3>
+<h3 class="no-TOC acc-title">What you need to know about an assert statement</h3>
 <div class="acc-body">
 <ul>
   <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
@@ -1759,7 +1759,7 @@ end main
  <td>
 <codeblock>main
   variable li set to new List&lt;of Int&gt;()
-  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  assign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   print(li[4])
   print(li.subList(4, li.length()))
   print(li.subList(0, 7))
@@ -1870,7 +1870,7 @@ end function
 end if
 </codeblock>
 </li>
-<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
+<li><code>assign differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
 Two Lists compare equal if they contain the same items in the same order.
@@ -1897,8 +1897,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<code>reassign x to (a > b) and (b < c)</code><br>
-<code>reassign x to (a + b) > (c - d)</code>
+<code>assign x to (a > b) and (b < c)</code><br>
+<code>assign x to (a + b) > (c - d)</code>
 </div>
 
 <div id="functionRef">
@@ -1915,7 +1915,7 @@ end main
 <h4 class="no-TOC">Notes</h4>
 <ul>
 <li>The third example above is not strictly a function call, but is a 'system method' call.
-System methods may be used only within the <b>main</b> routine or a <b>procedure</b>, because they have external dependencies or side effects.</li>
+System methods may be used only within the <b>main routine</b> or a <b>procedure</b>, because they have external dependencies or side effects.</li>
 <li>In the fourth example, <code>upperCase</code> is a dot method that may be applied to any instance (variable or literal) of type <code>String</code>.
 See <a href="LibRef.html#upperCase">Dot methods on a String <i class="fa">&#xf08e;</i></a>.</li>
 </ul>
@@ -1960,9 +1960,9 @@ We hope to remove this requirement in a future version &ndash; to make the synta
 </div>
 
 <div id="ifExpression">
-<h2><b>if</b> expression</h2>
+<h2>if expression</h2>
 
-<p>An 'if expression' has some similarity with an <b>if</b> <i>instruction</i>, but with important differences:</p>
+<p>An 'if expression' has some similarity with an <b>if statement</b>, but with important differences:</p>
 
 <ul>
   <li>An 'if expression' is written within a single line.</li>
@@ -1973,17 +1973,18 @@ We hope to remove this requirement in a future version &ndash; to make the synta
 
 <p>All modern languages, including Python, VB, C#, and Java, support this concept, though sometimes by another name such as 'conditional expression', or even 'ternary operator' (because it has three terms).
   The syntax varies significantly between those languages. When coding with Elan in any of the supported languages, this functionality is provided by a 'pseudo function' named <el-method>if_</el-method>,
-  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if</b> instruction. (This is consistent the standard advice
+  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if statement</b>. 
+  (This is consistent the standard advice
   that if you define your own identifier that classes with a <i>reserved word</i>, the simplest fix is to add an underscore on the end.)
 </p>
 
-<p>The <b>if</b> expression returns one of two values dependent upon the evaulation of a Boolean value:</p>
+<p>The <el-method>if_</el-method> function returns one of two values dependent upon the evaulation of a Boolean value:</p>
 <p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
   <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
 <p>in which variable <code>d</code> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
-<p>An <b>if</b> expression may be used within an <b>if</b> expression but may be hard to read and understand.</p>
+<p>An <el-method>if_</el-method> function may be used within an <el-method>if_</el-method> function but may be hard to read and understand.</p>
 
 <p>Why do we refer to <el-method>if_</el-method> as a 'pseudo function'. At first glance it looks to operate like any function: it requires three arguments and returns a result that depends on them.
 But it does one thing very differently: if either or both of the second and third arguments are themselves defined by expressions, they are evaluated <i>lazily</i> &ndash; only the one that is
@@ -1992,7 +1993,7 @@ So though <el-method>if_</el-method> <i>looks</i> like any other library functio
 drop-down list of library function names.</p>
 
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples using <b>if</b> expression:</h3>
+<h3 class="no-TOC acc-title">Examples using <el-method>if_</el-method> function:</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>function foo() returns Int
@@ -2000,7 +2001,7 @@ drop-down list of library function names.</p>
 end function
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an <b>if</b> expression in a <b>call procedure</b> <el-method>print</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an <el-method>if_</el-method> function in a <b>procedure call</b> <el-method>print</el-method>:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -2069,13 +2070,13 @@ variable x set to point.item_0
  <p>The 'actual' field should be kept as simple as possible, <i>preferably</i>
  just a named value or a function evaluation. Generally, if you want to use a more
  complex expression, it is better to evaluate it in a preceding <b>variable definition</b>
- instruction and then use the named value in the 'actual' field of the <b>assert</b> equal
+ instruction and then use the named value in the 'actual' field of the <b>assert statement</b> equal
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
   <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
-  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert</b> equal instruction.</li>
+  the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert statement</b> equal instruction.</li>
  </ul>
 
 <h3 id="AssignableField" class="no-TOC">'variable name' field in a set instruction</h3>
@@ -2114,7 +2115,7 @@ variable x set to point.item_0
  <p>The type must follow the rules for a <a href="#TypeName">type <i class="fa">&#xf14c;</i></a>.</p>
  <p>If more than one parameter is defined, the definitions must be separated by commas.</p>
 
-<h3 id="ProcRefField" class="no-TOC">'procedureName' in a <b>call procedure</b> instruction</h3>
+<h3 id="ProcRefField" class="no-TOC">'procedureName' in a <b>procedure call</b> instruction</h3>
  <p>Valid forms for a procedure call are
  <ul>
   <li><code>call procedureName()</code> to call a library procedure, or user-defined procedure.</li>

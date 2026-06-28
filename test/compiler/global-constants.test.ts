@@ -377,7 +377,7 @@ end main
 constant a set to 3
 
 main
-  reassign a to 4
+  assign a to 4
   call printNoLine(a)
 end main
 `;
@@ -403,7 +403,7 @@ end main
     const code = `${testHeader}
 
 main
-  reassign pi to 4
+  assign pi to 4
   call printNoLine(a)
 end main
 `;
@@ -431,7 +431,7 @@ end main
 constant a set to 3 + 4
 
 main
-  reassign a to 4 
+  assign a to 4 
   call printNoLine(a)
 end main
 `;

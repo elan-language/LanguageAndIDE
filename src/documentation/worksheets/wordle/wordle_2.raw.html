@@ -89,10 +89,10 @@
       variable mark set to ""
       call enterMark(attemptNo, grid, mark)
       if mark is "22222" then
-        reassign solved to true
+        assign solved to true
       else
-        reassign attemptNo to attemptNo + 1
-        reassign attempt to possible[randint(0, possible.length() - 1)]
+        assign attemptNo to attemptNo + 1
+        assign attempt to possible[randint(0, possible.length() - 1)]
       end if
     end while
     </codeblock>
@@ -182,7 +182,7 @@
       variable newPossible set to new List<of String>()
       each something in something
         if something is something then
-          reassign something to something
+          assign something to something
         end if
       end each
       return newPossible
@@ -206,7 +206,7 @@
         variable newPossible set to new List<of String>()
         each word in prior
           if markAttempt(attempt, word) is mark then
-            reassign newPossible to newPossible.withAppend(word)
+            assign newPossible to newPossible.withAppend(word)
           end if
         end each
         return newPossible
@@ -221,7 +221,7 @@
     we can make use of that with the <el-method>playReverseGame</el-method> procedure.
    <p>Insert a new instruction immediately <i>after</i> instruction <b>69</b> i.e. just <i>above</i> the instruction that you added
     into the procedure earlier. This new instruction should
-    reassign the list named <code>possible</code> to the new, filtered, list that results from evaluating the
+    assign the list named <code>possible</code> to the new, filtered, list that results from evaluating the
     <el-method>possibleTargetsAfterAttempt</el-method> function, passing in suitable arguments.</p>
   <hint>Hint HINTNUMBER: the expression to evaluate the filtered version of the list</hint>
   <content>
@@ -241,11 +241,11 @@
           variable mark set to ""
           call enterMark(attemptNo, grid, mark)
           if mark is "22222" then
-            reassign solved to true
+            assign solved to true
           else
-            reassign attemptNo to attemptNo + 1
-            reassign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
-            reassign attempt to possible[randint(0, possible.length() - 1)]
+            assign attemptNo to attemptNo + 1
+            assign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
+            assign attempt to possible[randint(0, possible.length() - 1)]
           end if
         end while
       end procedure
@@ -280,7 +280,7 @@
   <ul>
     <li><i>Delete</i> the following instruction (we'll replace it with something else, lower down):
     <codeblock>
-      reassign attempt to possible[randint(0, possible.length() - 1)]
+      assign attempt to possible[randint(0, possible.length() - 1)]
     </codeblock></li>
     <li>Within the <el-method>playReverseGame</el-method> procedure, <i>after</i> <el-kw>end if</el-kw> but <i>before</i> <el-kw>end while</el-kw>
       add a conditional instruction that tests whether there is at least one word in the latest filtered version of <code>possible</code>.
@@ -291,10 +291,10 @@
   <content>
     <code>
     if something then
-      reassign something to something
+      assign something to something
     else
       print something
-      reassign something to something
+      assign something to something
     end if
     </code>
   </content>
@@ -312,16 +312,16 @@
           variable mark set to ""
           call enterMark(attemptNo, grid, mark)
           if mark is "22222" then
-            reassign solved to true
+            assign solved to true
           else
-            reassign attemptNo to attemptNo + 1
-            reassign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
+            assign attemptNo to attemptNo + 1
+            assign possible to possibleTargetsAfterAttempt(possible, attempt, mark)
           end if
           if possible.length() > 0 then
-            reassign attempt to possible[0]
+            assign attempt to possible[0]
           else
             print "No possible target matches marks so far"
-            reassign attemptNo to 6
+            assign attemptNo to 6
           end if
         end while
       end procedure

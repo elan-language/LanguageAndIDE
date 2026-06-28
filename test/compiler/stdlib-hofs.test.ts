@@ -220,7 +220,7 @@ return [main, _tests];}`;
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-  reassign source to source.map(lambda x as Int => x + 1)
+  assign source to source.map(lambda x as Int => x + 1)
   call printNoLine(source)
 end main`;
 

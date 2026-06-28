@@ -15,7 +15,7 @@ procedure playGame()
   variable grid set to new Array2D<of String>(5, 6, "")
   variable used set to new Dictionary<of String, String>()
   for letter in "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
-    reassign used[letter] to " "
+    assign used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
   variable target set to allValidTargetWords.split(" ")[randint(0, 2308)]
@@ -25,8 +25,8 @@ procedure playGame()
     call enterAttempt(attemptNo, grid, used)
     variable solvedRef set to new AsRef<of Boolean>(solved)
     call colourAttempt(attemptNo, grid, target, solvedRef, used)
-    reassign solved to solvedRef.value()
-    reassign attemptNo to attemptNo + 1
+    assign solved to solvedRef.value()
+    assign attemptNo to attemptNo + 1
   end while
   call clearPrintedText()
   if solved then
@@ -40,17 +40,17 @@ procedure enterAttempt(attemptNo as Int, grid as Array2D<of String>, used as Dic
   while chNo <= 5
     variable k set to waitForKey().upperCase()
     if (k.equals("BACKSPACE")) and (chNo > 0) then
-      reassign chNo to chNo - 1
-      reassign grid[chNo][attemptNo] to ""
-      reassign word to word[0..chNo]
+      assign chNo to chNo - 1
+      assign grid[chNo][attemptNo] to ""
+      assign word to word[0..chNo]
       call clearPrintedText()
     elif (chNo < 5) and isUCLetter(k) then
-      reassign grid[chNo][attemptNo] to k
-      reassign chNo to chNo + 1
-      reassign word to word + k
+      assign grid[chNo][attemptNo] to k
+      assign chNo to chNo + 1
+      assign word to word + k
     elif (chNo is 5) and (k.equals("ENTER")) then
       if allValidAttemptWords.contains(word) then
-        reassign chNo to chNo + 1
+        assign chNo to chNo + 1
       else
         print("Invalid word")
       end if
@@ -65,9 +65,9 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
   for i in range(0, 5)
     variable letter set to grid[i, attemptNo]
     variable mark set to marks[i]
-    reassign grid[i][attemptNo] to letter + mark
+    assign grid[i][attemptNo] to letter + mark
     if mark.isAfter(used[letter]) then
-      reassign used[letter] to mark
+      assign used[letter] to mark
     end if
   end for
   if marks.equals("22222") then
@@ -83,17 +83,17 @@ procedure enterMark(attemptNo as Int, grid as Array2D<of String>, markRef as AsR
   while chNo <= 5
     variable k set to waitForKey().upperCase()
     if (k.equals("BACKSPACE")) and (chNo > 0) then
-      reassign chNo to chNo - 1
+      assign chNo to chNo - 1
       variable entry set to grid[chNo, attemptNo]
-      reassign grid[chNo][attemptNo] to entry[0]
-      reassign mark to mark.subString(0, chNo)
+      assign grid[chNo][attemptNo] to entry[0]
+      assign mark to mark.subString(0, chNo)
     elif (chNo < 5) and "012".contains(k) then
       variable ch set to grid[chNo, attemptNo]
-      reassign grid[chNo][attemptNo] to ch + k
-      reassign chNo to chNo + 1
-      reassign mark to mark + k
+      assign grid[chNo][attemptNo] to ch + k
+      assign chNo to chNo + 1
+      assign mark to mark + k
     elif (chNo is 5) and (k.equals("ENTER")) then
-      reassign chNo to chNo + 1
+      assign chNo to chNo + 1
     end if
     call displayHtml(drawGrid(grid))
   end while
@@ -102,7 +102,7 @@ end procedure
 
 procedure putAttemptIntoGrid(attempt as String, position as Int, grid as Array2D<of String>)
   for i in range(0, 5)
-    reassign grid[i][position] to attempt[i]
+    assign grid[i][position] to attempt[i]
   end for
   call displayHtml(drawGrid(grid))
 end procedure
@@ -115,7 +115,7 @@ end function
 function getWord(attemptNo as Int, grid as Array2D<of String>) returns String
   variable guessWord set to ""
   for i in range(0, 5)
-    reassign guessWord to guessWord + grid[i, attemptNo]
+    assign guessWord to guessWord + grid[i, attemptNo]
   end for
   return guessWord
 end function
@@ -123,14 +123,14 @@ end function
 function drawGrid(grid as Array2D<of String>) returns String
   variable html set to $"<style>{styleSheet}</style> <grid>"
   for row in range(0, 6)
-    reassign html to html + "<word>"
+    assign html to html + "<word>"
     for col in range(0, 5)
       variable entry set to grid[col, row]
       variable ch set to if_(entry.length() > 0, entry[0], "")
       variable mark set to if_(entry.length() > 1, entry.subString(1, entry.length()), "")
-      reassign html to html + $"<ch class='_{mark}'>{ch}</ch>"
+      assign html to html + $"<ch class='_{mark}'>{ch}</ch>"
     end for
-    reassign html to html + "</word>"
+    assign html to html + "</word>"
   end for
   return html + "</grid>"
 end function
@@ -139,9 +139,9 @@ function drawKeyboard(used as Dictionary<of String, String>) returns String
   variable html set to "<keyboard><div>"
   for k in "QWERTYUIOP-ASDFGHJKL-ZXCVBNM"
     if k.equals("-") then
-      reassign html to html + "</div><div>"
+      assign html to html + "</div><div>"
     else
-      reassign html to html + $"<key class='_{used[k]}'>{k}</key>"
+      assign html to html + $"<key class='_{used[k]}'>{k}</key>"
     end if
   end for
   return html + "<key></key></div></keyboard>"
@@ -152,14 +152,14 @@ function markAttempt(attempt as String, target as String) returns String
   variable unused set to target
   for i in range(0, 5)
     if attempt[i].equals(unused[i]) then
-      reassign mark to setChar(mark, i, "2")
-      reassign unused to setChar(unused, i, " ")
+      assign mark to setChar(mark, i, "2")
+      assign unused to setChar(unused, i, " ")
     end if
   end for
   for i in range(0, 5)
     if (not mark[i].equals("2")) and unused.contains(attempt[i]) then
-      reassign mark to setChar(mark, i, "1")
-      reassign unused to setChar(unused, unused.indexOf(attempt[i]), " ")
+      assign mark to setChar(mark, i, "1")
+      assign unused to setChar(unused, unused.indexOf(attempt[i]), " ")
     end if
   end for
   return mark
@@ -216,9 +216,9 @@ procedure playReverseGame()
     variable mark set to new AsRef<of String>("")
     call enterMark(attemptNo, grid, mark)
     if mark.value().equals("22222") then
-      reassign solved to true
+      assign solved to true
     else
-      reassign attemptNo to attemptNo + 1
+      assign attemptNo to attemptNo + 1
     end if
   end while
 end procedure

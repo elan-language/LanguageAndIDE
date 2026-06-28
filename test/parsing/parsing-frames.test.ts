@@ -3,16 +3,16 @@ import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
 import { FileImpl } from "../../src/ide/frames/file-impl";
-import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { InputStatement } from "../../src/ide/frames/statements/input-statement";
 import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { Throw } from "../../src/ide/frames/statements/throw";
+import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { testHeader, transforms } from "../compiler/compiler-test-helpers";
@@ -23,7 +23,7 @@ function hash() {
 
 suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement", () => {
-    const code = "  reassign fooBar to 3.141";
+    const code = "  assign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -34,15 +34,15 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new ReAssignVariable(m);
+    const m = new MainRoutine(fl);
+    const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
   });
 
   test("parse Frames - set statement 2", () => {
-    const code = "  reassign tot to tot";
+    const code = "  assign tot to tot";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -53,14 +53,14 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new ReAssignVariable(m);
+    const m = new MainRoutine(fl);
+    const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - set statement 3", () => {
-    const code = "  reassign result to 3 + 4";
+    const code = "  assign result to 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -71,8 +71,8 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new ReAssignVariable(m);
+    const m = new MainRoutine(fl);
+    const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -109,7 +109,7 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
+    const m = new MainRoutine(fl);
     const v = new VariableStatement(m);
     v.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
@@ -128,8 +128,8 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new Throw(m);
+    const m = new MainRoutine(fl);
+    const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -146,8 +146,8 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new Throw(m);
+    const m = new MainRoutine(fl);
+    const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -164,7 +164,7 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
+    const m = new MainRoutine(fl);
     const setTo = new InputStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
@@ -182,7 +182,7 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
+    const m = new MainRoutine(fl);
     const setTo = new PrintStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
@@ -200,8 +200,8 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new CallStatement(m);
+    const m = new MainRoutine(fl);
+    const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
@@ -218,14 +218,14 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
-    const setTo = new CallStatement(m);
+    const m = new MainRoutine(fl);
+    const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - StatementSelector", () => {
-    const code = "reassign fooBar to 3.141";
+    const code = "assign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -236,7 +236,7 @@ suite("Parsing Frame Tests", async () => {
       false,
       true,
     );
-    const m = new MainFrame(fl);
+    const m = new MainRoutine(fl);
     const ss = new StatementSelector(m);
     ss.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
@@ -357,7 +357,7 @@ end main
 
 main
   variable name set to value or expression
-  reassign a to 3 + 4
+  assign a to 3 + 4
   throw ElanRuntimeError "message"
   call signIn(rwp, password)
   call printNoLine("Hello World!")

@@ -22,7 +22,6 @@ import {
   assertCompiles,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -75,7 +74,7 @@ suite("Directives", () => {
 
 main
   variable x set to 0.0
-  reassign x to simpleFunction()
+  assign x to simpleFunction()
   call printNoLine(x)
 end main`;
 
@@ -102,7 +101,7 @@ end main`;
 
 main
   variable x set to new List<of VectorGraphic>()
-  reassign x to createVectorGraphics()
+  assign x to createVectorGraphics()
   call printNoLine(x)
 end main`;
 

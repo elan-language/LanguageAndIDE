@@ -102,7 +102,7 @@ import { GlobalComment } from "../frames/globals/global-comment";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { InterfaceFrame } from "../frames/globals/interface-frame";
-import { MainFrame } from "../frames/globals/main-frame";
+import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Index } from "../frames/parse-nodes";
 import { AbstractAlternatives } from "../frames/parse-nodes/abstract-alternatives";
@@ -163,22 +163,22 @@ import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
-import { CallStatement } from "../frames/statements/call-statement";
+import { Assignment } from "../frames/statements/assignment";
 import { CatchStatement } from "../frames/statements/catch-statement";
 import { CommentStatement } from "../frames/statements/comment-statement";
-import { Else } from "../frames/statements/else";
-import { ElseIf } from "../frames/statements/elseIf";
-import { For } from "../frames/statements/for";
+import { ElseClause } from "../frames/statements/else-clause";
+import { ElseIfClause } from "../frames/statements/elseIf-clause";
+import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
 import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
-import { ReAssignVariable } from "../frames/statements/reassign-variable";
+import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
-import { Throw } from "../frames/statements/throw";
-import { TryStatement } from "../frames/statements/try";
+import { ThrowStatement } from "../frames/statements/throw-statement";
+import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
-import { While } from "../frames/statements/while";
+import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
 
 export function transformMany(
@@ -230,7 +230,7 @@ export function transform(
     return astRoot;
   }
 
-  if (node instanceof MainFrame) {
+  if (node instanceof MainRoutine) {
     const mainAsn = new MainAsn(node.getHtmlId(), scope);
     mainAsn.breakpointStatus = node.breakpointStatus;
 
@@ -366,7 +366,7 @@ export function transform(
     return letAsn;
   }
 
-  if (node instanceof ReAssignVariable) {
+  if (node instanceof Assignment) {
     const setAsn = new SetAsn(node.getHtmlId(), scope);
     setAsn.breakpointStatus = node.breakpointStatus;
 
@@ -402,7 +402,7 @@ export function transform(
     return printAsn;
   }
 
-  if (node instanceof CallStatement) {
+  if (node instanceof ProcedureCall) {
     const callAsn = new CallAsn(node.getHtmlId(), scope);
     callAsn.breakpointStatus = node.breakpointStatus;
 
@@ -544,7 +544,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof For) {
+  if (node instanceof ForLoop) {
     const eachAsn = new EachAsn(node.getHtmlId(), scope);
     eachAsn.breakpointStatus = node.breakpointStatus;
     eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
@@ -558,7 +558,7 @@ export function transform(
     return eachAsn;
   }
 
-  if (node instanceof While) {
+  if (node instanceof WhileLoop) {
     const whileAsn = new WhileAsn(node.getHtmlId(), scope);
     whileAsn.breakpointStatus = node.breakpointStatus;
     whileAsn.condition = transform(node.condition, node.getHtmlId(), whileAsn) ?? EmptyAsn.Instance;
@@ -584,7 +584,7 @@ export function transform(
     return ifAsn;
   }
 
-  if (node instanceof ElseIf) {
+  if (node instanceof ElseIfClause) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
@@ -592,7 +592,7 @@ export function transform(
     return elseAsn;
   }
 
-  if (node instanceof Else) {
+  if (node instanceof ElseClause) {
     const elseAsn = new ElseAsn(node.getHtmlId(), scope);
     elseAsn.breakpointStatus = node.breakpointStatus;
     elseAsn.condition = EmptyAsn.Instance;
@@ -622,7 +622,7 @@ export function transform(
     return catchAsn;
   }
 
-  if (node instanceof Throw) {
+  if (node instanceof ThrowStatement) {
     const type = node.type.text;
     const msg = transform(node.text, node.getHtmlId(), scope)!;
 

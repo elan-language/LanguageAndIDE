@@ -2,20 +2,20 @@
 
 static void main() {
   var grid = createBlockGraphics(white);
-  fillRandom(grid); // call procedure
+  fillRandom(grid); // procedure call
   while (true) {
-    displayBlocks(grid); // call procedure
+    displayBlocks(grid); // procedure call
     var gridRef = new AsRef<List<List<int>>>(grid);
-    nextGeneration(gridRef); // call procedure
-    grid = gridRef.value(); // reassign variable
-    sleep_ms(50); // call procedure
+    nextGeneration(gridRef); // procedure call
+    grid = gridRef.value(); // assignment
+    sleep_ms(50); // procedure call
   } // end while
 } // end main
 
 static void fillRandom(List<List<int>> grid) { // procedure
   foreach (var col in range(0, 40)) {
     foreach (var row in range(0, 30)) {
-      grid[col][row] = blackOrWhite(random()); // reassign variable
+      grid[col][row] = blackOrWhite(random()); // assignment
     } // end foreach
   } // end foreach
 } // end procedure
@@ -26,16 +26,16 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
   foreach (var x in range(0, 40)) {
     foreach (var y in range(0, 30)) {
       var colour = nextCellValue(grid, x, y);
-      nextGen[x][y] = colour; // reassign variable
+      nextGen[x][y] = colour; // assignment
     } // end foreach
   } // end foreach
-  gridRef.set(nextGen); // call procedure
+  gridRef.set(nextGen); // procedure call
 } // end procedure
 
 static int blackOrWhite(double random) { // function
   var result = black;
   if (random > 0.5) {
-    result = white; // reassign variable
+    result = white; // assignment
   } // end if
   return result;
 } // end function
@@ -45,7 +45,7 @@ static (int, int) north((int, int) cell) { // function
   var y = cell.item_1;
   var y2 = y - 1;
   if (y2 == -1) {
-    y2 = 29; // reassign variable
+    y2 = 29; // assignment
   } // end if
   return (x, y2);
 } // end function
@@ -55,7 +55,7 @@ static (int, int) south((int, int) cell) { // function
   var y = cell.item_1;
   var y2 = y + 1;
   if (y2 == 30) {
-    y2 = 0; // reassign variable
+    y2 = 0; // assignment
   } // end if
   return (x, y2);
 } // end function
@@ -65,7 +65,7 @@ static (int, int) east((int, int) cell) { // function
   var y = cell.item_1;
   var x2 = x + 1;
   if (x2 == 40) {
-    x2 = 0; // reassign variable
+    x2 = 0; // assignment
   } // end if
   return (x2, y);
 } // end function
@@ -75,7 +75,7 @@ static (int, int) west((int, int) cell) { // function
   var y = cell.item_1;
   var x2 = x - 1;
   if (x2 == -1) {
-    x2 = 39; // reassign variable
+    x2 = 39; // assignment
   } // end if
   return (x2, y);
 } // end function
@@ -107,7 +107,7 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
     var cx = cell.item_0;
     var cy = cell.item_1;
     if (grid[cx][cy] == black) {
-      count = count + 1; // reassign variable
+      count = count + 1; // assignment
     } // end if
   } // end foreach
   return count;
@@ -116,9 +116,9 @@ static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
 static bool willLive(int cell, int liveNeighbours) { // function
   var result = false;
   if (cell == black) {
-    result = (liveNeighbours > 1) && (liveNeighbours < 4); // reassign variable
+    result = (liveNeighbours > 1) && (liveNeighbours < 4); // assignment
   } else {
-    result = liveNeighbours == 3; // reassign variable
+    result = liveNeighbours == 3; // assignment
   } // end if
   return result;
 } // end function
@@ -127,7 +127,7 @@ static int nextCellValue(List<List<int>> grid, int x, int y) { // function
   var colour = white;
   var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
   if (live) {
-    colour = black; // reassign variable
+    colour = black; // assignment
   } // end if
   return colour;
 } // end function

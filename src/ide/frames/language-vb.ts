@@ -22,7 +22,7 @@ import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { InterfaceFrame } from "./globals/interface-frame";
-import { MainFrame } from "./globals/main-frame";
+import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
@@ -45,22 +45,22 @@ import { TypeNameUse } from "./parse-nodes/type-name-use";
 import { TypeNode } from "./parse-nodes/type-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
-import { CallStatement } from "./statements/call-statement";
+import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Else } from "./statements/else";
-import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ElseClause } from "./statements/else-clause";
+import { ElseIfClause } from "./statements/elseIf-clause";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ReAssignVariable } from "./statements/reassign-variable";
+import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
-import { Throw } from "./statements/throw";
-import { TryStatement } from "./statements/try";
+import { ThrowStatement } from "./statements/throw-statement";
+import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 import { ParseStatus } from "./status-enums";
 import { TokenType } from "./symbol-completion-helpers";
 import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
@@ -86,8 +86,8 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof VariableStatement ||
       frame instanceof ProcedureFrame ||
       frame instanceof LetStatement ||
-      frame instanceof CallStatement ||
-      frame instanceof ReAssignVariable ||
+      frame instanceof ProcedureCall ||
+      frame instanceof Assignment ||
       frame instanceof PrintStatement ||
       frame instanceof InputStatement
     ) {
@@ -100,7 +100,7 @@ export class LanguageVB extends LanguageAbstract {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
       html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
-    } else if (frame instanceof CallStatement) {
+    } else if (frame instanceof ProcedureCall) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof CatchStatement) {
       //Catch e As DivideByZeroException
@@ -110,9 +110,9 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top> = ${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ElseIf) {
+    } else if (frame instanceof ElseIfClause) {
       html = `<el-kw>${this.ELSEIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
-    } else if (frame instanceof Else) {
+    } else if (frame instanceof ElseClause) {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
@@ -129,9 +129,9 @@ export class LanguageVB extends LanguageAbstract {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof ReAssignVariable) {
+    } else if (frame instanceof Assignment) {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
-    } else if (frame instanceof Throw) {
+    } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX} </el-kw>${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableStatement) {
       html = `<el-kw>${this.DIM} </el-kw>${frame.name.renderAsHtml()}<el-kw> = </el-kw>${frame.expr.renderAsHtml()}`;
@@ -153,7 +153,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw>(${frame.params.renderAsHtml()})`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
@@ -163,7 +163,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
-    } else if (frame instanceof MainFrame) {
+    } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method>()`;
     } else if (frame instanceof FunctionMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
@@ -173,7 +173,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `&lt;<el-type>TestClass</el-type> <el-kw>${this.CLASS}</el-kw> ${this.testClassNameAsHtml(frame)}<br>&nbsp;&lt;<el-type>TestMethod</el-type>&gt; <el-kw>${this.SUB} </el-kw>${frame.testName.renderAsHtml()}()`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
@@ -197,7 +197,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.CLASS}</el-kw>`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
-    } else if (frame instanceof For) {
+    } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
     } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
@@ -207,13 +207,13 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.IF}</el-kw>`;
     } else if (frame instanceof InterfaceFrame) {
       html = `<el-kw>${this.END} ${this.INTERFACE}</el-kw>`;
-    } else if (frame instanceof MainFrame) {
+    } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-punc>&nbsp;</el-punc><el-kw>${this.END} ${this.SUB}</el-kw><br><el-kw>${this.END} ${this.CLASS}</el-kw><br>`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.END} ${this.TRY}</el-kw>`;
-    } else if (frame instanceof While) {
+    } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.END} ${this.WHILE}</el-kw>`;
     }
     return html;

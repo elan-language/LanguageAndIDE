@@ -8,16 +8,16 @@ static final Int delay_ms = 300; // constant
 
 static void main() {
   var stacks = create3Stacks(nDiscs);
-  display(stacks); // call procedure
+  display(stacks); // procedure call
   while (stacks[2].length() != nDiscs) {
     if ((stacks[0].length() % 2) == 0) {
-      moveBetween(stacks, 0, 1); // call procedure
-      moveBetween(stacks, 0, 2); // call procedure
-      moveBetween(stacks, 1, 2); // call procedure
+      moveBetween(stacks, 0, 1); // procedure call
+      moveBetween(stacks, 0, 2); // procedure call
+      moveBetween(stacks, 1, 2); // procedure call
     } else {
-      moveBetween(stacks, 0, 2); // call procedure
-      moveBetween(stacks, 0, 1); // call procedure
-      moveBetween(stacks, 1, 2); // call procedure
+      moveBetween(stacks, 0, 2); // procedure call
+      moveBetween(stacks, 0, 1); // procedure call
+      moveBetween(stacks, 1, 2); // procedure call
     } // end if
   } // end while
 } // end main
@@ -28,31 +28,31 @@ static void moveBetween(List<List<int>> stacks, int fromStack, int toStack) { //
   if (b.length() < nDiscs) {
     if ((a.length() > 0) && ((b.length() == 0) || (top(a) < top(b)))) {
       var disc = top(a);
-      a.removeFirst(disc); // call procedure
-      b.append(disc); // call procedure
+      a.removeFirst(disc); // procedure call
+      b.append(disc); // procedure call
     } else if (b.length() > 0) {
       var disc = top(b);
-      b.removeFirst(disc); // call procedure
-      a.append(disc); // call procedure
+      b.removeFirst(disc); // procedure call
+      a.append(disc); // procedure call
     } // end if
   } // end if
-  display(stacks); // call procedure
+  display(stacks); // procedure call
 } // end procedure
 
 static void display(List<List<int>> stacks) { // procedure
-  clearAllDisplays(); // call procedure
+  clearAllDisplays(); // procedure call
   var vg = createVectorGraphics();
-  drawStack(stacks[0], 1, vg); // call procedure
-  drawStack(stacks[1], 2, vg); // call procedure
-  drawStack(stacks[2], 3, vg); // call procedure
-  displayVectorGraphics(vg); // call procedure
-  sleep_ms(delay_ms); // call procedure
+  drawStack(stacks[0], 1, vg); // procedure call
+  drawStack(stacks[1], 2, vg); // procedure call
+  drawStack(stacks[2], 3, vg); // procedure call
+  displayVectorGraphics(vg); // procedure call
+  sleep_ms(delay_ms); // procedure call
 } // end procedure
 
 static void drawStack(List<int> s, int peg, List<VectorGraphic> vg) { // procedure
   foreach (var n in range(0, s.length())) {
     var discVG = createDisc(s[n], peg, n);
-    vg.append(discVG); // call procedure
+    vg.append(discVG); // procedure call
   } // end foreach
 } // end procedure
 

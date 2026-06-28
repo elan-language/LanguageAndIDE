@@ -1,11 +1,11 @@
-# 89177f028df424dfbe939a89ae06dee6cf32e48632718aa0fdceeba533a0d423 Elan 2.0.0-beta1 valid
+# f5a1012ccadacfb06561f1ea2f42d7086e92daa06454a6d45da284ce828759cc Elan 2.0.0-beta1 valid
 
 # A program to investigate the Collatz Conjecture
 # https://en.wikipedia.org/wiki/Collatz_conjecture
 main
   variable x set to 1
   while x > 0
-    reassign x to inputInt("Enter a starting number (0 to quit)")
+    assign x to inputInt("Enter a starting number (0 to quit)")
     # Array of the values we have seen so far
     variable p set to [x]
     # capture the max value so we can scale the graph
@@ -13,18 +13,18 @@ main
     while x > 1
       # Collatz sequence
       if (x mod 2) is 0 then
-        reassign x to divAsInt(x, 2)
+        assign x to divAsInt(x, 2)
       else
-        reassign x to x*3 + 1
+        assign x to x*3 + 1
       end if
       if x > max then
-        reassign max to x
+        assign max to x
       end if
       call p.append(x)
       # draw what we have got so far, scaled to the canvas
       variable vg set to createVectorGraphics()
       for i in range(0, p.length() - 1)
-        reassign vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
+        assign vg to vg.withAppend((new LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
       end for
       call displayVectorGraphics(vg)
       print(x)

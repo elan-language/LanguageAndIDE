@@ -85,7 +85,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  reassign a to inputInt("")
+  assign a to inputInt("")
   call printNoLine(a)
 end main`;
 
@@ -120,7 +120,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  reassign a to inputFloat("")
+  assign a to inputFloat("")
   call printNoLine(a)
 end main`;
 
@@ -156,8 +156,8 @@ return [main, _tests];}`;
 main
   variable a set to "value"
   variable b set to "value1"
-  reassign a to input("")
-  reassign b to a
+  assign a to input("")
+  assign b to a
   call printNoLine(b)
 end main`;
 
@@ -260,7 +260,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  reassign a to inputInt("aprompt")
+  assign a to inputInt("aprompt")
   call printNoLine(a)
 end main`;
 
@@ -295,7 +295,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  reassign a to inputIntBetween("aprompt", 3, 7)
+  assign a to inputIntBetween("aprompt", 3, 7)
   call printNoLine(a)
 end main`;
 
@@ -330,7 +330,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  reassign a to inputFloat("aprompt")
+  assign a to inputFloat("aprompt")
   call printNoLine(a)
 end main`;
 
@@ -365,7 +365,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0.0
-  reassign a to inputFloatBetween("aprompt", 0, 1)
+  assign a to inputFloatBetween("aprompt", 0, 1)
   call printNoLine(a)
 end main`;
 
@@ -400,7 +400,7 @@ return [main, _tests];}`;
 
 main
   variable a set to ""
-  reassign a to inputInt("")
+  assign a to inputInt("")
   call printNoLine(a)
 end main`;
 

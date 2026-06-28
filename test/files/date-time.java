@@ -5,18 +5,18 @@ public class Global {
 static void main() {
   var quit = false;
   while (!quit) {
-    var reply = Console.ReadLine("t - for time now, q - to quit, or an integer value to convert"); // input
+    var reply = Console.ReadLine("t - for time now, q - to quit, or an integer value to convert"); // input statement
     if (reply.upperCase().equals("Q")) {
-      quit = true; // reassign variable
+      quit = true; // assignment
     } else if (reply.upperCase().equals("T")) {
       var now = divAsInt(clock(), 1000);
-      System.out.println(now); // print
-      System.out.println(getDate(now)); // print
+      System.out.println(now); // print statement
+      System.out.println(getDate(now)); // print statement
     } else {
       try {
         var td = asInt(reply);
         if (td >= 0) {
-          System.out.println(getDate(td)); // print
+          System.out.println(getDate(td)); // print statement
         } // end if
       } catch (ElanRuntimeError e) {
       } // end try
@@ -78,11 +78,11 @@ static int dayInYear(int year, int unixDays) { // function
   var dayNumber = unixDays + 1;
   if (year > unixYear) {
     // discount previous nominal years
-    dayNumber = dayNumber - 365*(year - unixYear); // reassign variable
+    dayNumber = dayNumber - 365*(year - unixYear); // assignment
     // discount previous leap days
     foreach (var y in range(unixYear, year)) {
       if (leap(y)) {
-        dayNumber = dayNumber - 1; // reassign variable
+        dayNumber = dayNumber - 1; // assignment
       } // end if
     } // end foreach
   } // end if
@@ -115,10 +115,10 @@ static (int, int) monthDay(List<int> startDays, int dayNumber) { // function
   var monthFound = false;
   while (monthFound == false) {
     if ((dayNumber < startDays[month])) {
-      monthFound = true; // reassign variable
-      day = dayNumber - startDays[month - 1] + 1; // reassign variable
+      monthFound = true; // assignment
+      day = dayNumber - startDays[month - 1] + 1; // assignment
     } else {
-      month = month + 1; // reassign variable
+      month = month + 1; // assignment
     } // end if
   } // end while
   return (month, day);
@@ -129,7 +129,7 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
   var startDaysL = getStartDays();
   if (leap(year)) {
     foreach (var m in range(2, 13)) {
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // reassign variable
+      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // assignment
     } // end foreach
   } // end if
   return startDaysL;
@@ -190,9 +190,9 @@ static String pad(String d, String p, String s) { // function
   if (p.length() > s.length()) {
     if (d.upperCase().equals("L")) {
       var ps = p + s;
-      sR = ps.subString(ps.length() - p.length(), ps.length()); // reassign variable
+      sR = ps.subString(ps.length() - p.length(), ps.length()); // assignment
     } else if (d.upperCase().equals("R")) {
-      sR = (s + p).subString(0, p.length()); // reassign variable
+      sR = (s + p).subString(0, p.length()); // assignment
     } // end if
   } // end if
   return sR;

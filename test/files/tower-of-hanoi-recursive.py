@@ -6,41 +6,41 @@ delay_ms = 300 # constant
 
 def main() -> None:
   stacks = create3Stacks(nDiscs) # variable definition
-  display(stacks) # call procedure
-  moveMultiple(nDiscs, stacks, 0, 2, 1) # call procedure
+  display(stacks) # procedure call
+  moveMultiple(nDiscs, stacks, 0, 2, 1) # procedure call
 # end main
 
 def moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int) -> None: # procedure
   if n == 1:
-    moveOne(stacks, fromStack, toStack) # call procedure
+    moveOne(stacks, fromStack, toStack) # procedure call
   else:
-    moveMultiple(n - 1, stacks, fromStack, spare, toStack) # call procedure
-    moveOne(stacks, fromStack, toStack) # call procedure
-    moveMultiple(n - 1, stacks, spare, toStack, fromStack) # call procedure
+    moveMultiple(n - 1, stacks, fromStack, spare, toStack) # procedure call
+    moveOne(stacks, fromStack, toStack) # procedure call
+    moveMultiple(n - 1, stacks, spare, toStack, fromStack) # procedure call
   # end if
 # end procedure
 
 def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None: # procedure
   disc = top(stacks[fromStack]) # variable definition
-  stacks[fromStack].removeFirst(disc) # call procedure
-  stacks[toStack].append(disc) # call procedure
-  display(stacks) # call procedure
+  stacks[fromStack].removeFirst(disc) # procedure call
+  stacks[toStack].append(disc) # procedure call
+  display(stacks) # procedure call
 # end procedure
 
 def display(stacks: list[list[int]]) -> None: # procedure
-  clearAllDisplays() # call procedure
+  clearAllDisplays() # procedure call
   vg = createVectorGraphics() # variable definition
-  drawStack(stacks[0], 1, vg) # call procedure
-  drawStack(stacks[1], 2, vg) # call procedure
-  drawStack(stacks[2], 3, vg) # call procedure
-  displayVectorGraphics(vg) # call procedure
-  sleep_ms(delay_ms) # call procedure
+  drawStack(stacks[0], 1, vg) # procedure call
+  drawStack(stacks[1], 2, vg) # procedure call
+  drawStack(stacks[2], 3, vg) # procedure call
+  displayVectorGraphics(vg) # procedure call
+  sleep_ms(delay_ms) # procedure call
 # end procedure
 
 def drawStack(s: list[int], peg: int, vg: list[VectorGraphic]) -> None: # procedure
   for n in range(0, s.length()):
     discVG = createDisc(s[n], peg, n) # variable definition
-    vg.append(discVG) # call procedure
+    vg.append(discVG) # procedure call
   # end for
 # end procedure
 

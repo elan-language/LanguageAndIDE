@@ -25,7 +25,7 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -91,13 +91,13 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable x set to 1.1
-  reassign x to f.times(x)
+  assign x to f.times(x)
   call printNoLine(x)
 end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -165,13 +165,13 @@ return [main, _tests];}`;
 main
   variable f set to new Foo()
   variable x set to new List<of Float>()
-  reassign x to f.times(2)
+  assign x to f.times(2)
   call printNoLine(x)
 end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -244,7 +244,7 @@ end main
 
 class Bar
   constructor()
-    reassign this.p1 to new Foo()
+    assign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -254,7 +254,7 @@ class Bar
 
   function getTimes() returns List<of Float>
     variable x set to new List<of Float>()
-    reassign x to this.p1.times(2)
+    assign x to this.p1.times(2)
     return x
   end function
 
@@ -262,7 +262,7 @@ end class
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
     function toString() returns String
       return ""
@@ -361,7 +361,7 @@ end main
 
 class Bar
   constructor()
-    reassign this.p1 to new Foo()
+    assign this.p1 to new Foo()
   end constructor
   function toString() returns String
     return ""
@@ -371,7 +371,7 @@ class Bar
 
   function getTimes() returns List<of Qux>
     variable x set to new List<of Qux>()
-    reassign x to this.p1.times(2)
+    assign x to this.p1.times(2)
     return x
   end function
 
@@ -379,7 +379,7 @@ end class
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
     function toString() returns String
       return ""
@@ -499,7 +499,7 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to new Bar()
+        assign this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
@@ -516,7 +516,7 @@ end class
 
 class Bar
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -613,7 +613,7 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -634,7 +634,7 @@ end class
 
 class Bar
     constructor()
-        reassign this.p1 to 1
+        assign this.p1 to 1
     end constructor
 
     property p1 as Float
@@ -729,7 +729,7 @@ end main
 
 class Foo
   constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -880,7 +880,7 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -919,7 +919,7 @@ end class`;
 main
   variable f set to new Foo()
   variable v set to 0
-  reassign v to f.noSuch()
+  assign v to f.noSuch()
 end main
 
 class Foo
@@ -958,7 +958,7 @@ end class`;
 
 class Foo
   constructor()
-    reassign this.p1 to 5
+    assign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -967,7 +967,7 @@ class Foo
   property p1 as Float
 
   function times(value as Float) returns Float
-    reassign this.p1 to this.p1 * value
+    assign this.p1 to this.p1 * value
     return this.p1
   end function
 
@@ -995,7 +995,7 @@ end class`;
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
   function toString() returns String
     return ""
@@ -1009,7 +1009,7 @@ class Foo
     end function
 
     procedure setP1(value as Float) 
-        reassign this.p1 to value
+        assign this.p1 to value
     end procedure
 
     function toString() returns String
@@ -1252,7 +1252,7 @@ class Foo
 
   function foo() returns Int
     if this.p2 then
-      reassign this.p1 to 1
+      assign this.p1 to 1
     end if
     return this.p1
   end function
@@ -1298,7 +1298,7 @@ class Foo
     if this.p2 then
       if this.p2 then
         if this.p2 then
-          reassign this.p1 to 1
+          assign this.p1 to 1
         end if
       end if
     end if

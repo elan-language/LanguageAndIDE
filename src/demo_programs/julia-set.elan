@@ -1,4 +1,4 @@
-# 60fe5eba73e53ec717fd8362031a4b2a90b873428872f5b02315fe43b46da8d4 Elan 2.0.0-beta1 valid
+# ae75bb3455e3ad140e71b7ddc012aa834a6d687047502bbe60b0992921684c8e Elan 2.0.0-beta1 valid
 
 # After image is displayed, press: 
 # - z to zoom in, x to zoom out
@@ -27,7 +27,7 @@ function allpoints(p as Coords) returns List<of VectorGraphic>
       # colour depends on how many iterations were done for that point
       variable col set to if_(n is nmax, 0xffffff, ((n*0x010201) mod 0xffffff))
       variable rect set to (new RectangleVG()).withX(xp/2.0).withY(yp/2.0).withWidth(0.5).withHeight(0.5).withFillColour(col).withStrokeColour(col).withStrokeWidth(0.25)
-      reassign vg2 to vg2.withAppend(rect)
+      assign vg2 to vg2.withAppend(rect)
     end for
   end for
   return vg2
@@ -40,11 +40,11 @@ function onepoint(x as Float, y as Float, maxnum as Int, p as Coords) returns In
   variable i set to 0
   while not done
     variable c set to 2*a*b
-    reassign a to (a*a - b*b) + p.jx
-    reassign b to c + p.jy
-    reassign i to i + 1
+    assign a to (a*a - b*b) + p.jx
+    assign b to c + p.jy
+    assign i to i + 1
     if (i >= maxnum) or ((a*a + b*b) > 4) then
-      reassign done to true
+      assign done to true
     end if
   end while
   return i
@@ -53,13 +53,13 @@ end function
 class Coords
   constructor()
     # number of cells per unit distance on complex plane
-    reassign this.scale to 100
+    assign this.scale to 100
     # centered on the screen to start
-    reassign this.xoff to 0
-    reassign this.yoff to 0
+    assign this.xoff to 0
+    assign this.yoff to 0
     # Julia set parameters
-    reassign this.jx to -0.512
-    reassign this.jy to 0.521
+    assign this.jx to -0.512
+    assign this.jy to 0.521
   end constructor
 
   function toString() returns String
@@ -88,32 +88,32 @@ class Coords
       # loop because more than one key may have been pressed
       while not k.equals("")
         if k.equals("z") then
-          reassign this.scale to this.scale*1.2
+          assign this.scale to this.scale*1.2
         elif k.equals("x") then
-          reassign this.scale to this.scale/1.2
+          assign this.scale to this.scale/1.2
         elif k.equals("ArrowUp") then
-          reassign this.yoff to this.yoff + panstep
+          assign this.yoff to this.yoff + panstep
         elif k.equals("ArrowDown") then
-          reassign this.yoff to this.yoff - panstep
+          assign this.yoff to this.yoff - panstep
         elif k.equals("ArrowLeft") then
-          reassign this.xoff to this.xoff + panstep
+          assign this.xoff to this.xoff + panstep
         elif k.equals("ArrowRight") then
-          reassign this.xoff to this.xoff - panstep
+          assign this.xoff to this.xoff - panstep
         elif k.equals("g") then
-          reassign this.jx to this.jx + jstep
+          assign this.jx to this.jx + jstep
         elif k.equals("j") then
-          reassign this.jx to this.jx - jstep
+          assign this.jx to this.jx - jstep
         elif k.equals("y") then
-          reassign this.jy to this.jy + jstep
+          assign this.jy to this.jy + jstep
         elif k.equals("h") then
-          reassign this.jy to this.jy - jstep
+          assign this.jy to this.jy - jstep
         else
           # ignore erroneous key presses
         end if
         # there is no harm in recalculating even if an invalid key was pressed
-        reassign changed to true
+        assign changed to true
         # another key may have been pressed
-        reassign k to getKey()
+        assign k to getKey()
       end while
       call sleep_ms(10)
     end while

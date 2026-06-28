@@ -4,11 +4,11 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
-import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { Profile } from "../../src/ide/frames/profile";
-import { CallStatement } from "../../src/ide/frames/statements/call-statement";
+import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { ReAssignVariable } from "../../src/ide/frames/statements/reassign-variable";
+import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
@@ -16,7 +16,7 @@ import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
-    const main = new MainFrame(
+    const main = new MainRoutine(
       new FileImpl(
         hash,
         new Profile(""),
@@ -26,7 +26,7 @@ suite("Editing Fields Tests", () => {
         false,
       ),
     );
-    const set = new ReAssignVariable(main);
+    const set = new Assignment(main);
     const expr = set.expr;
     expr.processKey(key("3"));
     assert.equal(expr.text, "3");
@@ -202,7 +202,7 @@ suite("Editing Fields Tests", () => {
 
   //Temp ignored pending #2378
   ignore_test("Entry of expression using 'is' - #464", () => {
-    const main = new MainFrame(
+    const main = new MainRoutine(
       new FileImpl(
         hash,
         new Profile(""),
@@ -299,8 +299,8 @@ suite("Editing Fields Tests", () => {
       new StdLib(new StubInputOutput()),
       false,
     );
-    const main = new MainFrame(file);
-    const c = new CallStatement(main);
+    const main = new MainRoutine(file);
+    const c = new ProcedureCall(main);
     const proc = c.proc;
     const args = c.args;
     proc.select(true, false);

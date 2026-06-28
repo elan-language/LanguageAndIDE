@@ -21,10 +21,10 @@ def main() -> None:
   mark = "" # variable definition
   attempt = "RAISE" # variable definition
   while not mark.equals("*****"):
-    inp = input("" + attempt) # input
-    mark = inp # reassign variable
-    possible = possibleAnswersAfterAttempt(possible, attempt, mark) # reassign variable
-    attempt = bestAttempt(possible) # reassign variable
+    inp = input("" + attempt) # input statement
+    mark = inp # assignment
+    possible = possibleAnswersAfterAttempt(possible, attempt, mark) # assignment
+    attempt = bestAttempt(possible) # assignment
   # end while
 # end main
 
@@ -111,8 +111,8 @@ def bestAttempt(possAnswers: list[str]) -> str: # function
 class WordCount: # concrete class
 
   def __init__(self: WordCount, word: str, count: int) -> None:
-    self.word = word # reassign variable
-    self.count = count # reassign variable
+    self.word = word # assignment
+    self.count = count # assignment
   # end constructor
 
   word: str # property

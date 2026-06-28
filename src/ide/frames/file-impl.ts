@@ -38,7 +38,7 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
-import { MainFrame } from "./globals/main-frame";
+import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Profile } from "./profile";
 
 import { TestFrame } from "./globals/test-frame";
@@ -130,7 +130,7 @@ export class FileImpl implements File {
     this._map = new Map<string, Selectable>();
     this._factory = new StatementFactoryImpl();
     if (withMain) {
-      const main = new MainFrame(this);
+      const main = new MainRoutine(this);
       this.getChildren().push(main);
       const selector = main.getFirstChild();
       selector.select(true, false);
@@ -589,7 +589,7 @@ export class FileImpl implements File {
   }
 
   createMain(): Frame {
-    return new MainFrame(this);
+    return new MainRoutine(this);
   }
   createFunction(): Frame {
     return new GlobalFunction(this);

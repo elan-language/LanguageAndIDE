@@ -40,7 +40,7 @@ export class PrintStatement extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "print";
+    return "print statement";
   }
 
   override renderAsElanSource(): string {

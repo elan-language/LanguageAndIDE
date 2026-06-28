@@ -10,53 +10,53 @@ Sub main()
   Dim currentDir = Direction.right ' variable definition
   Dim gameOn = True ' variable definition
   Dim apple = {0, 0} ' variable definition
-  setAppleToRandomPosition(apple, body) ' call procedure
+  setAppleToRandomPosition(apple, body) ' procedure call
   While gameOn
-    updateDisplay(blocks, head, tail, body, apple) ' call procedure
+    updateDisplay(blocks, head, tail, body, apple) ' procedure call
     Dim currentDirRef = New AsRef(Of Direction)(currentDir) ' variable definition
     Dim headRef = New AsRef(Of List(Of Integer))(head) ' variable definition
     Dim tailRef = New AsRef(Of List(Of Integer))(tail) ' variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) ' call procedure
-    head = headRef.value() ' reassign variable
-    tail = tailRef.value() ' reassign variable
-    currentDir = currentDirRef.value() ' reassign variable
-    gameOn = Not hasHitEdge(head(0), head(1)) And Not body.contains(head) ' reassign variable
+    updateSnake(currentDirRef, tailRef, headRef, body) ' procedure call
+    head = headRef.value() ' assignment
+    tail = tailRef.value() ' assignment
+    currentDir = currentDirRef.value() ' assignment
+    gameOn = Not hasHitEdge(head(0), head(1)) And Not body.contains(head) ' assignment
     If head.equals(apple) Then
-      setAppleToRandomPosition(apple, body) ' call procedure
+      setAppleToRandomPosition(apple, body) ' procedure call
     Else
-      body.removeAt(0) ' call procedure
+      body.removeAt(0) ' procedure call
     End If
-    sleep_ms(150) ' call procedure
+    sleep_ms(150) ' procedure call
   End While
-  Console.WriteLine($"Game Over! Score: {body.length() - 1}") ' print
+  Console.WriteLine($"Game Over! Score: {body.length() - 1}") ' print statement
 End Sub
 
 Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(Of Integer)), headRef As AsRef(Of List(Of Integer)), body As List(Of List(Of Integer))) ' procedure
   Dim head = headRef.value() ' variable definition
   Dim tail = tailRef.value() ' variable definition
   Dim currentDir = currentDirRef.value() ' variable definition
-  currentDir = directionByKey(currentDir, getKey()) ' reassign variable
-  tailRef.set(body(0)) ' call procedure
-  body.append(head) ' call procedure
-  headRef.set(getAdjacentSquare(head, currentDir)) ' call procedure
-  currentDirRef.set(currentDir) ' call procedure
+  currentDir = directionByKey(currentDir, getKey()) ' assignment
+  tailRef.set(body(0)) ' procedure call
+  body.append(head) ' procedure call
+  headRef.set(getAdjacentSquare(head, currentDir)) ' procedure call
+  currentDirRef.set(currentDir) ' procedure call
 End Sub
 
 Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer), tail As List(Of Integer), body As List(Of List(Of Integer)), apple As List(Of Integer)) ' procedure
-  blocks(head(0))(head(1)) = green ' reassign variable
+  blocks(head(0))(head(1)) = green ' assignment
   Dim tailColour = getTailColour(tail, body) ' variable definition
-  blocks(tail(0))(tail(1)) = tailColour ' reassign variable
-  blocks(apple(0))(apple(1)) = red ' reassign variable
-  displayBlocks(blocks) ' call procedure
+  blocks(tail(0))(tail(1)) = tailColour ' assignment
+  blocks(apple(0))(apple(1)) = red ' assignment
+  displayBlocks(blocks) ' procedure call
 End Sub
 
 Sub setAppleToRandomPosition(apple As List(Of Integer), body As List(Of List(Of Integer))) ' procedure
   Dim changePosition = True ' variable definition
   While changePosition
-    apple(0) = randint(0, 39) ' reassign variable
-    apple(1) = randint(0, 29) ' reassign variable
+    apple(0) = randint(0, 39) ' assignment
+    apple(1) = randint(0, 29) ' assignment
     If Not body.contains(apple) Then
-      changePosition = False ' reassign variable
+      changePosition = False ' assignment
     End If
   End While
 End Sub
@@ -64,7 +64,7 @@ End Sub
 Function getTailColour(tail As List(Of Integer), body As List(Of List(Of Integer))) As Integer
   Dim colour = white ' variable definition
   If body(0).equals(tail) Then
-    colour = green ' reassign variable
+    colour = green ' assignment
   End If
   Return colour
 End Function
@@ -77,13 +77,13 @@ Function getAdjacentSquare(sq As List(Of Integer), dir As Direction) As List(Of 
   Dim newX = sq(0) ' variable definition
   Dim newY = sq(1) ' variable definition
   If dir = Direction.left Then
-    newX = newX - 1 ' reassign variable
+    newX = newX - 1 ' assignment
   ElseIf dir = Direction.right Then
-    newX = newX + 1 ' reassign variable
+    newX = newX + 1 ' assignment
   ElseIf dir = Direction.up Then
-    newY = newY - 1 ' reassign variable
+    newY = newY - 1 ' assignment
   ElseIf dir = Direction.down Then
-    newY = newY + 1 ' reassign variable
+    newY = newY + 1 ' assignment
   End If
   Return {newX, newY}
 End Function
@@ -91,13 +91,13 @@ End Function
 Function directionByKey(current As Direction, key As String) As Direction
   Dim dirn = current ' variable definition
   If key.equals("w") Then
-    dirn = Direction.up ' reassign variable
+    dirn = Direction.up ' assignment
   ElseIf key.equals("s") Then
-    dirn = Direction.down ' reassign variable
+    dirn = Direction.down ' assignment
   ElseIf key.equals("a") Then
-    dirn = Direction.left ' reassign variable
+    dirn = Direction.left ' assignment
   ElseIf key.equals("d") Then
-    dirn = Direction.right ' reassign variable
+    dirn = Direction.right ' assignment
   End If
   Return dirn
 End Function

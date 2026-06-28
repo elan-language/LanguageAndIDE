@@ -1,4 +1,4 @@
-# 7daf514b3bd26b2d37b8f2ac81962c73b5b0fe30e898f62340eb5ad87007a260 Elan 2.0.0-beta1 valid
+# 8e185c249de130ac5d2ac689ca7189503a476c91312728c530017c0d78d71983 Elan 2.0.0-beta1 valid
 
 main
   variable rng set to new Random()
@@ -6,7 +6,7 @@ main
   variable grid set to initialGrid(rng)
   while true
     call displayBlocks(grid)
-    reassign grid to nextGeneration(grid)
+    assign grid to nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main

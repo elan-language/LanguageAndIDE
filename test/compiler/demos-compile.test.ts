@@ -67,10 +67,6 @@ suite("Demo compile", () => {
     await testElanFile("merge-sort");
   });
 
-  test("test password-generator", async () => {
-    await testElanFile("password-generator");
-  });
-
   test("test pathfinder", async () => {
     await testElanFile("pathfinder");
   });

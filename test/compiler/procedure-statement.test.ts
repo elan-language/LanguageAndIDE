@@ -196,7 +196,7 @@ main
 end main
 
 procedure changeFirst(a as List<of Int>)
-    reassign a[0] to 5
+    assign a[0] to 5
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -427,7 +427,7 @@ end main
 
 class Foo
     constructor()
-      reassign this.p1 to new Bar()
+      assign this.p1 to new Bar()
     end constructor
 
     property p1 as Bar
@@ -445,7 +445,7 @@ end class
 
 class Bar
     constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -789,7 +789,7 @@ end procedure
 
 class Foo
   constructor()
-    reassign this.ff to 1
+    assign this.ff to 1
   end constructor
   function toString() returns String
     return ""
@@ -1251,7 +1251,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-  reassign a to [1, 2, 3]
+  assign a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1282,7 +1282,7 @@ main
 end main
 
 procedure changeAll(a as List<of Int>)
-  reassign a to [1, 2, 3]
+  assign a to [1, 2, 3]
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1313,7 +1313,7 @@ main
 end main
 
 procedure changeValue(a as Int)
-    reassign a to 3
+    assign a to 3
 end procedure`;
 
     const fileImpl = new FileImpl(
@@ -1577,7 +1577,7 @@ end procedure`;
 
 main
   variable a set to [1,2]
-  reassign a to a.append(3)
+  assign a to a.append(3)
 end main`;
 
     const fileImpl = new FileImpl(

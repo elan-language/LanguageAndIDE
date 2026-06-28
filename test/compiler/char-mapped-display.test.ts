@@ -52,7 +52,7 @@ return [main, _tests];}`;
 
 main
   variable g set to createBlockGraphics(white)
-  reassign g[1][0] to 4
+  assign g[1][0] to 4
   call displayBlocks(g)
 end main`;
 
@@ -157,7 +157,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 0
-  reassign a to getNumericKey()
+  assign a to getNumericKey()
   call printNoLine(a)
 end main`;
 
@@ -330,7 +330,7 @@ end main
 
 class Foo
   constructor()
-    reassign this.p to new List<of Int>()
+    assign this.p to new List<of Int>()
   end constructor
   function toString() returns String
     return ""
