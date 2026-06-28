@@ -294,18 +294,18 @@ generates a non-editable class named Global, and all global instructions are cre
   variable x set to 20
   variable y set to 15
   while true
-    reassign blocks[x][y] to red
+    assign blocks[x][y] to red
     call displayBlocks(blocks)
-    reassign blocks[x][y] to black
+    assign blocks[x][y] to black
     variable direction set to randint(0, 3)
     if direction is 0 then
-      reassign x to min([x + 1, 39])
+      assign x to min([x + 1, 39])
     elif direction is 1 then
-      reassign x to max([x - 1, 0])
+      assign x to max([x - 1, 0])
     elif direction is 2 then
-      reassign y to min([y + 1, 29])
+      assign y to min([y + 1, 29])
     elif direction is 3 then
-      reassign y to max([y - 1, 0])
+      assign y to max([y - 1, 0])
     end if
   end while
 end main
@@ -331,7 +331,7 @@ It is good practice to <i>keep the main routine small</i>.</p>
     call displayBlocks(grid)
     variable gridRef set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(grid)
     call nextGeneration(gridRef)
-    reassign grid to gridRef.value()
+    assign grid to gridRef.value()
     call sleep_ms(50)
   end while
 end main
@@ -399,7 +399,7 @@ end procedure
 <codeblock>procedure fillRandom(grid as List&lt;of List&lt;of Int&gt;&gt;)
   for col in range(0, 40)
     for row in range(0, 30)
-      reassign grid[col][row] to blackOrWhite(random())
+      assign grid[col][row] to blackOrWhite(random())
     end for
   end for
 end procedure
@@ -525,7 +525,7 @@ the single parameter and return value are 2-tuples, where both items are of type
   variable y set to cell.item_1
   variable y2 set to y - 1
   if y2 is -1 then
-    reassign y2 to 29
+    assign y2 to 29
   end if
   return (x, y2)
 end function
@@ -539,11 +539,11 @@ end function
     variable mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     if item.equals(value) then
-      reassign result to true
+      assign result to true
     elif item.isBefore(value) then
-      reassign result to binarySearch(li.subList(0, mid), item)
+      assign result to binarySearch(li.subList(0, mid), item)
     else
-      reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
+      assign result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
   end if
   return result
@@ -862,13 +862,13 @@ end function
   variable newX set to sq[0]
   variable newY set to sq[1]
   if dir is Direction.left then
-    reassign newX to newX - 1
+    assign newX to newX - 1
   elif dir is Direction.right then
-    reassign newX to newX + 1
+    assign newX to newX + 1
   elif dir is Direction.up then
-    reassign newY to newY - 1
+    assign newY to newY - 1
   elif dir is Direction.down then
-    reassign newY to newY + 1
+    assign newY to newY + 1
   end if
   return [newX, newY]
 end function
@@ -976,7 +976,7 @@ of a program: the main routine, functions, and procedures.</p>
 <codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
@@ -1021,10 +1021,10 @@ end main
     variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
     variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
     call updateSnake(currentDirRef, tailRef, headRef, body)
-    reassign head to headRef.value()
-    reassign tail to tailRef.value()
-    reassign currentDir to currentDirRef.value()
-    reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    assign head to headRef.value()
+    assign tail to tailRef.value()
+    assign currentDir to currentDirRef.value()
+    assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
     if head.equals(apple) then
       call setAppleToRandomPosition(apple, body)
     else
@@ -1134,16 +1134,16 @@ case a function call:</p>
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
-    reassign hasChanged to false
+    assign hasChanged to false
     for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
+        assign li[i] to li[i + 1]
+        assign li[i + 1] to temp
+        assign hasChanged to true
       end if
     end for
-    reassign lastComp to lastComp - 1
+    assign lastComp to lastComp - 1
   end while
 end procedure
   </codeblock>
@@ -1156,7 +1156,7 @@ end procedure
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
-  reassign currentDir to directionByKey(currentDir, getKey())
+  assign currentDir to directionByKey(currentDir, getKey())
   call tailRef.set(body[0])
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
@@ -1244,7 +1244,7 @@ random value (expected to be in the range 0 to 1) is greater than 0.5:</p>
 <codeblock>function blackOrWhite(random as Float) returns Int
   variable result set to black
   if random > 0.5 then
-    reassign result to white
+    assign result to white
   end if
   return result
 end function
@@ -1268,13 +1268,13 @@ end if
 on the value of the <code>direction</code> variable, one of four different instructions is executed:</p>
 
 <codeblock>if direction is 0 then
-  reassign x to min([x + 1, 39])
+  assign x to min([x + 1, 39])
 elif direction is 1 then
-  reassign x to max([x - 1, 0])
+  assign x to max([x - 1, 0])
 elif direction is 2 then
-  reassign y to min([y + 1, 29])
+  assign y to min([y + 1, 29])
 elif direction is 3 then
-  reassign y to max([y - 1, 0])
+  assign y to max([y - 1, 0])
 end if
 </codeblock>
 
@@ -1318,16 +1318,16 @@ end if
   variable as <code>false (meaning that no more swaps have occurred):</code></p>
 
   <codeblock>while hasChanged is true
-  reassign hasChanged to false
+  assign hasChanged to false
   for i in range(0, lastComp + 1)
     if li[i] > li[i + 1] then
       variable temp set to li[i]
-      reassign li[i] to li[i + 1]
-      reassign li[i + 1] to temp
-      reassign hasChanged to true
+      assign li[i] to li[i + 1]
+      assign li[i + 1] to temp
+      assign hasChanged to true
     end if
   end for
-  reassign lastComp to lastComp - 1
+  assign lastComp to lastComp - 1
 end while
   </codeblock>
 
@@ -1406,7 +1406,7 @@ end while
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
-    reassign turnI to (if_(turn.equals(left), 1, -1))
+    assign turnI to (if_(turn.equals(left), 1, -1))
     call t.turn(-45*turnI)
     call t.move(corner)
     call t.turn(-45*turnI)
@@ -1424,7 +1424,7 @@ end procedure
   <codeblock>for x in range(0, 40)
     for y in range(0, 30)
       variable colour set to nextCellValue(grid, x, y)
-      reassign nextGen[x][y] to colour
+      assign nextGen[x][y] to colour
     end for
   end for
   </codeblock>
@@ -1492,7 +1492,7 @@ which is defined immediately below the main routine at the same (global) level.
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
-  reassign currentDir to directionByKey(currentDir, getKey())
+  assign currentDir to directionByKey(currentDir, getKey())
   call tailRef.set(body[0])
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
@@ -1549,7 +1549,7 @@ is used to intercept (or 'catch') this exception and just ignore that input:</p>
 <codeblock>main
   variable reply set to ""
   while not reply.upperCase().equals("Q")
-    reassign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
+    assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
@@ -1610,7 +1610,7 @@ end main
 <codeblock>function factorial(n as Int) returns Int
   variable result set to 1
   if n > 1 then
-    reassign result to n*factorial(n - 1)
+    assign result to n*factorial(n - 1)
   elif n < 0 then
     throw CustomError "Factorial cannot be called with a negative argument"
   end if
@@ -1759,7 +1759,7 @@ end main
  <td>
 <codeblock>main
   variable li set to new List&lt;of Int&gt;()
-  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  assign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   print(li[4])
   print(li.subList(4, li.length()))
   print(li.subList(0, 7))
@@ -1870,7 +1870,7 @@ end function
 end if
 </codeblock>
 </li>
-<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
+<li><code>assign differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
 Two Lists compare equal if they contain the same items in the same order.
@@ -1897,8 +1897,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<code>reassign x to (a > b) and (b < c)</code><br>
-<code>reassign x to (a + b) > (c - d)</code>
+<code>assign x to (a > b) and (b < c)</code><br>
+<code>assign x to (a + b) > (c - d)</code>
 </div>
 
 <div id="functionRef">

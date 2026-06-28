@@ -78,11 +78,11 @@
         while something
           let mark be something
           if something then
-            reassign solved to something
+            assign solved to something
           else
-            reassign possible to something
-            reassign attemptNo to something
-            reassign attempt to something
+            assign possible to something
+            assign attemptNo to something
+            assign attempt to something
           end if
         end while
         return attemptNo
@@ -103,11 +103,11 @@
         while (not solved)
           let mark be markAttempt(attempt, target)
           if mark is "22222" then
-            reassign solved to true
+            assign solved to true
           else
-            reassign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
-            reassign attemptNo to attemptNo + 1
-            reassign attempt to possible[0]
+            assign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+            assign attemptNo to attemptNo + 1
+            assign attempt to possible[0]
           end if
         end while
         return attemptNo
@@ -254,7 +254,7 @@
       each target in something
         let attempts be something
         if something then
-          reassign success to something
+          assign success to something
         end if
       end each
     </codeblock>
@@ -268,7 +268,7 @@
         each target in validTargets
           let attempts be attemptsNeededToSolve(target, firstAttempt)
           if attempts <= 6 then
-            reassign success to success + 1
+            assign success to success + 1
           end if
         end each
         let successPercent be success/validTargets.length()*100.round(1)
@@ -315,14 +315,14 @@
   <content>
     <codeblock>
       for i from something to something step 1
-        reassign weightedSum to something
+        assign weightedSum to something
       end for
     </codeblock>
   </content>
   <hint>Hint HINTNUMBER: the completed instruction for updating 'outcomes'</hint>
   <content>
     <codeblock>
-      reassign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+      assign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
     </codeblock>
   </content>
   <hint>Hint HINTNUMBER: the completed function</hint>
@@ -335,12 +335,12 @@
         each target in validTargets
           let attempts be attemptsNeededToSolve(target, firstAttempt)
           if attempts <= 6 then
-            reassign success to success + 1
-            reassign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
+            assign success to success + 1
+            assign outcomes to outcomes.withPut(attempts, outcomes[attempts] + 1)
           end if
         end each
         for i from 1 to 6 step 1
-          reassign weightedSum to weightedSum + i*outcomes[i]
+          assign weightedSum to weightedSum + i*outcomes[i]
         end for
         let successPercent be (success/validTargets.length()*100).round(1)
         let average be (weightedSum/success).round(2)

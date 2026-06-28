@@ -94,12 +94,12 @@ in the range:</li>
 <codeblock>function hex(n as Int) returns String
   variable h set to ""
   if (n &lt; 1) then
-    reassign h to "0"
+    assign h to "0"
   else
     variable m set to n
     while m &gt; 0
-      reassign h to hexDigit(m mod 16) + h
-      reassign m to divAsInt(m, 16)
+      assign h to hexDigit(m mod 16) + h
+      assign m to divAsInt(m, 16)
     end while
   end if
   return h
@@ -467,7 +467,7 @@ Ssee <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i
 <p>If <code>velocity</code> and <code>fuel</code> have values 3.0 and 50.4:</p>
 <table class="tablePlain">
 <tr>
- <td><code>reassign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </code>
+ <td><code>assign message to $"LANDED SAFELY AT SPEED {(velocity*100).floor()} FUEL {fuel.floor()}" </code>
   <code>print(message) </code>
  </td>
  <td><br><br><br>&#x27f6;</td><td><br>LANDED SAFELY AT SPEED 300 FUEL 50</td>
@@ -601,7 +601,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 </ul>
 <p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
- <li><code>reassign aList[ix] to "Smith"</code></li>
+ <li><code>assign aList[ix] to "Smith"</code></li>
 </ul>
 <p>A List's size can be dynamically changed using the procedure methods listed below.</p>
 
@@ -612,12 +612,12 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>To extract the first item in a List:<br>
  <code>variable headItem set to myList[0]</code><br>
  or<br>
- <code>reassign heatItem to myList.head()</code>
+ <code>assign heatItem to myList.head()</code>
  </li><li>To form a new List of all but the first item in a List:<br>
  <code>variable  tailList set to myList.tail()</code><br>
  If the original list contains only one item, the new List will be the empty List.
  </li><li>To get some other portion of a List, use the method <el-method>subList</el-method>:<br>
- <code>reassign shortList to myList.subList(1,5)</code>
+ <code>assign shortList to myList.subList(1,5)</code>
 </li>
 </ul>
 <p>In all these cases the items indexed must exist, else a runtime error will stop the program.</p>
@@ -637,7 +637,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  using its two coordinates in square brackets:</p>
 <ul>
   <li><code>variable value set to  array2D[ix][iy]</code></li>
-  <li><code>reassign array2D[ix][iy] to 7</code></li>
+  <li><code>assign array2D[ix][iy] to 7</code></li>
 </ul>
 
 <h4 class="no-TOC">Higher dimensional arrays</h4>
@@ -866,7 +866,7 @@ and function getDItem retrieves a value given a key.</p>
   variable dL set to new Dictionary&lt;of String, Int&gt;()
   variable dLRef set to new AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;(dL)
   call greekLetters(dLRef)
-  reassign dL to dLRef.value()
+  assign dL to dLRef.value()
   print(dL)
   call printD(dL)
   print(getDItem(dL, "alpha"))
@@ -882,9 +882,9 @@ procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
 end procedure
 procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
   variable di set to new Dictionary&lt;of String, Int&gt;()
-  reassign di["alpha"] to 1
-  reassign di["beta"] to 2
-  reassign di["gamma"] to 3
+  assign di["alpha"] to 1
+  assign di["beta"] to 2
+  assign di["gamma"] to 3
   call d.set(di)
 end procedure
 </codeblock>
@@ -988,12 +988,12 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <tr>
  <td>
   <codeblock>  variable st set to new HashSet&lt;of Int&gt;()
-  reassign st to st.addFromList([3, 5, 7])
+  assign st to st.addFromList([3, 5, 7])
   print(st.length())
-  reassign st to st.add(7)
-  reassign st to st.remove(3)
+  assign st to st.add(7)
+  assign st to st.remove(3)
   print(st.length())
-  reassign st to st.remove(3)
+  assign st to st.remove(3)
   print(st.length())
   print(st)
 </codeblock>
@@ -1206,9 +1206,9 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <codeblock>main
   variable sk set to new Stack&lt;of String&gt;()
   print(sk.length())
-  reassign sk to sk.push("apple")
-  reassign sk to sk.push("banana")
-  reassign sk to sk.push("cherry")
+  assign sk to sk.push("apple")
+  assign sk to sk.push("banana")
+  assign sk to sk.push("cherry")
   print(sk.length())
   print(sk)
   print(sk.peek())
@@ -1216,7 +1216,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   print(sk)
   print(sk.pop().item_0)
   print(sk)
-  reassign sk to sk.pop().item_1
+  assign sk to sk.pop().item_1
   print(sk)
 end main
 </codeblock>
@@ -1232,9 +1232,9 @@ end main
 <codeblock>main
   variable qu set to new Queue&lt;of String&gt;()
   print(qu.length())
-  reassign qu to qu.enqueue("apple")
-  reassign qu to qu.enqueue("banana")
-  reassign qu to qu.enqueue("cherry")
+  assign qu to qu.enqueue("apple")
+  assign qu to qu.enqueue("banana")
+  assign qu to qu.enqueue("cherry")
   print(qu.length())
   print(qu)
   print(qu.peek())
@@ -1242,7 +1242,7 @@ end main
   print(qu)
   print(qu.dequeue().item_0)
   print(qu)
-  reassign qu to qu.dequeue().item_1
+  assign qu to qu.dequeue().item_1
   print(qu)
 end main
 </codeblock>
@@ -1344,7 +1344,7 @@ end function
     variable x set to randint(0, 39)
     variable y set to randint(0, 29)
     variable colour set to randint(0, white - 1)
-    reassign grid[x][y] to colour
+    assign grid[x][y] to colour
     call displayBlocks(grid)
   end while
 end main
@@ -1896,7 +1896,7 @@ main
   call rnd.initialiseFromClock()
   for i in range(1, 20)
     print(randomThrow(rnd).item_0)
-    reassign rnd to randomThrow(rnd).item_1
+    assign rnd to randomThrow(rnd).item_1
   end for
 end main
 
@@ -3026,7 +3026,7 @@ end main
 function reverse(s as String) returns String
   variable sReturn set to ""
   for ch in s
-    reassign sReturn to ch + sReturn
+    assign sReturn to ch + sReturn
   end for
   return sReturn
 end function
@@ -3121,7 +3121,7 @@ use <el-method>reduce</el-method> on a <code>List</code> of words (created by <e
   variable s set to "'Twas brillig and the slithy toves"
   variable sR set to ""
   variable eL set to new List&lt;of String&gt;()
-  reassign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
+  assign sR to s.split(" ").reduce(eL, lambda sR as List&lt;of String&gt;, word as String => sR.withPrepend(word)).join(" ")
   print(sR)
 end main
 </codeblock>

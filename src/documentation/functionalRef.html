@@ -315,7 +315,7 @@ end function
 <p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
 
 <codeblock>
-  reassign mySubjects[3] to "Geography"
+  assign mySubjects[3] to "Geography"
 </codeblock>
 
 or by calling one of the available procedure methods on on it such as:
@@ -546,7 +546,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 <codeblock>
 function withHead(value as Square) returns Game
   let copyOfThis be copy(this)
-  reassign copyOfThis.head to value
+  assign copyOfThis.head to value
   return copyOfThis
 end function
 </codeblock>
@@ -563,7 +563,7 @@ Note that it:
 must be created using the <b>with method</b> instruction template, which is
 offered only within a Class, and only when using the <b>functional</b> paradigm.</p>
 <p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
-a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would make changes observable from outside the function.</p>
+a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>assign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
 <p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
   within the program to update any instance of Square &ndash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
@@ -624,7 +624,7 @@ main
   variable rng set to new Random()
   for i in range(1, 10)
     print(rollDice(rng))
-    reassign rng to rng.nextGen()
+    assign rng to rng.nextGen()
   end for
 end main
 </codeblock>
@@ -640,7 +640,7 @@ main
   call rng.initialiseFromClock()
   for i in range(1, 10)
     print(rollDice(rng))
-    reassign rng to rng.nextGen()
+    assign rng to rng.nextGen()
   end for
 end main
 </codeblock>
@@ -783,7 +783,7 @@ paradigm, with two exceptions:</p>
         <codeblock>
           function withHead(value as Square) returns Game
             let copyOfThis be copy(this)
-            reassign copyOfThis.head to value
+            assign copyOfThis.head to value
             return copyOfThis
           end function
         </codeblock>
@@ -822,7 +822,7 @@ paradigm, with two exceptions:</p>
           <li>When you create a new <b>with method</b> within a class, the method includes three templated completed instructions.
             You should not attempt to change the first or last instructions, nor delete the middle one - if you do this by mistake, delete the
             whole method and start again.</li>
-          <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>reassign copyOfThis.aPropertyName to theNewValue</code></li>
+          <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>assign copyOfThis.aPropertyName to theNewValue</code></li>
           <li><code>copyOfThis</code> is a <i>reserved name</i> within Elan - this variable can only be created by the templated instruction shown above,
           and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> paradigm.</li>
           <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 

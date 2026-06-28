@@ -171,8 +171,8 @@ end if
 <codeblock>
 class Square
   constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
+    assign this.x to x
+    assign this.y to y
   end constructor
 
   property x as Int
@@ -217,10 +217,10 @@ end class
 class Snake
   constructor()
     variable tail set to new Square(20, 15)
-    reassign this.currentDir to Direction.right
-    reassign this.body to [tail]
-    reassign this.head to tail.getAdjacentSquare(this.currentDir)
-    reassign this.priorTail to tail
+    assign this.currentDir to Direction.right
+    assign this.body to [tail]
+    assign this.head to tail.getAdjacentSquare(this.currentDir)
+    assign this.priorTail to tail
   end constructor
 
   private property currentDir as Direction
@@ -277,13 +277,13 @@ function getAdjacentSquare(d as Direction) returns Square
     variable newX set to this.x
     variable newY set to this.y
     if d is Direction.left then
-      reassign newX to this.x - 1
+      assign newX to this.x - 1
     elif d is Direction.right then
-      reassign newX to this.x + 1
+      assign newX to this.x + 1
     elif d is Direction.up then
-      reassign newY to this.y - 1
+      assign newY to this.y - 1
     elif d is Direction.down then
-      reassign newY to this.y + 1
+      assign newY to this.y + 1
     end if
     return new Square(newX, newY)
 end function
@@ -318,14 +318,14 @@ end function
 <codeblock>
 procedure clockTick(key as String, apple as Apple)
   call this.setDirection(key)
-  reassign this.priorTail to this.body[0]
+  assign this.priorTail to this.body[0]
   variable body set to this.body
   call body.append(this.head)
-  reassign this.head to this.head.getAdjacentSquare(this.currentDir)
+  assign this.head to this.head.getAdjacentSquare(this.currentDir)
   if this.head.equals(apple.location) then
     call apple.newRandomPosition(this)
   else
-    reassign this.body to this.body.subList(1, this.body.length())
+    assign this.body to this.body.subList(1, this.body.length())
   end if
 end procedure
 </codeblock>
@@ -474,7 +474,7 @@ two new ones: <b>concrete class</b> and <b>abstract class</b></p>
 <codeblock>
 class Apple
   constructor()
-    reassign this.location to new Square(0, 0)
+    assign this.location to new Square(0, 0)
   end constructor
 
   property location as Square
@@ -484,15 +484,15 @@ class Apple
     while changePosition
       variable ranX set to randint(0, 39)
       variable ranY set to randint(0, 29)
-      reassign this.location to new Square(ranX, ranY)
+      assign this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
-        reassign changePosition to false
+        assign changePosition to false
       end if
     end while
   end procedure
 
   procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
-    reassign blocks[this.location.x][this.location.y] to red
+    assign blocks[this.location.x][this.location.y] to red
   end procedure
   
   function toString() returns String
@@ -513,17 +513,17 @@ end class
   property faceDown as Boolean
 
   constructor(rank as String, suit as Suit, facedown as Boolean)
-    reassign this.rank to rank
-    reassign this.suit to suit
-    reassign this.faceDown to facedown
+    assign this.rank to rank
+    assign this.suit to suit
+    assign this.faceDown to facedown
   end constructor
 
   procedure turnFaceUp()
-    reassign this.faceDown to false
+    assign this.faceDown to false
   end procedure
 
   procedure turnFaceDown()
-    reassign this.faceDown to true
+    assign this.faceDown to true
   end procedure
 
   function toString() returns String
@@ -545,10 +545,10 @@ end class
 
   constructor(x as Int, y as Int)
     if (x < 0) or (y < 0) then
-      reassign this.isEmpty to true
+      assign this.isEmpty to true
     else
-      reassign this.x to x
-      reassign this.y to y
+      assign this.x to x
+      assign this.y to y
     end if
   end constructor
 
@@ -630,7 +630,7 @@ abstract class Player
 
   procedure startTurn()
     if this.status is Status.active then
-      reassign this.hasTurn to true
+      assign this.hasTurn to true
     end if
   end procedure
 
@@ -650,23 +650,23 @@ abstract class Player
 
   procedure evaluateStatus(newCard as Card)
     if (this.cardCount() is 2) and (this.handTotal is 21) then
-      reassign this.status to Status.blackjack
+      assign this.status to Status.blackjack
     elif (this.handTotal > 21) and (this.softAce) then
-      reassign this.handTotal to this.handTotal - 10
-      reassign this.softAce to false
+      assign this.handTotal to this.handTotal - 10
+      assign this.softAce to false
     elif this.handTotal > 21 then
-      reassign this.status to Status.bust
+      assign this.status to Status.bust
     elif this.handTotal is 21 then
-      reassign this.status to Status.standing
+      assign this.status to Status.standing
     end if
     if this.status isnt Status.active then
-      reassign this.hasTurn to false
+      assign this.hasTurn to false
     end if
   end procedure
 
   procedure stand()
-    reassign this.status to Status.standing
-    reassign this.hasTurn to false
+    assign this.status to Status.standing
+    assign this.hasTurn to false
   end procedure
 
   procedure draw()
@@ -676,17 +676,17 @@ abstract class Player
     if newCard.rank.equals("A") then
       call this.addAce()
     else
-      reassign this.handTotal to this.handTotal + rankValue()[newCard.rank]
+      assign this.handTotal to this.handTotal + rankValue()[newCard.rank]
     end if
     call this.evaluateStatus(newCard)
   end procedure
 
   procedure addAce()
     if this.softAce then
-      reassign this.handTotal to this.handTotal + 1
+      assign this.handTotal to this.handTotal + 1
     else
-      reassign this.handTotal to this.handTotal + 11
-      reassign this.softAce to true
+      assign this.handTotal to this.handTotal + 11
+      assign this.softAce to true
     end if
   end procedure
 
@@ -695,17 +695,17 @@ abstract class Player
   end function
 
   procedure changePointsBy(amount as Int)
-    reassign this.points to this.points + amount
+    assign this.points to this.points + amount
   end procedure
 
   abstract procedure newHand()
 
   private procedure newHandHelper()
-    reassign this.hasTurn to false
-    reassign this.softAce to false
-    reassign this.cards to new List&lt;of Card&gt;()
-    reassign this.handTotal to 0
-    reassign this.status to Status.active
+    assign this.hasTurn to false
+    assign this.softAce to false
+    assign this.cards to new List&lt;of Card&gt;()
+    assign this.handTotal to 0
+    assign this.status to Status.active
     call this.draw()
     call this.draw()
   end procedure
@@ -716,13 +716,13 @@ abstract class Player
     variable msg set to ""
     variable status set to this.status
     if this.hasTurn then
-      reassign msg to msg + " - PLAYING"
+      assign msg to msg + " - PLAYING"
     elif status is Status.standing then
-      reassign msg to msg + " - STANDING"
+      assign msg to msg + " - STANDING"
     elif status is Status.blackjack then
-      reassign msg to msg + " - BLACKJACK"
+      assign msg to msg + " - BLACKJACK"
     elif status is Status.bust then
-      reassign msg to msg + " - BUST"
+      assign msg to msg + " - BUST"
     end if
     return msg
   end function
@@ -802,8 +802,8 @@ end class
 <codeblock>
 class Square
   constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
+    assign this.x to x
+    assign this.y to y
   end constructor
 
   # other code not shown
@@ -822,9 +822,9 @@ and assigns these parameters to the corresponding properties of the object.</p>
 <codeblock>
 class Game
   constructor(dealerStartPoints as Int)
-    reassign this.dealer to new Dealer(dealerStartPoints)
-    reassign this.players to new List&lt;of Player&gt;()
-    reassign this.message to ""
+    assign this.dealer to new Dealer(dealerStartPoints)
+    assign this.players to new List&lt;of Player&gt;()
+    assign this.message to ""
   end constructor
 
   #  other code not shown
@@ -848,7 +848,7 @@ end class
     <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
       the default values for those types).</li>
-    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>reassign this.x to x</code> &ndash; 
+    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash; 
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
@@ -919,7 +919,7 @@ end class
 
 class Pupil
   constructor()
-    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
+    assign this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
   property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
@@ -983,7 +983,7 @@ end class
 
 <codeblock>
   procedure setTape(tape as String)
-    reassign this.tape to tape
+    assign this.tape to tape
   end procedure
 </codeblock>
 
@@ -1035,7 +1035,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   function getMessage() returns String
     variable msg set to ""
     if this.hasPlayed then
-      reassign msg to this.getMessageHelper() + $" - hand total: {this.handTotal}"
+      assign msg to this.getMessageHelper() + $" - hand total: {this.handTotal}"
     end if
     return msg
   end function
@@ -1087,13 +1087,13 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
     variable key set to ""
     call clearKeyBuffer()
     while key.equals("")
-      reassign key to waitForKey()
+      assign key to waitForKey()
       if key.equals("d") then
         call this.draw()
       elif key.equals("s") then
         call this.stand()
       else
-        reassign key to ""
+        assign key to ""
       end if
     end while
   end procedure

@@ -89,7 +89,7 @@
       variable mark set to "00000"
       for something from something to something step 1
         if (something is something) then
-          reassign something to something
+          assign something to something
         end if
       end for
       return mark
@@ -136,7 +136,7 @@
       variable mark set to "00000"
       for i from 0 to 4 step 1
         if (attempt[i] is target[i]) then
-          reassign mark to mark[..i] + "2" + mark[i + 1..]
+          assign mark to mark[..i] + "2" + mark[i + 1..]
         end if
       end for
       return mark
@@ -169,7 +169,7 @@
       <code>
       for i from 0 to 4 step 1
         if something then
-          reassign something to something
+          assign something to something
         end if
       end for
       </code>
@@ -182,12 +182,12 @@ function markAttempt(attempt as String, target as String) returns String
   variable mark set to "00000"
   for i from 0 to 4 step 1
     if attempt[i] is target[i] then
-      reassign mark to mark[..i] + "2" + mark[i + 1..]
+      assign mark to mark[..i] + "2" + mark[i + 1..]
     end if
   end for
   for i from 0 to 4 step 1
     if target.contains(attempt[i]) then
-      reassign mark to mark[..i] + "1" + mark[i + 1..]
+      assign mark to mark[..i] + "1" + mark[i + 1..]
     end if
   end for
   return mark
@@ -229,12 +229,12 @@ end function
       variable mark set to "00000"
       for i from 0 to 4 step 1
         if attempt[i] is target[i] then
-          reassign mark to mark[..i] + "2" + mark[i + 1..]
+          assign mark to mark[..i] + "2" + mark[i + 1..]
         end if
       end for
       for i from 0 to 4 step 1
         if (mark[i] isnt "2") and target.contains(attempt[i]) then
-          reassign mark to mark[..i] + "1" + mark[i + 1..]
+          assign mark to mark[..i] + "1" + mark[i + 1..]
         end if
       end for
       return mark
@@ -251,10 +251,10 @@ end function
       going to deal with what professional developers call a 'code smell'! The two expressions that are used to 
       update the mark are very similar:
       <codeblock>
-        reassign mark to mark[..i] + "2" + mark[i + 1..]
+        assign mark to mark[..i] + "2" + mark[i + 1..]
       </codeblock> 
       <codeblock>
-        reassign mark to mark[..i] + "1" + mark[i + 1..]
+        assign mark to mark[..i] + "1" + mark[i + 1..]
       </codeblock> 
       Applying the 'DRY' principle (<b>D</b>on't <b>R</b>epeat <b>Y</b>ourself) we should extract this common
       code into a separate function. The two expressions aren't <i>identical</i> so we need to 'parameterise' 
@@ -299,7 +299,7 @@ end function
     <hint>Hint HINTNUMBER: one of the changes to be made in markAttempt</hint>
     <content>
       <code>
-        reassign mark to setChar(mark, i, "2")
+        assign mark to setChar(mark, i, "2")
       </code>
       Work out which instruction should be changed to this, and how to change the other relevant instruction.
     </content>
@@ -310,12 +310,12 @@ end function
           variable mark set to "00000"
           for i from 0 to 4 step 1
             if attempt[i] is target[i] then
-              reassign mark to setChar(mark, i, "2")
+              assign mark to setChar(mark, i, "2")
             end if
           end for
           for i from 0 to 4 step 1
             if (mark[i] isnt "2") and target.contains(attempt[i]) then
-              reassign mark to setChar(mark, i, "1")
+              assign mark to setChar(mark, i, "1")
             end if
           end for
           return mark
@@ -365,7 +365,7 @@ end function
   </content>
   <hint>Hint HINTNUMBER: the complete new instruction</hint>
   <content>
-    <code>reassign unused to setChar(unused, unused.indexOf(attempt[i]), " ")</code>
+    <code>assign unused to setChar(unused, unused.indexOf(attempt[i]), " ")</code>
   </content>
   <hint>Hint HINTNUMBER: the complete <el-method>markAttempt</el-method> function </hint>
   <content>
@@ -375,13 +375,13 @@ end function
       variable unused set to target
       for i from 0 to 4 step 1
         if attempt[i] is target[i] then
-          reassign mark to setChar(mark, i, "2")
+          assign mark to setChar(mark, i, "2")
         end if
       end for
       for i from 0 to 4 step 1
         if (mark[i] isnt "2") and unused.contains(attempt[i]) then
-          reassign mark to setChar(mark, i, "1")
-          reassign unused to setChar(unused, unused.indexOf(attempt[i]), " ")
+          assign mark to setChar(mark, i, "1")
+          assign unused to setChar(unused, unused.indexOf(attempt[i]), " ")
         end if
       end for
       return mark
@@ -409,7 +409,7 @@ end function
   <hint>Hint HINTNUMBER: the new instruction to be added in within the <i>first</i> loop</hint>
   <content>
     <codeblock>
-      reassign unused to setChar(unused, i, " ")
+      assign unused to setChar(unused, i, " ")
     </codeblock>
   </content>
 
@@ -421,13 +421,13 @@ end function
         variable unused set to target
         for i from 0 to 4 step 1
           if attempt[i] is target[i] then
-            reassign mark to setChar(mark, i, "2")
-            reassign unused to setChar(unused, i, " ")
+            assign mark to setChar(mark, i, "2")
+            assign unused to setChar(unused, i, " ")
           end if
         end for
         for i from 0 to 4 step 1
           if (mark[i] isnt "2") and unused.contains(attempt[i]) then
-            reassign mark to setChar(mark, i, "1")
+            assign mark to setChar(mark, i, "1")
           end if
         end for
         return mark
