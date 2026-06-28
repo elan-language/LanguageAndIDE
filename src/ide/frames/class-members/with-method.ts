@@ -11,8 +11,8 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { AbstractClass } from "../globals/abstract-class";
 import { FunctionFrame } from "../globals/function-frame";
+import { Assignment } from "../statements/assignment";
 import { LetStatement } from "../statements/let-statement";
-import { ReAssignVariable } from "../statements/reassign-variable";
 import { ReturnStatement } from "../statements/return-statement";
 
 export class WithMethod extends FunctionFrame {
@@ -34,7 +34,7 @@ export class WithMethod extends FunctionFrame {
     const this_inst = this.language().THIS_INSTANCE;
     letCopyOfThis.expr.setFieldToKnownValidText(`copy(${this_inst})`);
     this.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new ReAssignVariable(this);
+    const firstProp = new Assignment(this);
     firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
     this.addChildBefore(firstProp, defaultSelector);
     const ret = this.getLastChild() as ReturnStatement;
