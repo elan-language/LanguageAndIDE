@@ -23,12 +23,11 @@ export class WithMethod extends FunctionFrame {
   help: string = "with-method";
   document: string = "functionalRef.html";
 
-  constructor(parent: Parent) {
+  constructor(parent: Parent, parentClassName: string) {
     super(parent);
     this.file = parent.getFile();
     this.name.setPlaceholder("<i>withPropertyName</i>");
-    const className: string = this.name.text;
-    this.returnType.setFieldToKnownValidText(className);
+    this.returnType.setFieldToKnownValidText(parentClassName);
     const defaultSelector = this.getFirstSelectorAsDirectChild();
     const letCopyOfThis = new LetStatement(this);
     letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");

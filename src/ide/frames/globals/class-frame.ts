@@ -227,7 +227,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new FunctionMethod(this, priv);
   }
   createWithMethod(): Frame {
-    return new WithMethod(this);
+    return new WithMethod(this, this.name.text);
   }
   createProperty(priv: boolean = false): Frame {
     return new Property(this, priv);
