@@ -5,6 +5,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { WithMethod } from "./class-members/with-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { ParamListField } from "./fields/param-list-field";
@@ -100,7 +101,8 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractProperty ||
-      frame instanceof InputStatement
+      frame instanceof InputStatement ||
+      frame instanceof WithMethod
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -181,6 +183,8 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
+    } else if (frame instanceof WithMethod) {
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     }
     return html;
   }
