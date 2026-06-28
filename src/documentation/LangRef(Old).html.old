@@ -1470,7 +1470,7 @@ Two instances which are subclasses of the same abstract class compare equal only
 <code>reassign x to (a > b) and (b < c)</code><br>
 <code>reassign x to (a + b) > (c - d)</code>
 
-<h2 id="functionCall">Function reference</h2>
+<h2 id="functionRef">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>
 main

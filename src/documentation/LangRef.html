@@ -242,6 +242,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
 </div>
 
 <div id="otherConstraints">
+<div id="Identifier"></div>
 <h2>Other constraints</h2>
 
 <p>Elan enforces a few other constraints that aren't driven by best practices, or by the common library, but because of small arbitrary differences between
@@ -409,6 +410,8 @@ end procedure
 <h3 class="no-TOC acc-title">What you need to know about a procedure</h3>
 <div class="acc-body">
 
+<div id="Parameter"></div>
+<div id="Argument"></div>
 <ul>
   <li>A procedure (also known as a 'subroutine') defines a <i>part</i> of the program to which work
   is delegated, either by the main routine, or by another procedure.</li>
@@ -432,13 +435,12 @@ end procedure
 <div id="AsRef"></div>
 <div id="set_Ref"></div>
 <div id="value_Ref"></div>
-<div id="Parameter_reference"></div>
+<div id="CallByRef"></div>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<div id="CallByRef"></div>
 <h4 class="no-TOC">Call by reference</h4>
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
@@ -458,6 +460,7 @@ procedure changeArg(pointer as AsRef&lt;of String&gt;)
 end procedure
 </codeblock>
 
+<div id="Recursion"></div>
 <h3 class="no-TOC">Recursive procedure calls</h3>
 
 <p>A procedure may call itself, directly or indirectly (calling another procedure that then calls back to the first one).
@@ -954,7 +957,7 @@ end procedure
 </div>
 </div>
 
-<div id="statementInstructions">
+<div id="StatementInstructions">
 <h1>Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods
 of a program: the main routine, functions, and procedures.</p>
@@ -1225,8 +1228,7 @@ which offer several advantages, including:</p>
 </div></div>
 </div>
 
-<div id="ifStatement">
-<div id="if"></div>
+<div id="if">
 <div id="then"></div>
 <div id="else"></div>
 <div id="elif"></div>
@@ -1701,14 +1703,14 @@ end test
 <h1>Expressions</h1>
 <p>One of the most important constructs in programming is the <b>expression</b>. An expression evaluates and returns a value using the following elements:</p>
 <ul>
-<li><a href="#literalValue">Literal value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#namedValue">Named value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
-<li><a href="#functionCall"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#LiteralValue">Literal value <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#NamedValue">Named value <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#Operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
+<li><a href="#functionRef"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
 </ul>
 
-<div id="literalValue">
+<div id="LiteralValue">
 <h2>Literal value</h2>
 <p>A literal value is where a value is written 'literally' in the code, such as <code>3.142</code>, in contrast to a value that is referred to by a name.</p>
 <p>Here is a table showing some example literal values.  Follow the links for more information about each type.</p>
@@ -1770,7 +1772,7 @@ end main
 </div>
 
 <div>
-<div id="operator">
+<div id="Operator">
 <h2>Operators</h2>
 
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
@@ -1778,8 +1780,7 @@ end main
 <p>Arithmetic operators can be applied to <code>Float</code> or <code>Int</code> arguments. The result may be a <code>Float</code> or an <code>Int</code> depending on the arguments.</p>
 <p>For the  + &minus; *  operators, the result is a <code>Float</code> if either of the arguments is a <code>Float</code>, and an <code>Int</code> if both arguments are <code>Int</code>.</p>
 <p>For the  /  operator, at least one of the values must be a <code>Float</code>, and the result is always a <code>Float</code>. It can be converted to an <code>Int</code> using standalone function <a href="LibRef.html#floor"><el-method>floor</el-method> <i class="fa">&#xf08e;</i></a>.</p>
-<div id="power"></div>
-<p>For raising one value to the power of another, use the syntax in these examples:<br></p>
+<p>For raising one value to the power of another, use the the library function <a href="LibRef.html#pow"><el-method>pow</el-method></a> <i class="fa">&#xf08e;</i>:<br></p>
 <code>print(pow(4, 4))</code><br>
 <code>variable c set to sqrt(pow(a, 2) + pow(b, 2))</code>
 <p>If, when including a power in an expression, it does not parse, try enclosing parts of the expression in brackets to remove potential ambiguity.</p>
@@ -1832,7 +1833,8 @@ This is just to visually reinforce the precedence.</p>
 <div id="and"></div>
 <div id="not"></div>
 <div id="or"></div>
-<h3 class="no-TOC" id="LogicalOperators">Logical operators</h3>
+<div id="LogicalOperators"></div>
+<h3 class="no-TOC">Logical operators</h3>
 <p>Logical operators are applied to <code>Boolean</code> arguments and return a <code>Boolean</code> result.</p>
 <p><code>and</code> and <code>or</code> are binary operators<br>
 <code>not</code> is a unary operator. </p>
@@ -1899,7 +1901,7 @@ Two instances which are subclasses of the same abstract class compare equal only
 <code>reassign x to (a + b) > (c - d)</code>
 </div>
 
-<div id="functionCall">
+<div id="functionRef">
 <h2>Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>main
@@ -1940,22 +1942,19 @@ e.g. in a particular call to a Higher-order Function.</p>
 </codeblock>
 
 <p>The lambda above is usually verbalised as 'lambda x returns x.round(8)`</p>
-
-<p>The advantages of using a lambda (where one would be allowed) <i>instead</i> of defining a function are:</p>
-
+<p>The advantages of using a lambda (where one is allowed) <i>instead</i> of defining a function are:</p>
 <ul>
-  <li>It is more succinct.</li>
-  <li>It is defined exactly where it is used, so you don't need to navigate to the function to see what it does.</li>
-  <li>The expression </i></li>
+  <li>it is more succinct,</li>
+  <li>it is defined exactly where it is used, so you don't need to navigate to the function to see what it does,</li>
+<!--  <li>the expression.</li> -->
 </ul>
 
 <p>Here are some more examples of the syntax for a lambda:</p>
 <codeblock>lambda n as Node => n.point.equals(p)</codeblock>
 <codeblock>lambda dd as Dictionary&lt;of String, Int&gt;, answer as String => incrementCount(dd, answer, attempt)</codeblock>
 
-<p>b>Note:</b> currently, 
-it is necessary to specify the type of each parameter in a lambda explicitly. We hope to remove this requirement in a 
-future version - to make the syntax for a lambda much cleaner.</p>
+<p>Note that currently it is necessary to specify the type of each parameter in a lambda explicitly.
+We hope to remove this requirement in a future version &ndash; to make the syntax for a lambda cleaner.</p>
 
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
 </div>
