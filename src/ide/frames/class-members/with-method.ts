@@ -32,7 +32,8 @@ export class WithMethod extends FunctionFrame {
     const defaultSelector = this.getFirstSelectorAsDirectChild();
     const letCopyOfThis = new LetStatement(this);
     letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
-    letCopyOfThis.expr.setFieldToKnownValidText("copy(this)");
+    const this_inst = this.language().THIS_INSTANCE;
+    letCopyOfThis.expr.setFieldToKnownValidText(`copy(${this_inst})`);
     this.addChildBefore(letCopyOfThis, defaultSelector);
     const firstProp = new ReAssignVariable(this);
     firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
