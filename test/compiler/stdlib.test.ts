@@ -740,7 +740,7 @@ main
   variable results set to [0, 0]
   for i in range(1, 10001)
     variable r set to randint(0, 1)
-    reassign results[r] to results[r] + 1
+    assign results[r] to results[r] + 1
   end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
@@ -788,9 +788,9 @@ main
   variable val set to 0
   call rnd.initialiseFromClock()
   for i in range(1, 10001)
-    reassign val to rnd.asInt(0, 1)
-    reassign rnd to rnd.nextGen()
-    reassign results[val] to results[val] + 1
+    assign val to rnd.asInt(0, 1)
+    assign rnd to rnd.nextGen()
+    assign results[val] to results[val] + 1
   end for
   call printNoLine(results[0] > 0)
   call printNoLine(results[1] > 0)
@@ -840,9 +840,9 @@ main
   variable rnd set to new Random()
   variable val set to 0
   for i in range(1, 10001)
-    reassign val to rnd.asInt(3, 5)
-    reassign rnd to rnd.nextGen()
-    reassign results[val] to results[val] + 1
+    assign val to rnd.asInt(3, 5)
+    assign rnd to rnd.nextGen()
+    assign results[val] to results[val] + 1
   end for
   for i in range(0, 7)
     variable r set to results[i]
@@ -897,9 +897,9 @@ main
   variable dice set to 0
   for i in range(1, 10001)
     variable t set to rollDice(rnd)
-    reassign dice to t.item_0
-    reassign rnd to t.item_1
-    reassign results[dice] to results[dice] + 1
+    assign dice to t.item_0
+    assign rnd to t.item_1
+    assign results[dice] to results[dice] + 1
   end for
   for i in range(0, 7)
     variable r set to results[i]
@@ -1498,7 +1498,7 @@ main
   call printNoLine(c.indexOf("ll"))
   call printNoLine(c.indexOf("x"))
   variable i set to 1
-  reassign i to a.indexOf(9)
+  assign i to a.indexOf(9)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1540,7 +1540,7 @@ return [main, _tests];}`;
 
 main
   variable i set to 1
-  reassign i to "A".asUnicode()
+  assign i to "A".asUnicode()
   call printNoLine(i)
 end main`;
 
@@ -2168,7 +2168,7 @@ main
     end for
     call b.append(sa)
   end for
-  reassign b to createBlockGraphics(white)
+  assign b to createBlockGraphics(white)
 end main
 `;
 
@@ -2281,8 +2281,8 @@ main
   variable b set to [(1, "a"), (2, "b")]
   variable d1 set to new Dictionary<of String, Int>()
   variable d2 set to new Dictionary<of Int, String>()
-  reassign d1 to createDictionary(a)
-  reassign d2 to createDictionary(b)
+  assign d1 to createDictionary(a)
+  assign d2 to createDictionary(b)
   call printNoLine(d1)
   call printNoLine(d2)
 end main

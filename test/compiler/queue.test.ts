@@ -30,7 +30,7 @@ main
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
-  reassign fruit to q.dequeue()
+  assign fruit to q.dequeue()
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
@@ -80,17 +80,17 @@ return [main, _tests];}`;
 main
   variable q set to new Queue<of String>()
   call printNoLine(q.length())
-  reassign q to q.withEnqueue("apple")
-  reassign q to q.withEnqueue("pear")
+  assign q to q.withEnqueue("apple")
+  assign q to q.withEnqueue("pear")
   call printNoLine(q)
   call printNoLine(q.length())
   call printNoLine(q.peek())
   variable fruit set to q.peek()
-  reassign q to q.withDequeue()
+  assign q to q.withDequeue()
   call printNoLine(fruit)
   call printNoLine(q.length())
   call printNoLine(q)
-  reassign q to q.withDequeue()
+  assign q to q.withDequeue()
   call printNoLine(q.length())
   call printNoLine(q)
 end main`;
@@ -138,8 +138,8 @@ return [main, _tests];}`;
 
 main
   variable q set to new Queue<of String>()
-  reassign q to q.withEnqueue("apple")
-  reassign q to q.withEnqueue(3)
+  assign q to q.withEnqueue("apple")
+  assign q to q.withEnqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -165,7 +165,7 @@ end main`;
 
 main
   variable q set to new Queue<of String>()
-  reassign q to q.withEnqueue(3)
+  assign q to q.withEnqueue(3)
 end main`;
 
     const fileImpl = new FileImpl(

@@ -2,28 +2,28 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
-import { CallStatement } from "./statements/call-statement";
+import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
 import { CommentStatement } from "./statements/comment-statement";
-import { Else } from "./statements/else";
-import { ElseIf } from "./statements/elseIf";
-import { For } from "./statements/for";
+import { ElseClause } from "./statements/else-clause";
+import { ElseIfClause } from "./statements/elseIf-clause";
+import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
 import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ReAssignVariable } from "./statements/reassign-variable";
-import { Throw } from "./statements/throw";
-import { TryStatement } from "./statements/try";
+import { ProcedureCall } from "./statements/procedureCall";
+import { ThrowStatement } from "./statements/throw-statement";
+import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
-import { While } from "./statements/while";
+import { WhileLoop } from "./statements/whileLoop";
 
 export class StatementFactoryImpl implements StatementFactory {
   public newAssert(parent: Parent): Frame {
     return new AssertStatement(parent);
   }
   public newCall(parent: Parent, procName = ""): Frame {
-    const call = new CallStatement(parent);
+    const call = new ProcedureCall(parent);
     if (procName !== "") {
       call.proc.setFieldToKnownValidText(procName);
     }
@@ -33,13 +33,13 @@ export class StatementFactoryImpl implements StatementFactory {
     return new CatchStatement(parent);
   }
   public newElif(parent: Parent): Frame {
-    return new ElseIf(parent);
+    return new ElseIfClause(parent);
   }
   public newElse(parent: Parent): Frame {
-    return new Else(parent);
+    return new ElseClause(parent);
   }
   public newFor(parent: Parent): Frame {
-    return new For(parent);
+    return new ForLoop(parent);
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
@@ -54,10 +54,10 @@ export class StatementFactoryImpl implements StatementFactory {
     return new PrintStatement(parent);
   }
   public newSet(parent: Parent): Frame {
-    return new ReAssignVariable(parent);
+    return new Assignment(parent);
   }
   public newThrow(parent: Parent): Frame {
-    return new Throw(parent);
+    return new ThrowStatement(parent);
   }
   public newTryCatch(parent: Parent): Frame {
     return new TryStatement(parent);
@@ -66,7 +66,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new VariableStatement(parent);
   }
   public newWhile(parent: Parent): Frame {
-    return new While(parent);
+    return new WhileLoop(parent);
   }
   public newComment(parent: Parent): Frame {
     return new CommentStatement(parent);

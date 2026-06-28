@@ -28,7 +28,7 @@ main
   call printNoLine(st.peek())
   variable fruit set to st.pop()
   call printNoLine(fruit)
-  reassign fruit to st.pop()
+  assign fruit to st.pop()
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
@@ -76,18 +76,18 @@ return [main, _tests];}`;
 main
   variable st set to new Stack<of String>()
   call printNoLine(st.length())
-  reassign st to st.withPush("apple")
-  reassign st to st.withPush("pear")
+  assign st to st.withPush("apple")
+  assign st to st.withPush("pear")
   call printNoLine(st)
   call printNoLine(st.length())
   call printNoLine(st.peek())
   variable fruit set to st.peek()
-  reassign st to st.withPop()
+  assign st to st.withPop()
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
-  reassign fruit to st.peek()
-  reassign st to st.withPop()
+  assign fruit to st.peek()
+  assign st to st.withPop()
   call printNoLine(fruit)
   call printNoLine(st.length())
   call printNoLine(st)
@@ -138,8 +138,8 @@ return [main, _tests];}`;
 
 main
   variable st set to new Stack<of String>()
-  reassign st to st.withPush("apple")
-  reassign st to st.withPush(3)
+  assign st to st.withPush("apple")
+  assign st to st.withPush(3)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -167,7 +167,7 @@ main
   variable st set to new Stack<of String>()
   call st.push("apple")
   variable a set to 1
-  reassign a to st.peek()
+  assign a to st.peek()
 end main`;
 
     const fileImpl = new FileImpl(

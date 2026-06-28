@@ -23,10 +23,10 @@ Sub main()
   While Not mark.equals("*****")
     Console.WriteLine("" + attempt)
 
-      Dim inp = Console.ReadLine() ' input
-    mark = inp ' reassign variable
-    possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' reassign variable
-    attempt = bestAttempt(possible) ' reassign variable
+      Dim inp = Console.ReadLine() ' input statement
+    mark = inp ' assignment
+    possible = possibleAnswersAfterAttempt(possible, attempt, mark) ' assignment
+    attempt = bestAttempt(possible) ' assignment
   End While
 End Sub
 
@@ -113,8 +113,8 @@ End Function
 Class WordCount
 
   Sub New(word As String, count As Integer)
-    Me.word = word ' reassign variable
-    Me.count = count ' reassign variable
+    Me.word = word ' assignment
+    Me.count = count ' assignment
   End Sub
 
   Property word As String

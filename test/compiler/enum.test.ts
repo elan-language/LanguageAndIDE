@@ -61,7 +61,7 @@ return [main, _tests];}`;
 
 main
   variable x set to Fruit.apple
-  reassign x to Fruit.pear
+  assign x to Fruit.pear
   call printNoLine(enumValue(x))
 end main
    
@@ -451,7 +451,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
 
 main
   variable a set to 1
-  reassign a to Fruit.apple
+  assign a to Fruit.apple
 end main
 
 enum Fruit apple, orange, pear`;

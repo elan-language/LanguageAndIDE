@@ -2,7 +2,7 @@
 
 def main() -> None:
   blocks = createBlockGraphics(black) # variable definition
-  blocks = createStart(blocks) # reassign variable
+  blocks = createStart(blocks) # assignment
   for i in range(0, displayWidth + 1):
     x = randint(0, 39) # variable definition
     y = randint(0, 29) # variable definition
@@ -11,13 +11,13 @@ def main() -> None:
     setTo = (random() + 0.7).floor() # variable definition
     if okToSet(p, setTo, blocks):
       colour = if_(setTo == 1, white, black) # variable definition
-      blocks[p.x][p.y] = colour # reassign variable
+      blocks[p.x][p.y] = colour # assignment
     # end if
   # end for
-  displayBlocks(blocks) # call procedure
-  name = input("File name to save: ") # input
+  displayBlocks(blocks) # procedure call
+  name = input("File name to save: ") # input statement
   if not name.equals("x"):
-    saveAsFile(name, blocks) # call procedure
+    saveAsFile(name, blocks) # procedure call
   # end if
 # end main
 
@@ -30,17 +30,17 @@ def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
     for col in range(0, 40):
       colour = b[col][row] # variable definition
       symbol = if_(colour == white, " ", "X") # variable definition
-      line = line + symbol # reassign variable
+      line = line + symbol # assignment
     # end for
-    file.writeLine(line) # call procedure
+    file.writeLine(line) # procedure call
   # end for
-  file.saveAndClose() # call procedure
+  file.saveAndClose() # procedure call
 # end procedure
 
 def createStart(b: list[list[int]]) -> list[list[int]]: # function
   b2 = b # variable definition
   for i in rangeInSteps(0, 16, 2):
-    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) # reassign variable
+    b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) # assignment
   # end for
   return b2
 # end function
@@ -49,12 +49,12 @@ def addRectangle(b: list[list[int]], startX: int, startY: int, width: int, depth
   paint = white # variable definition
   b2 = b # variable definition
   for x in range(startX, startX + width + 1):
-    b2 = withPut(b2, x, startY, paint) # reassign variable
-    b2 = withPut(b2, x, startY + depth, paint) # reassign variable
+    b2 = withPut(b2, x, startY, paint) # assignment
+    b2 = withPut(b2, x, startY + depth, paint) # assignment
   # end for
   for y in range(startY, startY + depth + 1):
-    b2 = withPut(b2, startX, y, paint) # reassign variable
-    b2 = withPut(b2, startX + width, y, paint) # reassign variable
+    b2 = withPut(b2, startX, y, paint) # assignment
+    b2 = withPut(b2, startX + width, y, paint) # assignment
   # end for
   return b2
 # end function
@@ -78,7 +78,7 @@ def getValue(p: Point, b: list[list[int]]) -> int: # function
   result = 0 # variable definition
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30):
     colour = b[p.x][p.y] # variable definition
-    result = if_(colour == black, 0, 1) # reassign variable
+    result = if_(colour == black, 0, 1) # assignment
   # end if
   return result
 # end function
@@ -124,8 +124,8 @@ class Point: # concrete class
   y: int # property
 
   def __init__(self: Point, x: int, y: int) -> None:
-    self.x = x # reassign variable
-    self.y = y # reassign variable
+    self.x = x # assignment
+    self.y = y # assignment
   # end constructor
 
   def toString(self: Point) -> str: # function method

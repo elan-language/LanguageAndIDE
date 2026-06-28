@@ -9,13 +9,13 @@ def main() -> None:
   s = State(RectangleVG(), 0.0, 0.16, Random()) # variable definition
   # can't call s.r.initialiseFromClock() directly
   t = s.r # variable definition
-  t.initialiseFromClock() # call procedure
+  t.initialiseFromClock() # procedure call
   # don't set the count limit too high
   # or the browser will run out of memory
   for count in range(0, 1000):
-    s = onepoint(s) # reassign variable
-    vg.append(s.rect) # call procedure
-    displayVectorGraphics(vg) # call procedure
+    s = onepoint(s) # assignment
+    vg.append(s.rect) # procedure call
+    displayVectorGraphics(vg) # procedure call
   # end for
   print("Finished")
 # end main
@@ -78,10 +78,10 @@ def getparams(r: float, prms: list[list[float]], cumuprob: float) -> list[float]
 class State: # concrete class
 
   def __init__(self: State, rect: RectangleVG, x: float, y: float, r: Random) -> None:
-    self.rect = rect # reassign variable
-    self.x = x # reassign variable
-    self.y = y # reassign variable
-    self.r = r # reassign variable
+    self.rect = rect # assignment
+    self.x = x # assignment
+    self.y = y # assignment
+    self.r = r # assignment
   # end constructor
 
   rect: RectangleVG # property

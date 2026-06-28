@@ -27,12 +27,12 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
     procedure setP1(value as Float)
-        reassign this.p1 to value
+        assign this.p1 to value
     end procedure
     function toString() returns String
          return ""
@@ -96,7 +96,7 @@ end main
 
 class Foo
   constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
   end constructor
 
   property p1 as Float
@@ -167,7 +167,7 @@ end main
 
 class Foo
     constructor()
-        reassign this.p1 to 5
+        assign this.p1 to 5
     end constructor
 
     property p1 as Float
@@ -175,12 +175,12 @@ class Foo
     procedure times(b as Bar)
         call b.p1PlusOne()
         call this.p1PlusOne()
-        reassign this.p1 to this.p1 + b.p1
+        assign this.p1 to this.p1 + b.p1
         call printNoLine(this.p1)
     end procedure
 
     procedure p1PlusOne()
-        reassign this.p1 to this.p1 + 1
+        assign this.p1 to this.p1 + 1
     end procedure
 
     function toString() returns String
@@ -191,13 +191,13 @@ end class
 
 class Bar
     constructor()
-        reassign this.p1 to 1
+        assign this.p1 to 1
     end constructor
 
     property p1 as Float
 
     procedure p1PlusOne()
-        reassign this.p1 to this.p1 + 1
+        assign this.p1 to this.p1 + 1
     end procedure
 
     function toString() returns String
@@ -289,7 +289,7 @@ end main
 
 class Foo
   constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -332,7 +332,7 @@ end main
 
 class Foo
   constructor()
-      reassign this.p1 to 5
+      assign this.p1 to 5
   end constructor
   function toString() returns String
     return ""
@@ -547,7 +547,7 @@ class Foo
   end function
   
   procedure foo()
-    reassign p1 to 4
+    assign p1 to 4
   end procedure
 
   property p1 as Int

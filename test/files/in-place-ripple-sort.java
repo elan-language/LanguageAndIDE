@@ -4,25 +4,25 @@ public class Global {
 
 static void main() {
   var li = list(7, 1, 0, 4, 8, 3, 6);
-  System.out.println(li); // print
-  inPlaceRippleSort(li); // call procedure
-  System.out.println(li); // print
+  System.out.println(li); // print statement
+  inPlaceRippleSort(li); // procedure call
+  System.out.println(li); // print statement
 } // end main
 
 static void inPlaceRippleSort(List<int> li) { // procedure
   var hasChanged = true;
   var lastComp = li.length() - 2;
   while (hasChanged == true) {
-    hasChanged = false; // reassign variable
+    hasChanged = false; // assignment
     foreach (var i in range(0, lastComp + 1)) {
       if (li[i] > li[i + 1]) {
         var temp = li[i];
-        li[i] = li[i + 1]; // reassign variable
-        li[i + 1] = temp; // reassign variable
-        hasChanged = true; // reassign variable
+        li[i] = li[i + 1]; // assignment
+        li[i + 1] = temp; // assignment
+        hasChanged = true; // assignment
       } // end if
     } // end foreach
-    lastComp = lastComp - 1; // reassign variable
+    lastComp = lastComp - 1; // assignment
   } // end while
 } // end procedure
 } // end Global

@@ -4,12 +4,12 @@ public class Global {
 
 static void main() {
   var rng = new Random();
-  rng.initialiseFromClock(); // call procedure
+  rng.initialiseFromClock(); // procedure call
   var grid = initialGrid(rng);
   while (true) {
-    displayBlocks(grid); // call procedure
-    grid = nextGeneration(grid); // reassign variable
-    sleep_ms(50); // call procedure
+    displayBlocks(grid); // procedure call
+    grid = nextGeneration(grid); // assignment
+    sleep_ms(50); // procedure call
   } // end while
 } // end main
 

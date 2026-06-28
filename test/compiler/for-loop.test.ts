@@ -21,7 +21,7 @@ suite("For Loop", () => {
 main
   variable tot set to 0
   for i in range(1, 11)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -62,7 +62,7 @@ main
   variable tot set to 0
   variable i set to 0
   for i in range(1, 11)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -90,7 +90,7 @@ end main`;
 main
 variable tot set to 0
 for i in rangeInSteps(1, 11, 2)
-  reassign tot to tot + i
+  assign tot to tot + i
 end for
 call printNoLine(tot)
 end main`;
@@ -130,7 +130,7 @@ return [main, _tests];}`;
 main
   variable tot set to 0
   for i in rangeInSteps(10, 3, -1)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -171,7 +171,7 @@ main
   variable tot set to 0
   for i in range(1, 4)
     for j in range(1, 5)
-      reassign tot to tot + 1
+      assign tot to tot + 1
     end for
   end for
   call printNoLine(tot)
@@ -216,7 +216,7 @@ main
   variable upper set to 10
   variable tot set to 0
   for i in rangeInSteps(lower, upper + 1, 2)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -261,7 +261,7 @@ end main
 
 procedure foo(arr as List<of Int>)
   for i in range(0, 11)
-    reassign arr[i] to 1
+    assign arr[i] to 1
   end for
   call printNoLine(arr[0])
 end procedure`;
@@ -305,7 +305,7 @@ main
   variable limit set to 10
   for i in range(1, limit + 1)
     call printNoLine($"{i}")
-    reassign limit to limit + 1
+    assign limit to limit + 1
   end for
 end main`;
 
@@ -345,7 +345,7 @@ main
   variable tot set to 0
   variable i set to ""
   for i in range(1, 11)
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main`;
@@ -374,7 +374,7 @@ end main`;
 main
   variable tot set to 0.0
   for i in range(1.5, 11.1).0
-    reassign tot to tot + i
+    assign tot to tot + i
   end for
   call printNoLine(tot)
 end main
@@ -400,7 +400,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 11)
-    reassign i to 10
+    assign i to 10
   end for
 end main
 `;
@@ -428,7 +428,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 11)
-    reassign tot to 10
+    assign tot to 10
   end for
   call printNoLine(i)
 end main
@@ -455,7 +455,7 @@ end main
 main
   variable tot set to 0
   for i in range(1, 4)
-    for j in range(1, 5)  reassign tot to tot + 1
+    for j in range(1, 5)  assign tot to tot + 1
     end for
 end main
 `;
@@ -503,7 +503,7 @@ end main
 
 main
   variable tot set to 0
-  for i in range(1, 11)  reassign tot to tot + i
+  for i in range(1, 11)  assign tot to tot + i
     break
   end for
 end main
@@ -528,7 +528,7 @@ end main
 
 main
   variable tot set to 0
-  for i in range(1, 11)  reassign tot to tot + i
+  for i in range(1, 11)  assign tot to tot + i
     continue
   end for
 end main

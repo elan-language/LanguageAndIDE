@@ -4,12 +4,12 @@ public class Global {
 
 static void main() {
   var t = new Turtle();
-  t.placeAt(-100, 75); // call procedure
-  t.turnToHeading(90); // call procedure
+  t.placeAt(-100, 75); // procedure call
+  t.turnToHeading(90); // procedure call
   foreach (var i in rangeInSteps(150, -1, -5)) {
-    t.move(i); // call procedure
-    t.turn(90); // call procedure
-    sleep_ms(300); // call procedure
+    t.move(i); // procedure call
+    t.turn(90); // procedure call
+    sleep_ms(300); // procedure call
   } // end foreach
 } // end main
 } // end Global

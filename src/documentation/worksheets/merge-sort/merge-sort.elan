@@ -28,13 +28,13 @@ end test
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to new List<of String>()
   if a.length() is 0 then
-    reassign result to b
+    assign result to b
   elif b.length() is 0 then
-    reassign result to a
+    assign result to a
   elif a[0].isBefore(b[0]) then
-    reassign result to .subList(a[0]].withAppendList(merge(a[1, .length()), b))
+    assign result to .subList(a[0]].withAppendList(merge(a[1, .length()), b))
   else
-    reassign result to .subList(b[0]].withAppendList(merge(a, b[1, .length())))
+    assign result to .subList(b[0]].withAppendList(merge(a, b[1, .length())))
   end if
   return result
 end function

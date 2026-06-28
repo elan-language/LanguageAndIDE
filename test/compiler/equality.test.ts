@@ -28,15 +28,15 @@ end main
 
 class Foo
     constructor(p1 as Float, p2 as String)
-        reassign this.p1 to p1
-        reassign this.p2 to p2
+        assign this.p1 to p1
+        assign this.p2 to p2
     end constructor
 
     property p1 as Float
     property p2 as String
 
     procedure setP1(v as Float)
-        reassign this.p1 to v
+        assign this.p1 to v
     end procedure
 
     function toString() returns String
@@ -111,15 +111,15 @@ end main
 
 class Foo
   constructor(p1 as Int, p2 as String)
-    reassign this.p1 to p1
-    reassign this.p2 to p2
+    assign this.p1 to p1
+    assign this.p2 to p2
   end constructor
 
   property p1 as Int
   property p2 as String
 
   procedure setP1(v as Int)
-    reassign this.p1 to v
+    assign this.p1 to v
   end procedure
 
   function toString() returns String
@@ -236,7 +236,7 @@ end main
 
 class Foo
   constructor(p as Int)
-    reassign this.p to p
+    assign this.p to p
   end constructor
   function toString() returns String
     return ""
@@ -245,7 +245,7 @@ class Foo
   property p as Int
 
   procedure setP(value as Int)
-    reassign this.p to value
+    assign this.p to value
   end procedure
 
 end class`;
@@ -323,7 +323,7 @@ class Foo
   property p as Int
 
   constructor(p as Int)
-    reassign this.p to p
+    assign this.p to p
   end constructor
   function toString() returns String
     return ""

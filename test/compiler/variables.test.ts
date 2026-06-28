@@ -121,7 +121,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3
-  reassign a to 4
+  assign a to 4
   call printNoLine(a)
 end main`;
 
@@ -156,7 +156,7 @@ return [main, _tests];}`;
 
 main
   variable a set to 3.1
-  reassign a to 4
+  assign a to 4
   call printNoLine(a)
 end main`;
 
@@ -294,7 +294,7 @@ return [main, _tests];}`;
 main
   variable a set to [1, 2]
   variable b set to a.map(lambda x as Int => x)
-  reassign b to [1, 2]
+  assign b to [1, 2]
   call printNoLine(b)
 end main`;
 
@@ -398,7 +398,7 @@ end main`;
 
 main
   variable a set to "astring"
-  reassign a to 4.1
+  assign a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -423,7 +423,7 @@ end main`;
 
 main
   variable a
-  reassign a to 4.1
+  assign a to 4.1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -553,10 +553,10 @@ main
   variable b set to 1
   variable c set to ""
   variable d set to f()
-  reassign a to 1.0
-  reassign b to false
-  reassign c to [1.0, 2]
-  reassign d to 1.0
+  assign a to 1.0
+  assign b to false
+  assign c to [1.0, 2]
+  assign d to 1.0
 end main`;
 
     const fileImpl = new FileImpl(
@@ -585,9 +585,9 @@ end main`;
 main
   variable a set to createPopulatedList(3, "")
   variable b set to [1.0, 2]
-  reassign a to [1.0, 2]
-  reassign b to a
-  reassign c to b
+  assign a to [1.0, 2]
+  assign b to a
+  assign c to b
 end main`;
 
     const fileImpl = new FileImpl(

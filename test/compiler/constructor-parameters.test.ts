@@ -17,7 +17,7 @@ suite("Constructor Parameters", () => {
 
 class Foo
     constructor(p_1 as Int)
-        reassign p_1 to this.p1
+        assign p_1 to this.p1
     end constructor
   function toString() returns String
     return ""
@@ -83,7 +83,7 @@ end class`;
 
 class Foo
     constructor()
-        reassign p1 to 4
+        assign p1 to 4
     end constructor
   function toString() returns String
     return ""

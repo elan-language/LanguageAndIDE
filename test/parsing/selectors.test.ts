@@ -8,12 +8,12 @@ import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
 import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
 import { InterfaceFrame } from "../../src/ide/frames/globals/interface-frame";
-import { MainFrame } from "../../src/ide/frames/globals/main-frame";
+import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Profile } from "../../src/ide/frames/profile";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { While } from "../../src/ide/frames/statements/while";
+import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { transforms } from "../compiler/compiler-test-helpers";
@@ -25,16 +25,16 @@ suite("Selector tests", () => {
     const file = emptyMainOnly();
     const selector = file.getById("elan_select2") as StatementSelector;
     assertOptions(selector, [
-      "print",
+      "print statement",
       "variable definition",
-      "reassign variable",
-      "input",
-      "if",
+      "assignment",
+      "input statement",
+      "if statement",
       "while loop",
       "for loop",
-      "call procedure",
-      "try",
-      "throw",
+      "procedure call",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -71,7 +71,15 @@ suite("Selector tests", () => {
       false,
     );
     const g = new GlobalSelector(f);
-    assertOptions(g, ["main", "function", "test", "procedure", "k constant", "enum", "# comment"]);
+    assertOptions(g, [
+      "main routine",
+      "function",
+      "test",
+      "procedure",
+      "k constant",
+      "enum",
+      "# comment",
+    ]);
   });
 
   test("Selection Filtering - globals - procedural - with main", () => {
@@ -91,7 +99,7 @@ suite("Selector tests", () => {
     );
     const g = new GlobalSelector(f);
     assertOptions(g, [
-      "main",
+      "main routine",
       "function",
       "test",
       "procedure",
@@ -179,12 +187,12 @@ suite("Selector tests", () => {
     const s = new StatementSelector(func);
     assertOptions(s, [
       "variable definition",
-      "reassign variable",
-      "if",
+      "assignment",
+      "if statement",
       "while loop",
       "for loop",
-      "try",
-      "throw",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -215,16 +223,16 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     assertOptions(s, [
-      "print",
+      "print statement",
       "variable definition",
-      "reassign variable",
-      "input",
-      "if",
+      "assignment",
+      "input statement",
+      "if statement",
       "while loop",
       "for loop",
-      "call procedure",
-      "try",
-      "throw",
+      "procedure call",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -241,16 +249,16 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     assertOptions(s, [
-      "print",
+      "print statement",
       "variable definition",
-      "reassign variable",
-      "input",
-      "if",
+      "assignment",
+      "input statement",
+      "if statement",
       "while loop",
       "for loop",
-      "call procedure",
-      "try",
-      "throw",
+      "procedure call",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -294,7 +302,7 @@ suite("Selector tests", () => {
     );
     const func = new GlobalFunction(fl);
     const if1 = new IfStatement(func);
-    const wh = new While(if1);
+    const wh = new WhileLoop(if1);
     const s = new StatementSelector(wh);
     assertOptions(s, ["let statement", "# comment"]);
   });
@@ -308,22 +316,22 @@ suite("Selector tests", () => {
       new StdLib(new StubInputOutput()),
       false,
     );
-    const m = new MainFrame(fl);
+    const m = new MainRoutine(fl);
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     assertOptions(s, [
-      "print",
+      "print statement",
       "variable definition",
-      "reassign variable",
-      "input",
-      "if",
-      "else if",
-      "else",
+      "assignment",
+      "input statement",
+      "if statement",
+      "else if clause",
+      "else clause",
       "while loop",
       "for loop",
-      "call procedure",
-      "try",
-      "throw",
+      "procedure call",
+      "try statement",
+      "throw statement",
       "# comment",
     ]);
   });
@@ -339,7 +347,15 @@ suite("Selector tests", () => {
     );
     fl.removeChild(fl.getFirstChild());
     const gs = new GlobalSelector(fl);
-    assertOptions(gs, ["main", "function", "test", "procedure", "k constant", "enum", "# comment"]);
+    assertOptions(gs, [
+      "main routine",
+      "function",
+      "test",
+      "procedure",
+      "k constant",
+      "enum",
+      "# comment",
+    ]);
   });
 
   test("Selection Filtering - globals - all", () => {
@@ -353,7 +369,7 @@ suite("Selector tests", () => {
     );
     const g = new GlobalSelector(f);
     assertOptions(g, [
-      "main",
+      "main routine",
       "function",
       "test",
       "procedure",

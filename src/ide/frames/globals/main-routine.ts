@@ -5,7 +5,7 @@ import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class MainFrame extends FrameWithStatements implements GlobalFrame {
+export class MainRoutine extends FrameWithStatements implements GlobalFrame {
   isMain = true;
   isGlobal = true;
   file: File;
@@ -27,7 +27,7 @@ export class MainFrame extends FrameWithStatements implements GlobalFrame {
   }
 
   frameSpecificAnnotation(): string {
-    return "main";
+    return "main routine";
   }
 
   get symbolId() {

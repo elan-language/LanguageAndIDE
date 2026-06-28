@@ -32,7 +32,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [mainKeyword, "m", "<b>m</b>ain", (_parent: Parent) => this.file.createMain()],
+      [mainKeyword, "m", "<b>m</b>ain routine", (_parent: Parent) => this.file.createMain()],
       [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
       [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
       [procedureKeyword, "p", "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],

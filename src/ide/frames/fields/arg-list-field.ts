@@ -7,9 +7,9 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ArgListNode } from "../parse-nodes/arg-list-node";
-import { CallStatement } from "../statements/call-statement";
 import { InputStatement } from "../statements/input-statement";
 import { PrintStatement } from "../statements/print-statement";
+import { ProcedureCall } from "../statements/procedureCall";
 import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 
@@ -55,8 +55,8 @@ export class ArgListField extends AbstractField {
 
   private argumentDescriptions(holder: Frame, scope: Scope | undefined) {
     let procName = "";
-    if (holder instanceof CallStatement) {
-      procName = (holder as CallStatement).proc.text;
+    if (holder instanceof ProcedureCall) {
+      procName = (holder as ProcedureCall).proc.text;
     } else if (holder instanceof PrintStatement) {
       procName = printKeyword;
     } else if (holder instanceof InputStatement) {

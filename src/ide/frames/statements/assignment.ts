@@ -1,4 +1,4 @@
-import { reassignKeyword, toKeyword } from "../../../compiler/elan-keywords";
+import { assignKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { AssignableField } from "../fields/assignableField";
 import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { SingleLineFrame } from "../single-line-frame";
 
-export class ReAssignVariable extends SingleLineFrame implements Statement {
+export class Assignment extends SingleLineFrame implements Statement {
   isStatement = true;
   assignable: AssignableField;
   expr: ExpressionField;
@@ -18,12 +18,12 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
     this.expr = new ExpressionField(this);
   }
   initialKeywords(): string {
-    return reassignKeyword;
+    return assignKeyword;
   }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove(`${reassignKeyword} `);
+    source.remove(`${assignKeyword} `);
     this.assignable.parseFrom(source);
     source.remove(` ${toKeyword} `);
     this.expr.parseFrom(source);
@@ -38,10 +38,10 @@ export class ReAssignVariable extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return "reassign variable";
+    return "assignment";
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${reassignKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${assignKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

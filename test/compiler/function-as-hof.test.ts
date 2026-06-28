@@ -254,7 +254,7 @@ end function
   
 class Foo
   constructor(f as Func<of Int => Int>)
-    reassign this.pf to f
+    assign this.pf to f
   end constructor
   function toString() returns String
     return ""
@@ -574,7 +574,7 @@ end function
   
 class Foo
   constructor(f as Func<of Int => Int>)
-    reassign this.pf to f
+    assign this.pf to f
   end constructor
   function toString() returns String
     return ""

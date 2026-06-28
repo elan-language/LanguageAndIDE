@@ -2,48 +2,48 @@
 
 def main() -> None:
   game = Game(1000) # variable definition
-  game.addPlayer(HumanPlayer("Player A", 1000)) # call procedure
+  game.addPlayer(HumanPlayer("Player A", 1000)) # procedure call
   anotherRound = True # variable definition
   while anotherRound:
-    playOneRound(game) # call procedure
-    game.setMessage("Points updated. Do you want to play another round? (press y or n)") # call procedure
-    clearKeyBuffer() # call procedure
-    display(game) # call procedure
+    playOneRound(game) # procedure call
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)") # procedure call
+    clearKeyBuffer() # procedure call
+    display(game) # procedure call
     k = waitForKey().lowerCase() # variable definition
     if k.equals("y"):
-      game.setMessage("") # call procedure
+      game.setMessage("") # procedure call
     else:
-      anotherRound = False # reassign variable
+      anotherRound = False # assignment
     # end if
   # end while
 # end main
 
 def playOneRound(game: Game) -> None: # procedure
-  game.newRound() # call procedure
-  display(game) # call procedure
+  game.newRound() # procedure call
+  display(game) # procedure call
   dealer = game.dealer # variable definition
   faceCard = dealer.faceCard # variable definition
   for player in game.players:
-    player.startTurn() # call procedure
-    display(game) # call procedure
+    player.startTurn() # procedure call
+    display(game) # procedure call
     while player.status == Status.active:
-      player.nextAction(faceCard) # call procedure
-      display(game) # call procedure
+      player.nextAction(faceCard) # procedure call
+      display(game) # procedure call
     # end while
   # end for
-  dealer.play() # call procedure
-  display(game) # call procedure
+  dealer.play() # procedure call
+  display(game) # procedure call
   while dealer.status == Status.active:
-    dealer.nextAction(faceCard) # call procedure
-    display(game) # call procedure
+    dealer.nextAction(faceCard) # procedure call
+    display(game) # procedure call
   # end while
-  game.updatePoints() # call procedure
+  game.updatePoints() # procedure call
 # end procedure
 
 def display(game: Game) -> None: # procedure
   html = f"<style>{styleSheet}</style>{htmlForGame(game)}" # variable definition
-  displayHtml(html) # call procedure
-  sleep(1.5) # call procedure
+  displayHtml(html) # procedure call
+  sleep(1.5) # procedure call
 # end procedure
 
 def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # function
@@ -59,24 +59,24 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
   draw = Outcome.draw # variable definition
   playerOutcome = draw # variable definition
   if p == bust:
-    playerOutcome = lose # reassign variable
+    playerOutcome = lose # assignment
   elif (p == bj) and (d != bj): # else if
-    playerOutcome = winDouble # reassign variable
+    playerOutcome = winDouble # assignment
   elif d == bust: # else if
-    playerOutcome = win # reassign variable
+    playerOutcome = win # assignment
   elif (d == bj) and (p == bj): # else if
-    playerOutcome = draw # reassign variable
+    playerOutcome = draw # assignment
   elif p == bj: # else if
-    playerOutcome = winDouble # reassign variable
+    playerOutcome = winDouble # assignment
   elif d == bj: # else if
-    playerOutcome = lose # reassign variable
+    playerOutcome = lose # assignment
   elif pTotal > dTotal: # else if
-    playerOutcome = win # reassign variable
+    playerOutcome = win # assignment
   elif pTotal < dTotal: # else if
-    playerOutcome = lose # reassign variable
+    playerOutcome = lose # assignment
   else:
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
-    playerOutcome = draw # reassign variable
+    playerOutcome = draw # assignment
   # end if
   return playerOutcome
 # end function
@@ -133,11 +133,11 @@ class Test_dealCard(unittest.TestCase):
 def intAsSuit(n: int) -> Suit: # function
   suit = Suit.clubs # variable definition
   if n == 1:
-    suit = Suit.diamonds # reassign variable
+    suit = Suit.diamonds # assignment
   elif n == 2: # else if
-    suit = Suit.hearts # reassign variable
+    suit = Suit.hearts # assignment
   elif n == 3: # else if
-    suit = Suit.spades # reassign variable
+    suit = Suit.spades # assignment
   # end if
   return suit
 # end function
@@ -152,11 +152,11 @@ class Test_intAsSuit(unittest.TestCase):
 
 def htmlForGame(game: Game) -> str: # function
   html = "<div class='game'>" # variable definition
-  html = html + htmlForPlayer(game.dealer) # reassign variable
+  html = html + htmlForPlayer(game.dealer) # assignment
   for player in game.players:
-    html = html + htmlForPlayer(player) # reassign variable
+    html = html + htmlForPlayer(player) # assignment
   # end for
-  html = html + f"<div class='message'>{game.message}</div>" # reassign variable
+  html = html + f"<div class='message'>{game.message}</div>" # assignment
   return html + "</div>"
 # end function
 
@@ -172,12 +172,12 @@ class Test_htmlForGame(unittest.TestCase):
 
 def htmlForPlayer(player: Player) -> str: # function
   html = "<div class='player'>" # variable definition
-  html = html + f"<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>" # reassign variable
-  html = html + "<div class='hand'>" # reassign variable
+  html = html + f"<div class='details'>{player.name} - {player.points} points {player.getMessage()}</div>" # assignment
+  html = html + "<div class='hand'>" # assignment
   for card in player.cards:
     suit = card.suit # variable definition
     rank = card.rank # variable definition
-    html = html + htmlForCard(card) # reassign variable
+    html = html + htmlForCard(card) # assignment
   # end for
   return html + "</div></div>"
 # end function
@@ -193,24 +193,24 @@ class Test_htmlForPlayer(unittest.TestCase):
 def htmlForCard(card: Card) -> str: # function
   html = "" # variable definition
   if card.faceDown:
-    html = "<div class='card reversed'>" # reassign variable
+    html = "<div class='card reversed'>" # assignment
   else:
     rank = card.rank # variable definition
     suit = card.suit # variable definition
     colour = colourForSuit(suit) # variable definition
     symbol = symbolForSuit(suit) # variable definition
-    html = f"<div class='card {colour}'>" # reassign variable
+    html = f"<div class='card {colour}'>" # assignment
     u = htmlForSpot("u", rank) # variable definition
     v = htmlForSpot("v", symbol) # variable definition
     grid = "" # variable definition
     for location in gridForRank(rank):
       if location.equals("royal"):
-        grid = grid + htmlForSpot(location, rank) # reassign variable
+        grid = grid + htmlForSpot(location, rank) # assignment
       else:
-        grid = grid + htmlForSpot(location, symbol) # reassign variable
+        grid = grid + htmlForSpot(location, symbol) # assignment
       # end if
     # end for
-    html = html + f"{u}{v}{grid}" # reassign variable
+    html = html + f"{u}{v}{grid}" # assignment
   # end if
   return html + "</div>"
 # end function
@@ -236,9 +236,9 @@ class Test_htmlForSpot(unittest.TestCase):
 class Game: # concrete class
 
   def __init__(self: Game, dealerStartPoints: int) -> None:
-    self.dealer = Dealer(dealerStartPoints) # reassign variable
-    self.players = list[Player]() # reassign variable
-    self.message = "" # reassign variable
+    self.dealer = Dealer(dealerStartPoints) # assignment
+    self.players = list[Player]() # assignment
+    self.message = "" # assignment
   # end constructor
 
   dealer: Dealer # property
@@ -249,31 +249,31 @@ class Game: # concrete class
 
   def withPlayers(self: Game, p: list[Player]) -> Game: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.players = p # reassign variable
+    copyOfThis.players = p # assignment
     return copyOfThis
   # end function method
 
   def newRound(self: Game) -> None: # procedure method
     dealer = self.dealer # variable definition
-    dealer.newHand() # call procedure
+    dealer.newHand() # procedure call
     for player in self.players:
-      player.newHand() # call procedure
+      player.newHand() # procedure call
     # end for
   # end procedure method
 
   def updatePoints(self: Game) -> None: # procedure method
     for player in self.players:
-      player.determineOutcomeAndUpdatePoints(self.dealer) # call procedure
+      player.determineOutcomeAndUpdatePoints(self.dealer) # procedure call
     # end for
   # end procedure method
 
   def addPlayer(self: Game, player: Player) -> None: # procedure method
     players = self.players # variable definition
-    players.append(player) # call procedure
+    players.append(player) # procedure call
   # end procedure method
 
   def setMessage(self: Game, message: str) -> None: # procedure method
-    self.message = message # reassign variable
+    self.message = message # assignment
   # end procedure method
 
   def toString(self: Game) -> str: # function method
@@ -291,17 +291,17 @@ class Card: # concrete class
   faceDown: bool # property
 
   def __init__(self: Card, rank: str, suit: Suit, facedown: bool) -> None:
-    self.rank = rank # reassign variable
-    self.suit = suit # reassign variable
-    self.faceDown = facedown # reassign variable
+    self.rank = rank # assignment
+    self.suit = suit # assignment
+    self.faceDown = facedown # assignment
   # end constructor
 
   def turnFaceUp(self: Card) -> None: # procedure method
-    self.faceDown = False # reassign variable
+    self.faceDown = False # assignment
   # end procedure method
 
   def turnFaceDown(self: Card) -> None: # procedure method
-    self.faceDown = True # reassign variable
+    self.faceDown = True # assignment
   # end procedure method
 
   def toString(self: Card) -> str: # function method
@@ -328,63 +328,63 @@ class Player(ABC): # abstract class
 
   def startTurn(self: Player) -> None: # procedure method
     if self.status == Status.active:
-      self.hasTurn = True # reassign variable
+      self.hasTurn = True # assignment
     # end if
   # end procedure method
 
   def determineOutcomeAndUpdatePoints(self: Player, dealer: Dealer) -> None: # procedure method
     playerOutcome = determinePlayerOutcome(dealer, self) # variable definition
     if playerOutcome == Outcome.winDouble:
-      self.changePointsBy(2) # call procedure
-      dealer.changePointsBy(-2) # call procedure
+      self.changePointsBy(2) # procedure call
+      dealer.changePointsBy(-2) # procedure call
     elif playerOutcome == Outcome.win: # else if
-      self.changePointsBy(1) # call procedure
-      dealer.changePointsBy(-1) # call procedure
+      self.changePointsBy(1) # procedure call
+      dealer.changePointsBy(-1) # procedure call
     elif playerOutcome == Outcome.lose: # else if
-      self.changePointsBy(-1) # call procedure
-      dealer.changePointsBy(1) # call procedure
+      self.changePointsBy(-1) # procedure call
+      dealer.changePointsBy(1) # procedure call
     # end if
   # end procedure method
 
   def evaluateStatus(self: Player, newCard: Card) -> None: # procedure method
     if (self.cardCount() == 2) and (self.handTotal == 21):
-      self.status = Status.blackjack # reassign variable
+      self.status = Status.blackjack # assignment
     elif (self.handTotal > 21) and (self.softAce): # else if
-      self.handTotal = self.handTotal - 10 # reassign variable
-      self.softAce = False # reassign variable
+      self.handTotal = self.handTotal - 10 # assignment
+      self.softAce = False # assignment
     elif self.handTotal > 21: # else if
-      self.status = Status.bust # reassign variable
+      self.status = Status.bust # assignment
     elif self.handTotal == 21: # else if
-      self.status = Status.standing # reassign variable
+      self.status = Status.standing # assignment
     # end if
     if self.status != Status.active:
-      self.hasTurn = False # reassign variable
+      self.hasTurn = False # assignment
     # end if
   # end procedure method
 
   def stand(self: Player) -> None: # procedure method
-    self.status = Status.standing # reassign variable
-    self.hasTurn = False # reassign variable
+    self.status = Status.standing # assignment
+    self.hasTurn = False # assignment
   # end procedure method
 
   def draw(self: Player) -> None: # procedure method
     newCard = dealCard(random()) # variable definition
     cards = self.cards # variable definition
-    cards.append(newCard) # call procedure
+    cards.append(newCard) # procedure call
     if newCard.rank.equals("A"):
-      self.addAce() # call procedure
+      self.addAce() # procedure call
     else:
-      self.handTotal = self.handTotal + valueForRank(newCard.rank) # reassign variable
+      self.handTotal = self.handTotal + valueForRank(newCard.rank) # assignment
     # end if
-    self.evaluateStatus(newCard) # call procedure
+    self.evaluateStatus(newCard) # procedure call
   # end procedure method
 
   def addAce(self: Player) -> None: # procedure method
     if self.softAce:
-      self.handTotal = self.handTotal + 1 # reassign variable
+      self.handTotal = self.handTotal + 1 # assignment
     else:
-      self.handTotal = self.handTotal + 11 # reassign variable
-      self.softAce = True # reassign variable
+      self.handTotal = self.handTotal + 11 # assignment
+      self.softAce = True # assignment
     # end if
   # end procedure method
 
@@ -393,7 +393,7 @@ class Player(ABC): # abstract class
   # end function method
 
   def changePointsBy(self: Player, amount: int) -> None: # procedure method
-    self.points = self.points + amount # reassign variable
+    self.points = self.points + amount # assignment
   # end procedure method
 
   @abstractmethod
@@ -401,13 +401,13 @@ class Player(ABC): # abstract class
     pass # abstract procedure
 
   def newHandHelper(self: Player) -> None: # private procedure method
-    self.hasTurn = False # reassign variable
-    self.softAce = False # reassign variable
-    self.cards = list[Card]() # reassign variable
-    self.handTotal = 0 # reassign variable
-    self.status = Status.active # reassign variable
-    self.draw() # call procedure
-    self.draw() # call procedure
+    self.hasTurn = False # assignment
+    self.softAce = False # assignment
+    self.cards = list[Card]() # assignment
+    self.handTotal = 0 # assignment
+    self.status = Status.active # assignment
+    self.draw() # procedure call
+    self.draw() # procedure call
   # end procedure method
 
   @abstractmethod
@@ -418,13 +418,13 @@ class Player(ABC): # abstract class
     msg = "" # variable definition
     status = self.status # variable definition
     if self.hasTurn:
-      msg = msg + " - PLAYING" # reassign variable
+      msg = msg + " - PLAYING" # assignment
     elif status == Status.standing: # else if
-      msg = msg + " - STANDING" # reassign variable
+      msg = msg + " - STANDING" # assignment
     elif status == Status.blackjack: # else if
-      msg = msg + " - BLACKJACK" # reassign variable
+      msg = msg + " - BLACKJACK" # assignment
     elif status == Status.bust: # else if
-      msg = msg + " - BUST" # reassign variable
+      msg = msg + " - BUST" # assignment
     # end if
     return msg
   # end function method
@@ -438,10 +438,10 @@ class Player(ABC): # abstract class
 class Dealer(Player): # concrete class
 
   def __init__(self: Dealer, startingPoints: int) -> None:
-    self.name = "Dealer" # reassign variable
-    self.points = startingPoints # reassign variable
-    self.cards = list[Card]() # reassign variable
-    self.faceCard = Card("2", Suit.clubs, True) # reassign variable
+    self.name = "Dealer" # assignment
+    self.points = startingPoints # assignment
+    self.cards = list[Card]() # assignment
+    self.faceCard = Card("2", Suit.clubs, True) # assignment
   # end constructor
 
   faceCard: Card # property
@@ -450,43 +450,43 @@ class Dealer(Player): # concrete class
 
   def withStatus(self: Dealer, status: Status) -> Dealer: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.status = status # reassign variable
+    copyOfThis.status = status # assignment
     return copyOfThis
   # end function method
 
   def withHandTotal(self: Dealer, ht: int) -> Dealer: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.handTotal = ht # reassign variable
+    copyOfThis.handTotal = ht # assignment
     return copyOfThis
   # end function method
 
   def play(self: Dealer) -> None: # procedure method
-    self.startTurn() # call procedure
+    self.startTurn() # procedure call
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceUp() # call procedure
-    self.hasPlayed = True # reassign variable
+    hiddenCard.turnFaceUp() # procedure call
+    self.hasPlayed = True # assignment
   # end procedure method
 
   def newHand(self: Dealer) -> None: # procedure method
-    self.hasPlayed = False # reassign variable
-    self.newHandHelper() # call procedure
-    self.faceCard = self.cards[0] # reassign variable
+    self.hasPlayed = False # assignment
+    self.newHandHelper() # procedure call
+    self.faceCard = self.cards[0] # assignment
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceDown() # call procedure
+    hiddenCard.turnFaceDown() # procedure call
   # end procedure method
 
   def nextAction(self: Dealer, faceCard: Card) -> None: # procedure method
     if self.handTotal < 17:
-      self.draw() # call procedure
+      self.draw() # procedure call
     else:
-      self.stand() # call procedure
+      self.stand() # procedure call
     # end if
   # end procedure method
 
   def getMessage(self: Dealer) -> str: # function method
     msg = "" # variable definition
     if self.hasPlayed:
-      msg = self.getMessageHelper() + f" - hand total: {self.handTotal}" # reassign variable
+      msg = self.getMessageHelper() + f" - hand total: {self.handTotal}" # assignment
     # end if
     return msg
   # end function method
@@ -500,44 +500,44 @@ class Dealer(Player): # concrete class
 class HumanPlayer(Player): # concrete class
 
   def __init__(self: HumanPlayer, name: str, startingPoints: int) -> None:
-    self.name = name # reassign variable
-    self.points = startingPoints # reassign variable
-    self.cards = list[Card]() # reassign variable
+    self.name = name # assignment
+    self.points = startingPoints # assignment
+    self.cards = list[Card]() # assignment
   # end constructor
 
   def withStatus(self: HumanPlayer, status: Status) -> HumanPlayer: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.status = status # reassign variable
+    copyOfThis.status = status # assignment
     return copyOfThis
   # end function method
 
   def withHandTotal(self: HumanPlayer, ht: int) -> HumanPlayer: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.handTotal = ht # reassign variable
+    copyOfThis.handTotal = ht # assignment
     return copyOfThis
   # end function method
 
   def withCards(self: HumanPlayer, c: list[Card]) -> HumanPlayer: # function method
     copyOfThis = copy(self) # let
-    copyOfThis.cards = c # reassign variable
+    copyOfThis.cards = c # assignment
     return copyOfThis
   # end function method
 
   def newHand(self: HumanPlayer) -> None: # procedure method
-    self.newHandHelper() # call procedure
+    self.newHandHelper() # procedure call
   # end procedure method
 
   def nextAction(self: HumanPlayer, dealerFaceCard: Card) -> None: # procedure method
     key = "" # variable definition
-    clearKeyBuffer() # call procedure
+    clearKeyBuffer() # procedure call
     while key.equals(""):
-      key = waitForKey() # reassign variable
+      key = waitForKey() # assignment
       if key.equals("d"):
-        self.draw() # call procedure
+        self.draw() # procedure call
       elif key.equals("s"): # else if
-        self.stand() # call procedure
+        self.stand() # procedure call
       else:
-        key = "" # reassign variable
+        key = "" # assignment
       # end if
     # end while
   # end procedure method
@@ -545,7 +545,7 @@ class HumanPlayer(Player): # concrete class
   def getMessage(self: HumanPlayer) -> str: # function method
     msg = self.getMessageHelper() + f"- hand total: {self.handTotal}" # variable definition
     if self.hasTurn:
-      msg = msg + " - press 'd' to draw, 's' to stand" # reassign variable
+      msg = msg + " - press 'd' to draw, 's' to stand" # assignment
     # end if
     return msg
   # end function method

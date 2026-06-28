@@ -228,7 +228,7 @@ end test
 
 class Foo
   constructor()
-    reassign this.p1 to 10
+    assign this.p1 to 10
   end constructor
   function toString() returns String
     return ""
@@ -300,7 +300,7 @@ end test
 
 class Foo
   constructor()
-    reassign this.p1 to 10
+    assign this.p1 to 10
   end constructor
   function toString() returns String
     return ""
@@ -593,7 +593,7 @@ end test
 
 class Foo
   constructor(b as Int)
-    reassign this.bar to b
+    assign this.bar to b
   end constructor
   function toString() returns String
     return "a Foo"

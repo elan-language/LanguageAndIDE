@@ -1,11 +1,11 @@
-# 4ade1b9e14e2a93308f5b27f072f3f83dc16bbe5d301aab2aa0d399f4bf4d368 Elan 2.0.0-beta1 valid
+# 1e79c596f2b9d6f90ff0f0a171be870e3be93c7d8e39b88aa74d5f0dac2503ce Elan 2.0.0-beta1 valid
 
 main
   variable quit set to false
   while not quit
     input reply set to inputString("t - for time now, q - to quit, or an integer value to convert")
     if reply.upperCase().equals("Q") then
-      reassign quit to true
+      assign quit to true
     elif reply.upperCase().equals("T") then
       variable now set to divAsInt(clock(), 1000)
       print(now)
@@ -74,11 +74,11 @@ function dayInYear(year as Int, unixDays as Int) returns Int
   variable dayNumber set to unixDays + 1
   if year > unixYear then
     # discount previous nominal years
-    reassign dayNumber to dayNumber - 365*(year - unixYear)
+    assign dayNumber to dayNumber - 365*(year - unixYear)
     # discount previous leap days
     for y in range(unixYear, year)
       if leap(y) then
-        reassign dayNumber to dayNumber - 1
+        assign dayNumber to dayNumber - 1
       end if
     end for
   end if
@@ -109,10 +109,10 @@ function monthDay(startDays as List<of Int>, dayNumber as Int) returns (Int, Int
   variable monthFound set to false
   while monthFound is false
     if (dayNumber < startDays[month]) then
-      reassign monthFound to true
-      reassign day to dayNumber - startDays[month - 1] + 1
+      assign monthFound to true
+      assign day to dayNumber - startDays[month - 1] + 1
     else
-      reassign month to month + 1
+      assign month to month + 1
     end if
   end while
   return (month, day)
@@ -123,7 +123,7 @@ function startDaysList(year as Int, startDays as List<of Int>) returns List<of I
   variable startDaysL set to getStartDays()
   if leap(year) then
     for m in range(2, 13)
-      reassign startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
+      assign startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
     end for
   end if
   return startDaysL
@@ -179,9 +179,9 @@ function pad(d as String, p as String, s as String) returns String
   if p.length() > s.length() then
     if d.upperCase().equals("L") then
       variable ps set to p + s
-      reassign sR to ps.subString(ps.length() - p.length(), ps.length())
+      assign sR to ps.subString(ps.length() - p.length(), ps.length())
     elif d.upperCase().equals("R") then
-      reassign sR to (s + p).subString(0, p.length())
+      assign sR to (s + p).subString(0, p.length())
     end if
   end if
   return sR

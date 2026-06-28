@@ -1,4 +1,4 @@
-# 32e49e28aa1e8a04cacf851fff17f428d4f6d5d480ad98d51a7865c31542b58f Elan 2.0.0-beta1 valid
+# 65ffcbebf5fa4d3194c3023bc5015acb7afa1f34c939097874fa82afcccda3a8 Elan 2.0.0-beta1 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -14,9 +14,9 @@ main
   variable attempt set to "RAISE"
   while not mark.equals("*****")
     input inp set to inputString("" + attempt)
-    reassign mark to inp
-    reassign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
-    reassign attempt to bestAttempt(possible)
+    assign mark to inp
+    assign possible to possibleAnswersAfterAttempt(possible, attempt, mark)
+    assign attempt to bestAttempt(possible)
   end while
 end main
 
@@ -102,8 +102,8 @@ end function
 
 class WordCount
   constructor(word as String, count as Int)
-    reassign this.word to word
-    reassign this.count to count
+    assign this.word to word
+    assign this.count to count
   end constructor
 
   property word as String

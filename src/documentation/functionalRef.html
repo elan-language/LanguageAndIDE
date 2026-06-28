@@ -36,7 +36,7 @@ This changes two things: </p>
 </li>
 <li>It will change some of the options available on the <b>new code</b> menus in the editor:
     <ul>
-        <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a new instruction named <b>let</b> (plus, of course, comments).</li>
+        <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a <b>let statement</b> (plus, of course, comments).</li>
         <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
         <li>Within a concrete or abstract class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
         of function method which is particularly useful in FP.</li>
@@ -74,7 +74,7 @@ This changes two things: </p>
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
 (in Python, VB, C#, or Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> paradigms
-and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a procedure</b>, nor can you make use of system methods such as <el-method>input</el-method>,
+and you are <i>within a function</i>, you cannot add a <b>print statement</b>, <b>input statement</b>, or <b>procedure call</b>, nor can you make use of system methods such as <el-method>input</el-method>,
 <el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
 
 <h2>As much of the code as possible should be in functions</h2>
@@ -83,7 +83,7 @@ and you are <i>within a function</i>, you cannot <b>print</b> or <b>call a proce
   because it cannot work without dependencies on the system, and it generates <i>side effects</i> such as output to a display.</p>
 <p>To avoid your main routine becoming difficult to read, and to avoid duplicated code, you may still define procedures
   (which also, inherently, use procedural programming to manage input/output and other system operations).
-  But this second principle of FP implies that the <b>main</b> together with any necessary <b>procedure</b>s should
+  But this second principle of FP implies that the <b>main routine</b> together with any necessary <b>procedure</b>s should
   be kept as small as possible:
   <ul>
     <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or 
@@ -183,7 +183,7 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
 
   <h3 class="no-TOC">Note on demo program <b>Best Fit</b></h3>
 <ul>
-  <li>The <b>Best Fit</b> demo defines a function and a Class for use in other programs. It has no <b>main</b> instruction,
+  <li>The <b>Best Fit</b> demo defines a function and a Class for use in other programs. It has no <b>main routine</b> instruction,
     so comparison with the the unit testing in other programs would be misleading. The function and the operation
   of the Class are both 100% tested.</li>
 </ul>
@@ -214,11 +214,11 @@ end function
   <li>it may refer to a List or other data structure, where as the (global) <b>constant</b> instruction is limited to simple value types or a string.</li>
 </ul>
 
-<p>In the four languages supported by Elan, <b>let</b> instructions 
-  are really just disguised variable definitions, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
-  <b>let</b> instructions (some languages have 'let <i>clauses</i>') are executed <i>lazily</i>, meaning that execution of a function
-    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let</b> instructions <i>only when or if they are needed</i>. 
-   So getting used to using <b>let</b> instructions in Elan leaves you better prepared to move onto a pure FP language at a future point.
+<p>In the four languages supported by Elan, <b>let statement</b>s
+  are really just disguised <b>variable definition</b>s, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
+  <b>let statement</b><s></s> (some languages permit 'let clauses' <i>within an expression</i>) are executed <i>lazily</i>, meaning that execution of a function
+    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let statement</b>s <i>only when or if they are needed</i>. 
+   So getting used to using <b>let statement</b>s in Elan leaves you better prepared to move onto a pure FP language at a future point.
 </p>
 
 <p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
@@ -230,11 +230,11 @@ end function
 </ul>
 
 <p>When running in the <b>functional</b> paradigm, <b>let statement</b> is the only type of instruction that you may add within a function,
-  and the only type in addition to an <b>assert</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
+  and the only type in addition to an <b>assert statement</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
 
 <h2>Selection is implemented using 'conditional expressions'</h2>
 
-<p>When running in the Functional paradigm, you cannot add an <b>if</b> <i>instruction</i> into a function.
+<p>When running in the Functional paradigm, you cannot add an <b>if statement</b> into a function.
    Selection is handled by means of a 'conditional expression'.</p>
 
 <p>All of the languages supported by Elan have their own custom syntax for conditional expressions. For simplicity,
@@ -265,7 +265,7 @@ end function
   <li>The value to be returned by the <el-method>if</el-method> function when the condition evaluates to <code>false</code></li>
 </ol>
 
-<p>Thus the <el-method>if</el-method> function performs a role somewhat similar to an <b>if</b> <i>instruction</i>,
+<p>Thus the <el-method>if</el-method> function performs a role somewhat similar to an <b>if statement</b>,
 but differs from it in these important respects:</p>
 
 <ul>
@@ -315,7 +315,7 @@ end function
 <p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
 
 <codeblock>
-  reassign mySubjects[3] to "Geography"
+  assign mySubjects[3] to "Geography"
 </codeblock>
 
 or by calling one of the available procedure methods on on it such as:
@@ -546,7 +546,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 <codeblock>
 function withHead(value as Square) returns Game
   let copyOfThis be copy(this)
-  reassign copyOfThis.head to value
+  assign copyOfThis.head to value
   return copyOfThis
 end function
 </codeblock>
@@ -563,7 +563,7 @@ Note that it:
 must be created using the <b>with method</b> instruction template, which is
 offered only within a Class, and only when using the <b>functional</b> paradigm.</p>
 <p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
-a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>reassign this.x to value</code>, since that would make changes observable from outside the function.</p>
+a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>assign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
 <p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
   within the program to update any instance of Square &ndash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
@@ -624,7 +624,7 @@ main
   variable rng set to new Random()
   for i in range(1, 10)
     print(rollDice(rng))
-    reassign rng to rng.nextGen()
+    assign rng to rng.nextGen()
   end for
 end main
 </codeblock>
@@ -640,7 +640,7 @@ main
   call rng.initialiseFromClock()
   for i in range(1, 10)
     print(rollDice(rng))
-    reassign rng to rng.nextGen()
+    assign rng to rng.nextGen()
   end for
 end main
 </codeblock>
@@ -693,7 +693,7 @@ which forms part of the function template, plus the option to precede this with 
  <h2>Let Statement</h2>
  
 <div class="accordion">
-<h4 class="no-TOC acc-title">Examples of let statements</h4>
+<h3 class="no-TOC acc-title">Examples of a let statement</h3>
 <div class="acc-body">
 
   <p>From the <b>Life - functional</b> demo:</p>
@@ -734,7 +734,7 @@ end function
 </div></div>
 
  <div class="accordion">
-<h4 class="no-TOC acc-title">What you need to know about let statements</h4>
+<h3 class="no-TOC acc-title">What you need to know about a let statement</h3>
 <div class="acc-body">
 
   <ul>
@@ -775,7 +775,7 @@ paradigm, with two exceptions:</p>
   <h2>With method</h2>
 
     <div class="accordion">
-      <h3 class="no-TOC acc-title">Examples of <b>with method</b></h3>
+      <h3 class="no-TOC acc-title">Examples of a with method</h3>
       <div class="acc-body">
 
         <p>From the <b>Snake - functional</b> demo, where the <code>Game</code> class defines 8 <b>with method</b>s including:</p>
@@ -783,7 +783,7 @@ paradigm, with two exceptions:</p>
         <codeblock>
           function withHead(value as Square) returns Game
             let copyOfThis be copy(this)
-            reassign copyOfThis.head to value
+            assign copyOfThis.head to value
             return copyOfThis
           end function
         </codeblock>
@@ -809,7 +809,7 @@ paradigm, with two exceptions:</p>
   
 
       <div class="accordion">
-      <h4 class="no-TOC acc-title">What you need to know about <b>with method</b>s</h4>
+      <h3 class="no-TOC acc-title">What you need to know about a with method</h3>
       <div class="acc-body">
 
         <ul>
@@ -822,7 +822,7 @@ paradigm, with two exceptions:</p>
           <li>When you create a new <b>with method</b> within a class, the method includes three templated completed instructions.
             You should not attempt to change the first or last instructions, nor delete the middle one - if you do this by mistake, delete the
             whole method and start again.</li>
-          <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>reassign copyOfThis.aPropertyName to theNewValue</code></li>
+          <li>The middle instruction - a <b>reassign variable</b> - indicates that its form should be: <code>assign copyOfThis.aPropertyName to theNewValue</code></li>
           <li><code>copyOfThis</code> is a <i>reserved name</i> within Elan - this variable can only be created by the templated instruction shown above,
           and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> paradigm.</li>
           <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 

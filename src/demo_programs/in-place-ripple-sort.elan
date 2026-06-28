@@ -1,4 +1,4 @@
-# fe2d1ac3ac339d639d718c3f34827f75b17a1b2120a9175691975cda3fe1b3a2 Elan 2.0.0-beta1 valid
+# 071286c43fed0ae16c32c2a7be115b31af7fc23e1bc1e0098f3d8134dab2262d Elan 2.0.0-beta1 valid
 
 main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
@@ -11,15 +11,15 @@ procedure inPlaceRippleSort(li as List<of Int>)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
-    reassign hasChanged to false
+    assign hasChanged to false
     for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
+        assign li[i] to li[i + 1]
+        assign li[i + 1] to temp
+        assign hasChanged to true
       end if
     end for
-    reassign lastComp to lastComp - 1
+    assign lastComp to lastComp - 1
   end while
 end procedure

@@ -31,7 +31,7 @@ export class TryStatement extends FrameWithStatements {
   }
 
   frameSpecificAnnotation(): string {
-    return "try";
+    return "try statement";
   }
 
   outerHtmlTag: string = "el-statement";

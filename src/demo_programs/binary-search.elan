@@ -1,4 +1,4 @@
-# 5f781825526e1e888c0c2fac7f64d5d96b017fc105547fa37d42b8a257b198a2 Elan 2.0.0-beta1 valid
+# d445241af6e354ed8e5b63605ed5cc3123b9d4e7e36a2882550226a4a77d271a Elan 2.0.0-beta1 valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -6,7 +6,7 @@ main
   while not done
     input wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
-      reassign done to true
+      assign done to true
     else
       variable result set to binarySearch(fruit, wanted)
       if result then
@@ -24,11 +24,11 @@ function binarySearch(li as List<of String>, item as String) returns Boolean
     variable mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     if item.equals(value) then
-      reassign result to true
+      assign result to true
     elif item.isBefore(value) then
-      reassign result to binarySearch(li.subList(0, mid), item)
+      assign result to binarySearch(li.subList(0, mid), item)
     else
-      reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
+      assign result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
   end if
   return result

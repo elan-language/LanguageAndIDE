@@ -2,20 +2,20 @@
 
 def main() -> None:
   grid = createBlockGraphics(white) # variable definition
-  fillRandom(grid) # call procedure
+  fillRandom(grid) # procedure call
   while True:
-    displayBlocks(grid) # call procedure
+    displayBlocks(grid) # procedure call
     gridRef = AsRef[list[list[int]]](grid) # variable definition
-    nextGeneration(gridRef) # call procedure
-    grid = gridRef.value() # reassign variable
-    sleep_ms(50) # call procedure
+    nextGeneration(gridRef) # procedure call
+    grid = gridRef.value() # assignment
+    sleep_ms(50) # procedure call
   # end while
 # end main
 
 def fillRandom(grid: list[list[int]]) -> None: # procedure
   for col in range(0, 40):
     for row in range(0, 30):
-      grid[col][row] = blackOrWhite(random()) # reassign variable
+      grid[col][row] = blackOrWhite(random()) # assignment
     # end for
   # end for
 # end procedure
@@ -26,16 +26,16 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
   for x in range(0, 40):
     for y in range(0, 30):
       colour = nextCellValue(grid, x, y) # variable definition
-      nextGen[x][y] = colour # reassign variable
+      nextGen[x][y] = colour # assignment
     # end for
   # end for
-  gridRef.set(nextGen) # call procedure
+  gridRef.set(nextGen) # procedure call
 # end procedure
 
 def blackOrWhite(random: float) -> int: # function
   result = black # variable definition
   if random > 0.5:
-    result = white # reassign variable
+    result = white # assignment
   # end if
   return result
 # end function
@@ -45,7 +45,7 @@ def north(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   y2 = y - 1 # variable definition
   if y2 == -1:
-    y2 = 29 # reassign variable
+    y2 = 29 # assignment
   # end if
   return (x, y2)
 # end function
@@ -55,7 +55,7 @@ def south(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   y2 = y + 1 # variable definition
   if y2 == 30:
-    y2 = 0 # reassign variable
+    y2 = 0 # assignment
   # end if
   return (x, y2)
 # end function
@@ -65,7 +65,7 @@ def east(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   x2 = x + 1 # variable definition
   if x2 == 40:
-    x2 = 0 # reassign variable
+    x2 = 0 # assignment
   # end if
   return (x2, y)
 # end function
@@ -75,7 +75,7 @@ def west(cell: tuple[int, int]) -> tuple[int, int]: # function
   y = cell.item_1 # variable definition
   x2 = x - 1 # variable definition
   if x2 == -1:
-    x2 = 39 # reassign variable
+    x2 = 39 # assignment
   # end if
   return (x2, y)
 # end function
@@ -107,7 +107,7 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
     cx = cell.item_0 # variable definition
     cy = cell.item_1 # variable definition
     if grid[cx][cy] == black:
-      count = count + 1 # reassign variable
+      count = count + 1 # assignment
     # end if
   # end for
   return count
@@ -116,9 +116,9 @@ def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   result = False # variable definition
   if cell == black:
-    result = (liveNeighbours > 1) and (liveNeighbours < 4) # reassign variable
+    result = (liveNeighbours > 1) and (liveNeighbours < 4) # assignment
   else:
-    result = liveNeighbours == 3 # reassign variable
+    result = liveNeighbours == 3 # assignment
   # end if
   return result
 # end function
@@ -127,7 +127,7 @@ def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
   colour = white # variable definition
   live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
   if live:
-    colour = black # reassign variable
+    colour = black # assignment
   # end if
   return colour
 # end function
