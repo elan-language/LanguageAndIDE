@@ -12,6 +12,7 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
+import { WithMethod } from "../class-members/with-method";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -229,7 +230,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new FunctionMethod(this, priv);
   }
   createWithMethod(): Frame {
-    const wm = new FunctionMethod(this, false);
+    const wm = new WithMethod(this, false);
     wm.setHelpId("with-method");
     wm.name.setPlaceholder("<i>withPropertyName</i>");
     const className: string = this.name.text;
