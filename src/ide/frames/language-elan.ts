@@ -1,4 +1,49 @@
-import { abstractKeyword, asKeyword, assertKeyword, assignKeyword, beKeyword, callKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, copyKeyword, elifKeyword, elseKeyword, endKeyword, enumKeyword, forKeyword, functionKeyword, ifKeyword, inheritsKeyword, inKeyword, inputKeyword, interfaceKeyword, lambdaKeyword, letKeyword, mainKeyword, newKeyword, ofKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, returnKeyword, returnsKeyword, setKeyword, stepKeyword, testKeyword, thenKeyword, thisKeyword, throwKeyword, toKeyword, tryKeyword, variableKeyword, whileKeyword, withKeyword } from "../../compiler/elan-keywords";
+import {
+  abstractKeyword,
+  asKeyword,
+  assertKeyword,
+  assignKeyword,
+  beKeyword,
+  callKeyword,
+  catchKeyword,
+  classKeyword,
+  constantKeyword,
+  constructorKeyword,
+  copyKeyword,
+  elifKeyword,
+  elseKeyword,
+  endKeyword,
+  enumKeyword,
+  forKeyword,
+  functionKeyword,
+  ifKeyword,
+  inheritsKeyword,
+  inKeyword,
+  inputKeyword,
+  interfaceKeyword,
+  lambdaKeyword,
+  letKeyword,
+  mainKeyword,
+  newKeyword,
+  ofKeyword,
+  printKeyword,
+  privateKeyword,
+  procedureKeyword,
+  propertyKeyword,
+  returnKeyword,
+  returnsKeyword,
+  setKeyword,
+  stepKeyword,
+  testKeyword,
+  thenKeyword,
+  thisKeyword,
+  throwKeyword,
+  toKeyword,
+  tryKeyword,
+  variableKeyword,
+  whileKeyword,
+  withKeyword,
+} from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -279,13 +324,7 @@ export class LanguageElan extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
-  EXPRESSION_KEYWORDS: string[] = [
-    this.NEW,
-    this.IF,
-    this.lambdaKeyword,
-    this.THIS,
-    this.NOT,
-  ];
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.THIS, this.NOT];
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));

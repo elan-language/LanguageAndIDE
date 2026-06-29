@@ -600,7 +600,9 @@ export function elanDeprecated(
 }
 
 export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyExceptEnumName);
-export const ElanAnyInclEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyInclEnumName);
+export const ElanAnyInclEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(
+  AnyInclEnumName,
+);
 export const ElanAnyEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyEnumName);
 export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);

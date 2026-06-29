@@ -2,11 +2,9 @@ import {
   copyKeyword,
   endKeyword,
   returnKeyword,
-  returnsKeyword
+  returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import {
-  singleIndent
-} from "../frame-helpers";
+import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
@@ -25,8 +23,8 @@ export class CopyWithMethod extends FunctionFrame {
   constructor(parent: Parent, _parentClassName: string) {
     super(parent);
     this.file = parent.getFile();
-     const ret = this.getLastChild() as ReturnStatement;
-     const thisInst = this.language().THIS_INSTANCE;
+    const ret = this.getLastChild() as ReturnStatement;
+    const thisInst = this.language().THIS_INSTANCE;
     ret.expr.setPlaceholder(`copyWithPropertyUpdate(${thisInst}, "propertyName", newValue)`);
     this.removeChild(this.getFirstSelectorAsDirectChild());
   }
@@ -71,24 +69,24 @@ ${this.indent()}${endKeyword} ${copyKeyword}\r
 `;
   }
 
-    parseTop(source: CodeSource): void {
-      source.remove(`${copyKeyword} `);
-      this.name.parseFrom(source);
-      source.remove("(");
-      this.params.parseFrom(source);
-      source.remove(`) ${returnsKeyword} `);
-      this.returnType.parseFrom(source);
+  parseTop(source: CodeSource): void {
+    source.remove(`${copyKeyword} `);
+    this.name.parseFrom(source);
+    source.remove("(");
+    this.params.parseFrom(source);
+    source.remove(`) ${returnsKeyword} `);
+    this.returnType.parseFrom(source);
+  }
+  parseBottom(source: CodeSource): boolean {
+    let result = false;
+    source.removeIndent();
+    if (source.isMatch(`${returnKeyword} `)) {
+      const ret = this.getLastChild() as ReturnStatement;
+      ret.parseFrom(source);
+      source.removeNewLine().removeIndent();
+      this.parseStandardEnding(source, `${endKeyword} ${copyKeyword}`);
+      result = true;
     }
-    parseBottom(source: CodeSource): boolean {
-      let result = false;
-      source.removeIndent();
-      if (source.isMatch(`${returnKeyword} `)) {
-        const ret = this.getLastChild() as ReturnStatement;
-        ret.parseFrom(source);
-        source.removeNewLine().removeIndent();
-        this.parseStandardEnding(source, `${endKeyword} ${copyKeyword}`);
-        result = true;
-      }
-      return result;
-    }
+    return result;
+  }
 }

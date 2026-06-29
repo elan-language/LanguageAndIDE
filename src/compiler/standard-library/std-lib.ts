@@ -905,8 +905,12 @@ export class StdLib {
   }
 
   @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  copyWithPropertyUpdated<T extends object>(@elanGenericParamT1Type() toCopy: T, propName: string, @elanAnyInclEnumType() newValue: any): T {
+  copyWithPropertyUpdated<T extends object>(
+    @elanGenericParamT1Type() toCopy: T,
+    propName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @elanAnyInclEnumType() newValue: any,
+  ): T {
     const newObject = Object.create(toCopy);
     const cc = Object.assign(newObject, toCopy);
     cc[propName] = newValue;
