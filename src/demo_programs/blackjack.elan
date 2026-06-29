@@ -1,4 +1,4 @@
-# 3744228c5d12b693abcd4f673be58c3ac1a3d397b1ff8f812a6e95d90845dcd0 Elan 2.0.0-beta1 valid
+# d2f99c212606a6b3bc624e2c816a3d030348efa9709da385c8d96b68d55e9052 Elan 2.0.0-beta1 valid
 
 main
   variable game set to new Game(1000)
@@ -239,10 +239,8 @@ class Game
 
   property message as String
 
-  copy with_players(p as List<of Player>) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.players to p
-    return copyOfThis
+  copy with_players(players as List<of Player>) returns Game
+    return copyWithPropertyUpdated(this, "players", players)
   end copy
 
   procedure newRound()
@@ -432,15 +430,11 @@ class Dealer inherits Player
   property hasPlayed as Boolean
 
   copy with_status(status as Status) returns Dealer
-    let copyOfThis be copy(this)
-    assign copyOfThis.status to status
-    return copyOfThis
-  end funcopyction
+    return copyWithPropertyUpdated(this, "status", status)
+  end copy
 
-  copy with_handTotal(ht as Int) returns Dealer
-    let copyOfThis be copy(this)
-    assign copyOfThis.handTotal to ht
-    return copyOfThis
+  copy with_handTotal(handTotal as Int) returns Dealer
+    return copyWithPropertyUpdated(this, "handTotal", handTotal)
   end copy
 
   procedure play()
@@ -488,21 +482,15 @@ class HumanPlayer inherits Player
   end constructor
 
   copy with_status(status as Status) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.status to status
-    return copyOfThis
+    return copyWithPropertyUpdated(this, "status", status)
   end copy
 
-  copy with_handTotal(ht as Int) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.handTotal to ht
-    return copyOfThis
+  copy with_handTotal(handTotal as Int) returns HumanPlayer
+    return copyWithPropertyUpdated(this, "handTotal", handTotal)
   end copy
 
-  copy with_cards(c as List<of Card>) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.cards to c
-    return copyOfThis
+  copy with_cards(cards as List<of Card>) returns HumanPlayer
+    return copyWithPropertyUpdated(this, "cards", cards)
   end copy
 
   procedure newHand()

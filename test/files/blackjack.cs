@@ -83,18 +83,18 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
 
 [TestClass] class Test_determinePlayerOutcome
 [TestMethod] static void test_determinePlayerOutcome() {
-  var dbj = (new Dealer(0)).withStatus(Status.blackjack); // let
+  var dbj = (new Dealer(0)).with_status(Status.blackjack); // let
   Assert.AreEqual(Status.blackjack, dbj.status);
-  var d21 = (new Dealer(0)).withStatus(Status.standing).withHandTotal(21); // let
+  var d21 = (new Dealer(0)).with_status(Status.standing).with_handTotal(21); // let
   Assert.AreEqual(Status.standing, d21.status);
   Assert.AreEqual(21, d21.handTotal);
-  var d17 = (new Dealer(0)).withStatus(Status.standing).withHandTotal(17); // let
-  var dbu = (new Dealer(0)).withStatus(Status.bust); // let
-  var pbj = (new HumanPlayer("", 0)).withStatus(Status.blackjack); // let
+  var d17 = (new Dealer(0)).with_status(Status.standing).with_handTotal(17); // let
+  var dbu = (new Dealer(0)).with_status(Status.bust); // let
+  var pbj = (new HumanPlayer("", 0)).with_status(Status.blackjack); // let
   Assert.AreEqual(Status.blackjack, pbj.status);
-  var p21 = (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21); // let
-  var p17 = (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17); // let
-  var pbu = (new HumanPlayer("", 0)).withStatus(Status.bust); // let
+  var p21 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21); // let
+  var p17 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17); // let
+  var pbu = (new HumanPlayer("", 0)).with_status(Status.bust); // let
   Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj));
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21));
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu));
@@ -164,9 +164,9 @@ static string htmlForGame(Game game) { // function
 [TestMethod] static void test_htmlForGame() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("fred", 10)).withCards(new [] {c1, c2}); // let
+  var p = (new HumanPlayer("fred", 10)).with_cards(new [] {c1, c2}); // let
   var players = (new List<Player>()).withAppend(p); // let
-  var g2 = (new Game(1)).withPlayers(players); // let
+  var g2 = (new Game(1)).with_players(players); // let
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
 }} // end test
 
@@ -186,7 +186,7 @@ static string htmlForPlayer(Player player) { // function
 [TestMethod] static void test_htmlForPlayer() {
   var c1 = new Card("3", Suit.clubs, false); // let
   var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("charlie", 10)).withCards(new [] {c1, c2}); // let
+  var p = (new HumanPlayer("charlie", 10)).with_cards(new [] {c1, c2}); // let
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
 }} // end test
 
@@ -247,11 +247,9 @@ class Game {
 
   public string message {get; private set;} // property
 
-  public Game withPlayers(List<Player> p) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.players = p; // assignment
-    return copyOfThis;
-  } // end function method
+  Game with_players(List<Player> players) { // copy with method
+    return copyWithPropertyUpdated(this, "players", players);
+  } // end with method
 
   public void newRound() { // procedure method
     var dealer = this.dealer;
@@ -442,17 +440,13 @@ class Dealer: Player {
 
   public bool hasPlayed {get; private set;} // property
 
-  public Dealer withStatus(Status status) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.status = status; // assignment
-    return copyOfThis;
-  } // end function method
+  Dealer with_status(Status status) { // copy with method
+    return copyWithPropertyUpdated(this, "status", status);
+  } // end with method
 
-  public Dealer withHandTotal(int ht) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.handTotal = ht; // assignment
-    return copyOfThis;
-  } // end function method
+  Dealer with_handTotal(int handTotal) { // copy with method
+    return copyWithPropertyUpdated(this, "handTotal", handTotal);
+  } // end with method
 
   public void play() { // procedure method
     this.startTurn(); // procedure call
@@ -499,23 +493,17 @@ class HumanPlayer: Player {
     this.cards = new List<Card>(); // assignment
   } // end constructor
 
-  public HumanPlayer withStatus(Status status) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.status = status; // assignment
-    return copyOfThis;
-  } // end function method
+  HumanPlayer with_status(Status status) { // copy with method
+    return copyWithPropertyUpdated(this, "status", status);
+  } // end with method
 
-  public HumanPlayer withHandTotal(int ht) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.handTotal = ht; // assignment
-    return copyOfThis;
-  } // end function method
+  HumanPlayer with_handTotal(int handTotal) { // copy with method
+    return copyWithPropertyUpdated(this, "handTotal", handTotal);
+  } // end with method
 
-  public HumanPlayer withCards(List<Card> c) { // function method
-    var copyOfThis = copy(this); // let
-    copyOfThis.cards = c; // assignment
-    return copyOfThis;
-  } // end function method
+  HumanPlayer with_cards(List<Card> cards) { // copy with method
+    return copyWithPropertyUpdated(this, "cards", cards);
+  } // end with method
 
   public override void newHand() { // procedure method
     this.newHandHelper(); // procedure call

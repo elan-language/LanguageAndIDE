@@ -17,10 +17,10 @@ Sub main()
 End Sub
 
 Function clockTick(g As Game, k As String) As Game
-  Dim g2 = if_(k.equals(""), g, g.withKey(k)) ' let
+  Dim g2 = if_(k.equals(""), g, g.with_key(k)) ' let
   Dim g3 = moveSnake(g2) ' let
   Dim g4 = eatAppleIfPoss(g3) ' let
-  Return if_(gameOver(g4), g4.withIsOn(False), g4)
+  Return if_(gameOver(g4), g4.with_isOn(False), g4)
 End Function
 
 Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of List(Of Integer))
@@ -45,13 +45,13 @@ Function moveSnake(g As Game) As Game
   Dim y = g.head.y ' let
   Dim newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) ' let
   Dim newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) ' let
-  Return g.withBody(g.body.withAppend(g.head)).withHead(New Square(newX, newY))
+  Return g.with_body(g.body.withAppend(g.head)).with_head(New Square(newX, newY))
 End Function
 
 Function eatAppleIfPoss(g As Game) As Game
   Dim tail = g.body(0) ' let
   Dim moveTail = g.body.subList(1, g.body.length()) ' let
-  Return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+  Return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail))
 End Function
 
 Function headOverApple(g As Game) As Boolean
@@ -104,50 +104,36 @@ Class Game
     Dim y = rnd2.asInt(0, 29) ' let
     Dim rnd3 = rnd2.nextGen() ' let
     Dim apple2 = New Square(x, y) ' let
-    Dim g2 = Me.withApple(apple2).withRnd(rnd3) ' let
+    Dim g2 = Me.with_apple(apple2).with_rnd(rnd3) ' let
     Return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
 
-  Function withHead(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.head = value ' assignment
-    Return copyOfThis
+  Function with_head(head As Square) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "head", head)
   End Function
 
-  Function withBody(value As List(Of Square)) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.body = value ' assignment
-    Return copyOfThis
+  Function with_body(body As List(Of Square)) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "body", body)
   End Function
 
-  Function withPriorTail(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.priorTail = value ' assignment
-    Return copyOfThis
+  Function with_priorTail(priorTail As Square) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "priorTail", priorTail)
   End Function
 
-  Function withApple(value As Square) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.apple = value ' assignment
-    Return copyOfThis
+  Function with_apple(apple As Square) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "apple", apple)
   End Function
 
-  Function withIsOn(value As Boolean) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.isOn = value ' assignment
-    Return copyOfThis
+  Function with_isOn(isOn As Boolean) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "isOn", isOn)
   End Function
 
-  Function withRnd(value As Random) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.rnd = value ' assignment
-    Return copyOfThis
+  Function with_rnd(rnd As Random) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "rnd", rnd)
   End Function
 
-  Function withKey(value As String) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.key = value ' assignment
-    Return copyOfThis
+  Function with_key(key As String) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "key", key)
   End Function
 
 End Class
@@ -178,12 +164,12 @@ End Class
   Assert.AreEqual(2, g3.body.length())
   Assert.AreEqual(g2.body(0), g3.priorTail)
   Assert.AreEqual(True, g3.isOn)
-  Dim g4 = g3.withApple(New Square(22, 17)) ' let
+  Dim g4 = g3.with_apple(New Square(22, 17)) ' let
   Dim g5 = clockTick(g4, "s") ' let
   Assert.AreEqual(3, g5.body.length())
   Assert.AreEqual(g4.priorTail, g5.priorTail)
   Assert.AreEqual(True, g5.isOn)
-  Dim g6 = g5.withHead(New Square(22, 29)) ' let
+  Dim g6 = g5.with_head(New Square(22, 29)) ' let
   Dim g7 = clockTick(g6, "s") ' let
   Assert.AreEqual(False, g7.isOn)
  End Sub
@@ -217,7 +203,7 @@ End Class
   Assert.AreEqual(New Square(10, 12), g3.apple)
   ' test that apple is never over snake
   Dim g4 = (New Game(New Random())) ' let
-  Dim g5 = g4.withBody({New Square(10, 12)}) ' let
+  Dim g5 = g4.with_body({New Square(10, 12)}) ' let
   Dim g6 = g5.withNewApple() ' let
   Assert.AreEqual(New Square(12, 15), g4.apple)
  End Sub
@@ -228,11 +214,11 @@ End Class
  <TestMethod> Sub test_score()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(0, score(g1))
-  Dim g2 = g1.withBody({New Square(4, 4), New Square(5, 4)}) ' let
+  Dim g2 = g1.with_body({New Square(4, 4), New Square(5, 4)}) ' let
   Assert.AreEqual(0, score(g2))
-  Dim g3 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4)}) ' let
+  Dim g3 = g1.with_body({New Square(3, 4), New Square(4, 4), New Square(5, 4)}) ' let
   Assert.AreEqual(1, score(g3))
-  Dim g4 = g1.withBody({New Square(3, 4), New Square(4, 4), New Square(5, 4), New Square(5, 5)}) ' let
+  Dim g4 = g1.with_body({New Square(3, 4), New Square(4, 4), New Square(5, 4), New Square(5, 5)}) ' let
   Assert.AreEqual(2, score(g4))
  End Sub
 End Class
@@ -241,16 +227,16 @@ End Class
 <TestClass Class Test_moveSnake
  <TestMethod> Sub test_moveSnake()
   Dim g1 = New Game(New Random()) ' let
-  Dim g2 = g1.withKey("a") ' let
+  Dim g2 = g1.with_key("a") ' let
   Dim g3 = moveSnake(g2) ' let
   Assert.AreEqual(New Square(21, 15), g3.head)
-  Dim g4 = g1.withKey("d") ' let
+  Dim g4 = g1.with_key("d") ' let
   Dim g5 = moveSnake(g4) ' let
   Assert.AreEqual(New Square(23, 15), g5.head)
-  Dim g6 = g1.withKey("w") ' let
+  Dim g6 = g1.with_key("w") ' let
   Dim g7 = moveSnake(g6) ' let
   Assert.AreEqual(New Square(22, 14), g7.head)
-  Dim g8 = g1.withKey("s") ' let
+  Dim g8 = g1.with_key("s") ' let
   Dim g9 = moveSnake(g8) ' let
   Assert.AreEqual(New Square(22, 16), g9.head)
  End Sub
@@ -262,13 +248,13 @@ End Class
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(2, g1.body.length())
   ' negative case
-  Dim g2 = g1.withApple(New Square(23, 15)) ' let
+  Dim g2 = g1.with_apple(New Square(23, 15)) ' let
   Dim g3 = eatAppleIfPoss(g2) ' let
   Assert.AreEqual(1, g3.body.length())
   Assert.AreEqual(g2.apple, g3.apple)
   Assert.AreEqual(g2.body(0), g3.priorTail)
   ' positive case
-  Dim g4 = g2.withHead(New Square(23, 15)) ' let
+  Dim g4 = g2.with_head(New Square(23, 15)) ' let
   Dim g5 = eatAppleIfPoss(g4) ' let
   Assert.AreEqual(2, g5.body.length())
   Assert.AreEqual(New Square(12, 15), g5.apple)
@@ -280,9 +266,9 @@ End Class
 <TestClass Class Test_overApple
  <TestMethod> Sub test_overApple()
   Dim g1 = New Game(New Random()) ' let
-  Dim g2 = g1.withApple(New Square(23, 15)) ' let
+  Dim g2 = g1.with_apple(New Square(23, 15)) ' let
   Assert.AreEqual(False, headOverApple(g2))
-  Dim g3 = g2.withHead(New Square(23, 15)) ' let
+  Dim g3 = g2.with_head(New Square(23, 15)) ' let
   Assert.AreEqual(True, headOverApple(g3))
  End Sub
 End Class
@@ -292,11 +278,11 @@ End Class
  <TestMethod> Sub test_gameOver()
   Dim g1 = New Game((New Random())) ' let
   Assert.AreEqual(False, gameOver(g1))
-  Dim g2 = g1.withHead(New Square(0, 0)) ' let
+  Dim g2 = g1.with_head(New Square(0, 0)) ' let
   Assert.AreEqual(False, gameOver(g2))
-  Dim g3 = g1.withHead(New Square(40, 15)) ' let
+  Dim g3 = g1.with_head(New Square(40, 15)) ' let
   Assert.AreEqual(True, gameOver(g3))
-  Dim g4 = g1.withHead(New Square(21, 15)) ' let
+  Dim g4 = g1.with_head(New Square(21, 15)) ' let
   Assert.AreEqual(True, gameOver(g4))
  End Sub
 End Class
@@ -306,13 +292,13 @@ End Class
  <TestMethod> Sub test_headIsAtEdge()
   Dim g1 = New Game(New Random()) ' let
   Assert.AreEqual(False, hasHitEdge(g1))
-  Dim g2 = g1.withHead(New Square(40, 15)) ' let
+  Dim g2 = g1.with_head(New Square(40, 15)) ' let
   Assert.AreEqual(True, hasHitEdge(g2))
-  Dim g3 = g1.withHead(New Square(-1, 15)) ' let
+  Dim g3 = g1.with_head(New Square(-1, 15)) ' let
   Assert.AreEqual(True, hasHitEdge(g3))
-  Dim g4 = g1.withHead(New Square(20, 30)) ' let
+  Dim g4 = g1.with_head(New Square(20, 30)) ' let
   Assert.AreEqual(True, hasHitEdge(g4))
-  Dim g5 = g1.withHead(New Square(20, -1)) ' let
+  Dim g5 = g1.with_head(New Square(20, -1)) ' let
   Assert.AreEqual(True, hasHitEdge(g5))
  End Sub
 End Class

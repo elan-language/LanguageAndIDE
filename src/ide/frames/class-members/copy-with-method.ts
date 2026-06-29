@@ -12,8 +12,6 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { AbstractClass } from "../globals/abstract-class";
 import { FunctionFrame } from "../globals/function-frame";
-import { Assignment } from "../statements/assignment";
-import { LetStatement } from "../statements/let-statement";
 import { ReturnStatement } from "../statements/return-statement";
 
 export class CopyWithMethod extends FunctionFrame {
@@ -24,23 +22,13 @@ export class CopyWithMethod extends FunctionFrame {
   help: string = "with-method";
   document: string = "functionalRef.html";
 
-  constructor(parent: Parent, parentClassName: string) {
+  constructor(parent: Parent, _parentClassName: string) {
     super(parent);
     this.file = parent.getFile();
-    this.name.setPlaceholder("<i>with_propertyName</i>");
-    this.returnType.setFieldToKnownValidText(parentClassName);
-    const defaultSelector = this.getFirstSelectorAsDirectChild();
-    const letCopyOfThis = new LetStatement(this);
-    letCopyOfThis.name.setFieldToKnownValidText("copyOfThis");
-    const this_inst = this.language().THIS_INSTANCE;
-    letCopyOfThis.expr.setFieldToKnownValidText(`copy(${this_inst})`);
-    this.addChildBefore(letCopyOfThis, defaultSelector);
-    const firstProp = new Assignment(this);
-    firstProp.assignable.setPlaceholder("copyOfThis.propertyName");
-    this.addChildBefore(firstProp, defaultSelector);
-    const ret = this.getLastChild() as ReturnStatement;
-    ret.expr.setFieldToKnownValidText("copyOfThis");
-    this.removeChild(defaultSelector);
+     const ret = this.getLastChild() as ReturnStatement;
+     const thisInst = this.language().THIS_INSTANCE;
+    ret.expr.setPlaceholder(`copyWithPropertyUpdate(${thisInst}, "propertyName", newValue)`);
+    this.removeChild(this.getFirstSelectorAsDirectChild());
   }
 
   initialKeywords(): string {

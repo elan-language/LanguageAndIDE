@@ -495,9 +495,7 @@ class Player inherits Foo, Bar
   property score as Int
 
   copy with_score(score as Int) returns Player
-    let copyOfThis be copy(this)
-    assign copyOfThis.score to score
-    return copyOfThis
+    return copyWithPropertyUpdated(this, "score", score)
   end copy
 
 end class

@@ -12,8 +12,7 @@ import {
   privateProcedureKeywords,
   privatePropertyKeywords,
   procedureKeyword,
-  propertyKeyword,
-  withKeyword,
+  propertyKeyword
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
@@ -129,7 +128,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else if (keyword === procedureKeyword) {
       result = !(this.profile.isFunctional() && userEntry);
-    } else if (keyword === withKeyword) {
+    } else if (keyword === copyKeyword) {
       result = !userEntry || this.profile.isFunctional();
     }
     return result;

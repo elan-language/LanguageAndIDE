@@ -1,4 +1,4 @@
-# f6489423eb4e952e74f1329523b91c6601d570d3ea3fa7908bcdd591693ae878 Elan 2.0.0-beta1 valid
+# ea19f9b4613ad8f0397f0afaa15f9352da5c68667617f7a23e5e4e2812d95232 Elan 2.0.0-beta1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -106,46 +106,32 @@ class Game
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
-  copy with_head(value as Square) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.head to value
-    return copyOfThis
+  copy with_head(head as Square) returns Game
+    return copyWithPropertyUpdated(this, "head", head)
   end copy
 
-  copy with_body(value as List<of Square>) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.body to value
-    return copyOfThis
+  copy with_body(body as List<of Square>) returns Game
+    return copyWithPropertyUpdated(this, "body", body)
   end copy
 
-  copy with_priorTail(value as Square) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.priorTail to value
-    return copyOfThis
+  copy with_priorTail(priorTail as Square) returns Game
+    return copyWithPropertyUpdated(this, "priorTail", priorTail)
   end copy
 
-  copy with_apple(value as Square) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.apple to value
-    return copyOfThis
+  copy with_apple(apple as Square) returns Game
+    return copyWithPropertyUpdated(this, "apple", apple)
   end copy
 
-  copy with_isOn(value as Boolean) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.isOn to value
-    return copyOfThis
+  copy with_isOn(isOn as Boolean) returns Game
+    return copyWithPropertyUpdated(this, "isOn", isOn)
   end copy
 
-  copy with_rnd(value as Random) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.rnd to value
-    return copyOfThis
+  copy with_rnd(rnd as Random) returns Game
+    return copyWithPropertyUpdated(this, "rnd", rnd)
   end copy
 
-  copy with_key(value as String) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.key to value
-    return copyOfThis
+  copy with_key(key as String) returns Game
+    return copyWithPropertyUpdated(this, "key", key)
   end copy
 
 end class

@@ -39,7 +39,7 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 // flag to update test files
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   const runner = await createTestRunner();
@@ -712,7 +712,8 @@ export function assertOptions(selector : AbstractSelector, options : string[]) {
   for(const v of map) {
     const [, [rawVal,]] = v;
     const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
-    if (!val.includes("delete") && !val.includes("copy") && !val.includes("paste")) {
+    //TODO temp kludge to avoid confusion between copy and copy with
+    if (!val.includes("delete") && !val.includes("paste")) {
       availableOptions.push(val);
     }
   }
