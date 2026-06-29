@@ -116,7 +116,7 @@ initial value given to it.</p>
   to arise because:</p>
   <ul>
     <li>Every variable definition must specify an initial value</li>
-    <li>It may never be reassigned to null</li>
+    <li>It may never be assigned to null</li>
     <li>(Additional, related rules are enforced in object-oriented programming)</li>
   </ul>
 
@@ -508,7 +508,7 @@ end function
 </codeblock>
 
 <p>It is called within the main routine as part of this instruction:</p>
-<codeblock>reassign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+<codeblock>assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
 </codeblock>
 
 <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
@@ -805,7 +805,7 @@ constant warningMsg set to "Limit reached"
   <li>The <b>constant</b> instruction allows you to define your own constants.</li>
   <li class="python">Even though Python does not natively support the idea of a constant, when writing
     Python with Elan, having created a constant with <b>constant</b> instruction you will find that you
-    cannot change it with a <b>reassign</b> instruction.</li>
+    cannot change it with a <b>assignment</b> instruction.</li>
   <li>When coding with Elan, a constant:
       <ul>
         <li>may be defined only at global (file) level,</li>
@@ -894,7 +894,7 @@ enum Outcome undecided, win, lose, draw, winDouble
   </codeblock>
   initialises <code>currentDir</code> with the value <code>right</code> which is valid only because it is listed
   in the definition of the enum named <code>Direction</code>.</li>
-  <li>Because the variable <code>currentDirect</code> has the type <code>Direction</code>, it may only be reassigned to
+  <li>Because the variable <code>currentDirect</code> has the type <code>Direction</code>, it may only be assigned to
   another of the values defined in enum <code>Direction</code></li>
   <li>An enum value cannot be converted to anything else.</li>
   <li>The advantages of using enums are:
@@ -1088,7 +1088,7 @@ end main
 
 <p>and the values of these variables are used in multiple places within the program, for example here:</p>
 
-<codeblock>reassign blocks[x][y] to red</codeblock>
+<codeblock>assign blocks[x][y] to red</codeblock>
 
 <p>From the <b>Life &ndash; procedural</b> demo where a variable is initialised using an expression, in this
 case a function call:</p>
@@ -1120,14 +1120,14 @@ case a function call:</p>
 </div>
 
 <div id="reassign">
-<h2>Reassign variable</h2>
+<h2>Assigment</h2>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of an assignment</h3>
 <div class="acc-body">
 
   <p>From the <b>Ripple sort</b> demo, where the <code>hasChanged</code> variable, having been <i>defined</i> higher up,
-    is reassigned to <code>false</code> at the start of the while loop,
+    is assigned to <code>false</code> at the start of the while loop,
   and then to <code>true</code> if two values are swapped:</p>
 
   <codeblock>procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
@@ -1148,7 +1148,7 @@ case a function call:</p>
 end procedure
   </codeblock>
 
-  <p>From the <b>Snake -procedural</b> demo, where the variable <code>currentDef</code> is reassigned to a new value by calling the function
+  <p>From the <b>Snake -procedural</b> demo, where the variable <code>currentDef</code> is assigned to a new value by calling the function
     <el-method>directionByKey</el-method>, which is passed a keypress that has been read from the keyboard using the <el-method>getKey</el-method>
   system method:</p>
 
@@ -1171,7 +1171,7 @@ end procedure
 <div class="acc-body">
 
 <ul>
-  <li>The <b>reassign variable</b> instruction assigns a new value to a variable that has been defined earlier within the method.</li>
+  <li>An <b>assignment</b> instruction assigns a new value to a variable that has been defined earlier within the method.</li>
   <li>The new value to be assigned may be defined as a literal value, or as the result of evaluating an expression.</li>
   <li>The new value must be of the same type as the one that the variable was defined with.</li>
 </ul>
@@ -1199,8 +1199,8 @@ end procedure
   <li>You must specify a user-prompt string, though this may be an empty string &ndash; <code>""</code>.</li>
   <li>When working in Elan, the user entry will <i>always</i> be on the line below the displayed prompt.</li>
   <li>The entered value is put into a <i>new</i> variable &ndash; equivalent to if it was a <b>variable definition</b>.</li>
-  <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding a <b>reassign variable</b>
-  instruction on the next line.</li>
+  <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding an <b>assignment</b>
+   on the next line.</li>
   <li>Also <i>in a separate instruction</i>, you can parse the string into a numeric type by applying the <code>asInt()</code>
     or <code>asFloat()</code> functions to the input variable, but note that <i>these functions will throw an exception if the input string does not parse to the required numeric type</i>.</li>
   <li>See below for more advanced options for handling specific forms of user input.</li>
@@ -1979,7 +1979,7 @@ We hope to remove this requirement in a future version &ndash; to make the synta
 </p>
 
 <p>The <el-method>if_</el-method> function returns one of two values dependent upon the evaulation of a Boolean value:</p>
-<p>Its syntax is shown in this <b>reassign variable</b> instruction:</p>
+<p>Its syntax is shown here:</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
   <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
