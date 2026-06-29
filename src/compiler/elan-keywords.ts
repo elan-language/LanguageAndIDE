@@ -10,6 +10,7 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
+export const copyKeyword = "copy";
 export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";

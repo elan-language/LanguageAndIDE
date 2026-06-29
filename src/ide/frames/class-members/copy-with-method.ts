@@ -1,6 +1,7 @@
 import {
+  copyKeyword,
   endKeyword,
-  functionKeyword,
+  returnKeyword,
   returnsKeyword
 } from "../../../compiler/elan-keywords";
 import {
@@ -15,7 +16,7 @@ import { Assignment } from "../statements/assignment";
 import { LetStatement } from "../statements/let-statement";
 import { ReturnStatement } from "../statements/return-statement";
 
-export class WithMethod extends FunctionFrame {
+export class CopyWithMethod extends FunctionFrame {
   isMember: boolean = true;
   isAbstract = false;
   isPrivate = false;
@@ -26,7 +27,7 @@ export class WithMethod extends FunctionFrame {
   constructor(parent: Parent, parentClassName: string) {
     super(parent);
     this.file = parent.getFile();
-    this.name.setPlaceholder("<i>withPropertyName</i>");
+    this.name.setPlaceholder("<i>with_propertyName</i>");
     this.returnType.setFieldToKnownValidText(parentClassName);
     const defaultSelector = this.getFirstSelectorAsDirectChild();
     const letCopyOfThis = new LetStatement(this);
@@ -40,6 +41,10 @@ export class WithMethod extends FunctionFrame {
     const ret = this.getLastChild() as ReturnStatement;
     ret.expr.setFieldToKnownValidText("copyOfThis");
     this.removeChild(defaultSelector);
+  }
+
+  initialKeywords(): string {
+    return copyKeyword;
   }
 
   isOnAbstractClass(): boolean {
@@ -63,26 +68,39 @@ export class WithMethod extends FunctionFrame {
   }
 
   frameSpecificAnnotation(): string {
-    return `with method`;
+    return `copy with method`;
   }
 
   public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
+    return `${this.indent()}${this.sourceAnnotations()}${copyKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
 ${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${functionKeyword}\r
+${this.indent()}${endKeyword} ${copyKeyword}\r
 `;
-  }
-
-  parseTop(source: CodeSource): void {
-    source.removeIndent();
-    super.parseTop(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return super.parseBottom(source);
   }
 
   renderAsExport(): string {
     return `${super.renderAsExport()}\r
 `;
   }
+
+    parseTop(source: CodeSource): void {
+      source.remove(`${copyKeyword} `);
+      this.name.parseFrom(source);
+      source.remove("(");
+      this.params.parseFrom(source);
+      source.remove(`) ${returnsKeyword} `);
+      this.returnType.parseFrom(source);
+    }
+    parseBottom(source: CodeSource): boolean {
+      let result = false;
+      source.removeIndent();
+      if (source.isMatch(`${returnKeyword} `)) {
+        const ret = this.getLastChild() as ReturnStatement;
+        ret.parseFrom(source);
+        source.removeNewLine().removeIndent();
+        this.parseStandardEnding(source, `${endKeyword} ${copyKeyword}`);
+        result = true;
+      }
+      return result;
+    }
 }

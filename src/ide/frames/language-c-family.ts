@@ -2,10 +2,10 @@ import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
+import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { WithMethod } from "./class-members/with-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -80,7 +80,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof AbstractFunction ||
       frame instanceof PrintStatement ||
       frame instanceof InputStatement ||
-      frame instanceof WithMethod
+      frame instanceof CopyWithMethod
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -161,7 +161,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.TRY}</el-kw> {`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
-    } else if (frame instanceof WithMethod) {
+    } else if (frame instanceof CopyWithMethod) {
       html = `${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     }
     return html;
@@ -195,7 +195,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html += this.WHILE;
     } else if (frame instanceof TestFrame) {
       html += "test";
-    } else if (frame instanceof WithMethod) {
+    } else if (frame instanceof CopyWithMethod) {
       html += "with method";
     }
     return html + "</el-comment>";

@@ -5,6 +5,7 @@ import {
   abstractPropertyKeywords,
   commentMarker,
   constructorKeyword,
+  copyKeyword,
   functionKeyword,
   privateFunctionKeywords,
   privateKeyword,
@@ -58,7 +59,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         "<b>f</b>unction method",
         (_parent: Parent) => this.class.createFunction(),
       ],
-      [withKeyword, "w", "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
+      [copyKeyword, "w", "copy <b>w</b>ith method", (_parent: Parent) => this.class.createCopyWithMethod()],
       [
         abstractPropertyKeywords,
         "",
