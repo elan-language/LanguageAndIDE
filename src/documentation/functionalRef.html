@@ -808,18 +808,20 @@ paradigm, with two exceptions:</p>
       <div class="acc-body">
 
         <ul>
-          <li>A <b>copy with method</b> is a specific form of function method.</li>
+          <li>A <b>copy with method</b> is a very specific form of function method.</li>
           <li>Its purpose is to allow an instance of a class to be 'updated' without actually mutating the instance.</li>
-          <li>Instead, the method returns a <i>copy</i> of the current instance, but with the specified differences.</li>
-          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, that are broadly equivalent to 
-            procedure methods, but for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
+          <li>Instead, the method returns a <i>copy</i> of the current instance, but with a specified difference to one of its properties.</li>
+          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, each being broadly equivalent to 
+            a procedure method, but designed for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
             and the function method <el-method>withAppend</el-method>.</li>
-          <li>When you create a new <b>copy with method</b> within a class, the method includes three templated completed instructions.
-            You should not attempt to change the first or last instructions, nor delete the middle one - if you do this by mistake, delete the
-            whole method and start again.</li>
-          <li>The middle instruction - an <b>assignment</b> - indicates that its form should be: <code>assign copyOfThis.aPropertyName to theNewValue</code></li>
-          <li><code>copyOfThis</code> is a <i>reserved name</i> within Elan - this variable can only be created by the templated instruction shown above,
-          and it is the <i>only</i> variable that may be re-assigned within a function, working in the <b>functional</b> paradigm.</li>
+          <li>When you add a <b>copy with method</b> you must specify the name and type for the single parameter that it permits.
+          Importantly, <i>both the name and the type must exactly match those of the property that you wish to update.</i></li>
+          <li>The <b>copy with method</b> has only a <b>return</b> instruction, and does not permit any other instructions to be added.</li>
+          <li>The expression returned by the function must take the form <code>copyWithPropertyUpdated(this, "head", head)</code> where
+            the name of the parameter (<code>head</code> in this case) appears twice: the first time in quotes - to define the name of the property being changed - 
+            and the second time without quotes, representing the new value. This must currently be entered by hand, but in a future version will
+            be generated automatically, and will be uneditable.
+          </li>
           <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 
             procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
             <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
