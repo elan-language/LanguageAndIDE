@@ -776,9 +776,22 @@ paradigm, with two exceptions:</p>
       <h3 class="no-TOC acc-title">Examples of a copy with method</h3>
       <div class="acc-body">
 
-        <p>From the <b>Snake - functional</b> demo, where the <code>Game</code> class defines 8 <b>copy with method</b>s including:</p>
+        <p>In the <b>Snake - functional</b> demo the <code>Game</code> class defines multiple <b>copy with method</b>s including:</p>
 
-        <codeblock>
+        <ul>
+          <li><el-method>with_head</el-method></li>
+          <li><el-method>with_body</el-method></li>
+          <li><el-method>with_priorTail</el-method></li>
+          <li><el-method>with_apple</el-method></li>
+          <li><el-method>with_isOn</el-method></li>
+          <li><el-method>with_rnd</el-method></li>
+          <li><el-method>with_key</el-method></li>
+        </ul>
+
+        <p>The method <el-method>withNewApple</el-method> is a conventional <b>function method</b>, which creates a <i>new</i> apple
+        and then delegates to <el-method>with_apple</el-method> to return a game with that new apple.</p>
+
+<!--         <codeblock>
           copy withHead(head as Square) returns Game
             return copyWithPropertyUpdated(this, "head", head)
           end copy
@@ -795,7 +808,7 @@ paradigm, with two exceptions:</p>
           let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
           return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
         end function
-      </codeblock>
+      </codeblock> -->
 
       <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>copy with method</b>s -
       because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
@@ -825,8 +838,8 @@ paradigm, with two exceptions:</p>
           <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 
             procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
             <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
-          <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as in the earlier example:
-          <code>return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
+          <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as you can see
+            in the <el-method>moveSnake</el-method>, which returns <code>g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
         </ul>
       </div>
     </div>
