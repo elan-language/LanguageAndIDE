@@ -30,9 +30,9 @@ End Sub
 Sub display(stacks As List(Of List(Of Integer))) ' procedure
   clearAllDisplays() ' procedure call
   Dim vg = createVectorGraphics() ' variable definition
-  drawStack(stacks(0), 1, vg) ' procedure call
-  drawStack(stacks(1), 2, vg) ' procedure call
-  drawStack(stacks(2), 3, vg) ' procedure call
+  For Each i In range(0, 3)
+    drawStack(stacks(i), i + 1, vg) ' procedure call
+  Next i
   displayVectorGraphics(vg) ' procedure call
   sleep_ms(delay_ms) ' procedure call
 End Sub

@@ -1,4 +1,4 @@
-# 517019170e0a362bdf8a60813c98e3eec2956b590f422d76a5c1faeefc14e373 Elan 2.0.0-beta1 valid
+# 2beae2415643a6a3a88ee13ffa4102b75f1e0133d5e10c24c26b5648ac2d2d1b Python with Elan 2.0.0-beta1 valid
 
 constant nDiscs set to 7
 
@@ -40,9 +40,9 @@ end procedure
 procedure display(stacks as List<of List<of Int>>)
   call clearAllDisplays()
   variable vg set to createVectorGraphics()
-  call drawStack(stacks[0], 1, vg)
-  call drawStack(stacks[1], 2, vg)
-  call drawStack(stacks[2], 3, vg)
+  for i in range(0, 3)
+    call drawStack(stacks[i], i + 1, vg)
+  end for
   call displayVectorGraphics(vg)
   call sleep_ms(delay_ms)
 end procedure

@@ -30,9 +30,9 @@ def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None: # pr
 def display(stacks: list[list[int]]) -> None: # procedure
   clearAllDisplays() # procedure call
   vg = createVectorGraphics() # variable definition
-  drawStack(stacks[0], 1, vg) # procedure call
-  drawStack(stacks[1], 2, vg) # procedure call
-  drawStack(stacks[2], 3, vg) # procedure call
+  for i in range(0, 3):
+    drawStack(stacks[i], i + 1, vg) # procedure call
+  # end for
   displayVectorGraphics(vg) # procedure call
   sleep_ms(delay_ms) # procedure call
 # end procedure
