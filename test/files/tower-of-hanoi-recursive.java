@@ -32,9 +32,9 @@ static void moveOne(List<List<int>> stacks, int fromStack, int toStack) { // pro
 static void display(List<List<int>> stacks) { // procedure
   clearAllDisplays(); // procedure call
   var vg = createVectorGraphics();
-  drawStack(stacks[0], 1, vg); // procedure call
-  drawStack(stacks[1], 2, vg); // procedure call
-  drawStack(stacks[2], 3, vg); // procedure call
+  foreach (var i in range(0, 3)) {
+    drawStack(stacks[i], i + 1, vg); // procedure call
+  } // end foreach
   displayVectorGraphics(vg); // procedure call
   sleep_ms(delay_ms); // procedure call
 } // end procedure

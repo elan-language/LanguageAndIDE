@@ -38,7 +38,7 @@ This changes two things: </p>
     <ul>
         <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a <b>let statement</b> (plus, of course, comments).</li>
         <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
-        <li>Within a concrete or abstract class, there is a new kind of method named a <b>with method</b>. Actually, this is just a template for a specific form
+        <li>Within a concrete or abstract class, there is a new kind of method named a <b>copy with method</b>. Actually, this is just a template for a specific form
         of function method which is particularly useful in FP.</li>
     </ul>
     The rationale for disallowing some of the instructions you are used to in PP or OOP, and how to use the new instructions, will become clear as you read through this document.
@@ -544,11 +544,9 @@ using them to access the appropriate portions of the <code>grid</code>, which is
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
 <codeblock>
-function withHead(value as Square) returns Game
-  let copyOfThis be copy(this)
-  assign copyOfThis.head to value
-  return copyOfThis
-end function
+copy withHead(head as Square) returns Game
+  return copyWithPropertyUpdated(this, "head", head)
+end copy
 </codeblock>
 
 Note that it:
@@ -560,7 +558,7 @@ Note that it:
 </ul>
 
 <p>Although a <el-method>with..</el-method> method is a pure function, the standard form of a <el-method>with..</el-method> method, like the one above,
-must be created using the <b>with method</b> instruction template, which is
+must be created using the <b>copy with method</b> instruction template, which is
 offered only within a Class, and only when using the <b>functional</b> paradigm.</p>
 <p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
 a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>assign this.x to value</code>, since that would make changes observable from outside the function.</p>
@@ -766,26 +764,24 @@ end function
 <p>When using the <b>functional</b> paradigm, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
 paradigm, with two exceptions:</p>
  <ul>
-  <li>There is an additional member: the <b>with method</b></li>
+  <li>There is an additional member: the <b>copy with method</b></li>
   <li>The procedure method is not available for use - because procedure methods cause side effects. 
     All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</li>
  </ul>
 
   <div id="with-method">
-  <h2>With method</h2>
+  <h2>Copy with method</h2>
 
     <div class="accordion">
-      <h3 class="no-TOC acc-title">Examples of a with method</h3>
+      <h3 class="no-TOC acc-title">Examples of a copy with method</h3>
       <div class="acc-body">
 
-        <p>From the <b>Snake - functional</b> demo, where the <code>Game</code> class defines 8 <b>with method</b>s including:</p>
+        <p>From the <b>Snake - functional</b> demo, where the <code>Game</code> class defines 8 <b>copy with method</b>s including:</p>
 
         <codeblock>
-          function withHead(value as Square) returns Game
-            let copyOfThis be copy(this)
-            assign copyOfThis.head to value
-            return copyOfThis
-          end function
+          copy withHead(head as Square) returns Game
+            return copyWithPropertyUpdated(this, "head", head)
+          end copy
         </codeblock>
 
       <p>This method is called from 11 places elsewhere in the code, including within this global method:</p> 
@@ -801,25 +797,24 @@ paradigm, with two exceptions:</p>
         end function
       </codeblock>
 
-      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with method</b>s -
+      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>copy with method</b>s -
       because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
       to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
       </div>
     </div>
   
-
       <div class="accordion">
-      <h3 class="no-TOC acc-title">What you need to know about a with method</h3>
+      <h3 class="no-TOC acc-title">What you need to know about a copy with method</h3>
       <div class="acc-body">
 
         <ul>
-          <li>A <b>with method</b> is a specific form of function method.</li>
+          <li>A <b>copy with method</b> is a specific form of function method.</li>
           <li>Its purpose is to allow an instance of a class to be 'updated' without actually mutating the instance.</li>
           <li>Instead, the method returns a <i>copy</i> of the current instance, but with the specified differences.</li>
           <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, that are broadly equivalent to 
             procedure methods, but for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
             and the function method <el-method>withAppend</el-method>.</li>
-          <li>When you create a new <b>with method</b> within a class, the method includes three templated completed instructions.
+          <li>When you create a new <b>copy with method</b> within a class, the method includes three templated completed instructions.
             You should not attempt to change the first or last instructions, nor delete the middle one - if you do this by mistake, delete the
             whole method and start again.</li>
           <li>The middle instruction - an <b>assignment</b> - indicates that its form should be: <code>assign copyOfThis.aPropertyName to theNewValue</code></li>

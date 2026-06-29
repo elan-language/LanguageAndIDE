@@ -511,11 +511,11 @@ end function
 <codeblock>assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
 </codeblock>
 
-<p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
+<!-- <p>From the <b>Date Time</b> demo. A function to determine whether a given year is a leap year or not:</p>
 <codeblock>function leap(year as Int) returns Boolean
   return (((year mod 4) is 0) and ((year mod 100) isnt 0)) or ((year mod 400) is 0)
 end function
-</codeblock>
+</codeblock> -->
 
 <p>From the <b>Life &ndash; procedural</b> demo a function that finds the cell immediately to the north of the cell provided. Both
 the single parameter and return value are 2-tuples, where both items are of type <code>Int</code>:</p>
@@ -608,7 +608,7 @@ end function
 <h3 class="no-TOC acc-title">Examples of a test</h3>
 <div class="acc-body">
 
-<p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year.
+<!-- <p>From the <b>Date Time</b> demo, testing the function that determines whether a given year is a leap year.
   Note that the comments distinguish between the 'normal' test cases and the 'boundary' (also known as 'edge') cases,
   where errors are more common:</p>
 
@@ -620,7 +620,7 @@ end function
   assert leap(1900) is false
   assert leap(2000) is true
 end test
-</codeblock>
+</codeblock> -->
 
 <p>Example from the <b>Life &ndash; procedural</b> demo. It tests <i>all</i> valid combinations of parameter values,
  because the logic of this function is quite unusual:</p>
@@ -1539,7 +1539,7 @@ TODO: write afresh descriptions of mutating a (mutable) parameter, and, separate
 <h3 class="no-TOC acc-title">Examples of a try statement</h3>
 <div class="acc-body">
 
-  <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string
+  <!-- <p>From the <b>Date Time</b> demo, where the <el-method>input</el-method> may be <code>"Q"</code> (to quit), an empty string
     (to get the current date/time), or may be a numeric value to be converted. The function call <code>int(reply)</code>
   attempts to read a string as an integer, but if it is not a valid integer will throw an exception. A <b>try statement</b>
 is used to intercept (or 'catch') this exception and just ignore that input:</p>
@@ -1563,7 +1563,7 @@ is used to intercept (or 'catch') this exception and just ignore that input:</p>
     end if
   end while
 end main
-</codeblock>
+</codeblock> -->
 </div></div>
 
 <div class="accordion">
@@ -1637,7 +1637,7 @@ end function
 <h3 class="no-TOC acc-title">Examples of an assert statement</h3>
 <div class="acc-body">
 
-  <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
+ <!--  <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
 
 <codeblock>test test_leap
   # normal cases
@@ -1647,7 +1647,7 @@ end function
   assert leap(1900) is false
   assert leap(2000) is true
 end test
-</codeblock>
+</codeblock> -->
 
 <p>From the <b></b>Tower of Hanoi</p> demo, showing an assert for an error case:
 

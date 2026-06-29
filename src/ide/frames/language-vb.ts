@@ -2,10 +2,10 @@ import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
+import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { WithMethod } from "./class-members/with-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { FileImpl } from "./file-impl";
@@ -91,7 +91,7 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof Assignment ||
       frame instanceof PrintStatement ||
       frame instanceof InputStatement ||
-      frame instanceof WithMethod
+      frame instanceof CopyWithMethod
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -177,7 +177,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
-    } else if (frame instanceof WithMethod) {
+    } else if (frame instanceof CopyWithMethod) {
       html = `${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
     }
     return html;
@@ -206,7 +206,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (
       frame instanceof GlobalFunction ||
       frame instanceof FunctionMethod ||
-      frame instanceof WithMethod
+      frame instanceof CopyWithMethod
     ) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalProcedure || frame instanceof ProcedureMethod) {

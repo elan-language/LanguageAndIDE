@@ -1,4 +1,4 @@
-# 3744228c5d12b693abcd4f673be58c3ac1a3d397b1ff8f812a6e95d90845dcd0 Elan 2.0.0-beta1 valid
+# d2f99c212606a6b3bc624e2c816a3d030348efa9709da385c8d96b68d55e9052 Elan 2.0.0-beta1 valid
 
 main
   variable game set to new Game(1000)
@@ -82,18 +82,18 @@ function determinePlayerOutcome(dealer as Dealer, player as Player) returns Outc
 end function
 
 test test_determinePlayerOutcome
-  let dbj be (new Dealer(0)).withStatus(Status.blackjack)
+  let dbj be (new Dealer(0)).with_status(Status.blackjack)
   assert dbj.status is Status.blackjack
-  let d21 be (new Dealer(0)).withStatus(Status.standing).withHandTotal(21)
+  let d21 be (new Dealer(0)).with_status(Status.standing).with_handTotal(21)
   assert d21.status is Status.standing
   assert d21.handTotal is 21
-  let d17 be (new Dealer(0)).withStatus(Status.standing).withHandTotal(17)
-  let dbu be (new Dealer(0)).withStatus(Status.bust)
-  let pbj be (new HumanPlayer("", 0)).withStatus(Status.blackjack)
+  let d17 be (new Dealer(0)).with_status(Status.standing).with_handTotal(17)
+  let dbu be (new Dealer(0)).with_status(Status.bust)
+  let pbj be (new HumanPlayer("", 0)).with_status(Status.blackjack)
   assert pbj.status is Status.blackjack
-  let p21 be (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21)
-  let p17 be (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17)
-  let pbu be (new HumanPlayer("", 0)).withStatus(Status.bust)
+  let p21 be (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21)
+  let p17 be (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17)
+  let pbu be (new HumanPlayer("", 0)).with_status(Status.bust)
   assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
   assert determinePlayerOutcome(dbj, p21) is Outcome.lose
   assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
@@ -160,9 +160,9 @@ end function
 test test_htmlForGame
   let c1 be new Card("3", Suit.clubs, false)
   let c2 be new Card("K", Suit.spades, true)
-  let p be (new HumanPlayer("fred", 10)).withCards([c1, c2])
+  let p be (new HumanPlayer("fred", 10)).with_cards([c1, c2])
   let players be (new List<of Player>()).withAppend(p)
-  let g2 be (new Game(1)).withPlayers(players)
+  let g2 be (new Game(1)).with_players(players)
   assert htmlForGame(g2) is "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>"
 end test
 
@@ -181,7 +181,7 @@ end function
 test test_htmlForPlayer
   let c1 be new Card("3", Suit.clubs, false)
   let c2 be new Card("K", Suit.spades, true)
-  let p be (new HumanPlayer("charlie", 10)).withCards([c1, c2])
+  let p be (new HumanPlayer("charlie", 10)).with_cards([c1, c2])
   assert htmlForPlayer(p) is "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>"
 end test
 
@@ -239,11 +239,9 @@ class Game
 
   property message as String
 
-  function withPlayers(p as List<of Player>) returns Game
-    let copyOfThis be copy(this)
-    assign copyOfThis.players to p
-    return copyOfThis
-  end function
+  copy with_players(players as List<of Player>) returns Game
+    return copyWithPropertyUpdated(this, "players", players)
+  end copy
 
   procedure newRound()
     variable dealer set to this.dealer
@@ -431,17 +429,13 @@ class Dealer inherits Player
 
   property hasPlayed as Boolean
 
-  function withStatus(status as Status) returns Dealer
-    let copyOfThis be copy(this)
-    assign copyOfThis.status to status
-    return copyOfThis
-  end function
+  copy with_status(status as Status) returns Dealer
+    return copyWithPropertyUpdated(this, "status", status)
+  end copy
 
-  function withHandTotal(ht as Int) returns Dealer
-    let copyOfThis be copy(this)
-    assign copyOfThis.handTotal to ht
-    return copyOfThis
-  end function
+  copy with_handTotal(handTotal as Int) returns Dealer
+    return copyWithPropertyUpdated(this, "handTotal", handTotal)
+  end copy
 
   procedure play()
     call this.startTurn()
@@ -487,23 +481,17 @@ class HumanPlayer inherits Player
     assign this.cards to new List<of Card>()
   end constructor
 
-  function withStatus(status as Status) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.status to status
-    return copyOfThis
-  end function
+  copy with_status(status as Status) returns HumanPlayer
+    return copyWithPropertyUpdated(this, "status", status)
+  end copy
 
-  function withHandTotal(ht as Int) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.handTotal to ht
-    return copyOfThis
-  end function
+  copy with_handTotal(handTotal as Int) returns HumanPlayer
+    return copyWithPropertyUpdated(this, "handTotal", handTotal)
+  end copy
 
-  function withCards(c as List<of Card>) returns HumanPlayer
-    let copyOfThis be copy(this)
-    assign copyOfThis.cards to c
-    return copyOfThis
-  end function
+  copy with_cards(cards as List<of Card>) returns HumanPlayer
+    return copyWithPropertyUpdated(this, "cards", cards)
+  end copy
 
   procedure newHand()
     call this.newHandHelper()

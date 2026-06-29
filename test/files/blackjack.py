@@ -83,18 +83,18 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
 
 class Test_determinePlayerOutcome(unittest.TestCase):
  def test_determinePlayerOutcome(self) -> None:
-  dbj = (Dealer(0)).withStatus(Status.blackjack) # let
+  dbj = (Dealer(0)).with_status(Status.blackjack) # let
   self.assertEqual(dbj.status, Status.blackjack)
-  d21 = (Dealer(0)).withStatus(Status.standing).withHandTotal(21) # let
+  d21 = (Dealer(0)).with_status(Status.standing).with_handTotal(21) # let
   self.assertEqual(d21.status, Status.standing)
   self.assertEqual(d21.handTotal, 21)
-  d17 = (Dealer(0)).withStatus(Status.standing).withHandTotal(17) # let
-  dbu = (Dealer(0)).withStatus(Status.bust) # let
-  pbj = (HumanPlayer("", 0)).withStatus(Status.blackjack) # let
+  d17 = (Dealer(0)).with_status(Status.standing).with_handTotal(17) # let
+  dbu = (Dealer(0)).with_status(Status.bust) # let
+  pbj = (HumanPlayer("", 0)).with_status(Status.blackjack) # let
   self.assertEqual(pbj.status, Status.blackjack)
-  p21 = (HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21) # let
-  p17 = (HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17) # let
-  pbu = (HumanPlayer("", 0)).withStatus(Status.bust) # let
+  p21 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) # let
+  p17 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) # let
+  pbu = (HumanPlayer("", 0)).with_status(Status.bust) # let
   self.assertEqual(determinePlayerOutcome(dbj, pbj), Outcome.draw)
   self.assertEqual(determinePlayerOutcome(dbj, p21), Outcome.lose)
   self.assertEqual(determinePlayerOutcome(dbj, pbu), Outcome.lose)
@@ -164,9 +164,9 @@ class Test_htmlForGame(unittest.TestCase):
  def test_htmlForGame(self) -> None:
   c1 = Card("3", Suit.clubs, False) # let
   c2 = Card("K", Suit.spades, True) # let
-  p = (HumanPlayer("fred", 10)).withCards([c1, c2]) # let
+  p = (HumanPlayer("fred", 10)).with_cards([c1, c2]) # let
   players = (list[Player]()).withAppend(p) # let
-  g2 = (Game(1)).withPlayers(players) # let
+  g2 = (Game(1)).with_players(players) # let
   self.assertEqual(htmlForGame(g2), "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>")
 # end test
 
@@ -186,7 +186,7 @@ class Test_htmlForPlayer(unittest.TestCase):
  def test_htmlForPlayer(self) -> None:
   c1 = Card("3", Suit.clubs, False) # let
   c2 = Card("K", Suit.spades, True) # let
-  p = (HumanPlayer("charlie", 10)).withCards([c1, c2]) # let
+  p = (HumanPlayer("charlie", 10)).with_cards([c1, c2]) # let
   self.assertEqual(htmlForPlayer(p), "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>")
 # end test
 
@@ -247,11 +247,9 @@ class Game: # concrete class
 
   message: str # property
 
-  def withPlayers(self: Game, p: list[Player]) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.players = p # assignment
-    return copyOfThis
-  # end function method
+  def with_players(self: Game, players: list[Player]) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "players", players)
+  # end 
 
   def newRound(self: Game) -> None: # procedure method
     dealer = self.dealer # variable definition
@@ -448,17 +446,13 @@ class Dealer(Player): # concrete class
 
   hasPlayed: bool # property
 
-  def withStatus(self: Dealer, status: Status) -> Dealer: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.status = status # assignment
-    return copyOfThis
-  # end function method
+  def with_status(self: Dealer, status: Status) -> Dealer: # copy with method
+    return copyWithPropertyUpdated(self, "status", status)
+  # end 
 
-  def withHandTotal(self: Dealer, ht: int) -> Dealer: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.handTotal = ht # assignment
-    return copyOfThis
-  # end function method
+  def with_handTotal(self: Dealer, handTotal: int) -> Dealer: # copy with method
+    return copyWithPropertyUpdated(self, "handTotal", handTotal)
+  # end 
 
   def play(self: Dealer) -> None: # procedure method
     self.startTurn() # procedure call
@@ -505,23 +499,17 @@ class HumanPlayer(Player): # concrete class
     self.cards = list[Card]() # assignment
   # end constructor
 
-  def withStatus(self: HumanPlayer, status: Status) -> HumanPlayer: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.status = status # assignment
-    return copyOfThis
-  # end function method
+  def with_status(self: HumanPlayer, status: Status) -> HumanPlayer: # copy with method
+    return copyWithPropertyUpdated(self, "status", status)
+  # end 
 
-  def withHandTotal(self: HumanPlayer, ht: int) -> HumanPlayer: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.handTotal = ht # assignment
-    return copyOfThis
-  # end function method
+  def with_handTotal(self: HumanPlayer, handTotal: int) -> HumanPlayer: # copy with method
+    return copyWithPropertyUpdated(self, "handTotal", handTotal)
+  # end 
 
-  def withCards(self: HumanPlayer, c: list[Card]) -> HumanPlayer: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.cards = c # assignment
-    return copyOfThis
-  # end function method
+  def with_cards(self: HumanPlayer, cards: list[Card]) -> HumanPlayer: # copy with method
+    return copyWithPropertyUpdated(self, "cards", cards)
+  # end 
 
   def newHand(self: HumanPlayer) -> None: # procedure method
     self.newHandHelper() # procedure call

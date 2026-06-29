@@ -23,11 +23,13 @@ import { ElanCompilerError } from "./elan-compiler-error";
 import { constructorKeyword } from "./elan-keywords";
 import { AnyEnumType } from "./symbols/any-enum-type";
 import { AnyExceptEnumType } from "./symbols/any-except-enum-type";
+import { AnyInclEnumType } from "./symbols/any-incl-enum-type";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import {
   AnyEnumName,
   AnyExceptEnumName,
+  AnyInclEnumName,
   BooleanName,
   ClassName,
   FloatName,
@@ -195,6 +197,8 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return AnyExceptEnumType.Instance;
       case AnyEnumName:
         return AnyEnumType.Instance;
+      case AnyInclEnumName:
+        return AnyInclEnumType.Instance;
     }
     throw new Error("NotImplemented: " + this.name);
   }
@@ -596,6 +600,9 @@ export function elanDeprecated(
 }
 
 export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyExceptEnumName);
+export const ElanAnyInclEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(
+  AnyInclEnumName,
+);
 export const ElanAnyEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyEnumName);
 export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);
@@ -639,6 +646,10 @@ export function elanAnyType() {
 
 export function elanAnyEnumType() {
   return elanType(ElanAnyEnum);
+}
+
+export function elanAnyInclEnumType() {
+  return elanType(ElanAnyInclEnum);
 }
 
 export function elanIntType() {

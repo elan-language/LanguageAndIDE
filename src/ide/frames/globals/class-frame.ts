@@ -8,11 +8,11 @@ import { AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { Constructor } from "../class-members/constructor";
+import { CopyWithMethod } from "../class-members/copy-with-method";
 import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { WithMethod } from "../class-members/with-method";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -226,8 +226,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   createFunction(priv: boolean = false): Frame {
     return new FunctionMethod(this, priv);
   }
-  createWithMethod(): Frame {
-    return new WithMethod(this, this.name.text);
+  createCopyWithMethod(): Frame {
+    return new CopyWithMethod(this, this.name.text);
   }
   createProperty(priv: boolean = false): Frame {
     return new Property(this, priv);

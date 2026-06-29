@@ -712,7 +712,8 @@ export function assertOptions(selector : AbstractSelector, options : string[]) {
   for(const v of map) {
     const [, [rawVal,]] = v;
     const val = rawVal.replaceAll("<b>", "").replaceAll("</b>", "");
-    if (!val.includes("delete") && !val.includes("copy") && !val.includes("paste")) {
+    //TODO temp kludge to avoid confusion between copy and copy with
+    if (!val.includes("delete") && !val.includes("paste")) {
       availableOptions.push(val);
     }
   }
