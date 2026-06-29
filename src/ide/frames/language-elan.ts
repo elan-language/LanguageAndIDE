@@ -1,4 +1,4 @@
-import { asKeyword, lambdaKeyword, ofKeyword } from "../../compiler/elan-keywords";
+import { abstractKeyword, asKeyword, assertKeyword, assignKeyword, beKeyword, callKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, copyKeyword, elifKeyword, elseKeyword, endKeyword, enumKeyword, forKeyword, functionKeyword, ifKeyword, inheritsKeyword, inKeyword, inputKeyword, interfaceKeyword, lambdaKeyword, letKeyword, mainKeyword, newKeyword, ofKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, returnKeyword, returnsKeyword, setKeyword, stepKeyword, testKeyword, thenKeyword, thisKeyword, throwKeyword, toKeyword, tryKeyword, variableKeyword, whileKeyword, withKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
@@ -27,7 +27,7 @@ import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
+import { languageHelper_enumValuesList, LineFormat } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
 import { IdentifierDef } from "./parse-nodes/identifier-def";
@@ -86,7 +86,7 @@ export class LanguageElan extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
+      html = `<el-kw>${this.ASSERT} </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof ProcedureCall) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof CatchStatement) {
@@ -115,7 +115,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
-      html = `<el-kw>${this.REASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>${this.ASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableStatement) {
@@ -203,60 +203,50 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  private ABSTRACT = "abstract";
-  private AS = "as";
-  private ASSERT = "assert";
-  private BE = "be";
-  private CALL = "call";
-  private CATCH = "catch";
-  private CLASS = "class";
-  private CONSTANT = "constant";
-  private CONSTRUCTOR = "constructor";
-  private COPY = "copy";
-  private DIV = "div";
-  private EACH = "each";
-  private ELIF = "elif";
-  private ELSE = "else";
-  private EMPTY = "empty";
-  private END = "end";
-  private ENUM = "enum";
-  private EXCEPTION = "exception";
-  private FOR = "for";
-  private FROM = "from";
-  private FUNCTION = "function";
-  private GLOBAL = "global";
-  private IF = "if";
-  private IMPORT = "import";
-  private IN = "in";
-  private INHERITS = "inherits";
-  private INPUT = "input";
-  private INTERFACE = "interface";
-  private lambdaKeyword = "lambda";
-  private LET = "let";
-  private LIBRARY = "library";
-  private MAIN = "main";
-  private NEW = "new";
-  private OF = "of";
-  private OUT = "out";
-  private PRINT = "print";
-  private PRIVATE = "private";
-  private PROCEDURE = "procedure";
-  private PROPERTY = "property";
-  private REASSIGN = "reassign";
-  private REF = "ref";
-  private RETURN = "return";
-  private RETURNS = "returns";
-  private SET = "set";
-  private STEP = "step";
-  private TEST = "test";
-  private THEN = "then";
-  private THIS = "this";
-  private THROW = "throw";
-  private TO = "to";
-  private TRY = "try";
-  private VARIABLE = "variable";
-  private WHILE = "while";
-  private WITH = "with";
+  private ABSTRACT = abstractKeyword;
+  private AS = asKeyword;
+  private ASSERT = assertKeyword;
+  private ASSIGN = assignKeyword;
+  private BE = beKeyword;
+  private CALL = callKeyword;
+  private CATCH = catchKeyword;
+  private CLASS = classKeyword;
+  private CONSTANT = constantKeyword;
+  private CONSTRUCTOR = constructorKeyword;
+  private COPY = copyKeyword;
+  private ELIF = elifKeyword;
+  private ELSE = elseKeyword;
+  private END = endKeyword;
+  private ENUM = enumKeyword;
+  private FOR = forKeyword;
+  private FUNCTION = functionKeyword;
+  private IF = ifKeyword;
+  private IN = inKeyword;
+  private INHERITS = inheritsKeyword;
+  private INPUT = inputKeyword;
+  private INTERFACE = interfaceKeyword;
+  private lambdaKeyword = lambdaKeyword;
+  private LET = letKeyword;
+  private MAIN = mainKeyword;
+  private NEW = newKeyword;
+  private OF = ofKeyword;
+  private PRINT = printKeyword;
+  private PRIVATE = privateKeyword;
+  private PROCEDURE = procedureKeyword;
+  private PROPERTY = propertyKeyword;
+  private RETURN = returnKeyword;
+  private RETURNS = returnsKeyword;
+  private SET = setKeyword;
+  private STEP = stepKeyword;
+  private TEST = testKeyword;
+  private THEN = thenKeyword;
+  private THIS = thisKeyword;
+  private THROW = throwKeyword;
+  private TO = toKeyword;
+  private TRY = tryKeyword;
+  private VARIABLE = variableKeyword;
+  private WHILE = whileKeyword;
+  private WITH = withKeyword;
 
   POWER: string = "^";
   EQUAL: string = "is";
@@ -293,7 +283,6 @@ export class LanguageElan extends LanguageAbstract {
     this.NEW,
     this.IF,
     this.lambdaKeyword,
-    this.REF,
     this.THIS,
     this.NOT,
   ];

@@ -271,16 +271,16 @@ procedure inPlaceRippleSort(li as List&lt;of Int&gt;)
   variable hasChanged set to true
   variable lastComp set to li.length() - 2
   while hasChanged is true
-    reassign hasChanged to false
+    assign hasChanged to false
     for i in range(0, lastComp + 1)
       if li[i] > li[i + 1] then
         variable temp set to li[i]
-        reassign li[i] to li[i + 1]
-        reassign li[i + 1] to temp
-        reassign hasChanged to true
+        assign li[i] to li[i + 1]
+        assign li[i + 1] to temp
+        assign hasChanged to true
       end if
     end for
-    reassign lastComp to lastComp - 1
+    assign lastComp to lastComp - 1
   end while
 end procedure
 </codeblock>
@@ -342,11 +342,11 @@ function binarySearch(li as List&lt;of String&gt;, item as String) returns Boole
     variable mid set to divAsInt(li.length(), 2)
     variable value set to li[mid]
     if item.equals(value) then
-      reassign result to true
+      assign result to true
     elif item.isBefore(value) then
-      reassign result to binarySearch(li.subList(0, mid), item)
+      assign result to binarySearch(li.subList(0, mid), item)
     else
-      reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
+      assign result to binarySearch(li.subList(mid + 1, li.length()), item)
     end if
   end if
   return result
@@ -526,7 +526,7 @@ end main
 class Thing
   property names as List&lt;of String&gt;
   constructor()
-    reassign this.names to createPopulatedList(6, "X")
+    assign this.names to createPopulatedList(6, "X")
   end constructor
   function toString() returns String
     return "instance of class Thing"
@@ -544,7 +544,7 @@ end class
 <codeblock>
 class Apple
   constructor()
-    reassign this.location to new Square(0, 0)
+    assign this.location to new Square(0, 0)
   end constructor
   function toString() returns String
     return ""
@@ -555,14 +555,14 @@ class Apple
     while changePosition
       variable ranX set to randint(0, 39)
       variable ranY set to randint(0, 29)
-      reassign this.location to new Square(ranX, ranY)
+      assign this.location to new Square(ranX, ranY)
       if not snake.bodyCovers(this.location) then
-        reassign changePosition to false
+        assign changePosition to false
       end if
     end while
   end procedure
   procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
-    reassign blocks[this.location.x][this.location.y] to red
+    assign blocks[this.location.x][this.location.y] to red
   end procedure
 end class
 </codeblock>
@@ -707,11 +707,11 @@ end main
 function clockwise(d as Compass) returns Compass
   variable newDir set to Compass.north
   if d.equals(Compass.north) then
-    reassign newDir to Compass.east
+    assign newDir to Compass.east
   elif d.equals(Compass.east) then
-    reassign newDir to Compass.south
+    assign newDir to Compass.south
   elif d.equals(Compass.south) then
-    reassign newDir to Compass.west
+    assign newDir to Compass.west
   end if
   return newDir
 end function
@@ -825,8 +825,8 @@ the correct type must be provided. For example, if the class <code>Square</code>
 <codeblock>
 class Square
   constructor(x as Int, y as Int)
-    reassign this.x to x
-    reassign this.y to y
+    assign this.x to x
+    assign this.y to y
   end constructor
 end class
 </codeblock>
@@ -882,7 +882,7 @@ class Teacher
 end class
 class Pupil
   constructor()
-    reassign this.tutor to new Maybe&lt;of Teacher&gt;()
+    assign this.tutor to new Maybe&lt;of Teacher&gt;()
   end constructor
   property tutor as Maybe&lt;of Teacher&gt;
   function toString() returns String
@@ -927,7 +927,7 @@ end class
 <p>A <b>property</b> may be marked <b>private</b>, in which case it is visible only to code within the class and,
 if defined on an <b>abstract class</b>, within its subclasses.
  This is done by using the context menu on the property instruction or selecting it and keying <b>Ctrl+p</b>.
-This action is a toggle used both to reassign and to remove the modifier <b>private</b>.</p>
+This action is a toggle used both to assign and to remove the modifier <b>private</b>.</p>
 <ul>
  <li></li>
  <li>A property that is not private may be read, but not written to.</li>
@@ -940,10 +940,10 @@ This action is a toggle used both to reassign and to remove the modifier <b>priv
 <codeblock>
 class Game
   constructor(board as Board)
-    reassign this.board to board
+    assign this.board to board
   end constructor
   procedure setHeight(height as Int)
-    reassign this.height to height
+    assign this.height to height
   end procedure
 end class
 </codeblock>
@@ -971,10 +971,10 @@ end class
 </p>
 
 <h2 id="reassign"><b>reassign variable</b></h2>
-<p>The <code>reassign a to b</code> instruction assigns a new value to an existing named value:
+<p>The <code>assign a to b</code> instruction assigns a new value to an existing named value:
 the value in <code>b</code> is copied into the named value <code>a</code></p>
 <p>The two named values must be of the same Type.</p>
-<p>A <b>reassign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
+<p>A <b>assign variable</b> instruction may not assign a new value to a parameter within a procedure.</p>
 <p>To change the value of an argument supplied in a procedure call, the corresponding parameter must have been defined as of type <code>AsRef</code>,
 which then allows use of the dot method <el-method>set</el-method> on it. See <a href="#CallByRef">Call by reference <i class="fa">&#xf14c;</i></a></p>
 
@@ -988,13 +988,13 @@ which then allows use of the dot method <el-method>set</el-method> on it. See <a
  <li>It is structured like this:
 <codeblock>
 if (x < 1) then
-  reassign x to 1
+  assign x to 1
 elif x < 2 then
-  reassign x to 2
+  assign x to 2
 elif x < 3 then
-  reassign x to 3
+  assign x to 3
 else
-  reassign x to 0
+  assign x to 0
 end if
 </codeblock>
 </li>
@@ -1021,11 +1021,11 @@ end if
 main
   variable result set to false
   if item.equals(value) then
-    reassign result to true
+    assign result to true
   elif item.isBefore(value) then
-    reassign result to binarySearch(li.subList(0, mid), item)
+    assign result to binarySearch(li.subList(0, mid), item)
   else
-    reassign result to binarySearch(li.subList(mid + 1, li.length()), item)
+    assign result to binarySearch(li.subList(mid + 1, li.length()), item)
   end if
 end main
 </codeblock>
@@ -1108,7 +1108,7 @@ end main
 function reverse(s as String) returns String
   variable sReturn set to ""
   for ch in s
-    reassign sReturn to ch + sReturn
+    assign sReturn to ch + sReturn
   end for
   return sReturn
 end function
@@ -1329,7 +1329,7 @@ end main
 <codeblock>
 main
   variable li set to new List&lt;of Int&gt;()
-  reassign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
+  assign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
   print(li[4])
   print(li.subList(4, li.length()))
   print(li.subList(0, 7))
@@ -1440,7 +1440,7 @@ if listA.equals(listB) then
 end if
 </codeblock>
 </li>
-<li><code>reassign differs to set1.notEqualTo(set2)</code></li>
+<li><code>assign differs to set1.notEqualTo(set2)</code></li>
 </ul>
 <p>The comparison is made sequentially through the characters or items in the structures to see if the objects are equal.
 Two Lists compare equal if they contain the same items in the same order.
@@ -1467,8 +1467,8 @@ Two instances which are subclasses of the same abstract class compare equal only
 
 <h3 class="no-TOC">Combining operators </h3>
 <p>You can combine operators of different kinds, e.g. combining numeric comparison with logical operators in a single expression. However the rules of precedence between operators of different kinds are complex. It is strongly recommend that you always use brackets to disambiguate such expressions, for example:</p>
-<code>reassign x to (a > b) and (b < c)</code><br>
-<code>reassign x to (a + b) > (c - d)</code>
+<code>assign x to (a > b) and (b < c)</code><br>
+<code>assign x to (a + b) > (c - d)</code>
 
 <h2 id="functionRef">Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
