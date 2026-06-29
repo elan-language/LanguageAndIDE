@@ -214,6 +214,31 @@ end function`;
     assert.strictEqual(actual[0].startsWith("<el-statement"), true);
   });
 
+  test("process lambda", async () => {
+    const code = `lambda n as Node => n.point.equals(p)`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-kw"), true);
+  });
+
+  test("process procedure", async () => {
+    const code = `procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
+  variable head set to headRef.value()
+  variable tail set to tailRef.value()
+  variable currentDir set to currentDirRef.value()
+  assign currentDir to directionByKey(currentDir, getKey())
+  call tailRef.set(body[0])
+  call body.append(head)
+  call headRef.set(getAdjacentSquare(head, currentDir))
+  call currentDirRef.set(currentDir)
+end procedure`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-proc"), true);
+  });
+
   ignore_test("process wrapped expression", async () => {
     const code = `<code>
   mark[something] + "2" + mark[something]

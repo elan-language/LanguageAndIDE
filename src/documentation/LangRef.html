@@ -1152,7 +1152,7 @@ end procedure
     <el-method>directionByKey</el-method>, which is passed a keypress that has been read from the keyboard using the <el-method>getKey</el-method>
   system method:</p>
 
-<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
+<codeblock>procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
@@ -1161,9 +1161,7 @@ end procedure
   call body.append(head)
   call headRef.set(getAdjacentSquare(head, currentDir))
   call currentDirRef.set(currentDir)
-end procedure
-
-</codeblock>
+end procedure</codeblock>
 </div></div>
 
 <div class="accordion">
@@ -1315,7 +1313,7 @@ end if
 <h3 class="no-TOC acc-title">Examples of a while loop</h3>
 <div class="acc-body">
   <p>From the <b>Ripple Sort</b> demo, where the loop is executed until a pass right through the loop has left the <code>hasChanged</code>
-  variable as <code>false (meaning that no more swaps have occurred):</code></p>
+  variable as <code>false</code> (meaning that no more swaps have occurred):</p>
 
   <codeblock>while hasChanged is true
   assign hasChanged to false
@@ -1475,7 +1473,7 @@ end procedure
 <div class="acc-body">
 
 <p>From the <b>Burrow</b> demo: a call to the library procedure named <el-method>displayBlocks</el-method>,
-  passing in the data structure held in variable <code>blocks:</code></p>
+  passing in the data structure held in variable <code>blocks</code>:</p>
 
   <codeblock>call displayBlocks(blocks)
   </codeblock>
@@ -2136,7 +2134,6 @@ variable x set to point.item_0
  <p>The definition for a variable instruction is most commonly
  a simple name. Less commonly, it may take the form of a deconstruction of a
  <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
-<!-- <a href="LibRef.html#deconstructListImmutable"><code>ListImmutable</code>e <i class="fa">&#xf08e;</i></a> or-->
  <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
 </div>
 </div>
