@@ -1,11 +1,5 @@
-import {
-  endKeyword,
-  functionKeyword,
-  returnsKeyword
-} from "../../../compiler/elan-keywords";
-import {
-  singleIndent
-} from "../frame-helpers";
+import { endKeyword, functionKeyword, returnsKeyword } from "../../../compiler/elan-keywords";
+import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";

@@ -5,6 +5,7 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
+import { ParamListField } from "../ide/frames/fields/param-list-field";
 import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
@@ -337,6 +338,40 @@ function parseAsExpression(code: string): [string, string, string, string, strin
   }
 }
 
+function parseAsParameter(code: string): [string, string, string, string, string] | undefined {
+  // const ms = Date.now();
+  // console.log(`    Parse as Expression '${code.trim()}'`);
+
+  const codeSource = new CodeSourceFromString(code.trim() + ")");
+  const file = newFileImpl();
+
+  try {
+    const gf = new GlobalFunction(file);
+    const pp = new ParamListField(gf);
+    pp.parseFrom(codeSource);
+
+    if (pp.readParseStatus() !== ParseStatus.valid) {
+      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+      return undefined;
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(pp.textAsHtml());
+    }
+
+    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
+  } catch (_e) {
+    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+    return undefined;
+  }
+}
+
 function parseAsType(code: string): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
   // console.log(`    Parse as Type '${code.trim()}'`);
@@ -392,7 +427,7 @@ function parseAsKeyword(code: string): [string, string, string, string, string] 
 export async function processInnerCode(
   code: string,
 ): Promise<[string, string, string, string, string]> {
-  code = code.trim() + "\n";
+  code = (code.startsWith("#") ? code : code.trim()) + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
   const hasHeader = code.includes("guest default_profile valid");
   return (
@@ -404,6 +439,7 @@ export async function processInnerCode(
     parseAsMain(code) ||
     parseAsMember(code) ||
     parseAsExpression(code) ||
+    parseAsParameter(code) ||
     (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) || [
       `Code does not parse as Elan.`,
       `Code does not parse as Elan.`,

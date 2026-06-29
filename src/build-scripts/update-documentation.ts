@@ -28,25 +28,40 @@ function updatePaths(contents: string) {
   return newContents;
 }
 
-async function updateFile(fileName: string) {
+export async function processDocument(fileName: string): Promise<[string, string]> {
   const ms = Date.now();
   console.log(`Processing: ${fileName}`);
 
   let contents = loadFile(fileName);
+
+  // don't double processs
+  if (contents.includes(`<span class="python">`)) {
+    return [fileName, contents];
+  }
+
   contents = updatePaths(contents);
   contents = await processCode(contents, codeTag, codeEndTag);
   contents = await processCode(contents, codeBlockTag, codeBlockEndTag);
   console.log(`Finished Processing: ${fileName} in ${Date.now() - ms}ms`);
-  saveFile(fileName, contents);
-  // console.log(`Saved: ${fileName} in ${Date.now() - ms}ms`);
+  return [fileName, contents];
 }
 
 export async function processDocumentation() {
   //Promise.all(getDocs(docs).map(fn => updateFile(`${docs}${fn}`)));
+  const results: [string, string][] = [];
+
   for (const fn of getDocs(docs)) {
     resetFile();
-    await updateFile(`${docs}${fn}`);
+    results.push(await processDocument(`${docs}${fn}`));
+  }
+
+  return results;
+}
+
+export async function processAndSaveDocumentation() {
+  for (const [fileName, contents] of await processDocumentation()) {
+    saveFile(fileName, contents);
   }
 }
 
-processDocumentation();
+processAndSaveDocumentation();

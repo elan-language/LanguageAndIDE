@@ -182,12 +182,36 @@ end function`;
     assert.strictEqual(actual[0].startsWith("<el-type"), true);
   });
 
-  ignore_test("process expression", async () => {
+  test("process expression", async () => {
     const code = `mark[something] + "2" + mark[something]`;
 
     const actual = await processInnerCode(code);
 
     assert.strictEqual(actual[0].startsWith("<el-id"), true);
+  });
+
+  test("process parameter", async () => {
+    const code = `bubbles as List&lt;of CircleVG&gt;`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-id"), true);
+  });
+
+  test("process call statement", async () => {
+    const code = `call moveGrowBurst(bubbles)`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-statement"), true);
+  });
+
+  test("process comment", async () => {
+    const code = `# `;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-statement"), true);
   });
 
   ignore_test("process wrapped expression", async () => {

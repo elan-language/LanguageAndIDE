@@ -829,7 +829,7 @@ paradigm, with two exceptions:</p>
             procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
             <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
           <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as in the earlier example:
-          <code>return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
+          <code>g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
         </ul>
       </div>
     </div>

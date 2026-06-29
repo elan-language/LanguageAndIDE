@@ -203,7 +203,11 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
-    } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod || frame instanceof WithMethod) {
+    } else if (
+      frame instanceof GlobalFunction ||
+      frame instanceof FunctionMethod ||
+      frame instanceof WithMethod
+    ) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalProcedure || frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
