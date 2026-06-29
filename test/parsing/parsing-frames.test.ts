@@ -480,6 +480,41 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
+  test("parse Frames - copy with method", async () => {
+    const code = `${testHeader}
+
+class Player inherits Foo, Bar
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+  property score as Int
+
+  copy with_score(score as Int) returns Player
+    return copyWithPropertyUpdated(this, "score", score)
+  end copy
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = new FileImpl(
+      hash,
+      new Profile(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
   test("parse Frames - else with and without if", async () => {
     const code = `${testHeader}
 

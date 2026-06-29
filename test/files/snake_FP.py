@@ -17,10 +17,10 @@ def main() -> None:
 # end main
 
 def clockTick(g: Game, k: str) -> Game: # function
-  g2 = if_(k.equals(""), g, g.withKey(k)) # let
+  g2 = if_(k.equals(""), g, g.with_key(k)) # let
   g3 = moveSnake(g2) # let
   g4 = eatAppleIfPoss(g3) # let
-  return if_(gameOver(g4), g4.withIsOn(False), g4)
+  return if_(gameOver(g4), g4.with_isOn(False), g4)
 # end function
 
 def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
@@ -45,13 +45,13 @@ def moveSnake(g: Game) -> Game: # function
   y = g.head.y # let
   newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) # let
   newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) # let
-  return g.withBody(g.body.withAppend(g.head)).withHead(Square(newX, newY))
+  return g.with_body(g.body.withAppend(g.head)).with_head(Square(newX, newY))
 # end function
 
 def eatAppleIfPoss(g: Game) -> Game: # function
   tail = g.body[0] # let
   moveTail = g.body.subList(1, g.body.length()) # let
-  return if_(headOverApple(g), g.withNewApple(), g.withPriorTail(tail).withBody(moveTail))
+  return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail))
 # end function
 
 def headOverApple(g: Game) -> bool: # function
@@ -104,51 +104,37 @@ class Game: # concrete class
     y = rnd2.asInt(0, 29) # let
     rnd3 = rnd2.nextGen() # let
     apple2 = Square(x, y) # let
-    g2 = self.withApple(apple2).withRnd(rnd3) # let
+    g2 = self.with_apple(apple2).with_rnd(rnd3) # let
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   # end function method
 
-  def withHead(self: Game, value: Square) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.head = value # assignment
-    return copyOfThis
-  # end function method
+  def with_head(self: Game, head: Square) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "head", head)
+  # end 
 
-  def withBody(self: Game, value: list[Square]) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.body = value # assignment
-    return copyOfThis
-  # end function method
+  def with_body(self: Game, body: list[Square]) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "body", body)
+  # end 
 
-  def withPriorTail(self: Game, value: Square) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.priorTail = value # assignment
-    return copyOfThis
-  # end function method
+  def with_priorTail(self: Game, priorTail: Square) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "priorTail", priorTail)
+  # end 
 
-  def withApple(self: Game, value: Square) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.apple = value # assignment
-    return copyOfThis
-  # end function method
+  def with_apple(self: Game, apple: Square) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "apple", apple)
+  # end 
 
-  def withIsOn(self: Game, value: bool) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.isOn = value # assignment
-    return copyOfThis
-  # end function method
+  def with_isOn(self: Game, isOn: bool) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "isOn", isOn)
+  # end 
 
-  def withRnd(self: Game, value: Random) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.rnd = value # assignment
-    return copyOfThis
-  # end function method
+  def with_rnd(self: Game, rnd: Random) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "rnd", rnd)
+  # end 
 
-  def withKey(self: Game, value: str) -> Game: # function method
-    copyOfThis = copy(self) # let
-    copyOfThis.key = value # assignment
-    return copyOfThis
-  # end function method
+  def with_key(self: Game, key: str) -> Game: # copy with method
+    return copyWithPropertyUpdated(self, "key", key)
+  # end 
 
 # end class
 
@@ -178,12 +164,12 @@ class Test_clockTick(unittest.TestCase):
   self.assertEqual(g3.body.length(), 2)
   self.assertEqual(g3.priorTail, g2.body[0])
   self.assertEqual(g3.isOn, True)
-  g4 = g3.withApple(Square(22, 17)) # let
+  g4 = g3.with_apple(Square(22, 17)) # let
   g5 = clockTick(g4, "s") # let
   self.assertEqual(g5.body.length(), 3)
   self.assertEqual(g5.priorTail, g4.priorTail)
   self.assertEqual(g5.isOn, True)
-  g6 = g5.withHead(Square(22, 29)) # let
+  g6 = g5.with_head(Square(22, 29)) # let
   g7 = clockTick(g6, "s") # let
   self.assertEqual(g7.isOn, False)
 # end test
@@ -213,7 +199,7 @@ class Test_testnewApple(unittest.TestCase):
   self.assertEqual(g3.apple, Square(10, 12))
   # test that apple is never over snake
   g4 = (Game(Random())) # let
-  g5 = g4.withBody([Square(10, 12)]) # let
+  g5 = g4.with_body([Square(10, 12)]) # let
   g6 = g5.withNewApple() # let
   self.assertEqual(g4.apple, Square(12, 15))
 # end test
@@ -222,27 +208,27 @@ class Test_score(unittest.TestCase):
  def test_score(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(score(g1), 0)
-  g2 = g1.withBody([Square(4, 4), Square(5, 4)]) # let
+  g2 = g1.with_body([Square(4, 4), Square(5, 4)]) # let
   self.assertEqual(score(g2), 0)
-  g3 = g1.withBody([Square(3, 4), Square(4, 4), Square(5, 4)]) # let
+  g3 = g1.with_body([Square(3, 4), Square(4, 4), Square(5, 4)]) # let
   self.assertEqual(score(g3), 1)
-  g4 = g1.withBody([Square(3, 4), Square(4, 4), Square(5, 4), Square(5, 5)]) # let
+  g4 = g1.with_body([Square(3, 4), Square(4, 4), Square(5, 4), Square(5, 5)]) # let
   self.assertEqual(score(g4), 2)
 # end test
 
 class Test_moveSnake(unittest.TestCase):
  def test_moveSnake(self) -> None:
   g1 = Game(Random()) # let
-  g2 = g1.withKey("a") # let
+  g2 = g1.with_key("a") # let
   g3 = moveSnake(g2) # let
   self.assertEqual(g3.head, Square(21, 15))
-  g4 = g1.withKey("d") # let
+  g4 = g1.with_key("d") # let
   g5 = moveSnake(g4) # let
   self.assertEqual(g5.head, Square(23, 15))
-  g6 = g1.withKey("w") # let
+  g6 = g1.with_key("w") # let
   g7 = moveSnake(g6) # let
   self.assertEqual(g7.head, Square(22, 14))
-  g8 = g1.withKey("s") # let
+  g8 = g1.with_key("s") # let
   g9 = moveSnake(g8) # let
   self.assertEqual(g9.head, Square(22, 16))
 # end test
@@ -252,13 +238,13 @@ class Test_eatAppleIfPoss(unittest.TestCase):
   g1 = Game(Random()) # let
   self.assertEqual(g1.body.length(), 2)
   # negative case
-  g2 = g1.withApple(Square(23, 15)) # let
+  g2 = g1.with_apple(Square(23, 15)) # let
   g3 = eatAppleIfPoss(g2) # let
   self.assertEqual(g3.body.length(), 1)
   self.assertEqual(g3.apple, g2.apple)
   self.assertEqual(g3.priorTail, g2.body[0])
   # positive case
-  g4 = g2.withHead(Square(23, 15)) # let
+  g4 = g2.with_head(Square(23, 15)) # let
   g5 = eatAppleIfPoss(g4) # let
   self.assertEqual(g5.body.length(), 2)
   self.assertEqual(g5.apple, Square(12, 15))
@@ -268,9 +254,9 @@ class Test_eatAppleIfPoss(unittest.TestCase):
 class Test_overApple(unittest.TestCase):
  def test_overApple(self) -> None:
   g1 = Game(Random()) # let
-  g2 = g1.withApple(Square(23, 15)) # let
+  g2 = g1.with_apple(Square(23, 15)) # let
   self.assertEqual(headOverApple(g2), False)
-  g3 = g2.withHead(Square(23, 15)) # let
+  g3 = g2.with_head(Square(23, 15)) # let
   self.assertEqual(headOverApple(g3), True)
 # end test
 
@@ -278,11 +264,11 @@ class Test_gameOver(unittest.TestCase):
  def test_gameOver(self) -> None:
   g1 = Game((Random())) # let
   self.assertEqual(gameOver(g1), False)
-  g2 = g1.withHead(Square(0, 0)) # let
+  g2 = g1.with_head(Square(0, 0)) # let
   self.assertEqual(gameOver(g2), False)
-  g3 = g1.withHead(Square(40, 15)) # let
+  g3 = g1.with_head(Square(40, 15)) # let
   self.assertEqual(gameOver(g3), True)
-  g4 = g1.withHead(Square(21, 15)) # let
+  g4 = g1.with_head(Square(21, 15)) # let
   self.assertEqual(gameOver(g4), True)
 # end test
 
@@ -290,13 +276,13 @@ class Test_headIsAtEdge(unittest.TestCase):
  def test_headIsAtEdge(self) -> None:
   g1 = Game(Random()) # let
   self.assertEqual(hasHitEdge(g1), False)
-  g2 = g1.withHead(Square(40, 15)) # let
+  g2 = g1.with_head(Square(40, 15)) # let
   self.assertEqual(hasHitEdge(g2), True)
-  g3 = g1.withHead(Square(-1, 15)) # let
+  g3 = g1.with_head(Square(-1, 15)) # let
   self.assertEqual(hasHitEdge(g3), True)
-  g4 = g1.withHead(Square(20, 30)) # let
+  g4 = g1.with_head(Square(20, 30)) # let
   self.assertEqual(hasHitEdge(g4), True)
-  g5 = g1.withHead(Square(20, -1)) # let
+  g5 = g1.with_head(Square(20, -1)) # let
   self.assertEqual(hasHitEdge(g5), True)
 # end test
 

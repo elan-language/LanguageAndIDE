@@ -5,6 +5,7 @@ import {
   abstractPropertyKeywords,
   commentMarker,
   constructorKeyword,
+  copyKeyword,
   functionKeyword,
   privateFunctionKeywords,
   privateKeyword,
@@ -12,7 +13,6 @@ import {
   privatePropertyKeywords,
   procedureKeyword,
   propertyKeyword,
-  withKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
@@ -58,7 +58,12 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         "<b>f</b>unction method",
         (_parent: Parent) => this.class.createFunction(),
       ],
-      [withKeyword, "w", "<b>w</b>ith method", (_parent: Parent) => this.class.createWithMethod()],
+      [
+        copyKeyword,
+        "w",
+        "copy <b>w</b>ith method",
+        (_parent: Parent) => this.class.createCopyWithMethod(),
+      ],
       [
         abstractPropertyKeywords,
         "",
@@ -128,7 +133,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else if (keyword === procedureKeyword) {
       result = !(this.profile.isFunctional() && userEntry);
-    } else if (keyword === withKeyword) {
+    } else if (keyword === copyKeyword) {
       result = !userEntry || this.profile.isFunctional();
     }
     return result;

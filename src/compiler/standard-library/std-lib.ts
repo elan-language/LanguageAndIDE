@@ -14,6 +14,7 @@ import {
   FunctionOptions,
   ProcedureOptions,
   elanAnyEnumType,
+  elanAnyInclEnumType,
   elanAnyType,
   elanClassExport,
   elanClassType,
@@ -901,6 +902,19 @@ export class StdLib {
   copy<T extends object>(@elanGenericParamT1Type() toCopy: T): T {
     const newObject = Object.create(toCopy);
     return Object.assign(newObject, toCopy);
+  }
+
+  @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
+  copyWithPropertyUpdated<T extends object>(
+    @elanGenericParamT1Type() toCopy: T,
+    propName: string,
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    @elanAnyInclEnumType() newValue: any,
+  ): T {
+    const newObject = Object.create(toCopy);
+    const cc = Object.assign(newObject, toCopy);
+    cc[propName] = newValue;
+    return cc;
   }
 
   @elanProcedure(["listOfVGs"], ProcedureOptions.async)

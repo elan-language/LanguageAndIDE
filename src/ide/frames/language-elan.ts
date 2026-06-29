@@ -1,12 +1,57 @@
-import { abstractKeyword, asKeyword, assertKeyword, assignKeyword, beKeyword, callKeyword, catchKeyword, classKeyword, constantKeyword, constructorKeyword, copyKeyword, elifKeyword, elseKeyword, endKeyword, enumKeyword, forKeyword, functionKeyword, ifKeyword, inheritsKeyword, inKeyword, inputKeyword, interfaceKeyword, lambdaKeyword, letKeyword, mainKeyword, newKeyword, ofKeyword, printKeyword, privateKeyword, procedureKeyword, propertyKeyword, returnKeyword, returnsKeyword, setKeyword, stepKeyword, testKeyword, thenKeyword, thisKeyword, throwKeyword, toKeyword, tryKeyword, variableKeyword, whileKeyword, withKeyword } from "../../compiler/elan-keywords";
+import {
+  abstractKeyword,
+  asKeyword,
+  assertKeyword,
+  assignKeyword,
+  beKeyword,
+  callKeyword,
+  catchKeyword,
+  classKeyword,
+  constantKeyword,
+  constructorKeyword,
+  copyKeyword,
+  elifKeyword,
+  elseKeyword,
+  endKeyword,
+  enumKeyword,
+  forKeyword,
+  functionKeyword,
+  ifKeyword,
+  inheritsKeyword,
+  inKeyword,
+  inputKeyword,
+  interfaceKeyword,
+  lambdaKeyword,
+  letKeyword,
+  mainKeyword,
+  newKeyword,
+  ofKeyword,
+  printKeyword,
+  privateKeyword,
+  procedureKeyword,
+  propertyKeyword,
+  returnKeyword,
+  returnsKeyword,
+  setKeyword,
+  stepKeyword,
+  testKeyword,
+  thenKeyword,
+  thisKeyword,
+  throwKeyword,
+  toKeyword,
+  tryKeyword,
+  variableKeyword,
+  whileKeyword,
+  withKeyword,
+} from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
+import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
-import { WithMethod } from "./class-members/with-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { FileImpl } from "./file-impl";
@@ -164,8 +209,8 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
-    } else if (frame instanceof WithMethod) {
-      html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+    } else if (frame instanceof CopyWithMethod) {
+      html = `<el-kw>${this.COPY} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     }
     return html;
   }
@@ -279,13 +324,7 @@ export class LanguageElan extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
-  EXPRESSION_KEYWORDS: string[] = [
-    this.NEW,
-    this.IF,
-    this.lambdaKeyword,
-    this.THIS,
-    this.NOT,
-  ];
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.THIS, this.NOT];
 
   addNodesForNewInstance(node: NewInstance): void {
     node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));

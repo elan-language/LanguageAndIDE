@@ -83,18 +83,18 @@ End Function
 
 <TestClass Class Test_determinePlayerOutcome
  <TestMethod> Sub test_determinePlayerOutcome()
-  Dim dbj = (New Dealer(0)).withStatus(Status.blackjack) ' let
+  Dim dbj = (New Dealer(0)).with_status(Status.blackjack) ' let
   Assert.AreEqual(Status.blackjack, dbj.status)
-  Dim d21 = (New Dealer(0)).withStatus(Status.standing).withHandTotal(21) ' let
+  Dim d21 = (New Dealer(0)).with_status(Status.standing).with_handTotal(21) ' let
   Assert.AreEqual(Status.standing, d21.status)
   Assert.AreEqual(21, d21.handTotal)
-  Dim d17 = (New Dealer(0)).withStatus(Status.standing).withHandTotal(17) ' let
-  Dim dbu = (New Dealer(0)).withStatus(Status.bust) ' let
-  Dim pbj = (New HumanPlayer("", 0)).withStatus(Status.blackjack) ' let
+  Dim d17 = (New Dealer(0)).with_status(Status.standing).with_handTotal(17) ' let
+  Dim dbu = (New Dealer(0)).with_status(Status.bust) ' let
+  Dim pbj = (New HumanPlayer("", 0)).with_status(Status.blackjack) ' let
   Assert.AreEqual(Status.blackjack, pbj.status)
-  Dim p21 = (New HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21) ' let
-  Dim p17 = (New HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17) ' let
-  Dim pbu = (New HumanPlayer("", 0)).withStatus(Status.bust) ' let
+  Dim p21 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) ' let
+  Dim p17 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) ' let
+  Dim pbu = (New HumanPlayer("", 0)).with_status(Status.bust) ' let
   Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj))
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21))
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu))
@@ -170,9 +170,9 @@ End Function
  <TestMethod> Sub test_htmlForGame()
   Dim c1 = New Card("3", Suit.clubs, False) ' let
   Dim c2 = New Card("K", Suit.spades, True) ' let
-  Dim p = (New HumanPlayer("fred", 10)).withCards({c1, c2}) ' let
+  Dim p = (New HumanPlayer("fred", 10)).with_cards({c1, c2}) ' let
   Dim players = (New List(Of Player)()).withAppend(p) ' let
-  Dim g2 = (New Game(1)).withPlayers(players) ' let
+  Dim g2 = (New Game(1)).with_players(players) ' let
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2))
  End Sub
 End Class
@@ -194,7 +194,7 @@ End Function
  <TestMethod> Sub test_htmlForPlayer()
   Dim c1 = New Card("3", Suit.clubs, False) ' let
   Dim c2 = New Card("K", Suit.spades, True) ' let
-  Dim p = (New HumanPlayer("charlie", 10)).withCards({c1, c2}) ' let
+  Dim p = (New HumanPlayer("charlie", 10)).with_cards({c1, c2}) ' let
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p))
  End Sub
 End Class
@@ -261,10 +261,8 @@ Class Game
 
   Property message As String
 
-  Function withPlayers(p As List(Of Player)) As Game
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.players = p ' assignment
-    Return copyOfThis
+  Function with_players(players As List(Of Player)) As Game ' copy with method
+    Return copyWithPropertyUpdated(Me, "players", players)
   End Function
 
   Sub newRound() ' procedure method
@@ -458,16 +456,12 @@ Class Dealer
 
   Property hasPlayed As Boolean
 
-  Function withStatus(status As Status) As Dealer
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.status = status ' assignment
-    Return copyOfThis
+  Function with_status(status As Status) As Dealer ' copy with method
+    Return copyWithPropertyUpdated(Me, "status", status)
   End Function
 
-  Function withHandTotal(ht As Integer) As Dealer
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.handTotal = ht ' assignment
-    Return copyOfThis
+  Function with_handTotal(handTotal As Integer) As Dealer ' copy with method
+    Return copyWithPropertyUpdated(Me, "handTotal", handTotal)
   End Function
 
   Sub play() ' procedure method
@@ -517,22 +511,16 @@ Class HumanPlayer
     Me.cards = New List(Of Card)() ' assignment
   End Sub
 
-  Function withStatus(status As Status) As HumanPlayer
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.status = status ' assignment
-    Return copyOfThis
+  Function with_status(status As Status) As HumanPlayer ' copy with method
+    Return copyWithPropertyUpdated(Me, "status", status)
   End Function
 
-  Function withHandTotal(ht As Integer) As HumanPlayer
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.handTotal = ht ' assignment
-    Return copyOfThis
+  Function with_handTotal(handTotal As Integer) As HumanPlayer ' copy with method
+    Return copyWithPropertyUpdated(Me, "handTotal", handTotal)
   End Function
 
-  Function withCards(c As List(Of Card)) As HumanPlayer
-    Dim copyOfThis = copy(Me) ' let
-    copyOfThis.cards = c ' assignment
-    Return copyOfThis
+  Function with_cards(cards As List(Of Card)) As HumanPlayer ' copy with method
+    Return copyWithPropertyUpdated(Me, "cards", cards)
   End Function
 
   Overrides Sub newHand() ' procedure method

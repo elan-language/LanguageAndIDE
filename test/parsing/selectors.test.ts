@@ -136,7 +136,7 @@ suite("Selector tests", () => {
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "function method", "with method", "# comment"]);
+    assertOptions(s, ["property", "function method", "copy with method", "# comment"]);
   });
 
   test("Selection Filtering - abstract class", () => {

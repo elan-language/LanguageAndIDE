@@ -1,7 +1,7 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
+import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
-import { WithMethod } from "./class-members/with-method";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
 import { FileImpl } from "./file-impl";
@@ -180,7 +180,7 @@ export abstract class LanguageAbstract implements Language {
     return [frame.actual, frame.expected];
   }
 
-  protected implements(frame: FunctionMethod | ProcedureMethod | WithMethod): string {
+  protected implements(frame: FunctionMethod | ProcedureMethod | CopyWithMethod): string {
     const superImpl = implementsAbstractMethodOnClassOrInterface(
       frame.name,
       frame.getParent() as ClassFrame,
@@ -192,7 +192,7 @@ export abstract class LanguageAbstract implements Language {
     return implementsClause;
   }
 
-  protected overrides(frame: FunctionMethod | ProcedureMethod | WithMethod) {
+  protected overrides(frame: FunctionMethod | ProcedureMethod | CopyWithMethod) {
     const superImpl = implementsAbstractMethodOnClassOrInterface(
       frame.name,
       frame.getParent() as ClassFrame,
