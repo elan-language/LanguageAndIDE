@@ -324,7 +324,7 @@ export function togglePrivatePublic(member: PossiblyPrivateMember) {
 
 export function selfTypeAsHtml(member: MemberFrame): string {
   const typeNode = (member.getParent() as ClassFrame).name.getRootNode();
-  return typeNode!.renderAsHtml();
+  return typeNode?.renderAsHtml() ?? "<el-type></el-type>";
 }
 
 export function modifierAsElanSource(member: MemberFrame): string {

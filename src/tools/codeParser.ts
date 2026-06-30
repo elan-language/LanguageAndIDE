@@ -5,8 +5,10 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
+import { ParamListField } from "../ide/frames/fields/param-list-field";
 import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
+import { AbstractClass } from "../ide/frames/globals/abstract-class";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { GlobalSelector } from "../ide/frames/globals/global-selector";
@@ -17,6 +19,7 @@ import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageVB } from "../ide/frames/language-vb";
 import { Profile } from "../ide/frames/profile";
+import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
 import { ParseStatus } from "../ide/frames/status-enums";
@@ -282,6 +285,41 @@ function parseAsMember(code: string): [string, string, string, string, string] |
 
     if (file.parseError) {
       // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
+
+      return undefined;
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(cc.getChildren()[1].renderAsHtml());
+    }
+
+    // console.log(`    Parse as Member succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
+  } catch (_e) {
+    // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
+    return undefined;
+  }
+}
+
+function parseAsAbstractMember(code: string): [string, string, string, string, string] | undefined {
+  // const mss = Date.now();
+  // console.log(`    Parse as Member '${code.trim()}'`);
+
+  const codeSource = new CodeSourceFromString(code);
+  const file = newFileImpl();
+
+  try {
+    const cc = new AbstractClass(file);
+    const ms = new MemberSelector(cc);
+    ms.parseFrom(codeSource);
+
+    if (file.parseError) {
+      // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
       return undefined;
     }
     file.removeAllSelectorsThatCanBe();
@@ -327,6 +365,73 @@ function parseAsExpression(code: string): [string, string, string, string, strin
     for (const l of languages) {
       file.setLanguage(l);
       allCode.push(expr.textAsHtml());
+    }
+
+    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
+  } catch (_e) {
+    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+    return undefined;
+  }
+}
+
+function parseAsParameter(code: string): [string, string, string, string, string] | undefined {
+  // const ms = Date.now();
+  // console.log(`    Parse as Expression '${code.trim()}'`);
+
+  const codeSource = new CodeSourceFromString(code.trim() + ")");
+  const file = newFileImpl();
+
+  try {
+    const gf = new GlobalFunction(file);
+    const pp = new ParamListField(gf);
+    pp.parseFrom(codeSource);
+
+    if (pp.readParseStatus() !== ParseStatus.valid) {
+      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+      return undefined;
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(pp.textAsHtml());
+    }
+
+    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
+    return allCode as [string, string, string, string, string];
+  } catch (_e) {
+    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+    return undefined;
+  }
+}
+
+function parseAsLambda(code: string): [string, string, string, string, string] | undefined {
+  // const ms = Date.now();
+  // console.log(`    Parse as Expression '${code.trim()}'`);
+
+  const codeSource = new CodeSourceFromString(code.trim() + ")");
+  const file = newFileImpl();
+
+  try {
+    const ss = new ProcedureCall(file);
+    ss.args.parseFrom(codeSource);
+
+    if (ss.args.readParseStatus() !== ParseStatus.valid) {
+      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
+      return undefined;
+    }
+    file.removeAllSelectorsThatCanBe();
+    file.deselectAll();
+
+    const allCode: string[] = [];
+
+    for (const l of languages) {
+      file.setLanguage(l);
+      allCode.push(ss.args.textAsHtml());
     }
 
     // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
@@ -392,7 +497,7 @@ function parseAsKeyword(code: string): [string, string, string, string, string] 
 export async function processInnerCode(
   code: string,
 ): Promise<[string, string, string, string, string]> {
-  code = code.trim() + "\n";
+  code = (code.startsWith("#") ? code : code.trim()) + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
   const hasHeader = code.includes("guest default_profile valid");
   return (
@@ -403,7 +508,10 @@ export async function processInnerCode(
     parseAsFunction(code) ||
     parseAsMain(code) ||
     parseAsMember(code) ||
+    parseAsAbstractMember(code) ||
     parseAsExpression(code) ||
+    parseAsParameter(code) ||
+    parseAsLambda(code) ||
     (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) || [
       `Code does not parse as Elan.`,
       `Code does not parse as Elan.`,
