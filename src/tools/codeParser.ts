@@ -25,11 +25,30 @@ import { Profile } from "../ide/frames/profile";
 import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
+import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "./parserConstants";
 
 type TransformedCode = [string, string, string, string, string];
+
+const counts = new Map<string, number>();
+
+export function resetCounts() {
+  counts.clear();
+}
+
+function incrementCount(what: string) {
+  if (counts.has(what)) {
+    counts.set(what, counts.get(what)! + 1);
+  } else {
+    counts.set(what, 1);
+  }
+}
+
+export function getCounts() {
+  return counts;
+}
 
 function transforms(): Transforms {
   return {
@@ -93,6 +112,11 @@ async function parseAs(
     const [parser, renderer] = parserFunc(file);
     parser.parseFrom(codeSource);
 
+    if (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid) {
+      // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
+      return undefined;
+    }
+
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
 
@@ -102,6 +126,8 @@ async function parseAs(
       file.setLanguage(l);
       allCode.push(await renderer.textAsHtml());
     }
+
+    incrementCount(_what);
 
     // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
     return allCode as TransformedCode;
@@ -116,6 +142,7 @@ function parseAsKeyword(code: string): TransformedCode | undefined {
   const trimmed = code.trim();
   // console.log(`    Parse as keyword '${trimmed}'`);
   if (matchesElanKeyword(trimmed)) {
+    incrementCount("Keyword");
     // console.log(`    Parse as keyword succeeded after ${Date.now() - ms}ms`);
     return [
       `<el-kw>${trimmed}</el-kw>`,
@@ -225,6 +252,13 @@ function FileWithHeaderParserAndRender(file: FileImpl): [
   ];
 }
 
+// Parse Keyword: 56 times
+// Parse Expression: 133 times
+// Parse Statement: 14 times
+// Parse Type: 6 times
+// Parse Function: 10 times
+// Parse File: 25 times
+
 export async function processInnerCode(code: string): Promise<TransformedCode> {
   code = (code.startsWith("#") ? code : code.trim()) + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
@@ -232,13 +266,13 @@ export async function processInnerCode(code: string): Promise<TransformedCode> {
   return (
     parseAsKeyword(code) ||
     (await parseAs("Type", TypeParserAndRender, code)) ||
+    (await parseAs("Expression", ExpressionrParserAndRender, code)) ||
     (await parseAs("Statement", StatementParserAndRender, code)) ||
-    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code)) ||
     (await parseAs("Function", FunctionParserAndRender, code)) ||
+    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code)) ||
     (await parseAs("Main", MainParserAndRender, code)) ||
     (await parseAs("Member", MemberParserAndRender, code)) ||
     (await parseAs("AbstractMember", AbstractMemberParserAndRender, code)) ||
-    (await parseAs("Expression", ExpressionrParserAndRender, code)) ||
     (await parseAs("Parameter", ParameterParserAndRender, code.trim() + ")")) ||
     (await parseAs("Lambda", LambdaParserAndRender, code.trim() + ")")) ||
     (hasHeader

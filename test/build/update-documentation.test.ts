@@ -1,6 +1,6 @@
 import assert from "assert";
 import { processDocumentation } from "../../src/build-scripts/update-documentation";
-import { processInnerCode } from "../../src/tools/codeParser";
+import { getCounts, processInnerCode } from "../../src/tools/codeParser";
 import { processCode } from "../../src/tools/markupParser";
 import {
   codeTag,
@@ -17,6 +17,11 @@ suite("process code", () => {
         failures.push(`${fileName} : Code does not parse`);
       }
     }
+
+    for (const [what, count] of getCounts().entries()) {
+      console.log(`Parse ${what}: ${count} times`);
+    }
+
     assert.strictEqual(failures.length, 0, failures.join("\n"));
   });
 
