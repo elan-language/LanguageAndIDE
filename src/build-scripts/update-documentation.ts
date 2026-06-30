@@ -47,7 +47,6 @@ export async function processDocument(fileName: string): Promise<[string, string
 }
 
 export async function processDocumentation() {
-  //Promise.all(getDocs(docs).map(fn => updateFile(`${docs}${fn}`)));
   const results: [string, string][] = [];
 
   for (const fn of getDocs(docs)) {

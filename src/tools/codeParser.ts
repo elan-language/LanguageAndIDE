@@ -554,7 +554,7 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
   const e = codeAndTag.indexOf(endTag);
   const code = codeAndTag.slice(s, e);
 
-  // (`  Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
+  // console.log(`  Processing Elan Code '${code}' after ${Date.now() -ms}ms`)
 
   const processed: string[] = [];
 
@@ -567,18 +567,6 @@ export async function processElanCode(codeAndTag: string, startTag: string, endT
       `${lt(startTag, true)} class="${l.languageHtmlClass}">${cc}${lt(startTag, false)}`,
     );
   }
-
-  // const codeAndLanguage = languages.map(
-  //   (l) => [processInnerCode(code, l), l] as [Promise<string>, Language],
-  // );
-  // const processedCode = await Promise.all(codeAndLanguage.map((c) => c[0]));
-  // const matchLanguage = codeAndLanguage.map((c) => c[1]);
-
-  // let index = 0;
-  // const processed = processedCode.map(
-  //   (cc) =>
-  //     `${lt(startTag, true)} class="${matchLanguage[index++].languageHtmlClass}">${cc}${lt(startTag, false)}`,
-  // );
 
   const joiner = startTag === codeBlockTag ? "\n" : "";
 
