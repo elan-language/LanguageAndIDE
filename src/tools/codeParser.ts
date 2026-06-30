@@ -127,18 +127,18 @@ export async function parseAsFile(
   return allCode as [string, string, string, string, string];
 }
 
-function parseAs(
+async function parseAs(
   _what: string,
   parserFunc: (f: FileImpl) => [
     {
       parseFrom(source: CodeSource): void;
     },
     {
-      textAsHtml(): string;
+      textAsHtml(): Promise<string>;
     },
   ],
   code: string,
-): [string, string, string, string, string] | undefined {
+): Promise<[string, string, string, string, string] | undefined> {
   // const ms = Date.now();
   // console.log(`    Parse as ${_what} '${code.trim()}'`);
 
@@ -156,7 +156,7 @@ function parseAs(
 
     for (const l of languages) {
       file.setLanguage(l);
-      allCode.push(renderer.textAsHtml());
+      allCode.push(await renderer.textAsHtml());
     }
 
     // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
@@ -185,72 +185,84 @@ function parseAsKeyword(code: string): [string, string, string, string, string] 
   return undefined;
 }
 
-function TypeParserAndRender(file: FileImpl): [TypeField, TypeField] {
+function TypeParserAndRender(file: FileImpl): [TypeField, { textAsHtml(): Promise<string> }] {
   const fr = new TypeField(new GlobalFunction(file));
-  return [fr, fr];
+  return [fr, { textAsHtml: async () => fr.textAsHtml() }];
 }
 
-function StatementParserAndRender(file: FileImpl): [StatementSelector, { textAsHtml(): string }] {
+function StatementParserAndRender(
+  file: FileImpl,
+): [StatementSelector, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
   const ss = new StatementSelector(mf);
-  return [ss, { textAsHtml: () => mf.getChildren()[0].renderAsHtml() }];
+  return [ss, { textAsHtml: async () => mf.getChildren()[0].renderAsHtml() }];
 }
 
 function FunctionStatementParserAndRender(
   file: FileImpl,
-): [StatementSelector, { textAsHtml(): string }] {
+): [StatementSelector, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
   const ss = new StatementSelector(gf);
-  return [ss, { textAsHtml: () => gf.getChildren()[0].renderAsHtml() }];
+  return [ss, { textAsHtml: async () => gf.getChildren()[0].renderAsHtml() }];
 }
 
-function FunctionParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+function FunctionParserAndRender(
+  file: FileImpl,
+): [AbstractSelector, { textAsHtml(): Promise<string> }] {
   const gs = new GlobalSelector(file);
   file.getChildren().push(gs);
   const ss = file.getFirstSelectorAsDirectChild();
 
-  return [ss, { textAsHtml: () => file.getChildren()[0].renderAsHtml() }];
+  return [ss, { textAsHtml: async () => file.getChildren()[0].renderAsHtml() }];
 }
 
-function MainParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+function MainParserAndRender(
+  file: FileImpl,
+): [AbstractSelector, { textAsHtml(): Promise<string> }] {
   const ss = new GlobalSelector(file);
-  return [ss, { textAsHtml: () => file.getChildren()[0].renderAsHtml() }];
+  return [ss, { textAsHtml: async () => file.getChildren()[0].renderAsHtml() }];
 }
 
-function MemberParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+function MemberParserAndRender(
+  file: FileImpl,
+): [AbstractSelector, { textAsHtml(): Promise<string> }] {
   const cc = new ConcreteClass(file);
   const ms = new MemberSelector(cc);
-  return [ms, { textAsHtml: () => cc.getChildren()[1].renderAsHtml() }];
+  return [ms, { textAsHtml: async () => cc.getChildren()[1].renderAsHtml() }];
 }
 
 function AbstractMemberParserAndRender(
   file: FileImpl,
-): [AbstractSelector, { textAsHtml(): string }] {
+): [AbstractSelector, { textAsHtml(): Promise<string> }] {
   const cc = new AbstractClass(file);
   const ms = new MemberSelector(cc);
-  return [ms, { textAsHtml: () => cc.getChildren()[0].renderAsHtml() }];
+  return [ms, { textAsHtml: async () => cc.getChildren()[0].renderAsHtml() }];
 }
 
-function ExpressionrParserAndRender(file: FileImpl): [ExpressionField, ExpressionField] {
+function ExpressionrParserAndRender(
+  file: FileImpl,
+): [ExpressionField, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
   const ls = new VariableStatement(mf);
   const expr = new ExpressionField(ls);
 
-  return [expr, expr];
+  return [expr, { textAsHtml: async () => expr.textAsHtml() }];
 }
 
-function ParameterParserAndRender(file: FileImpl): [ParamListField, ParamListField] {
+function ParameterParserAndRender(
+  file: FileImpl,
+): [ParamListField, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
   const pp = new ParamListField(gf);
 
-  return [pp, pp];
+  return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }
 
-function LambdaParserAndRender(file: FileImpl): [ArgListField, ArgListField] {
+function LambdaParserAndRender(file: FileImpl): [ArgListField, { textAsHtml(): Promise<string> }] {
   const ss = new ProcedureCall(file);
   const args = ss.args;
 
-  return [args, args];
+  return [args, { textAsHtml: async () => args.textAsHtml() }];
 }
 
 export async function processInnerCode(
@@ -261,23 +273,24 @@ export async function processInnerCode(
   const hasHeader = code.includes("guest default_profile valid");
   return (
     parseAsKeyword(code) ||
-    parseAs("Type", TypeParserAndRender, code) ||
-    parseAs("Statement", StatementParserAndRender, code) ||
-    parseAs("FunctionStatement", FunctionStatementParserAndRender, code) ||
-    parseAs("Function", FunctionParserAndRender, code) ||
-    parseAs("Main", MainParserAndRender, code) ||
-    parseAs("Member", MemberParserAndRender, code) ||
-    parseAs("AbstractMember", AbstractMemberParserAndRender, code) ||
-    parseAs("Expression", ExpressionrParserAndRender, code) ||
-    parseAs("Parameter", ParameterParserAndRender, code.trim() + ")") ||
-    parseAs("Lambda", LambdaParserAndRender, code.trim() + ")") ||
-    (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) || [
-      `Code does not parse as Elan.`,
-      `Code does not parse as Elan.`,
-      `Code does not parse as Elan.`,
-      `Code does not parse as Elan.`,
-      `Code does not parse as Elan.`,
-    ]
+    (await parseAs("Type", TypeParserAndRender, code)) ||
+    (await parseAs("Statement", StatementParserAndRender, code)) ||
+    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code)) ||
+    (await parseAs("Function", FunctionParserAndRender, code)) ||
+    (await parseAs("Main", MainParserAndRender, code)) ||
+    (await parseAs("Member", MemberParserAndRender, code)) ||
+    (await parseAs("AbstractMember", AbstractMemberParserAndRender, code)) ||
+    (await parseAs("Expression", ExpressionrParserAndRender, code)) ||
+    (await parseAs("Parameter", ParameterParserAndRender, code.trim() + ")")) ||
+    (await parseAs("Lambda", LambdaParserAndRender, code.trim() + ")")) ||
+    (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) ||
+    (languages.map(() => `Code does not parse as Elan.`) as [
+      string,
+      string,
+      string,
+      string,
+      string,
+    ])
   );
 }
 
