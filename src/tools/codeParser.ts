@@ -2,12 +2,15 @@ import { matchesElanKeyword } from "../compiler/elan-keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
+import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
+import { ArgListField } from "../ide/frames/fields/arg-list-field";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { ParamListField } from "../ide/frames/fields/param-list-field";
 import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
+import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
 import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
@@ -22,7 +25,6 @@ import { Profile } from "../ide/frames/profile";
 import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
-import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "./parserConstants";
@@ -41,13 +43,7 @@ export function resetFile() {
   fileImpl = undefined;
 }
 
-//let resetCount = 0;
-
 function newFileImpl(): FileImpl {
-  // if (resetCount++ > 75) {
-  //   resetFile();
-  // }
-
   if (!fileImpl) {
     fileImpl = new FileImpl(hash, new Profile(""), "guest", transforms(), stdLib, false, true);
   }
@@ -131,163 +127,28 @@ export async function parseAsFile(
   return allCode as [string, string, string, string, string];
 }
 
-function parseAsStatement(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Statement '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code + " ");
-  const file = newFileImpl();
-
-  try {
-    const mf = new MainRoutine(file);
-    const ss = new StatementSelector(mf);
-    ss.parseFrom(codeSource);
-
-    if (file.parseError) {
-      // console.log(`    Parse as Statement failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(mf.getChildren()[0].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Statement succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Statement failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsFunctionStatement(
+function parseAs(
+  _what: string,
+  parserFunc: (f: FileImpl) => [
+    {
+      parseFrom(source: CodeSource): void;
+    },
+    {
+      textAsHtml(): string;
+    },
+  ],
   code: string,
 ): [string, string, string, string, string] | undefined {
   // const ms = Date.now();
-  // console.log(`    Parse as Function '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code + " ");
-  const file = newFileImpl();
-
-  try {
-    const gf = new GlobalFunction(file);
-    const ss = new StatementSelector(gf);
-    ss.parseFrom(codeSource);
-
-    if (file.parseError) {
-      // console.log(`    Parse as Function failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(gf.getChildren()[0].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Function succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Function failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsFunction(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Main '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code + " ");
-  const file = newFileImpl();
-
-  try {
-    // const mf = new MainFrame(file);
-    // file.getChildren().push(mf);
-    const gs = new GlobalSelector(file);
-    file.getChildren().push(gs);
-    const ss = file.getFirstSelectorAsDirectChild();
-    ss.parseFrom(codeSource);
-
-    if (file.parseError) {
-      // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(file.getChildren()[0].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Main succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsMain(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Main '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code + " ");
-  const file = newFileImpl();
-
-  try {
-    const ss = new GlobalSelector(file);
-    ss.parseFrom(codeSource);
-
-    if (file.parseError) {
-      // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(file.getChildren()[0].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Main succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Main failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsMember(code: string): [string, string, string, string, string] | undefined {
-  // const mss = Date.now();
-  // console.log(`    Parse as Member '${code.trim()}'`);
+  // console.log(`    Parse as ${_what} '${code.trim()}'`);
 
   const codeSource = new CodeSourceFromString(code);
   const file = newFileImpl();
 
   try {
-    const cc = new ConcreteClass(file);
-    const ms = new MemberSelector(cc);
-    ms.parseFrom(codeSource);
+    const [parser, renderer] = parserFunc(file);
+    parser.parseFrom(codeSource);
 
-    if (file.parseError) {
-      // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
-
-      return undefined;
-    }
     file.removeAllSelectorsThatCanBe();
     file.deselectAll();
 
@@ -295,183 +156,13 @@ function parseAsMember(code: string): [string, string, string, string, string] |
 
     for (const l of languages) {
       file.setLanguage(l);
-      allCode.push(cc.getChildren()[1].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Member succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
-    return undefined;
-  }
-}
-
-function parseAsAbstractMember(code: string): [string, string, string, string, string] | undefined {
-  // const mss = Date.now();
-  // console.log(`    Parse as Member '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code);
-  const file = newFileImpl();
-
-  try {
-    const cc = new AbstractClass(file);
-    const ms = new MemberSelector(cc);
-    ms.parseFrom(codeSource);
-
-    if (file.parseError) {
-      // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(cc.getChildren()[0].renderAsHtml());
-    }
-
-    // console.log(`    Parse as Member succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
-    return undefined;
-  }
-}
-
-function parseAsExpression(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Expression '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code);
-  const file = newFileImpl();
-
-  try {
-    const mf = new MainRoutine(file);
-    const ls = new VariableStatement(mf);
-    const expr = new ExpressionField(ls);
-    expr.parseFrom(codeSource);
-
-    if (expr.readParseStatus() !== ParseStatus.valid) {
-      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(expr.textAsHtml());
-    }
-
-    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsParameter(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Expression '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code.trim() + ")");
-  const file = newFileImpl();
-
-  try {
-    const gf = new GlobalFunction(file);
-    const pp = new ParamListField(gf);
-    pp.parseFrom(codeSource);
-
-    if (pp.readParseStatus() !== ParseStatus.valid) {
-      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(pp.textAsHtml());
-    }
-
-    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsLambda(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Expression '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code.trim() + ")");
-  const file = newFileImpl();
-
-  try {
-    const ss = new ProcedureCall(file);
-    ss.args.parseFrom(codeSource);
-
-    if (ss.args.readParseStatus() !== ParseStatus.valid) {
-      // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(ss.args.textAsHtml());
-    }
-
-    // console.log(`    Parse as Expression succeeded after ${Date.now() - ms}ms`);
-    return allCode as [string, string, string, string, string];
-  } catch (_e) {
-    // console.log(`    Parse as Expression failed after ${Date.now() - ms}ms`);
-    return undefined;
-  }
-}
-
-function parseAsType(code: string): [string, string, string, string, string] | undefined {
-  // const ms = Date.now();
-  // console.log(`    Parse as Type '${code.trim()}'`);
-
-  const codeSource = new CodeSourceFromString(code);
-  const file = newFileImpl();
-
-  try {
-    const f = new GlobalFunction(file);
-    const expr = new TypeField(f);
-    expr.parseFrom(codeSource);
-
-    if (expr.readParseStatus() !== ParseStatus.valid) {
-      // console.log(`    Parse as Type failed after ${Date.now() - ms}ms`);
-      return undefined;
-    }
-    file.removeAllSelectorsThatCanBe();
-    file.deselectAll();
-
-    const allCode: string[] = [];
-
-    for (const l of languages) {
-      file.setLanguage(l);
-      allCode.push(expr.textAsHtml());
+      allCode.push(renderer.textAsHtml());
     }
 
     // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
     return allCode as [string, string, string, string, string];
   } catch (_e) {
-    // console.log(`    Parse as Type failed after ${Date.now() - ms}ms`);
+    // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
     return undefined;
   }
 }
@@ -494,6 +185,74 @@ function parseAsKeyword(code: string): [string, string, string, string, string] 
   return undefined;
 }
 
+function TypeParserAndRender(file: FileImpl): [TypeField, TypeField] {
+  const fr = new TypeField(new GlobalFunction(file));
+  return [fr, fr];
+}
+
+function StatementParserAndRender(file: FileImpl): [StatementSelector, { textAsHtml(): string }] {
+  const mf = new MainRoutine(file);
+  const ss = new StatementSelector(mf);
+  return [ss, { textAsHtml: () => mf.getChildren()[0].renderAsHtml() }];
+}
+
+function FunctionStatementParserAndRender(
+  file: FileImpl,
+): [StatementSelector, { textAsHtml(): string }] {
+  const gf = new GlobalFunction(file);
+  const ss = new StatementSelector(gf);
+  return [ss, { textAsHtml: () => gf.getChildren()[0].renderAsHtml() }];
+}
+
+function FunctionParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+  const gs = new GlobalSelector(file);
+  file.getChildren().push(gs);
+  const ss = file.getFirstSelectorAsDirectChild();
+
+  return [ss, { textAsHtml: () => file.getChildren()[0].renderAsHtml() }];
+}
+
+function MainParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+  const ss = new GlobalSelector(file);
+  return [ss, { textAsHtml: () => file.getChildren()[0].renderAsHtml() }];
+}
+
+function MemberParserAndRender(file: FileImpl): [AbstractSelector, { textAsHtml(): string }] {
+  const cc = new ConcreteClass(file);
+  const ms = new MemberSelector(cc);
+  return [ms, { textAsHtml: () => cc.getChildren()[1].renderAsHtml() }];
+}
+
+function AbstractMemberParserAndRender(
+  file: FileImpl,
+): [AbstractSelector, { textAsHtml(): string }] {
+  const cc = new AbstractClass(file);
+  const ms = new MemberSelector(cc);
+  return [ms, { textAsHtml: () => cc.getChildren()[0].renderAsHtml() }];
+}
+
+function ExpressionrParserAndRender(file: FileImpl): [ExpressionField, ExpressionField] {
+  const mf = new MainRoutine(file);
+  const ls = new VariableStatement(mf);
+  const expr = new ExpressionField(ls);
+
+  return [expr, expr];
+}
+
+function ParameterParserAndRender(file: FileImpl): [ParamListField, ParamListField] {
+  const gf = new GlobalFunction(file);
+  const pp = new ParamListField(gf);
+
+  return [pp, pp];
+}
+
+function LambdaParserAndRender(file: FileImpl): [ArgListField, ArgListField] {
+  const ss = new ProcedureCall(file);
+  const args = ss.args;
+
+  return [args, args];
+}
+
 export async function processInnerCode(
   code: string,
 ): Promise<[string, string, string, string, string]> {
@@ -502,16 +261,16 @@ export async function processInnerCode(
   const hasHeader = code.includes("guest default_profile valid");
   return (
     parseAsKeyword(code) ||
-    parseAsType(code) ||
-    parseAsStatement(code) ||
-    parseAsFunctionStatement(code) ||
-    parseAsFunction(code) ||
-    parseAsMain(code) ||
-    parseAsMember(code) ||
-    parseAsAbstractMember(code) ||
-    parseAsExpression(code) ||
-    parseAsParameter(code) ||
-    parseAsLambda(code) ||
+    parseAs("Type", TypeParserAndRender, code) ||
+    parseAs("Statement", StatementParserAndRender, code) ||
+    parseAs("FunctionStatement", FunctionStatementParserAndRender, code) ||
+    parseAs("Function", FunctionParserAndRender, code) ||
+    parseAs("Main", MainParserAndRender, code) ||
+    parseAs("Member", MemberParserAndRender, code) ||
+    parseAs("AbstractMember", AbstractMemberParserAndRender, code) ||
+    parseAs("Expression", ExpressionrParserAndRender, code) ||
+    parseAs("Parameter", ParameterParserAndRender, code.trim() + ")") ||
+    parseAs("Lambda", LambdaParserAndRender, code.trim() + ")") ||
     (hasHeader ? await parseAsFileWithHeader(code) : await parseAsFile(code)) || [
       `Code does not parse as Elan.`,
       `Code does not parse as Elan.`,
