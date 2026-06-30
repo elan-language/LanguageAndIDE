@@ -285,6 +285,7 @@ function parseAsMember(code: string): [string, string, string, string, string] |
 
     if (file.parseError) {
       // console.log(`    Parse as Member failed after ${Date.now() - mss}ms`);
+
       return undefined;
     }
     file.removeAllSelectorsThatCanBe();
@@ -294,7 +295,7 @@ function parseAsMember(code: string): [string, string, string, string, string] |
 
     for (const l of languages) {
       file.setLanguage(l);
-      allCode.push(cc.getChildren()[0].renderAsHtml());
+      allCode.push(cc.getChildren()[1].renderAsHtml());
     }
 
     // console.log(`    Parse as Member succeeded after ${Date.now() - ms}ms`);

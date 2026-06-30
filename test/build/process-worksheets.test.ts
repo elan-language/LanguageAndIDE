@@ -222,6 +222,16 @@ end function`;
     assert.strictEqual(actual[0].startsWith("<el-kw"), true);
   });
 
+  test("process copy", async () => {
+    const code = `copy withHead(head as Square) returns Game
+  return copyWithPropertyUpdated(this, "head", head)
+end copy`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-func"), true);
+  });
+
   test("process procedure", async () => {
     const code = `procedure updateSnake(currentDirRef as AsRef&lt;of Direction&gt;, tailRef as AsRef&lt;of List&lt;of Int&gt;&gt;, headRef as AsRef&lt;of List&lt;of Int&gt;&gt;, body as List&lt;of List&lt;of Int&gt;&gt;)
   variable head set to headRef.value()
