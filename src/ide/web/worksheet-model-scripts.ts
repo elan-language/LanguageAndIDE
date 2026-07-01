@@ -379,7 +379,7 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
     }
   }
 
-  if (typeof m.data === "string" && m.data.startsWith("profile:")) {
+  if (typeof m.data === "string" && m.data.startsWith("paradigm:")) {
     const l = m.data.slice(8);
     const ws = document.querySelector("#worksheet");
     if (ws) {

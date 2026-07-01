@@ -7,7 +7,7 @@ window.addEventListener("message", (m => {
       ws.classList.add(l);
     }
   }
-  if (typeof m.data === "string" && m.data.startsWith("profile:")) {
+  if (typeof m.data === "string" && m.data.startsWith("paradigm:")) {
     const p = m.data.slice(8);
     const ws = document.querySelector("body");
     if (ws) {
