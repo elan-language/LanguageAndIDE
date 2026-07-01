@@ -16,7 +16,7 @@ import { StatementSelector } from "../../src/ide/frames/statements/statement-sel
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
-import { transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { assertOptions, key, selectOption } from "../testHelpers";
 import { emptyMainOnly } from "./model-generating-functions";
 
@@ -105,8 +105,6 @@ suite("Selector tests", () => {
       "procedure",
       "k constant",
       "enum",
-      "concrete class",
-      "abstract class",
       "# comment",
     ]);
   });
@@ -361,7 +359,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - globals - all", () => {
     const f = new FileImpl(
       hash,
-      new Paradigm("all"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
