@@ -5,7 +5,7 @@ import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
@@ -21,7 +21,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -44,7 +44,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -67,7 +67,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -97,7 +97,7 @@ suite("Field Parsing Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -125,7 +125,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -152,7 +152,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -170,7 +170,7 @@ suite("Field Parsing Tests", () => {
       const func = new GlobalFunction(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -192,7 +192,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -215,7 +215,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -234,7 +234,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -257,7 +257,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -279,7 +279,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -298,7 +298,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -316,7 +316,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -334,7 +334,7 @@ suite("Field Parsing Tests", () => {
       const main = new MainRoutine(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -352,7 +352,7 @@ suite("Field Parsing Tests", () => {
       const c = new ConstantGlobal(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),
@@ -385,7 +385,7 @@ suite("Field Parsing Tests", () => {
       const test = new TestFrame(
         new FileImpl(
           hash,
-          new Profile(""),
+          new Paradigm(""),
           "",
           transforms(),
           new StdLib(new StubInputOutput()),

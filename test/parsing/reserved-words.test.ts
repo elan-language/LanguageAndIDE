@@ -1,12 +1,12 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { IdentifierDef } from "../../src/ide/frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../../src/ide/frames/parse-nodes/identifier-use";
 import { MethodNameDef } from "../../src/ide/frames/parse-nodes/method-name-def";
 import { MethodNameUse } from "../../src/ide/frames/parse-nodes/method-name-use";
 import { TypeNameDef } from "../../src/ide/frames/parse-nodes/type-name-def";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
-import { Profile } from "../../src/ide/frames/profile";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -16,7 +16,7 @@ import { testNodeParse } from "../testHelpers";
 suite("Reserved Words", () => {
   const f = new FileImpl(
     hash,
-    new Profile(""),
+    new Paradigm(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),

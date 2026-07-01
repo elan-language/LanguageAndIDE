@@ -10,7 +10,7 @@ import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
 import { InterfaceFrame } from "../../src/ide/frames/globals/interface-frame";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
@@ -64,7 +64,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - globals - procedural", () => {
     const f = new FileImpl(
       hash,
-      new Profile("procedural"),
+      new Paradigm("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -88,10 +88,10 @@ suite("Selector tests", () => {
     assertOptions(g, ["function", "test", "procedure", "k constant", "enum", "# comment"]);
   });
 
-  test("Selection Filtering - globals - no profile specified", () => {
+  test("Selection Filtering - globals - no paradigm specified", () => {
     const f = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -114,7 +114,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - members - oop", () => {
     const f = new FileImpl(
       hash,
-      new Profile("oop"),
+      new Paradigm("oop"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -128,7 +128,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - members - functional", () => {
     const f = new FileImpl(
       hash,
-      new Profile("functional"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -142,7 +142,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - abstract class", () => {
     const f = new FileImpl(
       hash,
-      new Profile("oop"),
+      new Paradigm("oop"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -163,7 +163,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - interface", () => {
     const f = new FileImpl(
       hash,
-      new Profile("oop"),
+      new Paradigm("oop"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -177,7 +177,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Function - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("procedural"),
+      new Paradigm("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -200,7 +200,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Function - functional", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("functional"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -214,7 +214,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Procedure", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("procedural"),
+      new Paradigm("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -237,10 +237,10 @@ suite("Selector tests", () => {
     ]);
   });
 
-  test("Selection Context - in a Procedure - functional profile", () => {
+  test("Selection Context - in a Procedure - functional paradigm", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("functional"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -266,7 +266,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Test - functional", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("functional"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -280,7 +280,7 @@ suite("Selector tests", () => {
   test("Selection Context - in a Test - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("procedural"),
+      new Paradigm("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -294,7 +294,7 @@ suite("Selector tests", () => {
   test("Selection Context - deeper nesting  - functional", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("functional"),
+      new Paradigm("functional"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -310,7 +310,7 @@ suite("Selector tests", () => {
   test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -339,7 +339,7 @@ suite("Selector tests", () => {
   test("Selection Context - if main deleted main option is shown - procedural", () => {
     const fl = new FileImpl(
       hash,
-      new Profile("procedural"),
+      new Paradigm("procedural"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -361,7 +361,7 @@ suite("Selector tests", () => {
   test("Selection Filtering - globals - all", () => {
     const f = new FileImpl(
       hash,
-      new Profile("all"),
+      new Paradigm("all"),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

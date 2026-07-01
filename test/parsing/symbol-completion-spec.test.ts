@@ -2,6 +2,7 @@ import assert from "assert";
 
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Alternatives } from "../../src/ide/frames/parse-nodes/alternatives";
 import { ArgListNode } from "../../src/ide/frames/parse-nodes/arg-list-node";
 import { AssertActualNode } from "../../src/ide/frames/parse-nodes/assert-actual-node";
@@ -22,7 +23,6 @@ import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../../src/ide/frames/parse-nodes/type-simple-or-generic";
-import { Profile } from "../../src/ide/frames/profile";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { TokenType } from "../../src/ide/frames/symbol-completion-helpers";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
@@ -33,7 +33,7 @@ import { testSymbolCompletionSpec } from "../testHelpers";
 suite("Symbol Completion Spec", () => {
   const f = new FileImpl(
     hash,
-    new Profile(""),
+    new Paradigm(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),

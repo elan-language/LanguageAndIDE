@@ -4,7 +4,7 @@ import { elanVersion } from "../environment";
 import { transform, transformMany } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
 import { FileImpl } from "../ide/frames/file-impl";
-import { Profile } from "../ide/frames/profile";
+import { Paradigm } from "../ide/frames/paradigm";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 
@@ -20,7 +20,7 @@ function updateVersion() {
 
   const file = new FileImpl(
     hash,
-    new Profile(""),
+    new Paradigm(""),
     "guest",
     transforms(),
     new StdLib(new StubInputOutput()),

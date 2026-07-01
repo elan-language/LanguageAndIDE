@@ -3,8 +3,7 @@ import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
 import { Regexes } from "../../src/ide/frames/fields/regexes";
 import { FileImpl } from "../../src/ide/frames/file-impl";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { processInnerCode } from "../../src/tools/codeParser";
 import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
@@ -46,7 +45,7 @@ suite("Misc Tests", () => {
     const source = new CodeSourceFromString("");
     const fl = new FileImpl(
       () => Promise.resolve("FFFF"),
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

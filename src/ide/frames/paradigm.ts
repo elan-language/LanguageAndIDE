@@ -1,8 +1,8 @@
 export const defaultUsername = "guest";
 
-export class Profile {
-  constructor(prof: string) {
-    this.name = prof;
+export class Paradigm {
+  constructor(para: string) {
+    this.name = para;
   }
 
   name: string;

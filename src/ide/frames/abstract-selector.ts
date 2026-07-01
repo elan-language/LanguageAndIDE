@@ -9,20 +9,20 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { Overtyper } from "./overtyper";
+import { Paradigm } from "./paradigm";
 import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
-import { Profile } from "./profile";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {
   isSelector = true;
   isStatement = true;
   text: string = "";
-  protected profile: Profile;
+  protected paradigm: Paradigm;
   overtyper = new Overtyper();
 
   constructor(parent: Parent) {
     super(parent);
-    this.profile = this.getFile().getProfile();
+    this.paradigm = this.getFile().getParadigm();
     this.setParseStatus(ParseStatus.valid); //Can never be invalid.
   }
 
@@ -40,7 +40,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame][];
-  abstract profileAllows(keyword: string): boolean;
+  abstract paradigmAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
   optionsFilteredByContext(
@@ -49,10 +49,10 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByProfile(
+  optionsFilteredByParadigm(
     userEntry: boolean,
   ): [string, string, string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByContext(userEntry).filter((o) => this.profileAllows(o[0]));
+    return this.optionsFilteredByContext(userEntry).filter((o) => this.paradigmAllows(o[0]));
   }
 
   parseFrom(source: CodeSource): Frame {
@@ -86,7 +86,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   optionsMatchingUserInput(match: string): [string, string, string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByProfile(true).filter((o) => o[1] === match);
+    return this.optionsFilteredByParadigm(true).filter((o) => o[1] === match);
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -315,7 +315,7 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    const allOptions = this.optionsFilteredByProfile(true);
+    const allOptions = this.optionsFilteredByParadigm(true);
     allOptions.forEach((o) => {
       const name = o[0];
       const action = () => {

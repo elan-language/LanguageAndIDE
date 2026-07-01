@@ -12,7 +12,7 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
-import { Profile } from "../profile";
+import { Paradigm } from "../paradigm";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
@@ -33,8 +33,8 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return functionKeyword;
   }
 
-  getProfile(): Profile {
-    return this.getFile().getProfile();
+  getParadigm(): Paradigm {
+    return this.getFile().getParadigm();
   }
 
   minimumNumberOfChildrenExceeded(): boolean {
