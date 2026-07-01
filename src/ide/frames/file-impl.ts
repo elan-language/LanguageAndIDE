@@ -119,7 +119,7 @@ export class FileImpl implements File {
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
-    public paradigm: Paradigm,
+    private paradigm: Paradigm,
     private userName: string | undefined,
     private readonly transform: Transforms,
     stdLib: StdLib,

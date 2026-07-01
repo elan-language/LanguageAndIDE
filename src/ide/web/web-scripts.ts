@@ -924,22 +924,19 @@ elanButton.forEach((b) =>
 );
 
 async function paradigmEventHandler(this: HTMLDivElement, _event: MouseEvent) {
-  // Changing the paradigm clears the current code
-  if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
-    const oldParadigmName = codeViewModel.getParadigm()?.name || "";
-    const paradigmName = this.id.replace("paradigm-", "");
-    codeViewModel.setParadigm(new Paradigm(paradigmName));
-    codeViewModel.recreateFile(ideViewModel, true);
-    await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
-    paradigmButton.textContent = this.textContent;
-    const bodyClassList = docBody.classList;
-    bodyClassList.remove(oldParadigmName);
-    bodyClassList.add(paradigmName);
-    tabViewModel.setWorksheetParadigm(paradigmName);
-    tabViewModel.setHelpParadigm(paradigmName);
-    setUrl();
-  }
+  const oldParadigmName = codeViewModel.getParadigm()?.name || "";
+  const paradigmName = this.id.replace("paradigm-", "");
+  codeViewModel.setParadigm(new Paradigm(paradigmName));
+  await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, false, false);
+  paradigmButton.textContent = this.textContent;
+  const bodyClassList = docBody.classList;
+  bodyClassList.remove(oldParadigmName);
+  bodyClassList.add(paradigmName);
+  tabViewModel.setWorksheetParadigm(paradigmName);
+  tabViewModel.setHelpParadigm(paradigmName);
+  setUrl();
 }
+
 proceduralButton?.addEventListener("click", paradigmEventHandler);
 oopButton?.addEventListener("click", paradigmEventHandler);
 functionalButton?.addEventListener("click", paradigmEventHandler);
