@@ -42,7 +42,7 @@ system.stdlib = stdlib; // to allow injection
 
 export class CodeEditorViewModel implements ICodeEditorViewModel {
   private file?: File = undefined;
-  private cvdCss?: string = undefined;
+  private cvdCss?: string = "colourScheme";
   private emptyCodeHash?: string = undefined;
 
   lastDOMEvent: Event | undefined;

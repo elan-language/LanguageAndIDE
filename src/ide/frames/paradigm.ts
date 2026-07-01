@@ -1,11 +1,15 @@
 export const defaultUsername = "guest";
 
 export class Paradigm {
-  constructor(para: string) {
-    this.name = para;
+  constructor(para: string | undefined) {
+    if (para === "procedural" || para === "oop" || para === "functional") {
+      this.name = para;
+    } else {
+      this.name = "procedural";
+    }
   }
 
-  name: string;
+  name: "procedural" | "oop" | "functional";
 
   isProcedural(): boolean {
     return this.name === "procedural";
@@ -15,8 +19,5 @@ export class Paradigm {
   }
   isFunctional(): boolean {
     return this.name === "functional";
-  }
-  isAll() {
-    return this.name === "all" || this.name === "";
   }
 }

@@ -882,6 +882,7 @@ async function setLanguage(ll: Language, pane: number) {
 
   if (pane === 0) {
     await codeViewModel.changeLanguage(ll, ideViewModel, testRunner, false);
+    setUrl();
   } else {
     await codeViewModel.refreshAndDisplay(ideViewModel, testRunner, true, false);
   }
@@ -927,7 +928,7 @@ async function paradigmEventHandler(this: HTMLDivElement, _event: MouseEvent) {
   if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
     const oldParadigmName = codeViewModel.getParadigm()?.name || "";
     const paradigmName = this.id.replace("paradigm-", "");
-    await codeViewModel.setParadigm(new Paradigm(paradigmName));
+    codeViewModel.setParadigm(new Paradigm(paradigmName));
     codeViewModel.recreateFile(ideViewModel, true);
     await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
     paradigmButton.textContent = this.textContent;
@@ -936,6 +937,7 @@ async function paradigmEventHandler(this: HTMLDivElement, _event: MouseEvent) {
     bodyClassList.add(paradigmName);
     tabViewModel.setWorksheetParadigm(paradigmName);
     tabViewModel.setHelpParadigm(paradigmName);
+    setUrl();
   }
 }
 proceduralButton?.addEventListener("click", paradigmEventHandler);
@@ -960,29 +962,12 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
   const code = await codeViewModel.renderAsSource();
   const bEncoded = btoa(code);
   const url = new URL(window.location.href);
-
-  const urlParams: { [propName: string]: { default: string; current: string } } = {
-    paradigm: { default: "procedural", current: codeViewModel.getParadigm()?.name || "procedural" },
-    lang: { default: "elan", current: codeViewModel.getLanguage().languageHtmlClass },
-    cvd: { default: "colourScheme", current: codeViewModel.getCss() ?? "colourScheme" },
-  };
-
-  // Use a URLSearchParams object even though the values are going to end up in the fragment identifier.
-  // We use the same encoding as URLSearchParams, ie name1=value1&name2=value2
-  const sp = new URLSearchParams();
-  for (const p in urlParams) {
-    const e = urlParams[p];
-    if (e.default !== e.current) {
-      // Only include values which are not the default
-      sp.set(p, e.current);
-    }
-  }
+  const sp = url.searchParams;
 
   // Only include the code if it is not an empty file
   if (!codeViewModel.isEmptyCodeHash()) {
     sp.set("code", bEncoded);
   }
-  url.hash = sp.toString(); // it adds the "#" for us
   const urlAsString = url.toString();
 
   if (urlAsString.length < 2000) {
@@ -1092,6 +1077,7 @@ closePreferencesDialogButton?.addEventListener("click", (event: Event) => {
     const newCss = useCvdTickbox.checked ? "cvd-colourScheme" : "colourScheme";
     changeCss(newCss);
     codeViewModel.setCss(newCss);
+    setUrl();
     preferencesDialog.close();
   }
 });
@@ -1249,63 +1235,8 @@ window.addEventListener("message", async (m) => {
   await ideViewModel.messageHandler(m, codeViewModel, fileManager, testRunner);
 });
 
-// The user may edit the URL and press Enter and expect the page to change
-window.addEventListener("hashchange", async () => {
-  let fragId = new URL(window.location.href).hash;
-  // It may be an empty string, in which case we want an empty URLSearchParams.
-  fragId = fragId.length > 0 ? fragId.substring(1) : "";
-  const sp = new URLSearchParams(fragId);
-
-  // Slightly different logic from initial load in that values have to be set
-  // for every parameter (except code) even if it is the default value
-  const lang = sp.get("lang") ?? "elan";
-  const cvd = sp.get("cvd") ?? "colourScheme";
-  const code = sp.get("code");
-  let param = sp.get("paradigm") ?? "procedural";
-
-  // We are going to wipe the code in all cases
-  // and we want to make no changes at all if the user cancels
-  if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
-    changeCss(cvd);
-    codeViewModel.setCss(cvd);
-
-    await codeViewModel.changeLanguage(getLanguageByClass(lang), ideViewModel, testRunner, false);
-
-    if (!document.getElementById("paradigm-" + param)) {
-      // invalid paradigm name
-      param = "procedural";
-    }
-    const oldParadigmName = codeViewModel.getParadigm()?.name || "";
-    const paradigmName = param;
-
-    await codeViewModel.setParadigm(new Paradigm(paradigmName));
-    paradigmButton.textContent = document.getElementById("paradigm-" + paradigmName)!.textContent;
-    const bodyClassList = docBody.classList;
-    bodyClassList.remove(oldParadigmName);
-    bodyClassList.add(paradigmName);
-    // reset to blank code even if overwriting after
-    codeViewModel.recreateFile(ideViewModel, true);
-    await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
-    codeViewModel.saveEmptyCodeHash();
-    if (code) {
-      await codeViewModel.loadFromUrl(ideViewModel, fileManager, testRunner, code);
-    }
-  }
-});
-
 if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
-  let fragId = new URL(window.location.href).hash;
-  // It may be an empty string, in which case we want an empty URLSearchParams.
-  fragId = fragId.length > 0 ? fragId.substring(1) : "";
-  const sp = new URLSearchParams(fragId);
-
-  let param = sp.get("paradigm") || "procedural";
-  if (!document.getElementById("paradigm-" + param)) {
-    // invalid paradigm name
-    param = "procedural";
-  }
-  const paradigm = new Paradigm(param);
-  setup(paradigm);
+  setup();
 } else {
   const msg = "Require Chrome or Edge";
   ideViewModel.disable(
@@ -1336,29 +1267,47 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   }
 }
 
-async function setup(p: Paradigm) {
-  fileManager.reset();
-  codeViewModel.setParadigm(p);
-  let fragId = new URL(window.location.href).hash;
-  // It may be an empty string, in which case we want an empty URLSearchParams.
-  fragId = fragId.length > 0 ? fragId.substring(1) : "";
-  const sp = new URLSearchParams(fragId);
+function setUrl() {
+  const paraClass = codeViewModel.getParadigm().name;
+  const langClass = codeViewModel.getLanguage().languageHtmlClass;
+  const cvdClass = codeViewModel.getCss();
+  const stateObj = { paradigm: paraClass, lang: langClass, cvd: cvdClass };
+  window.history.replaceState(
+    stateObj,
+    "",
+    `index.html?paradigm=${paraClass}&lang=${langClass}&cvd=${cvdClass}`,
+  );
+}
+
+async function setup() {
+  const sp = new URL(window.location.href).searchParams;
   const lang = sp.get("lang") ?? "python";
-  const cvd = sp.get("cvd");
+  const paradigm = new Paradigm(sp.get("paradigm") ?? undefined);
+  let cvd = sp.get("cvd") ?? "colourScheme";
   const code = sp.get("code");
 
-  if (cvd) {
-    changeCss("cvd-colourScheme");
-    codeViewModel.setCss("cvd-colourScheme");
+  if (cvd !== "colourScheme" && cvd !== "cvd-colourScheme") {
+    cvd = "colourScheme";
   }
+
+  if (codeViewModel.getCss() !== cvd) {
+    changeCss(cvd);
+    codeViewModel.setCss(cvd);
+  }
+
+  fileManager.reset();
+  codeViewModel.setParadigm(paradigm);
 
   // add "procedural", "oop" or "functional" to body
   // to control which demos are visible
-  docBody.classList.add(p.name);
+  docBody.classList.add(paradigm.name);
   // and reassign the text on the button to match
-  paradigmButton.textContent = document.getElementById("paradigm-" + p.name)!.textContent;
+  paradigmButton.textContent = document.getElementById("paradigm-" + paradigm.name)!.textContent;
 
   codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
+
+  setUrl();
+
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
   // make a record of the hash of the empty code for the chosen language
   // before we (optionally) overwrite the empty code with something non-empty
