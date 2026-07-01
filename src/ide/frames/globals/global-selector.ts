@@ -69,7 +69,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     // First apply universal instruction-specific rules
     if (keyword === mainKeyword && userEntry) {
       result = !this.file.containsMain();
-    } else if (this.paradigm.isProcedural() && userEntry) {
+    } else if (this.getParadigm().isProcedural() && userEntry) {
       result =
         keyword !== classKeyword && keyword !== abstractKeyword && keyword !== interfaceKeyword;
     } else if (keyword === interfaceKeyword) {

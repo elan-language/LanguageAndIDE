@@ -123,7 +123,7 @@ export class StatementSelector extends AbstractSelector {
         keyword === commentMarker;
     }
     // Then apply paradigm rules
-    if (this.paradigm.isFunctional() && userEntry) {
+    if (this.getParadigm().isFunctional() && userEntry) {
       if (this.isWithinAFunction()) {
         result = keyword === letKeyword || keyword === commentMarker;
       } else if (this.isWithinATest()) {

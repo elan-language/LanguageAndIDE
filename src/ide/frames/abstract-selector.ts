@@ -17,13 +17,15 @@ export abstract class AbstractSelector extends AbstractFrame {
   isSelector = true;
   isStatement = true;
   text: string = "";
-  protected paradigm: Paradigm;
   overtyper = new Overtyper();
 
   constructor(parent: Parent) {
     super(parent);
-    this.paradigm = this.getFile().getParadigm();
     this.setParseStatus(ParseStatus.valid); //Can never be invalid.
+  }
+
+  getParadigm(): Paradigm {
+    return this.getFile().getParadigm();
   }
 
   initialKeywords(): string {
