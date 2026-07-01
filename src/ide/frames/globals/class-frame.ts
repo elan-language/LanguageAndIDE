@@ -24,6 +24,7 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -48,7 +49,6 @@ import {
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
-import { Profile } from "../profile";
 import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
 
@@ -95,8 +95,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return classKeyword;
   }
 
-  getProfile(): Profile {
-    return this.getFile().getProfile();
+  getParadigm(): Paradigm {
+    return this.getFile().getParadigm();
   }
   protected setClasses() {
     super.setClasses();

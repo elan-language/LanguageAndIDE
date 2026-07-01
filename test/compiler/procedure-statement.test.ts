@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
@@ -46,7 +46,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -92,7 +92,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -125,7 +125,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -171,7 +171,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -215,7 +215,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -259,7 +259,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -312,7 +312,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -354,7 +354,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -402,7 +402,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -517,7 +517,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -567,7 +567,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -619,7 +619,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -680,7 +680,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -758,7 +758,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -831,7 +831,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -879,7 +879,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -921,7 +921,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -946,7 +946,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -972,7 +972,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -999,7 +999,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1028,7 +1028,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1059,7 +1059,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1085,7 +1085,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1116,7 +1116,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1145,7 +1145,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1169,7 +1169,7 @@ end main
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1195,7 +1195,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1225,7 +1225,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1256,7 +1256,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1287,7 +1287,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1318,7 +1318,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1347,7 +1347,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1374,7 +1374,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1398,7 +1398,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1421,7 +1421,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1445,7 +1445,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1470,7 +1470,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1496,7 +1496,7 @@ end procedure
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1521,7 +1521,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1555,7 +1555,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1582,7 +1582,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1614,7 +1614,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1639,7 +1639,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1664,7 +1664,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1687,7 +1687,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -1712,7 +1712,7 @@ end procedure`;
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

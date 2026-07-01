@@ -1,5 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { BinaryExpression } from "../../src/ide/frames/parse-nodes/binary-expression";
 import { CSV } from "../../src/ide/frames/parse-nodes/csv";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
@@ -10,7 +11,6 @@ import { ParamDefNode } from "../../src/ide/frames/parse-nodes/param-def-node";
 import { Space } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { SpaceNode } from "../../src/ide/frames/parse-nodes/space-node";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
-import { Profile } from "../../src/ide/frames/profile";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -22,7 +22,7 @@ suite("Parsing - Completions", () => {
 
   const f = new FileImpl(
     hash,
-    new Profile(""),
+    new Paradigm(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),

@@ -13,7 +13,7 @@ import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
 import { LanguageElan } from "../frames/language-elan";
 import { LanguagePython } from "../frames/language-python";
-import { Profile } from "../frames/profile";
+import { Paradigm } from "../frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
 import { FileManager } from "./file-manager";
@@ -61,12 +61,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.fileName;
   }
 
-  setProfile(p: Profile) {
-    this.file?.setProfile(p);
+  setParadigm(p: Paradigm) {
+    this.file?.setParadigm(p);
   }
 
-  getProfile() {
-    return this.file!.getProfile();
+  getParadigm() {
+    return this.file!.getParadigm();
   }
 
   setCss(stylesheet: string): void {
@@ -225,8 +225,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
 
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
     const existingLanguage = language ?? this.file?.language() ?? LanguagePython.Instance;
-    const existingProfile = this.file?.getProfile() ?? new Profile("procedural");
-    this.file = new FileImpl(hash, existingProfile, undefined, transforms(), stdlib, withMain);
+    const existingParadigm = this.file?.getParadigm() ?? new Paradigm("procedural");
+    this.file = new FileImpl(hash, existingParadigm, undefined, transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
   }
@@ -485,8 +485,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     await vm.clearDisplays();
     vm.setDisplayLanguage(this.file?.language() ?? LanguagePython.Instance);
 
-    vm.tvm.setWorksheetProfile("procedural");
-    vm.tvm.setHelpProfile("procedural");
+    vm.tvm.setWorksheetParadigm("procedural");
+    vm.tvm.setHelpParadigm("procedural");
 
     const ps = this.readParseStatus();
     if (ps === ParseStatus.valid || ps === ParseStatus.default || ps === ParseStatus.incomplete) {

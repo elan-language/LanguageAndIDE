@@ -109,7 +109,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     ];
   }
 
-  profileAllows(_keyword: string): boolean {
+  paradigmAllows(_keyword: string): boolean {
     return true;
   }
 
@@ -132,9 +132,9 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     } else if (keyword === constructorKeyword) {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else if (keyword === procedureKeyword) {
-      result = !(this.profile.isFunctional() && userEntry);
+      result = !(this.paradigm.isFunctional() && userEntry);
     } else if (keyword === copyKeyword) {
-      result = !userEntry || this.profile.isFunctional();
+      result = !userEntry || this.paradigm.isFunctional();
     }
     return result;
   }

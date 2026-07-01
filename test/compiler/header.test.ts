@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import {
@@ -33,7 +33,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "guest",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -67,7 +67,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -101,7 +101,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -135,7 +135,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -169,7 +169,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -186,7 +186,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_user", async () => {
-    const code = `# 4949493ed4278e580a9ce6c85933365009324ed49b9a92437d04b027e4613522 Elan 1.0.0 aUser default_profile valid
+    const code = `# 4949493ed4278e580a9ce6c85933365009324ed49b9a92437d04b027e4613522 Elan 1.0.0 aUser default_paradigm valid
 
 main
   # My first program
@@ -203,7 +203,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "aUser",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -229,7 +229,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -255,7 +255,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -281,7 +281,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -315,7 +315,7 @@ return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "aUser",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -341,7 +341,7 @@ end main`;
 
     const fileImpl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

@@ -26,7 +26,7 @@ import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageVB } from "../src/ide/frames/language-vb";
-import { Profile } from "../src/ide/frames/profile";
+import { Paradigm } from "../src/ide/frames/paradigm";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
 import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
@@ -185,7 +185,7 @@ export function getElanFiles(sourceDir: string): string[] {
 export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
   if (fl.parseError) {
     throw new Error(fl.parseError);
@@ -198,7 +198,7 @@ export async function getFile(sf: string): Promise<[FileImpl, string, string, st
   const testPath = `./out/test/files/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
-  const fl = new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
   return [fl, source, sourceFile, testPath];
 }
@@ -599,7 +599,7 @@ export function fileWithJava(): FileImpl {
 function fileWithLanguage(language: Language): FileImpl {
   const f = new FileImpl(
     hash,
-    new Profile(""),
+    new Paradigm(""),
     "",
     transforms(),
     new StdLib(new StubInputOutput()),false,
@@ -610,7 +610,7 @@ function fileWithLanguage(language: Language): FileImpl {
 }
 
 export function testExtractContextForExpression(text: string, context: string) {
-  const main = new MainRoutine(new FileImpl(hash, new Profile(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
+  const main = new MainRoutine(new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
   const v = new VariableStatement(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);

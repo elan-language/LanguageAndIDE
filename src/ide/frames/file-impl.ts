@@ -39,7 +39,7 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
-import { defaultUsername, Profile } from "./profile";
+import { defaultUsername, Paradigm } from "./paradigm";
 
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
@@ -119,7 +119,7 @@ export class FileImpl implements File {
 
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
-    public profile: Profile,
+    public paradigm: Paradigm,
     private userName: string | undefined,
     private readonly transform: Transforms,
     stdLib: StdLib,
@@ -181,12 +181,12 @@ export class FileImpl implements File {
     this._fieldBeingEdited = value;
   }
 
-  getProfile(): Profile {
-    return this.profile;
+  getParadigm(): Paradigm {
+    return this.paradigm;
   }
 
-  setProfile(p: Profile) {
-    this.profile = p;
+  setParadigm(p: Paradigm) {
+    this.paradigm = p;
   }
 
   getChildren(): Frame[] {

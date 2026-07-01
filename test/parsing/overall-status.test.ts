@@ -3,7 +3,7 @@ import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { TestStatus } from "../../src/compiler/test-status";
 import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
 import { FileImpl } from "../../src/ide/frames/file-impl";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
@@ -20,7 +20,7 @@ suite("Overall Status Tests", () => {
 
     const fileImpl = new FileImpl(
       testHash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -31,7 +31,7 @@ suite("Overall Status Tests", () => {
   });
 
   test("new file created with all statuses at default", async () => {
-    const prof = new Profile("");
+    const prof = new Paradigm("");
     const f = new FileImpl(
       testHash,
       prof,

@@ -5,7 +5,7 @@ import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
@@ -19,7 +19,7 @@ suite("Editing Fields Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -67,7 +67,7 @@ suite("Editing Fields Tests", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -155,7 +155,7 @@ suite("Editing Fields Tests", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -205,7 +205,7 @@ suite("Editing Fields Tests", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -236,7 +236,7 @@ suite("Editing Fields Tests", () => {
     const comment = new GlobalComment(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -264,7 +264,7 @@ suite("Editing Fields Tests", () => {
     const comment = new GlobalComment(
       new FileImpl(
         hash,
-        new Profile(""),
+        new Paradigm(""),
         "",
         transforms(),
         new StdLib(new StubInputOutput()),
@@ -293,7 +293,7 @@ suite("Editing Fields Tests", () => {
   test("End of field marker automatically skips to next field #496", () => {
     const file = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

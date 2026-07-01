@@ -5,7 +5,7 @@ import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-stri
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Profile } from "../../src/ide/frames/profile";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { InputStatement } from "../../src/ide/frames/statements/input-statement";
@@ -27,7 +27,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -46,7 +46,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -64,7 +64,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -83,7 +83,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -102,7 +102,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -121,7 +121,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -139,7 +139,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -157,7 +157,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -175,7 +175,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -193,7 +193,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -211,7 +211,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -229,7 +229,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -249,7 +249,7 @@ suite("Parsing Frame Tests", async () => {
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -269,7 +269,7 @@ constant pi set to 3.142
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -291,7 +291,7 @@ constant e set to 2.718
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -313,7 +313,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -337,7 +337,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -366,7 +366,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -400,7 +400,7 @@ enum Fruit apple, orange, pear
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -439,7 +439,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -468,7 +468,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -503,7 +503,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -528,7 +528,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -554,7 +554,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -577,7 +577,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -601,7 +601,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -628,7 +628,7 @@ abstract class Card
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),
@@ -657,7 +657,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = new FileImpl(
       hash,
-      new Profile(""),
+      new Paradigm(""),
       "",
       transforms(),
       new StdLib(new StubInputOutput()),

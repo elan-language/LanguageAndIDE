@@ -95,7 +95,7 @@ export class StatementSelector extends AbstractSelector {
     ];
   }
 
-  profileAllows(_keyword: string): boolean {
+  paradigmAllows(_keyword: string): boolean {
     return true;
   }
 
@@ -122,8 +122,8 @@ export class StatementSelector extends AbstractSelector {
         keyword === letKeyword ||
         keyword === commentMarker;
     }
-    // Then apply profile rules
-    if (this.profile.isFunctional() && userEntry) {
+    // Then apply paradigm rules
+    if (this.paradigm.isFunctional() && userEntry) {
       if (this.isWithinAFunction()) {
         result = keyword === letKeyword || keyword === commentMarker;
       } else if (this.isWithinATest()) {

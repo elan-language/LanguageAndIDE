@@ -21,7 +21,7 @@ import { LanguageElan } from "../ide/frames/language-elan";
 import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageVB } from "../ide/frames/language-vb";
-import { Profile } from "../ide/frames/profile";
+import { Paradigm } from "../ide/frames/paradigm";
 import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
@@ -66,7 +66,7 @@ export function resetFile() {
 
 function newFileImpl(): FileImpl {
   if (!fileImpl) {
-    fileImpl = new FileImpl(hash, new Profile(""), "guest", transforms(), stdLib, false, true);
+    fileImpl = new FileImpl(hash, new Paradigm(""), "guest", transforms(), stdLib, false, true);
   }
 
   const cc = fileImpl.getChildren();

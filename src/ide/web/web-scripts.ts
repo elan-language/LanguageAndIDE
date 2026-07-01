@@ -13,7 +13,7 @@ import { LanguageElan } from "../frames/language-elan";
 import { LanguageJava } from "../frames/language-java";
 import { LanguagePython } from "../frames/language-python";
 import { LanguageVB } from "../frames/language-vb";
-import { Profile } from "../frames/profile";
+import { Paradigm } from "../frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
 import { FileManager } from "./file-manager";
@@ -77,10 +77,10 @@ const csButton = document.querySelectorAll(".cs-language") as NodeListOf<HTMLDiv
 const javaButton = document.querySelectorAll(".java-language") as NodeListOf<HTMLDivElement>;
 const elanButton = document.querySelectorAll(".elan-language") as NodeListOf<HTMLDivElement>;
 
-const profileMenu = document.getElementById("profile-menu") as HTMLDivElement;
-const proceduralButton = document.getElementById("profile-procedural") as HTMLDivElement;
-const oopButton = document.getElementById("profile-oop") as HTMLDivElement;
-const functionalButton = document.getElementById("profile-functional") as HTMLDivElement;
+const paradigmMenu = document.getElementById("paradigm-menu") as HTMLDivElement;
+const proceduralButton = document.getElementById("paradigm-procedural") as HTMLDivElement;
+const oopButton = document.getElementById("paradigm-oop") as HTMLDivElement;
+const functionalButton = document.getElementById("paradigm-functional") as HTMLDivElement;
 
 const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
@@ -92,7 +92,7 @@ const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
 const fileButton = document.getElementById("file") as HTMLButtonElement;
 
-const profileButton = document.getElementById("profile") as HTMLButtonElement;
+const paradigmButton = document.getElementById("paradigm") as HTMLButtonElement;
 const saveAsStandaloneButton = document.getElementById("save-as-standalone") as HTMLDivElement;
 const preferencesButton = document.getElementById("preferences") as HTMLDivElement;
 const copyAsUrlButton = document.getElementById("copy-as-url") as HTMLDivElement;
@@ -196,12 +196,12 @@ class TabViewModel implements ITabViewModel {
     helpIFrame.contentWindow?.postMessage(`language:${l}`, "*");
   }
 
-  setWorksheetProfile(l: string) {
-    worksheetIFrame.contentWindow?.postMessage(`profile:${l}`, "*");
+  setWorksheetParadigm(l: string) {
+    worksheetIFrame.contentWindow?.postMessage(`paradigm:${l}`, "*");
   }
 
-  setHelpProfile(l: string) {
-    helpIFrame.contentWindow?.postMessage(`profile:${l}`, "*");
+  setHelpParadigm(l: string) {
+    helpIFrame.contentWindow?.postMessage(`paradigm:${l}`, "*");
   }
 }
 
@@ -279,7 +279,7 @@ class IDEViewModel implements IIDEViewModel {
           redoButton,
           clearDisplayButton,
           fileButton,
-          profileButton,
+          paradigmButton,
           loadButton,
           saveAsStandaloneButton,
           preferencesButton,
@@ -298,7 +298,7 @@ class IDEViewModel implements IIDEViewModel {
       this.disable([stopButton, pauseButton, stepButton], "Program is not running");
 
       this.enable(fileButton, "File actions");
-      this.enable(profileButton, "Programming paradigm");
+      this.enable(paradigmButton, "Programming paradigm");
       this.enable(loadButton, "Load code from a file");
       this.enable(appendButton, "Append code from a file onto the end of the existing code");
       this.enable(newButton, "Clear the current code and start afresh");
@@ -747,10 +747,10 @@ class IDEViewModel implements IIDEViewModel {
         worksheetIFrame.contentWindow?.postMessage(`code:${id}:${code}`, "*");
 
         const l = cvm.getLanguage().languageHtmlClass;
-        const p = cvm.getProfile()?.name;
+        const p = cvm.getParadigm()?.name;
 
         worksheetIFrame.contentWindow?.postMessage(`language:${l}`, "*");
-        worksheetIFrame.contentWindow?.postMessage(`profile:${p}`, "*");
+        worksheetIFrame.contentWindow?.postMessage(`paradigm:${p}`, "*");
       }
 
       if (m.data.startsWith("filename:")) {
@@ -922,25 +922,25 @@ elanButton.forEach((b) =>
   }),
 );
 
-async function profileEventHandler(this: HTMLDivElement, _event: MouseEvent) {
-  // Changing the profile clears the current code
+async function paradigmEventHandler(this: HTMLDivElement, _event: MouseEvent) {
+  // Changing the paradigm clears the current code
   if (checkForUnsavedChanges(fileManager, codeViewModel, cancelMsg)) {
-    const oldProfileName = codeViewModel.getProfile()?.name || "";
-    const profileName = this.id.replace("profile-", "");
-    await codeViewModel.setProfile(new Profile(profileName));
+    const oldParadigmName = codeViewModel.getParadigm()?.name || "";
+    const paradigmName = this.id.replace("paradigm-", "");
+    await codeViewModel.setParadigm(new Paradigm(paradigmName));
     codeViewModel.recreateFile(ideViewModel, true);
     await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
-    profileButton.textContent = this.textContent;
+    paradigmButton.textContent = this.textContent;
     const bodyClassList = docBody.classList;
-    bodyClassList.remove(oldProfileName);
-    bodyClassList.add(profileName);
-    tabViewModel.setWorksheetProfile(profileName);
-    tabViewModel.setHelpProfile(profileName);
+    bodyClassList.remove(oldParadigmName);
+    bodyClassList.add(paradigmName);
+    tabViewModel.setWorksheetParadigm(paradigmName);
+    tabViewModel.setHelpParadigm(paradigmName);
   }
 }
-proceduralButton?.addEventListener("click", profileEventHandler);
-oopButton?.addEventListener("click", profileEventHandler);
-functionalButton?.addEventListener("click", profileEventHandler);
+proceduralButton?.addEventListener("click", paradigmEventHandler);
+oopButton?.addEventListener("click", paradigmEventHandler);
+functionalButton?.addEventListener("click", paradigmEventHandler);
 
 loadButton.addEventListener("click", chooser(getUploader(), false));
 
@@ -962,7 +962,7 @@ copyAsUrlButton.addEventListener("click", async (_e: Event) => {
   const url = new URL(window.location.href);
 
   const urlParams: { [propName: string]: { default: string; current: string } } = {
-    profile: { default: "procedural", current: codeViewModel.getProfile()?.name || "procedural" },
+    paradigm: { default: "procedural", current: codeViewModel.getParadigm()?.name || "procedural" },
     lang: { default: "elan", current: codeViewModel.getLanguage().languageHtmlClass },
     cvd: { default: "colourScheme", current: codeViewModel.getCss() ?? "colourScheme" },
   };
@@ -1139,7 +1139,7 @@ helpIFrame.addEventListener("load", () => {
   helpIFrame.contentWindow?.addEventListener("keydown", ideViewModel.globalHandler);
   helpIFrame.contentWindow?.addEventListener("click", () => tabViewModel.showHelpTab());
   tabViewModel.setHelpLanguage(codeViewModel.getLanguage().languageHtmlClass);
-  tabViewModel.setHelpProfile(codeViewModel.getProfile().name);
+  tabViewModel.setHelpParadigm(codeViewModel.getParadigm().name);
 });
 
 parseStatus.addEventListener("click", async (event) => {
@@ -1181,7 +1181,7 @@ language0Button.addEventListener("click", handleClickDropDownButton);
 language1Button.addEventListener("click", handleClickDropDownButton);
 language2Button.addEventListener("click", handleClickDropDownButton);
 language3Button.addEventListener("click", handleClickDropDownButton);
-profileButton.addEventListener("click", handleClickDropDownButton);
+paradigmButton.addEventListener("click", handleClickDropDownButton);
 
 demosButton.addEventListener("keydown", handleKeyDropDownButton);
 fileButton.addEventListener("keydown", handleKeyDropDownButton);
@@ -1190,7 +1190,7 @@ language0Button.addEventListener("keydown", handleKeyDropDownButton);
 language1Button.addEventListener("keydown", handleKeyDropDownButton);
 language2Button.addEventListener("keydown", handleKeyDropDownButton);
 language3Button.addEventListener("keydown", handleKeyDropDownButton);
-profileButton.addEventListener("keydown", handleKeyDropDownButton);
+paradigmButton.addEventListener("keydown", handleKeyDropDownButton);
 
 demosMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
@@ -1218,7 +1218,7 @@ language3Menu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
 
-profileMenu.addEventListener("keydown", (e) =>
+paradigmMenu.addEventListener("keydown", (e) =>
   handleMenuKey(e, codeViewModel, ideViewModel, testRunner),
 );
 
@@ -1231,7 +1231,7 @@ language1Menu.addEventListener("click", () => collapseMenu(language1Button, fals
 language2Menu.addEventListener("click", () => collapseMenu(language2Button, false));
 language3Menu.addEventListener("click", () => collapseMenu(language3Button, false));
 
-profileMenu.addEventListener("click", () => collapseMenu(profileButton, false));
+paradigmMenu.addEventListener("click", () => collapseMenu(paradigmButton, false));
 
 displayTab?.addEventListener("click", () => tabViewModel.showDisplayTab());
 infoTab?.addEventListener("click", () => tabViewModel.showInfoTab());
@@ -1261,7 +1261,7 @@ window.addEventListener("hashchange", async () => {
   const lang = sp.get("lang") ?? "elan";
   const cvd = sp.get("cvd") ?? "colourScheme";
   const code = sp.get("code");
-  let param = sp.get("profile") ?? "procedural";
+  let param = sp.get("paradigm") ?? "procedural";
 
   // We are going to wipe the code in all cases
   // and we want to make no changes at all if the user cancels
@@ -1271,18 +1271,18 @@ window.addEventListener("hashchange", async () => {
 
     await codeViewModel.changeLanguage(getLanguageByClass(lang), ideViewModel, testRunner, false);
 
-    if (!document.getElementById("profile-" + param)) {
-      // invalid profile name
+    if (!document.getElementById("paradigm-" + param)) {
+      // invalid paradigm name
       param = "procedural";
     }
-    const oldProfileName = codeViewModel.getProfile()?.name || "";
-    const profileName = param;
+    const oldParadigmName = codeViewModel.getParadigm()?.name || "";
+    const paradigmName = param;
 
-    await codeViewModel.setProfile(new Profile(profileName));
-    profileButton.textContent = document.getElementById("profile-" + profileName)!.textContent;
+    await codeViewModel.setParadigm(new Paradigm(paradigmName));
+    paradigmButton.textContent = document.getElementById("paradigm-" + paradigmName)!.textContent;
     const bodyClassList = docBody.classList;
-    bodyClassList.remove(oldProfileName);
-    bodyClassList.add(profileName);
+    bodyClassList.remove(oldParadigmName);
+    bodyClassList.add(paradigmName);
     // reset to blank code even if overwriting after
     codeViewModel.recreateFile(ideViewModel, true);
     await codeViewModel.initialDisplay(fileManager, ideViewModel, testRunner, false);
@@ -1299,13 +1299,13 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   fragId = fragId.length > 0 ? fragId.substring(1) : "";
   const sp = new URLSearchParams(fragId);
 
-  let param = sp.get("profile") || "procedural";
-  if (!document.getElementById("profile-" + param)) {
-    // invalid profile name
+  let param = sp.get("paradigm") || "procedural";
+  if (!document.getElementById("paradigm-" + param)) {
+    // invalid paradigm name
     param = "procedural";
   }
-  const profile = new Profile(param);
-  setup(profile);
+  const paradigm = new Paradigm(param);
+  setup(paradigm);
 } else {
   const msg = "Require Chrome or Edge";
   ideViewModel.disable(
@@ -1336,9 +1336,9 @@ if (checkIsChrome() || confirmContinueOnNonChromeBrowser()) {
   }
 }
 
-async function setup(p: Profile) {
+async function setup(p: Paradigm) {
   fileManager.reset();
-  codeViewModel.setProfile(p);
+  codeViewModel.setParadigm(p);
   let fragId = new URL(window.location.href).hash;
   // It may be an empty string, in which case we want an empty URLSearchParams.
   fragId = fragId.length > 0 ? fragId.substring(1) : "";
@@ -1356,7 +1356,7 @@ async function setup(p: Profile) {
   // to control which demos are visible
   docBody.classList.add(p.name);
   // and reassign the text on the button to match
-  profileButton.textContent = document.getElementById("profile-" + p.name)!.textContent;
+  paradigmButton.textContent = document.getElementById("paradigm-" + p.name)!.textContent;
 
   codeViewModel.recreateFile(ideViewModel, true, getLanguageByClass(lang));
   await codeViewModel.displayFile(fileManager, ideViewModel, testRunner);
