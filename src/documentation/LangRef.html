@@ -2030,7 +2030,86 @@ end procedure
 <div id="Miscellaneous">
 <h1>Miscellaneous</h1>
 
-<h2 id="dotSyntax">Dot syntax</h2>
+<div id="Type">
+<h2>Data Types</h2>
+
+<p>There are two fundamentally different kinds of data Type, differing by how their values
+are passed around in a running program:</p>
+<ul>
+ <li><i><b id="ValueType">Value Types</b></i> that contain a single value, and are passed around directly:<br>
+ <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
+ <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <code>String</code>, <code>List</code>, etc. as well as
+ any <b>concrete class</b> pr <b>abstract class</b>.</li>
+</ul>
+
+<p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
+<table>
+ <tr><th></th><th colspan="4">Value Types</th>
+ </tr><tr>
+  <td>Value data</td>
+  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+ <th></th><th colspan="4">Reference Types</th>
+ </tr><tr>
+  <td>Standard<br>data</td>
+  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf14c;</i></a></td>
+ </tr><tr>
+  <td>structures</td>
+  <td><a href="LibRef.html#HashSet"><el-topic>Set</el-topic><br><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Graphics</td>
+  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
+  <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Data I/O</td>
+  <td><a href="LibRef.html#TextFileWriter"><el-topic>Text file output</el-topic><br><code>TextFileWriter</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#TextFileReader"><el-topic>Text file input</el-topic><br><code>TextFileReader</code> <i class="fa">&#xf08e;</i></a></td>
+  <td></td>
+  <td></td>
+ </tr><tr>
+  <td>User-defined</td>
+  <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+ </tr><tr>
+  <td>Other</td>
+  <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
+<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
+  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
+  </tr>
+</table>
+
+<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's type is:
+<ul>
+ <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
+ <li><i>or</i> specified in the definition of:
+ <ul>
+  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
+  <li>parameters of functions and procedures</li>
+  <li><b>return</b> value of a function</li>
+  <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
+ </ul></li>
+</ul>
+</div>
+
+<div id="dotSyntax">
+<h2>Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
  <li>To apply a function method to a named value, e.g. to obtain the length of <code>String</code> <code>s</code> using a library method:<br>
@@ -2051,7 +2130,9 @@ variable x set to point.item_0
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
  nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>
+</div>
 
+<div>
 <h2>Field help</h2>
 
 <h3 id="ArgListField" class="no-TOC">'arguments' field in a call instruction</h3>
@@ -2136,8 +2217,7 @@ variable x set to point.item_0
  <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
  <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
 </div>
-</div>
-</div>
-
+<hr>
+<p><b>Procedural programming Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
 </body>
 </html>
