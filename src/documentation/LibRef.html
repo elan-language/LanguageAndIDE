@@ -1094,15 +1094,35 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <ul>
  <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
- <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they can contain, similarly to how <code>List</code> has a specified item type, though with different syntax.
+ <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they contain, similarly to how a <code>List</code> has a specified item type.
  The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
- <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
+ <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
  <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> type.</li>
  <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
- <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
+ <el-method>peek</el-method> returns the next item without actually removing it.</li>
+ <li>There are two ways of adding and retrieving the next item in a Stack or a Queue:
+  <ul>
+   <li>in a procedure, use procedure methods <code>push</code> and <code>enqueue</code> to add an item, and system methods <code>pop</code> and <code>dequeue</code> to obtain and remove the next item,</li>
+   <li>in a function, use dot methods: <code>withPush</code> and <code>withEnqueue</code> to add an item, and <code>withPop</code> and <code>withDequeue</code> to remove the next item. </li>
+  </ul>
+  Note that in a function you will usually need to peek the next item before applying <code>withPop</code> or <code>withDequeue</code> (both of which remove it).
+ </li>
  <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
 </ul>
+
+<h3 class="no-TOC" id="List_procedures">Procedure method on a <code>Stack</code></h3>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument</th>
+  <th>action</th>
+ </tr><tr id="push">
+  <td><el-method>push</el-method></td>
+  <td>value of <code>Stack</code> item's type</td>
+  <td>the item is added to the top of the Stack</td>
+ </tr>
+</table>
 
 <h3 class="no-TOC" id="Stack_functions">Function dot methods on a <code>Stack</code></h3>
 <table class="tableMethod">
@@ -1121,16 +1141,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>Stack</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if stack and argument differ<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="push">
-  <td><el-method>push</el-method></td>
-  <td>value<br>(of <code>Stack</code> item's type)</td>
-  <td><code>Stack</code></td>
-  <td>the Stack with the value added to its top</td>
  </tr><tr id="pop">
   <td><el-method>pop</el-method></td>
   <td>(none)</td>
-  <td><code>Stack</code> item,<br><code>Stack</code></td>
-  <td>the topmost item of the Stack, and the Stack with the item removed</td>
+  <td><code>Stack</code> item</td>
+  <td>the topmost item of the Stack which is now without the item</td>
  </tr><tr id="peek_Stack">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
@@ -1147,6 +1162,29 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>String</code></td>
   <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
    the last item pushed being the first in the String</td>
+ </tr><tr id="withPop">
+  <td><el-method>withPop</el-method></td>
+  <td>(none)</td>
+  <td><code>Stack</code></td>
+  <td>the Stack with the topmost item removed</td>
+ </tr><tr id="withPush">
+  <td><el-method>withPush</el-method></td>
+  <td><code>Stack</code> item</td>
+  <td><code>Stack</code></td>
+  <td>the item is added to the top of the Stack and the Stack returned</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC" id="List_procedures">Procedure method on a <code>Queue</code></h3>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument</th>
+  <th>action</th>
+ </tr><tr id="enqueue">
+  <td><el-method>enqueue</el-method></td>
+  <td>value of <code>Queue</code> item's type</td>
+  <td>the item is added to the tail of the queue</td>
  </tr>
 </table>
 
@@ -1167,16 +1205,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>Queue</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if queue and argument differ<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="enqueue">
-  <td><el-method>enqueue</el-method></td>
-  <td>value<br>(of <code>Queue</code> item's type)</td>
-  <td><code>Queue</code></td>
-  <td>the Queue with the item added to the end of the Queue</td>
  </tr><tr id="dequeue">
   <td><el-method>dequeue</el-method></td>
   <td>(none)</td>
-  <td><code>Queue</code> item,<br><code>Queue</code></td>
-  <td>the next item in the Queue, and the Queue  with the item removed</td>
+  <td><code>Queue</code> item</td>
+  <td>the next item in the Queue which is now without the item</td>
  </tr><tr id="peek_Queue">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
@@ -1193,62 +1226,66 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>String</code></td>
   <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
    the first item enqueued being the first in the String</td>
-</tr>
+</tr><tr id="withDequeue">
+  <td><el-method>withDequeue</el-method></td>
+  <td>(none)</td>
+  <td><code>Queue</code></td>
+  <td>the Queue with the next item removed</td>
+ </tr><tr id="withEnqueue">
+  <td><el-method>withEnqueue</el-method></td>
+  <td><code>Queue</code> item</td>
+  <td><code>Queue</code></td>
+  <td>the item is added to the tail of the Queue and the Queue returned</td>
+ </tr>
 </table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Stack</code> and <code>Queue</code></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Stack</code> and <code>Queue</code> in a procedure</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <code>Stack</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <code>Stack</code> that starts empty:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>main
-  variable sk set to new Stack&lt;of String&gt;()
+<codeblock>procedure stackProc(sk as Stack&lt;of String&gt;)
   print(sk.length())
-  assign sk to sk.push("apple")
-  assign sk to sk.push("banana")
-  assign sk to sk.push("cherry")
+  call sk.push("apple")
+  call sk.push("banana")
+  call sk.push("cherry")
   print(sk.length())
   print(sk)
   print(sk.peek())
-  print(sk.pop())
   print(sk)
-  print(sk.pop().item_0)
+  variable fruit set to sk.pop()
+  print(fruit) 
   print(sk)
-  assign sk to sk.pop().item_1
-  print(sk)
-end main
+end procedure
 </codeblock>
 </td>
-<td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
-<td><br><br>0<br><br><br><br>3<br>[cherry, banana, apple]<br>cherry<br>(cherry, [banana, apple])<br>[cherry, banana, apple]<br>cherry<br>[cherry, banana, apple]<br><br>[banana, apple]</td>
+<td><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
+<td><br>0<br><br><br><br>3<br>[cherry, banana, apple] &mdash; <i>note the order of items</i><br>cherry<br>[cherry, banana, apple] &mdash; <i>no change on peek</i><br><br>cherry<br>[banana, apple] &mdash; <i>last added item was popped</i></td>
 </tr>
 </table>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <code>Queue</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <code>Queue</code> that starts empty:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>main
-  variable qu set to new Queue&lt;of String&gt;()
+<codeblock>procedure stackProc(sk as Queue&lt;of String&gt;)
   print(qu.length())
-  assign qu to qu.enqueue("apple")
-  assign qu to qu.enqueue("banana")
-  assign qu to qu.enqueue("cherry")
+  call to qu.enqueue("apple")
+  call qu.enqueue("banana")
+  call qu.enqueue("cherry")
   print(qu.length())
   print(qu)
   print(qu.peek())
-  print(qu.dequeue())
   print(qu)
-  print(qu.dequeue().item_0)
+  variable fruit set to qu.dequeue()
+  print(fruit)
   print(qu)
-  assign qu to qu.dequeue().item_1
-  print(qu)
-end main
+end procedure
 </codeblock>
 </td>
-<td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
-<td><br><br>0<br><br><br><br>3<br>[apple, banana, cherry]<br>apple<br>(apple, [banana, cherry])<br>[apple, banana, cherry]<br>apple<br>[apple, banana, cherry]<br><br>[banana, cherry]</td>
+<td><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
+<td><br>0<br><br><br><br>3<br>[apple, banana, cherry] &mdash; <i>note the order of items</i><br>apple<br>[apple, banana, cherry] &mdash; <i>no change on peek</i><br><br>apple<br>[banana, cherry] &mdash; <i>first added item was dequeued</i></td>
 </tr>
 </table>
 <hr>

@@ -1849,7 +1849,7 @@ end function
 
 <h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
 <h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
-<p>Equality testing of these Value Types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
+<p>Equality testing of these Value types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
 <ul>
  <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
  <li><code>(a is b)</code> returns <b><code>true</code></b>, if <code>a</code> and <el-lit>b</el-lit> are both of the same type and their values are equal.
@@ -1859,8 +1859,8 @@ end function
  <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
 </ul>
 
-<h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference Types</h4>
-<p>Equality testing of these Reference Types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
+<h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference types</h4>
+<p>Equality testing of these Reference types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
 <li>
 <codeblock>if listA.equals(listB) then
@@ -2031,21 +2031,21 @@ end procedure
 <h1>Miscellaneous</h1>
 
 <div id="type">
-<h2>Data Types</h2>
+<h2>Data types</h2>
 
-<p>There are two fundamentally different kinds of data Type, differing by how their values
+<p>There are two fundamentally different kinds of data type, differing by how their values
 are passed around in a running program:</p>
 <ul>
- <li><i><b id="ValueType">Value Types</b></i> that contain a single value, and are passed around directly:<br>
+ <li><i><b id="ValueType">Value types</b></i> that contain a single value, and are passed around directly:<br>
  <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
- <li><i><b id="ReferenceType">Reference Types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <li><i><b id="ReferenceType">Reference types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
  any <b>concrete class</b> pr <b>abstract class</b>.</li>
 </ul>
 
-<p>This table lists the value Types and the standard data structure (reference) Types, each linking to its definition and further details:</p>
+<p>This table lists the Value types and the standard data structure (Reference) types, each linking to its definition and further details:</p>
 <table>
- <tr><th></th><th colspan="4">Value Types</th>
+ <tr><th></th><th colspan="4">Value types</th>
  </tr><tr>
   <td>Value data</td>
   <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
@@ -2053,7 +2053,7 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr>
- <th></th><th colspan="4">Reference Types</th>
+ <th></th><th colspan="4">Reference types</th>
  </tr><tr>
   <td>Standard<br>data</td>
   <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
@@ -2090,17 +2090,17 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
 <!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
-  <td><a href="#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="oopRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   </tr>
 </table>
 
-<p>Named values are statically typed: their Type, once defined, cannot be changed. A named value's type is:
+<p>Named values are statically typed: their type, once defined, cannot be changed. A named value's type is:
 <ul>
- <li><i>either</i> automatically inferred from the value of the literal or expression defining a value Type,</li>
+ <li><i>either</i> automatically inferred from the value of the literal or expression defining a value type,</li>
  <li><i>or</i> specified in the definition of:
  <ul>
-  <li>data structures whose items have a particular Type, e.g. <code>List&lt;of Int&gt;</code></li>
+  <li>data structures whose items have a particular type, e.g. <code>List&lt;of Int&gt;</code></li>
   <li>parameters of functions and procedures</li>
   <li><b>return</b> value of a function</li>
   <li><b>property</b> of an <b>abstract class</b> or <b>concrete class</b></li>
