@@ -1096,17 +1096,17 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
  <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they contain, similarly to how a <code>List</code> has a specified item type.
  The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
- <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
+ <li>Both <code>Stack</code> and <code>Queue</code> are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
  <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> type.</li>
  <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
  <el-method>peek</el-method> returns the next item without actually removing it.</li>
  <li>There are two ways of adding and retrieving the next item in a Stack or a Queue:
   <ul>
-   <li>in a procedure, use procedure methods <code>push</code> and <code>enqueue</code> to add an item, and system methods <code>pop</code> and <code>dequeue</code> to obtain and remove the next item,</li>
-   <li>in a function, use dot methods: <code>withPush</code> and <code>withEnqueue</code> to add an item, and <code>withPop</code> and <code>withDequeue</code> to remove the next item. </li>
+   <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and system methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
+   <li>in a function, use dot methods: <el-method>withPush</el-method> and <el-method>withEnqueue</el-method> to add an item, and <el-method>withPop</el-method> and <el-method>withDequeue</el-method> to remove the next item. </li>
   </ul>
-  Note that in a function you will usually need to peek the next item before applying <code>withPop</code> or <code>withDequeue</code> (both of which remove it).
+  Note that in a function you will usually need to peek the next item before applying <el-method>withPop</el-method> or <el-method>withDequeue</el-method> (both of which remove it).
  </li>
  <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
 </ul>
@@ -2069,7 +2069,6 @@ end main
   print($"That was {key}")
 end main
 </codeblock>
-
 
 <h2 id="FileInputOutput">Text file input/output</h2>
 <p>Reading or writing a text file requires that you <b>open</b> (for reading) or <b>create</b> (for writing) a file using these system methods:</p>
