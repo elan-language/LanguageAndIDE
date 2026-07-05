@@ -197,7 +197,7 @@ end class
     an instance is specified via paramaters added into the constructor definition.</li>
   <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
     so creating a new <code>Square</code> for example takes the form <code>variable tail set to new Square(20, 15)</code></li>
-  <li>A property is initialised within the construction using a <b>reassign variable</b> instruction - since a property may be thought of as 
+  <li>A property is initialised within the construction using an <b>assignment</b> instruction - since a property may be thought of as 
     a named variable that holds a value specific to each instance of the class.</li>
   <li>the name of the property being reassigned must be prefixed by 
 <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw>
@@ -848,7 +848,7 @@ end class
     <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
       the default values for those types).</li>
-    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash; 
+    <li>A property is initialised using an <b>assignment</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash; 
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
