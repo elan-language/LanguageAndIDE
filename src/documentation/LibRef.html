@@ -206,7 +206,7 @@ Its type is <code>Float</code>.
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:
-  <codeblock>variable hoursWorked set to 3.0</codeblock></li>
+  <code>variable hoursWorked set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
@@ -494,7 +494,7 @@ three immutable data structure types <code>HashSet</code>, <code>Stack</code> an
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no procedure dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
 <p>Since procedure methods may be called only from within the <b>main routine</b> or a <b>procedure</b>,
-it is also possible to make changes via <b>function</b> dot methods,  which return a copy of the data structure
+it is also possible to make changes via <b>function</b> dot methods, which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
@@ -599,7 +599,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
+<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using an <b>assign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>assign aList[ix] to "Smith"</code></li>
 </ul>
@@ -892,7 +892,7 @@ end procedure
 
 <div class="functional">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
-in a way suitable for Functional programming, by using the HoF <code>reduce</code> in a function
+in a way suitable for Functional programming, by using the HoF <el-method>reduce</el-method> in a function
 that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 <codeblock>main
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
@@ -987,7 +987,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tablePlain">
 <tr>
  <td>
-  <codeblock>  variable st set to new HashSet&lt;of Int&gt;()
+<codeblock>variable st set to new HashSet&lt;of Int&gt;()
   assign st to st.addFromList([3, 5, 7])
   print(st.length())
   assign st to st.add(7)
@@ -1106,12 +1106,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
    <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and system methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
    <li>in a function, use dot methods: <el-method>withPush</el-method> and <el-method>withEnqueue</el-method> to add an item, and <el-method>withPop</el-method> and <el-method>withDequeue</el-method> to remove the next item. </li>
   </ul>
-  Note that in a function you will usually need to peek the next item before applying <el-method>withPop</el-method> or <el-method>withDequeue</el-method> (both of which remove it).
+  Note that in a function you will usually need to <el-method>peek</el-method> the next item before applying <el-method>withPop</el-method> or <el-method>withDequeue</el-method> (both of which remove it).
  </li>
- <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
 </ul>
 
-<h3 class="no-TOC" id="List_procedures">Procedure method on a <code>Stack</code></h3>
+<h3 class="no-TOC" id="Stack_procedure">Procedure method on a <code>Stack</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1175,7 +1174,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="List_procedures">Procedure method on a <code>Queue</code></h3>
+<h3 class="no-TOC" id="Queue_procedure">Procedure method on a <code>Queue</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1323,7 +1322,7 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>  variable t set to (3, "apple", true)
+<codeblock>variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
   print(t.item_1)
@@ -1554,7 +1553,7 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="LineVG"><code>LineVG</code> for &lt;line../&gt;</li>
  <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
-<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
+<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's stroke-width
  is assigned with property <code>strokeWidth</code>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
 Also <code>stroke</code> and <code>fill</code> are set by the properties <code>strokeColour</code> and <code>fillColour</code>.</p>
 
@@ -1875,7 +1874,7 @@ end main
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods <i class="fa">&#xf14c;</i></a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
-<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case <code>R</code> required for a type name).</p>
+<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case R required for a type name).</p>
 <p>You start by getting a seed random number in your <b>main routine</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 <code>variable rnd set to new Random()</code><br>
 <code>call rnd.initialiseFromClock()</code>
@@ -1927,8 +1926,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code></p>:
-<codeblock>
-main
+<codeblock>main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
@@ -1936,7 +1934,6 @@ main
     assign rnd to randomThrow(rnd).item_1
   end for
 end main
-
 function randomThrow(rnd as Random) returns (Int, Random)
   return (rnd.asInt(1, 6), rnd.nextGen())
 end function
@@ -1977,7 +1974,7 @@ end function
   <td><el-method>getNumericKey</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <code>"-1"</code></td>
+  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then "-1"</td>
  </tr><tr id="input">
   <td><el-method>input</el-method></td>
   <td><code>String</code></td>
@@ -2200,7 +2197,7 @@ end main
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>display</b>.
     The following code:</p>
 
-<codeblock>  call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
+<codeblock>call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
 </codeblock>
 
 <p>will produce:</p>
@@ -2631,7 +2628,7 @@ end main
 <p>These methods may be referenced from within a <b>function</b>.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
-<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or a <b>reassign variable</b>, either on their own or within a more complex expression.</p>
+<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or an <b>assign variable</b>, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
 
 <table class="tableMethod">
@@ -3288,8 +3285,7 @@ end main
 <codeblock>class Pupil
   property mathsPercent as Int
 end class
-main
-  variable allPupils set to new List&lt;of Pupil&gt;()
+main variable allPupils set to new List&lt;of Pupil&gt;()
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 function passedMathsTest(p as Pupil) returns Boolean
