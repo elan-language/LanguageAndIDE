@@ -24,10 +24,10 @@
 <h1>Getting started</h1>
 <h2>Select the object-oriented programming paradigm</h2> <!-- to balance the ToC -->
 
-<p>To undertake object-oriented programming (OOP) with Elan, you should first be reasonably familiar with procedural programming with Elan. 
-Start by switching to the <b>object-oriented</b> paradigm from the menu at the top of the IDE. 
+<p>To undertake object-oriented programming (OOP) with Elan, you should first be reasonably familiar with procedural programming with Elan.
+Start by switching to the <b>object-oriented</b> paradigm from the menu at the top of the IDE.
 This will still allow you to do procedural programming, but changes two things: </p>
-  
+
 <ul>
 <li>The list of demo programs will now show only programs that use OOP - except that <b>Snake</b> is offered in both <b>procedural</b>
     and <b>object-oriented</b> forms for direct comparison.
@@ -47,9 +47,9 @@ This will still allow you to do procedural programming, but changes two things: 
 <h1>Principles of object-oriented programming</h1>
 
 <p><b>Important</b>. Every textbook on OOP differs <i>slightly</i> in the definition of core principles, and every language that supports OOP differs in the rules that it enforces.
-  The following 10 principles are based on widely recognised best practices in OOP. When coding with Elan, in whichever of the supported languages 
-  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling. 
-  The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library. 
+  The following 10 principles are based on widely recognised best practices in OOP. When coding with Elan, in whichever of the supported languages
+  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling.
+  The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library.
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
   Elan will result in better code and fewer problems.<p>
@@ -62,7 +62,7 @@ This will still allow you to do procedural programming, but changes two things: 
     is to define a <b>concrete class</b> which is one of the new options made available at global (file) level
     when using Elan with the <b>object-oriented</b> paradigm selected.</p>
 
-        In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes. 
+        In the <b>Snake object-oriented</b> demo you can find three examples of concrete classes.
         Only the 'signature' of each class is shown <i>here</i> - not the instructions contained within the classes:
 
 <codeblock>
@@ -125,14 +125,14 @@ where the only thing you <i>must</i> provide is a unique name for the class, whi
 
 <p>Every object in code is an instance of a specific class. The class may be thought of as a 'template' for defining instances. Each instance
     holds <i>its own specific value</i> for each of the properties defined in the class.</p>
-    
+
 <p>An new object may be created and assigned to a variable definition, for example:</p>
 
 <codeblock>variable apple set to new Apple()</codeblock>
 <codeblock>variable snake set to new Snake()</codeblock>
 
 <p>Note that the type of each variable is determined by the class of the instance so that the <code>apple</code> variable
-    may subsequently be reassigned to a different instance of <code>Apple</code> but may not be reassigned to 
+    may subsequently be reassigned to a different instance of <code>Apple</code> but may not be reassigned to
     an instance of a different class (nor any other type).<p>
 
 <p>A new instance may also be created as part of an expression without having to be assigned to a variable, for example:
@@ -163,7 +163,7 @@ end if
     and which may be edited, though not deleted. The role of the constructor is to initialise the properties whenever an instance
     of that class is created.</p>
 
-<p>The only properties that don't need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> - 
+<p>The only properties that don't need to be initialised are properties of type <code>Int</code>, <code>Float</code>, or <code>Boolean</code> -
     which are automatically initialised to the default value of each type - <code>0</code>, <code>0.0</code>, or <code>false</code> respectively.
     All other properties <i>must</i> be explicitly initialised within the constructor. Here is simple example of properties being initialised
     within the constructor for <code>Square</code> in the <b>Snake</b> demo:</p>
@@ -191,15 +191,15 @@ end class
 <h3 class="no-TOC">Note:</h3>
 <ul>
   <li>Even properties that are automatically initialised <i>may</i> be explicitly initialised in the constructor.</li>
-  <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type, 
+  <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type,
         for example <code>new List&lt;of Int&gt;()</code> - though you may choose any value.</li>
   <li>If you don't you want every instance of a class to be initialised with the same value, the specific value for
     an instance is specified via paramaters added into the constructor definition.</li>
   <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
     so creating a new <code>Square</code> for example takes the form <code>variable tail set to new Square(20, 15)</code></li>
-  <li>A property is initialised within the construction using a <b>reassign variable</b> instruction - since a property may be thought of as 
+  <li>A property is initialised within the construction using an <b>assignment</b> instruction - since a property may be thought of as
     a named variable that holds a value specific to each instance of the class.</li>
-  <li>the name of the property being reassigned must be prefixed by 
+  <li>the name of the property being reassigned must be prefixed by
 <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw>
  followed by a dot.</li>
 </ul>
@@ -239,12 +239,12 @@ end class
   <li>The<code>Snake</code> is always initialised to the same values, so the constructor does not need to define any parameters.</li>
   <li>The <code>currentDir</code> property is of type <code>Direction</code> (which is an enum) and is initialised to <code>Direction.right</code>.</li>
   <li>The <code>body</code> property is a multiple association - defined as a list of type <code>Square</code></li>
-  <li>The constructor defines a variable <code>tail</code> used only for the purpose of initialising properties. 
+  <li>The constructor defines a variable <code>tail</code> used only for the purpose of initialising properties.
     It is first used to initialise the <code>body</code> as a list containing only the <code>tail</code> and
     is finally used to define the <code>priorTail</code> which is a single association of type <code>Square</code>.
     In between it is used in an expression to determine the initial value for the <code>head</code> property using a function (more on this in the next heading).
-  <li>It is thus legitimate to call functions within the constructor. A constructor may not call any procedure, however. 
-    And you should avoid doing any work in a constructor <i>other than</i> determining appropriate values for initialising its properties. 
+  <li>It is thus legitimate to call functions within the constructor. A constructor may not call any procedure, however.
+    And you should avoid doing any work in a constructor <i>other than</i> determining appropriate values for initialising its properties.
 </ul>
 
 <h2>Classes provide behaviour through methods</h2>
@@ -255,7 +255,7 @@ end class
     <ul>
         <li>they are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
         <li>they have access to all the properties belonging to that same instance, and  can also invoke other
-            methods on the same object, in both cases prefixed by 
+            methods on the same object, in both cases prefixed by
             <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
     </ul>
 
@@ -266,7 +266,7 @@ end class
   <p>Function methods defined on a class, are similar to global functions in that they act like 'queries', returning information that is determined by
     the values of the parameters. The difference is that a function method defined on a class, may additionally make use of information obtained from
     the properties of the object (directly or indirectly) - to determine the information to be returned. But like a global function, a function method
-    defined on a class may not cause any side effects, which means that it may not update any property. The body of the 
+    defined on a class may not cause any side effects, which means that it may not update any property. The body of the
     <el-method>getAdjacentSquare</el-method> accesses the objects <code>x</code> and <code>y</code> properties and uses this, together
     with the <code>Direction</code> parameter to create and return a new instance of <code>Square</code> with different <code>x</code> and <code>y</code>
     properties:</p>
@@ -290,7 +290,7 @@ end function
 </codeblock>
 
 <p>The <el-method>toString</el-method> function method returns a string that represents the object in some way. It is called automatically
-whenever you call <el-method>print</el-method> with a variable that holds an instance of the class. 
+whenever you call <el-method>print</el-method> with a variable that holds an instance of the class.
 If you don't need to <i>print</i> an object in text form on the display, it is safe to leave the <i>default</i> implementation
 <el-method>toString</el-method> - that was created when you added the class, and which returns an empty string <code>""</code>.
 If you do intend to print an object in text form then you can define the string to be returned, incorporating
@@ -333,7 +333,7 @@ end procedure
 <h2 id="representation">Objects should represent the principal nouns in the application domain</h2>
 
 <p>The word 'encapsulation' is often used in descriptions of object-oriented programming. But
-  that word has two rather different meanings in plain English. Fortunately, both of the meanings of 'encapsulation' 
+  that word has two rather different meanings in plain English. Fortunately, both of the meanings of 'encapsulation'
   apply. </p>
 
 <p>The first meaning of encapsulation is similar to 'represents' - as in 'Our school motto <i>encapsulates</i> the ethos and culture of the school'.
@@ -344,51 +344,51 @@ end procedure
 would be recognised by anyone who understands how to play the game Snake, but who does not necessarily know anything about programming.</p>
 
 <p>One of the claimed benefits of this is that it makes programs easier to read, and to update in response to new
-  requirements, because the structure of the code corresponds more closely to the language of the application domain. 
+  requirements, because the structure of the code corresponds more closely to the language of the application domain.
   If the user, or the business customer that owns the game, says that they want the snake to be a different colour, or for there to be two
   apples at once (in different positions) - it will be easier for the programmer to identity where within the program the code must be changed
   that in a procedural implementation. You can try this for yourself, by asking a user to specify similar small changes to the presentation
   and/or game rules, and testing how long it takes you to update the procedural, and object-oriented, versions of the Snake program as required.</p>
 
-<p>Importantly, the class does not just represent all the information associated with the noun - it also encapsulates the 
+<p>Importantly, the class does not just represent all the information associated with the noun - it also encapsulates the
   behaviour needed from that thing, in the form of methods. This is sometimes stated as representing the <i>know-whats</i> for the thing (as properties),
   and the <i>know how-to's</i> as methods.</p>
 
 <h2 id="info-hiding">Objects should hide state behind methods, where possible</h2>
 
 <p>This principle corresponds to the second meaning of 'encapsulation': sealing. Think of the related word: 'capsule'.
-  You can only access the capabilities of an object through its <i>public</i> members. All the 'members' 
+  You can only access the capabilities of an object through its <i>public</i> members. All the 'members'
   defined on a class (that is: its properties and methods) are public - although properties
   are public only for <i>reading</i>, not for modifying. However, it is possible to make any property or method <i>private</i>
   - such that it can be accessed from code within the class, but not from outside. To do this, you bring up the context
-  menu on the instruction (by right-mouse-click or <b>Ctrl-m</b>) and select <b>make private</b> 
-  (a change that can be reversed with <b>make public</b>).A method might be made private because it just provides help to one or more public methods, 
+  menu on the instruction (by right-mouse-click or <b>Ctrl-m</b>) and select <b>make private</b>
+  (a change that can be reversed with <b>make public</b>).A method might be made private because it just provides help to one or more public methods,
   but is not expected to be useful in its own right. However, a property is often made private to implement
 the principle of 'information' hiding.</p>
 
 
-<p>Some textbooks suggest that every property - for example <code>dateOfBirth</code> - should be private, and that access should be via a 'getter' - 
+<p>Some textbooks suggest that every property - for example <code>dateOfBirth</code> - should be private, and that access should be via a 'getter' -
 a function method typically named <el-method>getDateOfBirth</el-method>, and a 'setter' - a procedure method typically named <el-method>setDateOfBirth</el-method>.
 But that idea is not really hiding the information. Real information hiding is to prevent external code from accessing the data and instead
-provide them with public methods that provide more useful services. For example, in the <b>Snake</b> demo, <i>all</i> the 
+provide them with public methods that provide more useful services. For example, in the <b>Snake</b> demo, <i>all</i> the
 <code>head</code> and <code>body</code> properties are private, but the function method <el-method>bodyCovers</el-method> allows external
-code to test whether the snake (body or head) covers a given square, passed in as a parameter. This method is called from within the 
+code to test whether the snake (body or head) covers a given square, passed in as a parameter. This method is called from within the
 <el-method>newRandomPosition</el-method> defined by the <code>Apple</code> class, to ensure that the next apple is not created
 directly underneath the snake.</p>
 
 <h2>A concrete class may optionally inherit from an abstract class</h2>
 
-<p>In many applications two or more of the classes will be seen as having quite a lot in common. 
+<p>In many applications two or more of the classes will be seen as having quite a lot in common.
   When this situation identified, there <i>might</i> be a case for making them inherit from a common 'abstract' class.
   For example, in a school administration system, you might define classes named Pupil, Teacher, and Parent, but these
-  might all inherit from a common abstract class named Individual. The Person class can then be described as the 'superclass' 
+  might all inherit from a common abstract class named Individual. The Person class can then be described as the 'superclass'
   of the other three, and they as the 'subclasses' of Individual.</p>
 
-  <p>An abstract class is created, at global level, with an <b>abstract class</b> instruction, and the template requires a name 
+  <p>An abstract class is created, at global level, with an <b>abstract class</b> instruction, and the template requires a name
   (beginning with a capital letter) to be specified.</p>
 
   <p>The main differences between an abstract and a concrete super-class are:
-    
+
     <ul>
       <li>an abstract class <i>cannot be instantiated</i>. If, using the
 example above, you were to write: <code>new Individual()</code> you will get a compile-error message: <b>Individual must be concrete to create instance.</b>
@@ -415,7 +415,7 @@ inheritance may be characterised as an 'is a' relationship, as in 'a Student is 
 </ul>
 
 <p>Some textbooks emphasise the <i>first</i> of those two motivations, but it is the <i>second</i> one that is far more important.
-Indeed, inheritance is the most over-used, and the most frequently abused, concepts in OOP. 
+Indeed, inheritance is the most over-used, and the most frequently abused, concepts in OOP.
 For that reason, irrespective of the programming language being used, Elan deliberately enforces principles of <i>good</i> OOP from the outset. For example:</p>
 
 <ul>
@@ -458,7 +458,7 @@ For that reason, irrespective of the programming language being used, Elan delib
 <div id="GlobalInstructions">
 <h1>Global Instructions</h1>
 
-<p>Coding with Elan using the <b>object-oriented</b> paradigm offers all the 
+<p>Coding with Elan using the <b>object-oriented</b> paradigm offers all the
   <a href="LangRef.html#GlobalInstructions">global instructions uses in the <b>procedural</b> paradigm</a> plus
 two new ones: <b>concrete class</b> and <b>abstract class</b></p>
 
@@ -494,7 +494,7 @@ class Apple
   procedure updateBlocks(blocks as List&lt;of List&lt;of Int&gt;&gt;)
     assign blocks[this.location.x][this.location.y] to red
   end procedure
-  
+
   function toString() returns String
     return $"an Apple at {this.location}"
   end function
@@ -580,7 +580,7 @@ end class
 
   <ul>
     <li>A <b>concrete class</b> is a type of user-defined data-structure that holds data in properties, as well as methods to provide behaviour.</li>
-    <li>A new class is defined by adding a <b>concrete class</b> instruction at global level, which requires a name (starting with an initial capital) 
+    <li>A new class is defined by adding a <b>concrete class</b> instruction at global level, which requires a name (starting with an initial capital)
     to be specified</li>
     <li>All concrete classes must define a constructor, and a <el-method>toString</el-method> method, but the template for the class provides minimal
     valid implementations of these which you may expand or modify.</li>
@@ -594,7 +594,7 @@ end class
     <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may ony be accessed by
     code within the same class.</li>
     <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
-    <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li> 
+    <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li>
     <li>A class may <i>optionally</i> inherit from a single <a href="#abstract_class">abstract class</a>.</li>
   </ul>
 
@@ -609,7 +609,7 @@ end class
 <div class="acc-body">
 
   <p>From the <b>Blackjack</b> demo, the abstract class <code>Player</code> - which is inherited by the concrete classes <code>HumanPlayer</code>
-  and <code>Dealer</code> - defines public concrete properties, public concrete methods, plus three abstract methods, 
+  and <code>Dealer</code> - defines public concrete properties, public concrete methods, plus three abstract methods,
   two of which are accompanied by private 'helper' methods to which subclasses may delegate part or all of their implementations.</p>
 
 <codeblock>
@@ -741,7 +741,7 @@ end class
     <ul>
       <li>It may not be instantiated directly, and hence has no constructor.</li>
       <li>A concrete class may inherit from it; this is specified in the concrete class, by entering the name
-       of the desired abstract 'superclass' in the the field labelled <b>inheritance</b>. Note that when 
+       of the desired abstract 'superclass' in the the field labelled <b>inheritance</b>. Note that when
        this has been entered the editor will add the syntax for inheritance appropriate to the language being used.</li>
       <li>It may define concrete members (as found on concrete classes) and/or <i>abstract</i> members.</li>
       <li>Any concrete class that inherits from an abstract class, must provide concrete implementations
@@ -759,8 +759,8 @@ end class
 <div class="acc-body">
 
   <h4 class="no-TOC">Delegation</h4>
-  <p>If you want sub-classes to be able to define their own implementation of a common method, then that method should be made abstract. 
-  If it turns out that several of the sub-classes need the same, or very similar, implementations (and duplication of code is always to be avoided, according to 
+  <p>If you want sub-classes to be able to define their own implementation of a common method, then that method should be made abstract.
+  If it turns out that several of the sub-classes need the same, or very similar, implementations (and duplication of code is always to be avoided, according to
   the DRY principle - Don't Repeat Yourself) then you use the pattern of 'delegation'. This means defining the method as abstract, but also providing a
   <i>private</i> implementation (or part-implementation) with a slightly different name, which sub-classes may call from their own implementations.
   You can see an example of this in the <b>Blackjack</b> demo:</p>
@@ -788,7 +788,7 @@ end class
 <h1 id="Member">Member instructions</h1>
 
 <p>Member instructions (also referred to simply as 'members') may be added only with a <b>concrete class</b> or <b>abstract class</b>.
-  Hence, these method instructions may be created only when the paradigm is set to <b>object-oriented</b> 
+  Hence, these method instructions may be created only when the paradigm is set to <b>object-oriented</b>
   (or <b>functional</b> - which includes all OOP capabilities).
 
 <div id="constructor">
@@ -848,7 +848,7 @@ end class
     <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
       the default values for those types).</li>
-    <li>A property is initialised using a <b>reassign</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash; 
+    <li>A property is initialised using an <b>assignment</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash;
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
@@ -877,8 +877,8 @@ end class
 
 <ul>
   <li>A <b>property</b> is a named value defined on a concrete or abstract class with a name conforming to the standard rules for an identifier.</li>
-  <li>The type of a property, unlike a variable, is explicitly defined, as shown in the examples above. 
-    It may be a standard library type (including data structures), or the name of another used-defined class, 
+  <li>The type of a property, unlike a variable, is explicitly defined, as shown in the examples above.
+    It may be a standard library type (including data structures), or the name of another used-defined class,
     or a data structure of another class type (see examples above).</li>
   <li>Every property must be initialsed within a <b>constructor</b> unless it is of a numeric or Boolean type - which have default values.</li>
   <li>A property is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
@@ -888,6 +888,7 @@ end class
 </ul>
 </div></div>
 
+<div id="Maybe"></div>
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
@@ -1029,7 +1030,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 
   <codeblock>abstract function getMessage() returns String</codeblock>
 
-  <p>which is implemented (as a concrete function method) by the subclasses, including on <code>Dealer</code>:</p> 
+  <p>which is implemented (as a concrete function method) by the subclasses, including on <code>Dealer</code>:</p>
 
   <codeblock>
   function getMessage() returns String

@@ -206,7 +206,7 @@ Its type is <code>Float</code>.
     nor as an index into a <code>List</code>  even if the variable contains no fractional part.
     It may, however, be converted into an <code>Int</code> before passing, using the <b>function</b> <el-method>floor</el-method> or <el-method>ceiling</el-method>.</li>
  <li>If you wish to define a variable to be of type <code>Float</code>, but initialise it with an integer value, then add <b>.0</b> on the end of the whole number, as in:
-  <codeblock>variable hoursWorked set to 3.0</codeblock></li>
+  <code>variable hoursWorked set to 3.0</code></li>
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
@@ -494,7 +494,7 @@ three immutable data structure types <code>HashSet</code>, <code>Stack</code> an
 <p>The values of items in an <i>immutable</i> structure cannot be changed directly, and so have no procedure dot methods defined for them:
  rather, the methods called on them create new copies of the structures containing specified changes.</p>
 <p>Since procedure methods may be called only from within the <b>main routine</b> or a <b>procedure</b>,
-it is also possible to make changes via <b>function</b> dot methods,  which return a copy of the data structure
+it is also possible to make changes via <b>function</b> dot methods, which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
 <p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
  but some are also useful within other programming paradigms.</p>
@@ -599,7 +599,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using a <b>reassign variable</b> instruction and a valid index value in square brackets:</p>
+<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using an <b>assign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>assign aList[ix] to "Smith"</code></li>
 </ul>
@@ -892,7 +892,7 @@ end procedure
 
 <div class="functional">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
-in a way suitable for Functional programming, by using the HoF <code>reduce</code> in a function
+in a way suitable for Functional programming, by using the HoF <el-method>reduce</el-method> in a function
 that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 <codeblock>main
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
@@ -987,7 +987,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tablePlain">
 <tr>
  <td>
-  <codeblock>  variable st set to new HashSet&lt;of Int&gt;()
+<codeblock>variable st set to new HashSet&lt;of Int&gt;()
   assign st to st.addFromList([3, 5, 7])
   print(st.length())
   assign st to st.add(7)
@@ -1094,15 +1094,34 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <ul>
  <li><code>Stack</code> and <code>Queue</code> are similar data structures except that <code>Stack</code> is 'LIFO' (last in, first out), while <code>Queue</code> is FIFO (first in, first out).
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
- <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they can contain, similarly to how <code>List</code> has a specified item type, though with different syntax.
+ <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they contain, similarly to how a <code>List</code> has a specified item type.
  The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
- <li>Both <code>Stack </code>and<code> Queue</code> are dynamically extensible, like a <code>List</code>. There is no need (or means) to specify a size limit
+ <li>Both <code>Stack</code> and <code>Queue</code> are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
  <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> type.</li>
  <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
- <el-method>peek</el-method> returns the next item to be removed, without actually removing it.</li>
- <li>The methods for adding and removing an item are different for <code>Stack</code> and <code>Queue</code>, as shown here:</li>
+ <el-method>peek</el-method> returns the next item without actually removing it.</li>
+ <li>There are two ways of adding and retrieving the next item in a Stack or a Queue:
+  <ul>
+   <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and system methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
+   <li>in a function, use dot methods: <el-method>withPush</el-method> and <el-method>withEnqueue</el-method> to add an item, and <el-method>withPop</el-method> and <el-method>withDequeue</el-method> to remove the next item. </li>
+  </ul>
+  Note that in a function you will usually need to <el-method>peek</el-method> the next item before applying <el-method>withPop</el-method> or <el-method>withDequeue</el-method> (both of which remove it).
+ </li>
 </ul>
+
+<h3 class="no-TOC" id="Stack_procedure">Procedure method on a <code>Stack</code></h3>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument</th>
+  <th>action</th>
+ </tr><tr id="push">
+  <td><el-method>push</el-method></td>
+  <td>value of <code>Stack</code> item's type</td>
+  <td>the item is added to the top of the Stack</td>
+ </tr>
+</table>
 
 <h3 class="no-TOC" id="Stack_functions">Function dot methods on a <code>Stack</code></h3>
 <table class="tableMethod">
@@ -1121,16 +1140,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>Stack</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if stack and argument differ<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="push">
-  <td><el-method>push</el-method></td>
-  <td>value<br>(of <code>Stack</code> item's type)</td>
-  <td><code>Stack</code></td>
-  <td>the Stack with the value added to its top</td>
  </tr><tr id="pop">
   <td><el-method>pop</el-method></td>
   <td>(none)</td>
-  <td><code>Stack</code> item,<br><code>Stack</code></td>
-  <td>the topmost item of the Stack, and the Stack with the item removed</td>
+  <td><code>Stack</code> item</td>
+  <td>the topmost item of the Stack which is now without the item</td>
  </tr><tr id="peek_Stack">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
@@ -1147,6 +1161,29 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>String</code></td>
   <td>a String that is a comma+space-separated list of the Stack's items, enclosed in square brackets,<br>
    the last item pushed being the first in the String</td>
+ </tr><tr id="withPop">
+  <td><el-method>withPop</el-method></td>
+  <td>(none)</td>
+  <td><code>Stack</code></td>
+  <td>the Stack with the topmost item removed</td>
+ </tr><tr id="withPush">
+  <td><el-method>withPush</el-method></td>
+  <td><code>Stack</code> item</td>
+  <td><code>Stack</code></td>
+  <td>the item is added to the top of the Stack and the Stack returned</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC" id="Queue_procedure">Procedure method on a <code>Queue</code></h3>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>method</th>
+  <th>argument</th>
+  <th>action</th>
+ </tr><tr id="enqueue">
+  <td><el-method>enqueue</el-method></td>
+  <td>value of <code>Queue</code> item's type</td>
+  <td>the item is added to the tail of the queue</td>
  </tr>
 </table>
 
@@ -1167,16 +1204,11 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>Queue</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if queue and argument differ<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="enqueue">
-  <td><el-method>enqueue</el-method></td>
-  <td>value<br>(of <code>Queue</code> item's type)</td>
-  <td><code>Queue</code></td>
-  <td>the Queue with the item added to the end of the Queue</td>
  </tr><tr id="dequeue">
   <td><el-method>dequeue</el-method></td>
   <td>(none)</td>
-  <td><code>Queue</code> item,<br><code>Queue</code></td>
-  <td>the next item in the Queue, and the Queue  with the item removed</td>
+  <td><code>Queue</code> item</td>
+  <td>the next item in the Queue which is now without the item</td>
  </tr><tr id="peek_Queue">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
@@ -1193,62 +1225,66 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   <td><code>String</code></td>
   <td>a String that is a comma+space-separated list of the Queue's items, enclosed in square brackets,<br>
    the first item enqueued being the first in the String</td>
-</tr>
+</tr><tr id="withDequeue">
+  <td><el-method>withDequeue</el-method></td>
+  <td>(none)</td>
+  <td><code>Queue</code></td>
+  <td>the Queue with the next item removed</td>
+ </tr><tr id="withEnqueue">
+  <td><el-method>withEnqueue</el-method></td>
+  <td><code>Queue</code> item</td>
+  <td><code>Queue</code></td>
+  <td>the item is added to the tail of the Queue and the Queue returned</td>
+ </tr>
 </table>
 
 <div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Stack</code> and <code>Queue</code></h4>
+<h4 class="no-TOC acc-title" tabindex="0">Examples using <code>Stack</code> and <code>Queue</code> in a procedure</h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <code>Stack</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>push</el-method> and <el-method>pop</el-method> on strings in a <code>Stack</code> that starts empty:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>main
-  variable sk set to new Stack&lt;of String&gt;()
+<codeblock>procedure stackProc(sk as Stack&lt;of String&gt;)
   print(sk.length())
-  assign sk to sk.push("apple")
-  assign sk to sk.push("banana")
-  assign sk to sk.push("cherry")
+  call sk.push("apple")
+  call sk.push("banana")
+  call sk.push("cherry")
   print(sk.length())
   print(sk)
   print(sk.peek())
-  print(sk.pop())
   print(sk)
-  print(sk.pop().item_0)
+  variable fruit set to sk.pop()
+  print(fruit)
   print(sk)
-  assign sk to sk.pop().item_1
-  print(sk)
-end main
+end procedure
 </codeblock>
 </td>
-<td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
-<td><br><br>0<br><br><br><br>3<br>[cherry, banana, apple]<br>cherry<br>(cherry, [banana, apple])<br>[cherry, banana, apple]<br>cherry<br>[cherry, banana, apple]<br><br>[banana, apple]</td>
+<td><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
+<td><br>0<br><br><br><br>3<br>[cherry, banana, apple] &mdash; <i>note the order of items</i><br>cherry<br>[cherry, banana, apple] &mdash; <i>no change on peek</i><br><br>cherry<br>[banana, apple] &mdash; <i>last added item was popped</i></td>
 </tr>
 </table>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <code>Queue</code>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Results of <el-method>enqueue</el-method> and <el-method>dequeue</el-method> on strings in a <code>Queue</code> that starts empty:</p>
 <table class="tablePlain">
 <tr><td>
-<codeblock>main
-  variable qu set to new Queue&lt;of String&gt;()
+<codeblock>procedure queueProc(qu as Queue&lt;of String&gt;)
   print(qu.length())
-  assign qu to qu.enqueue("apple")
-  assign qu to qu.enqueue("banana")
-  assign qu to qu.enqueue("cherry")
+  call qu.enqueue("apple")
+  call qu.enqueue("banana")
+  call qu.enqueue("cherry")
   print(qu.length())
   print(qu)
   print(qu.peek())
-  print(qu.dequeue())
   print(qu)
-  print(qu.dequeue().item_0)
+  variable fruit set to qu.dequeue()
+  print(fruit)
   print(qu)
-  assign qu to qu.dequeue().item_1
-  print(qu)
-end main
+end procedure
 </codeblock>
 </td>
-<td><br><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;</td>
-<td><br><br>0<br><br><br><br>3<br>[apple, banana, cherry]<br>apple<br>(apple, [banana, cherry])<br>[apple, banana, cherry]<br>apple<br>[apple, banana, cherry]<br><br>[banana, cherry]</td>
+<td><br>&#x27f6;<br><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
+<td><br>0<br><br><br><br>3<br>[apple, banana, cherry] &mdash; <i>note the order of items</i><br>apple<br>[apple, banana, cherry] &mdash; <i>no change on peek</i><br><br>apple<br>[banana, cherry] &mdash; <i>first added item was dequeued</i></td>
 </tr>
 </table>
 <hr>
@@ -1286,7 +1322,7 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>  variable t set to (3, "apple", true)
+<codeblock>variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
   print(t.item_1)
@@ -1517,7 +1553,7 @@ So for example the centre of the display is at (50, 37.5).</p>
  <li id="LineVG"><code>LineVG</code> for &lt;line../&gt;</li>
  <li id="RectangleVG"><code>RectangleVG</code> for &lt;rect../&gt;</li>
 </ul>
-<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's <code>stroke-width</code>
+<p>The properties of these shapes are named to reflect the attributes used in the SVG tags but some names differ. For example, SVG's stroke-width
  is assigned with property <code>strokeWidth</code>, to make it a valid <a href="LangRef.html#Identifier">identifier <i class="fa">&#xf08e;</i></a>.
 Also <code>stroke</code> and <code>fill</code> are set by the properties <code>strokeColour</code> and <code>fillColour</code>.</p>
 
@@ -1838,7 +1874,7 @@ end main
 <h2 id="Random">Random</h2>
 <h3 class="no-TOC">Generating random numbers within a function</h3>
 <p>It is <i>not</i> possible to use the <a href="#SystemMethods">system methods <i class="fa">&#xf14c;</i></a> <el-method>random</el-method> or <el-method>randint</el-method> within a <b>function</b> because they create unseen side effects. You <i>may</i> use those system methods outside the<b> function</b> and pass the resulting random number (as an <code>Int</code> or a <code>Float</code>) as an argument <i>into </i>a <b>function</b>.</p>
-<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case <code>R</code> required for a type name).</p>
+<p>It is, however, possible to create and use random numbers within a <b>function</b>, but it requires a different approach and is a little more complex. You use the special type <code>Random</code>. (Note the upper case R required for a type name).</p>
 <p>You start by getting a seed random number in your <b>main routine</b> or in a <b>procedure</b> using method <el-method>initialiseFromClock</el-method>:</p>
 <code>variable rnd set to new Random()</code><br>
 <code>call rnd.initialiseFromClock()</code>
@@ -1890,8 +1926,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <div class="acc-body">
 
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; To roll a dice 20 times in a function that returns a 2-tuple of random value and a new instance of <code>Random</code></p>:
-<codeblock>
-main
+<codeblock>main
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   for i in range(1, 20)
@@ -1899,7 +1934,6 @@ main
     assign rnd to randomThrow(rnd).item_1
   end for
 end main
-
 function randomThrow(rnd as Random) returns (Int, Random)
   return (rnd.asInt(1, 6), rnd.nextGen())
 end function
@@ -1940,7 +1974,7 @@ end function
   <td><el-method>getNumericKey</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then <code>"-1"</code></td>
+  <td>returns either the numeric key last pressed or, if the last pressed key was not numeric, then "-1"</td>
  </tr><tr id="input">
   <td><el-method>input</el-method></td>
   <td><code>String</code></td>
@@ -2032,7 +2066,6 @@ end main
   print($"That was {key}")
 end main
 </codeblock>
-
 
 <h2 id="FileInputOutput">Text file input/output</h2>
 <p>Reading or writing a text file requires that you <b>open</b> (for reading) or <b>create</b> (for writing) a file using these system methods:</p>
@@ -2164,7 +2197,7 @@ end main
     will not be recognised. This is for security reasons. However, it <i>is</i> possible to display formatted Html in the <b>display</b>.
     The following code:</p>
 
-<codeblock>  call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
+<codeblock>call displayHtml("&lt;h1 style='color: blue;'&gt;A heading&lt;/h1&gt;&lt;p&gt;some text&lt;/p&gt;")
 </codeblock>
 
 <p>will produce:</p>
@@ -2595,7 +2628,7 @@ end main
 <p>These methods may be referenced from within a <b>function</b>.</p>
 
 <h2 id="StandaloneFunctions">Standalone functions</h2>
-<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or a <b>reassign variable</b>, either on their own or within a more complex expression.</p>
+<p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or an <b>assign variable</b>, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
 
 <table class="tableMethod">
@@ -3252,8 +3285,7 @@ end main
 <codeblock>class Pupil
   property mathsPercent as Int
 end class
-main
-  variable allPupils set to new List&lt;of Pupil&gt;()
+main variable allPupils set to new List&lt;of Pupil&gt;()
   variable passes set to allPupils.filter(passedMathsTest)
 end main
 function passedMathsTest(p as Pupil) returns Boolean
