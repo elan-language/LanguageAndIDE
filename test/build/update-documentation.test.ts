@@ -1,6 +1,6 @@
 import assert from "assert";
-import { processDocumentation } from "../../src/build-scripts/update-documentation";
-import { getCounts, processInnerCode } from "../../src/tools/codeParser";
+import { getDocs, processDocumentation } from "../../src/build-scripts/update-documentation";
+import { clearLogs, getCounts, processInnerCode, writeLogs } from "../../src/tools/codeParser";
 import { processCode } from "../../src/tools/markupParser";
 import {
   codeTag,
@@ -11,19 +11,27 @@ import {
 import { ignore_test } from "../compiler/compiler-test-helpers";
 suite("process code", () => {
   test("process documentation", async () => {
-    const failures: string[] = [];
-    for (const [fileName, contents] of await processDocumentation()) {
+    clearLogs();
+    const rootdir = `${__dirname}/../../..`;
+    const path = `${rootdir}/src/documentation/`;
+    const testDocs = getDocs(path).map((fn) => `${path}${fn}`);
+    const results = await processDocumentation(testDocs);
+    let failure = false;
+
+    for (const [_fileName, contents] of results) {
       if (contents.includes("Code does not parse")) {
-        failures.push(`${fileName} : Code does not parse`);
+        failure = true;
       }
     }
 
-    for (const [what, count] of getCounts().entries()) {
-      console.log(`Parse ${what}: ${count} times`);
-    }
+    // for (const [what, count] of getCounts().entries()) {
+    //   console.log(`Parse ${what}: ${count} times`);
+    // }
 
-    assert.strictEqual(failures.length, 0, failures.join("\n"));
-  });
+    if (failure) {
+      assert.fail(writeLogs());
+    }
+  }).timeout(20000);
 
   ignore_test("process file with header", async () => {
     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 valid

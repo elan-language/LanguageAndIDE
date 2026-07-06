@@ -1,12 +1,11 @@
 import { readdirSync, readFileSync, writeFileSync } from "node:fs";
-import { resetFile } from "../tools/codeParser";
+import { log, resetFile } from "../tools/codeParser";
 import { processCode } from "../tools/markupParser";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "../tools/parserConstants";
 
 const rootdir = `${__dirname}/../../..`;
 
 const docs = `${rootdir}/out/website/documentation/`;
-
 function loadFile(fileName: string): string {
   return readFileSync(fileName, "utf-8");
 }
@@ -15,7 +14,7 @@ function saveFile(fileName: string, newContent: string) {
   writeFileSync(fileName, newContent);
 }
 
-function getDocs(sourceDir: string): string[] {
+export function getDocs(sourceDir: string): string[] {
   return readdirSync(sourceDir).filter((s) => s.endsWith(".html"));
 }
 
@@ -28,37 +27,43 @@ function updatePaths(contents: string) {
   return newContents;
 }
 
-export async function processDocument(fileName: string): Promise<[string, string]> {
-  const ms = Date.now();
-  console.log(`Processing: ${fileName}`);
+function fileName(fn: string) {
+  const path = fn.split("/");
+  return path[path.length - 1];
+}
 
-  let contents = loadFile(fileName);
+export async function processDocument(fileAndPath: string): Promise<[string, string]> {
+  const ms = Date.now();
+  log(`Processing: ${fileName(fileAndPath)}`);
+
+  let contents = loadFile(fileAndPath);
 
   // don't double processs
   if (contents.includes(`<span class="python">`)) {
-    return [fileName, contents];
+    return [fileAndPath, contents];
   }
 
   contents = updatePaths(contents);
   contents = await processCode(contents, codeTag, codeEndTag);
   contents = await processCode(contents, codeBlockTag, codeBlockEndTag);
-  console.log(`Finished Processing: ${fileName} in ${Date.now() - ms}ms`);
-  return [fileName, contents];
+  log(`Finished Processing: ${fileName(fileAndPath)} in ${Date.now() - ms}ms`);
+  return [fileAndPath, contents];
 }
 
-export async function processDocumentation() {
+export async function processDocumentation(fileNames: string[]) {
   const results: [string, string][] = [];
 
-  for (const fn of getDocs(docs)) {
+  for (const fn of fileNames) {
     resetFile();
-    results.push(await processDocument(`${docs}${fn}`));
+    results.push(await processDocument(fn));
   }
 
   return results;
 }
 
 export async function processAndSaveDocumentation() {
-  for (const [fileName, contents] of await processDocumentation()) {
+  const fileNames = getDocs(docs).map((fn) => `${docs}${fn}`);
+  for (const [fileName, contents] of await processDocumentation(fileNames)) {
     saveFile(fileName, contents);
   }
 }
