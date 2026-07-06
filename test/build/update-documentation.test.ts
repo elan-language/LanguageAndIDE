@@ -99,6 +99,20 @@ end main`;
     assert.strictEqual(actual[0].startsWith("<el-main"), true);
   });
 
+  test("process main1", async () => {
+    const code = `main
+  for n in range(50, 73)
+    variable np set to pow(2, n).floor()
+    call printTab(n.toString().length(), $"{n}")
+    call printTab(30 - np.toString().length(), $"{np}\n")
+  end for
+end main`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-main"), true);
+  });
+
   test("process let", async () => {
     const code = `let a be 1`;
 
@@ -179,9 +193,13 @@ end function`;
   end if
   return h
 end function
+
 function hexDigit(i as Int) returns String
   return "0123456789abcdef".subString(i, i + 1)
-end function`;
+end function
+
+main
+end main`;
 
     const actual = await processInnerCode(code);
 

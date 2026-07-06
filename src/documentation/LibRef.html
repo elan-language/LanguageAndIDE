@@ -871,15 +871,19 @@ and function getDItem retrieves a value given a key.</p>
   call printD(dL)
   print(getDItem(dL, "alpha"))
 end main
+
 procedure printD(dL as Dictionary&lt;of String, Int&gt;)
   print(dL)
 end procedure
+
 function getDItem(dL as Dictionary&lt;of String, Int&gt;, k as String) returns Int
   return dL[k]
 end function
+
 procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
   print(dL, k)
 end procedure
+
 procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
   variable di set to new Dictionary&lt;of String, Int&gt;()
   assign di["alpha"] to 1
@@ -898,6 +902,7 @@ that creates the Dictionary from a List of key:value pairs as Tuples:</p>
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
   print(di["beta"])
 end main
+
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
   return kvps.reduce(d, lambda d, kvp  => d.withSet(kvp.item_0, kvp.item_1))
