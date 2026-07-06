@@ -149,11 +149,15 @@ el-class el-proc, el-class el-func, el-class, el-class el-constructor, el-class 
 }
 
 
-/* Only the last of consecutive properties, constants should have exta v. space */
-el-prop:has(+ :not(el-prop)), 
+/* Only the last of consecutive properties, constants should have extrav. space */
 el-const:has(+ :not(el-const)) {
     display: block;
-    padding-bottom: 1ch;
+    margin-bottom: 1ch; /* using padding here would make the highlight on last constant deeper */
+}
+
+el-prop:has(+ :not(el-prop)) {
+    display: block;
+    padding-bottom: 1ch; /* using margin here would put a break in the hightlight when class is selected */
 }
 
 /* Last member in a class/record - no added v. space (no other circumstance where they would be immediately followed by a keyword) */
@@ -180,7 +184,8 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-txt, 
 .selected > el-place, 
 .selected > el-compl,
-.selected > .outdent el-top, .selected > .outdent el-top *
+.selected > .outdent el-top, .selected > .outdent el-top *,
+el-const.selected, el-const.selected *
 {
     background-color: var(--selection);
     border-right-color: var(--selection);
