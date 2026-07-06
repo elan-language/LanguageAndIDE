@@ -30,6 +30,20 @@ import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
 import { codeBlockEndTag, codeBlockTag, codeEndTag, codeTag } from "./parserConstants";
 
+let documentationLogs: string[] = [];
+
+export function log(l: string) {
+  documentationLogs.push(l);
+}
+
+export function clearLogs() {
+  documentationLogs = [];
+}
+
+export function writeLogs() {
+  return documentationLogs.join("\n");
+}
+
 type TransformedCode = [string, string, string, string, string];
 
 const counts = new Map<string, number>();
@@ -252,6 +266,11 @@ function FileWithHeaderParserAndRender(file: FileImpl): [
   ];
 }
 
+function failedToParse(code: string) {
+  log(` - Failed to parse code: '${code}'`);
+  return languages.map(() => `Code does not parse as Elan.`) as TransformedCode;
+}
+
 // Parse Keyword: 56 times
 // Parse Expression: 133 times
 // Parse Statement: 14 times
@@ -278,7 +297,7 @@ export async function processInnerCode(code: string): Promise<TransformedCode> {
     (hasHeader
       ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code)
       : await parseAs("File", FileParserAndRender, code)) ||
-    (languages.map(() => `Code does not parse as Elan.`) as TransformedCode)
+    failedToParse(code)
   );
 }
 
