@@ -518,7 +518,9 @@ function nextGeneration(grid as List&lt;of List&lt;of Int&gt;&gt;) returns List&
   let cols be range(0, 40)
   return cols.map(lambda x as Int => nextCol(grid, x))
 end function
+</codeblock>
 
+<codeblock>
 function nextCol(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int) returns List&lt;of Int&gt;
   let col be grid[x]
   let rows be range(0, 30)
@@ -608,6 +610,7 @@ main
     print(rollDice(rng))
   end for
 end main
+
 function rollDice(rng as Random) returns Int
   return rng.asInt(1, 6)
 end function
