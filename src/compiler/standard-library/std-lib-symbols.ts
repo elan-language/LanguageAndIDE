@@ -40,8 +40,7 @@ export class StdLibSymbols implements Scope {
       const name = names[i];
 
       const metadata = Reflect.getMetadata(elanMetadataKey, stdlib, name) as
-        | ElanDescriptor
-        | undefined;
+        ElanDescriptor | undefined;
 
       if (isFunctionDescriptor(metadata)) {
         this.symbols.set(name, getSymbol(name, metadata.mapType(this), SymbolScope.stdlib));
