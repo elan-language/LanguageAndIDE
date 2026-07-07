@@ -42,19 +42,20 @@ suite("process code", () => {
     assert.strictEqual(actual[0].startsWith("<el-header"), true);
   });
 
-  ignore_test("process file", async () => {
-    const code = `procedure fillRandom(grid as List<of List<of Int>>)
-  for col in range(0, 40)
-    for row in range(0, 30)
-      variable cell set to if_(random() > 0.5, black, white)
-      assign grid[col][row] to cell
-    end for
-  end for
-end procedure`;
+  test("process file", async () => {
+    const code = `main
+  variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
+  print(di["beta"])
+end main
+
+function createDictionary(kvps as List<of (String, Int)>) returns Dictionary<of String, Int>
+  let d be new Dictionary<of String, Int>()
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
+end function`;
 
     const actual = await processInnerCode(code);
 
-    assert.strictEqual(actual[0].startsWith("<el-proc"), true);
+    assert.strictEqual(actual[0].startsWith("<el-main"), true);
   });
 
   test("process statement", async () => {
@@ -92,6 +93,20 @@ end constructor`;
     const code = `main 
   variable r set to 2.0
   print($"area = {(pi*r*r).round(2)}")
+end main`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("<el-main"), true);
+  });
+
+  test("process main1", async () => {
+    const code = `main
+  for n in range(50, 73)
+    variable np set to pow(2, n).floor()
+    call printTab(n.toString().length(), $"{n}")
+    call printTab(30 - np.toString().length(), $"{np}\n")
+  end for
 end main`;
 
     const actual = await processInnerCode(code);
@@ -179,9 +194,13 @@ end function`;
   end if
   return h
 end function
+
 function hexDigit(i as Int) returns String
   return "0123456789abcdef".subString(i, i + 1)
-end function`;
+end function
+
+main
+end main`;
 
     const actual = await processInnerCode(code);
 

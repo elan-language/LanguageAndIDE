@@ -871,15 +871,19 @@ and function getDItem retrieves a value given a key.</p>
   call printD(dL)
   print(getDItem(dL, "alpha"))
 end main
+
 procedure printD(dL as Dictionary&lt;of String, Int&gt;)
   print(dL)
 end procedure
+
 function getDItem(dL as Dictionary&lt;of String, Int&gt;, k as String) returns Int
   return dL[k]
 end function
+
 procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
   print(dL, k)
 end procedure
+
 procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
   variable di set to new Dictionary&lt;of String, Int&gt;()
   assign di["alpha"] to 1
@@ -898,9 +902,10 @@ that creates the Dictionary from a List of key:value pairs as Tuples:</p>
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
   print(di["beta"])
 end main
+
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d, kvp  => d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
@@ -987,7 +992,8 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>variable st set to new HashSet&lt;of Int&gt;()
+<codeblock>main
+  variable st set to new HashSet&lt;of Int&gt;()
   assign st to st.addFromList([3, 5, 7])
   print(st.length())
   assign st to st.add(7)
@@ -996,6 +1002,7 @@ And you can create a new <code>HashSet</code> from an existing <code>List</code>
   assign st to st.remove(3)
   print(st.length())
   print(st)
+end main
 </codeblock>
   </td><td>
   <br><br>&#x27f6;<br><br><br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;
@@ -1322,11 +1329,13 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>variable t set to (3, "apple", true)
+<codeblock>main
+  variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
   print(t.item_1)
   print(t.item_2)
+end main
 </codeblock>
  </td>
  <td><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -2138,7 +2147,7 @@ To guard against this possibility (it might mean the loss of important data), yo
   end for
   try
     call file.saveAndClose()
-  catch CustomError
+  catch e as CustomError
     print("Save cancelled")
   end try
 end main
@@ -2606,10 +2615,13 @@ end main
   variable tab set to 10
   for i in range(1, tab)
     variable j set to pow(9, i).floor()
-    variable f set to (lambda j as Int => j.toString().length())
-    call printTab(tab - f(j), $"{j}\n")
+    call printTab(tab - strLen(j), $"{j}\n")
   end for
 end main
+
+function strLen(j as Int) returns Int
+  return j.toString().length()
+end function
 </codeblock>
 <hr>
 </div></div>
@@ -3250,9 +3262,11 @@ end function
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
+<codeblock>main
+  variable numbers set to [27, 2, 3, 5, 7, 31, 37, 11, 23, 13, 19, 23]
   variable ordered set to numbers.orderBy(lambda x as Int, y as Int => x > y)
   print(ordered)
+end main
 </codeblock>
 </td>
 <td><br>&#x27f6;</td><td><br><code>[2, 3, 5, 7, 11, 13, 19, 23, 23, 27, 31, 37]</code></td>
