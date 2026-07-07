@@ -1103,11 +1103,10 @@ end main
  The names of the methods for adding and removing items are different, but there are also common methods.</li>
  <li>Both a <code>Stack</code> and a <code>Queue</code> are defined with the type of the items that they contain, similarly to how a <code>List</code> has a specified item type.
  The type is specified in the form shown below e.g. <code>Stack&lt;of String&gt;</code>, <code>Queue&lt;of Int&gt;</code>.</li>
- <li>Both <code>Stack</code> and <code>Queue</code> are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
+ <li>Both structures are dynamically extensible (like a <code>List</code>). There is no need (or means) to specify a size limit
  as they can continue to expand (eventually until the computer's memory limit is reached).</li>
  <li>The same syntax is used to specify the type if you want to pass a <code>Stack</code> or <code>Queue</code> into a <b>function</b>, or specify it as the <b>return</b> type.</li>
- <li><code>Stack</code> and <code>Queue</code> have two methods in common: <el-method>length</el-method> and <el-method>peek</el-method>.
- <el-method>peek</el-method> returns the next item without actually removing it.</li>
+ <li>As well as standard common dot methods, <code>Stack</code> and <code>Queue</code> also both have method <el-method>peek</el-method> to read respectively the last in and first in item without removing it.</li>
  <li>There are two ways of adding and retrieving the next item in a Stack or a Queue:
   <ul>
    <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and system methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
@@ -1151,12 +1150,12 @@ end main
   <td><el-method>pop</el-method></td>
   <td>(none)</td>
   <td><code>Stack</code> item</td>
-  <td>the topmost item of the Stack which is now without the item</td>
+  <td>the item most recently pushed onto the Stack, which is now deleted from the Stack</td>
  </tr><tr id="peek_Stack">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
   <td><code>Stack</code> item</td>
-  <td>the topmost item on the Stack (without altering the Stack)</td>
+  <td>the item most recently pushed onto the Stack (without altering the Stack)</td>
  </tr><tr id="length_Stack">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
@@ -1172,7 +1171,7 @@ end main
   <td><el-method>withPop</el-method></td>
   <td>(none)</td>
   <td><code>Stack</code></td>
-  <td>the Stack with the topmost item removed</td>
+  <td>the Stack with the most recently pushed item removed</td>
  </tr><tr id="withPush">
   <td><el-method>withPush</el-method></td>
   <td><code>Stack</code> item</td>
@@ -1215,12 +1214,12 @@ end main
   <td><el-method>dequeue</el-method></td>
   <td>(none)</td>
   <td><code>Queue</code> item</td>
-  <td>the next item in the Queue which is now without the item</td>
+  <td>the item least recently enqueued on the Queue, which is now deleted from the Queue</td>
  </tr><tr id="peek_Queue">
   <td><el-method>peek</el-method></td>
   <td>(none)</td>
   <td><code>Queue</code> item</td>
-  <td>the next item in the Queue (without altering the Queue)</td>
+  <td>the item least recently enqueued on the Queue (without altering the Queue)</td>
  </tr><tr id="length_Queue">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
@@ -1236,7 +1235,7 @@ end main
   <td><el-method>withDequeue</el-method></td>
   <td>(none)</td>
   <td><code>Queue</code></td>
-  <td>the Queue with the next item removed</td>
+  <td>the Queue with the least recently enqueued item removed</td>
  </tr><tr id="withEnqueue">
   <td><el-method>withEnqueue</el-method></td>
   <td><code>Queue</code> item</td>
@@ -1296,6 +1295,40 @@ end procedure
 </table>
 <hr>
 </div></div>
+
+<div class="accordion">
+<h4 class="no-TOC acc-title" tabindex="0">Example using <code>Queue</code> in functions</h4>
+<div class="acc-body">
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Adding to a <code>Queue</code> by function, then transforming its contents in a function (via a <code>String</code>, a <code>List</code> and the HoF <el-method>reduce</el-method>):</p>
+<table class="tablePlain">
+<tr><td>
+<codeblock>main
+  variable qu set to new Queue&lt;of String&gt;()
+  assign qu to quEnqueue(qu, "jones")
+  assign qu to quEnqueue(qu, "Smith")
+  assign qu to quEnqueue(qu, "JACKSON")
+  print(qu)
+  print(quUpper(qu))
+end main
+function quEnqueue(qu as Queue&lt;of String&gt;, s as String) returns Queue&lt;of String&gt;
+  return qu.withEnqueue(s)
+end function
+function quUpper(qu as Queue&lt;of String&gt;) returns Queue&lt;of String&gt;
+  let quString be qu.toString().upperCase().replace("[", "").replace("]", "")
+  let quList be quString.split(", ")
+  let quR be new Queue&lt;of String&gt;()
+  return quList.reduce(quR, lambda quR as Queue&lt;of String&gt;, s as String => quR.withEnqueue(s))
+end function
+</codeblock>
+ </td>
+ <td><br><br><br><br><br>&#x27f6;<br>&#x27f6;</td>
+ <td><br><br><br><br><br>[jones, Smith, JACKSON]<br>[JONES, SMITH, JACKSON]</td>
+</tr>
+</table>
+<hr>
+</div></div>
+
 <h2 id="Tuple">Tuple</h2>
 <p>A Tuple is not a value or data structure type. Rather, it is a small <i>collection</i> of values
 of differing types held together and referenced by a single identifier.</p>
