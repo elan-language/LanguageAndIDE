@@ -1341,7 +1341,6 @@ of differing types held together and referenced by a single identifier.</p>
 <ul>
  <li>Holding a pair of <i>x,y</i> coordinates (each of type <code>Float</code>) as a single unit.</li>
  <li>Allowing a <b>function</b> to pass back a result comprised of both a message in a <code>String</code> and a <code>Boolean</code> indicating whether the operation was successful.</li>
- <li>Returning both an updated copy of a data structure and the value of an item from it, e.g. from method <el-method>pop</el-method> on a <a href="#Stack"><el-method> Stack</el-method> <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
 
 <h3 class="no-TOC">Defining a Tuple</h3>
@@ -1355,7 +1354,7 @@ of differing types held together and referenced by a single identifier.</p>
 <table class="tablePlain">
 <tr>
  <td>
-<codeblock>variable t set to (3, "apple", true)
+<codeblock>  variable t set to (3, "apple", true)
   print(t)
   print(t.item_0)
   print(t.item_1)
