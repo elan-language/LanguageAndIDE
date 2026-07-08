@@ -2120,13 +2120,13 @@ are passed around in a running program:</p>
  library methods:<br>
  <code>variable  bodyGL set to game.body.toString().length()</code></li>
  <li>To extract an item from a Tuple using its special properties <el-id>item_</el-id>N, e.g. to get the first value from a 2-Tuple:<br>
-<codeblock>variable  point set to (3, 7)
-variable x set to point.item_0
-</codeblock></li>
+ <codeblock>variable point set to (3, 7)</codeblock>
+ <codeblock>variable x set to point.item_0</codeblock>
+ </li>
  <li>To refer to a 'value' in an <b>enum</b>, e.g.to pick one of the identifiers in the <b>enum</b> <code>Suit</code>:<br>
-<codeblock>enum Suit spades, hearts, diamonds, clubs</codeblock>
-<codeblock>variable suit set to Suit.spades</codeblock>
-</li>
+ <codeblock>enum Suit spades, hearts, diamonds, clubs</codeblock>
+ <codeblock>variable suit set to Suit.spades</codeblock>
+ </li>
 </ul>
 <p>You cannot use dot syntax with functions and procedures that you define at the global level,
  nor with some system functions (e.g. <el-method>abs</el-method>) and procedures (e.g. <el-method>clearPrintedText</el-method>).</p>

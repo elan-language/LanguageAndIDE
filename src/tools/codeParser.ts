@@ -115,18 +115,26 @@ async function parseAs(
     },
   ],
   code: string,
+  delimiter?: string,
 ): Promise<TransformedCode | undefined> {
   // const ms = Date.now();
   // console.log(`    Parse as ${_what} '${code.trim()}'`);
 
-  const codeSource = new CodeSourceFromString(code);
+  const codeSource = new CodeSourceFromString(code + (delimiter ? delimiter : ""));
   const file = newFileImpl();
 
   try {
     const [parser, renderer] = parserFunc(file);
     parser.parseFrom(codeSource);
 
-    if (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid) {
+    if (delimiter) {
+      codeSource.remove(delimiter);
+    }
+
+    if (
+      codeSource.getRemainingCode().trim() ||
+      (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid)
+    ) {
       // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
       return undefined;
     }
@@ -250,16 +258,21 @@ function LambdaParserAndRender(file: FileImpl): [ArgListField, { textAsHtml(): P
   return [args, { textAsHtml: async () => args.textAsHtml() }];
 }
 
-function FileParserAndRender(file: FileImpl): [FileImpl, { textAsHtml(): Promise<string> }] {
+function FileWithHeaderParserAndRender(
+  file: FileImpl,
+): [FileImpl, { textAsHtml(): Promise<string> }] {
+  file.getChildren().push(file.newChildSelector());
   return [file, { textAsHtml: async () => await file.renderAsHtml(false) }];
 }
 
-function FileWithHeaderParserAndRender(file: FileImpl): [
+function FileParserAndRender(file: FileImpl): [
   {
     parseFrom(source: CodeSource): void;
   },
   { textAsHtml(): Promise<string> },
 ] {
+  file.getChildren().push(file.newChildSelector());
+
   return [
     { parseFrom: (source: CodeSource) => file.parseBodyFrom(source) },
     { textAsHtml: async () => await file.renderAsHtml(false) },
@@ -292,8 +305,8 @@ export async function processInnerCode(code: string): Promise<TransformedCode> {
     (await parseAs("Main", MainParserAndRender, code)) ||
     (await parseAs("Member", MemberParserAndRender, code)) ||
     (await parseAs("AbstractMember", AbstractMemberParserAndRender, code)) ||
-    (await parseAs("Parameter", ParameterParserAndRender, code.trim() + ")")) ||
-    (await parseAs("Lambda", LambdaParserAndRender, code.trim() + ")")) ||
+    (await parseAs("Parameter", ParameterParserAndRender, code.trim(), ")")) ||
+    (await parseAs("Lambda", LambdaParserAndRender, code.trim(), ")")) ||
     (hasHeader
       ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code)
       : await parseAs("File", FileParserAndRender, code)) ||
