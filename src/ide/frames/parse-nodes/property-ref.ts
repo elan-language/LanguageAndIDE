@@ -2,18 +2,18 @@ import { thisKeyword } from "../../../compiler/elan-keywords";
 import { File } from "../frame-interfaces/file";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { InstanceNode } from "./instanceNode";
+import { IdentifierWithOptIndexes } from "./IdentiferWithOptIndexes";
 import { PunctuationNode } from "./punctuation-node";
 import { ThisInstance } from "./this-instance";
 
 export class PropertyRef extends AbstractSequence {
-  name: InstanceNode;
+  name: IdentifierWithOptIndexes;
 
   constructor(file: File) {
     super(file);
     this.addElement(new ThisInstance(this.file));
     this.addElement(new PunctuationNode(this.file, DOT));
-    this.name = new InstanceNode(file);
+    this.name = new IdentifierWithOptIndexes(file);
     this.addElement(this.name);
   }
 

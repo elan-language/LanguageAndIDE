@@ -1,20 +1,20 @@
 import { File } from "../frame-interfaces/file";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
+import { IdentifierWithOptIndexes } from "./IdentiferWithOptIndexes";
 import { IdentifierUse } from "./identifier-use";
-import { InstanceNode } from "./instanceNode";
 import { PunctuationNode } from "./punctuation-node";
 
 export class PropertyInstanceRef extends AbstractSequence {
   qualifier: IdentifierUse;
-  name: InstanceNode;
+  name: IdentifierWithOptIndexes;
 
   constructor(file: File) {
     super(file);
     this.qualifier = new IdentifierUse(file);
     this.addElement(this.qualifier);
     this.addElement(new PunctuationNode(this.file, DOT));
-    this.name = new InstanceNode(file);
+    this.name = new IdentifierWithOptIndexes(file);
     this.addElement(this.name);
   }
 

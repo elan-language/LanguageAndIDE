@@ -14,7 +14,7 @@ import { DottedTerm } from "../../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
 import { IdentifierUse } from "../../src/ide/frames/parse-nodes/identifier-use";
 import { IfExpr } from "../../src/ide/frames/parse-nodes/if-expr";
-import { InstanceNode } from "../../src/ide/frames/parse-nodes/instanceNode";
+import { IdentifierWithOptIndexes } from "../../src/ide/frames/parse-nodes/IdentiferWithOptIndexes";
 import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../../src/ide/frames/parse-nodes/kvp-node";
@@ -66,6 +66,7 @@ import {
   testActiveNodeAndDone,
   testNodeParse,
 } from "../testHelpers";
+import { IdentifierField } from "../../src/ide/frames/fields/identifier-field";
 
 suite("Parsing Nodes", () => {
   const f = new FileImpl(
@@ -695,10 +696,17 @@ suite("Parsing Nodes", () => {
 
     testNodeParse(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
   });
-  test("Instance", () => {
-    testNodeParse(new InstanceNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(new InstanceNode(f), `bar`, ParseStatus.valid, `bar`, "", "");
-    testNodeParse(new InstanceNode(f), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
+  test("IdentifierWithOptIndexes", () => {
+    testNodeParse(new IdentifierWithOptIndexes(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new IdentifierWithOptIndexes(f), `bar`, ParseStatus.valid, `bar`, "", "");
+    testNodeParse(
+      new IdentifierWithOptIndexes(f),
+      `bar[foo]`,
+      ParseStatus.valid,
+      `bar[foo]`,
+      "",
+      "",
+    );
     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 

@@ -5,7 +5,7 @@ import { IdentifierUse } from "./identifier-use";
 import { Multiple } from "./multiple";
 import { allIds } from "./parse-node-helpers";
 
-export class InstanceNode extends AbstractSequence {
+export class IdentifierWithOptIndexes extends AbstractSequence {
   variable: IdentifierUse | undefined;
   index: Multiple | undefined;
   tokenTypes = new Set([

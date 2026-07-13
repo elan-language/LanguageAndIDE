@@ -118,11 +118,11 @@ import { DottedTerm } from "../frames/parse-nodes/dotted-term";
 import { EnumValUse } from "../frames/parse-nodes/enum-val-use";
 import { EnumValuesList } from "../frames/parse-nodes/enum-values-list";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
+import { IdentifierWithOptIndexes } from "../frames/parse-nodes/IdentiferWithOptIndexes";
 import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
 import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
-import { InstanceNode } from "../frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { KVPnode } from "../frames/parse-nodes/kvp-node";
@@ -911,7 +911,7 @@ export function transform(
     return new QualifierAsn(q, fieldId, scope);
   }
 
-  if (node instanceof InstanceNode) {
+  if (node instanceof IdentifierWithOptIndexes) {
     const id = node.variable!.matchedText;
     const index = transformMany(node.index!, fieldId, scope);
     return new VarAsn(id, false, EmptyAsn.Instance, index, fieldId, scope);

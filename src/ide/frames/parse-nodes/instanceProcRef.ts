@@ -1,7 +1,7 @@
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { DotAfter } from "./dot-after";
-import { InstanceNode } from "./instanceNode";
+import { IdentifierWithOptIndexes } from "./IdentiferWithOptIndexes";
 import { MethodNameUse } from "./method-name-use";
 
 export class InstanceProcRef extends AbstractSequence {
@@ -17,7 +17,7 @@ export class InstanceProcRef extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      const instance = new InstanceNode(this.file);
+      const instance = new IdentifierWithOptIndexes(this.file);
       this.prefix = new DotAfter(this.file, instance);
       this.procName = new MethodNameUse(
         this.file,
