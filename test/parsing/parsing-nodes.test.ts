@@ -39,7 +39,6 @@ import { ParamListNode } from "../../src/ide/frames/parse-nodes/param-list-node"
 import { Space } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
 import { PunctuationNode } from "../../src/ide/frames/parse-nodes/punctuation-node";
-import { ReferenceNode } from "../../src/ide/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../../src/ide/frames/parse-nodes/regex-match-node";
 import { SetToClause } from "../../src/ide/frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../../src/ide/frames/parse-nodes/space-node";
@@ -1487,11 +1486,11 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-    testNodeParse(new ReferenceNode(f), `this`, ParseStatus.valid, `this`, "");
+    testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, `this`, "");
     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
-    testNodeParse(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
+    testNodeParse(new TermSimple(f), `a`, ParseStatus.valid, `a`, "");
     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
-    testNodeParse(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
+    testNodeParse(new DotAfter(f, new TermSimple(f)), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
     testNodeParse(
       new TermChained(f),

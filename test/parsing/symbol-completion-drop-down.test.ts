@@ -68,7 +68,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "elan_ident10", "f", expected);
   });
 
-  test("Pass_Let", async () => {
+  test("Pass_Variable", async () => {
     const code = `${testHeader}
 
 main

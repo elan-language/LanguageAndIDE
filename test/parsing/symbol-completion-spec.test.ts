@@ -18,7 +18,6 @@ import { MethodNameUse } from "../../src/ide/frames/parse-nodes/method-name-use"
 import { OptionalNode } from "../../src/ide/frames/parse-nodes/optional-node";
 import { allIds } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
-import { ReferenceNode } from "../../src/ide/frames/parse-nodes/reference-node";
 import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
@@ -54,10 +53,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("Reference1", () => {
     testSymbolCompletionSpec(
-      new ReferenceNode(f),
+      new TermSimple(f),
       "r",
       ParseStatus.valid,
-      ReferenceNode.name,
+      TermSimple.name,
       "r",
       [
         TokenType.id_constant,
@@ -74,10 +73,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("Reference2", () => {
     testSymbolCompletionSpec(
-      new ReferenceNode(f),
+      new TermSimple(f),
       "t",
       ParseStatus.valid,
-      ReferenceNode.name,
+      TermSimple.name,
       "t",
       [
         TokenType.id_constant,
@@ -117,7 +116,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "th",
       ParseStatus.valid,
-      ReferenceNode.name, //because t could be start of literal boolean, or typeof  also
+      TermSimple.name, //because t could be start of literal boolean, or typeof  also
       "th",
       [
         TokenType.id_constant,
@@ -447,7 +446,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "(a, a",
       ParseStatus.incomplete,
-      ReferenceNode.name,
+      TermSimple.name,
       "a",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
       [""],
@@ -471,7 +470,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "[a",
       ParseStatus.incomplete,
-      ReferenceNode.name,
+      TermSimple.name,
       "a",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
       [""],
@@ -483,7 +482,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "[a, a",
       ParseStatus.incomplete,
-      ReferenceNode.name,
+      TermSimple.name,
       "a",
       allIds.concat([TokenType.method_function, TokenType.method_system]),
       [""],
