@@ -75,7 +75,7 @@ import { LanguageAbstract } from "./language-abstract";
 import { languageHelper_enumValuesList, LineFormat } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
-import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { IdentifierUse } from "./parse-nodes/identifier-use";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
 import { ListNode } from "./parse-nodes/list-node";
@@ -341,7 +341,7 @@ export class LanguageElan extends LanguageAbstract {
   }
 
   addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new IdentifierDef(node.file);
+    node.name = new IdentifierUse(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(new KeywordNode(node.file, asKeyword));

@@ -25,7 +25,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
-import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { IdentifierUse } from "./parse-nodes/identifier-use";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -274,7 +274,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     );
     node.addElement(node.type);
     node.addElement(new SpaceNode(node.file, Space.required));
-    node.name = new IdentifierDef(node.file);
+    node.name = new IdentifierUse(node.file);
     node.addElement(node.name);
   }
 

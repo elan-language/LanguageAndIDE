@@ -3,11 +3,11 @@ import { removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { KeywordCompletion } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { IdentifierDef } from "./identifier-def";
+import { IdentifierUse } from "./identifier-use";
 import { TypeNode } from "./type-node";
 
 export class ParamDefNode extends AbstractSequence {
-  name: IdentifierDef | undefined;
+  name: IdentifierUse | undefined;
   type: TypeNode | undefined;
 
   constructor(file: File) {
