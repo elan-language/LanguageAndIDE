@@ -5,7 +5,7 @@ import { Identifier } from "../parse-nodes/identifier";
 import { AbstractField } from "./abstract-field";
 
 export class IdentifierDefField extends AbstractField {
-  isParseByNodes = true;
+  
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>name</i>");

@@ -5,7 +5,7 @@ import { ExceptionMsgNode } from "../parse-nodes/exception-msg-node";
 import { AbstractField } from "./abstract-field";
 
 export class ExceptionMessageField extends AbstractField {
-  isParseByNodes = true;
+  
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>message</i>");

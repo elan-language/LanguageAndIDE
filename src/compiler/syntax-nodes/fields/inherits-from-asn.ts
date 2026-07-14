@@ -6,7 +6,7 @@ import { isAstCollectionNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
 export class InheritsFromAsn extends AbstractAstNode {
-  isParseByNodes = true;
+  
   constructor(readonly fieldId: string) {
     super();
   }

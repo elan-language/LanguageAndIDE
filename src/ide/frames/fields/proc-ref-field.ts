@@ -9,7 +9,7 @@ import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
-  isParseByNodes = true;
+  
 
   constructor(holder: Frame) {
     super(holder);

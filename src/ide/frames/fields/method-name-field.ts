@@ -5,7 +5,7 @@ import { MethodNameDef } from "../parse-nodes/method-name-def";
 import { AbstractField } from "./abstract-field";
 
 export class MethodNameField extends AbstractField {
-  isParseByNodes: boolean = true;
+  
 
   constructor(holder: Frame) {
     super(holder);

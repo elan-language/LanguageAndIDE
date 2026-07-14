@@ -9,7 +9,7 @@ import { ExprNode } from "../parse-nodes/expr-node";
 import { AbstractField } from "./abstract-field";
 
 export class ExpressionField extends AbstractField {
-  isParseByNodes = true;
+  
   readUntil: RegExp;
 
   constructor(holder: Frame, readUntil = /\r?\n/) {
