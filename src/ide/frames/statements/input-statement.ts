@@ -1,6 +1,6 @@
 import { inputKeyword, setKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { ArgListField } from "../fields/arg-list-field";
-import { IdentifierDefField } from "../fields/identifier-def-field";
+import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -10,11 +10,11 @@ import { SingleLineFrame } from "../single-line-frame";
 export class InputStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
-  name: IdentifierDefField;
+  name: IdentifierField;
   prompt: ArgListField;
   constructor(parent: Parent) {
     super(parent);
-    this.name = new IdentifierDefField(this);
+    this.name = new IdentifierField(this);
     this.prompt = new ArgListField(this);
     this.prompt.setOptional(false);
     this.prompt.setPlaceholder("prompt message");

@@ -5,8 +5,6 @@ import { ParamListNode } from "../parse-nodes/param-list-node";
 import { AbstractField } from "./abstract-field";
 
 export class ParamListField extends AbstractField {
-  
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>parameter definitions</i>");

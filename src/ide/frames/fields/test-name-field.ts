@@ -5,8 +5,6 @@ import { TestName } from "../parse-nodes/testName";
 import { AbstractField } from "./abstract-field";
 
 export class TestNameField extends AbstractField {
-  
-
   constructor(holder: Frame) {
     super(holder);
     this._placeholder = "test_name";

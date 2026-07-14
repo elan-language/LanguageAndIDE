@@ -9,8 +9,6 @@ import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 
 export class ProcRefField extends AbstractField {
-  
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>procedureName</i>");

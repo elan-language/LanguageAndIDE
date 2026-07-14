@@ -44,7 +44,7 @@ suite("Navigation", () => {
   });
   test("Tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
-    const var4 = file.getById("elan_var4") as IdentifierField;
+    const var4 = file.getById("elan_ident4") as IdentifierField;
     assert.equal(var4.isSelected(), false);
     file.processKey(tab());
     assert.equal(var4.isSelected(), true);
@@ -72,7 +72,7 @@ suite("Navigation", () => {
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(shift_tab());
     assert.equal(expr5.isSelected(), false);
-    const var4 = file.getById("elan_var4") as IdentifierField;
+    const var4 = file.getById("elan_ident4") as IdentifierField;
     assert.equal(var4.isSelected(), true);
     var4.processKey(shift_tab());
     assert.equal(var4.isSelected(), false);

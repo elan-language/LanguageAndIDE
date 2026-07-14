@@ -6,8 +6,6 @@ import { ConstantValueNode } from "../parse-nodes/constant-value-node";
 import { AbstractField } from "./abstract-field";
 
 export class ConstantValueField extends AbstractField {
-  
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>literal</i>");

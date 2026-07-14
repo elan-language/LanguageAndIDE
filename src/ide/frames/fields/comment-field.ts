@@ -7,8 +7,6 @@ import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 
 export class CommentField extends AbstractField {
-  
-
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);

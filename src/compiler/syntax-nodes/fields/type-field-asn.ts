@@ -6,7 +6,6 @@ import { isAstTypeNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
 export class TypeFieldAsn extends AbstractAstNode implements AstIdNode {
-  
   constructor(readonly fieldId: string) {
     super();
   }
