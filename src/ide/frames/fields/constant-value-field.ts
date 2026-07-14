@@ -1,13 +1,11 @@
+import { isSymbol } from "../../../compiler/symbols/symbol-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
 import { ConstantValueNode } from "../parse-nodes/constant-value-node";
 import { AbstractField } from "./abstract-field";
-import { isSymbol } from "../../../compiler/symbols/symbol-helpers";
 
 export class ConstantValueField extends AbstractField {
-  isParseByNodes = true;
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>literal</i>");

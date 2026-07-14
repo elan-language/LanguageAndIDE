@@ -68,7 +68,7 @@ end main`;
     await assertSymbolCompletionWithString(fileImpl, "elan_ident10", "f", expected);
   });
 
-  test("Pass_Let", async () => {
+  test("Pass_Variable", async () => {
     const code = `${testHeader}
 
 main
@@ -362,6 +362,7 @@ end class`;
       ["a", "a", "a"],
       ["aa2", "this.aa2", "this.aa2"],
       ["aa3", "this.aa3", "this.aa3"],
+      ["aa4", "aa4", "aa4"],
     ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);

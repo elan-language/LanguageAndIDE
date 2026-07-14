@@ -460,7 +460,10 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
@@ -492,7 +495,10 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'short' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

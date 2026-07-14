@@ -1,6 +1,6 @@
 import { File } from "../frame-interfaces/file";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { IdentifierUse } from "./identifier-use";
+import { IdentifierNode } from "./identifier-node";
 import { LitValueNode } from "./lit-value-node";
 
 export class ConstantValueNode extends AbstractAlternatives {
@@ -11,7 +11,7 @@ export class ConstantValueNode extends AbstractAlternatives {
 
   parseText(text: string): void {
     this.alternatives.push(new LitValueNode(this.file));
-    this.alternatives.push(new IdentifierUse(this.file));
+    this.alternatives.push(new IdentifierNode(this.file));
     super.parseText(text);
   }
 }

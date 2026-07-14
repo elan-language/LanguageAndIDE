@@ -1,10 +1,11 @@
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
+import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class MethodNameUse extends AbstractParseNode {
+export class IdentifierNode extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 
@@ -27,6 +28,12 @@ export class MethodNameUse extends AbstractParseNode {
         Regexes.identifier,
       );
     }
+    const disallowed = this.file.language().DISALLOWED_IDENTIFIERS.concat(["if", "if_"]);
+    if (this.isValid() && disallowed.includes(this.matchedText.toLowerCase())) {
+      this.status = ParseStatus.invalid;
+      this.remainingText = text;
+      this.matchedText = "";
+    }
     if (this.isValid() && this.remainingText.length > 0) {
       this._done = true;
     }
@@ -40,6 +47,6 @@ export class MethodNameUse extends AbstractParseNode {
   }
 
   override renderAsHtml(): string {
-    return `<el-method>${this.matchedText.trim()}</el-method>`;
+    return this.isValid() ? `<el-id>${this.matchedText.trim()}</el-id>` : this.matchedText;
   }
 }

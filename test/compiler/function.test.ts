@@ -1041,7 +1041,9 @@ end function`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1090,8 +1092,9 @@ end function`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueName", async () => {

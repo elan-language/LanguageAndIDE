@@ -83,12 +83,12 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="elan_var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    id.setFieldToKnownValidText("default");
+    id.setFieldToKnownValidText("new");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
   });
@@ -113,12 +113,12 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.valid);
     assert.equal(
       id.renderAsHtml(),
-      `<el-field id="elan_var4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ValueDefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    id.setFieldToKnownValidText("default");
+    id.setFieldToKnownValidText("new");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
     test("parse  ArgListField", () => {

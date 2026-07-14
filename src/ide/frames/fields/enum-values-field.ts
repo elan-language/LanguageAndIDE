@@ -5,8 +5,6 @@ import { EnumValuesList } from "../parse-nodes/enum-values-list";
 import { AbstractField } from "./abstract-field";
 
 export class EnumValuesField extends AbstractField {
-  isParseByNodes = true;
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>values</i>");

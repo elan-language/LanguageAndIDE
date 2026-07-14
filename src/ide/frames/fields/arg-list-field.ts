@@ -14,8 +14,6 @@ import { ParseStatus } from "../status-enums";
 import { AbstractField } from "./abstract-field";
 
 export class ArgListField extends AbstractField {
-  isParseByNodes = true;
-
   constructor(holder: Frame) {
     super(holder);
     this.setPlaceholder("<i>arguments</i>");

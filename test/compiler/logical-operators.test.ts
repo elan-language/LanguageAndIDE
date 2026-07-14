@@ -475,7 +475,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable a set to - true
+  variable a set to -true
   call printNoLine(a)
 end main`;
 
@@ -491,9 +491,8 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'true' matches a reserved word.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
     ]);
   });
 

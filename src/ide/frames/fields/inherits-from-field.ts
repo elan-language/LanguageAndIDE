@@ -5,7 +5,6 @@ import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { AbstractField } from "./abstract-field";
 
 export class InheritsFromField extends AbstractField {
-  isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);

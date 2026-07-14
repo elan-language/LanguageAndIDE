@@ -118,11 +118,10 @@ import { DottedTerm } from "../frames/parse-nodes/dotted-term";
 import { EnumValUse } from "../frames/parse-nodes/enum-val-use";
 import { EnumValuesList } from "../frames/parse-nodes/enum-values-list";
 import { ExceptionMsgNode } from "../frames/parse-nodes/exception-msg-node";
-import { IdentifierDef } from "../frames/parse-nodes/identifier-def";
-import { IdentifierUse } from "../frames/parse-nodes/identifier-use";
+import { IdentifierWithOptIndexes } from "../frames/parse-nodes/IdentiferWithOptIndexes";
+import { IdentifierNode } from "../frames/parse-nodes/identifier-node";
 import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
-import { InstanceNode } from "../frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
 import { KVPnode } from "../frames/parse-nodes/kvp-node";
@@ -138,13 +137,12 @@ import { LitStringInterpolatedInsert } from "../frames/parse-nodes/lit-string-in
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
 import { LitStringText } from "../frames/parse-nodes/lit-string-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
-import { MethodNameUse } from "../frames/parse-nodes/method-name-use";
+import { MethodNameNode } from "../frames/parse-nodes/method-name-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { OptionalNode } from "../frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../frames/parse-nodes/param-list-node";
-import { PropertyInstanceRef } from "../frames/parse-nodes/property-instance-ref";
 import { PropertyRef } from "../frames/parse-nodes/property-ref";
 import { PunctuationNode } from "../frames/parse-nodes/punctuation-node";
 import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
@@ -726,7 +724,7 @@ export function transform(
     return new LiteralRegExAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof IdentifierDef) {
+  if (node instanceof IdentifierNode) {
     // todo kludge - fix
     if (
       (fieldId.includes("_var") || fieldId.includes("_ident") || fieldId.includes("_enumVals")) &&
@@ -738,7 +736,11 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof IdentifierUse || node instanceof MethodNameUse || node instanceof TestName) {
+  if (
+    node instanceof IdentifierNode ||
+    node instanceof MethodNameNode ||
+    node instanceof TestName
+  ) {
     // todo kludge - fix
     if (
       (fieldId.includes("_var") || fieldId.includes("_ident") || fieldId.includes("_enumVals")) &&
@@ -911,7 +913,7 @@ export function transform(
     return new QualifierAsn(q, fieldId, scope);
   }
 
-  if (node instanceof InstanceNode) {
+  if (node instanceof IdentifierWithOptIndexes) {
     const id = node.variable!.matchedText;
     const index = transformMany(node.index!, fieldId, scope);
     return new VarAsn(id, false, EmptyAsn.Instance, index, fieldId, scope);
@@ -959,12 +961,6 @@ export function transform(
   if (node instanceof PropertyRef) {
     const thisAsn = new ThisAsn(fieldId, scope);
     const qualifier = thisAsn as unknown as AstQualifierNode;
-    const name = transform(node.name, fieldId, scope) as AstIdNode;
-    return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
-  }
-
-  if (node instanceof PropertyInstanceRef) {
-    const qualifier = transform(node.qualifier, fieldId, scope) as AstQualifierNode;
     const name = transform(node.name, fieldId, scope) as AstIdNode;
     return new VarAsn(name.id, true, qualifier, EmptyAsn.Instance, fieldId, scope);
   }

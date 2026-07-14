@@ -286,7 +286,8 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
       const name = names[i];
 
       const metadata = Reflect.getMetadata(elanMetadataKey, this.cls.prototype, name) as
-        ElanDescriptor | undefined;
+        | ElanDescriptor
+        | undefined;
 
       if (name === "constructor") {
         children.push([

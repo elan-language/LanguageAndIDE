@@ -3,9 +3,11 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BracketedExpression } from "./bracketed-expression";
 import { ExprNode } from "./expr-node";
+import { IdentifierNode } from "./identifier-node";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
-import { ReferenceNode } from "./reference-node";
+import { MethodCallNode } from "./method-call-node";
+import { ThisInstance } from "./this-instance";
 import { UnaryExpression } from "./unary-expression";
 
 export class TermSimple extends AbstractAlternatives {
@@ -31,7 +33,9 @@ export class TermSimple extends AbstractAlternatives {
       this.alternatives.push(new UnaryExpression(this.file));
       this.alternatives.push(new BracketedExpression(this.file));
       this.alternatives.push(new LitValueNode(this.file));
-      this.alternatives.push(new ReferenceNode(this.file));
+      this.alternatives.push(new ThisInstance(this.file));
+      this.alternatives.push(new IdentifierNode(this.file, this.defaultTokenTypes));
+      this.alternatives.push(new MethodCallNode(this.file));
       super.parseText(text);
     }
   }

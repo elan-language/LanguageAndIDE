@@ -6,7 +6,6 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {
-  isParseByNodes = true;
   constructor(holder: Frame) {
     super(holder);
     this.useHtmlTags = true;

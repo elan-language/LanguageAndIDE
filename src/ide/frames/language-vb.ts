@@ -30,7 +30,7 @@ import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
-import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { InheritanceNode } from "./parse-nodes/inheritanceNode";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
@@ -313,10 +313,11 @@ export class LanguageVB extends LanguageAbstract {
   OVERRIDES = "Overrides";
   IMPLEMENTS = "Implements";
 
-  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.FUNCTION, this.ME, this.NOT];
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.FUNCTION, this.ME, this.NOT];
+  DISALLOWED_IDENTIFIERS: string[] = [this.ME, this.FUNCTION, this.NOT, this.TRUE, this.FALSE];
 
   addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new IdentifierDef(node.file);
+    node.name = new IdentifierNode(node.file);
     node.addElement(node.name);
     node.addElement(new SpaceNode(node.file, Space.required));
     node.addElement(new PunctuationNode(node.file, this.AS));

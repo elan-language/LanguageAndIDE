@@ -519,7 +519,10 @@ end main`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfLanguageTypeAsName", async () => {
@@ -539,7 +542,10 @@ end main`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'int' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_TypeCheck1", async () => {

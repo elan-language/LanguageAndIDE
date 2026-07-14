@@ -25,7 +25,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
-import { IdentifierDef } from "./parse-nodes/identifier-def";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { NewInstance } from "./parse-nodes/new-instance";
 import { ParamDefNode } from "./parse-nodes/param-def-node";
 import { Space } from "./parse-nodes/parse-node-helpers";
@@ -261,6 +261,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   THIS_INSTANCE: string = this.THIS;
 
   EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];
+  DISALLOWED_IDENTIFIERS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS, this.TRUE, this.FALSE];
 
   c_langs_addNodesForParamDef(node: ParamDefNode): void {
     node.type = new TypeNode(
@@ -273,7 +274,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     );
     node.addElement(node.type);
     node.addElement(new SpaceNode(node.file, Space.required));
-    node.name = new IdentifierDef(node.file);
+    node.name = new IdentifierNode(node.file);
     node.addElement(node.name);
   }
 

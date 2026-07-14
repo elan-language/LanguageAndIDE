@@ -2,13 +2,13 @@ import { thisKeyword } from "../../../compiler/elan-keywords";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
-import { MethodNameUse } from "./method-name-use";
+import { MethodNameNode } from "./method-name-node";
 import { PunctuationNode } from "./punctuation-node";
 import { ThisInstance } from "./this-instance";
 
 export class ThisProcRef extends AbstractSequence {
   thisInstance: ThisInstance | undefined;
-  procName: MethodNameUse | undefined;
+  procName: MethodNameNode | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_regular,
@@ -20,7 +20,7 @@ export class ThisProcRef extends AbstractSequence {
   parseText(text: string): void {
     if (text.length > 0) {
       this.thisInstance = new ThisInstance(this.file);
-      this.procName = new MethodNameUse(this.file);
+      this.procName = new MethodNameNode(this.file);
       this.addElement(this.thisInstance);
       this.addElement(new PunctuationNode(this.file, DOT));
       this.addElement(this.procName!);

@@ -595,7 +595,7 @@ end function
 <p>In this example of factorial calculation, each call is on a smaller value of input, and the process stops when <code>n</code> reaches <el-lit>1</el-lit>:</p>
 
 <codeblock>function factorial(n as Int) returns Int
-  return (if(n > 1, n*factorial(n - 1), 1))
+  return if_(n > 1, n*factorial(n - 1), 1)
 end function
 </codeblock>
 </div></div>

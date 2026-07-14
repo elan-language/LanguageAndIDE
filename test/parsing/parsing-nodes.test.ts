@@ -4,6 +4,7 @@ import { Regexes } from "../../src/ide/frames/fields/regexes";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AbstractSequence } from "../../src/ide/frames/parse-nodes/abstract-sequence";
+import { ArgumentNode } from "../../src/ide/frames/parse-nodes/argument-node";
 import { BinaryExpression } from "../../src/ide/frames/parse-nodes/binary-expression";
 import { BinaryOperation } from "../../src/ide/frames/parse-nodes/binary-operation";
 import { BracketedExpression } from "../../src/ide/frames/parse-nodes/bracketed-expression";
@@ -12,9 +13,9 @@ import { CSV } from "../../src/ide/frames/parse-nodes/csv";
 import { DotAfter } from "../../src/ide/frames/parse-nodes/dot-after";
 import { DottedTerm } from "../../src/ide/frames/parse-nodes/dotted-term";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
-import { IdentifierUse } from "../../src/ide/frames/parse-nodes/identifier-use";
+import { IdentifierWithOptIndexes } from "../../src/ide/frames/parse-nodes/IdentiferWithOptIndexes";
+import { IdentifierNode } from "../../src/ide/frames/parse-nodes/identifier-node";
 import { IfExpr } from "../../src/ide/frames/parse-nodes/if-expr";
-import { InstanceNode } from "../../src/ide/frames/parse-nodes/instanceNode";
 import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../../src/ide/frames/parse-nodes/keyword-node";
 import { KVPnode } from "../../src/ide/frames/parse-nodes/kvp-node";
@@ -39,7 +40,6 @@ import { ParamListNode } from "../../src/ide/frames/parse-nodes/param-list-node"
 import { Space } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
 import { PunctuationNode } from "../../src/ide/frames/parse-nodes/punctuation-node";
-import { ReferenceNode } from "../../src/ide/frames/parse-nodes/reference-node";
 import { RegExMatchNode } from "../../src/ide/frames/parse-nodes/regex-match-node";
 import { SetToClause } from "../../src/ide/frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../../src/ide/frames/parse-nodes/space-node";
@@ -48,6 +48,7 @@ import { TermChained } from "../../src/ide/frames/parse-nodes/term-chained";
 import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
 import { TermSimpleWithOptIndex } from "../../src/ide/frames/parse-nodes/term-simple-with-opt-index";
 import { ThisInstance } from "../../src/ide/frames/parse-nodes/this-instance";
+import { ThisProcRef } from "../../src/ide/frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../../src/ide/frames/parse-nodes/tuple-node";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
@@ -163,6 +164,17 @@ suite("Parsing Nodes", () => {
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.invalid,
       "",
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "",
+      "",
+    );
+  });
+  test("Lambda as argument", () => {
+    testNodeParse(
+      new ArgumentNode(f),
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      ParseStatus.valid,
+      "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       "",
       "",
       "",
@@ -191,20 +203,20 @@ suite("Parsing Nodes", () => {
     );
   });
   test("Identifier", () => {
-    testNodeParse(new IdentifierUse(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(new IdentifierUse(f), `  `, ParseStatus.invalid, ``, "", "");
-    testNodeParse(new IdentifierUse(f), `a`, ParseStatus.valid, `a`, "", "a", "");
-    testNodeParse(new IdentifierUse(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
-    testNodeParse(new IdentifierUse(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
-    testNodeParse(new IdentifierUse(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
-    testNodeParse(new IdentifierUse(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+    testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
+    testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
+    testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
+    testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
+    testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
+    testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
     // Can be a keyword - because that will be rejected at compile stage, not parse stage
-    testNodeParse(new IdentifierUse(f), `new`, ParseStatus.valid, `new`, "", "");
-    testNodeParse(new IdentifierUse(f), `global`, ParseStatus.valid, `global`, "", "");
-    testNodeParse(new IdentifierUse(f), `x as`, ParseStatus.valid, `x`, " as", "x");
-    testNodeParse(new IdentifierUse(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
-    testNodeParse(new IdentifierUse(f), `_`, ParseStatus.invalid, ``, "_", "");
-    testNodeParse(new IdentifierUse(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
+    testNodeParse(new IdentifierNode(f), `new`, ParseStatus.invalid, "", "new", "");
+    testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
+    testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
+    testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
+    testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
+    testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
   });
   test("LitString - single chars", () => {
     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
@@ -599,17 +611,24 @@ suite("Parsing Nodes", () => {
       `"apple", "orange", "pear"`,
     );
     testNodeParse(
-      new CSV(f, () => new IdentifierUse(f), 0),
+      new CSV(f, () => new IdentifierNode(f), 0),
       `a,b,c`,
       ParseStatus.valid,
       `a,b,c`,
       "",
       "a, b, c",
     );
-    testNodeParse(new CSV(f, () => new IdentifierUse(f), 0), `1`, ParseStatus.valid, ``, "1", "");
-    testNodeParse(new CSV(f, () => new IdentifierUse(f), 1), `1`, ParseStatus.invalid, ``, "1", "");
+    testNodeParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, ParseStatus.valid, ``, "1", "");
     testNodeParse(
-      new CSV(f, () => new IdentifierUse(f), 0),
+      new CSV(f, () => new IdentifierNode(f), 1),
+      `1`,
+      ParseStatus.invalid,
+      ``,
+      "1",
+      "",
+    );
+    testNodeParse(
+      new CSV(f, () => new IdentifierNode(f), 0),
       `a,1`,
       ParseStatus.valid,
       `a`,
@@ -617,7 +636,7 @@ suite("Parsing Nodes", () => {
       "",
     );
     testNodeParse(
-      new CSV(f, () => new IdentifierUse(f), 0),
+      new CSV(f, () => new IdentifierNode(f), 0),
       `a,b,1`,
       ParseStatus.valid,
       `a,b`,
@@ -696,10 +715,17 @@ suite("Parsing Nodes", () => {
 
     testNodeParse(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
   });
-  test("Instance", () => {
-    testNodeParse(new InstanceNode(f), ``, ParseStatus.empty, ``, "", "");
-    testNodeParse(new InstanceNode(f), `bar`, ParseStatus.valid, `bar`, "", "");
-    testNodeParse(new InstanceNode(f), `bar[foo]`, ParseStatus.valid, `bar[foo]`, "", "");
+  test("IdentifierWithOptIndexes", () => {
+    testNodeParse(new IdentifierWithOptIndexes(f), ``, ParseStatus.empty, ``, "", "");
+    testNodeParse(new IdentifierWithOptIndexes(f), `bar`, ParseStatus.valid, `bar`, "", "");
+    testNodeParse(
+      new IdentifierWithOptIndexes(f),
+      `bar[foo]`,
+      ParseStatus.valid,
+      `bar[foo]`,
+      "",
+      "",
+    );
     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   });
 
@@ -1436,10 +1462,13 @@ suite("Parsing Nodes", () => {
     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
     testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
     testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
-    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.invalid, "", "");
-    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.invalid, "", "");
+    testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
+    testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
-    testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", "");
+    testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", ""); //As that would be picked up by ThisProcRef
+  });
+  test("ThisProcRef", () => {
+    testNodeParse(new ThisProcRef(f), `this.bar`, ParseStatus.valid, "", "");
   });
   test("ProcRefNode", () => {
     testNodeParse(new ProcRefNode(f), `foo`, ParseStatus.valid, "", "");
@@ -1487,11 +1516,11 @@ suite("Parsing Nodes", () => {
     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-    testNodeParse(new ReferenceNode(f), `this`, ParseStatus.valid, `this`, "");
+    testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, `this`, "");
     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
-    testNodeParse(new ReferenceNode(f), `a`, ParseStatus.valid, `a`, "");
+    testNodeParse(new TermSimple(f), `a`, ParseStatus.valid, `a`, "");
     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
-    testNodeParse(new DotAfter(f, new ReferenceNode(f)), `.a`, ParseStatus.invalid, ``, ".a");
+    testNodeParse(new DotAfter(f, new TermSimple(f)), `.a`, ParseStatus.invalid, ``, ".a");
     testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
     testNodeParse(
       new TermChained(f),
@@ -1530,8 +1559,8 @@ suite("Parsing Nodes", () => {
       `this.a[1].b().c(d)[e]`,
       "",
     );
-    testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.invalid, ``, "");
-    testNodeParse(new ExprNode(f), `ref `, ParseStatus.invalid, ``, "");
+    testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref`, " foo");
+    testNodeParse(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
   });
   test("OperatorAmbiguity#728", () => {
     //Test operations
@@ -1965,7 +1994,8 @@ suite("Parsing Nodes", () => {
       "not (a + b)",
       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
-    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.valid, `not(a+b)`, "", "", ``); //keywords no longer invalid for methodNameUse (but still as methodNameDef) - though won't compile
+    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
+    testNodeParse(new ExprNode(f), `not (a+b)`, ParseStatus.valid, `not (a+b)`, "", "", ``);
   });
   test("Parse list of list of floats", () => {
     testNodeParse(
