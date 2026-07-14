@@ -5,7 +5,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class IdentifierUse extends AbstractParseNode {
+export class Identifier extends AbstractParseNode {
   private tokenTypes: Set<TokenType>;
   private contextGenerator: () => string;
 

@@ -11,7 +11,7 @@ import { BinaryExpression } from "../../src/ide/frames/parse-nodes/binary-expres
 import { BinaryOperation } from "../../src/ide/frames/parse-nodes/binary-operation";
 import { CSV } from "../../src/ide/frames/parse-nodes/csv";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
-import { IdentifierUse } from "../../src/ide/frames/parse-nodes/identifier-use";
+import { Identifier } from "../../src/ide/frames/parse-nodes/identifier";
 import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
 import { MethodCallNode } from "../../src/ide/frames/parse-nodes/method-call-node";
 import { MethodNameUse } from "../../src/ide/frames/parse-nodes/method-name-use";
@@ -204,7 +204,7 @@ suite("Symbol Completion Spec", () => {
       new AssignableNode(f),
       "this.f",
       ParseStatus.valid,
-      IdentifierUse.name,
+      Identifier.name,
       "f",
       [
         TokenType.id_let,
@@ -359,10 +359,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV minimum 1", () => {
     testSymbolCompletionSpec(
-      new CSV(f, () => new IdentifierUse(f, new Set([TokenType.id_let, TokenType.id_variable])), 1),
+      new CSV(f, () => new Identifier(f, new Set([TokenType.id_let, TokenType.id_variable])), 1),
       "",
       ParseStatus.empty,
-      IdentifierUse.name,
+      Identifier.name,
       "",
       [TokenType.id_let, TokenType.id_variable],
       [],
@@ -371,7 +371,7 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV minimum 0", () => {
     testSymbolCompletionSpec(
-      new CSV(f, () => new IdentifierUse(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(f, () => new Identifier(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
       "",
       ParseStatus.valid,
       OptionalNode.name,
@@ -383,10 +383,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV in a valid entry", () => {
     testSymbolCompletionSpec(
-      new CSV(f, () => new IdentifierUse(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(f, () => new Identifier(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
       "foo",
       ParseStatus.valid,
-      IdentifierUse.name,
+      Identifier.name,
       "foo",
       [TokenType.id_let, TokenType.id_variable],
       [],
@@ -395,10 +395,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV after a comma & space", () => {
     testSymbolCompletionSpec(
-      new CSV(f, () => new IdentifierUse(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(f, () => new Identifier(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
       "foo, ",
       ParseStatus.incomplete,
-      IdentifierUse.name,
+      Identifier.name,
       "",
       [TokenType.id_let, TokenType.id_variable],
       [],
@@ -407,10 +407,10 @@ suite("Symbol Completion Spec", () => {
   });
   test("CSV after a comma only", () => {
     testSymbolCompletionSpec(
-      new CSV(f, () => new IdentifierUse(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
+      new CSV(f, () => new Identifier(f, new Set([TokenType.id_let, TokenType.id_variable])), 0),
       "foo,",
       ParseStatus.incomplete,
-      IdentifierUse.name,
+      Identifier.name,
       "",
       [TokenType.id_let, TokenType.id_variable],
       [],
@@ -434,7 +434,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "Direction.",
       ParseStatus.incomplete,
-      IdentifierUse.name,
+      Identifier.name,
       "",
       [TokenType.id_enumValue],
       [""],

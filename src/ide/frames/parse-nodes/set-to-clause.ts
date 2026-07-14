@@ -3,13 +3,13 @@ import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { ExprNode } from "./expr-node";
-import { IdentifierUse } from "./identifier-use";
+import { Identifier } from "./identifier";
 import { KeywordNode } from "./keyword-node";
 import { Space } from "./parse-node-helpers";
 import { SpaceNode } from "./space-node";
 
 export class SetToClause extends AbstractSequence {
-  property: IdentifierUse | undefined;
+  property: Identifier | undefined;
   expr: ExprNode | undefined;
   private context: () => string;
 
@@ -20,7 +20,7 @@ export class SetToClause extends AbstractSequence {
   }
 
   parseText(text: string): void {
-    this.property = new IdentifierUse(
+    this.property = new Identifier(
       this.file,
       new Set<TokenType>([TokenType.id_property]),
       this.context,

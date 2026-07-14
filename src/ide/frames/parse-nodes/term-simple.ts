@@ -3,7 +3,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { BracketedExpression } from "./bracketed-expression";
 import { ExprNode } from "./expr-node";
-import { IdentifierUse } from "./identifier-use";
+import { Identifier } from "./identifier";
 import { ListNode } from "./list-node";
 import { LitValueNode } from "./lit-value-node";
 import { MethodCallNode } from "./method-call-node";
@@ -34,7 +34,7 @@ export class TermSimple extends AbstractAlternatives {
       this.alternatives.push(new BracketedExpression(this.file));
       this.alternatives.push(new LitValueNode(this.file));
       this.alternatives.push(new ThisInstance(this.file));
-      this.alternatives.push(new IdentifierUse(this.file, this.defaultTokenTypes));
+      this.alternatives.push(new Identifier(this.file, this.defaultTokenTypes));
       this.alternatives.push(new MethodCallNode(this.file));
       super.parseText(text);
     }

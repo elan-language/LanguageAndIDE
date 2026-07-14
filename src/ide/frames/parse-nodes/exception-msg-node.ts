@@ -1,7 +1,7 @@
 import { File } from "../frame-interfaces/file";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { IdentifierUse } from "./identifier-use";
+import { Identifier } from "./identifier";
 import { LitString } from "./lit-string";
 
 export class ExceptionMsgNode extends AbstractAlternatives {
@@ -13,6 +13,6 @@ export class ExceptionMsgNode extends AbstractAlternatives {
   constructor(file: File) {
     super(file);
     this.alternatives.push(new LitString(file));
-    this.alternatives.push(new IdentifierUse(file, this.tokenTypes));
+    this.alternatives.push(new Identifier(file, this.tokenTypes));
   }
 }
