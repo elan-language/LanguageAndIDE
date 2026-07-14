@@ -4,7 +4,7 @@ import { Paradigm } from "../../src/ide/frames/paradigm";
 import { BinaryExpression } from "../../src/ide/frames/parse-nodes/binary-expression";
 import { CSV } from "../../src/ide/frames/parse-nodes/csv";
 import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
-import { Identifier } from "../../src/ide/frames/parse-nodes/identifier";
+import { IdentifierNode } from "../../src/ide/frames/parse-nodes/identifier-node";
 import { Lambda } from "../../src/ide/frames/parse-nodes/lambda";
 import { NewInstance } from "../../src/ide/frames/parse-nodes/new-instance";
 import { ParamDefNode } from "../../src/ide/frames/parse-nodes/param-def-node";
@@ -68,12 +68,17 @@ suite("Parsing - Completions", () => {
 
   test("CSV of Identifier", () => {
     testCompletion(
-      new CSV(f, () => new Identifier(f), 0),
+      new CSV(f, () => new IdentifierNode(f), 0),
       "foo,",
       ParseStatus.incomplete,
       "<i>name</i>",
     );
-    testCompletion(new CSV(f, () => new Identifier(f), 0), "foo, bar, yon", ParseStatus.valid, "");
+    testCompletion(
+      new CSV(f, () => new IdentifierNode(f), 0),
+      "foo, bar, yon",
+      ParseStatus.valid,
+      "",
+    );
   });
 
   test("SpaceNode", () => {

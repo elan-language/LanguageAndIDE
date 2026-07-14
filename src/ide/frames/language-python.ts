@@ -34,7 +34,7 @@ import { LanguageExportPython } from "./language-export-python";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { CSV } from "./parse-nodes/csv";
 import { ExprNode } from "./parse-nodes/expr-node";
-import { Identifier } from "./parse-nodes/identifier";
+import { IdentifierNode } from "./parse-nodes/identifier-node";
 import { KeywordNode } from "./parse-nodes/keyword-node";
 import { Lambda } from "./parse-nodes/lambda";
 import { ListNode } from "./parse-nodes/list-node";
@@ -316,7 +316,7 @@ export class LanguagePython extends LanguageAbstract {
   DISALLOWED_IDENTIFIERS: string[] = [this.SELF, this.TRUE, this.FALSE];
 
   addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new Identifier(node.file);
+    node.name = new IdentifierNode(node.file);
     node.addElement(node.name);
     node.addElement(new PunctuationNode(node.file, COLON));
     node.addElement(new SpaceNode(node.file, Space.added));

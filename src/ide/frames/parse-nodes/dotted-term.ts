@@ -4,7 +4,7 @@ import { TokenType } from "../symbol-completion-helpers";
 import { DOT } from "../symbols";
 import { AbstractSequence } from "./abstract-sequence";
 import { Alternatives } from "./alternatives";
-import { Identifier } from "./identifier";
+import { IdentifierNode } from "./identifier-node";
 import { MethodCallNode } from "./method-call-node";
 import { PunctuationNode } from "./punctuation-node";
 
@@ -14,7 +14,7 @@ export class DottedTerm extends AbstractSequence {
 
   constructor(file: File) {
     super(file);
-    const prop = () => new Identifier(file, new Set([TokenType.id_property]));
+    const prop = () => new IdentifierNode(file, new Set([TokenType.id_property]));
     const method = () => new MethodCallNode(file);
     this.term = new Alternatives(this.file, [prop, method], this.tokenTypes);
   }

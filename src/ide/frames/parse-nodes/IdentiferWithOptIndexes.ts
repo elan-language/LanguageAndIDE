@@ -1,12 +1,12 @@
 import { Index } from ".";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
-import { Identifier } from "./identifier";
+import { IdentifierNode } from "./identifier-node";
 import { Multiple } from "./multiple";
 import { allIds } from "./parse-node-helpers";
 
 export class IdentifierWithOptIndexes extends AbstractSequence {
-  variable: Identifier | undefined;
+  variable: IdentifierNode | undefined;
   index: Multiple | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
@@ -17,7 +17,7 @@ export class IdentifierWithOptIndexes extends AbstractSequence {
 
   parseText(text: string): void {
     if (text.length > 0) {
-      this.variable = new Identifier(this.file, this.tokenTypes);
+      this.variable = new IdentifierNode(this.file, this.tokenTypes);
       this.index = new Multiple(this.file, () => new Index(this.file), 0);
       this.addElement(this.variable);
       this.addElement(this.index);

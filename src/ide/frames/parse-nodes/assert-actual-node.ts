@@ -2,7 +2,7 @@ import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
 import { TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
-import { Identifier } from "./identifier";
+import { IdentifierNode } from "./identifier-node";
 import { MethodCallNode } from "./method-call-node";
 import { TermChained } from "./term-chained";
 import { TermSimple } from "./term-simple";
@@ -12,7 +12,7 @@ export class AssertActualNode extends AbstractAlternatives {
   methodTypes: Set<TokenType> = new Set([TokenType.method_function]);
   constructor(file: File) {
     super(file);
-    this.alternatives.push(new Identifier(file, this.idTypes));
+    this.alternatives.push(new IdentifierNode(file, this.idTypes));
     this.alternatives.push(new MethodCallNode(file, this.methodTypes));
     this.alternatives.push(new TermSimple(file));
     this.alternatives.push(new TermChained(file));

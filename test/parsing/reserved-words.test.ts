@@ -1,7 +1,7 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
-import { Identifier } from "../../src/ide/frames/parse-nodes/identifier";
+import { IdentifierNode } from "../../src/ide/frames/parse-nodes/identifier-node";
 import { MethodNameNode } from "../../src/ide/frames/parse-nodes/method-name-node";
 import { TypeNameDef } from "../../src/ide/frames/parse-nodes/type-name-def";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
@@ -22,28 +22,28 @@ suite("Reserved Words", () => {
     true,
   );
   test("Identifier", () => {
-    testNodeParse(new Identifier(f), "x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "_x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "new", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "if", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "if_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "this", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "true", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "false", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "strictfp", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "strictFP", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "strictfp_", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "_x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "new", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "if", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "if_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "this", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "true", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "false", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "strictfp", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "strictFP", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "strictfp_", ParseStatus.valid, "", "", "", "");
   });
   test("Identifier", () => {
-    testNodeParse(new Identifier(f), "x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "x.", ParseStatus.valid, "x", ".", "", "");
-    testNodeParse(new Identifier(f), "_x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new Identifier(f), "strictfp", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new Identifier(f), "strictfp.", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "x.", ParseStatus.valid, "x", ".", "", "");
+    testNodeParse(new IdentifierNode(f), "_x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "strictfp", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierNode(f), "strictfp.", ParseStatus.valid, "", "", "", "");
   });
   test("MethodNameUse", () => {
     testNodeParse(new MethodNameNode(f), "x", ParseStatus.valid, "", "", "", "");
