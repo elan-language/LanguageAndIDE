@@ -1,4 +1,3 @@
-import { ReservedWords } from "../../../compiler/reserved-words";
 import { Regexes } from "../fields/regexes";
 import { ParseStatus } from "../status-enums";
 import { IdentifierUse } from "./identifier-use";
@@ -13,13 +12,14 @@ export class IdentifierDef extends IdentifierUse {
         Regexes.identifier,
       );
     }
+    const disallowed = this.file.language().DISALLOWED_IDENTIFIERS.concat(["if", "if_"]);
+    if (this.isValid() && disallowed.includes(this.matchedText.toLowerCase())) {
+      this.status = ParseStatus.invalid;
+      this.remainingText = text;
+      this.matchedText = "";
+    }
     if (this.isValid()) {
-      if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
-        this.status = ParseStatus.invalid;
-        this.message = `matches a reserved word.`;
-      } else {
-        this._done = true;
-      }
+      this._done = true;
     }
   }
 }

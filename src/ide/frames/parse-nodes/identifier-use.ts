@@ -1,4 +1,3 @@
-import { ReservedWords } from "../../../compiler/reserved-words";
 import { Regexes } from "../fields/regexes";
 import { File } from "../frame-interfaces/file";
 import { ParseStatus } from "../status-enums";
@@ -29,14 +28,14 @@ export class IdentifierUse extends AbstractParseNode {
         Regexes.identifier,
       );
     }
+    const disallowed = this.file.language().DISALLOWED_IDENTIFIERS.concat(["if", "if_"]);
+    if (this.isValid() && disallowed.includes(this.matchedText.toLowerCase())) {
+      this.status = ParseStatus.invalid;
+      this.remainingText = text;
+      this.matchedText = "";
+    }
     if (this.isValid() && this.remainingText.length > 0) {
-      if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
-        this.status = ParseStatus.invalid;
-        this.matchedText = "";
-        this.remainingText = text;
-      } else {
-        this._done = true;
-      }
+      this._done = true;
     }
   }
   symbolCompletion_tokenTypes(): Set<TokenType> {

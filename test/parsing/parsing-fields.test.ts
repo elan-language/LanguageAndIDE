@@ -88,7 +88,7 @@ suite("Field Parsing Tests", () => {
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    id.setFieldToKnownValidText("default");
+    id.setFieldToKnownValidText("new");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
   });
@@ -118,7 +118,7 @@ suite("Field Parsing Tests", () => {
     id.setFieldToKnownValidText("Ab_1");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
-    id.setFieldToKnownValidText("default");
+    id.setFieldToKnownValidText("new");
     id.parseCurrentText();
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
     test("parse  ArgListField", () => {

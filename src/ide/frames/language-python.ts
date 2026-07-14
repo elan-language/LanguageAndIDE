@@ -313,6 +313,7 @@ export class LanguagePython extends LanguageAbstract {
   IMPLEMENTS = "";
 
   EXPRESSION_KEYWORDS: string[] = [this.LAMBDA, this.SELF, this.NOT];
+  DISALLOWED_IDENTIFIERS: string[] = [this.SELF, this.TRUE, this.FALSE];
 
   addNodesForParamDef(node: ParamDefNode): void {
     node.name = new IdentifierDef(node.file);

@@ -244,6 +244,7 @@ export abstract class LanguageAbstract implements Language {
   abstract IMPLEMENTS: string;
 
   abstract EXPRESSION_KEYWORDS: string[];
+  abstract DISALLOWED_IDENTIFIERS: string[];
 
   protected spaced(text: string): string {
     return ` ${text} `;

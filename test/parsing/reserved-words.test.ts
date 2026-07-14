@@ -28,12 +28,15 @@ suite("Reserved Words", () => {
     testNodeParse(new IdentifierDef(f), "_x", ParseStatus.valid, "", "", "", "");
     testNodeParse(new IdentifierDef(f), "_", ParseStatus.invalid, "", "", "", "");
     testNodeParse(new IdentifierDef(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new IdentifierDef(f), "strictfp", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new IdentifierDef(f), "strictFP", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "new", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "if", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "if_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "this", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "true", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "false", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "strictfp", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierDef(f), "strictFP", ParseStatus.valid, "", "", "", "");
     testNodeParse(new IdentifierDef(f), "strictfp_", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new IdentifierDef(f), "sizeof", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new IdentifierDef(f), "sizeOf", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new IdentifierDef(f), "sizeOf_", ParseStatus.valid, "", "", "", "");
   });
   test("IdentifierUse", () => {
     testNodeParse(new IdentifierUse(f), "x", ParseStatus.valid, "", "", "", "");
@@ -41,19 +44,22 @@ suite("Reserved Words", () => {
     testNodeParse(new IdentifierUse(f), "_x", ParseStatus.valid, "", "", "", "");
     testNodeParse(new IdentifierUse(f), "_", ParseStatus.invalid, "", "", "", "");
     testNodeParse(new IdentifierUse(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new IdentifierUse(f), "strictfp", ParseStatus.valid, "", "", "", ""); // because no following text; should be a compile error, though
-    testNodeParse(new IdentifierUse(f), "strictfp.", ParseStatus.invalid, "", "strictfp.", "", "");
+    testNodeParse(new IdentifierUse(f), "strictfp", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new IdentifierUse(f), "strictfp.", ParseStatus.valid, "", "", "", "");
   });
   test("MethodNameDef", () => {
     testNodeParse(new MethodNameDef(f), "x", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameDef(f), "_x", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameDef(f), "_", ParseStatus.invalid, "", "", "", "");
     testNodeParse(new MethodNameDef(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "mybase", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "myBase", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "new", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "if_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "true", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "mybase", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "myBase", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameDef(f), "mybase_", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "def", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "deF", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "def", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameDef(f), "deF", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameDef(f), "def_", ParseStatus.valid, "", "", "", "");
   });
   test("MethodNameUse", () => {

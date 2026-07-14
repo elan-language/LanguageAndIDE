@@ -1406,7 +1406,10 @@ end procedure`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
   test("Fail_UseOfLangTypeAsName", async () => {
     const code = `${testHeader}
@@ -1429,7 +1432,10 @@ end procedure`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'float' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1478,8 +1484,10 @@ end procedure`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueName", async () => {

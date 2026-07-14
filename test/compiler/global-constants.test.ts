@@ -532,7 +532,10 @@ end main
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_NotUniqueName", async () => {
