@@ -19,7 +19,6 @@ import { PropertyAsn } from "../../compiler/syntax-nodes/class-members/property-
 import { CommentAsn } from "../../compiler/syntax-nodes/comment-asn";
 import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
-import { DiscardAsn } from "../../compiler/syntax-nodes/discard-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-from-asn";
@@ -42,7 +41,6 @@ import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { InterpolatedAsn } from "../../compiler/syntax-nodes/interpolated-asn";
-import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
@@ -73,7 +71,6 @@ import { TryAsn } from "../../compiler/syntax-nodes/statements/try-asn";
 import { VariableAsn } from "../../compiler/syntax-nodes/statements/variable-asn";
 import { WhileAsn } from "../../compiler/syntax-nodes/statements/while-asn";
 import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
-import { ToAsn } from "../../compiler/syntax-nodes/to-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
@@ -124,7 +121,6 @@ import { IfExpr } from "../frames/parse-nodes/if-expr";
 import { InheritanceNode } from "../frames/parse-nodes/inheritanceNode";
 import { InstanceProcRef } from "../frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../frames/parse-nodes/keyword-node";
-import { KVPnode } from "../frames/parse-nodes/kvp-node";
 import { Lambda } from "../frames/parse-nodes/lambda";
 import { ListNode } from "../frames/parse-nodes/list-node";
 import { LitBoolean } from "../frames/parse-nodes/lit-boolean";
@@ -144,10 +140,8 @@ import { OptionalNode } from "../frames/parse-nodes/optional-node";
 import { ParamDefNode } from "../frames/parse-nodes/param-def-node";
 import { ParamListNode } from "../frames/parse-nodes/param-list-node";
 import { PropertyRef } from "../frames/parse-nodes/property-ref";
-import { PunctuationNode } from "../frames/parse-nodes/punctuation-node";
 import { RegExMatchNode } from "../frames/parse-nodes/regex-match-node";
 import { Sequence } from "../frames/parse-nodes/sequence";
-import { SetToClause } from "../frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../frames/parse-nodes/space-node";
 import { TermChained } from "../frames/parse-nodes/term-chained";
 import { TermSimpleWithOptIndex } from "../frames/parse-nodes/term-simple-with-opt-index";
@@ -813,20 +807,6 @@ export function transform(
     return transformMany(node as CSV, fieldId, scope);
   }
 
-  if (node instanceof SetToClause) {
-    const id = node.property!.matchedText;
-    const to = transform(node.expr, fieldId, scope) as AstNode;
-
-    return new ToAsn(id, to, fieldId);
-  }
-
-  if (node instanceof PunctuationNode) {
-    if (node.fixedText === "_") {
-      return new DiscardAsn("", fieldId);
-    }
-    return undefined;
-  }
-
   if (node instanceof CommaNode) {
     return undefined;
   }
@@ -931,13 +911,6 @@ export function transform(
     const type = new EnumType(node.type!.matchedText);
 
     return new LiteralEnumAsn(id, type, fieldId, scope);
-  }
-
-  if (node instanceof KVPnode) {
-    const key = transform(node.key, fieldId, scope)!;
-    const value = transform(node.value, fieldId, scope)!;
-
-    return new KvpAsn(key, value, fieldId);
   }
 
   if (node instanceof LitStringInterpolatedInsert) {

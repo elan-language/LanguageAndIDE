@@ -18,7 +18,6 @@ import { IdentifierNode } from "../../src/ide/frames/parse-nodes/identifier-node
 import { IfExpr } from "../../src/ide/frames/parse-nodes/if-expr";
 import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
 import { KeywordNode } from "../../src/ide/frames/parse-nodes/keyword-node";
-import { KVPnode } from "../../src/ide/frames/parse-nodes/kvp-node";
 import { Lambda } from "../../src/ide/frames/parse-nodes/lambda";
 import { ListNode } from "../../src/ide/frames/parse-nodes/list-node";
 import { LitBoolean } from "../../src/ide/frames/parse-nodes/lit-boolean";
@@ -41,7 +40,6 @@ import { Space } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
 import { PunctuationNode } from "../../src/ide/frames/parse-nodes/punctuation-node";
 import { RegExMatchNode } from "../../src/ide/frames/parse-nodes/regex-match-node";
-import { SetToClause } from "../../src/ide/frames/parse-nodes/set-to-clause";
 import { SpaceNode } from "../../src/ide/frames/parse-nodes/space-node";
 import { Term } from "../../src/ide/frames/parse-nodes/term";
 import { TermChained } from "../../src/ide/frames/parse-nodes/term-chained";
@@ -175,28 +173,6 @@ suite("Parsing Nodes", () => {
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
       ParseStatus.valid,
       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-      "",
-      "",
-      "",
-    );
-  });
-  test("Set To Clause", () => {
-    testNodeParse(
-      new SetToClause(f, () => ""),
-      "x set to p.x + 3",
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-      "",
-    );
-  });
-  test("CSV of set clauses", () => {
-    testNodeParse(
-      new CSV(f, () => new SetToClause(f, () => ""), 1),
-      "x set to p.x + 3, y set to p.y - 1",
-      ParseStatus.valid,
-      "",
       "",
       "",
       "",
@@ -1153,56 +1129,6 @@ suite("Parsing Nodes", () => {
       ParseStatus.incomplete,
       "",
       "",
-      "",
-    );
-  });
-  test("KVP", () => {
-    testNodeParse(
-      new KVPnode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `"a":37`,
-      ParseStatus.valid,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new KVPnode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `"a":`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new KVPnode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `"a"`,
-      ParseStatus.incomplete,
-      "",
-      "",
-      "",
-    );
-    testNodeParse(
-      new KVPnode(
-        f,
-        () => new LitString(f),
-        () => new LitInt(f),
-      ),
-      `"a":"b"`,
-      ParseStatus.invalid,
-      "",
-      `"a":"b"`,
       "",
     );
   });
