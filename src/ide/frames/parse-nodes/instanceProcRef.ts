@@ -2,11 +2,11 @@ import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractSequence } from "./abstract-sequence";
 import { DotAfter } from "./dot-after";
 import { IdentifierWithOptIndexes } from "./IdentiferWithOptIndexes";
-import { MethodNameUse } from "./method-name-use";
+import { MethodNameNode } from "./method-name-node";
 
 export class InstanceProcRef extends AbstractSequence {
   prefix: DotAfter | undefined;
-  procName: MethodNameUse | undefined;
+  procName: MethodNameNode | undefined;
   tokenTypes = new Set([
     TokenType.id_let,
     TokenType.id_parameter_regular,
@@ -19,7 +19,7 @@ export class InstanceProcRef extends AbstractSequence {
     if (text.length > 0) {
       const instance = new IdentifierWithOptIndexes(this.file);
       this.prefix = new DotAfter(this.file, instance);
-      this.procName = new MethodNameUse(
+      this.procName = new MethodNameNode(
         this.file,
         new Set([TokenType.method_procedure]),
         () => instance.matchedText,

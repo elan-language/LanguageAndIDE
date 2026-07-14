@@ -2,8 +2,7 @@ import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Identifier } from "../../src/ide/frames/parse-nodes/identifier";
-import { MethodNameDef } from "../../src/ide/frames/parse-nodes/method-name-def";
-import { MethodNameUse } from "../../src/ide/frames/parse-nodes/method-name-use";
+import { MethodNameNode } from "../../src/ide/frames/parse-nodes/method-name-node";
 import { TypeNameDef } from "../../src/ide/frames/parse-nodes/type-name-def";
 import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
@@ -46,29 +45,29 @@ suite("Reserved Words", () => {
     testNodeParse(new Identifier(f), "strictfp", ParseStatus.valid, "", "", "", "");
     testNodeParse(new Identifier(f), "strictfp.", ParseStatus.valid, "", "", "", "");
   });
-  test("MethodNameDef", () => {
-    testNodeParse(new MethodNameDef(f), "x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "_x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "new", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "if_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "true", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "mybase", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "myBase", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "mybase_", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "def", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "deF", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameDef(f), "def_", ParseStatus.valid, "", "", "", "");
+  test("MethodNameUse", () => {
+    testNodeParse(new MethodNameNode(f), "x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "_x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "new", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "if_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "true", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "mybase", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "myBase", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "mybase_", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "def", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "deF", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "def_", ParseStatus.valid, "", "", "", "");
   });
   test("MethodNameUse", () => {
-    testNodeParse(new MethodNameUse(f), "x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "x()", ParseStatus.valid, "x", "()", "", "");
-    testNodeParse(new MethodNameUse(f), "_x", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "def", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new MethodNameUse(f), "def()", ParseStatus.valid, "def", "()", "", ""); // keywords are no longer disallowed in method name USE - though won't compile
+    testNodeParse(new MethodNameNode(f), "x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "x()", ParseStatus.valid, "x", "()", "", "");
+    testNodeParse(new MethodNameNode(f), "_x", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "def", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new MethodNameNode(f), "def()", ParseStatus.valid, "def", "()", "", ""); // keywords are no longer disallowed in method name USE - though won't compile
   });
   test("TypeNameDef", () => {
     testNodeParse(new TypeNameDef(f), "X", ParseStatus.valid, "", "", "", "");

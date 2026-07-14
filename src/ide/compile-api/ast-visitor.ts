@@ -137,7 +137,7 @@ import { LitStringInterpolatedInsert } from "../frames/parse-nodes/lit-string-in
 import { LitStringOrdinary } from "../frames/parse-nodes/lit-string-ordinary";
 import { LitStringText } from "../frames/parse-nodes/lit-string-text";
 import { MethodCallNode } from "../frames/parse-nodes/method-call-node";
-import { MethodNameUse } from "../frames/parse-nodes/method-name-use";
+import { MethodNameNode } from "../frames/parse-nodes/method-name-node";
 import { Multiple } from "../frames/parse-nodes/multiple";
 import { NewInstance } from "../frames/parse-nodes/new-instance";
 import { OptionalNode } from "../frames/parse-nodes/optional-node";
@@ -737,7 +737,7 @@ export function transform(
     return new IdAsn(node.matchedText, fieldId, scope);
   }
 
-  if (node instanceof Identifier || node instanceof MethodNameUse || node instanceof TestName) {
+  if (node instanceof Identifier || node instanceof MethodNameNode || node instanceof TestName) {
     // todo kludge - fix
     if (
       (fieldId.includes("_var") || fieldId.includes("_ident") || fieldId.includes("_enumVals")) &&

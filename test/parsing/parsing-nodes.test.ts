@@ -1980,7 +1980,8 @@ suite("Parsing Nodes", () => {
       "not (a + b)",
       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
     );
-    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.valid, `not(a+b)`, "", "", ``); //keywords no longer invalid for methodNameUse (but still as methodNameDef) - though won't compile
+    testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
+    testNodeParse(new ExprNode(f), `not (a+b)`, ParseStatus.valid, `not (a+b)`, "", "", ``);
   });
   test("Parse list of list of floats", () => {
     testNodeParse(

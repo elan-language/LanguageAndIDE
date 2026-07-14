@@ -14,7 +14,7 @@ import { ExprNode } from "../../src/ide/frames/parse-nodes/expr-node";
 import { Identifier } from "../../src/ide/frames/parse-nodes/identifier";
 import { InstanceProcRef } from "../../src/ide/frames/parse-nodes/instanceProcRef";
 import { MethodCallNode } from "../../src/ide/frames/parse-nodes/method-call-node";
-import { MethodNameUse } from "../../src/ide/frames/parse-nodes/method-name-use";
+import { MethodNameNode } from "../../src/ide/frames/parse-nodes/method-name-node";
 import { OptionalNode } from "../../src/ide/frames/parse-nodes/optional-node";
 import { allIds } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
@@ -45,7 +45,7 @@ suite("Symbol Completion Spec", () => {
       new MethodCallNode(f),
       "x",
       ParseStatus.incomplete,
-      MethodNameUse.name,
+      MethodNameNode.name,
       "x",
       [TokenType.method_function, TokenType.method_system],
       [],
@@ -221,7 +221,7 @@ suite("Symbol Completion Spec", () => {
       new InstanceProcRef(f),
       "foo.",
       ParseStatus.incomplete,
-      MethodNameUse.name,
+      MethodNameNode.name,
       "",
       [TokenType.method_procedure],
       [],
@@ -267,7 +267,7 @@ suite("Symbol Completion Spec", () => {
       new InstanceProcRef(f),
       "foo.wi",
       ParseStatus.valid,
-      MethodNameUse.name,
+      MethodNameNode.name,
       "wi",
       [TokenType.method_procedure],
       [],
