@@ -2,7 +2,6 @@ import { File } from "../frame-interfaces/file";
 import { KeywordCompletion, TokenType } from "../symbol-completion-helpers";
 import { AbstractAlternatives } from "./abstract-alternatives";
 import { IdentifierWithOptIndexes } from "./IdentiferWithOptIndexes";
-import { PropertyInstanceRef } from "./property-instance-ref";
 import { PropertyRef } from "./property-ref";
 
 export class AssignableNode extends AbstractAlternatives {
@@ -12,7 +11,6 @@ export class AssignableNode extends AbstractAlternatives {
     super(file);
     this.alternatives.push(new IdentifierWithOptIndexes(file));
     this.alternatives.push(new PropertyRef(file));
-    this.alternatives.push(new PropertyInstanceRef(file));
   }
 
   symbolCompletion_tokenTypes(): Set<TokenType> {

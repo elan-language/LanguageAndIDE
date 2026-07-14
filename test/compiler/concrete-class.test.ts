@@ -761,7 +761,7 @@ return [main, _tests];}`;
 
 main
   variable f set to new Foo()
-  assign f to f.withP1(1)
+  assign f to f.with_P1(1)
   call printNoLine(f.p1)
 end main
 
@@ -774,18 +774,16 @@ class Foo
 
   property p1 as Int
 
-  function withP1(p as Int) returns Foo
-    let copyOfThis be copy(this)
-    assign copyOfThis.p1 to p
-    return copyOfThis
-  end function
+  copy with_P1(p as Int) returns Foo
+    return copyWithPropertyUpdated(this, "p1", p)
+  end copy
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let f = system.initialise(await new Foo()._initialise());
-  f = (await f.withP1(1));
+  f = (await f.with_P1(1));
   await _stdlib.printNoLine(f.p1);
 }
 
@@ -803,10 +801,8 @@ class Foo {
 
   p1 = 0;
 
-  async withP1(p) {
-    const copyOfThis = _stdlib.copy(this);
-    copyOfThis.p1 = p;
-    return copyOfThis;
+  async with_P1(p) {
+    return _stdlib.copyWithPropertyUpdated(this, "p1", p);
   }
 
 }
@@ -856,17 +852,13 @@ class Foo
 
   property p3 as String
 
-  function withP1(p as Int) returns Foo
-    let copyOfThis be copy(this)
-    assign copyOfThis.p1 to p
-    return copyOfThis
-  end function
+  copy withP1(p as Int) returns Foo
+    return copyWithPropertyUpdated(this, "p1", p)
+  end copy
 
-  function withP2(p as String) returns Foo
-     let copyOfThis be copy(this)
-    assign copyOfThis.p2 to p
-    return copyOfThis
-  end function
+  copy withP2(p as String) returns Foo
+    return copyWithPropertyUpdated(this, "p2", p)
+  end copy
 
   procedure setup(pI as Int, pS as String)
     assign this.p1 to pI
@@ -910,15 +902,11 @@ class Foo {
   p3 = "";
 
   async withP1(p) {
-    const copyOfThis = _stdlib.copy(this);
-    copyOfThis.p1 = p;
-    return copyOfThis;
+    return _stdlib.copyWithPropertyUpdated(this, "p1", p);
   }
 
   async withP2(p) {
-    const copyOfThis = _stdlib.copy(this);
-    copyOfThis.p2 = p;
-    return copyOfThis;
+    return _stdlib.copyWithPropertyUpdated(this, "p2", p);
   }
 
   async setup(pI, pS) {
@@ -1087,10 +1075,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot set property: p1 directly.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_OverloadedConstructor", async () => {
@@ -2074,47 +2059,6 @@ end class`;
 
 main
   variable f set to new Foo()
-  assign f to f.withP1(f, 1)
-  call printNoLine(f.p1)
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  property p1 as Int
-
-  function withP1(nf as Foo, p as Int) returns Foo
-    assign nf.p1 to p
-    return nf
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_UpdatePropertyInFunction1", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
   assign f to f.withP1(1)
   call printNoLine(f.p1)
 end main
@@ -2144,108 +2088,13 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "May not set property: p1 in a function.ErrorMessages.html#compile_error",
     ]);
   });
 
-  test("Fail_UpdatePropertyInFunction2", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
-  variable b set to f.withP1(1)
-  call printNoLine(b.p1)
-end main
-
-class Bar
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  property p1 as Int
-
-end class
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as Int
-
-  function withP1(p as Int) returns Bar
-    variable nb set to new Bar()
-    assign nb.p1 to p
-    return nb
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_UpdatePropertyInFunction3", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
-  assign f to f.withP1(f, 1)
-  call printNoLine(f.p1)
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  property p1 as Int
-
-  function withP1(nff as Foo, p as Int) returns Foo
-    variable nf set to nff
-    assign nf.p1 to p
-    return nf
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May not set property: p1 in a function.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_InvalidUpdateProperty", async () => {
+  test("Fail_UpdatePropertyInFunction1", async () => {
     const code = `${testHeader}
 
 main
@@ -2260,53 +2109,12 @@ class Foo
   function toString() returns String
     return ""
   end function
+
   property p1 as Int
 
   function withP1(p as Int) returns Foo
-    variable copyOfThis set to new Foo()
-    assign copyOfThis.p1 to p
-    return copyOfThis
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'copyOfThis' is a restricted to use within the 'with...' instructionErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_InvalidUpdateProperty1", async () => {
-    const code = `${testHeader}
-
-main
-  variable f set to new Foo()
-  assign f to f.withP1(1)
-  call printNoLine(f.p1)
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as Int
-
-  function withP1(p as Int) returns Foo
-    variable cpy set to copy(this)
-    assign cpy.p1 to p
-    return cpy
+    assign this.p1 to p
+    return this
   end function
 end class`;
 
@@ -2372,10 +2180,6 @@ class Bar
   end constructor
 
   property prop_1 as String
-
-  function toString() returns String
-    return this.prop_1
-  end function
 
 end class`;
 
