@@ -35,7 +35,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected selected: boolean = false;
   private focused: boolean = false;
   private _classes = new Array<string>();
-  private holder: Frame;
+  protected holder: Frame;
   private _optional: boolean = false;
   protected map: Map<string, Selectable>;
   protected _parseStatus: ParseStatus;

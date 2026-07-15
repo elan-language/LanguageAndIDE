@@ -24,6 +24,7 @@ import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-as
 import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-from-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn";
+//import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn";
 import { FileAsn } from "../../compiler/syntax-nodes/file-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
@@ -173,6 +174,7 @@ import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
+import { ElanElanVisitorImpl } from "./ElanElanVisitorImpl";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -655,13 +657,21 @@ export function transform(
   }
 
   if (node instanceof TypeField) {
-    const rn = node.getRootNode();
-    if (rn && rn.status === ParseStatus.valid) {
-      const typeAsn = new TypeFieldAsn(node.getHtmlId());
+    const ctx = node.context;
 
-      typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+    if (ctx) {
+      const typeAsn = new TypeFieldAsn(node.getHtmlId());
+      const type = ctx.accept(new ElanElanVisitorImpl(scope, node.getHtmlId()));
+      typeAsn.type = type;
       return typeAsn;
     }
+    // const rn = node.getRootNode();
+    // if (rn && rn.status === ParseStatus.valid) {
+    //   const typeAsn = new TypeFieldAsn(node.getHtmlId());
+
+    //   typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+    //   return typeAsn;
+    // }
     return EmptyAsn.Instance;
   }
 
