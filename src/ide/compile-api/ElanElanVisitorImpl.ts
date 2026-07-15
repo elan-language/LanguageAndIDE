@@ -23,6 +23,12 @@ export class ElanElanVisitorImpl extends ElanElanVisitor {
     );
   }
 
+  visitFuncType(ctx: any) {
+    return ((this as any).visitChildren(ctx) as (IdAsn | TypeAsn)[]).filter(
+      (n) => n instanceof TypeAsn,
+    );
+  }
+
   override visitType(context: any) {
     if (context.VALUE_TYPE()) {
       const typeName = (this as any).visit(context.VALUE_TYPE()) as AstIdNode;
@@ -41,7 +47,10 @@ export class ElanElanVisitorImpl extends ElanElanVisitor {
     }
 
     if (context.tupleType()) {
-      return (this as any).visit(context.tupleType());
+      const gs = context.tupleType();
+      const gp = gs ? (this as any).visit(gs) : [];
+      const typeName = "Tuple";
+      return new TypeAsn(typeName, gp, this.fieldId, this.scope);
     }
 
     throw new Error(context.children.First().GetText());
