@@ -1334,7 +1334,7 @@ end function
 of differing types held together and referenced by a single identifier.</p>
 <p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
-<p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
+<p>Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
 <p>A <b>function</b> may return a <b>Tuple</b>.</p>
 <p>A Tuple differs from a List in that:</p>
@@ -1357,7 +1357,7 @@ of differing types held together and referenced by a single identifier.</p>
 <code>variable t set to (3, "apple", true)</code>
 
 <h3 class="no-TOC" id="deconstructTuple">Accessing items in a Tuple</h3>
-<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and its special properties <code>item_0</code>, etc. thus:</p>
+<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and the special properties <code>item_</code>N, thus:</p>
 <table class="tablePlain">
 <tr><td>
 <codeblock>main
@@ -1374,7 +1374,7 @@ end main
 </tr>
 </table>
 
-<p>And where p1 and p2 represent points each with 2-Tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
+<p>And where p1 and p2 represent points each with 2-tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
 <codeblock>function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
 end function
@@ -2007,7 +2007,7 @@ end function
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
-  <td>2-Tuple:<br>(<code>String</code>, <code>String</code>)</td>
+  <td>2-tuple:<br>(<code>String</code>, <code>String</code>)</td>
   <td>returns the last key combination pressed on the keyboard:<br>
       the key pressed and the modifier key's name (if also pressed)</td>
  </tr><tr id="getNumericKey">
@@ -2083,7 +2083,7 @@ end main
  <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. "z" or "@".</li>
  <li><el-method>getNumericKey</el-method> returns a string containing either a digit ("0".."9") or, if the last key pressed was not numeric, then "-1".
  A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
- <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
+ <li><el-method>getKeyWithModifier</el-method> returns a 2-tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
   <code>"Ctrl"</code> or <code>"Alt"</code> if simultaneously pressed.
   If no modifier had been pressed, the Tuple's second item will be the empty string. Note that a few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
  <li>Non-printable keys will also be returned as strings, e.g. <code>"Home"</code>, <code>"End"</code>, <code>"Delete"</code>, <code>"Tab"</code>,
@@ -2622,7 +2622,7 @@ end main
 </codeblock>
  </td>
  <td>&#x27f6;<br><br><br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
- <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="#InterpolatedString">interpolated strings <i class="fa">&#xf14c;</i></a>]<br>[defining a <a href="LangRefef.html#Tuple">2-Tuple <i class="fa">&#xf08e;</i></a>]<br>true<br>42</td>
+ <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="#InterpolatedString">interpolated strings <i class="fa">&#xf14c;</i></a>]<br>[defining a <a href="LangRefef.html#Tuple">2-tuple <i class="fa">&#xf08e;</i></a>]<br>true<br>42</td>
  </tr>
 </table>
 <hr>
@@ -2701,7 +2701,7 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using standalone functions</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-Tuple returned by <el-method>parseAsInt</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-tuple returned by <el-method>parseAsInt</el-method>:</p>
   <code>variable success set to parseAsInt(s).item_0</code>
   <code>variable value set to parseAsInt(s).item_1</code>
 <p>Always check the <code>Boolean</code> (<code>success</code>) before using the returned value (<code>value</code>) in case the latter is zero only because the parse was unsuccessful.</p>
