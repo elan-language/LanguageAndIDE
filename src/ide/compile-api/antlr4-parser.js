@@ -4057,352 +4057,432 @@ var ElanVisitor = class extends Ln.tree.ParseTreeVisitor {
   visitFile(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#importStatement.
-  visitImportStatement(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#namespace.
-  visitNamespace(ctx) {
+  // Visit a parse tree produced by ElanParser#global.
+  visitGlobal(ctx) {
     return this.visitChildren(ctx);
   }
   // Visit a parse tree produced by ElanParser#main.
   visitMain(ctx) {
     return this.visitChildren(ctx);
   }
+  // Visit a parse tree produced by ElanParser#function.
+  visitFunction(ctx) {
+    return this.visitChildren(ctx);
+  }
   // Visit a parse tree produced by ElanParser#test.
   visitTest(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#statementBlock.
-  visitStatementBlock(ctx) {
+  // Visit a parse tree produced by ElanParser#procedure.
+  visitProcedure(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#testStatements.
-  visitTestStatements(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#assert.
-  visitAssert(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#callStatement.
-  visitCallStatement(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#throwException.
-  visitThrowException(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#printStatement.
-  visitPrintStatement(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#varDef.
-  visitVarDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#assignment.
-  visitAssignment(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#inlineAsignment.
-  visitInlineAsignment(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#assignableValue.
-  visitAssignableValue(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#procedureCall.
-  visitProcedureCall(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#functionCall.
-  visitFunctionCall(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#systemCall.
-  visitSystemCall(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#input.
-  visitInput(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#argument.
-  visitArgument(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#argumentList.
-  visitArgumentList(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#procedureDef.
-  visitProcedureDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#procedureSignature.
-  visitProcedureSignature(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#procedureParameterList.
-  visitProcedureParameterList(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#parameterList.
-  visitParameterList(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#parameter.
-  visitParameter(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#procedureParameter.
-  visitProcedureParameter(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#functionDef.
-  visitFunctionDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#functionSignature.
-  visitFunctionSignature(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#constantDef.
-  visitConstantDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#enumDef.
-  visitEnumDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#enumType.
-  visitEnumType(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#enumValue.
-  visitEnumValue(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#classDef.
-  visitClassDef(ctx) {
-    return this.visitChildren(ctx);
-  }
-  // Visit a parse tree produced by ElanParser#mutableClass.
-  visitMutableClass(ctx) {
+  // Visit a parse tree produced by ElanParser#concreteClass.
+  visitConcreteClass(ctx) {
     return this.visitChildren(ctx);
   }
   // Visit a parse tree produced by ElanParser#abstractClass.
   visitAbstractClass(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#immutableClass.
-  visitImmutableClass(ctx) {
+  // Visit a parse tree produced by ElanParser#commentGlobal.
+  visitCommentGlobal(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#abstractImmutableClass.
-  visitAbstractImmutableClass(ctx) {
+  // Visit a parse tree produced by ElanParser#ordinaryStatement.
+  visitOrdinaryStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#inherits.
-  visitInherits(ctx) {
+  // Visit a parse tree produced by ElanParser#ifStatement.
+  visitIfStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#property.
-  visitProperty(ctx) {
+  // Visit a parse tree produced by ElanParser#whileLoop.
+  visitWhileLoop(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#forLoop.
+  visitForLoop(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#tryStatement.
+  visitTryStatement(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#commentStatement.
+  visitCommentStatement(ctx) {
     return this.visitChildren(ctx);
   }
   // Visit a parse tree produced by ElanParser#econstructor.
   visitEconstructor(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#newInstance.
-  visitNewInstance(ctx) {
+  // Visit a parse tree produced by ElanParser#functionMethod.
+  visitFunctionMethod(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#withClause.
-  visitWithClause(ctx) {
+  // Visit a parse tree produced by ElanParser#procedureMethod.
+  visitProcedureMethod(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#proceduralControlFlow.
-  visitProceduralControlFlow(ctx) {
+  // Visit a parse tree produced by ElanParser#copyMethod.
+  visitCopyMethod(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#if.
-  visitIf(ctx) {
+  // Visit a parse tree produced by ElanParser#commentMember.
+  visitCommentMember(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#for.
-  visitFor(ctx) {
+  // Visit a parse tree produced by ElanParser#mainTop.
+  visitMainTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#each.
-  visitEach(ctx) {
+  // Visit a parse tree produced by ElanParser#mainBottom.
+  visitMainBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#while.
-  visitWhile(ctx) {
+  // Visit a parse tree produced by ElanParser#functionTop.
+  visitFunctionTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#repeat.
-  visitRepeat(ctx) {
+  // Visit a parse tree produced by ElanParser#functionBottom.
+  visitFunctionBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#try.
-  visitTry(ctx) {
+  // Visit a parse tree produced by ElanParser#testTop.
+  visitTestTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#switch.
-  visitSwitch(ctx) {
+  // Visit a parse tree produced by ElanParser#testBottom.
+  visitTestBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#case.
-  visitCase(ctx) {
+  // Visit a parse tree produced by ElanParser#procedureTop.
+  visitProcedureTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#caseDefault.
-  visitCaseDefault(ctx) {
+  // Visit a parse tree produced by ElanParser#procedureBottom.
+  visitProcedureBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#expression.
-  visitExpression(ctx) {
+  // Visit a parse tree produced by ElanParser#concreteClassTop.
+  visitConcreteClassTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#bracketedExpression.
-  visitBracketedExpression(ctx) {
+  // Visit a parse tree produced by ElanParser#concreteClassBottom.
+  visitConcreteClassBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#ifExpression.
-  visitIfExpression(ctx) {
+  // Visit a parse tree produced by ElanParser#abstractClassTop.
+  visitAbstractClassTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#elseExpression.
-  visitElseExpression(ctx) {
+  // Visit a parse tree produced by ElanParser#abstractClassBottom.
+  visitAbstractClassBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#lambda.
-  visitLambda(ctx) {
+  // Visit a parse tree produced by ElanParser#constant.
+  visitConstant(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#index.
-  visitIndex(ctx) {
+  // Visit a parse tree produced by ElanParser#enum.
+  visitEnum(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#range.
-  visitRange(ctx) {
+  // Visit a parse tree produced by ElanParser#assert.
+  visitAssert(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#value.
-  visitValue(ctx) {
+  // Visit a parse tree produced by ElanParser#letStatement.
+  visitLetStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#scopeQualifier.
-  visitScopeQualifier(ctx) {
+  // Visit a parse tree produced by ElanParser#print.
+  visitPrint(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literal.
-  visitLiteral(ctx) {
+  // Visit a parse tree produced by ElanParser#variableDefinition.
+  visitVariableDefinition(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalValue.
-  visitLiteralValue(ctx) {
+  // Visit a parse tree produced by ElanParser#assignment.
+  visitAssignment(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#dataStructureDefinition.
-  visitDataStructureDefinition(ctx) {
+  // Visit a parse tree produced by ElanParser#inputStatement.
+  visitInputStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalDataStructure.
-  visitLiteralDataStructure(ctx) {
+  // Visit a parse tree produced by ElanParser#procedureCall.
+  visitProcedureCall(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#tupleDefinition.
-  visitTupleDefinition(ctx) {
+  // Visit a parse tree produced by ElanParser#throwStatement.
+  visitThrowStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalTuple.
-  visitLiteralTuple(ctx) {
+  // Visit a parse tree produced by ElanParser#returnStatement.
+  visitReturnStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#deconstructedTuple.
-  visitDeconstructedTuple(ctx) {
+  // Visit a parse tree produced by ElanParser#elseIfClause.
+  visitElseIfClause(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#listDefinition.
-  visitListDefinition(ctx) {
+  // Visit a parse tree produced by ElanParser#elseClause.
+  visitElseClause(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalList.
-  visitLiteralList(ctx) {
+  // Visit a parse tree produced by ElanParser#catchStatement.
+  visitCatchStatement(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#listDecomp.
-  visitListDecomp(ctx) {
+  // Visit a parse tree produced by ElanParser#ifStatementTop.
+  visitIfStatementTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#arrayDefinition.
-  visitArrayDefinition(ctx) {
+  // Visit a parse tree produced by ElanParser#ifStatementBottom.
+  visitIfStatementBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#dictionaryDefinition.
-  visitDictionaryDefinition(ctx) {
+  // Visit a parse tree produced by ElanParser#whileLoopTop.
+  visitWhileLoopTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalDictionary.
-  visitLiteralDictionary(ctx) {
+  // Visit a parse tree produced by ElanParser#whileLoopBottom.
+  visitWhileLoopBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#kvp.
-  visitKvp(ctx) {
+  // Visit a parse tree produced by ElanParser#forLoopTop.
+  visitForLoopTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#literalKvp.
-  visitLiteralKvp(ctx) {
+  // Visit a parse tree produced by ElanParser#forLoopBottom.
+  visitForLoopBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#unaryOp.
-  visitUnaryOp(ctx) {
+  // Visit a parse tree produced by ElanParser#tryStatementTop.
+  visitTryStatementTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#binaryOp.
-  visitBinaryOp(ctx) {
+  // Visit a parse tree produced by ElanParser#tryStatementBottom.
+  visitTryStatementBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#arithmeticOp.
-  visitArithmeticOp(ctx) {
+  // Visit a parse tree produced by ElanParser#constructorTop.
+  visitConstructorTop(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#logicalOp.
-  visitLogicalOp(ctx) {
+  // Visit a parse tree produced by ElanParser#constructorBottom.
+  visitConstructorBottom(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#conditionalOp.
-  visitConditionalOp(ctx) {
+  // Visit a parse tree produced by ElanParser#property.
+  visitProperty(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#functionMethodTop.
+  visitFunctionMethodTop(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#functionMethodBottom.
+  visitFunctionMethodBottom(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#procedureMethodTop.
+  visitProcedureMethodTop(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#procedureMethodBottom.
+  visitProcedureMethodBottom(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#copyMethodTop.
+  visitCopyMethodTop(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#copyMethodBottom.
+  visitCopyMethodBottom(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#abstractFunction.
+  visitAbstractFunction(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#abstractProcedure.
+  visitAbstractProcedure(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#identifier.
+  visitIdentifier(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#assignable.
+  visitAssignable(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#methodName.
+  visitMethodName(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#testName.
+  visitTestName(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#typeName.
+  visitTypeName(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#constantValue.
+  visitConstantValue(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#argList.
+  visitArgList(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#argument.
+  visitArgument(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#paramsList.
+  visitParamsList(ctx) {
     return this.visitChildren(ctx);
   }
   // Visit a parse tree produced by ElanParser#type.
   visitType(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#dataStructureType.
-  visitDataStructureType(ctx) {
+  // Visit a parse tree produced by ElanParser#enumValuesList.
+  visitEnumValuesList(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#genericSpecifier.
-  visitGenericSpecifier(ctx) {
+  // Visit a parse tree produced by ElanParser#procRef.
+  visitProcRef(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#tupleType.
-  visitTupleType(ctx) {
+  // Visit a parse tree produced by ElanParser#assertActual.
+  visitAssertActual(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#typeList.
-  visitTypeList(ctx) {
+  // Visit a parse tree produced by ElanParser#litValue.
+  visitLitValue(ctx) {
     return this.visitChildren(ctx);
   }
-  // Visit a parse tree produced by ElanParser#funcType.
-  visitFuncType(ctx) {
+  // Visit a parse tree produced by ElanParser#litInt.
+  visitLitInt(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#litFloat.
+  visitLitFloat(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#enumValue.
+  visitEnumValue(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#litRegExp.
+  visitLitRegExp(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#litString.
+  visitLitString(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#thisInstance.
+  visitThisInstance(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#index.
+  visitIndex(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#identifierWithOptIndexes.
+  visitIdentifierWithOptIndexes(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#propertyRef.
+  visitPropertyRef(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#expression.
+  visitExpression(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#term.
+  visitTerm(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#chainable.
+  visitChainable(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#bracketedExpression.
+  visitBracketedExpression(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#unaryExpression.
+  visitUnaryExpression(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#binaryExpression.
+  visitBinaryExpression(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#tuple.
+  visitTuple(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#methodCall.
+  visitMethodCall(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#binaryOperator.
+  visitBinaryOperator(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#ifExpression.
+  visitIfExpression(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#newInstance.
+  visitNewInstance(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#paramDef.
+  visitParamDef(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#typeGeneric.
+  visitTypeGeneric(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#typeTuple.
+  visitTypeTuple(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#lambda.
+  visitLambda(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#list.
+  visitList(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#interpolatedString.
+  visitInterpolatedString(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#segment.
+  visitSegment(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#textSegment.
+  visitTextSegment(ctx) {
+    return this.visitChildren(ctx);
+  }
+  // Visit a parse tree produced by ElanParser#fieldSegment.
+  visitFieldSegment(ctx) {
     return this.visitChildren(ctx);
   }
 };
@@ -4411,8 +4491,8 @@ var ElanVisitor = class extends Ln.tree.ParseTreeVisitor {
 var serializedATN = [
   4,
   0,
-  101,
-  952,
+  95,
+  858,
   6,
   -1,
   2,
@@ -4875,38 +4955,14 @@ var serializedATN = [
   114,
   7,
   114,
-  2,
-  115,
-  7,
-  115,
-  2,
-  116,
-  7,
-  116,
-  2,
-  117,
-  7,
-  117,
-  2,
-  118,
-  7,
-  118,
-  2,
-  119,
-  7,
-  119,
-  2,
-  120,
-  7,
-  120,
-  2,
-  121,
-  7,
-  121,
-  2,
-  122,
-  7,
-  122,
+  1,
+  0,
+  1,
+  0,
+  1,
+  0,
+  1,
+  0,
   1,
   0,
   1,
@@ -4919,57 +4975,28 @@ var serializedATN = [
   0,
   1,
   1,
-  4,
   1,
-  254,
-  8,
   1,
-  11,
   1,
-  12,
   1,
-  255,
+  1,
+  1,
   1,
   2,
+  1,
+  2,
+  1,
+  2,
+  1,
   3,
-  2,
-  259,
-  8,
-  2,
   1,
-  2,
-  5,
-  2,
-  262,
-  8,
-  2,
-  10,
-  2,
-  12,
-  2,
-  265,
-  9,
-  2,
+  3,
   1,
-  2,
+  3,
   1,
-  2,
-  5,
-  2,
-  269,
-  8,
-  2,
-  10,
-  2,
-  12,
-  2,
-  272,
-  9,
-  2,
+  3,
   1,
-  2,
-  1,
-  2,
+  3,
   1,
   3,
   1,
@@ -4989,12 +5016,6 @@ var serializedATN = [
   1,
   4,
   1,
-  4,
-  1,
-  4,
-  1,
-  5,
-  1,
   5,
   1,
   5,
@@ -5007,7 +5028,9 @@ var serializedATN = [
   1,
   6,
   1,
-  7,
+  6,
+  1,
+  6,
   1,
   7,
   1,
@@ -5031,6 +5054,16 @@ var serializedATN = [
   1,
   8,
   1,
+  8,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
   9,
   1,
   9,
@@ -5053,7 +5086,17 @@ var serializedATN = [
   1,
   10,
   1,
-  11,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
   1,
   11,
   1,
@@ -5072,30 +5115,6 @@ var serializedATN = [
   12,
   1,
   12,
-  1,
-  12,
-  1,
-  12,
-  1,
-  12,
-  1,
-  12,
-  1,
-  12,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
   1,
   13,
   1,
@@ -5116,16 +5135,6 @@ var serializedATN = [
   14,
   1,
   14,
-  1,
-  14,
-  1,
-  15,
-  1,
-  15,
-  1,
-  15,
-  1,
-  15,
   1,
   15,
   1,
@@ -5143,7 +5152,7 @@ var serializedATN = [
   1,
   16,
   1,
-  17,
+  16,
   1,
   17,
   1,
@@ -5171,9 +5180,15 @@ var serializedATN = [
   1,
   19,
   1,
-  20,
+  19,
   1,
-  20,
+  19,
+  1,
+  19,
+  1,
+  19,
+  1,
+  19,
   1,
   20,
   1,
@@ -5187,8 +5202,6 @@ var serializedATN = [
   1,
   21,
   1,
-  21,
-  1,
   22,
   1,
   22,
@@ -5199,11 +5212,13 @@ var serializedATN = [
   1,
   22,
   1,
-  23,
+  22,
   1,
-  23,
+  22,
   1,
-  23,
+  22,
+  1,
+  22,
   1,
   23,
   1,
@@ -5237,7 +5252,7 @@ var serializedATN = [
   1,
   25,
   1,
-  26,
+  25,
   1,
   26,
   1,
@@ -5248,20 +5263,6 @@ var serializedATN = [
   26,
   1,
   26,
-  1,
-  26,
-  1,
-  26,
-  1,
-  26,
-  1,
-  26,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
   1,
   27,
   1,
@@ -5277,15 +5278,7 @@ var serializedATN = [
   1,
   28,
   1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
+  28,
   1,
   29,
   1,
@@ -5301,25 +5294,15 @@ var serializedATN = [
   1,
   30,
   1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
   31,
   1,
   31,
   1,
   31,
   1,
-  31,
+  32,
   1,
-  31,
-  1,
-  31,
-  1,
-  31,
+  32,
   1,
   32,
   1,
@@ -5355,6 +5338,26 @@ var serializedATN = [
   1,
   34,
   1,
+  34,
+  1,
+  34,
+  1,
+  34,
+  1,
+  34,
+  1,
+  34,
+  1,
+  35,
+  1,
+  35,
+  1,
+  35,
+  1,
+  35,
+  1,
+  35,
+  1,
   35,
   1,
   35,
@@ -5370,6 +5373,20 @@ var serializedATN = [
   36,
   1,
   36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
   1,
   37,
   1,
@@ -5385,6 +5402,12 @@ var serializedATN = [
   1,
   38,
   1,
+  38,
+  1,
+  39,
+  1,
+  39,
+  1,
   39,
   1,
   39,
@@ -5397,7 +5420,9 @@ var serializedATN = [
   1,
   40,
   1,
-  41,
+  40,
+  1,
+  40,
   1,
   41,
   1,
@@ -5405,7 +5430,9 @@ var serializedATN = [
   1,
   41,
   1,
-  42,
+  41,
+  1,
+  41,
   1,
   42,
   1,
@@ -5416,14 +5443,6 @@ var serializedATN = [
   42,
   1,
   42,
-  1,
-  42,
-  1,
-  42,
-  1,
-  43,
-  1,
-  43,
   1,
   43,
   1,
@@ -5443,20 +5462,6 @@ var serializedATN = [
   1,
   44,
   1,
-  44,
-  1,
-  44,
-  1,
-  44,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
   45,
   1,
   45,
@@ -5482,14 +5487,6 @@ var serializedATN = [
   46,
   1,
   46,
-  1,
-  46,
-  1,
-  47,
-  1,
-  47,
-  1,
-  47,
   1,
   47,
   1,
@@ -5510,14 +5507,6 @@ var serializedATN = [
   48,
   1,
   48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  49,
   1,
   49,
   1,
@@ -5539,7 +5528,13 @@ var serializedATN = [
   1,
   50,
   1,
-  51,
+  50,
+  1,
+  50,
+  1,
+  50,
+  1,
+  50,
   1,
   51,
   1,
@@ -5549,9 +5544,11 @@ var serializedATN = [
   1,
   51,
   1,
-  52,
+  51,
   1,
-  52,
+  51,
+  1,
+  51,
   1,
   52,
   1,
@@ -5566,191 +5563,120 @@ var serializedATN = [
   53,
   1,
   53,
-  1,
+  5,
   53,
-  1,
-  53,
-  1,
-  53,
-  1,
-  53,
-  1,
-  53,
-  1,
-  54,
-  1,
-  54,
-  1,
-  54,
-  1,
-  54,
-  1,
-  54,
-  1,
-  55,
-  1,
-  55,
-  1,
-  55,
-  1,
-  55,
-  1,
-  55,
-  1,
-  56,
-  1,
-  56,
-  1,
-  56,
-  1,
-  56,
-  1,
-  56,
-  1,
-  56,
-  1,
-  57,
-  1,
-  57,
-  1,
-  57,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  62,
-  1,
-  62,
-  1,
-  62,
-  1,
-  62,
-  1,
-  62,
-  1,
-  63,
-  1,
-  63,
-  1,
-  63,
-  1,
-  63,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  3,
-  64,
-  635,
+  536,
   8,
+  53,
+  10,
+  53,
+  12,
+  53,
+  539,
+  9,
+  53,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  1,
+  54,
+  3,
+  54,
+  550,
+  8,
+  54,
+  1,
+  55,
+  1,
+  55,
+  1,
+  55,
+  1,
+  56,
+  1,
+  56,
+  1,
+  56,
+  1,
+  56,
+  1,
+  56,
+  1,
+  57,
+  1,
+  57,
+  1,
+  57,
+  1,
+  58,
+  1,
+  58,
+  1,
+  58,
+  1,
+  59,
+  1,
+  59,
+  1,
+  59,
+  1,
+  60,
+  1,
+  60,
+  1,
+  61,
+  4,
+  61,
+  572,
+  8,
+  61,
+  11,
+  61,
+  12,
+  61,
+  573,
+  1,
+  61,
+  1,
+  61,
+  1,
+  62,
+  4,
+  62,
+  579,
+  8,
+  62,
+  11,
+  62,
+  12,
+  62,
+  580,
+  1,
+  63,
+  1,
+  63,
+  1,
+  64,
+  1,
   64,
   1,
   65,
   1,
   65,
   1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  3,
-  65,
-  659,
-  8,
-  65,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  1,
   66,
   1,
   66,
@@ -5759,39 +5685,9 @@ var serializedATN = [
   1,
   67,
   1,
-  67,
-  1,
-  67,
-  1,
-  67,
-  1,
   68,
   1,
   68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  68,
-  1,
-  69,
-  1,
-  69,
-  1,
-  69,
   1,
   69,
   1,
@@ -5800,8 +5696,6 @@ var serializedATN = [
   70,
   1,
   70,
-  1,
-  71,
   1,
   71,
   1,
@@ -5835,11 +5729,13 @@ var serializedATN = [
   1,
   78,
   1,
-  78,
-  1,
   79,
   1,
   79,
+  1,
+  79,
+  1,
+  80,
   1,
   80,
   1,
@@ -5853,165 +5749,355 @@ var serializedATN = [
   1,
   82,
   1,
+  82,
+  1,
+  82,
+  1,
   83,
   1,
+  83,
+  1,
+  83,
+  1,
+  83,
+  1,
+  83,
+  1,
+  83,
+  1,
+  83,
+  5,
+  83,
+  634,
+  8,
+  83,
+  10,
+  83,
+  12,
+  83,
+  637,
+  9,
   83,
   1,
   84,
   1,
   84,
+  5,
+  84,
+  641,
+  8,
+  84,
+  10,
+  84,
+  12,
+  84,
+  644,
+  9,
+  84,
   1,
   85,
   1,
+  85,
+  5,
+  85,
+  648,
+  8,
+  85,
+  10,
+  85,
+  12,
+  85,
+  651,
+  9,
   85,
   1,
   86,
   1,
   86,
-  1,
-  87,
-  1,
-  87,
-  1,
-  88,
-  1,
-  88,
-  1,
-  89,
-  1,
-  89,
-  1,
-  89,
-  1,
-  90,
-  1,
-  90,
-  1,
-  90,
-  1,
-  91,
-  1,
-  91,
-  5,
-  91,
-  736,
-  8,
-  91,
-  10,
-  91,
-  12,
-  91,
-  739,
-  9,
-  91,
-  1,
-  91,
-  1,
-  91,
-  1,
-  92,
-  1,
-  92,
-  1,
-  93,
-  1,
-  93,
-  1,
-  94,
-  1,
-  94,
-  5,
-  94,
-  749,
-  8,
-  94,
-  10,
-  94,
-  12,
-  94,
-  752,
-  9,
-  94,
-  1,
-  95,
-  1,
-  95,
-  1,
-  95,
-  1,
-  95,
-  3,
-  95,
-  758,
-  8,
-  95,
-  1,
-  96,
-  1,
-  96,
-  1,
-  96,
-  3,
-  96,
-  763,
-  8,
-  96,
-  1,
-  96,
-  1,
-  96,
-  1,
-  96,
-  3,
-  96,
-  768,
-  8,
-  96,
-  1,
-  97,
-  1,
-  97,
-  1,
-  97,
-  5,
-  97,
-  773,
-  8,
-  97,
-  10,
-  97,
-  12,
-  97,
-  776,
-  9,
-  97,
-  1,
-  97,
-  1,
-  97,
-  1,
-  98,
   4,
-  98,
-  781,
+  86,
+  655,
   8,
-  98,
+  86,
   11,
-  98,
+  86,
   12,
-  98,
-  782,
+  86,
+  656,
+  1,
+  87,
+  1,
+  87,
+  4,
+  87,
+  661,
+  8,
+  87,
+  11,
+  87,
+  12,
+  87,
+  662,
+  1,
+  88,
+  1,
+  88,
+  5,
+  88,
+  667,
+  8,
+  88,
+  10,
+  88,
+  12,
+  88,
+  670,
+  9,
+  88,
+  1,
+  89,
+  1,
+  89,
+  1,
+  89,
+  1,
+  89,
+  3,
+  89,
+  676,
+  8,
+  89,
+  1,
+  90,
+  1,
+  90,
+  1,
+  90,
+  1,
+  90,
+  5,
+  90,
+  682,
+  8,
+  90,
+  10,
+  90,
+  12,
+  90,
+  685,
+  9,
+  90,
+  1,
+  90,
+  1,
+  90,
+  1,
+  91,
+  1,
+  91,
+  1,
+  91,
+  5,
+  91,
+  692,
+  8,
+  91,
+  10,
+  91,
+  12,
+  91,
+  695,
+  9,
+  91,
+  1,
+  91,
+  1,
+  91,
+  1,
+  92,
+  4,
+  92,
+  700,
+  8,
+  92,
+  11,
+  92,
+  12,
+  92,
+  701,
+  1,
+  92,
+  1,
+  92,
+  1,
+  93,
+  4,
+  93,
+  707,
+  8,
+  93,
+  11,
+  93,
+  12,
+  93,
+  708,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  95,
+  1,
+  95,
+  1,
+  96,
+  1,
+  96,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  3,
+  97,
+  728,
+  8,
+  97,
+  1,
+  97,
+  1,
+  97,
   1,
   98,
   1,
+  98,
+  1,
+  98,
+  3,
+  98,
+  735,
+  8,
   98,
   1,
   99,
   1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  3,
+  99,
+  759,
+  8,
   99,
   1,
   100,
   1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  3,
+  100,
+  786,
+  8,
   100,
   1,
   101,
@@ -6021,128 +6107,47 @@ var serializedATN = [
   101,
   3,
   101,
-  794,
+  791,
   8,
   101,
   1,
-  101,
-  1,
-  101,
-  1,
-  102,
-  1,
   102,
   1,
   102,
   3,
   102,
+  795,
+  8,
+  102,
+  1,
+  103,
+  1,
+  103,
+  1,
+  104,
+  1,
+  104,
+  3,
+  104,
   801,
   8,
-  102,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  1,
-  103,
-  3,
-  103,
-  825,
-  8,
-  103,
-  1,
   104,
   1,
   104,
-  1,
+  5,
   104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  1,
-  104,
-  3,
-  104,
-  852,
+  804,
   8,
   104,
+  10,
+  104,
+  12,
+  104,
+  807,
+  9,
+  104,
+  1,
+  105,
   1,
   105,
   1,
@@ -6151,217 +6156,104 @@ var serializedATN = [
   105,
   3,
   105,
-  857,
+  813,
   8,
   105,
   1,
   106,
   1,
   106,
+  1,
+  106,
   3,
   106,
-  861,
+  818,
   8,
   106,
   1,
   107,
   1,
   107,
-  1,
-  108,
-  1,
-  108,
   3,
-  108,
-  867,
+  107,
+  822,
   8,
+  107,
+  1,
   108,
   1,
   108,
-  5,
-  108,
-  870,
+  1,
+  109,
+  1,
+  109,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  1,
+  110,
+  3,
+  110,
+  848,
   8,
-  108,
-  10,
-  108,
-  12,
-  108,
-  873,
-  9,
-  108,
-  1,
-  109,
-  1,
-  109,
-  5,
-  109,
-  877,
-  8,
-  109,
-  10,
-  109,
-  12,
-  109,
-  880,
-  9,
-  109,
-  1,
   110,
-  1,
-  110,
-  5,
-  110,
-  884,
-  8,
-  110,
-  10,
-  110,
-  12,
-  110,
-  887,
-  9,
-  110,
-  1,
-  111,
-  1,
-  111,
-  1,
-  111,
   1,
   111,
   3,
   111,
-  893,
+  851,
   8,
   111,
   1,
   112,
   1,
-  112,
-  1,
-  112,
-  3,
-  112,
-  898,
-  8,
   112,
   1,
   113,
   1,
-  113,
-  3,
-  113,
-  902,
-  8,
   113,
   1,
   114,
   1,
   114,
-  1,
-  115,
-  1,
-  115,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  1,
-  116,
-  3,
-  116,
-  928,
-  8,
-  116,
-  1,
-  117,
-  3,
-  117,
-  931,
-  8,
-  117,
-  1,
-  118,
-  1,
-  118,
-  1,
-  119,
-  1,
-  119,
-  1,
-  120,
-  1,
-  120,
-  1,
-  121,
-  3,
-  121,
-  940,
-  8,
-  121,
-  1,
-  121,
-  1,
-  121,
-  3,
-  121,
-  944,
-  8,
-  121,
-  1,
-  122,
-  4,
-  122,
-  947,
-  8,
-  122,
-  11,
-  122,
-  12,
-  122,
-  948,
-  1,
-  122,
-  1,
-  122,
   0,
   0,
-  123,
+  115,
   1,
   1,
   3,
@@ -6553,13 +6445,13 @@ var serializedATN = [
   189,
   95,
   191,
-  96,
+  0,
   193,
-  97,
+  0,
   195,
-  98,
+  0,
   197,
-  99,
+  0,
   199,
   0,
   201,
@@ -6592,25 +6484,21 @@ var serializedATN = [
   0,
   229,
   0,
-  231,
-  0,
-  233,
-  0,
-  235,
-  0,
-  237,
-  0,
-  239,
-  0,
-  241,
-  0,
-  243,
-  100,
-  245,
-  101,
   1,
   0,
+  11,
+  2,
+  0,
   10,
+  10,
+  13,
+  13,
+  2,
+  0,
+  9,
+  9,
+  32,
+  32,
   2,
   0,
   10,
@@ -6620,19 +6508,19 @@ var serializedATN = [
   1,
   0,
   48,
-  57,
-  5,
+  49,
+  3,
   0,
-  10,
-  10,
-  13,
-  13,
-  39,
-  39,
-  92,
-  92,
-  133,
-  133,
+  48,
+  57,
+  65,
+  70,
+  97,
+  102,
+  1,
+  0,
+  48,
+  57,
   2,
   0,
   34,
@@ -6647,10 +6535,8 @@ var serializedATN = [
   13,
   133,
   133,
-  2,
+  1,
   0,
-  69,
-  69,
   101,
   101,
   2,
@@ -6665,21 +6551,7 @@ var serializedATN = [
   32,
   160,
   160,
-  3,
-  0,
-  48,
-  57,
-  65,
-  70,
-  97,
-  102,
-  2,
-  0,
-  9,
-  9,
-  32,
-  32,
-  979,
+  882,
   0,
   1,
   1,
@@ -7250,5344 +7122,4760 @@ var serializedATN = [
   0,
   0,
   0,
-  0,
-  191,
   1,
-  0,
-  0,
-  0,
-  0,
-  193,
-  1,
-  0,
-  0,
-  0,
-  0,
-  195,
-  1,
-  0,
-  0,
-  0,
-  0,
-  197,
-  1,
-  0,
-  0,
-  0,
-  0,
-  243,
-  1,
-  0,
-  0,
-  0,
-  0,
-  245,
-  1,
-  0,
-  0,
-  0,
-  1,
-  247,
-  1,
-  0,
-  0,
-  0,
-  3,
-  253,
-  1,
-  0,
-  0,
-  0,
-  5,
-  258,
-  1,
-  0,
-  0,
-  0,
-  7,
-  275,
-  1,
-  0,
-  0,
-  0,
-  9,
-  277,
-  1,
-  0,
-  0,
-  0,
-  11,
-  286,
-  1,
-  0,
-  0,
-  0,
-  13,
-  290,
-  1,
-  0,
-  0,
-  0,
-  15,
-  293,
-  1,
-  0,
-  0,
-  0,
-  17,
-  300,
-  1,
-  0,
-  0,
-  0,
-  19,
-  305,
-  1,
-  0,
-  0,
-  0,
-  21,
-  310,
-  1,
-  0,
-  0,
-  0,
-  23,
-  316,
-  1,
-  0,
-  0,
-  0,
-  25,
-  322,
-  1,
-  0,
-  0,
-  0,
-  27,
-  331,
-  1,
-  0,
-  0,
-  0,
-  29,
-  343,
-  1,
-  0,
-  0,
-  0,
-  31,
-  349,
-  1,
-  0,
-  0,
-  0,
-  33,
-  357,
-  1,
-  0,
-  0,
-  0,
-  35,
-  361,
-  1,
-  0,
-  0,
-  0,
-  37,
-  366,
-  1,
-  0,
-  0,
-  0,
-  39,
-  371,
-  1,
-  0,
-  0,
-  0,
-  41,
-  375,
-  1,
-  0,
-  0,
-  0,
-  43,
-  380,
-  1,
-  0,
-  0,
-  0,
-  45,
-  384,
-  1,
-  0,
-  0,
-  0,
-  47,
-  389,
-  1,
-  0,
-  0,
-  0,
-  49,
-  398,
-  1,
-  0,
-  0,
-  0,
-  51,
-  405,
-  1,
-  0,
-  0,
-  0,
-  53,
-  408,
-  1,
-  0,
-  0,
-  0,
-  55,
-  418,
-  1,
-  0,
-  0,
-  0,
-  57,
-  425,
-  1,
-  0,
-  0,
-  0,
-  59,
-  428,
-  1,
-  0,
-  0,
-  0,
-  61,
-  437,
-  1,
-  0,
-  0,
-  0,
-  63,
-  443,
-  1,
-  0,
-  0,
-  0,
-  65,
-  450,
-  1,
-  0,
-  0,
-  0,
-  67,
-  454,
-  1,
-  0,
-  0,
-  0,
-  69,
-  462,
-  1,
-  0,
-  0,
-  0,
-  71,
-  467,
-  1,
-  0,
-  0,
-  0,
-  73,
-  471,
-  1,
-  0,
-  0,
-  0,
-  75,
-  475,
-  1,
-  0,
-  0,
-  0,
-  77,
-  479,
-  1,
-  0,
-  0,
-  0,
-  79,
-  482,
-  1,
-  0,
-  0,
-  0,
-  81,
-  485,
-  1,
-  0,
-  0,
-  0,
-  83,
-  488,
-  1,
-  0,
-  0,
-  0,
-  85,
-  492,
-  1,
-  0,
-  0,
-  0,
-  87,
-  500,
-  1,
-  0,
-  0,
-  0,
-  89,
-  508,
-  1,
-  0,
-  0,
-  0,
-  91,
-  514,
-  1,
-  0,
-  0,
-  0,
-  93,
-  522,
-  1,
-  0,
-  0,
-  0,
-  95,
-  532,
-  1,
-  0,
-  0,
-  0,
-  97,
-  541,
-  1,
-  0,
-  0,
-  0,
-  99,
-  548,
-  1,
-  0,
-  0,
-  0,
-  101,
-  555,
-  1,
-  0,
-  0,
-  0,
-  103,
-  559,
-  1,
-  0,
-  0,
-  0,
-  105,
-  564,
-  1,
-  0,
-  0,
-  0,
-  107,
-  571,
-  1,
-  0,
-  0,
-  0,
-  109,
-  578,
-  1,
-  0,
-  0,
-  0,
-  111,
-  583,
-  1,
-  0,
-  0,
-  0,
-  113,
-  588,
-  1,
-  0,
-  0,
-  0,
-  115,
-  594,
-  1,
-  0,
-  0,
-  0,
-  117,
-  597,
-  1,
-  0,
-  0,
-  0,
-  119,
-  601,
-  1,
-  0,
-  0,
-  0,
-  121,
-  605,
-  1,
-  0,
-  0,
-  0,
-  123,
-  610,
-  1,
-  0,
-  0,
-  0,
-  125,
-  616,
-  1,
-  0,
-  0,
-  0,
-  127,
-  621,
-  1,
-  0,
-  0,
-  0,
-  129,
-  634,
-  1,
-  0,
-  0,
-  0,
-  131,
-  658,
-  1,
-  0,
-  0,
-  0,
-  133,
-  660,
-  1,
-  0,
-  0,
-  0,
-  135,
-  666,
-  1,
-  0,
-  0,
-  0,
-  137,
-  671,
-  1,
-  0,
-  0,
-  0,
-  139,
-  682,
-  1,
-  0,
-  0,
-  0,
-  141,
-  687,
-  1,
-  0,
-  0,
-  0,
-  143,
-  689,
-  1,
-  0,
-  0,
-  0,
-  145,
-  692,
-  1,
-  0,
-  0,
-  0,
-  147,
-  694,
-  1,
-  0,
-  0,
-  0,
-  149,
-  696,
-  1,
-  0,
-  0,
-  0,
-  151,
-  698,
-  1,
-  0,
-  0,
-  0,
-  153,
-  700,
-  1,
-  0,
-  0,
-  0,
-  155,
-  702,
-  1,
-  0,
-  0,
-  0,
-  157,
-  704,
-  1,
-  0,
-  0,
-  0,
-  159,
-  707,
-  1,
-  0,
-  0,
-  0,
-  161,
-  709,
-  1,
-  0,
-  0,
-  0,
-  163,
-  711,
-  1,
-  0,
-  0,
-  0,
-  165,
-  713,
-  1,
-  0,
-  0,
-  0,
-  167,
-  715,
-  1,
-  0,
-  0,
-  0,
-  169,
-  717,
-  1,
-  0,
-  0,
-  0,
-  171,
-  719,
-  1,
-  0,
-  0,
-  0,
-  173,
-  721,
-  1,
-  0,
-  0,
-  0,
-  175,
-  723,
-  1,
-  0,
-  0,
-  0,
-  177,
-  725,
-  1,
-  0,
-  0,
-  0,
-  179,
-  727,
-  1,
-  0,
-  0,
-  0,
-  181,
-  730,
-  1,
-  0,
-  0,
-  0,
-  183,
-  733,
-  1,
-  0,
-  0,
-  0,
-  185,
-  742,
-  1,
-  0,
-  0,
-  0,
-  187,
-  744,
-  1,
-  0,
-  0,
-  0,
-  189,
-  746,
-  1,
-  0,
-  0,
-  0,
-  191,
-  753,
-  1,
-  0,
-  0,
-  0,
-  193,
-  767,
-  1,
-  0,
-  0,
-  0,
-  195,
-  769,
-  1,
-  0,
-  0,
-  0,
-  197,
-  780,
-  1,
-  0,
-  0,
-  0,
-  199,
-  786,
-  1,
-  0,
-  0,
-  0,
-  201,
-  788,
-  1,
-  0,
-  0,
-  0,
-  203,
-  790,
-  1,
-  0,
-  0,
-  0,
-  205,
-  800,
-  1,
-  0,
-  0,
-  0,
-  207,
-  824,
-  1,
-  0,
-  0,
-  0,
-  209,
-  851,
-  1,
-  0,
-  0,
-  0,
-  211,
-  856,
-  1,
-  0,
-  0,
-  0,
-  213,
-  860,
-  1,
-  0,
-  0,
-  0,
-  215,
-  862,
-  1,
-  0,
-  0,
-  0,
-  217,
-  866,
-  1,
-  0,
-  0,
-  0,
-  219,
-  874,
-  1,
-  0,
-  0,
-  0,
-  221,
-  881,
-  1,
-  0,
-  0,
-  0,
-  223,
-  892,
-  1,
-  0,
-  0,
-  0,
-  225,
-  897,
-  1,
-  0,
-  0,
-  0,
-  227,
-  901,
-  1,
-  0,
-  0,
-  0,
-  229,
-  903,
-  1,
-  0,
-  0,
-  0,
   231,
-  905,
   1,
   0,
   0,
   0,
-  233,
-  927,
-  1,
-  0,
-  0,
-  0,
-  235,
-  930,
-  1,
-  0,
-  0,
-  0,
-  237,
-  932,
-  1,
-  0,
-  0,
-  0,
-  239,
-  934,
-  1,
-  0,
-  0,
-  0,
-  241,
-  936,
-  1,
-  0,
-  0,
-  0,
-  243,
-  943,
-  1,
-  0,
-  0,
-  0,
-  245,
-  946,
-  1,
-  0,
-  0,
-  0,
-  247,
-  248,
-  5,
-  70,
-  0,
-  0,
-  248,
-  249,
-  5,
-  117,
-  0,
-  0,
-  249,
-  250,
-  5,
-  110,
-  0,
-  0,
-  250,
-  251,
-  5,
-  99,
-  0,
-  0,
-  251,
-  2,
-  1,
-  0,
-  0,
-  0,
-  252,
-  254,
-  7,
-  0,
-  0,
-  0,
-  253,
-  252,
-  1,
-  0,
-  0,
-  0,
-  254,
-  255,
-  1,
-  0,
-  0,
-  0,
-  255,
-  253,
-  1,
-  0,
-  0,
-  0,
-  255,
-  256,
-  1,
-  0,
-  0,
-  0,
-  256,
-  4,
-  1,
-  0,
-  0,
-  0,
-  257,
-  259,
-  3,
-  3,
-  1,
-  0,
-  258,
-  257,
-  1,
-  0,
-  0,
-  0,
-  258,
-  259,
-  1,
-  0,
-  0,
-  0,
-  259,
-  263,
-  1,
-  0,
-  0,
-  0,
-  260,
-  262,
-  3,
-  213,
-  106,
-  0,
-  261,
-  260,
-  1,
-  0,
-  0,
-  0,
-  262,
-  265,
-  1,
-  0,
-  0,
-  0,
-  263,
-  261,
-  1,
-  0,
-  0,
-  0,
-  263,
-  264,
-  1,
-  0,
-  0,
-  0,
-  264,
-  266,
-  1,
-  0,
-  0,
-  0,
-  265,
-  263,
-  1,
-  0,
-  0,
-  0,
-  266,
-  270,
-  3,
-  7,
-  3,
-  0,
-  267,
-  269,
-  3,
-  199,
-  99,
-  0,
-  268,
-  267,
-  1,
-  0,
-  0,
-  0,
-  269,
-  272,
-  1,
-  0,
-  0,
-  0,
-  270,
-  268,
-  1,
-  0,
-  0,
-  0,
-  270,
-  271,
-  1,
-  0,
-  0,
-  0,
-  271,
-  273,
-  1,
-  0,
-  0,
-  0,
-  272,
-  270,
-  1,
-  0,
-  0,
-  0,
-  273,
-  274,
-  6,
-  2,
-  0,
-  0,
-  274,
-  6,
-  1,
-  0,
-  0,
-  0,
-  275,
-  276,
-  5,
-  35,
-  0,
-  0,
-  276,
-  8,
-  1,
-  0,
-  0,
-  0,
-  277,
-  278,
-  5,
-  97,
-  0,
-  0,
-  278,
-  279,
-  5,
-  98,
-  0,
-  0,
-  279,
-  280,
-  5,
-  115,
-  0,
-  0,
-  280,
-  281,
-  5,
-  116,
-  0,
-  0,
-  281,
-  282,
-  5,
-  114,
-  0,
-  0,
-  282,
-  283,
-  5,
-  97,
-  0,
-  0,
-  283,
-  284,
-  5,
-  99,
-  0,
-  0,
-  284,
-  285,
-  5,
-  116,
-  0,
-  0,
-  285,
-  10,
-  1,
-  0,
-  0,
-  0,
-  286,
-  287,
-  5,
-  97,
-  0,
-  0,
-  287,
-  288,
-  5,
-  110,
-  0,
-  0,
-  288,
-  289,
-  5,
-  100,
-  0,
-  0,
-  289,
-  12,
-  1,
-  0,
-  0,
-  0,
-  290,
-  291,
-  5,
-  97,
-  0,
-  0,
-  291,
-  292,
-  5,
-  115,
-  0,
-  0,
-  292,
-  14,
-  1,
-  0,
-  0,
-  0,
-  293,
-  294,
-  5,
-  97,
-  0,
-  0,
-  294,
-  295,
-  5,
-  115,
-  0,
-  0,
-  295,
-  296,
-  5,
-  115,
-  0,
-  0,
-  296,
-  297,
-  5,
-  101,
-  0,
-  0,
-  297,
-  298,
-  5,
-  114,
-  0,
-  0,
-  298,
-  299,
-  5,
-  116,
-  0,
-  0,
-  299,
-  16,
-  1,
-  0,
-  0,
-  0,
-  300,
-  301,
-  5,
-  99,
-  0,
-  0,
-  301,
-  302,
-  5,
-  97,
-  0,
-  0,
-  302,
-  303,
-  5,
-  108,
-  0,
-  0,
-  303,
-  304,
-  5,
-  108,
-  0,
-  0,
-  304,
-  18,
-  1,
-  0,
-  0,
-  0,
-  305,
-  306,
-  5,
-  99,
-  0,
-  0,
-  306,
-  307,
-  5,
-  97,
-  0,
-  0,
-  307,
-  308,
-  5,
-  115,
-  0,
-  0,
-  308,
-  309,
-  5,
-  101,
-  0,
-  0,
-  309,
-  20,
-  1,
-  0,
-  0,
-  0,
-  310,
-  311,
-  5,
-  99,
-  0,
-  0,
-  311,
-  312,
-  5,
-  97,
-  0,
-  0,
-  312,
-  313,
-  5,
-  116,
-  0,
-  0,
-  313,
-  314,
-  5,
-  99,
-  0,
-  0,
-  314,
-  315,
-  5,
-  104,
-  0,
-  0,
-  315,
-  22,
-  1,
-  0,
-  0,
-  0,
-  316,
-  317,
-  5,
-  99,
-  0,
-  0,
-  317,
-  318,
-  5,
-  108,
-  0,
-  0,
-  318,
-  319,
-  5,
-  97,
-  0,
-  0,
-  319,
-  320,
-  5,
-  115,
-  0,
-  0,
-  320,
-  321,
-  5,
-  115,
-  0,
-  0,
-  321,
-  24,
-  1,
-  0,
-  0,
-  0,
-  322,
-  323,
-  5,
-  99,
-  0,
-  0,
-  323,
-  324,
-  5,
-  111,
-  0,
-  0,
-  324,
-  325,
-  5,
-  110,
-  0,
-  0,
-  325,
-  326,
-  5,
-  115,
-  0,
-  0,
-  326,
-  327,
-  5,
-  116,
-  0,
-  0,
-  327,
-  328,
-  5,
-  97,
-  0,
-  0,
-  328,
-  329,
-  5,
-  110,
-  0,
-  0,
-  329,
-  330,
-  5,
-  116,
-  0,
-  0,
-  330,
-  26,
-  1,
-  0,
-  0,
-  0,
-  331,
-  332,
-  5,
-  99,
-  0,
-  0,
-  332,
-  333,
-  5,
-  111,
-  0,
-  0,
-  333,
-  334,
-  5,
-  110,
-  0,
-  0,
-  334,
-  335,
-  5,
-  115,
-  0,
-  0,
-  335,
-  336,
-  5,
-  116,
-  0,
-  0,
-  336,
-  337,
-  5,
-  114,
-  0,
-  0,
-  337,
-  338,
-  5,
-  117,
-  0,
-  0,
-  338,
-  339,
-  5,
-  99,
-  0,
-  0,
-  339,
-  340,
-  5,
-  116,
-  0,
-  0,
-  340,
-  341,
-  5,
-  111,
-  0,
-  0,
-  341,
-  342,
-  5,
-  114,
-  0,
-  0,
-  342,
-  28,
-  1,
-  0,
-  0,
-  0,
-  343,
-  344,
-  5,
-  99,
-  0,
-  0,
-  344,
-  345,
-  5,
-  117,
-  0,
-  0,
-  345,
-  346,
-  5,
-  114,
-  0,
-  0,
-  346,
-  347,
-  5,
-  114,
-  0,
-  0,
-  347,
-  348,
-  5,
-  121,
-  0,
-  0,
-  348,
-  30,
-  1,
-  0,
-  0,
-  0,
-  349,
-  350,
-  5,
-  100,
-  0,
-  0,
-  350,
-  351,
-  5,
-  101,
-  0,
-  0,
-  351,
-  352,
-  5,
-  102,
-  0,
-  0,
-  352,
-  353,
-  5,
-  97,
-  0,
-  0,
-  353,
-  354,
-  5,
-  117,
-  0,
-  0,
-  354,
-  355,
-  5,
-  108,
-  0,
-  0,
-  355,
-  356,
-  5,
-  116,
-  0,
-  0,
-  356,
-  32,
-  1,
-  0,
-  0,
-  0,
-  357,
-  358,
-  5,
-  100,
-  0,
-  0,
-  358,
-  359,
-  5,
-  105,
-  0,
-  0,
-  359,
-  360,
-  5,
-  118,
-  0,
-  0,
-  360,
-  34,
-  1,
-  0,
-  0,
-  0,
-  361,
-  362,
-  5,
-  101,
-  0,
-  0,
-  362,
-  363,
-  5,
-  97,
-  0,
-  0,
-  363,
-  364,
-  5,
-  99,
-  0,
-  0,
-  364,
-  365,
-  5,
-  104,
-  0,
-  0,
-  365,
-  36,
-  1,
-  0,
-  0,
-  0,
-  366,
-  367,
-  5,
-  101,
-  0,
-  0,
-  367,
-  368,
-  5,
-  108,
-  0,
-  0,
-  368,
-  369,
-  5,
-  115,
-  0,
-  0,
-  369,
-  370,
-  5,
-  101,
-  0,
-  0,
-  370,
-  38,
-  1,
-  0,
-  0,
-  0,
-  371,
-  372,
-  5,
-  101,
-  0,
-  0,
-  372,
-  373,
-  5,
-  110,
-  0,
-  0,
-  373,
-  374,
-  5,
-  100,
-  0,
-  0,
-  374,
-  40,
-  1,
-  0,
-  0,
-  0,
-  375,
-  376,
-  5,
-  101,
-  0,
-  0,
-  376,
-  377,
-  5,
-  110,
-  0,
-  0,
-  377,
-  378,
-  5,
-  117,
-  0,
-  0,
-  378,
-  379,
-  5,
-  109,
-  0,
-  0,
-  379,
-  42,
-  1,
-  0,
-  0,
-  0,
-  380,
-  381,
-  5,
-  102,
-  0,
-  0,
-  381,
-  382,
-  5,
-  111,
-  0,
-  0,
-  382,
-  383,
-  5,
-  114,
-  0,
-  0,
-  383,
-  44,
-  1,
-  0,
-  0,
-  0,
-  384,
-  385,
-  5,
-  102,
-  0,
-  0,
-  385,
-  386,
-  5,
-  114,
-  0,
-  0,
-  386,
-  387,
-  5,
-  111,
-  0,
-  0,
-  387,
-  388,
-  5,
-  109,
-  0,
-  0,
-  388,
-  46,
-  1,
-  0,
-  0,
-  0,
-  389,
-  390,
-  5,
-  102,
-  0,
-  0,
-  390,
-  391,
-  5,
-  117,
-  0,
-  0,
-  391,
-  392,
-  5,
-  110,
-  0,
-  0,
-  392,
-  393,
-  5,
-  99,
-  0,
-  0,
-  393,
-  394,
-  5,
-  116,
-  0,
-  0,
-  394,
-  395,
-  5,
-  105,
-  0,
-  0,
-  395,
-  396,
-  5,
-  111,
-  0,
-  0,
-  396,
-  397,
-  5,
-  110,
-  0,
-  0,
-  397,
-  48,
-  1,
-  0,
-  0,
-  0,
-  398,
-  399,
-  5,
-  103,
-  0,
-  0,
-  399,
-  400,
-  5,
-  108,
-  0,
-  0,
-  400,
-  401,
-  5,
-  111,
-  0,
-  0,
-  401,
-  402,
-  5,
-  98,
-  0,
-  0,
-  402,
-  403,
-  5,
-  97,
-  0,
-  0,
-  403,
-  404,
-  5,
-  108,
-  0,
-  0,
-  404,
-  50,
-  1,
-  0,
-  0,
-  0,
-  405,
-  406,
-  5,
-  105,
-  0,
-  0,
-  406,
-  407,
-  5,
-  102,
-  0,
-  0,
-  407,
-  52,
-  1,
-  0,
-  0,
-  0,
-  408,
-  409,
-  5,
-  105,
-  0,
-  0,
-  409,
-  410,
-  5,
-  109,
-  0,
-  0,
-  410,
-  411,
-  5,
-  109,
-  0,
-  0,
-  411,
-  412,
-  5,
-  117,
-  0,
-  0,
-  412,
-  413,
-  5,
-  116,
-  0,
-  0,
-  413,
-  414,
-  5,
-  97,
-  0,
-  0,
-  414,
-  415,
-  5,
-  98,
-  0,
-  0,
-  415,
-  416,
-  5,
-  108,
-  0,
-  0,
-  416,
-  417,
-  5,
-  101,
-  0,
-  0,
-  417,
-  54,
-  1,
-  0,
-  0,
-  0,
-  418,
-  419,
-  5,
-  105,
-  0,
-  0,
-  419,
-  420,
-  5,
-  109,
-  0,
-  0,
-  420,
-  421,
-  5,
-  112,
-  0,
-  0,
-  421,
-  422,
-  5,
-  111,
-  0,
-  0,
-  422,
-  423,
-  5,
-  114,
-  0,
-  0,
-  423,
-  424,
-  5,
-  116,
-  0,
-  0,
-  424,
-  56,
-  1,
-  0,
-  0,
-  0,
-  425,
-  426,
-  5,
-  105,
-  0,
-  0,
-  426,
-  427,
-  5,
-  110,
-  0,
-  0,
-  427,
-  58,
-  1,
-  0,
-  0,
-  0,
-  428,
-  429,
-  5,
-  105,
-  0,
-  0,
-  429,
-  430,
-  5,
-  110,
-  0,
-  0,
-  430,
-  431,
-  5,
-  104,
-  0,
-  0,
-  431,
-  432,
-  5,
-  101,
-  0,
-  0,
-  432,
-  433,
-  5,
-  114,
-  0,
-  0,
-  433,
-  434,
-  5,
-  105,
-  0,
-  0,
-  434,
-  435,
-  5,
-  116,
-  0,
-  0,
-  435,
-  436,
-  5,
-  115,
-  0,
-  0,
-  436,
-  60,
-  1,
-  0,
-  0,
-  0,
-  437,
-  438,
-  5,
-  105,
-  0,
-  0,
-  438,
-  439,
-  5,
-  110,
-  0,
-  0,
-  439,
-  440,
-  5,
-  112,
-  0,
-  0,
-  440,
-  441,
-  5,
-  117,
-  0,
-  0,
-  441,
-  442,
-  5,
-  116,
-  0,
-  0,
-  442,
-  62,
-  1,
-  0,
-  0,
-  0,
-  443,
-  444,
-  5,
-  108,
-  0,
-  0,
-  444,
-  445,
-  5,
-  97,
-  0,
-  0,
-  445,
-  446,
-  5,
-  109,
-  0,
-  0,
-  446,
-  447,
-  5,
-  98,
-  0,
-  0,
-  447,
-  448,
-  5,
-  100,
-  0,
-  0,
-  448,
-  449,
-  5,
-  97,
-  0,
-  0,
-  449,
-  64,
-  1,
-  0,
-  0,
-  0,
-  450,
-  451,
-  5,
-  108,
-  0,
-  0,
-  451,
-  452,
-  5,
-  101,
-  0,
-  0,
-  452,
-  453,
-  5,
-  116,
-  0,
-  0,
-  453,
-  66,
-  1,
-  0,
-  0,
-  0,
-  454,
-  455,
-  5,
-  108,
-  0,
-  0,
-  455,
-  456,
-  5,
-  105,
-  0,
-  0,
-  456,
-  457,
-  5,
-  98,
-  0,
-  0,
-  457,
-  458,
-  5,
-  114,
-  0,
-  0,
-  458,
-  459,
-  5,
-  97,
-  0,
-  0,
-  459,
-  460,
-  5,
-  114,
-  0,
-  0,
-  460,
-  461,
-  5,
-  121,
-  0,
-  0,
-  461,
-  68,
-  1,
-  0,
-  0,
-  0,
-  462,
-  463,
-  5,
-  109,
-  0,
-  0,
-  463,
-  464,
-  5,
-  97,
-  0,
-  0,
-  464,
-  465,
-  5,
-  105,
-  0,
-  0,
-  465,
-  466,
-  5,
-  110,
-  0,
-  0,
-  466,
-  70,
-  1,
-  0,
-  0,
-  0,
-  467,
-  468,
-  5,
-  109,
-  0,
-  0,
-  468,
-  469,
-  5,
-  111,
-  0,
-  0,
-  469,
-  470,
-  5,
-  100,
-  0,
-  0,
-  470,
-  72,
-  1,
-  0,
-  0,
-  0,
-  471,
-  472,
-  5,
-  110,
-  0,
-  0,
-  472,
-  473,
-  5,
-  101,
-  0,
-  0,
-  473,
-  474,
-  5,
-  119,
-  0,
-  0,
-  474,
-  74,
-  1,
-  0,
-  0,
-  0,
-  475,
-  476,
-  5,
-  110,
-  0,
-  0,
-  476,
-  477,
-  5,
-  111,
-  0,
-  0,
-  477,
-  478,
-  5,
-  116,
-  0,
-  0,
-  478,
-  76,
-  1,
-  0,
-  0,
-  0,
-  479,
-  480,
-  5,
-  111,
-  0,
-  0,
-  480,
-  481,
-  5,
-  102,
-  0,
-  0,
-  481,
-  78,
-  1,
-  0,
-  0,
-  0,
-  482,
-  483,
-  5,
-  105,
-  0,
-  0,
-  483,
-  484,
-  5,
-  115,
-  0,
-  0,
-  484,
-  80,
-  1,
-  0,
-  0,
-  0,
-  485,
-  486,
-  5,
-  111,
-  0,
-  0,
-  486,
-  487,
-  5,
-  114,
-  0,
-  0,
-  487,
-  82,
-  1,
-  0,
-  0,
-  0,
-  488,
-  489,
-  5,
-  111,
-  0,
-  0,
-  489,
-  490,
-  5,
-  117,
-  0,
-  0,
-  490,
-  491,
-  5,
-  116,
-  0,
-  0,
-  491,
-  84,
-  1,
-  0,
-  0,
-  0,
-  492,
-  493,
-  5,
-  112,
-  0,
-  0,
-  493,
-  494,
-  5,
-  97,
-  0,
-  0,
-  494,
-  495,
-  5,
-  99,
-  0,
-  0,
-  495,
-  496,
-  5,
-  107,
-  0,
-  0,
-  496,
-  497,
-  5,
-  97,
-  0,
-  0,
-  497,
-  498,
-  5,
-  103,
-  0,
-  0,
-  498,
-  499,
-  5,
-  101,
-  0,
-  0,
-  499,
-  86,
-  1,
-  0,
-  0,
-  0,
-  500,
-  501,
-  5,
-  112,
-  0,
-  0,
-  501,
-  502,
-  5,
-  97,
-  0,
-  0,
-  502,
-  503,
-  5,
-  114,
-  0,
-  0,
-  503,
-  504,
-  5,
-  116,
-  0,
-  0,
-  504,
-  505,
-  5,
-  105,
-  0,
-  0,
-  505,
-  506,
-  5,
-  97,
-  0,
-  0,
-  506,
-  507,
-  5,
-  108,
-  0,
-  0,
-  507,
-  88,
-  1,
-  0,
-  0,
-  0,
-  508,
-  509,
-  5,
-  112,
-  0,
-  0,
-  509,
-  510,
-  5,
-  114,
-  0,
-  0,
-  510,
-  511,
-  5,
-  105,
-  0,
-  0,
-  511,
-  512,
-  5,
-  110,
-  0,
-  0,
-  512,
-  513,
-  5,
-  116,
-  0,
-  0,
-  513,
-  90,
-  1,
-  0,
-  0,
-  0,
-  514,
-  515,
-  5,
-  112,
-  0,
-  0,
-  515,
-  516,
-  5,
-  114,
-  0,
-  0,
-  516,
-  517,
-  5,
-  105,
-  0,
-  0,
-  517,
-  518,
-  5,
-  118,
-  0,
-  0,
-  518,
-  519,
-  5,
-  97,
-  0,
-  0,
-  519,
-  520,
-  5,
-  116,
-  0,
-  0,
-  520,
-  521,
-  5,
-  101,
-  0,
-  0,
-  521,
-  92,
-  1,
-  0,
-  0,
-  0,
-  522,
-  523,
-  5,
-  112,
-  0,
-  0,
-  523,
-  524,
-  5,
-  114,
-  0,
-  0,
-  524,
-  525,
-  5,
-  111,
-  0,
-  0,
-  525,
-  526,
-  5,
-  99,
-  0,
-  0,
-  526,
-  527,
-  5,
-  101,
-  0,
-  0,
-  527,
-  528,
-  5,
-  100,
-  0,
-  0,
-  528,
-  529,
-  5,
-  117,
-  0,
-  0,
-  529,
-  530,
-  5,
-  114,
-  0,
-  0,
-  530,
-  531,
-  5,
-  101,
-  0,
-  0,
-  531,
-  94,
-  1,
-  0,
-  0,
-  0,
-  532,
-  533,
-  5,
-  112,
-  0,
-  0,
-  533,
-  534,
-  5,
-  114,
-  0,
-  0,
-  534,
-  535,
-  5,
-  111,
-  0,
-  0,
-  535,
-  536,
-  5,
-  112,
-  0,
-  0,
-  536,
-  537,
-  5,
-  101,
-  0,
-  0,
-  537,
-  538,
-  5,
-  114,
-  0,
-  0,
-  538,
-  539,
-  5,
-  116,
-  0,
-  0,
-  539,
-  540,
-  5,
-  121,
-  0,
-  0,
-  540,
-  96,
-  1,
-  0,
-  0,
-  0,
-  541,
-  542,
-  5,
-  114,
-  0,
-  0,
-  542,
-  543,
-  5,
-  101,
-  0,
-  0,
-  543,
-  544,
-  5,
-  112,
-  0,
-  0,
-  544,
-  545,
-  5,
-  101,
-  0,
-  0,
-  545,
-  546,
-  5,
-  97,
-  0,
-  0,
-  546,
-  547,
-  5,
-  116,
-  0,
-  0,
-  547,
-  98,
-  1,
-  0,
-  0,
-  0,
-  548,
-  549,
-  5,
-  114,
-  0,
-  0,
-  549,
-  550,
-  5,
-  101,
-  0,
-  0,
-  550,
-  551,
-  5,
-  116,
-  0,
-  0,
-  551,
-  552,
-  5,
-  117,
-  0,
-  0,
-  552,
-  553,
-  5,
-  114,
-  0,
-  0,
-  553,
-  554,
-  5,
-  110,
-  0,
-  0,
-  554,
-  100,
-  1,
-  0,
-  0,
-  0,
-  555,
-  556,
-  5,
-  115,
-  0,
-  0,
-  556,
-  557,
-  5,
-  101,
-  0,
-  0,
-  557,
-  558,
-  5,
-  116,
-  0,
-  0,
-  558,
-  102,
-  1,
-  0,
-  0,
-  0,
-  559,
-  560,
-  5,
-  115,
-  0,
-  0,
-  560,
-  561,
-  5,
-  116,
-  0,
-  0,
-  561,
-  562,
-  5,
-  101,
-  0,
-  0,
-  562,
-  563,
-  5,
-  112,
-  0,
-  0,
-  563,
-  104,
-  1,
-  0,
-  0,
-  0,
-  564,
-  565,
-  5,
-  115,
-  0,
-  0,
-  565,
-  566,
-  5,
-  119,
-  0,
-  0,
-  566,
-  567,
-  5,
-  105,
-  0,
-  0,
-  567,
-  568,
-  5,
-  116,
-  0,
-  0,
-  568,
-  569,
-  5,
-  99,
-  0,
-  0,
-  569,
-  570,
-  5,
-  104,
-  0,
-  0,
-  570,
-  106,
-  1,
-  0,
-  0,
-  0,
-  571,
-  572,
-  5,
-  115,
-  0,
-  0,
-  572,
-  573,
-  5,
-  121,
-  0,
-  0,
-  573,
-  574,
-  5,
-  115,
-  0,
-  0,
-  574,
-  575,
-  5,
-  116,
-  0,
-  0,
-  575,
-  576,
-  5,
-  101,
-  0,
-  0,
-  576,
-  577,
-  5,
-  109,
-  0,
-  0,
-  577,
-  108,
-  1,
-  0,
-  0,
-  0,
-  578,
-  579,
-  5,
-  116,
-  0,
-  0,
-  579,
-  580,
-  5,
-  101,
-  0,
-  0,
-  580,
-  581,
-  5,
-  115,
-  0,
-  0,
-  581,
-  582,
-  5,
-  116,
-  0,
-  0,
-  582,
-  110,
-  1,
-  0,
-  0,
-  0,
-  583,
-  584,
-  5,
-  116,
-  0,
-  0,
-  584,
-  585,
-  5,
-  104,
-  0,
-  0,
-  585,
-  586,
-  5,
-  105,
-  0,
-  0,
-  586,
-  587,
-  5,
-  115,
-  0,
-  0,
-  587,
-  112,
-  1,
-  0,
-  0,
-  0,
-  588,
-  589,
-  5,
-  116,
-  0,
-  0,
-  589,
-  590,
-  5,
-  104,
-  0,
-  0,
-  590,
-  591,
-  5,
-  114,
-  0,
-  0,
-  591,
-  592,
-  5,
-  111,
-  0,
-  0,
-  592,
-  593,
-  5,
-  119,
-  0,
-  0,
-  593,
-  114,
-  1,
-  0,
-  0,
-  0,
-  594,
-  595,
-  5,
-  116,
-  0,
-  0,
-  595,
-  596,
-  5,
-  111,
-  0,
-  0,
-  596,
-  116,
-  1,
-  0,
-  0,
-  0,
-  597,
-  598,
-  5,
-  116,
-  0,
-  0,
-  598,
-  599,
-  5,
-  114,
-  0,
-  0,
-  599,
-  600,
-  5,
-  121,
-  0,
-  0,
-  600,
-  118,
-  1,
-  0,
-  0,
-  0,
-  601,
-  602,
-  5,
-  118,
-  0,
-  0,
-  602,
-  603,
-  5,
-  97,
-  0,
-  0,
-  603,
-  604,
-  5,
-  114,
-  0,
-  0,
-  604,
-  120,
-  1,
-  0,
-  0,
-  0,
-  605,
-  606,
-  5,
-  119,
-  0,
-  0,
-  606,
-  607,
-  5,
-  104,
-  0,
-  0,
-  607,
-  608,
-  5,
-  101,
-  0,
-  0,
-  608,
-  609,
-  5,
-  110,
-  0,
-  0,
-  609,
-  122,
-  1,
-  0,
-  0,
-  0,
-  610,
-  611,
-  5,
-  119,
-  0,
-  0,
-  611,
-  612,
-  5,
-  104,
-  0,
-  0,
-  612,
-  613,
-  5,
-  105,
-  0,
-  0,
-  613,
-  614,
-  5,
-  108,
-  0,
-  0,
-  614,
-  615,
-  5,
-  101,
-  0,
-  0,
-  615,
-  124,
-  1,
-  0,
-  0,
-  0,
-  616,
-  617,
-  5,
-  119,
-  0,
-  0,
-  617,
-  618,
-  5,
-  105,
-  0,
-  0,
-  618,
-  619,
-  5,
-  116,
-  0,
-  0,
-  619,
-  620,
-  5,
-  104,
-  0,
-  0,
-  620,
-  126,
-  1,
-  0,
-  0,
-  0,
-  621,
-  622,
-  5,
-  120,
-  0,
-  0,
-  622,
-  623,
-  5,
-  111,
-  0,
-  0,
-  623,
-  624,
-  5,
-  114,
-  0,
-  0,
-  624,
-  128,
-  1,
-  0,
-  0,
-  0,
-  625,
-  626,
-  5,
-  116,
-  0,
-  0,
-  626,
-  627,
-  5,
-  114,
-  0,
-  0,
-  627,
-  628,
-  5,
-  117,
-  0,
-  0,
-  628,
-  635,
-  5,
-  101,
-  0,
-  0,
-  629,
-  630,
-  5,
-  102,
-  0,
-  0,
-  630,
-  631,
-  5,
-  97,
-  0,
-  0,
-  631,
-  632,
-  5,
-  108,
-  0,
-  0,
-  632,
-  633,
-  5,
-  115,
-  0,
-  0,
-  633,
-  635,
-  5,
-  101,
-  0,
-  0,
-  634,
-  625,
-  1,
-  0,
-  0,
-  0,
-  634,
-  629,
-  1,
-  0,
-  0,
-  0,
-  635,
-  130,
-  1,
-  0,
-  0,
-  0,
-  636,
-  637,
-  5,
-  73,
-  0,
-  0,
-  637,
-  638,
-  5,
-  110,
-  0,
-  0,
-  638,
-  659,
-  5,
-  116,
-  0,
-  0,
-  639,
-  640,
-  5,
-  70,
-  0,
-  0,
-  640,
-  641,
-  5,
-  108,
-  0,
-  0,
-  641,
-  642,
-  5,
-  111,
-  0,
-  0,
-  642,
-  643,
-  5,
-  97,
-  0,
-  0,
-  643,
-  659,
-  5,
-  116,
-  0,
-  0,
-  644,
-  645,
-  5,
-  67,
-  0,
-  0,
-  645,
-  646,
-  5,
-  104,
-  0,
-  0,
-  646,
-  647,
-  5,
-  97,
-  0,
-  0,
-  647,
-  659,
-  5,
-  114,
-  0,
-  0,
-  648,
-  649,
-  5,
-  83,
-  0,
-  0,
-  649,
-  650,
-  5,
-  116,
-  0,
-  0,
-  650,
-  651,
-  5,
-  114,
-  0,
-  0,
-  651,
-  652,
-  5,
-  105,
-  0,
-  0,
-  652,
-  653,
-  5,
-  110,
-  0,
-  0,
-  653,
-  659,
-  5,
-  103,
-  0,
-  0,
-  654,
-  655,
-  5,
-  66,
-  0,
-  0,
-  655,
-  656,
-  5,
-  111,
-  0,
-  0,
-  656,
-  657,
-  5,
-  111,
-  0,
-  0,
-  657,
-  659,
-  5,
-  108,
-  0,
-  0,
-  658,
-  636,
-  1,
-  0,
-  0,
-  0,
-  658,
-  639,
-  1,
-  0,
-  0,
-  0,
-  658,
-  644,
-  1,
-  0,
-  0,
-  0,
-  658,
-  648,
-  1,
-  0,
-  0,
-  0,
-  658,
-  654,
-  1,
-  0,
-  0,
-  0,
-  659,
-  132,
-  1,
-  0,
-  0,
-  0,
-  660,
-  661,
-  5,
-  65,
-  0,
-  0,
-  661,
-  662,
-  5,
-  114,
-  0,
-  0,
-  662,
-  663,
-  5,
-  114,
-  0,
-  0,
-  663,
-  664,
-  5,
-  97,
-  0,
-  0,
-  664,
-  665,
-  5,
-  121,
-  0,
-  0,
-  665,
-  134,
-  1,
-  0,
-  0,
-  0,
-  666,
-  667,
-  5,
-  76,
-  0,
-  0,
-  667,
-  668,
-  5,
-  105,
-  0,
-  0,
-  668,
-  669,
-  5,
-  115,
-  0,
-  0,
-  669,
-  670,
-  5,
-  116,
-  0,
-  0,
-  670,
-  136,
-  1,
-  0,
-  0,
-  0,
-  671,
-  672,
-  5,
-  68,
-  0,
-  0,
-  672,
-  673,
-  5,
-  105,
-  0,
-  0,
-  673,
-  674,
-  5,
-  99,
-  0,
-  0,
-  674,
-  675,
-  5,
-  116,
-  0,
-  0,
-  675,
-  676,
-  5,
-  105,
-  0,
-  0,
-  676,
-  677,
-  5,
-  111,
-  0,
-  0,
-  677,
-  678,
-  5,
-  110,
-  0,
-  0,
-  678,
-  679,
-  5,
-  97,
-  0,
-  0,
-  679,
-  680,
-  5,
-  114,
-  0,
-  0,
-  680,
-  681,
-  5,
-  121,
-  0,
-  0,
-  681,
-  138,
-  1,
-  0,
-  0,
-  0,
-  682,
-  683,
-  5,
-  73,
-  0,
-  0,
-  683,
-  684,
-  5,
-  116,
-  0,
-  0,
-  684,
-  685,
-  5,
-  101,
-  0,
-  0,
-  685,
-  686,
-  5,
-  114,
-  0,
-  0,
-  686,
-  140,
-  1,
-  0,
-  0,
-  0,
-  687,
-  688,
-  5,
-  61,
-  0,
-  0,
-  688,
-  142,
-  1,
-  0,
-  0,
-  0,
-  689,
-  690,
-  5,
-  45,
-  0,
-  0,
-  690,
-  691,
-  5,
-  62,
-  0,
-  0,
-  691,
-  144,
-  1,
-  0,
-  0,
-  0,
-  692,
-  693,
-  5,
-  123,
-  0,
-  0,
-  693,
-  146,
-  1,
-  0,
-  0,
-  0,
-  694,
-  695,
-  5,
-  125,
-  0,
-  0,
-  695,
-  148,
-  1,
-  0,
-  0,
-  0,
-  696,
-  697,
-  5,
-  91,
-  0,
-  0,
-  697,
-  150,
-  1,
-  0,
-  0,
-  0,
-  698,
-  699,
-  5,
-  93,
-  0,
-  0,
-  699,
-  152,
-  1,
-  0,
-  0,
-  0,
-  700,
-  701,
-  5,
-  40,
-  0,
-  0,
-  701,
-  154,
-  1,
-  0,
-  0,
-  0,
-  702,
-  703,
-  5,
-  41,
-  0,
-  0,
-  703,
-  156,
-  1,
-  0,
-  0,
-  0,
-  704,
-  705,
-  5,
-  46,
-  0,
-  0,
-  705,
-  706,
-  5,
-  46,
-  0,
-  0,
-  706,
-  158,
-  1,
-  0,
-  0,
-  0,
-  707,
-  708,
-  5,
-  46,
-  0,
-  0,
-  708,
-  160,
-  1,
-  0,
-  0,
-  0,
-  709,
-  710,
-  5,
-  44,
-  0,
-  0,
-  710,
-  162,
-  1,
-  0,
-  0,
-  0,
-  711,
-  712,
-  5,
-  58,
-  0,
-  0,
-  712,
-  164,
-  1,
-  0,
-  0,
-  0,
-  713,
-  714,
-  5,
-  43,
-  0,
-  0,
-  714,
-  166,
-  1,
-  0,
-  0,
-  0,
-  715,
-  716,
-  5,
-  45,
-  0,
-  0,
-  716,
-  168,
-  1,
-  0,
-  0,
-  0,
-  717,
-  718,
-  5,
-  42,
-  0,
-  0,
-  718,
-  170,
-  1,
-  0,
-  0,
-  0,
-  719,
-  720,
-  5,
-  47,
-  0,
-  0,
-  720,
-  172,
-  1,
-  0,
-  0,
-  0,
-  721,
-  722,
-  5,
-  94,
-  0,
-  0,
-  722,
-  174,
-  1,
-  0,
-  0,
-  0,
-  723,
-  724,
-  5,
-  60,
-  0,
-  0,
-  724,
-  176,
-  1,
-  0,
-  0,
-  0,
-  725,
-  726,
-  5,
-  62,
-  0,
-  0,
-  726,
-  178,
-  1,
-  0,
-  0,
-  0,
-  727,
-  728,
-  5,
-  60,
-  0,
-  0,
-  728,
-  729,
-  5,
-  61,
-  0,
-  0,
-  729,
-  180,
-  1,
-  0,
-  0,
-  0,
-  730,
-  731,
-  5,
-  62,
-  0,
-  0,
-  731,
-  732,
-  5,
-  61,
-  0,
-  0,
-  732,
-  182,
-  1,
-  0,
-  0,
-  0,
-  733,
-  737,
-  3,
-  79,
-  39,
-  0,
-  734,
-  736,
-  3,
-  213,
-  106,
-  0,
-  735,
-  734,
-  1,
-  0,
-  0,
-  0,
-  736,
-  739,
-  1,
-  0,
-  0,
-  0,
-  737,
-  735,
-  1,
-  0,
-  0,
-  0,
-  737,
-  738,
-  1,
-  0,
-  0,
-  0,
-  738,
-  740,
-  1,
-  0,
-  0,
-  0,
-  739,
-  737,
-  1,
-  0,
-  0,
-  0,
-  740,
-  741,
-  3,
-  75,
-  37,
-  0,
-  741,
-  184,
-  1,
-  0,
-  0,
-  0,
-  742,
-  743,
-  3,
-  221,
-  110,
-  0,
-  743,
-  186,
-  1,
-  0,
-  0,
-  0,
-  744,
-  745,
-  3,
-  219,
-  109,
-  0,
-  745,
-  188,
-  1,
-  0,
-  0,
-  0,
-  746,
-  750,
-  7,
-  1,
-  0,
-  0,
-  747,
-  749,
-  7,
-  1,
-  0,
-  0,
-  748,
-  747,
-  1,
-  0,
-  0,
-  0,
-  749,
-  752,
-  1,
-  0,
-  0,
-  0,
-  750,
-  748,
-  1,
-  0,
-  0,
-  0,
-  750,
-  751,
-  1,
-  0,
-  0,
-  0,
-  751,
-  190,
-  1,
-  0,
-  0,
-  0,
-  752,
-  750,
-  1,
-  0,
-  0,
-  0,
-  753,
-  754,
-  3,
-  189,
-  94,
-  0,
-  754,
-  755,
-  3,
-  159,
-  79,
-  0,
-  755,
-  757,
-  3,
-  189,
-  94,
-  0,
-  756,
-  758,
-  3,
-  203,
-  101,
-  0,
-  757,
-  756,
-  1,
-  0,
-  0,
-  0,
-  757,
-  758,
-  1,
-  0,
-  0,
-  0,
-  758,
-  192,
-  1,
-  0,
-  0,
-  0,
-  759,
-  762,
-  5,
-  39,
-  0,
-  0,
-  760,
-  763,
-  8,
-  2,
-  0,
-  0,
-  761,
-  763,
-  3,
-  205,
-  102,
-  0,
-  762,
-  760,
-  1,
-  0,
-  0,
-  0,
-  762,
-  761,
-  1,
-  0,
-  0,
-  0,
-  763,
-  764,
-  1,
-  0,
-  0,
-  0,
-  764,
-  768,
-  5,
-  39,
-  0,
-  0,
-  765,
-  766,
-  5,
-  39,
-  0,
-  0,
-  766,
-  768,
-  5,
-  39,
-  0,
-  0,
-  767,
-  759,
-  1,
-  0,
-  0,
-  0,
-  767,
-  765,
-  1,
-  0,
-  0,
-  0,
-  768,
-  194,
-  1,
-  0,
-  0,
-  0,
-  769,
-  774,
-  5,
-  34,
-  0,
-  0,
-  770,
-  773,
-  8,
-  3,
-  0,
-  0,
-  771,
-  773,
-  3,
-  205,
-  102,
-  0,
-  772,
-  770,
-  1,
-  0,
-  0,
-  0,
-  772,
-  771,
-  1,
-  0,
-  0,
-  0,
-  773,
-  776,
-  1,
-  0,
-  0,
-  0,
-  774,
-  772,
-  1,
-  0,
-  0,
-  0,
-  774,
-  775,
-  1,
-  0,
-  0,
-  0,
-  775,
-  777,
-  1,
-  0,
-  0,
-  0,
-  776,
-  774,
-  1,
-  0,
-  0,
-  0,
-  777,
-  778,
-  5,
-  34,
-  0,
-  0,
-  778,
-  196,
-  1,
-  0,
-  0,
-  0,
-  779,
-  781,
-  3,
-  213,
-  106,
-  0,
-  780,
-  779,
-  1,
-  0,
-  0,
-  0,
-  781,
-  782,
-  1,
-  0,
-  0,
-  0,
-  782,
-  780,
-  1,
-  0,
-  0,
-  0,
-  782,
-  783,
-  1,
-  0,
-  0,
-  0,
-  783,
-  784,
-  1,
-  0,
-  0,
-  0,
-  784,
-  785,
-  6,
-  98,
-  0,
-  0,
-  785,
-  198,
-  1,
-  0,
-  0,
-  0,
-  786,
-  787,
-  8,
-  4,
-  0,
-  0,
-  787,
-  200,
-  1,
-  0,
-  0,
-  0,
-  788,
-  789,
-  7,
-  4,
-  0,
-  0,
-  789,
-  202,
-  1,
-  0,
-  0,
-  0,
-  790,
-  793,
-  7,
-  5,
-  0,
-  0,
-  791,
-  794,
-  3,
-  165,
-  82,
-  0,
-  792,
-  794,
-  3,
-  167,
-  83,
-  0,
-  793,
-  791,
-  1,
-  0,
-  0,
-  0,
-  793,
-  792,
-  1,
-  0,
-  0,
-  0,
-  793,
-  794,
-  1,
-  0,
-  0,
-  0,
-  794,
-  795,
-  1,
-  0,
-  0,
-  0,
-  795,
-  796,
-  3,
-  189,
-  94,
-  0,
-  796,
-  204,
-  1,
-  0,
-  0,
-  0,
-  797,
-  801,
-  3,
-  207,
-  103,
-  0,
-  798,
-  801,
-  3,
-  209,
-  104,
-  0,
-  799,
-  801,
-  3,
-  233,
-  116,
-  0,
-  800,
-  797,
-  1,
-  0,
-  0,
-  0,
-  800,
-  798,
-  1,
-  0,
-  0,
-  0,
-  800,
-  799,
-  1,
-  0,
-  0,
-  0,
-  801,
-  206,
-  1,
-  0,
-  0,
-  0,
-  802,
-  803,
-  5,
-  92,
-  0,
-  0,
-  803,
-  825,
-  5,
-  39,
-  0,
-  0,
-  804,
-  805,
-  5,
-  92,
-  0,
-  0,
-  805,
-  825,
-  5,
-  34,
-  0,
-  0,
-  806,
-  807,
-  5,
-  92,
-  0,
-  0,
-  807,
-  825,
-  5,
-  92,
-  0,
-  0,
-  808,
-  809,
-  5,
-  92,
-  0,
-  0,
-  809,
-  825,
-  5,
-  48,
-  0,
-  0,
-  810,
-  811,
-  5,
-  92,
-  0,
-  0,
-  811,
-  825,
-  5,
-  97,
-  0,
-  0,
-  812,
-  813,
-  5,
-  92,
-  0,
-  0,
-  813,
-  825,
-  5,
-  98,
-  0,
-  0,
-  814,
-  815,
-  5,
-  92,
-  0,
-  0,
-  815,
-  825,
-  5,
-  102,
-  0,
-  0,
-  816,
-  817,
-  5,
-  92,
-  0,
-  0,
-  817,
-  825,
-  5,
-  110,
-  0,
-  0,
-  818,
-  819,
-  5,
-  92,
-  0,
-  0,
-  819,
-  825,
-  5,
-  114,
-  0,
-  0,
-  820,
-  821,
-  5,
-  92,
-  0,
-  0,
-  821,
-  825,
-  5,
-  116,
-  0,
-  0,
-  822,
-  823,
-  5,
-  92,
-  0,
-  0,
-  823,
-  825,
-  5,
-  118,
-  0,
-  0,
-  824,
-  802,
-  1,
-  0,
-  0,
-  0,
-  824,
-  804,
-  1,
-  0,
-  0,
-  0,
-  824,
-  806,
-  1,
-  0,
-  0,
-  0,
-  824,
-  808,
-  1,
-  0,
-  0,
-  0,
-  824,
-  810,
-  1,
-  0,
-  0,
-  0,
-  824,
-  812,
-  1,
-  0,
-  0,
-  0,
-  824,
-  814,
-  1,
-  0,
-  0,
-  0,
-  824,
-  816,
-  1,
-  0,
-  0,
-  0,
-  824,
-  818,
-  1,
-  0,
-  0,
-  0,
-  824,
-  820,
-  1,
-  0,
-  0,
-  0,
-  824,
-  822,
-  1,
-  0,
-  0,
-  0,
-  825,
-  208,
-  1,
-  0,
-  0,
-  0,
-  826,
-  827,
-  5,
-  92,
-  0,
-  0,
-  827,
-  828,
-  5,
-  120,
-  0,
-  0,
-  828,
-  829,
-  1,
-  0,
-  0,
-  0,
-  829,
-  852,
-  3,
-  235,
-  117,
-  0,
-  830,
-  831,
-  5,
-  92,
-  0,
-  0,
-  831,
-  832,
-  5,
-  120,
-  0,
-  0,
-  832,
-  833,
-  1,
-  0,
-  0,
-  0,
-  833,
-  834,
-  3,
-  235,
-  117,
-  0,
-  834,
-  835,
-  3,
-  235,
-  117,
-  0,
-  835,
-  852,
-  1,
-  0,
-  0,
-  0,
-  836,
-  837,
-  5,
-  92,
-  0,
-  0,
-  837,
-  838,
-  5,
-  120,
-  0,
-  0,
-  838,
-  839,
-  1,
-  0,
-  0,
-  0,
-  839,
-  840,
-  3,
-  235,
-  117,
-  0,
-  840,
-  841,
-  3,
-  235,
-  117,
-  0,
-  841,
-  842,
-  3,
-  235,
-  117,
-  0,
-  842,
-  852,
-  1,
-  0,
-  0,
-  0,
-  843,
-  844,
-  5,
-  92,
-  0,
-  0,
-  844,
-  845,
-  5,
-  120,
-  0,
-  0,
-  845,
-  846,
-  1,
-  0,
-  0,
-  0,
-  846,
-  847,
-  3,
-  235,
-  117,
-  0,
-  847,
-  848,
-  3,
-  235,
-  117,
-  0,
-  848,
-  849,
-  3,
-  235,
-  117,
-  0,
-  849,
-  850,
-  3,
-  235,
-  117,
-  0,
-  850,
-  852,
-  1,
-  0,
-  0,
-  0,
-  851,
-  826,
-  1,
-  0,
-  0,
-  0,
-  851,
-  830,
-  1,
-  0,
-  0,
-  0,
-  851,
-  836,
-  1,
-  0,
-  0,
-  0,
-  851,
-  843,
-  1,
-  0,
-  0,
-  0,
-  852,
-  210,
-  1,
-  0,
-  0,
-  0,
-  853,
-  854,
-  5,
-  13,
-  0,
-  0,
-  854,
-  857,
-  5,
-  10,
-  0,
-  0,
-  855,
-  857,
-  7,
-  4,
-  0,
-  0,
-  856,
-  853,
-  1,
-  0,
-  0,
-  0,
-  856,
-  855,
-  1,
-  0,
-  0,
-  0,
-  857,
-  212,
-  1,
-  0,
-  0,
-  0,
-  858,
-  861,
-  3,
-  215,
-  107,
-  0,
-  859,
-  861,
-  7,
-  6,
-  0,
-  0,
-  860,
-  858,
-  1,
-  0,
-  0,
-  0,
-  860,
-  859,
-  1,
-  0,
-  0,
-  0,
-  861,
-  214,
-  1,
-  0,
-  0,
-  0,
-  862,
-  863,
-  7,
-  7,
-  0,
-  0,
-  863,
-  216,
-  1,
-  0,
-  0,
-  0,
-  864,
-  867,
-  3,
-  239,
-  119,
-  0,
-  865,
-  867,
-  3,
-  237,
-  118,
-  0,
-  866,
-  864,
-  1,
-  0,
-  0,
-  0,
-  866,
-  865,
-  1,
-  0,
-  0,
-  0,
-  867,
-  871,
-  1,
-  0,
-  0,
-  0,
-  868,
-  870,
-  3,
-  223,
-  111,
-  0,
-  869,
-  868,
-  1,
-  0,
-  0,
-  0,
-  870,
-  873,
-  1,
-  0,
-  0,
-  0,
-  871,
-  869,
-  1,
-  0,
-  0,
-  0,
-  871,
-  872,
-  1,
-  0,
-  0,
-  0,
-  872,
-  218,
-  1,
-  0,
-  0,
-  0,
-  873,
-  871,
-  1,
-  0,
-  0,
-  0,
-  874,
-  878,
-  3,
-  239,
-  119,
-  0,
-  875,
-  877,
-  3,
-  223,
-  111,
-  0,
-  876,
-  875,
-  1,
-  0,
-  0,
-  0,
-  877,
-  880,
-  1,
-  0,
-  0,
-  0,
-  878,
-  876,
-  1,
-  0,
-  0,
-  0,
-  878,
-  879,
-  1,
-  0,
-  0,
-  0,
-  879,
-  220,
-  1,
-  0,
-  0,
-  0,
-  880,
-  878,
-  1,
-  0,
-  0,
-  0,
-  881,
-  885,
-  3,
-  237,
-  118,
-  0,
-  882,
-  884,
-  3,
-  223,
-  111,
-  0,
-  883,
-  882,
-  1,
-  0,
-  0,
-  0,
-  884,
-  887,
-  1,
-  0,
-  0,
-  0,
-  885,
-  883,
-  1,
-  0,
-  0,
-  0,
-  885,
-  886,
-  1,
-  0,
-  0,
-  0,
-  886,
-  222,
-  1,
-  0,
-  0,
-  0,
-  887,
-  885,
-  1,
-  0,
-  0,
-  0,
-  888,
-  893,
-  3,
-  237,
-  118,
-  0,
-  889,
-  893,
-  3,
-  239,
-  119,
-  0,
-  890,
-  893,
-  3,
-  227,
-  113,
-  0,
-  891,
-  893,
-  5,
-  95,
-  0,
-  0,
-  892,
-  888,
-  1,
-  0,
-  0,
-  0,
-  892,
-  889,
-  1,
-  0,
-  0,
-  0,
-  892,
-  890,
-  1,
-  0,
-  0,
-  0,
-  892,
-  891,
-  1,
-  0,
-  0,
-  0,
-  893,
-  224,
-  1,
-  0,
-  0,
-  0,
-  894,
-  898,
-  3,
-  237,
-  118,
-  0,
-  895,
-  898,
-  3,
-  239,
-  119,
-  0,
-  896,
-  898,
-  3,
-  233,
-  116,
-  0,
-  897,
-  894,
-  1,
-  0,
-  0,
-  0,
-  897,
-  895,
-  1,
-  0,
-  0,
-  0,
-  897,
-  896,
-  1,
-  0,
-  0,
-  0,
-  898,
-  226,
-  1,
-  0,
-  0,
-  0,
-  899,
-  902,
-  3,
-  241,
-  120,
-  0,
-  900,
-  902,
-  3,
-  233,
-  116,
-  0,
-  901,
-  899,
-  1,
-  0,
-  0,
-  0,
-  901,
-  900,
-  1,
-  0,
-  0,
-  0,
-  902,
-  228,
-  1,
-  0,
-  0,
-  0,
-  903,
-  904,
-  3,
-  233,
-  116,
-  0,
-  904,
-  230,
-  1,
-  0,
-  0,
-  0,
-  905,
-  906,
-  3,
-  233,
-  116,
-  0,
-  906,
-  232,
-  1,
-  0,
-  0,
-  0,
-  907,
-  908,
-  5,
-  92,
-  0,
-  0,
-  908,
-  909,
-  5,
-  117,
-  0,
-  0,
-  909,
-  910,
-  1,
-  0,
-  0,
-  0,
-  910,
-  911,
-  3,
-  235,
-  117,
-  0,
-  911,
-  912,
   3,
-  235,
-  117,
-  0,
-  912,
-  913,
-  3,
-  235,
-  117,
-  0,
-  913,
-  914,
-  3,
-  235,
-  117,
-  0,
-  914,
-  928,
-  1,
-  0,
-  0,
-  0,
-  915,
-  916,
-  5,
-  92,
-  0,
-  0,
-  916,
-  917,
-  5,
-  85,
-  0,
-  0,
-  917,
-  918,
-  1,
-  0,
-  0,
-  0,
-  918,
-  919,
-  3,
-  235,
-  117,
-  0,
-  919,
-  920,
-  3,
-  235,
-  117,
-  0,
-  920,
-  921,
-  3,
-  235,
-  117,
-  0,
-  921,
-  922,
-  3,
-  235,
-  117,
-  0,
-  922,
-  923,
-  3,
-  235,
-  117,
-  0,
-  923,
-  924,
-  3,
-  235,
-  117,
-  0,
-  924,
-  925,
-  3,
-  235,
-  117,
-  0,
-  925,
-  926,
-  3,
-  235,
-  117,
-  0,
-  926,
-  928,
-  1,
-  0,
-  0,
-  0,
-  927,
-  907,
-  1,
-  0,
-  0,
-  0,
-  927,
-  915,
-  1,
-  0,
-  0,
-  0,
-  928,
-  234,
-  1,
-  0,
-  0,
-  0,
-  929,
-  931,
-  7,
-  8,
-  0,
-  0,
-  930,
-  929,
-  1,
-  0,
-  0,
-  0,
-  931,
-  236,
-  1,
-  0,
-  0,
-  0,
-  932,
-  933,
-  2,
-  65,
-  90,
-  0,
-  933,
-  238,
-  1,
-  0,
-  0,
-  0,
-  934,
-  935,
-  2,
-  97,
-  122,
-  0,
-  935,
   240,
   1,
   0,
   0,
   0,
-  936,
-  937,
-  2,
-  48,
-  57,
-  0,
-  937,
-  242,
-  1,
-  0,
-  0,
-  0,
-  938,
-  940,
   5,
-  13,
-  0,
-  0,
-  939,
-  938,
-  1,
-  0,
-  0,
-  0,
-  939,
-  940,
-  1,
-  0,
-  0,
-  0,
-  940,
-  941,
-  1,
-  0,
-  0,
-  0,
-  941,
-  944,
-  5,
-  10,
-  0,
-  0,
-  942,
-  944,
-  5,
-  13,
-  0,
-  0,
-  943,
-  939,
-  1,
-  0,
-  0,
-  0,
-  943,
-  942,
-  1,
-  0,
-  0,
-  0,
-  944,
   244,
   1,
   0,
   0,
   0,
-  945,
-  947,
   7,
+  247,
+  1,
+  0,
+  0,
+  0,
   9,
-  0,
-  0,
-  946,
-  945,
+  254,
   1,
   0,
   0,
   0,
-  947,
-  948,
+  11,
+  261,
   1,
   0,
   0,
   0,
-  948,
-  946,
+  13,
+  264,
   1,
   0,
   0,
   0,
-  948,
-  949,
+  15,
+  269,
   1,
   0,
   0,
   0,
-  949,
-  950,
+  17,
+  275,
   1,
   0,
   0,
   0,
-  950,
-  951,
-  6,
-  122,
+  19,
+  281,
+  1,
   0,
   0,
-  951,
-  246,
+  0,
+  21,
+  290,
+  1,
+  0,
+  0,
+  0,
+  23,
+  302,
+  1,
+  0,
+  0,
+  0,
+  25,
+  307,
+  1,
+  0,
+  0,
+  0,
+  27,
+  311,
+  1,
+  0,
+  0,
+  0,
+  29,
+  316,
+  1,
+  0,
+  0,
+  0,
+  31,
+  321,
   1,
   0,
   0,
   0,
   33,
+  325,
+  1,
+  0,
+  0,
+  0,
+  35,
+  330,
+  1,
+  0,
+  0,
+  0,
+  37,
+  334,
+  1,
+  0,
+  0,
+  0,
+  39,
+  339,
+  1,
+  0,
+  0,
+  0,
+  41,
+  348,
+  1,
+  0,
+  0,
+  0,
+  43,
+  351,
+  1,
+  0,
+  0,
+  0,
+  45,
+  354,
+  1,
+  0,
+  0,
+  0,
+  47,
+  363,
+  1,
+  0,
+  0,
+  0,
+  49,
+  369,
+  1,
+  0,
+  0,
+  0,
+  51,
+  376,
+  1,
+  0,
+  0,
+  0,
+  53,
+  380,
+  1,
+  0,
+  0,
+  0,
+  55,
+  385,
+  1,
+  0,
+  0,
+  0,
+  57,
+  389,
+  1,
+  0,
+  0,
+  0,
+  59,
+  393,
+  1,
+  0,
+  0,
+  0,
+  61,
+  397,
+  1,
+  0,
+  0,
+  0,
+  63,
+  400,
+  1,
+  0,
+  0,
+  0,
+  65,
+  403,
+  1,
+  0,
+  0,
+  0,
+  67,
+  409,
+  1,
+  0,
+  0,
+  0,
+  69,
+  417,
+  1,
+  0,
+  0,
+  0,
+  71,
+  427,
+  1,
+  0,
+  0,
+  0,
+  73,
+  436,
+  1,
+  0,
+  0,
+  0,
+  75,
+  443,
+  1,
+  0,
+  0,
+  0,
+  77,
+  451,
+  1,
+  0,
+  0,
+  0,
+  79,
+  455,
+  1,
+  0,
+  0,
+  0,
+  81,
+  460,
+  1,
+  0,
+  0,
+  0,
+  83,
+  465,
+  1,
+  0,
+  0,
+  0,
+  85,
+  470,
+  1,
+  0,
+  0,
+  0,
+  87,
+  475,
+  1,
+  0,
+  0,
+  0,
+  89,
+  481,
+  1,
+  0,
+  0,
+  0,
+  91,
+  484,
+  1,
+  0,
+  0,
+  0,
+  93,
+  488,
+  1,
+  0,
+  0,
+  0,
+  95,
+  497,
+  1,
+  0,
+  0,
+  0,
+  97,
+  503,
+  1,
+  0,
+  0,
+  0,
+  99,
+  507,
+  1,
+  0,
+  0,
+  0,
+  101,
+  513,
+  1,
+  0,
+  0,
+  0,
+  103,
+  521,
+  1,
+  0,
+  0,
+  0,
+  105,
+  528,
+  1,
+  0,
+  0,
+  0,
+  107,
+  533,
+  1,
+  0,
+  0,
+  0,
+  109,
+  549,
+  1,
+  0,
+  0,
+  0,
+  111,
+  551,
+  1,
+  0,
+  0,
+  0,
+  113,
+  554,
+  1,
+  0,
+  0,
+  0,
+  115,
+  559,
+  1,
+  0,
+  0,
+  0,
+  117,
+  562,
+  1,
+  0,
+  0,
+  0,
+  119,
+  565,
+  1,
+  0,
+  0,
+  0,
+  121,
+  568,
+  1,
+  0,
+  0,
+  0,
+  123,
+  571,
+  1,
+  0,
+  0,
+  0,
+  125,
+  578,
+  1,
+  0,
+  0,
+  0,
+  127,
+  582,
+  1,
+  0,
+  0,
+  0,
+  129,
+  584,
+  1,
+  0,
+  0,
+  0,
+  131,
+  586,
+  1,
+  0,
+  0,
+  0,
+  133,
+  588,
+  1,
+  0,
+  0,
+  0,
+  135,
+  590,
+  1,
+  0,
+  0,
+  0,
+  137,
+  592,
+  1,
+  0,
+  0,
+  0,
+  139,
+  594,
+  1,
+  0,
+  0,
+  0,
+  141,
+  596,
+  1,
+  0,
+  0,
+  0,
+  143,
+  598,
+  1,
+  0,
+  0,
+  0,
+  145,
+  600,
+  1,
+  0,
+  0,
+  0,
+  147,
+  602,
+  1,
+  0,
+  0,
+  0,
+  149,
+  604,
+  1,
+  0,
+  0,
+  0,
+  151,
+  606,
+  1,
+  0,
+  0,
+  0,
+  153,
+  608,
+  1,
+  0,
+  0,
+  0,
+  155,
+  610,
+  1,
+  0,
+  0,
+  0,
+  157,
+  612,
+  1,
+  0,
+  0,
+  0,
+  159,
+  614,
+  1,
+  0,
+  0,
+  0,
+  161,
+  617,
+  1,
+  0,
+  0,
+  0,
+  163,
+  620,
+  1,
+  0,
+  0,
+  0,
+  165,
+  622,
+  1,
+  0,
+  0,
+  0,
+  167,
+  626,
+  1,
+  0,
+  0,
+  0,
+  169,
+  638,
+  1,
+  0,
+  0,
+  0,
+  171,
+  645,
+  1,
+  0,
+  0,
+  0,
+  173,
+  652,
+  1,
+  0,
+  0,
+  0,
+  175,
+  658,
+  1,
+  0,
+  0,
+  0,
+  177,
+  664,
+  1,
+  0,
+  0,
+  0,
+  179,
+  671,
+  1,
+  0,
+  0,
+  0,
+  181,
+  677,
+  1,
+  0,
+  0,
+  0,
+  183,
+  688,
+  1,
+  0,
+  0,
+  0,
+  185,
+  699,
+  1,
+  0,
+  0,
+  0,
+  187,
+  706,
+  1,
+  0,
+  0,
+  0,
+  189,
+  710,
+  1,
+  0,
+  0,
+  0,
+  191,
+  720,
+  1,
+  0,
+  0,
+  0,
+  193,
+  722,
+  1,
+  0,
+  0,
+  0,
+  195,
+  724,
+  1,
+  0,
+  0,
+  0,
+  197,
+  734,
+  1,
+  0,
+  0,
+  0,
+  199,
+  758,
+  1,
+  0,
+  0,
+  0,
+  201,
+  785,
+  1,
+  0,
+  0,
+  0,
+  203,
+  790,
+  1,
+  0,
+  0,
+  0,
+  205,
+  794,
+  1,
+  0,
+  0,
+  0,
+  207,
+  796,
+  1,
+  0,
+  0,
+  0,
+  209,
+  800,
+  1,
+  0,
+  0,
+  0,
+  211,
+  812,
+  1,
+  0,
+  0,
+  0,
+  213,
+  817,
+  1,
+  0,
+  0,
+  0,
+  215,
+  821,
+  1,
+  0,
+  0,
+  0,
+  217,
+  823,
+  1,
+  0,
+  0,
+  0,
+  219,
+  825,
+  1,
+  0,
+  0,
+  0,
+  221,
+  847,
+  1,
+  0,
+  0,
+  0,
+  223,
+  850,
+  1,
+  0,
+  0,
+  0,
+  225,
+  852,
+  1,
+  0,
+  0,
+  0,
+  227,
+  854,
+  1,
+  0,
+  0,
+  0,
+  229,
+  856,
+  1,
+  0,
+  0,
+  0,
+  231,
+  232,
+  5,
+  97,
+  0,
+  0,
+  232,
+  233,
+  5,
+  98,
+  0,
+  0,
+  233,
+  234,
+  5,
+  115,
+  0,
+  0,
+  234,
+  235,
+  5,
+  116,
+  0,
+  0,
+  235,
+  236,
+  5,
+  114,
+  0,
+  0,
+  236,
+  237,
+  5,
+  97,
+  0,
+  0,
+  237,
+  238,
+  5,
+  99,
+  0,
+  0,
+  238,
+  239,
+  5,
+  116,
+  0,
+  0,
+  239,
+  2,
+  1,
+  0,
+  0,
+  0,
+  240,
+  241,
+  5,
+  97,
+  0,
+  0,
+  241,
+  242,
+  5,
+  110,
+  0,
+  0,
+  242,
+  243,
+  5,
+  100,
+  0,
+  0,
+  243,
+  4,
+  1,
+  0,
+  0,
+  0,
+  244,
+  245,
+  5,
+  97,
+  0,
+  0,
+  245,
+  246,
+  5,
+  115,
+  0,
+  0,
+  246,
+  6,
+  1,
+  0,
+  0,
+  0,
+  247,
+  248,
+  5,
+  97,
+  0,
+  0,
+  248,
+  249,
+  5,
+  115,
+  0,
+  0,
+  249,
+  250,
+  5,
+  115,
+  0,
+  0,
+  250,
+  251,
+  5,
+  101,
+  0,
+  0,
+  251,
+  252,
+  5,
+  114,
+  0,
+  0,
+  252,
+  253,
+  5,
+  116,
+  0,
+  0,
+  253,
+  8,
+  1,
+  0,
+  0,
+  0,
+  254,
+  255,
+  5,
+  97,
+  0,
   0,
   255,
+  256,
+  5,
+  115,
+  0,
+  0,
+  256,
+  257,
+  5,
+  115,
+  0,
+  0,
+  257,
   258,
+  5,
+  105,
+  0,
+  0,
+  258,
+  259,
+  5,
+  103,
+  0,
+  0,
+  259,
+  260,
+  5,
+  110,
+  0,
+  0,
+  260,
+  10,
+  1,
+  0,
+  0,
+  0,
+  261,
+  262,
+  5,
+  98,
+  0,
+  0,
+  262,
   263,
+  5,
+  101,
+  0,
+  0,
+  263,
+  12,
+  1,
+  0,
+  0,
+  0,
+  264,
+  265,
+  5,
+  99,
+  0,
+  0,
+  265,
+  266,
+  5,
+  97,
+  0,
+  0,
+  266,
+  267,
+  5,
+  108,
+  0,
+  0,
+  267,
+  268,
+  5,
+  108,
+  0,
+  0,
+  268,
+  14,
+  1,
+  0,
+  0,
+  0,
+  269,
   270,
+  5,
+  99,
+  0,
+  0,
+  270,
+  271,
+  5,
+  97,
+  0,
+  0,
+  271,
+  272,
+  5,
+  116,
+  0,
+  0,
+  272,
+  273,
+  5,
+  99,
+  0,
+  0,
+  273,
+  274,
+  5,
+  104,
+  0,
+  0,
+  274,
+  16,
+  1,
+  0,
+  0,
+  0,
+  275,
+  276,
+  5,
+  99,
+  0,
+  0,
+  276,
+  277,
+  5,
+  108,
+  0,
+  0,
+  277,
+  278,
+  5,
+  97,
+  0,
+  0,
+  278,
+  279,
+  5,
+  115,
+  0,
+  0,
+  279,
+  280,
+  5,
+  115,
+  0,
+  0,
+  280,
+  18,
+  1,
+  0,
+  0,
+  0,
+  281,
+  282,
+  5,
+  99,
+  0,
+  0,
+  282,
+  283,
+  5,
+  111,
+  0,
+  0,
+  283,
+  284,
+  5,
+  110,
+  0,
+  0,
+  284,
+  285,
+  5,
+  115,
+  0,
+  0,
+  285,
+  286,
+  5,
+  116,
+  0,
+  0,
+  286,
+  287,
+  5,
+  97,
+  0,
+  0,
+  287,
+  288,
+  5,
+  110,
+  0,
+  0,
+  288,
+  289,
+  5,
+  116,
+  0,
+  0,
+  289,
+  20,
+  1,
+  0,
+  0,
+  0,
+  290,
+  291,
+  5,
+  99,
+  0,
+  0,
+  291,
+  292,
+  5,
+  111,
+  0,
+  0,
+  292,
+  293,
+  5,
+  110,
+  0,
+  0,
+  293,
+  294,
+  5,
+  115,
+  0,
+  0,
+  294,
+  295,
+  5,
+  116,
+  0,
+  0,
+  295,
+  296,
+  5,
+  114,
+  0,
+  0,
+  296,
+  297,
+  5,
+  117,
+  0,
+  0,
+  297,
+  298,
+  5,
+  99,
+  0,
+  0,
+  298,
+  299,
+  5,
+  116,
+  0,
+  0,
+  299,
+  300,
+  5,
+  111,
+  0,
+  0,
+  300,
+  301,
+  5,
+  114,
+  0,
+  0,
+  301,
+  22,
+  1,
+  0,
+  0,
+  0,
+  302,
+  303,
+  5,
+  99,
+  0,
+  0,
+  303,
+  304,
+  5,
+  111,
+  0,
+  0,
+  304,
+  305,
+  5,
+  112,
+  0,
+  0,
+  305,
+  306,
+  5,
+  121,
+  0,
+  0,
+  306,
+  24,
+  1,
+  0,
+  0,
+  0,
+  307,
+  308,
+  5,
+  100,
+  0,
+  0,
+  308,
+  309,
+  5,
+  105,
+  0,
+  0,
+  309,
+  310,
+  5,
+  118,
+  0,
+  0,
+  310,
+  26,
+  1,
+  0,
+  0,
+  0,
+  311,
+  312,
+  5,
+  101,
+  0,
+  0,
+  312,
+  313,
+  5,
+  108,
+  0,
+  0,
+  313,
+  314,
+  5,
+  105,
+  0,
+  0,
+  314,
+  315,
+  5,
+  102,
+  0,
+  0,
+  315,
+  28,
+  1,
+  0,
+  0,
+  0,
+  316,
+  317,
+  5,
+  101,
+  0,
+  0,
+  317,
+  318,
+  5,
+  108,
+  0,
+  0,
+  318,
+  319,
+  5,
+  115,
+  0,
+  0,
+  319,
+  320,
+  5,
+  101,
+  0,
+  0,
+  320,
+  30,
+  1,
+  0,
+  0,
+  0,
+  321,
+  322,
+  5,
+  101,
+  0,
+  0,
+  322,
+  323,
+  5,
+  110,
+  0,
+  0,
+  323,
+  324,
+  5,
+  100,
+  0,
+  0,
+  324,
+  32,
+  1,
+  0,
+  0,
+  0,
+  325,
+  326,
+  5,
+  101,
+  0,
+  0,
+  326,
+  327,
+  5,
+  110,
+  0,
+  0,
+  327,
+  328,
+  5,
+  117,
+  0,
+  0,
+  328,
+  329,
+  5,
+  109,
+  0,
+  0,
+  329,
+  34,
+  1,
+  0,
+  0,
+  0,
+  330,
+  331,
+  5,
+  102,
+  0,
+  0,
+  331,
+  332,
+  5,
+  111,
+  0,
+  0,
+  332,
+  333,
+  5,
+  114,
+  0,
+  0,
+  333,
+  36,
+  1,
+  0,
+  0,
+  0,
+  334,
+  335,
+  5,
+  102,
+  0,
+  0,
+  335,
+  336,
+  5,
+  114,
+  0,
+  0,
+  336,
+  337,
+  5,
+  111,
+  0,
+  0,
+  337,
+  338,
+  5,
+  109,
+  0,
+  0,
+  338,
+  38,
+  1,
+  0,
+  0,
+  0,
+  339,
+  340,
+  5,
+  102,
+  0,
+  0,
+  340,
+  341,
+  5,
+  117,
+  0,
+  0,
+  341,
+  342,
+  5,
+  110,
+  0,
+  0,
+  342,
+  343,
+  5,
+  99,
+  0,
+  0,
+  343,
+  344,
+  5,
+  116,
+  0,
+  0,
+  344,
+  345,
+  5,
+  105,
+  0,
+  0,
+  345,
+  346,
+  5,
+  111,
+  0,
+  0,
+  346,
+  347,
+  5,
+  110,
+  0,
+  0,
+  347,
+  40,
+  1,
+  0,
+  0,
+  0,
+  348,
+  349,
+  5,
+  105,
+  0,
+  0,
+  349,
+  350,
+  5,
+  102,
+  0,
+  0,
+  350,
+  42,
+  1,
+  0,
+  0,
+  0,
+  351,
+  352,
+  5,
+  105,
+  0,
+  0,
+  352,
+  353,
+  5,
+  110,
+  0,
+  0,
+  353,
+  44,
+  1,
+  0,
+  0,
+  0,
+  354,
+  355,
+  5,
+  105,
+  0,
+  0,
+  355,
+  356,
+  5,
+  110,
+  0,
+  0,
+  356,
+  357,
+  5,
+  104,
+  0,
+  0,
+  357,
+  358,
+  5,
+  101,
+  0,
+  0,
+  358,
+  359,
+  5,
+  114,
+  0,
+  0,
+  359,
+  360,
+  5,
+  105,
+  0,
+  0,
+  360,
+  361,
+  5,
+  116,
+  0,
+  0,
+  361,
+  362,
+  5,
+  115,
+  0,
+  0,
+  362,
+  46,
+  1,
+  0,
+  0,
+  0,
+  363,
+  364,
+  5,
+  105,
+  0,
+  0,
+  364,
+  365,
+  5,
+  110,
+  0,
+  0,
+  365,
+  366,
+  5,
+  112,
+  0,
+  0,
+  366,
+  367,
+  5,
+  117,
+  0,
+  0,
+  367,
+  368,
+  5,
+  116,
+  0,
+  0,
+  368,
+  48,
+  1,
+  0,
+  0,
+  0,
+  369,
+  370,
+  5,
+  108,
+  0,
+  0,
+  370,
+  371,
+  5,
+  97,
+  0,
+  0,
+  371,
+  372,
+  5,
+  109,
+  0,
+  0,
+  372,
+  373,
+  5,
+  98,
+  0,
+  0,
+  373,
+  374,
+  5,
+  100,
+  0,
+  0,
+  374,
+  375,
+  5,
+  97,
+  0,
+  0,
+  375,
+  50,
+  1,
+  0,
+  0,
+  0,
+  376,
+  377,
+  5,
+  108,
+  0,
+  0,
+  377,
+  378,
+  5,
+  101,
+  0,
+  0,
+  378,
+  379,
+  5,
+  116,
+  0,
+  0,
+  379,
+  52,
+  1,
+  0,
+  0,
+  0,
+  380,
+  381,
+  5,
+  109,
+  0,
+  0,
+  381,
+  382,
+  5,
+  97,
+  0,
+  0,
+  382,
+  383,
+  5,
+  105,
+  0,
+  0,
+  383,
+  384,
+  5,
+  110,
+  0,
+  0,
+  384,
+  54,
+  1,
+  0,
+  0,
+  0,
+  385,
+  386,
+  5,
+  109,
+  0,
+  0,
+  386,
+  387,
+  5,
+  111,
+  0,
+  0,
+  387,
+  388,
+  5,
+  100,
+  0,
+  0,
+  388,
+  56,
+  1,
+  0,
+  0,
+  0,
+  389,
+  390,
+  5,
+  110,
+  0,
+  0,
+  390,
+  391,
+  5,
+  101,
+  0,
+  0,
+  391,
+  392,
+  5,
+  119,
+  0,
+  0,
+  392,
+  58,
+  1,
+  0,
+  0,
+  0,
+  393,
+  394,
+  5,
+  110,
+  0,
+  0,
+  394,
+  395,
+  5,
+  111,
+  0,
+  0,
+  395,
+  396,
+  5,
+  116,
+  0,
+  0,
+  396,
+  60,
+  1,
+  0,
+  0,
+  0,
+  397,
+  398,
+  5,
+  111,
+  0,
+  0,
+  398,
+  399,
+  5,
+  102,
+  0,
+  0,
+  399,
+  62,
+  1,
+  0,
+  0,
+  0,
+  400,
+  401,
+  5,
+  111,
+  0,
+  0,
+  401,
+  402,
+  5,
+  114,
+  0,
+  0,
+  402,
+  64,
+  1,
+  0,
+  0,
+  0,
+  403,
+  404,
+  5,
+  112,
+  0,
+  0,
+  404,
+  405,
+  5,
+  114,
+  0,
+  0,
+  405,
+  406,
+  5,
+  105,
+  0,
+  0,
+  406,
+  407,
+  5,
+  110,
+  0,
+  0,
+  407,
+  408,
+  5,
+  116,
+  0,
+  0,
+  408,
+  66,
+  1,
+  0,
+  0,
+  0,
+  409,
+  410,
+  5,
+  112,
+  0,
+  0,
+  410,
+  411,
+  5,
+  114,
+  0,
+  0,
+  411,
+  412,
+  5,
+  105,
+  0,
+  0,
+  412,
+  413,
+  5,
+  118,
+  0,
+  0,
+  413,
+  414,
+  5,
+  97,
+  0,
+  0,
+  414,
+  415,
+  5,
+  116,
+  0,
+  0,
+  415,
+  416,
+  5,
+  101,
+  0,
+  0,
+  416,
+  68,
+  1,
+  0,
+  0,
+  0,
+  417,
+  418,
+  5,
+  112,
+  0,
+  0,
+  418,
+  419,
+  5,
+  114,
+  0,
+  0,
+  419,
+  420,
+  5,
+  111,
+  0,
+  0,
+  420,
+  421,
+  5,
+  99,
+  0,
+  0,
+  421,
+  422,
+  5,
+  101,
+  0,
+  0,
+  422,
+  423,
+  5,
+  100,
+  0,
+  0,
+  423,
+  424,
+  5,
+  117,
+  0,
+  0,
+  424,
+  425,
+  5,
+  114,
+  0,
+  0,
+  425,
+  426,
+  5,
+  101,
+  0,
+  0,
+  426,
+  70,
+  1,
+  0,
+  0,
+  0,
+  427,
+  428,
+  5,
+  112,
+  0,
+  0,
+  428,
+  429,
+  5,
+  114,
+  0,
+  0,
+  429,
+  430,
+  5,
+  111,
+  0,
+  0,
+  430,
+  431,
+  5,
+  112,
+  0,
+  0,
+  431,
+  432,
+  5,
+  101,
+  0,
+  0,
+  432,
+  433,
+  5,
+  114,
+  0,
+  0,
+  433,
+  434,
+  5,
+  116,
+  0,
+  0,
+  434,
+  435,
+  5,
+  121,
+  0,
+  0,
+  435,
+  72,
+  1,
+  0,
+  0,
+  0,
+  436,
+  437,
+  5,
+  114,
+  0,
+  0,
+  437,
+  438,
+  5,
+  101,
+  0,
+  0,
+  438,
+  439,
+  5,
+  116,
+  0,
+  0,
+  439,
+  440,
+  5,
+  117,
+  0,
+  0,
+  440,
+  441,
+  5,
+  114,
+  0,
+  0,
+  441,
+  442,
+  5,
+  110,
+  0,
+  0,
+  442,
+  74,
+  1,
+  0,
+  0,
+  0,
+  443,
+  444,
+  5,
+  114,
+  0,
+  0,
+  444,
+  445,
+  5,
+  101,
+  0,
+  0,
+  445,
+  446,
+  5,
+  116,
+  0,
+  0,
+  446,
+  447,
+  5,
+  117,
+  0,
+  0,
+  447,
+  448,
+  5,
+  114,
+  0,
+  0,
+  448,
+  449,
+  5,
+  110,
+  0,
+  0,
+  449,
+  450,
+  5,
+  115,
+  0,
+  0,
+  450,
+  76,
+  1,
+  0,
+  0,
+  0,
+  451,
+  452,
+  5,
+  115,
+  0,
+  0,
+  452,
+  453,
+  5,
+  101,
+  0,
+  0,
+  453,
+  454,
+  5,
+  116,
+  0,
+  0,
+  454,
+  78,
+  1,
+  0,
+  0,
+  0,
+  455,
+  456,
+  5,
+  115,
+  0,
+  0,
+  456,
+  457,
+  5,
+  116,
+  0,
+  0,
+  457,
+  458,
+  5,
+  101,
+  0,
+  0,
+  458,
+  459,
+  5,
+  112,
+  0,
+  0,
+  459,
+  80,
+  1,
+  0,
+  0,
+  0,
+  460,
+  461,
+  5,
+  116,
+  0,
+  0,
+  461,
+  462,
+  5,
+  101,
+  0,
+  0,
+  462,
+  463,
+  5,
+  115,
+  0,
+  0,
+  463,
+  464,
+  5,
+  116,
+  0,
+  0,
+  464,
+  82,
+  1,
+  0,
+  0,
+  0,
+  465,
+  466,
+  5,
+  116,
+  0,
+  0,
+  466,
+  467,
+  5,
+  104,
+  0,
+  0,
+  467,
+  468,
+  5,
+  101,
+  0,
+  0,
+  468,
+  469,
+  5,
+  110,
+  0,
+  0,
+  469,
+  84,
+  1,
+  0,
+  0,
+  0,
+  470,
+  471,
+  5,
+  116,
+  0,
+  0,
+  471,
+  472,
+  5,
+  104,
+  0,
+  0,
+  472,
+  473,
+  5,
+  105,
+  0,
+  0,
+  473,
+  474,
+  5,
+  115,
+  0,
+  0,
+  474,
+  86,
+  1,
+  0,
+  0,
+  0,
+  475,
+  476,
+  5,
+  116,
+  0,
+  0,
+  476,
+  477,
+  5,
+  104,
+  0,
+  0,
+  477,
+  478,
+  5,
+  114,
+  0,
+  0,
+  478,
+  479,
+  5,
+  111,
+  0,
+  0,
+  479,
+  480,
+  5,
+  119,
+  0,
+  0,
+  480,
+  88,
+  1,
+  0,
+  0,
+  0,
+  481,
+  482,
+  5,
+  116,
+  0,
+  0,
+  482,
+  483,
+  5,
+  111,
+  0,
+  0,
+  483,
+  90,
+  1,
+  0,
+  0,
+  0,
+  484,
+  485,
+  5,
+  116,
+  0,
+  0,
+  485,
+  486,
+  5,
+  114,
+  0,
+  0,
+  486,
+  487,
+  5,
+  121,
+  0,
+  0,
+  487,
+  92,
+  1,
+  0,
+  0,
+  0,
+  488,
+  489,
+  5,
+  118,
+  0,
+  0,
+  489,
+  490,
+  5,
+  97,
+  0,
+  0,
+  490,
+  491,
+  5,
+  114,
+  0,
+  0,
+  491,
+  492,
+  5,
+  105,
+  0,
+  0,
+  492,
+  493,
+  5,
+  97,
+  0,
+  0,
+  493,
+  494,
+  5,
+  98,
+  0,
+  0,
+  494,
+  495,
+  5,
+  108,
+  0,
+  0,
+  495,
+  496,
+  5,
+  101,
+  0,
+  0,
+  496,
+  94,
+  1,
+  0,
+  0,
+  0,
+  497,
+  498,
+  5,
+  119,
+  0,
+  0,
+  498,
+  499,
+  5,
+  104,
+  0,
+  0,
+  499,
+  500,
+  5,
+  105,
+  0,
+  0,
+  500,
+  501,
+  5,
+  108,
+  0,
+  0,
+  501,
+  502,
+  5,
+  101,
+  0,
+  0,
+  502,
+  96,
+  1,
+  0,
+  0,
+  0,
+  503,
+  504,
+  5,
+  73,
+  0,
+  0,
+  504,
+  505,
+  5,
+  110,
+  0,
+  0,
+  505,
+  506,
+  5,
+  116,
+  0,
+  0,
+  506,
+  98,
+  1,
+  0,
+  0,
+  0,
+  507,
+  508,
+  5,
+  70,
+  0,
+  0,
+  508,
+  509,
+  5,
+  108,
+  0,
+  0,
+  509,
+  510,
+  5,
+  111,
+  0,
+  0,
+  510,
+  511,
+  5,
+  97,
+  0,
+  0,
+  511,
+  512,
+  5,
+  116,
+  0,
+  0,
+  512,
+  100,
+  1,
+  0,
+  0,
+  0,
+  513,
+  514,
+  5,
+  66,
+  0,
+  0,
+  514,
+  515,
+  5,
+  111,
+  0,
+  0,
+  515,
+  516,
+  5,
+  111,
+  0,
+  0,
+  516,
+  517,
+  5,
+  108,
+  0,
+  0,
+  517,
+  518,
+  5,
+  101,
+  0,
+  0,
+  518,
+  519,
+  5,
+  97,
+  0,
+  0,
+  519,
+  520,
+  5,
+  110,
+  0,
+  0,
+  520,
+  102,
+  1,
+  0,
+  0,
+  0,
+  521,
+  522,
+  5,
+  83,
+  0,
+  0,
+  522,
+  523,
+  5,
+  116,
+  0,
+  0,
+  523,
+  524,
+  5,
+  114,
+  0,
+  0,
+  524,
+  525,
+  5,
+  105,
+  0,
+  0,
+  525,
+  526,
+  5,
+  110,
+  0,
+  0,
+  526,
+  527,
+  5,
+  103,
+  0,
+  0,
+  527,
+  104,
+  1,
+  0,
+  0,
+  0,
+  528,
+  529,
+  5,
+  76,
+  0,
+  0,
+  529,
+  530,
+  5,
+  105,
+  0,
+  0,
+  530,
+  531,
+  5,
+  115,
+  0,
+  0,
+  531,
+  532,
+  5,
+  116,
+  0,
+  0,
+  532,
+  106,
+  1,
+  0,
+  0,
+  0,
+  533,
+  537,
+  5,
+  35,
+  0,
+  0,
+  534,
+  536,
+  8,
+  0,
+  0,
+  0,
+  535,
+  534,
+  1,
+  0,
+  0,
+  0,
+  536,
+  539,
+  1,
+  0,
+  0,
+  0,
+  537,
+  535,
+  1,
+  0,
+  0,
+  0,
+  537,
+  538,
+  1,
+  0,
+  0,
+  0,
+  538,
+  108,
+  1,
+  0,
+  0,
+  0,
+  539,
+  537,
+  1,
+  0,
+  0,
+  0,
+  540,
+  541,
+  5,
+  116,
+  0,
+  0,
+  541,
+  542,
+  5,
+  114,
+  0,
+  0,
+  542,
+  543,
+  5,
+  117,
+  0,
+  0,
+  543,
+  550,
+  5,
+  101,
+  0,
+  0,
+  544,
+  545,
+  5,
+  102,
+  0,
+  0,
+  545,
+  546,
+  5,
+  97,
+  0,
+  0,
+  546,
+  547,
+  5,
+  108,
+  0,
+  0,
+  547,
+  548,
+  5,
+  115,
+  0,
+  0,
+  548,
+  550,
+  5,
+  101,
+  0,
+  0,
+  549,
+  540,
+  1,
+  0,
+  0,
+  0,
+  549,
+  544,
+  1,
+  0,
+  0,
+  0,
+  550,
+  110,
+  1,
+  0,
+  0,
+  0,
+  551,
+  552,
+  5,
+  105,
+  0,
+  0,
+  552,
+  553,
+  5,
+  115,
+  0,
+  0,
+  553,
+  112,
+  1,
+  0,
+  0,
+  0,
+  554,
+  555,
+  5,
+  105,
+  0,
+  0,
+  555,
+  556,
+  5,
+  115,
+  0,
+  0,
+  556,
+  557,
+  5,
+  110,
+  0,
+  0,
+  557,
+  558,
+  5,
+  116,
+  0,
+  0,
+  558,
+  114,
+  1,
+  0,
+  0,
+  0,
+  559,
+  560,
+  5,
+  61,
+  0,
+  0,
+  560,
+  561,
+  5,
+  62,
+  0,
+  0,
+  561,
+  116,
+  1,
+  0,
+  0,
+  0,
+  562,
+  563,
+  5,
+  48,
+  0,
+  0,
+  563,
+  564,
+  5,
+  98,
+  0,
+  0,
+  564,
+  118,
+  1,
+  0,
+  0,
+  0,
+  565,
+  566,
+  5,
+  48,
+  0,
+  0,
+  566,
+  567,
+  5,
+  120,
+  0,
+  0,
+  567,
+  120,
+  1,
+  0,
+  0,
+  0,
+  568,
+  569,
+  5,
+  36,
+  0,
+  0,
+  569,
+  122,
+  1,
+  0,
+  0,
+  0,
+  570,
+  572,
+  7,
+  1,
+  0,
+  0,
+  571,
+  570,
+  1,
+  0,
+  0,
+  0,
+  572,
+  573,
+  1,
+  0,
+  0,
+  0,
+  573,
+  571,
+  1,
+  0,
+  0,
+  0,
+  573,
+  574,
+  1,
+  0,
+  0,
+  0,
+  574,
+  575,
+  1,
+  0,
+  0,
+  0,
+  575,
+  576,
+  6,
+  61,
+  0,
+  0,
+  576,
+  124,
+  1,
+  0,
+  0,
+  0,
+  577,
+  579,
+  7,
+  2,
+  0,
+  0,
+  578,
+  577,
+  1,
+  0,
+  0,
+  0,
+  579,
+  580,
+  1,
+  0,
+  0,
+  0,
+  580,
+  578,
+  1,
+  0,
+  0,
+  0,
+  580,
+  581,
+  1,
+  0,
+  0,
+  0,
+  581,
+  126,
+  1,
+  0,
+  0,
+  0,
+  582,
+  583,
+  5,
+  61,
+  0,
+  0,
+  583,
+  128,
+  1,
+  0,
+  0,
+  0,
+  584,
+  585,
+  5,
+  123,
+  0,
+  0,
+  585,
+  130,
+  1,
+  0,
+  0,
+  0,
+  586,
+  587,
+  5,
+  125,
+  0,
+  0,
+  587,
+  132,
+  1,
+  0,
+  0,
+  0,
+  588,
+  589,
+  5,
+  91,
+  0,
+  0,
+  589,
+  134,
+  1,
+  0,
+  0,
+  0,
+  590,
+  591,
+  5,
+  93,
+  0,
+  0,
+  591,
+  136,
+  1,
+  0,
+  0,
+  0,
+  592,
+  593,
+  5,
+  40,
+  0,
+  0,
+  593,
+  138,
+  1,
+  0,
+  0,
+  0,
+  594,
+  595,
+  5,
+  41,
+  0,
+  0,
+  595,
+  140,
+  1,
+  0,
+  0,
+  0,
+  596,
+  597,
+  5,
+  46,
+  0,
+  0,
+  597,
+  142,
+  1,
+  0,
+  0,
+  0,
+  598,
+  599,
+  5,
+  44,
+  0,
+  0,
+  599,
+  144,
+  1,
+  0,
+  0,
+  0,
+  600,
+  601,
+  5,
+  58,
+  0,
+  0,
+  601,
+  146,
+  1,
+  0,
+  0,
+  0,
+  602,
+  603,
+  5,
+  43,
+  0,
+  0,
+  603,
+  148,
+  1,
+  0,
+  0,
+  0,
+  604,
+  605,
+  5,
+  45,
+  0,
+  0,
+  605,
+  150,
+  1,
+  0,
+  0,
+  0,
+  606,
+  607,
+  5,
+  42,
+  0,
+  0,
+  607,
+  152,
+  1,
+  0,
+  0,
+  0,
+  608,
+  609,
+  5,
+  47,
+  0,
+  0,
+  609,
+  154,
+  1,
+  0,
+  0,
+  0,
+  610,
+  611,
+  5,
+  60,
+  0,
+  0,
+  611,
+  156,
+  1,
+  0,
+  0,
+  0,
+  612,
+  613,
+  5,
+  62,
+  0,
+  0,
+  613,
+  158,
+  1,
+  0,
+  0,
+  0,
+  614,
+  615,
+  5,
+  60,
+  0,
+  0,
+  615,
+  616,
+  5,
+  61,
+  0,
+  0,
+  616,
+  160,
+  1,
+  0,
+  0,
+  0,
+  617,
+  618,
+  5,
+  62,
+  0,
+  0,
+  618,
+  619,
+  5,
+  61,
+  0,
+  0,
+  619,
+  162,
+  1,
+  0,
+  0,
+  0,
+  620,
+  621,
+  5,
+  34,
+  0,
+  0,
+  621,
+  164,
+  1,
+  0,
+  0,
+  0,
+  622,
+  623,
+  5,
+  105,
+  0,
+  0,
+  623,
+  624,
+  5,
+  102,
+  0,
+  0,
+  624,
+  625,
+  5,
+  95,
+  0,
+  0,
+  625,
+  166,
+  1,
+  0,
+  0,
+  0,
+  626,
+  627,
+  5,
+  116,
+  0,
+  0,
+  627,
+  628,
+  5,
+  101,
+  0,
+  0,
+  628,
+  629,
+  5,
+  115,
+  0,
+  0,
+  629,
+  630,
+  5,
+  116,
+  0,
+  0,
+  630,
+  631,
+  5,
+  95,
+  0,
+  0,
+  631,
+  635,
+  1,
+  0,
+  0,
+  0,
+  632,
   634,
+  3,
+  211,
+  105,
+  0,
+  633,
+  632,
+  1,
+  0,
+  0,
+  0,
+  634,
+  637,
+  1,
+  0,
+  0,
+  0,
+  635,
+  633,
+  1,
+  0,
+  0,
+  0,
+  635,
+  636,
+  1,
+  0,
+  0,
+  0,
+  636,
+  168,
+  1,
+  0,
+  0,
+  0,
+  637,
+  635,
+  1,
+  0,
+  0,
+  0,
+  638,
+  642,
+  3,
+  227,
+  113,
+  0,
+  639,
+  641,
+  3,
+  211,
+  105,
+  0,
+  640,
+  639,
+  1,
+  0,
+  0,
+  0,
+  641,
+  644,
+  1,
+  0,
+  0,
+  0,
+  642,
+  640,
+  1,
+  0,
+  0,
+  0,
+  642,
+  643,
+  1,
+  0,
+  0,
+  0,
+  643,
+  170,
+  1,
+  0,
+  0,
+  0,
+  644,
+  642,
+  1,
+  0,
+  0,
+  0,
+  645,
+  649,
+  3,
+  225,
+  112,
+  0,
+  646,
+  648,
+  3,
+  211,
+  105,
+  0,
+  647,
+  646,
+  1,
+  0,
+  0,
+  0,
+  648,
+  651,
+  1,
+  0,
+  0,
+  0,
+  649,
+  647,
+  1,
+  0,
+  0,
+  0,
+  649,
+  650,
+  1,
+  0,
+  0,
+  0,
+  650,
+  172,
+  1,
+  0,
+  0,
+  0,
+  651,
+  649,
+  1,
+  0,
+  0,
+  0,
+  652,
+  654,
+  3,
+  117,
+  58,
+  0,
+  653,
+  655,
+  7,
+  3,
+  0,
+  0,
+  654,
+  653,
+  1,
+  0,
+  0,
+  0,
+  655,
+  656,
+  1,
+  0,
+  0,
+  0,
+  656,
+  654,
+  1,
+  0,
+  0,
+  0,
+  656,
+  657,
+  1,
+  0,
+  0,
+  0,
+  657,
+  174,
+  1,
+  0,
+  0,
+  0,
   658,
+  660,
+  3,
+  119,
+  59,
+  0,
+  659,
+  661,
+  7,
+  4,
+  0,
+  0,
+  660,
+  659,
+  1,
+  0,
+  0,
+  0,
+  661,
+  662,
+  1,
+  0,
+  0,
+  0,
+  662,
+  660,
+  1,
+  0,
+  0,
+  0,
+  662,
+  663,
+  1,
+  0,
+  0,
+  0,
+  663,
+  176,
+  1,
+  0,
+  0,
+  0,
+  664,
+  668,
+  7,
+  5,
+  0,
+  0,
+  665,
+  667,
+  7,
+  5,
+  0,
+  0,
+  666,
+  665,
+  1,
+  0,
+  0,
+  0,
+  667,
+  670,
+  1,
+  0,
+  0,
+  0,
+  668,
+  666,
+  1,
+  0,
+  0,
+  0,
+  668,
+  669,
+  1,
+  0,
+  0,
+  0,
+  669,
+  178,
+  1,
+  0,
+  0,
+  0,
+  670,
+  668,
+  1,
+  0,
+  0,
+  0,
+  671,
+  672,
+  3,
+  177,
+  88,
+  0,
+  672,
+  673,
+  3,
+  141,
+  70,
+  0,
+  673,
+  675,
+  3,
+  177,
+  88,
+  0,
+  674,
+  676,
+  3,
+  195,
+  97,
+  0,
+  675,
+  674,
+  1,
+  0,
+  0,
+  0,
+  675,
+  676,
+  1,
+  0,
+  0,
+  0,
+  676,
+  180,
+  1,
+  0,
+  0,
+  0,
+  677,
+  678,
+  3,
+  121,
+  60,
+  0,
+  678,
+  683,
+  5,
+  34,
+  0,
+  0,
+  679,
+  682,
+  8,
+  6,
+  0,
+  0,
+  680,
+  682,
+  3,
+  197,
+  98,
+  0,
+  681,
+  679,
+  1,
+  0,
+  0,
+  0,
+  681,
+  680,
+  1,
+  0,
+  0,
+  0,
+  682,
+  685,
+  1,
+  0,
+  0,
+  0,
+  683,
+  681,
+  1,
+  0,
+  0,
+  0,
+  683,
+  684,
+  1,
+  0,
+  0,
+  0,
+  684,
+  686,
+  1,
+  0,
+  0,
+  0,
+  685,
+  683,
+  1,
+  0,
+  0,
+  0,
+  686,
+  687,
+  5,
+  34,
+  0,
+  0,
+  687,
+  182,
+  1,
+  0,
+  0,
+  0,
+  688,
+  693,
+  5,
+  34,
+  0,
+  0,
+  689,
+  692,
+  8,
+  6,
+  0,
+  0,
+  690,
+  692,
+  3,
+  197,
+  98,
+  0,
+  691,
+  689,
+  1,
+  0,
+  0,
+  0,
+  691,
+  690,
+  1,
+  0,
+  0,
+  0,
+  692,
+  695,
+  1,
+  0,
+  0,
+  0,
+  693,
+  691,
+  1,
+  0,
+  0,
+  0,
+  693,
+  694,
+  1,
+  0,
+  0,
+  0,
+  694,
+  696,
+  1,
+  0,
+  0,
+  0,
+  695,
+  693,
+  1,
+  0,
+  0,
+  0,
+  696,
+  697,
+  5,
+  34,
+  0,
+  0,
+  697,
+  184,
+  1,
+  0,
+  0,
+  0,
+  698,
+  700,
+  3,
+  205,
+  102,
+  0,
+  699,
+  698,
+  1,
+  0,
+  0,
+  0,
+  700,
+  701,
+  1,
+  0,
+  0,
+  0,
+  701,
+  699,
+  1,
+  0,
+  0,
+  0,
+  701,
+  702,
+  1,
+  0,
+  0,
+  0,
+  702,
+  703,
+  1,
+  0,
+  0,
+  0,
+  703,
+  704,
+  6,
+  92,
+  0,
+  0,
+  704,
+  186,
+  1,
+  0,
+  0,
+  0,
+  705,
+  707,
+  3,
+  197,
+  98,
+  0,
+  706,
+  705,
+  1,
+  0,
+  0,
+  0,
+  707,
+  708,
+  1,
+  0,
+  0,
+  0,
+  708,
+  706,
+  1,
+  0,
+  0,
+  0,
+  708,
+  709,
+  1,
+  0,
+  0,
+  0,
+  709,
+  188,
+  1,
+  0,
+  0,
+  0,
+  710,
+  711,
+  5,
+  91,
+  0,
+  0,
+  711,
+  712,
+  5,
+  103,
+  0,
+  0,
+  712,
+  713,
+  5,
+  104,
+  0,
+  0,
+  713,
+  714,
+  5,
+  111,
+  0,
+  0,
+  714,
+  715,
+  5,
+  115,
+  0,
+  0,
+  715,
+  716,
+  5,
+  116,
+  0,
+  0,
+  716,
+  717,
+  5,
+  101,
+  0,
+  0,
+  717,
+  718,
+  5,
+  100,
+  0,
+  0,
+  718,
+  719,
+  5,
+  93,
+  0,
+  0,
+  719,
+  190,
+  1,
+  0,
+  0,
+  0,
+  720,
+  721,
+  8,
+  7,
+  0,
+  0,
+  721,
+  192,
+  1,
+  0,
+  0,
+  0,
+  722,
+  723,
+  7,
+  7,
+  0,
+  0,
+  723,
+  194,
+  1,
+  0,
+  0,
+  0,
+  724,
+  727,
+  7,
+  8,
+  0,
+  0,
+  725,
+  728,
+  3,
+  147,
+  73,
+  0,
+  726,
+  728,
+  3,
+  149,
+  74,
+  0,
+  727,
+  725,
+  1,
+  0,
+  0,
+  0,
+  727,
+  726,
+  1,
+  0,
+  0,
+  0,
+  727,
+  728,
+  1,
+  0,
+  0,
+  0,
+  728,
+  729,
+  1,
+  0,
+  0,
+  0,
+  729,
+  730,
+  3,
+  177,
+  88,
+  0,
+  730,
+  196,
+  1,
+  0,
+  0,
+  0,
+  731,
+  735,
+  3,
+  199,
+  99,
+  0,
+  732,
+  735,
+  3,
+  201,
+  100,
+  0,
+  733,
+  735,
+  3,
+  221,
+  110,
+  0,
+  734,
+  731,
+  1,
+  0,
+  0,
+  0,
+  734,
+  732,
+  1,
+  0,
+  0,
+  0,
+  734,
+  733,
+  1,
+  0,
+  0,
+  0,
+  735,
+  198,
+  1,
+  0,
+  0,
+  0,
+  736,
   737,
+  5,
+  92,
+  0,
+  0,
+  737,
+  759,
+  5,
+  39,
+  0,
+  0,
+  738,
+  739,
+  5,
+  92,
+  0,
+  0,
+  739,
+  759,
+  5,
+  34,
+  0,
+  0,
+  740,
+  741,
+  5,
+  92,
+  0,
+  0,
+  741,
+  759,
+  5,
+  92,
+  0,
+  0,
+  742,
+  743,
+  5,
+  92,
+  0,
+  0,
+  743,
+  759,
+  5,
+  48,
+  0,
+  0,
+  744,
+  745,
+  5,
+  92,
+  0,
+  0,
+  745,
+  759,
+  5,
+  97,
+  0,
+  0,
+  746,
+  747,
+  5,
+  92,
+  0,
+  0,
+  747,
+  759,
+  5,
+  98,
+  0,
+  0,
+  748,
+  749,
+  5,
+  92,
+  0,
+  0,
+  749,
+  759,
+  5,
+  102,
+  0,
+  0,
   750,
+  751,
+  5,
+  92,
+  0,
+  0,
+  751,
+  759,
+  5,
+  110,
+  0,
+  0,
+  752,
+  753,
+  5,
+  92,
+  0,
+  0,
+  753,
+  759,
+  5,
+  114,
+  0,
+  0,
+  754,
+  755,
+  5,
+  92,
+  0,
+  0,
+  755,
+  759,
+  5,
+  116,
+  0,
+  0,
+  756,
   757,
+  5,
+  92,
+  0,
+  0,
+  757,
+  759,
+  5,
+  118,
+  0,
+  0,
+  758,
+  736,
+  1,
+  0,
+  0,
+  0,
+  758,
+  738,
+  1,
+  0,
+  0,
+  0,
+  758,
+  740,
+  1,
+  0,
+  0,
+  0,
+  758,
+  742,
+  1,
+  0,
+  0,
+  0,
+  758,
+  744,
+  1,
+  0,
+  0,
+  0,
+  758,
+  746,
+  1,
+  0,
+  0,
+  0,
+  758,
+  748,
+  1,
+  0,
+  0,
+  0,
+  758,
+  750,
+  1,
+  0,
+  0,
+  0,
+  758,
+  752,
+  1,
+  0,
+  0,
+  0,
+  758,
+  754,
+  1,
+  0,
+  0,
+  0,
+  758,
+  756,
+  1,
+  0,
+  0,
+  0,
+  759,
+  200,
+  1,
+  0,
+  0,
+  0,
+  760,
+  761,
+  5,
+  92,
+  0,
+  0,
+  761,
   762,
+  5,
+  120,
+  0,
+  0,
+  762,
+  763,
+  1,
+  0,
+  0,
+  0,
+  763,
+  786,
+  3,
+  223,
+  111,
+  0,
+  764,
+  765,
+  5,
+  92,
+  0,
+  0,
+  765,
+  766,
+  5,
+  120,
+  0,
+  0,
+  766,
   767,
+  1,
+  0,
+  0,
+  0,
+  767,
+  768,
+  3,
+  223,
+  111,
+  0,
+  768,
+  769,
+  3,
+  223,
+  111,
+  0,
+  769,
+  786,
+  1,
+  0,
+  0,
+  0,
+  770,
+  771,
+  5,
+  92,
+  0,
+  0,
+  771,
   772,
+  5,
+  120,
+  0,
+  0,
+  772,
+  773,
+  1,
+  0,
+  0,
+  0,
+  773,
   774,
+  3,
+  223,
+  111,
+  0,
+  774,
+  775,
+  3,
+  223,
+  111,
+  0,
+  775,
+  776,
+  3,
+  223,
+  111,
+  0,
+  776,
+  786,
+  1,
+  0,
+  0,
+  0,
+  777,
+  778,
+  5,
+  92,
+  0,
+  0,
+  778,
+  779,
+  5,
+  120,
+  0,
+  0,
+  779,
+  780,
+  1,
+  0,
+  0,
+  0,
+  780,
+  781,
+  3,
+  223,
+  111,
+  0,
+  781,
   782,
+  3,
+  223,
+  111,
+  0,
+  782,
+  783,
+  3,
+  223,
+  111,
+  0,
+  783,
+  784,
+  3,
+  223,
+  111,
+  0,
+  784,
+  786,
+  1,
+  0,
+  0,
+  0,
+  785,
+  760,
+  1,
+  0,
+  0,
+  0,
+  785,
+  764,
+  1,
+  0,
+  0,
+  0,
+  785,
+  770,
+  1,
+  0,
+  0,
+  0,
+  785,
+  777,
+  1,
+  0,
+  0,
+  0,
+  786,
+  202,
+  1,
+  0,
+  0,
+  0,
+  787,
+  788,
+  5,
+  13,
+  0,
+  0,
+  788,
+  791,
+  5,
+  10,
+  0,
+  0,
+  789,
+  791,
+  7,
+  7,
+  0,
+  0,
+  790,
+  787,
+  1,
+  0,
+  0,
+  0,
+  790,
+  789,
+  1,
+  0,
+  0,
+  0,
+  791,
+  204,
+  1,
+  0,
+  0,
+  0,
+  792,
+  795,
+  3,
+  207,
+  103,
+  0,
   793,
+  795,
+  7,
+  9,
+  0,
+  0,
+  794,
+  792,
+  1,
+  0,
+  0,
+  0,
+  794,
+  793,
+  1,
+  0,
+  0,
+  0,
+  795,
+  206,
+  1,
+  0,
+  0,
+  0,
+  796,
+  797,
+  7,
+  10,
+  0,
+  0,
+  797,
+  208,
+  1,
+  0,
+  0,
+  0,
+  798,
+  801,
+  3,
+  227,
+  113,
+  0,
+  799,
+  801,
+  3,
+  225,
+  112,
+  0,
   800,
+  798,
+  1,
+  0,
+  0,
+  0,
+  800,
+  799,
+  1,
+  0,
+  0,
+  0,
+  801,
+  805,
+  1,
+  0,
+  0,
+  0,
+  802,
+  804,
+  3,
+  211,
+  105,
+  0,
+  803,
+  802,
+  1,
+  0,
+  0,
+  0,
+  804,
+  807,
+  1,
+  0,
+  0,
+  0,
+  805,
+  803,
+  1,
+  0,
+  0,
+  0,
+  805,
+  806,
+  1,
+  0,
+  0,
+  0,
+  806,
+  210,
+  1,
+  0,
+  0,
+  0,
+  807,
+  805,
+  1,
+  0,
+  0,
+  0,
+  808,
+  813,
+  3,
+  225,
+  112,
+  0,
+  809,
+  813,
+  3,
+  227,
+  113,
+  0,
+  810,
+  813,
+  3,
+  215,
+  107,
+  0,
+  811,
+  813,
+  5,
+  95,
+  0,
+  0,
+  812,
+  808,
+  1,
+  0,
+  0,
+  0,
+  812,
+  809,
+  1,
+  0,
+  0,
+  0,
+  812,
+  810,
+  1,
+  0,
+  0,
+  0,
+  812,
+  811,
+  1,
+  0,
+  0,
+  0,
+  813,
+  212,
+  1,
+  0,
+  0,
+  0,
+  814,
+  818,
+  3,
+  225,
+  112,
+  0,
+  815,
+  818,
+  3,
+  227,
+  113,
+  0,
+  816,
+  818,
+  3,
+  221,
+  110,
+  0,
+  817,
+  814,
+  1,
+  0,
+  0,
+  0,
+  817,
+  815,
+  1,
+  0,
+  0,
+  0,
+  817,
+  816,
+  1,
+  0,
+  0,
+  0,
+  818,
+  214,
+  1,
+  0,
+  0,
+  0,
+  819,
+  822,
+  3,
+  229,
+  114,
+  0,
+  820,
+  822,
+  3,
+  221,
+  110,
+  0,
+  821,
+  819,
+  1,
+  0,
+  0,
+  0,
+  821,
+  820,
+  1,
+  0,
+  0,
+  0,
+  822,
+  216,
+  1,
+  0,
+  0,
+  0,
+  823,
   824,
+  3,
+  221,
+  110,
+  0,
+  824,
+  218,
+  1,
+  0,
+  0,
+  0,
+  825,
+  826,
+  3,
+  221,
+  110,
+  0,
+  826,
+  220,
+  1,
+  0,
+  0,
+  0,
+  827,
+  828,
+  5,
+  92,
+  0,
+  0,
+  828,
+  829,
+  5,
+  117,
+  0,
+  0,
+  829,
+  830,
+  1,
+  0,
+  0,
+  0,
+  830,
+  831,
+  3,
+  223,
+  111,
+  0,
+  831,
+  832,
+  3,
+  223,
+  111,
+  0,
+  832,
+  833,
+  3,
+  223,
+  111,
+  0,
+  833,
+  834,
+  3,
+  223,
+  111,
+  0,
+  834,
+  848,
+  1,
+  0,
+  0,
+  0,
+  835,
+  836,
+  5,
+  92,
+  0,
+  0,
+  836,
+  837,
+  5,
+  85,
+  0,
+  0,
+  837,
+  838,
+  1,
+  0,
+  0,
+  0,
+  838,
+  839,
+  3,
+  223,
+  111,
+  0,
+  839,
+  840,
+  3,
+  223,
+  111,
+  0,
+  840,
+  841,
+  3,
+  223,
+  111,
+  0,
+  841,
+  842,
+  3,
+  223,
+  111,
+  0,
+  842,
+  843,
+  3,
+  223,
+  111,
+  0,
+  843,
+  844,
+  3,
+  223,
+  111,
+  0,
+  844,
+  845,
+  3,
+  223,
+  111,
+  0,
+  845,
+  846,
+  3,
+  223,
+  111,
+  0,
+  846,
+  848,
+  1,
+  0,
+  0,
+  0,
+  847,
+  827,
+  1,
+  0,
+  0,
+  0,
+  847,
+  835,
+  1,
+  0,
+  0,
+  0,
+  848,
+  222,
+  1,
+  0,
+  0,
+  0,
+  849,
   851,
+  7,
+  4,
+  0,
+  0,
+  850,
+  849,
+  1,
+  0,
+  0,
+  0,
+  851,
+  224,
+  1,
+  0,
+  0,
+  0,
+  852,
+  853,
+  2,
+  65,
+  90,
+  0,
+  853,
+  226,
+  1,
+  0,
+  0,
+  0,
+  854,
+  855,
+  2,
+  97,
+  122,
+  0,
+  855,
+  228,
+  1,
+  0,
+  0,
+  0,
   856,
-  860,
-  866,
-  871,
-  878,
-  885,
-  892,
-  897,
-  901,
-  927,
-  930,
-  939,
-  943,
-  948,
+  857,
+  2,
+  48,
+  57,
+  0,
+  857,
+  230,
+  1,
+  0,
+  0,
+  0,
+  31,
+  0,
+  537,
+  549,
+  573,
+  580,
+  635,
+  642,
+  649,
+  656,
+  662,
+  668,
+  675,
+  681,
+  683,
+  691,
+  693,
+  701,
+  708,
+  727,
+  734,
+  758,
+  785,
+  790,
+  794,
+  800,
+  805,
+  812,
+  817,
+  821,
+  847,
+  850,
   1,
   6,
   0,
@@ -12601,85 +11889,76 @@ var ElanLexer = class extends Ln.Lexer {
   static modeNames = ["DEFAULT_MODE"];
   static literalNames = [
     null,
-    "'Func'",
-    null,
-    null,
-    "'#'",
     "'abstract'",
     "'and'",
     "'as'",
     "'assert'",
+    "'assign'",
+    "'be'",
     "'call'",
-    "'case'",
     "'catch'",
     "'class'",
     "'constant'",
     "'constructor'",
-    "'curry'",
-    "'default'",
+    "'copy'",
     "'div'",
-    "'each'",
+    "'elif'",
     "'else'",
     "'end'",
     "'enum'",
     "'for'",
     "'from'",
     "'function'",
-    "'global'",
     "'if'",
-    "'immutable'",
-    "'import'",
     "'in'",
     "'inherits'",
     "'input'",
     "'lambda'",
     "'let'",
-    "'library'",
     "'main'",
     "'mod'",
     "'new'",
     "'not'",
     "'of'",
-    "'is'",
     "'or'",
-    "'out'",
-    "'package'",
-    "'partial'",
     "'print'",
     "'private'",
     "'procedure'",
     "'property'",
-    "'repeat'",
     "'return'",
+    "'returns'",
     "'set'",
     "'step'",
-    "'switch'",
-    "'system'",
     "'test'",
+    "'then'",
     "'this'",
     "'throw'",
     "'to'",
     "'try'",
-    "'var'",
-    "'when'",
+    "'variable'",
     "'while'",
-    "'with'",
-    "'xor'",
-    null,
-    null,
-    "'Array'",
+    "'Int'",
+    "'Float'",
+    "'Boolean'",
+    "'String'",
     "'List'",
-    "'Dictionary'",
-    "'Iter'",
+    null,
+    null,
+    "'is'",
+    "'isnt'",
+    "'=>'",
+    "'0b'",
+    "'0x'",
+    "'$'",
+    null,
+    null,
     "'='",
-    "'->'",
     "'{'",
     "'}'",
     "'['",
     "']'",
     "'('",
     "')'",
-    "'..'",
     "'.'",
     "','",
     "':'",
@@ -12687,93 +11966,97 @@ var ElanLexer = class extends Ln.Lexer {
     "'-'",
     "'*'",
     "'/'",
-    "'^'",
     "'<'",
     "'>'",
     "'<='",
-    "'>='"
+    "'>='",
+    `'"'`,
+    "'if_'",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    "'[ghosted]'"
   ];
   static symbolicNames = [
     null,
-    null,
-    "NL",
-    "SINGLE_LINE_COMMENT",
-    "COMMENT_MARKER",
     "ABSTRACT",
     "AND",
     "AS",
     "ASSERT",
+    "ASSIGN",
+    "BE",
     "CALL",
-    "CASE",
     "CATCH",
     "CLASS",
     "CONSTANT",
     "CONSTRUCTOR",
-    "CURRY",
-    "DEFAULT",
+    "COPY",
     "DIV",
-    "EACH",
+    "ELIF",
     "ELSE",
     "END",
     "ENUM",
     "FOR",
     "FROM",
     "FUNCTION",
-    "GLOBAL",
     "IF",
-    "IMMUTABLE",
-    "IMPORT",
     "IN",
     "INHERITS",
     "INPUT",
     "LAMBDA",
     "LET",
-    "LIBRARY",
     "MAIN",
     "MOD",
     "NEW",
     "NOT",
     "OF",
-    "IS",
     "OR",
-    "OUT",
-    "PACKAGE",
-    "PARTIAL",
     "PRINT",
     "PRIVATE",
     "PROCEDURE",
     "PROPERTY",
-    "REPEAT",
     "RETURN",
+    "RETURNS",
     "SET",
     "STEP",
-    "SWITCH",
-    "SYSTEM",
     "TEST",
+    "THEN",
     "THIS",
     "THROW",
     "TO",
     "TRY",
-    "VAR",
-    "WHEN",
+    "VARIABLE",
     "WHILE",
-    "WITH",
-    "XOR",
-    "BOOL_VALUE",
-    "VALUE_TYPE",
-    "ARRAY",
-    "LIST",
-    "DICTIONARY",
-    "ITERABLE",
-    "EQUALS",
+    "INT_NAME",
+    "FLOAT_NAME",
+    "BOOL_NAME",
+    "STRING_NAME",
+    "LIST_NAME",
+    "COMMENT",
+    "LIT_BOOLEAN",
+    "EQUAL",
+    "NOT_EQUAL",
     "ARROW",
+    "BINARY_PREFIX",
+    "HEX_PREFIX",
+    "INTERPOLATED_STRING_PREFIX",
+    "WS",
+    "NL",
+    "SINGLE_EQUALS",
     "OPEN_BRACE",
     "CLOSE_BRACE",
     "OPEN_SQ_BRACKET",
     "CLOSE_SQ_BRACKET",
     "OPEN_BRACKET",
     "CLOSE_BRACKET",
-    "DOUBLE_DOT",
     "DOT",
     "COMMA",
     "COLON",
@@ -12781,102 +12064,96 @@ var ElanLexer = class extends Ln.Lexer {
     "MINUS",
     "MULT",
     "DIVIDE",
-    "POWER",
     "LT",
     "GT",
     "LE",
     "GE",
-    "IS_NOT",
-    "TYPENAME",
-    "IDENTIFIER",
+    "DOUBLE_QUOTES",
+    "IF_",
+    "NAME_STARTING_TEST_",
+    "NAME_STARTING_LC",
+    "NAME_STARTING_UC",
+    "LITERAL_BINARY",
+    "LITERAL_HEX",
     "LITERAL_INTEGER",
     "LITERAL_FLOAT",
-    "LITERAL_CHAR",
+    "INTERPOLATED_STRING",
     "LITERAL_STRING",
     "WHITESPACES",
-    "NEWLINE",
-    "WS"
+    "TEXT",
+    "GHOSTED"
   ];
   static ruleNames = [
-    "T__0",
-    "NL",
-    "SINGLE_LINE_COMMENT",
-    "COMMENT_MARKER",
     "ABSTRACT",
     "AND",
     "AS",
     "ASSERT",
+    "ASSIGN",
+    "BE",
     "CALL",
-    "CASE",
     "CATCH",
     "CLASS",
     "CONSTANT",
     "CONSTRUCTOR",
-    "CURRY",
-    "DEFAULT",
+    "COPY",
     "DIV",
-    "EACH",
+    "ELIF",
     "ELSE",
     "END",
     "ENUM",
     "FOR",
     "FROM",
     "FUNCTION",
-    "GLOBAL",
     "IF",
-    "IMMUTABLE",
-    "IMPORT",
     "IN",
     "INHERITS",
     "INPUT",
     "LAMBDA",
     "LET",
-    "LIBRARY",
     "MAIN",
     "MOD",
     "NEW",
     "NOT",
     "OF",
-    "IS",
     "OR",
-    "OUT",
-    "PACKAGE",
-    "PARTIAL",
     "PRINT",
     "PRIVATE",
     "PROCEDURE",
     "PROPERTY",
-    "REPEAT",
     "RETURN",
+    "RETURNS",
     "SET",
     "STEP",
-    "SWITCH",
-    "SYSTEM",
     "TEST",
+    "THEN",
     "THIS",
     "THROW",
     "TO",
     "TRY",
-    "VAR",
-    "WHEN",
+    "VARIABLE",
     "WHILE",
-    "WITH",
-    "XOR",
-    "BOOL_VALUE",
-    "VALUE_TYPE",
-    "ARRAY",
-    "LIST",
-    "DICTIONARY",
-    "ITERABLE",
-    "EQUALS",
+    "INT_NAME",
+    "FLOAT_NAME",
+    "BOOL_NAME",
+    "STRING_NAME",
+    "LIST_NAME",
+    "COMMENT",
+    "LIT_BOOLEAN",
+    "EQUAL",
+    "NOT_EQUAL",
     "ARROW",
+    "BINARY_PREFIX",
+    "HEX_PREFIX",
+    "INTERPOLATED_STRING_PREFIX",
+    "WS",
+    "NL",
+    "SINGLE_EQUALS",
     "OPEN_BRACE",
     "CLOSE_BRACE",
     "OPEN_SQ_BRACKET",
     "CLOSE_SQ_BRACKET",
     "OPEN_BRACKET",
     "CLOSE_BRACKET",
-    "DOUBLE_DOT",
     "DOT",
     "COMMA",
     "COLON",
@@ -12884,19 +12161,24 @@ var ElanLexer = class extends Ln.Lexer {
     "MINUS",
     "MULT",
     "DIVIDE",
-    "POWER",
     "LT",
     "GT",
     "LE",
     "GE",
-    "IS_NOT",
-    "TYPENAME",
-    "IDENTIFIER",
+    "DOUBLE_QUOTES",
+    "IF_",
+    "NAME_STARTING_TEST_",
+    "NAME_STARTING_LC",
+    "NAME_STARTING_UC",
+    "LITERAL_BINARY",
+    "LITERAL_HEX",
     "LITERAL_INTEGER",
     "LITERAL_FLOAT",
-    "LITERAL_CHAR",
+    "INTERPOLATED_STRING",
     "LITERAL_STRING",
     "WHITESPACES",
+    "TEXT",
+    "GHOSTED",
     "InputCharacter",
     "NewLineCharacter",
     "ExponentPart",
@@ -12907,8 +12189,6 @@ var ElanLexer = class extends Ln.Lexer {
     "Whitespace",
     "UnicodeClassZS",
     "IdentifierStartingUCorLC",
-    "IdentifierStartingLC",
-    "IdentifierStartingUC",
     "IdentifierPartCharacter",
     "LetterCharacter",
     "DecimalDigitCharacter",
@@ -12918,9 +12198,7 @@ var ElanLexer = class extends Ln.Lexer {
     "HexDigit",
     "UnicodeClassLU",
     "UnicodeClassLL",
-    "UnicodeClassND",
-    "NEWLINE",
-    "WS"
+    "UnicodeClassND"
   ];
   constructor(input) {
     super(input);
@@ -12928,107 +12206,101 @@ var ElanLexer = class extends Ln.Lexer {
   }
 };
 ElanLexer.EOF = Ln.Token.EOF;
-ElanLexer.T__0 = 1;
-ElanLexer.NL = 2;
-ElanLexer.SINGLE_LINE_COMMENT = 3;
-ElanLexer.COMMENT_MARKER = 4;
-ElanLexer.ABSTRACT = 5;
-ElanLexer.AND = 6;
-ElanLexer.AS = 7;
-ElanLexer.ASSERT = 8;
-ElanLexer.CALL = 9;
-ElanLexer.CASE = 10;
-ElanLexer.CATCH = 11;
-ElanLexer.CLASS = 12;
-ElanLexer.CONSTANT = 13;
-ElanLexer.CONSTRUCTOR = 14;
-ElanLexer.CURRY = 15;
-ElanLexer.DEFAULT = 16;
-ElanLexer.DIV = 17;
-ElanLexer.EACH = 18;
-ElanLexer.ELSE = 19;
-ElanLexer.END = 20;
-ElanLexer.ENUM = 21;
-ElanLexer.FOR = 22;
-ElanLexer.FROM = 23;
-ElanLexer.FUNCTION = 24;
-ElanLexer.GLOBAL = 25;
-ElanLexer.IF = 26;
-ElanLexer.IMMUTABLE = 27;
-ElanLexer.IMPORT = 28;
-ElanLexer.IN = 29;
-ElanLexer.INHERITS = 30;
-ElanLexer.INPUT = 31;
-ElanLexer.LAMBDA = 32;
-ElanLexer.LET = 33;
-ElanLexer.LIBRARY = 34;
-ElanLexer.MAIN = 35;
-ElanLexer.MOD = 36;
-ElanLexer.NEW = 37;
-ElanLexer.NOT = 38;
-ElanLexer.OF = 39;
-ElanLexer.IS = 40;
-ElanLexer.OR = 41;
-ElanLexer.OUT = 42;
-ElanLexer.PACKAGE = 43;
-ElanLexer.PARTIAL = 44;
-ElanLexer.PRINT = 45;
-ElanLexer.PRIVATE = 46;
-ElanLexer.PROCEDURE = 47;
-ElanLexer.PROPERTY = 48;
-ElanLexer.REPEAT = 49;
-ElanLexer.RETURN = 50;
-ElanLexer.SET = 51;
-ElanLexer.STEP = 52;
-ElanLexer.SWITCH = 53;
-ElanLexer.SYSTEM = 54;
-ElanLexer.TEST = 55;
-ElanLexer.THIS = 56;
-ElanLexer.THROW = 57;
-ElanLexer.TO = 58;
-ElanLexer.TRY = 59;
-ElanLexer.VAR = 60;
-ElanLexer.WHEN = 61;
-ElanLexer.WHILE = 62;
-ElanLexer.WITH = 63;
-ElanLexer.XOR = 64;
-ElanLexer.BOOL_VALUE = 65;
-ElanLexer.VALUE_TYPE = 66;
-ElanLexer.ARRAY = 67;
-ElanLexer.LIST = 68;
-ElanLexer.DICTIONARY = 69;
-ElanLexer.ITERABLE = 70;
-ElanLexer.EQUALS = 71;
-ElanLexer.ARROW = 72;
-ElanLexer.OPEN_BRACE = 73;
-ElanLexer.CLOSE_BRACE = 74;
-ElanLexer.OPEN_SQ_BRACKET = 75;
-ElanLexer.CLOSE_SQ_BRACKET = 76;
-ElanLexer.OPEN_BRACKET = 77;
-ElanLexer.CLOSE_BRACKET = 78;
-ElanLexer.DOUBLE_DOT = 79;
-ElanLexer.DOT = 80;
-ElanLexer.COMMA = 81;
-ElanLexer.COLON = 82;
-ElanLexer.PLUS = 83;
-ElanLexer.MINUS = 84;
-ElanLexer.MULT = 85;
-ElanLexer.DIVIDE = 86;
-ElanLexer.POWER = 87;
-ElanLexer.LT = 88;
-ElanLexer.GT = 89;
-ElanLexer.LE = 90;
-ElanLexer.GE = 91;
-ElanLexer.IS_NOT = 92;
-ElanLexer.TYPENAME = 93;
-ElanLexer.IDENTIFIER = 94;
-ElanLexer.LITERAL_INTEGER = 95;
-ElanLexer.LITERAL_FLOAT = 96;
-ElanLexer.LITERAL_CHAR = 97;
-ElanLexer.LITERAL_STRING = 98;
-ElanLexer.WHITESPACES = 99;
-ElanLexer.NEWLINE = 100;
-ElanLexer.WS = 101;
+ElanLexer.ABSTRACT = 1;
+ElanLexer.AND = 2;
+ElanLexer.AS = 3;
+ElanLexer.ASSERT = 4;
+ElanLexer.ASSIGN = 5;
+ElanLexer.BE = 6;
+ElanLexer.CALL = 7;
+ElanLexer.CATCH = 8;
+ElanLexer.CLASS = 9;
+ElanLexer.CONSTANT = 10;
+ElanLexer.CONSTRUCTOR = 11;
+ElanLexer.COPY = 12;
+ElanLexer.DIV = 13;
+ElanLexer.ELIF = 14;
+ElanLexer.ELSE = 15;
+ElanLexer.END = 16;
+ElanLexer.ENUM = 17;
+ElanLexer.FOR = 18;
+ElanLexer.FROM = 19;
+ElanLexer.FUNCTION = 20;
+ElanLexer.IF = 21;
+ElanLexer.IN = 22;
+ElanLexer.INHERITS = 23;
+ElanLexer.INPUT = 24;
+ElanLexer.LAMBDA = 25;
+ElanLexer.LET = 26;
+ElanLexer.MAIN = 27;
+ElanLexer.MOD = 28;
+ElanLexer.NEW = 29;
+ElanLexer.NOT = 30;
+ElanLexer.OF = 31;
+ElanLexer.OR = 32;
+ElanLexer.PRINT = 33;
+ElanLexer.PRIVATE = 34;
+ElanLexer.PROCEDURE = 35;
+ElanLexer.PROPERTY = 36;
+ElanLexer.RETURN = 37;
+ElanLexer.RETURNS = 38;
+ElanLexer.SET = 39;
+ElanLexer.STEP = 40;
+ElanLexer.TEST = 41;
+ElanLexer.THEN = 42;
+ElanLexer.THIS = 43;
+ElanLexer.THROW = 44;
+ElanLexer.TO = 45;
+ElanLexer.TRY = 46;
+ElanLexer.VARIABLE = 47;
+ElanLexer.WHILE = 48;
+ElanLexer.INT_NAME = 49;
+ElanLexer.FLOAT_NAME = 50;
+ElanLexer.BOOL_NAME = 51;
+ElanLexer.STRING_NAME = 52;
+ElanLexer.LIST_NAME = 53;
+ElanLexer.COMMENT = 54;
+ElanLexer.LIT_BOOLEAN = 55;
+ElanLexer.EQUAL = 56;
+ElanLexer.NOT_EQUAL = 57;
+ElanLexer.ARROW = 58;
+ElanLexer.BINARY_PREFIX = 59;
+ElanLexer.HEX_PREFIX = 60;
+ElanLexer.INTERPOLATED_STRING_PREFIX = 61;
+ElanLexer.WS = 62;
+ElanLexer.NL = 63;
+ElanLexer.SINGLE_EQUALS = 64;
+ElanLexer.OPEN_BRACE = 65;
+ElanLexer.CLOSE_BRACE = 66;
+ElanLexer.OPEN_SQ_BRACKET = 67;
+ElanLexer.CLOSE_SQ_BRACKET = 68;
+ElanLexer.OPEN_BRACKET = 69;
+ElanLexer.CLOSE_BRACKET = 70;
+ElanLexer.DOT = 71;
+ElanLexer.COMMA = 72;
+ElanLexer.COLON = 73;
+ElanLexer.PLUS = 74;
+ElanLexer.MINUS = 75;
+ElanLexer.MULT = 76;
+ElanLexer.DIVIDE = 77;
+ElanLexer.LT = 78;
+ElanLexer.GT = 79;
+ElanLexer.LE = 80;
+ElanLexer.GE = 81;
+ElanLexer.DOUBLE_QUOTES = 82;
+ElanLexer.IF_ = 83;
+ElanLexer.NAME_STARTING_TEST_ = 84;
+ElanLexer.NAME_STARTING_LC = 85;
+ElanLexer.NAME_STARTING_UC = 86;
+ElanLexer.LITERAL_BINARY = 87;
+ElanLexer.LITERAL_HEX = 88;
+ElanLexer.LITERAL_INTEGER = 89;
+ElanLexer.LITERAL_FLOAT = 90;
+ElanLexer.INTERPOLATED_STRING = 91;
+ElanLexer.LITERAL_STRING = 92;
+ElanLexer.WHITESPACES = 93;
+ElanLexer.TEXT = 94;
+ElanLexer.GHOSTED = 95;
 
 // src/generatedElan/ElanListener.js
 var ElanListener = class extends Ln.tree.ParseTreeListener {
@@ -13038,17 +12310,11 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
   // Exit a parse tree produced by ElanParser#file.
   exitFile(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#importStatement.
-  enterImportStatement(ctx) {
+  // Enter a parse tree produced by ElanParser#global.
+  enterGlobal(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#importStatement.
-  exitImportStatement(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#namespace.
-  enterNamespace(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#namespace.
-  exitNamespace(ctx) {
+  // Exit a parse tree produced by ElanParser#global.
+  exitGlobal(ctx) {
   }
   // Enter a parse tree produced by ElanParser#main.
   enterMain(ctx) {
@@ -13056,191 +12322,29 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
   // Exit a parse tree produced by ElanParser#main.
   exitMain(ctx) {
   }
+  // Enter a parse tree produced by ElanParser#function.
+  enterFunction(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#function.
+  exitFunction(ctx) {
+  }
   // Enter a parse tree produced by ElanParser#test.
   enterTest(ctx) {
   }
   // Exit a parse tree produced by ElanParser#test.
   exitTest(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#statementBlock.
-  enterStatementBlock(ctx) {
+  // Enter a parse tree produced by ElanParser#procedure.
+  enterProcedure(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#statementBlock.
-  exitStatementBlock(ctx) {
+  // Exit a parse tree produced by ElanParser#procedure.
+  exitProcedure(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#testStatements.
-  enterTestStatements(ctx) {
+  // Enter a parse tree produced by ElanParser#concreteClass.
+  enterConcreteClass(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#testStatements.
-  exitTestStatements(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#assert.
-  enterAssert(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#assert.
-  exitAssert(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#callStatement.
-  enterCallStatement(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#callStatement.
-  exitCallStatement(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#throwException.
-  enterThrowException(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#throwException.
-  exitThrowException(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#printStatement.
-  enterPrintStatement(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#printStatement.
-  exitPrintStatement(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#varDef.
-  enterVarDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#varDef.
-  exitVarDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#assignment.
-  enterAssignment(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#assignment.
-  exitAssignment(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#inlineAsignment.
-  enterInlineAsignment(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#inlineAsignment.
-  exitInlineAsignment(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#assignableValue.
-  enterAssignableValue(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#assignableValue.
-  exitAssignableValue(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#procedureCall.
-  enterProcedureCall(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#procedureCall.
-  exitProcedureCall(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#functionCall.
-  enterFunctionCall(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#functionCall.
-  exitFunctionCall(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#systemCall.
-  enterSystemCall(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#systemCall.
-  exitSystemCall(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#input.
-  enterInput(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#input.
-  exitInput(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#argument.
-  enterArgument(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#argument.
-  exitArgument(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#argumentList.
-  enterArgumentList(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#argumentList.
-  exitArgumentList(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#procedureDef.
-  enterProcedureDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#procedureDef.
-  exitProcedureDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#procedureSignature.
-  enterProcedureSignature(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#procedureSignature.
-  exitProcedureSignature(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#procedureParameterList.
-  enterProcedureParameterList(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#procedureParameterList.
-  exitProcedureParameterList(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#parameterList.
-  enterParameterList(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#parameterList.
-  exitParameterList(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#parameter.
-  enterParameter(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#parameter.
-  exitParameter(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#procedureParameter.
-  enterProcedureParameter(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#procedureParameter.
-  exitProcedureParameter(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#functionDef.
-  enterFunctionDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#functionDef.
-  exitFunctionDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#functionSignature.
-  enterFunctionSignature(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#functionSignature.
-  exitFunctionSignature(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#constantDef.
-  enterConstantDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#constantDef.
-  exitConstantDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#enumDef.
-  enterEnumDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#enumDef.
-  exitEnumDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#enumType.
-  enterEnumType(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#enumType.
-  exitEnumType(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#enumValue.
-  enterEnumValue(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#enumValue.
-  exitEnumValue(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#classDef.
-  enterClassDef(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#classDef.
-  exitClassDef(ctx) {
-  }
-  // Enter a parse tree produced by ElanParser#mutableClass.
-  enterMutableClass(ctx) {
-  }
-  // Exit a parse tree produced by ElanParser#mutableClass.
-  exitMutableClass(ctx) {
+  // Exit a parse tree produced by ElanParser#concreteClass.
+  exitConcreteClass(ctx) {
   }
   // Enter a parse tree produced by ElanParser#abstractClass.
   enterAbstractClass(ctx) {
@@ -13248,29 +12352,47 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
   // Exit a parse tree produced by ElanParser#abstractClass.
   exitAbstractClass(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#immutableClass.
-  enterImmutableClass(ctx) {
+  // Enter a parse tree produced by ElanParser#commentGlobal.
+  enterCommentGlobal(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#immutableClass.
-  exitImmutableClass(ctx) {
+  // Exit a parse tree produced by ElanParser#commentGlobal.
+  exitCommentGlobal(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#abstractImmutableClass.
-  enterAbstractImmutableClass(ctx) {
+  // Enter a parse tree produced by ElanParser#ordinaryStatement.
+  enterOrdinaryStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#abstractImmutableClass.
-  exitAbstractImmutableClass(ctx) {
+  // Exit a parse tree produced by ElanParser#ordinaryStatement.
+  exitOrdinaryStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#inherits.
-  enterInherits(ctx) {
+  // Enter a parse tree produced by ElanParser#ifStatement.
+  enterIfStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#inherits.
-  exitInherits(ctx) {
+  // Exit a parse tree produced by ElanParser#ifStatement.
+  exitIfStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#property.
-  enterProperty(ctx) {
+  // Enter a parse tree produced by ElanParser#whileLoop.
+  enterWhileLoop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#property.
-  exitProperty(ctx) {
+  // Exit a parse tree produced by ElanParser#whileLoop.
+  exitWhileLoop(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#forLoop.
+  enterForLoop(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#forLoop.
+  exitForLoop(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#tryStatement.
+  enterTryStatement(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#tryStatement.
+  exitTryStatement(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#commentStatement.
+  enterCommentStatement(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#commentStatement.
+  exitCommentStatement(ctx) {
   }
   // Enter a parse tree produced by ElanParser#econstructor.
   enterEconstructor(ctx) {
@@ -13278,251 +12400,353 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
   // Exit a parse tree produced by ElanParser#econstructor.
   exitEconstructor(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#newInstance.
-  enterNewInstance(ctx) {
+  // Enter a parse tree produced by ElanParser#functionMethod.
+  enterFunctionMethod(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#newInstance.
-  exitNewInstance(ctx) {
+  // Exit a parse tree produced by ElanParser#functionMethod.
+  exitFunctionMethod(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#withClause.
-  enterWithClause(ctx) {
+  // Enter a parse tree produced by ElanParser#procedureMethod.
+  enterProcedureMethod(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#withClause.
-  exitWithClause(ctx) {
+  // Exit a parse tree produced by ElanParser#procedureMethod.
+  exitProcedureMethod(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#proceduralControlFlow.
-  enterProceduralControlFlow(ctx) {
+  // Enter a parse tree produced by ElanParser#copyMethod.
+  enterCopyMethod(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#proceduralControlFlow.
-  exitProceduralControlFlow(ctx) {
+  // Exit a parse tree produced by ElanParser#copyMethod.
+  exitCopyMethod(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#if.
-  enterIf(ctx) {
+  // Enter a parse tree produced by ElanParser#commentMember.
+  enterCommentMember(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#if.
-  exitIf(ctx) {
+  // Exit a parse tree produced by ElanParser#commentMember.
+  exitCommentMember(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#for.
-  enterFor(ctx) {
+  // Enter a parse tree produced by ElanParser#mainTop.
+  enterMainTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#for.
-  exitFor(ctx) {
+  // Exit a parse tree produced by ElanParser#mainTop.
+  exitMainTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#each.
-  enterEach(ctx) {
+  // Enter a parse tree produced by ElanParser#mainBottom.
+  enterMainBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#each.
-  exitEach(ctx) {
+  // Exit a parse tree produced by ElanParser#mainBottom.
+  exitMainBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#while.
-  enterWhile(ctx) {
+  // Enter a parse tree produced by ElanParser#functionTop.
+  enterFunctionTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#while.
-  exitWhile(ctx) {
+  // Exit a parse tree produced by ElanParser#functionTop.
+  exitFunctionTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#repeat.
-  enterRepeat(ctx) {
+  // Enter a parse tree produced by ElanParser#functionBottom.
+  enterFunctionBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#repeat.
-  exitRepeat(ctx) {
+  // Exit a parse tree produced by ElanParser#functionBottom.
+  exitFunctionBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#try.
-  enterTry(ctx) {
+  // Enter a parse tree produced by ElanParser#testTop.
+  enterTestTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#try.
-  exitTry(ctx) {
+  // Exit a parse tree produced by ElanParser#testTop.
+  exitTestTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#switch.
-  enterSwitch(ctx) {
+  // Enter a parse tree produced by ElanParser#testBottom.
+  enterTestBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#switch.
-  exitSwitch(ctx) {
+  // Exit a parse tree produced by ElanParser#testBottom.
+  exitTestBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#case.
-  enterCase(ctx) {
+  // Enter a parse tree produced by ElanParser#procedureTop.
+  enterProcedureTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#case.
-  exitCase(ctx) {
+  // Exit a parse tree produced by ElanParser#procedureTop.
+  exitProcedureTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#caseDefault.
-  enterCaseDefault(ctx) {
+  // Enter a parse tree produced by ElanParser#procedureBottom.
+  enterProcedureBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#caseDefault.
-  exitCaseDefault(ctx) {
+  // Exit a parse tree produced by ElanParser#procedureBottom.
+  exitProcedureBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#expression.
-  enterExpression(ctx) {
+  // Enter a parse tree produced by ElanParser#concreteClassTop.
+  enterConcreteClassTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#expression.
-  exitExpression(ctx) {
+  // Exit a parse tree produced by ElanParser#concreteClassTop.
+  exitConcreteClassTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#bracketedExpression.
-  enterBracketedExpression(ctx) {
+  // Enter a parse tree produced by ElanParser#concreteClassBottom.
+  enterConcreteClassBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#bracketedExpression.
-  exitBracketedExpression(ctx) {
+  // Exit a parse tree produced by ElanParser#concreteClassBottom.
+  exitConcreteClassBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#ifExpression.
-  enterIfExpression(ctx) {
+  // Enter a parse tree produced by ElanParser#abstractClassTop.
+  enterAbstractClassTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#ifExpression.
-  exitIfExpression(ctx) {
+  // Exit a parse tree produced by ElanParser#abstractClassTop.
+  exitAbstractClassTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#elseExpression.
-  enterElseExpression(ctx) {
+  // Enter a parse tree produced by ElanParser#abstractClassBottom.
+  enterAbstractClassBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#elseExpression.
-  exitElseExpression(ctx) {
+  // Exit a parse tree produced by ElanParser#abstractClassBottom.
+  exitAbstractClassBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#lambda.
-  enterLambda(ctx) {
+  // Enter a parse tree produced by ElanParser#constant.
+  enterConstant(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#lambda.
-  exitLambda(ctx) {
+  // Exit a parse tree produced by ElanParser#constant.
+  exitConstant(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#index.
-  enterIndex(ctx) {
+  // Enter a parse tree produced by ElanParser#enum.
+  enterEnum(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#index.
-  exitIndex(ctx) {
+  // Exit a parse tree produced by ElanParser#enum.
+  exitEnum(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#range.
-  enterRange(ctx) {
+  // Enter a parse tree produced by ElanParser#assert.
+  enterAssert(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#range.
-  exitRange(ctx) {
+  // Exit a parse tree produced by ElanParser#assert.
+  exitAssert(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#value.
-  enterValue(ctx) {
+  // Enter a parse tree produced by ElanParser#letStatement.
+  enterLetStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#value.
-  exitValue(ctx) {
+  // Exit a parse tree produced by ElanParser#letStatement.
+  exitLetStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#scopeQualifier.
-  enterScopeQualifier(ctx) {
+  // Enter a parse tree produced by ElanParser#print.
+  enterPrint(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#scopeQualifier.
-  exitScopeQualifier(ctx) {
+  // Exit a parse tree produced by ElanParser#print.
+  exitPrint(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literal.
-  enterLiteral(ctx) {
+  // Enter a parse tree produced by ElanParser#variableDefinition.
+  enterVariableDefinition(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literal.
-  exitLiteral(ctx) {
+  // Exit a parse tree produced by ElanParser#variableDefinition.
+  exitVariableDefinition(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalValue.
-  enterLiteralValue(ctx) {
+  // Enter a parse tree produced by ElanParser#assignment.
+  enterAssignment(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalValue.
-  exitLiteralValue(ctx) {
+  // Exit a parse tree produced by ElanParser#assignment.
+  exitAssignment(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#dataStructureDefinition.
-  enterDataStructureDefinition(ctx) {
+  // Enter a parse tree produced by ElanParser#inputStatement.
+  enterInputStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#dataStructureDefinition.
-  exitDataStructureDefinition(ctx) {
+  // Exit a parse tree produced by ElanParser#inputStatement.
+  exitInputStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalDataStructure.
-  enterLiteralDataStructure(ctx) {
+  // Enter a parse tree produced by ElanParser#procedureCall.
+  enterProcedureCall(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalDataStructure.
-  exitLiteralDataStructure(ctx) {
+  // Exit a parse tree produced by ElanParser#procedureCall.
+  exitProcedureCall(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#tupleDefinition.
-  enterTupleDefinition(ctx) {
+  // Enter a parse tree produced by ElanParser#throwStatement.
+  enterThrowStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#tupleDefinition.
-  exitTupleDefinition(ctx) {
+  // Exit a parse tree produced by ElanParser#throwStatement.
+  exitThrowStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalTuple.
-  enterLiteralTuple(ctx) {
+  // Enter a parse tree produced by ElanParser#returnStatement.
+  enterReturnStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalTuple.
-  exitLiteralTuple(ctx) {
+  // Exit a parse tree produced by ElanParser#returnStatement.
+  exitReturnStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#deconstructedTuple.
-  enterDeconstructedTuple(ctx) {
+  // Enter a parse tree produced by ElanParser#elseIfClause.
+  enterElseIfClause(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#deconstructedTuple.
-  exitDeconstructedTuple(ctx) {
+  // Exit a parse tree produced by ElanParser#elseIfClause.
+  exitElseIfClause(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#listDefinition.
-  enterListDefinition(ctx) {
+  // Enter a parse tree produced by ElanParser#elseClause.
+  enterElseClause(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#listDefinition.
-  exitListDefinition(ctx) {
+  // Exit a parse tree produced by ElanParser#elseClause.
+  exitElseClause(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalList.
-  enterLiteralList(ctx) {
+  // Enter a parse tree produced by ElanParser#catchStatement.
+  enterCatchStatement(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalList.
-  exitLiteralList(ctx) {
+  // Exit a parse tree produced by ElanParser#catchStatement.
+  exitCatchStatement(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#listDecomp.
-  enterListDecomp(ctx) {
+  // Enter a parse tree produced by ElanParser#ifStatementTop.
+  enterIfStatementTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#listDecomp.
-  exitListDecomp(ctx) {
+  // Exit a parse tree produced by ElanParser#ifStatementTop.
+  exitIfStatementTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#arrayDefinition.
-  enterArrayDefinition(ctx) {
+  // Enter a parse tree produced by ElanParser#ifStatementBottom.
+  enterIfStatementBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#arrayDefinition.
-  exitArrayDefinition(ctx) {
+  // Exit a parse tree produced by ElanParser#ifStatementBottom.
+  exitIfStatementBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#dictionaryDefinition.
-  enterDictionaryDefinition(ctx) {
+  // Enter a parse tree produced by ElanParser#whileLoopTop.
+  enterWhileLoopTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#dictionaryDefinition.
-  exitDictionaryDefinition(ctx) {
+  // Exit a parse tree produced by ElanParser#whileLoopTop.
+  exitWhileLoopTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalDictionary.
-  enterLiteralDictionary(ctx) {
+  // Enter a parse tree produced by ElanParser#whileLoopBottom.
+  enterWhileLoopBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalDictionary.
-  exitLiteralDictionary(ctx) {
+  // Exit a parse tree produced by ElanParser#whileLoopBottom.
+  exitWhileLoopBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#kvp.
-  enterKvp(ctx) {
+  // Enter a parse tree produced by ElanParser#forLoopTop.
+  enterForLoopTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#kvp.
-  exitKvp(ctx) {
+  // Exit a parse tree produced by ElanParser#forLoopTop.
+  exitForLoopTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#literalKvp.
-  enterLiteralKvp(ctx) {
+  // Enter a parse tree produced by ElanParser#forLoopBottom.
+  enterForLoopBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#literalKvp.
-  exitLiteralKvp(ctx) {
+  // Exit a parse tree produced by ElanParser#forLoopBottom.
+  exitForLoopBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#unaryOp.
-  enterUnaryOp(ctx) {
+  // Enter a parse tree produced by ElanParser#tryStatementTop.
+  enterTryStatementTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#unaryOp.
-  exitUnaryOp(ctx) {
+  // Exit a parse tree produced by ElanParser#tryStatementTop.
+  exitTryStatementTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#binaryOp.
-  enterBinaryOp(ctx) {
+  // Enter a parse tree produced by ElanParser#tryStatementBottom.
+  enterTryStatementBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#binaryOp.
-  exitBinaryOp(ctx) {
+  // Exit a parse tree produced by ElanParser#tryStatementBottom.
+  exitTryStatementBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#arithmeticOp.
-  enterArithmeticOp(ctx) {
+  // Enter a parse tree produced by ElanParser#constructorTop.
+  enterConstructorTop(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#arithmeticOp.
-  exitArithmeticOp(ctx) {
+  // Exit a parse tree produced by ElanParser#constructorTop.
+  exitConstructorTop(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#logicalOp.
-  enterLogicalOp(ctx) {
+  // Enter a parse tree produced by ElanParser#constructorBottom.
+  enterConstructorBottom(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#logicalOp.
-  exitLogicalOp(ctx) {
+  // Exit a parse tree produced by ElanParser#constructorBottom.
+  exitConstructorBottom(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#conditionalOp.
-  enterConditionalOp(ctx) {
+  // Enter a parse tree produced by ElanParser#property.
+  enterProperty(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#conditionalOp.
-  exitConditionalOp(ctx) {
+  // Exit a parse tree produced by ElanParser#property.
+  exitProperty(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#functionMethodTop.
+  enterFunctionMethodTop(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#functionMethodTop.
+  exitFunctionMethodTop(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#functionMethodBottom.
+  enterFunctionMethodBottom(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#functionMethodBottom.
+  exitFunctionMethodBottom(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#procedureMethodTop.
+  enterProcedureMethodTop(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#procedureMethodTop.
+  exitProcedureMethodTop(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#procedureMethodBottom.
+  enterProcedureMethodBottom(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#procedureMethodBottom.
+  exitProcedureMethodBottom(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#copyMethodTop.
+  enterCopyMethodTop(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#copyMethodTop.
+  exitCopyMethodTop(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#copyMethodBottom.
+  enterCopyMethodBottom(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#copyMethodBottom.
+  exitCopyMethodBottom(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#abstractFunction.
+  enterAbstractFunction(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#abstractFunction.
+  exitAbstractFunction(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#abstractProcedure.
+  enterAbstractProcedure(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#abstractProcedure.
+  exitAbstractProcedure(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#identifier.
+  enterIdentifier(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#identifier.
+  exitIdentifier(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#assignable.
+  enterAssignable(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#assignable.
+  exitAssignable(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#methodName.
+  enterMethodName(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#methodName.
+  exitMethodName(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#testName.
+  enterTestName(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#testName.
+  exitTestName(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#typeName.
+  enterTypeName(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#typeName.
+  exitTypeName(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#constantValue.
+  enterConstantValue(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#constantValue.
+  exitConstantValue(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#argList.
+  enterArgList(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#argList.
+  exitArgList(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#argument.
+  enterArgument(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#argument.
+  exitArgument(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#paramsList.
+  enterParamsList(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#paramsList.
+  exitParamsList(ctx) {
   }
   // Enter a parse tree produced by ElanParser#type.
   enterType(ctx) {
@@ -13530,35 +12754,203 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
   // Exit a parse tree produced by ElanParser#type.
   exitType(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#dataStructureType.
-  enterDataStructureType(ctx) {
+  // Enter a parse tree produced by ElanParser#enumValuesList.
+  enterEnumValuesList(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#dataStructureType.
-  exitDataStructureType(ctx) {
+  // Exit a parse tree produced by ElanParser#enumValuesList.
+  exitEnumValuesList(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#genericSpecifier.
-  enterGenericSpecifier(ctx) {
+  // Enter a parse tree produced by ElanParser#procRef.
+  enterProcRef(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#genericSpecifier.
-  exitGenericSpecifier(ctx) {
+  // Exit a parse tree produced by ElanParser#procRef.
+  exitProcRef(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#tupleType.
-  enterTupleType(ctx) {
+  // Enter a parse tree produced by ElanParser#assertActual.
+  enterAssertActual(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#tupleType.
-  exitTupleType(ctx) {
+  // Exit a parse tree produced by ElanParser#assertActual.
+  exitAssertActual(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#typeList.
-  enterTypeList(ctx) {
+  // Enter a parse tree produced by ElanParser#litValue.
+  enterLitValue(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#typeList.
-  exitTypeList(ctx) {
+  // Exit a parse tree produced by ElanParser#litValue.
+  exitLitValue(ctx) {
   }
-  // Enter a parse tree produced by ElanParser#funcType.
-  enterFuncType(ctx) {
+  // Enter a parse tree produced by ElanParser#litInt.
+  enterLitInt(ctx) {
   }
-  // Exit a parse tree produced by ElanParser#funcType.
-  exitFuncType(ctx) {
+  // Exit a parse tree produced by ElanParser#litInt.
+  exitLitInt(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#litFloat.
+  enterLitFloat(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#litFloat.
+  exitLitFloat(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#enumValue.
+  enterEnumValue(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#enumValue.
+  exitEnumValue(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#litRegExp.
+  enterLitRegExp(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#litRegExp.
+  exitLitRegExp(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#litString.
+  enterLitString(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#litString.
+  exitLitString(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#thisInstance.
+  enterThisInstance(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#thisInstance.
+  exitThisInstance(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#index.
+  enterIndex(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#index.
+  exitIndex(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#identifierWithOptIndexes.
+  enterIdentifierWithOptIndexes(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#identifierWithOptIndexes.
+  exitIdentifierWithOptIndexes(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#propertyRef.
+  enterPropertyRef(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#propertyRef.
+  exitPropertyRef(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#expression.
+  enterExpression(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#expression.
+  exitExpression(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#term.
+  enterTerm(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#term.
+  exitTerm(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#chainable.
+  enterChainable(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#chainable.
+  exitChainable(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#bracketedExpression.
+  enterBracketedExpression(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#bracketedExpression.
+  exitBracketedExpression(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#unaryExpression.
+  enterUnaryExpression(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#unaryExpression.
+  exitUnaryExpression(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#binaryExpression.
+  enterBinaryExpression(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#binaryExpression.
+  exitBinaryExpression(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#tuple.
+  enterTuple(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#tuple.
+  exitTuple(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#methodCall.
+  enterMethodCall(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#methodCall.
+  exitMethodCall(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#binaryOperator.
+  enterBinaryOperator(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#binaryOperator.
+  exitBinaryOperator(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#ifExpression.
+  enterIfExpression(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#ifExpression.
+  exitIfExpression(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#newInstance.
+  enterNewInstance(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#newInstance.
+  exitNewInstance(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#paramDef.
+  enterParamDef(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#paramDef.
+  exitParamDef(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#typeGeneric.
+  enterTypeGeneric(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#typeGeneric.
+  exitTypeGeneric(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#typeTuple.
+  enterTypeTuple(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#typeTuple.
+  exitTypeTuple(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#lambda.
+  enterLambda(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#lambda.
+  exitLambda(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#list.
+  enterList(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#list.
+  exitList(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#interpolatedString.
+  enterInterpolatedString(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#interpolatedString.
+  exitInterpolatedString(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#segment.
+  enterSegment(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#segment.
+  exitSegment(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#textSegment.
+  enterTextSegment(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#textSegment.
+  exitTextSegment(ctx) {
+  }
+  // Enter a parse tree produced by ElanParser#fieldSegment.
+  enterFieldSegment(ctx) {
+  }
+  // Exit a parse tree produced by ElanParser#fieldSegment.
+  exitFieldSegment(ctx) {
   }
 };
 
@@ -13566,1333 +12958,1422 @@ var ElanListener = class extends Ln.tree.ParseTreeListener {
 var serializedATN2 = [
   4,
   1,
+  95,
+  1e3,
+  2,
+  0,
+  7,
+  0,
+  2,
+  1,
+  7,
+  1,
+  2,
+  2,
+  7,
+  2,
+  2,
+  3,
+  7,
+  3,
+  2,
+  4,
+  7,
+  4,
+  2,
+  5,
+  7,
+  5,
+  2,
+  6,
+  7,
+  6,
+  2,
+  7,
+  7,
+  7,
+  2,
+  8,
+  7,
+  8,
+  2,
+  9,
+  7,
+  9,
+  2,
+  10,
+  7,
+  10,
+  2,
+  11,
+  7,
+  11,
+  2,
+  12,
+  7,
+  12,
+  2,
+  13,
+  7,
+  13,
+  2,
+  14,
+  7,
+  14,
+  2,
+  15,
+  7,
+  15,
+  2,
+  16,
+  7,
+  16,
+  2,
+  17,
+  7,
+  17,
+  2,
+  18,
+  7,
+  18,
+  2,
+  19,
+  7,
+  19,
+  2,
+  20,
+  7,
+  20,
+  2,
+  21,
+  7,
+  21,
+  2,
+  22,
+  7,
+  22,
+  2,
+  23,
+  7,
+  23,
+  2,
+  24,
+  7,
+  24,
+  2,
+  25,
+  7,
+  25,
+  2,
+  26,
+  7,
+  26,
+  2,
+  27,
+  7,
+  27,
+  2,
+  28,
+  7,
+  28,
+  2,
+  29,
+  7,
+  29,
+  2,
+  30,
+  7,
+  30,
+  2,
+  31,
+  7,
+  31,
+  2,
+  32,
+  7,
+  32,
+  2,
+  33,
+  7,
+  33,
+  2,
+  34,
+  7,
+  34,
+  2,
+  35,
+  7,
+  35,
+  2,
+  36,
+  7,
+  36,
+  2,
+  37,
+  7,
+  37,
+  2,
+  38,
+  7,
+  38,
+  2,
+  39,
+  7,
+  39,
+  2,
+  40,
+  7,
+  40,
+  2,
+  41,
+  7,
+  41,
+  2,
+  42,
+  7,
+  42,
+  2,
+  43,
+  7,
+  43,
+  2,
+  44,
+  7,
+  44,
+  2,
+  45,
+  7,
+  45,
+  2,
+  46,
+  7,
+  46,
+  2,
+  47,
+  7,
+  47,
+  2,
+  48,
+  7,
+  48,
+  2,
+  49,
+  7,
+  49,
+  2,
+  50,
+  7,
+  50,
+  2,
+  51,
+  7,
+  51,
+  2,
+  52,
+  7,
+  52,
+  2,
+  53,
+  7,
+  53,
+  2,
+  54,
+  7,
+  54,
+  2,
+  55,
+  7,
+  55,
+  2,
+  56,
+  7,
+  56,
+  2,
+  57,
+  7,
+  57,
+  2,
+  58,
+  7,
+  58,
+  2,
+  59,
+  7,
+  59,
+  2,
+  60,
+  7,
+  60,
+  2,
+  61,
+  7,
+  61,
+  2,
+  62,
+  7,
+  62,
+  2,
+  63,
+  7,
+  63,
+  2,
+  64,
+  7,
+  64,
+  2,
+  65,
+  7,
+  65,
+  2,
+  66,
+  7,
+  66,
+  2,
+  67,
+  7,
+  67,
+  2,
+  68,
+  7,
+  68,
+  2,
+  69,
+  7,
+  69,
+  2,
+  70,
+  7,
+  70,
+  2,
+  71,
+  7,
+  71,
+  2,
+  72,
+  7,
+  72,
+  2,
+  73,
+  7,
+  73,
+  2,
+  74,
+  7,
+  74,
+  2,
+  75,
+  7,
+  75,
+  2,
+  76,
+  7,
+  76,
+  2,
+  77,
+  7,
+  77,
+  2,
+  78,
+  7,
+  78,
+  2,
+  79,
+  7,
+  79,
+  2,
+  80,
+  7,
+  80,
+  2,
+  81,
+  7,
+  81,
+  2,
+  82,
+  7,
+  82,
+  2,
+  83,
+  7,
+  83,
+  2,
+  84,
+  7,
+  84,
+  2,
+  85,
+  7,
+  85,
+  2,
+  86,
+  7,
+  86,
+  2,
+  87,
+  7,
+  87,
+  2,
+  88,
+  7,
+  88,
+  2,
+  89,
+  7,
+  89,
+  2,
+  90,
+  7,
+  90,
+  2,
+  91,
+  7,
+  91,
+  2,
+  92,
+  7,
+  92,
+  2,
+  93,
+  7,
+  93,
+  2,
+  94,
+  7,
+  94,
+  2,
+  95,
+  7,
+  95,
+  2,
+  96,
+  7,
+  96,
+  2,
+  97,
+  7,
+  97,
+  2,
+  98,
+  7,
+  98,
+  2,
+  99,
+  7,
+  99,
+  2,
+  100,
+  7,
+  100,
+  2,
   101,
-  984,
-  2,
-  0,
   7,
-  0,
+  101,
   2,
+  102,
+  7,
+  102,
+  2,
+  103,
+  7,
+  103,
+  2,
+  104,
+  7,
+  104,
+  2,
+  105,
+  7,
+  105,
+  2,
+  106,
+  7,
+  106,
+  2,
+  107,
+  7,
+  107,
   1,
-  7,
-  1,
-  2,
-  2,
-  7,
-  2,
-  2,
+  0,
   3,
-  7,
-  3,
-  2,
-  4,
-  7,
-  4,
-  2,
-  5,
-  7,
-  5,
-  2,
-  6,
-  7,
-  6,
-  2,
-  7,
-  7,
-  7,
-  2,
+  0,
+  218,
   8,
-  7,
-  8,
-  2,
-  9,
-  7,
-  9,
-  2,
-  10,
-  7,
-  10,
-  2,
-  11,
-  7,
-  11,
-  2,
-  12,
-  7,
-  12,
-  2,
-  13,
-  7,
-  13,
-  2,
-  14,
-  7,
-  14,
-  2,
-  15,
-  7,
-  15,
-  2,
-  16,
-  7,
-  16,
-  2,
-  17,
-  7,
-  17,
-  2,
-  18,
-  7,
-  18,
-  2,
-  19,
-  7,
-  19,
-  2,
-  20,
-  7,
-  20,
-  2,
-  21,
-  7,
-  21,
-  2,
-  22,
-  7,
-  22,
-  2,
-  23,
-  7,
-  23,
-  2,
-  24,
-  7,
-  24,
-  2,
-  25,
-  7,
-  25,
-  2,
-  26,
-  7,
-  26,
-  2,
-  27,
-  7,
-  27,
-  2,
-  28,
-  7,
-  28,
-  2,
-  29,
-  7,
-  29,
-  2,
-  30,
-  7,
-  30,
-  2,
-  31,
-  7,
-  31,
-  2,
-  32,
-  7,
-  32,
-  2,
-  33,
-  7,
-  33,
-  2,
-  34,
-  7,
-  34,
-  2,
-  35,
-  7,
-  35,
-  2,
-  36,
-  7,
-  36,
-  2,
-  37,
-  7,
-  37,
-  2,
-  38,
-  7,
-  38,
-  2,
-  39,
-  7,
-  39,
-  2,
-  40,
-  7,
-  40,
-  2,
-  41,
-  7,
-  41,
-  2,
-  42,
-  7,
-  42,
-  2,
-  43,
-  7,
-  43,
-  2,
-  44,
-  7,
-  44,
-  2,
-  45,
-  7,
-  45,
-  2,
-  46,
-  7,
-  46,
-  2,
-  47,
-  7,
-  47,
-  2,
-  48,
-  7,
-  48,
-  2,
-  49,
-  7,
-  49,
-  2,
-  50,
-  7,
-  50,
-  2,
-  51,
-  7,
-  51,
-  2,
-  52,
-  7,
-  52,
-  2,
-  53,
-  7,
-  53,
-  2,
-  54,
-  7,
-  54,
-  2,
-  55,
-  7,
-  55,
-  2,
-  56,
-  7,
-  56,
-  2,
-  57,
-  7,
-  57,
-  2,
-  58,
-  7,
-  58,
-  2,
-  59,
-  7,
-  59,
-  2,
-  60,
-  7,
-  60,
-  2,
-  61,
-  7,
-  61,
-  2,
-  62,
-  7,
-  62,
-  2,
-  63,
-  7,
-  63,
-  2,
-  64,
-  7,
-  64,
-  2,
-  65,
-  7,
-  65,
-  2,
-  66,
-  7,
-  66,
-  2,
-  67,
-  7,
-  67,
-  2,
-  68,
-  7,
-  68,
-  2,
-  69,
-  7,
-  69,
-  2,
-  70,
-  7,
-  70,
-  2,
-  71,
-  7,
-  71,
-  2,
-  72,
-  7,
-  72,
-  2,
-  73,
-  7,
-  73,
-  2,
-  74,
-  7,
-  74,
-  2,
-  75,
-  7,
-  75,
-  2,
-  76,
-  7,
-  76,
-  2,
-  77,
-  7,
-  77,
-  2,
-  78,
-  7,
-  78,
-  2,
-  79,
-  7,
-  79,
-  2,
-  80,
-  7,
-  80,
-  2,
-  81,
-  7,
-  81,
-  2,
-  82,
-  7,
-  82,
-  2,
-  83,
-  7,
-  83,
-  2,
-  84,
-  7,
-  84,
-  2,
-  85,
-  7,
-  85,
-  2,
-  86,
-  7,
-  86,
-  2,
-  87,
-  7,
-  87,
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
   0,
   1,
   0,
   5,
   0,
-  185,
+  221,
   8,
   0,
   10,
   0,
   12,
   0,
-  188,
+  224,
   9,
   0,
   1,
   0,
   5,
   0,
-  191,
+  227,
   8,
   0,
   10,
   0,
   12,
   0,
-  194,
-  9,
-  0,
-  1,
-  0,
-  1,
-  0,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  1,
-  2,
-  1,
-  2,
-  1,
-  2,
-  5,
-  2,
-  204,
-  8,
-  2,
-  10,
-  2,
-  12,
-  2,
-  207,
-  9,
-  2,
-  1,
-  3,
-  1,
-  3,
-  1,
-  3,
-  1,
-  3,
-  1,
-  3,
-  1,
-  3,
-  1,
-  3,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  4,
-  1,
-  5,
-  1,
-  5,
-  1,
-  5,
-  1,
-  5,
-  1,
-  5,
-  1,
-  5,
-  5,
-  5,
   230,
-  8,
-  5,
-  10,
-  5,
-  12,
-  5,
-  233,
   9,
-  5,
+  0,
   1,
-  6,
+  0,
   1,
-  6,
+  0,
   1,
-  6,
-  5,
-  6,
-  238,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  1,
+  3,
+  1,
+  243,
   8,
-  6,
+  1,
+  1,
+  2,
+  1,
+  2,
+  3,
+  2,
+  247,
+  8,
+  2,
+  1,
+  2,
+  1,
+  2,
+  5,
+  2,
+  251,
+  8,
+  2,
   10,
-  6,
+  2,
   12,
-  6,
-  241,
+  2,
+  254,
   9,
-  6,
+  2,
   1,
-  7,
+  2,
   1,
-  7,
+  2,
   1,
-  7,
+  2,
   1,
-  7,
+  3,
   1,
-  7,
-  1,
-  7,
-  1,
-  8,
-  1,
-  8,
-  1,
-  8,
-  1,
-  8,
-  1,
-  8,
-  1,
-  8,
-  1,
+  3,
+  3,
+  3,
+  261,
   8,
   3,
+  1,
+  3,
+  1,
+  3,
+  1,
+  3,
+  5,
+  3,
+  266,
   8,
-  256,
-  8,
-  8,
-  1,
-  9,
-  1,
-  9,
-  1,
-  9,
-  1,
-  9,
-  1,
-  10,
-  1,
-  10,
-  1,
-  10,
   3,
   10,
-  265,
+  3,
+  12,
+  3,
+  269,
+  9,
+  3,
+  1,
+  3,
+  1,
+  3,
+  1,
+  3,
+  1,
+  3,
+  1,
+  4,
+  1,
+  4,
+  3,
+  4,
+  277,
   8,
+  4,
+  1,
+  4,
+  1,
+  4,
+  1,
+  4,
+  1,
+  4,
+  1,
+  4,
+  5,
+  4,
+  284,
+  8,
+  4,
   10,
-  1,
-  11,
-  1,
-  11,
-  1,
-  11,
-  1,
-  11,
-  1,
-  11,
-  1,
-  11,
-  1,
-  11,
-  1,
+  4,
   12,
+  4,
+  287,
+  9,
+  4,
   1,
-  12,
+  4,
   1,
-  12,
+  4,
   1,
-  12,
+  4,
   1,
-  12,
+  5,
   1,
-  12,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  13,
-  1,
-  14,
+  5,
   3,
-  14,
-  286,
-  8,
-  14,
-  1,
-  14,
-  1,
-  14,
-  3,
-  14,
-  290,
-  8,
-  14,
-  1,
-  14,
-  1,
-  14,
-  3,
-  14,
+  5,
   294,
   8,
+  5,
+  1,
+  5,
+  1,
+  5,
+  5,
+  5,
+  298,
+  8,
+  5,
+  10,
+  5,
+  12,
+  5,
+  301,
+  9,
+  5,
+  1,
+  5,
+  1,
+  5,
+  1,
+  5,
+  1,
+  6,
+  1,
+  6,
+  3,
+  6,
+  308,
+  8,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  5,
+  6,
+  317,
+  8,
+  6,
+  10,
+  6,
+  12,
+  6,
+  320,
+  9,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  6,
+  1,
+  7,
+  1,
+  7,
+  3,
+  7,
+  327,
+  8,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  5,
+  7,
+  337,
+  8,
+  7,
+  10,
+  7,
+  12,
+  7,
+  340,
+  9,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  7,
+  1,
+  8,
+  1,
+  8,
+  1,
+  8,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  1,
+  9,
+  3,
+  9,
+  359,
+  8,
+  9,
+  1,
+  10,
+  1,
+  10,
+  3,
+  10,
+  363,
+  8,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
+  5,
+  10,
+  369,
+  8,
+  10,
+  10,
+  10,
+  12,
+  10,
+  372,
+  9,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  10,
+  1,
+  11,
+  1,
+  11,
+  3,
+  11,
+  379,
+  8,
+  11,
+  1,
+  11,
+  1,
+  11,
+  5,
+  11,
+  383,
+  8,
+  11,
+  10,
+  11,
+  12,
+  11,
+  386,
+  9,
+  11,
+  1,
+  11,
+  1,
+  11,
+  1,
+  11,
+  1,
+  12,
+  1,
+  12,
+  3,
+  12,
+  393,
+  8,
+  12,
+  1,
+  12,
+  1,
+  12,
+  5,
+  12,
+  397,
+  8,
+  12,
+  10,
+  12,
+  12,
+  12,
+  400,
+  9,
+  12,
+  1,
+  12,
+  1,
+  12,
+  1,
+  12,
+  1,
+  13,
+  1,
+  13,
+  3,
+  13,
+  407,
+  8,
+  13,
+  1,
+  13,
+  1,
+  13,
+  5,
+  13,
+  411,
+  8,
+  13,
+  10,
+  13,
+  12,
+  13,
+  414,
+  9,
+  13,
+  1,
+  13,
+  1,
+  13,
+  5,
+  13,
+  418,
+  8,
+  13,
+  10,
+  13,
+  12,
+  13,
+  421,
+  9,
+  13,
+  1,
+  13,
+  1,
+  13,
+  1,
+  13,
+  1,
+  14,
+  1,
+  14,
+  1,
   14,
   1,
   15,
+  1,
+  15,
   3,
   15,
-  297,
+  431,
   8,
   15,
   1,
   15,
   1,
   15,
-  1,
-  15,
-  3,
-  15,
-  302,
-  8,
-  15,
-  1,
-  15,
-  1,
-  15,
-  1,
-  16,
-  3,
-  16,
-  307,
-  8,
-  16,
-  1,
-  16,
-  1,
-  16,
-  1,
-  16,
-  3,
-  16,
-  312,
-  8,
-  16,
-  1,
-  16,
-  1,
-  16,
-  1,
-  17,
-  1,
-  17,
-  1,
-  17,
-  1,
-  17,
-  1,
-  17,
-  3,
-  17,
-  321,
-  8,
-  17,
-  1,
-  17,
-  1,
-  17,
-  1,
-  18,
-  1,
-  18,
-  3,
-  18,
-  327,
-  8,
-  18,
-  1,
-  19,
-  1,
-  19,
-  3,
-  19,
-  331,
-  8,
-  19,
-  1,
-  20,
-  1,
-  20,
-  1,
-  20,
   5,
-  20,
-  336,
+  15,
+  435,
   8,
-  20,
+  15,
   10,
-  20,
+  15,
   12,
-  20,
-  339,
+  15,
+  438,
   9,
-  20,
+  15,
   1,
-  21,
+  15,
   1,
-  21,
+  15,
   1,
-  21,
+  15,
   1,
-  21,
+  16,
   1,
-  21,
-  1,
-  21,
-  1,
-  21,
-  1,
-  21,
-  1,
-  22,
-  1,
-  22,
-  1,
-  22,
+  16,
   3,
-  22,
-  352,
-  8,
-  22,
-  1,
-  22,
-  1,
-  22,
-  1,
-  23,
-  1,
-  23,
-  1,
-  23,
-  5,
-  23,
-  359,
-  8,
-  23,
-  10,
-  23,
-  12,
-  23,
-  362,
-  9,
-  23,
-  1,
-  24,
-  1,
-  24,
-  1,
-  24,
-  5,
-  24,
-  367,
-  8,
-  24,
-  10,
-  24,
-  12,
-  24,
-  370,
-  9,
-  24,
-  1,
-  25,
-  1,
-  25,
-  1,
-  25,
-  1,
-  26,
-  3,
-  26,
-  376,
-  8,
-  26,
-  1,
-  26,
-  1,
-  26,
-  1,
-  26,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  3,
-  27,
-  389,
-  8,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  27,
-  1,
-  28,
-  1,
-  28,
-  1,
-  28,
-  3,
-  28,
-  398,
-  8,
-  28,
-  1,
-  28,
-  1,
-  28,
-  1,
-  28,
-  1,
-  28,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  1,
-  29,
-  3,
-  29,
-  411,
-  8,
-  29,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  5,
-  30,
-  420,
-  8,
-  30,
-  10,
-  30,
-  12,
-  30,
-  423,
-  9,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  30,
-  1,
-  31,
-  1,
-  31,
-  1,
-  32,
-  1,
-  32,
-  1,
-  32,
-  1,
-  32,
-  1,
-  33,
-  1,
-  33,
-  1,
-  33,
-  1,
-  33,
-  3,
-  33,
-  439,
-  8,
-  33,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  3,
-  34,
+  16,
   445,
   8,
-  34,
+  16,
   1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  5,
-  34,
-  452,
-  8,
-  34,
-  10,
-  34,
-  12,
-  34,
-  455,
-  9,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  34,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
+  16,
   3,
-  35,
-  466,
+  16,
+  448,
   8,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
-  1,
-  35,
+  16,
   5,
-  35,
-  479,
+  16,
+  453,
   8,
-  35,
+  16,
   10,
-  35,
+  16,
   12,
-  35,
-  482,
+  16,
+  456,
   9,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  35,
+  16,
   1,
-  36,
+  17,
   1,
-  36,
-  1,
-  36,
-  1,
-  36,
-  1,
-  36,
+  17,
   3,
-  36,
-  493,
+  17,
+  464,
   8,
-  36,
+  17,
   1,
-  36,
+  17,
+  3,
+  17,
+  467,
+  8,
+  17,
   1,
-  36,
+  17,
   1,
-  36,
-  1,
-  36,
+  17,
   5,
-  36,
+  17,
+  471,
+  8,
+  17,
+  10,
+  17,
+  12,
+  17,
+  474,
+  9,
+  17,
+  1,
+  17,
+  1,
+  17,
+  1,
+  17,
+  1,
+  18,
+  1,
+  18,
+  3,
+  18,
+  481,
+  8,
+  18,
+  1,
+  18,
+  3,
+  18,
+  484,
+  8,
+  18,
+  1,
+  18,
+  1,
+  18,
+  5,
+  18,
+  488,
+  8,
+  18,
+  10,
+  18,
+  12,
+  18,
+  491,
+  9,
+  18,
+  1,
+  18,
+  1,
+  18,
+  1,
+  18,
+  1,
+  18,
+  1,
+  19,
+  1,
+  19,
+  3,
+  19,
   499,
   8,
-  36,
-  10,
-  36,
-  12,
-  36,
-  502,
-  9,
-  36,
+  19,
   1,
-  36,
+  20,
   1,
-  36,
+  20,
   1,
-  36,
+  21,
   1,
-  36,
+  21,
   1,
-  37,
+  21,
   1,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
-  1,
-  37,
+  22,
   3,
-  37,
-  514,
+  22,
+  510,
   8,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
+  22,
   1,
-  37,
+  23,
   1,
-  37,
+  23,
   1,
-  37,
-  5,
-  37,
-  523,
-  8,
-  37,
-  10,
-  37,
-  12,
-  37,
-  526,
-  9,
-  37,
+  23,
   1,
-  37,
+  24,
   1,
-  37,
+  24,
   1,
-  37,
+  24,
   1,
-  37,
+  25,
   1,
-  38,
+  25,
   1,
-  38,
+  25,
   1,
-  38,
+  26,
   1,
-  38,
-  5,
-  38,
-  536,
-  8,
-  38,
-  10,
-  38,
-  12,
-  38,
-  539,
-  9,
-  38,
+  26,
   1,
-  39,
+  26,
+  1,
+  26,
   3,
-  39,
-  542,
+  26,
+  529,
   8,
-  39,
+  26,
   1,
-  39,
+  26,
   1,
-  39,
+  26,
   1,
-  39,
+  27,
   1,
-  39,
+  27,
   1,
-  40,
+  27,
   1,
-  40,
+  28,
   1,
-  40,
+  28,
   1,
-  40,
+  28,
+  1,
+  28,
   3,
-  40,
-  552,
+  28,
+  540,
   8,
-  40,
+  28,
   1,
-  40,
+  29,
   1,
-  40,
+  29,
   1,
-  40,
+  29,
   1,
-  40,
+  30,
   1,
-  40,
+  30,
   1,
-  40,
+  30,
   1,
-  41,
+  30,
   1,
-  41,
-  1,
-  41,
-  1,
-  41,
+  30,
   3,
-  41,
-  564,
+  30,
+  550,
   8,
-  41,
+  30,
   1,
-  41,
+  31,
   1,
-  41,
+  31,
+  1,
+  31,
+  1,
+  31,
+  1,
+  32,
+  1,
+  32,
   3,
-  41,
+  32,
+  558,
+  8,
+  32,
+  1,
+  32,
+  1,
+  32,
+  1,
+  32,
+  1,
+  32,
+  1,
+  32,
+  1,
+  32,
+  1,
+  33,
+  1,
+  33,
+  3,
+  33,
   568,
   8,
-  41,
+  33,
   1,
-  41,
+  33,
   1,
-  41,
+  33,
+  1,
+  33,
+  1,
+  33,
+  1,
+  34,
+  1,
+  34,
   3,
-  41,
-  572,
+  34,
+  576,
   8,
-  41,
+  34,
   1,
-  42,
+  34,
   1,
-  42,
+  34,
   1,
-  42,
+  34,
   1,
-  42,
+  34,
   1,
-  42,
-  5,
-  42,
-  579,
-  8,
-  42,
-  10,
-  42,
-  12,
-  42,
-  582,
-  9,
-  42,
+  34,
   1,
-  42,
+  35,
   1,
-  42,
-  1,
-  43,
-  1,
-  43,
-  1,
-  43,
-  1,
-  43,
-  1,
-  43,
-  1,
-  43,
-  1,
-  43,
+  35,
   3,
-  43,
-  593,
+  35,
+  585,
   8,
-  43,
+  35,
   1,
-  44,
+  35,
   1,
-  44,
+  35,
   1,
-  44,
+  35,
   1,
-  44,
+  35,
   1,
-  44,
+  35,
   1,
-  44,
+  36,
   1,
-  44,
-  1,
-  44,
-  1,
-  44,
-  1,
-  44,
-  5,
-  44,
-  605,
-  8,
-  44,
-  10,
-  44,
-  12,
-  44,
-  608,
-  9,
-  44,
-  1,
-  44,
-  1,
-  44,
-  1,
-  44,
+  36,
   3,
-  44,
+  36,
+  594,
+  8,
+  36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  36,
+  1,
+  37,
+  1,
+  37,
+  3,
+  37,
+  603,
+  8,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  37,
+  1,
+  38,
+  1,
+  38,
+  3,
+  38,
   613,
   8,
+  38,
+  1,
+  38,
+  1,
+  38,
+  1,
+  38,
+  1,
+  38,
+  1,
+  38,
+  1,
+  39,
+  1,
+  39,
+  3,
+  39,
+  622,
+  8,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  39,
+  1,
+  40,
+  1,
+  40,
+  3,
+  40,
+  635,
+  8,
+  40,
+  1,
+  40,
+  1,
+  40,
+  1,
+  40,
+  1,
+  40,
+  1,
+  40,
+  1,
+  40,
+  1,
+  41,
+  1,
+  41,
+  3,
+  41,
+  645,
+  8,
+  41,
+  1,
+  41,
+  1,
+  41,
+  1,
+  41,
+  1,
+  41,
+  1,
+  42,
+  1,
+  42,
+  1,
+  42,
+  1,
+  42,
+  1,
+  43,
+  1,
+  43,
+  3,
+  43,
+  657,
+  8,
+  43,
+  1,
+  43,
+  1,
+  43,
+  1,
+  43,
+  1,
+  43,
+  1,
+  44,
+  1,
+  44,
+  3,
+  44,
+  665,
+  8,
   44,
   1,
   44,
   1,
   44,
-  1,
-  44,
-  1,
-  44,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
-  1,
-  45,
   1,
   45,
   1,
   45,
   3,
   45,
-  628,
-  8,
-  45,
-  1,
-  45,
-  3,
-  45,
-  631,
+  671,
   8,
   45,
   1,
@@ -14914,28 +14395,6 @@ var serializedATN2 = [
   1,
   46,
   1,
-  46,
-  1,
-  46,
-  1,
-  46,
-  1,
-  46,
-  1,
-  46,
-  1,
-  46,
-  1,
-  47,
-  1,
-  47,
-  1,
-  47,
-  1,
-  47,
-  1,
-  47,
-  1,
   47,
   1,
   47,
@@ -14948,34 +14407,6 @@ var serializedATN2 = [
   1,
   48,
   1,
-  48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  48,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
-  49,
-  1,
   49,
   1,
   49,
@@ -14989,37 +14420,8 @@ var serializedATN2 = [
   50,
   1,
   50,
-  4,
-  50,
-  680,
-  8,
-  50,
-  11,
-  50,
-  12,
-  50,
-  681,
   1,
   50,
-  1,
-  50,
-  1,
-  50,
-  1,
-  50,
-  1,
-  50,
-  1,
-  51,
-  1,
-  51,
-  1,
-  51,
-  3,
-  51,
-  692,
-  8,
-  51,
   1,
   51,
   1,
@@ -15031,616 +14433,646 @@ var serializedATN2 = [
   1,
   52,
   1,
-  52,
-  1,
-  52,
-  1,
   53,
   1,
   53,
   1,
   53,
   1,
-  53,
+  54,
   1,
-  53,
+  54,
   1,
-  53,
-  1,
-  53,
-  1,
-  53,
-  1,
-  53,
-  1,
-  53,
+  54,
   3,
-  53,
-  711,
+  54,
+  707,
   8,
-  53,
+  54,
   1,
-  53,
+  54,
   1,
-  53,
+  54,
   1,
-  53,
+  55,
   1,
-  53,
+  55,
   1,
-  53,
+  55,
   1,
-  53,
+  56,
   1,
-  53,
+  56,
+  3,
+  56,
+  716,
+  8,
+  56,
   1,
-  53,
+  56,
   1,
-  53,
+  56,
   1,
-  53,
+  56,
   1,
-  53,
+  56,
   1,
-  53,
+  56,
   1,
-  53,
+  57,
   1,
-  53,
+  57,
   1,
-  53,
+  58,
   1,
-  53,
+  58,
   1,
-  53,
+  59,
   1,
-  53,
+  59,
   1,
-  53,
+  60,
   1,
-  53,
+  60,
   1,
-  53,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  61,
+  1,
+  62,
+  1,
+  62,
+  1,
+  62,
+  1,
+  63,
+  1,
+  63,
+  3,
+  63,
+  744,
+  8,
+  63,
+  1,
+  63,
+  1,
+  63,
+  1,
+  63,
+  1,
+  64,
+  1,
+  64,
+  3,
+  64,
+  751,
+  8,
+  64,
+  1,
+  64,
+  1,
+  64,
+  1,
+  64,
+  1,
+  65,
+  1,
+  65,
+  1,
+  66,
+  1,
+  66,
+  3,
+  66,
+  760,
+  8,
+  66,
+  1,
+  67,
+  1,
+  67,
+  1,
+  68,
+  1,
+  68,
+  1,
+  69,
+  1,
+  69,
+  1,
+  70,
+  1,
+  70,
+  3,
+  70,
+  770,
+  8,
+  70,
+  1,
+  71,
+  1,
+  71,
+  1,
+  71,
   5,
-  53,
-  734,
+  71,
+  775,
   8,
-  53,
+  71,
   10,
-  53,
+  71,
   12,
-  53,
-  737,
-  9,
-  53,
-  1,
-  54,
-  1,
-  54,
-  1,
-  54,
-  1,
-  54,
-  1,
-  55,
-  1,
-  55,
-  1,
-  55,
-  1,
-  56,
-  1,
-  56,
-  1,
-  56,
-  1,
-  57,
-  1,
-  57,
-  1,
-  57,
-  1,
-  57,
-  1,
-  57,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  58,
-  3,
-  58,
-  761,
-  8,
-  58,
-  1,
-  58,
-  1,
-  58,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  1,
-  59,
-  3,
-  59,
-  774,
-  8,
-  59,
-  1,
-  60,
-  1,
-  60,
-  3,
-  60,
+  71,
   778,
-  8,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  1,
-  60,
-  3,
-  60,
-  785,
-  8,
-  60,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  61,
-  3,
-  61,
-  793,
-  8,
-  61,
-  1,
-  61,
-  1,
-  61,
-  1,
-  62,
-  1,
-  62,
-  3,
-  62,
-  799,
-  8,
-  62,
-  1,
-  63,
-  1,
-  63,
-  1,
-  63,
-  1,
-  63,
-  1,
-  63,
-  3,
-  63,
-  806,
-  8,
-  63,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  1,
-  64,
-  3,
-  64,
-  812,
-  8,
-  64,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  1,
-  65,
-  3,
-  65,
-  818,
-  8,
-  65,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  1,
-  66,
-  5,
-  66,
-  826,
-  8,
-  66,
-  10,
-  66,
-  12,
-  66,
-  829,
   9,
-  66,
+  71,
   1,
-  66,
+  72,
   1,
-  66,
-  1,
-  67,
-  1,
-  67,
-  1,
-  67,
-  1,
-  67,
-  1,
-  67,
-  1,
-  67,
-  5,
-  67,
-  839,
+  72,
+  3,
+  72,
+  782,
   8,
-  67,
+  72,
+  1,
+  73,
+  1,
+  73,
+  1,
+  73,
+  5,
+  73,
+  787,
+  8,
+  73,
   10,
-  67,
+  73,
   12,
-  67,
-  842,
+  73,
+  790,
   9,
-  67,
+  73,
   1,
-  67,
+  74,
   1,
-  67,
+  74,
   1,
-  68,
+  74,
+  3,
+  74,
+  795,
+  8,
+  74,
   1,
-  68,
+  75,
   1,
-  68,
+  75,
   1,
-  68,
-  4,
-  68,
+  75,
+  5,
+  75,
+  800,
+  8,
+  75,
+  10,
+  75,
+  12,
+  75,
+  803,
+  9,
+  75,
+  1,
+  76,
+  1,
+  76,
+  1,
+  76,
+  3,
+  76,
+  808,
+  8,
+  76,
+  1,
+  76,
+  1,
+  76,
+  1,
+  76,
+  3,
+  76,
+  813,
+  8,
+  76,
+  1,
+  76,
+  1,
+  76,
+  1,
+  77,
+  1,
+  77,
+  1,
+  78,
+  1,
+  78,
+  1,
+  78,
+  1,
+  78,
+  1,
+  78,
+  1,
+  78,
+  3,
+  78,
+  825,
+  8,
+  78,
+  1,
+  79,
+  1,
+  79,
+  1,
+  80,
+  1,
+  80,
+  1,
+  81,
+  1,
+  81,
+  1,
+  81,
+  1,
+  81,
+  1,
+  82,
+  1,
+  82,
+  1,
+  83,
+  1,
+  83,
+  1,
+  84,
+  1,
+  84,
+  1,
+  85,
+  1,
+  85,
+  1,
+  85,
+  1,
+  85,
+  1,
+  86,
+  1,
+  86,
+  5,
+  86,
+  847,
+  8,
+  86,
+  10,
+  86,
+  12,
+  86,
   850,
-  8,
-  68,
-  11,
-  68,
-  12,
-  68,
-  851,
-  1,
-  68,
-  1,
-  68,
-  1,
-  69,
-  1,
-  69,
-  1,
-  69,
-  1,
-  69,
-  5,
-  69,
-  860,
-  8,
-  69,
-  10,
-  69,
-  12,
-  69,
-  863,
   9,
-  69,
+  86,
   1,
-  69,
+  87,
   1,
-  69,
+  87,
   1,
-  70,
+  87,
   1,
-  70,
+  87,
   1,
-  70,
+  88,
   1,
-  70,
-  5,
-  70,
-  871,
-  8,
-  70,
-  10,
-  70,
-  12,
-  70,
-  874,
-  9,
-  70,
+  88,
   1,
-  70,
+  88,
   1,
-  70,
+  88,
   1,
-  71,
-  1,
-  71,
-  1,
-  71,
-  1,
-  71,
-  1,
-  71,
-  1,
-  71,
-  1,
-  72,
-  1,
-  72,
-  1,
-  72,
-  1,
-  72,
+  88,
   3,
-  72,
-  888,
+  88,
+  861,
   8,
-  72,
+  88,
   1,
-  72,
+  89,
   1,
-  72,
-  1,
-  73,
-  1,
-  73,
-  1,
-  73,
-  1,
-  73,
-  5,
-  73,
-  896,
-  8,
-  73,
-  10,
-  73,
-  12,
-  73,
-  899,
-  9,
-  73,
-  1,
-  73,
-  1,
-  73,
-  1,
-  74,
-  1,
-  74,
-  1,
-  74,
-  1,
-  74,
-  5,
-  74,
-  907,
-  8,
-  74,
-  10,
-  74,
-  12,
-  74,
-  910,
-  9,
-  74,
-  1,
-  74,
-  1,
-  74,
-  1,
-  75,
-  1,
-  75,
-  1,
-  75,
-  1,
-  75,
-  1,
-  76,
-  1,
-  76,
-  1,
-  76,
-  1,
-  76,
-  1,
-  77,
-  1,
-  77,
-  1,
-  78,
-  1,
-  78,
-  1,
-  78,
+  89,
   3,
-  78,
-  927,
+  89,
+  865,
   8,
-  78,
+  89,
   1,
-  79,
+  89,
   1,
-  79,
-  1,
-  80,
-  1,
-  80,
-  1,
-  81,
-  1,
-  81,
-  1,
-  82,
-  1,
-  82,
-  1,
-  82,
-  1,
-  82,
-  1,
-  82,
-  1,
-  82,
-  3,
-  82,
-  941,
-  8,
-  82,
-  1,
-  83,
-  1,
-  83,
-  1,
-  83,
-  1,
-  84,
-  1,
-  84,
-  1,
-  84,
-  1,
-  84,
-  1,
-  84,
+  89,
   5,
-  84,
-  951,
+  89,
+  869,
   8,
-  84,
+  89,
   10,
-  84,
+  89,
   12,
-  84,
-  954,
+  89,
+  872,
   9,
-  84,
+  89,
   1,
-  84,
+  90,
   1,
-  84,
+  90,
   1,
-  85,
+  90,
   1,
-  85,
+  90,
   1,
-  85,
+  90,
   1,
-  85,
+  90,
+  3,
+  90,
+  880,
+  8,
+  90,
+  1,
+  90,
+  5,
+  90,
+  883,
+  8,
+  90,
+  10,
+  90,
+  12,
+  90,
+  886,
+  9,
+  90,
+  1,
+  91,
+  1,
+  91,
+  1,
+  91,
+  1,
+  91,
+  1,
+  92,
+  1,
+  92,
+  1,
+  92,
+  1,
+  93,
+  1,
+  93,
+  1,
+  93,
+  1,
+  93,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  94,
+  5,
+  94,
+  905,
+  8,
+  94,
+  10,
+  94,
+  12,
+  94,
+  908,
+  9,
+  94,
+  1,
+  94,
+  1,
+  94,
+  1,
+  95,
+  1,
+  95,
+  1,
+  95,
+  1,
+  95,
+  1,
+  95,
+  1,
+  96,
+  1,
+  96,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  97,
+  1,
+  98,
+  1,
+  98,
+  1,
+  98,
+  1,
+  98,
+  1,
+  98,
+  1,
+  98,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  99,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  100,
+  5,
+  100,
+  944,
+  8,
+  100,
+  10,
+  100,
+  12,
+  100,
+  947,
+  9,
+  100,
+  1,
+  100,
+  1,
+  100,
+  1,
+  101,
+  1,
+  101,
+  1,
+  101,
+  1,
+  101,
   4,
-  85,
-  962,
+  101,
+  955,
   8,
-  85,
+  101,
   11,
-  85,
+  101,
   12,
-  85,
-  963,
+  101,
+  956,
   1,
-  85,
+  101,
   1,
-  85,
+  101,
   1,
-  86,
+  102,
   1,
-  86,
+  102,
   1,
-  86,
-  5,
-  86,
-  971,
+  102,
+  3,
+  102,
+  964,
   8,
-  86,
+  102,
+  1,
+  102,
+  1,
+  102,
+  1,
+  102,
+  1,
+  103,
+  1,
+  103,
+  1,
+  103,
+  1,
+  103,
+  5,
+  103,
+  973,
+  8,
+  103,
   10,
-  86,
+  103,
   12,
-  86,
-  974,
+  103,
+  976,
   9,
-  86,
+  103,
   1,
-  87,
+  103,
   1,
-  87,
+  103,
   1,
-  87,
+  104,
   1,
-  87,
+  104,
   1,
-  87,
+  104,
+  5,
+  104,
+  983,
+  8,
+  104,
+  10,
+  104,
+  12,
+  104,
+  986,
+  9,
+  104,
   1,
-  87,
+  104,
   1,
-  87,
+  104,
   1,
-  87,
+  105,
   1,
-  87,
-  0,
+  105,
+  3,
+  105,
+  992,
+  8,
+  105,
   1,
   106,
-  88,
+  1,
+  106,
+  1,
+  107,
+  1,
+  107,
+  1,
+  107,
+  1,
+  107,
+  1,
+  107,
+  0,
+  0,
+  108,
   0,
   2,
   4,
@@ -15729,1529 +15161,1395 @@ var serializedATN2 = [
   170,
   172,
   174,
-  0,
-  7,
-  1,
-  0,
-  93,
-  94,
-  2,
-  0,
-  94,
-  94,
-  98,
-  98,
-  2,
-  0,
-  38,
-  38,
-  84,
-  84,
-  3,
-  0,
-  17,
-  17,
-  36,
-  36,
-  83,
-  87,
-  3,
-  0,
-  6,
-  6,
-  41,
-  41,
-  64,
-  64,
-  2,
-  0,
-  40,
-  40,
-  88,
-  92,
-  1,
-  0,
-  67,
-  70,
-  1025,
-  0,
+  176,
+  178,
+  180,
+  182,
+  184,
   186,
+  188,
+  190,
+  192,
+  194,
+  196,
+  198,
+  200,
+  202,
+  204,
+  206,
+  208,
+  210,
+  212,
+  214,
+  0,
+  5,
+  2,
+  0,
+  49,
+  53,
+  86,
+  86,
+  1,
+  0,
+  87,
+  89,
+  1,
+  0,
+  91,
+  92,
+  2,
+  0,
+  30,
+  30,
+  75,
+  75,
+  5,
+  0,
+  2,
+  2,
+  28,
+  28,
+  32,
+  32,
+  56,
+  57,
+  74,
+  81,
+  1019,
+  0,
+  217,
   1,
   0,
   0,
   0,
   2,
-  197,
-  1,
-  0,
-  0,
-  0,
-  4,
-  200,
-  1,
-  0,
-  0,
-  0,
-  6,
-  208,
-  1,
-  0,
-  0,
-  0,
-  8,
-  215,
-  1,
-  0,
-  0,
-  0,
-  10,
-  231,
-  1,
-  0,
-  0,
-  0,
-  12,
-  239,
-  1,
-  0,
-  0,
-  0,
-  14,
   242,
   1,
   0,
   0,
   0,
-  16,
-  248,
+  4,
+  244,
   1,
   0,
   0,
   0,
-  18,
-  257,
+  6,
+  258,
   1,
   0,
   0,
   0,
-  20,
-  261,
+  8,
+  274,
   1,
   0,
   0,
   0,
-  22,
-  266,
+  10,
+  291,
   1,
   0,
   0,
   0,
-  24,
-  273,
+  12,
+  305,
   1,
   0,
   0,
   0,
-  26,
-  279,
-  1,
-  0,
-  0,
-  0,
-  28,
-  293,
-  1,
-  0,
-  0,
-  0,
-  30,
-  296,
-  1,
-  0,
-  0,
-  0,
-  32,
-  306,
-  1,
-  0,
-  0,
-  0,
-  34,
-  315,
-  1,
-  0,
-  0,
-  0,
-  36,
+  14,
   324,
   1,
   0,
   0,
   0,
-  38,
-  330,
+  16,
+  344,
   1,
   0,
   0,
   0,
-  40,
-  332,
+  18,
+  358,
   1,
   0,
   0,
   0,
-  42,
-  340,
+  20,
+  360,
   1,
   0,
   0,
   0,
-  44,
-  348,
+  22,
+  376,
   1,
   0,
   0,
   0,
-  46,
-  355,
+  24,
+  390,
   1,
   0,
   0,
   0,
-  48,
-  363,
+  26,
+  404,
   1,
   0,
   0,
   0,
-  50,
-  371,
+  28,
+  425,
   1,
   0,
   0,
   0,
-  52,
-  375,
-  1,
-  0,
-  0,
-  0,
-  54,
-  380,
-  1,
-  0,
-  0,
-  0,
-  56,
-  394,
-  1,
-  0,
-  0,
-  0,
-  58,
-  403,
-  1,
-  0,
-  0,
-  0,
-  60,
-  412,
-  1,
-  0,
-  0,
-  0,
-  62,
+  30,
   428,
   1,
   0,
   0,
   0,
-  64,
-  430,
+  32,
+  442,
   1,
   0,
   0,
   0,
-  66,
-  438,
+  34,
+  461,
   1,
   0,
   0,
   0,
-  68,
-  440,
+  36,
+  478,
   1,
   0,
   0,
   0,
-  70,
-  460,
+  38,
+  496,
   1,
   0,
   0,
   0,
-  72,
-  487,
+  40,
+  500,
   1,
   0,
   0,
   0,
-  74,
-  507,
+  42,
+  502,
   1,
   0,
   0,
   0,
-  76,
-  531,
+  44,
+  505,
   1,
   0,
   0,
   0,
-  78,
+  46,
+  515,
+  1,
+  0,
+  0,
+  0,
+  48,
+  518,
+  1,
+  0,
+  0,
+  0,
+  50,
+  521,
+  1,
+  0,
+  0,
+  0,
+  52,
+  524,
+  1,
+  0,
+  0,
+  0,
+  54,
+  532,
+  1,
+  0,
+  0,
+  0,
+  56,
+  535,
+  1,
+  0,
+  0,
+  0,
+  58,
   541,
   1,
   0,
   0,
   0,
-  80,
-  547,
+  60,
+  544,
   1,
   0,
   0,
   0,
-  82,
-  571,
+  62,
+  551,
   1,
   0,
   0,
   0,
-  84,
+  64,
+  555,
+  1,
+  0,
+  0,
+  0,
+  66,
+  565,
+  1,
+  0,
+  0,
+  0,
+  68,
   573,
   1,
   0,
   0,
   0,
+  70,
+  582,
+  1,
+  0,
+  0,
+  0,
+  72,
+  591,
+  1,
+  0,
+  0,
+  0,
+  74,
+  600,
+  1,
+  0,
+  0,
+  0,
+  76,
+  610,
+  1,
+  0,
+  0,
+  0,
+  78,
+  619,
+  1,
+  0,
+  0,
+  0,
+  80,
+  632,
+  1,
+  0,
+  0,
+  0,
+  82,
+  642,
+  1,
+  0,
+  0,
+  0,
+  84,
+  650,
+  1,
+  0,
+  0,
+  0,
   86,
-  592,
+  654,
   1,
   0,
   0,
   0,
   88,
-  594,
+  662,
   1,
   0,
   0,
   0,
   90,
-  618,
+  668,
   1,
   0,
   0,
   0,
   92,
-  637,
+  677,
   1,
   0,
   0,
   0,
   94,
-  647,
+  681,
   1,
   0,
   0,
   0,
   96,
-  655,
+  684,
   1,
   0,
   0,
   0,
   98,
-  664,
+  687,
   1,
   0,
   0,
   0,
   100,
-  675,
+  690,
   1,
   0,
   0,
   0,
   102,
-  688,
+  695,
   1,
   0,
   0,
   0,
   104,
-  696,
+  698,
   1,
   0,
   0,
   0,
   106,
+  700,
+  1,
+  0,
+  0,
+  0,
+  108,
+  703,
+  1,
+  0,
+  0,
+  0,
+  110,
   710,
   1,
   0,
   0,
   0,
-  108,
-  738,
-  1,
-  0,
-  0,
-  0,
-  110,
-  742,
-  1,
-  0,
-  0,
-  0,
   112,
-  745,
+  713,
   1,
   0,
   0,
   0,
   114,
-  748,
+  722,
   1,
   0,
   0,
   0,
   116,
-  753,
+  724,
   1,
   0,
   0,
   0,
   118,
-  773,
+  726,
   1,
   0,
   0,
   0,
   120,
-  784,
+  728,
   1,
   0,
   0,
   0,
   122,
-  792,
+  730,
   1,
   0,
   0,
   0,
   124,
-  798,
+  738,
   1,
   0,
   0,
   0,
   126,
-  805,
+  741,
   1,
   0,
   0,
   0,
   128,
-  811,
+  748,
   1,
   0,
   0,
   0,
   130,
-  817,
+  755,
   1,
   0,
   0,
   0,
   132,
-  819,
+  759,
   1,
   0,
   0,
   0,
   134,
-  832,
+  761,
   1,
   0,
   0,
   0,
   136,
-  845,
+  763,
   1,
   0,
   0,
   0,
   138,
-  855,
+  765,
   1,
   0,
   0,
   0,
   140,
-  866,
+  769,
   1,
   0,
   0,
   0,
   142,
-  877,
+  771,
   1,
   0,
   0,
   0,
   144,
-  883,
+  781,
   1,
   0,
   0,
   0,
   146,
-  891,
+  783,
   1,
   0,
   0,
   0,
   148,
-  902,
+  794,
   1,
   0,
   0,
   0,
   150,
-  913,
+  796,
   1,
   0,
   0,
   0,
   152,
-  917,
+  807,
   1,
   0,
   0,
   0,
   154,
-  921,
+  816,
   1,
   0,
   0,
   0,
   156,
-  926,
+  824,
   1,
   0,
   0,
   0,
   158,
-  928,
+  826,
   1,
   0,
   0,
   0,
   160,
-  930,
+  828,
   1,
   0,
   0,
   0,
   162,
-  932,
+  830,
   1,
   0,
   0,
   0,
   164,
-  940,
+  834,
   1,
   0,
   0,
   0,
   166,
-  942,
+  836,
   1,
   0,
   0,
   0,
   168,
-  945,
+  838,
   1,
   0,
   0,
   0,
   170,
-  957,
+  840,
   1,
   0,
   0,
   0,
   172,
-  967,
+  844,
   1,
   0,
   0,
   0,
   174,
-  975,
+  851,
   1,
   0,
   0,
   0,
   176,
-  185,
-  3,
-  6,
-  3,
+  860,
+  1,
   0,
-  177,
-  185,
-  3,
-  42,
-  21,
+  0,
   0,
   178,
-  185,
-  3,
-  54,
-  27,
+  864,
+  1,
   0,
-  179,
-  185,
-  3,
-  58,
-  29,
+  0,
   0,
   180,
-  185,
-  3,
-  60,
-  30,
+  879,
+  1,
   0,
-  181,
-  185,
-  3,
-  66,
-  33,
+  0,
   0,
   182,
-  185,
-  3,
-  8,
-  4,
-  0,
-  183,
-  185,
-  3,
-  2,
-  1,
-  0,
-  184,
-  176,
+  887,
   1,
   0,
   0,
   0,
   184,
-  177,
-  1,
-  0,
-  0,
-  0,
-  184,
-  178,
-  1,
-  0,
-  0,
-  0,
-  184,
-  179,
-  1,
-  0,
-  0,
-  0,
-  184,
-  180,
-  1,
-  0,
-  0,
-  0,
-  184,
-  181,
-  1,
-  0,
-  0,
-  0,
-  184,
-  182,
-  1,
-  0,
-  0,
-  0,
-  184,
-  183,
-  1,
-  0,
-  0,
-  0,
-  185,
-  188,
+  891,
   1,
   0,
   0,
   0,
   186,
-  184,
-  1,
-  0,
-  0,
-  0,
-  186,
-  187,
-  1,
-  0,
-  0,
-  0,
-  187,
-  192,
+  894,
   1,
   0,
   0,
   0,
   188,
-  186,
+  898,
   1,
   0,
-  0,
-  0,
-  189,
-  191,
-  5,
-  2,
   0,
   0,
   190,
-  189,
-  1,
-  0,
-  0,
-  0,
-  191,
-  194,
+  911,
   1,
   0,
   0,
   0,
   192,
-  190,
-  1,
-  0,
-  0,
-  0,
-  192,
-  193,
-  1,
-  0,
-  0,
-  0,
-  193,
-  195,
+  916,
   1,
   0,
   0,
   0,
   194,
-  192,
+  918,
   1,
   0,
   0,
   0,
-  195,
   196,
-  5,
-  0,
-  0,
-  1,
-  196,
-  1,
+  927,
   1,
   0,
-  0,
-  0,
-  197,
-  198,
-  5,
-  28,
   0,
   0,
   198,
-  199,
-  3,
-  4,
-  2,
-  0,
-  199,
-  3,
+  933,
   1,
   0,
   0,
   0,
   200,
-  205,
-  7,
+  937,
+  1,
   0,
-  0,
-  0,
-  201,
-  202,
-  5,
-  80,
   0,
   0,
   202,
-  204,
-  7,
-  0,
-  0,
-  0,
-  203,
-  201,
+  950,
   1,
   0,
   0,
   0,
   204,
-  207,
-  1,
-  0,
-  0,
-  0,
-  205,
-  203,
-  1,
-  0,
-  0,
-  0,
-  205,
-  206,
+  960,
   1,
   0,
   0,
   0,
   206,
-  5,
-  1,
-  0,
-  0,
-  0,
-  207,
-  205,
+  968,
   1,
   0,
   0,
   0,
   208,
-  209,
-  5,
-  2,
-  0,
-  0,
-  209,
-  210,
-  5,
-  35,
-  0,
-  0,
-  210,
-  211,
-  3,
-  10,
-  5,
-  0,
-  211,
-  212,
-  5,
-  2,
-  0,
-  0,
-  212,
-  213,
-  5,
-  20,
-  0,
-  0,
-  213,
-  214,
-  5,
-  35,
-  0,
-  0,
-  214,
-  7,
+  979,
   1,
   0,
   0,
   0,
-  215,
+  210,
+  991,
+  1,
+  0,
+  0,
+  0,
+  212,
+  993,
+  1,
+  0,
+  0,
+  0,
+  214,
+  995,
+  1,
+  0,
+  0,
+  0,
   216,
+  218,
   5,
+  54,
+  0,
+  0,
+  217,
+  216,
+  1,
+  0,
+  0,
+  0,
+  217,
+  218,
+  1,
+  0,
+  0,
+  0,
+  218,
+  222,
+  1,
+  0,
+  0,
+  0,
+  219,
+  221,
+  3,
+  2,
+  1,
+  0,
+  220,
+  219,
+  1,
+  0,
+  0,
+  0,
+  221,
+  224,
+  1,
+  0,
+  0,
+  0,
+  222,
+  220,
+  1,
+  0,
+  0,
+  0,
+  222,
+  223,
+  1,
+  0,
+  0,
+  0,
+  223,
+  228,
+  1,
+  0,
+  0,
+  0,
+  224,
+  222,
+  1,
+  0,
+  0,
+  0,
+  225,
+  227,
+  5,
+  63,
+  0,
+  0,
+  226,
+  225,
+  1,
+  0,
+  0,
+  0,
+  227,
+  230,
+  1,
+  0,
+  0,
+  0,
+  228,
+  226,
+  1,
+  0,
+  0,
+  0,
+  228,
+  229,
+  1,
+  0,
+  0,
+  0,
+  229,
+  231,
+  1,
+  0,
+  0,
+  0,
+  230,
+  228,
+  1,
+  0,
+  0,
+  0,
+  231,
+  232,
+  5,
+  0,
+  0,
+  1,
+  232,
+  1,
+  1,
+  0,
+  0,
+  0,
+  233,
+  243,
+  3,
+  4,
   2,
   0,
+  234,
+  243,
+  3,
+  6,
+  3,
   0,
-  216,
-  217,
+  235,
+  243,
+  3,
+  8,
+  4,
+  0,
+  236,
+  243,
+  3,
+  10,
   5,
-  55,
   0,
+  237,
+  243,
+  3,
+  64,
+  32,
   0,
-  217,
-  218,
-  5,
-  94,
+  238,
+  243,
+  3,
+  66,
+  33,
   0,
-  0,
-  218,
-  219,
+  239,
+  243,
   3,
   12,
   6,
   0,
-  219,
-  220,
-  5,
-  2,
-  0,
-  0,
-  220,
-  221,
-  5,
-  20,
-  0,
-  0,
-  221,
-  222,
-  5,
-  55,
-  0,
-  0,
-  222,
-  9,
-  1,
-  0,
-  0,
-  0,
-  223,
-  230,
-  3,
-  22,
-  11,
-  0,
-  224,
-  230,
-  3,
-  24,
-  12,
-  0,
-  225,
-  230,
-  3,
-  86,
-  43,
-  0,
-  226,
-  230,
-  3,
-  16,
-  8,
-  0,
-  227,
-  230,
-  3,
-  18,
-  9,
-  0,
-  228,
-  230,
-  3,
-  20,
-  10,
-  0,
-  229,
-  223,
-  1,
-  0,
-  0,
-  0,
-  229,
-  224,
-  1,
-  0,
-  0,
-  0,
-  229,
-  225,
-  1,
-  0,
-  0,
-  0,
-  229,
-  226,
-  1,
-  0,
-  0,
-  0,
-  229,
-  227,
-  1,
-  0,
-  0,
-  0,
-  229,
-  228,
-  1,
-  0,
-  0,
-  0,
-  230,
-  233,
-  1,
-  0,
-  0,
-  0,
-  231,
-  229,
-  1,
-  0,
-  0,
-  0,
-  231,
-  232,
-  1,
-  0,
-  0,
-  0,
-  232,
-  11,
-  1,
-  0,
-  0,
-  0,
-  233,
-  231,
-  1,
-  0,
-  0,
-  0,
-  234,
-  238,
+  240,
+  243,
   3,
   14,
   7,
   0,
-  235,
-  238,
-  3,
-  22,
-  11,
-  0,
-  236,
-  238,
+  241,
+  243,
   3,
   16,
   8,
   0,
-  237,
+  242,
+  233,
+  1,
+  0,
+  0,
+  0,
+  242,
   234,
   1,
   0,
   0,
   0,
-  237,
+  242,
   235,
   1,
   0,
   0,
   0,
-  237,
+  242,
   236,
   1,
   0,
   0,
   0,
-  238,
-  241,
-  1,
-  0,
-  0,
-  0,
-  239,
+  242,
   237,
   1,
   0,
   0,
   0,
-  239,
-  240,
+  242,
+  238,
   1,
   0,
   0,
   0,
-  240,
-  13,
-  1,
-  0,
-  0,
-  0,
-  241,
+  242,
   239,
   1,
   0,
   0,
   0,
   242,
+  240,
+  1,
+  0,
+  0,
+  0,
+  242,
+  241,
+  1,
+  0,
+  0,
+  0,
   243,
-  5,
-  2,
-  0,
-  0,
-  243,
-  244,
-  5,
-  8,
-  0,
-  0,
-  244,
-  245,
   3,
-  106,
-  53,
+  1,
   0,
-  245,
+  0,
+  0,
+  244,
   246,
   5,
-  40,
+  63,
+  0,
+  0,
+  245,
+  247,
+  5,
+  95,
+  0,
+  0,
+  246,
+  245,
+  1,
+  0,
   0,
   0,
   246,
   247,
-  3,
-  120,
-  60,
+  1,
+  0,
+  0,
   0,
   247,
-  15,
+  248,
   1,
   0,
   0,
   0,
   248,
-  249,
-  5,
-  2,
+  252,
+  3,
+  40,
+  20,
   0,
-  0,
   249,
-  255,
-  5,
+  251,
+  3,
+  18,
   9,
   0,
-  0,
   250,
-  256,
-  3,
-  30,
-  15,
+  249,
+  1,
+  0,
+  0,
   0,
   251,
+  254,
+  1,
+  0,
+  0,
+  0,
   252,
-  3,
-  28,
-  14,
+  250,
+  1,
+  0,
+  0,
   0,
   252,
   253,
+  1,
+  0,
+  0,
+  0,
+  253,
+  255,
+  1,
+  0,
+  0,
+  0,
+  254,
+  252,
+  1,
+  0,
+  0,
+  0,
+  255,
+  256,
   5,
-  80,
+  63,
   0,
   0,
-  253,
-  254,
+  256,
+  257,
   3,
-  30,
-  15,
-  0,
-  254,
-  256,
-  1,
-  0,
-  0,
-  0,
-  255,
-  250,
-  1,
-  0,
-  0,
-  0,
-  255,
-  251,
-  1,
-  0,
-  0,
-  0,
-  256,
-  17,
-  1,
-  0,
-  0,
+  42,
+  21,
   0,
   257,
-  258,
   5,
-  2,
-  0,
-  0,
-  258,
-  259,
-  5,
-  57,
-  0,
-  0,
-  259,
-  260,
-  7,
   1,
   0,
   0,
+  0,
+  258,
   260,
-  19,
+  5,
+  63,
+  0,
+  0,
+  259,
+  261,
+  5,
+  95,
+  0,
+  0,
+  260,
+  259,
+  1,
+  0,
+  0,
+  0,
+  260,
+  261,
   1,
   0,
   0,
   0,
   261,
   262,
-  5,
-  2,
+  1,
+  0,
   0,
   0,
   262,
-  264,
-  5,
-  45,
-  0,
-  0,
-  263,
-  265,
+  267,
   3,
-  106,
-  53,
+  44,
+  22,
+  0,
+  263,
+  266,
+  3,
+  70,
+  35,
   0,
   264,
+  266,
+  3,
+  18,
+  9,
+  0,
+  265,
   263,
   1,
   0,
   0,
   0,
+  265,
   264,
-  265,
-  1,
-  0,
-  0,
-  0,
-  265,
-  21,
   1,
   0,
   0,
   0,
   266,
-  267,
-  5,
-  2,
-  0,
-  0,
-  267,
-  268,
-  5,
-  60,
-  0,
-  0,
-  268,
   269,
-  3,
-  28,
-  14,
-  0,
-  269,
-  270,
-  5,
-  51,
-  0,
-  0,
-  270,
-  271,
-  5,
-  58,
-  0,
-  0,
-  271,
-  272,
-  3,
-  106,
-  53,
-  0,
-  272,
-  23,
   1,
   0,
   0,
+  0,
+  267,
+  265,
+  1,
+  0,
+  0,
+  0,
+  267,
+  268,
+  1,
+  0,
+  0,
+  0,
+  268,
+  270,
+  1,
+  0,
+  0,
+  0,
+  269,
+  267,
+  1,
+  0,
+  0,
+  0,
+  270,
+  271,
+  3,
+  84,
+  42,
+  0,
+  271,
+  272,
+  5,
+  63,
+  0,
+  0,
+  272,
+  273,
+  3,
+  46,
+  23,
   0,
   273,
-  274,
-  5,
-  2,
-  0,
-  0,
-  274,
-  275,
-  5,
-  51,
-  0,
-  0,
-  275,
-  276,
-  3,
-  28,
-  14,
-  0,
-  276,
-  277,
-  5,
-  58,
-  0,
-  0,
-  277,
-  278,
-  3,
-  106,
-  53,
-  0,
-  278,
-  25,
+  7,
   1,
   0,
   0,
+  0,
+  274,
+  276,
+  5,
+  63,
+  0,
+  0,
+  275,
+  277,
+  5,
+  95,
+  0,
+  0,
+  276,
+  275,
+  1,
+  0,
+  0,
+  0,
+  276,
+  277,
+  1,
+  0,
+  0,
+  0,
+  277,
+  278,
+  1,
+  0,
+  0,
+  0,
+  278,
+  285,
+  3,
+  48,
+  24,
   0,
   279,
+  284,
+  3,
+  68,
+  34,
+  0,
   280,
+  284,
+  3,
+  70,
+  35,
+  0,
+  281,
+  284,
+  3,
+  74,
+  37,
+  0,
+  282,
+  284,
   3,
   28,
   14,
   0,
+  283,
+  279,
+  1,
+  0,
+  0,
+  0,
+  283,
   280,
-  281,
-  5,
-  51,
+  1,
   0,
   0,
-  281,
-  282,
-  5,
-  58,
   0,
-  0,
-  282,
   283,
+  281,
+  1,
+  0,
+  0,
+  0,
+  283,
+  282,
+  1,
+  0,
+  0,
+  0,
+  284,
+  287,
+  1,
+  0,
+  0,
+  0,
+  285,
+  283,
+  1,
+  0,
+  0,
+  0,
+  285,
+  286,
+  1,
+  0,
+  0,
+  0,
+  286,
+  288,
+  1,
+  0,
+  0,
+  0,
+  287,
+  285,
+  1,
+  0,
+  0,
+  0,
+  288,
+  289,
+  5,
+  63,
+  0,
+  0,
+  289,
+  290,
   3,
-  106,
-  53,
+  50,
+  25,
   0,
-  283,
+  290,
+  9,
+  1,
+  0,
+  0,
+  0,
+  291,
+  293,
+  5,
+  63,
+  0,
+  0,
+  292,
+  294,
+  5,
+  95,
+  0,
+  0,
+  293,
+  292,
+  1,
+  0,
+  0,
+  0,
+  293,
+  294,
+  1,
+  0,
+  0,
+  0,
+  294,
+  295,
+  1,
+  0,
+  0,
+  0,
+  295,
+  299,
+  3,
+  52,
+  26,
+  0,
+  296,
+  298,
+  3,
+  18,
+  9,
+  0,
+  297,
+  296,
+  1,
+  0,
+  0,
+  0,
+  298,
+  301,
+  1,
+  0,
+  0,
+  0,
+  299,
+  297,
+  1,
+  0,
+  0,
+  0,
+  299,
+  300,
+  1,
+  0,
+  0,
+  0,
+  300,
+  302,
+  1,
+  0,
+  0,
+  0,
+  301,
+  299,
+  1,
+  0,
+  0,
+  0,
+  302,
+  303,
+  5,
+  63,
+  0,
+  0,
+  303,
+  304,
+  3,
+  54,
   27,
-  1,
-  0,
-  0,
-  0,
-  284,
-  286,
-  3,
-  122,
-  61,
-  0,
-  285,
-  284,
-  1,
-  0,
-  0,
-  0,
-  285,
-  286,
-  1,
-  0,
-  0,
-  0,
-  286,
-  287,
-  1,
-  0,
-  0,
-  0,
-  287,
-  289,
-  5,
-  94,
-  0,
-  0,
-  288,
-  290,
-  3,
-  116,
-  58,
-  0,
-  289,
-  288,
-  1,
-  0,
-  0,
-  0,
-  289,
-  290,
-  1,
-  0,
-  0,
-  0,
-  290,
-  294,
-  1,
-  0,
-  0,
-  0,
-  291,
-  294,
-  3,
-  136,
-  68,
-  0,
-  292,
-  294,
-  3,
-  142,
-  71,
-  0,
-  293,
-  285,
-  1,
-  0,
-  0,
-  0,
-  293,
-  291,
-  1,
-  0,
-  0,
-  0,
-  293,
-  292,
-  1,
-  0,
-  0,
-  0,
-  294,
-  29,
-  1,
-  0,
-  0,
-  0,
-  295,
-  297,
-  3,
-  122,
-  61,
-  0,
-  296,
-  295,
-  1,
-  0,
-  0,
-  0,
-  296,
-  297,
-  1,
-  0,
-  0,
-  0,
-  297,
-  298,
-  1,
-  0,
-  0,
-  0,
-  298,
-  299,
-  5,
-  94,
-  0,
-  0,
-  299,
-  301,
-  5,
-  77,
-  0,
-  0,
-  300,
-  302,
-  3,
-  40,
-  20,
-  0,
-  301,
-  300,
-  1,
-  0,
-  0,
-  0,
-  301,
-  302,
-  1,
-  0,
-  0,
-  0,
-  302,
-  303,
-  1,
-  0,
-  0,
-  0,
-  303,
-  304,
-  5,
-  78,
-  0,
   0,
   304,
-  31,
+  11,
   1,
   0,
   0,
   0,
   305,
   307,
-  3,
-  122,
-  61,
-  0,
-  306,
-  305,
-  1,
-  0,
+  5,
+  63,
   0,
   0,
   306,
+  308,
+  5,
+  95,
+  0,
+  0,
   307,
+  306,
   1,
   0,
   0,
@@ -17264,108 +16562,132 @@ var serializedATN2 = [
   0,
   308,
   309,
-  5,
-  94,
+  1,
+  0,
   0,
   0,
   309,
-  311,
-  5,
-  77,
-  0,
-  0,
-  310,
-  312,
+  318,
   3,
-  40,
-  20,
+  56,
+  28,
   0,
-  311,
   310,
-  1,
-  0,
-  0,
+  317,
+  3,
+  30,
+  15,
   0,
   311,
+  317,
+  3,
+  112,
+  56,
+  0,
   312,
-  1,
-  0,
-  0,
-  0,
-  312,
-  313,
-  1,
-  0,
-  0,
+  317,
+  3,
+  32,
+  16,
   0,
   313,
+  317,
+  3,
+  34,
+  17,
+  0,
   314,
-  5,
-  78,
-  0,
-  0,
-  314,
-  33,
-  1,
-  0,
-  0,
+  317,
+  3,
+  36,
+  18,
   0,
   315,
-  316,
-  5,
-  54,
-  0,
-  0,
-  316,
   317,
-  5,
-  80,
-  0,
-  0,
-  317,
-  318,
-  5,
-  94,
-  0,
-  0,
-  318,
-  320,
-  5,
-  77,
-  0,
-  0,
-  319,
-  321,
   3,
-  40,
-  20,
+  38,
+  19,
   0,
+  316,
+  310,
+  1,
+  0,
+  0,
+  0,
+  316,
+  311,
+  1,
+  0,
+  0,
+  0,
+  316,
+  312,
+  1,
+  0,
+  0,
+  0,
+  316,
+  313,
+  1,
+  0,
+  0,
+  0,
+  316,
+  314,
+  1,
+  0,
+  0,
+  0,
+  316,
+  315,
+  1,
+  0,
+  0,
+  0,
+  317,
   320,
+  1,
+  0,
+  0,
+  0,
+  318,
+  316,
+  1,
+  0,
+  0,
+  0,
+  318,
   319,
   1,
   0,
   0,
   0,
+  319,
+  321,
+  1,
+  0,
+  0,
+  0,
   320,
-  321,
+  318,
   1,
   0,
   0,
   0,
   321,
   322,
-  1,
-  0,
-  0,
-  0,
-  322,
-  323,
   5,
-  78,
+  63,
   0,
+  0,
+  322,
+  323,
+  3,
+  58,
+  29,
   0,
   323,
-  35,
+  13,
   1,
   0,
   0,
@@ -17373,13 +16695,13 @@ var serializedATN2 = [
   324,
   326,
   5,
-  31,
+  63,
   0,
   0,
   325,
   327,
   5,
-  98,
+  95,
   0,
   0,
   326,
@@ -17395,271 +16717,361 @@ var serializedATN2 = [
   0,
   0,
   327,
-  37,
-  1,
-  0,
-  0,
-  0,
-  328,
-  331,
-  3,
-  106,
-  53,
-  0,
-  329,
-  331,
-  3,
-  114,
-  57,
-  0,
-  330,
   328,
   1,
   0,
   0,
   0,
-  330,
+  328,
+  338,
+  3,
+  60,
+  30,
+  0,
   329,
-  1,
+  337,
+  3,
+  112,
+  56,
   0,
-  0,
+  330,
+  337,
+  3,
+  32,
+  16,
   0,
   331,
-  39,
-  1,
-  0,
-  0,
+  337,
+  3,
+  34,
+  17,
   0,
   332,
   337,
   3,
-  38,
-  19,
+  36,
+  18,
   0,
   333,
-  334,
-  5,
-  81,
+  337,
+  3,
+  126,
+  63,
   0,
-  0,
   334,
-  336,
+  337,
+  3,
+  128,
+  64,
+  0,
+  335,
+  337,
   3,
   38,
   19,
   0,
-  335,
+  336,
+  329,
+  1,
+  0,
+  0,
+  0,
+  336,
+  330,
+  1,
+  0,
+  0,
+  0,
+  336,
+  331,
+  1,
+  0,
+  0,
+  0,
+  336,
+  332,
+  1,
+  0,
+  0,
+  0,
+  336,
   333,
   1,
   0,
   0,
   0,
   336,
-  339,
+  334,
   1,
   0,
   0,
   0,
-  337,
+  336,
   335,
   1,
   0,
   0,
   0,
   337,
-  338,
+  340,
   1,
   0,
   0,
   0,
   338,
-  41,
+  336,
+  1,
+  0,
+  0,
+  0,
+  338,
+  339,
   1,
   0,
   0,
   0,
   339,
-  337,
+  341,
   1,
   0,
   0,
   0,
   340,
-  341,
-  5,
-  2,
-  0,
-  0,
-  341,
-  342,
-  5,
-  47,
-  0,
-  0,
-  342,
-  343,
-  3,
-  44,
-  22,
-  0,
-  343,
-  344,
-  3,
-  10,
-  5,
-  0,
-  344,
-  345,
-  5,
-  2,
-  0,
-  0,
-  345,
-  346,
-  5,
-  20,
-  0,
-  0,
-  346,
-  347,
-  5,
-  47,
-  0,
-  0,
-  347,
-  43,
+  338,
   1,
   0,
   0,
+  0,
+  341,
+  342,
+  5,
+  63,
+  0,
+  0,
+  342,
+  343,
+  3,
+  62,
+  31,
+  0,
+  343,
+  15,
+  1,
+  0,
+  0,
+  0,
+  344,
+  345,
+  5,
+  63,
+  0,
+  0,
+  345,
+  346,
+  5,
+  54,
+  0,
+  0,
+  346,
+  17,
+  1,
+  0,
+  0,
+  0,
+  347,
+  359,
+  3,
+  72,
+  36,
   0,
   348,
-  349,
-  5,
-  94,
-  0,
-  0,
-  349,
-  351,
-  5,
-  77,
-  0,
-  0,
-  350,
-  352,
+  359,
   3,
-  46,
-  23,
+  74,
+  37,
   0,
-  351,
+  349,
+  359,
+  3,
+  76,
+  38,
+  0,
   350,
-  1,
-  0,
-  0,
+  359,
+  3,
+  78,
+  39,
   0,
   351,
+  359,
+  3,
+  20,
+  10,
+  0,
   352,
-  1,
-  0,
-  0,
-  0,
-  352,
-  353,
-  1,
-  0,
-  0,
+  359,
+  3,
+  22,
+  11,
   0,
   353,
+  359,
+  3,
+  24,
+  12,
+  0,
   354,
-  5,
-  78,
-  0,
-  0,
-  354,
-  45,
-  1,
-  0,
-  0,
+  359,
+  3,
+  80,
+  40,
   0,
   355,
-  360,
+  359,
   3,
-  52,
   26,
+  13,
   0,
   356,
+  359,
+  3,
+  82,
+  41,
+  0,
   357,
+  359,
+  3,
+  28,
+  14,
+  0,
+  358,
+  347,
+  1,
+  0,
+  0,
+  0,
+  358,
+  348,
+  1,
+  0,
+  0,
+  0,
+  358,
+  349,
+  1,
+  0,
+  0,
+  0,
+  358,
+  350,
+  1,
+  0,
+  0,
+  0,
+  358,
+  351,
+  1,
+  0,
+  0,
+  0,
+  358,
+  352,
+  1,
+  0,
+  0,
+  0,
+  358,
+  353,
+  1,
+  0,
+  0,
+  0,
+  358,
+  354,
+  1,
+  0,
+  0,
+  0,
+  358,
+  355,
+  1,
+  0,
+  0,
+  0,
+  358,
+  356,
+  1,
+  0,
+  0,
+  0,
+  358,
+  357,
+  1,
+  0,
+  0,
+  0,
+  359,
+  19,
+  1,
+  0,
+  0,
+  0,
+  360,
+  362,
   5,
-  81,
+  63,
   0,
   0,
-  357,
-  359,
-  3,
-  52,
-  26,
-  0,
-  358,
-  356,
-  1,
+  361,
+  363,
+  5,
+  95,
   0,
   0,
-  0,
-  359,
   362,
-  1,
-  0,
-  0,
-  0,
-  360,
-  358,
-  1,
-  0,
-  0,
-  0,
-  360,
   361,
   1,
   0,
   0,
   0,
-  361,
-  47,
-  1,
-  0,
-  0,
-  0,
   362,
-  360,
+  363,
   1,
   0,
   0,
   0,
   363,
-  368,
-  3,
-  50,
-  25,
-  0,
-  364,
-  365,
-  5,
-  81,
-  0,
-  0,
-  365,
-  367,
-  3,
-  50,
-  25,
-  0,
-  366,
   364,
   1,
   0,
   0,
   0,
-  367,
+  364,
   370,
+  3,
+  92,
+  46,
+  0,
+  365,
+  369,
+  3,
+  86,
+  43,
+  0,
+  366,
+  369,
+  3,
+  88,
+  44,
+  0,
+  367,
+  369,
+  3,
+  18,
+  9,
+  0,
+  368,
+  365,
   1,
   0,
   0,
@@ -17671,199 +17083,211 @@ var serializedATN2 = [
   0,
   0,
   368,
-  369,
+  367,
   1,
   0,
   0,
   0,
   369,
-  49,
+  372,
   1,
   0,
   0,
   0,
   370,
   368,
+  1,
+  0,
+  0,
+  0,
+  370,
+  371,
   1,
   0,
   0,
   0,
   371,
-  372,
-  5,
-  94,
-  0,
-  0,
-  372,
   373,
+  1,
+  0,
+  0,
+  0,
+  372,
+  370,
+  1,
+  0,
+  0,
+  0,
+  373,
+  374,
+  5,
+  63,
+  0,
+  0,
+  374,
+  375,
   3,
-  164,
-  82,
+  94,
+  47,
   0,
-  373,
-  51,
+  375,
+  21,
   1,
   0,
   0,
   0,
-  374,
   376,
+  378,
   5,
-  42,
+  63,
   0,
   0,
-  375,
-  374,
-  1,
+  377,
+  379,
+  5,
+  95,
   0,
   0,
-  0,
-  375,
-  376,
-  1,
-  0,
-  0,
-  0,
-  376,
+  378,
   377,
   1,
   0,
   0,
   0,
-  377,
-  378,
-  5,
-  94,
-  0,
-  0,
   378,
   379,
-  3,
-  164,
-  82,
+  1,
+  0,
+  0,
   0,
   379,
-  53,
+  380,
   1,
   0,
   0,
   0,
   380,
-  381,
-  5,
-  2,
-  0,
-  0,
-  381,
-  382,
-  5,
-  24,
-  0,
-  0,
-  382,
-  383,
-  3,
-  56,
-  28,
-  0,
-  383,
   384,
   3,
-  10,
-  5,
+  96,
+  48,
   0,
-  384,
-  385,
-  5,
-  2,
-  0,
-  0,
-  385,
-  388,
-  5,
-  50,
-  0,
-  0,
-  386,
-  389,
+  381,
+  383,
   3,
-  106,
-  53,
+  18,
+  9,
   0,
-  387,
-  389,
-  5,
-  16,
+  382,
+  381,
+  1,
   0,
   0,
-  388,
+  0,
+  383,
   386,
   1,
   0,
   0,
   0,
-  388,
+  384,
+  382,
+  1,
+  0,
+  0,
+  0,
+  384,
+  385,
+  1,
+  0,
+  0,
+  0,
+  385,
   387,
   1,
   0,
   0,
   0,
+  386,
+  384,
+  1,
+  0,
+  0,
+  0,
+  387,
+  388,
+  5,
+  63,
+  0,
+  0,
+  388,
   389,
-  390,
+  3,
+  98,
+  49,
+  0,
+  389,
+  23,
   1,
   0,
   0,
   0,
   390,
-  391,
-  5,
-  2,
-  0,
-  0,
-  391,
   392,
   5,
-  20,
+  63,
+  0,
+  0,
+  391,
+  393,
+  5,
+  95,
+  0,
+  0,
+  392,
+  391,
+  1,
+  0,
   0,
   0,
   392,
   393,
-  5,
-  24,
+  1,
+  0,
   0,
   0,
   393,
-  55,
+  394,
   1,
   0,
   0,
   0,
   394,
-  395,
-  5,
-  94,
-  0,
-  0,
-  395,
-  397,
-  5,
-  77,
-  0,
-  0,
-  396,
   398,
   3,
-  48,
-  24,
+  100,
+  50,
   0,
+  395,
   397,
+  3,
+  18,
+  9,
+  0,
   396,
+  395,
   1,
   0,
   0,
   0,
   397,
+  400,
+  1,
+  0,
+  0,
+  0,
   398,
+  396,
   1,
   0,
   0,
@@ -17875,76 +17299,76 @@ var serializedATN2 = [
   0,
   0,
   399,
-  400,
-  5,
-  78,
-  0,
-  0,
-  400,
   401,
-  5,
-  7,
-  0,
-  0,
-  401,
-  402,
-  3,
-  164,
-  82,
-  0,
-  402,
-  57,
   1,
   0,
   0,
   0,
+  400,
+  398,
+  1,
+  0,
+  0,
+  0,
+  401,
+  402,
+  5,
+  63,
+  0,
+  0,
+  402,
   403,
-  404,
-  5,
-  2,
-  0,
-  0,
-  404,
-  405,
-  5,
-  13,
-  0,
-  0,
-  405,
-  406,
-  5,
-  94,
-  0,
-  0,
-  406,
-  407,
-  5,
+  3,
+  102,
   51,
   0,
+  403,
+  25,
+  1,
+  0,
+  0,
+  0,
+  404,
+  406,
+  5,
+  63,
+  0,
+  0,
+  405,
+  407,
+  5,
+  95,
+  0,
+  0,
+  406,
+  405,
+  1,
+  0,
+  0,
+  0,
+  406,
+  407,
+  1,
+  0,
+  0,
   0,
   407,
-  410,
-  5,
-  58,
-  0,
-  0,
-  408,
-  411,
-  3,
-  124,
-  62,
-  0,
-  409,
-  411,
-  3,
-  82,
-  41,
-  0,
-  410,
   408,
   1,
   0,
   0,
+  0,
+  408,
+  412,
+  3,
+  104,
+  52,
+  0,
+  409,
+  411,
+  3,
+  18,
+  9,
   0,
   410,
   409,
@@ -17953,51 +17377,57 @@ var serializedATN2 = [
   0,
   0,
   411,
-  59,
+  414,
+  1,
+  0,
+  0,
+  0,
+  412,
+  410,
   1,
   0,
   0,
   0,
   412,
   413,
-  5,
-  2,
+  1,
+  0,
   0,
   0,
   413,
-  414,
-  5,
-  21,
-  0,
-  0,
-  414,
   415,
+  1,
+  0,
+  0,
+  0,
+  414,
+  412,
+  1,
+  0,
+  0,
+  0,
+  415,
+  419,
   3,
-  62,
-  31,
-  0,
-  415,
-  416,
-  5,
-  2,
-  0,
+  90,
+  45,
   0,
   416,
-  421,
-  5,
-  94,
-  0,
+  418,
+  3,
+  18,
+  9,
   0,
   417,
-  418,
-  5,
-  81,
+  416,
+  1,
   0,
   0,
+  0,
   418,
-  420,
-  5,
-  94,
+  421,
+  1,
+  0,
   0,
   0,
   419,
@@ -18006,8 +17436,14 @@ var serializedATN2 = [
   0,
   0,
   0,
+  419,
   420,
-  423,
+  1,
+  0,
+  0,
+  0,
+  420,
+  422,
   1,
   0,
   0,
@@ -18018,1889 +17454,1847 @@ var serializedATN2 = [
   0,
   0,
   0,
-  421,
   422,
-  1,
-  0,
-  0,
-  0,
-  422,
-  424,
-  1,
-  0,
+  423,
+  5,
+  63,
   0,
   0,
   423,
-  421,
+  424,
+  3,
+  106,
+  53,
+  0,
+  424,
+  27,
   1,
   0,
   0,
   0,
-  424,
-  425,
-  5,
-  2,
-  0,
-  0,
   425,
   426,
   5,
-  20,
+  63,
   0,
   0,
   426,
   427,
   5,
-  21,
+  54,
   0,
   0,
   427,
-  61,
+  29,
   1,
   0,
   0,
   0,
   428,
-  429,
+  430,
   5,
-  93,
+  63,
   0,
   0,
   429,
-  63,
+  431,
+  5,
+  95,
+  0,
+  0,
+  430,
+  429,
   1,
   0,
   0,
   0,
   430,
   431,
-  3,
-  62,
-  31,
+  1,
+  0,
+  0,
   0,
   431,
   432,
-  5,
-  80,
+  1,
+  0,
   0,
   0,
   432,
+  436,
+  3,
+  108,
+  54,
+  0,
   433,
+  435,
+  3,
+  18,
+  9,
+  0,
+  434,
+  433,
+  1,
+  0,
+  0,
+  0,
+  435,
+  438,
+  1,
+  0,
+  0,
+  0,
+  436,
+  434,
+  1,
+  0,
+  0,
+  0,
+  436,
+  437,
+  1,
+  0,
+  0,
+  0,
+  437,
+  439,
+  1,
+  0,
+  0,
+  0,
+  438,
+  436,
+  1,
+  0,
+  0,
+  0,
+  439,
+  440,
   5,
-  94,
+  63,
   0,
   0,
-  433,
+  440,
+  441,
+  3,
+  110,
+  55,
+  0,
+  441,
+  31,
+  1,
+  0,
+  0,
+  0,
+  442,
+  444,
+  5,
+  63,
+  0,
+  0,
+  443,
+  445,
+  5,
+  95,
+  0,
+  0,
+  444,
+  443,
+  1,
+  0,
+  0,
+  0,
+  444,
+  445,
+  1,
+  0,
+  0,
+  0,
+  445,
+  447,
+  1,
+  0,
+  0,
+  0,
+  446,
+  448,
+  5,
+  34,
+  0,
+  0,
+  447,
+  446,
+  1,
+  0,
+  0,
+  0,
+  447,
+  448,
+  1,
+  0,
+  0,
+  0,
+  448,
+  449,
+  1,
+  0,
+  0,
+  0,
+  449,
+  454,
+  3,
+  114,
+  57,
+  0,
+  450,
+  453,
+  3,
+  70,
+  35,
+  0,
+  451,
+  453,
+  3,
+  18,
+  9,
+  0,
+  452,
+  450,
+  1,
+  0,
+  0,
+  0,
+  452,
+  451,
+  1,
+  0,
+  0,
+  0,
+  453,
+  456,
+  1,
+  0,
+  0,
+  0,
+  454,
+  452,
+  1,
+  0,
+  0,
+  0,
+  454,
+  455,
+  1,
+  0,
+  0,
+  0,
+  455,
+  457,
+  1,
+  0,
+  0,
+  0,
+  456,
+  454,
+  1,
+  0,
+  0,
+  0,
+  457,
+  458,
+  3,
+  84,
+  42,
+  0,
+  458,
+  459,
+  5,
+  63,
+  0,
+  0,
+  459,
+  460,
+  3,
+  116,
+  58,
+  0,
+  460,
+  33,
+  1,
+  0,
+  0,
+  0,
+  461,
+  463,
+  5,
+  63,
+  0,
+  0,
+  462,
+  464,
+  5,
+  95,
+  0,
+  0,
+  463,
+  462,
+  1,
+  0,
+  0,
+  0,
+  463,
+  464,
+  1,
+  0,
+  0,
+  0,
+  464,
+  466,
+  1,
+  0,
+  0,
+  0,
+  465,
+  467,
+  5,
+  34,
+  0,
+  0,
+  466,
+  465,
+  1,
+  0,
+  0,
+  0,
+  466,
+  467,
+  1,
+  0,
+  0,
+  0,
+  467,
+  468,
+  1,
+  0,
+  0,
+  0,
+  468,
+  472,
+  3,
+  118,
+  59,
+  0,
+  469,
+  471,
+  3,
+  18,
+  9,
+  0,
+  470,
+  469,
+  1,
+  0,
+  0,
+  0,
+  471,
+  474,
+  1,
+  0,
+  0,
+  0,
+  472,
+  470,
+  1,
+  0,
+  0,
+  0,
+  472,
+  473,
+  1,
+  0,
+  0,
+  0,
+  473,
+  475,
+  1,
+  0,
+  0,
+  0,
+  474,
+  472,
+  1,
+  0,
+  0,
+  0,
+  475,
+  476,
+  5,
+  63,
+  0,
+  0,
+  476,
+  477,
+  3,
+  120,
+  60,
+  0,
+  477,
+  35,
+  1,
+  0,
+  0,
+  0,
+  478,
+  480,
+  5,
+  63,
+  0,
+  0,
+  479,
+  481,
+  5,
+  95,
+  0,
+  0,
+  480,
+  479,
+  1,
+  0,
+  0,
+  0,
+  480,
+  481,
+  1,
+  0,
+  0,
+  0,
+  481,
+  483,
+  1,
+  0,
+  0,
+  0,
+  482,
+  484,
+  5,
+  34,
+  0,
+  0,
+  483,
+  482,
+  1,
+  0,
+  0,
+  0,
+  483,
+  484,
+  1,
+  0,
+  0,
+  0,
+  484,
+  485,
+  1,
+  0,
+  0,
+  0,
+  485,
+  489,
+  3,
+  122,
+  61,
+  0,
+  486,
+  488,
+  3,
+  18,
+  9,
+  0,
+  487,
+  486,
+  1,
+  0,
+  0,
+  0,
+  488,
+  491,
+  1,
+  0,
+  0,
+  0,
+  489,
+  487,
+  1,
+  0,
+  0,
+  0,
+  489,
+  490,
+  1,
+  0,
+  0,
+  0,
+  490,
+  492,
+  1,
+  0,
+  0,
+  0,
+  491,
+  489,
+  1,
+  0,
+  0,
+  0,
+  492,
+  493,
+  3,
+  84,
+  42,
+  0,
+  493,
+  494,
+  5,
+  63,
+  0,
+  0,
+  494,
+  495,
+  3,
+  124,
+  62,
+  0,
+  495,
+  37,
+  1,
+  0,
+  0,
+  0,
+  496,
+  498,
+  5,
+  63,
+  0,
+  0,
+  497,
+  499,
+  5,
+  54,
+  0,
+  0,
+  498,
+  497,
+  1,
+  0,
+  0,
+  0,
+  498,
+  499,
+  1,
+  0,
+  0,
+  0,
+  499,
+  39,
+  1,
+  0,
+  0,
+  0,
+  500,
+  501,
+  5,
+  27,
+  0,
+  0,
+  501,
+  41,
+  1,
+  0,
+  0,
+  0,
+  502,
+  503,
+  5,
+  16,
+  0,
+  0,
+  503,
+  504,
+  5,
+  27,
+  0,
+  0,
+  504,
+  43,
+  1,
+  0,
+  0,
+  0,
+  505,
+  506,
+  5,
+  20,
+  0,
+  0,
+  506,
+  507,
+  3,
+  134,
+  67,
+  0,
+  507,
+  509,
+  5,
+  69,
+  0,
+  0,
+  508,
+  510,
+  3,
+  146,
+  73,
+  0,
+  509,
+  508,
+  1,
+  0,
+  0,
+  0,
+  509,
+  510,
+  1,
+  0,
+  0,
+  0,
+  510,
+  511,
+  1,
+  0,
+  0,
+  0,
+  511,
+  512,
+  5,
+  70,
+  0,
+  0,
+  512,
+  513,
+  5,
+  38,
+  0,
+  0,
+  513,
+  514,
+  3,
+  148,
+  74,
+  0,
+  514,
+  45,
+  1,
+  0,
+  0,
+  0,
+  515,
+  516,
+  5,
+  16,
+  0,
+  0,
+  516,
+  517,
+  5,
+  20,
+  0,
+  0,
+  517,
+  47,
+  1,
+  0,
+  0,
+  0,
+  518,
+  519,
+  5,
+  41,
+  0,
+  0,
+  519,
+  520,
+  3,
+  136,
+  68,
+  0,
+  520,
+  49,
+  1,
+  0,
+  0,
+  0,
+  521,
+  522,
+  5,
+  16,
+  0,
+  0,
+  522,
+  523,
+  5,
+  41,
+  0,
+  0,
+  523,
+  51,
+  1,
+  0,
+  0,
+  0,
+  524,
+  525,
+  5,
+  35,
+  0,
+  0,
+  525,
+  526,
+  3,
+  134,
+  67,
+  0,
+  526,
+  528,
+  5,
+  69,
+  0,
+  0,
+  527,
+  529,
+  3,
+  146,
+  73,
+  0,
+  528,
+  527,
+  1,
+  0,
+  0,
+  0,
+  528,
+  529,
+  1,
+  0,
+  0,
+  0,
+  529,
+  530,
+  1,
+  0,
+  0,
+  0,
+  530,
+  531,
+  5,
+  70,
+  0,
+  0,
+  531,
+  53,
+  1,
+  0,
+  0,
+  0,
+  532,
+  533,
+  5,
+  16,
+  0,
+  0,
+  533,
+  534,
+  5,
+  35,
+  0,
+  0,
+  534,
+  55,
+  1,
+  0,
+  0,
+  0,
+  535,
+  536,
+  5,
+  9,
+  0,
+  0,
+  536,
+  539,
+  3,
+  138,
+  69,
+  0,
+  537,
+  538,
+  5,
+  23,
+  0,
+  0,
+  538,
+  540,
+  3,
+  138,
+  69,
+  0,
+  539,
+  537,
+  1,
+  0,
+  0,
+  0,
+  539,
+  540,
+  1,
+  0,
+  0,
+  0,
+  540,
+  57,
+  1,
+  0,
+  0,
+  0,
+  541,
+  542,
+  5,
+  16,
+  0,
+  0,
+  542,
+  543,
+  5,
+  9,
+  0,
+  0,
+  543,
+  59,
+  1,
+  0,
+  0,
+  0,
+  544,
+  545,
+  5,
+  1,
+  0,
+  0,
+  545,
+  546,
+  5,
+  9,
+  0,
+  0,
+  546,
+  549,
+  3,
+  138,
+  69,
+  0,
+  547,
+  548,
+  5,
+  23,
+  0,
+  0,
+  548,
+  550,
+  3,
+  138,
+  69,
+  0,
+  549,
+  547,
+  1,
+  0,
+  0,
+  0,
+  549,
+  550,
+  1,
+  0,
+  0,
+  0,
+  550,
+  61,
+  1,
+  0,
+  0,
+  0,
+  551,
+  552,
+  5,
+  16,
+  0,
+  0,
+  552,
+  553,
+  5,
+  1,
+  0,
+  0,
+  553,
+  554,
+  5,
+  9,
+  0,
+  0,
+  554,
+  63,
+  1,
+  0,
+  0,
+  0,
+  555,
+  557,
+  5,
+  63,
+  0,
+  0,
+  556,
+  558,
+  5,
+  95,
+  0,
+  0,
+  557,
+  556,
+  1,
+  0,
+  0,
+  0,
+  557,
+  558,
+  1,
+  0,
+  0,
+  0,
+  558,
+  559,
+  1,
+  0,
+  0,
+  0,
+  559,
+  560,
+  5,
+  10,
+  0,
+  0,
+  560,
+  561,
+  3,
+  130,
+  65,
+  0,
+  561,
+  562,
+  5,
+  39,
+  0,
+  0,
+  562,
+  563,
+  5,
+  45,
+  0,
+  0,
+  563,
+  564,
+  3,
+  140,
+  70,
+  0,
+  564,
   65,
   1,
   0,
   0,
   0,
-  434,
-  439,
-  3,
-  68,
-  34,
+  565,
+  567,
+  5,
+  63,
   0,
-  435,
-  439,
-  3,
-  70,
-  35,
   0,
-  436,
-  439,
-  3,
-  72,
-  36,
+  566,
+  568,
+  5,
+  95,
   0,
-  437,
-  439,
-  3,
-  74,
-  37,
   0,
-  438,
-  434,
+  567,
+  566,
   1,
   0,
   0,
   0,
-  438,
-  435,
+  567,
+  568,
   1,
   0,
   0,
   0,
-  438,
-  436,
+  568,
+  569,
   1,
   0,
   0,
   0,
-  438,
-  437,
-  1,
+  569,
+  570,
+  5,
+  17,
   0,
   0,
+  570,
+  571,
+  3,
+  138,
+  69,
   0,
-  439,
+  571,
+  572,
+  3,
+  150,
+  75,
+  0,
+  572,
   67,
   1,
   0,
   0,
   0,
-  440,
-  441,
-  5,
-  2,
-  0,
-  0,
-  441,
-  442,
-  5,
-  12,
-  0,
-  0,
-  442,
-  444,
-  5,
-  93,
-  0,
-  0,
-  443,
-  445,
-  3,
-  76,
-  38,
-  0,
-  444,
-  443,
-  1,
-  0,
-  0,
-  0,
-  444,
-  445,
-  1,
-  0,
-  0,
-  0,
-  445,
-  446,
-  1,
-  0,
-  0,
-  0,
-  446,
-  453,
-  3,
-  80,
-  40,
-  0,
-  447,
-  448,
-  5,
-  2,
-  0,
-  0,
-  448,
-  452,
-  3,
-  78,
-  39,
-  0,
-  449,
-  452,
-  3,
-  54,
-  27,
-  0,
-  450,
-  452,
-  3,
-  42,
-  21,
-  0,
-  451,
-  447,
-  1,
-  0,
-  0,
-  0,
-  451,
-  449,
-  1,
-  0,
-  0,
-  0,
-  451,
-  450,
-  1,
-  0,
-  0,
-  0,
-  452,
-  455,
-  1,
-  0,
-  0,
-  0,
-  453,
-  451,
-  1,
-  0,
-  0,
-  0,
-  453,
-  454,
-  1,
-  0,
-  0,
-  0,
-  454,
-  456,
-  1,
-  0,
-  0,
-  0,
-  455,
-  453,
-  1,
-  0,
-  0,
-  0,
-  456,
-  457,
-  5,
-  2,
-  0,
-  0,
-  457,
-  458,
-  5,
-  20,
-  0,
-  0,
-  458,
-  459,
-  5,
-  12,
-  0,
-  0,
-  459,
-  69,
-  1,
-  0,
-  0,
-  0,
-  460,
-  461,
-  5,
-  2,
-  0,
-  0,
-  461,
-  462,
-  5,
-  5,
-  0,
-  0,
-  462,
-  463,
-  5,
-  12,
-  0,
-  0,
-  463,
-  465,
-  5,
-  93,
-  0,
-  0,
-  464,
-  466,
-  3,
-  76,
-  38,
-  0,
-  465,
-  464,
-  1,
-  0,
-  0,
-  0,
-  465,
-  466,
-  1,
-  0,
-  0,
-  0,
-  466,
-  480,
-  1,
-  0,
-  0,
-  0,
-  467,
-  468,
-  5,
-  2,
-  0,
-  0,
-  468,
-  469,
-  5,
-  5,
-  0,
-  0,
-  469,
-  479,
-  3,
-  78,
-  39,
-  0,
-  470,
-  471,
-  5,
-  2,
-  0,
-  0,
-  471,
-  472,
-  5,
-  5,
-  0,
-  0,
-  472,
-  473,
-  5,
-  24,
-  0,
-  0,
-  473,
-  479,
-  3,
-  56,
-  28,
-  0,
-  474,
-  475,
-  5,
-  2,
-  0,
-  0,
-  475,
-  476,
-  5,
-  5,
-  0,
-  0,
-  476,
-  477,
-  5,
-  47,
-  0,
-  0,
-  477,
-  479,
-  3,
-  44,
-  22,
-  0,
-  478,
-  467,
-  1,
-  0,
-  0,
-  0,
-  478,
-  470,
-  1,
-  0,
-  0,
-  0,
-  478,
-  474,
-  1,
-  0,
-  0,
-  0,
-  479,
-  482,
-  1,
-  0,
-  0,
-  0,
-  480,
-  478,
-  1,
-  0,
-  0,
-  0,
-  480,
-  481,
-  1,
-  0,
-  0,
-  0,
-  481,
-  483,
-  1,
-  0,
-  0,
-  0,
-  482,
-  480,
-  1,
-  0,
-  0,
-  0,
-  483,
-  484,
-  5,
-  2,
-  0,
-  0,
-  484,
-  485,
-  5,
-  20,
-  0,
-  0,
-  485,
-  486,
-  5,
-  12,
-  0,
-  0,
-  486,
-  71,
-  1,
-  0,
-  0,
-  0,
-  487,
-  488,
-  5,
-  2,
-  0,
-  0,
-  488,
-  489,
-  5,
-  27,
-  0,
-  0,
-  489,
-  490,
-  5,
-  12,
-  0,
-  0,
-  490,
-  492,
-  5,
-  93,
-  0,
-  0,
-  491,
-  493,
-  3,
-  76,
-  38,
-  0,
-  492,
-  491,
-  1,
-  0,
-  0,
-  0,
-  492,
-  493,
-  1,
-  0,
-  0,
-  0,
-  493,
-  494,
-  1,
-  0,
-  0,
-  0,
-  494,
-  500,
-  3,
-  80,
-  40,
-  0,
-  495,
-  496,
-  5,
-  2,
-  0,
-  0,
-  496,
-  499,
-  3,
-  78,
-  39,
-  0,
-  497,
-  499,
-  3,
-  54,
-  27,
-  0,
-  498,
-  495,
-  1,
-  0,
-  0,
-  0,
-  498,
-  497,
-  1,
-  0,
-  0,
-  0,
-  499,
-  502,
-  1,
-  0,
-  0,
-  0,
-  500,
-  498,
-  1,
-  0,
-  0,
-  0,
-  500,
-  501,
-  1,
-  0,
-  0,
-  0,
-  501,
-  503,
-  1,
-  0,
-  0,
-  0,
-  502,
-  500,
-  1,
-  0,
-  0,
-  0,
-  503,
-  504,
-  5,
-  2,
-  0,
-  0,
-  504,
-  505,
-  5,
-  20,
-  0,
-  0,
-  505,
-  506,
-  5,
-  12,
-  0,
-  0,
-  506,
-  73,
-  1,
-  0,
-  0,
-  0,
-  507,
-  508,
-  5,
-  2,
-  0,
-  0,
-  508,
-  509,
-  5,
-  5,
-  0,
-  0,
-  509,
-  510,
-  5,
-  27,
-  0,
-  0,
-  510,
-  511,
-  5,
-  12,
-  0,
-  0,
-  511,
-  513,
-  5,
-  93,
-  0,
-  0,
-  512,
-  514,
-  3,
-  76,
-  38,
-  0,
-  513,
-  512,
-  1,
-  0,
-  0,
-  0,
-  513,
-  514,
-  1,
-  0,
-  0,
-  0,
-  514,
-  524,
-  1,
-  0,
-  0,
-  0,
-  515,
-  516,
-  5,
-  2,
-  0,
-  0,
-  516,
-  517,
-  5,
-  5,
-  0,
-  0,
-  517,
-  523,
-  3,
-  78,
-  39,
-  0,
-  518,
-  519,
-  5,
-  2,
-  0,
-  0,
-  519,
-  520,
-  5,
-  5,
-  0,
-  0,
-  520,
-  521,
-  5,
-  24,
-  0,
-  0,
-  521,
-  523,
-  3,
-  56,
-  28,
-  0,
-  522,
-  515,
-  1,
-  0,
-  0,
-  0,
-  522,
-  518,
-  1,
-  0,
-  0,
-  0,
-  523,
-  526,
-  1,
-  0,
-  0,
-  0,
-  524,
-  522,
-  1,
-  0,
-  0,
-  0,
-  524,
-  525,
-  1,
-  0,
-  0,
-  0,
-  525,
-  527,
-  1,
-  0,
-  0,
-  0,
-  526,
-  524,
-  1,
-  0,
-  0,
-  0,
-  527,
-  528,
-  5,
-  2,
-  0,
-  0,
-  528,
-  529,
-  5,
-  20,
-  0,
-  0,
-  529,
-  530,
-  5,
-  12,
-  0,
-  0,
-  530,
-  75,
-  1,
-  0,
-  0,
-  0,
-  531,
-  532,
-  5,
-  30,
-  0,
-  0,
-  532,
-  537,
-  3,
-  164,
-  82,
-  0,
-  533,
-  534,
-  5,
-  81,
-  0,
-  0,
-  534,
-  536,
-  3,
-  164,
-  82,
-  0,
-  535,
-  533,
-  1,
-  0,
-  0,
-  0,
-  536,
-  539,
-  1,
-  0,
-  0,
-  0,
-  537,
-  535,
-  1,
-  0,
-  0,
-  0,
-  537,
-  538,
-  1,
-  0,
-  0,
-  0,
-  538,
-  77,
-  1,
-  0,
-  0,
-  0,
-  539,
-  537,
-  1,
-  0,
-  0,
-  0,
-  540,
-  542,
-  5,
-  46,
-  0,
-  0,
-  541,
-  540,
-  1,
-  0,
-  0,
-  0,
-  541,
-  542,
-  1,
-  0,
-  0,
-  0,
-  542,
-  543,
-  1,
-  0,
-  0,
-  0,
-  543,
-  544,
-  5,
-  48,
-  0,
-  0,
-  544,
-  545,
-  5,
-  94,
-  0,
-  0,
-  545,
-  546,
-  3,
-  164,
-  82,
-  0,
-  546,
-  79,
-  1,
-  0,
-  0,
-  0,
-  547,
-  548,
-  5,
-  2,
-  0,
-  0,
-  548,
-  549,
-  5,
-  14,
-  0,
-  0,
-  549,
-  551,
-  5,
-  77,
-  0,
-  0,
-  550,
-  552,
-  3,
-  48,
-  24,
-  0,
-  551,
-  550,
-  1,
-  0,
-  0,
-  0,
-  551,
-  552,
-  1,
-  0,
-  0,
-  0,
-  552,
-  553,
-  1,
-  0,
-  0,
-  0,
-  553,
-  554,
-  5,
-  78,
-  0,
-  0,
-  554,
-  555,
-  3,
-  10,
-  5,
-  0,
-  555,
-  556,
-  5,
-  2,
-  0,
-  0,
-  556,
-  557,
-  5,
-  20,
-  0,
-  0,
-  557,
-  558,
-  5,
-  14,
-  0,
-  0,
-  558,
-  81,
-  1,
-  0,
-  0,
-  0,
-  559,
-  560,
-  5,
-  37,
-  0,
-  0,
-  560,
-  561,
-  3,
-  164,
-  82,
-  0,
-  561,
-  563,
-  5,
-  77,
-  0,
-  0,
-  562,
-  564,
-  3,
-  40,
-  20,
-  0,
-  563,
-  562,
-  1,
-  0,
-  0,
-  0,
-  563,
-  564,
-  1,
-  0,
-  0,
-  0,
-  564,
-  565,
-  1,
-  0,
-  0,
-  0,
-  565,
-  567,
-  5,
-  78,
-  0,
-  0,
-  566,
-  568,
-  3,
-  84,
-  42,
-  0,
-  567,
-  566,
-  1,
-  0,
-  0,
-  0,
-  567,
-  568,
-  1,
-  0,
-  0,
-  0,
-  568,
-  572,
-  1,
-  0,
-  0,
-  0,
-  569,
-  570,
-  5,
-  94,
-  0,
-  0,
-  570,
-  572,
-  3,
-  84,
-  42,
-  0,
-  571,
-  559,
-  1,
-  0,
-  0,
-  0,
-  571,
-  569,
-  1,
-  0,
-  0,
-  0,
-  572,
-  83,
-  1,
-  0,
-  0,
-  0,
   573,
-  574,
+  575,
   5,
   63,
   0,
   0,
   574,
-  575,
-  5,
-  73,
-  0,
-  0,
-  575,
-  580,
-  3,
-  26,
-  13,
-  0,
   576,
-  577,
   5,
-  81,
+  95,
   0,
   0,
-  577,
-  579,
-  3,
-  26,
-  13,
+  575,
+  574,
+  1,
   0,
-  578,
+  0,
+  0,
+  575,
   576,
   1,
   0,
   0,
   0,
-  579,
-  582,
+  576,
+  577,
   1,
   0,
   0,
   0,
-  580,
+  577,
   578,
-  1,
-  0,
-  0,
-  0,
-  580,
-  581,
-  1,
-  0,
-  0,
-  0,
-  581,
-  583,
-  1,
-  0,
-  0,
-  0,
-  582,
-  580,
-  1,
-  0,
-  0,
-  0,
-  583,
-  584,
   5,
-  74,
+  4,
   0,
   0,
-  584,
-  85,
-  1,
-  0,
-  0,
-  0,
-  585,
-  593,
+  578,
+  579,
   3,
+  154,
+  77,
+  0,
+  579,
+  580,
+  5,
+  56,
+  0,
+  0,
+  580,
+  581,
+  3,
+  176,
   88,
-  44,
   0,
-  586,
-  593,
-  3,
-  90,
-  45,
+  581,
+  69,
+  1,
   0,
-  587,
-  593,
-  3,
-  92,
-  46,
   0,
-  588,
-  593,
-  3,
-  94,
-  47,
   0,
-  589,
-  593,
-  3,
-  96,
-  48,
+  582,
+  584,
+  5,
+  63,
   0,
-  590,
-  593,
-  3,
-  98,
-  49,
   0,
-  591,
-  593,
-  3,
-  100,
-  50,
+  583,
+  585,
+  5,
+  95,
   0,
-  592,
+  0,
+  584,
+  583,
+  1,
+  0,
+  0,
+  0,
+  584,
   585,
   1,
   0,
   0,
   0,
-  592,
+  585,
   586,
   1,
   0,
   0,
   0,
-  592,
+  586,
   587,
-  1,
+  5,
+  26,
   0,
   0,
-  0,
-  592,
+  587,
   588,
-  1,
+  3,
+  130,
+  65,
   0,
-  0,
-  0,
-  592,
+  588,
   589,
-  1,
+  5,
+  6,
   0,
   0,
-  0,
-  592,
+  589,
   590,
+  3,
+  176,
+  88,
+  0,
+  590,
+  71,
   1,
   0,
   0,
   0,
-  592,
   591,
+  593,
+  5,
+  63,
+  0,
+  0,
+  592,
+  594,
+  5,
+  95,
+  0,
+  0,
+  593,
+  592,
   1,
   0,
   0,
   0,
   593,
-  87,
+  594,
   1,
   0,
   0,
   0,
   594,
   595,
-  5,
-  2,
+  1,
+  0,
   0,
   0,
   595,
   596,
   5,
-  26,
+  33,
   0,
   0,
   596,
   597,
-  3,
-  106,
-  53,
+  5,
+  69,
+  0,
   0,
   597,
-  606,
+  598,
   3,
-  10,
-  5,
+  142,
+  71,
   0,
   598,
   599,
   5,
-  2,
+  70,
   0,
   0,
   599,
+  73,
+  1,
+  0,
+  0,
+  0,
   600,
+  602,
   5,
-  19,
-  0,
-  0,
-  600,
-  601,
-  5,
-  26,
+  63,
   0,
   0,
   601,
-  602,
-  3,
-  106,
-  53,
-  0,
-  602,
   603,
-  3,
-  10,
-  5,
-  0,
-  603,
-  605,
-  1,
-  0,
-  0,
-  0,
-  604,
-  598,
-  1,
-  0,
-  0,
-  0,
-  605,
-  608,
-  1,
-  0,
-  0,
-  0,
-  606,
-  604,
-  1,
-  0,
-  0,
-  0,
-  606,
-  607,
-  1,
-  0,
-  0,
-  0,
-  607,
-  612,
-  1,
-  0,
-  0,
-  0,
-  608,
-  606,
-  1,
-  0,
-  0,
-  0,
-  609,
-  610,
-  5,
-  2,
-  0,
-  0,
-  610,
-  611,
-  5,
-  19,
-  0,
-  0,
-  611,
-  613,
-  3,
-  10,
-  5,
-  0,
-  612,
-  609,
-  1,
-  0,
-  0,
-  0,
-  612,
-  613,
-  1,
-  0,
-  0,
-  0,
-  613,
-  614,
-  1,
-  0,
-  0,
-  0,
-  614,
-  615,
-  5,
-  2,
-  0,
-  0,
-  615,
-  616,
-  5,
-  20,
-  0,
-  0,
-  616,
-  617,
-  5,
-  26,
-  0,
-  0,
-  617,
-  89,
-  1,
-  0,
-  0,
-  0,
-  618,
-  619,
-  5,
-  2,
-  0,
-  0,
-  619,
-  620,
-  5,
-  22,
-  0,
-  0,
-  620,
-  621,
-  5,
-  94,
-  0,
-  0,
-  621,
-  622,
-  5,
-  23,
-  0,
-  0,
-  622,
-  623,
-  3,
-  106,
-  53,
-  0,
-  623,
-  624,
-  5,
-  58,
-  0,
-  0,
-  624,
-  630,
-  3,
-  106,
-  53,
-  0,
-  625,
-  627,
-  5,
-  52,
-  0,
-  0,
-  626,
-  628,
-  5,
-  84,
-  0,
-  0,
-  627,
-  626,
-  1,
-  0,
-  0,
-  0,
-  627,
-  628,
-  1,
-  0,
-  0,
-  0,
-  628,
-  629,
-  1,
-  0,
-  0,
-  0,
-  629,
-  631,
   5,
   95,
   0,
   0,
-  630,
-  625,
+  602,
+  601,
   1,
   0,
   0,
   0,
-  630,
-  631,
+  602,
+  603,
   1,
   0,
   0,
   0,
-  631,
-  632,
+  603,
+  604,
   1,
   0,
   0,
   0,
-  632,
-  633,
+  604,
+  605,
+  5,
+  47,
+  0,
+  0,
+  605,
+  606,
   3,
-  10,
+  130,
+  65,
+  0,
+  606,
+  607,
   5,
+  39,
   0,
-  633,
-  634,
+  0,
+  607,
+  608,
   5,
-  2,
+  45,
   0,
   0,
-  634,
-  635,
-  5,
-  20,
+  608,
+  609,
+  3,
+  176,
+  88,
   0,
-  0,
-  635,
-  636,
-  5,
-  22,
-  0,
-  0,
-  636,
-  91,
+  609,
+  75,
   1,
   0,
+  0,
+  0,
+  610,
+  612,
+  5,
+  63,
+  0,
+  0,
+  611,
+  613,
+  5,
+  95,
+  0,
+  0,
+  612,
+  611,
+  1,
+  0,
+  0,
+  0,
+  612,
+  613,
+  1,
+  0,
+  0,
+  0,
+  613,
+  614,
+  1,
+  0,
+  0,
+  0,
+  614,
+  615,
+  5,
+  5,
+  0,
+  0,
+  615,
+  616,
+  3,
+  132,
+  66,
+  0,
+  616,
+  617,
+  5,
+  45,
+  0,
+  0,
+  617,
+  618,
+  3,
+  176,
+  88,
+  0,
+  618,
+  77,
+  1,
+  0,
+  0,
+  0,
+  619,
+  621,
+  5,
+  63,
+  0,
+  0,
+  620,
+  622,
+  5,
+  95,
+  0,
+  0,
+  621,
+  620,
+  1,
+  0,
+  0,
+  0,
+  621,
+  622,
+  1,
+  0,
+  0,
+  0,
+  622,
+  623,
+  1,
+  0,
+  0,
+  0,
+  623,
+  624,
+  5,
+  24,
+  0,
+  0,
+  624,
+  625,
+  3,
+  130,
+  65,
+  0,
+  625,
+  626,
+  5,
+  39,
+  0,
+  0,
+  626,
+  627,
+  5,
+  45,
+  0,
+  0,
+  627,
+  628,
+  3,
+  134,
+  67,
+  0,
+  628,
+  629,
+  5,
+  69,
+  0,
+  0,
+  629,
+  630,
+  3,
+  142,
+  71,
+  0,
+  630,
+  631,
+  5,
+  70,
+  0,
+  0,
+  631,
+  79,
+  1,
+  0,
+  0,
+  0,
+  632,
+  634,
+  5,
+  63,
+  0,
+  0,
+  633,
+  635,
+  5,
+  95,
+  0,
+  0,
+  634,
+  633,
+  1,
+  0,
+  0,
+  0,
+  634,
+  635,
+  1,
+  0,
+  0,
+  0,
+  635,
+  636,
+  1,
+  0,
+  0,
+  0,
+  636,
+  637,
+  5,
+  7,
   0,
   0,
   637,
   638,
-  5,
-  2,
-  0,
+  3,
+  152,
+  76,
   0,
   638,
   639,
   5,
-  18,
+  69,
   0,
   0,
   639,
   640,
-  5,
-  94,
-  0,
+  3,
+  142,
+  71,
   0,
   640,
   641,
   5,
-  29,
+  70,
   0,
   0,
   641,
-  642,
-  3,
-  106,
-  53,
-  0,
-  642,
-  643,
-  3,
-  10,
-  5,
-  0,
-  643,
-  644,
-  5,
-  2,
-  0,
-  0,
-  644,
-  645,
-  5,
-  20,
-  0,
-  0,
-  645,
-  646,
-  5,
-  18,
-  0,
-  0,
-  646,
-  93,
+  81,
   1,
   0,
+  0,
+  0,
+  642,
+  644,
+  5,
+  63,
+  0,
+  0,
+  643,
+  645,
+  5,
+  95,
+  0,
+  0,
+  644,
+  643,
+  1,
+  0,
+  0,
+  0,
+  644,
+  645,
+  1,
+  0,
+  0,
+  0,
+  645,
+  646,
+  1,
+  0,
+  0,
+  0,
+  646,
+  647,
+  5,
+  44,
   0,
   0,
   647,
   648,
-  5,
-  2,
-  0,
+  3,
+  138,
+  69,
   0,
   648,
   649,
-  5,
-  62,
-  0,
+  3,
+  166,
+  83,
   0,
   649,
-  650,
-  3,
-  106,
-  53,
-  0,
-  650,
-  651,
-  3,
-  10,
-  5,
-  0,
-  651,
-  652,
-  5,
-  2,
-  0,
-  0,
-  652,
-  653,
-  5,
-  20,
-  0,
-  0,
-  653,
-  654,
-  5,
-  62,
-  0,
-  0,
-  654,
-  95,
+  83,
   1,
   0,
   0,
   0,
+  650,
+  651,
+  5,
+  63,
+  0,
+  0,
+  651,
+  652,
+  5,
+  37,
+  0,
+  0,
+  652,
+  653,
+  3,
+  176,
+  88,
+  0,
+  653,
+  85,
+  1,
+  0,
+  0,
+  0,
+  654,
+  656,
+  5,
+  63,
+  0,
+  0,
   655,
-  656,
+  657,
   5,
-  2,
+  95,
+  0,
+  0,
+  656,
+  655,
+  1,
+  0,
   0,
   0,
   656,
   657,
-  5,
-  49,
+  1,
+  0,
   0,
   0,
   657,
   658,
-  3,
-  10,
-  5,
+  1,
+  0,
+  0,
   0,
   658,
   659,
   5,
-  2,
+  14,
   0,
   0,
   659,
   660,
-  5,
-  20,
-  0,
+  3,
+  176,
+  88,
   0,
   660,
   661,
   5,
-  49,
+  42,
   0,
   0,
   661,
+  87,
+  1,
+  0,
+  0,
+  0,
   662,
+  664,
   5,
-  61,
+  63,
   0,
-  0,
-  662,
-  663,
-  3,
-  106,
-  53,
   0,
   663,
-  97,
+  665,
+  5,
+  95,
+  0,
+  0,
+  664,
+  663,
   1,
   0,
   0,
   0,
   664,
   665,
-  5,
-  2,
+  1,
+  0,
   0,
   0,
   665,
   666,
-  5,
-  59,
+  1,
+  0,
   0,
   0,
   666,
   667,
-  3,
-  10,
   5,
+  15,
+  0,
   0,
   667,
-  668,
-  5,
-  2,
-  0,
-  0,
-  668,
-  669,
-  5,
-  11,
-  0,
-  0,
-  669,
-  670,
-  5,
-  94,
-  0,
-  0,
-  670,
-  671,
-  3,
-  10,
-  5,
-  0,
-  671,
-  672,
-  5,
-  2,
-  0,
-  0,
-  672,
-  673,
-  5,
-  20,
-  0,
-  0,
-  673,
-  674,
-  5,
-  59,
-  0,
-  0,
-  674,
-  99,
+  89,
   1,
   0,
+  0,
+  0,
+  668,
+  670,
+  5,
+  63,
+  0,
+  0,
+  669,
+  671,
+  5,
+  95,
+  0,
+  0,
+  670,
+  669,
+  1,
+  0,
+  0,
+  0,
+  670,
+  671,
+  1,
+  0,
+  0,
+  0,
+  671,
+  672,
+  1,
+  0,
+  0,
+  0,
+  672,
+  673,
+  5,
+  8,
+  0,
+  0,
+  673,
+  674,
+  3,
+  130,
+  65,
+  0,
+  674,
+  675,
+  5,
+  3,
   0,
   0,
   675,
   676,
-  5,
-  2,
-  0,
+  3,
+  138,
+  69,
   0,
   676,
+  91,
+  1,
+  0,
+  0,
+  0,
   677,
+  678,
   5,
-  53,
+  21,
   0,
-  0,
-  677,
-  679,
-  3,
-  106,
-  53,
   0,
   678,
+  679,
+  3,
+  176,
+  88,
+  0,
+  679,
   680,
-  3,
-  102,
-  51,
-  0,
-  679,
-  678,
-  1,
-  0,
+  5,
+  42,
   0,
   0,
   680,
-  681,
-  1,
-  0,
-  0,
-  0,
-  681,
-  679,
+  93,
   1,
   0,
   0,
   0,
   681,
   682,
-  1,
-  0,
+  5,
+  16,
   0,
   0,
   682,
   683,
-  1,
-  0,
+  5,
+  21,
   0,
   0,
   683,
-  684,
-  3,
-  104,
-  52,
-  0,
-  684,
-  685,
-  5,
-  2,
-  0,
-  0,
-  685,
-  686,
-  5,
-  20,
-  0,
-  0,
-  686,
-  687,
-  5,
-  53,
-  0,
-  0,
-  687,
-  101,
+  95,
   1,
   0,
+  0,
+  0,
+  684,
+  685,
+  5,
+  48,
+  0,
+  0,
+  685,
+  686,
+  3,
+  176,
+  88,
+  0,
+  686,
+  97,
+  1,
+  0,
+  0,
+  0,
+  687,
+  688,
+  5,
+  16,
   0,
   0,
   688,
   689,
   5,
-  2,
+  48,
   0,
   0,
   689,
-  691,
-  5,
-  10,
-  0,
-  0,
-  690,
-  692,
-  5,
-  84,
-  0,
-  0,
-  691,
-  690,
+  99,
   1,
   0,
   0,
   0,
+  690,
+  691,
+  5,
+  18,
+  0,
+  0,
   691,
   692,
-  1,
-  0,
-  0,
+  3,
+  130,
+  65,
   0,
   692,
   693,
-  1,
-  0,
+  5,
+  22,
   0,
   0,
   693,
   694,
   3,
-  126,
-  63,
+  176,
+  88,
   0,
   694,
-  695,
-  3,
-  10,
-  5,
-  0,
-  695,
-  103,
+  101,
   1,
   0,
+  0,
+  0,
+  695,
+  696,
+  5,
+  16,
   0,
   0,
   696,
   697,
   5,
-  2,
+  18,
   0,
   0,
   697,
-  698,
-  5,
-  16,
+  103,
+  1,
+  0,
   0,
   0,
   698,
   699,
-  3,
-  10,
   5,
+  46,
+  0,
   0,
   699,
   105,
@@ -19910,306 +19304,240 @@ var serializedATN2 = [
   0,
   700,
   701,
-  6,
-  53,
-  -1,
+  5,
+  16,
+  0,
   0,
   701,
-  711,
-  3,
-  108,
-  54,
+  702,
+  5,
+  46,
+  0,
   0,
   702,
-  711,
-  3,
-  32,
-  16,
-  0,
-  703,
-  711,
-  3,
-  120,
-  60,
-  0,
-  704,
-  705,
-  3,
-  154,
-  77,
-  0,
-  705,
-  706,
-  3,
-  106,
-  53,
-  8,
-  706,
-  711,
-  1,
-  0,
-  0,
-  0,
-  707,
-  711,
-  3,
-  82,
-  41,
-  0,
-  708,
-  711,
-  3,
-  36,
-  18,
-  0,
-  709,
-  711,
-  3,
-  34,
-  17,
-  0,
-  710,
-  700,
-  1,
-  0,
-  0,
-  0,
-  710,
-  702,
-  1,
-  0,
-  0,
-  0,
-  710,
-  703,
-  1,
-  0,
-  0,
-  0,
-  710,
-  704,
-  1,
-  0,
-  0,
-  0,
-  710,
-  707,
-  1,
-  0,
-  0,
-  0,
-  710,
-  708,
-  1,
-  0,
-  0,
-  0,
-  710,
-  709,
-  1,
-  0,
-  0,
-  0,
-  711,
-  735,
-  1,
-  0,
-  0,
-  0,
-  712,
-  713,
-  10,
-  7,
-  0,
-  0,
-  713,
-  714,
-  5,
-  87,
-  0,
-  0,
-  714,
-  734,
-  3,
-  106,
-  53,
-  8,
-  715,
-  716,
-  10,
-  6,
-  0,
-  0,
-  716,
-  717,
-  3,
-  156,
-  78,
-  0,
-  717,
-  718,
-  3,
-  106,
-  53,
-  7,
-  718,
-  734,
-  1,
-  0,
-  0,
-  0,
-  719,
-  720,
-  10,
-  11,
-  0,
-  0,
-  720,
-  734,
-  3,
-  116,
-  58,
-  0,
-  721,
-  722,
-  10,
-  10,
-  0,
-  0,
-  722,
-  723,
-  5,
-  80,
-  0,
-  0,
-  723,
-  734,
-  3,
-  32,
-  16,
-  0,
-  724,
-  725,
-  10,
-  9,
-  0,
-  0,
-  725,
-  726,
-  5,
-  80,
-  0,
-  0,
-  726,
-  734,
-  5,
-  94,
-  0,
-  0,
-  727,
-  728,
-  10,
-  4,
-  0,
-  0,
-  728,
-  729,
-  3,
-  110,
-  55,
-  0,
-  729,
-  730,
-  3,
-  112,
-  56,
-  0,
-  730,
-  734,
-  1,
-  0,
-  0,
-  0,
-  731,
-  732,
-  10,
-  3,
-  0,
-  0,
-  732,
-  734,
-  3,
-  84,
-  42,
-  0,
-  733,
-  712,
-  1,
-  0,
-  0,
-  0,
-  733,
-  715,
-  1,
-  0,
-  0,
-  0,
-  733,
-  719,
-  1,
-  0,
-  0,
-  0,
-  733,
-  721,
-  1,
-  0,
-  0,
-  0,
-  733,
-  724,
-  1,
-  0,
-  0,
-  0,
-  733,
-  727,
-  1,
-  0,
-  0,
-  0,
-  733,
-  731,
-  1,
-  0,
-  0,
-  0,
-  734,
-  737,
-  1,
-  0,
-  0,
-  0,
-  735,
-  733,
-  1,
-  0,
-  0,
-  0,
-  735,
-  736,
-  1,
-  0,
-  0,
-  0,
-  736,
   107,
   1,
   0,
   0,
   0,
-  737,
+  703,
+  704,
+  5,
+  11,
+  0,
+  0,
+  704,
+  706,
+  5,
+  69,
+  0,
+  0,
+  705,
+  707,
+  3,
+  146,
+  73,
+  0,
+  706,
+  705,
+  1,
+  0,
+  0,
+  0,
+  706,
+  707,
+  1,
+  0,
+  0,
+  0,
+  707,
+  708,
+  1,
+  0,
+  0,
+  0,
+  708,
+  709,
+  5,
+  70,
+  0,
+  0,
+  709,
+  109,
+  1,
+  0,
+  0,
+  0,
+  710,
+  711,
+  5,
+  16,
+  0,
+  0,
+  711,
+  712,
+  5,
+  11,
+  0,
+  0,
+  712,
+  111,
+  1,
+  0,
+  0,
+  0,
+  713,
+  715,
+  5,
+  63,
+  0,
+  0,
+  714,
+  716,
+  5,
+  34,
+  0,
+  0,
+  715,
+  714,
+  1,
+  0,
+  0,
+  0,
+  715,
+  716,
+  1,
+  0,
+  0,
+  0,
+  716,
+  717,
+  1,
+  0,
+  0,
+  0,
+  717,
+  718,
+  5,
+  36,
+  0,
+  0,
+  718,
+  719,
+  3,
+  130,
+  65,
+  0,
+  719,
+  720,
+  5,
+  3,
+  0,
+  0,
+  720,
+  721,
+  3,
+  148,
+  74,
+  0,
+  721,
+  113,
+  1,
+  0,
+  0,
+  0,
+  722,
+  723,
+  3,
+  44,
+  22,
+  0,
+  723,
+  115,
+  1,
+  0,
+  0,
+  0,
+  724,
+  725,
+  3,
+  46,
+  23,
+  0,
+  725,
+  117,
+  1,
+  0,
+  0,
+  0,
+  726,
+  727,
+  3,
+  52,
+  26,
+  0,
+  727,
+  119,
+  1,
+  0,
+  0,
+  0,
+  728,
+  729,
+  3,
+  54,
+  27,
+  0,
+  729,
+  121,
+  1,
+  0,
+  0,
+  0,
+  730,
+  731,
+  5,
+  12,
+  0,
+  0,
+  731,
+  732,
+  3,
+  134,
+  67,
+  0,
+  732,
+  733,
+  5,
+  69,
+  0,
+  0,
+  733,
+  734,
+  3,
+  146,
+  73,
+  0,
+  734,
   735,
+  5,
+  70,
+  0,
+  0,
+  735,
+  736,
+  5,
+  38,
+  0,
+  0,
+  736,
+  737,
+  3,
+  148,
+  74,
+  0,
+  737,
+  123,
   1,
   0,
   0,
@@ -20217,41 +19545,47 @@ var serializedATN2 = [
   738,
   739,
   5,
-  77,
+  16,
   0,
   0,
   739,
   740,
-  3,
-  106,
-  53,
+  5,
+  12,
+  0,
   0,
   740,
-  741,
-  5,
-  78,
-  0,
-  0,
-  741,
-  109,
+  125,
   1,
   0,
   0,
   0,
-  742,
+  741,
   743,
   5,
-  26,
+  63,
+  0,
+  0,
+  742,
+  744,
+  5,
+  95,
+  0,
+  0,
+  743,
+  742,
+  1,
+  0,
   0,
   0,
   743,
   744,
-  3,
-  106,
-  53,
+  1,
+  0,
+  0,
   0,
   744,
-  111,
+  745,
   1,
   0,
   0,
@@ -20259,887 +19593,857 @@ var serializedATN2 = [
   745,
   746,
   5,
-  19,
+  1,
   0,
   0,
   746,
   747,
   3,
-  106,
-  53,
+  44,
+  22,
   0,
   747,
-  113,
-  1,
-  0,
-  0,
-  0,
-  748,
-  749,
-  5,
-  32,
-  0,
-  0,
-  749,
-  750,
-  3,
-  40,
-  20,
-  0,
-  750,
-  751,
-  5,
-  72,
-  0,
-  0,
-  751,
-  752,
-  3,
-  106,
-  53,
-  0,
-  752,
-  115,
-  1,
-  0,
-  0,
-  0,
-  753,
-  760,
-  5,
-  75,
-  0,
-  0,
-  754,
-  761,
-  3,
-  106,
-  53,
-  0,
-  755,
-  756,
-  3,
-  106,
-  53,
-  0,
-  756,
-  757,
-  5,
-  81,
-  0,
-  0,
-  757,
-  758,
-  3,
-  106,
-  53,
-  0,
-  758,
-  761,
-  1,
-  0,
-  0,
-  0,
-  759,
-  761,
-  3,
-  118,
-  59,
-  0,
-  760,
-  754,
-  1,
-  0,
-  0,
-  0,
-  760,
-  755,
-  1,
-  0,
-  0,
-  0,
-  760,
-  759,
-  1,
-  0,
-  0,
-  0,
-  761,
-  762,
-  1,
-  0,
-  0,
-  0,
-  762,
-  763,
-  5,
-  76,
-  0,
-  0,
-  763,
-  117,
-  1,
-  0,
-  0,
-  0,
-  764,
-  765,
-  3,
-  106,
-  53,
-  0,
-  765,
-  766,
-  5,
-  79,
-  0,
-  0,
-  766,
-  767,
-  3,
-  106,
-  53,
-  0,
-  767,
-  774,
-  1,
-  0,
-  0,
-  0,
-  768,
-  769,
-  3,
-  106,
-  53,
-  0,
-  769,
-  770,
-  5,
-  79,
-  0,
-  0,
-  770,
-  774,
-  1,
-  0,
-  0,
-  0,
-  771,
-  772,
-  5,
-  79,
-  0,
-  0,
-  772,
-  774,
-  3,
-  106,
-  53,
-  0,
-  773,
-  764,
-  1,
-  0,
-  0,
-  0,
-  773,
-  768,
-  1,
-  0,
-  0,
-  0,
-  773,
-  771,
-  1,
-  0,
-  0,
-  0,
-  774,
-  119,
-  1,
-  0,
-  0,
-  0,
-  775,
-  785,
-  3,
-  124,
-  62,
-  0,
-  776,
-  778,
-  3,
-  122,
-  61,
-  0,
-  777,
-  776,
-  1,
-  0,
-  0,
-  0,
-  777,
-  778,
-  1,
-  0,
-  0,
-  0,
-  778,
-  779,
-  1,
-  0,
-  0,
-  0,
-  779,
-  785,
-  5,
-  94,
-  0,
-  0,
-  780,
-  785,
-  3,
-  128,
-  64,
-  0,
-  781,
-  785,
-  5,
-  56,
-  0,
-  0,
-  782,
-  783,
-  5,
-  16,
-  0,
-  0,
-  783,
-  785,
-  3,
-  164,
-  82,
-  0,
-  784,
-  775,
-  1,
-  0,
-  0,
-  0,
-  784,
-  777,
-  1,
-  0,
-  0,
-  0,
-  784,
-  780,
-  1,
-  0,
-  0,
-  0,
-  784,
-  781,
-  1,
-  0,
-  0,
-  0,
-  784,
-  782,
-  1,
-  0,
-  0,
-  0,
-  785,
-  121,
-  1,
-  0,
-  0,
-  0,
-  786,
-  793,
-  5,
-  48,
-  0,
-  0,
-  787,
-  793,
-  5,
-  25,
-  0,
-  0,
-  788,
-  793,
-  5,
-  34,
-  0,
-  0,
-  789,
-  790,
-  5,
-  43,
-  0,
-  0,
-  790,
-  791,
-  5,
-  80,
-  0,
-  0,
-  791,
-  793,
-  3,
-  4,
-  2,
-  0,
-  792,
-  786,
-  1,
-  0,
-  0,
-  0,
-  792,
-  787,
-  1,
-  0,
-  0,
-  0,
-  792,
-  788,
-  1,
-  0,
-  0,
-  0,
-  792,
-  789,
-  1,
-  0,
-  0,
-  0,
-  793,
-  794,
-  1,
-  0,
-  0,
-  0,
-  794,
-  795,
-  5,
-  80,
-  0,
-  0,
-  795,
-  123,
-  1,
-  0,
-  0,
-  0,
-  796,
-  799,
-  3,
-  126,
-  63,
-  0,
-  797,
-  799,
-  3,
-  130,
-  65,
-  0,
-  798,
-  796,
-  1,
-  0,
-  0,
-  0,
-  798,
-  797,
-  1,
-  0,
-  0,
-  0,
-  799,
-  125,
-  1,
-  0,
-  0,
-  0,
-  800,
-  806,
-  5,
-  65,
-  0,
-  0,
-  801,
-  806,
-  5,
-  95,
-  0,
-  0,
-  802,
-  806,
-  5,
-  96,
-  0,
-  0,
-  803,
-  806,
-  5,
-  97,
-  0,
-  0,
-  804,
-  806,
-  3,
-  64,
-  32,
-  0,
-  805,
-  800,
-  1,
-  0,
-  0,
-  0,
-  805,
-  801,
-  1,
-  0,
-  0,
-  0,
-  805,
-  802,
-  1,
-  0,
-  0,
-  0,
-  805,
-  803,
-  1,
-  0,
-  0,
-  0,
-  805,
-  804,
-  1,
-  0,
-  0,
-  0,
-  806,
   127,
   1,
   0,
   0,
   0,
-  807,
-  812,
-  3,
-  138,
-  69,
+  748,
+  750,
+  5,
+  63,
   0,
-  808,
-  812,
-  3,
-  144,
-  72,
   0,
-  809,
-  812,
-  3,
-  132,
-  66,
+  749,
+  751,
+  5,
+  95,
   0,
-  810,
-  812,
-  3,
-  146,
-  73,
   0,
-  811,
-  807,
+  750,
+  749,
   1,
   0,
   0,
   0,
-  811,
-  808,
+  750,
+  751,
   1,
   0,
   0,
   0,
-  811,
-  809,
+  751,
+  752,
   1,
   0,
   0,
   0,
-  811,
-  810,
+  752,
+  753,
+  5,
   1,
   0,
   0,
+  753,
+  754,
+  3,
+  52,
+  26,
   0,
-  812,
+  754,
   129,
   1,
   0,
   0,
   0,
-  813,
-  818,
+  755,
+  756,
   5,
-  98,
+  85,
   0,
   0,
-  814,
-  818,
-  3,
-  134,
-  67,
-  0,
-  815,
-  818,
-  3,
-  140,
-  70,
-  0,
-  816,
-  818,
-  3,
-  148,
-  74,
-  0,
-  817,
-  813,
-  1,
-  0,
-  0,
-  0,
-  817,
-  814,
-  1,
-  0,
-  0,
-  0,
-  817,
-  815,
-  1,
-  0,
-  0,
-  0,
-  817,
-  816,
-  1,
-  0,
-  0,
-  0,
-  818,
+  756,
   131,
   1,
   0,
   0,
   0,
-  819,
-  820,
-  5,
-  77,
-  0,
-  0,
-  820,
-  821,
+  757,
+  760,
   3,
-  106,
-  53,
+  172,
+  86,
   0,
-  821,
-  822,
-  5,
-  81,
-  0,
-  0,
-  822,
-  827,
+  758,
+  760,
   3,
-  106,
-  53,
+  174,
+  87,
   0,
-  823,
-  824,
-  5,
-  81,
-  0,
-  0,
-  824,
-  826,
-  3,
-  106,
-  53,
-  0,
-  825,
-  823,
+  759,
+  757,
   1,
   0,
   0,
   0,
-  826,
-  829,
+  759,
+  758,
   1,
   0,
   0,
   0,
-  827,
-  825,
-  1,
-  0,
-  0,
-  0,
-  827,
-  828,
-  1,
-  0,
-  0,
-  0,
-  828,
-  830,
-  1,
-  0,
-  0,
-  0,
-  829,
-  827,
-  1,
-  0,
-  0,
-  0,
-  830,
-  831,
-  5,
-  78,
-  0,
-  0,
-  831,
+  760,
   133,
   1,
   0,
   0,
   0,
-  832,
-  833,
+  761,
+  762,
   5,
-  77,
+  85,
   0,
   0,
-  833,
-  834,
-  3,
-  124,
-  62,
-  0,
-  834,
-  835,
-  5,
-  81,
-  0,
-  0,
-  835,
-  840,
-  3,
-  124,
-  62,
-  0,
-  836,
-  837,
-  5,
-  81,
-  0,
-  0,
-  837,
-  839,
-  3,
-  124,
-  62,
-  0,
-  838,
-  836,
-  1,
-  0,
-  0,
-  0,
-  839,
-  842,
-  1,
-  0,
-  0,
-  0,
-  840,
-  838,
-  1,
-  0,
-  0,
-  0,
-  840,
-  841,
-  1,
-  0,
-  0,
-  0,
-  841,
-  843,
-  1,
-  0,
-  0,
-  0,
-  842,
-  840,
-  1,
-  0,
-  0,
-  0,
-  843,
-  844,
-  5,
-  78,
-  0,
-  0,
-  844,
+  762,
   135,
   1,
   0,
   0,
   0,
-  845,
-  846,
+  763,
+  764,
   5,
-  77,
+  84,
   0,
   0,
-  846,
-  849,
-  5,
-  94,
-  0,
-  0,
-  847,
-  848,
-  5,
-  81,
-  0,
-  0,
-  848,
-  850,
-  5,
-  94,
-  0,
-  0,
-  849,
-  847,
-  1,
-  0,
-  0,
-  0,
-  850,
-  851,
-  1,
-  0,
-  0,
-  0,
-  851,
-  849,
-  1,
-  0,
-  0,
-  0,
-  851,
-  852,
-  1,
-  0,
-  0,
-  0,
-  852,
-  853,
-  1,
-  0,
-  0,
-  0,
-  853,
-  854,
-  5,
-  78,
-  0,
-  0,
-  854,
+  764,
   137,
   1,
   0,
   0,
   0,
-  855,
-  856,
-  5,
-  73,
+  765,
+  766,
+  7,
   0,
   0,
-  856,
-  861,
+  0,
+  766,
+  139,
+  1,
+  0,
+  0,
+  0,
+  767,
+  770,
   3,
-  106,
-  53,
+  156,
+  78,
   0,
-  857,
-  858,
+  768,
+  770,
+  3,
+  130,
+  65,
+  0,
+  769,
+  767,
+  1,
+  0,
+  0,
+  0,
+  769,
+  768,
+  1,
+  0,
+  0,
+  0,
+  770,
+  141,
+  1,
+  0,
+  0,
+  0,
+  771,
+  776,
+  3,
+  144,
+  72,
+  0,
+  772,
+  773,
   5,
+  72,
+  0,
+  0,
+  773,
+  775,
+  3,
+  144,
+  72,
+  0,
+  774,
+  772,
+  1,
+  0,
+  0,
+  0,
+  775,
+  778,
+  1,
+  0,
+  0,
+  0,
+  776,
+  774,
+  1,
+  0,
+  0,
+  0,
+  776,
+  777,
+  1,
+  0,
+  0,
+  0,
+  777,
+  143,
+  1,
+  0,
+  0,
+  0,
+  778,
+  776,
+  1,
+  0,
+  0,
+  0,
+  779,
+  782,
+  3,
+  204,
+  102,
+  0,
+  780,
+  782,
+  3,
+  176,
+  88,
+  0,
+  781,
+  779,
+  1,
+  0,
+  0,
+  0,
+  781,
+  780,
+  1,
+  0,
+  0,
+  0,
+  782,
+  145,
+  1,
+  0,
+  0,
+  0,
+  783,
+  788,
+  3,
+  198,
+  99,
+  0,
+  784,
+  785,
+  5,
+  72,
+  0,
+  0,
+  785,
+  787,
+  3,
+  198,
+  99,
+  0,
+  786,
+  784,
+  1,
+  0,
+  0,
+  0,
+  787,
+  790,
+  1,
+  0,
+  0,
+  0,
+  788,
+  786,
+  1,
+  0,
+  0,
+  0,
+  788,
+  789,
+  1,
+  0,
+  0,
+  0,
+  789,
+  147,
+  1,
+  0,
+  0,
+  0,
+  790,
+  788,
+  1,
+  0,
+  0,
+  0,
+  791,
+  795,
+  3,
+  202,
+  101,
+  0,
+  792,
+  795,
+  3,
+  138,
+  69,
+  0,
+  793,
+  795,
+  3,
+  200,
+  100,
+  0,
+  794,
+  791,
+  1,
+  0,
+  0,
+  0,
+  794,
+  792,
+  1,
+  0,
+  0,
+  0,
+  794,
+  793,
+  1,
+  0,
+  0,
+  0,
+  795,
+  149,
+  1,
+  0,
+  0,
+  0,
+  796,
+  801,
+  3,
+  130,
+  65,
+  0,
+  797,
+  798,
+  5,
+  72,
+  0,
+  0,
+  798,
+  800,
+  3,
+  130,
+  65,
+  0,
+  799,
+  797,
+  1,
+  0,
+  0,
+  0,
+  800,
+  803,
+  1,
+  0,
+  0,
+  0,
+  801,
+  799,
+  1,
+  0,
+  0,
+  0,
+  801,
+  802,
+  1,
+  0,
+  0,
+  0,
+  802,
+  151,
+  1,
+  0,
+  0,
+  0,
+  803,
+  801,
+  1,
+  0,
+  0,
+  0,
+  804,
+  805,
+  3,
+  168,
+  84,
+  0,
+  805,
+  806,
+  5,
+  71,
+  0,
+  0,
+  806,
+  808,
+  1,
+  0,
+  0,
+  0,
+  807,
+  804,
+  1,
+  0,
+  0,
+  0,
+  807,
+  808,
+  1,
+  0,
+  0,
+  0,
+  808,
+  812,
+  1,
+  0,
+  0,
+  0,
+  809,
+  810,
+  3,
+  172,
+  86,
+  0,
+  810,
+  811,
+  5,
+  71,
+  0,
+  0,
+  811,
+  813,
+  1,
+  0,
+  0,
+  0,
+  812,
+  809,
+  1,
+  0,
+  0,
+  0,
+  812,
+  813,
+  1,
+  0,
+  0,
+  0,
+  813,
+  814,
+  1,
+  0,
+  0,
+  0,
+  814,
+  815,
+  3,
+  134,
+  67,
+  0,
+  815,
+  153,
+  1,
+  0,
+  0,
+  0,
+  816,
+  817,
+  3,
+  176,
+  88,
+  0,
+  817,
+  155,
+  1,
+  0,
+  0,
+  0,
+  818,
+  825,
+  5,
+  55,
+  0,
+  0,
+  819,
+  825,
+  3,
+  158,
+  79,
+  0,
+  820,
+  825,
+  3,
+  160,
+  80,
+  0,
+  821,
+  825,
+  3,
+  166,
+  83,
+  0,
+  822,
+  825,
+  3,
+  162,
   81,
   0,
+  823,
+  825,
+  3,
+  164,
+  82,
+  0,
+  824,
+  818,
+  1,
+  0,
+  0,
+  0,
+  824,
+  819,
+  1,
+  0,
+  0,
+  0,
+  824,
+  820,
+  1,
+  0,
+  0,
+  0,
+  824,
+  821,
+  1,
+  0,
+  0,
+  0,
+  824,
+  822,
+  1,
+  0,
+  0,
+  0,
+  824,
+  823,
+  1,
+  0,
+  0,
+  0,
+  825,
+  157,
+  1,
+  0,
+  0,
+  0,
+  826,
+  827,
+  7,
+  1,
+  0,
+  0,
+  827,
+  159,
+  1,
+  0,
+  0,
+  0,
+  828,
+  829,
+  5,
+  90,
+  0,
+  0,
+  829,
+  161,
+  1,
+  0,
+  0,
+  0,
+  830,
+  831,
+  3,
+  138,
+  69,
+  0,
+  831,
+  832,
+  5,
+  71,
+  0,
+  0,
+  832,
+  833,
+  3,
+  130,
+  65,
+  0,
+  833,
+  163,
+  1,
+  0,
+  0,
+  0,
+  834,
+  835,
+  1,
+  0,
+  0,
+  0,
+  835,
+  165,
+  1,
+  0,
+  0,
+  0,
+  836,
+  837,
+  7,
+  2,
+  0,
+  0,
+  837,
+  167,
+  1,
+  0,
+  0,
+  0,
+  838,
+  839,
+  5,
+  43,
+  0,
+  0,
+  839,
+  169,
+  1,
+  0,
+  0,
+  0,
+  840,
+  841,
+  5,
+  67,
+  0,
+  0,
+  841,
+  842,
+  3,
+  176,
+  88,
+  0,
+  842,
+  843,
+  5,
+  68,
+  0,
+  0,
+  843,
+  171,
+  1,
+  0,
+  0,
+  0,
+  844,
+  848,
+  3,
+  130,
+  65,
+  0,
+  845,
+  847,
+  3,
+  170,
+  85,
+  0,
+  846,
+  845,
+  1,
+  0,
+  0,
+  0,
+  847,
+  850,
+  1,
+  0,
+  0,
+  0,
+  848,
+  846,
+  1,
+  0,
+  0,
+  0,
+  848,
+  849,
+  1,
+  0,
+  0,
+  0,
+  849,
+  173,
+  1,
+  0,
+  0,
+  0,
+  850,
+  848,
+  1,
+  0,
+  0,
+  0,
+  851,
+  852,
+  3,
+  168,
+  84,
+  0,
+  852,
+  853,
+  5,
+  71,
+  0,
+  0,
+  853,
+  854,
+  3,
+  172,
+  86,
+  0,
+  854,
+  175,
+  1,
+  0,
+  0,
+  0,
+  855,
+  861,
+  3,
+  196,
+  98,
+  0,
+  856,
+  861,
+  3,
+  194,
+  97,
+  0,
+  857,
+  861,
+  3,
+  184,
+  92,
   0,
   858,
-  860,
+  861,
   3,
-  106,
-  53,
+  178,
+  89,
   0,
   859,
+  861,
+  3,
+  186,
+  93,
+  0,
+  860,
+  855,
+  1,
+  0,
+  0,
+  0,
+  860,
+  856,
+  1,
+  0,
+  0,
+  0,
+  860,
   857,
   1,
   0,
   0,
   0,
   860,
-  863,
+  858,
   1,
   0,
   0,
   0,
-  861,
+  860,
   859,
   1,
   0,
   0,
   0,
   861,
-  862,
+  177,
   1,
   0,
   0,
   0,
   862,
-  864,
-  1,
-  0,
-  0,
+  865,
+  3,
+  168,
+  84,
   0,
   863,
-  861,
+  865,
+  3,
+  180,
+  90,
+  0,
+  864,
+  862,
   1,
   0,
   0,
   0,
   864,
-  865,
-  5,
-  74,
+  863,
+  1,
   0,
   0,
+  0,
   865,
-  139,
+  870,
   1,
   0,
   0,
@@ -21147,26 +20451,26 @@ var serializedATN2 = [
   866,
   867,
   5,
-  73,
+  71,
   0,
   0,
   867,
-  872,
+  869,
   3,
-  124,
-  62,
+  180,
+  90,
   0,
   868,
-  869,
-  5,
-  81,
+  866,
+  1,
   0,
   0,
+  0,
   869,
-  871,
-  3,
-  124,
-  62,
+  872,
+  1,
+  0,
+  0,
   0,
   870,
   868,
@@ -21174,8 +20478,14 @@ var serializedATN2 = [
   0,
   0,
   0,
+  870,
   871,
-  874,
+  1,
+  0,
+  0,
+  0,
+  871,
+  179,
   1,
   0,
   0,
@@ -21186,221 +20496,239 @@ var serializedATN2 = [
   0,
   0,
   0,
-  872,
   873,
-  1,
-  0,
-  0,
-  0,
-  873,
-  875,
-  1,
-  0,
-  0,
+  880,
+  3,
+  130,
+  65,
   0,
   874,
-  872,
-  1,
-  0,
-  0,
+  880,
+  3,
+  190,
+  95,
   0,
   875,
+  880,
+  3,
+  182,
+  91,
+  0,
   876,
-  5,
-  74,
-  0,
-  0,
-  876,
-  141,
-  1,
-  0,
-  0,
+  880,
+  3,
+  188,
+  94,
   0,
   877,
-  878,
-  5,
-  73,
-  0,
-  0,
-  878,
-  879,
-  5,
-  94,
-  0,
-  0,
-  879,
   880,
-  5,
-  82,
+  3,
+  156,
+  78,
+  0,
+  878,
+  880,
+  3,
+  206,
+  103,
+  0,
+  879,
+  873,
+  1,
+  0,
+  0,
+  0,
+  879,
+  874,
+  1,
+  0,
+  0,
+  0,
+  879,
+  875,
+  1,
+  0,
+  0,
+  0,
+  879,
+  876,
+  1,
+  0,
+  0,
+  0,
+  879,
+  877,
+  1,
+  0,
+  0,
+  0,
+  879,
+  878,
+  1,
+  0,
   0,
   0,
   880,
+  884,
+  1,
+  0,
+  0,
+  0,
   881,
-  5,
-  94,
+  883,
+  3,
+  170,
+  85,
   0,
-  0,
+  882,
   881,
-  882,
-  5,
-  74,
-  0,
-  0,
-  882,
-  143,
   1,
   0,
   0,
   0,
   883,
+  886,
+  1,
+  0,
+  0,
+  0,
   884,
-  5,
-  67,
+  882,
+  1,
+  0,
   0,
   0,
   884,
   885,
+  1,
+  0,
+  0,
+  0,
+  885,
+  181,
+  1,
+  0,
+  0,
+  0,
+  886,
+  884,
+  1,
+  0,
+  0,
+  0,
+  887,
+  888,
+  5,
+  69,
+  0,
+  0,
+  888,
+  889,
   3,
-  168,
-  84,
-  0,
-  885,
-  887,
-  5,
-  77,
-  0,
-  0,
-  886,
-  888,
-  5,
-  95,
-  0,
-  0,
-  887,
-  886,
-  1,
-  0,
-  0,
-  0,
-  887,
-  888,
-  1,
-  0,
-  0,
-  0,
-  888,
-  889,
-  1,
-  0,
-  0,
+  176,
+  88,
   0,
   889,
   890,
   5,
-  78,
+  70,
   0,
   0,
   890,
-  145,
+  183,
   1,
   0,
   0,
   0,
   891,
   892,
-  5,
-  73,
+  7,
+  3,
   0,
   0,
   892,
-  897,
+  893,
   3,
-  150,
-  75,
+  178,
+  89,
   0,
   893,
-  894,
-  5,
-  81,
+  185,
+  1,
   0,
   0,
+  0,
   894,
+  895,
+  3,
+  178,
+  89,
+  0,
+  895,
   896,
   3,
-  150,
-  75,
-  0,
-  895,
-  893,
-  1,
-  0,
-  0,
+  192,
+  96,
   0,
   896,
-  899,
-  1,
-  0,
-  0,
+  897,
+  3,
+  176,
+  88,
   0,
   897,
-  895,
-  1,
-  0,
-  0,
-  0,
-  897,
-  898,
+  187,
   1,
   0,
   0,
   0,
   898,
-  900,
-  1,
-  0,
+  899,
+  5,
+  69,
   0,
   0,
   899,
-  897,
-  1,
-  0,
-  0,
+  900,
+  3,
+  176,
+  88,
   0,
   900,
   901,
   5,
-  74,
+  72,
   0,
   0,
   901,
-  147,
-  1,
-  0,
-  0,
+  906,
+  3,
+  176,
+  88,
   0,
   902,
   903,
   5,
-  73,
+  72,
   0,
   0,
   903,
-  908,
+  905,
   3,
-  152,
-  76,
+  176,
+  88,
   0,
   904,
-  905,
-  5,
-  81,
+  902,
+  1,
   0,
   0,
+  0,
   905,
-  907,
-  3,
-  152,
-  76,
+  908,
+  1,
+  0,
+  0,
   0,
   906,
   904,
@@ -21408,8 +20736,14 @@ var serializedATN2 = [
   0,
   0,
   0,
+  906,
   907,
-  910,
+  1,
+  0,
+  0,
+  0,
+  907,
+  909,
   1,
   0,
   0,
@@ -21420,323 +20754,281 @@ var serializedATN2 = [
   0,
   0,
   0,
-  908,
   909,
-  1,
-  0,
-  0,
-  0,
-  909,
-  911,
-  1,
-  0,
+  910,
+  5,
+  70,
   0,
   0,
   910,
-  908,
+  189,
   1,
   0,
   0,
   0,
   911,
   912,
-  5,
-  74,
-  0,
+  3,
+  134,
+  67,
   0,
   912,
-  149,
-  1,
-  0,
+  913,
+  5,
+  69,
   0,
   0,
   913,
   914,
   3,
-  106,
-  53,
+  142,
+  71,
   0,
   914,
   915,
   5,
-  82,
+  70,
   0,
   0,
   915,
-  916,
-  3,
-  106,
-  53,
-  0,
-  916,
-  151,
+  191,
   1,
   0,
   0,
   0,
+  916,
   917,
-  918,
-  3,
-  124,
-  62,
-  0,
-  918,
-  919,
-  5,
-  82,
-  0,
-  0,
-  919,
-  920,
-  3,
-  124,
-  62,
-  0,
-  920,
-  153,
-  1,
-  0,
-  0,
-  0,
-  921,
-  922,
-  7,
-  2,
-  0,
-  0,
-  922,
-  155,
-  1,
-  0,
-  0,
-  0,
-  923,
-  927,
-  3,
-  158,
-  79,
-  0,
-  924,
-  927,
-  3,
-  160,
-  80,
-  0,
-  925,
-  927,
-  3,
-  162,
-  81,
-  0,
-  926,
-  923,
-  1,
-  0,
-  0,
-  0,
-  926,
-  924,
-  1,
-  0,
-  0,
-  0,
-  926,
-  925,
-  1,
-  0,
-  0,
-  0,
-  927,
-  157,
-  1,
-  0,
-  0,
-  0,
-  928,
-  929,
-  7,
-  3,
-  0,
-  0,
-  929,
-  159,
-  1,
-  0,
-  0,
-  0,
-  930,
-  931,
   7,
   4,
   0,
   0,
-  931,
-  161,
+  917,
+  193,
   1,
   0,
+  0,
+  0,
+  918,
+  919,
+  5,
+  83,
+  0,
+  0,
+  919,
+  920,
+  5,
+  69,
+  0,
+  0,
+  920,
+  921,
+  3,
+  176,
+  88,
+  0,
+  921,
+  922,
+  5,
+  72,
+  0,
+  0,
+  922,
+  923,
+  3,
+  176,
+  88,
+  0,
+  923,
+  924,
+  5,
+  72,
+  0,
+  0,
+  924,
+  925,
+  3,
+  176,
+  88,
+  0,
+  925,
+  926,
+  5,
+  70,
+  0,
+  0,
+  926,
+  195,
+  1,
+  0,
+  0,
+  0,
+  927,
+  928,
+  5,
+  29,
+  0,
+  0,
+  928,
+  929,
+  3,
+  148,
+  74,
+  0,
+  929,
+  930,
+  5,
+  69,
+  0,
+  0,
+  930,
+  931,
+  3,
+  142,
+  71,
+  0,
+  931,
+  932,
+  5,
+  70,
   0,
   0,
   932,
-  933,
-  7,
-  5,
-  0,
-  0,
-  933,
-  163,
+  197,
   1,
   0,
   0,
   0,
+  933,
   934,
-  941,
+  3,
+  130,
+  65,
+  0,
+  934,
+  935,
   5,
-  66,
+  3,
   0,
   0,
   935,
-  941,
-  5,
-  93,
-  0,
+  936,
+  3,
+  148,
+  74,
   0,
   936,
+  199,
+  1,
+  0,
+  0,
+  0,
   937,
+  938,
+  3,
+  138,
+  69,
+  0,
+  938,
+  939,
   5,
-  93,
+  78,
   0,
-  0,
-  937,
-  941,
-  3,
-  168,
-  84,
-  0,
-  938,
-  941,
-  3,
-  170,
-  85,
   0,
   939,
-  941,
+  940,
+  5,
+  31,
+  0,
+  0,
+  940,
+  945,
   3,
-  174,
-  87,
-  0,
-  940,
-  934,
-  1,
-  0,
-  0,
-  0,
-  940,
-  935,
-  1,
-  0,
-  0,
-  0,
-  940,
-  936,
-  1,
-  0,
-  0,
-  0,
-  940,
-  938,
-  1,
-  0,
-  0,
-  0,
-  940,
-  939,
-  1,
-  0,
-  0,
+  148,
+  74,
   0,
   941,
-  165,
-  1,
-  0,
+  942,
+  5,
+  72,
   0,
   0,
   942,
-  943,
-  7,
-  6,
-  0,
-  0,
-  943,
   944,
   3,
-  168,
-  84,
+  148,
+  74,
+  0,
+  943,
+  941,
+  1,
+  0,
+  0,
   0,
   944,
-  167,
+  947,
+  1,
+  0,
+  0,
+  0,
+  945,
+  943,
   1,
   0,
   0,
   0,
   945,
   946,
-  5,
-  88,
+  1,
+  0,
   0,
   0,
   946,
-  947,
-  5,
-  39,
-  0,
-  0,
-  947,
-  952,
-  3,
-  164,
-  82,
-  0,
-  948,
-  949,
-  5,
-  81,
-  0,
-  0,
-  949,
-  951,
-  3,
-  164,
-  82,
-  0,
-  950,
   948,
   1,
   0,
+  0,
+  0,
+  947,
+  945,
+  1,
+  0,
+  0,
+  0,
+  948,
+  949,
+  5,
+  79,
+  0,
+  0,
+  949,
+  201,
+  1,
+  0,
+  0,
+  0,
+  950,
+  951,
+  5,
+  69,
   0,
   0,
   951,
   954,
-  1,
-  0,
-  0,
-  0,
-  952,
-  950,
-  1,
-  0,
-  0,
+  3,
+  148,
+  74,
   0,
   952,
   953,
-  1,
-  0,
+  5,
+  72,
   0,
   0,
   953,
   955,
-  1,
-  0,
-  0,
+  3,
+  148,
+  74,
   0,
   954,
   952,
@@ -21746,60 +21038,66 @@ var serializedATN2 = [
   0,
   955,
   956,
-  5,
-  89,
+  1,
+  0,
   0,
   0,
   956,
-  169,
+  954,
+  1,
+  0,
+  0,
+  0,
+  956,
+  957,
   1,
   0,
   0,
   0,
   957,
   958,
-  5,
-  77,
+  1,
+  0,
   0,
   0,
   958,
-  961,
-  3,
-  164,
-  82,
-  0,
   959,
-  960,
   5,
-  81,
+  70,
+  0,
+  0,
+  959,
+  203,
+  1,
+  0,
   0,
   0,
   960,
-  962,
-  3,
-  164,
-  82,
+  963,
+  5,
+  25,
+  0,
   0,
   961,
-  959,
-  1,
-  0,
-  0,
-  0,
-  962,
-  963,
-  1,
-  0,
-  0,
-  0,
-  963,
-  961,
-  1,
-  0,
-  0,
-  0,
-  963,
   964,
+  3,
+  146,
+  73,
+  0,
+  962,
+  964,
+  3,
+  142,
+  71,
+  0,
+  963,
+  961,
+  1,
+  0,
+  0,
+  0,
+  963,
+  962,
   1,
   0,
   0,
@@ -21813,44 +21111,44 @@ var serializedATN2 = [
   965,
   966,
   5,
-  78,
+  58,
   0,
   0,
   966,
-  171,
-  1,
-  0,
-  0,
+  967,
+  3,
+  176,
+  88,
   0,
   967,
-  972,
-  3,
-  164,
-  82,
+  205,
+  1,
+  0,
+  0,
   0,
   968,
   969,
   5,
-  81,
+  67,
   0,
   0,
   969,
-  971,
+  974,
   3,
-  164,
-  82,
+  176,
+  88,
   0,
   970,
-  968,
-  1,
-  0,
+  971,
+  5,
+  72,
   0,
   0,
   971,
-  974,
-  1,
-  0,
-  0,
+  973,
+  3,
+  176,
+  88,
   0,
   972,
   970,
@@ -21858,154 +21156,269 @@ var serializedATN2 = [
   0,
   0,
   0,
-  972,
   973,
-  1,
-  0,
-  0,
-  0,
-  973,
-  173,
+  976,
   1,
   0,
   0,
   0,
   974,
   972,
+  1,
+  0,
+  0,
+  0,
+  974,
+  975,
   1,
   0,
   0,
   0,
   975,
-  976,
-  5,
+  977,
   1,
   0,
   0,
+  0,
   976,
-  977,
-  5,
-  88,
+  974,
+  1,
+  0,
   0,
   0,
   977,
   978,
   5,
-  39,
+  68,
   0,
   0,
   978,
-  979,
-  3,
-  172,
-  86,
+  207,
+  1,
+  0,
+  0,
   0,
   979,
   980,
   5,
-  72,
+  61,
   0,
   0,
   980,
-  981,
-  3,
-  164,
+  984,
+  5,
   82,
   0,
+  0,
   981,
-  982,
-  5,
-  89,
+  983,
+  3,
+  210,
+  105,
   0,
-  0,
   982,
-  175,
+  981,
   1,
   0,
   0,
   0,
-  81,
-  184,
-  186,
-  192,
-  205,
-  229,
-  231,
-  237,
-  239,
-  255,
-  264,
+  983,
+  986,
+  1,
+  0,
+  0,
+  0,
+  984,
+  982,
+  1,
+  0,
+  0,
+  0,
+  984,
+  985,
+  1,
+  0,
+  0,
+  0,
+  985,
+  987,
+  1,
+  0,
+  0,
+  0,
+  986,
+  984,
+  1,
+  0,
+  0,
+  0,
+  987,
+  988,
+  5,
+  82,
+  0,
+  0,
+  988,
+  209,
+  1,
+  0,
+  0,
+  0,
+  989,
+  992,
+  3,
+  212,
+  106,
+  0,
+  990,
+  992,
+  3,
+  214,
+  107,
+  0,
+  991,
+  989,
+  1,
+  0,
+  0,
+  0,
+  991,
+  990,
+  1,
+  0,
+  0,
+  0,
+  992,
+  211,
+  1,
+  0,
+  0,
+  0,
+  993,
+  994,
+  5,
+  94,
+  0,
+  0,
+  994,
+  213,
+  1,
+  0,
+  0,
+  0,
+  995,
+  996,
+  5,
+  65,
+  0,
+  0,
+  996,
+  997,
+  3,
+  176,
+  88,
+  0,
+  997,
+  998,
+  5,
+  66,
+  0,
+  0,
+  998,
+  215,
+  1,
+  0,
+  0,
+  0,
+  88,
+  217,
+  222,
+  228,
+  242,
+  246,
+  252,
+  260,
+  265,
+  267,
+  276,
+  283,
   285,
-  289,
   293,
-  296,
-  301,
-  306,
-  311,
-  320,
+  299,
+  307,
+  316,
+  318,
   326,
-  330,
-  337,
-  351,
-  360,
+  336,
+  338,
+  358,
+  362,
   368,
-  375,
-  388,
-  397,
-  410,
-  421,
-  438,
+  370,
+  378,
+  384,
+  392,
+  398,
+  406,
+  412,
+  419,
+  430,
+  436,
   444,
-  451,
-  453,
-  465,
-  478,
+  447,
+  452,
+  454,
+  463,
+  466,
+  472,
   480,
-  492,
+  483,
+  489,
   498,
-  500,
-  513,
-  522,
-  524,
-  537,
-  541,
-  551,
-  563,
+  509,
+  528,
+  539,
+  549,
+  557,
   567,
-  571,
-  580,
-  592,
-  606,
+  575,
+  584,
+  593,
+  602,
   612,
-  627,
-  630,
-  681,
-  691,
-  710,
-  733,
-  735,
-  760,
-  773,
-  777,
-  784,
-  792,
-  798,
-  805,
-  811,
-  817,
-  827,
-  840,
-  851,
-  861,
-  872,
-  887,
-  897,
-  908,
-  926,
-  940,
-  952,
+  621,
+  634,
+  644,
+  656,
+  664,
+  670,
+  706,
+  715,
+  743,
+  750,
+  759,
+  769,
+  776,
+  781,
+  788,
+  794,
+  801,
+  807,
+  812,
+  824,
+  848,
+  860,
+  864,
+  870,
+  879,
+  884,
+  906,
+  945,
+  956,
   963,
-  972
+  974,
+  984,
+  991
 ];
 var atn2 = new Ln.atn.ATNDeserializer().deserialize(serializedATN2);
 var decisionsToDFA2 = atn2.decisionToState.map((ds, index) => new Ln.dfa.DFA(ds, index));
@@ -22014,85 +21427,76 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   static grammarFileName = "Elan.g4";
   static literalNames = [
     null,
-    "'Func'",
-    null,
-    null,
-    "'#'",
     "'abstract'",
     "'and'",
     "'as'",
     "'assert'",
+    "'assign'",
+    "'be'",
     "'call'",
-    "'case'",
     "'catch'",
     "'class'",
     "'constant'",
     "'constructor'",
-    "'curry'",
-    "'default'",
+    "'copy'",
     "'div'",
-    "'each'",
+    "'elif'",
     "'else'",
     "'end'",
     "'enum'",
     "'for'",
     "'from'",
     "'function'",
-    "'global'",
     "'if'",
-    "'immutable'",
-    "'import'",
     "'in'",
     "'inherits'",
     "'input'",
     "'lambda'",
     "'let'",
-    "'library'",
     "'main'",
     "'mod'",
     "'new'",
     "'not'",
     "'of'",
-    "'is'",
     "'or'",
-    "'out'",
-    "'package'",
-    "'partial'",
     "'print'",
     "'private'",
     "'procedure'",
     "'property'",
-    "'repeat'",
     "'return'",
+    "'returns'",
     "'set'",
     "'step'",
-    "'switch'",
-    "'system'",
     "'test'",
+    "'then'",
     "'this'",
     "'throw'",
     "'to'",
     "'try'",
-    "'var'",
-    "'when'",
+    "'variable'",
     "'while'",
-    "'with'",
-    "'xor'",
-    null,
-    null,
-    "'Array'",
+    "'Int'",
+    "'Float'",
+    "'Boolean'",
+    "'String'",
     "'List'",
-    "'Dictionary'",
-    "'Iter'",
+    null,
+    null,
+    "'is'",
+    "'isnt'",
+    "'=>'",
+    "'0b'",
+    "'0x'",
+    "'$'",
+    null,
+    null,
     "'='",
-    "'->'",
     "'{'",
     "'}'",
     "'['",
     "']'",
     "'('",
     "')'",
-    "'..'",
     "'.'",
     "','",
     "':'",
@@ -22100,93 +21504,97 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     "'-'",
     "'*'",
     "'/'",
-    "'^'",
     "'<'",
     "'>'",
     "'<='",
-    "'>='"
+    "'>='",
+    `'"'`,
+    "'if_'",
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    null,
+    "'[ghosted]'"
   ];
   static symbolicNames = [
     null,
-    null,
-    "NL",
-    "SINGLE_LINE_COMMENT",
-    "COMMENT_MARKER",
     "ABSTRACT",
     "AND",
     "AS",
     "ASSERT",
+    "ASSIGN",
+    "BE",
     "CALL",
-    "CASE",
     "CATCH",
     "CLASS",
     "CONSTANT",
     "CONSTRUCTOR",
-    "CURRY",
-    "DEFAULT",
+    "COPY",
     "DIV",
-    "EACH",
+    "ELIF",
     "ELSE",
     "END",
     "ENUM",
     "FOR",
     "FROM",
     "FUNCTION",
-    "GLOBAL",
     "IF",
-    "IMMUTABLE",
-    "IMPORT",
     "IN",
     "INHERITS",
     "INPUT",
     "LAMBDA",
     "LET",
-    "LIBRARY",
     "MAIN",
     "MOD",
     "NEW",
     "NOT",
     "OF",
-    "IS",
     "OR",
-    "OUT",
-    "PACKAGE",
-    "PARTIAL",
     "PRINT",
     "PRIVATE",
     "PROCEDURE",
     "PROPERTY",
-    "REPEAT",
     "RETURN",
+    "RETURNS",
     "SET",
     "STEP",
-    "SWITCH",
-    "SYSTEM",
     "TEST",
+    "THEN",
     "THIS",
     "THROW",
     "TO",
     "TRY",
-    "VAR",
-    "WHEN",
+    "VARIABLE",
     "WHILE",
-    "WITH",
-    "XOR",
-    "BOOL_VALUE",
-    "VALUE_TYPE",
-    "ARRAY",
-    "LIST",
-    "DICTIONARY",
-    "ITERABLE",
-    "EQUALS",
+    "INT_NAME",
+    "FLOAT_NAME",
+    "BOOL_NAME",
+    "STRING_NAME",
+    "LIST_NAME",
+    "COMMENT",
+    "LIT_BOOLEAN",
+    "EQUAL",
+    "NOT_EQUAL",
     "ARROW",
+    "BINARY_PREFIX",
+    "HEX_PREFIX",
+    "INTERPOLATED_STRING_PREFIX",
+    "WS",
+    "NL",
+    "SINGLE_EQUALS",
     "OPEN_BRACE",
     "CLOSE_BRACE",
     "OPEN_SQ_BRACKET",
     "CLOSE_SQ_BRACKET",
     "OPEN_BRACKET",
     "CLOSE_BRACKET",
-    "DOUBLE_DOT",
     "DOT",
     "COMMA",
     "COLON",
@@ -22194,111 +21602,134 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     "MINUS",
     "MULT",
     "DIVIDE",
-    "POWER",
     "LT",
     "GT",
     "LE",
     "GE",
-    "IS_NOT",
-    "TYPENAME",
-    "IDENTIFIER",
+    "DOUBLE_QUOTES",
+    "IF_",
+    "NAME_STARTING_TEST_",
+    "NAME_STARTING_LC",
+    "NAME_STARTING_UC",
+    "LITERAL_BINARY",
+    "LITERAL_HEX",
     "LITERAL_INTEGER",
     "LITERAL_FLOAT",
-    "LITERAL_CHAR",
+    "INTERPOLATED_STRING",
     "LITERAL_STRING",
     "WHITESPACES",
-    "NEWLINE",
-    "WS"
+    "TEXT",
+    "GHOSTED"
   ];
   static ruleNames = [
     "file",
-    "importStatement",
-    "namespace",
+    "global",
     "main",
+    "function",
     "test",
-    "statementBlock",
-    "testStatements",
-    "assert",
-    "callStatement",
-    "throwException",
-    "printStatement",
-    "varDef",
-    "assignment",
-    "inlineAsignment",
-    "assignableValue",
-    "procedureCall",
-    "functionCall",
-    "systemCall",
-    "input",
-    "argument",
-    "argumentList",
-    "procedureDef",
-    "procedureSignature",
-    "procedureParameterList",
-    "parameterList",
-    "parameter",
-    "procedureParameter",
-    "functionDef",
-    "functionSignature",
-    "constantDef",
-    "enumDef",
-    "enumType",
-    "enumValue",
-    "classDef",
-    "mutableClass",
+    "procedure",
+    "concreteClass",
     "abstractClass",
-    "immutableClass",
-    "abstractImmutableClass",
-    "inherits",
-    "property",
+    "commentGlobal",
+    "ordinaryStatement",
+    "ifStatement",
+    "whileLoop",
+    "forLoop",
+    "tryStatement",
+    "commentStatement",
     "econstructor",
-    "newInstance",
-    "withClause",
-    "proceduralControlFlow",
-    "if",
-    "for",
-    "each",
-    "while",
-    "repeat",
-    "try",
-    "switch",
-    "case",
-    "caseDefault",
-    "expression",
-    "bracketedExpression",
-    "ifExpression",
-    "elseExpression",
-    "lambda",
-    "index",
-    "range",
-    "value",
-    "scopeQualifier",
-    "literal",
-    "literalValue",
-    "dataStructureDefinition",
-    "literalDataStructure",
-    "tupleDefinition",
-    "literalTuple",
-    "deconstructedTuple",
-    "listDefinition",
-    "literalList",
-    "listDecomp",
-    "arrayDefinition",
-    "dictionaryDefinition",
-    "literalDictionary",
-    "kvp",
-    "literalKvp",
-    "unaryOp",
-    "binaryOp",
-    "arithmeticOp",
-    "logicalOp",
-    "conditionalOp",
+    "functionMethod",
+    "procedureMethod",
+    "copyMethod",
+    "commentMember",
+    "mainTop",
+    "mainBottom",
+    "functionTop",
+    "functionBottom",
+    "testTop",
+    "testBottom",
+    "procedureTop",
+    "procedureBottom",
+    "concreteClassTop",
+    "concreteClassBottom",
+    "abstractClassTop",
+    "abstractClassBottom",
+    "constant",
+    "enum",
+    "assert",
+    "letStatement",
+    "print",
+    "variableDefinition",
+    "assignment",
+    "inputStatement",
+    "procedureCall",
+    "throwStatement",
+    "returnStatement",
+    "elseIfClause",
+    "elseClause",
+    "catchStatement",
+    "ifStatementTop",
+    "ifStatementBottom",
+    "whileLoopTop",
+    "whileLoopBottom",
+    "forLoopTop",
+    "forLoopBottom",
+    "tryStatementTop",
+    "tryStatementBottom",
+    "constructorTop",
+    "constructorBottom",
+    "property",
+    "functionMethodTop",
+    "functionMethodBottom",
+    "procedureMethodTop",
+    "procedureMethodBottom",
+    "copyMethodTop",
+    "copyMethodBottom",
+    "abstractFunction",
+    "abstractProcedure",
+    "identifier",
+    "assignable",
+    "methodName",
+    "testName",
+    "typeName",
+    "constantValue",
+    "argList",
+    "argument",
+    "paramsList",
     "type",
-    "dataStructureType",
-    "genericSpecifier",
-    "tupleType",
-    "typeList",
-    "funcType"
+    "enumValuesList",
+    "procRef",
+    "assertActual",
+    "litValue",
+    "litInt",
+    "litFloat",
+    "enumValue",
+    "litRegExp",
+    "litString",
+    "thisInstance",
+    "index",
+    "identifierWithOptIndexes",
+    "propertyRef",
+    "expression",
+    "term",
+    "chainable",
+    "bracketedExpression",
+    "unaryExpression",
+    "binaryExpression",
+    "tuple",
+    "methodCall",
+    "binaryOperator",
+    "ifExpression",
+    "newInstance",
+    "paramDef",
+    "typeGeneric",
+    "typeTuple",
+    "lambda",
+    "list",
+    "interpolatedString",
+    "segment",
+    "textSegment",
+    "fieldSegment"
   ];
   constructor(input) {
     super(input);
@@ -22307,98 +21738,42 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     this.literalNames = _ElanParser.literalNames;
     this.symbolicNames = _ElanParser.symbolicNames;
   }
-  sempred(localctx, ruleIndex, predIndex) {
-    switch (ruleIndex) {
-      case 53:
-        return this.expression_sempred(localctx, predIndex);
-      default:
-        throw "No predicate with index:" + ruleIndex;
-    }
-  }
-  expression_sempred(localctx, predIndex) {
-    switch (predIndex) {
-      case 0:
-        return this.precpred(this._ctx, 7);
-      case 1:
-        return this.precpred(this._ctx, 6);
-      case 2:
-        return this.precpred(this._ctx, 11);
-      case 3:
-        return this.precpred(this._ctx, 10);
-      case 4:
-        return this.precpred(this._ctx, 9);
-      case 5:
-        return this.precpred(this._ctx, 4);
-      case 6:
-        return this.precpred(this._ctx, 3);
-      default:
-        throw "No predicate with index:" + predIndex;
-    }
-  }
   file() {
     let localctx = new FileContext(this, this._ctx, this.state);
     this.enterRule(localctx, 0, _ElanParser.RULE_file);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 186;
+      this.state = 217;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 54) {
+        this.state = 216;
+        this.match(_ElanParser.COMMENT);
+      }
+      this.state = 222;
       this._errHandler.sync(this);
       var _alt = this._interp.adaptivePredict(this._input, 1, this._ctx);
       while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
         if (_alt === 1) {
-          this.state = 184;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 0, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 176;
-              this.main();
-              break;
-            case 2:
-              this.state = 177;
-              this.procedureDef();
-              break;
-            case 3:
-              this.state = 178;
-              this.functionDef();
-              break;
-            case 4:
-              this.state = 179;
-              this.constantDef();
-              break;
-            case 5:
-              this.state = 180;
-              this.enumDef();
-              break;
-            case 6:
-              this.state = 181;
-              this.classDef();
-              break;
-            case 7:
-              this.state = 182;
-              this.test();
-              break;
-            case 8:
-              this.state = 183;
-              this.importStatement();
-              break;
-          }
+          this.state = 219;
+          this.global();
         }
-        this.state = 188;
+        this.state = 224;
         this._errHandler.sync(this);
         _alt = this._interp.adaptivePredict(this._input, 1, this._ctx);
       }
-      this.state = 192;
+      this.state = 228;
       this._errHandler.sync(this);
       _la = this._input.LA(1);
-      while (_la === 2) {
-        this.state = 189;
+      while (_la === 63) {
+        this.state = 225;
         this.match(_ElanParser.NL);
-        this.state = 194;
+        this.state = 230;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
       }
-      this.state = 195;
+      this.state = 231;
       this.match(_ElanParser.EOF);
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -22413,61 +21788,59 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  importStatement() {
-    let localctx = new ImportStatementContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 2, _ElanParser.RULE_importStatement);
+  global() {
+    let localctx = new GlobalContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 2, _ElanParser.RULE_global);
     try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 197;
-      this.match(_ElanParser.IMPORT);
-      this.state = 198;
-      this.namespace();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  namespace() {
-    let localctx = new NamespaceContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 4, _ElanParser.RULE_namespace);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 200;
-      _la = this._input.LA(1);
-      if (!(_la === 93 || _la === 94)) {
-        this._errHandler.recoverInline(this);
-      } else {
-        this._errHandler.reportMatch(this);
-        this.consume();
-      }
-      this.state = 205;
+      this.state = 242;
       this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 3, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 201;
-          this.match(_ElanParser.DOT);
-          this.state = 202;
-          _la = this._input.LA(1);
-          if (!(_la === 93 || _la === 94)) {
-            this._errHandler.recoverInline(this);
-          } else {
-            this._errHandler.reportMatch(this);
-            this.consume();
-          }
-        }
-        this.state = 207;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 3, this._ctx);
+      var la_ = this._interp.adaptivePredict(this._input, 3, this._ctx);
+      switch (la_) {
+        case 1:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 233;
+          this.main();
+          break;
+        case 2:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 234;
+          this.function_();
+          break;
+        case 3:
+          this.enterOuterAlt(localctx, 3);
+          this.state = 235;
+          this.test();
+          break;
+        case 4:
+          this.enterOuterAlt(localctx, 4);
+          this.state = 236;
+          this.procedure();
+          break;
+        case 5:
+          this.enterOuterAlt(localctx, 5);
+          this.state = 237;
+          this.constant();
+          break;
+        case 6:
+          this.enterOuterAlt(localctx, 6);
+          this.state = 238;
+          this.enum_();
+          break;
+        case 7:
+          this.enterOuterAlt(localctx, 7);
+          this.state = 239;
+          this.concreteClass();
+          break;
+        case 8:
+          this.enterOuterAlt(localctx, 8);
+          this.state = 240;
+          this.abstractClass();
+          break;
+        case 9:
+          this.enterOuterAlt(localctx, 9);
+          this.state = 241;
+          this.commentGlobal();
+          break;
       }
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -22484,21 +21857,96 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   }
   main() {
     let localctx = new MainContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 6, _ElanParser.RULE_main);
+    this.enterRule(localctx, 4, _ElanParser.RULE_main);
+    var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 208;
+      this.state = 244;
       this.match(_ElanParser.NL);
-      this.state = 209;
-      this.match(_ElanParser.MAIN);
-      this.state = 210;
-      this.statementBlock();
-      this.state = 211;
+      this.state = 246;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 245;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 248;
+      this.mainTop();
+      this.state = 252;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 249;
+          this.ordinaryStatement();
+        }
+        this.state = 254;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
+      }
+      this.state = 255;
       this.match(_ElanParser.NL);
-      this.state = 212;
-      this.match(_ElanParser.END);
-      this.state = 213;
-      this.match(_ElanParser.MAIN);
+      this.state = 256;
+      this.mainBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  function_() {
+    let localctx = new FunctionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 6, _ElanParser.RULE_function);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 258;
+      this.match(_ElanParser.NL);
+      this.state = 260;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 259;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 262;
+      this.functionTop();
+      this.state = 267;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 8, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 265;
+          this._errHandler.sync(this);
+          var la_ = this._interp.adaptivePredict(this._input, 7, this._ctx);
+          switch (la_) {
+            case 1:
+              this.state = 263;
+              this.letStatement();
+              break;
+            case 2:
+              this.state = 264;
+              this.ordinaryStatement();
+              break;
+          }
+        }
+        this.state = 269;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 8, this._ctx);
+      }
+      this.state = 270;
+      this.returnStatement();
+      this.state = 271;
+      this.match(_ElanParser.NL);
+      this.state = 272;
+      this.functionBottom();
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
         localctx.exception = re2;
@@ -22515,124 +21963,1219 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   test() {
     let localctx = new TestContext(this, this._ctx, this.state);
     this.enterRule(localctx, 8, _ElanParser.RULE_test);
+    var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 215;
+      this.state = 274;
       this.match(_ElanParser.NL);
-      this.state = 216;
-      this.match(_ElanParser.TEST);
-      this.state = 217;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 218;
-      this.testStatements();
-      this.state = 219;
-      this.match(_ElanParser.NL);
-      this.state = 220;
-      this.match(_ElanParser.END);
-      this.state = 221;
-      this.match(_ElanParser.TEST);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  statementBlock() {
-    let localctx = new StatementBlockContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 10, _ElanParser.RULE_statementBlock);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 231;
+      this.state = 276;
       this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 275;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 278;
+      this.testTop();
+      this.state = 285;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 11, this._ctx);
       while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
         if (_alt === 1) {
-          this.state = 229;
+          this.state = 283;
           this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 4, this._ctx);
+          var la_ = this._interp.adaptivePredict(this._input, 10, this._ctx);
           switch (la_) {
             case 1:
-              this.state = 223;
-              this.varDef();
-              break;
-            case 2:
-              this.state = 224;
-              this.assignment();
-              break;
-            case 3:
-              this.state = 225;
-              this.proceduralControlFlow();
-              break;
-            case 4:
-              this.state = 226;
-              this.callStatement();
-              break;
-            case 5:
-              this.state = 227;
-              this.throwException();
-              break;
-            case 6:
-              this.state = 228;
-              this.printStatement();
-              break;
-          }
-        }
-        this.state = 233;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 5, this._ctx);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  testStatements() {
-    let localctx = new TestStatementsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 12, _ElanParser.RULE_testStatements);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 239;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 7, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 237;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 6, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 234;
+              this.state = 279;
               this.assert();
               break;
             case 2:
-              this.state = 235;
-              this.varDef();
+              this.state = 280;
+              this.letStatement();
               break;
             case 3:
-              this.state = 236;
-              this.callStatement();
+              this.state = 281;
+              this.variableDefinition();
+              break;
+            case 4:
+              this.state = 282;
+              this.commentStatement();
               break;
           }
         }
-        this.state = 241;
+        this.state = 287;
         this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 7, this._ctx);
+        _alt = this._interp.adaptivePredict(this._input, 11, this._ctx);
       }
+      this.state = 288;
+      this.match(_ElanParser.NL);
+      this.state = 289;
+      this.testBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedure() {
+    let localctx = new ProcedureContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 10, _ElanParser.RULE_procedure);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 291;
+      this.match(_ElanParser.NL);
+      this.state = 293;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 292;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 295;
+      this.procedureTop();
+      this.state = 299;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 296;
+          this.ordinaryStatement();
+        }
+        this.state = 301;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 13, this._ctx);
+      }
+      this.state = 302;
+      this.match(_ElanParser.NL);
+      this.state = 303;
+      this.procedureBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  concreteClass() {
+    let localctx = new ConcreteClassContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 12, _ElanParser.RULE_concreteClass);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 305;
+      this.match(_ElanParser.NL);
+      this.state = 307;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 306;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 309;
+      this.concreteClassTop();
+      this.state = 318;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 16, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 316;
+          this._errHandler.sync(this);
+          var la_ = this._interp.adaptivePredict(this._input, 15, this._ctx);
+          switch (la_) {
+            case 1:
+              this.state = 310;
+              this.econstructor();
+              break;
+            case 2:
+              this.state = 311;
+              this.property();
+              break;
+            case 3:
+              this.state = 312;
+              this.functionMethod();
+              break;
+            case 4:
+              this.state = 313;
+              this.procedureMethod();
+              break;
+            case 5:
+              this.state = 314;
+              this.copyMethod();
+              break;
+            case 6:
+              this.state = 315;
+              this.commentMember();
+              break;
+          }
+        }
+        this.state = 320;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 16, this._ctx);
+      }
+      this.state = 321;
+      this.match(_ElanParser.NL);
+      this.state = 322;
+      this.concreteClassBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  abstractClass() {
+    let localctx = new AbstractClassContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 14, _ElanParser.RULE_abstractClass);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 324;
+      this.match(_ElanParser.NL);
+      this.state = 326;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 325;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 328;
+      this.abstractClassTop();
+      this.state = 338;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 19, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 336;
+          this._errHandler.sync(this);
+          var la_ = this._interp.adaptivePredict(this._input, 18, this._ctx);
+          switch (la_) {
+            case 1:
+              this.state = 329;
+              this.property();
+              break;
+            case 2:
+              this.state = 330;
+              this.functionMethod();
+              break;
+            case 3:
+              this.state = 331;
+              this.procedureMethod();
+              break;
+            case 4:
+              this.state = 332;
+              this.copyMethod();
+              break;
+            case 5:
+              this.state = 333;
+              this.abstractFunction();
+              break;
+            case 6:
+              this.state = 334;
+              this.abstractProcedure();
+              break;
+            case 7:
+              this.state = 335;
+              this.commentMember();
+              break;
+          }
+        }
+        this.state = 340;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 19, this._ctx);
+      }
+      this.state = 341;
+      this.match(_ElanParser.NL);
+      this.state = 342;
+      this.abstractClassBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  commentGlobal() {
+    let localctx = new CommentGlobalContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 16, _ElanParser.RULE_commentGlobal);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 344;
+      this.match(_ElanParser.NL);
+      this.state = 345;
+      this.match(_ElanParser.COMMENT);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  ordinaryStatement() {
+    let localctx = new OrdinaryStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 18, _ElanParser.RULE_ordinaryStatement);
+    try {
+      this.state = 358;
+      this._errHandler.sync(this);
+      var la_ = this._interp.adaptivePredict(this._input, 20, this._ctx);
+      switch (la_) {
+        case 1:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 347;
+          this.print();
+          break;
+        case 2:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 348;
+          this.variableDefinition();
+          break;
+        case 3:
+          this.enterOuterAlt(localctx, 3);
+          this.state = 349;
+          this.assignment();
+          break;
+        case 4:
+          this.enterOuterAlt(localctx, 4);
+          this.state = 350;
+          this.inputStatement();
+          break;
+        case 5:
+          this.enterOuterAlt(localctx, 5);
+          this.state = 351;
+          this.ifStatement();
+          break;
+        case 6:
+          this.enterOuterAlt(localctx, 6);
+          this.state = 352;
+          this.whileLoop();
+          break;
+        case 7:
+          this.enterOuterAlt(localctx, 7);
+          this.state = 353;
+          this.forLoop();
+          break;
+        case 8:
+          this.enterOuterAlt(localctx, 8);
+          this.state = 354;
+          this.procedureCall();
+          break;
+        case 9:
+          this.enterOuterAlt(localctx, 9);
+          this.state = 355;
+          this.tryStatement();
+          break;
+        case 10:
+          this.enterOuterAlt(localctx, 10);
+          this.state = 356;
+          this.throwStatement();
+          break;
+        case 11:
+          this.enterOuterAlt(localctx, 11);
+          this.state = 357;
+          this.commentStatement();
+          break;
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  ifStatement() {
+    let localctx = new IfStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 20, _ElanParser.RULE_ifStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 360;
+      this.match(_ElanParser.NL);
+      this.state = 362;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 361;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 364;
+      this.ifStatementTop();
+      this.state = 370;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 23, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 368;
+          this._errHandler.sync(this);
+          var la_ = this._interp.adaptivePredict(this._input, 22, this._ctx);
+          switch (la_) {
+            case 1:
+              this.state = 365;
+              this.elseIfClause();
+              break;
+            case 2:
+              this.state = 366;
+              this.elseClause();
+              break;
+            case 3:
+              this.state = 367;
+              this.ordinaryStatement();
+              break;
+          }
+        }
+        this.state = 372;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 23, this._ctx);
+      }
+      this.state = 373;
+      this.match(_ElanParser.NL);
+      this.state = 374;
+      this.ifStatementBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  whileLoop() {
+    let localctx = new WhileLoopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 22, _ElanParser.RULE_whileLoop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 376;
+      this.match(_ElanParser.NL);
+      this.state = 378;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 377;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 380;
+      this.whileLoopTop();
+      this.state = 384;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 25, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 381;
+          this.ordinaryStatement();
+        }
+        this.state = 386;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 25, this._ctx);
+      }
+      this.state = 387;
+      this.match(_ElanParser.NL);
+      this.state = 388;
+      this.whileLoopBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  forLoop() {
+    let localctx = new ForLoopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 24, _ElanParser.RULE_forLoop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 390;
+      this.match(_ElanParser.NL);
+      this.state = 392;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 391;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 394;
+      this.forLoopTop();
+      this.state = 398;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 27, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 395;
+          this.ordinaryStatement();
+        }
+        this.state = 400;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 27, this._ctx);
+      }
+      this.state = 401;
+      this.match(_ElanParser.NL);
+      this.state = 402;
+      this.forLoopBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  tryStatement() {
+    let localctx = new TryStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 26, _ElanParser.RULE_tryStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 404;
+      this.match(_ElanParser.NL);
+      this.state = 406;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 405;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 408;
+      this.tryStatementTop();
+      this.state = 412;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 29, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 409;
+          this.ordinaryStatement();
+        }
+        this.state = 414;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 29, this._ctx);
+      }
+      this.state = 415;
+      this.catchStatement();
+      this.state = 419;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 30, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 416;
+          this.ordinaryStatement();
+        }
+        this.state = 421;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 30, this._ctx);
+      }
+      this.state = 422;
+      this.match(_ElanParser.NL);
+      this.state = 423;
+      this.tryStatementBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  commentStatement() {
+    let localctx = new CommentStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 28, _ElanParser.RULE_commentStatement);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 425;
+      this.match(_ElanParser.NL);
+      this.state = 426;
+      this.match(_ElanParser.COMMENT);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  econstructor() {
+    let localctx = new EconstructorContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 30, _ElanParser.RULE_econstructor);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 428;
+      this.match(_ElanParser.NL);
+      this.state = 430;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 429;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 432;
+      this.constructorTop();
+      this.state = 436;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 32, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 433;
+          this.ordinaryStatement();
+        }
+        this.state = 438;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 32, this._ctx);
+      }
+      this.state = 439;
+      this.match(_ElanParser.NL);
+      this.state = 440;
+      this.constructorBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  functionMethod() {
+    let localctx = new FunctionMethodContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 32, _ElanParser.RULE_functionMethod);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 442;
+      this.match(_ElanParser.NL);
+      this.state = 444;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 443;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 447;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 34) {
+        this.state = 446;
+        this.match(_ElanParser.PRIVATE);
+      }
+      this.state = 449;
+      this.functionMethodTop();
+      this.state = 454;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 36, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 452;
+          this._errHandler.sync(this);
+          var la_ = this._interp.adaptivePredict(this._input, 35, this._ctx);
+          switch (la_) {
+            case 1:
+              this.state = 450;
+              this.letStatement();
+              break;
+            case 2:
+              this.state = 451;
+              this.ordinaryStatement();
+              break;
+          }
+        }
+        this.state = 456;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 36, this._ctx);
+      }
+      this.state = 457;
+      this.returnStatement();
+      this.state = 458;
+      this.match(_ElanParser.NL);
+      this.state = 459;
+      this.functionMethodBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureMethod() {
+    let localctx = new ProcedureMethodContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 34, _ElanParser.RULE_procedureMethod);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 461;
+      this.match(_ElanParser.NL);
+      this.state = 463;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 462;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 466;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 34) {
+        this.state = 465;
+        this.match(_ElanParser.PRIVATE);
+      }
+      this.state = 468;
+      this.procedureMethodTop();
+      this.state = 472;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 39, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 469;
+          this.ordinaryStatement();
+        }
+        this.state = 474;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 39, this._ctx);
+      }
+      this.state = 475;
+      this.match(_ElanParser.NL);
+      this.state = 476;
+      this.procedureMethodBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  copyMethod() {
+    let localctx = new CopyMethodContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 36, _ElanParser.RULE_copyMethod);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 478;
+      this.match(_ElanParser.NL);
+      this.state = 480;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 479;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 483;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 34) {
+        this.state = 482;
+        this.match(_ElanParser.PRIVATE);
+      }
+      this.state = 485;
+      this.copyMethodTop();
+      this.state = 489;
+      this._errHandler.sync(this);
+      var _alt = this._interp.adaptivePredict(this._input, 42, this._ctx);
+      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
+        if (_alt === 1) {
+          this.state = 486;
+          this.ordinaryStatement();
+        }
+        this.state = 491;
+        this._errHandler.sync(this);
+        _alt = this._interp.adaptivePredict(this._input, 42, this._ctx);
+      }
+      this.state = 492;
+      this.returnStatement();
+      this.state = 493;
+      this.match(_ElanParser.NL);
+      this.state = 494;
+      this.copyMethodBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  commentMember() {
+    let localctx = new CommentMemberContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 38, _ElanParser.RULE_commentMember);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 496;
+      this.match(_ElanParser.NL);
+      this.state = 498;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 54) {
+        this.state = 497;
+        this.match(_ElanParser.COMMENT);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  mainTop() {
+    let localctx = new MainTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 40, _ElanParser.RULE_mainTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 500;
+      this.match(_ElanParser.MAIN);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  mainBottom() {
+    let localctx = new MainBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 42, _ElanParser.RULE_mainBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 502;
+      this.match(_ElanParser.END);
+      this.state = 503;
+      this.match(_ElanParser.MAIN);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  functionTop() {
+    let localctx = new FunctionTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 44, _ElanParser.RULE_functionTop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 505;
+      this.match(_ElanParser.FUNCTION);
+      this.state = 506;
+      this.methodName();
+      this.state = 507;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 509;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 85) {
+        this.state = 508;
+        this.paramsList();
+      }
+      this.state = 511;
+      this.match(_ElanParser.CLOSE_BRACKET);
+      this.state = 512;
+      this.match(_ElanParser.RETURNS);
+      this.state = 513;
+      this.type();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  functionBottom() {
+    let localctx = new FunctionBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 46, _ElanParser.RULE_functionBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 515;
+      this.match(_ElanParser.END);
+      this.state = 516;
+      this.match(_ElanParser.FUNCTION);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  testTop() {
+    let localctx = new TestTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 48, _ElanParser.RULE_testTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 518;
+      this.match(_ElanParser.TEST);
+      this.state = 519;
+      this.testName();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  testBottom() {
+    let localctx = new TestBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 50, _ElanParser.RULE_testBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 521;
+      this.match(_ElanParser.END);
+      this.state = 522;
+      this.match(_ElanParser.TEST);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureTop() {
+    let localctx = new ProcedureTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 52, _ElanParser.RULE_procedureTop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 524;
+      this.match(_ElanParser.PROCEDURE);
+      this.state = 525;
+      this.methodName();
+      this.state = 526;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 528;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 85) {
+        this.state = 527;
+        this.paramsList();
+      }
+      this.state = 530;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureBottom() {
+    let localctx = new ProcedureBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 54, _ElanParser.RULE_procedureBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 532;
+      this.match(_ElanParser.END);
+      this.state = 533;
+      this.match(_ElanParser.PROCEDURE);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  concreteClassTop() {
+    let localctx = new ConcreteClassTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 56, _ElanParser.RULE_concreteClassTop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 535;
+      this.match(_ElanParser.CLASS);
+      this.state = 536;
+      this.typeName();
+      this.state = 539;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 23) {
+        this.state = 537;
+        this.match(_ElanParser.INHERITS);
+        this.state = 538;
+        this.typeName();
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  concreteClassBottom() {
+    let localctx = new ConcreteClassBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 58, _ElanParser.RULE_concreteClassBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 541;
+      this.match(_ElanParser.END);
+      this.state = 542;
+      this.match(_ElanParser.CLASS);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  abstractClassTop() {
+    let localctx = new AbstractClassTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 60, _ElanParser.RULE_abstractClassTop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 544;
+      this.match(_ElanParser.ABSTRACT);
+      this.state = 545;
+      this.match(_ElanParser.CLASS);
+      this.state = 546;
+      this.typeName();
+      this.state = 549;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 23) {
+        this.state = 547;
+        this.match(_ElanParser.INHERITS);
+        this.state = 548;
+        this.typeName();
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  abstractClassBottom() {
+    let localctx = new AbstractClassBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 62, _ElanParser.RULE_abstractClassBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 551;
+      this.match(_ElanParser.END);
+      this.state = 552;
+      this.match(_ElanParser.ABSTRACT);
+      this.state = 553;
+      this.match(_ElanParser.CLASS);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  constant() {
+    let localctx = new ConstantContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 64, _ElanParser.RULE_constant);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 555;
+      this.match(_ElanParser.NL);
+      this.state = 557;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 556;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 559;
+      this.match(_ElanParser.CONSTANT);
+      this.state = 560;
+      this.identifier();
+      this.state = 561;
+      this.match(_ElanParser.SET);
+      this.state = 562;
+      this.match(_ElanParser.TO);
+      this.state = 563;
+      this.constantValue();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  enum_() {
+    let localctx = new EnumContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 66, _ElanParser.RULE_enum);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 565;
+      this.match(_ElanParser.NL);
+      this.state = 567;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 566;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 569;
+      this.match(_ElanParser.ENUM);
+      this.state = 570;
+      this.typeName();
+      this.state = 571;
+      this.enumValuesList();
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
         localctx.exception = re2;
@@ -22648,84 +23191,996 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   }
   assert() {
     let localctx = new AssertContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 14, _ElanParser.RULE_assert);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 242;
-      this.match(_ElanParser.NL);
-      this.state = 243;
-      this.match(_ElanParser.ASSERT);
-      this.state = 244;
-      this.expression(0);
-      this.state = 245;
-      this.match(_ElanParser.IS);
-      this.state = 246;
-      this.value();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  callStatement() {
-    let localctx = new CallStatementContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 16, _ElanParser.RULE_callStatement);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 248;
-      this.match(_ElanParser.NL);
-      this.state = 249;
-      this.match(_ElanParser.CALL);
-      this.state = 255;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 8, this._ctx);
-      switch (la_) {
-        case 1:
-          this.state = 250;
-          this.procedureCall();
-          break;
-        case 2:
-          this.state = 251;
-          this.assignableValue();
-          this.state = 252;
-          this.match(_ElanParser.DOT);
-          this.state = 253;
-          this.procedureCall();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  throwException() {
-    let localctx = new ThrowExceptionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 18, _ElanParser.RULE_throwException);
+    this.enterRule(localctx, 68, _ElanParser.RULE_assert);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 257;
+      this.state = 573;
       this.match(_ElanParser.NL);
-      this.state = 258;
-      this.match(_ElanParser.THROW);
-      this.state = 259;
+      this.state = 575;
+      this._errHandler.sync(this);
       _la = this._input.LA(1);
-      if (!(_la === 94 || _la === 98)) {
+      if (_la === 95) {
+        this.state = 574;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 577;
+      this.match(_ElanParser.ASSERT);
+      this.state = 578;
+      this.assertActual();
+      this.state = 579;
+      this.match(_ElanParser.EQUAL);
+      this.state = 580;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  letStatement() {
+    let localctx = new LetStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 70, _ElanParser.RULE_letStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 582;
+      this.match(_ElanParser.NL);
+      this.state = 584;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 583;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 586;
+      this.match(_ElanParser.LET);
+      this.state = 587;
+      this.identifier();
+      this.state = 588;
+      this.match(_ElanParser.BE);
+      this.state = 589;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  print() {
+    let localctx = new PrintContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 72, _ElanParser.RULE_print);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 591;
+      this.match(_ElanParser.NL);
+      this.state = 593;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 592;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 595;
+      this.match(_ElanParser.PRINT);
+      this.state = 596;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 597;
+      this.argList();
+      this.state = 598;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  variableDefinition() {
+    let localctx = new VariableDefinitionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 74, _ElanParser.RULE_variableDefinition);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 600;
+      this.match(_ElanParser.NL);
+      this.state = 602;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 601;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 604;
+      this.match(_ElanParser.VARIABLE);
+      this.state = 605;
+      this.identifier();
+      this.state = 606;
+      this.match(_ElanParser.SET);
+      this.state = 607;
+      this.match(_ElanParser.TO);
+      this.state = 608;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  assignment() {
+    let localctx = new AssignmentContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 76, _ElanParser.RULE_assignment);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 610;
+      this.match(_ElanParser.NL);
+      this.state = 612;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 611;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 614;
+      this.match(_ElanParser.ASSIGN);
+      this.state = 615;
+      this.assignable();
+      this.state = 616;
+      this.match(_ElanParser.TO);
+      this.state = 617;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  inputStatement() {
+    let localctx = new InputStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 78, _ElanParser.RULE_inputStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 619;
+      this.match(_ElanParser.NL);
+      this.state = 621;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 620;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 623;
+      this.match(_ElanParser.INPUT);
+      this.state = 624;
+      this.identifier();
+      this.state = 625;
+      this.match(_ElanParser.SET);
+      this.state = 626;
+      this.match(_ElanParser.TO);
+      this.state = 627;
+      this.methodName();
+      this.state = 628;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 629;
+      this.argList();
+      this.state = 630;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureCall() {
+    let localctx = new ProcedureCallContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 80, _ElanParser.RULE_procedureCall);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 632;
+      this.match(_ElanParser.NL);
+      this.state = 634;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 633;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 636;
+      this.match(_ElanParser.CALL);
+      this.state = 637;
+      this.procRef();
+      this.state = 638;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 639;
+      this.argList();
+      this.state = 640;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  throwStatement() {
+    let localctx = new ThrowStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 82, _ElanParser.RULE_throwStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 642;
+      this.match(_ElanParser.NL);
+      this.state = 644;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 643;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 646;
+      this.match(_ElanParser.THROW);
+      this.state = 647;
+      this.typeName();
+      this.state = 648;
+      this.litString();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  returnStatement() {
+    let localctx = new ReturnStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 84, _ElanParser.RULE_returnStatement);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 650;
+      this.match(_ElanParser.NL);
+      this.state = 651;
+      this.match(_ElanParser.RETURN);
+      this.state = 652;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  elseIfClause() {
+    let localctx = new ElseIfClauseContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 86, _ElanParser.RULE_elseIfClause);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 654;
+      this.match(_ElanParser.NL);
+      this.state = 656;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 655;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 658;
+      this.match(_ElanParser.ELIF);
+      this.state = 659;
+      this.expression();
+      this.state = 660;
+      this.match(_ElanParser.THEN);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  elseClause() {
+    let localctx = new ElseClauseContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 88, _ElanParser.RULE_elseClause);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 662;
+      this.match(_ElanParser.NL);
+      this.state = 664;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 663;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 666;
+      this.match(_ElanParser.ELSE);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  catchStatement() {
+    let localctx = new CatchStatementContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 90, _ElanParser.RULE_catchStatement);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 668;
+      this.match(_ElanParser.NL);
+      this.state = 670;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 669;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 672;
+      this.match(_ElanParser.CATCH);
+      this.state = 673;
+      this.identifier();
+      this.state = 674;
+      this.match(_ElanParser.AS);
+      this.state = 675;
+      this.typeName();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  ifStatementTop() {
+    let localctx = new IfStatementTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 92, _ElanParser.RULE_ifStatementTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 677;
+      this.match(_ElanParser.IF);
+      this.state = 678;
+      this.expression();
+      this.state = 679;
+      this.match(_ElanParser.THEN);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  ifStatementBottom() {
+    let localctx = new IfStatementBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 94, _ElanParser.RULE_ifStatementBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 681;
+      this.match(_ElanParser.END);
+      this.state = 682;
+      this.match(_ElanParser.IF);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  whileLoopTop() {
+    let localctx = new WhileLoopTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 96, _ElanParser.RULE_whileLoopTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 684;
+      this.match(_ElanParser.WHILE);
+      this.state = 685;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  whileLoopBottom() {
+    let localctx = new WhileLoopBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 98, _ElanParser.RULE_whileLoopBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 687;
+      this.match(_ElanParser.END);
+      this.state = 688;
+      this.match(_ElanParser.WHILE);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  forLoopTop() {
+    let localctx = new ForLoopTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 100, _ElanParser.RULE_forLoopTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 690;
+      this.match(_ElanParser.FOR);
+      this.state = 691;
+      this.identifier();
+      this.state = 692;
+      this.match(_ElanParser.IN);
+      this.state = 693;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  forLoopBottom() {
+    let localctx = new ForLoopBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 102, _ElanParser.RULE_forLoopBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 695;
+      this.match(_ElanParser.END);
+      this.state = 696;
+      this.match(_ElanParser.FOR);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  tryStatementTop() {
+    let localctx = new TryStatementTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 104, _ElanParser.RULE_tryStatementTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 698;
+      this.match(_ElanParser.TRY);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  tryStatementBottom() {
+    let localctx = new TryStatementBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 106, _ElanParser.RULE_tryStatementBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 700;
+      this.match(_ElanParser.END);
+      this.state = 701;
+      this.match(_ElanParser.TRY);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  constructorTop() {
+    let localctx = new ConstructorTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 108, _ElanParser.RULE_constructorTop);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 703;
+      this.match(_ElanParser.CONSTRUCTOR);
+      this.state = 704;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 706;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 85) {
+        this.state = 705;
+        this.paramsList();
+      }
+      this.state = 708;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  constructorBottom() {
+    let localctx = new ConstructorBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 110, _ElanParser.RULE_constructorBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 710;
+      this.match(_ElanParser.END);
+      this.state = 711;
+      this.match(_ElanParser.CONSTRUCTOR);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  property() {
+    let localctx = new PropertyContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 112, _ElanParser.RULE_property);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 713;
+      this.match(_ElanParser.NL);
+      this.state = 715;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 34) {
+        this.state = 714;
+        this.match(_ElanParser.PRIVATE);
+      }
+      this.state = 717;
+      this.match(_ElanParser.PROPERTY);
+      this.state = 718;
+      this.identifier();
+      this.state = 719;
+      this.match(_ElanParser.AS);
+      this.state = 720;
+      this.type();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  functionMethodTop() {
+    let localctx = new FunctionMethodTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 114, _ElanParser.RULE_functionMethodTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 722;
+      this.functionTop();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  functionMethodBottom() {
+    let localctx = new FunctionMethodBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 116, _ElanParser.RULE_functionMethodBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 724;
+      this.functionBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureMethodTop() {
+    let localctx = new ProcedureMethodTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 118, _ElanParser.RULE_procedureMethodTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 726;
+      this.procedureTop();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procedureMethodBottom() {
+    let localctx = new ProcedureMethodBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 120, _ElanParser.RULE_procedureMethodBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 728;
+      this.procedureBottom();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  copyMethodTop() {
+    let localctx = new CopyMethodTopContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 122, _ElanParser.RULE_copyMethodTop);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 730;
+      this.match(_ElanParser.COPY);
+      this.state = 731;
+      this.methodName();
+      this.state = 732;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 733;
+      this.paramsList();
+      this.state = 734;
+      this.match(_ElanParser.CLOSE_BRACKET);
+      this.state = 735;
+      this.match(_ElanParser.RETURNS);
+      this.state = 736;
+      this.type();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  copyMethodBottom() {
+    let localctx = new CopyMethodBottomContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 124, _ElanParser.RULE_copyMethodBottom);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 738;
+      this.match(_ElanParser.END);
+      this.state = 739;
+      this.match(_ElanParser.COPY);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  abstractFunction() {
+    let localctx = new AbstractFunctionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 126, _ElanParser.RULE_abstractFunction);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 741;
+      this.match(_ElanParser.NL);
+      this.state = 743;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 742;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 745;
+      this.match(_ElanParser.ABSTRACT);
+      this.state = 746;
+      this.functionTop();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  abstractProcedure() {
+    let localctx = new AbstractProcedureContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 128, _ElanParser.RULE_abstractProcedure);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 748;
+      this.match(_ElanParser.NL);
+      this.state = 750;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 95) {
+        this.state = 749;
+        this.match(_ElanParser.GHOSTED);
+      }
+      this.state = 752;
+      this.match(_ElanParser.ABSTRACT);
+      this.state = 753;
+      this.procedureTop();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  identifier() {
+    let localctx = new IdentifierContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 130, _ElanParser.RULE_identifier);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 755;
+      this.match(_ElanParser.NAME_STARTING_LC);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  assignable() {
+    let localctx = new AssignableContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 132, _ElanParser.RULE_assignable);
+    try {
+      this.state = 759;
+      this._errHandler.sync(this);
+      switch (this._input.LA(1)) {
+        case 85:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 757;
+          this.identifierWithOptIndexes();
+          break;
+        case 43:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 758;
+          this.propertyRef();
+          break;
+        default:
+          throw new Ln.error.NoViableAltException(this);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  methodName() {
+    let localctx = new MethodNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 134, _ElanParser.RULE_methodName);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 761;
+      this.match(_ElanParser.NAME_STARTING_LC);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  testName() {
+    let localctx = new TestNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 136, _ElanParser.RULE_testName);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 763;
+      this.match(_ElanParser.NAME_STARTING_TEST_);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  typeName() {
+    let localctx = new TypeNameContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 138, _ElanParser.RULE_typeName);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 765;
+      _la = this._input.LA(1);
+      if (!((_la - 49 & ~31) === 0 && (1 << _la - 49 & 31) !== 0 || _la === 86)) {
         this._errHandler.recoverInline(this);
       } else {
         this._errHandler.reportMatch(this);
@@ -22744,160 +24199,36 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  printStatement() {
-    let localctx = new PrintStatementContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 20, _ElanParser.RULE_printStatement);
-    var _la = 0;
+  constantValue() {
+    let localctx = new ConstantValueContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 140, _ElanParser.RULE_constantValue);
     try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 261;
-      this.match(_ElanParser.NL);
-      this.state = 262;
-      this.match(_ElanParser.PRINT);
-      this.state = 264;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if ((_la & ~31) === 0 && (1 << _la & 2181103616) !== 0 || (_la - 34 & ~31) === 0 && (1 << _la - 34 & 2152743449) !== 0 || (_la - 67 & ~31) === 0 && (1 << _la - 67 & 4227990593) !== 0) {
-        this.state = 263;
-        this.expression(0);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  varDef() {
-    let localctx = new VarDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 22, _ElanParser.RULE_varDef);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 266;
-      this.match(_ElanParser.NL);
-      this.state = 267;
-      this.match(_ElanParser.VAR);
-      this.state = 268;
-      this.assignableValue();
-      this.state = 269;
-      this.match(_ElanParser.SET);
-      this.state = 270;
-      this.match(_ElanParser.TO);
-      this.state = 271;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  assignment() {
-    let localctx = new AssignmentContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 24, _ElanParser.RULE_assignment);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 273;
-      this.match(_ElanParser.NL);
-      this.state = 274;
-      this.match(_ElanParser.SET);
-      this.state = 275;
-      this.assignableValue();
-      this.state = 276;
-      this.match(_ElanParser.TO);
-      this.state = 277;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  inlineAsignment() {
-    let localctx = new InlineAsignmentContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 26, _ElanParser.RULE_inlineAsignment);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 279;
-      this.assignableValue();
-      this.state = 280;
-      this.match(_ElanParser.SET);
-      this.state = 281;
-      this.match(_ElanParser.TO);
-      this.state = 282;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  assignableValue() {
-    let localctx = new AssignableValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 28, _ElanParser.RULE_assignableValue);
-    var _la = 0;
-    try {
-      this.state = 293;
+      this.state = 769;
       this._errHandler.sync(this);
       switch (this._input.LA(1)) {
-        case 25:
-        case 34:
-        case 43:
-        case 48:
-        case 94:
+        case -1:
+        case 49:
+        case 50:
+        case 51:
+        case 52:
+        case 53:
+        case 55:
+        case 63:
+        case 86:
+        case 87:
+        case 88:
+        case 89:
+        case 90:
+        case 91:
+        case 92:
           this.enterOuterAlt(localctx, 1);
-          this.state = 285;
-          this._errHandler.sync(this);
-          _la = this._input.LA(1);
-          if ((_la - 25 & ~31) === 0 && (1 << _la - 25 & 8651265) !== 0) {
-            this.state = 284;
-            this.scopeQualifier();
-          }
-          this.state = 287;
-          this.match(_ElanParser.IDENTIFIER);
-          this.state = 289;
-          this._errHandler.sync(this);
-          _la = this._input.LA(1);
-          if (_la === 75) {
-            this.state = 288;
-            this.index();
-          }
+          this.state = 767;
+          this.litValue();
           break;
-        case 77:
+        case 85:
           this.enterOuterAlt(localctx, 2);
-          this.state = 291;
-          this.deconstructedTuple();
-          break;
-        case 73:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 292;
-          this.listDecomp();
+          this.state = 768;
+          this.identifier();
           break;
         default:
           throw new Ln.error.NoViableAltException(this);
@@ -22915,133 +24246,25 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  procedureCall() {
-    let localctx = new ProcedureCallContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 30, _ElanParser.RULE_procedureCall);
+  argList() {
+    let localctx = new ArgListContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 142, _ElanParser.RULE_argList);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 296;
+      this.state = 771;
+      this.argument();
+      this.state = 776;
       this._errHandler.sync(this);
       _la = this._input.LA(1);
-      if ((_la - 25 & ~31) === 0 && (1 << _la - 25 & 8651265) !== 0) {
-        this.state = 295;
-        this.scopeQualifier();
-      }
-      this.state = 298;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 299;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 301;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if ((_la - 16 & ~31) === 0 && (1 << _la - 16 & 140870145) !== 0 || (_la - 48 & ~31) === 0 && (1 << _la - 48 & 571081025) !== 0 || (_la - 84 & ~31) === 0 && (1 << _la - 84 & 32257) !== 0) {
-        this.state = 300;
-        this.argumentList();
-      }
-      this.state = 303;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  functionCall() {
-    let localctx = new FunctionCallContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 32, _ElanParser.RULE_functionCall);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 306;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if ((_la - 25 & ~31) === 0 && (1 << _la - 25 & 8651265) !== 0) {
-        this.state = 305;
-        this.scopeQualifier();
-      }
-      this.state = 308;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 309;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 311;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if ((_la - 16 & ~31) === 0 && (1 << _la - 16 & 140870145) !== 0 || (_la - 48 & ~31) === 0 && (1 << _la - 48 & 571081025) !== 0 || (_la - 84 & ~31) === 0 && (1 << _la - 84 & 32257) !== 0) {
-        this.state = 310;
-        this.argumentList();
-      }
-      this.state = 313;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  systemCall() {
-    let localctx = new SystemCallContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 34, _ElanParser.RULE_systemCall);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 315;
-      this.match(_ElanParser.SYSTEM);
-      this.state = 316;
-      this.match(_ElanParser.DOT);
-      this.state = 317;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 318;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 320;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if ((_la - 16 & ~31) === 0 && (1 << _la - 16 & 140870145) !== 0 || (_la - 48 & ~31) === 0 && (1 << _la - 48 & 571081025) !== 0 || (_la - 84 & ~31) === 0 && (1 << _la - 84 & 32257) !== 0) {
-        this.state = 319;
-        this.argumentList();
-      }
-      this.state = 322;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  input() {
-    let localctx = new InputContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 36, _ElanParser.RULE_input);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 324;
-      this.match(_ElanParser.INPUT);
-      this.state = 326;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 18, this._ctx);
-      if (la_ === 1) {
-        this.state = 325;
-        this.match(_ElanParser.LITERAL_STRING);
+      while (_la === 72) {
+        this.state = 772;
+        this.match(_ElanParser.COMMA);
+        this.state = 773;
+        this.argument();
+        this.state = 778;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
       }
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -23058,2514 +24281,56 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   }
   argument() {
     let localctx = new ArgumentContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 38, _ElanParser.RULE_argument);
+    this.enterRule(localctx, 144, _ElanParser.RULE_argument);
     try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 330;
+      this.state = 781;
       this._errHandler.sync(this);
       switch (this._input.LA(1)) {
-        case 16:
         case 25:
-        case 31:
-        case 34:
-        case 37:
-        case 38:
-        case 43:
-        case 48:
-        case 54:
-        case 56:
-        case 65:
-        case 67:
-        case 73:
-        case 77:
-        case 84:
-        case 93:
-        case 94:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-          this.state = 328;
-          this.expression(0);
-          break;
-        case 32:
-          this.state = 329;
+          this.enterOuterAlt(localctx, 1);
+          this.state = 779;
           this.lambda();
           break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  argumentList() {
-    let localctx = new ArgumentListContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 40, _ElanParser.RULE_argumentList);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 332;
-      this.argument();
-      this.state = 337;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 333;
-        this.match(_ElanParser.COMMA);
-        this.state = 334;
-        this.argument();
-        this.state = 339;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  procedureDef() {
-    let localctx = new ProcedureDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 42, _ElanParser.RULE_procedureDef);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 340;
-      this.match(_ElanParser.NL);
-      this.state = 341;
-      this.match(_ElanParser.PROCEDURE);
-      this.state = 342;
-      this.procedureSignature();
-      this.state = 343;
-      this.statementBlock();
-      this.state = 344;
-      this.match(_ElanParser.NL);
-      this.state = 345;
-      this.match(_ElanParser.END);
-      this.state = 346;
-      this.match(_ElanParser.PROCEDURE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  procedureSignature() {
-    let localctx = new ProcedureSignatureContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 44, _ElanParser.RULE_procedureSignature);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 348;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 349;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 351;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 42 || _la === 94) {
-        this.state = 350;
-        this.procedureParameterList();
-      }
-      this.state = 353;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  procedureParameterList() {
-    let localctx = new ProcedureParameterListContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 46, _ElanParser.RULE_procedureParameterList);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 355;
-      this.procedureParameter();
-      this.state = 360;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 356;
-        this.match(_ElanParser.COMMA);
-        this.state = 357;
-        this.procedureParameter();
-        this.state = 362;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  parameterList() {
-    let localctx = new ParameterListContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 48, _ElanParser.RULE_parameterList);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 363;
-      this.parameter();
-      this.state = 368;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 364;
-        this.match(_ElanParser.COMMA);
-        this.state = 365;
-        this.parameter();
-        this.state = 370;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  parameter() {
-    let localctx = new ParameterContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 50, _ElanParser.RULE_parameter);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 371;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 372;
-      this.type();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  procedureParameter() {
-    let localctx = new ProcedureParameterContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 52, _ElanParser.RULE_procedureParameter);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 375;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 42) {
-        this.state = 374;
-        this.match(_ElanParser.OUT);
-      }
-      this.state = 377;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 378;
-      this.type();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  functionDef() {
-    let localctx = new FunctionDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 54, _ElanParser.RULE_functionDef);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 380;
-      this.match(_ElanParser.NL);
-      this.state = 381;
-      this.match(_ElanParser.FUNCTION);
-      this.state = 382;
-      this.functionSignature();
-      this.state = 383;
-      this.statementBlock();
-      this.state = 384;
-      this.match(_ElanParser.NL);
-      this.state = 385;
-      this.match(_ElanParser.RETURN);
-      this.state = 388;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 25, this._ctx);
-      switch (la_) {
-        case 1:
-          this.state = 386;
-          this.expression(0);
-          break;
         case 2:
-          this.state = 387;
-          this.match(_ElanParser.DEFAULT);
-          break;
-      }
-      this.state = 390;
-      this.match(_ElanParser.NL);
-      this.state = 391;
-      this.match(_ElanParser.END);
-      this.state = 392;
-      this.match(_ElanParser.FUNCTION);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  functionSignature() {
-    let localctx = new FunctionSignatureContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 56, _ElanParser.RULE_functionSignature);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 394;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 395;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 397;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 94) {
-        this.state = 396;
-        this.parameterList();
-      }
-      this.state = 399;
-      this.match(_ElanParser.CLOSE_BRACKET);
-      this.state = 400;
-      this.match(_ElanParser.AS);
-      this.state = 401;
-      this.type();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  constantDef() {
-    let localctx = new ConstantDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 58, _ElanParser.RULE_constantDef);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 403;
-      this.match(_ElanParser.NL);
-      this.state = 404;
-      this.match(_ElanParser.CONSTANT);
-      this.state = 405;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 406;
-      this.match(_ElanParser.SET);
-      this.state = 407;
-      this.match(_ElanParser.TO);
-      this.state = 410;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 65:
-        case 73:
-        case 77:
-        case 93:
-        case 95:
-        case 96:
-        case 97:
-        case 98:
-          this.state = 408;
-          this.literal();
-          break;
-        case 37:
-        case 94:
-          this.state = 409;
-          this.newInstance();
-          break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  enumDef() {
-    let localctx = new EnumDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 60, _ElanParser.RULE_enumDef);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 412;
-      this.match(_ElanParser.NL);
-      this.state = 413;
-      this.match(_ElanParser.ENUM);
-      this.state = 414;
-      this.enumType();
-      this.state = 415;
-      this.match(_ElanParser.NL);
-      this.state = 416;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 421;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 417;
-        this.match(_ElanParser.COMMA);
-        this.state = 418;
-        this.match(_ElanParser.IDENTIFIER);
-        this.state = 423;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 424;
-      this.match(_ElanParser.NL);
-      this.state = 425;
-      this.match(_ElanParser.END);
-      this.state = 426;
-      this.match(_ElanParser.ENUM);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  enumType() {
-    let localctx = new EnumTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 62, _ElanParser.RULE_enumType);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 428;
-      this.match(_ElanParser.TYPENAME);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  enumValue() {
-    let localctx = new EnumValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 64, _ElanParser.RULE_enumValue);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 430;
-      this.enumType();
-      this.state = 431;
-      this.match(_ElanParser.DOT);
-      this.state = 432;
-      this.match(_ElanParser.IDENTIFIER);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  classDef() {
-    let localctx = new ClassDefContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 66, _ElanParser.RULE_classDef);
-    try {
-      this.state = 438;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 29, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 434;
-          this.mutableClass();
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 435;
-          this.abstractClass();
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 436;
-          this.immutableClass();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 437;
-          this.abstractImmutableClass();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  mutableClass() {
-    let localctx = new MutableClassContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 68, _ElanParser.RULE_mutableClass);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 440;
-      this.match(_ElanParser.NL);
-      this.state = 441;
-      this.match(_ElanParser.CLASS);
-      this.state = 442;
-      this.match(_ElanParser.TYPENAME);
-      this.state = 444;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 30) {
-        this.state = 443;
-        this.inherits();
-      }
-      this.state = 446;
-      this.econstructor();
-      this.state = 453;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 32, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 451;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 31, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 447;
-              this.match(_ElanParser.NL);
-              this.state = 448;
-              this.property();
-              break;
-            case 2:
-              this.state = 449;
-              this.functionDef();
-              break;
-            case 3:
-              this.state = 450;
-              this.procedureDef();
-              break;
-          }
-        }
-        this.state = 455;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 32, this._ctx);
-      }
-      this.state = 456;
-      this.match(_ElanParser.NL);
-      this.state = 457;
-      this.match(_ElanParser.END);
-      this.state = 458;
-      this.match(_ElanParser.CLASS);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  abstractClass() {
-    let localctx = new AbstractClassContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 70, _ElanParser.RULE_abstractClass);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 460;
-      this.match(_ElanParser.NL);
-      this.state = 461;
-      this.match(_ElanParser.ABSTRACT);
-      this.state = 462;
-      this.match(_ElanParser.CLASS);
-      this.state = 463;
-      this.match(_ElanParser.TYPENAME);
-      this.state = 465;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 30) {
-        this.state = 464;
-        this.inherits();
-      }
-      this.state = 480;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 35, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 478;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 34, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 467;
-              this.match(_ElanParser.NL);
-              this.state = 468;
-              this.match(_ElanParser.ABSTRACT);
-              this.state = 469;
-              this.property();
-              break;
-            case 2:
-              this.state = 470;
-              this.match(_ElanParser.NL);
-              this.state = 471;
-              this.match(_ElanParser.ABSTRACT);
-              this.state = 472;
-              this.match(_ElanParser.FUNCTION);
-              this.state = 473;
-              this.functionSignature();
-              break;
-            case 3:
-              this.state = 474;
-              this.match(_ElanParser.NL);
-              this.state = 475;
-              this.match(_ElanParser.ABSTRACT);
-              this.state = 476;
-              this.match(_ElanParser.PROCEDURE);
-              this.state = 477;
-              this.procedureSignature();
-              break;
-          }
-        }
-        this.state = 482;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 35, this._ctx);
-      }
-      this.state = 483;
-      this.match(_ElanParser.NL);
-      this.state = 484;
-      this.match(_ElanParser.END);
-      this.state = 485;
-      this.match(_ElanParser.CLASS);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  immutableClass() {
-    let localctx = new ImmutableClassContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 72, _ElanParser.RULE_immutableClass);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 487;
-      this.match(_ElanParser.NL);
-      this.state = 488;
-      this.match(_ElanParser.IMMUTABLE);
-      this.state = 489;
-      this.match(_ElanParser.CLASS);
-      this.state = 490;
-      this.match(_ElanParser.TYPENAME);
-      this.state = 492;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 30) {
-        this.state = 491;
-        this.inherits();
-      }
-      this.state = 494;
-      this.econstructor();
-      this.state = 500;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 38, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 498;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 37, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 495;
-              this.match(_ElanParser.NL);
-              this.state = 496;
-              this.property();
-              break;
-            case 2:
-              this.state = 497;
-              this.functionDef();
-              break;
-          }
-        }
-        this.state = 502;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 38, this._ctx);
-      }
-      this.state = 503;
-      this.match(_ElanParser.NL);
-      this.state = 504;
-      this.match(_ElanParser.END);
-      this.state = 505;
-      this.match(_ElanParser.CLASS);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  abstractImmutableClass() {
-    let localctx = new AbstractImmutableClassContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 74, _ElanParser.RULE_abstractImmutableClass);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 507;
-      this.match(_ElanParser.NL);
-      this.state = 508;
-      this.match(_ElanParser.ABSTRACT);
-      this.state = 509;
-      this.match(_ElanParser.IMMUTABLE);
-      this.state = 510;
-      this.match(_ElanParser.CLASS);
-      this.state = 511;
-      this.match(_ElanParser.TYPENAME);
-      this.state = 513;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 30) {
-        this.state = 512;
-        this.inherits();
-      }
-      this.state = 524;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 41, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 522;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 40, this._ctx);
-          switch (la_) {
-            case 1:
-              this.state = 515;
-              this.match(_ElanParser.NL);
-              this.state = 516;
-              this.match(_ElanParser.ABSTRACT);
-              this.state = 517;
-              this.property();
-              break;
-            case 2:
-              this.state = 518;
-              this.match(_ElanParser.NL);
-              this.state = 519;
-              this.match(_ElanParser.ABSTRACT);
-              this.state = 520;
-              this.match(_ElanParser.FUNCTION);
-              this.state = 521;
-              this.functionSignature();
-              break;
-          }
-        }
-        this.state = 526;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 41, this._ctx);
-      }
-      this.state = 527;
-      this.match(_ElanParser.NL);
-      this.state = 528;
-      this.match(_ElanParser.END);
-      this.state = 529;
-      this.match(_ElanParser.CLASS);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  inherits() {
-    let localctx = new InheritsContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 76, _ElanParser.RULE_inherits);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 531;
-      this.match(_ElanParser.INHERITS);
-      this.state = 532;
-      this.type();
-      this.state = 537;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 533;
-        this.match(_ElanParser.COMMA);
-        this.state = 534;
-        this.type();
-        this.state = 539;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  property() {
-    let localctx = new PropertyContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 78, _ElanParser.RULE_property);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 541;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 46) {
-        this.state = 540;
-        this.match(_ElanParser.PRIVATE);
-      }
-      this.state = 543;
-      this.match(_ElanParser.PROPERTY);
-      this.state = 544;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 545;
-      this.type();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  econstructor() {
-    let localctx = new EconstructorContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 80, _ElanParser.RULE_econstructor);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 547;
-      this.match(_ElanParser.NL);
-      this.state = 548;
-      this.match(_ElanParser.CONSTRUCTOR);
-      this.state = 549;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 551;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 94) {
-        this.state = 550;
-        this.parameterList();
-      }
-      this.state = 553;
-      this.match(_ElanParser.CLOSE_BRACKET);
-      this.state = 554;
-      this.statementBlock();
-      this.state = 555;
-      this.match(_ElanParser.NL);
-      this.state = 556;
-      this.match(_ElanParser.END);
-      this.state = 557;
-      this.match(_ElanParser.CONSTRUCTOR);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  newInstance() {
-    let localctx = new NewInstanceContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 82, _ElanParser.RULE_newInstance);
-    var _la = 0;
-    try {
-      this.state = 571;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 37:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 559;
-          this.match(_ElanParser.NEW);
-          this.state = 560;
-          this.type();
-          this.state = 561;
-          this.match(_ElanParser.OPEN_BRACKET);
-          this.state = 563;
-          this._errHandler.sync(this);
-          _la = this._input.LA(1);
-          if ((_la - 16 & ~31) === 0 && (1 << _la - 16 & 140870145) !== 0 || (_la - 48 & ~31) === 0 && (1 << _la - 48 & 571081025) !== 0 || (_la - 84 & ~31) === 0 && (1 << _la - 84 & 32257) !== 0) {
-            this.state = 562;
-            this.argumentList();
-          }
-          this.state = 565;
-          this.match(_ElanParser.CLOSE_BRACKET);
-          this.state = 567;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 46, this._ctx);
-          if (la_ === 1) {
-            this.state = 566;
-            this.withClause();
-          }
-          break;
-        case 94:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 569;
-          this.match(_ElanParser.IDENTIFIER);
-          this.state = 570;
-          this.withClause();
-          break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  withClause() {
-    let localctx = new WithClauseContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 84, _ElanParser.RULE_withClause);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 573;
-      this.match(_ElanParser.WITH);
-      this.state = 574;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 575;
-      this.inlineAsignment();
-      this.state = 580;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 576;
-        this.match(_ElanParser.COMMA);
-        this.state = 577;
-        this.inlineAsignment();
-        this.state = 582;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 583;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  proceduralControlFlow() {
-    let localctx = new ProceduralControlFlowContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 86, _ElanParser.RULE_proceduralControlFlow);
-    try {
-      this.state = 592;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 49, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 585;
-          this.if_();
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 586;
-          this.for_();
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 587;
-          this.each();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 588;
-          this.while_();
-          break;
-        case 5:
-          this.enterOuterAlt(localctx, 5);
-          this.state = 589;
-          this.repeat();
-          break;
-        case 6:
-          this.enterOuterAlt(localctx, 6);
-          this.state = 590;
-          this.try_();
-          break;
-        case 7:
-          this.enterOuterAlt(localctx, 7);
-          this.state = 591;
-          this.switch_();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  if_() {
-    let localctx = new IfContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 88, _ElanParser.RULE_if);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 594;
-      this.match(_ElanParser.NL);
-      this.state = 595;
-      this.match(_ElanParser.IF);
-      this.state = 596;
-      this.expression(0);
-      this.state = 597;
-      this.statementBlock();
-      this.state = 606;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 50, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          this.state = 598;
-          this.match(_ElanParser.NL);
-          this.state = 599;
-          this.match(_ElanParser.ELSE);
-          this.state = 600;
-          this.match(_ElanParser.IF);
-          this.state = 601;
-          this.expression(0);
-          this.state = 602;
-          this.statementBlock();
-        }
-        this.state = 608;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 50, this._ctx);
-      }
-      this.state = 612;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 51, this._ctx);
-      if (la_ === 1) {
-        this.state = 609;
-        this.match(_ElanParser.NL);
-        this.state = 610;
-        this.match(_ElanParser.ELSE);
-        this.state = 611;
-        this.statementBlock();
-      }
-      this.state = 614;
-      this.match(_ElanParser.NL);
-      this.state = 615;
-      this.match(_ElanParser.END);
-      this.state = 616;
-      this.match(_ElanParser.IF);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  for_() {
-    let localctx = new ForContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 90, _ElanParser.RULE_for);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 618;
-      this.match(_ElanParser.NL);
-      this.state = 619;
-      this.match(_ElanParser.FOR);
-      this.state = 620;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 621;
-      this.match(_ElanParser.FROM);
-      this.state = 622;
-      this.expression(0);
-      this.state = 623;
-      this.match(_ElanParser.TO);
-      this.state = 624;
-      this.expression(0);
-      this.state = 630;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 52) {
-        this.state = 625;
-        this.match(_ElanParser.STEP);
-        this.state = 627;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-        if (_la === 84) {
-          this.state = 626;
-          this.match(_ElanParser.MINUS);
-        }
-        this.state = 629;
-        this.match(_ElanParser.LITERAL_INTEGER);
-      }
-      this.state = 632;
-      this.statementBlock();
-      this.state = 633;
-      this.match(_ElanParser.NL);
-      this.state = 634;
-      this.match(_ElanParser.END);
-      this.state = 635;
-      this.match(_ElanParser.FOR);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  each() {
-    let localctx = new EachContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 92, _ElanParser.RULE_each);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 637;
-      this.match(_ElanParser.NL);
-      this.state = 638;
-      this.match(_ElanParser.EACH);
-      this.state = 639;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 640;
-      this.match(_ElanParser.IN);
-      this.state = 641;
-      this.expression(0);
-      this.state = 642;
-      this.statementBlock();
-      this.state = 643;
-      this.match(_ElanParser.NL);
-      this.state = 644;
-      this.match(_ElanParser.END);
-      this.state = 645;
-      this.match(_ElanParser.EACH);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  while_() {
-    let localctx = new WhileContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 94, _ElanParser.RULE_while);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 647;
-      this.match(_ElanParser.NL);
-      this.state = 648;
-      this.match(_ElanParser.WHILE);
-      this.state = 649;
-      this.expression(0);
-      this.state = 650;
-      this.statementBlock();
-      this.state = 651;
-      this.match(_ElanParser.NL);
-      this.state = 652;
-      this.match(_ElanParser.END);
-      this.state = 653;
-      this.match(_ElanParser.WHILE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  repeat() {
-    let localctx = new RepeatContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 96, _ElanParser.RULE_repeat);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 655;
-      this.match(_ElanParser.NL);
-      this.state = 656;
-      this.match(_ElanParser.REPEAT);
-      this.state = 657;
-      this.statementBlock();
-      this.state = 658;
-      this.match(_ElanParser.NL);
-      this.state = 659;
-      this.match(_ElanParser.END);
-      this.state = 660;
-      this.match(_ElanParser.REPEAT);
-      this.state = 661;
-      this.match(_ElanParser.WHEN);
-      this.state = 662;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  try_() {
-    let localctx = new TryContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 98, _ElanParser.RULE_try);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 664;
-      this.match(_ElanParser.NL);
-      this.state = 665;
-      this.match(_ElanParser.TRY);
-      this.state = 666;
-      this.statementBlock();
-      this.state = 667;
-      this.match(_ElanParser.NL);
-      this.state = 668;
-      this.match(_ElanParser.CATCH);
-      this.state = 669;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 670;
-      this.statementBlock();
-      this.state = 671;
-      this.match(_ElanParser.NL);
-      this.state = 672;
-      this.match(_ElanParser.END);
-      this.state = 673;
-      this.match(_ElanParser.TRY);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  switch_() {
-    let localctx = new SwitchContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 100, _ElanParser.RULE_switch);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 675;
-      this.match(_ElanParser.NL);
-      this.state = 676;
-      this.match(_ElanParser.SWITCH);
-      this.state = 677;
-      this.expression(0);
-      this.state = 679;
-      this._errHandler.sync(this);
-      var _alt = 1;
-      do {
-        switch (_alt) {
-          case 1:
-            this.state = 678;
-            this.case_();
-            break;
-          default:
-            throw new Ln.error.NoViableAltException(this);
-        }
-        this.state = 681;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 54, this._ctx);
-      } while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER);
-      this.state = 683;
-      this.caseDefault();
-      this.state = 684;
-      this.match(_ElanParser.NL);
-      this.state = 685;
-      this.match(_ElanParser.END);
-      this.state = 686;
-      this.match(_ElanParser.SWITCH);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  case_() {
-    let localctx = new CaseContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 102, _ElanParser.RULE_case);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 688;
-      this.match(_ElanParser.NL);
-      this.state = 689;
-      this.match(_ElanParser.CASE);
-      this.state = 691;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 84) {
-        this.state = 690;
-        this.match(_ElanParser.MINUS);
-      }
-      this.state = 693;
-      this.literalValue();
-      this.state = 694;
-      this.statementBlock();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  caseDefault() {
-    let localctx = new CaseDefaultContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 104, _ElanParser.RULE_caseDefault);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 696;
-      this.match(_ElanParser.NL);
-      this.state = 697;
-      this.match(_ElanParser.DEFAULT);
-      this.state = 698;
-      this.statementBlock();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  expression(_p) {
-    if (_p === void 0) {
-      _p = 0;
-    }
-    const _parentctx = this._ctx;
-    const _parentState = this.state;
-    let localctx = new ExpressionContext(this, this._ctx, _parentState);
-    let _prevctx = localctx;
-    const _startState = 106;
-    this.enterRecursionRule(localctx, 106, _ElanParser.RULE_expression, _p);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 710;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 56, this._ctx);
-      switch (la_) {
-        case 1:
-          this.state = 701;
-          this.bracketedExpression();
-          break;
-        case 2:
-          this.state = 702;
-          this.functionCall();
-          break;
-        case 3:
-          this.state = 703;
-          this.value();
-          break;
-        case 4:
-          this.state = 704;
-          this.unaryOp();
-          this.state = 705;
-          this.expression(8);
-          break;
-        case 5:
-          this.state = 707;
-          this.newInstance();
-          break;
-        case 6:
-          this.state = 708;
-          this.input();
-          break;
-        case 7:
-          this.state = 709;
-          this.systemCall();
-          break;
-      }
-      this._ctx.stop = this._input.LT(-1);
-      this.state = 735;
-      this._errHandler.sync(this);
-      var _alt = this._interp.adaptivePredict(this._input, 58, this._ctx);
-      while (_alt != 2 && _alt != Ln.atn.ATN.INVALID_ALT_NUMBER) {
-        if (_alt === 1) {
-          if (this._parseListeners !== null) {
-            this.triggerExitRuleEvent();
-          }
-          _prevctx = localctx;
-          this.state = 733;
-          this._errHandler.sync(this);
-          var la_ = this._interp.adaptivePredict(this._input, 57, this._ctx);
-          switch (la_) {
-            case 1:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 712;
-              if (!this.precpred(this._ctx, 7)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 7)");
-              }
-              this.state = 713;
-              this.match(_ElanParser.POWER);
-              this.state = 714;
-              this.expression(8);
-              break;
-            case 2:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 715;
-              if (!this.precpred(this._ctx, 6)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 6)");
-              }
-              this.state = 716;
-              this.binaryOp();
-              this.state = 717;
-              this.expression(7);
-              break;
-            case 3:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 719;
-              if (!this.precpred(this._ctx, 11)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 11)");
-              }
-              this.state = 720;
-              this.index();
-              break;
-            case 4:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 721;
-              if (!this.precpred(this._ctx, 10)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 10)");
-              }
-              this.state = 722;
-              this.match(_ElanParser.DOT);
-              this.state = 723;
-              this.functionCall();
-              break;
-            case 5:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 724;
-              if (!this.precpred(this._ctx, 9)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 9)");
-              }
-              this.state = 725;
-              this.match(_ElanParser.DOT);
-              this.state = 726;
-              this.match(_ElanParser.IDENTIFIER);
-              break;
-            case 6:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 727;
-              if (!this.precpred(this._ctx, 4)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 4)");
-              }
-              this.state = 728;
-              this.ifExpression();
-              this.state = 729;
-              this.elseExpression();
-              break;
-            case 7:
-              localctx = new ExpressionContext(this, _parentctx, _parentState);
-              this.pushNewRecursionContext(localctx, _startState, _ElanParser.RULE_expression);
-              this.state = 731;
-              if (!this.precpred(this._ctx, 3)) {
-                throw new Ln.error.FailedPredicateException(this, "this.precpred(this._ctx, 3)");
-              }
-              this.state = 732;
-              this.withClause();
-              break;
-          }
-        }
-        this.state = 737;
-        this._errHandler.sync(this);
-        _alt = this._interp.adaptivePredict(this._input, 58, this._ctx);
-      }
-    } catch (error) {
-      if (error instanceof Ln.error.RecognitionException) {
-        localctx.exception = error;
-        this._errHandler.reportError(this, error);
-        this._errHandler.recover(this, error);
-      } else {
-        throw error;
-      }
-    } finally {
-      this.unrollRecursionContexts(_parentctx);
-    }
-    return localctx;
-  }
-  bracketedExpression() {
-    let localctx = new BracketedExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 108, _ElanParser.RULE_bracketedExpression);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 738;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 739;
-      this.expression(0);
-      this.state = 740;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  ifExpression() {
-    let localctx = new IfExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 110, _ElanParser.RULE_ifExpression);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 742;
-      this.match(_ElanParser.IF);
-      this.state = 743;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  elseExpression() {
-    let localctx = new ElseExpressionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 112, _ElanParser.RULE_elseExpression);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 745;
-      this.match(_ElanParser.ELSE);
-      this.state = 746;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  lambda() {
-    let localctx = new LambdaContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 114, _ElanParser.RULE_lambda);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 748;
-      this.match(_ElanParser.LAMBDA);
-      this.state = 749;
-      this.argumentList();
-      this.state = 750;
-      this.match(_ElanParser.ARROW);
-      this.state = 751;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  index() {
-    let localctx = new IndexContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 116, _ElanParser.RULE_index);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 753;
-      this.match(_ElanParser.OPEN_SQ_BRACKET);
-      this.state = 760;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 59, this._ctx);
-      switch (la_) {
-        case 1:
-          this.state = 754;
-          this.expression(0);
-          break;
-        case 2:
-          this.state = 755;
-          this.expression(0);
-          this.state = 756;
-          this.match(_ElanParser.COMMA);
-          this.state = 757;
-          this.expression(0);
-          break;
-        case 3:
-          this.state = 759;
-          this.range();
-          break;
-      }
-      this.state = 762;
-      this.match(_ElanParser.CLOSE_SQ_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  range() {
-    let localctx = new RangeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 118, _ElanParser.RULE_range);
-    try {
-      this.state = 773;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 60, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 764;
-          this.expression(0);
-          this.state = 765;
-          this.match(_ElanParser.DOUBLE_DOT);
-          this.state = 766;
-          this.expression(0);
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 768;
-          this.expression(0);
-          this.state = 769;
-          this.match(_ElanParser.DOUBLE_DOT);
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 771;
-          this.match(_ElanParser.DOUBLE_DOT);
-          this.state = 772;
-          this.expression(0);
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  value() {
-    let localctx = new ValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 120, _ElanParser.RULE_value);
-    var _la = 0;
-    try {
-      this.state = 784;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 62, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 775;
-          this.literal();
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 777;
-          this._errHandler.sync(this);
-          _la = this._input.LA(1);
-          if ((_la - 25 & ~31) === 0 && (1 << _la - 25 & 8651265) !== 0) {
-            this.state = 776;
-            this.scopeQualifier();
-          }
-          this.state = 779;
-          this.match(_ElanParser.IDENTIFIER);
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 780;
-          this.dataStructureDefinition();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 781;
-          this.match(_ElanParser.THIS);
-          break;
-        case 5:
-          this.enterOuterAlt(localctx, 5);
-          this.state = 782;
-          this.match(_ElanParser.DEFAULT);
-          this.state = 783;
-          this.type();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  scopeQualifier() {
-    let localctx = new ScopeQualifierContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 122, _ElanParser.RULE_scopeQualifier);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 792;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 48:
-          this.state = 786;
-          this.match(_ElanParser.PROPERTY);
-          break;
-        case 25:
-          this.state = 787;
-          this.match(_ElanParser.GLOBAL);
-          break;
-        case 34:
-          this.state = 788;
-          this.match(_ElanParser.LIBRARY);
-          break;
+        case 28:
+        case 29:
+        case 30:
+        case 32:
         case 43:
-          this.state = 789;
-          this.match(_ElanParser.PACKAGE);
-          this.state = 790;
-          this.match(_ElanParser.DOT);
-          this.state = 791;
-          this.namespace();
-          break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-      this.state = 794;
-      this.match(_ElanParser.DOT);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literal() {
-    let localctx = new LiteralContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 124, _ElanParser.RULE_literal);
-    try {
-      this.state = 798;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 65:
-        case 93:
-        case 95:
-        case 96:
-        case 97:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 796;
-          this.literalValue();
-          break;
-        case 73:
+        case 49:
+        case 50:
+        case 51:
+        case 52:
+        case 53:
+        case 55:
+        case 56:
+        case 57:
+        case 58:
+        case 67:
+        case 69:
+        case 70:
+        case 71:
+        case 72:
+        case 74:
+        case 75:
+        case 76:
         case 77:
-        case 98:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 797;
-          this.literalDataStructure();
-          break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalValue() {
-    let localctx = new LiteralValueContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 126, _ElanParser.RULE_literalValue);
-    try {
-      this.state = 805;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 65:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 800;
-          this.match(_ElanParser.BOOL_VALUE);
-          break;
-        case 95:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 801;
-          this.match(_ElanParser.LITERAL_INTEGER);
-          break;
-        case 96:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 802;
-          this.match(_ElanParser.LITERAL_FLOAT);
-          break;
-        case 97:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 803;
-          this.match(_ElanParser.LITERAL_CHAR);
-          break;
-        case 93:
-          this.enterOuterAlt(localctx, 5);
-          this.state = 804;
-          this.enumValue();
-          break;
-        default:
-          throw new Ln.error.NoViableAltException(this);
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  dataStructureDefinition() {
-    let localctx = new DataStructureDefinitionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 128, _ElanParser.RULE_dataStructureDefinition);
-    try {
-      this.state = 811;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 66, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 807;
-          this.listDefinition();
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 808;
-          this.arrayDefinition();
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 809;
-          this.tupleDefinition();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 810;
-          this.dictionaryDefinition();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalDataStructure() {
-    let localctx = new LiteralDataStructureContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 130, _ElanParser.RULE_literalDataStructure);
-    try {
-      this.state = 817;
-      this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 67, this._ctx);
-      switch (la_) {
-        case 1:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 813;
-          this.match(_ElanParser.LITERAL_STRING);
-          break;
-        case 2:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 814;
-          this.literalTuple();
-          break;
-        case 3:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 815;
-          this.literalList();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 816;
-          this.literalDictionary();
-          break;
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  tupleDefinition() {
-    let localctx = new TupleDefinitionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 132, _ElanParser.RULE_tupleDefinition);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 819;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 820;
-      this.expression(0);
-      this.state = 821;
-      this.match(_ElanParser.COMMA);
-      this.state = 822;
-      this.expression(0);
-      this.state = 827;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 823;
-        this.match(_ElanParser.COMMA);
-        this.state = 824;
-        this.expression(0);
-        this.state = 829;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 830;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalTuple() {
-    let localctx = new LiteralTupleContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 134, _ElanParser.RULE_literalTuple);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 832;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 833;
-      this.literal();
-      this.state = 834;
-      this.match(_ElanParser.COMMA);
-      this.state = 835;
-      this.literal();
-      this.state = 840;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 836;
-        this.match(_ElanParser.COMMA);
-        this.state = 837;
-        this.literal();
-        this.state = 842;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 843;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  deconstructedTuple() {
-    let localctx = new DeconstructedTupleContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 136, _ElanParser.RULE_deconstructedTuple);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 845;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 846;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 849;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      do {
-        this.state = 847;
-        this.match(_ElanParser.COMMA);
-        this.state = 848;
-        this.match(_ElanParser.IDENTIFIER);
-        this.state = 851;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      } while (_la === 81);
-      this.state = 853;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  listDefinition() {
-    let localctx = new ListDefinitionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 138, _ElanParser.RULE_listDefinition);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 855;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 856;
-      this.expression(0);
-      this.state = 861;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 857;
-        this.match(_ElanParser.COMMA);
-        this.state = 858;
-        this.expression(0);
-        this.state = 863;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 864;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalList() {
-    let localctx = new LiteralListContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 140, _ElanParser.RULE_literalList);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 866;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 867;
-      this.literal();
-      this.state = 872;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 868;
-        this.match(_ElanParser.COMMA);
-        this.state = 869;
-        this.literal();
-        this.state = 874;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 875;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  listDecomp() {
-    let localctx = new ListDecompContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 142, _ElanParser.RULE_listDecomp);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 877;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 878;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 879;
-      this.match(_ElanParser.COLON);
-      this.state = 880;
-      this.match(_ElanParser.IDENTIFIER);
-      this.state = 881;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  arrayDefinition() {
-    let localctx = new ArrayDefinitionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 144, _ElanParser.RULE_arrayDefinition);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 883;
-      this.match(_ElanParser.ARRAY);
-      this.state = 884;
-      this.genericSpecifier();
-      this.state = 885;
-      this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 887;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      if (_la === 95) {
-        this.state = 886;
-        this.match(_ElanParser.LITERAL_INTEGER);
-      }
-      this.state = 889;
-      this.match(_ElanParser.CLOSE_BRACKET);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  dictionaryDefinition() {
-    let localctx = new DictionaryDefinitionContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 146, _ElanParser.RULE_dictionaryDefinition);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 891;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 892;
-      this.kvp();
-      this.state = 897;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 893;
-        this.match(_ElanParser.COMMA);
-        this.state = 894;
-        this.kvp();
-        this.state = 899;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 900;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalDictionary() {
-    let localctx = new LiteralDictionaryContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 148, _ElanParser.RULE_literalDictionary);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 902;
-      this.match(_ElanParser.OPEN_BRACE);
-      this.state = 903;
-      this.literalKvp();
-      this.state = 908;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 904;
-        this.match(_ElanParser.COMMA);
-        this.state = 905;
-        this.literalKvp();
-        this.state = 910;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      }
-      this.state = 911;
-      this.match(_ElanParser.CLOSE_BRACE);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  kvp() {
-    let localctx = new KvpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 150, _ElanParser.RULE_kvp);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 913;
-      this.expression(0);
-      this.state = 914;
-      this.match(_ElanParser.COLON);
-      this.state = 915;
-      this.expression(0);
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  literalKvp() {
-    let localctx = new LiteralKvpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 152, _ElanParser.RULE_literalKvp);
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 917;
-      this.literal();
-      this.state = 918;
-      this.match(_ElanParser.COLON);
-      this.state = 919;
-      this.literal();
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  unaryOp() {
-    let localctx = new UnaryOpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 154, _ElanParser.RULE_unaryOp);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 921;
-      _la = this._input.LA(1);
-      if (!(_la === 38 || _la === 84)) {
-        this._errHandler.recoverInline(this);
-      } else {
-        this._errHandler.reportMatch(this);
-        this.consume();
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  binaryOp() {
-    let localctx = new BinaryOpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 156, _ElanParser.RULE_binaryOp);
-    try {
-      this.state = 926;
-      this._errHandler.sync(this);
-      switch (this._input.LA(1)) {
-        case 17:
-        case 36:
+        case 78:
+        case 79:
+        case 80:
+        case 81:
         case 83:
-        case 84:
         case 85:
         case 86:
         case 87:
-          this.enterOuterAlt(localctx, 1);
-          this.state = 923;
-          this.arithmeticOp();
-          break;
-        case 6:
-        case 41:
-        case 64:
-          this.enterOuterAlt(localctx, 2);
-          this.state = 924;
-          this.logicalOp();
-          break;
-        case 40:
         case 88:
         case 89:
         case 90:
         case 91:
         case 92:
-          this.enterOuterAlt(localctx, 3);
-          this.state = 925;
-          this.conditionalOp();
+          this.enterOuterAlt(localctx, 2);
+          this.state = 780;
+          this.expression();
           break;
         default:
           throw new Ln.error.NoViableAltException(this);
@@ -25583,73 +24348,25 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  arithmeticOp() {
-    let localctx = new ArithmeticOpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 158, _ElanParser.RULE_arithmeticOp);
+  paramsList() {
+    let localctx = new ParamsListContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 146, _ElanParser.RULE_paramsList);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 928;
+      this.state = 783;
+      this.paramDef();
+      this.state = 788;
+      this._errHandler.sync(this);
       _la = this._input.LA(1);
-      if (!(_la === 17 || _la === 36 || (_la - 83 & ~31) === 0 && (1 << _la - 83 & 31) !== 0)) {
-        this._errHandler.recoverInline(this);
-      } else {
-        this._errHandler.reportMatch(this);
-        this.consume();
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  logicalOp() {
-    let localctx = new LogicalOpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 160, _ElanParser.RULE_logicalOp);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 930;
-      _la = this._input.LA(1);
-      if (!(_la === 6 || _la === 41 || _la === 64)) {
-        this._errHandler.recoverInline(this);
-      } else {
-        this._errHandler.reportMatch(this);
-        this.consume();
-      }
-    } catch (re2) {
-      if (re2 instanceof Ln.error.RecognitionException) {
-        localctx.exception = re2;
-        this._errHandler.reportError(this, re2);
-        this._errHandler.recover(this, re2);
-      } else {
-        throw re2;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localctx;
-  }
-  conditionalOp() {
-    let localctx = new ConditionalOpContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 162, _ElanParser.RULE_conditionalOp);
-    var _la = 0;
-    try {
-      this.enterOuterAlt(localctx, 1);
-      this.state = 932;
-      _la = this._input.LA(1);
-      if (!(_la === 40 || (_la - 88 & ~31) === 0 && (1 << _la - 88 & 31) !== 0)) {
-        this._errHandler.recoverInline(this);
-      } else {
-        this._errHandler.reportMatch(this);
-        this.consume();
+      while (_la === 72) {
+        this.state = 784;
+        this.match(_ElanParser.COMMA);
+        this.state = 785;
+        this.paramDef();
+        this.state = 790;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
       }
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -25666,38 +24383,26 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   }
   type() {
     let localctx = new TypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 164, _ElanParser.RULE_type);
+    this.enterRule(localctx, 148, _ElanParser.RULE_type);
     try {
-      this.state = 940;
+      this.state = 794;
       this._errHandler.sync(this);
-      var la_ = this._interp.adaptivePredict(this._input, 77, this._ctx);
+      var la_ = this._interp.adaptivePredict(this._input, 70, this._ctx);
       switch (la_) {
         case 1:
           this.enterOuterAlt(localctx, 1);
-          this.state = 934;
-          this.match(_ElanParser.VALUE_TYPE);
+          this.state = 791;
+          this.typeTuple();
           break;
         case 2:
           this.enterOuterAlt(localctx, 2);
-          this.state = 935;
-          this.match(_ElanParser.TYPENAME);
+          this.state = 792;
+          this.typeName();
           break;
         case 3:
           this.enterOuterAlt(localctx, 3);
-          this.state = 936;
-          this.match(_ElanParser.TYPENAME);
-          this.state = 937;
-          this.genericSpecifier();
-          break;
-        case 4:
-          this.enterOuterAlt(localctx, 4);
-          this.state = 938;
-          this.tupleType();
-          break;
-        case 5:
-          this.enterOuterAlt(localctx, 5);
-          this.state = 939;
-          this.funcType();
+          this.state = 793;
+          this.typeGeneric();
           break;
       }
     } catch (re2) {
@@ -25713,22 +24418,195 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  dataStructureType() {
-    let localctx = new DataStructureTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 166, _ElanParser.RULE_dataStructureType);
+  enumValuesList() {
+    let localctx = new EnumValuesListContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 150, _ElanParser.RULE_enumValuesList);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 942;
+      this.state = 796;
+      this.identifier();
+      this.state = 801;
+      this._errHandler.sync(this);
       _la = this._input.LA(1);
-      if (!((_la - 67 & ~31) === 0 && (1 << _la - 67 & 15) !== 0)) {
+      while (_la === 72) {
+        this.state = 797;
+        this.match(_ElanParser.COMMA);
+        this.state = 798;
+        this.identifier();
+        this.state = 803;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  procRef() {
+    let localctx = new ProcRefContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 152, _ElanParser.RULE_procRef);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 807;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      if (_la === 43) {
+        this.state = 804;
+        this.thisInstance();
+        this.state = 805;
+        this.match(_ElanParser.DOT);
+      }
+      this.state = 812;
+      this._errHandler.sync(this);
+      var la_ = this._interp.adaptivePredict(this._input, 73, this._ctx);
+      if (la_ === 1) {
+        this.state = 809;
+        this.identifierWithOptIndexes();
+        this.state = 810;
+        this.match(_ElanParser.DOT);
+      }
+      this.state = 814;
+      this.methodName();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  assertActual() {
+    let localctx = new AssertActualContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 154, _ElanParser.RULE_assertActual);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 816;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  litValue() {
+    let localctx = new LitValueContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 156, _ElanParser.RULE_litValue);
+    try {
+      this.state = 824;
+      this._errHandler.sync(this);
+      switch (this._input.LA(1)) {
+        case 55:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 818;
+          this.match(_ElanParser.LIT_BOOLEAN);
+          break;
+        case 87:
+        case 88:
+        case 89:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 819;
+          this.litInt();
+          break;
+        case 90:
+          this.enterOuterAlt(localctx, 3);
+          this.state = 820;
+          this.litFloat();
+          break;
+        case 91:
+        case 92:
+          this.enterOuterAlt(localctx, 4);
+          this.state = 821;
+          this.litString();
+          break;
+        case 49:
+        case 50:
+        case 51:
+        case 52:
+        case 53:
+        case 86:
+          this.enterOuterAlt(localctx, 5);
+          this.state = 822;
+          this.enumValue();
+          break;
+        case -1:
+        case 2:
+        case 28:
+        case 32:
+        case 42:
+        case 56:
+        case 57:
+        case 58:
+        case 63:
+        case 66:
+        case 67:
+        case 68:
+        case 70:
+        case 71:
+        case 72:
+        case 74:
+        case 75:
+        case 76:
+        case 77:
+        case 78:
+        case 79:
+        case 80:
+        case 81:
+          this.enterOuterAlt(localctx, 6);
+          this.state = 823;
+          this.litRegExp();
+          break;
+        default:
+          throw new Ln.error.NoViableAltException(this);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  litInt() {
+    let localctx = new LitIntContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 158, _ElanParser.RULE_litInt);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 826;
+      _la = this._input.LA(1);
+      if (!((_la - 87 & ~31) === 0 && (1 << _la - 87 & 7) !== 0)) {
         this._errHandler.recoverInline(this);
       } else {
         this._errHandler.reportMatch(this);
         this.consume();
       }
-      this.state = 943;
-      this.genericSpecifier();
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
         localctx.exception = re2;
@@ -25742,32 +24620,157 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  genericSpecifier() {
-    let localctx = new GenericSpecifierContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 168, _ElanParser.RULE_genericSpecifier);
+  litFloat() {
+    let localctx = new LitFloatContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 160, _ElanParser.RULE_litFloat);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 828;
+      this.match(_ElanParser.LITERAL_FLOAT);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  enumValue() {
+    let localctx = new EnumValueContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 162, _ElanParser.RULE_enumValue);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 830;
+      this.typeName();
+      this.state = 831;
+      this.match(_ElanParser.DOT);
+      this.state = 832;
+      this.identifier();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  litRegExp() {
+    let localctx = new LitRegExpContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 164, _ElanParser.RULE_litRegExp);
+    try {
+      this.enterOuterAlt(localctx, 1);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  litString() {
+    let localctx = new LitStringContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 166, _ElanParser.RULE_litString);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 945;
-      this.match(_ElanParser.LT);
-      this.state = 946;
-      this.match(_ElanParser.OF);
-      this.state = 947;
-      this.type();
-      this.state = 952;
+      this.state = 836;
+      _la = this._input.LA(1);
+      if (!(_la === 91 || _la === 92)) {
+        this._errHandler.recoverInline(this);
+      } else {
+        this._errHandler.reportMatch(this);
+        this.consume();
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  thisInstance() {
+    let localctx = new ThisInstanceContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 168, _ElanParser.RULE_thisInstance);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 838;
+      this.match(_ElanParser.THIS);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  index() {
+    let localctx = new IndexContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 170, _ElanParser.RULE_index);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 840;
+      this.match(_ElanParser.OPEN_SQ_BRACKET);
+      this.state = 841;
+      this.expression();
+      this.state = 842;
+      this.match(_ElanParser.CLOSE_SQ_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  identifierWithOptIndexes() {
+    let localctx = new IdentifierWithOptIndexesContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 172, _ElanParser.RULE_identifierWithOptIndexes);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 844;
+      this.identifier();
+      this.state = 848;
       this._errHandler.sync(this);
       _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 948;
-        this.match(_ElanParser.COMMA);
-        this.state = 949;
-        this.type();
-        this.state = 954;
+      while (_la === 67) {
+        this.state = 845;
+        this.index();
+        this.state = 850;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
       }
-      this.state = 955;
-      this.match(_ElanParser.GT);
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
         localctx.exception = re2;
@@ -25781,29 +24784,226 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  tupleType() {
-    let localctx = new TupleTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 170, _ElanParser.RULE_tupleType);
+  propertyRef() {
+    let localctx = new PropertyRefContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 174, _ElanParser.RULE_propertyRef);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 851;
+      this.thisInstance();
+      this.state = 852;
+      this.match(_ElanParser.DOT);
+      this.state = 853;
+      this.identifierWithOptIndexes();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  expression() {
+    let localctx = new ExpressionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 176, _ElanParser.RULE_expression);
+    try {
+      this.state = 860;
+      this._errHandler.sync(this);
+      var la_ = this._interp.adaptivePredict(this._input, 76, this._ctx);
+      switch (la_) {
+        case 1:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 855;
+          this.newInstance();
+          break;
+        case 2:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 856;
+          this.ifExpression();
+          break;
+        case 3:
+          this.enterOuterAlt(localctx, 3);
+          this.state = 857;
+          this.unaryExpression();
+          break;
+        case 4:
+          this.enterOuterAlt(localctx, 4);
+          this.state = 858;
+          this.term();
+          break;
+        case 5:
+          this.enterOuterAlt(localctx, 5);
+          this.state = 859;
+          this.binaryExpression();
+          break;
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  term() {
+    let localctx = new TermContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 178, _ElanParser.RULE_term);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 957;
+      this.state = 864;
+      this._errHandler.sync(this);
+      switch (this._input.LA(1)) {
+        case 43:
+          this.state = 862;
+          this.thisInstance();
+          break;
+        case 2:
+        case 28:
+        case 32:
+        case 42:
+        case 49:
+        case 50:
+        case 51:
+        case 52:
+        case 53:
+        case 55:
+        case 56:
+        case 57:
+        case 58:
+        case 63:
+        case 66:
+        case 67:
+        case 68:
+        case 69:
+        case 70:
+        case 71:
+        case 72:
+        case 74:
+        case 75:
+        case 76:
+        case 77:
+        case 78:
+        case 79:
+        case 80:
+        case 81:
+        case 85:
+        case 86:
+        case 87:
+        case 88:
+        case 89:
+        case 90:
+        case 91:
+        case 92:
+          this.state = 863;
+          this.chainable();
+          break;
+        default:
+          throw new Ln.error.NoViableAltException(this);
+      }
+      this.state = 870;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      while (_la === 71) {
+        this.state = 866;
+        this.match(_ElanParser.DOT);
+        this.state = 867;
+        this.chainable();
+        this.state = 872;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  chainable() {
+    let localctx = new ChainableContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 180, _ElanParser.RULE_chainable);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 879;
+      this._errHandler.sync(this);
+      var la_ = this._interp.adaptivePredict(this._input, 79, this._ctx);
+      switch (la_) {
+        case 1:
+          this.state = 873;
+          this.identifier();
+          break;
+        case 2:
+          this.state = 874;
+          this.methodCall();
+          break;
+        case 3:
+          this.state = 875;
+          this.bracketedExpression();
+          break;
+        case 4:
+          this.state = 876;
+          this.tuple();
+          break;
+        case 5:
+          this.state = 877;
+          this.litValue();
+          break;
+        case 6:
+          this.state = 878;
+          this.list();
+          break;
+      }
+      this.state = 884;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      while (_la === 67) {
+        this.state = 881;
+        this.index();
+        this.state = 886;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  bracketedExpression() {
+    let localctx = new BracketedExpressionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 182, _ElanParser.RULE_bracketedExpression);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 887;
       this.match(_ElanParser.OPEN_BRACKET);
-      this.state = 958;
-      this.type();
-      this.state = 961;
-      this._errHandler.sync(this);
-      _la = this._input.LA(1);
-      do {
-        this.state = 959;
-        this.match(_ElanParser.COMMA);
-        this.state = 960;
-        this.type();
-        this.state = 963;
-        this._errHandler.sync(this);
-        _la = this._input.LA(1);
-      } while (_la === 81);
-      this.state = 965;
+      this.state = 888;
+      this.expression();
+      this.state = 889;
       this.match(_ElanParser.CLOSE_BRACKET);
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -25818,25 +25018,139 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  typeList() {
-    let localctx = new TypeListContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 172, _ElanParser.RULE_typeList);
+  unaryExpression() {
+    let localctx = new UnaryExpressionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 184, _ElanParser.RULE_unaryExpression);
     var _la = 0;
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 967;
-      this.type();
-      this.state = 972;
+      this.state = 891;
+      _la = this._input.LA(1);
+      if (!(_la === 30 || _la === 75)) {
+        this._errHandler.recoverInline(this);
+      } else {
+        this._errHandler.reportMatch(this);
+        this.consume();
+      }
+      this.state = 892;
+      this.term();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  binaryExpression() {
+    let localctx = new BinaryExpressionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 186, _ElanParser.RULE_binaryExpression);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 894;
+      this.term();
+      this.state = 895;
+      this.binaryOperator();
+      this.state = 896;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  tuple() {
+    let localctx = new TupleContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 188, _ElanParser.RULE_tuple);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 898;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 899;
+      this.expression();
+      this.state = 900;
+      this.match(_ElanParser.COMMA);
+      this.state = 901;
+      this.expression();
+      this.state = 906;
       this._errHandler.sync(this);
       _la = this._input.LA(1);
-      while (_la === 81) {
-        this.state = 968;
+      while (_la === 72) {
+        this.state = 902;
         this.match(_ElanParser.COMMA);
-        this.state = 969;
-        this.type();
-        this.state = 974;
+        this.state = 903;
+        this.expression();
+        this.state = 908;
         this._errHandler.sync(this);
         _la = this._input.LA(1);
+      }
+      this.state = 909;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  methodCall() {
+    let localctx = new MethodCallContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 190, _ElanParser.RULE_methodCall);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 911;
+      this.methodName();
+      this.state = 912;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 913;
+      this.argList();
+      this.state = 914;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  binaryOperator() {
+    let localctx = new BinaryOperatorContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 192, _ElanParser.RULE_binaryOperator);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 916;
+      _la = this._input.LA(1);
+      if (!((_la - 2 & ~31) === 0 && (1 << _la - 2 & 1140850689) !== 0 || (_la - 56 & ~31) === 0 && (1 << _la - 56 & 66846723) !== 0)) {
+        this._errHandler.recoverInline(this);
+      } else {
+        this._errHandler.reportMatch(this);
+        this.consume();
       }
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
@@ -25851,25 +25165,343 @@ var ElanParser = class _ElanParser extends Ln.Parser {
     }
     return localctx;
   }
-  funcType() {
-    let localctx = new FuncTypeContext(this, this._ctx, this.state);
-    this.enterRule(localctx, 174, _ElanParser.RULE_funcType);
+  ifExpression() {
+    let localctx = new IfExpressionContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 194, _ElanParser.RULE_ifExpression);
     try {
       this.enterOuterAlt(localctx, 1);
-      this.state = 975;
-      this.match(_ElanParser.T__0);
-      this.state = 976;
-      this.match(_ElanParser.LT);
-      this.state = 977;
-      this.match(_ElanParser.OF);
-      this.state = 978;
-      this.typeList();
-      this.state = 979;
-      this.match(_ElanParser.ARROW);
-      this.state = 980;
+      this.state = 918;
+      this.match(_ElanParser.IF_);
+      this.state = 919;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 920;
+      this.expression();
+      this.state = 921;
+      this.match(_ElanParser.COMMA);
+      this.state = 922;
+      this.expression();
+      this.state = 923;
+      this.match(_ElanParser.COMMA);
+      this.state = 924;
+      this.expression();
+      this.state = 925;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  newInstance() {
+    let localctx = new NewInstanceContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 196, _ElanParser.RULE_newInstance);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 927;
+      this.match(_ElanParser.NEW);
+      this.state = 928;
       this.type();
-      this.state = 981;
+      this.state = 929;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 930;
+      this.argList();
+      this.state = 931;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  paramDef() {
+    let localctx = new ParamDefContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 198, _ElanParser.RULE_paramDef);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 933;
+      this.identifier();
+      this.state = 934;
+      this.match(_ElanParser.AS);
+      this.state = 935;
+      this.type();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  typeGeneric() {
+    let localctx = new TypeGenericContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 200, _ElanParser.RULE_typeGeneric);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 937;
+      this.typeName();
+      this.state = 938;
+      this.match(_ElanParser.LT);
+      this.state = 939;
+      this.match(_ElanParser.OF);
+      this.state = 940;
+      this.type();
+      this.state = 945;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      while (_la === 72) {
+        this.state = 941;
+        this.match(_ElanParser.COMMA);
+        this.state = 942;
+        this.type();
+        this.state = 947;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+      this.state = 948;
       this.match(_ElanParser.GT);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  typeTuple() {
+    let localctx = new TypeTupleContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 202, _ElanParser.RULE_typeTuple);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 950;
+      this.match(_ElanParser.OPEN_BRACKET);
+      this.state = 951;
+      this.type();
+      this.state = 954;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      do {
+        this.state = 952;
+        this.match(_ElanParser.COMMA);
+        this.state = 953;
+        this.type();
+        this.state = 956;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      } while (_la === 72);
+      this.state = 958;
+      this.match(_ElanParser.CLOSE_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  lambda() {
+    let localctx = new LambdaContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 204, _ElanParser.RULE_lambda);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 960;
+      this.match(_ElanParser.LAMBDA);
+      this.state = 963;
+      this._errHandler.sync(this);
+      var la_ = this._interp.adaptivePredict(this._input, 84, this._ctx);
+      switch (la_) {
+        case 1:
+          this.state = 961;
+          this.paramsList();
+          break;
+        case 2:
+          this.state = 962;
+          this.argList();
+          break;
+      }
+      this.state = 965;
+      this.match(_ElanParser.ARROW);
+      this.state = 966;
+      this.expression();
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  list() {
+    let localctx = new ListContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 206, _ElanParser.RULE_list);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 968;
+      this.match(_ElanParser.OPEN_SQ_BRACKET);
+      this.state = 969;
+      this.expression();
+      this.state = 974;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      while (_la === 72) {
+        this.state = 970;
+        this.match(_ElanParser.COMMA);
+        this.state = 971;
+        this.expression();
+        this.state = 976;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+      this.state = 977;
+      this.match(_ElanParser.CLOSE_SQ_BRACKET);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  interpolatedString() {
+    let localctx = new InterpolatedStringContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 208, _ElanParser.RULE_interpolatedString);
+    var _la = 0;
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 979;
+      this.match(_ElanParser.INTERPOLATED_STRING_PREFIX);
+      this.state = 980;
+      this.match(_ElanParser.DOUBLE_QUOTES);
+      this.state = 984;
+      this._errHandler.sync(this);
+      _la = this._input.LA(1);
+      while (_la === 65 || _la === 94) {
+        this.state = 981;
+        this.segment();
+        this.state = 986;
+        this._errHandler.sync(this);
+        _la = this._input.LA(1);
+      }
+      this.state = 987;
+      this.match(_ElanParser.DOUBLE_QUOTES);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  segment() {
+    let localctx = new SegmentContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 210, _ElanParser.RULE_segment);
+    try {
+      this.state = 991;
+      this._errHandler.sync(this);
+      switch (this._input.LA(1)) {
+        case 94:
+          this.enterOuterAlt(localctx, 1);
+          this.state = 989;
+          this.textSegment();
+          break;
+        case 65:
+          this.enterOuterAlt(localctx, 2);
+          this.state = 990;
+          this.fieldSegment();
+          break;
+        default:
+          throw new Ln.error.NoViableAltException(this);
+      }
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  textSegment() {
+    let localctx = new TextSegmentContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 212, _ElanParser.RULE_textSegment);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 993;
+      this.match(_ElanParser.TEXT);
+    } catch (re2) {
+      if (re2 instanceof Ln.error.RecognitionException) {
+        localctx.exception = re2;
+        this._errHandler.reportError(this, re2);
+        this._errHandler.recover(this, re2);
+      } else {
+        throw re2;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localctx;
+  }
+  fieldSegment() {
+    let localctx = new FieldSegmentContext(this, this._ctx, this.state);
+    this.enterRule(localctx, 214, _ElanParser.RULE_fieldSegment);
+    try {
+      this.enterOuterAlt(localctx, 1);
+      this.state = 995;
+      this.match(_ElanParser.OPEN_BRACE);
+      this.state = 996;
+      this.expression();
+      this.state = 997;
+      this.match(_ElanParser.CLOSE_BRACE);
     } catch (re2) {
       if (re2 instanceof Ln.error.RecognitionException) {
         localctx.exception = re2;
@@ -25885,195 +25517,209 @@ var ElanParser = class _ElanParser extends Ln.Parser {
   }
 };
 ElanParser.EOF = Ln.Token.EOF;
-ElanParser.T__0 = 1;
-ElanParser.NL = 2;
-ElanParser.SINGLE_LINE_COMMENT = 3;
-ElanParser.COMMENT_MARKER = 4;
-ElanParser.ABSTRACT = 5;
-ElanParser.AND = 6;
-ElanParser.AS = 7;
-ElanParser.ASSERT = 8;
-ElanParser.CALL = 9;
-ElanParser.CASE = 10;
-ElanParser.CATCH = 11;
-ElanParser.CLASS = 12;
-ElanParser.CONSTANT = 13;
-ElanParser.CONSTRUCTOR = 14;
-ElanParser.CURRY = 15;
-ElanParser.DEFAULT = 16;
-ElanParser.DIV = 17;
-ElanParser.EACH = 18;
-ElanParser.ELSE = 19;
-ElanParser.END = 20;
-ElanParser.ENUM = 21;
-ElanParser.FOR = 22;
-ElanParser.FROM = 23;
-ElanParser.FUNCTION = 24;
-ElanParser.GLOBAL = 25;
-ElanParser.IF = 26;
-ElanParser.IMMUTABLE = 27;
-ElanParser.IMPORT = 28;
-ElanParser.IN = 29;
-ElanParser.INHERITS = 30;
-ElanParser.INPUT = 31;
-ElanParser.LAMBDA = 32;
-ElanParser.LET = 33;
-ElanParser.LIBRARY = 34;
-ElanParser.MAIN = 35;
-ElanParser.MOD = 36;
-ElanParser.NEW = 37;
-ElanParser.NOT = 38;
-ElanParser.OF = 39;
-ElanParser.IS = 40;
-ElanParser.OR = 41;
-ElanParser.OUT = 42;
-ElanParser.PACKAGE = 43;
-ElanParser.PARTIAL = 44;
-ElanParser.PRINT = 45;
-ElanParser.PRIVATE = 46;
-ElanParser.PROCEDURE = 47;
-ElanParser.PROPERTY = 48;
-ElanParser.REPEAT = 49;
-ElanParser.RETURN = 50;
-ElanParser.SET = 51;
-ElanParser.STEP = 52;
-ElanParser.SWITCH = 53;
-ElanParser.SYSTEM = 54;
-ElanParser.TEST = 55;
-ElanParser.THIS = 56;
-ElanParser.THROW = 57;
-ElanParser.TO = 58;
-ElanParser.TRY = 59;
-ElanParser.VAR = 60;
-ElanParser.WHEN = 61;
-ElanParser.WHILE = 62;
-ElanParser.WITH = 63;
-ElanParser.XOR = 64;
-ElanParser.BOOL_VALUE = 65;
-ElanParser.VALUE_TYPE = 66;
-ElanParser.ARRAY = 67;
-ElanParser.LIST = 68;
-ElanParser.DICTIONARY = 69;
-ElanParser.ITERABLE = 70;
-ElanParser.EQUALS = 71;
-ElanParser.ARROW = 72;
-ElanParser.OPEN_BRACE = 73;
-ElanParser.CLOSE_BRACE = 74;
-ElanParser.OPEN_SQ_BRACKET = 75;
-ElanParser.CLOSE_SQ_BRACKET = 76;
-ElanParser.OPEN_BRACKET = 77;
-ElanParser.CLOSE_BRACKET = 78;
-ElanParser.DOUBLE_DOT = 79;
-ElanParser.DOT = 80;
-ElanParser.COMMA = 81;
-ElanParser.COLON = 82;
-ElanParser.PLUS = 83;
-ElanParser.MINUS = 84;
-ElanParser.MULT = 85;
-ElanParser.DIVIDE = 86;
-ElanParser.POWER = 87;
-ElanParser.LT = 88;
-ElanParser.GT = 89;
-ElanParser.LE = 90;
-ElanParser.GE = 91;
-ElanParser.IS_NOT = 92;
-ElanParser.TYPENAME = 93;
-ElanParser.IDENTIFIER = 94;
-ElanParser.LITERAL_INTEGER = 95;
-ElanParser.LITERAL_FLOAT = 96;
-ElanParser.LITERAL_CHAR = 97;
-ElanParser.LITERAL_STRING = 98;
-ElanParser.WHITESPACES = 99;
-ElanParser.NEWLINE = 100;
-ElanParser.WS = 101;
+ElanParser.ABSTRACT = 1;
+ElanParser.AND = 2;
+ElanParser.AS = 3;
+ElanParser.ASSERT = 4;
+ElanParser.ASSIGN = 5;
+ElanParser.BE = 6;
+ElanParser.CALL = 7;
+ElanParser.CATCH = 8;
+ElanParser.CLASS = 9;
+ElanParser.CONSTANT = 10;
+ElanParser.CONSTRUCTOR = 11;
+ElanParser.COPY = 12;
+ElanParser.DIV = 13;
+ElanParser.ELIF = 14;
+ElanParser.ELSE = 15;
+ElanParser.END = 16;
+ElanParser.ENUM = 17;
+ElanParser.FOR = 18;
+ElanParser.FROM = 19;
+ElanParser.FUNCTION = 20;
+ElanParser.IF = 21;
+ElanParser.IN = 22;
+ElanParser.INHERITS = 23;
+ElanParser.INPUT = 24;
+ElanParser.LAMBDA = 25;
+ElanParser.LET = 26;
+ElanParser.MAIN = 27;
+ElanParser.MOD = 28;
+ElanParser.NEW = 29;
+ElanParser.NOT = 30;
+ElanParser.OF = 31;
+ElanParser.OR = 32;
+ElanParser.PRINT = 33;
+ElanParser.PRIVATE = 34;
+ElanParser.PROCEDURE = 35;
+ElanParser.PROPERTY = 36;
+ElanParser.RETURN = 37;
+ElanParser.RETURNS = 38;
+ElanParser.SET = 39;
+ElanParser.STEP = 40;
+ElanParser.TEST = 41;
+ElanParser.THEN = 42;
+ElanParser.THIS = 43;
+ElanParser.THROW = 44;
+ElanParser.TO = 45;
+ElanParser.TRY = 46;
+ElanParser.VARIABLE = 47;
+ElanParser.WHILE = 48;
+ElanParser.INT_NAME = 49;
+ElanParser.FLOAT_NAME = 50;
+ElanParser.BOOL_NAME = 51;
+ElanParser.STRING_NAME = 52;
+ElanParser.LIST_NAME = 53;
+ElanParser.COMMENT = 54;
+ElanParser.LIT_BOOLEAN = 55;
+ElanParser.EQUAL = 56;
+ElanParser.NOT_EQUAL = 57;
+ElanParser.ARROW = 58;
+ElanParser.BINARY_PREFIX = 59;
+ElanParser.HEX_PREFIX = 60;
+ElanParser.INTERPOLATED_STRING_PREFIX = 61;
+ElanParser.WS = 62;
+ElanParser.NL = 63;
+ElanParser.SINGLE_EQUALS = 64;
+ElanParser.OPEN_BRACE = 65;
+ElanParser.CLOSE_BRACE = 66;
+ElanParser.OPEN_SQ_BRACKET = 67;
+ElanParser.CLOSE_SQ_BRACKET = 68;
+ElanParser.OPEN_BRACKET = 69;
+ElanParser.CLOSE_BRACKET = 70;
+ElanParser.DOT = 71;
+ElanParser.COMMA = 72;
+ElanParser.COLON = 73;
+ElanParser.PLUS = 74;
+ElanParser.MINUS = 75;
+ElanParser.MULT = 76;
+ElanParser.DIVIDE = 77;
+ElanParser.LT = 78;
+ElanParser.GT = 79;
+ElanParser.LE = 80;
+ElanParser.GE = 81;
+ElanParser.DOUBLE_QUOTES = 82;
+ElanParser.IF_ = 83;
+ElanParser.NAME_STARTING_TEST_ = 84;
+ElanParser.NAME_STARTING_LC = 85;
+ElanParser.NAME_STARTING_UC = 86;
+ElanParser.LITERAL_BINARY = 87;
+ElanParser.LITERAL_HEX = 88;
+ElanParser.LITERAL_INTEGER = 89;
+ElanParser.LITERAL_FLOAT = 90;
+ElanParser.INTERPOLATED_STRING = 91;
+ElanParser.LITERAL_STRING = 92;
+ElanParser.WHITESPACES = 93;
+ElanParser.TEXT = 94;
+ElanParser.GHOSTED = 95;
 ElanParser.RULE_file = 0;
-ElanParser.RULE_importStatement = 1;
-ElanParser.RULE_namespace = 2;
-ElanParser.RULE_main = 3;
+ElanParser.RULE_global = 1;
+ElanParser.RULE_main = 2;
+ElanParser.RULE_function = 3;
 ElanParser.RULE_test = 4;
-ElanParser.RULE_statementBlock = 5;
-ElanParser.RULE_testStatements = 6;
-ElanParser.RULE_assert = 7;
-ElanParser.RULE_callStatement = 8;
-ElanParser.RULE_throwException = 9;
-ElanParser.RULE_printStatement = 10;
-ElanParser.RULE_varDef = 11;
-ElanParser.RULE_assignment = 12;
-ElanParser.RULE_inlineAsignment = 13;
-ElanParser.RULE_assignableValue = 14;
-ElanParser.RULE_procedureCall = 15;
-ElanParser.RULE_functionCall = 16;
-ElanParser.RULE_systemCall = 17;
-ElanParser.RULE_input = 18;
-ElanParser.RULE_argument = 19;
-ElanParser.RULE_argumentList = 20;
-ElanParser.RULE_procedureDef = 21;
-ElanParser.RULE_procedureSignature = 22;
-ElanParser.RULE_procedureParameterList = 23;
-ElanParser.RULE_parameterList = 24;
-ElanParser.RULE_parameter = 25;
-ElanParser.RULE_procedureParameter = 26;
-ElanParser.RULE_functionDef = 27;
-ElanParser.RULE_functionSignature = 28;
-ElanParser.RULE_constantDef = 29;
-ElanParser.RULE_enumDef = 30;
-ElanParser.RULE_enumType = 31;
-ElanParser.RULE_enumValue = 32;
-ElanParser.RULE_classDef = 33;
-ElanParser.RULE_mutableClass = 34;
-ElanParser.RULE_abstractClass = 35;
-ElanParser.RULE_immutableClass = 36;
-ElanParser.RULE_abstractImmutableClass = 37;
-ElanParser.RULE_inherits = 38;
-ElanParser.RULE_property = 39;
-ElanParser.RULE_econstructor = 40;
-ElanParser.RULE_newInstance = 41;
-ElanParser.RULE_withClause = 42;
-ElanParser.RULE_proceduralControlFlow = 43;
-ElanParser.RULE_if = 44;
-ElanParser.RULE_for = 45;
-ElanParser.RULE_each = 46;
-ElanParser.RULE_while = 47;
-ElanParser.RULE_repeat = 48;
-ElanParser.RULE_try = 49;
-ElanParser.RULE_switch = 50;
-ElanParser.RULE_case = 51;
-ElanParser.RULE_caseDefault = 52;
-ElanParser.RULE_expression = 53;
-ElanParser.RULE_bracketedExpression = 54;
-ElanParser.RULE_ifExpression = 55;
-ElanParser.RULE_elseExpression = 56;
-ElanParser.RULE_lambda = 57;
-ElanParser.RULE_index = 58;
-ElanParser.RULE_range = 59;
-ElanParser.RULE_value = 60;
-ElanParser.RULE_scopeQualifier = 61;
-ElanParser.RULE_literal = 62;
-ElanParser.RULE_literalValue = 63;
-ElanParser.RULE_dataStructureDefinition = 64;
-ElanParser.RULE_literalDataStructure = 65;
-ElanParser.RULE_tupleDefinition = 66;
-ElanParser.RULE_literalTuple = 67;
-ElanParser.RULE_deconstructedTuple = 68;
-ElanParser.RULE_listDefinition = 69;
-ElanParser.RULE_literalList = 70;
-ElanParser.RULE_listDecomp = 71;
-ElanParser.RULE_arrayDefinition = 72;
-ElanParser.RULE_dictionaryDefinition = 73;
-ElanParser.RULE_literalDictionary = 74;
-ElanParser.RULE_kvp = 75;
-ElanParser.RULE_literalKvp = 76;
-ElanParser.RULE_unaryOp = 77;
-ElanParser.RULE_binaryOp = 78;
-ElanParser.RULE_arithmeticOp = 79;
-ElanParser.RULE_logicalOp = 80;
-ElanParser.RULE_conditionalOp = 81;
-ElanParser.RULE_type = 82;
-ElanParser.RULE_dataStructureType = 83;
-ElanParser.RULE_genericSpecifier = 84;
-ElanParser.RULE_tupleType = 85;
-ElanParser.RULE_typeList = 86;
-ElanParser.RULE_funcType = 87;
+ElanParser.RULE_procedure = 5;
+ElanParser.RULE_concreteClass = 6;
+ElanParser.RULE_abstractClass = 7;
+ElanParser.RULE_commentGlobal = 8;
+ElanParser.RULE_ordinaryStatement = 9;
+ElanParser.RULE_ifStatement = 10;
+ElanParser.RULE_whileLoop = 11;
+ElanParser.RULE_forLoop = 12;
+ElanParser.RULE_tryStatement = 13;
+ElanParser.RULE_commentStatement = 14;
+ElanParser.RULE_econstructor = 15;
+ElanParser.RULE_functionMethod = 16;
+ElanParser.RULE_procedureMethod = 17;
+ElanParser.RULE_copyMethod = 18;
+ElanParser.RULE_commentMember = 19;
+ElanParser.RULE_mainTop = 20;
+ElanParser.RULE_mainBottom = 21;
+ElanParser.RULE_functionTop = 22;
+ElanParser.RULE_functionBottom = 23;
+ElanParser.RULE_testTop = 24;
+ElanParser.RULE_testBottom = 25;
+ElanParser.RULE_procedureTop = 26;
+ElanParser.RULE_procedureBottom = 27;
+ElanParser.RULE_concreteClassTop = 28;
+ElanParser.RULE_concreteClassBottom = 29;
+ElanParser.RULE_abstractClassTop = 30;
+ElanParser.RULE_abstractClassBottom = 31;
+ElanParser.RULE_constant = 32;
+ElanParser.RULE_enum = 33;
+ElanParser.RULE_assert = 34;
+ElanParser.RULE_letStatement = 35;
+ElanParser.RULE_print = 36;
+ElanParser.RULE_variableDefinition = 37;
+ElanParser.RULE_assignment = 38;
+ElanParser.RULE_inputStatement = 39;
+ElanParser.RULE_procedureCall = 40;
+ElanParser.RULE_throwStatement = 41;
+ElanParser.RULE_returnStatement = 42;
+ElanParser.RULE_elseIfClause = 43;
+ElanParser.RULE_elseClause = 44;
+ElanParser.RULE_catchStatement = 45;
+ElanParser.RULE_ifStatementTop = 46;
+ElanParser.RULE_ifStatementBottom = 47;
+ElanParser.RULE_whileLoopTop = 48;
+ElanParser.RULE_whileLoopBottom = 49;
+ElanParser.RULE_forLoopTop = 50;
+ElanParser.RULE_forLoopBottom = 51;
+ElanParser.RULE_tryStatementTop = 52;
+ElanParser.RULE_tryStatementBottom = 53;
+ElanParser.RULE_constructorTop = 54;
+ElanParser.RULE_constructorBottom = 55;
+ElanParser.RULE_property = 56;
+ElanParser.RULE_functionMethodTop = 57;
+ElanParser.RULE_functionMethodBottom = 58;
+ElanParser.RULE_procedureMethodTop = 59;
+ElanParser.RULE_procedureMethodBottom = 60;
+ElanParser.RULE_copyMethodTop = 61;
+ElanParser.RULE_copyMethodBottom = 62;
+ElanParser.RULE_abstractFunction = 63;
+ElanParser.RULE_abstractProcedure = 64;
+ElanParser.RULE_identifier = 65;
+ElanParser.RULE_assignable = 66;
+ElanParser.RULE_methodName = 67;
+ElanParser.RULE_testName = 68;
+ElanParser.RULE_typeName = 69;
+ElanParser.RULE_constantValue = 70;
+ElanParser.RULE_argList = 71;
+ElanParser.RULE_argument = 72;
+ElanParser.RULE_paramsList = 73;
+ElanParser.RULE_type = 74;
+ElanParser.RULE_enumValuesList = 75;
+ElanParser.RULE_procRef = 76;
+ElanParser.RULE_assertActual = 77;
+ElanParser.RULE_litValue = 78;
+ElanParser.RULE_litInt = 79;
+ElanParser.RULE_litFloat = 80;
+ElanParser.RULE_enumValue = 81;
+ElanParser.RULE_litRegExp = 82;
+ElanParser.RULE_litString = 83;
+ElanParser.RULE_thisInstance = 84;
+ElanParser.RULE_index = 85;
+ElanParser.RULE_identifierWithOptIndexes = 86;
+ElanParser.RULE_propertyRef = 87;
+ElanParser.RULE_expression = 88;
+ElanParser.RULE_term = 89;
+ElanParser.RULE_chainable = 90;
+ElanParser.RULE_bracketedExpression = 91;
+ElanParser.RULE_unaryExpression = 92;
+ElanParser.RULE_binaryExpression = 93;
+ElanParser.RULE_tuple = 94;
+ElanParser.RULE_methodCall = 95;
+ElanParser.RULE_binaryOperator = 96;
+ElanParser.RULE_ifExpression = 97;
+ElanParser.RULE_newInstance = 98;
+ElanParser.RULE_paramDef = 99;
+ElanParser.RULE_typeGeneric = 100;
+ElanParser.RULE_typeTuple = 101;
+ElanParser.RULE_lambda = 102;
+ElanParser.RULE_list = 103;
+ElanParser.RULE_interpolatedString = 104;
+ElanParser.RULE_segment = 105;
+ElanParser.RULE_textSegment = 106;
+ElanParser.RULE_fieldSegment = 107;
 var FileContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
@@ -26089,84 +25735,17 @@ var FileContext = class extends Ln.ParserRuleContext {
   EOF() {
     return this.getToken(ElanParser.EOF, 0);
   }
-  main = function(i2) {
+  COMMENT() {
+    return this.getToken(ElanParser.COMMENT, 0);
+  }
+  global = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(MainContext);
+      return this.getTypedRuleContexts(GlobalContext);
     } else {
-      return this.getTypedRuleContext(MainContext, i2);
-    }
-  };
-  procedureDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ProcedureDefContext);
-    } else {
-      return this.getTypedRuleContext(ProcedureDefContext, i2);
-    }
-  };
-  functionDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(FunctionDefContext);
-    } else {
-      return this.getTypedRuleContext(FunctionDefContext, i2);
-    }
-  };
-  constantDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ConstantDefContext);
-    } else {
-      return this.getTypedRuleContext(ConstantDefContext, i2);
-    }
-  };
-  enumDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(EnumDefContext);
-    } else {
-      return this.getTypedRuleContext(EnumDefContext, i2);
-    }
-  };
-  classDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ClassDefContext);
-    } else {
-      return this.getTypedRuleContext(ClassDefContext, i2);
-    }
-  };
-  test = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(TestContext);
-    } else {
-      return this.getTypedRuleContext(TestContext, i2);
-    }
-  };
-  importStatement = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ImportStatementContext);
-    } else {
-      return this.getTypedRuleContext(ImportStatementContext, i2);
+      return this.getTypedRuleContext(GlobalContext, i2);
     }
   };
   NL = function(i2) {
@@ -26197,7 +25776,7 @@ var FileContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var ImportStatementContext = class extends Ln.ParserRuleContext {
+var GlobalContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -26207,87 +25786,48 @@ var ImportStatementContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_importStatement;
+    this.ruleIndex = ElanParser.RULE_global;
   }
-  IMPORT() {
-    return this.getToken(ElanParser.IMPORT, 0);
+  main() {
+    return this.getTypedRuleContext(MainContext, 0);
   }
-  namespace() {
-    return this.getTypedRuleContext(NamespaceContext, 0);
+  function_() {
+    return this.getTypedRuleContext(FunctionContext, 0);
+  }
+  test() {
+    return this.getTypedRuleContext(TestContext, 0);
+  }
+  procedure() {
+    return this.getTypedRuleContext(ProcedureContext, 0);
+  }
+  constant() {
+    return this.getTypedRuleContext(ConstantContext, 0);
+  }
+  enum_() {
+    return this.getTypedRuleContext(EnumContext, 0);
+  }
+  concreteClass() {
+    return this.getTypedRuleContext(ConcreteClassContext, 0);
+  }
+  abstractClass() {
+    return this.getTypedRuleContext(AbstractClassContext, 0);
+  }
+  commentGlobal() {
+    return this.getTypedRuleContext(CommentGlobalContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterImportStatement(this);
+      listener.enterGlobal(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitImportStatement(this);
+      listener.exitGlobal(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitImportStatement(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var NamespaceContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_namespace;
-  }
-  TYPENAME = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.TYPENAME);
-    } else {
-      return this.getToken(ElanParser.TYPENAME, i2);
-    }
-  };
-  IDENTIFIER = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.IDENTIFIER);
-    } else {
-      return this.getToken(ElanParser.IDENTIFIER, i2);
-    }
-  };
-  DOT = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.DOT);
-    } else {
-      return this.getToken(ElanParser.DOT, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterNamespace(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitNamespace(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitNamespace(this);
+      return visitor.visitGlobal(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -26315,22 +25855,25 @@ var MainContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  MAIN = function(i2) {
+  mainTop() {
+    return this.getTypedRuleContext(MainTopContext, 0);
+  }
+  mainBottom() {
+    return this.getTypedRuleContext(MainBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.MAIN);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getToken(ElanParser.MAIN, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
       listener.enterMain(this);
@@ -26344,6 +25887,78 @@ var MainContext = class extends Ln.ParserRuleContext {
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
       return visitor.visitMain(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var FunctionContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_function;
+  }
+  NL = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.NL);
+    } else {
+      return this.getToken(ElanParser.NL, i2);
+    }
+  };
+  functionTop() {
+    return this.getTypedRuleContext(FunctionTopContext, 0);
+  }
+  returnStatement() {
+    return this.getTypedRuleContext(ReturnStatementContext, 0);
+  }
+  functionBottom() {
+    return this.getTypedRuleContext(FunctionBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  letStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(LetStatementContext);
+    } else {
+      return this.getTypedRuleContext(LetStatementContext, i2);
+    }
+  };
+  ordinaryStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
+    } else {
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterFunction(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitFunction(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitFunction(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -26371,25 +25986,55 @@ var TestContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  TEST = function(i2) {
+  testTop() {
+    return this.getTypedRuleContext(TestTopContext, 0);
+  }
+  testBottom() {
+    return this.getTypedRuleContext(TestBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  assert = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.TEST);
+      return this.getTypedRuleContexts(AssertContext);
     } else {
-      return this.getToken(ElanParser.TEST, i2);
+      return this.getTypedRuleContext(AssertContext, i2);
     }
   };
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  testStatements() {
-    return this.getTypedRuleContext(TestStatementsContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
+  letStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(LetStatementContext);
+    } else {
+      return this.getTypedRuleContext(LetStatementContext, i2);
+    }
+  };
+  variableDefinition = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(VariableDefinitionContext);
+    } else {
+      return this.getTypedRuleContext(VariableDefinitionContext, i2);
+    }
+  };
+  commentStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(CommentStatementContext);
+    } else {
+      return this.getTypedRuleContext(CommentStatementContext, i2);
+    }
+  };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
       listener.enterTest(this);
@@ -26408,7 +26053,7 @@ var TestContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var StatementBlockContext = class extends Ln.ParserRuleContext {
+var ProcedureContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -26418,768 +26063,7 @@ var StatementBlockContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_statementBlock;
-  }
-  varDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(VarDefContext);
-    } else {
-      return this.getTypedRuleContext(VarDefContext, i2);
-    }
-  };
-  assignment = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(AssignmentContext);
-    } else {
-      return this.getTypedRuleContext(AssignmentContext, i2);
-    }
-  };
-  proceduralControlFlow = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ProceduralControlFlowContext);
-    } else {
-      return this.getTypedRuleContext(ProceduralControlFlowContext, i2);
-    }
-  };
-  callStatement = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(CallStatementContext);
-    } else {
-      return this.getTypedRuleContext(CallStatementContext, i2);
-    }
-  };
-  throwException = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ThrowExceptionContext);
-    } else {
-      return this.getTypedRuleContext(ThrowExceptionContext, i2);
-    }
-  };
-  printStatement = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(PrintStatementContext);
-    } else {
-      return this.getTypedRuleContext(PrintStatementContext, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterStatementBlock(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitStatementBlock(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitStatementBlock(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var TestStatementsContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_testStatements;
-  }
-  assert = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(AssertContext);
-    } else {
-      return this.getTypedRuleContext(AssertContext, i2);
-    }
-  };
-  varDef = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(VarDefContext);
-    } else {
-      return this.getTypedRuleContext(VarDefContext, i2);
-    }
-  };
-  callStatement = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(CallStatementContext);
-    } else {
-      return this.getTypedRuleContext(CallStatementContext, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterTestStatements(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitTestStatements(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitTestStatements(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var AssertContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_assert;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  ASSERT() {
-    return this.getToken(ElanParser.ASSERT, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  IS() {
-    return this.getToken(ElanParser.IS, 0);
-  }
-  value() {
-    return this.getTypedRuleContext(ValueContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterAssert(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitAssert(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitAssert(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var CallStatementContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_callStatement;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  CALL() {
-    return this.getToken(ElanParser.CALL, 0);
-  }
-  procedureCall() {
-    return this.getTypedRuleContext(ProcedureCallContext, 0);
-  }
-  assignableValue() {
-    return this.getTypedRuleContext(AssignableValueContext, 0);
-  }
-  DOT() {
-    return this.getToken(ElanParser.DOT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterCallStatement(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitCallStatement(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitCallStatement(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ThrowExceptionContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_throwException;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  THROW() {
-    return this.getToken(ElanParser.THROW, 0);
-  }
-  LITERAL_STRING() {
-    return this.getToken(ElanParser.LITERAL_STRING, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterThrowException(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitThrowException(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitThrowException(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var PrintStatementContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_printStatement;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  PRINT() {
-    return this.getToken(ElanParser.PRINT, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterPrintStatement(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitPrintStatement(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitPrintStatement(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var VarDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_varDef;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  VAR() {
-    return this.getToken(ElanParser.VAR, 0);
-  }
-  assignableValue() {
-    return this.getTypedRuleContext(AssignableValueContext, 0);
-  }
-  SET() {
-    return this.getToken(ElanParser.SET, 0);
-  }
-  TO() {
-    return this.getToken(ElanParser.TO, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterVarDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitVarDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitVarDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var AssignmentContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_assignment;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  SET() {
-    return this.getToken(ElanParser.SET, 0);
-  }
-  assignableValue() {
-    return this.getTypedRuleContext(AssignableValueContext, 0);
-  }
-  TO() {
-    return this.getToken(ElanParser.TO, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterAssignment(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitAssignment(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitAssignment(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var InlineAsignmentContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_inlineAsignment;
-  }
-  assignableValue() {
-    return this.getTypedRuleContext(AssignableValueContext, 0);
-  }
-  SET() {
-    return this.getToken(ElanParser.SET, 0);
-  }
-  TO() {
-    return this.getToken(ElanParser.TO, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterInlineAsignment(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitInlineAsignment(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitInlineAsignment(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var AssignableValueContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_assignableValue;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  scopeQualifier() {
-    return this.getTypedRuleContext(ScopeQualifierContext, 0);
-  }
-  index() {
-    return this.getTypedRuleContext(IndexContext, 0);
-  }
-  deconstructedTuple() {
-    return this.getTypedRuleContext(DeconstructedTupleContext, 0);
-  }
-  listDecomp() {
-    return this.getTypedRuleContext(ListDecompContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterAssignableValue(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitAssignableValue(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitAssignableValue(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ProcedureCallContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_procedureCall;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  scopeQualifier() {
-    return this.getTypedRuleContext(ScopeQualifierContext, 0);
-  }
-  argumentList() {
-    return this.getTypedRuleContext(ArgumentListContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterProcedureCall(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitProcedureCall(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitProcedureCall(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var FunctionCallContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_functionCall;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  scopeQualifier() {
-    return this.getTypedRuleContext(ScopeQualifierContext, 0);
-  }
-  argumentList() {
-    return this.getTypedRuleContext(ArgumentListContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterFunctionCall(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitFunctionCall(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitFunctionCall(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var SystemCallContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_systemCall;
-  }
-  SYSTEM() {
-    return this.getToken(ElanParser.SYSTEM, 0);
-  }
-  DOT() {
-    return this.getToken(ElanParser.DOT, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  argumentList() {
-    return this.getTypedRuleContext(ArgumentListContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterSystemCall(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitSystemCall(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitSystemCall(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var InputContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_input;
-  }
-  INPUT() {
-    return this.getToken(ElanParser.INPUT, 0);
-  }
-  LITERAL_STRING() {
-    return this.getToken(ElanParser.LITERAL_STRING, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterInput(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitInput(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitInput(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ArgumentContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_argument;
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  lambda() {
-    return this.getTypedRuleContext(LambdaContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterArgument(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitArgument(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitArgument(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ArgumentListContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_argumentList;
-  }
-  argument = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ArgumentContext);
-    } else {
-      return this.getTypedRuleContext(ArgumentContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterArgumentList(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitArgumentList(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitArgumentList(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ProcedureDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_procedureDef;
+    this.ruleIndex = ElanParser.RULE_procedure;
   }
   NL = function(i2) {
     if (i2 === void 0) {
@@ -27191,136 +26075,44 @@ var ProcedureDefContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  PROCEDURE = function(i2) {
+  procedureTop() {
+    return this.getTypedRuleContext(ProcedureTopContext, 0);
+  }
+  procedureBottom() {
+    return this.getTypedRuleContext(ProcedureBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.PROCEDURE);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getToken(ElanParser.PROCEDURE, i2);
-    }
-  };
-  procedureSignature() {
-    return this.getTypedRuleContext(ProcedureSignatureContext, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterProcedureDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitProcedureDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitProcedureDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ProcedureSignatureContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_procedureSignature;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  procedureParameterList() {
-    return this.getTypedRuleContext(ProcedureParameterListContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterProcedureSignature(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitProcedureSignature(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitProcedureSignature(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ProcedureParameterListContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_procedureParameterList;
-  }
-  procedureParameter = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ProcedureParameterContext);
-    } else {
-      return this.getTypedRuleContext(ProcedureParameterContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterProcedureParameterList(this);
+      listener.enterProcedure(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitProcedureParameterList(this);
+      listener.exitProcedure(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitProcedureParameterList(this);
+      return visitor.visitProcedure(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var ParameterListContext = class extends Ln.ParserRuleContext {
+var ConcreteClassContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -27330,132 +26122,7 @@ var ParameterListContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_parameterList;
-  }
-  parameter = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ParameterContext);
-    } else {
-      return this.getTypedRuleContext(ParameterContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterParameterList(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitParameterList(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitParameterList(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ParameterContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_parameter;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterParameter(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitParameter(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitParameter(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ProcedureParameterContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_procedureParameter;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
-  }
-  OUT() {
-    return this.getToken(ElanParser.OUT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterProcedureParameter(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitProcedureParameter(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitProcedureParameter(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var FunctionDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_functionDef;
+    this.ruleIndex = ElanParser.RULE_concreteClass;
   }
   NL = function(i2) {
     if (i2 === void 0) {
@@ -27467,385 +26134,25 @@ var FunctionDefContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  FUNCTION = function(i2) {
+  concreteClassTop() {
+    return this.getTypedRuleContext(ConcreteClassTopContext, 0);
+  }
+  concreteClassBottom() {
+    return this.getTypedRuleContext(ConcreteClassBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  econstructor = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.FUNCTION);
+      return this.getTypedRuleContexts(EconstructorContext);
     } else {
-      return this.getToken(ElanParser.FUNCTION, i2);
+      return this.getTypedRuleContext(EconstructorContext, i2);
     }
   };
-  functionSignature() {
-    return this.getTypedRuleContext(FunctionSignatureContext, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  RETURN() {
-    return this.getToken(ElanParser.RETURN, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  DEFAULT() {
-    return this.getToken(ElanParser.DEFAULT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterFunctionDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitFunctionDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitFunctionDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var FunctionSignatureContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_functionSignature;
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  AS() {
-    return this.getToken(ElanParser.AS, 0);
-  }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
-  }
-  parameterList() {
-    return this.getTypedRuleContext(ParameterListContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterFunctionSignature(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitFunctionSignature(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitFunctionSignature(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ConstantDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_constantDef;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  CONSTANT() {
-    return this.getToken(ElanParser.CONSTANT, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  SET() {
-    return this.getToken(ElanParser.SET, 0);
-  }
-  TO() {
-    return this.getToken(ElanParser.TO, 0);
-  }
-  literal() {
-    return this.getTypedRuleContext(LiteralContext, 0);
-  }
-  newInstance() {
-    return this.getTypedRuleContext(NewInstanceContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterConstantDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitConstantDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitConstantDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var EnumDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_enumDef;
-  }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  ENUM = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.ENUM);
-    } else {
-      return this.getToken(ElanParser.ENUM, i2);
-    }
-  };
-  enumType() {
-    return this.getTypedRuleContext(EnumTypeContext, 0);
-  }
-  IDENTIFIER = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.IDENTIFIER);
-    } else {
-      return this.getToken(ElanParser.IDENTIFIER, i2);
-    }
-  };
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterEnumDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitEnumDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitEnumDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var EnumTypeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_enumType;
-  }
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterEnumType(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitEnumType(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitEnumType(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var EnumValueContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_enumValue;
-  }
-  enumType() {
-    return this.getTypedRuleContext(EnumTypeContext, 0);
-  }
-  DOT() {
-    return this.getToken(ElanParser.DOT, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterEnumValue(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitEnumValue(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitEnumValue(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ClassDefContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_classDef;
-  }
-  mutableClass() {
-    return this.getTypedRuleContext(MutableClassContext, 0);
-  }
-  abstractClass() {
-    return this.getTypedRuleContext(AbstractClassContext, 0);
-  }
-  immutableClass() {
-    return this.getTypedRuleContext(ImmutableClassContext, 0);
-  }
-  abstractImmutableClass() {
-    return this.getTypedRuleContext(AbstractImmutableClassContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterClassDef(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitClassDef(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitClassDef(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var MutableClassContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_mutableClass;
-  }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  CLASS = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.CLASS);
-    } else {
-      return this.getToken(ElanParser.CLASS, i2);
-    }
-  };
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
-  }
-  econstructor() {
-    return this.getTypedRuleContext(EconstructorContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  inherits() {
-    return this.getTypedRuleContext(InheritsContext, 0);
-  }
   property = function(i2) {
     if (i2 === void 0) {
       i2 = null;
@@ -27856,39 +26163,59 @@ var MutableClassContext = class extends Ln.ParserRuleContext {
       return this.getTypedRuleContext(PropertyContext, i2);
     }
   };
-  functionDef = function(i2) {
+  functionMethod = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(FunctionDefContext);
+      return this.getTypedRuleContexts(FunctionMethodContext);
     } else {
-      return this.getTypedRuleContext(FunctionDefContext, i2);
+      return this.getTypedRuleContext(FunctionMethodContext, i2);
     }
   };
-  procedureDef = function(i2) {
+  procedureMethod = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(ProcedureDefContext);
+      return this.getTypedRuleContexts(ProcedureMethodContext);
     } else {
-      return this.getTypedRuleContext(ProcedureDefContext, i2);
+      return this.getTypedRuleContext(ProcedureMethodContext, i2);
+    }
+  };
+  copyMethod = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(CopyMethodContext);
+    } else {
+      return this.getTypedRuleContext(CopyMethodContext, i2);
+    }
+  };
+  commentMember = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(CommentMemberContext);
+    } else {
+      return this.getTypedRuleContext(CommentMemberContext, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterMutableClass(this);
+      listener.enterConcreteClass(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitMutableClass(this);
+      listener.exitConcreteClass(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitMutableClass(this);
+      return visitor.visitConcreteClass(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -27916,34 +26243,14 @@ var AbstractClassContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  ABSTRACT = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.ABSTRACT);
-    } else {
-      return this.getToken(ElanParser.ABSTRACT, i2);
-    }
-  };
-  CLASS = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.CLASS);
-    } else {
-      return this.getToken(ElanParser.CLASS, i2);
-    }
-  };
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
+  abstractClassTop() {
+    return this.getTypedRuleContext(AbstractClassTopContext, 0);
   }
-  END() {
-    return this.getToken(ElanParser.END, 0);
+  abstractClassBottom() {
+    return this.getTypedRuleContext(AbstractClassBottomContext, 0);
   }
-  inherits() {
-    return this.getTypedRuleContext(InheritsContext, 0);
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
   }
   property = function(i2) {
     if (i2 === void 0) {
@@ -27955,44 +26262,64 @@ var AbstractClassContext = class extends Ln.ParserRuleContext {
       return this.getTypedRuleContext(PropertyContext, i2);
     }
   };
-  FUNCTION = function(i2) {
+  functionMethod = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.FUNCTION);
+      return this.getTypedRuleContexts(FunctionMethodContext);
     } else {
-      return this.getToken(ElanParser.FUNCTION, i2);
+      return this.getTypedRuleContext(FunctionMethodContext, i2);
     }
   };
-  functionSignature = function(i2) {
+  procedureMethod = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(FunctionSignatureContext);
+      return this.getTypedRuleContexts(ProcedureMethodContext);
     } else {
-      return this.getTypedRuleContext(FunctionSignatureContext, i2);
+      return this.getTypedRuleContext(ProcedureMethodContext, i2);
     }
   };
-  PROCEDURE = function(i2) {
+  copyMethod = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.PROCEDURE);
+      return this.getTypedRuleContexts(CopyMethodContext);
     } else {
-      return this.getToken(ElanParser.PROCEDURE, i2);
+      return this.getTypedRuleContext(CopyMethodContext, i2);
     }
   };
-  procedureSignature = function(i2) {
+  abstractFunction = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(ProcedureSignatureContext);
+      return this.getTypedRuleContexts(AbstractFunctionContext);
     } else {
-      return this.getTypedRuleContext(ProcedureSignatureContext, i2);
+      return this.getTypedRuleContext(AbstractFunctionContext, i2);
+    }
+  };
+  abstractProcedure = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(AbstractProcedureContext);
+    } else {
+      return this.getTypedRuleContext(AbstractProcedureContext, i2);
+    }
+  };
+  commentMember = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(CommentMemberContext);
+    } else {
+      return this.getTypedRuleContext(CommentMemberContext, i2);
     }
   };
   enterRule(listener) {
@@ -28013,7 +26340,7 @@ var AbstractClassContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var ImmutableClassContext = class extends Ln.ParserRuleContext {
+var CommentGlobalContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28023,7 +26350,106 @@ var ImmutableClassContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_immutableClass;
+    this.ruleIndex = ElanParser.RULE_commentGlobal;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  COMMENT() {
+    return this.getToken(ElanParser.COMMENT, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCommentGlobal(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCommentGlobal(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCommentGlobal(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var OrdinaryStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_ordinaryStatement;
+  }
+  print() {
+    return this.getTypedRuleContext(PrintContext, 0);
+  }
+  variableDefinition() {
+    return this.getTypedRuleContext(VariableDefinitionContext, 0);
+  }
+  assignment() {
+    return this.getTypedRuleContext(AssignmentContext, 0);
+  }
+  inputStatement() {
+    return this.getTypedRuleContext(InputStatementContext, 0);
+  }
+  ifStatement() {
+    return this.getTypedRuleContext(IfStatementContext, 0);
+  }
+  whileLoop() {
+    return this.getTypedRuleContext(WhileLoopContext, 0);
+  }
+  forLoop() {
+    return this.getTypedRuleContext(ForLoopContext, 0);
+  }
+  procedureCall() {
+    return this.getTypedRuleContext(ProcedureCallContext, 0);
+  }
+  tryStatement() {
+    return this.getTypedRuleContext(TryStatementContext, 0);
+  }
+  throwStatement() {
+    return this.getTypedRuleContext(ThrowStatementContext, 0);
+  }
+  commentStatement() {
+    return this.getTypedRuleContext(CommentStatementContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterOrdinaryStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitOrdinaryStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitOrdinaryStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var IfStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_ifStatement;
   }
   NL = function(i2) {
     if (i2 === void 0) {
@@ -28035,70 +26461,64 @@ var ImmutableClassContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  IMMUTABLE() {
-    return this.getToken(ElanParser.IMMUTABLE, 0);
+  ifStatementTop() {
+    return this.getTypedRuleContext(IfStatementTopContext, 0);
   }
-  CLASS = function(i2) {
+  ifStatementBottom() {
+    return this.getTypedRuleContext(IfStatementBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  elseIfClause = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.CLASS);
+      return this.getTypedRuleContexts(ElseIfClauseContext);
     } else {
-      return this.getToken(ElanParser.CLASS, i2);
+      return this.getTypedRuleContext(ElseIfClauseContext, i2);
     }
   };
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
-  }
-  econstructor() {
-    return this.getTypedRuleContext(EconstructorContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  inherits() {
-    return this.getTypedRuleContext(InheritsContext, 0);
-  }
-  property = function(i2) {
+  elseClause = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(PropertyContext);
+      return this.getTypedRuleContexts(ElseClauseContext);
     } else {
-      return this.getTypedRuleContext(PropertyContext, i2);
+      return this.getTypedRuleContext(ElseClauseContext, i2);
     }
   };
-  functionDef = function(i2) {
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(FunctionDefContext);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getTypedRuleContext(FunctionDefContext, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterImmutableClass(this);
+      listener.enterIfStatement(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitImmutableClass(this);
+      listener.exitIfStatement(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitImmutableClass(this);
+      return visitor.visitIfStatement(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var AbstractImmutableClassContext = class extends Ln.ParserRuleContext {
+var WhileLoopContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28108,7 +26528,7 @@ var AbstractImmutableClassContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_abstractImmutableClass;
+    this.ruleIndex = ElanParser.RULE_whileLoop;
   }
   NL = function(i2) {
     if (i2 === void 0) {
@@ -28120,87 +26540,44 @@ var AbstractImmutableClassContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  ABSTRACT = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.ABSTRACT);
-    } else {
-      return this.getToken(ElanParser.ABSTRACT, i2);
-    }
-  };
-  IMMUTABLE() {
-    return this.getToken(ElanParser.IMMUTABLE, 0);
+  whileLoopTop() {
+    return this.getTypedRuleContext(WhileLoopTopContext, 0);
   }
-  CLASS = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.CLASS);
-    } else {
-      return this.getToken(ElanParser.CLASS, i2);
-    }
-  };
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
+  whileLoopBottom() {
+    return this.getTypedRuleContext(WhileLoopBottomContext, 0);
   }
-  END() {
-    return this.getToken(ElanParser.END, 0);
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
   }
-  inherits() {
-    return this.getTypedRuleContext(InheritsContext, 0);
-  }
-  property = function(i2) {
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(PropertyContext);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getTypedRuleContext(PropertyContext, i2);
-    }
-  };
-  FUNCTION = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.FUNCTION);
-    } else {
-      return this.getToken(ElanParser.FUNCTION, i2);
-    }
-  };
-  functionSignature = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(FunctionSignatureContext);
-    } else {
-      return this.getTypedRuleContext(FunctionSignatureContext, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterAbstractImmutableClass(this);
+      listener.enterWhileLoop(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitAbstractImmutableClass(this);
+      listener.exitWhileLoop(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitAbstractImmutableClass(this);
+      return visitor.visitWhileLoop(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var InheritsContext = class extends Ln.ParserRuleContext {
+var ForLoopContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28210,50 +26587,56 @@ var InheritsContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_inherits;
+    this.ruleIndex = ElanParser.RULE_forLoop;
   }
-  INHERITS() {
-    return this.getToken(ElanParser.INHERITS, 0);
-  }
-  type = function(i2) {
+  NL = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(TypeContext);
+      return this.getTokens(ElanParser.NL);
     } else {
-      return this.getTypedRuleContext(TypeContext, i2);
+      return this.getToken(ElanParser.NL, i2);
     }
   };
-  COMMA = function(i2) {
+  forLoopTop() {
+    return this.getTypedRuleContext(ForLoopTopContext, 0);
+  }
+  forLoopBottom() {
+    return this.getTypedRuleContext(ForLoopBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getToken(ElanParser.COMMA, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterInherits(this);
+      listener.enterForLoop(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitInherits(this);
+      listener.exitForLoop(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitInherits(this);
+      return visitor.visitForLoop(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var PropertyContext = class extends Ln.ParserRuleContext {
+var TryStatementContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28263,33 +26646,89 @@ var PropertyContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_property;
+    this.ruleIndex = ElanParser.RULE_tryStatement;
   }
-  PROPERTY() {
-    return this.getToken(ElanParser.PROPERTY, 0);
+  NL = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.NL);
+    } else {
+      return this.getToken(ElanParser.NL, i2);
+    }
+  };
+  tryStatementTop() {
+    return this.getTypedRuleContext(TryStatementTopContext, 0);
   }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
+  catchStatement() {
+    return this.getTypedRuleContext(CatchStatementContext, 0);
   }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
+  tryStatementBottom() {
+    return this.getTypedRuleContext(TryStatementBottomContext, 0);
   }
-  PRIVATE() {
-    return this.getToken(ElanParser.PRIVATE, 0);
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
   }
+  ordinaryStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
+    } else {
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
+    }
+  };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterProperty(this);
+      listener.enterTryStatement(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitProperty(this);
+      listener.exitTryStatement(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitProperty(this);
+      return visitor.visitTryStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CommentStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_commentStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  COMMENT() {
+    return this.getToken(ElanParser.COMMENT, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCommentStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCommentStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCommentStatement(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -28317,31 +26756,25 @@ var EconstructorContext = class extends Ln.ParserRuleContext {
       return this.getToken(ElanParser.NL, i2);
     }
   };
-  CONSTRUCTOR = function(i2) {
+  constructorTop() {
+    return this.getTypedRuleContext(ConstructorTopContext, 0);
+  }
+  constructorBottom() {
+    return this.getTypedRuleContext(ConstructorBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  ordinaryStatement = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.CONSTRUCTOR);
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
     } else {
-      return this.getToken(ElanParser.CONSTRUCTOR, i2);
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
     }
   };
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  parameterList() {
-    return this.getTypedRuleContext(ParameterListContext, 0);
-  }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
       listener.enterEconstructor(this);
@@ -28360,7 +26793,7 @@ var EconstructorContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var NewInstanceContext = class extends Ln.ParserRuleContext {
+var FunctionMethodContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28370,13 +26803,320 @@ var NewInstanceContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_newInstance;
+    this.ruleIndex = ElanParser.RULE_functionMethod;
   }
-  NEW() {
-    return this.getToken(ElanParser.NEW, 0);
+  NL = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.NL);
+    } else {
+      return this.getToken(ElanParser.NL, i2);
+    }
+  };
+  functionMethodTop() {
+    return this.getTypedRuleContext(FunctionMethodTopContext, 0);
   }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
+  returnStatement() {
+    return this.getTypedRuleContext(ReturnStatementContext, 0);
+  }
+  functionMethodBottom() {
+    return this.getTypedRuleContext(FunctionMethodBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  PRIVATE() {
+    return this.getToken(ElanParser.PRIVATE, 0);
+  }
+  letStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(LetStatementContext);
+    } else {
+      return this.getTypedRuleContext(LetStatementContext, i2);
+    }
+  };
+  ordinaryStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
+    } else {
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterFunctionMethod(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitFunctionMethod(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitFunctionMethod(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureMethodContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureMethod;
+  }
+  NL = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.NL);
+    } else {
+      return this.getToken(ElanParser.NL, i2);
+    }
+  };
+  procedureMethodTop() {
+    return this.getTypedRuleContext(ProcedureMethodTopContext, 0);
+  }
+  procedureMethodBottom() {
+    return this.getTypedRuleContext(ProcedureMethodBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  PRIVATE() {
+    return this.getToken(ElanParser.PRIVATE, 0);
+  }
+  ordinaryStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
+    } else {
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureMethod(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureMethod(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureMethod(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CopyMethodContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_copyMethod;
+  }
+  NL = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.NL);
+    } else {
+      return this.getToken(ElanParser.NL, i2);
+    }
+  };
+  copyMethodTop() {
+    return this.getTypedRuleContext(CopyMethodTopContext, 0);
+  }
+  returnStatement() {
+    return this.getTypedRuleContext(ReturnStatementContext, 0);
+  }
+  copyMethodBottom() {
+    return this.getTypedRuleContext(CopyMethodBottomContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  PRIVATE() {
+    return this.getToken(ElanParser.PRIVATE, 0);
+  }
+  ordinaryStatement = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(OrdinaryStatementContext);
+    } else {
+      return this.getTypedRuleContext(OrdinaryStatementContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCopyMethod(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCopyMethod(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCopyMethod(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CommentMemberContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_commentMember;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  COMMENT() {
+    return this.getToken(ElanParser.COMMENT, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCommentMember(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCommentMember(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCommentMember(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var MainTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_mainTop;
+  }
+  MAIN() {
+    return this.getToken(ElanParser.MAIN, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterMainTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitMainTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitMainTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var MainBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_mainBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  MAIN() {
+    return this.getToken(ElanParser.MAIN, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterMainBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitMainBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitMainBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var FunctionTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_functionTop;
+  }
+  FUNCTION() {
+    return this.getToken(ElanParser.FUNCTION, 0);
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
   }
   OPEN_BRACKET() {
     return this.getToken(ElanParser.OPEN_BRACKET, 0);
@@ -28384,34 +27124,34 @@ var NewInstanceContext = class extends Ln.ParserRuleContext {
   CLOSE_BRACKET() {
     return this.getToken(ElanParser.CLOSE_BRACKET, 0);
   }
-  argumentList() {
-    return this.getTypedRuleContext(ArgumentListContext, 0);
+  RETURNS() {
+    return this.getToken(ElanParser.RETURNS, 0);
   }
-  withClause() {
-    return this.getTypedRuleContext(WithClauseContext, 0);
+  type() {
+    return this.getTypedRuleContext(TypeContext, 0);
   }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
+  paramsList() {
+    return this.getTypedRuleContext(ParamsListContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterNewInstance(this);
+      listener.enterFunctionTop(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitNewInstance(this);
+      listener.exitFunctionTop(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitNewInstance(this);
+      return visitor.visitFunctionTop(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var WithClauseContext = class extends Ln.ParserRuleContext {
+var FunctionBottomContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28421,27 +27161,1985 @@ var WithClauseContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_withClause;
+    this.ruleIndex = ElanParser.RULE_functionBottom;
   }
-  WITH() {
-    return this.getToken(ElanParser.WITH, 0);
+  END() {
+    return this.getToken(ElanParser.END, 0);
   }
-  OPEN_BRACE() {
-    return this.getToken(ElanParser.OPEN_BRACE, 0);
+  FUNCTION() {
+    return this.getToken(ElanParser.FUNCTION, 0);
   }
-  inlineAsignment = function(i2) {
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterFunctionBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitFunctionBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitFunctionBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TestTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_testTop;
+  }
+  TEST() {
+    return this.getToken(ElanParser.TEST, 0);
+  }
+  testName() {
+    return this.getTypedRuleContext(TestNameContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTestTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTestTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTestTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TestBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_testBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  TEST() {
+    return this.getToken(ElanParser.TEST, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTestBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTestBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTestBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureTop;
+  }
+  PROCEDURE() {
+    return this.getToken(ElanParser.PROCEDURE, 0);
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  paramsList() {
+    return this.getTypedRuleContext(ParamsListContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  PROCEDURE() {
+    return this.getToken(ElanParser.PROCEDURE, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConcreteClassTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_concreteClassTop;
+  }
+  CLASS() {
+    return this.getToken(ElanParser.CLASS, 0);
+  }
+  typeName = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(InlineAsignmentContext);
+      return this.getTypedRuleContexts(TypeNameContext);
     } else {
-      return this.getTypedRuleContext(InlineAsignmentContext, i2);
+      return this.getTypedRuleContext(TypeNameContext, i2);
     }
   };
-  CLOSE_BRACE() {
-    return this.getToken(ElanParser.CLOSE_BRACE, 0);
+  INHERITS() {
+    return this.getToken(ElanParser.INHERITS, 0);
   }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConcreteClassTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConcreteClassTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConcreteClassTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConcreteClassBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_concreteClassBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  CLASS() {
+    return this.getToken(ElanParser.CLASS, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConcreteClassBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConcreteClassBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConcreteClassBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AbstractClassTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_abstractClassTop;
+  }
+  ABSTRACT() {
+    return this.getToken(ElanParser.ABSTRACT, 0);
+  }
+  CLASS() {
+    return this.getToken(ElanParser.CLASS, 0);
+  }
+  typeName = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(TypeNameContext);
+    } else {
+      return this.getTypedRuleContext(TypeNameContext, i2);
+    }
+  };
+  INHERITS() {
+    return this.getToken(ElanParser.INHERITS, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAbstractClassTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAbstractClassTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAbstractClassTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AbstractClassBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_abstractClassBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  ABSTRACT() {
+    return this.getToken(ElanParser.ABSTRACT, 0);
+  }
+  CLASS() {
+    return this.getToken(ElanParser.CLASS, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAbstractClassBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAbstractClassBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAbstractClassBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConstantContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_constant;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  CONSTANT() {
+    return this.getToken(ElanParser.CONSTANT, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  SET() {
+    return this.getToken(ElanParser.SET, 0);
+  }
+  TO() {
+    return this.getToken(ElanParser.TO, 0);
+  }
+  constantValue() {
+    return this.getTypedRuleContext(ConstantValueContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConstant(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConstant(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConstant(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var EnumContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_enum;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ENUM() {
+    return this.getToken(ElanParser.ENUM, 0);
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  enumValuesList() {
+    return this.getTypedRuleContext(EnumValuesListContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterEnum(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitEnum(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitEnum(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AssertContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_assert;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ASSERT() {
+    return this.getToken(ElanParser.ASSERT, 0);
+  }
+  assertActual() {
+    return this.getTypedRuleContext(AssertActualContext, 0);
+  }
+  EQUAL() {
+    return this.getToken(ElanParser.EQUAL, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAssert(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAssert(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAssert(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var LetStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_letStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  LET() {
+    return this.getToken(ElanParser.LET, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  BE() {
+    return this.getToken(ElanParser.BE, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterLetStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitLetStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitLetStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var PrintContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_print;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  PRINT() {
+    return this.getToken(ElanParser.PRINT, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterPrint(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitPrint(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitPrint(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var VariableDefinitionContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_variableDefinition;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  VARIABLE() {
+    return this.getToken(ElanParser.VARIABLE, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  SET() {
+    return this.getToken(ElanParser.SET, 0);
+  }
+  TO() {
+    return this.getToken(ElanParser.TO, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterVariableDefinition(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitVariableDefinition(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitVariableDefinition(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AssignmentContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_assignment;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ASSIGN() {
+    return this.getToken(ElanParser.ASSIGN, 0);
+  }
+  assignable() {
+    return this.getTypedRuleContext(AssignableContext, 0);
+  }
+  TO() {
+    return this.getToken(ElanParser.TO, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAssignment(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAssignment(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAssignment(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var InputStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_inputStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  INPUT() {
+    return this.getToken(ElanParser.INPUT, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  SET() {
+    return this.getToken(ElanParser.SET, 0);
+  }
+  TO() {
+    return this.getToken(ElanParser.TO, 0);
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterInputStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitInputStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitInputStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureCallContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureCall;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  CALL() {
+    return this.getToken(ElanParser.CALL, 0);
+  }
+  procRef() {
+    return this.getTypedRuleContext(ProcRefContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureCall(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureCall(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureCall(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ThrowStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_throwStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  THROW() {
+    return this.getToken(ElanParser.THROW, 0);
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  litString() {
+    return this.getTypedRuleContext(LitStringContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterThrowStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitThrowStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitThrowStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ReturnStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_returnStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  RETURN() {
+    return this.getToken(ElanParser.RETURN, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterReturnStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitReturnStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitReturnStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ElseIfClauseContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_elseIfClause;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ELIF() {
+    return this.getToken(ElanParser.ELIF, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  THEN() {
+    return this.getToken(ElanParser.THEN, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterElseIfClause(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitElseIfClause(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitElseIfClause(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ElseClauseContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_elseClause;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ELSE() {
+    return this.getToken(ElanParser.ELSE, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterElseClause(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitElseClause(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitElseClause(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CatchStatementContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_catchStatement;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  CATCH() {
+    return this.getToken(ElanParser.CATCH, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  AS() {
+    return this.getToken(ElanParser.AS, 0);
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCatchStatement(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCatchStatement(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCatchStatement(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var IfStatementTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_ifStatementTop;
+  }
+  IF() {
+    return this.getToken(ElanParser.IF, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  THEN() {
+    return this.getToken(ElanParser.THEN, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterIfStatementTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitIfStatementTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitIfStatementTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var IfStatementBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_ifStatementBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  IF() {
+    return this.getToken(ElanParser.IF, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterIfStatementBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitIfStatementBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitIfStatementBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var WhileLoopTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_whileLoopTop;
+  }
+  WHILE() {
+    return this.getToken(ElanParser.WHILE, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterWhileLoopTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitWhileLoopTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitWhileLoopTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var WhileLoopBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_whileLoopBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  WHILE() {
+    return this.getToken(ElanParser.WHILE, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterWhileLoopBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitWhileLoopBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitWhileLoopBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ForLoopTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_forLoopTop;
+  }
+  FOR() {
+    return this.getToken(ElanParser.FOR, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  IN() {
+    return this.getToken(ElanParser.IN, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterForLoopTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitForLoopTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitForLoopTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ForLoopBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_forLoopBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  FOR() {
+    return this.getToken(ElanParser.FOR, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterForLoopBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitForLoopBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitForLoopBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TryStatementTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_tryStatementTop;
+  }
+  TRY() {
+    return this.getToken(ElanParser.TRY, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTryStatementTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTryStatementTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTryStatementTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TryStatementBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_tryStatementBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  TRY() {
+    return this.getToken(ElanParser.TRY, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTryStatementBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTryStatementBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTryStatementBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConstructorTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_constructorTop;
+  }
+  CONSTRUCTOR() {
+    return this.getToken(ElanParser.CONSTRUCTOR, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  paramsList() {
+    return this.getTypedRuleContext(ParamsListContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConstructorTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConstructorTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConstructorTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConstructorBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_constructorBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  CONSTRUCTOR() {
+    return this.getToken(ElanParser.CONSTRUCTOR, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConstructorBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConstructorBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConstructorBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var PropertyContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_property;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  PROPERTY() {
+    return this.getToken(ElanParser.PROPERTY, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  AS() {
+    return this.getToken(ElanParser.AS, 0);
+  }
+  type() {
+    return this.getTypedRuleContext(TypeContext, 0);
+  }
+  PRIVATE() {
+    return this.getToken(ElanParser.PRIVATE, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProperty(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProperty(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProperty(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var FunctionMethodTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_functionMethodTop;
+  }
+  functionTop() {
+    return this.getTypedRuleContext(FunctionTopContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterFunctionMethodTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitFunctionMethodTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitFunctionMethodTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var FunctionMethodBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_functionMethodBottom;
+  }
+  functionBottom() {
+    return this.getTypedRuleContext(FunctionBottomContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterFunctionMethodBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitFunctionMethodBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitFunctionMethodBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureMethodTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureMethodTop;
+  }
+  procedureTop() {
+    return this.getTypedRuleContext(ProcedureTopContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureMethodTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureMethodTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureMethodTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcedureMethodBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procedureMethodBottom;
+  }
+  procedureBottom() {
+    return this.getTypedRuleContext(ProcedureBottomContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcedureMethodBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcedureMethodBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcedureMethodBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CopyMethodTopContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_copyMethodTop;
+  }
+  COPY() {
+    return this.getToken(ElanParser.COPY, 0);
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  paramsList() {
+    return this.getTypedRuleContext(ParamsListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  RETURNS() {
+    return this.getToken(ElanParser.RETURNS, 0);
+  }
+  type() {
+    return this.getTypedRuleContext(TypeContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCopyMethodTop(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCopyMethodTop(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCopyMethodTop(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var CopyMethodBottomContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_copyMethodBottom;
+  }
+  END() {
+    return this.getToken(ElanParser.END, 0);
+  }
+  COPY() {
+    return this.getToken(ElanParser.COPY, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterCopyMethodBottom(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitCopyMethodBottom(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitCopyMethodBottom(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AbstractFunctionContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_abstractFunction;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ABSTRACT() {
+    return this.getToken(ElanParser.ABSTRACT, 0);
+  }
+  functionTop() {
+    return this.getTypedRuleContext(FunctionTopContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAbstractFunction(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAbstractFunction(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAbstractFunction(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AbstractProcedureContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_abstractProcedure;
+  }
+  NL() {
+    return this.getToken(ElanParser.NL, 0);
+  }
+  ABSTRACT() {
+    return this.getToken(ElanParser.ABSTRACT, 0);
+  }
+  procedureTop() {
+    return this.getTypedRuleContext(ProcedureTopContext, 0);
+  }
+  GHOSTED() {
+    return this.getToken(ElanParser.GHOSTED, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAbstractProcedure(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAbstractProcedure(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAbstractProcedure(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var IdentifierContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_identifier;
+  }
+  NAME_STARTING_LC() {
+    return this.getToken(ElanParser.NAME_STARTING_LC, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterIdentifier(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitIdentifier(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitIdentifier(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AssignableContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_assignable;
+  }
+  identifierWithOptIndexes() {
+    return this.getTypedRuleContext(IdentifierWithOptIndexesContext, 0);
+  }
+  propertyRef() {
+    return this.getTypedRuleContext(PropertyRefContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAssignable(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAssignable(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAssignable(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var MethodNameContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_methodName;
+  }
+  NAME_STARTING_LC() {
+    return this.getToken(ElanParser.NAME_STARTING_LC, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterMethodName(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitMethodName(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitMethodName(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TestNameContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_testName;
+  }
+  NAME_STARTING_TEST_() {
+    return this.getToken(ElanParser.NAME_STARTING_TEST_, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTestName(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTestName(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTestName(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TypeNameContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_typeName;
+  }
+  INT_NAME() {
+    return this.getToken(ElanParser.INT_NAME, 0);
+  }
+  FLOAT_NAME() {
+    return this.getToken(ElanParser.FLOAT_NAME, 0);
+  }
+  BOOL_NAME() {
+    return this.getToken(ElanParser.BOOL_NAME, 0);
+  }
+  STRING_NAME() {
+    return this.getToken(ElanParser.STRING_NAME, 0);
+  }
+  LIST_NAME() {
+    return this.getToken(ElanParser.LIST_NAME, 0);
+  }
+  NAME_STARTING_UC() {
+    return this.getToken(ElanParser.NAME_STARTING_UC, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTypeName(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTypeName(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTypeName(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ConstantValueContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_constantValue;
+  }
+  litValue() {
+    return this.getTypedRuleContext(LitValueContext, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterConstantValue(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitConstantValue(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitConstantValue(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ArgListContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_argList;
+  }
+  argument = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(ArgumentContext);
+    } else {
+      return this.getTypedRuleContext(ArgumentContext, i2);
+    }
+  };
   COMMA = function(i2) {
     if (i2 === void 0) {
       i2 = null;
@@ -28454,23 +29152,23 @@ var WithClauseContext = class extends Ln.ParserRuleContext {
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterWithClause(this);
+      listener.enterArgList(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitWithClause(this);
+      listener.exitArgList(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitWithClause(this);
+      return visitor.visitArgList(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var ProceduralControlFlowContext = class extends Ln.ParserRuleContext {
+var ArgumentContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28480,48 +29178,33 @@ var ProceduralControlFlowContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_proceduralControlFlow;
+    this.ruleIndex = ElanParser.RULE_argument;
   }
-  if_() {
-    return this.getTypedRuleContext(IfContext, 0);
+  lambda() {
+    return this.getTypedRuleContext(LambdaContext, 0);
   }
-  for_() {
-    return this.getTypedRuleContext(ForContext, 0);
-  }
-  each() {
-    return this.getTypedRuleContext(EachContext, 0);
-  }
-  while_() {
-    return this.getTypedRuleContext(WhileContext, 0);
-  }
-  repeat() {
-    return this.getTypedRuleContext(RepeatContext, 0);
-  }
-  try_() {
-    return this.getTypedRuleContext(TryContext, 0);
-  }
-  switch_() {
-    return this.getTypedRuleContext(SwitchContext, 0);
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterProceduralControlFlow(this);
+      listener.enterArgument(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitProceduralControlFlow(this);
+      listener.exitArgument(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitProceduralControlFlow(this);
+      return visitor.visitArgument(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var IfContext = class extends Ln.ParserRuleContext {
+var ParamsListContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28531,80 +29214,47 @@ var IfContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_if;
+    this.ruleIndex = ElanParser.RULE_paramsList;
   }
-  NL = function(i2) {
+  paramDef = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
+      return this.getTypedRuleContexts(ParamDefContext);
     } else {
-      return this.getToken(ElanParser.NL, i2);
+      return this.getTypedRuleContext(ParamDefContext, i2);
     }
   };
-  IF = function(i2) {
+  COMMA = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.IF);
+      return this.getTokens(ElanParser.COMMA);
     } else {
-      return this.getToken(ElanParser.IF, i2);
-    }
-  };
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  statementBlock = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(StatementBlockContext);
-    } else {
-      return this.getTypedRuleContext(StatementBlockContext, i2);
-    }
-  };
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  ELSE = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.ELSE);
-    } else {
-      return this.getToken(ElanParser.ELSE, i2);
+      return this.getToken(ElanParser.COMMA, i2);
     }
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterIf(this);
+      listener.enterParamsList(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitIf(this);
+      listener.exitParamsList(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitIf(this);
+      return visitor.visitParamsList(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var ForContext = class extends Ln.ParserRuleContext {
+var TypeContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28614,81 +29264,255 @@ var ForContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_for;
+    this.ruleIndex = ElanParser.RULE_type;
   }
-  NL = function(i2) {
+  typeTuple() {
+    return this.getTypedRuleContext(TypeTupleContext, 0);
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  typeGeneric() {
+    return this.getTypedRuleContext(TypeGenericContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterType(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitType(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitType(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var EnumValuesListContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_enumValuesList;
+  }
+  identifier = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
+      return this.getTypedRuleContexts(IdentifierContext);
     } else {
-      return this.getToken(ElanParser.NL, i2);
+      return this.getTypedRuleContext(IdentifierContext, i2);
     }
   };
-  FOR = function(i2) {
+  COMMA = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.FOR);
+      return this.getTokens(ElanParser.COMMA);
     } else {
-      return this.getToken(ElanParser.FOR, i2);
+      return this.getToken(ElanParser.COMMA, i2);
     }
   };
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterEnumValuesList(this);
+    }
   }
-  FROM() {
-    return this.getToken(ElanParser.FROM, 0);
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitEnumValuesList(this);
+    }
   }
-  expression = function(i2) {
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitEnumValuesList(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ProcRefContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_procRef;
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
+  }
+  thisInstance() {
+    return this.getTypedRuleContext(ThisInstanceContext, 0);
+  }
+  DOT = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
+      return this.getTokens(ElanParser.DOT);
     } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
+      return this.getToken(ElanParser.DOT, i2);
     }
   };
-  TO() {
-    return this.getToken(ElanParser.TO, 0);
+  identifierWithOptIndexes() {
+    return this.getTypedRuleContext(IdentifierWithOptIndexesContext, 0);
   }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterProcRef(this);
+    }
   }
-  END() {
-    return this.getToken(ElanParser.END, 0);
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitProcRef(this);
+    }
   }
-  STEP() {
-    return this.getToken(ElanParser.STEP, 0);
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitProcRef(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var AssertActualContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_assertActual;
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterAssertActual(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitAssertActual(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitAssertActual(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var LitValueContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_litValue;
+  }
+  LIT_BOOLEAN() {
+    return this.getToken(ElanParser.LIT_BOOLEAN, 0);
+  }
+  litInt() {
+    return this.getTypedRuleContext(LitIntContext, 0);
+  }
+  litFloat() {
+    return this.getTypedRuleContext(LitFloatContext, 0);
+  }
+  litString() {
+    return this.getTypedRuleContext(LitStringContext, 0);
+  }
+  enumValue() {
+    return this.getTypedRuleContext(EnumValueContext, 0);
+  }
+  litRegExp() {
+    return this.getTypedRuleContext(LitRegExpContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterLitValue(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitLitValue(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitLitValue(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var LitIntContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_litInt;
   }
   LITERAL_INTEGER() {
     return this.getToken(ElanParser.LITERAL_INTEGER, 0);
   }
-  MINUS() {
-    return this.getToken(ElanParser.MINUS, 0);
+  LITERAL_BINARY() {
+    return this.getToken(ElanParser.LITERAL_BINARY, 0);
+  }
+  LITERAL_HEX() {
+    return this.getToken(ElanParser.LITERAL_HEX, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterFor(this);
+      listener.enterLitInt(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitFor(this);
+      listener.exitLitInt(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitFor(this);
+      return visitor.visitLitInt(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var EachContext = class extends Ln.ParserRuleContext {
+var LitFloatContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28698,62 +29522,207 @@ var EachContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_each;
+    this.ruleIndex = ElanParser.RULE_litFloat;
   }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  EACH = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.EACH);
-    } else {
-      return this.getToken(ElanParser.EACH, i2);
-    }
-  };
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
+  LITERAL_FLOAT() {
+    return this.getToken(ElanParser.LITERAL_FLOAT, 0);
   }
-  IN() {
-    return this.getToken(ElanParser.IN, 0);
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterLitFloat(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitLitFloat(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitLitFloat(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var EnumValueContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_enumValue;
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  DOT() {
+    return this.getToken(ElanParser.DOT, 0);
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterEnumValue(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitEnumValue(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitEnumValue(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var LitRegExpContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_litRegExp;
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterLitRegExp(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitLitRegExp(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitLitRegExp(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var LitStringContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_litString;
+  }
+  LITERAL_STRING() {
+    return this.getToken(ElanParser.LITERAL_STRING, 0);
+  }
+  INTERPOLATED_STRING() {
+    return this.getToken(ElanParser.INTERPOLATED_STRING, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterLitString(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitLitString(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitLitString(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ThisInstanceContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_thisInstance;
+  }
+  THIS() {
+    return this.getToken(ElanParser.THIS, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterThisInstance(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitThisInstance(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitThisInstance(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var IndexContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_index;
+  }
+  OPEN_SQ_BRACKET() {
+    return this.getToken(ElanParser.OPEN_SQ_BRACKET, 0);
   }
   expression() {
     return this.getTypedRuleContext(ExpressionContext, 0);
   }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
+  CLOSE_SQ_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_SQ_BRACKET, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterEach(this);
+      listener.enterIndex(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitEach(this);
+      listener.exitIndex(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitEach(this);
+      return visitor.visitIndex(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var WhileContext = class extends Ln.ParserRuleContext {
+var IdentifierWithOptIndexesContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28763,56 +29732,40 @@ var WhileContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_while;
+    this.ruleIndex = ElanParser.RULE_identifierWithOptIndexes;
   }
-  NL = function(i2) {
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  index = function(i2) {
     if (i2 === void 0) {
       i2 = null;
     }
     if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
+      return this.getTypedRuleContexts(IndexContext);
     } else {
-      return this.getToken(ElanParser.NL, i2);
+      return this.getTypedRuleContext(IndexContext, i2);
     }
   };
-  WHILE = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.WHILE);
-    } else {
-      return this.getToken(ElanParser.WHILE, i2);
-    }
-  };
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterWhile(this);
+      listener.enterIdentifierWithOptIndexes(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitWhile(this);
+      listener.exitIdentifierWithOptIndexes(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitWhile(this);
+      return visitor.visitIdentifierWithOptIndexes(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var RepeatContext = class extends Ln.ParserRuleContext {
+var PropertyRefContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -28822,281 +29775,36 @@ var RepeatContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_repeat;
+    this.ruleIndex = ElanParser.RULE_propertyRef;
   }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
+  thisInstance() {
+    return this.getTypedRuleContext(ThisInstanceContext, 0);
   }
-  END() {
-    return this.getToken(ElanParser.END, 0);
+  DOT() {
+    return this.getToken(ElanParser.DOT, 0);
   }
-  REPEAT = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.REPEAT);
-    } else {
-      return this.getToken(ElanParser.REPEAT, i2);
-    }
-  };
-  WHEN() {
-    return this.getToken(ElanParser.WHEN, 0);
-  }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
+  identifierWithOptIndexes() {
+    return this.getTypedRuleContext(IdentifierWithOptIndexesContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterRepeat(this);
+      listener.enterPropertyRef(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitRepeat(this);
+      listener.exitPropertyRef(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitRepeat(this);
+      return visitor.visitPropertyRef(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var TryContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_try;
-  }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  TRY = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.TRY);
-    } else {
-      return this.getToken(ElanParser.TRY, i2);
-    }
-  };
-  statementBlock = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(StatementBlockContext);
-    } else {
-      return this.getTypedRuleContext(StatementBlockContext, i2);
-    }
-  };
-  CATCH() {
-    return this.getToken(ElanParser.CATCH, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterTry(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitTry(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitTry(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var SwitchContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_switch;
-  }
-  NL = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.NL);
-    } else {
-      return this.getToken(ElanParser.NL, i2);
-    }
-  };
-  SWITCH = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.SWITCH);
-    } else {
-      return this.getToken(ElanParser.SWITCH, i2);
-    }
-  };
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
-  }
-  caseDefault() {
-    return this.getTypedRuleContext(CaseDefaultContext, 0);
-  }
-  END() {
-    return this.getToken(ElanParser.END, 0);
-  }
-  case_ = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(CaseContext);
-    } else {
-      return this.getTypedRuleContext(CaseContext, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterSwitch(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitSwitch(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitSwitch(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var CaseContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_case;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  CASE() {
-    return this.getToken(ElanParser.CASE, 0);
-  }
-  literalValue() {
-    return this.getTypedRuleContext(LiteralValueContext, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  MINUS() {
-    return this.getToken(ElanParser.MINUS, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterCase(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitCase(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitCase(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var CaseDefaultContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_caseDefault;
-  }
-  NL() {
-    return this.getToken(ElanParser.NL, 0);
-  }
-  DEFAULT() {
-    return this.getToken(ElanParser.DEFAULT, 0);
-  }
-  statementBlock() {
-    return this.getTypedRuleContext(StatementBlockContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterCaseDefault(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitCaseDefault(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitCaseDefault(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ExpressionContext = class _ExpressionContext extends Ln.ParserRuleContext {
+var ExpressionContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -29108,60 +29816,20 @@ var ExpressionContext = class _ExpressionContext extends Ln.ParserRuleContext {
     this.parser = parser;
     this.ruleIndex = ElanParser.RULE_expression;
   }
-  bracketedExpression() {
-    return this.getTypedRuleContext(BracketedExpressionContext, 0);
-  }
-  functionCall() {
-    return this.getTypedRuleContext(FunctionCallContext, 0);
-  }
-  value() {
-    return this.getTypedRuleContext(ValueContext, 0);
-  }
-  unaryOp() {
-    return this.getTypedRuleContext(UnaryOpContext, 0);
-  }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(_ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(_ExpressionContext, i2);
-    }
-  };
   newInstance() {
     return this.getTypedRuleContext(NewInstanceContext, 0);
-  }
-  input() {
-    return this.getTypedRuleContext(InputContext, 0);
-  }
-  systemCall() {
-    return this.getTypedRuleContext(SystemCallContext, 0);
-  }
-  POWER() {
-    return this.getToken(ElanParser.POWER, 0);
-  }
-  binaryOp() {
-    return this.getTypedRuleContext(BinaryOpContext, 0);
-  }
-  index() {
-    return this.getTypedRuleContext(IndexContext, 0);
-  }
-  DOT() {
-    return this.getToken(ElanParser.DOT, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
   }
   ifExpression() {
     return this.getTypedRuleContext(IfExpressionContext, 0);
   }
-  elseExpression() {
-    return this.getTypedRuleContext(ElseExpressionContext, 0);
+  unaryExpression() {
+    return this.getTypedRuleContext(UnaryExpressionContext, 0);
   }
-  withClause() {
-    return this.getTypedRuleContext(WithClauseContext, 0);
+  term() {
+    return this.getTypedRuleContext(TermContext, 0);
+  }
+  binaryExpression() {
+    return this.getTypedRuleContext(BinaryExpressionContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
@@ -29176,6 +29844,117 @@ var ExpressionContext = class _ExpressionContext extends Ln.ParserRuleContext {
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
       return visitor.visitExpression(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TermContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_term;
+  }
+  thisInstance() {
+    return this.getTypedRuleContext(ThisInstanceContext, 0);
+  }
+  chainable = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(ChainableContext);
+    } else {
+      return this.getTypedRuleContext(ChainableContext, i2);
+    }
+  };
+  DOT = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.DOT);
+    } else {
+      return this.getToken(ElanParser.DOT, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTerm(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTerm(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ChainableContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_chainable;
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  methodCall() {
+    return this.getTypedRuleContext(MethodCallContext, 0);
+  }
+  bracketedExpression() {
+    return this.getTypedRuleContext(BracketedExpressionContext, 0);
+  }
+  tuple() {
+    return this.getTypedRuleContext(TupleContext, 0);
+  }
+  litValue() {
+    return this.getTypedRuleContext(LitValueContext, 0);
+  }
+  list() {
+    return this.getTypedRuleContext(ListContext, 0);
+  }
+  index = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(IndexContext);
+    } else {
+      return this.getTypedRuleContext(IndexContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterChainable(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitChainable(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitChainable(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -29220,6 +29999,251 @@ var BracketedExpressionContext = class extends Ln.ParserRuleContext {
     }
   }
 };
+var UnaryExpressionContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_unaryExpression;
+  }
+  term() {
+    return this.getTypedRuleContext(TermContext, 0);
+  }
+  MINUS() {
+    return this.getToken(ElanParser.MINUS, 0);
+  }
+  NOT() {
+    return this.getToken(ElanParser.NOT, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterUnaryExpression(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitUnaryExpression(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitUnaryExpression(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var BinaryExpressionContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_binaryExpression;
+  }
+  term() {
+    return this.getTypedRuleContext(TermContext, 0);
+  }
+  binaryOperator() {
+    return this.getTypedRuleContext(BinaryOperatorContext, 0);
+  }
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterBinaryExpression(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitBinaryExpression(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitBinaryExpression(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TupleContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_tuple;
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  expression = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+      return this.getTypedRuleContext(ExpressionContext, i2);
+    }
+  };
+  COMMA = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.COMMA);
+    } else {
+      return this.getToken(ElanParser.COMMA, i2);
+    }
+  };
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTuple(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTuple(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTuple(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var MethodCallContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_methodCall;
+  }
+  methodName() {
+    return this.getTypedRuleContext(MethodNameContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterMethodCall(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitMethodCall(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitMethodCall(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var BinaryOperatorContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_binaryOperator;
+  }
+  EQUAL() {
+    return this.getToken(ElanParser.EQUAL, 0);
+  }
+  NOT_EQUAL() {
+    return this.getToken(ElanParser.NOT_EQUAL, 0);
+  }
+  GT() {
+    return this.getToken(ElanParser.GT, 0);
+  }
+  LT() {
+    return this.getToken(ElanParser.LT, 0);
+  }
+  GE() {
+    return this.getToken(ElanParser.GE, 0);
+  }
+  LE() {
+    return this.getToken(ElanParser.LE, 0);
+  }
+  MULT() {
+    return this.getToken(ElanParser.MULT, 0);
+  }
+  DIVIDE() {
+    return this.getToken(ElanParser.DIVIDE, 0);
+  }
+  PLUS() {
+    return this.getToken(ElanParser.PLUS, 0);
+  }
+  MINUS() {
+    return this.getToken(ElanParser.MINUS, 0);
+  }
+  AND() {
+    return this.getToken(ElanParser.AND, 0);
+  }
+  OR() {
+    return this.getToken(ElanParser.OR, 0);
+  }
+  MOD() {
+    return this.getToken(ElanParser.MOD, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterBinaryOperator(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitBinaryOperator(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitBinaryOperator(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
 var IfExpressionContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
@@ -29232,11 +30256,34 @@ var IfExpressionContext = class extends Ln.ParserRuleContext {
     this.parser = parser;
     this.ruleIndex = ElanParser.RULE_ifExpression;
   }
-  IF() {
-    return this.getToken(ElanParser.IF, 0);
+  IF_() {
+    return this.getToken(ElanParser.IF_, 0);
   }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  expression = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+      return this.getTypedRuleContext(ExpressionContext, i2);
+    }
+  };
+  COMMA = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.COMMA);
+    } else {
+      return this.getToken(ElanParser.COMMA, i2);
+    }
+  };
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
@@ -29256,7 +30303,7 @@ var IfExpressionContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var ElseExpressionContext = class extends Ln.ParserRuleContext {
+var NewInstanceContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -29266,27 +30313,193 @@ var ElseExpressionContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_elseExpression;
+    this.ruleIndex = ElanParser.RULE_newInstance;
   }
-  ELSE() {
-    return this.getToken(ElanParser.ELSE, 0);
+  NEW() {
+    return this.getToken(ElanParser.NEW, 0);
   }
-  expression() {
-    return this.getTypedRuleContext(ExpressionContext, 0);
+  type() {
+    return this.getTypedRuleContext(TypeContext, 0);
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
+  }
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterElseExpression(this);
+      listener.enterNewInstance(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitElseExpression(this);
+      listener.exitNewInstance(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitElseExpression(this);
+      return visitor.visitNewInstance(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var ParamDefContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_paramDef;
+  }
+  identifier() {
+    return this.getTypedRuleContext(IdentifierContext, 0);
+  }
+  AS() {
+    return this.getToken(ElanParser.AS, 0);
+  }
+  type() {
+    return this.getTypedRuleContext(TypeContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterParamDef(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitParamDef(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitParamDef(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TypeGenericContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_typeGeneric;
+  }
+  typeName() {
+    return this.getTypedRuleContext(TypeNameContext, 0);
+  }
+  LT() {
+    return this.getToken(ElanParser.LT, 0);
+  }
+  OF() {
+    return this.getToken(ElanParser.OF, 0);
+  }
+  type = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(TypeContext);
+    } else {
+      return this.getTypedRuleContext(TypeContext, i2);
+    }
+  };
+  GT() {
+    return this.getToken(ElanParser.GT, 0);
+  }
+  COMMA = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.COMMA);
+    } else {
+      return this.getToken(ElanParser.COMMA, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTypeGeneric(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTypeGeneric(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTypeGeneric(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TypeTupleContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_typeTuple;
+  }
+  OPEN_BRACKET() {
+    return this.getToken(ElanParser.OPEN_BRACKET, 0);
+  }
+  type = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(TypeContext);
+    } else {
+      return this.getTypedRuleContext(TypeContext, i2);
+    }
+  };
+  CLOSE_BRACKET() {
+    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
+  }
+  COMMA = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.COMMA);
+    } else {
+      return this.getToken(ElanParser.COMMA, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTypeTuple(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTypeTuple(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTypeTuple(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -29307,14 +30520,17 @@ var LambdaContext = class extends Ln.ParserRuleContext {
   LAMBDA() {
     return this.getToken(ElanParser.LAMBDA, 0);
   }
-  argumentList() {
-    return this.getTypedRuleContext(ArgumentListContext, 0);
-  }
   ARROW() {
     return this.getToken(ElanParser.ARROW, 0);
   }
   expression() {
     return this.getTypedRuleContext(ExpressionContext, 0);
+  }
+  paramsList() {
+    return this.getTypedRuleContext(ParamsListContext, 0);
+  }
+  argList() {
+    return this.getTypedRuleContext(ArgListContext, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
@@ -29334,7 +30550,7 @@ var LambdaContext = class extends Ln.ParserRuleContext {
     }
   }
 };
-var IndexContext = class extends Ln.ParserRuleContext {
+var ListContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -29344,502 +30560,24 @@ var IndexContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_index;
+    this.ruleIndex = ElanParser.RULE_list;
   }
   OPEN_SQ_BRACKET() {
     return this.getToken(ElanParser.OPEN_SQ_BRACKET, 0);
   }
+  expression = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(ExpressionContext);
+    } else {
+      return this.getTypedRuleContext(ExpressionContext, i2);
+    }
+  };
   CLOSE_SQ_BRACKET() {
     return this.getToken(ElanParser.CLOSE_SQ_BRACKET, 0);
   }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  COMMA() {
-    return this.getToken(ElanParser.COMMA, 0);
-  }
-  range() {
-    return this.getTypedRuleContext(RangeContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterIndex(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitIndex(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitIndex(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var RangeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_range;
-  }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  DOUBLE_DOT() {
-    return this.getToken(ElanParser.DOUBLE_DOT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterRange(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitRange(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitRange(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ValueContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_value;
-  }
-  literal() {
-    return this.getTypedRuleContext(LiteralContext, 0);
-  }
-  IDENTIFIER() {
-    return this.getToken(ElanParser.IDENTIFIER, 0);
-  }
-  scopeQualifier() {
-    return this.getTypedRuleContext(ScopeQualifierContext, 0);
-  }
-  dataStructureDefinition() {
-    return this.getTypedRuleContext(DataStructureDefinitionContext, 0);
-  }
-  THIS() {
-    return this.getToken(ElanParser.THIS, 0);
-  }
-  DEFAULT() {
-    return this.getToken(ElanParser.DEFAULT, 0);
-  }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterValue(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitValue(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitValue(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ScopeQualifierContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_scopeQualifier;
-  }
-  DOT = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.DOT);
-    } else {
-      return this.getToken(ElanParser.DOT, i2);
-    }
-  };
-  PROPERTY() {
-    return this.getToken(ElanParser.PROPERTY, 0);
-  }
-  GLOBAL() {
-    return this.getToken(ElanParser.GLOBAL, 0);
-  }
-  LIBRARY() {
-    return this.getToken(ElanParser.LIBRARY, 0);
-  }
-  PACKAGE() {
-    return this.getToken(ElanParser.PACKAGE, 0);
-  }
-  namespace() {
-    return this.getTypedRuleContext(NamespaceContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterScopeQualifier(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitScopeQualifier(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitScopeQualifier(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literal;
-  }
-  literalValue() {
-    return this.getTypedRuleContext(LiteralValueContext, 0);
-  }
-  literalDataStructure() {
-    return this.getTypedRuleContext(LiteralDataStructureContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteral(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteral(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteral(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralValueContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalValue;
-  }
-  BOOL_VALUE() {
-    return this.getToken(ElanParser.BOOL_VALUE, 0);
-  }
-  LITERAL_INTEGER() {
-    return this.getToken(ElanParser.LITERAL_INTEGER, 0);
-  }
-  LITERAL_FLOAT() {
-    return this.getToken(ElanParser.LITERAL_FLOAT, 0);
-  }
-  LITERAL_CHAR() {
-    return this.getToken(ElanParser.LITERAL_CHAR, 0);
-  }
-  enumValue() {
-    return this.getTypedRuleContext(EnumValueContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralValue(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralValue(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralValue(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var DataStructureDefinitionContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_dataStructureDefinition;
-  }
-  listDefinition() {
-    return this.getTypedRuleContext(ListDefinitionContext, 0);
-  }
-  arrayDefinition() {
-    return this.getTypedRuleContext(ArrayDefinitionContext, 0);
-  }
-  tupleDefinition() {
-    return this.getTypedRuleContext(TupleDefinitionContext, 0);
-  }
-  dictionaryDefinition() {
-    return this.getTypedRuleContext(DictionaryDefinitionContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterDataStructureDefinition(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitDataStructureDefinition(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitDataStructureDefinition(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralDataStructureContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalDataStructure;
-  }
-  LITERAL_STRING() {
-    return this.getToken(ElanParser.LITERAL_STRING, 0);
-  }
-  literalTuple() {
-    return this.getTypedRuleContext(LiteralTupleContext, 0);
-  }
-  literalList() {
-    return this.getTypedRuleContext(LiteralListContext, 0);
-  }
-  literalDictionary() {
-    return this.getTypedRuleContext(LiteralDictionaryContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralDataStructure(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralDataStructure(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralDataStructure(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var TupleDefinitionContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_tupleDefinition;
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterTupleDefinition(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitTupleDefinition(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitTupleDefinition(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralTupleContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalTuple;
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  literal = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(LiteralContext);
-    } else {
-      return this.getTypedRuleContext(LiteralContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralTuple(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralTuple(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralTuple(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var DeconstructedTupleContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_deconstructedTuple;
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  IDENTIFIER = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.IDENTIFIER);
-    } else {
-      return this.getToken(ElanParser.IDENTIFIER, i2);
-    }
-  };
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
   COMMA = function(i2) {
     if (i2 === void 0) {
       i2 = null;
@@ -29852,23 +30590,23 @@ var DeconstructedTupleContext = class extends Ln.ParserRuleContext {
   };
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterDeconstructedTuple(this);
+      listener.enterList(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitDeconstructedTuple(this);
+      listener.exitList(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitDeconstructedTuple(this);
+      return visitor.visitList(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
-var ListDefinitionContext = class extends Ln.ParserRuleContext {
+var InterpolatedStringContext = class extends Ln.ParserRuleContext {
   constructor(parser, parent, invokingState) {
     if (parent === void 0) {
       parent = null;
@@ -29878,1004 +30616,265 @@ var ListDefinitionContext = class extends Ln.ParserRuleContext {
     }
     super(parent, invokingState);
     this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_listDefinition;
+    this.ruleIndex = ElanParser.RULE_interpolatedString;
+  }
+  INTERPOLATED_STRING_PREFIX() {
+    return this.getToken(ElanParser.INTERPOLATED_STRING_PREFIX, 0);
+  }
+  DOUBLE_QUOTES = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTokens(ElanParser.DOUBLE_QUOTES);
+    } else {
+      return this.getToken(ElanParser.DOUBLE_QUOTES, i2);
+    }
+  };
+  segment = function(i2) {
+    if (i2 === void 0) {
+      i2 = null;
+    }
+    if (i2 === null) {
+      return this.getTypedRuleContexts(SegmentContext);
+    } else {
+      return this.getTypedRuleContext(SegmentContext, i2);
+    }
+  };
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterInterpolatedString(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitInterpolatedString(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitInterpolatedString(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var SegmentContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_segment;
+  }
+  textSegment() {
+    return this.getTypedRuleContext(TextSegmentContext, 0);
+  }
+  fieldSegment() {
+    return this.getTypedRuleContext(FieldSegmentContext, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterSegment(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitSegment(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitSegment(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var TextSegmentContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_textSegment;
+  }
+  TEXT() {
+    return this.getToken(ElanParser.TEXT, 0);
+  }
+  enterRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.enterTextSegment(this);
+    }
+  }
+  exitRule(listener) {
+    if (listener instanceof ElanListener) {
+      listener.exitTextSegment(this);
+    }
+  }
+  accept(visitor) {
+    if (visitor instanceof ElanVisitor) {
+      return visitor.visitTextSegment(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+};
+var FieldSegmentContext = class extends Ln.ParserRuleContext {
+  constructor(parser, parent, invokingState) {
+    if (parent === void 0) {
+      parent = null;
+    }
+    if (invokingState === void 0 || invokingState === null) {
+      invokingState = -1;
+    }
+    super(parent, invokingState);
+    this.parser = parser;
+    this.ruleIndex = ElanParser.RULE_fieldSegment;
   }
   OPEN_BRACE() {
     return this.getToken(ElanParser.OPEN_BRACE, 0);
   }
-  CLOSE_BRACE() {
-    return this.getToken(ElanParser.CLOSE_BRACE, 0);
-  }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterListDefinition(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitListDefinition(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitListDefinition(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralListContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalList;
-  }
-  OPEN_BRACE() {
-    return this.getToken(ElanParser.OPEN_BRACE, 0);
-  }
-  CLOSE_BRACE() {
-    return this.getToken(ElanParser.CLOSE_BRACE, 0);
-  }
-  literal = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(LiteralContext);
-    } else {
-      return this.getTypedRuleContext(LiteralContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralList(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralList(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralList(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ListDecompContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_listDecomp;
-  }
-  OPEN_BRACE() {
-    return this.getToken(ElanParser.OPEN_BRACE, 0);
-  }
-  IDENTIFIER = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.IDENTIFIER);
-    } else {
-      return this.getToken(ElanParser.IDENTIFIER, i2);
-    }
-  };
-  COLON() {
-    return this.getToken(ElanParser.COLON, 0);
+  expression() {
+    return this.getTypedRuleContext(ExpressionContext, 0);
   }
   CLOSE_BRACE() {
     return this.getToken(ElanParser.CLOSE_BRACE, 0);
   }
   enterRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.enterListDecomp(this);
+      listener.enterFieldSegment(this);
     }
   }
   exitRule(listener) {
     if (listener instanceof ElanListener) {
-      listener.exitListDecomp(this);
+      listener.exitFieldSegment(this);
     }
   }
   accept(visitor) {
     if (visitor instanceof ElanVisitor) {
-      return visitor.visitListDecomp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ArrayDefinitionContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_arrayDefinition;
-  }
-  ARRAY() {
-    return this.getToken(ElanParser.ARRAY, 0);
-  }
-  genericSpecifier() {
-    return this.getTypedRuleContext(GenericSpecifierContext, 0);
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  LITERAL_INTEGER() {
-    return this.getToken(ElanParser.LITERAL_INTEGER, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterArrayDefinition(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitArrayDefinition(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitArrayDefinition(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var DictionaryDefinitionContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_dictionaryDefinition;
-  }
-  OPEN_BRACE() {
-    return this.getToken(ElanParser.OPEN_BRACE, 0);
-  }
-  CLOSE_BRACE() {
-    return this.getToken(ElanParser.CLOSE_BRACE, 0);
-  }
-  kvp = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(KvpContext);
-    } else {
-      return this.getTypedRuleContext(KvpContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterDictionaryDefinition(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitDictionaryDefinition(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitDictionaryDefinition(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralDictionaryContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalDictionary;
-  }
-  OPEN_BRACE() {
-    return this.getToken(ElanParser.OPEN_BRACE, 0);
-  }
-  CLOSE_BRACE() {
-    return this.getToken(ElanParser.CLOSE_BRACE, 0);
-  }
-  literalKvp = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(LiteralKvpContext);
-    } else {
-      return this.getTypedRuleContext(LiteralKvpContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralDictionary(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralDictionary(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralDictionary(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var KvpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_kvp;
-  }
-  expression = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(ExpressionContext);
-    } else {
-      return this.getTypedRuleContext(ExpressionContext, i2);
-    }
-  };
-  COLON() {
-    return this.getToken(ElanParser.COLON, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterKvp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitKvp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitKvp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LiteralKvpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_literalKvp;
-  }
-  literal = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(LiteralContext);
-    } else {
-      return this.getTypedRuleContext(LiteralContext, i2);
-    }
-  };
-  COLON() {
-    return this.getToken(ElanParser.COLON, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLiteralKvp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLiteralKvp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLiteralKvp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var UnaryOpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_unaryOp;
-  }
-  MINUS() {
-    return this.getToken(ElanParser.MINUS, 0);
-  }
-  NOT() {
-    return this.getToken(ElanParser.NOT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterUnaryOp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitUnaryOp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitUnaryOp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var BinaryOpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_binaryOp;
-  }
-  arithmeticOp() {
-    return this.getTypedRuleContext(ArithmeticOpContext, 0);
-  }
-  logicalOp() {
-    return this.getTypedRuleContext(LogicalOpContext, 0);
-  }
-  conditionalOp() {
-    return this.getTypedRuleContext(ConditionalOpContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterBinaryOp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitBinaryOp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitBinaryOp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ArithmeticOpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_arithmeticOp;
-  }
-  POWER() {
-    return this.getToken(ElanParser.POWER, 0);
-  }
-  MULT() {
-    return this.getToken(ElanParser.MULT, 0);
-  }
-  DIVIDE() {
-    return this.getToken(ElanParser.DIVIDE, 0);
-  }
-  MOD() {
-    return this.getToken(ElanParser.MOD, 0);
-  }
-  DIV() {
-    return this.getToken(ElanParser.DIV, 0);
-  }
-  PLUS() {
-    return this.getToken(ElanParser.PLUS, 0);
-  }
-  MINUS() {
-    return this.getToken(ElanParser.MINUS, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterArithmeticOp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitArithmeticOp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitArithmeticOp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var LogicalOpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_logicalOp;
-  }
-  AND() {
-    return this.getToken(ElanParser.AND, 0);
-  }
-  OR() {
-    return this.getToken(ElanParser.OR, 0);
-  }
-  XOR() {
-    return this.getToken(ElanParser.XOR, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterLogicalOp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitLogicalOp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitLogicalOp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var ConditionalOpContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_conditionalOp;
-  }
-  GT() {
-    return this.getToken(ElanParser.GT, 0);
-  }
-  LT() {
-    return this.getToken(ElanParser.LT, 0);
-  }
-  GE() {
-    return this.getToken(ElanParser.GE, 0);
-  }
-  LE() {
-    return this.getToken(ElanParser.LE, 0);
-  }
-  IS() {
-    return this.getToken(ElanParser.IS, 0);
-  }
-  IS_NOT() {
-    return this.getToken(ElanParser.IS_NOT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterConditionalOp(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitConditionalOp(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitConditionalOp(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var TypeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_type;
-  }
-  VALUE_TYPE() {
-    return this.getToken(ElanParser.VALUE_TYPE, 0);
-  }
-  TYPENAME() {
-    return this.getToken(ElanParser.TYPENAME, 0);
-  }
-  genericSpecifier() {
-    return this.getTypedRuleContext(GenericSpecifierContext, 0);
-  }
-  tupleType() {
-    return this.getTypedRuleContext(TupleTypeContext, 0);
-  }
-  funcType() {
-    return this.getTypedRuleContext(FuncTypeContext, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterType(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitType(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitType(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var DataStructureTypeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_dataStructureType;
-  }
-  genericSpecifier() {
-    return this.getTypedRuleContext(GenericSpecifierContext, 0);
-  }
-  ARRAY() {
-    return this.getToken(ElanParser.ARRAY, 0);
-  }
-  LIST() {
-    return this.getToken(ElanParser.LIST, 0);
-  }
-  DICTIONARY() {
-    return this.getToken(ElanParser.DICTIONARY, 0);
-  }
-  ITERABLE() {
-    return this.getToken(ElanParser.ITERABLE, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterDataStructureType(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitDataStructureType(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitDataStructureType(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var GenericSpecifierContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_genericSpecifier;
-  }
-  LT() {
-    return this.getToken(ElanParser.LT, 0);
-  }
-  OF() {
-    return this.getToken(ElanParser.OF, 0);
-  }
-  type = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(TypeContext);
-    } else {
-      return this.getTypedRuleContext(TypeContext, i2);
-    }
-  };
-  GT() {
-    return this.getToken(ElanParser.GT, 0);
-  }
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterGenericSpecifier(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitGenericSpecifier(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitGenericSpecifier(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var TupleTypeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_tupleType;
-  }
-  OPEN_BRACKET() {
-    return this.getToken(ElanParser.OPEN_BRACKET, 0);
-  }
-  type = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(TypeContext);
-    } else {
-      return this.getTypedRuleContext(TypeContext, i2);
-    }
-  };
-  CLOSE_BRACKET() {
-    return this.getToken(ElanParser.CLOSE_BRACKET, 0);
-  }
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterTupleType(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitTupleType(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitTupleType(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var TypeListContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_typeList;
-  }
-  type = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTypedRuleContexts(TypeContext);
-    } else {
-      return this.getTypedRuleContext(TypeContext, i2);
-    }
-  };
-  COMMA = function(i2) {
-    if (i2 === void 0) {
-      i2 = null;
-    }
-    if (i2 === null) {
-      return this.getTokens(ElanParser.COMMA);
-    } else {
-      return this.getToken(ElanParser.COMMA, i2);
-    }
-  };
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterTypeList(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitTypeList(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitTypeList(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-};
-var FuncTypeContext = class extends Ln.ParserRuleContext {
-  constructor(parser, parent, invokingState) {
-    if (parent === void 0) {
-      parent = null;
-    }
-    if (invokingState === void 0 || invokingState === null) {
-      invokingState = -1;
-    }
-    super(parent, invokingState);
-    this.parser = parser;
-    this.ruleIndex = ElanParser.RULE_funcType;
-  }
-  LT() {
-    return this.getToken(ElanParser.LT, 0);
-  }
-  OF() {
-    return this.getToken(ElanParser.OF, 0);
-  }
-  typeList() {
-    return this.getTypedRuleContext(TypeListContext, 0);
-  }
-  ARROW() {
-    return this.getToken(ElanParser.ARROW, 0);
-  }
-  type() {
-    return this.getTypedRuleContext(TypeContext, 0);
-  }
-  GT() {
-    return this.getToken(ElanParser.GT, 0);
-  }
-  enterRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.enterFuncType(this);
-    }
-  }
-  exitRule(listener) {
-    if (listener instanceof ElanListener) {
-      listener.exitFuncType(this);
-    }
-  }
-  accept(visitor) {
-    if (visitor instanceof ElanVisitor) {
-      return visitor.visitFuncType(this);
+      return visitor.visitFieldSegment(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 };
 ElanParser.FileContext = FileContext;
-ElanParser.ImportStatementContext = ImportStatementContext;
-ElanParser.NamespaceContext = NamespaceContext;
+ElanParser.GlobalContext = GlobalContext;
 ElanParser.MainContext = MainContext;
+ElanParser.FunctionContext = FunctionContext;
 ElanParser.TestContext = TestContext;
-ElanParser.StatementBlockContext = StatementBlockContext;
-ElanParser.TestStatementsContext = TestStatementsContext;
-ElanParser.AssertContext = AssertContext;
-ElanParser.CallStatementContext = CallStatementContext;
-ElanParser.ThrowExceptionContext = ThrowExceptionContext;
-ElanParser.PrintStatementContext = PrintStatementContext;
-ElanParser.VarDefContext = VarDefContext;
-ElanParser.AssignmentContext = AssignmentContext;
-ElanParser.InlineAsignmentContext = InlineAsignmentContext;
-ElanParser.AssignableValueContext = AssignableValueContext;
-ElanParser.ProcedureCallContext = ProcedureCallContext;
-ElanParser.FunctionCallContext = FunctionCallContext;
-ElanParser.SystemCallContext = SystemCallContext;
-ElanParser.InputContext = InputContext;
-ElanParser.ArgumentContext = ArgumentContext;
-ElanParser.ArgumentListContext = ArgumentListContext;
-ElanParser.ProcedureDefContext = ProcedureDefContext;
-ElanParser.ProcedureSignatureContext = ProcedureSignatureContext;
-ElanParser.ProcedureParameterListContext = ProcedureParameterListContext;
-ElanParser.ParameterListContext = ParameterListContext;
-ElanParser.ParameterContext = ParameterContext;
-ElanParser.ProcedureParameterContext = ProcedureParameterContext;
-ElanParser.FunctionDefContext = FunctionDefContext;
-ElanParser.FunctionSignatureContext = FunctionSignatureContext;
-ElanParser.ConstantDefContext = ConstantDefContext;
-ElanParser.EnumDefContext = EnumDefContext;
-ElanParser.EnumTypeContext = EnumTypeContext;
-ElanParser.EnumValueContext = EnumValueContext;
-ElanParser.ClassDefContext = ClassDefContext;
-ElanParser.MutableClassContext = MutableClassContext;
+ElanParser.ProcedureContext = ProcedureContext;
+ElanParser.ConcreteClassContext = ConcreteClassContext;
 ElanParser.AbstractClassContext = AbstractClassContext;
-ElanParser.ImmutableClassContext = ImmutableClassContext;
-ElanParser.AbstractImmutableClassContext = AbstractImmutableClassContext;
-ElanParser.InheritsContext = InheritsContext;
-ElanParser.PropertyContext = PropertyContext;
+ElanParser.CommentGlobalContext = CommentGlobalContext;
+ElanParser.OrdinaryStatementContext = OrdinaryStatementContext;
+ElanParser.IfStatementContext = IfStatementContext;
+ElanParser.WhileLoopContext = WhileLoopContext;
+ElanParser.ForLoopContext = ForLoopContext;
+ElanParser.TryStatementContext = TryStatementContext;
+ElanParser.CommentStatementContext = CommentStatementContext;
 ElanParser.EconstructorContext = EconstructorContext;
-ElanParser.NewInstanceContext = NewInstanceContext;
-ElanParser.WithClauseContext = WithClauseContext;
-ElanParser.ProceduralControlFlowContext = ProceduralControlFlowContext;
-ElanParser.IfContext = IfContext;
-ElanParser.ForContext = ForContext;
-ElanParser.EachContext = EachContext;
-ElanParser.WhileContext = WhileContext;
-ElanParser.RepeatContext = RepeatContext;
-ElanParser.TryContext = TryContext;
-ElanParser.SwitchContext = SwitchContext;
-ElanParser.CaseContext = CaseContext;
-ElanParser.CaseDefaultContext = CaseDefaultContext;
-ElanParser.ExpressionContext = ExpressionContext;
-ElanParser.BracketedExpressionContext = BracketedExpressionContext;
-ElanParser.IfExpressionContext = IfExpressionContext;
-ElanParser.ElseExpressionContext = ElseExpressionContext;
-ElanParser.LambdaContext = LambdaContext;
-ElanParser.IndexContext = IndexContext;
-ElanParser.RangeContext = RangeContext;
-ElanParser.ValueContext = ValueContext;
-ElanParser.ScopeQualifierContext = ScopeQualifierContext;
-ElanParser.LiteralContext = LiteralContext;
-ElanParser.LiteralValueContext = LiteralValueContext;
-ElanParser.DataStructureDefinitionContext = DataStructureDefinitionContext;
-ElanParser.LiteralDataStructureContext = LiteralDataStructureContext;
-ElanParser.TupleDefinitionContext = TupleDefinitionContext;
-ElanParser.LiteralTupleContext = LiteralTupleContext;
-ElanParser.DeconstructedTupleContext = DeconstructedTupleContext;
-ElanParser.ListDefinitionContext = ListDefinitionContext;
-ElanParser.LiteralListContext = LiteralListContext;
-ElanParser.ListDecompContext = ListDecompContext;
-ElanParser.ArrayDefinitionContext = ArrayDefinitionContext;
-ElanParser.DictionaryDefinitionContext = DictionaryDefinitionContext;
-ElanParser.LiteralDictionaryContext = LiteralDictionaryContext;
-ElanParser.KvpContext = KvpContext;
-ElanParser.LiteralKvpContext = LiteralKvpContext;
-ElanParser.UnaryOpContext = UnaryOpContext;
-ElanParser.BinaryOpContext = BinaryOpContext;
-ElanParser.ArithmeticOpContext = ArithmeticOpContext;
-ElanParser.LogicalOpContext = LogicalOpContext;
-ElanParser.ConditionalOpContext = ConditionalOpContext;
+ElanParser.FunctionMethodContext = FunctionMethodContext;
+ElanParser.ProcedureMethodContext = ProcedureMethodContext;
+ElanParser.CopyMethodContext = CopyMethodContext;
+ElanParser.CommentMemberContext = CommentMemberContext;
+ElanParser.MainTopContext = MainTopContext;
+ElanParser.MainBottomContext = MainBottomContext;
+ElanParser.FunctionTopContext = FunctionTopContext;
+ElanParser.FunctionBottomContext = FunctionBottomContext;
+ElanParser.TestTopContext = TestTopContext;
+ElanParser.TestBottomContext = TestBottomContext;
+ElanParser.ProcedureTopContext = ProcedureTopContext;
+ElanParser.ProcedureBottomContext = ProcedureBottomContext;
+ElanParser.ConcreteClassTopContext = ConcreteClassTopContext;
+ElanParser.ConcreteClassBottomContext = ConcreteClassBottomContext;
+ElanParser.AbstractClassTopContext = AbstractClassTopContext;
+ElanParser.AbstractClassBottomContext = AbstractClassBottomContext;
+ElanParser.ConstantContext = ConstantContext;
+ElanParser.EnumContext = EnumContext;
+ElanParser.AssertContext = AssertContext;
+ElanParser.LetStatementContext = LetStatementContext;
+ElanParser.PrintContext = PrintContext;
+ElanParser.VariableDefinitionContext = VariableDefinitionContext;
+ElanParser.AssignmentContext = AssignmentContext;
+ElanParser.InputStatementContext = InputStatementContext;
+ElanParser.ProcedureCallContext = ProcedureCallContext;
+ElanParser.ThrowStatementContext = ThrowStatementContext;
+ElanParser.ReturnStatementContext = ReturnStatementContext;
+ElanParser.ElseIfClauseContext = ElseIfClauseContext;
+ElanParser.ElseClauseContext = ElseClauseContext;
+ElanParser.CatchStatementContext = CatchStatementContext;
+ElanParser.IfStatementTopContext = IfStatementTopContext;
+ElanParser.IfStatementBottomContext = IfStatementBottomContext;
+ElanParser.WhileLoopTopContext = WhileLoopTopContext;
+ElanParser.WhileLoopBottomContext = WhileLoopBottomContext;
+ElanParser.ForLoopTopContext = ForLoopTopContext;
+ElanParser.ForLoopBottomContext = ForLoopBottomContext;
+ElanParser.TryStatementTopContext = TryStatementTopContext;
+ElanParser.TryStatementBottomContext = TryStatementBottomContext;
+ElanParser.ConstructorTopContext = ConstructorTopContext;
+ElanParser.ConstructorBottomContext = ConstructorBottomContext;
+ElanParser.PropertyContext = PropertyContext;
+ElanParser.FunctionMethodTopContext = FunctionMethodTopContext;
+ElanParser.FunctionMethodBottomContext = FunctionMethodBottomContext;
+ElanParser.ProcedureMethodTopContext = ProcedureMethodTopContext;
+ElanParser.ProcedureMethodBottomContext = ProcedureMethodBottomContext;
+ElanParser.CopyMethodTopContext = CopyMethodTopContext;
+ElanParser.CopyMethodBottomContext = CopyMethodBottomContext;
+ElanParser.AbstractFunctionContext = AbstractFunctionContext;
+ElanParser.AbstractProcedureContext = AbstractProcedureContext;
+ElanParser.IdentifierContext = IdentifierContext;
+ElanParser.AssignableContext = AssignableContext;
+ElanParser.MethodNameContext = MethodNameContext;
+ElanParser.TestNameContext = TestNameContext;
+ElanParser.TypeNameContext = TypeNameContext;
+ElanParser.ConstantValueContext = ConstantValueContext;
+ElanParser.ArgListContext = ArgListContext;
+ElanParser.ArgumentContext = ArgumentContext;
+ElanParser.ParamsListContext = ParamsListContext;
 ElanParser.TypeContext = TypeContext;
-ElanParser.DataStructureTypeContext = DataStructureTypeContext;
-ElanParser.GenericSpecifierContext = GenericSpecifierContext;
-ElanParser.TupleTypeContext = TupleTypeContext;
-ElanParser.TypeListContext = TypeListContext;
-ElanParser.FuncTypeContext = FuncTypeContext;
+ElanParser.EnumValuesListContext = EnumValuesListContext;
+ElanParser.ProcRefContext = ProcRefContext;
+ElanParser.AssertActualContext = AssertActualContext;
+ElanParser.LitValueContext = LitValueContext;
+ElanParser.LitIntContext = LitIntContext;
+ElanParser.LitFloatContext = LitFloatContext;
+ElanParser.EnumValueContext = EnumValueContext;
+ElanParser.LitRegExpContext = LitRegExpContext;
+ElanParser.LitStringContext = LitStringContext;
+ElanParser.ThisInstanceContext = ThisInstanceContext;
+ElanParser.IndexContext = IndexContext;
+ElanParser.IdentifierWithOptIndexesContext = IdentifierWithOptIndexesContext;
+ElanParser.PropertyRefContext = PropertyRefContext;
+ElanParser.ExpressionContext = ExpressionContext;
+ElanParser.TermContext = TermContext;
+ElanParser.ChainableContext = ChainableContext;
+ElanParser.BracketedExpressionContext = BracketedExpressionContext;
+ElanParser.UnaryExpressionContext = UnaryExpressionContext;
+ElanParser.BinaryExpressionContext = BinaryExpressionContext;
+ElanParser.TupleContext = TupleContext;
+ElanParser.MethodCallContext = MethodCallContext;
+ElanParser.BinaryOperatorContext = BinaryOperatorContext;
+ElanParser.IfExpressionContext = IfExpressionContext;
+ElanParser.NewInstanceContext = NewInstanceContext;
+ElanParser.ParamDefContext = ParamDefContext;
+ElanParser.TypeGenericContext = TypeGenericContext;
+ElanParser.TypeTupleContext = TypeTupleContext;
+ElanParser.LambdaContext = LambdaContext;
+ElanParser.ListContext = ListContext;
+ElanParser.InterpolatedStringContext = InterpolatedStringContext;
+ElanParser.SegmentContext = SegmentContext;
+ElanParser.TextSegmentContext = TextSegmentContext;
+ElanParser.FieldSegmentContext = FieldSegmentContext;
 
 // src/elan-elan-visitor.js
 function getParser(input) {

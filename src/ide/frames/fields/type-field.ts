@@ -14,9 +14,6 @@ export class TypeField extends AbstractField {
     this.setPlaceholder("<i>Type</i>");
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any | undefined;
-
   helpId(): string {
     return "TypeField";
   }
@@ -46,18 +43,16 @@ export class TypeField extends AbstractField {
   override parseFrom(source: CodeSource): void {
     this.holder.hasBeenAddedTo();
     const text = this.readToDelimiter(source);
-    //   const root = this.initialiseRoot();
-    //   this.parseCompleteTextUsingNode(text, root);
-    //   if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
-    //     this._parseStatus = ParseStatus.valid;
-    //   } else if (this._parseStatus === ParseStatus.invalid) {
-    //     throw new Error(`Parse error at ${source.getRemainingCode()}`);
-    //   }
 
     const tree = parseType(text);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const parsed = (tree as any).getText();
 
     if (tree.parser.syntaxErrorsCount > 0) {
-      throw new Error(`Parse error at ${source.getRemainingCode()}`);
+      throw new Error(`Parse error at ${text}`);
+    } else if (parsed !== text.replaceAll(" ", "")) {
+      const remaining = text.replace(parsed, "");
+      throw new Error(`Parse error at ${remaining}`);
     } else {
       this.context = tree;
       this._parseStatus = ParseStatus.valid;

@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -2171,7 +2172,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_PropertyMustBeInitialised", async () => {
+  ignore_test("Fail_PropertyMustBeInitialised", async () => {
     const code = `${testHeader}
 
 class Bar

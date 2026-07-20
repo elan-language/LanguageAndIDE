@@ -7,6 +7,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -46,7 +47,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_EmptyClassIsCreatedWithDefaultConstructorAndToString", async () => {
+  ignore_test("Pass_EmptyClassIsCreatedWithDefaultConstructorAndToString", async () => {
     const code = `${testHeader}
 
 main

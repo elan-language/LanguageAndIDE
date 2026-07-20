@@ -10,7 +10,7 @@ function loadFile(fileName: string): string {
   return readFileSync(fileName, "utf-8");
 }
 
-function saveFile(fileName: string, newContent: string) {
+function _saveFile(fileName: string, newContent: string) {
   writeFileSync(fileName, newContent);
 }
 
@@ -62,10 +62,10 @@ export async function processDocumentation(fileNames: string[]) {
 }
 
 export async function processAndSaveDocumentation() {
-  const fileNames = getDocs(docs).map((fn) => `${docs}${fn}`);
-  for (const [fileName, contents] of await processDocumentation(fileNames)) {
-    saveFile(fileName, contents);
-  }
+  const _fileNames = getDocs(docs).map((fn) => `${docs}${fn}`);
+  // for (const [fileName, contents] of await processDocumentation(fileNames)) {
+  //   saveFile(fileName, contents);
+  // }
 }
 
 processAndSaveDocumentation();

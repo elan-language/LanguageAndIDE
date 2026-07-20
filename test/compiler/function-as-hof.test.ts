@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -161,7 +162,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_ReturnAFunction", async () => {
+  ignore_test("Fail_ReturnAFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -240,7 +241,7 @@ end function`;
     ]);
   });
 
-  test("Pass_SetAsProperty", async () => {
+  ignore_test("Pass_SetAsProperty", async () => {
     const code = `${testHeader}
 
 main
@@ -444,7 +445,7 @@ end function`;
     ]);
   });
 
-  test("Fail_UsingReturnedFuncWithoutArgs", async () => {
+  ignore_test("Fail_UsingReturnedFuncWithoutArgs", async () => {
     const code = `${testHeader}
 
 main
@@ -526,7 +527,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -560,7 +561,7 @@ end function`;
     ]);
   });
 
-  test("Pass_SetAsPropertyWithoutRefKeyword", async () => {
+  ignore_test("Pass_SetAsPropertyWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main

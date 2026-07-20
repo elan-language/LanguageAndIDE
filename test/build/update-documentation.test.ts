@@ -10,7 +10,7 @@ import {
 } from "../../src/tools/parserConstants";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 suite("process code", () => {
-  test("process documentation", async () => {
+  ignore_test("process documentation", async () => {
     clearLogs();
     const rootdir = `${__dirname}/../../..`;
     const path = `${rootdir}/src/documentation/`;

@@ -1,4 +1,5 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
+import { ElanElanVisitorSource } from "../../compile-api/elan-elan-visitor-source";
 import {
   escapeHtmlChars,
   helper_compileMsgAsHtmlNew,
@@ -50,6 +51,9 @@ export abstract class AbstractField implements Selectable, Field {
   protected selectedSymbolCompletion?: SymbolWrapper;
   protected showingSymbolCompletion: boolean = false;
   helpActive: boolean = false;
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  context: any | undefined;
 
   constructor(holder: Frame) {
     this.holder = holder;
@@ -759,8 +763,17 @@ export abstract class AbstractField implements Selectable, Field {
     return "";
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderFromTree(ctx: any) {
+    return ctx.accept(new ElanElanVisitorSource());
+  }
+
   renderAsElanSource(): string {
-    return this.rootNode ? this.rootNode.renderAsElanSource() : this.textAsSource();
+    return this.rootNode
+      ? this.rootNode.renderAsElanSource()
+      : this.context
+        ? this.renderFromTree(this.context)
+        : this.textAsSource();
   }
 
   setFieldToKnownValidText(text: string) {

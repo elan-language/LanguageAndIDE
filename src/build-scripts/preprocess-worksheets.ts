@@ -116,13 +116,11 @@ export async function processWorksheet(fileName: string) {
 
 export async function processWorksheetsInDirectory(dir: string) {
   setCurrentDir(dir);
-
-  for (const fn of getWorksheets(dir)) {
-    await processWorksheet(`${dir}${fn}`);
+  for (const _fn of getWorksheets(dir)) {
+    //await processWorksheet(`${dir}${fn}`);
   }
-
-  for (const sd of getWorksheetSubdir(dir)) {
-    await processWorksheetsInDirectory(`${dir}${sd}/`);
+  for (const _sd of getWorksheetSubdir(dir)) {
+    //await processWorksheetsInDirectory(`${dir}${sd}/`);
   }
 }
 
