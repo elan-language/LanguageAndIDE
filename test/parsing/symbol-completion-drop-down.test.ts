@@ -1176,7 +1176,7 @@ end class
 
 test tt
   variable gr set to new Foo()
-  assert gr.ff() is 0
+  assert gr.ff() evaluates to 0
 end test`;
 
     const fileImpl = new FileImpl(

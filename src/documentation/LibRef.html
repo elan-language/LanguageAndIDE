@@ -218,15 +218,15 @@ Its type is <code>Float</code>.
 test test_floor
   variable p set to pi
   variable mp set to -pi
-  assert p.floor() is 3
-  assert mp.floor() is -4
-  assert p.ceiling() is 4
-  assert mp.ceiling() is -3
-  assert p.round(3) is 3.142
-  assert mp.round(2) is -3.14
-  assert sqrt(-p).isNaN() is true
+  assert p.floor() evaluates to 3
+  assert mp.floor() evaluates to -4
+  assert p.ceiling() evaluates to 4
+  assert mp.ceiling() evaluates to -3
+  assert p.round(3) evaluates to 3.142
+  assert mp.round(2) evaluates to -3.14
+  assert sqrt(-p).isNaN() evaluates to true
   variable q set to divAsInt(1, 0).floor()
-  assert q.isInfinite() is true
+  assert q.isInfinite() evaluates to true
 end test
 </p>
 <hr>
@@ -840,8 +840,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the first item equal to the given item removed</td>
- </tr><tr id="withSet_List">
-  <td><el-method>withSet</el-method></td>
+ </tr><tr id="withPut_List">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the item replacing that at the given index</td>
@@ -905,7 +905,7 @@ end main
 
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
@@ -961,8 +961,8 @@ end function
   <td>(none)</td>
   <td><code>List</code></td>
   <td>a List containing the values</td>
-</tr><tr id="withSet_Dictionary">
-  <td><el-method>withSet</el-method></td>
+</tr><tr id="withPut_Dictionary">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
@@ -2491,13 +2491,13 @@ end main
   <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
-  <td id="withSet"><el-method>withSet</el-method></td>
+  <td id="withPut"><el-method>withPut</el-method> note 5.</td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withSet_List"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#withSet_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2532,6 +2532,7 @@ end main
  <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
  <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
+<li><el-method>withPut</el-method> supersedes the deprecated <el-method>withSet</el-method></li>
 </ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>
@@ -2709,13 +2710,13 @@ end function
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
 <codeblock>test test_parse
-  assert parseAsInt("31") is (true, 31)
-  assert parseAsInt("0") is (true, 0)
-  assert parseAsInt("thirty one") is (false, 0)
-  assert parseAsInt("3.1") is (false, 0)
-  assert parseAsFloat("31") is (true, 31)
-  assert parseAsFloat("0") is (true, 0)
-  assert parseAsFloat("3.1") is (true, 3.1)
+  assert parseAsInt("31") evaluates to (true, 31)
+  assert parseAsInt("0") evaluates to (true, 0)
+  assert parseAsInt("thirty one") evaluates to (false, 0)
+  assert parseAsInt("3.1") evaluates to (false, 0)
+  assert parseAsFloat("31") evaluates to (true, 31)
+  assert parseAsFloat("0") evaluates to (true, 0)
+  assert parseAsFloat("3.1") evaluates to (true, 3.1)
 end test
 </codeblock>
 <h5 class="no-TOC">Notes</h5>
@@ -2765,21 +2766,21 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 
 <p>Examples of some maths functions and constants being tested:</p>
 <codeblock>test test_maths
-  assert pi is 3.141592653589793
-  assert abs(-3.7) is 3.7
-  assert pow(2, 10) is 1024
-  assert sqrt(2).round(3) is 1.414
-  assert asin(0.5).round(3) is 0.524
-  assert acos(0.5).round(3) is 1.047
-  assert atan(1).round(2) is 0.79
-  assert sin(pi/6).round(2) is 0.5
-  assert cos(pi/4).round(3) is 0.707
-  assert tan(pi/4).round(2) is 1
-  assert exp(2).round(3) is 7.389
-  assert logE(7.389).round(2) is 2
-  assert log10(1000) is 3
-  assert log2(65536) is 16
-  assert log2(0x10000) is 16
+  assert pi evaluates to 3.141592653589793
+  assert abs(-3.7) evaluates to 3.7
+  assert pow(2, 10) evaluates to 1024
+  assert sqrt(2).round(3) evaluates to 1.414
+  assert asin(0.5).round(3) evaluates to 0.524
+  assert acos(0.5).round(3) evaluates to 1.047
+  assert atan(1).round(2) evaluates to 0.79
+  assert sin(pi/6).round(2) evaluates to 0.5
+  assert cos(pi/4).round(3) evaluates to 0.707
+  assert tan(pi/4).round(2) evaluates to 1
+  assert exp(2).round(3) evaluates to 7.389
+  assert logE(7.389).round(2) evaluates to 2
+  assert log10(1000) evaluates to 3
+  assert log2(65536) evaluates to 16
+  assert log2(0x10000) evaluates to 16
 end test
 </codeblock>
 
@@ -2832,21 +2833,21 @@ end test
 
 <codeblock>test test_bitwise
   variable a set to 13
-  assert a is 0xd
-  assert a is 0b1101
-  assert a.asBinary() is "1101"
+  assert a evaluates to 0xd
+  assert a evaluates to 0b1101
+  assert a.asBinary() evaluates to "1101"
   variable b set to 30
-  assert b is 0b11110
-  assert bitAnd(a, b) is 0b1100
+  assert b evaluates to 0b11110
+  assert bitAnd(a, b) evaluates to 0b1100
   variable aob set to bitOr(a, b)
-  assert aob is 0b11111
+  assert aob evaluates to 0b11111
   variable axb set to bitXor(a, b)
-  assert axb is 0b10011
+  assert axb evaluates to 0b10011
   variable nota set to bitNot(a)
-  assert nota is -14
+  assert nota evaluates to -14
   variable aL set to bitShiftL(a, 2)
-  assert aL is 0b110100
-  assert bitShiftR(a, 2) is 0b11
+  assert aL evaluates to 0b110100
+  assert bitShiftR(a, 2) evaluates to 0b11
 end test
 </codeblock>
 
@@ -2865,8 +2866,8 @@ end test
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to /^[a-z]*$/
-  assert s1.matchesRegExp(r) is true
-  assert s2.matchesRegExp(r) is false
+  assert s1.matchesRegExp(r) evaluates to true
+  assert s2.matchesRegExp(r) evaluates to false
 end test
 </codeblock>
 
@@ -2875,8 +2876,8 @@ end test
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to "^[a-z]*$".asRegExp()
-  assert s1.matchesRegExp(r) is true
-  assert s2.matchesRegExp(r) is false
+  assert s1.matchesRegExp(r) evaluates to true
+  assert s2.matchesRegExp(r) evaluates to false
 end test
 </codeblock>
 

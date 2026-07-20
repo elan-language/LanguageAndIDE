@@ -1,4 +1,4 @@
-# 2fe28132b9fd47353af101e23f0ecca84bdb721ef23e3daf49f3a14bc265808d Elan 2.0.0-beta1 valid
+# 9d439be83f41ac681b3494b6b28bf7c117b9d5f34d102d5820ab10bfd3680ba7 Elan 2.0.0-beta2 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -84,15 +84,15 @@ class State
 end class
 
 test test_one
-  assert roundtuple2(onestep(0.0, 0.16, 0.5)) is [0.0064, 1.736]
-  assert roundtuple2(onestep(0.0, 0.16, 0.9)) is [-0.0416, 1.6352]
+  assert roundtuple2(onestep(0.0, 0.16, 0.5)) evaluates to [0.0064, 1.736]
+  assert roundtuple2(onestep(0.0, 0.16, 0.9)) evaluates to [-0.0416, 1.6352]
   let s be onepoint(new State(new RectangleVG(), 0.0, 0.16, new Random()))
-  assert s.toString() is "rect at 50.0448, 62.848"
+  assert s.toString() evaluates to "rect at 50.0448, 62.848"
   let p1 be [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
   let p2 be [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
-  assert getparams(0.005, [p1, p2], 0.0) is p1
-  assert getparams(0.03, [p1, p2], 0.0) is p2
-  assert getparams(0.03, [p2], 0.01) is p2
+  assert getparams(0.005, [p1, p2], 0.0) evaluates to p1
+  assert getparams(0.03, [p1, p2], 0.0) evaluates to p2
+  assert getparams(0.03, [p2], 0.01) evaluates to p2
 end test
 
 # two approaches to rounding a tuple to N decimal places

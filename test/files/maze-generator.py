@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta1
+# Python with Elan 2.0.0-beta2
 
 def main() -> None:
   blocks = createBlockGraphics(black) # variable definition
@@ -60,7 +60,7 @@ def addRectangle(b: list[list[int]], startX: int, startY: int, width: int, depth
 # end function
 
 def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 # end function
 
 # colour: 0 for black, 1 for white

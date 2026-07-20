@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta1
+' VB.NET with Elan 2.0.0-beta2
 
 ' Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
 
@@ -67,7 +67,7 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
     Next i
   Next j
   Dim a = 0 ' variable definition
-  hodge.set(podge) ' procedure call
+  hodge.put(podge) ' procedure call
   displayBlocks(hodge.value()) ' procedure call
   sleep_ms(50) ' procedure call
 End Sub

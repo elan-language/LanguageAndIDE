@@ -1,6 +1,9 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
+  ElanClass,
   elanClass,
+  elanDeprecated,
   elanFunction,
   elanGenericParamT1Type,
   elanProcedure,
@@ -8,6 +11,7 @@ import {
   FunctionOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
+import { Maybe } from "./maybe";
 
 @elanClass(ClassOption.concrete, [ElanT1], ["to"], [ElanT1], [])
 export class AsRef<T1> {
@@ -31,9 +35,28 @@ export class AsRef<T1> {
     return this._value!;
   }
 
+  @elanDeprecated(
+    Deprecation.methodRenamed,
+    2,
+    0,
+    "LangRef.html#AsRef",
+    DeprecationSeverity.advisory,
+  )
   @elanProcedure([])
   set(@elanGenericParamT1Type() item: T1): void {
     this._value = item;
+  }
+
+  @elanProcedure([])
+  put(@elanGenericParamT1Type() item: T1): void {
+    this._value = item;
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClass(Maybe))
+  withPut(@elanGenericParamT1Type() value: T1): AsRef<T1> {
+    const opt = new AsRef<T1>();
+    opt.put(value);
+    return opt;
   }
 
   async toString() {

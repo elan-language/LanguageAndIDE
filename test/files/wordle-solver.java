@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta1
+// Java with Elan 2.0.0-beta2
 
 public class Global {
 
@@ -91,7 +91,7 @@ static Dictionary<String, int> incrementCount(Dictionary<String, int> d, String 
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
   var count = if_(keys.contains(mark), d[mark], 0); // let
-  return d.withSet(mark, count + 1);
+  return d.withPut(mark, count + 1);
 } // end function
 
 static List<WordCount> allRemainingWordCounts(List<String> possAnswers) { // function

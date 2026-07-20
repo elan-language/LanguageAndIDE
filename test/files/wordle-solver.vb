@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta1
+' VB.NET with Elan 2.0.0-beta2
 
 ' Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
@@ -91,7 +91,7 @@ Function incrementCount(d As Dictionary(Of String, Integer), possAnswer As Strin
   Dim mark = markAttempt(attempt, possAnswer) ' let
   Dim keys = d.keys() ' let
   Dim count = if_(keys.contains(mark), d(mark), 0) ' let
-  Return d.withSet(mark, count + 1)
+  Return d.withPut(mark, count + 1)
 End Function
 
 Function allRemainingWordCounts(possAnswers As List(Of String)) As List(Of WordCount)

@@ -1,17 +1,17 @@
-# 2d4291e7b9f865036b9ffc9a8e007eb28b0f170ba4505db1593071b5f9732325 Elan 2.0.0-beta1 valid
+# aaabee17b5c68ddbd6cdfa11e82cb4b5946e59be6ccbab723f5443abd2aee31b Elan 2.0.0-beta2 valid
 
 function factorial(n as Int) returns Int
   return if_(n < 2, 1, n*factorial(n - 1))
 end function
 
 test test_factorial
-  assert factorial(2) is 2
-  assert factorial(3) is 6
-  assert factorial(7) is 5040
-  assert factorial(10) is 3628800
+  assert factorial(2) evaluates to 2
+  assert factorial(3) evaluates to 6
+  assert factorial(7) evaluates to 5040
+  assert factorial(10) evaluates to 3628800
   # edge cases:
-  assert factorial(1) is 1
-  assert factorial(0) is 1
+  assert factorial(1) evaluates to 1
+  assert factorial(0) evaluates to 1
 end test
 
 function sum(li as List<of Float>) returns Float
@@ -20,12 +20,12 @@ end function
 
 test test_sum
   let li be [3.1, 5.02, 4, 7.73, 9.9]
-  assert sum(li).round(2) is 29.75
+  assert sum(li).round(2) evaluates to 29.75
   # edge cases: empty, and one element lists
   let le be new List<of Float>()
-  assert sum(le) is 0
+  assert sum(le) evaluates to 0
   let l1 be [0.6]
-  assert sum(l1) is 0.6
+  assert sum(l1) evaluates to 0.6
 end test
 
 function reverse(li as List<of Float>) returns List<of Float>
@@ -34,10 +34,10 @@ end function
 
 test test_reverse
   let l be [3.1, 5.02, 4, 7.73, 9.9]
-  assert reverse(l) is [9.9, 7.73, 4, 5.02, 3.1]
+  assert reverse(l) evaluates to [9.9, 7.73, 4, 5.02, 3.1]
   # edge cases: empty, and one element lists
   let le be new List<of Float>()
-  assert reverse(le) is le
+  assert reverse(le) evaluates to le
   let l1 be [0.6]
-  assert reverse(l1) is l1
+  assert reverse(l1) evaluates to l1
 end test

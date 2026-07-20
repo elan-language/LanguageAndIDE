@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta1
+# Python with Elan 2.0.0-beta2
 
 def main() -> None:
   quit = False # variable definition
@@ -127,7 +127,7 @@ def startDaysList(year: int, startDays: list[int]) -> list[int]: # function
   startDaysL = getStartDays() # variable definition
   if leap(year):
     for m in range(2, 13):
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1) # assignment
+      startDaysL = startDaysL.withPut(m, startDaysL[m] + 1) # assignment
     # end for
   # end if
   return startDaysL

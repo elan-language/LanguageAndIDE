@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta1
+// Java with Elan 2.0.0-beta2
 
 public class Global {
 
@@ -34,7 +34,7 @@ static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
 } // end function
 
 static List<List<int>> graphicsPut(List<List<int>> graphics, int x, int y, int colour) { // function
-  return graphics.withSet(x, graphics[x].withSet(y, colour));
+  return graphics.withPut(x, graphics[x].withPut(y, colour));
 } // end function
 
 static int score(Game g) { // function

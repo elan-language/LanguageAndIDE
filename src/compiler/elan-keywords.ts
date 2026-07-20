@@ -15,6 +15,7 @@ export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
+export const evaluatesKeyword = "evaluates";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
@@ -71,14 +72,17 @@ const elanKeywords: string[] = [
   andKeyword,
   asKeyword,
   assertKeyword,
+  assignKeyword,
   beKeyword,
   callKeyword,
   catchKeyword,
   classKeyword,
   constantKeyword,
   constructorKeyword,
+  copyKeyword,
   elifKeyword,
   elseKeyword,
+  evaluatesKeyword,
   endKeyword,
   enumKeyword,
   forKeyword,

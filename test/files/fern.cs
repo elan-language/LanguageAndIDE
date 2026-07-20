@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta1
+// C# with Elan 2.0.0-beta2
 
 // https://en.wikipedia.org/wiki/Barnsley_fern
 

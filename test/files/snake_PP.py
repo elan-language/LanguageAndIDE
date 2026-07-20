@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta1
+# Python with Elan 2.0.0-beta2
 
 # Use the w,a,s,d keys to change snake's direction
 
@@ -36,10 +36,10 @@ def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], head
   tail = tailRef.value() # variable definition
   currentDir = currentDirRef.value() # variable definition
   currentDir = directionByKey(currentDir, getKey()) # assignment
-  tailRef.set(body[0]) # procedure call
+  tailRef.put(body[0]) # procedure call
   body.append(head) # procedure call
-  headRef.set(getAdjacentSquare(head, currentDir)) # procedure call
-  currentDirRef.set(currentDir) # procedure call
+  headRef.put(getAdjacentSquare(head, currentDir)) # procedure call
+  currentDirRef.put(currentDir) # procedure call
 # end procedure
 
 def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure

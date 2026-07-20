@@ -444,7 +444,7 @@ end procedure
 <h4 class="no-TOC">Call by reference</h4>
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
+This then allows use of the dot methods <el-method>put</el-method> (supersedes deprecated <el-method>set</el-method>) and <el-method>value</el-method> on it to change and then read its value,
  as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in the <b>main routine</b>,
  so that <code>arg</code> can be accessed elsewhere <i>by reference</i>:</p>
 
@@ -614,11 +614,11 @@ end function
 
 <codeblock>test test_leap
   # normal cases
-  assert leap(2025) is false
-  assert leap(2024) is true
+  assert leap(2025) evaluates to false
+  assert leap(2024) evaluates to true
   # boundary cases
-  assert leap(1900) is false
-  assert leap(2000) is true
+  assert leap(1900) evaluates to false
+  assert leap(2000) evaluates to true
 end test
 </codeblock> -->
 
@@ -626,24 +626,24 @@ end test
  because the logic of this function is quite unusual:</p>
 
 <codeblock>test test_willLive
-  assert willLive(white, 0) is false
-  assert willLive(white, 1) is false
-  assert willLive(white, 2) is false
-  assert willLive(white, 3) is true
-  assert willLive(white, 4) is false
-  assert willLive(white, 5) is false
-  assert willLive(white, 6) is false
-  assert willLive(white, 7) is false
-  assert willLive(white, 8) is false
-  assert willLive(black, 0) is false
-  assert willLive(black, 1) is false
-  assert willLive(black, 2) is true
-  assert willLive(black, 3) is true
-  assert willLive(black, 4) is false
-  assert willLive(black, 5) is false
-  assert willLive(black, 6) is false
-  assert willLive(black, 7) is false
-  assert willLive(black, 8) is false
+  assert willLive(white, 0) evaluates to false
+  assert willLive(white, 1) evaluates to false
+  assert willLive(white, 2) evaluates to false
+  assert willLive(white, 3) evaluates to true
+  assert willLive(white, 4) evaluates to false
+  assert willLive(white, 5) evaluates to false
+  assert willLive(white, 6) evaluates to false
+  assert willLive(white, 7) evaluates to false
+  assert willLive(white, 8) evaluates to false
+  assert willLive(black, 0) evaluates to false
+  assert willLive(black, 1) evaluates to false
+  assert willLive(black, 2) evaluates to true
+  assert willLive(black, 3) evaluates to true
+  assert willLive(black, 4) evaluates to false
+  assert willLive(black, 5) evaluates to false
+  assert willLive(black, 6) evaluates to false
+  assert willLive(black, 7) evaluates to false
+  assert willLive(black, 8) evaluates to false
 end test
 </codeblock>
 
@@ -651,12 +651,12 @@ end test
 
   <codeblock>test test_getAdjacentSquare
   variable sq set to [20, 15]
-  assert getAdjacentSquare(sq, Direction.up) is [20, 14]
-  assert getAdjacentSquare(sq, Direction.down) is [20, 16]
-  assert getAdjacentSquare(sq, Direction.left) is [19, 15]
-  assert getAdjacentSquare(sq, Direction.right) is [21, 15]
+  assert getAdjacentSquare(sq, Direction.up) evaluates to [20, 14]
+  assert getAdjacentSquare(sq, Direction.down) evaluates to [20, 16]
+  assert getAdjacentSquare(sq, Direction.left) evaluates to [19, 15]
+  assert getAdjacentSquare(sq, Direction.right) evaluates to [21, 15]
   # boundary
-  assert getAdjacentSquare([0, 15], Direction.left) is [-1, 15]
+  assert getAdjacentSquare([0, 15], Direction.left) evaluates to [-1, 15]
 end test
   </codeblock>
 </div></div>
@@ -697,7 +697,7 @@ end test
 
 <h4 class="no-TOC" id="ignore">Ghosting tests</h4>
 <p>To prevent a particular test from running, you can use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when a <b>test</b> or <b>assert statement</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
+<p>Even when a <b>test</b> or <b>assert statement</b> evaluates to <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status only only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <p>You can ghost an entire test:</p>
@@ -705,9 +705,9 @@ the overall test status will show the status only only the unghosted tests (gree
 <codeblock>[ghosted] test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
-  assert headOverApple(g2) is false
+  assert headOverApple(g2) evaluates to false
   variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true
+  assert headOverApple(g3) evaluates to true
 end test
 </codeblock>
 
@@ -716,9 +716,9 @@ end test
 <codeblock>test test_overApple
   variable g1 set to new Game(new Random())
   variable g2 set to g1.withApple(new Square(23, 15))
-  [ghosted] assert headOverApple(g2) is true
+  [ghosted] assert headOverApple(g2) evaluates to true
   variable g3 set to g2.withHead(new Square(23, 15))
-  assert headOverApple(g3) is true
+  assert headOverApple(g3) evaluates to true
 end test
 </codeblock>
 
@@ -727,7 +727,7 @@ end test
 This avoids rounding errors and is easier to read. For example:</p>
 
 <codeblock>test test_round
-  assert sqrt(2).round(3) is 1.414
+  assert sqrt(2).round(3) evaluates to 1.414
 end test
 </codeblock>
 
@@ -738,8 +738,8 @@ end test
 <p>This <b>assert statement</b> shows how to test for an <i>expected</i> error message:</p>
 <codeblock>test test_message
   variable a set to [5, 1, 7]
-  assert a[4] is 0
-  assert a[4] is "Out of range index: 4 size: 3"
+  assert a[4] evaluates to 0
+  assert a[4] evaluates to "Out of range index: 4 size: 3"
 end test
 </codeblock>
 
@@ -753,7 +753,7 @@ function setInStyle(s as String) returns String
   return "&lt;style&gt;" + s + "&lt;style&gt;"
 end function
 test test_setInStyle
-  assert setInStyle(sGW) is "&lt;style&gt;" + sGW + "&lt;style&gt;"
+  assert setInStyle(sGW) evaluates to "&lt;style&gt;" + sGW + "&lt;style&gt;"
   # assert fail message will be "s found at [146] expected: )"
 end test
 </codeblock>
@@ -1641,11 +1641,11 @@ end function
 
 <codeblock>test test_leap
   # normal cases
-  assert leap(2025) is false
-  assert leap(2024) is true
+  assert leap(2025) evaluates to false
+  assert leap(2024) evaluates to true
   # boundary cases
-  assert leap(1900) is false
-  assert leap(2000) is true
+  assert leap(1900) evaluates to false
+  assert leap(2000) evaluates to true
 end test
 </codeblock> -->
 
@@ -1653,12 +1653,12 @@ end test
 
 <codeblock>test test_colour
   # Normal cases
-  assert colour(5) is green
+  assert colour(5) evaluates to green
   # Edge cases
-  assert colour(1) is red
-  assert colour(10) is 0xFF99CC
+  assert colour(1) evaluates to red
+  assert colour(10) evaluates to 0xFF99CC
   # Error cases
-  assert colour(11) is "Out of range index: 10 size: 10"
+  assert colour(11) evaluates to "Out of range index: 10 size: 10"
 end test
 </codeblock>
 
@@ -1668,7 +1668,7 @@ end test
 <h3 class="no-TOC acc-title">What you need to know about an assert statement</h3>
 <div class="acc-body">
 <ul>
-  <li>An assert instruction is used to test an individual case within a <b>test</b>, or sometimes to test individual
+  <li>An assert instruction evaluates to used to test an individual case within a <b>test</b>, or sometimes to test individual
   result values in a single case that returns a data structure.</li>
   <li>The assert defines two fields that the user must specify:
   <ul>
