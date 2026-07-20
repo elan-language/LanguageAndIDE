@@ -1,4 +1,4 @@
-# 98a220654bace35ed4b79415a6d000370c9825d3e191014fbeb6f1a00333e1f9 Elan 2.0.0-beta1 valid
+# d2356c3f7bd6f53127a93747ad3e237388183fa81aadbd6e1aed252ee34419fd Elan 2.0.0-beta1 valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -29,7 +29,7 @@ procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
       assign nextGen[x][y] to colour
     end for
   end for
-  call gridRef.set(nextGen)
+  call gridRef.put(nextGen)
 end procedure
 
 function blackOrWhite(random as Float) returns Int

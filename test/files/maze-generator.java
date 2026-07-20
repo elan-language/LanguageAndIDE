@@ -62,7 +62,7 @@ static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, i
 } // end function
 
 static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colour) { // function
-  return graphics.withSet(x, graphics[x].withSet(y, colour));
+  return graphics.withPut(x, graphics[x].withPut(y, colour));
 } // end function
 
 // colour: 0 for black, 1 for white

@@ -137,7 +137,7 @@ Function startDaysList(year As Integer, startDays As List(Of Integer)) As List(O
   Dim startDaysL = getStartDays() ' variable definition
   If leap(year) Then
     For Each m In range(2, 13)
-      startDaysL = startDaysL.withSet(m, startDaysL(m) + 1) ' assignment
+      startDaysL = startDaysL.withPut(m, startDaysL(m) + 1) ' assignment
     Next m
   End If
   Return startDaysL

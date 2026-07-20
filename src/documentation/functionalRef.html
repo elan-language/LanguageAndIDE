@@ -328,7 +328,7 @@ but in FP this is not permitted. Data structures are never to be mutated. Instea
 a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:</p>
 
 <codeblock>
-  let myNewSubjects be mySubjects.withSet(3, "Geography")
+  let myNewSubjects be mySubjects.withPut(3, "Geography")
 </codeblock>
 <p>or</p>
 <codeblock>

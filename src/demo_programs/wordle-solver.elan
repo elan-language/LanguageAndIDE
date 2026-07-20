@@ -1,4 +1,4 @@
-# 65ffcbebf5fa4d3194c3023bc5015acb7afa1f34c939097874fa82afcccda3a8 Elan 2.0.0-beta1 valid
+# 4218cf6ecf4c9ec020d7fa15a2d5ea05cfff65a2ccbf1b586c8b1e93d7a98316 Elan 2.0.0-beta1 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -81,7 +81,7 @@ function incrementCount(d as Dictionary<of String, Int>, possAnswer as String, a
   let mark be markAttempt(attempt, possAnswer)
   let keys be d.keys()
   let count be if_(keys.contains(mark), d[mark], 0)
-  return d.withSet(mark, count + 1)
+  return d.withPut(mark, count + 1)
 end function
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>

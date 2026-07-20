@@ -107,7 +107,7 @@ procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, targ
     end if
   end for
   if marks.equals("22222") then
-    call solved.set(true)
+    call solved.put(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
 end procedure
@@ -164,7 +164,7 @@ procedure enterMark(attemptNo as Int, grid as List<of List<of String>>, markRef 
     end if
     call displayHtml(drawGrid(grid))
   end while
-  call markRef.set(mark)
+  call markRef.put(mark)
 end procedure
 
 procedure analyse()

@@ -89,7 +89,7 @@ def incrementCount(d: Dictionary[str, int], possAnswer: str, attempt: str) -> Di
   mark = markAttempt(attempt, possAnswer) # let
   keys = d.keys() # let
   count = if_(keys.contains(mark), d[mark], 0) # let
-  return d.withSet(mark, count + 1)
+  return d.withPut(mark, count + 1)
 # end function
 
 def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # function

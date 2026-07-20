@@ -38,10 +38,10 @@ static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef
   var tail = tailRef.value();
   var currentDir = currentDirRef.value();
   currentDir = directionByKey(currentDir, getKey()); // assignment
-  tailRef.set(body[0]); // procedure call
+  tailRef.put(body[0]); // procedure call
   body.append(head); // procedure call
-  headRef.set(getAdjacentSquare(head, currentDir)); // procedure call
-  currentDirRef.set(currentDir); // procedure call
+  headRef.put(getAdjacentSquare(head, currentDir)); // procedure call
+  currentDirRef.put(currentDir); // procedure call
 } // end procedure
 
 static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure

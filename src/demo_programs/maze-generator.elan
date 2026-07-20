@@ -1,4 +1,4 @@
-# 79d26e592eb17082f0dd54966566827f4c6436d720c08e3dc6feaee7d8b501fd Elan 2.0.0-beta1 valid
+# 9cf0919713c534c5866b35814410527946bd916cf12b20482f19533e2c1f4252 Elan 2.0.0-beta1 valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -60,7 +60,7 @@ function addRectangle(b as List<of List<of Int>>, startX as Int, startY as Int, 
 end function
 
 function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 # colour: 0 for black, 1 for white

@@ -62,7 +62,7 @@ Function addRectangle(b As List(Of List(Of Integer)), startX As Integer, startY 
 End Function
 
 Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics(x).withSet(y, colour))
+  Return graphics.withPut(x, graphics(x).withPut(y, colour))
 End Function
 
 ' colour: 0 for black, 1 for white

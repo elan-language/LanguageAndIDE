@@ -67,7 +67,7 @@ static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, bool
     } // end foreach
   } // end foreach
   var a = 0;
-  hodge.set(podge); // procedure call
+  hodge.put(podge); // procedure call
   displayBlocks(hodge.value()); // procedure call
   sleep_ms(50); // procedure call
 } // end procedure

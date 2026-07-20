@@ -71,7 +71,7 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
     end if
   end for
   if marks.equals("22222") then
-    call solvedRef.set(true)
+    call solvedRef.put(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
 end procedure

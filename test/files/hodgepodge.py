@@ -67,7 +67,7 @@ def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: b
     # end for
   # end for
   a = 0 # variable definition
-  hodge.set(podge) # procedure call
+  hodge.put(podge) # procedure call
   displayBlocks(hodge.value()) # procedure call
   sleep_ms(50) # procedure call
 # end procedure

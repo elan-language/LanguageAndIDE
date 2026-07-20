@@ -70,7 +70,7 @@ static List<List<int>> initialiseGraphics(Point start, Point dest, List<Point> r
 } // end function
 
 static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colour) { // function
-  return graphics.withSet(x, graphics[x].withSet(y, colour));
+  return graphics.withPut(x, graphics[x].withPut(y, colour));
 } // end function
 
 static List<List<int>> addVisited(List<List<int>> gr, Point visited) { // function

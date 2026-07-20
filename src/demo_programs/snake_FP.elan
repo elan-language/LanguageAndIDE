@@ -1,4 +1,4 @@
-# ea19f9b4613ad8f0397f0afaa15f9352da5c68667617f7a23e5e4e2812d95232 Elan 2.0.0-beta1 valid
+# c096b51dde5f156336d837949685b068e08e6fef7190c5c511a82b6580cbe310 Elan 2.0.0-beta1 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -31,7 +31,7 @@ function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of L
 end function
 
 function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 function score(g as Game) returns Int

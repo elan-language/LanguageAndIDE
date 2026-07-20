@@ -444,7 +444,7 @@ end procedure
 <h4 class="no-TOC">Call by reference</h4>
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>set</el-method> and <el-method>value</el-method> on it to change and then read its value,
+This then allows use of the dot methods <el-method>put</el-method> (supersedes deprecated <el-method>set</el-method>) and <el-method>value</el-method> on it to change and then read its value,
  as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in the <b>main routine</b>,
  so that <code>arg</code> can be accessed elsewhere <i>by reference</i>:</p>
 

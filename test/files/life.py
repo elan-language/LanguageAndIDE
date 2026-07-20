@@ -29,7 +29,7 @@ def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
       nextGen[x][y] = colour # assignment
     # end for
   # end for
-  gridRef.set(nextGen) # procedure call
+  gridRef.put(nextGen) # procedure call
 # end procedure
 
 def blackOrWhite(random: float) -> int: # function

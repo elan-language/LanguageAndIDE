@@ -840,8 +840,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the first item equal to the given item removed</td>
- </tr><tr id="withSet_List">
-  <td><el-method>withSet</el-method></td>
+ </tr><tr id="withPut_List">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the item replacing that at the given index</td>
@@ -905,7 +905,7 @@ end main
 
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
@@ -961,8 +961,8 @@ end function
   <td>(none)</td>
   <td><code>List</code></td>
   <td>a List containing the values</td>
-</tr><tr id="withSet_Dictionary">
-  <td><el-method>withSet</el-method></td>
+</tr><tr id="withPut_Dictionary">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
@@ -2491,13 +2491,13 @@ end main
   <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
-  <td id="withSet"><el-method>withSet</el-method></td>
+  <td id="withPut"><el-method>withPut</el-method> note 5.</td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withSet_List"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#withSet_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2532,6 +2532,7 @@ end main
  <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
  <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
+<li><el-method>withPut</el-method> supersedes the deprecated <el-method>withSet</el-method></li>
 </ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>

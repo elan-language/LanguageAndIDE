@@ -1,4 +1,4 @@
-# 75111457f7d3acc7c0610f165f62a0addf5ffbd9a2a65dba0ddffb3d3b1fbf8b Elan 2.0.0-beta1 valid
+# 296bb614741d7a8e24f7f182edea14a4a803f877e982929ab10f254f69d1deaa Elan 2.0.0-beta1 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -35,10 +35,10 @@ procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of 
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
   assign currentDir to directionByKey(currentDir, getKey())
-  call tailRef.set(body[0])
+  call tailRef.put(body[0])
   call body.append(head)
-  call headRef.set(getAdjacentSquare(head, currentDir))
-  call currentDirRef.set(currentDir)
+  call headRef.put(getAdjacentSquare(head, currentDir))
+  call currentDirRef.put(currentDir)
 end procedure
 
 procedure updateDisplay(blocks as List<of List<of Int>>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)

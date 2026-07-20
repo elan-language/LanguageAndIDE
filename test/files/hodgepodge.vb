@@ -67,7 +67,7 @@ Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of Li
     Next i
   Next j
   Dim a = 0 ' variable definition
-  hodge.set(podge) ' procedure call
+  hodge.put(podge) ' procedure call
   displayBlocks(hodge.value()) ' procedure call
   sleep_ms(50) ' procedure call
 End Sub

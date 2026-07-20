@@ -1,4 +1,4 @@
-# 20178741e7e0589b9d0b42111aa08d5535c2e076c21e75c6543091182cb78013 Elan 2.0.0-beta1 valid
+# 0b7318da743c2c351c0f31eea3402da9b2d1c4852123652ef211ecd8cae140de Elan 2.0.0-beta1 valid
 
 main
   variable start set to new Point(5, 5)
@@ -68,7 +68,7 @@ function initialiseGraphics(start as Point, dest as Point, rocks as List<of Poin
 end function
 
 function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 function addVisited(gr as List<of List<of Int>>, visited as Point) returns List<of List<of Int>>

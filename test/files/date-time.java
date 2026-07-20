@@ -129,7 +129,7 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
   var startDaysL = getStartDays();
   if (leap(year)) {
     foreach (var m in range(2, 13)) {
-      startDaysL = startDaysL.withSet(m, startDaysL[m] + 1); // assignment
+      startDaysL = startDaysL.withPut(m, startDaysL[m] + 1); // assignment
     } // end foreach
   } // end if
   return startDaysL;

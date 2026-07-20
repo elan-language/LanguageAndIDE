@@ -1,8 +1,10 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
   ElanClass,
   elanClass,
+  elanDeprecated,
   elanFunction,
   elanGenericParamT1Type,
   elanProcedure,
@@ -43,13 +45,39 @@ export class Maybe<T1> {
     return !!this._value;
   }
 
+  @elanDeprecated(
+    Deprecation.methodRenamed,
+    2,
+    0,
+    "OopRef.html#Maybe",
+    DeprecationSeverity.advisory,
+  )
   @elanProcedure([])
   set(@elanGenericParamT1Type() value: T1): void {
     this._value = value;
   }
 
+  @elanProcedure([])
+  put(@elanGenericParamT1Type() value: T1): void {
+    this._value = value;
+  }
+
+  @elanDeprecated(
+    Deprecation.methodRenamed,
+    2,
+    0,
+    "OopRef.html#Maybe",
+    DeprecationSeverity.advisory,
+  )
   @elanFunction([], FunctionOptions.pure, ElanClass(Maybe))
   withSet(@elanGenericParamT1Type() value: T1): Maybe<T1> {
+    const opt = new Maybe<T1>();
+    opt.set(value);
+    return opt;
+  }
+
+  @elanFunction([], FunctionOptions.pure, ElanClass(Maybe))
+  withPut(@elanGenericParamT1Type() value: T1): Maybe<T1> {
     const opt = new Maybe<T1>();
     opt.set(value);
     return opt;

@@ -68,7 +68,7 @@ Function initialiseGraphics(start As Point, dest As Point, rocks As List(Of Poin
 End Function
 
 Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics(x).withSet(y, colour))
+  Return graphics.withPut(x, graphics(x).withPut(y, colour))
 End Function
 
 Function addVisited(gr As List(Of List(Of Integer)), visited As Point) As List(Of List(Of Integer))

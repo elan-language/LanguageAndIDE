@@ -32,7 +32,7 @@ def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
 # end function
 
 def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 # end function
 
 def score(g: Game) -> int: # function

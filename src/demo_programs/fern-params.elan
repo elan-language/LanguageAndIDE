@@ -51,21 +51,21 @@ procedure processoneline(line as String, result as AsRef<of String>, skippingRef
         # all values must be Floats
         assign num to "0.0"
       end if
-      call result.set(result.value() + num + ",")
+      call result.put(result.value() + num + ",")
     end if
     if linem.contains("texhtml") then
       # next row of parameters
-      call result.set(result.value() + closebrace + "," + openbrace)
+      call result.put(result.value() + closebrace + "," + openbrace)
     end if
     if linem.contains("Largest right-hand") then
       # end of parameters
-      call result.set(result.value() + closebrace + closebrace)
+      call result.put(result.value() + closebrace + closebrace)
       assign skipping to true
       # we are done, tidy up result to remove excess separators
-      call result.set(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
+      call result.put(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
     end if
   end if
-  call skippingRef.set(skipping)
+  call skippingRef.put(skipping)
 end procedure
 
 # find any number at the end of the given string

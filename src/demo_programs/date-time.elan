@@ -1,4 +1,4 @@
-# 1e79c596f2b9d6f90ff0f0a171be870e3be93c7d8e39b88aa74d5f0dac2503ce Elan 2.0.0-beta1 valid
+# 3fe6ba91fb90c927ea01247f0de382f63be0c33ccb58014f1c85437838a258ea Elan 2.0.0-beta1 valid
 
 main
   variable quit set to false
@@ -123,7 +123,7 @@ function startDaysList(year as Int, startDays as List<of Int>) returns List<of I
   variable startDaysL set to getStartDays()
   if leap(year) then
     for m in range(2, 13)
-      assign startDaysL to startDaysL.withSet(m, startDaysL[m] + 1)
+      assign startDaysL to startDaysL.withPut(m, startDaysL[m] + 1)
     end for
   end if
   return startDaysL
