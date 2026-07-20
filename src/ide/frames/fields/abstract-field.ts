@@ -1,4 +1,5 @@
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
+import { ElanElanVisitorHtml } from "../../compile-api/elan-elan-visitor-html";
 import { ElanElanVisitorSource } from "../../compile-api/elan-elan-visitor-source";
 import {
   escapeHtmlChars,
@@ -663,6 +664,8 @@ export abstract class AbstractField implements Selectable, Field {
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
+      } else if (this.context) {
+        html = this.renderAsHtmlFromTree(this.context);
       } else {
         html = escapeHtmlChars(this.text);
       }
@@ -766,6 +769,11 @@ export abstract class AbstractField implements Selectable, Field {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   renderFromTree(ctx: any) {
     return ctx.accept(new ElanElanVisitorSource());
+  }
+
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  renderAsHtmlFromTree(ctx: any) {
+    return ctx.accept(new ElanElanVisitorHtml());
   }
 
   renderAsElanSource(): string {

@@ -90,6 +90,8 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
     assert.strictEqual(actualHtml, expectedHtml);
   }
   catch {
+    console.log(actualHtml);
+
     msg = `rendered html incorrect`;
     if (updateTestFiles) {
       // update original not copied 

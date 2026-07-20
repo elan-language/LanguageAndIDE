@@ -10,28 +10,28 @@ import {
 } from "../../src/tools/parserConstants";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 suite("process code", () => {
-  ignore_test("process documentation", async () => {
-    clearLogs();
-    const rootdir = `${__dirname}/../../..`;
-    const path = `${rootdir}/src/documentation/`;
-    const testDocs = getDocs(path).map((fn) => `${path}${fn}`);
-    const results = await processDocumentation(testDocs);
-    let failure = false;
+  // ignore_test("process documentation", async () => {
+  //   clearLogs();
+  //   const rootdir = `${__dirname}/../../..`;
+  //   const path = `${rootdir}/src/documentation/`;
+  //   const testDocs = getDocs(path).map((fn) => `${path}${fn}`);
+  //   const results = await processDocumentation(testDocs);
+  //   let failure = false;
 
-    for (const [_fileName, contents] of results) {
-      if (contents.includes("Code does not parse")) {
-        failure = true;
-      }
-    }
+  //   for (const [_fileName, contents] of results) {
+  //     if (contents.includes("Code does not parse")) {
+  //       failure = true;
+  //     }
+  //   }
 
-    // for (const [what, count] of getCounts().entries()) {
-    //   console.log(`Parse ${what}: ${count} times`);
-    // }
+  //   // for (const [what, count] of getCounts().entries()) {
+  //   //   console.log(`Parse ${what}: ${count} times`);
+  //   // }
 
-    if (failure) {
-      assert.fail(writeLogs());
-    }
-  }).timeout(20000);
+  //   if (failure) {
+  //     assert.fail(writeLogs());
+  //   }
+  // }).timeout(20000);
 
   ignore_test("process file with header", async () => {
     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 valid
