@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta1
+# Python with Elan 2.0.0-beta2
 
 def main() -> None:
   start = Point(5, 5) # variable definition

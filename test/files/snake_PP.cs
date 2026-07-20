@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta1
+// C# with Elan 2.0.0-beta2
 
 // Use the w,a,s,d keys to change snake's direction
 

@@ -79,7 +79,7 @@ suite("Parsing Frame Tests", async () => {
   });
 
   test("parse Frames - assert statement 3", () => {
-    const code = "  assert foo is 7";
+    const code = "  assert foo evaluates to 7";
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,

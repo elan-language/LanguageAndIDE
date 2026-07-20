@@ -1,4 +1,4 @@
-# 0b7318da743c2c351c0f31eea3402da9b2d1c4852123652ef211ecd8cae140de Elan 2.0.0-beta1 valid
+# fdb583bf061f9eff70703ed895b1948bbd590ce433e750e48968c7699b871377 Elan 2.0.0-beta2 valid
 
 main
   variable start set to new Point(5, 5)
@@ -320,14 +320,14 @@ function getAlgFromLetter(letter as String) returns Algorithm
 end function
 
 test test_getAlgFromLetter
-  assert getAlgFromLetter("a") is Algorithm.aStar
-  assert getAlgFromLetter("h") is Algorithm.heuristic
-  assert getAlgFromLetter("d") is Algorithm.dijkstra
+  assert getAlgFromLetter("a") evaluates to Algorithm.aStar
+  assert getAlgFromLetter("h") evaluates to Algorithm.heuristic
+  assert getAlgFromLetter("d") evaluates to Algorithm.dijkstra
 end test
 
 test test_point
   variable p set to new Point(0, 0)
   variable n set to p.neighbouringPoints()
   variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
-  assert n is expected
+  assert n evaluates to expected
 end test

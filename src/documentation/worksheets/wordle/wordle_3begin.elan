@@ -163,30 +163,30 @@ end function
 
 test test_markAttempt
   # Default - no matches
-  assert markAttempt("ARISE", "CLOUD") is "00000"
+  assert markAttempt("ARISE", "CLOUD") evaluates to "00000"
   # Only greens
-  assert markAttempt("BANJO", "BANJO") is "22222"
-  assert markAttempt("ABIDE", "AFOOT") is "20000"
-  assert markAttempt("AHEAD", "CLOUD") is "00002"
+  assert markAttempt("BANJO", "BANJO") evaluates to "22222"
+  assert markAttempt("ABIDE", "AFOOT") evaluates to "20000"
+  assert markAttempt("AHEAD", "CLOUD") evaluates to "00002"
   # Only yellows
-  assert markAttempt("RECUT", "TRUCE") is "11111"
-  assert markAttempt("ASKEW", "CHINA") is "10000"
-  assert markAttempt("CHINA", "ASKEW") is "00001"
-  assert markAttempt("WBCDE", "VWXYZ") is "10000"
-  assert markAttempt("PUPPY", "APART") is "10000"
-  assert markAttempt("APART", "PUPPY") is "01000"
-  assert markAttempt("DOTTY", "TAINT") is "00110"
-  assert markAttempt("TAINT", "DOTTY") is "10001"
+  assert markAttempt("RECUT", "TRUCE") evaluates to "11111"
+  assert markAttempt("ASKEW", "CHINA") evaluates to "10000"
+  assert markAttempt("CHINA", "ASKEW") evaluates to "00001"
+  assert markAttempt("WBCDE", "VWXYZ") evaluates to "10000"
+  assert markAttempt("PUPPY", "APART") evaluates to "10000"
+  assert markAttempt("APART", "PUPPY") evaluates to "01000"
+  assert markAttempt("DOTTY", "TAINT") evaluates to "00110"
+  assert markAttempt("TAINT", "DOTTY") evaluates to "10001"
   # Mixed
-  assert markAttempt("ARISE", "PLANK") is "10000"
-  assert markAttempt("JUNTA", "PLANK") is "00101"
-  assert markAttempt("KNACK", "PLANK") is "01202"
-  assert markAttempt("FLANK", "PLANK") is "02222"
-  assert markAttempt("AORTA", "RATTY") is "10120"
-  assert markAttempt("BATTY", "RATTY") is "02222"
-  assert markAttempt("TATTY", "RATTY") is "02222"
-  assert markAttempt("YATCH", "RATTY") is "12200"
-  assert markAttempt("RATTY", "AORTA") is "11020"
+  assert markAttempt("ARISE", "PLANK") evaluates to "10000"
+  assert markAttempt("JUNTA", "PLANK") evaluates to "00101"
+  assert markAttempt("KNACK", "PLANK") evaluates to "01202"
+  assert markAttempt("FLANK", "PLANK") evaluates to "02222"
+  assert markAttempt("AORTA", "RATTY") evaluates to "10120"
+  assert markAttempt("BATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("TATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("YATCH", "RATTY") evaluates to "12200"
+  assert markAttempt("RATTY", "AORTA") evaluates to "11020"
 end test
 
 function setChar(word as String, n as Int, newChar as String) returns String
@@ -194,11 +194,11 @@ function setChar(word as String, n as Int, newChar as String) returns String
 end function
 
 test test_setChar
-  assert setChar("00000", 0, "1") is "10000"
-  assert setChar("00000", 1, "1") is "01000"
-  assert setChar("00000", 2, "1") is "00100"
-  assert setChar("00000", 3, "2") is "00020"
-  assert setChar("00000", 4, "2") is "00002"
+  assert setChar("00000", 0, "1") evaluates to "10000"
+  assert setChar("00000", 1, "1") evaluates to "01000"
+  assert setChar("00000", 2, "1") evaluates to "00100"
+  assert setChar("00000", 3, "2") evaluates to "00020"
+  assert setChar("00000", 4, "2") evaluates to "00002"
 end test
 
 function possibleTargetsAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
@@ -243,14 +243,14 @@ function attemptsNeededToSolve(target as String, firstAttempt as String) returns
 end function
 
 [ghosted] test test_attemptsNeededToSolve
-  assert attemptsNeededToSolve("ARISE", "ARISE") is 1
-  assert attemptsNeededToSolve("ACRID", "ARISE") is 2
-  assert attemptsNeededToSolve("ABODE", "ARISE") is 3
-  assert attemptsNeededToSolve("QUITE", "ARISE") is 4
-  assert attemptsNeededToSolve("ZESTY", "ARISE") is 5
-  assert attemptsNeededToSolve("FLUTE", "ARISE") is 6
-  assert attemptsNeededToSolve("CRAZY", "ARISE") is 7
-  assert attemptsNeededToSolve("LOWER", "ARISE") is 8
+  assert attemptsNeededToSolve("ARISE", "ARISE") evaluates to 1
+  assert attemptsNeededToSolve("ACRID", "ARISE") evaluates to 2
+  assert attemptsNeededToSolve("ABODE", "ARISE") evaluates to 3
+  assert attemptsNeededToSolve("QUITE", "ARISE") evaluates to 4
+  assert attemptsNeededToSolve("ZESTY", "ARISE") evaluates to 5
+  assert attemptsNeededToSolve("FLUTE", "ARISE") evaluates to 6
+  assert attemptsNeededToSolve("CRAZY", "ARISE") evaluates to 7
+  assert attemptsNeededToSolve("LOWER", "ARISE") evaluates to 8
 end test
 
 function analyseAlgorithm(firstAttempt as String, validAnswers as List<of String>) returns (Float, Float)
@@ -259,7 +259,7 @@ end function
 
 [ghosted] test test_analyseAlgorithm
   variable validTargets set to ["ABODE", "ACRID", "ARISE", "CRAZY", "FLUTE", "LOWER", "QUITE", "ZESTY"]
-  assert analyseAlgorithm("ABODE", validTargets) is (87.5, 4.0)
-  assert analyseAlgorithm("ZESTY", validTargets) is (87.5, 3.29)
-  assert analyseAlgorithm("ARISE", validTargets) is (75.0, 3.50)
+  assert analyseAlgorithm("ABODE", validTargets) evaluates to (87.5, 4.0)
+  assert analyseAlgorithm("ZESTY", validTargets) evaluates to (87.5, 3.29)
+  assert analyseAlgorithm("ARISE", validTargets) evaluates to (75.0, 3.50)
 end test

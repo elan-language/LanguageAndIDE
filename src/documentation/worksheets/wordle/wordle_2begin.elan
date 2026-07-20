@@ -167,30 +167,30 @@ end function
 
 test test_markAttempt
   # Default - no matches
-  assert markAttempt("ARISE", "CLOUD") is "00000"
+  assert markAttempt("ARISE", "CLOUD") evaluates to "00000"
   # Only greens
-  assert markAttempt("BANJO", "BANJO") is "22222"
-  assert markAttempt("ABIDE", "AFOOT") is "20000"
-  assert markAttempt("AHEAD", "CLOUD") is "00002"
+  assert markAttempt("BANJO", "BANJO") evaluates to "22222"
+  assert markAttempt("ABIDE", "AFOOT") evaluates to "20000"
+  assert markAttempt("AHEAD", "CLOUD") evaluates to "00002"
   # Only yellows
-  assert markAttempt("RECUT", "TRUCE") is "11111"
-  assert markAttempt("ASKEW", "CHINA") is "10000"
-  assert markAttempt("CHINA", "ASKEW") is "00001"
-  assert markAttempt("WBCDE", "VWXYZ") is "10000"
-  assert markAttempt("PUPPY", "APART") is "10000"
-  assert markAttempt("APART", "PUPPY") is "01000"
-  assert markAttempt("DOTTY", "TAINT") is "00110"
-  assert markAttempt("TAINT", "DOTTY") is "10001"
+  assert markAttempt("RECUT", "TRUCE") evaluates to "11111"
+  assert markAttempt("ASKEW", "CHINA") evaluates to "10000"
+  assert markAttempt("CHINA", "ASKEW") evaluates to "00001"
+  assert markAttempt("WBCDE", "VWXYZ") evaluates to "10000"
+  assert markAttempt("PUPPY", "APART") evaluates to "10000"
+  assert markAttempt("APART", "PUPPY") evaluates to "01000"
+  assert markAttempt("DOTTY", "TAINT") evaluates to "00110"
+  assert markAttempt("TAINT", "DOTTY") evaluates to "10001"
   # Mixed
-  assert markAttempt("ARISE", "PLANK") is "10000"
-  assert markAttempt("JUNTA", "PLANK") is "00101"
-  assert markAttempt("KNACK", "PLANK") is "01202"
-  assert markAttempt("FLANK", "PLANK") is "02222"
-  assert markAttempt("AORTA", "RATTY") is "10120"
-  assert markAttempt("BATTY", "RATTY") is "02222"
-  assert markAttempt("TATTY", "RATTY") is "02222"
-  assert markAttempt("YATCH", "RATTY") is "12200"
-  assert markAttempt("RATTY", "AORTA") is "11020"
+  assert markAttempt("ARISE", "PLANK") evaluates to "10000"
+  assert markAttempt("JUNTA", "PLANK") evaluates to "00101"
+  assert markAttempt("KNACK", "PLANK") evaluates to "01202"
+  assert markAttempt("FLANK", "PLANK") evaluates to "02222"
+  assert markAttempt("AORTA", "RATTY") evaluates to "10120"
+  assert markAttempt("BATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("TATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("YATCH", "RATTY") evaluates to "12200"
+  assert markAttempt("RATTY", "AORTA") evaluates to "11020"
 end test
 
 function setChar(word as String, n as Int, newChar as String) returns String
@@ -198,11 +198,11 @@ function setChar(word as String, n as Int, newChar as String) returns String
 end function
 
 test test_setChar
-  assert setChar("00000", 0, "1") is "10000"
-  assert setChar("00000", 1, "1") is "01000"
-  assert setChar("00000", 2, "1") is "00100"
-  assert setChar("00000", 3, "2") is "00020"
-  assert setChar("00000", 4, "2") is "00002"
+  assert setChar("00000", 0, "1") evaluates to "10000"
+  assert setChar("00000", 1, "1") evaluates to "01000"
+  assert setChar("00000", 2, "1") evaluates to "00100"
+  assert setChar("00000", 3, "2") evaluates to "00020"
+  assert setChar("00000", 4, "2") evaluates to "00002"
 end test
 
 procedure playReverseGame()
@@ -226,14 +226,14 @@ end procedure
 [ghosted] test test_possibleTargetsAfterAttempt
   variable prior set to ["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"]
   variable none set to new List<of String>()
-  assert possibleTargetsAfterAttempt(prior, "PARED", "02100") is ["FAIRY", "HAIRY", "RAINY", "RATTY"]
-  assert possibleTargetsAfterAttempt(prior, "YACHT", "12001") is ["RATTY"]
-  assert possibleTargetsAfterAttempt(prior, "RALLY", "22002") is ["RAINY", "RASPY", "RATTY"]
-  assert possibleTargetsAfterAttempt(prior, "COULD", "00000") is prior
-  assert possibleTargetsAfterAttempt(prior, "FAIRY", "00002") is none
+  assert possibleTargetsAfterAttempt(prior, "PARED", "02100") evaluates to ["FAIRY", "HAIRY", "RAINY", "RATTY"]
+  assert possibleTargetsAfterAttempt(prior, "YACHT", "12001") evaluates to ["RATTY"]
+  assert possibleTargetsAfterAttempt(prior, "RALLY", "22002") evaluates to ["RAINY", "RASPY", "RATTY"]
+  assert possibleTargetsAfterAttempt(prior, "COULD", "00000") evaluates to prior
+  assert possibleTargetsAfterAttempt(prior, "FAIRY", "00002") evaluates to none
   variable prior2 set to ["ZONAL"]
-  assert possibleTargetsAfterAttempt(prior2, "ZEBRA", "20001") is ["ZONAL"]
-  assert possibleTargetsAfterAttempt(prior2, "ZEBRA", "10001") is none
-  assert possibleTargetsAfterAttempt(none, "ZEBRA", "10000") is none
-  assert possibleTargetsAfterAttempt(none, "ZEBRA", "00000") is none
+  assert possibleTargetsAfterAttempt(prior2, "ZEBRA", "20001") evaluates to ["ZONAL"]
+  assert possibleTargetsAfterAttempt(prior2, "ZEBRA", "10001") evaluates to none
+  assert possibleTargetsAfterAttempt(none, "ZEBRA", "10000") evaluates to none
+  assert possibleTargetsAfterAttempt(none, "ZEBRA", "00000") evaluates to none
 end test

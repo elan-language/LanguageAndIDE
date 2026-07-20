@@ -304,7 +304,7 @@ end procedure`;
     variable mark set to "00000"
     variable i set to 3
     variable expression set to mark[something] + "2" + mark[something]
-    assert expression is "00020"
+    assert expression evaluates to "00020"
   end test
 </codeblock>`;
 

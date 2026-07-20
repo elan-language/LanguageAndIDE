@@ -1,4 +1,4 @@
-# 3fe6ba91fb90c927ea01247f0de382f63be0c33ccb58014f1c85437838a258ea Elan 2.0.0-beta1 valid
+# 2483543e1fbd97856cfccb351b86a5a22a4f49db1c13dce364bcbdc056a51a89 Elan 2.0.0-beta2 valid
 
 main
   variable quit set to false
@@ -46,7 +46,7 @@ function getDate(unixSecs as Int) returns String
 end function
 
 test test_getDate
-  assert getDate(1774946991) is "Tue, 31 Mar 2026 08:49:51 UTC"
+  assert getDate(1774946991) evaluates to "Tue, 31 Mar 2026 08:49:51 UTC"
 end test
 
 function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
@@ -66,7 +66,7 @@ function dateTime(unixSecs as Int) returns (Int, Int, Int, Int, Int, Int)
 end function
 
 test test_dateTime
-  assert dateTime(1774946991) is (8, 49, 51, 90, 2026, 2)
+  assert dateTime(1774946991) evaluates to (8, 49, 51, 90, 2026, 2)
 end test
 
 function dayInYear(year as Int, unixDays as Int) returns Int
@@ -86,7 +86,7 @@ function dayInYear(year as Int, unixDays as Int) returns Int
 end function
 
 test test_dayInYear
-  assert dayInYear(2025, 1) is -20087
+  assert dayInYear(2025, 1) evaluates to -20087
 end test
 
 function leap(year as Int) returns Boolean
@@ -95,11 +95,11 @@ end function
 
 test test_leap
   # normal cases
-  assert leap(2025) is false
-  assert leap(2024) is true
+  assert leap(2025) evaluates to false
+  assert leap(2024) evaluates to true
   # boundary cases
-  assert leap(1900) is false
-  assert leap(2000) is true
+  assert leap(1900) evaluates to false
+  assert leap(2000) evaluates to true
 end test
 
 function monthDay(startDays as List<of Int>, dayNumber as Int) returns (Int, Int)
@@ -143,8 +143,8 @@ function getWeekdayName(weekDay as Int) returns String
 end function
 
 test test_getWeekdayName
-  assert getWeekdayName(0) is "Sun"
-  assert getWeekdayName(6) is "Sat"
+  assert getWeekdayName(0) evaluates to "Sun"
+  assert getWeekdayName(6) evaluates to "Sat"
 end test
 
 function getMonthName(month as Int) returns String
@@ -153,8 +153,8 @@ function getMonthName(month as Int) returns String
 end function
 
 test test_getMonthName
-  assert getMonthName(1) is "Jan"
-  assert getMonthName(12) is "Dec"
+  assert getMonthName(1) evaluates to "Jan"
+  assert getMonthName(12) evaluates to "Dec"
 end test
 
 function getStartDays() returns List<of Int>
@@ -166,9 +166,9 @@ function padLwithZero(i as Int) returns String
 end function
 
 test test_padLwithZero
-  assert padLwithZero(1) is "01"
-  assert padLwithZero(10) is "10"
-  assert padLwithZero(0) is "00"
+  assert padLwithZero(1) evaluates to "01"
+  assert padLwithZero(10) evaluates to "10"
+  assert padLwithZero(0) evaluates to "00"
 end test
 
 function pad(d as String, p as String, s as String) returns String

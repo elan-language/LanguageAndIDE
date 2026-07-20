@@ -1,4 +1,4 @@
-# 296bb614741d7a8e24f7f182edea14a4a803f877e982929ab10f254f69d1deaa Elan 2.0.0-beta1 valid
+# d80c624f4facd8bc8616193641afe810e18e37df0e9450f1cca4f89baedb2ddd Elan 2.0.0-beta2 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -104,38 +104,38 @@ end function
 enum Direction up, down, left, right
 
 test test_getTailColour
-  assert getTailColour([3, 4], [[3, 4], [3, 5]]) is green
-  assert getTailColour([3, 4], [[3, 5], [3, 6]]) is white
+  assert getTailColour([3, 4], [[3, 4], [3, 5]]) evaluates to green
+  assert getTailColour([3, 4], [[3, 5], [3, 6]]) evaluates to white
 end test
 
 test test_hasHitEdge
-  assert hasHitEdge(0, 0) is false
-  assert hasHitEdge(0, 29) is false
-  assert hasHitEdge(39, 0) is false
-  assert hasHitEdge(29, 29) is false
-  assert hasHitEdge(-1, 5) is true
-  assert hasHitEdge(5, 30) is true
-  assert hasHitEdge(40, 5) is true
-  assert hasHitEdge(5, -1) is true
+  assert hasHitEdge(0, 0) evaluates to false
+  assert hasHitEdge(0, 29) evaluates to false
+  assert hasHitEdge(39, 0) evaluates to false
+  assert hasHitEdge(29, 29) evaluates to false
+  assert hasHitEdge(-1, 5) evaluates to true
+  assert hasHitEdge(5, 30) evaluates to true
+  assert hasHitEdge(40, 5) evaluates to true
+  assert hasHitEdge(5, -1) evaluates to true
 end test
 
 test test_getAdjacentSquare
   variable sq set to [20, 15]
-  assert getAdjacentSquare(sq, Direction.up) is [20, 14]
-  assert getAdjacentSquare(sq, Direction.down) is [20, 16]
-  assert getAdjacentSquare(sq, Direction.left) is [19, 15]
-  assert getAdjacentSquare(sq, Direction.right) is [21, 15]
+  assert getAdjacentSquare(sq, Direction.up) evaluates to [20, 14]
+  assert getAdjacentSquare(sq, Direction.down) evaluates to [20, 16]
+  assert getAdjacentSquare(sq, Direction.left) evaluates to [19, 15]
+  assert getAdjacentSquare(sq, Direction.right) evaluates to [21, 15]
   # boundary
-  assert getAdjacentSquare([0, 15], Direction.left) is [-1, 15]
+  assert getAdjacentSquare([0, 15], Direction.left) evaluates to [-1, 15]
 end test
 
 test test_directionByKey
   variable current set to Direction.up
-  assert directionByKey(current, "") is Direction.up
-  assert directionByKey(current, "x") is Direction.up
-  assert directionByKey(current, "w") is Direction.up
-  assert directionByKey(current, "s") is Direction.down
-  assert directionByKey(current, "a") is Direction.left
-  assert directionByKey(current, "d") is Direction.right
-  assert directionByKey(current, "D") is Direction.up
+  assert directionByKey(current, "") evaluates to Direction.up
+  assert directionByKey(current, "x") evaluates to Direction.up
+  assert directionByKey(current, "w") evaluates to Direction.up
+  assert directionByKey(current, "s") evaluates to Direction.down
+  assert directionByKey(current, "a") evaluates to Direction.left
+  assert directionByKey(current, "d") evaluates to Direction.right
+  assert directionByKey(current, "D") evaluates to Direction.up
 end test
