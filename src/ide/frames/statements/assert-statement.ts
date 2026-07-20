@@ -34,9 +34,8 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     if (source.isMatch(" is ")) {
       source.remove(" is ");
     } else {
-      source.remove("  ");
+      source.remove(` ${evaluatesKeyword} ${toKeyword} `);
     }
-    source.remove(` ${evaluatesKeyword} ${toKeyword} `);
     this.expected.parseFrom(source);
     source.removeNewLine();
   }
