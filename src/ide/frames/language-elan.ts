@@ -27,6 +27,7 @@ import {
   mainKeyword,
   newKeyword,
   ofKeyword,
+  powKeyword,
   printKeyword,
   privateKeyword,
   procedureKeyword,
@@ -281,6 +282,7 @@ export class LanguageElan extends LanguageAbstract {
   private PRIVATE = privateKeyword;
   private PROCEDURE = procedureKeyword;
   private PROPERTY = propertyKeyword;
+  private POW = powKeyword;
   private RETURN = returnKeyword;
   private RETURNS = returnsKeyword;
   private SET = setKeyword;
