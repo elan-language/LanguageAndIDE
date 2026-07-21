@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta1
+// Java with Elan 2.0.0-beta2
 
 public class Global {
 
@@ -31,7 +31,7 @@ static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
       nextGen[x][y] = colour; // assignment
     } // end foreach
   } // end foreach
-  gridRef.set(nextGen); // procedure call
+  gridRef.put(nextGen); // procedure call
 } // end procedure
 
 static int blackOrWhite(double random) { // function

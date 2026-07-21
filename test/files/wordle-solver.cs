@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta1
+// C# with Elan 2.0.0-beta2
 
 // Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 
@@ -91,7 +91,7 @@ static Dictionary<string, int> incrementCount(Dictionary<string, int> d, string 
   var mark = markAttempt(attempt, possAnswer); // let
   var keys = d.keys(); // let
   var count = if_(keys.contains(mark), d[mark], 0); // let
-  return d.withSet(mark, count + 1);
+  return d.withPut(mark, count + 1);
 } // end function
 
 static List<WordCount> allRemainingWordCounts(List<string> possAnswers) { // function

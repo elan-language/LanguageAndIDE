@@ -270,7 +270,7 @@ main
   call printNoLine(bar.p1)
   call printNoLine(bar.p2)
   variable opt set to bar.foo
-  call opt.set(foo)
+  call opt.put(foo)
   variable foo2 set to bar.foo.getValue()
   variable bar2 set to foo2.bar
   call printNoLine(bar2.p1)
@@ -316,7 +316,7 @@ async function main() {
   await _stdlib.printNoLine(bar.p1);
   await _stdlib.printNoLine(bar.p2);
   let opt = bar.foo;
-  opt.set(foo);
+  opt.put(foo);
   let foo2 = bar.foo.getValue();
   let bar2 = foo2.bar;
   await _stdlib.printNoLine(bar2.p1);

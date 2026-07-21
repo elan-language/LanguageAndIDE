@@ -28,10 +28,10 @@ function square(x as Float) returns Float
 end function
 
 test test_square
-  assert square(3) is 9
+  assert square(3) evaluates to 9
   variable actual set to square(4)
   variable expected set to 16
-  assert actual is expected
+  assert actual evaluates to expected
 end test
 `;
 
@@ -86,7 +86,7 @@ main
 end main
 
 test test_foo
-  assert (3 + 4) is 7
+  assert (3 + 4) evaluates to 7
 end test
 `;
 
@@ -128,7 +128,7 @@ end main
 
 test test_square
   variable t set to ("one", "two")
-  assert t is ("one", "two")
+  assert t evaluates to ("one", "two")
 end test
 `;
 
@@ -175,7 +175,7 @@ end main
 test test_square
   variable t1 set to ("one", "two")
   variable t2 set to ("one", "two")
-  assert t1 is t2
+  assert t1 evaluates to t2
 end test
 `;
 
@@ -223,7 +223,7 @@ end main
 test test_square
   variable f set to new Foo()
   variable t2 set to 10
-  assert f.p1 is t2
+  assert f.p1 evaluates to t2
 end test
 
 class Foo
@@ -295,7 +295,7 @@ end main
 test test_square
   variable f set to new Foo()
   variable t2 set to 10
-  assert t2 is f.p1
+  assert t2 evaluates to f.p1
 end test
 
 class Foo
@@ -369,8 +369,8 @@ function square(x as Float) returns Float
 end function
 
 test test_square
-  assert square(3) is 10
-  assert square(4) is 16
+  assert square(3) evaluates to 10
+  assert square(4) evaluates to 16
 end test
 `;
 
@@ -423,7 +423,7 @@ end main
 
 test test_square
   variable arr set to new List<of Int>()
-  assert arr[1] is "Out of range index: 1 size: 0"
+  assert arr[1] evaluates to "Out of range index: 1 size: 0"
 end test
 `;
 
@@ -476,7 +476,7 @@ end main
 
 test test_square
   variable arr set to new List<of Int>()
-  assert arr[1] is 0
+  assert arr[1] evaluates to 0
 end test
 `;
 
@@ -522,7 +522,7 @@ end main
 test test_square
   variable arr set to new List<of Int>()
   variable b set to arr[1]
-  assert b is 0
+  assert b evaluates to 0
 end test
 `;
 
@@ -569,26 +569,26 @@ end main
 test test_list_
   variable a set to [3, 2, 4, 0]
   variable b set to [3, 2, 4, 0]
-  assert a is b
+  assert a evaluates to b
 end test
 
 test test_list2_
   variable a set to [3, 2, 4, 0]
   variable b set to [3, 2, 4, 0]
-  assert a is b
+  assert a evaluates to b
 end test
 
 test test_string_
   variable a set to "Hello World"
   variable b set to "Hello" + " " + "World"
-  assert a is b
+  assert a evaluates to b
 end test
 
 constant hello set to "Hello"
 
 test test_constant_
   variable b set to "Hello"
-  assert hello is b
+  assert hello evaluates to b
 end test
 
 class Foo
@@ -605,7 +605,7 @@ end class
 test test_class1
   variable a set to new Foo(3)
   variable b set to new Foo(3)
-  assert a is b
+  assert a evaluates to b
 end test`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -704,25 +704,25 @@ end main
 test test_round1
   variable a set to 1/3.0
   variable b set to a.round(4)
-  assert b is 0.3333
+  assert b evaluates to 0.3333
 end test
 
 test test_round2
   variable a set to 0.9999
   variable b set to a.round(2)
-  assert b is 1
+  assert b evaluates to 1
 end test
 
 test test_round3
   variable a set to 1.25
   variable b set to a.round(1)
-  assert b is 1.3
+  assert b evaluates to 1.3
 end test
 
 test test_round4
   variable a set to 44.444
   variable b set to a.round(2)
-  assert b is 44.44
+  assert b evaluates to 44.44
 end test
 
 `;
@@ -793,7 +793,7 @@ end procedure
 test test_square
   variable arr set to createPopulatedList(1, 0)
   call square(3, arr)
-  assert arr[0] is 9
+  assert arr[0] evaluates to 9
 end test
 `;
     const fileImpl = new FileImpl(
@@ -821,7 +821,7 @@ function square(x as Float) returns Float
 end function
 
 test test_square
-  assert square(3) is 3 * 3
+  assert square(3) evaluates to 3 * 3
 end test
 `;
 
@@ -864,7 +864,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  assert square(3) is 3 * 3
+  assert square(3) evaluates to 3 * 3
 end main
 
 function square(x as Float) returns Float
@@ -898,7 +898,7 @@ function square(x as Float) returns Float
 end function
 
 test test_squareTest
-  assert square(3) is 93
+  assert square(3) evaluates to 93
 end test
 `;
     const fileImpl = new FileImpl(
@@ -930,7 +930,7 @@ function square(x as Float) returns Float
 end function
 
 test test_squareTest
-  assert square(3) is 93
+  assert square(3) evaluates to 93
 end test
 `;
     const fileImpl = new FileImpl(
@@ -960,7 +960,7 @@ end main
 test test_square
   variable a set to 1
   if true then
-    assert a is 9
+    assert a evaluates to 9
   end if
 end test
 `;
@@ -989,7 +989,7 @@ end main
 test test_square
   variable a set to 1
   while true
-    assert a is 9
+    assert a evaluates to 9
   end while
 end test
 `;
@@ -1017,7 +1017,7 @@ end main
 test test_square
   variable actual set to " 1  2   3    "
   variable expected set to " 1  2   3    "
-  assert actual is expected
+  assert actual evaluates to expected
 end test
 `;
 

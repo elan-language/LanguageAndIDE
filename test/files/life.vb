@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta1
+' VB.NET with Elan 2.0.0-beta2
 
 Sub main()
   Dim grid = createBlockGraphics(white) ' variable definition
@@ -29,7 +29,7 @@ Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
       nextGen(x)(y) = colour ' assignment
     Next y
   Next x
-  gridRef.set(nextGen) ' procedure call
+  gridRef.put(nextGen) ' procedure call
 End Sub
 
 Function blackOrWhite(random As Double) As Integer

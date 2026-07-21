@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta1
+' VB.NET with Elan 2.0.0-beta2
 
 ' Use the W,A,S,D keys to change Snake direction
 
@@ -32,7 +32,7 @@ Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of Li
 End Function
 
 Function graphicsPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withSet(x, graphics(x).withSet(y, colour))
+  Return graphics.withPut(x, graphics(x).withPut(y, colour))
 End Function
 
 Function score(g As Game) As Integer

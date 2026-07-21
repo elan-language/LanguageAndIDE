@@ -51,21 +51,21 @@ procedure processoneline(line as String, result as AsRef<of String>, skippingRef
         # all values must be Floats
         assign num to "0.0"
       end if
-      call result.set(result.value() + num + ",")
+      call result.put(result.value() + num + ",")
     end if
     if linem.contains("texhtml") then
       # next row of parameters
-      call result.set(result.value() + closebrace + "," + openbrace)
+      call result.put(result.value() + closebrace + "," + openbrace)
     end if
     if linem.contains("Largest right-hand") then
       # end of parameters
-      call result.set(result.value() + closebrace + closebrace)
+      call result.put(result.value() + closebrace + closebrace)
       assign skipping to true
       # we are done, tidy up result to remove excess separators
-      call result.set(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
+      call result.put(result.value().replace(openbrace + closebrace + ",", "").replace("," + closebrace, closebrace))
     end if
   end if
-  call skippingRef.set(skipping)
+  call skippingRef.put(skipping)
 end procedure
 
 # find any number at the end of the given string
@@ -89,15 +89,15 @@ function last(l as List<of Int>) returns Int
 end function
 
 test test_strings
-  assert isnumberchar("5") is true
-  assert gettrailingnumber("abc123") is "123"
-  assert gettrailingnumber("abc") is ""
-  assert gettrailingnumber("3a-1.63") is "-1.63"
-  assert gettrailingnumber("") is ""
+  assert isnumberchar("5") evaluates to true
+  assert gettrailingnumber("abc123") evaluates to "123"
+  assert gettrailingnumber("abc") evaluates to ""
+  assert gettrailingnumber("3a-1.63") evaluates to "-1.63"
+  assert gettrailingnumber("") evaluates to ""
 end test
 
 test test_last
-  assert last([5, 6, 7]) is 7
+  assert last([5, 6, 7]) evaluates to 7
 end test
 
 constant numberChars set to "-.0123456789"

@@ -139,27 +139,27 @@ end function
 
 test test_determinePlayerOutcome
   let dbj be (new Dealer(0)).withStatus(Status.blackjack)
-  assert dbj.status is Status.blackjack
+  assert dbj.status evaluates to Status.blackjack
   let d21 be (new Dealer(0)).withStatus(Status.standing).withHandTotal(21)
-  assert d21.status is Status.standing
-  assert d21.handTotal is 21
+  assert d21.status evaluates to Status.standing
+  assert d21.handTotal evaluates to 21
   let d17 be (new Dealer(0)).withStatus(Status.standing).withHandTotal(17)
   let dbu be (new Dealer(0)).withStatus(Status.bust)
   let pbj be (new HumanPlayer("", 0)).withStatus(Status.blackjack)
-  assert pbj.status is Status.blackjack
+  assert pbj.status evaluates to Status.blackjack
   let p21 be (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(21)
   let p17 be (new HumanPlayer("", 0)).withStatus(Status.standing).withHandTotal(17)
   let pbu be (new HumanPlayer("", 0)).withStatus(Status.bust)
-  assert determinePlayerOutcome(dbj, pbj) is Outcome.draw
-  assert determinePlayerOutcome(dbj, p21) is Outcome.lose
-  assert determinePlayerOutcome(dbj, pbu) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(d21, p21) is Outcome.draw
-  assert determinePlayerOutcome(d21, p17) is Outcome.lose
-  assert determinePlayerOutcome(d21, pbu) is Outcome.lose
-  assert determinePlayerOutcome(dbu, pbj) is Outcome.winDouble
-  assert determinePlayerOutcome(dbu, p17) is Outcome.win
-  assert determinePlayerOutcome(dbu, pbu) is Outcome.lose
+  assert determinePlayerOutcome(dbj, pbj) evaluates to Outcome.draw
+  assert determinePlayerOutcome(dbj, p21) evaluates to Outcome.lose
+  assert determinePlayerOutcome(dbj, pbu) evaluates to Outcome.lose
+  assert determinePlayerOutcome(d21, pbj) evaluates to Outcome.winDouble
+  assert determinePlayerOutcome(d21, p21) evaluates to Outcome.draw
+  assert determinePlayerOutcome(d21, p17) evaluates to Outcome.lose
+  assert determinePlayerOutcome(d21, pbu) evaluates to Outcome.lose
+  assert determinePlayerOutcome(dbu, pbj) evaluates to Outcome.winDouble
+  assert determinePlayerOutcome(dbu, p17) evaluates to Outcome.win
+  assert determinePlayerOutcome(dbu, pbu) evaluates to Outcome.lose
 end test
 
 function dealCard(random as Float) returns Card
@@ -171,17 +171,17 @@ end function
 
 test test_dealCard
   let c1 be dealCard(0)
-  assert c1.rank is "2"
-  assert c1.suit is Suit.clubs
+  assert c1.rank evaluates to "2"
+  assert c1.suit evaluates to Suit.clubs
   let c2 be dealCard(0.9999999)
-  assert c2.rank is "A"
-  assert c2.suit is Suit.spades
+  assert c2.rank evaluates to "A"
+  assert c2.suit evaluates to Suit.spades
   let c3 be dealCard(0.5)
-  assert c3.rank is "8"
-  assert c3.suit is Suit.hearts
+  assert c3.rank evaluates to "8"
+  assert c3.suit evaluates to Suit.hearts
   let c4 be dealCard(0.24)
-  assert c4.rank is "5"
-  assert c4.suit is Suit.clubs
+  assert c4.rank evaluates to "5"
+  assert c4.suit evaluates to Suit.clubs
 end test
 
 function intAsSuit(n as Int) returns Suit
@@ -197,10 +197,10 @@ function intAsSuit(n as Int) returns Suit
 end function
 
 test test_intAsSuit
-  assert intAsSuit(0) is Suit.clubs
-  assert intAsSuit(1) is Suit.diamonds
-  assert intAsSuit(2) is Suit.hearts
-  assert intAsSuit(3) is Suit.spades
+  assert intAsSuit(0) evaluates to Suit.clubs
+  assert intAsSuit(1) evaluates to Suit.diamonds
+  assert intAsSuit(2) evaluates to Suit.hearts
+  assert intAsSuit(3) evaluates to Suit.spades
 end test
 
 function htmlForGame(game as Game) returns String
@@ -219,7 +219,7 @@ test test_htmlForGame
   let p be (new HumanPlayer("fred", 10)).withCards([c1, c2])
   let players be (new List&lt;of Player&gt;()).withAppend(p)
   let g2 be (new Game(1)).withPlayers(players)
-  assert htmlForGame(g2) is "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
+  assert htmlForGame(g2) evaluates to "&lt;div class='game'&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;Dealer - 1 points &lt;/div&gt;&lt;div class='hand'&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='player'&gt;&lt;div class='details'&gt;fred - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;&lt;div class='message'&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForPlayer(player as Player) returns String
@@ -238,7 +238,7 @@ test test_htmlForPlayer
   let c1 be new Card("3", Suit.clubs, false)
   let c2 be new Card("K", Suit.spades, true)
   let p be (new HumanPlayer("charlie", 10)).withCards([c1, c2])
-  assert htmlForPlayer(p) is "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
+  assert htmlForPlayer(p) evaluates to "&lt;div class='player'&gt;&lt;div class='details'&gt;charlie - 10 points - hand total: 0&lt;/div&gt;&lt;div class='hand'&gt;&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;&lt;div class='card reversed'&gt;&lt;/div&gt;&lt;/div&gt;&lt;/div&gt;"
 end test
 
 function htmlForCard(card as Card) returns String
@@ -268,9 +268,9 @@ end function
 
 test test_htmlForCard
   variable c1 set to new Card("3", Suit.clubs, false)
-  assert htmlForCard(c1) is "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
+  assert htmlForCard(c1) evaluates to "&lt;div class='card black'&gt;&lt;div class='u'&gt;3&lt;/div&gt;&lt;div class='v'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='a'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='b'&gt;&amp;clubs;&lt;/div&gt;&lt;div class='c'&gt;&amp;clubs;&lt;/div&gt;&lt;/div&gt;"
   variable c2 set to new Card("K", Suit.spades, true)
-  assert htmlForCard(c2) is "&lt;div class='card reversed'&gt;&lt;/div&gt;"
+  assert htmlForCard(c2) evaluates to "&lt;div class='card reversed'&gt;&lt;/div&gt;"
 end test
 
 function htmlForSpot(id as String, content as String) returns String
@@ -278,8 +278,8 @@ function htmlForSpot(id as String, content as String) returns String
 end function
 
 test test_htmlForSpot
-  assert htmlForSpot("c", "&amp;hearts;") is "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
-  assert htmlForSpot("u", "10") is "&lt;div class='u'&gt;10&lt;/div&gt;"
+  assert htmlForSpot("c", "&amp;hearts;") evaluates to "&lt;div class='c'&gt;&amp;hearts;&lt;/div&gt;"
+  assert htmlForSpot("u", "10") evaluates to "&lt;div class='u'&gt;10&lt;/div&gt;"
 end test
 
 class Game

@@ -898,7 +898,7 @@ end class
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
 If <code>true</code> is returned, then you retrieve the value with function <el-method>getValue</el-method>; if <code>false</code> is returned, then it has no current value,
 and using <el-method>getValue</el-method> will give a runtime error.</p>
-<p>To update the property's value, use function <el-method>setValue</el-method>. To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
+<p>To update the property's value, use function <el-method>put</el-method> (supersedes deprecated <el-method>put</el-method>). To restore it to having no value, use function <el-method>clearValue</el-method>.</p>
 
 <p>Here a pupil (of class <el-type>Pupil</el-type>) that <i>optionally</i> has a tutor (of class <el-type>Teacher</el-type>):</p>
 <codeblock>
