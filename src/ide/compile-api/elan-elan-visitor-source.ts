@@ -1,6 +1,4 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { IdAsn } from "../../compiler/syntax-nodes/id-asn.js";
-import { TypeAsn } from "../../compiler/syntax-nodes/type-asn.js";
 import { ElanElanVisitor } from "./antlr4-parser.js";
 
 export class ElanElanVisitorSource extends ElanElanVisitor {
@@ -8,8 +6,15 @@ export class ElanElanVisitorSource extends ElanElanVisitor {
     super();
   }
 
+  filterTokens(s: string) {
+    return s.trim() && s !== "(" && s !== ")" && s !== ",";
+  }
+
   visitTypeTuple(ctx: any) {
-    return ((this as any).visitChildren(ctx) as (IdAsn | TypeAsn)[]).join(",");
+    const types = ((this as any).visitChildren(ctx) as string[])
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
+    return `(${types})`;
   }
 
   visitTypeName(ctx: any) {
@@ -20,7 +25,7 @@ export class ElanElanVisitorSource extends ElanElanVisitor {
     const typeName = (this as any).visit(ctx.typeName()) as string;
     const types = (this as any).visit(ctx.type()) as string[];
 
-    return `${typeName}<of ${types.join(",")}`;
+    return `${typeName}<of ${types.join(",")}>`;
   }
 
   override visitType(context: any) {
