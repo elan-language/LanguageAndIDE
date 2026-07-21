@@ -38,6 +38,7 @@ export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
+export const powKeyword = "pow";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
@@ -107,6 +108,7 @@ const elanKeywords: string[] = [
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
+  powKeyword,
   assignKeyword,
   returnKeyword,
   returnsKeyword,
