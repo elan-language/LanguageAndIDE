@@ -20,7 +20,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<div id="getting-started">
+<div id="GettingStarted">
 <h1>Getting started</h1>
 <h2>Select the object-oriented programming paradigm</h2> <!-- to balance the ToC -->
 
@@ -43,7 +43,7 @@ This will still allow you to do procedural programming, but changes two things: 
 <p>In the following section we will describe 10 principles that define the essence of OOP, illustrated with example code - where possible from the demo programs.</p>
 </div>
 
-<div id="oop_principles">
+<div id="Principles">
 <h1>Principles of object-oriented programming</h1>
 
 <p><b>Important</b>. Every textbook on OOP differs <i>slightly</i> in the definition of core principles, and every language that supports OOP differs in the rules that it enforces.
@@ -204,7 +204,7 @@ end class
  followed by a dot.</li>
 </ul>
 
-<h2 id="association">Objects may have associations to other objects</h2>
+<h2 id="Association">Objects may have associations to other objects</h2>
 
 <p>So far we have looked at properties where the type is one of the standard library types. However, a class may define one or more
     properties where the type is a class - either of the same type as the class in which the property is defined, or - more commonly -
@@ -309,7 +309,7 @@ end function
 
 <p>Procedure methods, like function methods, may define parameters and may also read the values of the object's properties.
   Like global procedures they may also generate side effects, and this includes changing the values of the object's properties,
-  and may call other procedures, on the same object, or <a href="#association">associated objects</a>. For example, the
+  and may call other procedures, on the same object, or <a href="#Association">associated objects</a>. For example, the
   <el-method>clockTick</el-method> procedure method defined in the <code>Snake</code> class, changes the position of various
   segments, and, if the <code>head</code> now covers the same space as the <code>apple</code> changes the position of
   the apple (passed into the method as a parameter) by calling the <el-method>newRandomPosition</el-method>
@@ -330,14 +330,14 @@ procedure clockTick(key as String, apple as Apple)
 end procedure
 </codeblock>
 
-<h2 id="representation">Objects should represent the principal nouns in the application domain</h2>
+<h2 id="Representation">Objects should represent the principal nouns in the application domain</h2>
 
 <p>The word 'encapsulation' is often used in descriptions of object-oriented programming. But
   that word has two rather different meanings in plain English. Fortunately, both of the meanings of 'encapsulation'
   apply. </p>
 
 <p>The first meaning of encapsulation is similar to 'represents' - as in 'Our school motto <i>encapsulates</i> the ethos and culture of the school'.
-  (The second meaning will be addressed in the <a href="#info-hiding">next principle</a>.)
+  (The second meaning will be addressed in the <a href="#InfoHiding">next principle</a>.)
   Thus, objects should represent, or encapsulate, the principal concepts in the application domain.
   A rule of thumb is that the classes defined in a program should correspond to the main <i>nouns</i> used when describing the purpose
   and operation of the program in plain English. You can see this in the <b>Snake</b> demo, where the code defines three classes, named <code>Snake</code>, <code>Apple</code>, and <code>Square</code> - all nouns that
@@ -354,7 +354,7 @@ would be recognised by anyone who understands how to play the game Snake, but wh
   behaviour needed from that thing, in the form of methods. This is sometimes stated as representing the <i>know-whats</i> for the thing (as properties),
   and the <i>know how-to's</i> as methods.</p>
 
-<h2 id="info-hiding">Objects should hide state behind methods, where possible</h2>
+<h2 id="InfoHiding">Objects should hide state behind methods, where possible</h2>
 
 <p>This principle corresponds to the second meaning of 'encapsulation': sealing. Think of the related word: 'capsule'.
   You can only access the capabilities of an object through its <i>public</i> members. All the 'members'
@@ -398,7 +398,7 @@ offer <b>abstract procedure method</b>, and <b>abstract function method</b>. A <
 implementation of each <i>abstract</i> member defined in its superclass, or any abstract class above it in the hierarchy.</li>
     </ul>
 
-<p>Earlier we learned about <a href="association">association</a> between objects. Association may be characterised by the 'has a' relationship, as in
+<p>Earlier we learned about <a href="Association">association</a> between objects. Association may be characterised by the 'has a' relationship, as in
 a 'Student has a personal tutor' (meaning that the Student class defines a property named 'tutor' - which is of <i>type</i> Teacher. Bt contrast
 inheritance may be characterised as an 'is a' relationship, as in 'a Student is an Individual'.</p>
 
@@ -595,13 +595,13 @@ end class
     code within the same class.</li>
     <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
     <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li>
-    <li>A class may <i>optionally</i> inherit from a single <a href="#abstractClass">abstract class</a>.</li>
+    <li>A class may <i>optionally</i> inherit from a single <a href="#AbstractClass">abstract class</a>.</li>
   </ul>
 
 </div></div>
 </div>
 
-<div id="abstractClass">
+<div id="AbstractClass">
 <h2>Abstract class</h2>
 
 <div class="accordion">
@@ -784,7 +784,7 @@ end class
   <a href="LangRef.html#StatementInstructions">statement instructions used in the <b>procedural</b> paradigm</a>.
 </div>
 
-<div id="MemberInstructions" >
+<div id="MemberInstructions">
 <h1 id="Member">Member instructions</h1>
 
 <p>Member instructions (also referred to simply as 'members') may be added only with a <b>concrete class</b> or <b>abstract class</b>.
@@ -931,7 +931,7 @@ end class
 </div></div>
 </div>
 
-<div id="functionMethod">
+<div id="FunctionMethod">
 <h2 >Function method</h2>
 
 <div class="accordion">
@@ -973,7 +973,7 @@ end class
 </div></div>
 </div>
 
-<div id="procedureMethod">
+<div id="ProcedureMethod">
 <h2>Procedure method</h2>
 
 <div class="accordion">
@@ -1019,7 +1019,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 </div></div>
 </div>
 
-<div id="abstractFunction">
+<div id="AbstractFunction">
 <h2>Abstract function</h2>
 
 <div class="accordion">
@@ -1050,14 +1050,14 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <div class="acc-body">
 
 <ul>
-  <li>An abstract function method may be defined only on an <a href="#abstractClass"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>.</li>
+  <li>An abstract function method may be defined only on an <a href="#AbstractClass"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>.</li>
   <li>Any concrete subclass must then implement a concrete (regular) function to match.</li>
 </ul>
 
 </div></div>
 </div>
 
-<div id="abstractProcedure">
+<div id="AbstractProcedure">
 <h2>Abstract procedure</h2>
 
 <div class="accordion">
@@ -1107,7 +1107,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <div class="acc-body">
 
 <ul>
-  <li>An abstract abstract procedure method may be defined only on an <a href="#abstractClass"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>.</li>
+  <li>An abstract abstract procedure method may be defined only on an <a href="#AbstractClass"><b>abstract class</b> <i class="fa">&#xf14c;</i></a>.</li>
   <li>Any concrete subclass must then implement a concrete (regular) function to match.</li>
 </ul>
 
