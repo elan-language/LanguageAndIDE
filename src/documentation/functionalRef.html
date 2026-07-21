@@ -20,7 +20,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<div id="getting-started">
+<div id="GettingStarted">
 <h1>Getting started</h1>
 <h2>Select functional programming paradigm</h2> <!-- to balance the ToC -->
 
@@ -46,7 +46,7 @@ This changes two things: </p>
 <p>In the following sections we will describe 10 principles that define the essence of FP, illustrated with example code - where possible from the demo programs.</p>
 </div>
 
-<div id="principles">
+<div id="Principles">
 <h1>Principles of functional programming</h1>
 <p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, and every language that supports FP differs in the rules that it enforces.
   The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages 
@@ -64,7 +64,7 @@ This changes two things: </p>
         This means it may not depend on data obtained from user input, from a file, or from over the network,
         though such data may be obtained <i>outside</i> the function and passed into it in parameters.</li>
     <li>Similarly, within the function, you cannot make direct use of the system clock or system-generated random numbers. (There is a technique
-        to <a href="#FP_random">generate random numbers <i class="fa">&#xf14c;</i></a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
+        to <a href="#random">generate random numbers <i class="fa">&#xf14c;</i></a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
     <li>The function may not generate any <i>side effects</i>, that is changes to the state of the system that may be observed outside the function.</li>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
@@ -278,10 +278,10 @@ but differs from it in these important respects:</p>
 <p>Although <el-method>if</el-method> functions can be nested, nesting to more than one level can become very hard to read.
 When required, it is often better to delegate to a new function to perform part of the logic.</p>
 
-<h2 id="FP_recursion">Iteration may be achieved using recursion</h2>
+<h2 id="Recursion">Iteration may be achieved using recursion</h2>
 
 <p>There are two ways to implement iteration within a function:</p>
-<p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#FP_HoFs">later<i class="fa">&#xf14c;</i></a>.</p>
+<p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#HoFs">later<i class="fa">&#xf14c;</i></a>.</p>
 <p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example.
   In the <b>Recursive Functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
 
@@ -310,7 +310,7 @@ end function
   </li>
 </ul>
 
-<h2 id="FP_listMutation">Lists and other data structures are never mutated</h2>
+<h2 id="ListMutation">Lists and other data structures are never mutated</h2>
 
 <p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
 
@@ -345,7 +345,7 @@ a <i>copy</i> of a data structure with specified differences from the original. 
 </codeblock>
 
 <p>When you want to apply operations to all items in a List you need to use iteration, which means using
-  either <a href="#FP_recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#FP_HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
+  either <a href="#recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
   and within that technique make use of the various <el-method>with..</el-method> methods. The <el-method>sum</el-method> function in the
    <b>Recursive Functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
@@ -396,7 +396,7 @@ back into <el-method>sort</el-method> again &ndash; crucially with approximately
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
-<h2 id="FP_HoFs">A function may be passed into another function</h2>
+<h2 id="HoFs">A function may be passed into another function</h2>
 
 <p>The alternative to writing your own recursive function is to use Higher-order Functions (see <a href="LibRef.html#HoFs" target="_blank">HoFs <i class="fa">&#xf08e;</i></a> in Library Reference).
   A HoF is a function that takes in another function as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,
@@ -541,7 +541,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 
 <p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
   The answer is similar to that for updating a List, String, or other standard data structure within a function
-  (described in <a href="#FP_listMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
+  (described in <a href="#listMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
   return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
@@ -570,7 +570,7 @@ a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e
   as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
   need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
 
-<h2 id="FP_random">Generating Random numbers within a function requires a special pattern</h2>
+<h2 id="Random">Generating Random numbers within a function requires a special pattern</h2>
 
 <p><b>Warning:</b> This is an <i>advanced</i> technique and we recommend not attempting to use
 it until you are fairly comfortable with all the previous Principles.</p>
@@ -761,7 +761,7 @@ end function
 </div>
 </div>
 
-<div id="MemberInstructions" >
+<div id="MemberInstructions">
 <h1 id="Member">Member instructions</h1>
 
 <p>When using the <b>functional</b> paradigm, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>

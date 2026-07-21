@@ -22,7 +22,7 @@
  <div id="generated-toc" class="generate_from_h1 generate_for_page"></div>
 </div>
 
-<div id="getting-started">
+<div id="GettingStarted">
 <h1>Getting started</h1>
 
 <h2>Select the procedural programming paradigm</h2>
@@ -34,17 +34,17 @@
  <li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP. These are listed below under:
   <ul>
     <li><a href="#GlobalInstructions">Global Instructions <i class="fa">&#xf14c;</i></a> and</li>
-    <li><a href="#statementInstructions">Statement Instructions <i class="fa">&#xf14c;</i></a></li>
+    <li><a href="#StatementInstructions">Statement Instructions <i class="fa">&#xf14c;</i></a></li>
    </ul>
   </li>
 </ul>
 </div>
 
-<div id="elan-differences">
+<div id="ElanDifferences">
 <h1>Why coding with Elan is different</h1>
 
 <p>To start programming with Elan, first familiarise yourself with using the Elan IDE, especially for
-  entering and editing code. Do this by watching the videos <a href="#videos">here <i class="fa">&#xf08e;</i></a>.
+  entering and editing code. Do this by watching the videos <a href="#Videos">here <i class="fa">&#xf08e;</i></a>.
   You will learn that Elan supports programming in <b>Python</b>, <b>VB</b>, <b>C#</b>, and <b>Java</b>
   (as well as the Reference Language Elan),
   and offers the option of immediate translation between these languages.
@@ -53,12 +53,12 @@
   There are three forms of constraint, which are described in more detail in these sections:</p>
 
 <ol>
-  <li><a href="#bestPractices">Best practices in coding that Elan encourages<i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#commonLibrary">Use of a common library across all the supported languages <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#otherConstraints">Some, generally smaller, constraints needed for portability between the supported languages <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#BestPractices">Best practices in coding that Elan encourages<i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#CommonLibrary">Use of a common library across all the supported languages <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#OtherConstraints">Some, generally smaller, constraints needed for portability between the supported languages <i class="fa">&#xf14c;</i></a></li>
 </ol>
 
-<div id="bestPractices">
+<div id="BestPractices">
 <h2>Best practices in coding that Elan encourages</h2>
 
 <p>Elan supports, and in many cases <i>enforces</i> good programming practices, which
@@ -73,21 +73,21 @@
   bad habits from the beginning. This will result in you writing better code and encountering fewer unexpected problems.</p>
   <p>The six best practices enforced by Elan for procedural programming are:</p>
 <ol>
-  <li><a href="#noGlobalVars">No global variables <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#staticTyping">Static typing <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#noNullRefs">No null references <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#noEarlyBreaks">No breaking out of loops before they have completed <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#functionReturn">Return from a function or procedure only after the final instruction <i class="fa">&#xf14c;</i></a></li>
-  <li><a href="#pureFunctions">All functions must be pure <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#NoGlobalVars">No global variables <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#StaticTyping">Static typing <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#NoNullRefs">No null references <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#NoEarlyBreaks">No breaking out of loops before they have completed <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#FunctionReturn">Return from a function or procedure only after the final instruction <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#PureFunctions">All functions must be pure <i class="fa">&#xf14c;</i></a></li>
 </ol>
 together with this seventh best practice that is supported and encouraged by Elan:
 <ol start="7">
-  <li><a href="#unitTesting">Every function should be unit tested <i class="fa">&#xf14c;</i></a></li>
+  <li><a href="#UnitTesting">Every function should be unit tested <i class="fa">&#xf14c;</i></a></li>
 </ol>
 
-<h3 class="no-TOC" id="noGlobalVars">No global variables</h3>
+<h3 class="no-TOC" id="NoGlobalVars">No global variables</h3>
  <p>It is widely recognised that global variables are a bad idea: they encourage poor program structure and lead to unexpected
-  behaviour. Although most programming languages permit them, the Elan editor solves this by offering the <a href="#variableDefinition"><b>variable definition</b> <i class="fa">&#xf14c;</i></a>
+  behaviour. Although most programming languages permit them, the Elan editor solves this by offering the <a href="#VariableDefinition"><b>variable definition</b> <i class="fa">&#xf14c;</i></a>
   instruction only within the <b>main routine</b>, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
   is a <a href="#constant"><b>constant</b></a> and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
 
@@ -95,7 +95,7 @@ together with this seventh best practice that is supported and encouraged by Ela
   and all code must be within this. Everything added <i>immediately</i> within this class is deemed, in Elan terms, to be
   global, so you will not be able to add a variable, even in the form of a class property there.</p>
 
-<h3 class="no-TOC" id="staticTyping">Static typing</h3>
+<h3 class="no-TOC" id="StaticTyping">Static typing</h3>
 <p>Static typing means that the <i>type</i> of every variable, parameter, or value returned by a function, is known at <i>compile</i> time,
  and that type never changes, even though the value may change. VB, C#, and Java, are  statically typed. but Python is inherently dynamically typed.
  Python 3.5 offers the option to add 'type hints' that assist working in a statically typed manner.</p>
@@ -107,7 +107,7 @@ together with this seventh best practice that is supported and encouraged by Ela
 <p>Elan does not require the type to be specified explicitly for any variable (or constant) because its type is <i>inferred</i> from the
 initial value given to it.</p>
 
-<h3 class="no-TOC" id="noNullRefs">No null references</h3>
+<h3 class="no-TOC" id="NoNullRefs">No null references</h3>
 <p>All programmers have encountered the notorious 'Null Reference ...` (or 'Null Pointer ...`) error message, and the cause can sometimes be
   very hard to track down. Tony Hoare, Turing Medal recipient and one of Britain's greatest computer scientists, magnanimously described his invention
   of 'null' as a <a href="https://www.infoq.com/presentations/Null-References-The-Billion-Dollar-Mistake-Tony-Hoare/">Billion Dollar Mistake</a>.</p>
@@ -120,7 +120,7 @@ initial value given to it.</p>
     <li>(Additional, related rules are enforced in object-oriented programming)</li>
   </ul>
 
-<h3 class="no-TOC" id="noEarlyBreaks">No breaking out of loops before they have completed</h3>
+<h3 class="no-TOC" id="NoNullRefsnoEarlyBreaks">No breaking out of loops before they have completed</h3>
 
 <p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allows you to break out of
 a loop before its completion. Elan does not permit any of those instructions to be used for the following reasons.</p>
@@ -129,7 +129,7 @@ offered executed a specified number of times; there were no 'conditional loops'.
 came proper <i>conditional</i> loops, of which the most common form is the <b>while loop</b>.
 With properly structured programming, it is never <i>necessary</i> to break out from a loop before its natural termination.</p>
 
-<h3 class="no-TOC" id="functionReturn">Return from a function or procedure only after the final instruction</h3>
+<h3 class="no-TOC" id="FunctionReturn">Return from a function or procedure only after the final instruction</h3>
 
 <p>This principle is somewhat analogous to the previous one, in that programmers find it convenient to include multiple
  <code>return</code> instructions within a procedure or a function. All the supported languages permit this.
@@ -149,7 +149,7 @@ With properly structured programming, it is never <i>necessary</i> to break out 
   the cracks of poor structure).</li>
 </ul>
 
-<h3 class="no-TOC" id="pureFunctions">All functions must be pure</h3>
+<h3 class="no-TOC" id="PureFunctions">All functions must be pure</h3>
 
 <p>Many textbooks draw no distinction between procedures and functions, except that the latter return a value to the code that references it.
   Used properly, the two are distinct in other, very important, respects.</p>
@@ -189,7 +189,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
         <li>Functions can be more easily tested, which leads us on to our final best practice, as follows.</li>
       </ul>
 
-  <h3 class="no-TOC" id="unitTesting">Every function should be unit tested</h3>
+  <h3 class="no-TOC" id="UnitTesting">Every function should be unit tested</h3>
 
   <p>Historically, most testing of programs was done by humans, manually running through a large number of 'test scripts' (or 'cases') to check that
     the delivered system worked correctly, then again after every single change or extension to the system, to ensure that
@@ -220,7 +220,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
     so easy that it hopefully encourages learners to use the practice.</p>
 </div>
 
-<div id="commonLibrary">
+<div id="CommonLibrary">
 <h2>Use of a common library across all the supported languages</h2>
 
 <p>All programming languages have their own standard libraries for:</p>
@@ -241,7 +241,7 @@ or <i>mutating</i> a data structure passed into it, such as sorting a list 'in p
   semi-automated, tools for this in the future).</p>
 </div>
 
-<div id="otherConstraints">
+<div id="OtherConstraints">
 <div id="Identifier"></div>
 <h2>Other constraints</h2>
 
@@ -695,9 +695,9 @@ end test
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<h4 class="no-TOC" id="ignore">Ghosting tests</h4>
-<p>To prevent a particular test from running, you can use <a href="IDENavigation.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
-<p>Even when a <b>test</b> or <b>assert statement</b> evaluates to <code>ghosted</code>, all the tests will be run and their status shown, but
+<h4 class="no-TOC" id="Ignore">Ghosting tests</h4>
+<p>To prevent a particular test from running, you can use <a href="IdeRef.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
+<p>Even when a <b>test</b> or <b>assert statement</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
 the overall test status will show the status only only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <p>You can ghost an entire test:</p>
@@ -821,7 +821,7 @@ constant warningMsg set to "Limit reached"
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<h4 class="no-TOC" id="constantStructure">Constant data structures</h4>
+<h4 class="no-TOC" id="ConstantStructure">Constant data structures</h4>
 <p>To set up a data structure that is to be a constant in your program, you define it as the value returned by a <b>function</b>
   that requires no parameters. Such a function can then be referenced from anywhere in the program, often from within an expression,
   remembering to add empty brackets after its name.</p>
@@ -908,7 +908,7 @@ enum Outcome undecided, win, lose, draw, winDouble
 </div></div>
 </div>
 
-<div id="comment">
+<div id="Comment">
 <h2>Comment</h2>
 
 <div class="accordion">
@@ -963,7 +963,7 @@ end procedure
 of a program: the main routine, functions, and procedures.</p>
 
 <div id="print">
-<div id="print_instruction"></div>
+<div id="PrintInstruction"></div>
 <h2>Print</h2>
 
 <div class="accordion">
@@ -1073,7 +1073,7 @@ end main
 </div></div>
 </div>
 
-<div id="variableDefinition">
+<div id="VariableDefinition">
 <h2>Variable definition</h2>
 
 <div class="accordion">
@@ -1176,7 +1176,7 @@ end procedure</codeblock>
 </div></div>
 </div>
 
-<div id="input_instruction">
+<div id="InputInstruction">
 <h2>Input statement</h2>
 
 <div class="accordion">
@@ -1301,7 +1301,7 @@ end if
 <div class="accordion">
 <h3 class="no-TOC acc-title">See also</h3>
 <div class="acc-body">
-  <p><a href="#ifExpression"><b><el-method>if_</el-method> function</b></a>. This is an alternative way to implement conditions. Although
+  <p><a href="#IfExpression"><b><el-method>if_</el-method> function</b></a>. This is an alternative way to implement conditions. Although
     that is introduced as part of <b>functional</b> programming', you <i>may</i> use it within the <b>procedural</b> paradigm.</p>
 </div></div>
 </div>
@@ -1589,7 +1589,7 @@ end main
 </ul>
 <p>You can enclose code in a <b>try statement</b> when you want it to be able, at execution, to throw an exception that you handle.</p>
 <p>This might arise when calling a <a href="LibRef.html#SystemMethods">System method <i class="fa">&#xf08e;</i></a> that is dependent upon external conditions,
- such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#tryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
+ such as when cancelling the writing of a text file, as in the example in <a href="LibRef.html#TryCatchOnFile">Writing text files <i class="fa">&#xf08e;</i></a>.</p>
 <p>The <b>try statement</b> automatically provides a <b>catch clause</b> in which you provide a String for an message.</p>
 <p>You can also use a <b>test</b> to check whether another piece of code might throw an exception by wrapping it in a <b>try statement</b>.</p>
 </div></div>
@@ -1691,7 +1691,7 @@ end test
 </div></div>
 </div>
 
-<div id="commentLocal">
+<div id="CommentLocal">
 <h2>Comment</h2>
 <p>Comments can be inserted adjacent to statement instructions just like those at global level: see <a href="#Comment">Comment <i class="fa">&#xf14c;</i></a></p>
 </div>
@@ -1703,8 +1703,8 @@ end test
 <ul>
 <li><a href="#LiteralValue">Literal value <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#NamedValue">Named value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#Operator">Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
-<li><a href="#functionRef"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
+<li><a href="#Operators>Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
+<li><a href="#FunctionRef"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
 </ul>
 
@@ -1770,7 +1770,7 @@ end main
 </div>
 
 <div>
-<div id="Operator">
+<div id="Operators">
 <h2>Operators</h2>
 
 <h3 class="no-TOC" id="ArithmeticOperators">Arithmetic operators</h3>
@@ -1899,7 +1899,7 @@ Two instances which are subclasses of the same abstract class compare equal only
 <code>assign x to (a + b) > (c - d)</code>
 </div>
 
-<div id="functionRef">
+<div id="FunctionRef">
 <h2>Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>main
@@ -1957,7 +1957,7 @@ We hope to remove this requirement in a future version &ndash; to make the synta
 <p>For examples of using lambda in Higher-order Functions, see <a href="LibRef.html#libraryHoFs">Library functions that process Lists <i class="fa">&#xf08e;</i></a></p>
 </div>
 
-<div id="ifExpression">
+<div id="IfExpression">
 <h2>if expression</h2>
 
 <p>An 'if expression' has some similarity with an <b>if statement</b>, but with important differences:</p>
@@ -2022,7 +2022,7 @@ end procedure
 <div id="new">
 <h2><b>new</b></h2>
 <p>A 'new instance' expression is used to create a new instance of a <a href="LibRef.html#StandardDataStructures">library data structure <i class="fa">&#xf08e;</i></a>,
-   or a <a href="#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
+   or a <a href="oopRef.html#class"> user-defined class <i class="fa">&#xf14c;</i></a>, either to assign to a named value, or as part
   of a more complex expression. Example of use from demo program <b>snake &ndash; procedural</b>:</p>
 <code>variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)</code>
 </div>
@@ -2082,14 +2082,13 @@ are passed around in a running program:</p>
  </tr><tr>
   <td>User-defined</td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="oopRef.html#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="oopRef.html#abstractClass"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Other</td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
-<!--  <td><a href="LibRef.html#Func"><el-topic>Function reference</el-topic><br>Func <i class="fa">&#xf08e;</i></a></td> -->
   <td><a href="oopRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   </tr>
@@ -2108,7 +2107,7 @@ are passed around in a running program:</p>
 </ul>
 </div>
 
-<div id="dotSyntax">
+<div id="DotSyntax">
 <h2>Dot syntax</h2>
 <p>Reference to a named value is in many cases made with <b>dot syntax</b>, also referred to as applying a <b>dot method</b>. Here are its uses:</p>
 <ul>
@@ -2214,8 +2213,8 @@ are passed around in a running program:</p>
 <h3 id="ValueDefField" class="no-TOC">'name' field in a let or variable instruction</h3>
  <p>The definition for a variable instruction is most commonly
  a simple name. Less commonly, it may take the form of a deconstruction of a
- <a href="LibRef.html#deconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
- <a href="LibRef.html#deconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
+ <a href="LibRef.html#DeconstructList"><code>List</code> <i class="fa">&#xf08e;</i></a> or
+ <a href="LibRef.html#DeconstructTuple">Tuple <i class="fa">&#xf08e;</i></a>.</p>
 </div>
 <hr>
 <p><b>Procedural programming Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
