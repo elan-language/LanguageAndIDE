@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta1
+// C# with Elan 2.0.0-beta2
 
 static (double, double) bestFitLine(List<Point> points) { // function
   var sumX = points.sumBy(Point p => p.x); // let

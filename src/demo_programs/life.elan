@@ -1,4 +1,4 @@
-# 98a220654bace35ed4b79415a6d000370c9825d3e191014fbeb6f1a00333e1f9 Elan 2.0.0-beta1 valid
+# 90a662c454b679691e95d6ff357300fc373233b65d60735f21ba9cbc9ec3f948 Elan 2.0.0-beta2 valid
 
 main
   variable grid set to createBlockGraphics(white)
@@ -29,7 +29,7 @@ procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
       assign nextGen[x][y] to colour
     end for
   end for
-  call gridRef.set(nextGen)
+  call gridRef.put(nextGen)
 end procedure
 
 function blackOrWhite(random as Float) returns Int
@@ -133,94 +133,94 @@ function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) return
 end function
 
 test test_north
-  assert north((3, 4)) is (3, 3)
-  assert north((39, 0)) is (39, 29)
-  assert north((0, 29)) is (0, 28)
-  assert north((39, 29)) is (39, 28)
+  assert north((3, 4)) evaluates to (3, 3)
+  assert north((39, 0)) evaluates to (39, 29)
+  assert north((0, 29)) evaluates to (0, 28)
+  assert north((39, 29)) evaluates to (39, 28)
 end test
 
 test test_south
-  assert south((3, 4)) is (3, 5)
-  assert south((39, 0)) is (39, 1)
-  assert south((0, 29)) is (0, 0)
-  assert south((39, 29)) is (39, 0)
+  assert south((3, 4)) evaluates to (3, 5)
+  assert south((39, 0)) evaluates to (39, 1)
+  assert south((0, 29)) evaluates to (0, 0)
+  assert south((39, 29)) evaluates to (39, 0)
 end test
 
 test test_east
-  assert east((10, 2)) is (11, 2)
-  assert east((39, 0)) is (0, 0)
-  assert east((0, 1)) is (1, 1)
-  assert east((39, 29)) is (0, 29)
+  assert east((10, 2)) evaluates to (11, 2)
+  assert east((39, 0)) evaluates to (0, 0)
+  assert east((0, 1)) evaluates to (1, 1)
+  assert east((39, 29)) evaluates to (0, 29)
 end test
 
 test test_west
-  assert west((3, 4)) is (2, 4)
-  assert west((39, 0)) is (38, 0)
-  assert west((0, 0)) is (39, 0)
-  assert west((0, 29)) is (39, 29)
+  assert west((3, 4)) evaluates to (2, 4)
+  assert west((39, 0)) evaluates to (38, 0)
+  assert west((0, 0)) evaluates to (39, 0)
+  assert west((0, 29)) evaluates to (39, 29)
 end test
 
 test test_northEast
-  assert northEast((3, 4)) is (4, 3)
-  assert northEast((0, 0)) is (1, 29)
-  assert northEast((39, 0)) is (0, 29)
-  assert northEast((0, 29)) is (1, 28)
-  assert northEast((39, 29)) is (0, 28)
+  assert northEast((3, 4)) evaluates to (4, 3)
+  assert northEast((0, 0)) evaluates to (1, 29)
+  assert northEast((39, 0)) evaluates to (0, 29)
+  assert northEast((0, 29)) evaluates to (1, 28)
+  assert northEast((39, 29)) evaluates to (0, 28)
 end test
 
 test test_southEast
-  assert southEast((3, 4)) is (4, 5)
-  assert southEast((0, 0)) is (1, 1)
-  assert southEast((39, 0)) is (0, 1)
-  assert southEast((0, 29)) is (1, 0)
-  assert southEast((39, 29)) is (0, 0)
+  assert southEast((3, 4)) evaluates to (4, 5)
+  assert southEast((0, 0)) evaluates to (1, 1)
+  assert southEast((39, 0)) evaluates to (0, 1)
+  assert southEast((0, 29)) evaluates to (1, 0)
+  assert southEast((39, 29)) evaluates to (0, 0)
 end test
 
 test test_northWest
-  assert northWest((3, 4)) is (2, 3)
-  assert northWest((0, 0)) is (39, 29)
-  assert northWest((39, 0)) is (38, 29)
-  assert northWest((0, 29)) is (39, 28)
-  assert northWest((39, 29)) is (38, 28)
+  assert northWest((3, 4)) evaluates to (2, 3)
+  assert northWest((0, 0)) evaluates to (39, 29)
+  assert northWest((39, 0)) evaluates to (38, 29)
+  assert northWest((0, 29)) evaluates to (39, 28)
+  assert northWest((39, 29)) evaluates to (38, 28)
 end test
 
 test test_southWest
-  assert southWest((3, 4)) is (2, 5)
-  assert southWest((0, 0)) is (39, 1)
-  assert southWest((39, 0)) is (38, 1)
-  assert southWest((0, 29)) is (39, 0)
-  assert southWest((39, 29)) is (38, 0)
+  assert southWest((3, 4)) evaluates to (2, 5)
+  assert southWest((0, 0)) evaluates to (39, 1)
+  assert southWest((39, 0)) evaluates to (38, 1)
+  assert southWest((0, 29)) evaluates to (39, 0)
+  assert southWest((39, 29)) evaluates to (38, 0)
 end test
 
 test test_blackOrWhite
-  assert blackOrWhite(0) is black
-  assert blackOrWhite(0.499) is black
-  assert blackOrWhite(0.5) is black
-  assert blackOrWhite(0.501) is white
-  assert blackOrWhite(1) is white
+  assert blackOrWhite(0) evaluates to black
+  assert blackOrWhite(0.499) evaluates to black
+  assert blackOrWhite(0.5) evaluates to black
+  assert blackOrWhite(0.501) evaluates to white
+  assert blackOrWhite(1) evaluates to white
 end test
 
 test test_neighbourCells
-  assert neighbourCells(3, 4) is [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
+  assert neighbourCells(3, 4) evaluates to [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
 end test
 
 test test_willLive
-  assert willLive(white, 0) is false
-  assert willLive(white, 1) is false
-  assert willLive(white, 2) is false
-  assert willLive(white, 3) is true
-  assert willLive(white, 4) is false
-  assert willLive(white, 5) is false
-  assert willLive(white, 6) is false
-  assert willLive(white, 7) is false
-  assert willLive(white, 8) is false
-  assert willLive(black, 0) is false
-  assert willLive(black, 1) is false
-  assert willLive(black, 2) is true
-  assert willLive(black, 3) is true
-  assert willLive(black, 4) is false
-  assert willLive(black, 5) is false
-  assert willLive(black, 6) is false
-  assert willLive(black, 7) is false
-  assert willLive(black, 8) is false
+  assert willLive(white, 0) evaluates to false
+  assert willLive(white, 1) evaluates to false
+  assert willLive(white, 2) evaluates to false
+  assert willLive(white, 3) evaluates to true
+  assert willLive(white, 4) evaluates to false
+  assert willLive(white, 5) evaluates to false
+  assert willLive(white, 6) evaluates to false
+  assert willLive(white, 7) evaluates to false
+  assert willLive(white, 8) evaluates to false
+  assert willLive(black, 0) evaluates to false
+  assert willLive(black, 1) evaluates to false
+  assert willLive(black, 2) evaluates to true
+  assert willLive(black, 3) evaluates to true
+  assert willLive(black, 4) evaluates to false
+  assert willLive(black, 5) evaluates to false
+  assert willLive(black, 6) evaluates to false
+  assert willLive(black, 7) evaluates to false
+  assert willLive(black, 8) evaluates to false
 end test

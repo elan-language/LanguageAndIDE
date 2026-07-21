@@ -1,5 +1,5 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertKeyword } from "../../../compiler/elan-keywords";
+import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AssertActualField } from "../fields/assert-actual-field";
 import { ExpressionField } from "../fields/expression-field";
@@ -29,9 +29,13 @@ export class AssertStatement extends SingleLineFrame implements Statement {
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove("assert ");
+    source.remove(`${assertKeyword} `);
     this.actual.parseFrom(source);
-    source.remove(" is ");
+    if (source.isMatch(" is ")) {
+      source.remove(" is ");
+    } else {
+      source.remove(` ${evaluatesKeyword} ${toKeyword} `);
+    }
     this.expected.parseFrom(source);
     source.removeNewLine();
   }
@@ -48,7 +52,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}assert ${this.actual.renderAsElanSource()} is ${this.expected.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${assertKeyword} ${this.actual.renderAsElanSource()} ${evaluatesKeyword} ${toKeyword} ${this.expected.renderAsElanSource()}`;
   }
 
   setOutcome(outcome: AssertOutcome) {

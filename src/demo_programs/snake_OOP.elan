@@ -1,4 +1,4 @@
-# e9e3e692a2e8252349d6266fc2990f1caca51ce3f67ea504a06333e5c8519f51 Elan 2.0.0-beta1 valid
+# ce49478f3514ce8f68f118163c012d07f1d4af8f483db7471b2e5a42fccaa14c Elan 2.0.0-beta2 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -158,11 +158,11 @@ enum Direction up, down, left, right
 test test_snake
   variable snake set to new Snake()
   # bodyCovers
-  assert snake.bodyCovers(new Square(20, 15)) is true
-  assert snake.bodyCovers(new Square(21, 15)) is false
+  assert snake.bodyCovers(new Square(20, 15)) evaluates to true
+  assert snake.bodyCovers(new Square(21, 15)) evaluates to false
   # gameOver, score - can only test test_for default - which is not thorough test
-  assert snake.gameOver() is false
-  assert snake.score() is 0
+  assert snake.gameOver() evaluates to false
+  assert snake.score() evaluates to 0
 end test
 
 test test_apple
@@ -173,18 +173,18 @@ test test_square
   # constructor - not testable as properties are private
   # getAdjacentSquare
   variable sq1 set to new Square(3, 4)
-  assert sq1.getAdjacentSquare(Direction.up) is new Square(3, 3)
-  assert sq1.getAdjacentSquare(Direction.down) is new Square(3, 5)
-  assert sq1.getAdjacentSquare(Direction.left) is new Square(2, 4)
-  assert sq1.getAdjacentSquare(Direction.right) is new Square(4, 4)
+  assert sq1.getAdjacentSquare(Direction.up) evaluates to new Square(3, 3)
+  assert sq1.getAdjacentSquare(Direction.down) evaluates to new Square(3, 5)
+  assert sq1.getAdjacentSquare(Direction.left) evaluates to new Square(2, 4)
+  assert sq1.getAdjacentSquare(Direction.right) evaluates to new Square(4, 4)
   variable sq2 set to new Square(0, 0)
   variable sq3 set to new Square(-1, 0)
-  assert sq2.getAdjacentSquare(Direction.left) is sq3
+  assert sq2.getAdjacentSquare(Direction.left) evaluates to sq3
   # hasHitEdge
-  assert (new Square(0, 0)).hasHitEdge() is false
-  assert (new Square(39, 20)).hasHitEdge() is false
-  assert (new Square(-1, 3)).hasHitEdge() is true
-  assert (new Square(3, -1)).hasHitEdge() is true
-  assert (new Square(40, 3)).hasHitEdge() is true
-  assert (new Square(3, 30)).hasHitEdge() is true
+  assert (new Square(0, 0)).hasHitEdge() evaluates to false
+  assert (new Square(39, 20)).hasHitEdge() evaluates to false
+  assert (new Square(-1, 3)).hasHitEdge() evaluates to true
+  assert (new Square(3, -1)).hasHitEdge() evaluates to true
+  assert (new Square(40, 3)).hasHitEdge() evaluates to true
+  assert (new Square(3, 30)).hasHitEdge() evaluates to true
 end test

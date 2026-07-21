@@ -1,4 +1,4 @@
-# a33e54adb4a39d06322bfdb42ca8f4ef57fd3754929a94dae3df911b6f2e0a79 Elan 2.0.0-beta1 valid
+# 1e2adf958d2aaf3a1b6a6cc18426e61522bf771fd24a46013a3f7654ac64c9f6 Elan 2.0.0-beta2 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
   let sumX be points.sumBy(lambda p as Point => p.x)
@@ -36,13 +36,13 @@ test test_bestFit
   let a_b be bestFitLine(l1)
   let a be a_b.item_0
   let b be a_b.item_1
-  assert a.round(3) is 0.766
-  assert b.round(3) is 1.093
+  assert a.round(3) evaluates to 0.766
+  assert b.round(3) evaluates to 1.093
 end test
 
 test test_bestFit_empty
   let l1 be new List<of Point>()
   let a_b be bestFitLine(l1)
   # NaN means 'Not A Number"
-  assert a_b.toString() is "(NaN, NaN)"
+  assert a_b.toString() evaluates to "(NaN, NaN)"
 end test

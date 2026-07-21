@@ -218,15 +218,15 @@ Its type is <code>Float</code>.
 test test_floor
   variable p set to pi
   variable mp set to -pi
-  assert p.floor() is 3
-  assert mp.floor() is -4
-  assert p.ceiling() is 4
-  assert mp.ceiling() is -3
-  assert p.round(3) is 3.142
-  assert mp.round(2) is -3.14
-  assert sqrt(-p).isNaN() is true
+  assert p.floor() evaluates to 3
+  assert mp.floor() evaluates to -4
+  assert p.ceiling() evaluates to 4
+  assert mp.ceiling() evaluates to -3
+  assert p.round(3) evaluates to 3.142
+  assert mp.round(2) evaluates to -3.14
+  assert sqrt(-p).isNaN() evaluates to true
   variable q set to divAsInt(1, 0).floor()
-  assert q.isInfinite() is true
+  assert q.isInfinite() evaluates to true
 end test
 </p>
 <hr>
@@ -570,18 +570,18 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
-  <td>see <a href="#List_procedures">Procedure methods on a List <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListProcedures">Procedure methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#DictionaryProcedures">Procedure methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
-  <td>see <a href="#List_functions">Function dot methods on a List <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Set_functions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Stack_functions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Queue_functions">Function dot methods on a Queue <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListFunctions">Function dot methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#DictionaryFunctions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#SetFunctions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#StackFunctions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#QueueFunctions">Function dot methods on a Queue <i class="fa">&#xf14c;</i></a></td>
  </tr>
 </table>
 
@@ -649,7 +649,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
-<h3 class="no-TOC" id="List_procedures">Procedure methods on a <code>List</code></h3>
+<h3 class="no-TOC" id="ListProcedures">Procedure methods on a <code>List</code></h3>
 <p>Where an argument provides a new value for an item in a List, that value must be of the same type as defined for the List's items.</p>
 <table class="tableMethod">
  <tr>
@@ -698,14 +698,14 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr>
 </table>
 
-<h3 class="no-TOC" id="List_functions">Function dot methods on a <code>List</code></h3>
+<h3 class="no-TOC" id="ListFunctions">Function dot methods on a <code>List</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
   <th>arguments</th>
   <th>return<br>type</th>
   <th>returns</th>
- </tr><tr id="asSet_List">
+ </tr><tr id="asSet">
   <td><el-method>asSet</el-method></td>
   <td>(none)</td>
   <td><code>HashSet</code></td>
@@ -727,7 +727,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
- </tr><tr id="head_List">
+ </tr><tr id="head">
   <td><el-method>head</el-method></td>
   <td>(none)</td>
   <td><code>List</code> item's type</td>
@@ -840,8 +840,8 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the first item equal to the given item removed</td>
- </tr><tr id="withSet_List">
-  <td><el-method>withSet</el-method></td>
+ </tr><tr id="withPut_List">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List with the item replacing that at the given index</td>
@@ -905,13 +905,13 @@ end main
 
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
   let d be new Dictionary&lt;of String, Int&gt;()
-  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
 </div>
 </div></div>
 
-<h3 class="no-TOC" id="Dictionary_procedures">Procedure method on a <code>Dictionary</code></h3>
+<h3 class="no-TOC" id="DictionaryProcedures">Procedure method on a <code>Dictionary</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -924,7 +924,7 @@ end function
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Dictionary_functions">Function dot methods on a <code>Dictionary</code></h3>
+<h3 class="no-TOC" id="DictionaryFunctions">Function dot methods on a <code>Dictionary</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -936,7 +936,7 @@ end function
   <td><code>Dictionary</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if dictionary and argument are identical<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="hasKey_Dictionary">
+ </tr><tr id="hasKey">
   <td><el-method>hasKey</el-method></td>
   <td>item of Dictionary key's type</td>
   <td><code>Boolean</code></td>
@@ -961,8 +961,8 @@ end function
   <td>(none)</td>
   <td><code>List</code></td>
   <td>a List containing the values</td>
-</tr><tr id="withSet_Dictionary">
-  <td><el-method>withSet</el-method></td>
+</tr><tr id="withPut_Dictionary">
+  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
@@ -1011,7 +1011,7 @@ end main
 </tr>
 </table>
 
-<h3 class="no-TOC" id="Set_functions">Function dot methods on a <code>HashSet</code></h3>
+<h3 class="no-TOC" id="SetFunctions">Function dot methods on a <code>HashSet</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1116,7 +1116,7 @@ end main
  </li>
 </ul>
 
-<h3 class="no-TOC" id="Stack_procedure">Procedure method on a <code>Stack</code></h3>
+<h3 class="no-TOC" id="StackProcedure">Procedure method on a <code>Stack</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1129,7 +1129,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Stack_functions">Function dot methods on a <code>Stack</code></h3>
+<h3 class="no-TOC" id="StackFunctions">Function dot methods on a <code>Stack</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1180,7 +1180,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Queue_procedure">Procedure method on a <code>Queue</code></h3>
+<h3 class="no-TOC" id="QueueProcedure">Procedure method on a <code>Queue</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1193,7 +1193,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Queue_functions">Function dot methods on a <code>Queue</code></h3>
+<h3 class="no-TOC" id="QueueFunctions">Function dot methods on a <code>Queue</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1334,7 +1334,7 @@ end function
 of differing types held together and referenced by a single identifier.</p>
 <p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
-<p>Tuples are referred to as 2-Tuples, 3-Tuples, etc. according to the number of values they hold.</p>
+<p>Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
 <p>A <b>function</b> may return a <b>Tuple</b>.</p>
 <p>A Tuple differs from a List in that:</p>
@@ -1357,10 +1357,9 @@ of differing types held together and referenced by a single identifier.</p>
 <code>variable t set to (3, "apple", true)</code>
 
 <h3 class="no-TOC" id="deconstructTuple">Accessing items in a Tuple</h3>
-<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and its special properties <code>item_</code>N, thus:</p>
+<p id="item_N">The items in a Tuple may be individually addressed by a dot reference and the special properties <code>item_</code>N, thus:</p>
 <table class="tablePlain">
-<tr>
- <td>
+<tr><td>
 <codeblock>main
   variable t set to (3, "apple", true)
   print(t)
@@ -1372,10 +1371,10 @@ end main
  </td>
  <td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
  <td><br><br>(3, apple, true)<br>3<br>apple<br>true</td>
- </tr>
+</tr>
 </table>
 
-<p>And where p1 and p2 represent points each with 2-Tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
+<p>And where p1 and p2 represent points each with 2-tuples containing two <code>Float</code> values, this <b>function</b> returns the distance between them:</p>
 <codeblock>function distanceBetween(p1 as (Float, Float), p2 as (Float, Float)) returns Float
   return sqrt(pow(p2.item_0 - p1.item_0, 2) + pow(p2.item_1 - p1.item_1, 2))
 end function
@@ -1450,7 +1449,7 @@ end main
 So the top left corner of the display is at (-100,75).</p>
 <p>A new turtle's default starting position is at (0,0) facing upwards (<code>heading</code> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
 <p>You can move and turn a turtle, causing lines to be drawn, whether or not the turtle is showing.</p>
-<h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
+<h3 class="no-TOC" id="TurtleProcedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1508,7 +1507,7 @@ So the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
-<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
+<h3 class="no-TOC" id="TurtleProperties">Properties of a Turtle</h3>
 <p>The current location and heading of the turtle may be read using the properties
   <code>x</code>, <code>y</code>, and <code>heading</code>.</p>
 <table class="tableMethod">
@@ -1619,6 +1618,7 @@ Only <code>fillColour</code> can be specified as <code>transparent</code>.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <code>VectorGraphic</code> instance.
 Later shapes are positioned in front of earlier ones.</p>
 
+<div id="asSVG"></div>
 <h3 class="no-TOC">Function dot methods on Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
@@ -1660,7 +1660,7 @@ Later shapes are positioned in front of earlier ones.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="VG_properties">Properties of Vector graphic shapes</h3>
+<h3 class="no-TOC" id="VGProperties">Properties of Vector graphic shapes</h3>
 <p>This table lists the properties of the Vector graphic shapes and their default values,
 together with the <b>procedure</b> and <b>function</b> methods provided to alter their values in a given instance.</p>
 <table class="tableProperty">
@@ -1924,7 +1924,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <p>Avoid applying <el-method>nextGen</el-method> more than once on the same <code>Random</code> instance, because it will return the same values.</p>
 <p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using <code>Random</code> without so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
 
-<h3 class="no-TOC" id="Random_procedures">Function  method for random seed</h3>
+<h3 class="no-TOC" id="RandomProcedures">Function  method for random seed</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1937,7 +1937,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Random_functions">Function dot methods on a <code>Random</code></h3>
+<h3 class="no-TOC" id="RandomFunctions">Function dot methods on a <code>Random</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2008,7 +2008,7 @@ end function
  </tr><tr id="getKeyWithModifier">
   <td><el-method>getKeyWithModifier</el-method></td>
   <td>(none)</td>
-  <td>2-Tuple:<br>(<code>String</code>, <code>String</code>)</td>
+  <td>2-tuple:<br>(<code>String</code>, <code>String</code>)</td>
   <td>returns the last key combination pressed on the keyboard:<br>
       the key pressed and the modifier key's name (if also pressed)</td>
  </tr><tr id="getNumericKey">
@@ -2084,7 +2084,7 @@ end main
  <li><el-method>getKey</el-method> returns a string containing the keyboard character last pressed, possibly shifted, e.g. "z" or "@".</li>
  <li><el-method>getNumericKey</el-method> returns a string containing either a digit ("0".."9") or, if the last key pressed was not numeric, then "-1".
  A digit will be returned if the key pressed was either from the main keyboard, or from the numeric keypad when <b>NumLock</b> is on.</li>
- <li><el-method>getKeyWithModifier</el-method> returns a 2-Tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
+ <li><el-method>getKeyWithModifier</el-method> returns a 2-tuple of two strings: the key last pressed and the name of <i>one</i> modifier key <code>"Shift"</code>,
   <code>"Ctrl"</code> or <code>"Alt"</code> if simultaneously pressed.
   If no modifier had been pressed, the Tuple's second item will be the empty string. Note that a few such modified keys will be acted on by the browser and may not then be passed to your program.</li>
  <li>Non-printable keys will also be returned as strings, e.g. <code>"Home"</code>, <code>"End"</code>, <code>"Delete"</code>, <code>"Tab"</code>,
@@ -2280,7 +2280,7 @@ end main
 </codeblock>
    <p>The usual &lt;img&gt; tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
- <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures <i class="fa">&#xf14c;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
+ <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VGProperties">vector graphic procedures <i class="fa">&#xf14c;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>main
   variable sharkUrl set to "https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"
   variable sharkVG set to new ImageVG(sharkUrl)
@@ -2492,13 +2492,13 @@ end main
   <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
-  <td id="withSet"><el-method>withSet</el-method></td>
+  <td id="withPut"><el-method>withPut</el-method> note 5.</td>
   <td></td>
   <td></td>
   <td></td>
   <td></td>
-  <td><a href="#withSet_List"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#withSet_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_List"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#withPut_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2533,6 +2533,7 @@ end main
  <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
  <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
+<li><el-method>withPut</el-method> supersedes the deprecated <el-method>withSet</el-method></li>
 </ol>
 
 <h1 id="LibrayProcedures">Library procedures</h1>
@@ -2623,7 +2624,7 @@ end main
 </codeblock>
  </td>
  <td>&#x27f6;<br><br><br>&#x27f6;<br>&#x27f6;<br><br>&#x27f6;<br>&#x27f6;</td>
- <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="#InterpolatedString">interpolated strings <i class="fa">&#xf14c;</i></a>]<br>[defining a <a href="LangRefef.html#Tuple">2-Tuple <i class="fa">&#xf08e;</i></a>]<br>true<br>42</td>
+ <td>Hello<br><br><br>12<br>3 times 4 equals 12 [using <a href="#InterpolatedString">interpolated strings <i class="fa">&#xf14c;</i></a>]<br>[defining a <a href="LangRefef.html#Tuple">2-tuple <i class="fa">&#xf08e;</i></a>]<br>true<br>42</td>
  </tr>
 </table>
 <hr>
@@ -2662,9 +2663,9 @@ end function
 
 <p>Procedures applicable to standard Reference types are linked from:</p>
 <ul>
- <li><a href="#List_procedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></li>
- <li><a href="#Dictionary_procedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
- <li><a href="#Turtle_procedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#ListProcedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#DictionaryProcedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#TurtleProcedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf14c;</i></a></li>
 </ul>
 <p>User-defined Classes may have procedures that can be applied to their Class instances.
 
@@ -2702,7 +2703,7 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using standalone functions</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-Tuple returned by <el-method>parseAsInt</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-tuple returned by <el-method>parseAsInt</el-method>:</p>
   <code>variable success set to parseAsInt(s).item_0</code>
   <code>variable value set to parseAsInt(s).item_1</code>
 <p>Always check the <code>Boolean</code> (<code>success</code>) before using the returned value (<code>value</code>) in case the latter is zero only because the parse was unsuccessful.</p>
@@ -2710,13 +2711,13 @@ end function
 <hr>
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
 <codeblock>test test_parse
-  assert parseAsInt("31") is (true, 31)
-  assert parseAsInt("0") is (true, 0)
-  assert parseAsInt("thirty one") is (false, 0)
-  assert parseAsInt("3.1") is (false, 0)
-  assert parseAsFloat("31") is (true, 31)
-  assert parseAsFloat("0") is (true, 0)
-  assert parseAsFloat("3.1") is (true, 3.1)
+  assert parseAsInt("31") evaluates to (true, 31)
+  assert parseAsInt("0") evaluates to (true, 0)
+  assert parseAsInt("thirty one") evaluates to (false, 0)
+  assert parseAsInt("3.1") evaluates to (false, 0)
+  assert parseAsFloat("31") evaluates to (true, 31)
+  assert parseAsFloat("0") evaluates to (true, 0)
+  assert parseAsFloat("3.1") evaluates to (true, 3.1)
 end test
 </codeblock>
 <h5 class="no-TOC">Notes</h5>
@@ -2766,21 +2767,21 @@ They all return a value of type <code>Float</code>, except for <el-method>divAsI
 
 <p>Examples of some maths functions and constants being tested:</p>
 <codeblock>test test_maths
-  assert pi is 3.141592653589793
-  assert abs(-3.7) is 3.7
-  assert pow(2, 10) is 1024
-  assert sqrt(2).round(3) is 1.414
-  assert asin(0.5).round(3) is 0.524
-  assert acos(0.5).round(3) is 1.047
-  assert atan(1).round(2) is 0.79
-  assert sin(pi/6).round(2) is 0.5
-  assert cos(pi/4).round(3) is 0.707
-  assert tan(pi/4).round(2) is 1
-  assert exp(2).round(3) is 7.389
-  assert logE(7.389).round(2) is 2
-  assert log10(1000) is 3
-  assert log2(65536) is 16
-  assert log2(0x10000) is 16
+  assert pi evaluates to 3.141592653589793
+  assert abs(-3.7) evaluates to 3.7
+  assert pow(2, 10) evaluates to 1024
+  assert sqrt(2).round(3) evaluates to 1.414
+  assert asin(0.5).round(3) evaluates to 0.524
+  assert acos(0.5).round(3) evaluates to 1.047
+  assert atan(1).round(2) evaluates to 0.79
+  assert sin(pi/6).round(2) evaluates to 0.5
+  assert cos(pi/4).round(3) evaluates to 0.707
+  assert tan(pi/4).round(2) evaluates to 1
+  assert exp(2).round(3) evaluates to 7.389
+  assert logE(7.389).round(2) evaluates to 2
+  assert log10(1000) evaluates to 3
+  assert log2(65536) evaluates to 16
+  assert log2(0x10000) evaluates to 16
 end test
 </codeblock>
 
@@ -2833,21 +2834,21 @@ end test
 
 <codeblock>test test_bitwise
   variable a set to 13
-  assert a is 0xd
-  assert a is 0b1101
-  assert a.asBinary() is "1101"
+  assert a evaluates to 0xd
+  assert a evaluates to 0b1101
+  assert a.asBinary() evaluates to "1101"
   variable b set to 30
-  assert b is 0b11110
-  assert bitAnd(a, b) is 0b1100
+  assert b evaluates to 0b11110
+  assert bitAnd(a, b) evaluates to 0b1100
   variable aob set to bitOr(a, b)
-  assert aob is 0b11111
+  assert aob evaluates to 0b11111
   variable axb set to bitXor(a, b)
-  assert axb is 0b10011
+  assert axb evaluates to 0b10011
   variable nota set to bitNot(a)
-  assert nota is -14
+  assert nota evaluates to -14
   variable aL set to bitShiftL(a, 2)
-  assert aL is 0b110100
-  assert bitShiftR(a, 2) is 0b11
+  assert aL evaluates to 0b110100
+  assert bitShiftR(a, 2) evaluates to 0b11
 end test
 </codeblock>
 
@@ -2866,8 +2867,8 @@ end test
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to /^[a-z]*$/
-  assert s1.matchesRegExp(r) is true
-  assert s2.matchesRegExp(r) is false
+  assert s1.matchesRegExp(r) evaluates to true
+  assert s2.matchesRegExp(r) evaluates to false
 end test
 </codeblock>
 
@@ -2876,8 +2877,8 @@ end test
   variable s1 set to "hello"
   variable s2 set to "World"
   variable r set to "^[a-z]*$".asRegExp()
-  assert s1.matchesRegExp(r) is true
-  assert s2.matchesRegExp(r) is false
+  assert s1.matchesRegExp(r) evaluates to true
+  assert s2.matchesRegExp(r) evaluates to false
 end test
 </codeblock>
 
@@ -3321,7 +3322,7 @@ end main
 <hr>
 </div></div>
 
-<h2 id="AsRef">Passing a function as a reference</h2>
+<h2 id="functionRef">Passing a function as a reference</h2>
 <p>To use a Higher-order Function (HoF), you have to pass in a reference to a <b>function</b>.
  This can be either a <code>lambda</code> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
@@ -3339,7 +3340,7 @@ function passedMathsTest(p as Pupil) returns Boolean
 end function
 </codeblock>
 
-<h1 id="systemConstants">System constants</h1>
+<h1 id="SystemConstants">System constants</h1>
 
 <p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <b>constant</b>  <i class="fa">&#xf08e;</i></a>,
  in that they are mutable named values, though it would be poor practice to change them.</p>

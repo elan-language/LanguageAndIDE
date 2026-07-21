@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta1
+' VB.NET with Elan 2.0.0-beta2
 
 <TestClass Class Test_Map_Filter_Reduce
  <TestMethod> Sub test_Map_Filter_Reduce()

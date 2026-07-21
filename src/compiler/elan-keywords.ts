@@ -15,6 +15,7 @@ export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";
 export const enumKeyword = "enum";
+export const evaluatesKeyword = "evaluates";
 export const forKeyword = "for";
 export const fromKeyword = "from";
 export const functionKeyword = "function";
@@ -37,6 +38,7 @@ export const printKeyword = "print";
 export const privateKeyword = "private";
 export const procedureKeyword = "procedure";
 export const propertyKeyword = "property";
+export const powKeyword = "pow";
 export const returnKeyword = "return";
 export const returnsKeyword = "returns";
 export const setKeyword = "set";
@@ -71,14 +73,17 @@ const elanKeywords: string[] = [
   andKeyword,
   asKeyword,
   assertKeyword,
+  assignKeyword,
   beKeyword,
   callKeyword,
   catchKeyword,
   classKeyword,
   constantKeyword,
   constructorKeyword,
+  copyKeyword,
   elifKeyword,
   elseKeyword,
+  evaluatesKeyword,
   endKeyword,
   enumKeyword,
   forKeyword,
@@ -103,6 +108,7 @@ const elanKeywords: string[] = [
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
+  powKeyword,
   assignKeyword,
   returnKeyword,
   returnsKeyword,

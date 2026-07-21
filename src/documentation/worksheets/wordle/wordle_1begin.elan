@@ -71,7 +71,7 @@ procedure colourAttempt(attemptNo as Int, grid as Array2D<of String>, target as 
     end if
   end for
   if marks.equals("22222") then
-    call solvedRef.set(true)
+    call solvedRef.put(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
 end procedure
@@ -125,36 +125,36 @@ end function
 
 [ghosted] test test_markAttempt
   # Default - no matches
-  assert markAttempt("ARISE", "CLOUD") is "00000"
+  assert markAttempt("ARISE", "CLOUD") evaluates to "00000"
   # Only greens
-  assert markAttempt("BANJO", "BANJO") is "22222"
-  assert markAttempt("ABIDE", "AFOOT") is "20000"
-  assert markAttempt("AHEAD", "CLOUD") is "00002"
+  assert markAttempt("BANJO", "BANJO") evaluates to "22222"
+  assert markAttempt("ABIDE", "AFOOT") evaluates to "20000"
+  assert markAttempt("AHEAD", "CLOUD") evaluates to "00002"
   # Only yellows
-  assert markAttempt("RECUT", "TRUCE") is "11111"
-  assert markAttempt("ASKEW", "CHINA") is "10000"
-  assert markAttempt("CHINA", "ASKEW") is "00001"
-  assert markAttempt("WBCDE", "VWXYZ") is "10000"
-  assert markAttempt("PUPPY", "APART") is "10000"
-  assert markAttempt("APART", "PUPPY") is "01000"
-  assert markAttempt("DOTTY", "TAINT") is "00110"
-  assert markAttempt("TAINT", "DOTTY") is "10001"
+  assert markAttempt("RECUT", "TRUCE") evaluates to "11111"
+  assert markAttempt("ASKEW", "CHINA") evaluates to "10000"
+  assert markAttempt("CHINA", "ASKEW") evaluates to "00001"
+  assert markAttempt("WBCDE", "VWXYZ") evaluates to "10000"
+  assert markAttempt("PUPPY", "APART") evaluates to "10000"
+  assert markAttempt("APART", "PUPPY") evaluates to "01000"
+  assert markAttempt("DOTTY", "TAINT") evaluates to "00110"
+  assert markAttempt("TAINT", "DOTTY") evaluates to "10001"
   # Mixed
-  assert markAttempt("ARISE", "PLANK") is "10000"
-  assert markAttempt("JUNTA", "PLANK") is "00101"
-  assert markAttempt("KNACK", "PLANK") is "01202"
-  assert markAttempt("FLANK", "PLANK") is "02222"
-  assert markAttempt("AORTA", "RATTY") is "10120"
-  assert markAttempt("BATTY", "RATTY") is "02222"
-  assert markAttempt("TATTY", "RATTY") is "02222"
-  assert markAttempt("YATCH", "RATTY") is "12200"
-  assert markAttempt("RATTY", "AORTA") is "11020"
+  assert markAttempt("ARISE", "PLANK") evaluates to "10000"
+  assert markAttempt("JUNTA", "PLANK") evaluates to "00101"
+  assert markAttempt("KNACK", "PLANK") evaluates to "01202"
+  assert markAttempt("FLANK", "PLANK") evaluates to "02222"
+  assert markAttempt("AORTA", "RATTY") evaluates to "10120"
+  assert markAttempt("BATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("TATTY", "RATTY") evaluates to "02222"
+  assert markAttempt("YATCH", "RATTY") evaluates to "12200"
+  assert markAttempt("RATTY", "AORTA") evaluates to "11020"
 end test
 
 [ghosted] test test_setChar
-  assert setChar("00000", 0, "1") is "10000"
-  assert setChar("00000", 1, "1") is "01000"
-  assert setChar("00000", 2, "1") is "00100"
-  assert setChar("00000", 3, "2") is "00020"
-  assert setChar("00000", 4, "2") is "00002"
+  assert setChar("00000", 0, "1") evaluates to "10000"
+  assert setChar("00000", 1, "1") evaluates to "01000"
+  assert setChar("00000", 2, "1") evaluates to "00100"
+  assert setChar("00000", 3, "2") evaluates to "00020"
+  assert setChar("00000", 4, "2") evaluates to "00002"
 end test

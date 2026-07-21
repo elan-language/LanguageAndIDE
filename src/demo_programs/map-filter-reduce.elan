@@ -1,12 +1,12 @@
-# 37977480a1d15d0810310ac43d145c01a86a3f14ccef20eb782d5cb350732718 Elan 2.0.0-beta1 valid
+# d0aab945b401c7dbdb857084b2a9dd234cdb2ce41be2309221d50a979024b670 Elan 2.0.0-beta2 valid
 
 test test_Map_Filter_Reduce
   let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
-  assert nums.filter(lessThan5) is [2.22, 2.5]
-  assert nums.map(cube) is [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
-  assert nums.reduce(1.0, product).floor() is 81480107
-  assert nums.filter(lessThan5).map(inverse) is [0.45, 0.4]
-  assert nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat) is "results: 0.45|0.4|"
+  assert nums.filter(lessThan5) evaluates to [2.22, 2.5]
+  assert nums.map(cube) evaluates to [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
+  assert nums.reduce(1.0, product).floor() evaluates to 81480107
+  assert nums.filter(lessThan5).map(inverse) evaluates to [0.45, 0.4]
+  assert nums.filter(lessThan5).map(inverse).map(asString).reduce("results: ", concat) evaluates to "results: 0.45|0.4|"
 end test
 
 function lessThan5(n as Float) returns Boolean

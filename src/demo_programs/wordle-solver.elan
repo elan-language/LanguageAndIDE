@@ -1,4 +1,4 @@
-# 65ffcbebf5fa4d3194c3023bc5015acb7afa1f34c939097874fa82afcccda3a8 Elan 2.0.0-beta1 valid
+# 6d3da83ae9ac9485f12fd0fd11263ed81bb8b55c2307d3782d9b68f488bb2283 Elan 2.0.0-beta2 valid
 
 # Wordle Solver: in 'hard' mode (every attempt must be a valid possible answer)
 # Works only for the 2,309 words that may be set by the official online Wordle
@@ -81,7 +81,7 @@ function incrementCount(d as Dictionary<of String, Int>, possAnswer as String, a
   let mark be markAttempt(attempt, possAnswer)
   let keys be d.keys()
   let count be if_(keys.contains(mark), d[mark], 0)
-  return d.withSet(mark, count + 1)
+  return d.withPut(mark, count + 1)
 end function
 
 function allRemainingWordCounts(possAnswers as List<of String>) returns List<of WordCount>
@@ -124,135 +124,135 @@ test test_betterOf
   let b2 be new WordCount("B", 2)
   let a3 be new WordCount("A", 3)
   let a2 be new WordCount("A", 2)
-  assert betterOf(a3, b2, possAnswers) is b2
-  assert betterOf(b2, a3, possAnswers) is b2
-  assert betterOf(b2, a2, possAnswers) is b2
-  assert betterOf(a2, b2, possAnswers) is a2
+  assert betterOf(a3, b2, possAnswers) evaluates to b2
+  assert betterOf(b2, a3, possAnswers) evaluates to b2
+  assert betterOf(b2, a2, possAnswers) evaluates to b2
+  assert betterOf(a2, b2, possAnswers) evaluates to a2
   let possAnswers2 be ["B"]
-  assert betterOf(a2, b2, possAnswers2) is b2
+  assert betterOf(a2, b2, possAnswers2) evaluates to b2
   let possAnswers3 be ["B", "A"]
-  assert betterOf(a2, b2, possAnswers3) is b2
-  assert betterOf(b2, a2, possAnswers3) is a2
+  assert betterOf(a2, b2, possAnswers3) evaluates to b2
+  assert betterOf(b2, a2, possAnswers3) evaluates to a2
 end test
 
 test test_bestAttempt
   let possAnswers be ["ABCDE", "ABBBB", "EDCBA"]
-  assert bestAttempt(possAnswers) is "EDCBA"
+  assert bestAttempt(possAnswers) evaluates to "EDCBA"
   let possAnswers2 be ["ABCDE", "ABBBB", "BCDEA"]
-  assert bestAttempt(possAnswers2) is "BCDEA"
+  assert bestAttempt(possAnswers2) evaluates to "BCDEA"
 end test
 
 test test_Wordcount
   let wc be new WordCount("ABCDE", 3)
-  assert wc.word is "ABCDE"
-  assert wc.count is 3
-  assert wc.toString() is "ABCDE 3"
+  assert wc.word evaluates to "ABCDE"
+  assert wc.count evaluates to 3
+  assert wc.toString() evaluates to "ABCDE 3"
 end test
 
 test test_isGreen
-  assert isGreen("ABCDE", "A____", 0) is true
-  assert isGreen("ABCDE", "____E", 4) is true
-  assert isGreen("ABCDE", "_A___", 1) is false
-  assert isGreen("BABBB", "B____", 1) is false
+  assert isGreen("ABCDE", "A____", 0) evaluates to true
+  assert isGreen("ABCDE", "____E", 4) evaluates to true
+  assert isGreen("ABCDE", "_A___", 1) evaluates to false
+  assert isGreen("BABBB", "B____", 1) evaluates to false
 end test
 
 test test_setChar
-  assert setChar("ABCDE", 0, "_") is "_BCDE"
-  assert setChar("ABCDE", 4, "_") is "ABCD_"
+  assert setChar("ABCDE", 0, "_") evaluates to "_BCDE"
+  assert setChar("ABCDE", 4, "_") evaluates to "ABCD_"
 end test
 
 test test_setAttemptIfGreen
-  assert setAttemptIfGreen("ABCDE", "ABCDE", 0) is "*BCDE"
-  assert setAttemptIfGreen("ABCDE", "ABCDE", 4) is "ABCD*"
-  assert setAttemptIfGreen("BBCDE", "ABCDE", 0) is "BBCDE"
-  assert setAttemptIfGreen("ABCDE", "AACDE", 0) is "*BCDE"
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 0) evaluates to "*BCDE"
+  assert setAttemptIfGreen("ABCDE", "ABCDE", 4) evaluates to "ABCD*"
+  assert setAttemptIfGreen("BBCDE", "ABCDE", 0) evaluates to "BBCDE"
+  assert setAttemptIfGreen("ABCDE", "AACDE", 0) evaluates to "*BCDE"
 end test
 
 test test_setTargetIfGreen
-  assert setTargetIfGreen("ABCDE", "ABCDE", 0) is ".BCDE"
-  assert setTargetIfGreen("ABCDE", "ABCDE", 4) is "ABCD."
-  assert setTargetIfGreen("BBCDE", "ABCDE", 0) is "ABCDE"
-  assert setTargetIfGreen("ABCDE", "AACDE", 0) is ".ACDE"
+  assert setTargetIfGreen("ABCDE", "ABCDE", 0) evaluates to ".BCDE"
+  assert setTargetIfGreen("ABCDE", "ABCDE", 4) evaluates to "ABCD."
+  assert setTargetIfGreen("BBCDE", "ABCDE", 0) evaluates to "ABCDE"
+  assert setTargetIfGreen("ABCDE", "AACDE", 0) evaluates to ".ACDE"
 end test
 
 test test_evaluateGreens
-  assert evaluateGreens("ABCDE", "AXXXX") is ["*BCDE", ".XXXX"]
-  assert evaluateGreens("ABCDE", "XXXXE") is ["ABCD*", "XXXX."]
-  assert evaluateGreens("ABCDE", "ABCDE") is ["*****", "....."]
-  assert evaluateGreens("AACDE", "AXXXX") is ["*ACDE", ".XXXX"]
-  assert evaluateGreens("ABCDE", "AAXXX") is ["*BCDE", ".AXXX"]
+  assert evaluateGreens("ABCDE", "AXXXX") evaluates to ["*BCDE", ".XXXX"]
+  assert evaluateGreens("ABCDE", "XXXXE") evaluates to ["ABCD*", "XXXX."]
+  assert evaluateGreens("ABCDE", "ABCDE") evaluates to ["*****", "....."]
+  assert evaluateGreens("AACDE", "AXXXX") evaluates to ["*ACDE", ".XXXX"]
+  assert evaluateGreens("ABCDE", "AAXXX") evaluates to ["*BCDE", ".AXXX"]
 end test
 
 test test_isYellow
-  assert isYellow("ABCDE", "____A", 0) is true
-  assert isYellow("ABCDE", "____A", 4) is false
-  assert isYellow("ABCDE", "___AA", 0) is true
-  assert isYellow("AACDE", "_A___", 1) is true
-  assert isYellow("AACDE", "__A__", 1) is true
+  assert isYellow("ABCDE", "____A", 0) evaluates to true
+  assert isYellow("ABCDE", "____A", 4) evaluates to false
+  assert isYellow("ABCDE", "___AA", 0) evaluates to true
+  assert isYellow("AACDE", "_A___", 1) evaluates to true
+  assert isYellow("AACDE", "__A__", 1) evaluates to true
 end test
 
 test test_setAttemptIfYellow
-  assert setAttemptIfYellow("ABCDE", "EABCD", 0) is "+BCDE"
-  assert setAttemptIfYellow("ABCDE", "EABCD", 4) is "ABCD+"
-  assert setAttemptIfYellow("ABCDE", "BAAAA", 0) is "+BCDE"
-  assert setAttemptIfYellow("AAAAB", "EABBB", 4) is "AAAA+"
+  assert setAttemptIfYellow("ABCDE", "EABCD", 0) evaluates to "+BCDE"
+  assert setAttemptIfYellow("ABCDE", "EABCD", 4) evaluates to "ABCD+"
+  assert setAttemptIfYellow("ABCDE", "BAAAA", 0) evaluates to "+BCDE"
+  assert setAttemptIfYellow("AAAAB", "EABBB", 4) evaluates to "AAAA+"
 end test
 
 test test_isAlreadyMarkedGreen
-  assert isAlreadyMarkedGreen("AB*DE", 2) is true
-  assert isAlreadyMarkedGreen("AB*DE", 0) is false
-  assert isAlreadyMarkedGreen("AB*DE", 4) is false
-  assert isAlreadyMarkedGreen("*BCD*", 2) is false
-  assert isAlreadyMarkedGreen("*BCD*", 0) is true
-  assert isAlreadyMarkedGreen("*BCD*", 4) is true
+  assert isAlreadyMarkedGreen("AB*DE", 2) evaluates to true
+  assert isAlreadyMarkedGreen("AB*DE", 0) evaluates to false
+  assert isAlreadyMarkedGreen("AB*DE", 4) evaluates to false
+  assert isAlreadyMarkedGreen("*BCD*", 2) evaluates to false
+  assert isAlreadyMarkedGreen("*BCD*", 0) evaluates to true
+  assert isAlreadyMarkedGreen("*BCD*", 4) evaluates to true
 end test
 
 test test_setTargetIfYellow
-  assert setTargetIfYellow("ABCDE", "EABCD", 0) is "E.BCD"
-  assert setTargetIfYellow("ABCDE", "EABCD", 4) is ".ABCD"
-  assert setTargetIfYellow("ABCDE", "BAAAA", 0) is "B.AAA"
-  assert setTargetIfYellow("AAAAB", "EABEA", 4) is "EA.EA"
-  assert setTargetIfYellow("AAAAB", "EABBB", 4) is "EA.BB"
-  assert setTargetIfYellow("*BCDE", "*BCDA", 4) is "*BCDA"
+  assert setTargetIfYellow("ABCDE", "EABCD", 0) evaluates to "E.BCD"
+  assert setTargetIfYellow("ABCDE", "EABCD", 4) evaluates to ".ABCD"
+  assert setTargetIfYellow("ABCDE", "BAAAA", 0) evaluates to "B.AAA"
+  assert setTargetIfYellow("AAAAB", "EABEA", 4) evaluates to "EA.EA"
+  assert setTargetIfYellow("AAAAB", "EABBB", 4) evaluates to "EA.BB"
+  assert setTargetIfYellow("*BCDE", "*BCDA", 4) evaluates to "*BCDA"
 end test
 
 test test_evaluateYellows
-  assert evaluateYellows("ABCDE", "XAXXX") is ["+____", "X.XXX"]
-  assert evaluateYellows("ABCDE", "XXXXA") is ["+____", "XXXX."]
-  assert evaluateYellows("ABCDE", "XXXXE") is ["____+", "XXXX."]
-  assert evaluateYellows("ABCDE", "XAAXX") is ["+____", "X.AXX"]
-  assert evaluateYellows("AACDE", "XAXXX") is ["+____", "X.XXX"]
-  assert evaluateYellows("ABCDE", "BCDEA") is ["+++++", "....."]
+  assert evaluateYellows("ABCDE", "XAXXX") evaluates to ["+____", "X.XXX"]
+  assert evaluateYellows("ABCDE", "XXXXA") evaluates to ["+____", "XXXX."]
+  assert evaluateYellows("ABCDE", "XXXXE") evaluates to ["____+", "XXXX."]
+  assert evaluateYellows("ABCDE", "XAAXX") evaluates to ["+____", "X.AXX"]
+  assert evaluateYellows("AACDE", "XAXXX") evaluates to ["+____", "X.XXX"]
+  assert evaluateYellows("ABCDE", "BCDEA") evaluates to ["+++++", "....."]
 end test
 
 test test_markAttempt
-  assert markAttempt("ABCDE", "XXXXX") is "_____"
-  assert markAttempt("ABCDE", "BCDEA") is "+++++"
-  assert markAttempt("ABCDE", "ABCDE") is "*****"
-  assert markAttempt("SAINT", "LADLE") is "_*___"
-  assert markAttempt("IDEAL", "LADLE") is "_++++"
-  assert markAttempt("CABAL", "RECAP") is "+__*_"
-  assert markAttempt("CABAL", "RECAP") is "+__*_"
-  assert markAttempt("COLON", "GLORY") is "_++__"
+  assert markAttempt("ABCDE", "XXXXX") evaluates to "_____"
+  assert markAttempt("ABCDE", "BCDEA") evaluates to "+++++"
+  assert markAttempt("ABCDE", "ABCDE") evaluates to "*****"
+  assert markAttempt("SAINT", "LADLE") evaluates to "_*___"
+  assert markAttempt("IDEAL", "LADLE") evaluates to "_++++"
+  assert markAttempt("CABAL", "RECAP") evaluates to "+__*_"
+  assert markAttempt("CABAL", "RECAP") evaluates to "+__*_"
+  assert markAttempt("COLON", "GLORY") evaluates to "_++__"
 end test
 
 test test_possibleAnswersAfterAttempt
   let prior be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") is ["ABCDE"]
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") is ["BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") is ["BCDEA", "CDEAB", "EABCD"]
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "*____") evaluates to ["ABCDE"]
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "+____") evaluates to ["BCDEA", "CDEAB", "DEABC", "EABCD"]
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_") evaluates to ["BCDEA", "CDEAB", "EABCD"]
 end test
 
 test test_maxWordCountRemainingAfterAttempt
   let prior be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
   let d be new Dictionary<of String, Int>()
-  assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") is 1
-  assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") is 4
-  assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") is 5
+  assert maxWordCountRemainingAfterAttempt(prior, "AAAAA") evaluates to 1
+  assert maxWordCountRemainingAfterAttempt(prior, "AXXXX") evaluates to 4
+  assert maxWordCountRemainingAfterAttempt(prior, "XXXXX") evaluates to 5
 end test
 
 test test_allRemainingWordCounts
   let possAnswers be ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
   let wordcounts be allRemainingWordCounts(possAnswers)
-  assert wordcounts.toString() is "[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]"
+  assert wordcounts.toString() evaluates to "[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]"
 end test

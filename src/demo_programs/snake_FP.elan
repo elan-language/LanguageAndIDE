@@ -1,4 +1,4 @@
-# ea19f9b4613ad8f0397f0afaa15f9352da5c68667617f7a23e5e4e2812d95232 Elan 2.0.0-beta1 valid
+# 79b714d213e598a8d096d100aa704774f8ce79950bfb0597028a14bbe7989edd Elan 2.0.0-beta2 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -31,7 +31,7 @@ function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of L
 end function
 
 function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
 function score(g as Game) returns Int
@@ -156,141 +156,141 @@ test test_clockTick
   let g1 be new Game(new Random())
   let g2 be g1.withNewApple()
   let g3 be clockTick(g2, "s")
-  assert g3.head is new Square(22, 16)
-  assert g3.body.length() is 2
-  assert g3.priorTail is g2.body[0]
-  assert g3.isOn is true
+  assert g3.head evaluates to new Square(22, 16)
+  assert g3.body.length() evaluates to 2
+  assert g3.priorTail evaluates to g2.body[0]
+  assert g3.isOn evaluates to true
   let g4 be g3.with_apple(new Square(22, 17))
   let g5 be clockTick(g4, "s")
-  assert g5.body.length() is 3
-  assert g5.priorTail is g4.priorTail
-  assert g5.isOn is true
+  assert g5.body.length() evaluates to 3
+  assert g5.priorTail evaluates to g4.priorTail
+  assert g5.isOn evaluates to true
   let g6 be g5.with_head(new Square(22, 29))
   let g7 be clockTick(g6, "s")
-  assert g7.isOn is false
+  assert g7.isOn evaluates to false
 end test
 
 test test_updateGraphics
   let blocks be createBlockGraphics(white)
   let g1 be new Game(new Random())
   let blocks2 be updateGraphics(g1, blocks)
-  assert blocks2[12][15] is red
-  assert blocks2[22][15] is green
-  assert blocks2[21][15] is white
+  assert blocks2[12][15] evaluates to red
+  assert blocks2[22][15] evaluates to green
+  assert blocks2[21][15] evaluates to white
   let g3 be clockTick(g1, "d")
   let blocks3 be updateGraphics(g3, blocks2)
-  assert blocks3[12][15] is red
-  assert blocks3[22][15] is green
-  assert blocks3[23][15] is green
+  assert blocks3[12][15] evaluates to red
+  assert blocks3[22][15] evaluates to green
+  assert blocks3[23][15] evaluates to green
 end test
 
 test test_testnewApple
   let g1 be new Game(new Random())
-  assert g1.apple is new Square(12, 15)
+  assert g1.apple evaluates to new Square(12, 15)
   let g2 be g1.withNewApple()
-  assert g2.apple is new Square(12, 15)
+  assert g2.apple evaluates to new Square(12, 15)
   let g3 be g2.withNewApple()
-  assert g3.apple is new Square(10, 12)
+  assert g3.apple evaluates to new Square(10, 12)
   # test that apple is never over snake
   let g4 be (new Game(new Random()))
   let g5 be g4.with_body([new Square(10, 12)])
   let g6 be g5.withNewApple()
-  assert g4.apple is new Square(12, 15)
+  assert g4.apple evaluates to new Square(12, 15)
 end test
 
 test test_score
   let g1 be new Game(new Random())
-  assert score(g1) is 0
+  assert score(g1) evaluates to 0
   let g2 be g1.with_body([new Square(4, 4), new Square(5, 4)])
-  assert score(g2) is 0
+  assert score(g2) evaluates to 0
   let g3 be g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
-  assert score(g3) is 1
+  assert score(g3) evaluates to 1
   let g4 be g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
-  assert score(g4) is 2
+  assert score(g4) evaluates to 2
 end test
 
 test test_moveSnake
   let g1 be new Game(new Random())
   let g2 be g1.with_key("a")
   let g3 be moveSnake(g2)
-  assert g3.head is new Square(21, 15)
+  assert g3.head evaluates to new Square(21, 15)
   let g4 be g1.with_key("d")
   let g5 be moveSnake(g4)
-  assert g5.head is new Square(23, 15)
+  assert g5.head evaluates to new Square(23, 15)
   let g6 be g1.with_key("w")
   let g7 be moveSnake(g6)
-  assert g7.head is new Square(22, 14)
+  assert g7.head evaluates to new Square(22, 14)
   let g8 be g1.with_key("s")
   let g9 be moveSnake(g8)
-  assert g9.head is new Square(22, 16)
+  assert g9.head evaluates to new Square(22, 16)
 end test
 
 test test_eatAppleIfPoss
   let g1 be new Game(new Random())
-  assert g1.body.length() is 2
+  assert g1.body.length() evaluates to 2
   # negative case
   let g2 be g1.with_apple(new Square(23, 15))
   let g3 be eatAppleIfPoss(g2)
-  assert g3.body.length() is 1
-  assert g3.apple is g2.apple
-  assert g3.priorTail is g2.body[0]
+  assert g3.body.length() evaluates to 1
+  assert g3.apple evaluates to g2.apple
+  assert g3.priorTail evaluates to g2.body[0]
   # positive case
   let g4 be g2.with_head(new Square(23, 15))
   let g5 be eatAppleIfPoss(g4)
-  assert g5.body.length() is 2
-  assert g5.apple is new Square(12, 15)
-  assert g5.priorTail is g1.priorTail
+  assert g5.body.length() evaluates to 2
+  assert g5.apple evaluates to new Square(12, 15)
+  assert g5.priorTail evaluates to g1.priorTail
 end test
 
 test test_overApple
   let g1 be new Game(new Random())
   let g2 be g1.with_apple(new Square(23, 15))
-  assert headOverApple(g2) is false
+  assert headOverApple(g2) evaluates to false
   let g3 be g2.with_head(new Square(23, 15))
-  assert headOverApple(g3) is true
+  assert headOverApple(g3) evaluates to true
 end test
 
 test test_gameOver
   let g1 be new Game((new Random()))
-  assert gameOver(g1) is false
+  assert gameOver(g1) evaluates to false
   let g2 be g1.with_head(new Square(0, 0))
-  assert gameOver(g2) is false
+  assert gameOver(g2) evaluates to false
   let g3 be g1.with_head(new Square(40, 15))
-  assert gameOver(g3) is true
+  assert gameOver(g3) evaluates to true
   let g4 be g1.with_head(new Square(21, 15))
-  assert gameOver(g4) is true
+  assert gameOver(g4) evaluates to true
 end test
 
 test test_headIsAtEdge
   let g1 be new Game(new Random())
-  assert hasHitEdge(g1) is false
+  assert hasHitEdge(g1) evaluates to false
   let g2 be g1.with_head(new Square(40, 15))
-  assert hasHitEdge(g2) is true
+  assert hasHitEdge(g2) evaluates to true
   let g3 be g1.with_head(new Square(-1, 15))
-  assert hasHitEdge(g3) is true
+  assert hasHitEdge(g3) evaluates to true
   let g4 be g1.with_head(new Square(20, 30))
-  assert hasHitEdge(g4) is true
+  assert hasHitEdge(g4) evaluates to true
   let g5 be g1.with_head(new Square(20, -1))
-  assert hasHitEdge(g5) is true
+  assert hasHitEdge(g5) evaluates to true
 end test
 
 test test_newSquare
   let sq be new Square(3, 4)
-  assert sq.x is 3
-  assert sq.y is 4
+  assert sq.x evaluates to 3
+  assert sq.y evaluates to 4
 end test
 
 test test_newGame
   let rnd be new Random()
   let game be new Game(rnd)
   let totest be game.rnd.equals(rnd)
-  assert totest is true
-  assert game.head is new Square(22, 15)
+  assert totest evaluates to true
+  assert game.head evaluates to new Square(22, 15)
   let body be game.body
-  assert body.length() is 2
-  assert body[0] is new Square(20, 15)
-  assert body[1] is new Square(21, 15)
-  assert game.priorTail is new Square(0, 0)
-  assert game.key is "d"
-  assert game.isOn is true
+  assert body.length() evaluates to 2
+  assert body[0] evaluates to new Square(20, 15)
+  assert body[1] evaluates to new Square(21, 15)
+  assert game.priorTail evaluates to new Square(0, 0)
+  assert game.key evaluates to "d"
+  assert game.isOn evaluates to true
 end test

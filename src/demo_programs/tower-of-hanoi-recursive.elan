@@ -1,4 +1,4 @@
-# 2251766559276de2be597ee4f68ccce1e3b1bb931bb91913ed0830b0ce6e87b4 Python with Elan 2.0.0-beta1 valid
+# b9a8b6e4b72f9c4a752a7d12422320ece58d54fd2d86ce4a2c316efba40c31b9 Python with Elan 2.0.0-beta2 valid
 
 constant nDiscs set to 7
 
@@ -52,20 +52,20 @@ end function
 test test_createDisc
   # Normal cases
   variable d set to createDisc(5, 2, 4)
-  assert d.fillColour is green
-  assert d.strokeWidth is 0.25
-  assert d.height is 3
-  assert d.width is 12
-  assert d.x is 45
-  assert d.y is 38
+  assert d.fillColour evaluates to green
+  assert d.strokeWidth evaluates to 0.25
+  assert d.height evaluates to 3
+  assert d.width evaluates to 12
+  assert d.x evaluates to 45
+  assert d.y evaluates to 38
   # Edge cases
   variable d2 set to createDisc(1, 1, 0)
-  assert d2.fillColour is red
-  assert d2.strokeWidth is 0.25
-  assert d2.height is 3
-  assert d2.width is 4
-  assert d2.x is 19
-  assert d2.y is 50
+  assert d2.fillColour evaluates to red
+  assert d2.strokeWidth evaluates to 0.25
+  assert d2.height evaluates to 3
+  assert d2.width evaluates to 4
+  assert d2.x evaluates to 19
+  assert d2.y evaluates to 50
   # Error cases - none identified
 end test
 
@@ -79,12 +79,12 @@ end function
 test test_create3Stacks
   variable emptyStack set to new List<of Int>()
   # Normal case(s)
-  assert create3Stacks(7) is [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack]
+  assert create3Stacks(7) evaluates to [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack]
   # Edge case(s)
-  assert create3Stacks(1) is [[1], emptyStack, emptyStack]
-  assert create3Stacks(0) is [emptyStack, emptyStack, emptyStack]
+  assert create3Stacks(1) evaluates to [[1], emptyStack, emptyStack]
+  assert create3Stacks(0) evaluates to [emptyStack, emptyStack, emptyStack]
   # Error case(s)
-  assert create3Stacks(-1) is "Loop will not terminate when start < end start with negative step"
+  assert create3Stacks(-1) evaluates to "Loop will not terminate when start < end start with negative step"
 end test
 
 function colour(disc as Int) returns Int
@@ -94,12 +94,12 @@ end function
 
 test test_colour
   # Normal cases
-  assert colour(5) is green
+  assert colour(5) evaluates to green
   # Edge cases
-  assert colour(1) is red
-  assert colour(10) is 0xFF99CC
+  assert colour(1) evaluates to red
+  assert colour(10) evaluates to 0xFF99CC
   # Error cases
-  assert colour(11) is "Out of range index: 10 size: 10"
+  assert colour(11) evaluates to "Out of range index: 10 size: 10"
 end test
 
 function top(s as List<of Int>) returns Int
@@ -108,9 +108,9 @@ end function
 
 test test_top
   # Normal cases
-  assert top([3, 2, 1]) is 1
+  assert top([3, 2, 1]) evaluates to 1
   # Edge cases
-  assert top([7]) is 7
+  assert top([7]) evaluates to 7
   # Error cases
-  assert top(new List<of Int>()) is "Out of range index: -1 size: 0"
+  assert top(new List<of Int>()) evaluates to "Out of range index: -1 size: 0"
 end test

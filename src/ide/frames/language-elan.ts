@@ -14,6 +14,7 @@ import {
   elseKeyword,
   endKeyword,
   enumKeyword,
+  evaluatesKeyword,
   forKeyword,
   functionKeyword,
   ifKeyword,
@@ -26,6 +27,7 @@ import {
   mainKeyword,
   newKeyword,
   ofKeyword,
+  powKeyword,
   printKeyword,
   privateKeyword,
   procedureKeyword,
@@ -131,7 +133,7 @@ export class LanguageElan extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      html = `<el-kw>${this.ASSERT} </el-kw>${frame.actual.renderAsHtml()}<el-kw> is </el-kw>${frame.expected.renderAsHtml()}`;
+      html = `<el-kw>${this.ASSERT} </el-kw>${frame.actual.renderAsHtml()}<el-kw> ${this.EVALUATES} ${this.TO} </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof ProcedureCall) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
     } else if (frame instanceof CatchStatement) {
@@ -263,6 +265,7 @@ export class LanguageElan extends LanguageAbstract {
   private ELSE = elseKeyword;
   private END = endKeyword;
   private ENUM = enumKeyword;
+  private EVALUATES = evaluatesKeyword;
   private FOR = forKeyword;
   private FUNCTION = functionKeyword;
   private IF = ifKeyword;
@@ -279,6 +282,7 @@ export class LanguageElan extends LanguageAbstract {
   private PRIVATE = privateKeyword;
   private PROCEDURE = procedureKeyword;
   private PROPERTY = propertyKeyword;
+  private POW = powKeyword;
   private RETURN = returnKeyword;
   private RETURNS = returnsKeyword;
   private SET = setKeyword;
