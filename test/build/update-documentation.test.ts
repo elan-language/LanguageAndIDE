@@ -1,12 +1,12 @@
 import assert from "assert";
 import { getDocs, processDocumentation } from "../../src/build-scripts/update-documentation";
-import { clearLogs, getCounts, processInnerCode, writeLogs } from "../../src/tools/codeParser";
+import { clearLogs, processInnerCode, writeLogs } from "../../src/tools/codeParser";
 import { processCode } from "../../src/tools/markupParser";
 import {
-  codeTag,
-  codeEndTag,
-  codeBlockTag,
   codeBlockEndTag,
+  codeBlockTag,
+  codeEndTag,
+  codeTag,
 } from "../../src/tools/parserConstants";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 suite("process code", () => {
@@ -50,7 +50,7 @@ end main
 
 function createDictionary(kvps as List<of (String, Int)>) returns Dictionary<of String, Int>
   let d be new Dictionary<of String, Int>()
-  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withSet(kvp.item_0, kvp.item_1))
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
 end function`;
 
     const actual = await processInnerCode(code);
@@ -271,10 +271,10 @@ end copy`;
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
   assign currentDir to directionByKey(currentDir, getKey())
-  call tailRef.set(body[0])
+  call tailRef.put(body[0])
   call body.append(head)
-  call headRef.set(getAdjacentSquare(head, currentDir))
-  call currentDirRef.set(currentDir)
+  call headRef.put(getAdjacentSquare(head, currentDir))
+  call currentDirRef.put(currentDir)
 end procedure`;
 
     const actual = await processInnerCode(code);
@@ -304,7 +304,7 @@ end procedure`;
     variable mark set to "00000"
     variable i set to 3
     variable expression set to mark[something] + "2" + mark[something]
-    assert expression is "00020"
+    assert expression evaluates to "00020"
   end test
 </codeblock>`;
 

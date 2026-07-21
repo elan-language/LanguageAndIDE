@@ -6,7 +6,7 @@ constant allValidAnswers set to "ABACK ZONAL"
 
 main
   while true
-    variable choice assign to inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
+    variable choice set to inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue()
@@ -107,7 +107,7 @@ procedure colourAttempt(attemptNo as Int, grid as List<of List<of String>>, targ
     end if
   end for
   if marks.equals("22222") then
-    call solved.set(true)
+    call solved.put(true)
   end if
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
 end procedure
@@ -164,7 +164,7 @@ procedure enterMark(attemptNo as Int, grid as List<of List<of String>>, markRef 
     end if
     call displayHtml(drawGrid(grid))
   end while
-  call markRef.set(mark)
+  call markRef.put(mark)
 end procedure
 
 procedure analyse()
@@ -202,11 +202,11 @@ function isUCLetter(k as String) returns Boolean
 end function
 
 test test_isUCLetter
-  assert isUCLetter("A") is true
-  assert isUCLetter("Z") is true
-  assert isUCLetter("a") is false
-  assert isUCLetter("1") is false
-  assert isUCLetter(" ") is false
+  assert isUCLetter("A") evaluates to true
+  assert isUCLetter("Z") evaluates to true
+  assert isUCLetter("a") evaluates to false
+  assert isUCLetter("1") evaluates to false
+  assert isUCLetter(" ") evaluates to false
 end test
 
 function getWord(attemptNo as Int, grid as List<of List<of String>>) returns String
@@ -222,8 +222,8 @@ function setChar(word as String, n as Int, newChar as String) returns String
 end function
 
 test test_setChar
-  assert setChar("ABCDE", 0, "_") is "_BCDE"
-  assert setChar("ABCDE", 4, "_") is "ABCD_"
+  assert setChar("ABCDE", 0, "_") evaluates to "_BCDE"
+  assert setChar("ABCDE", 4, "_") evaluates to "ABCD_"
 end test
 
 function markAttempt(attempt as String, target as String) returns String
@@ -245,16 +245,16 @@ function markAttempt(attempt as String, target as String) returns String
 end function
 
 test test_markAttempt
-  assert markAttempt("ABCDE", "XXXXX") is "00000"
-  assert markAttempt("ABCDE", "BCDEA") is "11111"
-  assert markAttempt("ABCDE", "ABCDE") is "22222"
-  assert markAttempt("SAINT", "LADLE") is "02000"
-  assert markAttempt("IDEAL", "LADLE") is "01111"
-  assert markAttempt("CABAL", "RECAP") is "10020"
-  assert markAttempt("COLON", "GLORY") is "01100"
-  assert markAttempt("AORTA", "RATTY") is "10120"
-  assert markAttempt("RATTY", "AORTA") is "11020"
-  assert markAttempt("FAIRY", "RATTY") is "02012"
+  assert markAttempt("ABCDE", "XXXXX") evaluates to "00000"
+  assert markAttempt("ABCDE", "BCDEA") evaluates to "11111"
+  assert markAttempt("ABCDE", "ABCDE") evaluates to "22222"
+  assert markAttempt("SAINT", "LADLE") evaluates to "02000"
+  assert markAttempt("IDEAL", "LADLE") evaluates to "01111"
+  assert markAttempt("CABAL", "RECAP") evaluates to "10020"
+  assert markAttempt("COLON", "GLORY") evaluates to "01100"
+  assert markAttempt("AORTA", "RATTY") evaluates to "10120"
+  assert markAttempt("RATTY", "AORTA") evaluates to "11020"
+  assert markAttempt("FAIRY", "RATTY") evaluates to "02012"
 end test
 
 function possibleAnswersAfterAttempt(possible as List<of String>, attempt as String, mark as String) returns List<of String>
@@ -270,11 +270,11 @@ end function
 
 test test_possibleAnswersAfterAttempt
   variable prior set to ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") is ["ABCDE"]
-  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") is ["BCDEA", "CDEAB", "DEABC", "EABCD"]
-  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") is ["BCDEA", "CDEAB", "EABCD"]
-  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") is ["RATTY"]
-  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") is ["RASPY", "RATTY"]
+  assert possibleAnswersAfterAttempt(prior, "AAAAA", "20000") evaluates to ["ABCDE"]
+  assert possibleAnswersAfterAttempt(prior, "AXXXX", "10000") evaluates to ["BCDEA", "CDEAB", "DEABC", "EABCD"]
+  assert possibleAnswersAfterAttempt(prior, "AXXBX", "10010") evaluates to ["BCDEA", "CDEAB", "EABCD"]
+  assert possibleAnswersAfterAttempt(["RATTY"], "AORTA", "10120") evaluates to ["RATTY"]
+  assert possibleAnswersAfterAttempt(["FAIRY", "HAIRY", "RAINY", "RASPY", "RATTY"], "FAIRY", "02012") evaluates to ["RASPY", "RATTY"]
 end test
 
 function drawGrid(grid as List<of List<of String>>) returns String

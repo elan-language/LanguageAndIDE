@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta1
+# Python with Elan 2.0.0-beta2
 
 def main() -> None:
   start = Point(5, 5) # variable definition
@@ -68,7 +68,7 @@ def initialiseGraphics(start: Point, dest: Point, rocks: list[Point]) -> list[li
 # end function
 
 def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
-  return graphics.withSet(x, graphics[x].withSet(y, colour))
+  return graphics.withPut(x, graphics[x].withPut(y, colour))
 # end function
 
 def addVisited(gr: list[list[int]], visited: Point) -> list[list[int]]: # function

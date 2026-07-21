@@ -1,4 +1,4 @@
-# c75e336149d4d1d13b1bbb73ba4887156223228a83dc1af4d564da95e6f3f18c Elan 2.0.0-beta1 valid
+# 46a8b711ae011cd991c42107dd4ed8015c76af0885ba8087cd1571b1815fe8ef Elan 2.0.0-beta2 valid
 
 # Implementation of the Merge sort algorithm demonstrating
 # - Decomposition of the principal function 'sort' into smaller functions,
@@ -39,88 +39,88 @@ end function
 test test_sort
   # Edge case: empty
   let l1 be new List<of String>()
-  assert sort(l1) is l1
+  assert sort(l1) evaluates to l1
   # Edge case: one item
   let li2 be ["plum"]
-  assert sort(li2) is li2
+  assert sort(li2) evaluates to li2
   # Happy case: odd number of members
   let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
-  assert sort(li3) is sorted3
+  assert sort(li3) evaluates to sorted3
   # Happy case: even number of members
   let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
   let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
-  assert sort(li4) is sorted4
+  assert sort(li4) evaluates to sorted4
   # Edge case: already sorted
   let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
-  assert sort(li5) is li5
+  assert sort(li5) evaluates to li5
 end test
 
 test test_sortedFrontHalf
   # Edge case: one item - so front half is empty
   let li1 be ["plum"]
-  assert sortedFrontHalf(li1) is new List<of String>()
+  assert sortedFrontHalf(li1) evaluates to new List<of String>()
   # Happy case: odd number of members
   let li2 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  assert sortedFrontHalf(li2) is ["apricot", "lemon", "lime", "plum"]
+  assert sortedFrontHalf(li2) evaluates to ["apricot", "lemon", "lime", "plum"]
   # Happy case: even number of members
   let li3 be ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  assert sortedFrontHalf(li3) is ["apricot", "lemon", "melon", "plum"]
+  assert sortedFrontHalf(li3) evaluates to ["apricot", "lemon", "melon", "plum"]
   # Edge case: already sorted
   let li4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
-  assert sortedFrontHalf(li4) is ["apple", "apricot", "lemon"]
+  assert sortedFrontHalf(li4) evaluates to ["apple", "apricot", "lemon"]
 end test
 
 test test_sortedBackHalf
   # Edge case: one item - so back half is whole list
   let li1 be ["plum"]
-  assert sortedBackHalf(li1) is ["plum"]
+  assert sortedBackHalf(li1) evaluates to ["plum"]
   # Happy case: odd number of members
   let li2 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  assert sortedBackHalf(li2) is ["apple", "melon", "orange", "pear", "strawberry"]
+  assert sortedBackHalf(li2) evaluates to ["apple", "melon", "orange", "pear", "strawberry"]
   # Happy case: even number of members
   let li3 be ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  assert sortedBackHalf(li3) is ["apple", "orange", "pear", "strawberry"]
+  assert sortedBackHalf(li3) evaluates to ["apple", "orange", "pear", "strawberry"]
   # Edge case: already sorted
   let li4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
-  assert sortedBackHalf(li4) is ["lime", "melon", "orange", "pear"]
+  assert sortedBackHalf(li4) evaluates to ["lime", "melon", "orange", "pear"]
 end test
 
 test test_merge
   # Happy cases:
   let l1 be ["apple", "lime", "pear"]
   let l2 be ["apricot", "lemon", "plum", "watermelon"]
-  assert merge(["orange"], ["melon"]) is ["melon", "orange"]
-  assert merge(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert merge(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+  assert merge(["orange"], ["melon"]) evaluates to ["melon", "orange"]
+  assert merge(l1, l2) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+  assert merge(l2, l1) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
   # Edge cases - empty list(s)
   let le be new List<of String>()
-  assert merge(le, le) is le
-  assert merge(l1, le) is l1
-  assert merge(le, l2) is l2
+  assert merge(le, le) evaluates to le
+  assert merge(l1, le) evaluates to l1
+  assert merge(le, l2) evaluates to l2
   # Edge case - duplication
-  assert merge(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+  assert merge(l1, l1) evaluates to ["apple", "apple", "lime", "lime", "pear", "pear"]
   # Error case lists not sorted will not produce correct result
   let lu be ["lime", "pear", "apple"]
-  assert merge(lu, l2) is ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
-  assert merge(lu, le) is ["lime", "pear", "apple"]
+  assert merge(lu, l2) evaluates to ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
+  assert merge(lu, le) evaluates to ["lime", "pear", "apple"]
 end test
 
 test test_mergeNonEmpty
   let l1 be ["apple", "lime", "pear"]
   let l2 be ["apricot", "lemon", "plum", "watermelon"]
-  assert mergeNonEmpty(["orange"], ["melon"]) is ["melon", "orange"]
-  assert mergeNonEmpty(l1, l2) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert mergeNonEmpty(l2, l1) is ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
-  assert mergeNonEmpty(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+  assert mergeNonEmpty(["orange"], ["melon"]) evaluates to ["melon", "orange"]
+  assert mergeNonEmpty(l1, l2) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+  assert mergeNonEmpty(l2, l1) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
+  assert mergeNonEmpty(l1, l1) evaluates to ["apple", "apple", "lime", "lime", "pear", "pear"]
   #  Edge case: duplication
-  assert mergeNonEmpty(l1, l1) is ["apple", "apple", "lime", "lime", "pear", "pear"]
+  assert mergeNonEmpty(l1, l1) evaluates to ["apple", "apple", "lime", "lime", "pear", "pear"]
   # Edge cases: single elements
-  assert mergeNonEmpty(l1, ["lemon"]) is ["apple", "lemon", "lime", "pear"]
-  assert mergeNonEmpty(["melon"], l1) is ["apple", "lime", "melon", "pear"]
+  assert mergeNonEmpty(l1, ["lemon"]) evaluates to ["apple", "lemon", "lime", "pear"]
+  assert mergeNonEmpty(["melon"], l1) evaluates to ["apple", "lime", "melon", "pear"]
   # Error case - pass empty list
-  assert mergeNonEmpty(new List<of String>(), l1) is "Out of range index: 0 size: 0"
+  assert mergeNonEmpty(new List<of String>(), l1) evaluates to "Out of range index: 0 size: 0"
   #  Error case unsorted list
   let lu be ["lime", "pear", "apple"]
-  assert merge(lu, l2) is ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
+  assert merge(lu, l2) evaluates to ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
 end test

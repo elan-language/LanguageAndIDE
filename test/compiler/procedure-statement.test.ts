@@ -544,8 +544,8 @@ main
 end main
 
 procedure foo(x as AsRef<of Float>, y as AsRef<of String>)
-  call x.set(3)
-  call y.set("goodbye")
+  call x.put(3)
+  call y.put("goodbye")
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -559,8 +559,8 @@ async function main() {
 }
 
 async function foo(x, y) {
-  x.set(3);
-  y.set("goodbye");
+  x.put(3);
+  y.put("goodbye");
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -595,8 +595,8 @@ end main
 
 procedure foo(x as AsRef<of Float>, y as AsRef<of Float>)
   variable c set to x.value()
-  call x.set(y.value())
-  call y.set(c)
+  call x.put(y.value())
+  call y.put(c)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -611,8 +611,8 @@ async function main() {
 
 async function foo(x, y) {
   let c = x.value();
-  x.set(y.value());
-  y.set(c);
+  x.put(y.value());
+  y.put(c);
 }
 global["foo"] = foo;
 return [main, _tests];}`;
@@ -651,8 +651,8 @@ end procedure
 
 procedure bar(a as AsRef<of Float>, b as AsRef<of Float>)
   variable c set to a.value()
-  call a.set(b.value())
-  call b.set(c)
+  call a.put(b.value())
+  call b.put(c)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -672,8 +672,8 @@ global["foo"] = foo;
 
 async function bar(a, b) {
   let c = a.value();
-  a.set(b.value());
-  b.set(c);
+  a.put(b.value());
+  b.put(c);
 }
 global["bar"] = bar;
 return [main, _tests];}`;
@@ -718,7 +718,7 @@ class Foo
   end function
 
   procedure bar(z as AsRef<of Int>)
-    call z.set(1)
+    call z.put(1)
   end procedure
 end class`;
 
@@ -750,7 +750,7 @@ class Foo {
   }
 
   async bar(z) {
-    z.set(1);
+    z.put(1);
   }
 
 }
@@ -784,7 +784,7 @@ main
 end main
 
 procedure foo(f as  AsRef<of Foo>, y as  AsRef<of Int>)
-  call y.set(f.value().ff + y.value())
+  call y.put(f.value().ff + y.value())
 end procedure
 
 class Foo
@@ -808,7 +808,7 @@ async function main() {
 }
 
 async function foo(f, y) {
-  y.set(f.value().ff + y.value());
+  y.put(f.value().ff + y.value());
 }
 global["foo"] = foo;
 
@@ -858,7 +858,7 @@ main
 end main
 
 procedure addOne(n as AsRef<of Int>)
-  call n.set(n.value() + 1)
+  call n.put(n.value() + 1)
 end procedure`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -872,7 +872,7 @@ async function main() {
 }
 
 async function addOne(n) {
-  n.set(n.value() + 1);
+  n.put(n.value() + 1);
 }
 global["addOne"] = addOne;
 return [main, _tests];}`;

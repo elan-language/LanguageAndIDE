@@ -649,21 +649,21 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 test maths
-  assert pi is 3.141592653589793
-  assert abs(-3.7) is 3.7
-  assert acos(0.5).round(3) is 1.047
-  assert asin(0.5).round(3) is 0.524
-  assert atan(1).round(2) is 0.79
-  assert cos(pi/4).round(3) is 0.707
-  assert exp(2).round(3) is 7.389
-  assert logE(7.398).round(2) is 2
-  assert log10(1000) is 3
-  assert log2(65536) is 16
-  assert sin(pi/6).round(2) is 0.5
-  assert sqrt(2).round(3) is 1.414
-  assert tan(pi/4).round(2) is 1
-  assert radians(90).round(2) is 1.57
-  assert degrees(1).round(0) is 57
+  assert pi evaluates to 3.141592653589793
+  assert abs(-3.7) evaluates to 3.7
+  assert acos(0.5).round(3) evaluates to 1.047
+  assert asin(0.5).round(3) evaluates to 0.524
+  assert atan(1).round(2) evaluates to 0.79
+  assert cos(pi/4).round(3) evaluates to 0.707
+  assert exp(2).round(3) evaluates to 7.389
+  assert logE(7.398).round(2) evaluates to 2
+  assert log10(1000) evaluates to 3
+  assert log2(65536) evaluates to 16
+  assert sin(pi/6).round(2) evaluates to 0.5
+  assert sqrt(2).round(3) evaluates to 1.414
+  assert tan(pi/4).round(2) evaluates to 1
+  assert radians(90).round(2) evaluates to 1.57
+  assert degrees(1).round(0) evaluates to 57
 end test`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

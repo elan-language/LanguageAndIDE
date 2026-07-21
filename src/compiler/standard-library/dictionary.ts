@@ -1,8 +1,10 @@
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import {
   ClassOption,
   ElanBoolean,
   elanClass,
   ElanClass,
+  elanDeprecated,
   elanFunction,
   elanGenericParamT1Type,
   elanGenericParamT2Type,
@@ -111,8 +113,23 @@ export class Dictionary<T1, T2> {
     return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
   }
 
+  @elanDeprecated(
+    Deprecation.methodRenamed,
+    2,
+    0,
+    "LibRef.html#XwithPut_Dictionary",
+    DeprecationSeverity.advisory,
+  )
   @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(Dictionary))
   withSet(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
+    const rk = this.findRealKey(key);
+    const newDict = new Map<T1, T2>(this.contents);
+    newDict.set(rk, value);
+    return this.system!.initialise(new Dictionary<T1, T2>([...newDict.entries()]));
+  }
+
+  @elanFunction(["key", "value"], FunctionOptions.pure, ElanClass(Dictionary))
+  withPut(@elanGenericParamT1Type() key: T1, @elanGenericParamT2Type() value: T2) {
     const rk = this.findRealKey(key);
     const newDict = new Map<T1, T2>(this.contents);
     newDict.set(rk, value);
