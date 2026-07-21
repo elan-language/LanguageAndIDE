@@ -215,6 +215,14 @@ end main`;
     assert.strictEqual(actual[0].startsWith("<el-type"), true);
   });
 
+  test("process type3", async () => {
+    const code = `(Int, String)`;
+
+    const actual = await processInnerCode(code);
+
+    assert.strictEqual(actual[0].startsWith("(<el-type"), true);
+  });
+
   test("process expression", async () => {
     const code = `mark[something] + "2" + mark[something]`;
 

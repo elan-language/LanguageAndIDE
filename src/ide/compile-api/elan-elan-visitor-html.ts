@@ -6,13 +6,20 @@ export class ElanElanVisitorHtml extends ElanElanVisitor {
     super();
   }
 
+  filterTokens(s: string) {
+    return s.trim() && s !== "(" && s !== ")" && s !== ",";
+  }
+
   visitTypeTuple(ctx: any) {
-    const types = ((this as any).visitChildren(ctx) as string[]).filter((s) => s).join(", ");
+    const types = ((this as any).visitChildren(ctx) as string[])
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
     return `(${types})`;
   }
 
   visitTypeName(ctx: any) {
-    return (this as any).visitChildren(ctx)[0] as string;
+    const type = (this as any).visitChildren(ctx)[0] as string;
+    return `<el-type>${type}</el-type>`;
   }
 
   visitTypeGeneric(ctx: any) {
@@ -32,7 +39,7 @@ export class ElanElanVisitorHtml extends ElanElanVisitor {
     }
 
     if (typeName) {
-      return `<el-type>${(this as any).visit(typeName)}</el-type>`;
+      return (this as any).visit(typeName);
     }
 
     if (typeGeneric) {
