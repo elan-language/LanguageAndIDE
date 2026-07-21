@@ -49,9 +49,9 @@ This changes two things: </p>
 <div id="Principles">
 <h1>Principles of functional programming</h1>
 <p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, and every language that supports FP differs in the rules that it enforces.
-  The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages 
-  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling. 
-  The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library. 
+  The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages
+  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling.
+  The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library.
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
   Elan will result in better code and fewer problems.<p>
@@ -64,7 +64,7 @@ This changes two things: </p>
         This means it may not depend on data obtained from user input, from a file, or from over the network,
         though such data may be obtained <i>outside</i> the function and passed into it in parameters.</li>
     <li>Similarly, within the function, you cannot make direct use of the system clock or system-generated random numbers. (There is a technique
-        to <a href="#random">generate random numbers <i class="fa">&#xf14c;</i></a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
+        to <a href="#Random">generate random numbers <i class="fa">&#xf14c;</i></a> within a function, but this is best left until you have a thorough understanding of the basics of FP.)</li>
     <li>The function may not generate any <i>side effects</i>, that is changes to the state of the system that may be observed outside the function.</li>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
@@ -86,7 +86,7 @@ and you are <i>within a function</i>, you cannot add a <b>print statement</b>, <
   But this second principle of FP implies that the <b>main routine</b> together with any necessary <b>procedure</b>s should
   be kept as small as possible:
   <ul>
-    <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or 
+    <li>Any code within the main routine or procedures that performs calculation, evaluates logic, or
       transforms data in any way, should be delegated to functions.</li>.
     <li> Most procedural programs contain <i>some</i> functions,
       but a program written within the discipline of FP should consist <i>almost entirely</i> of functions.</li>
@@ -217,7 +217,7 @@ end function
 <p>In the four languages supported by Elan, <b>let statement</b>s
   are really just disguised <b>variable definition</b>s, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
   <b>let statement</b><s></s> (some languages permit 'let clauses' <i>within an expression</i>) are executed <i>lazily</i>, meaning that execution of a function
-    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let statement</b>s <i>only when or if they are needed</i>. 
+    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let statement</b>s <i>only when or if they are needed</i>.
    So getting used to using <b>let statement</b>s in Elan leaves you better prepared to move onto a pure FP language at a future point.
 </p>
 
@@ -345,7 +345,7 @@ a <i>copy</i> of a data structure with specified differences from the original. 
 </codeblock>
 
 <p>When you want to apply operations to all items in a List you need to use iteration, which means using
-  either <a href="#recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
+  either <a href="#Recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
   and within that technique make use of the various <el-method>with..</el-method> methods. The <el-method>sum</el-method> function in the
    <b>Recursive Functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
@@ -354,7 +354,7 @@ function sum(li as List&lt;of Float&gt;) returns Float
 end function
 </codeblock>
 
-<p>Note the use of these two dot function calls on the List <code>li</code>(see <a href="LangRef.html#dotSyntax" target="_blank">Dot syntax <i class="fa">&#xf08e;</i></a> in Language Reference):</p>
+<p>Note the use of these two dot function calls on the List <code>li</code>(see <a href="LangRef.html#DotSyntax" target="_blank">Dot syntax <i class="fa">&#xf08e;</i></a> in Language Reference):</p>
 
 <ul>
  <li><el-method>head</el-method> returns only the first item in the List.</li>
@@ -532,6 +532,7 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
+<div id="copyWithPropertyUpdated"></div>
 <h2>User-defined Classes should be immutable</h2>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
@@ -541,7 +542,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 
 <p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
   The answer is similar to that for updating a List, String, or other standard data structure within a function
-  (described in <a href="#listMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
+  (described in <a href="#ListMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
   return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
@@ -692,7 +693,7 @@ which forms part of the function template, plus the option to precede this with 
 
 <div id="let">
  <h2>Let Statement</h2>
- 
+
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of a let statement</h3>
 <div class="acc-body">
@@ -706,7 +707,7 @@ function north(cell as (Int, Int)) returns (Int, Int)
   let y2 be if_(y is 0, 29, y - 1)
   return (x, y2)
 end function
- </codeblock> 
+ </codeblock>
 
  <p>The first two let statements are used to extract the two values from the 2-tuple <code>cell</code> into named values <code>x</code> and <code>y</code>.
 The third let statement, calculates the y coordinate for the cell immediately to the North, using a conditional expression to 'wrap' around to the bottom
@@ -754,7 +755,7 @@ end function
         but the expressions can quickly become very hard to read, so it is better out sub-expressions into let statement - or, if the sub-expressions might be useful in
         in other contexts, as separate functions.</li>
         <li>Elan does have some limits on the complexity of expressions, and breaking out sub-expressions into lets is a good way to avoid encountering those limits.</li>
-      </ul>    
+      </ul>
     </li>
   </ul>
 </div></div>
@@ -768,7 +769,7 @@ end function
 paradigm, with two exceptions:</p>
  <ul>
   <li>There is an additional member: the <b>copy with method</b></li>
-  <li>The procedure method is not available for use - because procedure methods cause side effects. 
+  <li>The procedure method is not available for use - because procedure methods cause side effects.
     All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</li>
  </ul>
 
@@ -801,7 +802,7 @@ paradigm, with two exceptions:</p>
           end copy
         </codeblock>
 
-      <p>This method is called from 11 places elsewhere in the code, including within this global method:</p> 
+      <p>This method is called from 11 places elsewhere in the code, including within this global method:</p>
 
       <codeblock>
         function moveSnake(g as Game) returns Game
@@ -819,7 +820,7 @@ paradigm, with two exceptions:</p>
       to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
       </div>
     </div>
-  
+
       <div class="accordion">
       <h3 class="no-TOC acc-title">What you need to know about a copy with method</h3>
       <div class="acc-body">
@@ -828,18 +829,18 @@ paradigm, with two exceptions:</p>
           <li>A <b>copy with method</b> is a very specific form of function method.</li>
           <li>Its purpose is to allow an instance of a class to be 'updated' without actually mutating the instance.</li>
           <li>Instead, the method returns a <i>copy</i> of the current instance, but with a specified difference to one of its properties.</li>
-          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, each being broadly equivalent to 
+          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, each being broadly equivalent to
             a procedure method, but designed for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
             and the function method <el-method>withAppend</el-method>.</li>
           <li>When you add a <b>copy with method</b> you must specify the name and type for the single parameter that it permits.
           Importantly, <i>both the name and the type must exactly match those of the property that you wish to update.</i></li>
           <li>The <b>copy with method</b> has only a <b>return</b> instruction, and does not permit any other instructions to be added.</li>
           <li>The expression returned by the function must take the form <code>copyWithPropertyUpdated(this, "head", head)</code> where
-            the name of the parameter (<code>head</code> in this case) appears twice: the first time in quotes - to define the name of the property being changed - 
+            the name of the parameter (<code>head</code> in this case) appears twice: the first time in quotes - to define the name of the property being changed -
             and the second time without quotes, representing the new value. This must currently be entered by hand, but in a future version will
             be generated automatically, and will be uneditable.
           </li>
-          <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in 
+          <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in
             procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
             <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
           <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as you can see

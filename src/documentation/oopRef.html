@@ -36,7 +36,7 @@ This will still allow you to do procedural programming, but changes two things: 
     <ul>
     <li>At the global level, it will offer: <b>concrete class</b> and <b>abstract class</b>
    <li><i>Within</i> a <b>concrete class</b> or <b>abstract class</b> the <b>new code</b> menu will show an entirely new list of instructions,
-         collectively known as ‘members’ (plus <b>comment</b>) that may be defined within within them.</li>
+         collectively known as 'members' (plus <b>comment</b>) that may be defined within within them.</li>
     </ul>
 </ul>
 
@@ -194,7 +194,7 @@ end class
   <li>It is quite common to initialise strings to an empty string - <code>""</code> and a list to any empty list of the appropriate member-type,
         for example <code>new List&lt;of Int&gt;()</code> - though you may choose any value.</li>
   <li>If you don't you want every instance of a class to be initialised with the same value, the specific value for
-    an instance is specified via paramaters added into the constructor definition.</li>
+    an instance is specified via parameters added into the constructor definition.</li>
   <li>When a new instance is created, arguments for each parameter must be specified (as they would be for a procedure or function),
     so creating a new <code>Square</code> for example takes the form <code>variable tail set to new Square(20, 15)</code></li>
   <li>A property is initialised within the construction using an <b>assignment</b> instruction - since a property may be thought of as
@@ -426,7 +426,7 @@ For that reason, irrespective of the programming language being used, Elan delib
 </ul>
 
 <p>The last point is controversial - since all the supported programming languages allow overriding. But overriding (of concrete methods)
-  breaks the 'O' of the widely-quoted 'SOLID' principles of oop: that classes should be 'Open for extension, but closed for modification'.</p>
+  breaks the 'O' of the widely-quoted 'SOLID' principles of OOP: that classes should be 'Open for extension, but closed for modification'.</p>
 
 <h2>Application logic should be well-distributed across classes</h2>
 
@@ -591,7 +591,7 @@ end class
     <li><el-method>toString</el-method> is an ordinary function method but with a specific name; it is called if an instance of the class is printed,
     or inserted into an interpolated string; typically <el-method>toString</el-method> will include one or more of the object's properties. </li>
     <li>Procedure methods make changes to the properties of the instance and/or depend on the system in some way.</li>
-    <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may ony be accessed by
+    <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may only be accessed by
     code within the same class.</li>
     <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
     <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li>
@@ -848,7 +848,7 @@ end class
     <li>A <b>concrete class</b> must have a <b>constructor</b> - so when a new concrete class is created, it includes a minimal default implementation.</li>
     <li>The purpose of the constructor is to initialise all properties (except, optionally, for properties of numeric or Boolean types - if you are happy for them to take
       the default values for those types).</li>
-    <li>A property is initialised using an <b>assignment</b> instruction, prefixing the name of the propery as in this example &ndash; <code>assign this.x to x</code> &ndash;
+    <li>A property is initialised using an <b>assignment</b> instruction, prefixing the name of the property as in this example &ndash; <code>assign this.x to x</code> &ndash;
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
     <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
@@ -880,7 +880,7 @@ end class
   <li>The type of a property, unlike a variable, is explicitly defined, as shown in the examples above.
     It may be a standard library type (including data structures), or the name of another used-defined class,
     or a data structure of another class type (see examples above).</li>
-  <li>Every property must be initialsed within a <b>constructor</b> unless it is of a numeric or Boolean type - which have default values.</li>
+  <li>Every property must be initialised within a <b>constructor</b> unless it is of a numeric or Boolean type - which have default values.</li>
   <li>A property is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
   action on the context menu (or reverted to public with <b>make public</b>.</li>
   <li>The public properties of an instance may be <i>read</i> by code outside the class using dot-syntax, but may only be modified (from outside)

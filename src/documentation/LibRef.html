@@ -86,7 +86,6 @@ in the range:</li>
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
     in exponential (scientific) format, as shown in the example.</li>
 </ul>
-<div id="hex"></div>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of base conversion</h4>
 <div class="acc-body">
@@ -107,7 +106,8 @@ end function
 function hexDigit(i as Int) returns String
   return "0123456789abcdef".subString(i, i + 1)
 end function
-</codeblock><hr>
+</codeblock>
+<hr>
 </div></div>
 
 <div class="accordion">
@@ -317,7 +317,7 @@ end test
 </table>
 
 <p>These examples 'interpolate' the output of <b>function</b> <el-method>unicode</el-method> by using a $ before the string and curly braces within it.
-Ssee <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i></a>).</p>
+See <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i></a>).</p>
 
 <h3 class="no-TOC">Manipulating strings</h3>
 
@@ -522,7 +522,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <tr>
   <td>type form</td>
   <td><code>List&lt;of Type&gt;</code><br>The type of item can be any, including <code>List</code> for 'jagged' data</td>
-  <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code><br>
+  <td><code>Dictionary&lt;of keyType, valueType&gt;</code><br>
   <code>keyType</code> is <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code><br>
   <code>valueType</code> may be any type</td>
   <td><code>HashSet&lt;of Type&gt;</code><br>The type of the item must be immutable</td>
@@ -542,7 +542,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr><tr>
   <td>create empty</td>
   <td><code>new List&lt;of Type&gt;()</code></td>
-  <td><code>new Dictionary&lt;of KeyType, ValueType&gt;()</code></td>
+  <td><code>new Dictionary&lt;of keyType, valueType&gt;()</code></td>
   <td><code>new HashSet&lt;of Type&gt;()</code></td>
   <td><code>new Stack&lt;of Type&gt;()</code></td>
   <td><code>new Queue&lt;of Type&gt;()</code></td>
@@ -605,14 +605,14 @@ with specified changes: that is why all such methods have names starting '<el-me
 </ul>
 <p>A List's size can be dynamically changed using the procedure methods listed below.</p>
 
-<h3 class="no-TOC" id="deconstructList">Deconstructing a List</h3>
+<h3 class="no-TOC" id="DeconstructList">Deconstructing a List</h3>
 <p>A <code>List</code> may be split (deconstructed) into new named values using indexes and
  the methods <el-method>head</el-method>, <a href="#tail"><el-method>tail</el-method> <i class="fa">&#xf14c;</i></a> and <a href="#subList"><el-method>subList</el-method> <i class="fa">&#xf14c;</i></a>:</p>
 <ul>
  <li>To extract the first item in a List:<br>
  <code>variable headItem set to myList[0]</code><br>
  or<br>
- <code>assign heatItem to myList.head()</code>
+ <code>assign headItem to myList.head()</code>
  </li><li>To form a new List of all but the first item in a List:<br>
  <code>variable  tailList set to myList.tail()</code><br>
  If the original list contains only one item, the new List will be the empty List.
@@ -1356,7 +1356,7 @@ of differing types held together and referenced by a single identifier.</p>
 <code>variable point set to (3, 4)</code>
 <code>variable t set to (3, "apple", true)</code>
 
-<h3 class="no-TOC" id="deconstructTuple">Accessing items in a Tuple</h3>
+<h3 class="no-TOC" id="DeconstructTuple">Accessing items in a Tuple</h3>
 <p id="item_N">The items in a Tuple may be individually addressed by a dot reference and the special properties <code>item_</code>N, thus:</p>
 <table class="tablePlain">
 <tr><td>
@@ -2953,12 +2953,12 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
  <tr id="createDictionary">
   <td><el-method>createDictionary</el-method></td>
   <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
-  <td><code>Dictionary&lt;of KeyType, ValueType&gt;</code></td>
+  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
   <td>a Dictionary containing the specified key:value pairs</td>
  </tr><tr id="createPopulatedList">
   <td><el-method>createPopulatedList</el-method></td>
   <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
-  <td><code>List&lt;of ItemType&gt;</code></td>
+  <td><code>List&lt;of itemType&gt;</code></td>
   <td>a List containing the specified number of items each initialised to the value in the second argument</td>
  </tr><tr id="createPopulatedListofLists">
   <td><el-method>createPopulatedListofLists</el-method></td>

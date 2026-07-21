@@ -827,7 +827,7 @@ constant warningMsg set to "Limit reached"
   remembering to add empty brackets after its name.</p>
 <p>The following examples define a constant list of colours (using numerical hex values), and a constant dictionary that specifies
   the colour for each suit in a deck of cards using system method <a href="LibRef.html#createDictionary"><el-method>createDectionary</el-method></a>
-  to set up the dictionary from a list of 2-tuples. In this second case, integer ouput is converted to a string of
+  to set up the dictionary from a list of 2-tuples. In this second case, integer output is converted to a string of
   hexadecimal before printing by using example function <a href="LibRef.html#hex"><el-method>hex</el-method></a>:</p>
 
 <codeblock>main
@@ -901,7 +901,7 @@ enum Outcome undecided, win, lose, draw, winDouble
     <ul>
       <li>readability,</li>
       <li>safety, because if the four directions were defined as strings, e.g. <code>"right"</code> a mis-spelling
-      might not be picked up until runtime. Whereas with the enum, writing <code>Direction.rihgt</code> would raise an error at compilation.</li>
+      might not be picked up until runtime. Whereas with the enum, writing <code>Direction.right</code> would raise an error at compilation.</li>
     </ul>
   </li>
 </ul>
@@ -1120,7 +1120,7 @@ case a function call:</p>
 </div>
 
 <div id="assign">
-<h2>Assigment</h2>
+<h2>Assignment</h2>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of an assignment</h3>
@@ -1976,7 +1976,7 @@ We hope to remove this requirement in a future version &ndash; to make the synta
   that if you define your own identifier that classes with a <i>reserved word</i>, the simplest fix is to add an underscore on the end.)
 </p>
 
-<p>The <el-method>if_</el-method> function returns one of two values dependent upon the evaulation of a Boolean value:</p>
+<p>The <el-method>if_</el-method> function returns one of two values dependent upon the evaluation of a Boolean value:</p>
 <p>Its syntax is shown here:</p>
 <code>variable isBigger set to if_(a >= b, true, false)</code>
 <p>Similarly, but returning an evaluated expression:</p>
