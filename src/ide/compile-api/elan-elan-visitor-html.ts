@@ -1,8 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { Language } from "../frames/frame-interfaces/language.js";
 import { ElanElanVisitor } from "./antlr4-parser.js";
 
 export class ElanElanVisitorHtml extends ElanElanVisitor {
-  constructor() {
+  constructor(private readonly language: Language) {
     super();
   }
 
@@ -14,19 +15,28 @@ export class ElanElanVisitorHtml extends ElanElanVisitor {
     const types = ((this as any).visitChildren(ctx) as string[])
       .filter((s) => this.filterTokens(s))
       .join(", ");
-    return `(${types})`;
+    const op = this.language.TUPLE_START;
+    const cl = this.language.TUPLE_END;
+
+    return `${op}${types}${cl}`;
   }
 
   visitTypeName(ctx: any) {
     const type = (this as any).visitChildren(ctx)[0] as string;
-    return `<el-type>${type}</el-type>`;
+    return `<el-type>${this.language.mapType(type)}</el-type>`;
   }
 
   visitTypeGeneric(ctx: any) {
     const typeName = (this as any).visit(ctx.typeName()) as string;
     const types = (this as any).visit(ctx.type()) as string[];
 
-    return `${typeName}&lt;<el-kw>of</el-kw> ${types.join(",")}&gt;`;
+    const op = this.language.START_OF_GENERIC.replace("<", "&lt;").replace(
+      "of",
+      "<el-kw>of</el-kw>",
+    );
+    const end = this.language.END_OF_GENERIC.replace(">", "&gt;");
+
+    return `${typeName}${op}${types.join(", ")}${end}`;
   }
 
   override visitType(context: any) {

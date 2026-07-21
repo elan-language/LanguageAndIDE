@@ -312,6 +312,9 @@ export class LanguagePython extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
+  TUPLE_START = "tuple[";
+  TUPLE_END = "]";
+
   EXPRESSION_KEYWORDS: string[] = [this.LAMBDA, this.SELF, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [this.SELF, this.TRUE, this.FALSE];
 

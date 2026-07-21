@@ -773,7 +773,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   renderAsHtmlFromTree(ctx: any) {
-    return ctx.accept(new ElanElanVisitorHtml());
+    return ctx.accept(new ElanElanVisitorHtml(this.language()));
   }
 
   renderAsElanSource(): string {

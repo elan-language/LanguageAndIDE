@@ -260,6 +260,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   END_OF_GENERIC: string = ">";
   THIS_INSTANCE: string = this.THIS;
 
+  TUPLE_START = "(";
+  TUPLE_END = ")";
+
   EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];
   DISALLOWED_IDENTIFIERS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS, this.TRUE, this.FALSE];
 

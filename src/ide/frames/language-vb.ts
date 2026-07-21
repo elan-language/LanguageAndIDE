@@ -313,6 +313,9 @@ export class LanguageVB extends LanguageAbstract {
   OVERRIDES = "Overrides";
   IMPLEMENTS = "Implements";
 
+  TUPLE_START = "(";
+  TUPLE_END = ")";
+
   EXPRESSION_KEYWORDS: string[] = [this.NEW, this.FUNCTION, this.ME, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [this.ME, this.FUNCTION, this.NOT, this.TRUE, this.FALSE];
 

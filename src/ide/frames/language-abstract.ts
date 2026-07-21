@@ -251,4 +251,24 @@ export abstract class LanguageAbstract implements Language {
   }
 
   abstract reservedWords: Set<string>;
+
+  abstract TUPLE_START: string;
+  abstract TUPLE_END: string;
+
+  mapType(s: string) {
+    switch (s) {
+      case "Int":
+        return this.INT_NAME;
+      case "Float":
+        return this.FLOAT_NAME;
+      case "Boolean":
+        return this.BOOL_NAME;
+      case "String":
+        return this.STRING_NAME;
+      case "List":
+        return this.LIST_NAME;
+      default:
+        return s;
+    }
+  }
 }

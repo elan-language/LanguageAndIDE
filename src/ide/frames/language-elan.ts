@@ -324,6 +324,9 @@ export class LanguageElan extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
+  TUPLE_START = "(";
+  TUPLE_END = ")";
+
   EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.THIS, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [
     this.NEW,
