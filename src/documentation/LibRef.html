@@ -570,18 +570,18 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
-  <td>see <a href="#List_procedures">Procedure methods on a List <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Dictionary_procedures">Procedure methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListProcedures">Procedure methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#DictionaryProcedures">Procedure methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
-  <td>see <a href="#List_functions">Function dot methods on a List <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Dictionary_functions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Set_functions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Stack_functions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#Queue_functions">Function dot methods on a Queue <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListFunctions">Function dot methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#DictionaryFunctions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#SetFunctions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#StackFunctions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#QueueFunctions">Function dot methods on a Queue <i class="fa">&#xf14c;</i></a></td>
  </tr>
 </table>
 
@@ -649,7 +649,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 </ul>
 <p>and refer to a cell using three indexes in square brackets.
 
-<h3 class="no-TOC" id="List_procedures">Procedure methods on a <code>List</code></h3>
+<h3 class="no-TOC" id="ListProcedures">Procedure methods on a <code>List</code></h3>
 <p>Where an argument provides a new value for an item in a List, that value must be of the same type as defined for the List's items.</p>
 <table class="tableMethod">
  <tr>
@@ -698,14 +698,14 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr>
 </table>
 
-<h3 class="no-TOC" id="List_functions">Function dot methods on a <code>List</code></h3>
+<h3 class="no-TOC" id="ListFunctions">Function dot methods on a <code>List</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
   <th>arguments</th>
   <th>return<br>type</th>
   <th>returns</th>
- </tr><tr id="asSet_List">
+ </tr><tr id="asSet">
   <td><el-method>asSet</el-method></td>
   <td>(none)</td>
   <td><code>HashSet</code></td>
@@ -727,7 +727,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>List</code></td>
   <td>a new List obtained from applying a lambda to the input List<br>
   see <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
- </tr><tr id="head_List">
+ </tr><tr id="head">
   <td><el-method>head</el-method></td>
   <td>(none)</td>
   <td><code>List</code> item's type</td>
@@ -911,7 +911,7 @@ end function
 </div>
 </div></div>
 
-<h3 class="no-TOC" id="Dictionary_procedures">Procedure method on a <code>Dictionary</code></h3>
+<h3 class="no-TOC" id="DictionaryProcedures">Procedure method on a <code>Dictionary</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -924,7 +924,7 @@ end function
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Dictionary_functions">Function dot methods on a <code>Dictionary</code></h3>
+<h3 class="no-TOC" id="DictionaryFunctions">Function dot methods on a <code>Dictionary</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -936,7 +936,7 @@ end function
   <td><code>Dictionary</code></td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if dictionary and argument are identical<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="hasKey_Dictionary">
+ </tr><tr id="hasKey">
   <td><el-method>hasKey</el-method></td>
   <td>item of Dictionary key's type</td>
   <td><code>Boolean</code></td>
@@ -1011,7 +1011,7 @@ end main
 </tr>
 </table>
 
-<h3 class="no-TOC" id="Set_functions">Function dot methods on a <code>HashSet</code></h3>
+<h3 class="no-TOC" id="SetFunctions">Function dot methods on a <code>HashSet</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1116,7 +1116,7 @@ end main
  </li>
 </ul>
 
-<h3 class="no-TOC" id="Stack_procedure">Procedure method on a <code>Stack</code></h3>
+<h3 class="no-TOC" id="StackProcedure">Procedure method on a <code>Stack</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1129,7 +1129,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Stack_functions">Function dot methods on a <code>Stack</code></h3>
+<h3 class="no-TOC" id="StackFunctions">Function dot methods on a <code>Stack</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1180,7 +1180,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Queue_procedure">Procedure method on a <code>Queue</code></h3>
+<h3 class="no-TOC" id="QueueProcedure">Procedure method on a <code>Queue</code></h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1193,7 +1193,7 @@ end main
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Queue_functions">Function dot methods on a <code>Queue</code></h3>
+<h3 class="no-TOC" id="QueueFunctions">Function dot methods on a <code>Queue</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1449,7 +1449,7 @@ end main
 So the top left corner of the display is at (-100,75).</p>
 <p>A new turtle's default starting position is at (0,0) facing upwards (<code>heading</code> is 0), from where a <el-method>move</el-method>  will be  in the <i>y</i> direction.</p>
 <p>You can move and turn a turtle, causing lines to be drawn, whether or not the turtle is showing.</p>
-<h3 class="no-TOC" id="Turtle_procedures">Procedure methods on a Turtle</h3>
+<h3 class="no-TOC" id="TurtleProcedures">Procedure methods on a Turtle</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1507,7 +1507,7 @@ So the top left corner of the display is at (-100,75).</p>
   <td>turns the turtle to face in the direction specified in degrees<br>where 0 is upward and increasing values go clockwise from there</td>
  </tr>
 </table>
-<h3 class="no-TOC" id="Turtle_properties">Properties of a Turtle</h3>
+<h3 class="no-TOC" id="TurtleProperties">Properties of a Turtle</h3>
 <p>The current location and heading of the turtle may be read using the properties
   <code>x</code>, <code>y</code>, and <code>heading</code>.</p>
 <table class="tableMethod">
@@ -1618,6 +1618,7 @@ Only <code>fillColour</code> can be specified as <code>transparent</code>.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <code>VectorGraphic</code> instance.
 Later shapes are positioned in front of earlier ones.</p>
 
+<div id="asSVG"></div>
 <h3 class="no-TOC">Function dot methods on Vector graphic shapes</h3>
 <table class="tableMethod">
  <tr>
@@ -1659,7 +1660,7 @@ Later shapes are positioned in front of earlier ones.</p>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="VG_properties">Properties of Vector graphic shapes</h3>
+<h3 class="no-TOC" id="VGProperties">Properties of Vector graphic shapes</h3>
 <p>This table lists the properties of the Vector graphic shapes and their default values,
 together with the <b>procedure</b> and <b>function</b> methods provided to alter their values in a given instance.</p>
 <table class="tableProperty">
@@ -1923,7 +1924,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
 <p>Avoid applying <el-method>nextGen</el-method> more than once on the same <code>Random</code> instance, because it will return the same values.</p>
 <p>If the <el-method>initialiseFromClock</el-method> call is absent, the program will still generate a sequence of random values, <i>but the sequence will be exactly the same each time you run the program.</i> Initialising from the clock ensures that you get a different sequence each run. Using <code>Random</code> without so initialising, however, can be extremely useful for testing purposes since the results are repeatable.</p>
 
-<h3 class="no-TOC" id="Random_procedures">Function  method for random seed</h3>
+<h3 class="no-TOC" id="RandomProcedures">Function  method for random seed</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -1936,7 +1937,7 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
  </tr>
 </table>
 
-<h3 class="no-TOC" id="Random_functions">Function dot methods on a <code>Random</code></h3>
+<h3 class="no-TOC" id="RandomFunctions">Function dot methods on a <code>Random</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -2279,7 +2280,7 @@ end main
 </codeblock>
    <p>The usual &lt;img&gt; tag attributes are respected, though <code>alt</code> does not give the expected tooltip when hovering over the image, and <code>title</code> is only a descriptive comment.</p>
 
- <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VG_properties">vector graphic procedures <i class="fa">&#xf14c;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
+ <li>put the URL into a Vector Graphics <code>ImageVG</code> definition, set properties by calling <a href="#VGProperties">vector graphic procedures <i class="fa">&#xf14c;</i></a>, then call the method <el-method>displayVectorGraphics</el-method> on it, thus:
 <codeblock>main
   variable sharkUrl set to "https://upload.wikimedia.org/wikipedia/commons/0/08/Corl0207_(28225976491).jpg"
   variable sharkVG set to new ImageVG(sharkUrl)
@@ -2662,9 +2663,9 @@ end function
 
 <p>Procedures applicable to standard Reference types are linked from:</p>
 <ul>
- <li><a href="#List_procedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></li>
- <li><a href="#Dictionary_procedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
- <li><a href="#Turtle_procedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#ListProcedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#DictionaryProcedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
+ <li><a href="#TurtleProcedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf14c;</i></a></li>
 </ul>
 <p>User-defined Classes may have procedures that can be applied to their Class instances.
 
@@ -3321,7 +3322,7 @@ end main
 <hr>
 </div></div>
 
-<h2 id="AsRef">Passing a function as a reference</h2>
+<h2 id="functionRef">Passing a function as a reference</h2>
 <p>To use a Higher-order Function (HoF), you have to pass in a reference to a <b>function</b>.
  This can be either a <code>lambda</code> or the name of a <b>function</b>.
  It is also possible to use references to functions not in the context of HoFs.</p>
@@ -3339,7 +3340,7 @@ function passedMathsTest(p as Pupil) returns Boolean
 end function
 </codeblock>
 
-<h1 id="systemConstants">System constants</h1>
+<h1 id="SystemConstants">System constants</h1>
 
 <p>System constants are unlike values that you define in your <a href="LangRef.html#constant">program <b>constant</b>  <i class="fa">&#xf08e;</i></a>,
  in that they are mutable named values, though it would be poor practice to change them.</p>

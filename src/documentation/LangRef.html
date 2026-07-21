@@ -33,7 +33,7 @@
  <li>The list of demo programs will now show only programs that use PP.</li>
  <li>The options shown on the <b>new code</b> menus in the editor are all appropriate to PP. These are listed below under:
   <ul>
-    <li><a href="#globalInstructions">Global Instructions <i class="fa">&#xf14c;</i></a> and</li>
+    <li><a href="#GlobalInstructions">Global Instructions <i class="fa">&#xf14c;</i></a> and</li>
     <li><a href="#statementInstructions">Statement Instructions <i class="fa">&#xf14c;</i></a></li>
    </ul>
   </li>
@@ -273,7 +273,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
 </div>
 </div>
 
-<div id="globalInstructions">
+<div id="GlobalInstructions">
 <h1>Global instructions</h1>
 <p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
   and are therefore not indented.</p>
@@ -733,7 +733,7 @@ end test
 
 <h4 class="no-TOC">Testing for runtime errors</h4>
 <p>If the expression you are testing causes a runtime error, then the error will be displayed in the red <b>fail</b> message.</p>
-<p>If there are failures, mark the tests that you added since the last successful test as <a href="IDENavigation.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
+<p>If there are failures, mark the tests that you added since the last successful test as <a href="IdeRef.html#EditInstructions"><code>ghosted</code> <i class="fa">&#xf08e;</i></a> and then remove their ghosted status one by one until the cause is identified and fixed.</p>
 
 <p>This <b>assert statement</b> shows how to test for an <i>expected</i> error message:</p>
 <codeblock>test test_message
@@ -908,7 +908,7 @@ enum Outcome undecided, win, lose, draw, winDouble
 </div></div>
 </div>
 
-<div id="Comment">
+<div id="comment">
 <h2>Comment</h2>
 
 <div class="accordion">
@@ -1119,7 +1119,7 @@ case a function call:</p>
 </div></div>
 </div>
 
-<div id="reassign">
+<div id="assign">
 <h2>Assigment</h2>
 
 <div class="accordion">
@@ -2036,9 +2036,9 @@ end procedure
 <p>There are two fundamentally different kinds of data type, differing by how their values
 are passed around in a running program:</p>
 <ul>
- <li><i><b id="ValueType">Value types</b></i> that contain a single value, and are passed around directly:<br>
+ <li><i><b id="ValueTypes">Value types</b></i> that contain a single value, and are passed around directly:<br>
  <code>Int</code>, <code>Float</code>, <code>Boolean</code></li>
- <li><i><b id="ReferenceType">Reference types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
+ <li><i><b id="ReferenceTypes">Reference types</b></i> that contain a more complex structure of values, and are passed around by references to them:<br>
  <code>String</code>, <code>List</code>, etc. as well as
  any <b>concrete class</b> pr <b>abstract class</b>.</li>
 </ul>
@@ -2050,7 +2050,7 @@ are passed around in a running program:</p>
   <td>Value data</td>
   <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Boolean"><el-topic>Truth<br>value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><br><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr>
  <th></th><th colspan="4">Reference types</th>
@@ -2069,8 +2069,8 @@ are passed around in a running program:</p>
  </tr><tr>
   <td>Graphics</td>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>LineVG</code><br><code>RectangleVG</code>
-  <br><code>CircleVG</code><br><code>ImageVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>CircleVG</code><br><code>ImageVG</code><br><code>LineVG</code>
+  <br><code>RectangleVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr>
@@ -2083,7 +2083,7 @@ are passed around in a running program:</p>
   <td>User-defined</td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#abstract_class"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="oopRef.html#abstractClass"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Other</td>
