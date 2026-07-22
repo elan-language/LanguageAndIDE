@@ -21,7 +21,7 @@ import { TestRunner } from "./test-runner";
 import {
   collapseAllMenus,
   cursorDefault,
-  delayMessage,
+  //delayMessage,
   getEditorMsg,
   getFocused,
   getLanguageByClass,
@@ -425,18 +425,18 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
           if (this.purgingKeys) {
             return;
           }
-          const before = Date.now();
+          //const before = Date.now();
           codeChanged = this.handleKey(e);
-          const after = Date.now();
-          const delay = after - before;
+          //const after = Date.now();
+          //const delay = after - before;
           if (codeChanged === true) {
-            if (delay >= 1000) {
-              alert(delayMessage);
-              e.key = "Backspace";
-              this.handleKey(e);
-              setTimeout(() => (this.purgingKeys = false), 500);
-              this.purgingKeys = true;
-            }
+            // if (delay >= 1000) {
+            //   alert(delayMessage);
+            //   e.key = "Backspace";
+            //   this.handleKey(e);
+            //   setTimeout(() => (this.purgingKeys = false), 500);
+            //   this.purgingKeys = true;
+            // }
             const singleKeyEdit = !(e.modKey.control || e.modKey.shift || e.modKey.alt);
             await this.refreshAndDisplay(vm, tr, false, singleKeyEdit);
           } else if (codeChanged === false) {

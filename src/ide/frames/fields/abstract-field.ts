@@ -664,7 +664,7 @@ export abstract class AbstractField implements Selectable, Field {
     } else {
       if (this.rootNode && this._parseStatus === ParseStatus.valid) {
         html = this.rootNode.renderAsHtml();
-      } else if (this.context) {
+      } else if (this.context && this._parseStatus === ParseStatus.valid) {
         html = this.renderAsHtmlFromTree(this.context);
       } else {
         html = escapeHtmlChars(this.text);
@@ -729,7 +729,7 @@ export abstract class AbstractField implements Selectable, Field {
       const cls = this.isSelected()
         ? DisplayColour[DisplayColour.warning]
         : DisplayColour[DisplayColour.error];
-      const msg = this.rootNode!.message;
+      const msg = this.rootNode?.message ?? "invalid";
       message = `<el-msg class="${cls}">${msg}${this.helpAsHtml()}</el-msg>`;
     } else {
       message = helper_compileMsgAsHtmlNew(this.getFile(), this);
@@ -756,11 +756,11 @@ export abstract class AbstractField implements Selectable, Field {
     return html;
   }
 
-  renderAsExport(): string {
-    return this.readParseStatus() === ParseStatus.valid
-      ? removeHtmlTagsAndEscChars(this.textAsHtml())
-      : this.rootNode!.matchedText;
-  }
+  // renderAsExport(): string {
+  //   return this.readParseStatus() === ParseStatus.valid
+  //     ? removeHtmlTagsAndEscChars(this.textAsHtml())
+  //     : this.rootNode!.matchedText;
+  // }
 
   indent(): string {
     return "";
@@ -880,16 +880,20 @@ export abstract class AbstractField implements Selectable, Field {
     );
   }
 
-  public getSymbolCompletionSpec(): SymbolCompletionSpec {
+  public getSymbolCompletionSpec(): SymbolCompletionSpec | undefined {
     KeywordCompletion.reset(); // to clear static map
+
     const rn = this.rootNode ?? this.initialiseRoot();
-    const spec = rn.symbolCompletion_getSpec();
-    if (spec.context === "") {
-      spec.context = this.extractContextFromText();
-    } else if (spec.context === "none") {
-      spec.context = "";
+    if (rn) {
+      const spec = rn.symbolCompletion_getSpec();
+      if (spec.context === "") {
+        spec.context = this.extractContextFromText();
+      } else if (spec.context === "none") {
+        spec.context = "";
+      }
+      return spec;
     }
-    return spec;
+    return undefined;
   }
 
   orderSymbol(s1: SymbolWrapper, s2: SymbolWrapper) {
@@ -904,7 +908,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected symbolCompletionAsHtml(): string {
     let popupAsHtml = "";
     const spec = this.getSymbolCompletionSpec();
-    if (this.showAutoComplete(spec)) {
+    if (spec && this.showAutoComplete(spec)) {
       this.symbolToMatch = spec.toMatch;
       const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
       const keywords = Array.from(spec.keywords)
@@ -929,6 +933,12 @@ export abstract class AbstractField implements Selectable, Field {
   resetText() {
     if (!!this.rootNode && this._parseStatus === ParseStatus.valid) {
       const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
+      if (text !== this.text) {
+        this.setFieldToKnownValidText(text);
+      }
+    }
+    if (!!this.context && this._parseStatus === ParseStatus.valid) {
+      const text = removeHtmlTagsAndEscChars(this.renderAsHtmlFromTree(this.context));
       if (text !== this.text) {
         this.setFieldToKnownValidText(text);
       }
