@@ -22,7 +22,6 @@ export const ifKeyword = "if";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const inputKeyword = "input";
-export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
@@ -91,7 +90,6 @@ const elanKeywords: string[] = [
   inKeyword,
   inheritsKeyword,
   inputKeyword,
-  interfaceKeyword,
   isKeyword,
   isntKeyword,
   lambdaKeyword,

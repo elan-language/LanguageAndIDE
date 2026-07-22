@@ -23,7 +23,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -93,7 +92,6 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof CatchStatement ||
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
-      frame instanceof InterfaceFrame ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
@@ -167,8 +165,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof FunctionMethod) {

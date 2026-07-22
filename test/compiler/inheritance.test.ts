@@ -1491,11 +1491,11 @@ main
   call printNoLine(x.ff())
 end main
 
-interface Yon
+abstract class Yon
   abstract function ff() returns Int
-end interface
+end class
 
-abstract class Foo
+abstract class Foo inherits Yon
 
   function ff() returns Int
     return this.prop
@@ -1504,7 +1504,7 @@ abstract class Foo
   abstract property prop as Int
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Foo
   constructor()
     assign this.prop to 3
   end constructor
@@ -1530,7 +1530,7 @@ class Yon {
 
 }
 
-class Foo {
+class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
@@ -1586,9 +1586,9 @@ main
   call printNoLine(x.ff())
 end main
 
-interface Yon
+abstract class Yon
   abstract function ff() returns Int
-end interface
+end class
 
 abstract class Foo inherits Yon
 
@@ -1625,7 +1625,7 @@ class Yon {
 
 }
 
-class Foo {
+class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
@@ -1681,9 +1681,9 @@ main
   call printNoLine(x.ff())
 end main
 
-interface Yon
+abstract class Yon
   abstract function ff() returns Int
-end interface
+end class
 
 abstract class Foo inherits Yon
 
@@ -1694,7 +1694,7 @@ abstract class Foo inherits Yon
   abstract property prop as Int
 end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Foo
   constructor()
     assign this.prop to 3
   end constructor
@@ -1720,7 +1720,7 @@ class Yon {
 
 }
 
-class Foo {
+class Foo extends Yon {
   static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
@@ -2068,109 +2068,6 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-  });
-
-  test("Pass_DiamondInheritance", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-interface Foo
-  abstract property p1 as Int
-end interface
-
-interface Bar inherits Foo
-  abstract property p2 as Int
-end interface
-
-interface Yon inherits Foo
-  abstract property p3 as Int
-end interface
-
-class Qux inherits Bar, Yon
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as Int
-  property p2 as Int
-  property p3 as Int
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p3", 0]]);};
-  get p3() {
-    return 0;
-  }
-  set p3(p3) {
-  }
-
-}
-
-class Qux {
-  static emptyInstance() { return system.emptyClass(Qux, [["p1", 0], ["p2", 0], ["p3", 0]]);};
-
-  async _initialise() {
-
-    return this;
-  }
-
-  async toString() {
-    return "";
-  }
-
-  p1 = 0;
-
-  p2 = 0;
-
-  p3 = 0;
 
 }
 return [main, _tests];}`;
@@ -2546,7 +2443,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2576,7 +2473,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2606,7 +2503,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2636,7 +2533,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2666,7 +2563,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2696,7 +2593,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -3383,7 +3280,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'p1' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -3404,13 +3301,13 @@ abstract class Foo
   abstract property p2 as Float 
 end class
 
-interface Yon
+abstract class Yon inherits Foo
   abstract property p1 as Float 
   abstract procedure setP1(v as Float)
   abstract function product() returns Float
-end interface
+end class
 
-class Bar inherits Foo, Yon
+class Bar inherits Yon
     constructor()
         assign this.p1 to 3
         assign this.p2 to 4
@@ -3450,46 +3347,6 @@ end class`;
     ]);
   });
 
-  test("Fail_DiamondInheritance", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-interface Foo
-  abstract property p1 as Int
-end interface
-
-interface Bar inherits Foo
-  abstract property p2 as Int
-end interface
-
-interface Yon inherits Foo
-  abstract property p3 as Int
-end interface
-
-class Qux inherits Bar, Yon
-  property p2 as Int
-  property p3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Qux must implement Foo.p1.ErrorMessages.html#compile_error"]);
-  });
-
   test("Fail_PrivateMemberCannotImplementInterface", async () => {
     const code = `${testHeader}
 
@@ -3502,9 +3359,9 @@ function ff(f as Foo) returns Int
   return f.p1
 end function
 
-interface Foo
+abstract class Foo
   abstract property p1 as Int
-end interface
+end class
 
 class Bar inherits Foo
   private property p1 as Int
@@ -3538,9 +3395,9 @@ function ff(f as Yon) returns Int
   return f.p1
 end function
 
-interface Yon
+abstract class Yon
   abstract property p1 as Int
-end interface
+end class
 
 abstract class Foo inherits Yon
   private property p1 as Int
@@ -3578,9 +3435,9 @@ function ff(f as Yon) returns Int
   return f.p1
 end function
 
-interface Yon
+abstract class Yon
   abstract property p1 as Int
-end interface
+end class
 
 abstract class Foo inherits Yon
   private property p1 as Int

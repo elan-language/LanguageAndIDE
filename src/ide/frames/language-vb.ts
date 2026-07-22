@@ -21,7 +21,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -161,8 +160,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method>()`;
     } else if (frame instanceof FunctionMethod) {
@@ -205,8 +202,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.END} ${this.IF}</el-kw>`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.END} ${this.INTERFACE}</el-kw>`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TestFrame) {

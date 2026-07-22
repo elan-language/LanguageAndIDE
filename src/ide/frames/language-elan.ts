@@ -20,7 +20,6 @@ import {
   inheritsKeyword,
   inKeyword,
   inputKeyword,
-  interfaceKeyword,
   lambdaKeyword,
   letKeyword,
   mainKeyword,
@@ -68,7 +67,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
@@ -199,8 +197,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof TestFrame) {
@@ -267,7 +263,6 @@ export class LanguageElan extends LanguageAbstract {
   private IN = inKeyword;
   private INHERITS = inheritsKeyword;
   private INPUT = inputKeyword;
-  private INTERFACE = interfaceKeyword;
   private lambdaKeyword = lambdaKeyword;
   private LET = letKeyword;
   private MAIN = mainKeyword;
