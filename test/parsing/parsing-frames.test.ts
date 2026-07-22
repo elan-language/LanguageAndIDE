@@ -455,9 +455,9 @@ end class
     const code = `${testHeader}
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 
-  abstract property p2 as Int
+  property p2 as Int
 
   abstract procedure setP1(v as Int)
 
@@ -480,7 +480,7 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - copy with method", async () => {
+  test("parse Frames - with method", async () => {
     const code = `${testHeader}
 
 class Player inherits Foo, Bar
@@ -494,9 +494,9 @@ class Player inherits Foo, Bar
 
   property score as Int
 
-  copy with_score(score as Int) returns Player
-    return copyWithPropertyUpdated(this, "score", score)
-  end copy
+  function with_score(score as Int) returns Player
+    return copyWith(this, "score", score)
+  end function
 
 end class
 `;

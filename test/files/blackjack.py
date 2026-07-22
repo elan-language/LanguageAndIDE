@@ -247,9 +247,9 @@ class Game: # concrete class
 
   message: str # property
 
-  def with_players(self: Game, players: list[Player]) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "players", players)
-  # end 
+  def with_players(self: Game, players: list[Player]) -> Game: # function method
+    return copyWith(self, "players", players)
+  # end function method
 
   def newRound(self: Game) -> None: # procedure method
     dealer = self.dealer # variable definition
@@ -446,13 +446,13 @@ class Dealer(Player): # concrete class
 
   hasPlayed: bool # property
 
-  def with_status(self: Dealer, status: Status) -> Dealer: # copy with method
-    return copyWithPropertyUpdated(self, "status", status)
-  # end 
+  def with_status(self: Dealer, status: Status) -> Dealer: # function method
+    return copyWith(self, "status", status)
+  # end function method
 
-  def with_handTotal(self: Dealer, handTotal: int) -> Dealer: # copy with method
-    return copyWithPropertyUpdated(self, "handTotal", handTotal)
-  # end 
+  def with_handTotal(self: Dealer, handTotal: int) -> Dealer: # function method
+    return copyWith(self, "handTotal", handTotal)
+  # end function method
 
   def play(self: Dealer) -> None: # procedure method
     self.startTurn() # procedure call
@@ -499,17 +499,17 @@ class HumanPlayer(Player): # concrete class
     self.cards = list[Card]() # assignment
   # end constructor
 
-  def with_status(self: HumanPlayer, status: Status) -> HumanPlayer: # copy with method
-    return copyWithPropertyUpdated(self, "status", status)
-  # end 
+  def with_status(self: HumanPlayer, status: Status) -> HumanPlayer: # function method
+    return copyWith(self, "status", status)
+  # end function method
 
-  def with_handTotal(self: HumanPlayer, handTotal: int) -> HumanPlayer: # copy with method
-    return copyWithPropertyUpdated(self, "handTotal", handTotal)
-  # end 
+  def with_handTotal(self: HumanPlayer, handTotal: int) -> HumanPlayer: # function method
+    return copyWith(self, "handTotal", handTotal)
+  # end function method
 
-  def with_cards(self: HumanPlayer, cards: list[Card]) -> HumanPlayer: # copy with method
-    return copyWithPropertyUpdated(self, "cards", cards)
-  # end 
+  def with_cards(self: HumanPlayer, cards: list[Card]) -> HumanPlayer: # function method
+    return copyWith(self, "cards", cards)
+  # end function method
 
   def newHand(self: HumanPlayer) -> None: # procedure method
     self.newHandHelper() # procedure call

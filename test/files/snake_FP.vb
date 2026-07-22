@@ -108,32 +108,32 @@ Class Game
     Return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   End Function
 
-  Function with_head(head As Square) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "head", head)
+  Function with_head(head As Square) As Game
+    Return copyWith(Me, "head", head)
   End Function
 
-  Function with_body(body As List(Of Square)) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "body", body)
+  Function with_body(body As List(Of Square)) As Game
+    Return copyWith(Me, "body", body)
   End Function
 
-  Function with_priorTail(priorTail As Square) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "priorTail", priorTail)
+  Function with_priorTail(priorTail As Square) As Game
+    Return copyWith(Me, "priorTail", priorTail)
   End Function
 
-  Function with_apple(apple As Square) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "apple", apple)
+  Function with_apple(apple As Square) As Game
+    Return copyWith(Me, "apple", apple)
   End Function
 
-  Function with_isOn(isOn As Boolean) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "isOn", isOn)
+  Function with_isOn(isOn As Boolean) As Game
+    Return copyWith(Me, "isOn", isOn)
   End Function
 
-  Function with_rnd(rnd As Random) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "rnd", rnd)
+  Function with_rnd(rnd As Random) As Game
+    Return copyWith(Me, "rnd", rnd)
   End Function
 
-  Function with_key(key As String) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "key", key)
+  Function with_key(key As String) As Game
+    Return copyWith(Me, "key", key)
   End Function
 
 End Class

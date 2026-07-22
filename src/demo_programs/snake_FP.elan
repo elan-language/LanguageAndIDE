@@ -1,4 +1,4 @@
-# 79b714d213e598a8d096d100aa704774f8ce79950bfb0597028a14bbe7989edd Elan 2.0.0-beta2 valid
+# a4098cf4c47bfc9ba4a3b6954c5d6c52a1deca474634c3b3b2b4cbad494f6ce4 Elan 2.0.0-beta2 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -106,33 +106,33 @@ class Game
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
-  copy with_head(head as Square) returns Game
-    return copyWithPropertyUpdated(this, "head", head)
-  end copy
+  function with_head(head as Square) returns Game
+    return copyWith(this, "head", head)
+  end function
 
-  copy with_body(body as List<of Square>) returns Game
-    return copyWithPropertyUpdated(this, "body", body)
-  end copy
+  function with_body(body as List<of Square>) returns Game
+    return copyWith(this, "body", body)
+  end function
 
-  copy with_priorTail(priorTail as Square) returns Game
-    return copyWithPropertyUpdated(this, "priorTail", priorTail)
-  end copy
+  function with_priorTail(priorTail as Square) returns Game
+    return copyWith(this, "priorTail", priorTail)
+  end function
 
-  copy with_apple(apple as Square) returns Game
-    return copyWithPropertyUpdated(this, "apple", apple)
-  end copy
+  function with_apple(apple as Square) returns Game
+    return copyWith(this, "apple", apple)
+  end function
 
-  copy with_isOn(isOn as Boolean) returns Game
-    return copyWithPropertyUpdated(this, "isOn", isOn)
-  end copy
+  function with_isOn(isOn as Boolean) returns Game
+    return copyWith(this, "isOn", isOn)
+  end function
 
-  copy with_rnd(rnd as Random) returns Game
-    return copyWithPropertyUpdated(this, "rnd", rnd)
-  end copy
+  function with_rnd(rnd as Random) returns Game
+    return copyWith(this, "rnd", rnd)
+  end function
 
-  copy with_key(key as String) returns Game
-    return copyWithPropertyUpdated(this, "key", key)
-  end copy
+  function with_key(key as String) returns Game
+    return copyWith(this, "key", key)
+  end function
 
 end class
 
