@@ -28,7 +28,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -60,18 +59,12 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   async func() {
     return 0;
   }
 
   proc() {
-  }
-
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
   }
 
 }
@@ -393,7 +386,7 @@ abstract class Foo1 inherits Foo
 end class
 
 abstract class Foo2 inherits Foo1
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo2
@@ -412,7 +405,6 @@ class Bar inherits Foo2
     call printNoLine(2)
   end procedure
 
-  property prop as Int
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -441,16 +433,12 @@ class Foo1 extends Foo {
 
 class Foo2 extends Foo1 {
   static emptyInstance() { return system.emptyClass(Foo2, [["prop", 0]]);};
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
+  prop = 0;
 
 }
 
 class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -468,8 +456,6 @@ class Bar extends Foo2 {
   async proc() {
     await _stdlib.printNoLine(2);
   }
-
-  prop = 0;
 
 }
 return [main, _tests];}`;
@@ -733,11 +719,11 @@ main
 end main
 
 abstract class Foo
-  abstract property f as Foo2
+  property f as Foo2
 end class
 
 abstract class Foo2
-  abstract property f2 as Foo
+  property f2 as Foo
 end class
 
 class Bar
@@ -762,20 +748,24 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  elan_f;
   get f() {
-    return Foo2.emptyInstance();
+    return this.elan_f ??= Foo2.emptyInstance();
   }
   set f(f) {
+    this.elan_f = f;
   }
 
 }
 
 class Foo2 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
+  elan_f2;
   get f2() {
-    return Foo.emptyInstance();
+    return this.elan_f2 ??= Foo.emptyInstance();
   }
   set f2(f2) {
+    this.elan_f2 = f2;
   }
 
 }
@@ -820,55 +810,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Maybefalse");
   });
 
-  test("Fail_DoesntImplementProp", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-abstract class Foo
-  abstract function func() returns Int
-  abstract procedure proc()
-  abstract property prop as Int
-end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.prop.ErrorMessages.html#compile_error",
-    ]);
-  });
-
   test("Fail_DoesntImplementFunc", async () => {
     const code = `${testHeader}
 
@@ -881,7 +822,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -928,7 +868,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -963,58 +902,6 @@ end class`;
     ]);
   });
 
-  test("Fail_DoesntImplementIndirectProp", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-abstract class Foo1
-  abstract property prop as Int
-end class
-
-abstract class Foo inherits Foo1
-  abstract function func() returns Int
-  abstract procedure proc()
-end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
-    ]);
-  });
-
   test("Fail_InheritSelf", async () => {
     const code = `${testHeader}
 
@@ -1023,7 +910,7 @@ main
 end main
 
 abstract class Foo inherits Foo
-  abstract property prop as Int
+  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1051,15 +938,15 @@ main
 end main
 
 abstract class Yon inherits Foo
-  abstract property prop as Int
+  property prop1 as Int
 end class
 
 abstract class Bar inherits Yon
-  abstract property prop as Int
+  property prop2 as Int
 end class
 
 abstract class Foo inherits Bar
-  abstract property prop as Int
+  property prop3 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1087,11 +974,11 @@ main
 end main
 
 abstract class Foo
-  abstract property prop as Int
+  property prop as Int
 end class
 
 abstract class Bar inherits Foo
-  abstract property prop as Int
+  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1128,7 +1015,7 @@ class Foo
 end class
 
 abstract class Bar inherits Foo
-  abstract property prop as Int
+  property prop2 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1222,7 +1109,7 @@ abstract class Foo1
 end class
 
 abstract class Foo2
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo, Foo1, Foo2
@@ -1241,7 +1128,6 @@ class Bar inherits Foo, Foo1, Foo2
     call printNoLine(2)
   end procedure
 
-  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(

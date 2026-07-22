@@ -1949,24 +1949,17 @@ end class`;
     ]);
   });
 
-  test("Fail_InheritAbstractClassIndirect", async () => {
+  test("Fail_CannotInheritFromYourself", async () => {
     const code = `${testHeader}
 
 main
   
 end main
 
-class Foo inherits Bar
+abstract class Bar inherits Bar
   property prop as Int
 end class
-
-abstract class Yon inherits Bar
-  abstract property prop as Int
-end class
-
-abstract class Bar inherits Yon
-  abstract property prop as Int
-end class`;
+`;
 
     const fileImpl = new FileImpl(
       testHash,

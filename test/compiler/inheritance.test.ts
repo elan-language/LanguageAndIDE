@@ -28,8 +28,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Float
-  abstract property p2 as Float 
+  property p1 as Float
   abstract procedure setP1(v as Float)
   abstract function product() returns Float
 end class
@@ -40,7 +39,6 @@ class Bar inherits Foo
         assign this.p2 to 4
     end constructor
 
-    property p1 as Float
     property p2 as Float
 
     procedure setP1(p1 as Float)
@@ -68,18 +66,8 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
 
   setP1(v) {
   }
@@ -91,15 +79,13 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
 
   async _initialise() {
     this.p1 = 3;
     this.p2 = 4;
     return this;
   }
-
-  p1 = 0;
 
   p2 = 0;
 
@@ -145,11 +131,11 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Float
+  property p1 as Float
 end class
 
 abstract class Bar inherits Foo
-  abstract property p2 as String
+  property p2 as String
 end class
 
 class Yon inherits Bar
@@ -160,8 +146,6 @@ class Yon inherits Bar
   function toString() returns String
     return ""
   end function
-    property p1 as Float
-    property p2 as String
 end class
 
 function b(bar as Bar) returns String
@@ -182,26 +166,18 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
+  p1 = 0;
 
 }
 
 class Bar extends Foo {
   static emptyInstance() { return system.emptyClass(Bar, [["p2", ""]]);};
-  get p2() {
-    return "";
-  }
-  set p2(p2) {
-  }
+  p2 = "";
 
 }
 
 class Yon extends Bar {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0], ["p2", ""]]);};
+  static emptyInstance() { return system.emptyClass(Yon, []);};
 
   async _initialise() {
     this.p1 = 3;
@@ -212,10 +188,6 @@ class Yon extends Bar {
   async toString() {
     return "";
   }
-
-  p1 = 0;
-
-  p2 = "";
 
 }
 
@@ -256,7 +228,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -265,7 +237,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
 end class
 
 procedure proc(foo as Foo)
@@ -282,16 +253,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
+  p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -301,8 +268,6 @@ class Bar extends Foo {
   async toString() {
     return "";
   }
-
-  p1 = 0;
 
 }
 
@@ -339,7 +304,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -348,7 +313,6 @@ class Bar inherits Foo
   function toString() returns String
     return "a Bar"
   end function
-  property p1 as Int
 end class
 
 function fun(l as List<of Bar>) returns Bar
@@ -366,16 +330,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
+  p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -385,8 +345,6 @@ class Bar extends Foo {
   async toString() {
     return "a Bar";
   }
-
-  p1 = 0;
 
 }
 
@@ -422,7 +380,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -431,7 +389,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
 end class
 
 function fun(foo as Foo) returns Int
@@ -448,16 +405,12 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
+  p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -467,8 +420,6 @@ class Bar extends Foo {
   async toString() {
     return "";
   }
-
-  p1 = 0;
 
 }
 
@@ -1408,7 +1359,7 @@ abstract class Foo inherits Yon
     return this.prop
   end function
 
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo
@@ -1419,7 +1370,6 @@ class Bar inherits Foo
     return ""
   end function
 
-  property prop as Int
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1443,16 +1393,12 @@ class Foo extends Yon {
     return this.prop;
   }
 
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
+  prop = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -1462,8 +1408,6 @@ class Bar extends Foo {
   async toString() {
     return "";
   }
-
-  prop = 0;
 
 }
 return [main, _tests];}`;
@@ -1503,7 +1447,7 @@ abstract class Foo inherits Yon
     return this.prop
   end function
 
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo
@@ -1514,7 +1458,6 @@ class Bar inherits Foo
     return ""
   end function
 
-  property prop as Int
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1538,16 +1481,12 @@ class Foo extends Yon {
     return this.prop;
   }
 
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
+  prop = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -1557,8 +1496,6 @@ class Bar extends Foo {
   async toString() {
     return "";
   }
-
-  prop = 0;
 
 }
 return [main, _tests];}`;
@@ -1598,7 +1535,7 @@ abstract class Foo inherits Yon
     return this.prop
   end function
 
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo
@@ -1609,7 +1546,6 @@ class Bar inherits Foo
     return ""
   end function
 
-  property prop as Int
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -1633,16 +1569,12 @@ class Foo extends Yon {
     return this.prop;
   }
 
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
+  prop = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -1652,8 +1584,6 @@ class Bar extends Foo {
   async toString() {
     return "";
   }
-
-  prop = 0;
 
 }
 return [main, _tests];}`;
@@ -1691,8 +1621,8 @@ class Foo
 end class
 
 abstract class Bar inherits Foo
-    abstract property p1 as Int
-    abstract property p2 as Int
+    property p1 as Int
+    property p2 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1720,8 +1650,8 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Float
-    abstract property p2 as Float
+    property p1 as Float
+    property p2 as Float
 
     abstract procedure setP1(v as Float)
 
@@ -1735,8 +1665,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-
-    property p1 as Float
 
     function toString() returns String 
         return ""
@@ -1756,7 +1684,6 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.p2.ErrorMessages.html#compile_error",
       "Bar must implement Foo.setP1.ErrorMessages.html#compile_error",
       "Bar must implement Foo.product.ErrorMessages.html#compile_error",
     ]);
@@ -1816,9 +1743,6 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Int
-    abstract property p2 as String
-
     abstract procedure setP1(v as Int)
 
     abstract function product() returns Int
@@ -1831,9 +1755,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-
-    property p1 as Float
-    property p2 as String
 
     procedure setP1(v as String)
     end procedure
@@ -1860,7 +1781,6 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'p1' must be of type Int.ErrorMessages.html#MemberTypeCompileError",
       "Member 'setP1' must be of type Procedure (Int).ErrorMessages.html#MemberTypeCompileError",
       "Member 'product' must be of type lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
     ]);
@@ -1874,8 +1794,8 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Float
-    abstract property p2 as Float
+    property p1 as Float
+    property p2 as Float
 
     abstract procedure setP1(v as Float)
 
@@ -1890,8 +1810,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-    property p1 as Float
-    property p2 as Float
 
     procedure setP1(p1 as Float)
         assign this.p1 to p1
@@ -2053,8 +1971,8 @@ main
 end main
 
 abstract class Bar
-    abstract property p1 as Int
-    abstract property p2 as Int
+    property p1 as Int
+    property p2 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2084,7 +2002,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -2093,7 +2011,6 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
 end class
 
 function upcast(bar as Bar) returns Foo
@@ -2133,7 +2050,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -2142,7 +2059,7 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
+
 end class
 
 function fun(l as List<of Foo>) returns Foo
@@ -2178,7 +2095,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -2187,7 +2104,7 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
+
 end class
 
 procedure fun(l as List<of Foo>)
@@ -2222,7 +2139,7 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+ property p1 as Int
 end class
 
 class Bar inherits Foo
@@ -2231,7 +2148,7 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  property p1 as Int
+
 end class
 
 function fun(l as Dictionary<of String, Foo>) returns Foo
@@ -2299,11 +2216,11 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2332,8 +2249,8 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Int
-  abstract property p1 as String
+  property p1 as Int
+  property p1 as String
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2423,37 +2340,7 @@ end main
 
 abstract class Foo
   abstract procedure ff()
-  abstract property ff as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_DuplicateMemberNames2", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-abstract class Foo
   abstract function ff() returns Int
-  abstract property ff as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2730,19 +2617,9 @@ end main
 
 abstract class Yon
   private property p1 as String
-  abstract property p1 as String
+  property p1 as String
 end class
-
-class Bar inherits Yon
-  constructor()
-    assign this.p1 to 0
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as Int
-  property p2 as Int
-end class`;
+`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -2758,7 +2635,6 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'p1' must be of type String.ErrorMessages.html#MemberTypeCompileError",
       "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
@@ -2989,19 +2865,9 @@ end main
 
 abstract class Yon
   property p1 as String
-  abstract property p1 as String
+  property p1 as Int
 end class
-
-class Bar inherits Yon
-  constructor()
-    assign this.p1 to ""
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as String
-  property p2 as Int
-end class`;
+`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -3089,11 +2955,11 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Float
+  property p1 as Float
 end class
 
 abstract class Bar
-  abstract property p2 as String
+  property p2 as String
 end class
 
 class Yon inherits Foo, Bar
@@ -3104,8 +2970,6 @@ class Yon inherits Foo, Bar
   function toString() returns String
     return ""
   end function
-    property p1 as Float
-    property p2 as String
 end class`;
 
     const fileImpl = new FileImpl(
@@ -3130,48 +2994,20 @@ end class`;
     const code = `${testHeader}
 
 main
-  variable x set to new Bar()
-  call printNoLine(x.p1)
-  call printNoLine(x.p2)
-  call printNoLine(x.product())
-  call x.setP1(4)
-  call printNoLine(x.product())
+
 end main
 
 abstract class Foo
-  abstract property p1 as Float
-  abstract property p2 as Float 
+  property p1 as Float
+  property p2 as Float 
 end class
 
 abstract class Yon inherits Foo
-  abstract property p1 as Float 
+  property p1 as Float 
   abstract procedure setP1(v as Float)
   abstract function product() returns Float
 end class
-
-class Bar inherits Yon
-    constructor()
-        assign this.p1 to 3
-        assign this.p2 to 4
-    end constructor
-  function toString() returns String
-    return ""
-  end function
-    property p1 as Float
-    property p2 as Float
-
-    procedure setP1(p1 as Float)
-        assign this.p1 to p1
-    end procedure
-
-    function product() returns Float
-        return this.p1 * this.p2
-    end function
-
-    function toString() returns String 
-        return ""
-    end function
-end class`;
+`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -3204,17 +3040,11 @@ main
 end main
 
 abstract class Foo
-  abstract property p1 as Float
-  abstract property p2 as Float 
+  property p1 as Float
+  property p2 as Float 
 end class
 
-abstract class Yon inherits Foo
-  abstract property p1 as Float 
-  abstract procedure setP1(v as Float)
-  abstract function product() returns Float
-end class
-
-class Bar inherits Yon
+class Bar inherits Foo
     constructor()
         assign this.p1 to 3
         assign this.p2 to 4
@@ -3254,110 +3084,21 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivateMemberCannotImplementInterface", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(ff(x))
-end main
-
-function ff(f as Foo) returns Int
-  return f.p1
-end function
-
-abstract class Foo
-  abstract property p1 as Int
-end class
-
-class Bar inherits Foo
-  private property p1 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Foo.p1.ErrorMessages.html#compile_error"]);
-  });
-
-  test("Fail_PrivateMemberCannotImplementInterface1", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(ff(x))
-end main
-
-function ff(f as Yon) returns Int
-  return f.p1
-end function
-
-abstract class Yon
-  abstract property p1 as Int
-end class
-
-abstract class Foo inherits Yon
-  private property p1 as Int
-end class
-
-class Bar inherits Foo
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Bar must implement Yon.p1.ErrorMessages.html#compile_error"]);
-  });
-
   test("Fail_PrivateMemberDuplicateId", async () => {
     const code = `${testHeader}
 
 main
-  variable x set to new Bar()
-  call printNoLine(ff(x))
+
 end main
 
-function ff(f as Yon) returns Int
-  return f.p1
-end function
-
 abstract class Yon
-  abstract property p1 as Int
+  property p1 as Int
 end class
 
 abstract class Foo inherits Yon
   private property p1 as Int
 end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-  property p1 as Int
-end class`;
+`;
 
     const fileImpl = new FileImpl(
       testHash,

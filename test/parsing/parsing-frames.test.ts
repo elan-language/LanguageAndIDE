@@ -455,9 +455,9 @@ end class
     const code = `${testHeader}
 
 abstract class Foo
-  abstract property p1 as Int
+  property p1 as Int
 
-  abstract property p2 as Int
+  property p2 as Int
 
   abstract procedure setP1(v as Int)
 
