@@ -542,8 +542,20 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 
 <p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
   The answer is similar to that for updating a List, String, or other standard data structure within a function
-  (described in <a href="#ListMutation">earlier<i class="fa">&#xf14c;</i></a>): you need define <el-method>with..</el-method> methods that
-  return a copy of the instance with specified changes. For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
+  (described in <a href="#ListMutation">earlier<i class="fa">&#xf14c;</i></a>): you need ,ake a copy of the instance with specified changes.
+  This is best achieved with the aid of the library function: <el-method>copyWith</el-method>, which requires three arguments:
+
+  <ul>
+    <li>the instance that needs to be copied, with updates</li>
+    <li>the <i>name</i> of the property on that object that is to be updated. This is <i>typically</i> specified as a literal string,
+      but it may be a string variable or constant. Either way you must take care that the string corresponds exactly (including the case)
+      to the property name.</li>
+    <li>The new value for the property on the resulting copy, which must be of the correct type for the property.</li>
+  </ul>
+ 
+  <p>The <el-method>copyWith</el-method> may be used anywhere, but it is often convenient to use it within one or more 'with...' methods
+  defined on the class. 
+  For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
 <codeblock>
@@ -552,11 +564,22 @@ function with_head(head as Square) returns Game
 end function
 </codeblock>
 
-Note that it:
+<p>Note that:</p>
 <ul>
-  <li>returns a <code>Game</code> (i.e. a Class instance)</li>
-  <li>creates and returns a copy (i.e. a new instance) of <code>this</code> (instance) named <code>copyOfThis</code> 
-    with the property named <code>"head"</code> reassigned to the new value, all accomplished by calling the library function <el-method>copyWith</el-method>.
+  <li>The function can be given any valid function name, but <el-method>with_head</el-method> follows a recommended <i>convention</i> -
+  making the intent of the function clear.</li>
+  <li>The function returns a <code>Game</code> i.e. the same as the class on which the function is defined.</li>
+  <li>The function defined a paramater of the same type as the property being updated, and this paramater is passed into the <el-method>copyWith</el-method>.</li>
+  <li>Most 'with...' methods are as simple as this, but there is nothing to stop you from performing more work within such a method, if needed.</li>
+</ul>
+
+<p>Defining 'with...' methods on the class, rather than just using <el-method>copyWith</el-method> elsewhere to do the update, offers several advantages:</p>
+
+<ul>
+  <li>Safety. <el-method>with_head</el-method> enforces the correct type for the new value to be given to the <code>head</code> property on the copy.</li>
+  <li>Simplicity. You are providing fewer parameters to make the update.</li>
+  <li>Chaining. Because 'with...' methods are instance methods, and because they return a new instance of the same type, they may be 'dot-chained'.
+    So you can update multiple propertied on a single instance in one line. An example may be seen in <b>Snake Functional</b> here: <code>g.with_body(g.body.withAppend(g.head)).with_head(new Square(newX, newY))</code>
   </li>
 </ul>
 
@@ -761,81 +784,6 @@ end function
 <p>When using the <b>functional</b> paradigm, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
 paradigm, except that the procedure method is not available for use - because procedure methods cause side effects.
     All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</p>
-
-  <div id="withMethod"></div>
-  <h2>'with' methods - TODO THIS SECION NEEDS COMPLETE RE-WRITE</h2>
-
-    <div class="accordion">
-      <h3 class="no-TOC acc-title">Examples of using <el-method>copyWith</el-method> in instance methods</h3>
-      <div class="acc-body">
-
-        <p>In the <b>Snake - functional</b> demo the <code>Game</code> class defines multiple <b>copy with method</b>s including:</p>
-
-        <ul>
-          <li><el-method>with_head</el-method></li>
-          <li><el-method>with_body</el-method></li>
-          <li><el-method>with_priorTail</el-method></li>
-          <li><el-method>with_apple</el-method></li>
-          <li><el-method>with_isOn</el-method></li>
-          <li><el-method>with_rnd</el-method></li>
-          <li><el-method>with_key</el-method></li>
-        </ul>
-
-        <p>The method <el-method>withNewApple</el-method> is a conventional <b>function method</b>, which creates a <i>new</i> apple
-        and then delegates to <el-method>with_apple</el-method> to return a game with that new apple.</p>
-
-<!--         <codeblock>
-          function with_head(head as Square) returns Game
-            return copyWith(this, "head", head)
-          end function
-        </codeblock>
-
-      <p>This method is called from 11 places elsewhere in the code, including within this global method:</p>
-
-      <codeblock>
-        function moveSnake(g as Game) returns Game
-          let k be g.key
-          let x be g.head.x
-          let y be g.head.y
-          let newX be if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
-          let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
-          return g.withBody(g.body.withAppend(g.head)).with_hea(new Square(newX, newY))
-        end function
-      </codeblock> -->
-
-      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with...</b>s -
-      because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
-      to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
-      </div>
-    </div>
-
-      <div class="accordion">
-      <h3 class="no-TOC acc-title">What you need to know about a 'with...' method</h3>
-      <div class="acc-body">
-
-        <ul>
-          <li>A <b>copy with method</b> is a very specific form of function method.</li>
-          <li>Its purpose is to allow an instance of a class to be 'updated' without actually mutating the instance.</li>
-          <li>Instead, the method returns a <i>copy</i> of the current instance, but with a specified difference to one of its properties.</li>
-          <li>Several of the standard data structures in the Elan library have similar <b>with  method</b>s, each being broadly equivalent to
-            a procedure method, but designed for use within a function. For example <code>List</code> has the procedural method <el-method>append</el-method>
-            and the function method <el-method>withAppend</el-method>.</li>
-          <li>When you add a <b>copy with method</b> you must specify the name and type for the single parameter that it permits.
-          Importantly, <i>both the name and the type must exactly match those of the property that you wish to update.</i></li>
-          <li>The <b>copy with method</b> has only a <b>return</b> instruction, and does not permit any other instructions to be added.</li>
-          <li>The expression returned by the function must take the form <code>copyWith(this, "head", head)</code> where
-            the name of the parameter (<code>head</code> in this case) appears twice: the first time in quotes - to define the name of the property being changed -
-            and the second time without quotes, representing the new value. This must currently be entered by hand, but in a future version will
-            be generated automatically, and will be uneditable.
-          </li>
-          <li>Always returning a copy of the data structure, instead of mutating the one you have may feel strange, but even in
-            procedural programming, <i>strings</i> are never mutated: the dot-method <el-method>upperCase</el-method> does not
-            <i>change</i> a string to upper case - it returns a <i>new</i> string with the contents of the original transformed to upper case.          </li>
-          <li>Because the method returns a new object, <b>withMethods</b> may be 'chained' (or 'dot-changed'), as you can see
-            in the <el-method>moveSnake</el-method>, which returns <code>g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))</code></li>
-        </ul>
-      </div>
-    </div>
 </div>
 
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
