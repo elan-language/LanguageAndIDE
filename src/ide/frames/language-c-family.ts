@@ -1,6 +1,5 @@
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -73,7 +72,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof LetStatement ||
       frame instanceof Assignment ||
       frame instanceof Property ||
-      frame instanceof AbstractProperty ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractFunction ||
       frame instanceof PrintStatement ||

@@ -1,6 +1,5 @@
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -97,7 +96,6 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ProcedureMethod ||
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
-      frame instanceof AbstractProperty ||
       frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();

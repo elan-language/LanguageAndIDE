@@ -6,7 +6,6 @@ import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProcedure } from "../class-members/abstract-procedure";
-import { AbstractProperty } from "../class-members/abstract-property";
 import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
@@ -208,10 +207,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return "";
   }
 
-  properties(): (AbstractProperty | Property)[] {
-    return this.getChildren().filter(
-      (c) => c instanceof Property || c instanceof AbstractProperty,
-    ) as (AbstractProperty | Property)[];
+  properties(): Property[] {
+    return this.getChildren().filter((c) => c instanceof Property) as Property[];
   }
 
   protected seenTwice(name: string, seenNames: string[]) {
@@ -233,9 +230,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
   createAbstractFunction(): Frame {
     return new AbstractFunction(this);
-  }
-  createAbstractProperty(): Frame {
-    return new AbstractProperty(this);
   }
   createAbstractProcedure(): Frame {
     return new AbstractProcedure(this);

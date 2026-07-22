@@ -29,7 +29,6 @@ import { BreakpointEvent } from "../../debugging/breakpoint-event";
 import { thisKeyword } from "../../elan-keywords";
 import { getSuperClasses, isAstCollectionNode } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
-import { AbstractPropertyAsn } from "../class-members/abstract-property-asn";
 import { PropertyAsn } from "../class-members/property-asn";
 import { EmptyAsn } from "../empty-asn";
 import { InheritsFromAsn } from "../fields/inherits-from-asn";
@@ -80,10 +79,8 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
     return "";
   }
 
-  properties(): (AbstractPropertyAsn | PropertyAsn)[] {
-    return this.getChildren().filter(
-      (c) => c instanceof PropertyAsn || c instanceof AbstractPropertyAsn,
-    );
+  properties(): PropertyAsn[] {
+    return this.getChildren().filter((c) => c instanceof PropertyAsn);
   }
 
   protected propertiesToInit() {
