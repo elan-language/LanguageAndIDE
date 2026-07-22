@@ -44,7 +44,7 @@
 <h1>Why coding with Elan is different</h1>
 
 <p>To start programming with Elan, first familiarise yourself with using the Elan IDE, especially for
-  entering and editing code. Do this by watching the videos <a href="#Videos">here <i class="fa">&#xf08e;</i></a>.
+  entering and editing code. Do this by watching the videos <a href="StartHere.html#Videos">here <i class="fa">&#xf08e;</i></a>.
   You will learn that Elan supports programming in <b>Python</b>, <b>VB</b>, <b>C#</b>, and <b>Java</b>
   (as well as the Reference Language Elan),
   and offers the option of immediate translation between these languages.
@@ -120,7 +120,7 @@ initial value given to it.</p>
     <li>(Additional, related rules are enforced in object-oriented programming)</li>
   </ul>
 
-<h3 class="no-TOC" id="NoNullRefsnoEarlyBreaks">No breaking out of loops before they have completed</h3>
+<h3 class="no-TOC" id="NoEarlyBreaks">No breaking out of loops before they have completed</h3>
 
 <p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allows you to break out of
 a loop before its completion. Elan does not permit any of those instructions to be used for the following reasons.</p>
@@ -129,6 +129,7 @@ offered executed a specified number of times; there were no 'conditional loops'.
 came proper <i>conditional</i> loops, of which the most common form is the <b>while loop</b>.
 With properly structured programming, it is never <i>necessary</i> to break out from a loop before its natural termination.</p>
 
+<div id="return"></div>
 <h3 class="no-TOC" id="FunctionReturn">Return from a function or procedure only after the final instruction</h3>
 
 <p>This principle is somewhat analogous to the previous one, in that programmers find it convenient to include multiple
@@ -1074,6 +1075,7 @@ end main
 </div>
 
 <div id="VariableDefinition">
+<div id="variable"></div>
 <h2>Variable definition</h2>
 
 <div class="accordion">
@@ -1177,6 +1179,7 @@ end procedure</codeblock>
 </div>
 
 <div id="InputInstruction">
+<div id="input"></div>
 <h2>Input statement</h2>
 
 <div class="accordion">
@@ -1733,7 +1736,7 @@ end test
 <p>If the two index values of a range are equal, or the second is smaller than the first,
 then an empty string or list is returned.</p>
 <p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
-<a href="LibRef.html#put_List"><el-method>put</el-method> <i class="fa">&#xf08e;</i></a>.</p>
+<a href="LibRef.html#withPut"><el-method>withPut</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
 <p>Example using indexing on a string:</p>
 <table class="tablePlain">
@@ -2043,6 +2046,7 @@ are passed around in a running program:</p>
  any <b>concrete class</b> pr <b>abstract class</b>.</li>
 </ul>
 
+<div id="TypeName"></div>
 <p>This table lists the Value types and the standard data structure (Reference) types, each linking to its definition and further details:</p>
 <table>
  <tr><th></th><th colspan="4">Value types</th>
@@ -2094,6 +2098,7 @@ are passed around in a running program:</p>
   </tr>
 </table>
 
+<div id="NamedValue"></div>
 <p>Named values are statically typed: their type, once defined, cannot be changed. A named value's type is:
 <ul>
  <li><i>either</i> automatically inferred from the value of the literal or expression defining a value type,</li>

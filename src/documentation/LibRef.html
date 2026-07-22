@@ -86,6 +86,7 @@ in the range:</li>
     Larger numbers will be rounded with zeros at the end, unless they are larger than around 2<sup>70</sup>, when they will automatically be shown
     in exponential (scientific) format, as shown in the example.</li>
 </ul>
+<div id="hex"></div>
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example of base conversion</h4>
 <div class="acc-body">
@@ -172,7 +173,7 @@ Its type is <code>Float</code>.
   <td>(none)</td>
   <td><code>Boolean</code></td>
   <td><code>true</code> if value would be infinite, e.g. after division by zero<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="isNaN_Float">
+ </tr><tr id="isNaN">
   <td><el-method>isNaN</el-method></td>
   <td>(none)</td>
   <td><code>Boolean</code></td>
@@ -805,7 +806,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>item of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new List lengthened with the item added after the end</td>
- </tr><tr id="withAppend_List">
+ </tr><tr id="withAppendList">
   <td><el-method>withAppendList</el-method></td>
   <td><code>List</code> of same type</td>
   <td><code>List</code></td>
@@ -2170,7 +2171,7 @@ end main
 <li>When execution reaches <code>saveAndClose</code> you will be presented with a dialog to confirm (or edit) the given filename and location where it is to be saved. It is not therefore strictly necessary to specify a filename when creating the file, since it can be specified by the user in the dialog so, in that case, you might put the empty string <code>""</code> into the parameter of <code>createFileForWriting</code>.</li>
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
-<li id="tryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
+<li id="TryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
 To guard against this possibility (it might mean the loss of important data), you should perform the save and close within a <b>try statement</b> like this (where <a href="LangRef.html#CustomError"><code>CustomError</code> <i class="fa">&#xf08e;</i></a> is a Class provided by Elan for this purpose):
 <codeblock>main
   variable file set to createFileForWriting("squares.txt")
@@ -2421,8 +2422,8 @@ end main
   <td></td>
  </tr><tr><!---->
   <td id="isNan"><el-method>isNan</el-method></td>
-  <td><a href="#isNaN_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
-  <td><a href="#isNaN_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#isNaN"> <i class="fa">&#xf14c;</i></a> note 2.</td>
+  <td><a href="#isNaN"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2536,7 +2537,7 @@ end main
 <li><el-method>withPut</el-method> supersedes the deprecated <el-method>withSet</el-method></li>
 </ol>
 
-<h1 id="LibrayProcedures">Library procedures</h1>
+<h1 id="LibraryProcedures">Library procedures</h1>
 <p>All procedures are accessed via a <a href="LangRef.html#call"><code>call</code> <i class="fa">&#xf08e;</i></a> instruction.</p>
 
 <h2 id="StandaloneProcedures">Standalone procedures</h2>
@@ -2861,7 +2862,7 @@ end test
 <h2 id="RegExp">RegExp functions</h2>
     <p>Elan's regular expressions are modelled on those of JavaScript, including the syntax for literal regular expressions. See, for example this <a href="https://developer.mozilla.org/en-US/docs/Web/JavaScript/Guide/Regular_expressions">Guide to Regular Expressions <i class="fa">&#xf14c;</i></a>.</p>
     <p>More functions for using regular expressions will be added in a future release of Elan. For now:</p>
-    <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#dotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
+    <p>The method <el-method>matchesRegExp</el-method> is applied to a <code>String</code> using <a href="LangRef.html#DotSyntax">dot syntax <i class="fa">&#xf08e;</i></a> and requires a <code>RegExp</code> parameter specified as a literal or as variable. It returns a <code>Boolean</code>. For example:</p>
 
 <codeblock>test test_matchesRegExp
   variable s1 set to "hello"
@@ -2922,7 +2923,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>(none)</td>
   <td><code>Int</code></td>
   <td>the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr>
+ </tr><tr id="random">>
   <td><el-method>random</el-method></td>
   <td>(none)</td>
   <td><code>Float</code></td>
