@@ -28,7 +28,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -60,18 +59,12 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Foo, []);};
   async func() {
     return 0;
   }
 
   proc() {
-  }
-
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
   }
 
 }
@@ -393,7 +386,7 @@ abstract class Foo1 inherits Foo
 end class
 
 abstract class Foo2 inherits Foo1
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo2
@@ -412,7 +405,6 @@ class Bar inherits Foo2
     call printNoLine(2)
   end procedure
 
-  property prop as Int
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -441,16 +433,12 @@ class Foo1 extends Foo {
 
 class Foo2 extends Foo1 {
   static emptyInstance() { return system.emptyClass(Foo2, [["prop", 0]]);};
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
+  prop = 0;
 
 }
 
 class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -468,125 +456,6 @@ class Bar extends Foo2 {
   async proc() {
     await _stdlib.printNoLine(2);
   }
-
-  prop = 0;
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "312");
-  });
-
-  test("Pass_AbstractClassInheritsInterface", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.prop)
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-interface Foo
-  abstract function func() returns Int
-end interface
-
-abstract class Foo1 inherits Foo
-  abstract procedure proc()
-end class
-
-abstract class Foo2 inherits Foo1
-  abstract property prop as Int
-end class
-
-class Bar inherits Foo2
-  constructor()
-    assign this.prop to 3
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-  property prop as Int
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let x = system.initialise(await new Bar()._initialise());
-  await _stdlib.printNoLine(x.prop);
-  await _stdlib.printNoLine((await x.func()));
-  await x.proc();
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
-  async func() {
-    return 0;
-  }
-
-}
-
-class Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo1, []);};
-  proc() {
-  }
-
-}
-
-class Foo2 extends Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo2, [["prop", 0]]);};
-  get prop() {
-    return 0;
-  }
-  set prop(prop) {
-  }
-
-}
-
-class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
-
-  async _initialise() {
-    this.prop = 3;
-    return this;
-  }
-
-  async toString() {
-    return "";
-  }
-
-  async func() {
-    return 1;
-  }
-
-  async proc() {
-    await _stdlib.printNoLine(2);
-  }
-
-  prop = 0;
 
 }
 return [main, _tests];}`;
@@ -850,11 +719,11 @@ main
 end main
 
 abstract class Foo
-  abstract property f as Foo2
+  property f as Foo2
 end class
 
 abstract class Foo2
-  abstract property f2 as Foo
+  property f2 as Foo
 end class
 
 class Bar
@@ -879,20 +748,24 @@ async function main() {
 
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, []);};
+  elan_f;
   get f() {
-    return Foo2.emptyInstance();
+    return this.elan_f ??= Foo2.emptyInstance();
   }
   set f(f) {
+    this.elan_f = f;
   }
 
 }
 
 class Foo2 {
   static emptyInstance() { return system.emptyClass(Foo2, []);};
+  elan_f2;
   get f2() {
-    return Foo.emptyInstance();
+    return this.elan_f2 ??= Foo.emptyInstance();
   }
   set f2(f2) {
+    this.elan_f2 = f2;
   }
 
 }
@@ -937,228 +810,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Maybefalse");
   });
 
-  test("Pass_DiamondInheritance", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-interface Foo
-  abstract property p1 as Int
-end interface
-
-interface Bar inherits Foo
-  abstract property p2 as Int
-end interface
-
-interface Yon inherits Foo
-  abstract property p3 as Int
-end interface
-
-abstract class Qux inherits Bar, Yon
-  property p1 as Int
-  property p2 as Int
-  property p3 as Int
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p3", 0]]);};
-  get p3() {
-    return 0;
-  }
-  set p3(p3) {
-  }
-
-}
-
-class Qux {
-  static emptyInstance() { return system.emptyClass(Qux, [["p1", 0], ["p2", 0], ["p3", 0]]);};
-  p1 = 0;
-
-  p2 = 0;
-
-  p3 = 0;
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-  });
-
-  test("Pass_DiamondInheritance1", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-interface Foo
-  abstract property p1 as Int
-end interface
-
-interface Bar inherits Foo
-  abstract property p2 as Int
-end interface
-
-interface Yon inherits Foo
-  abstract property p3 as Int
-end interface
-
-abstract class Qux inherits Bar, Yon
-  property p2 as Int
-  property p3 as Int
-end class`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-
-}
-
-class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
-  get p1() {
-    return 0;
-  }
-  set p1(p1) {
-  }
-
-}
-
-class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
-  get p2() {
-    return 0;
-  }
-  set p2(p2) {
-  }
-
-}
-
-class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p3", 0]]);};
-  get p3() {
-    return 0;
-  }
-  set p3(p3) {
-  }
-
-}
-
-class Qux {
-  static emptyInstance() { return system.emptyClass(Qux, [["p2", 0], ["p3", 0]]);};
-  p2 = 0;
-
-  p3 = 0;
-
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-  });
-
-  test("Fail_DoesntImplementProp", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-abstract class Foo
-  abstract function func() returns Int
-  abstract procedure proc()
-  abstract property prop as Int
-end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo.prop.ErrorMessages.html#compile_error",
-    ]);
-  });
-
   test("Fail_DoesntImplementFunc", async () => {
     const code = `${testHeader}
 
@@ -1171,7 +822,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -1218,7 +868,6 @@ end main
 abstract class Foo
   abstract function func() returns Int
   abstract procedure proc()
-  abstract property prop as Int
 end class
 
 class Bar inherits Foo
@@ -1253,110 +902,6 @@ end class`;
     ]);
   });
 
-  test("Fail_DoesntImplementIndirectProp", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-abstract class Foo1
-  abstract property prop as Int
-end class
-
-abstract class Foo inherits Foo1
-  abstract function func() returns Int
-  abstract procedure proc()
-end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_DoesntImplementIndirectProp1", async () => {
-    const code = `${testHeader}
-
-main
-  variable x set to new Bar()
-  call printNoLine(x.func())
-  call x.proc()
-end main
-
-interface Foo1
-  abstract property prop as Int
-end interface
-
-abstract class Foo inherits Foo1
-  abstract function func() returns Int
-  abstract procedure proc()
-end class
-
-class Bar inherits Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function func() returns Int
-    return 1
-  end function
-
-  procedure proc()
-    call printNoLine(2)
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Bar must implement Foo1.prop.ErrorMessages.html#compile_error",
-    ]);
-  });
-
   test("Fail_InheritSelf", async () => {
     const code = `${testHeader}
 
@@ -1365,7 +910,7 @@ main
 end main
 
 abstract class Foo inherits Foo
-  abstract property prop as Int
+  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1393,15 +938,15 @@ main
 end main
 
 abstract class Yon inherits Foo
-  abstract property prop as Int
+  property prop1 as Int
 end class
 
 abstract class Bar inherits Yon
-  abstract property prop as Int
+  property prop2 as Int
 end class
 
 abstract class Foo inherits Bar
-  abstract property prop as Int
+  property prop3 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1421,42 +966,6 @@ end class`;
     ]);
   });
 
-  test("Fail_InheritInterfaceIndirect", async () => {
-    const code = `${testHeader}
-
-main
-  
-end main
-
-abstract class Foo inherits Bar
-  abstract property prop as Int
-end class
-
-interface Yon inherits Bar
-  abstract property prop as Int
-end interface
-
-interface Bar inherits Yon
-  abstract property prop as Int
-end interface`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself.ErrorMessages.html#compile_error",
-    ]);
-  });
-
   test("Fail_DuplicateProperty", async () => {
     const code = `${testHeader}
 
@@ -1465,11 +974,11 @@ main
 end main
 
 abstract class Foo
-  abstract property prop as Int
+  property prop as Int
 end class
 
 abstract class Bar inherits Foo
-  abstract property prop as Int
+  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1485,39 +994,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_DuplicatePropertyInterface", async () => {
-    const code = `${testHeader}
-
-main
-  
-end main
-
-interface Foo
-  abstract property prop as Int
-end interface
-
-abstract class Bar inherits Foo
-  abstract property prop as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'prop' not unique in scope. Suggestion: factor out the common member(s) into a higher level interface.ErrorMessages.html#compile_error",
+      "Name 'prop' not unique in scope.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1538,7 +1015,7 @@ class Foo
 end class
 
 abstract class Bar inherits Foo
-  abstract property prop as Int
+  property prop2 as Int
 end class`;
 
     const fileImpl = new FileImpl(
@@ -1632,7 +1109,7 @@ abstract class Foo1
 end class
 
 abstract class Foo2
-  abstract property prop as Int
+  property prop as Int
 end class
 
 class Bar inherits Foo, Foo1, Foo2
@@ -1651,7 +1128,6 @@ class Bar inherits Foo, Foo1, Foo2
     call printNoLine(2)
   end procedure
 
-  property prop as Int
 end class`;
 
     const fileImpl = new FileImpl(

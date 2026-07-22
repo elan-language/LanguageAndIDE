@@ -1,8 +1,6 @@
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
-import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
@@ -22,7 +20,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -90,8 +87,7 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof ProcedureCall ||
       frame instanceof Assignment ||
       frame instanceof PrintStatement ||
-      frame instanceof InputStatement ||
-      frame instanceof CopyWithMethod
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -141,8 +137,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.MUST_OVERRIDE} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
       html = `<el-kw>${this.MUST_OVERRIDE} ${this.SUB} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})`;
-    } else if (frame instanceof AbstractProperty) {
-      html = `<el-kw>${this.MUST_OVERRIDE} ${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     }
     return html;
   }
@@ -163,8 +157,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SUB} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.SUB}</el-kw> <el-method>main</el-method>()`;
     } else if (frame instanceof FunctionMethod) {
@@ -177,8 +169,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
-    } else if (frame instanceof CopyWithMethod) {
-      html = `${this.overrides(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.AS} </el-kw>${frame.returnType.renderAsHtml()}${this.implements(frame)}`;
     }
     return html;
   }
@@ -203,18 +193,12 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.NEXT}</el-kw> <el-id>${frame.variable.renderAsElanSource()}</el-id>`;
-    } else if (
-      frame instanceof GlobalFunction ||
-      frame instanceof FunctionMethod ||
-      frame instanceof CopyWithMethod
-    ) {
+    } else if (frame instanceof GlobalFunction || frame instanceof FunctionMethod) {
       html = `<el-kw>${this.END} ${this.FUNCTION}</el-kw>`;
     } else if (frame instanceof GlobalProcedure || frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.END} ${this.IF}</el-kw>`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.END} ${this.INTERFACE}</el-kw>`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.END} ${this.SUB}</el-kw>`;
     } else if (frame instanceof TestFrame) {
