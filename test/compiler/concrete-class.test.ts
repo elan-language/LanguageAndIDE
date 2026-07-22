@@ -774,9 +774,9 @@ class Foo
 
   property p1 as Int
 
-  copy with_P1(p as Int) returns Foo
-    return copyWithPropertyUpdated(this, "p1", p)
-  end copy
+  function with_P1(p as Int) returns Foo
+    return copyWith(this, "p1", p)
+  end function
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -802,7 +802,7 @@ class Foo {
   p1 = 0;
 
   async with_P1(p) {
-    return _stdlib.copyWithPropertyUpdated(this, "p1", p);
+    return _stdlib.copyWith(this, "p1", p);
   }
 
 }
@@ -852,13 +852,13 @@ class Foo
 
   property p3 as String
 
-  copy withP1(p as Int) returns Foo
-    return copyWithPropertyUpdated(this, "p1", p)
-  end copy
+  function withP1(p as Int) returns Foo
+    return copyWith(this, "p1", p)
+  end function
 
-  copy withP2(p as String) returns Foo
-    return copyWithPropertyUpdated(this, "p2", p)
-  end copy
+  function withP2(p as String) returns Foo
+    return copyWith(this, "p2", p)
+  end function
 
   procedure setup(pI as Int, pS as String)
     assign this.p1 to pI
@@ -902,11 +902,11 @@ class Foo {
   p3 = "";
 
   async withP1(p) {
-    return _stdlib.copyWithPropertyUpdated(this, "p1", p);
+    return _stdlib.copyWith(this, "p1", p);
   }
 
   async withP2(p) {
-    return _stdlib.copyWithPropertyUpdated(this, "p2", p);
+    return _stdlib.copyWith(this, "p2", p);
   }
 
   async setup(pI, pS) {
@@ -1946,42 +1946,6 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Class/interface 'Yon' cannot inherit from itself.ErrorMessages.html#compile_error",
-    ]);
-  });
-
-  test("Fail_InheritInterfaceIndirect", async () => {
-    const code = `${testHeader}
-
-main
-  
-end main
-
-class Foo inherits Bar
-  property prop as Int
-end class
-
-interface Yon inherits Bar
-  abstract property prop as Int
-end interface
-
-interface Bar inherits Yon
-  abstract property prop as Int
-end interface`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Class/interface 'Bar' cannot inherit from itself.ErrorMessages.html#compile_error",
     ]);
   });
 

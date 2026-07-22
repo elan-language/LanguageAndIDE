@@ -5,7 +5,6 @@ import {
   abstractPropertyKeywords,
   commentMarker,
   constructorKeyword,
-  copyKeyword,
   functionKeyword,
   privateFunctionKeywords,
   privateKeyword,
@@ -57,12 +56,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         "f",
         "<b>f</b>unction method",
         (_parent: Parent) => this.class.createFunction(),
-      ],
-      [
-        copyKeyword,
-        "w",
-        "copy <b>w</b>ith method",
-        (_parent: Parent) => this.class.createCopyWithMethod(),
       ],
       [
         abstractPropertyKeywords,
@@ -133,8 +126,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else if (keyword === procedureKeyword) {
       result = !(this.getParadigm().isFunctional() && userEntry);
-    } else if (keyword === copyKeyword) {
-      result = !userEntry || this.getParadigm().isFunctional();
     }
     return result;
   }

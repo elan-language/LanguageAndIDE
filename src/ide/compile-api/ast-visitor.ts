@@ -79,7 +79,6 @@ import { AbstractFunction } from "../frames/class-members/abstract-function";
 import { AbstractProcedure } from "../frames/class-members/abstract-procedure";
 import { AbstractProperty } from "../frames/class-members/abstract-property";
 import { Constructor } from "../frames/class-members/constructor";
-import { CopyWithMethod } from "../frames/class-members/copy-with-method";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
@@ -502,7 +501,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof FunctionMethod || node instanceof CopyWithMethod) {
+  if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
     functionAsn.private = node.isPrivate;

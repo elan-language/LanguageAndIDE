@@ -9,7 +9,6 @@ import {
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  copyKeyword,
   elifKeyword,
   elseKeyword,
   endKeyword,
@@ -50,7 +49,6 @@ import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
-import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
@@ -211,8 +209,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
-    } else if (frame instanceof CopyWithMethod) {
-      html = `<el-kw>${this.COPY} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     }
     return html;
   }
@@ -260,7 +256,6 @@ export class LanguageElan extends LanguageAbstract {
   private CLASS = classKeyword;
   private CONSTANT = constantKeyword;
   private CONSTRUCTOR = constructorKeyword;
-  private COPY = copyKeyword;
   private ELIF = elifKeyword;
   private ELSE = elseKeyword;
   private END = endKeyword;

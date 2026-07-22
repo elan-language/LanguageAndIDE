@@ -2,7 +2,6 @@ import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
-import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
@@ -101,8 +100,7 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractProperty ||
-      frame instanceof InputStatement ||
-      frame instanceof CopyWithMethod
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -183,8 +181,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof CopyWithMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     }
     return html;
   }

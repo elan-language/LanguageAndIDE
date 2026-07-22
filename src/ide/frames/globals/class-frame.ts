@@ -8,7 +8,6 @@ import { AbstractFunction } from "../class-members/abstract-function";
 import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { AbstractProperty } from "../class-members/abstract-property";
 import { Constructor } from "../class-members/constructor";
-import { CopyWithMethod } from "../class-members/copy-with-method";
 import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
@@ -225,9 +224,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   createFunction(priv: boolean = false): Frame {
     return new FunctionMethod(this, priv);
-  }
-  createCopyWithMethod(): Frame {
-    return new CopyWithMethod(this, this.name.text);
   }
   createProperty(priv: boolean = false): Frame {
     return new Property(this, priv);

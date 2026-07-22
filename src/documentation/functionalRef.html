@@ -48,7 +48,8 @@ This changes two things: </p>
 
 <div id="Principles">
 <h1>Principles of functional programming</h1>
-<p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, and every language that supports FP differs in the rules that it enforces.
+<p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, 
+  and every language that supports FP differs in the rules that it enforces.
   The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages
   - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling.
   The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library.
@@ -532,7 +533,6 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
-<div id="copyWithPropertyUpdated"></div>
 <h2>User-defined Classes should be immutable</h2>
 
 <p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
@@ -547,29 +547,22 @@ using them to access the appropriate portions of the <code>grid</code>, which is
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
 <codeblock>
-copy withHead(head as Square) returns Game
-  return copyWithPropertyUpdated(this, "head", head)
-end copy
+function with_head(head as Square) returns Game
+  return copyWith(this, "head", head)
+end function
 </codeblock>
 
 Note that it:
 <ul>
   <li>returns a <code>Game</code> (i.e. a Class instance)</li>
-  <li>creates a copy (i.e. a new instance) of <code>this</code> (instance) named <code>copyOfThis</code></li>
-  <li>reassigns the property <code>head</code> of <code>copyOfThis</code> to the new value</li>
-  <li>returns the updated <code>copyOfThis</code> (instance)</li>
+  <li>creates and returns a copy (i.e. a new instance) of <code>this</code> (instance) named <code>copyOfThis</code> 
+    with the property named <code>"head"</code> reassigned to the new value, all accomplished by calling the library function <el-method>copyWith</el-method>.
+  </li>
 </ul>
-
-<p>Although a <el-method>with..</el-method> method is a pure function, the standard form of a <el-method>with..</el-method> method, like the one above,
-must be created using the <b>copy with method</b> instruction template, which is
-offered only within a Class, and only when using the <b>functional</b> paradigm.</p>
-<p>The reason is that only within the <el-method>with..</el-method> method are you allowed to <b>reassign</b> a property, and this may only be on the
-a value named <code>copyOfThis</code>. You cannot, for example, edit it to say e.g. <code>assign this.x to value</code>, since that would make changes observable from outside the function.</p>
 
 <p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
   within the program to update any instance of Square &ndash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
-  as needed. For this reason the method named <el-method>withNewApple</el-method> does not need to be able to reassign a property on a copy, but does
-  need to do other work. It has been written using the standard <b>function method</b> instruction template.</p>
+  as needed.</p>
 
 <h2 id="Random">Generating Random numbers within a function requires a special pattern</h2>
 
@@ -766,19 +759,14 @@ end function
 <h1 id="Member">Member instructions</h1>
 
 <p>When using the <b>functional</b> paradigm, in the context of a class you will be offered the same member instructions as when using the <b>object-oriented</b>
-paradigm, with two exceptions:</p>
- <ul>
-  <li>There is an additional member: the <b>copy with method</b></li>
-  <li>The procedure method is not available for use - because procedure methods cause side effects.
-    All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</li>
- </ul>
+paradigm, except that the procedure method is not available for use - because procedure methods cause side effects.
+    All input/output or other system interaction within a <i>functional</i> program must be handled directly within the main routine, or a global procedure.</p>
 
-  <div id="copyWith">
   <div id="withMethod"></div>
-  <h2>Copy with method</h2>
+  <h2>'with' methods - TODO THIS SECION NEEDS COMPLETE RE-WRITE</h2>
 
     <div class="accordion">
-      <h3 class="no-TOC acc-title">Examples of a copy with method</h3>
+      <h3 class="no-TOC acc-title">Examples of using <el-method>copyWith</el-method> in instance methods</h3>
       <div class="acc-body">
 
         <p>In the <b>Snake - functional</b> demo the <code>Game</code> class defines multiple <b>copy with method</b>s including:</p>
@@ -797,9 +785,9 @@ paradigm, with two exceptions:</p>
         and then delegates to <el-method>with_apple</el-method> to return a game with that new apple.</p>
 
 <!--         <codeblock>
-          copy withHead(head as Square) returns Game
-            return copyWithPropertyUpdated(this, "head", head)
-          end copy
+          function with_head(head as Square) returns Game
+            return copyWith(this, "head", head)
+          end function
         </codeblock>
 
       <p>This method is called from 11 places elsewhere in the code, including within this global method:</p>
@@ -811,18 +799,18 @@ paradigm, with two exceptions:</p>
           let y be g.head.y
           let newX be if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
           let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
-          return g.withBody(g.body.withAppend(g.head)).withHead(new Square(newX, newY))
+          return g.withBody(g.body.withAppend(g.head)).with_hea(new Square(newX, newY))
         end function
       </codeblock> -->
 
-      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>copy with method</b>s -
+      <p>Notice, in the same program, that the <code>Square</code> class does <i>not</i> define any <b>with...</b>s -
       because there is a never a need to update a square. A square represents a specific location on the 40x30 grid - if you need
       to change, say, the location of the apple, you use (or create new) the square for the location you want - you don't update the existing one.</p>
       </div>
     </div>
 
       <div class="accordion">
-      <h3 class="no-TOC acc-title">What you need to know about a copy with method</h3>
+      <h3 class="no-TOC acc-title">What you need to know about a 'with...' method</h3>
       <div class="acc-body">
 
         <ul>
@@ -835,7 +823,7 @@ paradigm, with two exceptions:</p>
           <li>When you add a <b>copy with method</b> you must specify the name and type for the single parameter that it permits.
           Importantly, <i>both the name and the type must exactly match those of the property that you wish to update.</i></li>
           <li>The <b>copy with method</b> has only a <b>return</b> instruction, and does not permit any other instructions to be added.</li>
-          <li>The expression returned by the function must take the form <code>copyWithPropertyUpdated(this, "head", head)</code> where
+          <li>The expression returned by the function must take the form <code>copyWith(this, "head", head)</code> where
             the name of the parameter (<code>head</code> in this case) appears twice: the first time in quotes - to define the name of the property being changed -
             and the second time without quotes, representing the new value. This must currently be entered by hand, but in a future version will
             be generated automatically, and will be uneditable.
@@ -848,7 +836,6 @@ paradigm, with two exceptions:</p>
         </ul>
       </div>
     </div>
-  </div>
 </div>
 
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
