@@ -79,7 +79,6 @@ export interface File extends Parent {
   createEnum(): Frame;
   createConcreteClass(): Frame;
   createAbstractClass(): Frame;
-  createInterface(): Frame;
   createGlobalComment(): Frame;
   createConstant(): Frame;
   createTest(): Frame;

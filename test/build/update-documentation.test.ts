@@ -256,9 +256,9 @@ end main`;
   });
 
   test("process copy", async () => {
-    const code = `copy withHead(head as Square) returns Game
-  return copyWithPropertyUpdated(this, "head", head)
-end copy`;
+    const code = `function withHead(head as Square) returns Game
+  return copyWith(this, "head", head)
+end funcion`;
 
     const actual = await processInnerCode(code);
 

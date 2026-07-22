@@ -11,7 +11,6 @@ import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
 import { AbstractProcedureAsn } from "../../compiler/syntax-nodes/class-members/abstract-procedure-asn";
-import { AbstractPropertyAsn } from "../../compiler/syntax-nodes/class-members/abstract-property-asn";
 import { ConstructorAsn } from "../../compiler/syntax-nodes/class-members/constructor-asn";
 import { FunctionMethodAsn } from "../../compiler/syntax-nodes/class-members/function-method-asn";
 import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/procedure-method-asn";
@@ -33,7 +32,6 @@ import { GlobalCommentAsn } from "../../compiler/syntax-nodes/globals/global-com
 import { GlobalConstantAsn } from "../../compiler/syntax-nodes/globals/global-constant-asn";
 import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
-import { InterfaceAsn } from "../../compiler/syntax-nodes/globals/interface-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
@@ -77,9 +75,7 @@ import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import { AbstractFrame } from "../frames/abstract-frame";
 import { AbstractFunction } from "../frames/class-members/abstract-function";
 import { AbstractProcedure } from "../frames/class-members/abstract-procedure";
-import { AbstractProperty } from "../frames/class-members/abstract-property";
 import { Constructor } from "../frames/class-members/constructor";
-import { CopyWithMethod } from "../frames/class-members/copy-with-method";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
@@ -99,7 +95,6 @@ import { Enum } from "../frames/globals/enum";
 import { GlobalComment } from "../frames/globals/global-comment";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
-import { InterfaceFrame } from "../frames/globals/interface-frame";
 import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Index } from "../frames/parse-nodes";
@@ -287,22 +282,6 @@ export function transform(
     return classAsn;
   }
 
-  if (node instanceof InterfaceFrame) {
-    const recordAsn = new InterfaceAsn(node.getHtmlId(), scope);
-    recordAsn.breakpointStatus = node.breakpointStatus;
-
-    recordAsn.name = transform(node.name, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-    recordAsn.inheritance =
-      transform(node.inheritance, node.getHtmlId(), recordAsn) ?? EmptyAsn.Instance;
-
-    recordAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), recordAsn)) as AstNode[];
-
-    return recordAsn;
-  }
-
   if (node instanceof Constructor) {
     const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
     constructorAsn.breakpointStatus = node.breakpointStatus;
@@ -316,16 +295,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), constructorAsn)) as AstNode[];
 
     return constructorAsn;
-  }
-
-  if (node instanceof AbstractProperty) {
-    const propertyAsn = new AbstractPropertyAsn(node.getHtmlId(), scope);
-    propertyAsn.breakpointStatus = node.breakpointStatus;
-
-    propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
-    propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
-
-    return propertyAsn;
   }
 
   if (node instanceof Property) {
@@ -502,7 +471,7 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof FunctionMethod || node instanceof CopyWithMethod) {
+  if (node instanceof FunctionMethod) {
     const functionAsn = new FunctionMethodAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
     functionAsn.private = node.isPrivate;

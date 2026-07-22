@@ -110,33 +110,33 @@ class Game {
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2);
   } // end function method
 
-  Game with_head(Square head) { // copy with method
-    return copyWithPropertyUpdated(this, "head", head);
-  } // end with method
+  public Game with_head(Square head) { // function method
+    return copyWith(this, "head", head);
+  } // end function method
 
-  Game with_body(List<Square> body) { // copy with method
-    return copyWithPropertyUpdated(this, "body", body);
-  } // end with method
+  public Game with_body(List<Square> body) { // function method
+    return copyWith(this, "body", body);
+  } // end function method
 
-  Game with_priorTail(Square priorTail) { // copy with method
-    return copyWithPropertyUpdated(this, "priorTail", priorTail);
-  } // end with method
+  public Game with_priorTail(Square priorTail) { // function method
+    return copyWith(this, "priorTail", priorTail);
+  } // end function method
 
-  Game with_apple(Square apple) { // copy with method
-    return copyWithPropertyUpdated(this, "apple", apple);
-  } // end with method
+  public Game with_apple(Square apple) { // function method
+    return copyWith(this, "apple", apple);
+  } // end function method
 
-  Game with_isOn(boolean isOn) { // copy with method
-    return copyWithPropertyUpdated(this, "isOn", isOn);
-  } // end with method
+  public Game with_isOn(boolean isOn) { // function method
+    return copyWith(this, "isOn", isOn);
+  } // end function method
 
-  Game with_rnd(Random rnd) { // copy with method
-    return copyWithPropertyUpdated(this, "rnd", rnd);
-  } // end with method
+  public Game with_rnd(Random rnd) { // function method
+    return copyWith(this, "rnd", rnd);
+  } // end function method
 
-  Game with_key(String key) { // copy with method
-    return copyWithPropertyUpdated(this, "key", key);
-  } // end with method
+  public Game with_key(String key) { // function method
+    return copyWith(this, "key", key);
+  } // end function method
 
 } // end class
 

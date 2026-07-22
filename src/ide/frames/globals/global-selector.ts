@@ -4,7 +4,6 @@ import {
   constantKeyword,
   enumKeyword,
   functionKeyword,
-  interfaceKeyword,
   mainKeyword,
   procedureKeyword,
   testKeyword,
@@ -50,7 +49,6 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
         "<b>a</b>bstract class",
         (_parent: Parent) => this.file.createAbstractClass(),
       ],
-      [interfaceKeyword, "i", "<b>i</b>nterface", (_parent: Parent) => this.file.createInterface()],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
@@ -70,10 +68,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     if (keyword === mainKeyword && userEntry) {
       result = !this.file.containsMain();
     } else if (this.getParadigm().isProcedural() && userEntry) {
-      result =
-        keyword !== classKeyword && keyword !== abstractKeyword && keyword !== interfaceKeyword;
-    } else if (keyword === interfaceKeyword) {
-      result = !userEntry;
+      result = keyword !== classKeyword && keyword !== abstractKeyword;
     }
     return result;
   }

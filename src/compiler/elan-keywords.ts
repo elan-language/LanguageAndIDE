@@ -10,7 +10,6 @@ export const catchKeyword = "catch";
 export const classKeyword = "class";
 export const constantKeyword = "constant";
 export const constructorKeyword = "constructor";
-export const copyKeyword = "copy";
 export const elifKeyword = "elif";
 export const elseKeyword = "else";
 export const endKeyword = "end";
@@ -23,7 +22,6 @@ export const ifKeyword = "if";
 export const inKeyword = "in";
 export const inheritsKeyword = "inherits";
 export const inputKeyword = "input";
-export const interfaceKeyword = "interface";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
@@ -54,7 +52,6 @@ export const whileKeyword = "while";
 export const withKeyword = "with";
 
 //Not added to allKeywords
-export const abstractPropertyKeywords = abstractKeyword + " " + propertyKeyword;
 export const abstractProcedureKeywords = abstractKeyword + " " + procedureKeyword;
 export const abstractFunctionKeywords = abstractKeyword + " " + functionKeyword;
 export const privatePropertyKeywords = privateKeyword + " " + propertyKeyword;
@@ -80,7 +77,6 @@ const elanKeywords: string[] = [
   classKeyword,
   constantKeyword,
   constructorKeyword,
-  copyKeyword,
   elifKeyword,
   elseKeyword,
   evaluatesKeyword,
@@ -93,7 +89,6 @@ const elanKeywords: string[] = [
   inKeyword,
   inheritsKeyword,
   inputKeyword,
-  interfaceKeyword,
   isKeyword,
   isntKeyword,
   lambdaKeyword,
