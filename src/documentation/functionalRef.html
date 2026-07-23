@@ -22,15 +22,15 @@
 
 <div id="GettingStarted">
 <h1>Getting started</h1>
-<h2>Select functional programming paradigm</h2> <!-- to balance the ToC -->
+<h2>Select <b>functional</b> programming paradigm</h2> <!-- to balance the ToC -->
 
-<p>To undertake functional programming (FP) in Elan,
+<p>To undertake <b>functional</b> programming (FP) in Elan,
     you should first be reasonably familiar with procedural programming (PP) with Elan,
      and ideally, with object-oriented programming (OOP) with Elan.
 Then, switch to the <b>functional</b> paradigm from the menu at the top of the IDE.
 This changes two things: </p>
 <ol>
-<li>The list of demo programs will now show only programs that use FP.
+<li>The List of demo programs will now show only programs that use FP.
     A very good place to start is to look at the <b>Snake - functional</b> demo,
     which is functionally identical to the (procedural) original, but it written using FP design and coding patterns.
 </li>
@@ -70,7 +70,7 @@ This changes two things: </p>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
 
-<p>Dedicated Functional programming languages &ndash; such as Haskell &ndash; enforce these rules automatically. Common 'multi-paradigm' languages
+<p>Dedicated functional programming languages &ndash; such as Haskell &ndash; enforce these rules automatically. Common 'multi-paradigm' languages
     &ndash; including Python, VB, C#, and Java &ndash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
@@ -135,7 +135,7 @@ and you are <i>within a function</i>, you cannot add a <b>print statement</b>, <
 
 <h2>Every function can and should be unit tested</h2>
 
-  <p>The idea of writing automated tests isn't restricted to Functional programming. The tests offered by Elan are known as 'unit tests', and are
+  <p>The idea of writing automated tests isn't restricted to functional programming. The tests offered by Elan are known as 'unit tests', and are
     designed to test <i>functions</i>.</p>
     <p>Such tests are extremely easy to write, and run automatically when the program is loaded from a file, and then run
   again after every edit that results in code that compiles.</p>
@@ -212,7 +212,7 @@ end function
 
 <ul>
   <li>it may be defined by an expression rather than just by a literal value</li>
-  <li>it may refer to a List or other data structure, where as the (global) <b>constant</b> instruction is limited to simple value types or a string.</li>
+  <li>it may refer to a <code>List</code> or other data structure, where as the (global) <b>constant</b> instruction is limited to simple value types or a string.</li>
 </ul>
 
 <p>In the four languages supported by Elan, <b>let statement</b>s
@@ -313,7 +313,7 @@ end function
 
 <h2 id="ListMutation">Lists and other data structures are never mutated</h2>
 
-<p>In procedural programming a List may be mutated either by reassigning an indexed value, for example:
+<p>In procedural programming a <code>List</code> may be mutated either by reassigning an indexed value, for example:
 
 <codeblock>
   assign mySubjects[3] to "Geography"
@@ -345,24 +345,24 @@ a <i>copy</i> of a data structure with specified differences from the original. 
   let myNewString be myString.upperCase()
 </codeblock>
 
-<p>When you want to apply operations to all items in a List you need to use iteration, which means using
+<p>When you want to apply operations to all items in a <code>List</code> you need to use iteration, which means using
   either <a href="#Recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
   and within that technique make use of the various <el-method>with..</el-method> methods. The <el-method>sum</el-method> function in the
-   <b>Recursive functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
+   <b>Recursive functions</b> demo calculates the sum of all items in any <code>List</code> of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
 function sum(li as List&lt;of Float&gt;) returns Float
   return if_(li.length() is 0, 0.0, li.head() + sum(li.tail()))
 end function
 </codeblock>
 
-<p>Note the use of these two dot function calls on the List <code>li</code>(see <a href="LangRef.html#DotSyntax" target="_blank">Dot syntax <i class="fa">&#xf08e;</i></a> in Language Reference):</p>
+<p>Note the use of these two dot function calls on the Li<br>st <code>li</code>(see <a href="LangRef.html#DotSyntax" target="_blank">Dot syntax <i class="fa">&#xf08e;</i></a> in Language Reference):</p>
 
 <ul>
- <li><el-method>head</el-method> returns only the first item in the List.</li>
- <li><el-method>tail</el-method> returns all the items of the List <i>except</i> the first.</li>
+ <li><el-method>head</el-method> returns only the first item in the <code>List</code>,</li>
+ <li><el-method>tail</el-method> returns all the items of the <code>List</code> <i>except</i> the first.</li>
 </ul>
 
-<p>In FP, algorithms to process lists are often written in terms of the 'head' and 'tail' of the list.
+<p>In FP, algorithms to process lists are often written in terms of the 'head' and 'tail' of the List.
 You could just write e.g. <code>li[0]</code> and <code>li.substring(1, li.length())</code> instead, with the same result.
   But using the <el-method>head</el-method> and <el-method>tail</el-method> methods
    makes your code easier to read and may make your intention clearer.
@@ -371,11 +371,11 @@ You could just write e.g. <code>li[0]</code> and <code>li.substring(1, li.length
 <p>The next example combines the previous two ideas:</p>
 
 <ul>
-  <li>updating a List by using a <el-method>with..</el-method> method to create a copy of the original List with specified differences.</li>
-  <li>using recursion to iterate over the items in the List.</li>
+  <li>updating a <code>List</code> by using a <el-method>with..</el-method> method to create a copy of the original <code>List</code> with specified differences,</li>
+  <li>using recursion to iterate over the items in the <code>List</code>.</li>
 </ul>
 
-in a function to reverse the order or items in a List:
+in a function to reverse the order or items in a <code>List</code>:
 
 <codeblock>
 function reverse(li as List&lt;of Float&gt;) returns List&lt;of Float&gt;
@@ -393,7 +393,7 @@ end function
   <li>At first glance, none of the functions <i>appears</i> to be recursive because none of them calls <i>itself</i> directly. However,
   as you study the code you will see that <el-method>sort</el-method> calls <el-method>sortedFrontHalf</el-method>
   and <el-method>sortedBackHalf</el-method> both of which call
-back into <el-method>sort</el-method> again &ndash; crucially with approximately half of the original List.
+back into <el-method>sort</el-method> again &ndash; crucially with approximately half of the original <code>List</code>.
 The same pattern exists between <el-method>merge</el-method> and <el-method>mergeNonEmpty</el-method>.</li>
 </ul>
 
@@ -405,7 +405,7 @@ The same pattern exists between <el-method>merge</el-method> and <el-method>merg
   Under the covers, HoFs are written using recursion, but you don't see this. </p>
 
 <p>There are many possible HoFs, but three of them &ndash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &ndash;
-are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional programming'.
+are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
 They can be used individually or in combination. The purpose and operation of each is explained below.</p>
 
 <p>All of the languages supported by Elan have their own versions of <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> that are similar in intent
@@ -424,37 +424,37 @@ test test_Map_Filter_Reduce
   assert nums.filter(lessThan5).map(inverse).map(toString).reduce("results: ", concat) evaluates to "results: 0.45|0.4|"
 end test
 </codeblock>
-<p>Each of the three HoFs is applied to a List by a 'dot method call'. In this example each is applied to the same List (of floating point numbers),
-    though the subject List may be of any type.  Because they are all dot methods, they can easily be chained in dot sequences, as shown.</p>
+<p>Each of the three HoFs is applied to a <code>List</code> by a 'dot method call'. In this example each is applied to the same <code>List</code> (of floating point numbers),
+    though the subject <code>List</code> may be of any type.  Because they are all dot methods, they can easily be chained in dot sequences, as shown.</p>
 <p>Each HoF is passed the <i>name</i> of a function that is defined elsewhere in the program.
     The function name is given as an argument, without brackets or arguments, e.g. <el-method>lessThan5</el-method>.
     For <el-method>filter</el-method> and <el-method>map</el-method>, this is the only argument; for <el-method>reduce</el-method>
   there is another argument. Taking each HoF in turn:</p>
   <p><el-method>filter</el-method></p>
 <ul>
- <li>returns a List that is made up of selected items from the original List. The function passed into
-    <el-method>filter</el-method> is applied to <i>each</i> of the List's items in turn,
-    and determines whether or not each should 'pass' through the filter into the resulting List.
-    In the first example the function passes only those values from the original List that are less than 5.</li>
+ <li>returns a <code>List</code> that is made up of selected items from the original <code>List</code>. The function passed into
+    <el-method>filter</el-method> is applied to <i>each</i> of the <code>List</code>'s items in turn,
+    and determines whether or not each should 'pass' through the filter into the resulting <code>List</code>.
+    In the first example the function passes only those values from the original <code>List</code> that are less than 5.</li>
  <li>the definition of the function <el-method>lessThan5</el-method> (lower down in the code)
-    includes a parameter of type <code>Float</code> (the same type as of the item in the List) but returns a <code>Boolean</code>
+    includes a parameter of type <code>Float</code> (the same type as of the item in the <code>List</code>) but returns a <code>Boolean</code>
     specifying whether or not a specific item should pass the filter.
     Making sure that types match up as expected can be the trickiest part of learning to use HoFs.</li>
 </ul>
 <p><el-method>map</el-method></p>
 <ul>
-  <li>returns a List that will have the same <i>number</i> of items as in the original List.
-    They might be of the same type as the in the original List (though typically different values) or, depending on the return type of the function
-    passed in, the items in the resulting List might be of a type different from those in the original List.
-    But each item in the resulting List <i>corresponds</i> ('maps') to an item of the
-    original List at the same position</li>
+  <li>returns a <code>List</code> that will have the same <i>number</i> of items as in the original <code>List</code>.
+    They might be of the same type as the in the original <code>List</code> (though typically different values) or, depending on the return type of the function
+    passed in, the items in the resulting <code>List</code> might be of a type different from those in the original <code>List</code>.
+    But each item in the resulting <code>List</code> <i>corresponds</i> ('maps') to an item of the
+    original <code>List</code> at the same position</li>
    <li>as with <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
-    have a single parameter of the same type as the items in the List, though its return value may be of any type.
+    have a single parameter of the same type as the items in the <code>List</code>, though its return value may be of any type.
   </li>
  </ul>
 <p><el-method>reduce</el-method></p>
-<ul><li> returns a <i>single</i> value, that is derived by combining all of the item values in the original List according to the function passed in. That derived value can be of the same
-type as the items of the List (for example when used to combine a List of numbers by addition or multiplication),
+<ul><li> returns a <i>single</i> value, that is derived by combining all of the item values in the original <code>List</code> according to the function passed in. That derived value can be of the same
+type as the items of the <code>List</code> (for example when used to combine a <code>List</code> of numbers by addition or multiplication),
 but can be of a different type including a data structure.</li>
 <li>Unlike <el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments:
 <ol><li>the <i>initial</i> value (sometimes called the 'seed') that will be progressively refined and eventually returned.
@@ -462,16 +462,16 @@ This initial value must therefore have the type of the desired final value.</li>
 <li>the <i>function</i> passed into <el-method>reduce</el-method> must define two parameters:
 <ol>
 <li>the accumulating value, therefore of the same type as the initial 'seed' value.</li>
-<li>the item to which the function is applied, therefore of the same type as the items in the List.</li>
+<li>the item to which the function is applied, therefore of the same type as the items in the <code>List</code>.</li>
 </ol>
 </ol>
 <li>The return type of the function must have the same type as the 'seed' value.</li>
-<li>Each item of the List is passed in turn into the function (as second argument), the first argument being the <i>latest</i> value that has
+<li>Each item of the <code>List</code> is passed in turn into the function (as second argument), the first argument being the <i>latest</i> value that has
 developed from the seed.</li>
 </ul>
 <p><el-method>filter</el-method> and <el-method>map</el-method> methods may be chained, and in any order, provided that the item type of each resulting
-List is of the type expected by the next one.</p>
-<p>Because <el-method>reduce</el-method> transforms a List into a single value, it is <i>typically</i>
+<code>List</code> is of the type expected by the next one.</p>
+<p>Because <el-method>reduce</el-method> transforms a <code>List</code> into a single value, it is <i>typically</i>
 used in isolation or as the last of a chain. It can, of course, be followed in the chain by a simpler function (such as <el-method>round</el-method>).
 </p>
 
@@ -495,7 +495,7 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
   of function programming (FP). And lambdas have capabilities that are both more subtle and more sophisticated than can be described here, including the
   idea of 'closure' (which you can look up if you are ready to go much deeper &ndash; and which is supported in Elan). However, you should note that,
   because of the need for compatibility across all the supported languages, Elan has a restricted implementation of HoFs and of 'function passing' in general,
-  but it is sufficient to grasp the key principles of Functional programming. To go further you would need to switch to a pure FP language such as Haskell.
+  but it is sufficient to grasp the key principles of functional programming. To go further you would need to switch to a pure FP language such as Haskell.
   <i>Currently</i> Elan does <i>not</i> permit (in any of the supported languages):</p>
 <ul>
 <li>The definition of a lambda <i>except</i> inline as the argument to a HoF. You cannot, for example, assign a lambda (or a function) to a variable.</li>
@@ -504,9 +504,9 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
 
 <h3 class="no-TOC">Using HoFs to iterate over a 2D List</h3>
 
-<p>If you are using Elan's Block Graphics, or have another need to process a 2D List (such as working with matrices or tabular data), and you
+<p>If you are using Elan's Block Graphics, or have another need to process a 2D <code>List</code> (such as working with matrices or tabular data), and you
   want to do this in pure functions, you have the challenge of how to iterate over two dimensions &ndash; something that is straightforward in
-  <i>procedural</i> programming by means of 'nested loops'. It is certainly possible to iterate over two dimensions of a List using HoFs within a
+  <i>procedural</i> programming by means of 'nested loops'. It is certainly possible to iterate over two dimensions of a <code>List</code> using HoFs within a
   single expression, but until you are <i>fluent</i> in such programming, the recommended approach is to break up the task into an 'inner' function
   that processes just a single <i>column</i> (or row, if preferred) of the 2D structure and an 'outer' function that processes each of the columns
   (or rows).</p>
@@ -530,7 +530,7 @@ end function
 </codeblock>
 
 <p>Note the use of <el-method>range</el-method> in both functions to create <code>cols</code> and <code>rows</code> respectively, which are
-just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
+just lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
 <h2>User-defined classes should be immutable</h2>
@@ -542,7 +542,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
 
 <div id="copyWith"></div>
 <p>But this raises a question: how <i>are we to make changes to an instance of a class?</i>.
-  The answer is similar to that for updating a List, String, or other standard data structure within a function
+  The answer is similar to that for updating a <code>List</code>, String, or other standard data structure within a function
   (described in <a href="#ListMutation">earlier<i class="fa">&#xf14c;</i></a>): you need ,ake a copy of the instance with specified changes.
   This is best achieved with the aid of the library function: <el-method>copyWith</el-method>, which requires three arguments:
 
@@ -666,7 +666,7 @@ end main
 
 <p>This now works well. But if we are going to have to go back out to the main routine between each use of <code>Random</code>, we might
 as well have used the procedural methods in the first place. The following example shows something that could not be done that way:
-creating a List of random dice-throws entirely within a function:</p>
+creating a <code>List</code> of random dice-throws entirely within a function:</p>
 <codeblock>
 main
   variable rng set to new Random()
@@ -762,7 +762,7 @@ end function
       <ul>
         <li>It is defined within a function, not globally</li>
         <li>The value assigned to the name may be defined by an expression that incorporates function parameters and/or the named values from any (previous) let statements in the function.</li>
-        <li>The value may be a data structure such as a list</li>
+        <li>The value may be a data structure such as a <code>List</code></li>
       </ul>
     </li>
     <li>The motivations for using let statements is to:

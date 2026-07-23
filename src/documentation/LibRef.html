@@ -424,7 +424,7 @@ See <a href="#InterpolatedString">Interpolated fields <i class="fa">&#xf14c;</i>
   <td><code>String</code></td>
   <td><code>List&lt;of String&gt;</code></td>
   <td>a <code>List</code> of the substrings found between occurrences of the argument string<br>
-  if the argument is the empty string then the list is of all the individual characters</td>
+  if the argument is the empty string then the <code>List</code> is of all the individual characters</td>
  </tr><tr id="subString">
   <td><el-method>subString</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
@@ -497,7 +497,7 @@ three immutable data structure types <code>HashSet</code>, <code>Stack</code> an
 <p>Since procedure methods may be called only from within the <b>main routine</b> or a <b>procedure</b>,
 it is also possible to make changes via <b>function</b> dot methods, which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
-<p>Immutable data structures are intended specifically to facilitate the Functional programming paradigm,
+<p>Immutable data structures are intended specifically to facilitate the functional programming paradigm,
  but some are also useful within other programming paradigms.</p>
 <p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single type, that type being specified either explicitly
  (as in &lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
@@ -571,14 +571,14 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>not available</td>
  </tr><tr>
   <td>procedure methods to mutate contents</td>
-  <td>see <a href="#ListProcedures">Procedure methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListProcedures">Procedure methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#DictionaryProcedures">Procedure methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
   <td>not available</td>
   <td>not available</td>
   <td>not available</td>
  </tr><tr>
   <td>function dot methods</td>
-  <td>see <a href="#ListFunctions">Function dot methods on a List <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#ListFunctions">Function dot methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#DictionaryFunctions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#SetFunctions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#StackFunctions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
@@ -590,34 +590,34 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>The <code>List</code> type defines a data structure containing <i>n</i> items of any single type,
  including basic value types, structure types such as <code>List</code>,
  and user-defined types such as a class.</p>
-<p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
-<p>To create a List, use either of:</p>
+<p>Items in a <code>List</code> of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
+<p>To create a <code>List</code>, use either of:</p>
 <ul>
  <li>Method <a href="#createPopulatedList"><el-method>createPopulatedList</el-method> <i class="fa">&#xf14c;</i></a> to define its length and the initial value (and implicitly the type) of its items:<br>
   <code>variable aList set to createPopulatedList(10, "no one")</code></li>
- <li>Define an empty List of the required type, and use the procedure methods listed below to populate it:<br>
+ <li>Define an empty <code>List</code> of the required type, and use the procedure methods listed below to populate it:<br>
  <code>variable aList set to new List&lt;of String&gt;()</code><br>
  <code>call aList.initialise(10, "no one")</code><br>
  <code>call aList.append("4")</code></li>
 </ul>
-<p>The item at index <code>ix</code> in List <code>aList</code> can then be changed using an <b>assign variable</b> instruction and a valid index value in square brackets:</p>
+<p>The item at index <code>ix</code> in <code>List</code> <code>aList</code> can then be changed using an <b>assign variable</b> instruction and a valid index value in square brackets:</p>
 <ul>
  <li><code>assign aList[ix] to "Smith"</code></li>
 </ul>
-<p>A List's size can be dynamically changed using the procedure methods listed below.</p>
+<p>A <code>List</code>'s size can be dynamically changed using the procedure methods listed below.</p>
 
 <h3 class="no-TOC" id="DeconstructList">Deconstructing a List</h3>
 <p>A <code>List</code> may be split (deconstructed) into new named values using indexes and
  the methods <el-method>head</el-method>, <a href="#tail"><el-method>tail</el-method> <i class="fa">&#xf14c;</i></a> and <a href="#subList"><el-method>subList</el-method> <i class="fa">&#xf14c;</i></a>:</p>
 <ul>
- <li>To extract the first item in a List:<br>
+ <li>To extract the first item in a <code>List</code>:<br>
  <code>variable headItem set to myList[0]</code><br>
  or<br>
  <code>assign headItem to myList.head()</code>
- </li><li>To form a new List of all but the first item in a List:<br>
+ </li><li>To form a new <code>List</code> of all but the first item in a <code>List</code>:<br>
  <code>variable  tailList set to myList.tail()</code><br>
- If the original list contains only one item, the new List will be the empty List.
- </li><li>To get some other portion of a List, use the method <el-method>subList</el-method>:<br>
+ If the original <code>List</code> contains only one item, the new <code>List</code> will be the empty <code>List</code>.
+ </li><li>To get some other portion of a <code>List</code>, use the method <el-method>subList</el-method>:<br>
  <code>assign shortList to myList.subList(1,5)</code>
 </li>
 </ul>
@@ -625,8 +625,8 @@ with specified changes: that is why all such methods have names starting '<el-me
 
 <h3 class="no-TOC" id="ListsOfLists">Lists of lists</h3>
 <h4 class="no-TOC">Two dimensional arrays</h4>
-<p>Understood as a grid, a 2D array is a List of 'columns' each of which is a List of 'row' items, i.e. it is a List of Lists in which the column number is the <i>x</i> coordinate, and the row number is the <i>y</i> coordinate.</p>
-<p>To create a 2D array that holds a value of a single type in every cell, you define such a List of Lists thus:</p>
+<p>Understood as a grid, a 2D array is a <code>List</code> of 'columns' each of which is a <code>List</code> of 'row' items, i.e. it is a <code>List</code> of <code>List</code>s in which the column number is the <i>x</i> coordinate, and the row number is the <i>y</i> coordinate.</p>
+<p>To create a 2D array that holds a value of a single type in every cell, you define such a <code>List</code> of <code>List</code>s thus:</p>
 <ul>
  <li>Use method <a href="#createPopulatedListofLists"><el-method>createPopulatedListofLists</el-method> <i class="fa">&#xf14c;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
    <code>variable array2D set to  createPopulatedListofLists(cols, rows, value)</code></li>
@@ -651,7 +651,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>and refer to a cell using three indexes in square brackets.
 
 <h3 class="no-TOC" id="ListProcedures">Procedure methods on a <code>List</code></h3>
-<p>Where an argument provides a new value for an item in a List, that value must be of the same type as defined for the List's items.</p>
+<p>Where an argument provides a new value for an item in a <code>List</code>, that value must be of the same type as defined for the <code>List</code>'s items.</p>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
@@ -660,30 +660,30 @@ with specified changes: that is why all such methods have names starting '<el-me
  </tr><tr id="append">
   <td><el-method>append</el-method></td>
   <td>value of <code>List</code> item's type</td>
-  <td>the item is added to the end of the List</td>
+  <td>the item is added to the end of the <code>List</code></td>
  </tr><tr id="appendList">
   <td><el-method>appendList</el-method></td>
   <td><code>List</code></td>
-  <td>the argument List is added to the end of the List</td>
+  <td>the argument <code>List</code> is added to the end of the <code>List</code></td>
  </tr><tr id="initialise">
   <td><el-method>initialise</el-method></td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
-  <td>specify the number (&gt; 0) of items in the List,<br>and an initial value for every item.<br>
-      May be called at any time to redefine the List's size and initial values.</td>
+  <td>specify the number (&gt; 0) of items in the <code>List</code>,<br>and an initial value for every item.<br>
+      May be called at any time to redefine the <code>List</code>'s size and initial values.</td>
  </tr><tr id="insert">
   <td><el-method>insert</el-method></td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td>the item is inserted at the index given.<br>
   If the index is negative it is counted from the end<br>
-  If the index is greater than the list's length, the item is inserted at the end</td>
+  If the index is greater than the <code>List</code>'s length, the item is inserted at the end</td>
  </tr><tr id="prepend">
   <td><el-method>prepend</el-method></td>
   <td>value of <code>List</code> item's type</td>
-  <td>the item is is added to the start of the List</td>
+  <td>the item is is added to the start of the <code>List</code></td>
  </tr><tr id="prependList">
   <td><el-method>prependList</el-method></td>
   <td><code>List</code></td>
-  <td>the argument List is added to the start of the List</td>
+  <td>the argument <code>List</code> is added to the start of the <code>List</code></td>
  </tr><tr id="removeAll">
   <td><el-method>removeAll</el-method></td>
   <td>value of <code>List</code> item's type</td>
@@ -710,147 +710,147 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><el-method>asSet</el-method></td>
   <td>(none)</td>
   <td><code>HashSet</code></td>
-  <td>a new Set containing all the <i>unique</i> items in the List</td>
+  <td>a new Set containing all the <i>unique</i> items in the <code>List</code></td>
  </tr><tr id="contains_List">
   <td><el-method>contains</el-method></td>
   <td>value</td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if the List contains the specified item<br>
+  <td><code>true</code> if the <code>List</code> contains the specified item<br>
   &ndash; <code>false</code> otherwise</td>
  </tr><tr id="equals_List">
   <td><el-method>equals</el-method></td>
   <td><code>List</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if list and argument are identical<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if <code>List</code> and argument are identical<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="filter_List">
   <td><el-method>filter</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code></td>
-  <td>a new List obtained from applying a lambda to the input List<br>
+  <td>a new <code>List</code> obtained from applying a lambda to the input <code>List</code><br>
   see <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="head">
   <td><el-method>head</el-method></td>
   <td>(none)</td>
   <td><code>List</code> item's type</td>
-  <td>the first item of the List (i.e. index = 0, which must exist)</td>
+  <td>the first item of the <code>List</code> (i.e. index = 0, which must exist)</td>
  </tr><tr id="indexOf_List">
   <td><el-method>indexOf</el-method></td>
   <td>value of <code>List</code> item's type</td>
   <td><code>Int</code></td>
-  <td>the index of the first occurrence of the argument value in the List,<br>or -1 if no match is found</td>
+  <td>the index of the first occurrence of the argument value in the <code>List</code>,<br>or -1 if no match is found</td>
  </tr><tr id="join">
   <td><el-method>join</el-method></td>
   <td><code>List&lt;of String&gt;</code></td>
   <td><code>String</code></td>
-  <td>a single String that joins all the items in the list,<br>with the specified String (which can be empty) inserted between the items</td>
+  <td>a single String that joins all the items in the <code>List</code>,<br>with the specified String (which can be empty) inserted between the items</td>
  </tr><tr id="length_List">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
   <td><code>Int</code></td>
-  <td>the number of items in the List</td>
+  <td>the number of items in the <code>List</code></td>
  </tr><tr id="map_List">
   <td><el-method>map</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code></td>
-  <td>a new List obtained from applying a lambda to the input List<br>
+  <td>a new <code>List</code> obtained from applying a lambda to the input <code>List</code><br>
   see <a href="#map"><el-method>map</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="maxBy_List">
   <td><el-method>maxBy</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code> item's type</td>
-  <td>the list item corresponding to the maximum of the values returned by a lambda<br>
+  <td>the <code>List</code> item corresponding to the maximum of the values returned by a lambda<br>
   see <a href="#maxBy"><el-method>maxBy</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="minBy_List">
   <td><el-method>minBy</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code> item's type</td>
-  <td>the list item corresponding to the minimum of the values returned by a lambda<br>
+  <td>the <code>List</code> item corresponding to the minimum of the values returned by a lambda<br>
   see <a href="#minBy"><el-method>minBy</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="notEqualTo_List">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>List</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if list and argument differ l<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if <code>List</code> and argument differ l<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="orderBy_List">
   <td><el-method>orderBy</el-method></td>
   <td><code>lambda</code></td>
   <td><code>List</code></td>
-  <td>a new list with the items ordered according to the value returned by a lambda</td>
+  <td>a new <code>List</code> with the items ordered according to the value returned by a lambda</td>
  </tr><tr id="reduce_List">
   <td><el-method>reduce</el-method></td>
   <td>item of <code>List</code> item's type,<br><code>lambda</code></td>
   <td>return type of lambda</td>
-  <td>the final value obtained by applying a lambda cumulatively to each item in the input List<br>
+  <td>the final value obtained by applying a lambda cumulatively to each item in the input <code>List</code><br>
   taking account of the first argument as an initial (and default return) value<br>
   see <a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a> in <a href="#HoFs">HoFs <i class="fa">&#xf14c;</i></a></td>
  </tr><tr id="subList">
   <td><el-method>subList</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>List</code></td>
-  <td>a new list that contains the items specified by the two positive integers (<i>m,n</i>) where<br>
-  <i>m</i> indexes the first item of the list required (counting from 0) and<br>
+  <td>a new <code>List</code> that contains the items specified by the two positive integers (<i>m,n</i>) where<br>
+  <i>m</i> indexes the first item of the <code>List</code> required (counting from 0) and<br>
   <i>n</i> indexes the item <i>after</i> the last item required (exclusive index)<br>
-  if <i>m</i> &ge; <i>n</i> the result is the empty list
+  if <i>m</i> &ge; <i>n</i> the result is the empty <code>List</code>
   </td><tr id="tail">
   <td><el-method>tail</el-method></td>
   <td>(none)</td>
   <td><code>List</code> item's type</td>
-  <td>all items except the first item in the List (i.e. index = 1..n, which must exist)</td>
+  <td>all items except the first item in the <code>List</code> (i.e. index = 1..n, which must exist)</td>
  </tr><tr id="toString_List">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>a String that is a comma+space-separated list of the List's items, enclosed in square brackets</td>
+  <td>a String that is a comma+space-separated list of the <code>List</code>'s items, enclosed in square brackets</td>
  </tr><tr id="withAppend">
   <td><el-method>withAppend</el-method></td>
   <td>item of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List lengthened with the item added after the end</td>
+  <td>a new <code>List</code> lengthened with the item added after the end</td>
  </tr><tr id="withAppendList">
   <td><el-method>withAppendList</el-method></td>
   <td><code>List</code> of same type</td>
   <td><code>List</code></td>
-  <td>a new List lengthened by appending the given List</td>
+  <td>a new <code>List</code> lengthened by appending the given <code>List</code></td>
  </tr><tr id="withInsert">
   <td><el-method>withInsert</el-method></td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List with the item inserted after the item at the given index position</td>
+  <td>a new <code>List</code> with the item inserted after the item at the given index position</td>
 </tr><tr id="withPrepend">
   <td><el-method>withPrepend</el-method></td>
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List lengthened with the item added before the beginning</td>
+  <td>a new <code>List</code> lengthened with the item added before the beginning</td>
  </tr><tr id="withPrepend_List">
   <td><el-method>withPrependList</el-method></td>
   <td><code>List</code> of same type</td>
   <td><code>List</code></td>
-  <td>a new List lengthened by prepending the given List</td>
+  <td>a new <code>List</code> lengthened by prepending the given <code>List</code></td>
  </tr><tr id="withRemoveAll">
   <td><el-method>withRemoveAll</el-method></td>
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List with items equal to the given item removed</td>
+  <td>a new <code>List</code> with items equal to the given item removed</td>
  </tr><tr id="withRemoveAt_List">
   <td><el-method>withRemoveAt</el-method></td>
   <td><code>Int</code></td>
   <td><code>List</code></td>
-  <td>a new List with the item at the given index removed</td>
+  <td>a new <code>List</code> with the item at the given index removed</td>
  </tr><tr id="withRemoveFirst">
   <td><el-method>withRemoveFirst</el-method></td>
   <td>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List with the first item equal to the given item removed</td>
+  <td>a new <code>List</code> with the first item equal to the given item removed</td>
  </tr><tr id="withPut_List">
   <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
-  <td>a new List with the item replacing that at the given index</td>
+  <td>a new <code>List</code> with the item replacing that at the given index</td>
  </tr>
 </table>
 
 <h2 id="Dictionary">Dictionary</h2>
-<p>A <code>Dictionary</code> is like a List whose items are pairs but, instead of having a numeric index, each item has a <i>key</i> plus  an  associated <i>value</i>,
+<p>A <code>Dictionary</code> is like a <code>List</code> whose items are pairs but, instead of having a numeric index, each item has a <i>key</i> plus  an  associated <i>value</i>,
 i.e. a Dictionary is a set of <i>key:value</i> pairs.</p>
 <p>The key's type must be one of <code>Int</code>, <code>Float</code>, <code>String</code> or <code>Boolean</code>.
  The values may be of any type. The types of both keys and values are fixed when the Dictionary is created.</p>
@@ -897,7 +897,7 @@ end procedure
 
 <div class="functional">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program
-in a way suitable for Functional programming, by using the HoF <el-method>reduce</el-method> in a function
+in a way suitable for functional programming, by using the HoF <el-method>reduce</el-method> in a function
 that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 <codeblock>main
   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
@@ -946,7 +946,7 @@ end function
   <td><el-method>keys</el-method></td>
   <td>(none)</td>
   <td><code>List</code></td>
-  <td>a List containing the keys</td>
+  <td>a <code>List</code> containing the keys</td>
 </tr><tr id="notEqualTo_Dictionary">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>Dictionary</code></td>
@@ -961,7 +961,7 @@ end function
   <td><el-method>values</el-method></td>
   <td>(none)</td>
   <td><code>List</code></td>
-  <td>a List containing the values</td>
+  <td>a <code>List</code> containing the values</td>
 </tr><tr id="withPut_Dictionary">
   <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
   <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
@@ -976,19 +976,19 @@ end function
 </table>
 
 <h2 id="HashSet">HashSet</h2>
-<p>A <code>HashSet</code> (also referred to merely as a Set) is a standard data structure containing Set members, that works somewhat like a <code>List</code> with two important differences:</p>
+<p>A <code>HashSet</code> is a standard data structure containing set members, that works somewhat like a <code>List</code> with two important differences:</p>
 <ul>
- <li>The value of a <code>HashSet</code> member may appear only once: if a member being added to a Set has the same value as an existing member in the Set then the Set remains the same as before.</li>
- <li>The values in a <code>HashSet</code> are not indexed: two Sets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
- <li>There are no methods that modify an existing Set, but several (e.g. <el-method>add</el-method> and <el-method>remove</el-method>)
- return a new <code>HashSet</code> that is based on the original Set or Sets with specified differences.</li>
+ <li>The value of a <code>HashSet</code> member may appear only once: if a member being added to a <code>HashSet</code> has the same value as an existing member in the <code>HashSet</code> then the <code>HashSet</code> remains the same as before.</li>
+ <li>The values in a <code>HashSet</code> are not indexed: two HashSets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
+ <li>There are no methods that modify an existing <code>HashSet</code>, but several (e.g. <el-method>add</el-method> and <el-method>remove</el-method>)
+ return a new <code>HashSet</code> that is based on the original HashSet or HashSets with specified differences.</li>
 </ul>
-<p>This enables a Set to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
+<p>This enables a HashSet to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the type of its members must be specified in the form
  <code>HashSet&lt;of String&gt;</code></p>
 <p>You can add members: either individually with <el-method>add</el-method>, or many with <el-method>addFromList</el-method>.
 And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
-<p>Example of creating a Set from a literal List and changing its content:</p>
+<p>Example of creating a <code>HashSet</code> from a literal <code>List</code> and changing its content:</p>
 
 <table class="tablePlain">
 <tr>
@@ -1028,12 +1028,12 @@ end main
   <td><el-method>addFromList</el-method></td>
   <td><code>List</code></td>
   <td><code>HashSet</code></td>
-  <td>a new Set extended with those items from the List that are not already in the Set</td>
+  <td>a new Set extended with those items from the <code>List</code> that are not already in the Set</td>
  </tr><tr id="asList">
   <td><el-method>asList</el-method></td>
   <td>(none)</td>
   <td><code>List</code></td>
-  <td>a List containing the Set's members as List items</td>
+  <td>a <code>List</code> containing the Set's members as <code>List</code> items</td>
  </tr><tr id="contains_Set">
   <td><el-method>contains</el-method></td>
   <td>value<br>(of <code>HashSet</code> members' type)</td>
@@ -1088,7 +1088,7 @@ end main
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>a string that is a comma+space-separated list of the Set's members, enclosed in brackets</td>
+  <td>a string that is a comma+space-separated <code>List</code> of the Set's members, enclosed in brackets</td>
  </tr><tr id="union">
   <td><el-method>union</el-method></td>
   <td><code>HashSet</code></td>
@@ -1338,7 +1338,7 @@ of differing types held together and referenced by a single identifier.</p>
 <p>Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
 <p>A <b>function</b> may return a <b>Tuple</b>.</p>
-<p>A Tuple differs from a List in that:</p>
+<p>A Tuple differs from a <code>List</code> in that:</p>
 <ul>
  <li>A Tuple may hold items of <i>different</i> types.</li>
  <li>A Tuple is <i>immutable</i>: you may read, but not modify, the values it contains.
@@ -1605,7 +1605,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <code>s
   (e.g. <code>List&lt;of CircleVG&gt;</code>) by using the <code>List</code> <el-method>append</el-method> method.</p>
 <p><el-method>createVectorGraphics</el-method> is a convenience method that returns an empty <code>List&lt;of VectorGraphic&gt;</code></p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
-<p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
+<p>Adding a shape returns a new instance of the <code>List</code> which must be assigned to a new or existing variable.</p>
 <p>The constructors for the VG types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the class properties,
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
@@ -1615,7 +1615,7 @@ Only <code>fillColour</code> can be specified as <code>transparent</code>.</p>
 <p>Note that the <code>height</code> and <code>width</code> properties of an image are also dependent on the dimensions of the original graphic file.</p>
 
 <h3 class="no-TOC" id="displayVectorGraphics">Displaying Vector graphic shapes</h3>
-<p>As with <a href="#BlockGraphics">Block <i class="fa">&#xf14c;</i></a> graphics, the assembled list of shapes is not displayed until call procedure <el-method>displayVectorGraphics</el-method> with the list as its argument, thus allowing  you to make multiple changes before display.</p>
+<p>As with <a href="#BlockGraphics">Block <i class="fa">&#xf14c;</i></a> graphics, the assembled <code>List</code> of shapes is not displayed until call procedure <el-method>displayVectorGraphics</el-method> with the <code>List</code> as its argument, thus allowing  you to make multiple changes before display.</p>
 <p>And as with using SVG in Html, the shapes are drawn in the order in which they are added to the <code>VectorGraphic</code> instance.
 Later shapes are positioned in front of earlier ones.</p>
 
@@ -2034,7 +2034,7 @@ end function
   <td><code>String</code>, <code>List&lt;of String&gt;</code></td>
   <td><code>String</code></td>
   <td>prints the string as a prompt and returns the typed input when Enter is pressed<br>
-  provided it is one of the options in the list.<br>
+  provided it is one of the options in the <code>List</code>.<br>
   If it is not, the prompt is repeated with the options displayed</td>
  </tr><tr id="inputInt">
   <td><el-method>inputInt</el-method></td>
@@ -2524,12 +2524,12 @@ end main
  <li>The method <el-method>toString</el-method> is so widely applicable because it enables you to print
  all variables and data structures to the IDE's display pane for debugging purposes.</li>
  <li>methods <el-method>ceiling</el-method>, <el-method>floor</el-method>, <el-method>isInfinite</el-method>, <el-method>isNaN</el-method> and <el-method>round</el-method> are designed for use on <code>Float</code> values, but they can accept <code>Int</code> values without raising an error.</li>
- <li>The length of a <code>Dictionary</code> can be found by applying method <el-method>length</el-method> to the list returned by method <el-method>keys</el-method> on the dictionary:<br>
+ <li>The length of a <code>Dictionary</code> can be found by applying method <el-method>length</el-method> to the <code>List</code> returned by method <el-method>keys</el-method> on the dictionary:<br>
 <table class="tablePlain">
   <tr><td><code>print(di.keys().length())</code></td><td>&#x27f6;</td><td>15</tr>
 </table></li>
  <li>Checking whether an item is contained in a <code>Dictionary</code> can be
-  done by applying method <el-method>contains</el-method> to the list returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
+  done by applying method <el-method>contains</el-method> to the <code>List</code> returned by methods <el-method>keys</el-method> and <el-method>values</el-method> on the dictionary:<br>
 <table class="tablePlain">
  <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
  <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
@@ -2960,35 +2960,35 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td><el-method>createPopulatedList</el-method></td>
   <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
   <td><code>List&lt;of itemType&gt;</code></td>
-  <td>a List containing the specified number of items each initialised to the value in the second argument</td>
+  <td>a <code>List</code> containing the specified number of items each initialised to the value in the second argument</td>
  </tr><tr id="createPopulatedListofLists">
   <td><el-method>createPopulatedListofLists</el-method></td>
   <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's type</td>
   <td><code>List&lt;of List&lt;of itemType&gt;&gt;</code></td>
-  <td>a List of length the first argument containing that number of Lists<br>
-  each initialised to a List of length the second argument<br>
+  <td>a <code>List</code> of length the first argument containing that number of <code>List</code>s<br>
+  each initialised to a <code>List</code> of length the second argument<br>
   with each item therein initialised to the value in the third argument</td>
  </tr><tr id="max">
   <td><el-method>max</el-method></td>
   <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
   <td><code>Int</code> or<br> <code>Float</code></td>
-  <td>the maximum value found in the List</td>
+  <td>the maximum value found in the <code>List</code></td>
  </tr><tr id="min">
   <td><el-method>min</el-method></td>
   <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
   <td><code>Int</code> or<br> <code>Float</code></td>
-  <td>the minimum value found in the List</td>
+  <td>the minimum value found in the <code>List</code></td>
  </tr><tr id="range">
   <td><el-method>range</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>List</code></td>
-  <td>a List containing the integers from the first argument to one <i>less</i> than the second argument.<br>
-  If the second argument is not greater than the first, then the empty List is returned</td>
+  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument.<br>
+  If the second argument is not greater than the first, then the empty <code>List</code> is returned</td>
  </tr><tr id="rangeInSteps">
   <td><el-method>rangeInSteps</el-method></td>
   <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
   <td><code>List</code></td>
-  <td>a List containing the integers from the first argument to one <i>less</i> than the second argument<br>
+  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument<br>
    in increments specified by the third argument.<br>
    If the third argument is negative, the second argument must be less than the first,<br>
     and the integers returned will run from the first to one <i>more</i> than the second</td>
@@ -2998,7 +2998,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>range</el-method> or <el-method>rangeInSteps</el-method></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Print every second item in a List:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Print every second item in a <code>List</code>:</p>
 <codeblock>main
   variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
   for n in rangeInSteps(0, numbers.length() + 1, 2)
@@ -3025,7 +3025,7 @@ end function
   but Elan does not currently support that pattern.) </p>
 
 <h2>Standard HoFs</h2>
-<p>The standard library contains several HoFs that are widely recognised and used within Functional programming, namely:<br>
+<p>The standard library contains several HoFs that are widely recognised and used within functional programming, namely:<br>
 <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#map"><el-method>map</el-method> <i class="fa">&#xf14c;</i></a> and
 <a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a>,<br> and also provides:<br>
@@ -3043,7 +3043,7 @@ end function
 <h3 class="no-TOC" id="filter">filter </h3>
 
 <p>You give a <code>List</code> to the Higher-order Function <el-method>filter</el-method> in order to return a new <code>List</code> containing a subset of items.
-The subset is chosen by a <code>lambda</code> that tests list item values and returns a Boolean to specify filtering in or out.</p>
+The subset is chosen by a <code>lambda</code> that tests <code>List</code> item values and returns a Boolean to specify filtering in or out.</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
@@ -3059,14 +3059,14 @@ end function
 </div></div>
 
 <h3 class="no-TOC" id="map">map</h3>
-<p>The function <el-method>map</el-method> is used to apply a <b>function</b> to every item in a <code>List</code>, and return a new List.
-The <b>function</b> to be applied is usually specified as a <code>lambda</code> having a single argument of the type of the list's items, as in these examples:</p>
+<p>The function <el-method>map</el-method> is used to apply a <b>function</b> to every item in a <code>List</code>, and return a new <code>List</code>.
+The <b>function</b> to be applied is usually specified as a <code>lambda</code> having a single argument of the type of the <code>List</code>'s items, as in these examples:</p>
 
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>map</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To cube each integer value in a list:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To cube each integer value in a <code>List</code>:</p>
 
 <table class="tablePlain">
 <tr>
@@ -3081,7 +3081,7 @@ end main
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To change each string in a list to upper case:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To change each string in a <code>List</code> to upper case:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -3095,7 +3095,7 @@ end main
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To reverse each string in the list of names using the function <el-method>reverse</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To reverse each string in the <code>List</code> of names using the function <el-method>reverse</el-method>:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -3122,20 +3122,20 @@ end function
 </div></div>
 
 <h3 class="no-TOC" id="reduce">reduce</h3>
-<p>The function <el-method>reduce</el-method> is used to combine the items in a list in some way to produce a single result. This result may be of the same type as the items in the list, for example to:</p>
+<p>The function <el-method>reduce</el-method> is used to combine the items in a <code>List</code> in some way to produce a single result. This result may be of the same type as the items in the <code>List</code>, for example to:</p>
 <ul>
- <li>find the sum or sum-of-squares of a list of numeric values.</li>
- <li>concatenate, or combine in some other way, the items from a list of strings.</li>
+ <li>find the sum or sum-of-squares of a <code>List</code> of numeric values.</li>
+ <li>concatenate, or combine in some other way, the items from a <code>List</code> of strings.</li>
 </ul>
-<p>The result may, however, be of a different type than the items in the list, and may even be a data structure, for example to:</p>
+<p>The result may, however, be of a different type than the items in the <code>List</code>, and may even be a data structure, for example to:</p>
 <ul>
  <li>generate a 3-tuple containing the sum, sum-of-squares, and count of numerical items,</li>
- <li>generate a dictionary of all the unique words in a list, with the number of times each word appears in the input list.</li>
+ <li>generate a dictionary of all the unique words in a <code>List</code>, with the number of times each word appears in the input <code>List</code>.</li>
 </ul>
 <p>Method <el-method>reduce</el-method> requires two arguments:</p>
 <ol>
  <li>the initial, or 'seed', value, of the type that you wish to be returned by the <b>function</b> specified in the second argument.
- For example, if you were finding the sum of a list of type <code>Float</code>, the initial seed value
+ For example, if you were finding the sum of a <code>List</code> of type <code>Float</code>, the initial seed value
  would typically be <code>0.0</code>. If you were creating a dictionary of words, the initial seed
  value would be an empty dictionary of the correct key and value types.</li>
  <li>the <b>function</b> or <code>lambda</code> to be applied, which itself requires two arguments:
@@ -3143,11 +3143,11 @@ end function
  <li>the accumulating named value, which is therefore of the same type as the initial seed value,
  (This will be the return value of the <b>function</b> or <code>lambda</code>).</li>
  <li>the item to which the <b>function</b> is applied, which is therefore of the same type
-   as the items in the input list.</li>
+   as the items in the input <code>List</code>.</li>
  </ol>
  </li>
 </ol>
-<p>In other words, the specified <b>function</b> or <code>lambda</code> is applied to each item of the input List in turn, in each case passing in the current value
+<p>In other words, the specified <b>function</b> or <code>lambda</code> is applied to each item of the input <code>List</code> in turn, in each case passing in the current value
   of the result. The <b>function</b> makes use of both to generate a <i>new</i> value for the result, replacing the current one
   for application to the next item. This is best understood by looking at the examples.</p>
 
@@ -3211,7 +3211,7 @@ end main
 
 <h5 class="no-TOC">&nbsp;&nbsp;&nbsp;Note</h5>
 <ul>
- <li>In these two examples on Lists, an empty List has to be defined for use as the first argument of <el-method>reduce</el-method>.</li>
+ <li>In these two examples on <code>List</code>s, an empty List has to be defined for use as the first argument of <el-method>reduce</el-method>.</li>
 </ul>
 <hr>
 </div></div>
@@ -3220,7 +3220,7 @@ end main
 <div id="minBy"></div>
 <h3 class="no-TOC">maxBy and minBy</h3>
 <p><el-method>maxBy</el-method> and <el-method>minBy</el-method> are dot methods on a <code>List</code>.
-They take a <b>function</b> as an argument, and return the list item corresponding to the maximum or minimum of the values returned by the <b>function</b>.</p>
+They take a <b>function</b> as an argument, and return the <code>List</code> item corresponding to the maximum or minimum of the values returned by the <b>function</b>.</p>
 <p>For simply finding the maximum or minimum value in a <code>List</code>, you can use
 <a href="#max"><el-method>max</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#min"><el-method>min</el-method> <i class="fa">&#xf14c;</i></a>.</p>
@@ -3228,7 +3228,7 @@ They take a <b>function</b> as an argument, and return the list item correspondi
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>maxBy</el-method> and <el-method>minBy</el-method></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To find in a list the integer that has the highest last digit:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To find in a <code>List</code> the integer that has the highest last digit:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -3242,7 +3242,7 @@ end main
 </tr>
 </table>
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; To find in a list the the shortest string:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; To find in a <code>List</code> the the shortest string:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -3261,7 +3261,7 @@ end main
 <div id="sumBy">
 <h3 class="no-TOC">sumBy</h3>
 <p><el-method>sumBy</el-method> calculates the numerical sum of the items generated by the specified lambda (or named function)
-  <i>which must return a floating point value</i>. This does <i>not</i> mean that the list on which <el-method>sumBy</el-method>
+  <i>which must return a floating point value</i>. This does <i>not</i> mean that the <code>List</code> on which <el-method>sumBy</el-method>
   has to be of type <code>List&lt;of Float&gt;</code>. However, the lambda must process each element in a way that returns a <code>Float</code>.
 </p>
 
