@@ -160,7 +160,7 @@ With properly structured programming, it is never <i>necessary</i> to break out 
 <ul>
   <li>can be thought of as a way of adding you own custom <i>instruction</i> to the language,</li>
   <li>can make a change to the state of the system: which might be by printing a result on the screen, saving data to a file,
-or <i>mutating</i> a data structure passed into it, such as sorting a list 'in place' (see the <b>Ripple Sort</b> demo),</li>
+or <i>mutating</i> a data structure passed into it, such as sorting a <code>List</code> 'in place' (see the <b>Ripple Sort</b> demo),</li>
   <li><i>may</i> depend on the system in others ways, for example requesting a response from the user, or reading the system clock,</li>
   <li>must be called directly, never as part of an expression.</li>
 </ul>
@@ -312,9 +312,9 @@ generates a non-editable class named Global, and all global instructions are cre
 end main
 </codeblock>
 
-<p>From the <b>Ripple Sort</b> demo. The main routine defines the list to be sorted,
+<p>From the <b>Ripple Sort</b> demo. The main routine defines the <code>List</code> to be sorted,
   delegates most of the work to the <el-method>inPlaceRippleSort</el-method> procedure (not shown here),
-  then prints the sorted list:</p>
+  then prints the sorted <code>List</code>:</p>
 <codeblock>main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
@@ -359,7 +359,7 @@ end main
 <div class="accordion">
 <h3 class="no-TOC acc-title">Examples of a procedure</h3>
 <div class="acc-body">
-<p>From the <b>Bubbles</b> demo, this procedure changes the vertical position, and the size, of each bubble in the provided list:</p>
+<p>From the <b>Bubbles</b> demo, this procedure changes the vertical position, and the size, of each bubble in the provided <code>List</code>:</p>
 
 <codeblock>procedure moveGrowBurst(bubbles as List&lt;of CircleVG&gt;)
   for b in bubbles
@@ -427,7 +427,7 @@ end procedure
   <li>The procedure always finishes on the last instruction defined within it, at which point the program continues from where the <b>call instruction</b>
     is located.</li>
   <li>Changes made to parameter values (where possible) within the procedure (such as changing the radius and centre of each bubble
-     in the list <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
+     in the <code>List</code> <code>bubbles</code>) will be visible to the calling code when the procedure exits.</li>
   <li>Functions may be called from within a procedure, but not <i>vice versa</i>.</li>
   <li>Instructions within a procedure &ndash; unlike within a function &ndash; may call other procedures, undertake input/output, and use system methods.</li>
 </ul>
@@ -532,7 +532,7 @@ the single parameter and return value are 2-tuples, where both items are of type
 end function
 </codeblock>
 
-<p>A function to search a (pre-sorted) list of strings using the binary search algorithm:</p>
+<p>A function to search a (pre-sorted) <code>List</code> of strings using the binary search algorithm:</p>
 
 <codeblock>function binarySearch(li as List&lt;of String&gt;, item as String) returns Boolean
   variable result set to false
@@ -826,9 +826,9 @@ constant warningMsg set to "Limit reached"
 <p>To set up a data structure that is to be a constant in your program, you define it as the value returned by a <b>function</b>
   that requires no parameters. Such a function can then be referenced from anywhere in the program, often from within an expression,
   remembering to add empty brackets after its name.</p>
-<p>The following examples define a constant list of colours (using numerical hex values), and a constant dictionary that specifies
+<p>The following examples define a constant <code>List</code> of colours (using numerical hex values), and a constant dictionary that specifies
   the colour for each suit in a deck of cards using system method <a href="LibRef.html#createDictionary"><el-method>createDectionary</el-method></a>
-  to set up the dictionary from a list of 2-tuples. In this second case, integer output is converted to a string of
+  to set up the dictionary from a <code>List</code> of 2-tuples. In this second case, integer output is converted to a string of
   hexadecimal before printing by using example function <a href="LibRef.html#hex"><el-method>hex</el-method></a>:</p>
 
 <codeblock>main
@@ -995,7 +995,7 @@ of a program: the main routine, functions, and procedures.</p>
 end main
 </codeblock>
 
-<p>From the <b>Ripple sort</b> demo, printing a list:</p>
+<p>From the <b>Ripple sort</b> demo, printing a <code>List</code>:</p>
 
   <codeblock>main
   variable li set to [7, 1, 0, 4, 8, 3, 6]
@@ -1097,7 +1097,7 @@ case a function call:</p>
 
 <codeblock>variable grid set to createBlockGraphics(white)</codeblock>
 
-<p>Example from the <b>Ripple Sort</b> demo where a variable being initialised using a literal list of integers:</p>
+<p>Example from the <b>Ripple Sort</b> demo where a variable being initialised using a literal <code>List</code> of integers:</p>
 
 <codeblock>variable li set to [7, 1, 0, 4, 8, 3, 6]</codeblock>
 </div></div>
@@ -1225,7 +1225,7 @@ which offer several advantages, including:</p>
 
 <p>In all these cases, if the user input does not match the specified rules, the user will be advised, and asked to input a value response.</p>
 
-<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system method.</p>
+<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system methods.</p>
 </div></div>
 </div>
 
@@ -1442,7 +1442,7 @@ end procedure
     <li>The second field in the instruction specifies the sequence of values that will be assigned to the variable, successively.</li>
     <li>The sequence of values may be specified:
       <ul>
-        <li>as a literal list (of any kind), or a variable of type list</li>
+        <li>as a literal <code>List</code> (of any kind), or a variable of type <code>List</code></li>
         <li>as a string value, in which case each single character that makes up the string is assigned to the variable in succession</li>
         <li>as any expression that generates a List</li>
       </ul>
@@ -1734,7 +1734,7 @@ end test
  using methods <el-method>subString</el-method> and <el-method>subList</el-method> respectively.</p>
 <p>The upper index of a range is <i>exclusive</i>, so to define a range that picks items indexed from <i>i</i> to <i>j</i>, you would specify the range as <code>(i, j + 1)</code>.</p>
 <p>If the two index values of a range are equal, or the second is smaller than the first,
-then an empty string or list is returned.</p>
+then an empty <code>String</code> or <code>List</code> is returned.</p>
 <p>Indexes are used only for <i>reading</i> values. Writing a value to a specific index location in a list is done using method
 <a href="LibRef.html#withPut"><el-method>withPut</el-method> <i class="fa">&#xf08e;</i></a>.</p>
 
@@ -1754,7 +1754,7 @@ end main
 </tr>
 </table>
 
-<p>And on a list:</p>
+<p>And on a <code>List</code>:</p>
 <table class="tablePlain">
 <tr>
  <td>
@@ -1767,7 +1767,7 @@ end main
 end main
 </codeblock>
  </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
-  <td><el-code><br><br><br>4</el-code> &nbsp;&nbsp;&nbsp; (the value of the list item)<br><el-code>[4, 5, 6, 7, 8, 9, 10, 11]</el-code> &nbsp;&nbsp;&nbsp; (a new list)<br><el-code>[0, 1, 2, 3, 4, 5, 6]</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
+  <td><el-code><br><br><br>4</el-code> &nbsp;&nbsp;&nbsp; (the value of the <code>List</code> item)<br><el-code>[4, 5, 6, 7, 8, 9, 10, 11]</el-code> &nbsp;&nbsp;&nbsp; (a new list)<br><el-code>[0, 1, 2, 3, 4, 5, 6]</el-code> &nbsp;&nbsp;&nbsp; (since the upper bound of a range is <i>exclusive</i>)</td>
 </tr>
 </table>
 </div>
