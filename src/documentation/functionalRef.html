@@ -70,7 +70,7 @@ This changes two things: </p>
     <li>When the function has completed its execution the only legitimate observable effect is its returned value.</li>
 </ul>
 
-<p>Dedicated Functional Programming languages &ndash; such as Haskell &ndash; enforce these rules automatically. Common 'multi-paradigm' languages
+<p>Dedicated Functional programming languages &ndash; such as Haskell &ndash; enforce these rules automatically. Common 'multi-paradigm' languages
     &ndash; including Python, VB, C#, and Java &ndash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
@@ -119,7 +119,7 @@ and you are <i>within a function</i>, you cannot add a <b>print statement</b>, <
   <tr>
     <td>Number of functions</td>
     <td>4</td>
-    <td>21 (incl. function methods within Classes)</td>
+    <td>21 (incl. function methods within classes)</td>
   </tr>
   <tr>
     <td>Instructions within procedures, including main</td>
@@ -135,7 +135,7 @@ and you are <i>within a function</i>, you cannot add a <b>print statement</b>, <
 
 <h2>Every function can and should be unit tested</h2>
 
-  <p>The idea of writing automated tests isn't restricted to Functional Programming. The tests offered by Elan are known as 'unit tests', and are
+  <p>The idea of writing automated tests isn't restricted to Functional programming. The tests offered by Elan are known as 'unit tests', and are
     designed to test <i>functions</i>.</p>
     <p>Such tests are extremely easy to write, and run automatically when the program is loaded from a file, and then run
   again after every edit that results in code that compiles.</p>
@@ -184,9 +184,9 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
 
   <h3 class="no-TOC">Note on demo program <b>Best Fit</b></h3>
 <ul>
-  <li>The <b>Best Fit</b> demo defines a function and a Class for use in other programs. It has no <b>main routine</b> instruction,
+  <li>The <b>Best Fit</b> demo defines a function and a class for use in other programs. It has no <b>main routine</b> instruction,
     so comparison with the the unit testing in other programs would be misleading. The function and the operation
-  of the Class are both 100% tested.</li>
+  of the class are both 100% tested.</li>
 </ul>
 
 <h2>The function body should consists of a 'return', plus optional let instructions only</h2>
@@ -284,7 +284,7 @@ When required, it is often better to delegate to a new function to perform part 
 <p>There are two ways to implement iteration within a function:</p>
 <p>Either by using 'recursion', i.e. a recursive function (described here), or by the approach described in <a href="#HoFs">later<i class="fa">&#xf14c;</i></a>.</p>
 <p>A recursive function is one that at some point evaluates <i>itself</i>, and is best understood by example.
-  In the <b>Recursive Functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
+  In the <b>Recursive functions</b> demo, the <el-method>factorial</el-method> function is a good place to start:</p>
 
 <codeblock>
 function factorial(n as Int) returns Int
@@ -348,7 +348,7 @@ a <i>copy</i> of a data structure with specified differences from the original. 
 <p>When you want to apply operations to all items in a List you need to use iteration, which means using
   either <a href="#Recursion">recursion <i class="fa">&#xf14c;</i></a> or <a href="#HoFs">Higher-order Functions <i class="fa">&#xf14c;</i></a>
   and within that technique make use of the various <el-method>with..</el-method> methods. The <el-method>sum</el-method> function in the
-   <b>Recursive Functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
+   <b>Recursive functions</b> demo calculates the sum of all items in any List of floating point numbers (the tests included in the demo show example results):</p>
 <codeblock>
 function sum(li as List&lt;of Float&gt;) returns Float
   return if_(li.length() is 0, 0.0, li.head() + sum(li.tail()))
@@ -405,7 +405,7 @@ The same pattern exists between <el-method>merge</el-method> and <el-method>merg
   Under the covers, HoFs are written using recursion, but you don't see this. </p>
 
 <p>There are many possible HoFs, but three of them &ndash; <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> &ndash;
-are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional Programming'.
+are so widely used to process lists in FP, and in many different ways, that they are sometimes referred to as the 'Holy Trinity of Functional programming'.
 They can be used individually or in combination. The purpose and operation of each is explained below.</p>
 
 <p>All of the languages supported by Elan have their own versions of <el-method>filter</el-method>, <el-method>map</el-method> and <el-method>reduce</el-method> that are similar in intent
@@ -425,7 +425,7 @@ test test_Map_Filter_Reduce
 end test
 </codeblock>
 <p>Each of the three HoFs is applied to a List by a 'dot method call'. In this example each is applied to the same List (of floating point numbers),
-    though the subject List may be of any Type.  Because they are all dot methods, they can easily be chained in dot sequences, as shown.</p>
+    though the subject List may be of any type.  Because they are all dot methods, they can easily be chained in dot sequences, as shown.</p>
 <p>Each HoF is passed the <i>name</i> of a function that is defined elsewhere in the program.
     The function name is given as an argument, without brackets or arguments, e.g. <el-method>lessThan5</el-method>.
     For <el-method>filter</el-method> and <el-method>map</el-method>, this is the only argument; for <el-method>reduce</el-method>
@@ -439,7 +439,7 @@ end test
  <li>the definition of the function <el-method>lessThan5</el-method> (lower down in the code)
     includes a parameter of type <code>Float</code> (the same type as of the item in the List) but returns a <code>Boolean</code>
     specifying whether or not a specific item should pass the filter.
-    Making sure that Types match up as expected can be the trickiest part of learning to use HoFs.</li>
+    Making sure that types match up as expected can be the trickiest part of learning to use HoFs.</li>
 </ul>
 <p><el-method>map</el-method></p>
 <ul>
@@ -449,12 +449,12 @@ end test
     But each item in the resulting List <i>corresponds</i> ('maps') to an item of the
     original List at the same position</li>
    <li>as with <el-method>filter</el-method>, the function passed into <el-method>map</el-method> must
-    have a single parameter of the same type as the items in the List, though its return value may be of any Type.
+    have a single parameter of the same type as the items in the List, though its return value may be of any type.
   </li>
  </ul>
 <p><el-method>reduce</el-method></p>
 <ul><li> returns a <i>single</i> value, that is derived by combining all of the item values in the original List according to the function passed in. That derived value can be of the same
-Type as the items of the List (for example when used to combine a List of numbers by addition or multiplication),
+type as the items of the List (for example when used to combine a List of numbers by addition or multiplication),
 but can be of a different type including a data structure.</li>
 <li>Unlike <el-method>filter</el-method> and <el-method>map</el-method>, <el-method>reduce</el-method> requires two arguments:
 <ol><li>the <i>initial</i> value (sometimes called the 'seed') that will be progressively refined and eventually returned.
@@ -495,7 +495,7 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
   of function programming (FP). And lambdas have capabilities that are both more subtle and more sophisticated than can be described here, including the
   idea of 'closure' (which you can look up if you are ready to go much deeper &ndash; and which is supported in Elan). However, you should note that,
   because of the need for compatibility across all the supported languages, Elan has a restricted implementation of HoFs and of 'function passing' in general,
-  but it is sufficient to grasp the key principles of Functional Programming. To go further you would need to switch to a pure FP language such as Haskell.
+  but it is sufficient to grasp the key principles of Functional programming. To go further you would need to switch to a pure FP language such as Haskell.
   <i>Currently</i> Elan does <i>not</i> permit (in any of the supported languages):</p>
 <ul>
 <li>The definition of a lambda <i>except</i> inline as the argument to a HoF. You cannot, for example, assign a lambda (or a function) to a variable.</li>
@@ -533,14 +533,15 @@ end function
 just Lists of numbers e.g. [0, 1, 2, .. , 39]. The <el-method>map</el-method> HoFs iterate over these column and row <i>numbers</i>
 using them to access the appropriate portions of the <code>grid</code>, which is a 2D <code>List&lt;of List&lt;of Int&gt;&gt;</code>.</p>
 
-<h2>User-defined Classes should be immutable</h2>
+<h2>User-defined classes should be immutable</h2>
 
-<p>It is possible, indeed highly desirable, to have user-defined Types (i.e. Classes) in FP. However, in true FP, an instance of a Class would
-  never be mutated. So, when running under the <b>functional</b> paradigm, you may define Classes and add properties and function methods,
+<p>It is possible, indeed highly desirable, to have user-defined types (i.e. classes) in FP. However, in true FP, an instance of a class would
+  never be mutated. So, when running under the <b>functional</b> paradigm, you may define classes and add properties and function methods,
   but you may <i>not</i> define any <i>procedure</i> method. (In Object-oriented Programming  you <i>would</i> use procedure methods to mutate an instance or do anything
   that cannot be done by a function.)</p>
 
-<p>But this raises a question: how <i>are we to make changes to an instance of a Class?</i>.
+<div id="copyWith"></div>
+<p>But this raises a question: how <i>are we to make changes to an instance of a class?</i>.
   The answer is similar to that for updating a List, String, or other standard data structure within a function
   (described in <a href="#ListMutation">earlier<i class="fa">&#xf14c;</i></a>): you need ,ake a copy of the instance with specified changes.
   This is best achieved with the aid of the library function: <el-method>copyWith</el-method>, which requires three arguments:
@@ -555,7 +556,7 @@ using them to access the appropriate portions of the <code>grid</code>, which is
  
   <p>The <el-method>copyWith</el-method> may be used anywhere, but it is often convenient to use it within one or more 'with...' methods
   defined on the class. 
-  For example, in the <b>Snake - functional</b> demo, the Class <code>Game</code>
+  For example, in the <b>Snake - functional</b> demo, the class <code>Game</code>
   has several <el-method>with..</el-method> methods, one of which is shown here:</p>
 
 <codeblock>
@@ -579,11 +580,11 @@ end function
   <li>Safety. <el-method>with_head</el-method> enforces the correct type for the new value to be given to the <code>head</code> property on the copy.</li>
   <li>Simplicity. You are providing fewer parameters to make the update.</li>
   <li>Chaining. Because 'with...' methods are instance methods, and because they return a new instance of the same type, they may be 'dot-chained'.
-    So you can update multiple propertied on a single instance in one line. An example may be seen in <b>Snake Functional</b> here: <code>g.with_body(g.body.withAppend(g.head)).with_head(new Square(newX, newY))</code>
+    So you can update multiple propertied on a single instance in one line. An example may be seen in <b>snake &ndash; functional</b> here: <code>g.with_body(g.body.withAppend(g.head)).with_head(new Square(newX, newY))</code>
   </li>
 </ul>
 
-<p>Note, in the same demo, that the Class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
+<p>Note, in the same demo, that the class <code>Square</code> does not define any <el-method>with..</el-method> methods because there is no need
   within the program to update any instance of Square &ndash; instead, a new instance is created, specifying the <code>x</code> and <code>y</code> coordinates
   as needed.</p>
 

@@ -31,7 +31,7 @@
 
 <table class="tableType">
  <tr>
-  <th>name<br>of Type</th>
+  <th>name<br>of type</th>
   <th>examples of defining<br>a literal value</th>
 </tr><tr>
   <td><code>Int</code></td>
@@ -497,7 +497,7 @@ three immutable data structure types <code>HashSet</code>, <code>Stack</code> an
 <p>Since procedure methods may be called only from within the <b>main routine</b> or a <b>procedure</b>,
 it is also possible to make changes via <b>function</b> dot methods, which return a copy of the data structure
 with specified changes: that is why all such methods have names starting '<el-method>with</el-method>'.</p>
-<p>Immutable data structures are intended specifically to facilitate the Functional Programming paradigm,
+<p>Immutable data structures are intended specifically to facilitate the Functional programming paradigm,
  but some are also useful within other programming paradigms.</p>
 <p id="of">All six  contain values (and keys in the case of a <code>Dictionary</code>) of only a single type, that type being specified either explicitly
  (as in &lt;of <code>Int</code>&gt;), or implicitly if the structure is created using a literal definition.</p>
@@ -589,7 +589,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <h2 id="List">List</h2>
 <p>The <code>List</code> type defines a data structure containing <i>n</i> items of any single type,
  including basic value types, structure types such as <code>List</code>,
- and user-defined types such as a Class.</p>
+ and user-defined types such as a class.</p>
 <p>Items in a List of <i>n</i> items are indexed from <i>0</i> to <i>n-1</i>.</p>
 <p>To create a List, use either of:</p>
 <ul>
@@ -1333,7 +1333,7 @@ end function
 <h2 id="Tuple">Tuple</h2>
 <p>A Tuple is not a value or data structure type. Rather, it is a small <i>collection</i> of values
 of differing types held together and referenced by a single identifier.</p>
-<p>It may be considered a lightweight alternative to defining a Class for some specific purpose.</p>
+<p>It may be considered a lightweight alternative to defining a class for some specific purpose.</p>
 <p>The items in a Tuple may be literal or named values.</p>
 <p>Tuples are referred to as 2-tuples, 3-tuples, etc. according to the number of values they hold.</p>
 <p>An item within a Tuple may be another Tuple, giving nested Tuples.</p>
@@ -1606,7 +1606,7 @@ Also <code>stroke</code> and <code>fill</code> are set by the properties <code>s
 <p><el-method>createVectorGraphics</el-method> is a convenience method that returns an empty <code>List&lt;of VectorGraphic&gt;</code></p>
 <p><code>VectorGraphic</code> is the abstract superclass of all ..VG shapes. You use it when you want to define a <code>List</code> holding different types of shape.</p>
 <p>Adding a shape returns a new instance of the list which must be assigned to a new or existing variable.</p>
-<p>The constructors for the VG types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the Class properties,
+<p>The constructors for the VG types require arguments defining the attributes of the relevant SVG tags, so defaults are supplied from the class properties,
 as shown in the table below.</p>
 <p>To change the value of property 'p..', call the <el-method>setP..</el-method> procedure method on the vector graphic or,
 in a <b>function</b>, use the <el-method>withP..</el-method> dot method on the vector graphic, in either case specifying new values in the arguments.</p>
@@ -1872,7 +1872,7 @@ end main
 </div></div>
 
 <h3 class="no-TOC" id="RawVG"><code>RawVG</code></h3>
-<p>Strings containing raw SVG tags may be assembled and plotted directly using Class <code>RawVG</code>.
+<p>Strings containing raw SVG tags may be assembled and plotted directly using class <code>RawVG</code>.
 By this means features such as simple SVG animation can be defined.</p>
 <ul>
  <li>The raw SVG content should be enclosed in double quotes within which the SVG attribute values must be enclosed in single quotes.</li>
@@ -1880,7 +1880,7 @@ By this means features such as simple SVG animation can be defined.</p>
  <li>The raw SVG may define multiple shapes.</li>
  <li>Multiple instances of <code>RawVG</code> may be added to the collection to be displayed, along with instances of other SVG types;
  hence the need for list-defining square brackets in the parameter of method <el-method>displayVectorGraphics</el-method>.</li>
- <li>Method <el-method>withContent</el-method> is used to specify the property of Class <code>RawVG</code> that must contain the SVG string.</li>
+ <li>Method <el-method>withContent</el-method> is used to specify the property of class <code>RawVG</code> that must contain the SVG string.</li>
  <li>The example is of a simple animation in which the repetition defined in the SVG continues after the program has stopped,
   so you would then use the Clear button to blank the display.</li>
 </ul>
@@ -2115,7 +2115,7 @@ end main
  <tr>
   <th>system<br>method</th>
   <th>argument<br>types</th>
-  <th>return<br>Class</th>
+  <th>return<br>class</th>
   <th>action</th>
  </tr><tr id="createFileForWriting">
   <td><el-method>createFileForWriting</el-method></td>
@@ -2135,7 +2135,7 @@ end main
 </table>
 
 <h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
-<p>The <code>TextFileWriter</code> Class is used to write textual data to a file.</p>
+<p>The <code>TextFileWriter</code> class is used to write textual data to a file.</p>
 <p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2172,7 +2172,7 @@ end main
 <li><code>writeWholeFile</code> puts the string it is given into the file and then automatically saves the file, so the user will be presented with the same dialog as if <code>saveAndClose</code> had been called.</li>
 <li>Calling any method on a file that has already been closed (by calling either <code>saveAndClose</code> or by <code>writeWholeFile</code>) will result in a runtime error.</li>
 <li id="TryCatchOnFile">If the user were to click <b>Cancel</b> in the save dialogue, then the program will exit with an error.
-To guard against this possibility (it might mean the loss of important data), you should perform the save and close within a <b>try statement</b> like this (where <a href="LangRef.html#CustomError"><code>CustomError</code> <i class="fa">&#xf08e;</i></a> is a Class provided by Elan for this purpose):
+To guard against this possibility (it might mean the loss of important data), you should perform the save and close within a <b>try statement</b> like this (where <a href="LangRef.html#CustomError"><code>CustomError</code> <i class="fa">&#xf08e;</i></a> is a class provided by Elan for this purpose):
 <codeblock>main
   variable file set to createFileForWriting("squares.txt")
   for i in range(1, (101))
@@ -2189,7 +2189,7 @@ or you could make the code offer the user options: to save again, or to continue
 </ul>
 
 <h3 class="no-TOC" id="TextFileReader">Reading text files</h3>
-<p>The <code>TextFileReader</code> Class is used to read text data from a file with type extension .txt.</p>
+<p>The <code>TextFileReader</code> class is used to read text data from a file with type extension .txt.</p>
 <p>An instance is created by the system method <el-method>openFileForReading</el-method>.</p>
 <p>The available procedure methods are:</p>
 <table class="tableMethod">
@@ -2668,7 +2668,7 @@ end function
  <li><a href="#DictionaryProcedures">Procedure methods on a <code>Dictionary</code> <i class="fa">&#xf14c;</i></a></li>
  <li><a href="#TurtleProcedures">Procedure methods on a <code>Turtle</code> <i class="fa">&#xf14c;</i></a></li>
 </ul>
-<p>User-defined Classes may have procedures that can be applied to their Class instances.
+<p>User-defined classes may have procedures that can be applied to their class instances.
 
 <h1 id="LibraryMethods">Library methods</h1>
 <p>These methods may be referenced from within a <b>function</b>.</p>
@@ -2964,7 +2964,7 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
  </tr><tr id="createPopulatedListofLists">
   <td><el-method>createPopulatedListofLists</el-method></td>
   <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's type</td>
-  <td><code>List&lt;of List&lt;of ItemType&gt;&gt;</code></td>
+  <td><code>List&lt;of List&lt;of itemType&gt;&gt;</code></td>
   <td>a List of length the first argument containing that number of Lists<br>
   each initialised to a List of length the second argument<br>
   with each item therein initialised to the value in the third argument</td>
@@ -3025,7 +3025,7 @@ end function
   but Elan does not currently support that pattern.) </p>
 
 <h2>Standard HoFs</h2>
-<p>The standard library contains several HoFs that are widely recognised and used within Functional Programming, namely:<br>
+<p>The standard library contains several HoFs that are widely recognised and used within Functional programming, namely:<br>
 <a href="#filter"><el-method>filter</el-method> <i class="fa">&#xf14c;</i></a>,
 <a href="#map"><el-method>map</el-method> <i class="fa">&#xf14c;</i></a> and
 <a href="#reduce"><el-method>reduce</el-method> <i class="fa">&#xf14c;</i></a>,<br> and also provides:<br>
@@ -3049,7 +3049,7 @@ The subset is chosen by a <code>lambda</code> that tests list item values and re
 <h4 class="no-TOC acc-title" tabindex="0">Example using <el-method>filter</el-method></h4>
 <div class="acc-body">
 
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <b>pathfinder</b> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of Class <code>Node</code>) to find one that contains <code>p</code> (of Class <code>Point</code>):</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Example from demo program <b>pathfinder</b> in which <el-method>filter</el-method> applies the <code>lambda</code> to the <code>nodes</code> (of class <code>Node</code>) to find one that contains <code>p</code> (of class <code>Point</code>):</p>
 <codeblock>function getNodeFor(p as Point) returns Node
   variable matches set to this.nodes.filter(lambda n as Node => n.point.equals(p))
   return if_(matches.length() is 1,  matches.head(), emptyNode())
