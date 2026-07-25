@@ -57,16 +57,23 @@ export class TypeNameUse extends AbstractParseNode {
       if (this.status === ParseStatus.invalid) {
         this.attemptToMatchStandardType(text, lang.LIST_NAME, "List");
       }
-      if (this.status === ParseStatus.invalid) {
-        [this.status, this.matchedText, this.remainingText] = matchRegEx(
+      if (this.status !== ParseStatus.valid || /^\w/.test(this.remainingText)) {
+        // invalid, incomplete, or something extra on the end which continues the identifier
+        const [statusTemp, matchedTextTemp, remainingTextTemp] = matchRegEx(
           text,
           Regexes.typeSimpleName,
         );
-        this.elanTypeName = this.matchedText;
-        if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
-          this.status = ParseStatus.invalid;
-          this.matchedText = "";
-          this.message = `matches a reserved word.`;
+        if (statusTemp === ParseStatus.valid) {
+          // could be a user-defined type
+          this.status = statusTemp;
+          this.matchedText = matchedTextTemp;
+          this.remainingText = remainingTextTemp;
+          this.elanTypeName = this.matchedText;
+          if (ReservedWords.Instance.matchesIgnoringCase(this.matchedText)) {
+            this.status = ParseStatus.invalid;
+            this.matchedText = "";
+            this.message = `matches a reserved word.`;
+          }
         }
       }
     }

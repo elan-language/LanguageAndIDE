@@ -2287,7 +2287,7 @@ suite("Parsing Nodes", () => {
     testNodeParse(
       new TypeNode(fileWithVB()),
       `Inte`,
-      ParseStatus.incomplete,
+      ParseStatus.valid,
       `Inte`,
       "",
       `Inte`,
@@ -2300,11 +2300,11 @@ suite("Parsing Nodes", () => {
       new TypeNameUse(f),
       `Inte`,
       ParseStatus.valid,
-      `Int`,
-      "e",
-      `Int`,
-      "<el-type>Int</el-type>",
-      `Int`,
+      `Inte`,
+      "",
+      `Inte`,
+      "<el-type>Inte</el-type>",
+      `Inte`,
     );
   });
   test("ParamList VB", () => {
