@@ -380,7 +380,7 @@ window.addEventListener("message", async (m: MessageEvent<string>) => {
   }
 
   if (typeof m.data === "string" && m.data.startsWith("paradigm:")) {
-    const l = m.data.slice(8);
+    const l = m.data.slice(9);
     const ws = document.querySelector("#worksheet");
     if (ws) {
       ws.classList.remove("procedural", "oop", "functional");
