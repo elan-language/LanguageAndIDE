@@ -629,7 +629,9 @@ export function transform(
 
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const type = ctx.accept(new ElanElanVisitorCompiler(scope, node.getHtmlId()));
+      const type = ctx.accept(
+        new ElanElanVisitorCompiler(node.language(), scope, node.getHtmlId()),
+      );
       typeAsn.type = type;
       return typeAsn;
     }

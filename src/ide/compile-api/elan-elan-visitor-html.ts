@@ -23,7 +23,7 @@ export class ElanElanVisitorHtml extends ElanElanVisitor {
 
   visitTypeName(ctx: any) {
     const type = (this as any).visitChildren(ctx)[0] as string;
-    return `<el-type>${this.language.mapType(type)}</el-type>`;
+    return `<el-type>${this.language.mapElanTypeToLanguageType(type)}</el-type>`;
   }
 
   visitTypeGeneric(ctx: any) {
@@ -60,6 +60,6 @@ export class ElanElanVisitorHtml extends ElanElanVisitor {
   }
 
   visitTerminal(ctx: any) {
-    return ctx.symbol.text;
+    return this.language.mapLanguageTypeToElanType(ctx.symbol.text);
   }
 }

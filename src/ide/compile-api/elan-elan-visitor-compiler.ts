@@ -4,10 +4,12 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node.js";
 import { Scope } from "../../compiler/compiler-interfaces/scope.js";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn.js";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn.js";
+import { Language } from "../frames/frame-interfaces/language.js";
 import { ElanElanVisitor } from "./antlr4-parser.js";
 
 export class ElanElanVisitorCompiler extends ElanElanVisitor {
   constructor(
+    private readonly language: Language,
     private readonly scope: Scope,
     private readonly fieldId: string,
   ) {
@@ -55,6 +57,10 @@ export class ElanElanVisitorCompiler extends ElanElanVisitor {
   }
 
   visitTerminal(ctx: any) {
-    return new IdAsn(ctx.symbol.text, "", undefined as unknown as Scope);
+    return new IdAsn(
+      this.language.mapLanguageTypeToElanType(ctx.symbol.text),
+      "",
+      undefined as unknown as Scope,
+    );
   }
 }

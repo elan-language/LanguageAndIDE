@@ -937,11 +937,11 @@ export abstract class AbstractField implements Selectable, Field {
         this.setFieldToKnownValidText(text);
       }
     }
-    if (!!this.context && this._parseStatus === ParseStatus.valid) {
-      const text = removeHtmlTagsAndEscChars(this.renderAsHtmlFromTree(this.context));
-      if (text !== this.text) {
-        this.setFieldToKnownValidText(text);
-      }
-    }
+    // if (!!this.context && this._parseStatus === ParseStatus.valid) {
+    //   const text = removeHtmlTagsAndEscChars(this.renderAsHtmlFromTree(this.context));
+    //   if (text !== this.text) {
+    //     this.setFieldToKnownValidText(text);
+    //   }
+    // }
   }
 }
