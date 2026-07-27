@@ -108,33 +108,33 @@ class Game: # concrete class
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   # end function method
 
-  def with_head(self: Game, head: Square) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "head", head)
-  # end 
+  def with_head(self: Game, head: Square) -> Game: # function method
+    return copyWith(self, "head", head)
+  # end function method
 
-  def with_body(self: Game, body: list[Square]) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "body", body)
-  # end 
+  def with_body(self: Game, body: list[Square]) -> Game: # function method
+    return copyWith(self, "body", body)
+  # end function method
 
-  def with_priorTail(self: Game, priorTail: Square) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "priorTail", priorTail)
-  # end 
+  def with_priorTail(self: Game, priorTail: Square) -> Game: # function method
+    return copyWith(self, "priorTail", priorTail)
+  # end function method
 
-  def with_apple(self: Game, apple: Square) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "apple", apple)
-  # end 
+  def with_apple(self: Game, apple: Square) -> Game: # function method
+    return copyWith(self, "apple", apple)
+  # end function method
 
-  def with_isOn(self: Game, isOn: bool) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "isOn", isOn)
-  # end 
+  def with_isOn(self: Game, isOn: bool) -> Game: # function method
+    return copyWith(self, "isOn", isOn)
+  # end function method
 
-  def with_rnd(self: Game, rnd: Random) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "rnd", rnd)
-  # end 
+  def with_rnd(self: Game, rnd: Random) -> Game: # function method
+    return copyWith(self, "rnd", rnd)
+  # end function method
 
-  def with_key(self: Game, key: str) -> Game: # copy with method
-    return copyWithPropertyUpdated(self, "key", key)
-  # end 
+  def with_key(self: Game, key: str) -> Game: # function method
+    return copyWith(self, "key", key)
+  # end function method
 
 # end class
 

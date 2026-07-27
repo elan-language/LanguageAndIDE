@@ -409,7 +409,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameters - Int, Int - returning a Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, function that takes parameters - Int, Int - returning a Int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -441,7 +441,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (lambda or function name that takes parameter - Int - returning a Int), Provided: Int, lambda or function name that takes parameter - Int - returning a String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, function that takes parameter - Int - returning a String.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -656,7 +656,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -685,7 +685,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

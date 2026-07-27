@@ -37,7 +37,6 @@ import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Paradigm } from "./paradigm";
 
@@ -605,9 +604,6 @@ export class FileImpl implements File {
   }
   createAbstractClass(): Frame {
     return new AbstractClass(this);
-  }
-  createInterface(): Frame {
-    return new InterfaceFrame(this);
   }
   createGlobalComment(): Frame {
     return new GlobalComment(this);

@@ -1,4 +1,4 @@
-# a96ea4ac8fa820bde622f1b7e162bdaa60e8a1f53d5b06a30fc139b5dfa35102 Elan 2.0.0-beta2 valid
+# 2c3854fc732548a943fc3025dc7348e9ef28f9a3b549e2ef4e74f98a1c2afb61 Elan 2.0.0-beta2 valid
 
 main
   variable game set to new Game(1000)
@@ -239,9 +239,9 @@ class Game
 
   property message as String
 
-  copy with_players(players as List<of Player>) returns Game
-    return copyWithPropertyUpdated(this, "players", players)
-  end copy
+  function with_players(players as List<of Player>) returns Game
+    return copyWith(this, "players", players)
+  end function
 
   procedure newRound()
     variable dealer set to this.dealer
@@ -429,13 +429,13 @@ class Dealer inherits Player
 
   property hasPlayed as Boolean
 
-  copy with_status(status as Status) returns Dealer
-    return copyWithPropertyUpdated(this, "status", status)
-  end copy
+  function with_status(status as Status) returns Dealer
+    return copyWith(this, "status", status)
+  end function
 
-  copy with_handTotal(handTotal as Int) returns Dealer
-    return copyWithPropertyUpdated(this, "handTotal", handTotal)
-  end copy
+  function with_handTotal(handTotal as Int) returns Dealer
+    return copyWith(this, "handTotal", handTotal)
+  end function
 
   procedure play()
     call this.startTurn()
@@ -481,17 +481,17 @@ class HumanPlayer inherits Player
     assign this.cards to new List<of Card>()
   end constructor
 
-  copy with_status(status as Status) returns HumanPlayer
-    return copyWithPropertyUpdated(this, "status", status)
-  end copy
+  function with_status(status as Status) returns HumanPlayer
+    return copyWith(this, "status", status)
+  end function
 
-  copy with_handTotal(handTotal as Int) returns HumanPlayer
-    return copyWithPropertyUpdated(this, "handTotal", handTotal)
-  end copy
+  function with_handTotal(handTotal as Int) returns HumanPlayer
+    return copyWith(this, "handTotal", handTotal)
+  end function
 
-  copy with_cards(cards as List<of Card>) returns HumanPlayer
-    return copyWithPropertyUpdated(this, "cards", cards)
-  end copy
+  function with_cards(cards as List<of Card>) returns HumanPlayer
+    return copyWith(this, "cards", cards)
+  end function
 
   procedure newHand()
     call this.newHandHelper()

@@ -1,4 +1,3 @@
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
@@ -72,8 +71,6 @@ export class LanguageJava extends LanguageCfamily {
       html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println</el-method>(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
-    } else if (frame instanceof AbstractProperty) {
-      html = `<el-kw>${this.ABSTRACT}</el-kw> ${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else {
       html = this.common_renderSingleLineAsHtml(frame);
     }

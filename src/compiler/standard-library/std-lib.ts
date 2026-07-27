@@ -905,7 +905,7 @@ export class StdLib {
   }
 
   @elanFunction(["toCopy"], FunctionOptions.pure, ElanT1)
-  copyWithPropertyUpdated<T extends object>(
+  copyWith<T extends object>(
     @elanGenericParamT1Type() toCopy: T,
     propName: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any

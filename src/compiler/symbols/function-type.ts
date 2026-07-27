@@ -6,6 +6,7 @@ import { FuncName } from "./elan-type-names";
 
 export class FunctionType implements SymbolType {
   constructor(
+    private readonly isLambda: boolean,
     public readonly parameterNames: string[],
     public readonly parameterTypes: SymbolType[],
     public readonly returnType: SymbolType,
@@ -22,7 +23,8 @@ export class FunctionType implements SymbolType {
         : this.parameterTypes.length === 1
           ? "parameter - "
           : "parameters - ";
-    return `lambda or function name that takes ${ps}${this.parameterTypes.map((p) => p.languageSpecificName(language)).join(", ")} - returning a ${this.returnType.languageSpecificName(language)}`;
+    const type = this.isLambda ? "lambda" : "function";
+    return `${type} that takes ${ps}${this.parameterTypes.map((p) => p.languageSpecificName(language)).join(", ")} - returning a ${this.returnType.languageSpecificName(language)}`;
   }
 
   get initialValue() {

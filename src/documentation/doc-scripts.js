@@ -8,7 +8,7 @@ window.addEventListener("message", (m => {
     }
   }
   if (typeof m.data === "string" && m.data.startsWith("paradigm:")) {
-    const p = m.data.slice(8);
+    const p = m.data.slice(9);
     const ws = document.querySelector("body");
     if (ws) {
       ws.classList.remove("procedural", "oop", "functional");

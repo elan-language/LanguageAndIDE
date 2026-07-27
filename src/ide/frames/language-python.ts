@@ -1,8 +1,6 @@
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
-import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
@@ -24,7 +22,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -94,15 +91,12 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof CatchStatement ||
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
-      frame instanceof InterfaceFrame ||
       frame instanceof Property ||
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
       frame instanceof AbstractFunction ||
       frame instanceof AbstractProcedure ||
-      frame instanceof AbstractProperty ||
-      frame instanceof InputStatement ||
-      frame instanceof CopyWithMethod
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -169,8 +163,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof FunctionMethod) {
@@ -183,8 +175,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof CopyWithMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     }
     return html;
   }

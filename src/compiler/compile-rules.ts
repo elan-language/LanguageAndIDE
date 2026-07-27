@@ -1216,15 +1216,7 @@ export function mustBeUniqueNameInScope(
   const symbol = scope.resolveSymbol(name, true, scope);
 
   if (symbol instanceof DuplicateSymbol) {
-    let postFix = "";
-    if (
-      symbol.duplicates.length ===
-      symbol.duplicates.filter((s) => isMember(s) && s.isAbstract).length
-    ) {
-      postFix = ". Suggestion: factor out the common member(s) into a higher level interface";
-    }
-
-    compileErrors.push(new NotUniqueNameCompileError(name, postFix, location));
+    compileErrors.push(new NotUniqueNameCompileError(name, "", location));
   }
 }
 

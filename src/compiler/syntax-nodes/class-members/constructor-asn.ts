@@ -19,7 +19,6 @@ import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { ClassAsn } from "../globals/class-asn";
 import { SetAsn } from "../statements/set-asn";
-import { AbstractPropertyAsn } from "./abstract-property-asn";
 import { PropertyAsn } from "./property-asn";
 
 export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
@@ -42,7 +41,7 @@ export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
   public compile(): string {
     this.compileErrors = [];
 
-    let properties: PropertyAsn | AbstractPropertyAsn[] = [];
+    let properties: PropertyAsn[] = [];
     const cls = this.getClass();
     if (cls instanceof ClassAsn) {
       const abstractClasses = getAllAbstractClasses(cls, [], cls);

@@ -84,7 +84,7 @@ end class
     class in <b>Snake</b> defines:</p>
 
     <table>
-      <tr><th>Name</th><th>Type</th></tr>
+      <tr><th>Name</th><th>type</th></tr>
       <tr><td><code>x</code></td><td><code>Int</code></td></tr>
       <tr><td><code>y</code></td><td><code>Int</code></td></tr>
     </table>
@@ -93,7 +93,7 @@ end class
 
 
     <table>
-      <tr><th>Name</th><th>Type</th></tr>
+      <tr><th>name</th><th>type</th></tr>
       <tr><td><code>initialState</code></td><td><code>String</code></td></tr>
       <tr><td><code>currentState</code></td><td><code>String</code></td></tr>
       <tr><td><code>headPosition</code></td><td><code>Int</code></td></tr>
@@ -157,6 +157,7 @@ end if
  is comparing the value of the variable <code>distViaCurrent</code> to the property named <code>distFromStart</code> of the
  object named <code>neighbour</code>.
 
+<div id="constructor"></div>
 <h2>The constructor initialises the properties</h2>
 
 <p>When coding with Elan every class must define a constructor, the template for which is created when you define a new class,
@@ -204,6 +205,10 @@ end class
  followed by a dot.</li>
 </ul>
 
+<div id="PrivateProperty"></div>
+<div id="PrivateFunction"></div>
+<div id="PrivateProcedure"></div>
+<!-- these 'private' id links to be repositioned -->
 <h2 id="Association">Objects may have associations to other objects</h2>
 
 <p>So far we have looked at properties where the type is one of the standard library types. However, a class may define one or more
@@ -447,7 +452,7 @@ For that reason, irrespective of the programming language being used, Elan delib
 (they are all in the main routine). The allocation of the other instructions is as follows:</p>
 
 <table>
-  <tr><th>Class</th><th>Properties</th><th>Methods (excl. constructor & toString)</th><th>No. of instructions</th><th>Notes</th></tr>
+  <tr><th>class</th><th>properties</th><th>methods (excl. constructor & toString)</th><th>No. of instructions</th><th>Notes</th></tr>
   <tr><td><code>Snake</code></td><td>4</td><td>6</td><td>57</td><td>singleton - but an extended version of the game might have multiple instances.</td></tr>
   <tr><td><code>Apple</code></td><td>1</td><td>2</td><td>16</td><td>ditto</td></tr>
   <tr><td><code>Square</code></td><td>2</td><td>2</td><td>22</td><td>Many instances created in the game. Both Snake and Apple have associations to one or more Squares</td></tr>
@@ -1115,7 +1120,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 </div>
 
 <h2>Comment</h2>
-<p>See <a href="#Comment">Comments</a></p>
+<p>See <a href="LangRef.html#Comment">Comments</a></p>
 </div>
 
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>

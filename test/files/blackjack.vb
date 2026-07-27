@@ -261,8 +261,8 @@ Class Game
 
   Property message As String
 
-  Function with_players(players As List(Of Player)) As Game ' copy with method
-    Return copyWithPropertyUpdated(Me, "players", players)
+  Function with_players(players As List(Of Player)) As Game
+    Return copyWith(Me, "players", players)
   End Function
 
   Sub newRound() ' procedure method
@@ -456,12 +456,12 @@ Class Dealer
 
   Property hasPlayed As Boolean
 
-  Function with_status(status As Status) As Dealer ' copy with method
-    Return copyWithPropertyUpdated(Me, "status", status)
+  Function with_status(status As Status) As Dealer
+    Return copyWith(Me, "status", status)
   End Function
 
-  Function with_handTotal(handTotal As Integer) As Dealer ' copy with method
-    Return copyWithPropertyUpdated(Me, "handTotal", handTotal)
+  Function with_handTotal(handTotal As Integer) As Dealer
+    Return copyWith(Me, "handTotal", handTotal)
   End Function
 
   Sub play() ' procedure method
@@ -511,16 +511,16 @@ Class HumanPlayer
     Me.cards = New List(Of Card)() ' assignment
   End Sub
 
-  Function with_status(status As Status) As HumanPlayer ' copy with method
-    Return copyWithPropertyUpdated(Me, "status", status)
+  Function with_status(status As Status) As HumanPlayer
+    Return copyWith(Me, "status", status)
   End Function
 
-  Function with_handTotal(handTotal As Integer) As HumanPlayer ' copy with method
-    Return copyWithPropertyUpdated(Me, "handTotal", handTotal)
+  Function with_handTotal(handTotal As Integer) As HumanPlayer
+    Return copyWith(Me, "handTotal", handTotal)
   End Function
 
-  Function with_cards(cards As List(Of Card)) As HumanPlayer ' copy with method
-    Return copyWithPropertyUpdated(Me, "cards", cards)
+  Function with_cards(cards As List(Of Card)) As HumanPlayer
+    Return copyWith(Me, "cards", cards)
   End Function
 
   Overrides Sub newHand() ' procedure method

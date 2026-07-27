@@ -7,7 +7,6 @@ import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
 import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
-import { InterfaceFrame } from "../../src/ide/frames/globals/interface-frame";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
@@ -134,7 +133,7 @@ suite("Selector tests", () => {
     );
     const c = new ConcreteClass(f);
     const s = new MemberSelector(c);
-    assertOptions(s, ["property", "function method", "copy with method", "# comment"]);
+    assertOptions(s, ["property", "function method", "# comment"]);
   });
 
   test("Selection Filtering - abstract class", () => {
@@ -156,20 +155,6 @@ suite("Selector tests", () => {
       "abstract function",
       "# comment",
     ]);
-  });
-
-  test("Selection Filtering - interface", () => {
-    const f = new FileImpl(
-      hash,
-      new Paradigm("oop"),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const c = new InterfaceFrame(f);
-    const s = new MemberSelector(c);
-    assertOptions(s, ["abstract procedure", "abstract function", "# comment"]);
   });
 
   test("Selection Context - in a Function - procedural", () => {

@@ -249,9 +249,9 @@ class Game {
 
   public String message; // property
 
-  Game with_players(List<Player> players) { // copy with method
-    return copyWithPropertyUpdated(this, "players", players);
-  } // end with method
+  public Game with_players(List<Player> players) { // function method
+    return copyWith(this, "players", players);
+  } // end function method
 
   public void newRound() { // procedure method
     var dealer = this.dealer;
@@ -442,13 +442,13 @@ class Dealer extends Player {
 
   public boolean hasPlayed; // property
 
-  Dealer with_status(Status status) { // copy with method
-    return copyWithPropertyUpdated(this, "status", status);
-  } // end with method
+  public Dealer with_status(Status status) { // function method
+    return copyWith(this, "status", status);
+  } // end function method
 
-  Dealer with_handTotal(int handTotal) { // copy with method
-    return copyWithPropertyUpdated(this, "handTotal", handTotal);
-  } // end with method
+  public Dealer with_handTotal(int handTotal) { // function method
+    return copyWith(this, "handTotal", handTotal);
+  } // end function method
 
   public void play() { // procedure method
     this.startTurn(); // procedure call
@@ -495,17 +495,17 @@ class HumanPlayer extends Player {
     this.cards = new List<Card>(); // assignment
   } // end constructor
 
-  HumanPlayer with_status(Status status) { // copy with method
-    return copyWithPropertyUpdated(this, "status", status);
-  } // end with method
+  public HumanPlayer with_status(Status status) { // function method
+    return copyWith(this, "status", status);
+  } // end function method
 
-  HumanPlayer with_handTotal(int handTotal) { // copy with method
-    return copyWithPropertyUpdated(this, "handTotal", handTotal);
-  } // end with method
+  public HumanPlayer with_handTotal(int handTotal) { // function method
+    return copyWith(this, "handTotal", handTotal);
+  } // end function method
 
-  HumanPlayer with_cards(List<Card> cards) { // copy with method
-    return copyWithPropertyUpdated(this, "cards", cards);
-  } // end with method
+  public HumanPlayer with_cards(List<Card> cards) { // function method
+    return copyWith(this, "cards", cards);
+  } // end function method
 
   public  void newHand() { // procedure method
     this.newHandHelper(); // procedure call

@@ -1200,7 +1200,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1228,7 +1228,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1322,7 +1322,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1350,7 +1350,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1408,7 +1408,7 @@ end function`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined for type 'lambda or function name that takes no parameters - returning a Int'.ErrorMessages.html#compile_error",
+      "'b' is not defined for type 'function that takes no parameters - returning a Int'.ErrorMessages.html#compile_error",
     ]);
   });
 

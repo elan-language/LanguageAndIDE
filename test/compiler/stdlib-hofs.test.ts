@@ -819,7 +819,7 @@ end function`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: lambdaOrFunctionRef (lambda or function name that takes parameter - String - returning a Float), Provided: lambda or function name that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: lambdaOrFunctionRef (function that takes parameter - String - returning a Float), Provided: lambda that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
     ]);
   });
 

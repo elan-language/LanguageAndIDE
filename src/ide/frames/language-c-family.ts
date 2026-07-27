@@ -1,8 +1,6 @@
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
-import { AbstractProperty } from "./class-members/abstract-property";
 import { Constructor } from "./class-members/constructor";
-import { CopyWithMethod } from "./class-members/copy-with-method";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
@@ -18,7 +16,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
-import { InterfaceFrame } from "./globals/interface-frame";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -75,12 +72,10 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof LetStatement ||
       frame instanceof Assignment ||
       frame instanceof Property ||
-      frame instanceof AbstractProperty ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractFunction ||
       frame instanceof PrintStatement ||
-      frame instanceof InputStatement ||
-      frame instanceof CopyWithMethod
+      frame instanceof InputStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -153,16 +148,12 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.STATIC} ${this.VOID} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof IfStatement) {
       html = `<el-kw>${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
-    } else if (frame instanceof InterfaceFrame) {
-      html = `<el-kw>${this.INTERFACE} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method>() {`;
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw> {`;
     } else if (frame instanceof WhileLoop) {
       html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
-    } else if (frame instanceof CopyWithMethod) {
-      html = `${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     }
     return html;
   }
@@ -185,8 +176,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html += "procedure";
     } else if (frame instanceof IfStatement) {
       html += "if";
-    } else if (frame instanceof InterfaceFrame) {
-      html += this.INTERFACE;
     } else if (frame instanceof MainRoutine) {
       html += "main";
     } else if (frame instanceof TryStatement) {
@@ -195,8 +184,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html += this.WHILE;
     } else if (frame instanceof TestFrame) {
       html += "test";
-    } else if (frame instanceof CopyWithMethod) {
-      html += "with method";
     }
     return html + "</el-comment>";
   }

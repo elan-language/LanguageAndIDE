@@ -232,8 +232,20 @@ body.java span.java {
   display:inline;
 }
 
+body.elan li.elan, 
+body.python li.python, 
+body.vb li.vb, 
+body.cs li.cs, 
+body.java li.java {
+  display:list-item;
+}
+
 body .oop, body .functional {
   display: none;
+}
+
+body.oop li.oop, body.functional li.functional, body.functional li.oop { /* All oop options are shown in functional profile also */
+  display:list-item;
 }
 
 body.oop .oop, body.functional .functional, body.functional .oop { /* All oop options are shown in functional profile also */

@@ -150,6 +150,7 @@ export class ElanFunctionDescriptor implements IElanFunctionDescriptor {
     const parameterTypes = this.parameterTypes;
 
     return new FunctionType(
+      false,
       this.parameterNames,
       parameterTypes.map((t) => t.mapType(scope)),
       retType.mapType(scope),
@@ -229,6 +230,7 @@ export class ElanFuncTypeDescriptor implements TypeDescriptor {
 
   mapType(scope: Scope): SymbolType {
     return new FunctionType(
+      false,
       this.parameters.map((t) => t.name),
       this.parameters.map((p) => p.mapType(scope)),
       this.returnType.mapType(scope),

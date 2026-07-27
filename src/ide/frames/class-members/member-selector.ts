@@ -2,10 +2,8 @@ import {
   abstractFunctionKeywords,
   abstractKeyword,
   abstractProcedureKeywords,
-  abstractPropertyKeywords,
   commentMarker,
   constructorKeyword,
-  copyKeyword,
   functionKeyword,
   privateFunctionKeywords,
   privateKeyword,
@@ -59,18 +57,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         (_parent: Parent) => this.class.createFunction(),
       ],
       [
-        copyKeyword,
-        "w",
-        "copy <b>w</b>ith method",
-        (_parent: Parent) => this.class.createCopyWithMethod(),
-      ],
-      [
-        abstractPropertyKeywords,
-        "",
-        "abstract property",
-        (_parent: Parent) => this.class.createAbstractProperty(),
-      ],
-      [
         abstractProcedureKeywords,
         "",
         "abstract procedure",
@@ -118,8 +104,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     // First apply universal instruction-specific rules
     if (keyword.startsWith(privateKeyword)) {
       result = !userEntry;
-    } else if (keyword.startsWith(abstractPropertyKeywords)) {
-      result = !userEntry; // Abstract properties not available to user and not documented. Kept to preserve capability, and tests, for time being
     } else if (keyword.startsWith(abstractKeyword)) {
       result = this.class.isAbstract || this.class.isInterface;
     } else if (this.class.isInterface) {
@@ -133,8 +117,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
       result = this.class.isConcrete && !this.getClass().getConstructor();
     } else if (keyword === procedureKeyword) {
       result = !(this.getParadigm().isFunctional() && userEntry);
-    } else if (keyword === copyKeyword) {
-      result = !userEntry || this.getParadigm().isFunctional();
     }
     return result;
   }
