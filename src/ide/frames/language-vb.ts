@@ -107,7 +107,7 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top> = ${frame.value.renderAsHtml()}`;
+      html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof ElseIfClause) {
       html = `<el-kw>${this.ELSEIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof ElseClause) {
