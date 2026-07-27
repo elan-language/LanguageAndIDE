@@ -6,8 +6,9 @@ import { TokenType } from "../symbol-completion-helpers";
 import { AbstractParseNode } from "./abstract-parse-node";
 import { matchRegEx } from "./parse-node-helpers";
 
-export class TypeNameUse extends AbstractParseNode {
+export class TypeSimpleName extends AbstractParseNode {
   tokenTypes: Set<TokenType> = new Set<TokenType>();
+  allowBuiltIns = true;
   elanTypeName: string = "";
 
   constructor(
@@ -18,10 +19,12 @@ export class TypeNameUse extends AbstractParseNode {
       TokenType.type_notInheritable,
       TokenType.type_enum,
     ]),
+    allowBuiltIns = true,
   ) {
     super(file);
     this.completionWhenEmpty = "<i>Type</i>";
     this.tokenTypes = tokenTypes;
+    this.allowBuiltIns = allowBuiltIns;
   }
 
   private attemptToMatchStandardType(text: string, langName: string, elanName: string) {
@@ -41,21 +44,27 @@ export class TypeNameUse extends AbstractParseNode {
   }
 
   parseText(text: string): void {
+    this.matchedText = "";
     this.remainingText = text;
     const lang = this.file.language();
     if (text.length > 0) {
-      this.attemptToMatchStandardType(text, lang.INT_NAME, "Int");
-      if (this.status === ParseStatus.invalid) {
-        this.attemptToMatchStandardType(text, lang.FLOAT_NAME, "Float");
-      }
-      if (this.status === ParseStatus.invalid) {
-        this.attemptToMatchStandardType(text, lang.BOOL_NAME, "Boolean");
-      }
-      if (this.status === ParseStatus.invalid) {
-        this.attemptToMatchStandardType(text, lang.STRING_NAME, "String");
-      }
-      if (this.status === ParseStatus.invalid) {
-        this.attemptToMatchStandardType(text, lang.LIST_NAME, "List");
+      if (this.allowBuiltIns) {
+        this.attemptToMatchStandardType(text, lang.INT_NAME, "Int");
+        if (this.status === ParseStatus.invalid) {
+          this.attemptToMatchStandardType(text, lang.FLOAT_NAME, "Float");
+        }
+        if (this.status === ParseStatus.invalid) {
+          this.attemptToMatchStandardType(text, lang.BOOL_NAME, "Boolean");
+        }
+        if (this.status === ParseStatus.invalid) {
+          this.attemptToMatchStandardType(text, lang.STRING_NAME, "String");
+        }
+        if (this.status === ParseStatus.invalid) {
+          this.attemptToMatchStandardType(text, lang.LIST_NAME, "List");
+        }
+      } else {
+        // just do the next part, checking against Regexes.typeSimpleName
+        this.status = ParseStatus.invalid;
       }
       if (this.status !== ParseStatus.valid || /^\w/.test(this.remainingText)) {
         // invalid, incomplete, or something extra on the end which continues the identifier
@@ -78,6 +87,7 @@ export class TypeNameUse extends AbstractParseNode {
       }
     }
   }
+
   renderAsHtml(): string {
     return `<el-type>${this.renderAsExport()}</el-type>`;
   }
