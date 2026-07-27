@@ -1782,7 +1782,7 @@ end class`;
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Member 'setP1' must be of type Procedure (Int).ErrorMessages.html#MemberTypeCompileError",
-      "Member 'product' must be of type lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
+      "Member 'product' must be of type function that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
     ]);
   });
 
@@ -1837,7 +1837,7 @@ end class`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'product' must be of type lambda or function name that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
+      "Member 'product' must be of type function that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
     ]);
   });
 

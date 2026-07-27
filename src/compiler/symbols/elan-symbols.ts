@@ -115,6 +115,7 @@ const funcSymbol: ClassSymbol = {
   symbolId: FuncName,
   symbolType: function (): SymbolType {
     return new FunctionType(
+      false,
       ["T"],
       [new GenericParameterType("T")],
       new GenericParameterType("T1"),
