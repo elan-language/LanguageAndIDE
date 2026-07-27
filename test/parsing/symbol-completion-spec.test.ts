@@ -19,7 +19,7 @@ import { OptionalNode } from "../../src/ide/frames/parse-nodes/optional-node";
 import { allIds } from "../../src/ide/frames/parse-nodes/parse-node-helpers";
 import { ProcRefNode } from "../../src/ide/frames/parse-nodes/proc-ref-node";
 import { TermSimple } from "../../src/ide/frames/parse-nodes/term-simple";
-import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
+import { TypeSimpleName } from "../../src/ide/frames/parse-nodes/type-simple-name";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
@@ -177,7 +177,7 @@ suite("Symbol Completion Spec", () => {
       new ExprNode(f),
       "Foo",
       ParseStatus.incomplete,
-      TypeNameUse.name,
+      TypeSimpleName.name,
       "Foo",
       [TokenType.type_enum],
       [],

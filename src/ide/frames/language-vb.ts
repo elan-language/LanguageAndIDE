@@ -39,7 +39,7 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNameUse } from "./parse-nodes/type-name-use";
+import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeNode } from "./parse-nodes/type-node";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
@@ -328,7 +328,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   addNodesForTypeGeneric(node: TypeGenericNode) {
-    node.qualifiedName = new TypeNameUse(node.file, node.tokenTypes);
+    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
 

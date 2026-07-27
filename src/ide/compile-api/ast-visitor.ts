@@ -146,8 +146,7 @@ import { ThisProcRef } from "../frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
-import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
-import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
+import { TypeSimpleName } from "../frames/parse-nodes/type-simple-name";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
@@ -750,12 +749,7 @@ export function transform(
     return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeNameUse) {
-    const type = node.elanTypeName;
-    return new TypeAsn(type, [], fieldId, scope);
-  }
-
-  if (node instanceof TypeNameDef) {
+  if (node instanceof TypeSimpleName) {
     const type = node.elanTypeName;
     return new TypeAsn(type, [], fieldId, scope);
   }

@@ -48,7 +48,7 @@ import { TermSimpleWithOptIndex } from "../../src/ide/frames/parse-nodes/term-si
 import { ThisInstance } from "../../src/ide/frames/parse-nodes/this-instance";
 import { ThisProcRef } from "../../src/ide/frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../../src/ide/frames/parse-nodes/tuple-node";
-import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
+import { TypeSimpleName } from "../../src/ide/frames/parse-nodes/type-simple-name";
 import { TypeNode } from "../../src/ide/frames/parse-nodes/type-node";
 import { TypeSimpleOrGeneric } from "../../src/ide/frames/parse-nodes/type-simple-or-generic";
 import { TypeTupleNode } from "../../src/ide/frames/parse-nodes/type-tuple-node";
@@ -744,9 +744,9 @@ suite("Parsing Nodes", () => {
     );
     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   });
-  test("TypeSimpleNode", () => {
+  test("TypeSimpleName", () => {
     testNodeParse(
-      new TypeNameUse(f),
+      new TypeSimpleName(f),
       `Foo`,
       ParseStatus.valid,
       "Foo",
@@ -754,7 +754,7 @@ suite("Parsing Nodes", () => {
       "",
       "<el-type>Foo</el-type>",
     );
-    testNodeParse(new TypeNameUse(f), `foo`, ParseStatus.invalid, "", "foo", "");
+    testNodeParse(new TypeSimpleName(f), `foo`, ParseStatus.invalid, "", "foo", "");
   });
   test("TypeSimpleOrGeneric", () => {
     testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
@@ -2297,7 +2297,7 @@ suite("Parsing Nodes", () => {
   });
   test("Type incomplete Elan", () => {
     testNodeParse(
-      new TypeNameUse(f),
+      new TypeSimpleName(f),
       `Inte`,
       ParseStatus.valid,
       `Inte`,
@@ -2382,7 +2382,7 @@ suite("Parsing Nodes", () => {
   });
   test("Expr - i in type C#  - #2737", () => {
     testNodeParse(
-      new TypeNameUse(fileWithCS()),
+      new TypeSimpleName(fileWithCS()),
       `i`,
       ParseStatus.incomplete,
       `i`,
@@ -2391,9 +2391,9 @@ suite("Parsing Nodes", () => {
       "<el-type>i</el-type>",
       `i`,
     );
-    testNodeParse(new TypeNameUse(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
+    testNodeParse(new TypeSimpleName(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
     testNodeParse(
-      new TypeNameUse(fileWithCS()),
+      new TypeSimpleName(fileWithCS()),
       `int`,
       ParseStatus.valid,
       `int`,
