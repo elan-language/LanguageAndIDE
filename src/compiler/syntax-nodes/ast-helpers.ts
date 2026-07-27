@@ -240,6 +240,7 @@ export function generateType(
 
   if (type instanceof FunctionType) {
     return new FunctionType(
+      false,
       type.parameterNames,
       type.parameterTypes.map((t) => generateType(t, matches, depth)),
       generateType(type.returnType, matches),
