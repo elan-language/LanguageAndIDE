@@ -42,8 +42,8 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -132,7 +132,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof LetStatement) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-method>print</el-method>(${frame.args.renderAsHtml()})`;
+      html = `<el-method>print</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

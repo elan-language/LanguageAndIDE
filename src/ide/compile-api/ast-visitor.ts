@@ -359,7 +359,7 @@ export function transform(
   if (node instanceof PrintStatement) {
     const printAsn = new PrintAsn(node.getHtmlId(), scope);
     printAsn.breakpointStatus = node.breakpointStatus;
-    printAsn.expr = transform(node.args, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
+    printAsn.expr = transform(node.arg, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
     return printAsn;
   }
 

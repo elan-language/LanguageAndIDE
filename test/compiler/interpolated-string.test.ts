@@ -217,7 +217,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot interpolate an Enum value, use enumValue to convert to a String firstErrorMessages.html#compile_error",
+      "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String firstErrorMessages.html#compile_error",
     ]);
   });
 });

@@ -860,9 +860,9 @@ whose keys are names and whose values are birth year, you might refer to <code>b
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Example using <code>Dictionary</code></h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant Dictionary for reference throughout the program:</p>
-<p>Procedure greekLetters sets up the key:value pairs, procedure printD shows how a procedure can use the Dictionary,
-and function getDItem retrieves a value given a key.</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Define a constant dictionary for reference throughout the program:</p>
+<p>Procedure greekLetters sets up the key:value pairs, procedure <el-method>printD</el-method> shows how a procedure can use the dictionary,
+and function <el-method>getDItem</el-method> retrieves a value given a key.</p>
 <codeblock>main
   variable dL set to new Dictionary&lt;of String, Int&gt;()
   variable dLRef set to new AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;(dL)
@@ -882,7 +882,7 @@ function getDItem(dL as Dictionary&lt;of String, Int&gt;, k as String) returns I
 end function
 
 procedure printDItem(dL as Dictionary&lt;of String, Int&gt;, k as String)
-  print(dL, k)
+  print(dL[k])
 end procedure
 
 procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
@@ -890,7 +890,7 @@ procedure greekLetters(d as AsRef&lt;of Dictionary&lt;of String, Int&gt;&gt;)
   assign di["alpha"] to 1
   assign di["beta"] to 2
   assign di["gamma"] to 3
-  call d.set(di)
+  call d.put(di)
 end procedure
 </codeblock>
 <hr>

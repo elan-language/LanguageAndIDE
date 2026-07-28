@@ -1526,10 +1526,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [
-      ["alpha", "*", "*"],
-      ["enumValue", "*", "*"],
-    ] as [string, string, string][];
+    const expected = [["alpha", "*", "*"]] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "abs(al", expected);
   });

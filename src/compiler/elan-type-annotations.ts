@@ -601,10 +601,11 @@ export function elanDeprecated(
   };
 }
 
-export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyExceptEnumName);
-export const ElanAnyInclEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(
-  AnyInclEnumName,
+export const ElanAny: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyInclEnumName);
+export const ElanAnyExceptEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(
+  AnyExceptEnumName,
 );
+
 export const ElanAnyEnum: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(AnyEnumName);
 export const ElanInt: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(IntName);
 export const ElanFloat: ElanValueTypeDescriptor = new ElanValueTypeDescriptor(FloatName);
@@ -642,16 +643,16 @@ export function ElanFunc(parameters: TypeDescriptor[], returnType: TypeDescripto
   return new ElanFuncTypeDescriptor(parameters, returnType);
 }
 
-export function elanAnyType() {
-  return elanType(ElanAny);
+export function elanAnyExceptEnumType() {
+  return elanType(ElanAnyExceptEnum);
 }
 
 export function elanAnyEnumType() {
   return elanType(ElanAnyEnum);
 }
 
-export function elanAnyInclEnumType() {
-  return elanType(ElanAnyInclEnum);
+export function elanAnyType() {
+  return elanType(ElanAny);
 }
 
 export function elanIntType() {

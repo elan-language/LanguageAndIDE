@@ -132,7 +132,7 @@ class Rule: # concrete class
   move: Dir # property
 
   def toString(self: Rule) -> str: # function method
-    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
+    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumToString(self.move)}"
   # end function method
 
 # end class

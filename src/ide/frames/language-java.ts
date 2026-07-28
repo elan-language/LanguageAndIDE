@@ -68,7 +68,7 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof InputStatement) {
       html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>(${frame.prompt.renderAsHtml()});`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println</el-method>(${frame.args.renderAsHtml()});`;
+      html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println</el-method>(${frame.arg.renderAsHtml()});`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}${frame.type.renderAsHtml()} ${frame.name.renderAsHtml()};`;
     } else {

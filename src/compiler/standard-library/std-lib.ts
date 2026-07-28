@@ -14,7 +14,7 @@ import {
   FunctionOptions,
   ProcedureOptions,
   elanAnyEnumType,
-  elanAnyInclEnumType,
+  elanAnyExceptEnumType,
   elanAnyType,
   elanClassExport,
   elanClassType,
@@ -438,21 +438,27 @@ export class StdLib {
     throw new ElanRuntimeError(`'${s}' does not parse as an integer`);
   }
 
-  @elanFunction(["any enum"], FunctionOptions.pureAsync, ElanString)
+  @elanFunction(["enum value"], FunctionOptions.pureAsync, ElanString)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async enumValue(@elanAnyEnumType() s: any) {
+  async enumToString(@elanAnyEnumType() s: any) {
     return await this.system.toString(s);
   }
 
-  @elanProcedure(["any"], ProcedureOptions.async)
+  // NOT a user-visible method: it is invoked by the print *instruction* and by the printNoLine, printTab user-visible procedures.
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async printNoLine(@elanAnyType() s: any) {
+  async print(@elanAnyExceptEnumType() s: any) {
+    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
+  }
+
+  @elanProcedure(["item"], ProcedureOptions.async)
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  async printNoLine(@elanAnyExceptEnumType() s: any) {
     await this.system.elanInputOutput.print(await this.system.toString(s));
   }
 
-  @elanProcedure(["position", "any"], ProcedureOptions.async)
+  @elanProcedure(["position", "item"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async printTab(@elanIntType() position: number, @elanAnyType() s: any) {
+  async printTab(@elanIntType() position: number, @elanAnyExceptEnumType() s: any) {
     await this.system.elanInputOutput.printTab(position, await this.system.toString(s));
   }
 
@@ -517,11 +523,6 @@ export class StdLib {
       dict.safeSet(val, key);
     }
     return dict;
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async print(@elanAnyType() s: any) {
-    await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);
   }
 
   //Input functions
@@ -909,7 +910,7 @@ export class StdLib {
     @elanGenericParamT1Type() toCopy: T,
     propName: string,
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    @elanAnyInclEnumType() newValue: any,
+    @elanAnyType() newValue: any,
   ): T {
     const newObject = Object.create(toCopy);
     const cc = Object.assign(newObject, toCopy);
