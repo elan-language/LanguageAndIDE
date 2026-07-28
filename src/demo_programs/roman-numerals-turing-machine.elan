@@ -1,4 +1,4 @@
-# b0154d88937f58ff9bead4135637b3f03608ace12b017f0c59ed1c509e9fcdc9 Elan 2.0.0-beta2 valid
+# 9b3393ae235a70c57252ed1a3b8a4a89510f321968b78327bacf8964dba6e95d Elan 2.0.0-beta2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -125,7 +125,7 @@ class Rule
   end constructor
 
   function toString() returns String
-    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}"
+    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumToString(this.move)}"
   end function
 
 end class

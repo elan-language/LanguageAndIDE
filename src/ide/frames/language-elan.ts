@@ -83,8 +83,8 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -151,7 +151,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.LET} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-kw>${this.PRINT}</el-kw>(${frame.args.renderAsHtml()})`;
+      html = `<el-kw>${this.PRINT}</el-kw>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

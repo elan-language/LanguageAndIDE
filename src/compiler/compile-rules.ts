@@ -224,7 +224,7 @@ export function mustNotBeEnum(
   if (symbolType instanceof EnumType) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Cannot interpolate an Enum value, use enumValue to convert to a String first",
+        "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String first",
         location,
       ),
     );

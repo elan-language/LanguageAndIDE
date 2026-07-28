@@ -846,7 +846,7 @@ end function
 </div>
 
 <div id="enum">
-<div id="enumValue"></div>
+<div id="enumToString"></div>
 <h2>Enum</h2>
 
 <div class="accordion">
@@ -905,6 +905,9 @@ enum Outcome undecided, win, lose, draw, winDouble
       might not be picked up until runtime. Whereas with the enum, writing <code>Direction.right</code> would raise an error at compilation.</li>
     </ul>
   </li>
+  <li>In order to print an enum value, or incorporated it into an interpolated string, you should first convert the
+    value to a string using the <el-method>enumToString</el-method> function, for example <code>enumToString(Suit.hearts)</code>
+    will convert the enum value to the string equivalent to <code>"hearts"</code>.</li>
 </ul>
 </div></div>
 </div>

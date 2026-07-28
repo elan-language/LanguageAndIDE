@@ -132,7 +132,7 @@ Class Rule
   End Sub
 
   Function toString() As String
-    Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumValue(Me.move)}"
+    Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumToString(Me.move)}"
   End Function
 
 End Class

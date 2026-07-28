@@ -134,7 +134,7 @@ class Rule {
   } // end constructor
 
   public String toString() { // function method
-    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumValue(this.move));
+    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumToString(this.move));
   } // end function method
 
 } // end class

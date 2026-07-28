@@ -19,9 +19,9 @@ suite("Enum", () => {
     const code = `${testHeader}
 
 main
-  call printNoLine(enumValue(Fruit.apple))
-  call printNoLine(enumValue(Fruit.orange))
-  call printNoLine(enumValue(Fruit.pear))
+  call printNoLine(enumToString(Fruit.apple))
+  call printNoLine(enumToString(Fruit.orange))
+  call printNoLine(enumToString(Fruit.pear))
 end main
    
 enum Fruit apple, orange, pear`;
@@ -33,9 +33,9 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  await _stdlib.printNoLine((await _stdlib.enumValue(Fruit.apple)));
-  await _stdlib.printNoLine((await _stdlib.enumValue(Fruit.orange)));
-  await _stdlib.printNoLine((await _stdlib.enumValue(Fruit.pear)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(Fruit.apple)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(Fruit.orange)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(Fruit.pear)));
 }
 return [main, _tests];}`;
 
@@ -62,7 +62,7 @@ return [main, _tests];}`;
 main
   variable x set to Fruit.apple
   assign x to Fruit.pear
-  call printNoLine(enumValue(x))
+  call printNoLine(enumToString(x))
 end main
    
 enum Fruit apple, orange, pear`;
@@ -76,7 +76,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   x = Fruit.pear;
-  await _stdlib.printNoLine((await _stdlib.enumValue(x)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(x)));
 }
 return [main, _tests];}`;
 
@@ -140,7 +140,7 @@ return [main, _tests];}`;
 main
   variable x set to Fruit.apple
   variable y set to x
-  call printNoLine(enumValue(y))
+  call printNoLine(enumToString(y))
 end main
    
 enum Fruit apple, orange, pear`;
@@ -154,7 +154,7 @@ const global = new class {};
 async function main() {
   let x = Fruit.apple;
   let y = x;
-  await _stdlib.printNoLine((await _stdlib.enumValue(y)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(y)));
 }
 return [main, _tests];}`;
 
@@ -316,7 +316,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to $"Eat more {enumValue(Fruit.apple)}s!"
+  variable a set to $"Eat more {enumToString(Fruit.apple)}s!"
   call printNoLine(a)
 end main
    
@@ -329,7 +329,7 @@ const Fruit = {
 
 const global = new class {};
 async function main() {
-  let a = \`Eat more \${await _stdlib.toString((await _stdlib.enumValue(Fruit.apple)))}s!\`;
+  let a = \`Eat more \${await _stdlib.toString((await _stdlib.enumToString(Fruit.apple)))}s!\`;
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -669,7 +669,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: any (AnyExceptEnum), Provided: Fruit.ErrorMessages.html#compile_error",
+      "Argument types. Expected: item (AnyExceptEnum), Provided: Fruit.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -677,7 +677,7 @@ enum Fruit apple, orange, pear`;
     const code = `${testHeader}
 
 main
-  call printNoLine(enumValue("Fruit.apple"))
+  call printNoLine(enumToString("Fruit.apple"))
 end main
    
 enum Fruit apple, orange, pear`;
@@ -695,7 +695,7 @@ enum Fruit apple, orange, pear`;
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: any enum (AnyEnum), Provided: String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: enum value (AnyEnum), Provided: String.ErrorMessages.html#compile_error",
     ]);
   });
 });

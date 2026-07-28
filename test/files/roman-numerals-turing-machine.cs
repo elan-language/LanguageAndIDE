@@ -132,7 +132,7 @@ class Rule {
   } // end constructor
 
   public string toString() { // function method
-    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}";
+    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumToString(this.move)}";
   } // end function method
 
 } // end class
