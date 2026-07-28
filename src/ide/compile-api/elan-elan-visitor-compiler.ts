@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node.js";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node.js";
 import { Scope } from "../../compiler/compiler-interfaces/scope.js";
+import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers.js";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn.js";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn.js";
 import { Language } from "../frames/frame-interfaces/language.js";
@@ -20,20 +20,22 @@ export class ElanElanVisitorCompiler extends ElanElanVisitor {
     const types = ((this as any).visitChildren(ctx) as (IdAsn | TypeAsn)[]).filter(
       (n) => n instanceof TypeAsn,
     );
-    const typeName = "Tuple";
+    const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
   }
 
   visitTypeName(ctx: any) {
-    const typeName = (this as any).visitChildren(ctx)[0] as AstIdNode;
-    return new TypeAsn(typeName.id, [], this.fieldId, this.scope);
+    const typeName = (this as any).visitChildren(ctx)[0] as AstNode;
+
+    //return new TypeAsn(typeName, [], this.fieldId, this.scope);
+    return typeName;
   }
 
   visitTypeGeneric(ctx: any) {
-    const typeName = (this as any).visit(ctx.typeName()) as AstIdNode;
+    const typeName = (this as any).visit(ctx.typeName()) as AstNode;
     const types = (this as any).visit(ctx.type()) as AstNode[];
 
-    return new TypeAsn(typeName.id, types, this.fieldId, this.scope);
+    return new TypeAsn(typeName, types, this.fieldId, this.scope);
   }
 
   override visitType(context: any) {
@@ -46,7 +48,8 @@ export class ElanElanVisitorCompiler extends ElanElanVisitor {
     }
 
     if (typeName) {
-      return (this as any).visit(typeName);
+      const tn = (this as any).visit(typeName);
+      return new TypeAsn(tn, [], this.fieldId, this.scope);
     }
 
     if (typeGeneric) {
@@ -57,10 +60,6 @@ export class ElanElanVisitorCompiler extends ElanElanVisitor {
   }
 
   visitTerminal(ctx: any) {
-    return new IdAsn(
-      this.language.mapLanguageTypeToElanType(ctx.symbol.text),
-      "",
-      undefined as unknown as Scope,
-    );
+    return getTypeName(this.language, ctx.getText(), this.fieldId, this.scope);
   }
 }

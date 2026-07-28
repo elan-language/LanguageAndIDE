@@ -24,6 +24,10 @@ export class TypeNameUse extends AbstractParseNode {
     this.tokenTypes = tokenTypes;
   }
 
+  language() {
+    return this.file.language();
+  }
+
   private attemptToMatchStandardType(text: string, langName: string, elanName: string) {
     if (text.startsWith(langName)) {
       this.status = ParseStatus.valid;

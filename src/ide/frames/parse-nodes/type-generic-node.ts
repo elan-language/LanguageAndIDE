@@ -18,6 +18,10 @@ export class TypeGenericNode extends AbstractSequence {
     this.tokenTypes = tokenTypes;
   }
 
+  language() {
+    return this.file.language();
+  }
+
   parseText(text: string): void {
     if (text.trim().length > 0) {
       this.file.language().addNodesForTypeGeneric(this);

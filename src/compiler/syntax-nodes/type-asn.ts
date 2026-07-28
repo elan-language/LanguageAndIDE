@@ -15,21 +15,25 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
   checkForDeprecation,
   mustBeImmutableGenericType,
-  mustBeKnownSymbolType,
   mustBeReferenceGenericType,
   mustBeValidKeyType,
   mustMatchGenericParameters,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode } from "./ast-helpers";
 
 export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   constructor(
-    public readonly id: string,
+    public readonly name: AstNode,
     public readonly genericParameters: AstNode[],
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return isAstIdNode(this.name) ? this.name.id : this.name.compile();
   }
 
   expectedMinimumGenericParameters() {
@@ -58,7 +62,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
     this.compileErrors = [];
     const rootSt = this.rootSymbol().symbolType();
 
-    mustBeKnownSymbolType(rootSt, this.id, this.compileErrors, this.fieldId);
+    this.name.compile();
 
     mustMatchGenericParameters(
       this.genericParameters,
@@ -114,7 +118,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   compile(): string {
     this.commonCompile();
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-    return this.id;
+    return this.name.compile();
   }
 
   compileToEmptyObjectCode(): string {
@@ -128,8 +132,12 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   }
 
   rootSymbol() {
-    const scope = getGlobalScope(this.scope);
-    return scope.resolveSymbol(this.id, true, this.scope);
+    if (isAstIdNode(this.name)) {
+      const scope = getGlobalScope(this.scope);
+      return scope.resolveSymbol(this.name.id, true, this.scope);
+    }
+
+    return this.name;
   }
 
   symbolType() {

@@ -27,6 +27,10 @@ export class TypeFuncNode extends AbstractSequence {
     super(file);
   }
 
+  language() {
+    return this.file.language();
+  }
+
   parseText(text: string): void {
     this.remainingText = text;
     if (text.length > 0) {

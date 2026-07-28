@@ -24,6 +24,10 @@ export class TypeNameDef extends AbstractParseNode {
     this.tokenTypes = tokenTypes;
   }
 
+  language() {
+    return this.file.language();
+  }
+
   private langInt = RegExp(`^\\s*${this.file.language().INT_NAME}`);
   private langFloat = RegExp(`^\\s*${this.file.language().FLOAT_NAME}`);
   private langBool = RegExp(`^\\s*${this.file.language().BOOL_NAME}`);

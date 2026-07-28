@@ -32,16 +32,22 @@ import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
+import { BooleanTypeAsn } from "./boolean-type-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";
 import { EnumValuesAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
+import { FloatTypeAsn } from "./float-type-asn";
 import { ClassAsn } from "./globals/class-asn";
 import { FunctionAsn } from "./globals/function-asn";
 import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
+import { IntTypeAsn } from "./int-type-asn";
+import { ListTypeAsn } from "./list-type-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
+import { StringTypeAsn } from "./string-type-asn";
+import { TypeNameAsn } from "./type-name-asn";
 
 // interface type guards
 
@@ -523,4 +529,21 @@ export function getChildSymbol(
 
 export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
+}
+
+export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
+  switch (name) {
+    case l.INT_NAME:
+      return new IntTypeAsn(fieldId);
+    case l.FLOAT_NAME:
+      return new FloatTypeAsn(fieldId);
+    case l.STRING_NAME:
+      return new StringTypeAsn(fieldId);
+    case l.BOOL_NAME:
+      return new BooleanTypeAsn(fieldId);
+    case l.LIST_NAME:
+      return new ListTypeAsn(fieldId, scope);
+    default:
+      return new TypeNameAsn(name, fieldId, scope);
+  }
 }

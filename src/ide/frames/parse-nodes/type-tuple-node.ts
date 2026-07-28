@@ -12,6 +12,10 @@ export class TypeTupleNode extends AbstractSequence {
     }
   }
 
+  language() {
+    return this.file.language();
+  }
+
   renderAsHtml(): string {
     return this.isValid() ? this.file.language().typeTupleAsHtml(this) : this.matchedText;
   }
