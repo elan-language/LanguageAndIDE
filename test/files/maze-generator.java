@@ -121,14 +121,14 @@ class Test_isValidQuadrant {
 
 class Point {
 
-  public int x; // property
-
-  public int y; // property
-
   public Point(int x, int y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public int x; // property
+
+  public int y; // property
 
   public String toString() { // function method
     return String.format("Point at %, %", this.x, this.y);

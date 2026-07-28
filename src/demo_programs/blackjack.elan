@@ -1,4 +1,4 @@
-# 2c3854fc732548a943fc3025dc7348e9ef28f9a3b549e2ef4e74f98a1c2afb61 Elan 2.0.0-beta2 valid
+# f7a1b9e52023f3a5f73a81cbe25a01cee84dcb6374695daad70ee7d678a3f26c Elan 2.0.0-beta2 valid
 
 main
   variable game set to new Game(1000)
@@ -273,12 +273,6 @@ class Game
 end class
 
 class Card
-  property suit as Suit
-
-  property rank as String
-
-  property faceDown as Boolean
-
   constructor(rank as String, suit as Suit, facedown as Boolean)
     assign this.rank to rank
     assign this.suit to suit
@@ -292,6 +286,12 @@ class Card
   procedure turnFaceDown()
     assign this.faceDown to true
   end procedure
+
+  property suit as Suit
+
+  property rank as String
+
+  property faceDown as Boolean
 
   function toString() returns String
     return $"{this.rank}{symbolForSuit(this.suit)}"

@@ -22,6 +22,14 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return "oopRef.html";
   }
 
+  override canInsertBefore(): boolean {
+    return false;
+  }
+
+  override isMovable(): boolean {
+    return false;
+  }
+
   override isDeletable(): boolean {
     return false;
   }

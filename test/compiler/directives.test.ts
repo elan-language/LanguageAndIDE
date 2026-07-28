@@ -1,5 +1,5 @@
 import {
-  elanAnyType,
+  elanAnyExceptEnumType,
   ElanClass,
   elanClassExport,
   elanClassType,
@@ -41,7 +41,7 @@ class TestStdLib {
 
   @elanProcedure(["any"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  async printNoLine(@elanAnyType() s: any) {
+  async printNoLine(@elanAnyExceptEnumType() s: any) {
     const sl = new StdLib(new StubInputOutput());
     await sl.printNoLine(s);
   }

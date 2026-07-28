@@ -267,12 +267,6 @@ def emptyPoint() -> Point: # function
 
 class Point: # concrete class
 
-  x: int # property
-
-  y: int # property
-
-  isEmpty: bool # property
-
   def __init__(self: Point, x: int, y: int) -> None:
     if (x < 0) or (y < 0):
       self.isEmpty = True # assignment
@@ -294,6 +288,12 @@ class Point: # concrete class
   def neighbouringPoints(self: Point) -> list[Point]: # function method
     return [Point(self.x - 1, self.y - 1), Point(self.x, self.y - 1), Point(self.x + 1, self.y - 1), Point(self.x - 1, self.y), Point(self.x + 1, self.y), Point(self.x - 1, self.y + 1), Point(self.x, self.y + 1), Point(self.x + 1, self.y + 1)]
   # end function method
+
+  x: int # property
+
+  y: int # property
+
+  isEmpty: bool # property
 
   def toString(self: Point) -> str: # function method
     return f"{self.x},{self.y}"

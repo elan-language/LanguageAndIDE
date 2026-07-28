@@ -284,12 +284,6 @@ class Game {
 
 class Card {
 
-  public Suit suit; // property
-
-  public String rank; // property
-
-  public boolean faceDown; // property
-
   public Card(String rank, Suit suit, boolean facedown) {
     this.rank = rank; // assignment
     this.suit = suit; // assignment
@@ -303,6 +297,12 @@ class Card {
   public void turnFaceDown() { // procedure method
     this.faceDown = true; // assignment
   } // end procedure method
+
+  public Suit suit; // property
+
+  public String rank; // property
+
+  public boolean faceDown; // property
 
   public String toString() { // function method
     return String.format("%%", this.rank, symbolForSuit(this.suit));

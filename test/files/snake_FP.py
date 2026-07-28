@@ -70,6 +70,16 @@ def hasHitEdge(g: Game) -> bool: # function
 
 class Game: # concrete class
 
+  def __init__(self: Game, rnd: Random) -> None:
+    self.head = Square(22, 15) # assignment
+    self.body = [Square(20, 15), Square(21, 15)] # assignment
+    self.priorTail = Square(0, 0) # assignment
+    self.key = "d" # assignment
+    self.isOn = True # assignment
+    self.apple = Square(12, 15) # assignment
+    self.rnd = rnd # assignment
+  # end constructor
+
   head: Square # property
 
   body: list[Square] # property
@@ -83,16 +93,6 @@ class Game: # concrete class
   rnd: Random # property
 
   key: str # property
-
-  def __init__(self: Game, rnd: Random) -> None:
-    self.head = Square(22, 15) # assignment
-    self.body = [Square(20, 15), Square(21, 15)] # assignment
-    self.priorTail = Square(0, 0) # assignment
-    self.key = "d" # assignment
-    self.isOn = True # assignment
-    self.apple = Square(12, 15) # assignment
-    self.rnd = rnd # assignment
-  # end constructor
 
   def toString(self: Game) -> str: # function method
     return "a Game"
@@ -140,14 +140,14 @@ class Game: # concrete class
 
 class Square: # concrete class
 
-  x: int # property
-
-  y: int # property
-
   def __init__(self: Square, x: int, y: int) -> None:
     self.x = x # assignment
     self.y = y # assignment
   # end constructor
+
+  x: int # property
+
+  y: int # property
 
   def toString(self: Square) -> str: # function method
     return f"{self.x}, {self.y}"

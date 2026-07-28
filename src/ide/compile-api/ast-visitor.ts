@@ -147,8 +147,7 @@ import { ThisProcRef } from "../frames/parse-nodes/thisProcRef";
 import { TupleNode } from "../frames/parse-nodes/tuple-node";
 import { TypeFuncNode } from "../frames/parse-nodes/type-func-node";
 import { TypeGenericNode } from "../frames/parse-nodes/type-generic-node";
-import { TypeNameDef } from "../frames/parse-nodes/type-name-def";
-import { TypeNameUse } from "../frames/parse-nodes/type-name-use";
+import { TypeSimpleName } from "../frames/parse-nodes/type-simple-name";
 import { TypeTupleNode } from "../frames/parse-nodes/type-tuple-node";
 import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
@@ -362,7 +361,7 @@ export function transform(
   if (node instanceof PrintStatement) {
     const printAsn = new PrintAsn(node.getHtmlId(), scope);
     printAsn.breakpointStatus = node.breakpointStatus;
-    printAsn.expr = transform(node.args, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
+    printAsn.expr = transform(node.arg, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
     return printAsn;
   }
 
@@ -756,14 +755,18 @@ export function transform(
     return new TypeAsn(typeName, inp.concat(oup), fieldId, scope);
   }
 
-  if (node instanceof TypeNameUse) {
-    const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
-    return new TypeAsn(typeName, [], fieldId, scope);
-  }
+  // if (node instanceof TypeNameUse) {
+  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
+  //   return new TypeAsn(typeName, [], fieldId, scope);
+  // }
 
-  if (node instanceof TypeNameDef) {
-    const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
-    return new TypeAsn(typeName, [], fieldId, scope);
+  // if (node instanceof TypeNameDef) {
+  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
+  //   return new TypeAsn(typeName, [], fieldId, scope);
+  // }
+  if (node instanceof TypeSimpleName) {
+    const type = node.elanTypeName;
+    return new TypeAsn(type, [], fieldId, scope);
   }
 
   if (node instanceof InheritanceNode) {

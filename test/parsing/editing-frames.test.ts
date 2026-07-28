@@ -89,7 +89,7 @@ suite("Editing Frames", () => {
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
     const selector = file.getById("elan_select4") as MemberSelector;
-    assert.equal(selector.isSelected(), true);
+    assert.equal(selector.isSelected(), false);
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();

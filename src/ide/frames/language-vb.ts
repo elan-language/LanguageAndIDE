@@ -39,8 +39,8 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNameUse } from "./parse-nodes/type-name-use";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -122,7 +122,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.DIM} <el-kw>${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
-      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.args.renderAsHtml()})`;
+      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
@@ -331,7 +331,7 @@ export class LanguageVB extends LanguageAbstract {
   }
 
   addNodesForTypeGeneric(node: TypeGenericNode) {
-    node.qualifiedName = new TypeNameUse(node.file, node.tokenTypes);
+    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
     const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
     node.genericTypes = new CSV(node.file, typeConstr, 1);
 

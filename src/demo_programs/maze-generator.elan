@@ -1,4 +1,4 @@
-# 0eff1e4821ca93fe9bb6dad73e8fd8cc7b1d32f15e602bfff84025e54436506a Elan 2.0.0-beta2 valid
+# abd97ea7c74e78ecc4b796620d48fb56694248fbe02dadbe2a3b77441bbfa409 Elan 2.0.0-beta2 valid
 
 main
   variable blocks set to createBlockGraphics(black)
@@ -115,14 +115,14 @@ test test_isValidQuadrant
 end test
 
 class Point
-  property x as Int
-
-  property y as Int
-
   constructor(x as Int, y as Int)
     assign this.x to x
     assign this.y to y
   end constructor
+
+  property x as Int
+
+  property y as Int
 
   function toString() returns String
     return $"Point at {this.x}, {this.y}"

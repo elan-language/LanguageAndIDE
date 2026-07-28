@@ -17,7 +17,7 @@ export class ConcreteClass extends ClassFrame {
     super(parent);
     this.isConcrete = true;
     this.constr = new Constructor(this);
-    this.getChildren().push(this.constr);
+    this.getChildren().unshift(this.constr);
     this.toString = new FunctionMethod(this);
     this.toString.name.setFieldToKnownValidText("toString");
     this.toString.returnType.setFieldToKnownValidText(this.language().STRING_NAME);

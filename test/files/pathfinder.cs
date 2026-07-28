@@ -267,12 +267,6 @@ static Point emptyPoint() { // function
 
 class Point {
 
-  public int x {get; private set;} // property
-
-  public int y {get; private set;} // property
-
-  public bool isEmpty {get; private set;} // property
-
   public Point(int x, int y) {
     if ((x < 0) || (y < 0)) {
       this.isEmpty = true; // assignment
@@ -294,6 +288,12 @@ class Point {
   public List<Point> neighbouringPoints() { // function method
     return new [] {new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)};
   } // end function method
+
+  public int x {get; private set;} // property
+
+  public int y {get; private set;} // property
+
+  public bool isEmpty {get; private set;} // property
 
   public string toString() { // function method
     return $"{this.x},{this.y}";

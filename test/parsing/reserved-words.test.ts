@@ -3,8 +3,7 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { IdentifierNode } from "../../src/ide/frames/parse-nodes/identifier-node";
 import { MethodNameNode } from "../../src/ide/frames/parse-nodes/method-name-node";
-import { TypeNameDef } from "../../src/ide/frames/parse-nodes/type-name-def";
-import { TypeNameUse } from "../../src/ide/frames/parse-nodes/type-name-use";
+import { TypeSimpleName } from "../../src/ide/frames/parse-nodes/type-simple-name";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -69,30 +68,35 @@ suite("Reserved Words", () => {
     testNodeParse(new MethodNameNode(f), "def", ParseStatus.valid, "", "", "", "");
     testNodeParse(new MethodNameNode(f), "def()", ParseStatus.valid, "def", "()", "", ""); // keywords are no longer disallowed in method name USE - though won't compile
   });
-  test("TypeNameDef", () => {
-    testNodeParse(new TypeNameDef(f), "X", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "_X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "x", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "Each", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "Each_", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "Int", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "Float", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "Boolean", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "String", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameDef(f), "List", ParseStatus.invalid, "", "", "", "");
+  test("TypeSimpleName", () => {
+    // when defining a name, built-in types are not allowed (allowBuiltIns = false)
+    const u = undefined; // for token type parameter
+    testNodeParse(new TypeSimpleName(f, u, false), "B", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "X", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "_X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "x", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "Each", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "Each_", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "Int", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "Float", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "Boolean", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "String", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f, u, false), "List", ParseStatus.invalid, "", "", "", "");
   });
-  test("TypeNameUse", () => {
-    testNodeParse(new TypeNameUse(f), "X", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "_X", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "_", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "x", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "Async", ParseStatus.invalid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "Async_", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "Int", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "Float", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "Boolean", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "String", ParseStatus.valid, "", "", "", "");
-    testNodeParse(new TypeNameUse(f), "List", ParseStatus.valid, "", "", "", "");
+  test("TypeSimpleName", () => {
+    // when using a name, built-in types are allowed (allowBuiltIns has default value of true)
+    testNodeParse(new TypeSimpleName(f), "B", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "X", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "_X", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "_", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "x", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "Async", ParseStatus.invalid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "Async_", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "Int", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "Float", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "Boolean", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "String", ParseStatus.valid, "", "", "", "");
+    testNodeParse(new TypeSimpleName(f), "List", ParseStatus.valid, "", "", "", "");
   });
 });

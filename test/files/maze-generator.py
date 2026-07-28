@@ -119,14 +119,14 @@ class Test_isValidQuadrant(unittest.TestCase):
 
 class Point: # concrete class
 
-  x: int # property
-
-  y: int # property
-
   def __init__(self: Point, x: int, y: int) -> None:
     self.x = x # assignment
     self.y = y # assignment
   # end constructor
+
+  x: int # property
+
+  y: int # property
 
   def toString(self: Point) -> str: # function method
     return f"Point at {self.x}, {self.y}"

@@ -1,4 +1,4 @@
-# b0154d88937f58ff9bead4135637b3f03608ace12b017f0c59ed1c509e9fcdc9 Elan 2.0.0-beta2 valid
+# c4dad1caa8cb138b10dfdaeeec025e02acb4168cd9caa15aaed0857eeb816797 Elan 2.0.0-beta2 valid
 
 # Turing Machine that converts a Year from decimal to roman numerals
 # Run the program, enter the number to convert and watch the machine in action.
@@ -106,6 +106,14 @@ class TuringMachine
 end class
 
 class Rule
+  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
+    assign this.currentState to currentState
+    assign this.currentSymbol to currentSymbol
+    assign this.nextState to nextState
+    assign this.writeSymbol to writeSymbol
+    assign this.move to move
+  end constructor
+
   property currentState as String
 
   property currentSymbol as String
@@ -116,16 +124,8 @@ class Rule
 
   property move as Dir
 
-  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
-    assign this.currentState to currentState
-    assign this.currentSymbol to currentSymbol
-    assign this.nextState to nextState
-    assign this.writeSymbol to writeSymbol
-    assign this.move to move
-  end constructor
-
   function toString() returns String
-    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumValue(this.move)}"
+    return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumToString(this.move)}"
   end function
 
 end class

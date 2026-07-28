@@ -115,6 +115,14 @@ class TuringMachine {
 
 class Rule {
 
+  public Rule(String currentState, String currentSymbol, String nextState, String writeSymbol, Dir move) {
+    this.currentState = currentState; // assignment
+    this.currentSymbol = currentSymbol; // assignment
+    this.nextState = nextState; // assignment
+    this.writeSymbol = writeSymbol; // assignment
+    this.move = move; // assignment
+  } // end constructor
+
   public String currentState; // property
 
   public String currentSymbol; // property
@@ -125,16 +133,8 @@ class Rule {
 
   public Dir move; // property
 
-  public Rule(String currentState, String currentSymbol, String nextState, String writeSymbol, Dir move) {
-    this.currentState = currentState; // assignment
-    this.currentSymbol = currentSymbol; // assignment
-    this.nextState = nextState; // assignment
-    this.writeSymbol = writeSymbol; // assignment
-    this.move = move; // assignment
-  } // end constructor
-
   public String toString() { // function method
-    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumValue(this.move));
+    return String.format("%,%,%,%,%", this.currentState, this.currentSymbol, this.nextState, this.writeSymbol, enumToString(this.move));
   } // end function method
 
 } // end class

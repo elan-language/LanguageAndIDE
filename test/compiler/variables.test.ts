@@ -255,7 +255,7 @@ return [main, _tests];}`;
 
 main
   variable a set to Fruit.apple
-  call printNoLine(enumValue(a))
+  call printNoLine(enumToString(a))
 end main
 enum Fruit apple, orange, pear`;
 
@@ -267,7 +267,7 @@ const Fruit = {
 const global = new class {};
 async function main() {
   let a = Fruit.apple;
-  await _stdlib.printNoLine((await _stdlib.enumValue(a)));
+  await _stdlib.printNoLine((await _stdlib.enumToString(a)));
 }
 return [main, _tests];}`;
 

@@ -1,4 +1,4 @@
-# a4098cf4c47bfc9ba4a3b6954c5d6c52a1deca474634c3b3b2b4cbad494f6ce4 Elan 2.0.0-beta2 valid
+# c1715214074887ddc62c5b21f24e9b6679c95800da5e5712d74805bb754b8e8c Elan 2.0.0-beta2 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -68,6 +68,16 @@ function hasHitEdge(g as Game) returns Boolean
 end function
 
 class Game
+  constructor(rnd as Random)
+    assign this.head to new Square(22, 15)
+    assign this.body to [new Square(20, 15), new Square(21, 15)]
+    assign this.priorTail to new Square(0, 0)
+    assign this.key to "d"
+    assign this.isOn to true
+    assign this.apple to new Square(12, 15)
+    assign this.rnd to rnd
+  end constructor
+
   property head as Square
 
   property body as List<of Square>
@@ -81,16 +91,6 @@ class Game
   property rnd as Random
 
   property key as String
-
-  constructor(rnd as Random)
-    assign this.head to new Square(22, 15)
-    assign this.body to [new Square(20, 15), new Square(21, 15)]
-    assign this.priorTail to new Square(0, 0)
-    assign this.key to "d"
-    assign this.isOn to true
-    assign this.apple to new Square(12, 15)
-    assign this.rnd to rnd
-  end constructor
 
   function toString() returns String
     return "a Game"
@@ -137,14 +137,14 @@ class Game
 end class
 
 class Square
-  property x as Int
-
-  property y as Int
-
   constructor(x as Int, y as Int)
     assign this.x to x
     assign this.y to y
   end constructor
+
+  property x as Int
+
+  property y as Int
 
   function toString() returns String
     return $"{this.x}, {this.y}"

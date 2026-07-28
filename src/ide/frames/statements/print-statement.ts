@@ -1,5 +1,5 @@
 import { printKeyword } from "../../../compiler/elan-keywords";
-import { ArgListField } from "../fields/arg-list-field";
+import { ExpressionField } from "../fields/expression-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -9,10 +9,11 @@ import { SingleLineFrame } from "../single-line-frame";
 export class PrintStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
-  args: ArgListField;
+  arg: ExpressionField;
   constructor(parent: Parent) {
     super(parent);
-    this.args = new ArgListField(this);
+    this.arg = new ExpressionField(this);
+    this.arg.readUntil = /\)\r?\n/;
   }
 
   initialKeywords(): string {
@@ -27,12 +28,12 @@ export class PrintStatement extends SingleLineFrame implements Statement {
     source.removeIndent();
     source.remove(`${printKeyword}`);
     source.remove("(");
-    this.args.parseFrom(source);
+    this.arg.parseFrom(source);
     source.remove(")");
     source.removeNewLine();
   }
   getFields(): Field[] {
-    return [this.args];
+    return [this.arg];
   }
 
   getIdPrefix(): string {
@@ -44,6 +45,6 @@ export class PrintStatement extends SingleLineFrame implements Statement {
   }
 
   override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${printKeyword}(${this.args.renderAsElanSource()})`;
+    return `${this.indent()}${this.sourceAnnotations()}${printKeyword}(${this.arg.renderAsElanSource()})`;
   }
 }

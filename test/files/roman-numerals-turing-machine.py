@@ -113,6 +113,14 @@ class TuringMachine: # concrete class
 
 class Rule: # concrete class
 
+  def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
+    self.currentState = currentState # assignment
+    self.currentSymbol = currentSymbol # assignment
+    self.nextState = nextState # assignment
+    self.writeSymbol = writeSymbol # assignment
+    self.move = move # assignment
+  # end constructor
+
   currentState: str # property
 
   currentSymbol: str # property
@@ -123,16 +131,8 @@ class Rule: # concrete class
 
   move: Dir # property
 
-  def __init__(self: Rule, currentState: str, currentSymbol: str, nextState: str, writeSymbol: str, move: Dir) -> None:
-    self.currentState = currentState # assignment
-    self.currentSymbol = currentSymbol # assignment
-    self.nextState = nextState # assignment
-    self.writeSymbol = writeSymbol # assignment
-    self.move = move # assignment
-  # end constructor
-
   def toString(self: Rule) -> str: # function method
-    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumValue(self.move)}"
+    return f"{self.currentState},{self.currentSymbol},{self.nextState},{self.writeSymbol},{enumToString(self.move)}"
   # end function method
 
 # end class
