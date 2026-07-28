@@ -267,12 +267,6 @@ End Function
 
 Class Point
 
-  Property x As Integer
-
-  Property y As Integer
-
-  Property isEmpty As Boolean
-
   Sub New(x As Integer, y As Integer)
     If (x < 0) Or (y < 0) Then
       Me.isEmpty = True ' assignment
@@ -294,6 +288,12 @@ Class Point
   Function neighbouringPoints() As List(Of Point)
     Return {New Point(Me.x - 1, Me.y - 1), New Point(Me.x, Me.y - 1), New Point(Me.x + 1, Me.y - 1), New Point(Me.x - 1, Me.y), New Point(Me.x + 1, Me.y), New Point(Me.x - 1, Me.y + 1), New Point(Me.x, Me.y + 1), New Point(Me.x + 1, Me.y + 1)}
   End Function
+
+  Property x As Integer
+
+  Property y As Integer
+
+  Property isEmpty As Boolean
 
   Function toString() As String
     Return $"{Me.x},{Me.y}"

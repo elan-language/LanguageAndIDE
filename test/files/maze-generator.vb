@@ -125,14 +125,14 @@ End Class
 
 Class Point
 
-  Property x As Integer
-
-  Property y As Integer
-
   Sub New(x As Integer, y As Integer)
     Me.x = x ' assignment
     Me.y = y ' assignment
   End Sub
+
+  Property x As Integer
+
+  Property y As Integer
 
   Function toString() As String
     Return $"Point at {Me.x}, {Me.y}"

@@ -70,6 +70,16 @@ static bool hasHitEdge(Game g) { // function
 
 class Game {
 
+  public Game(Random rnd) {
+    this.head = new Square(22, 15); // assignment
+    this.body = new [] {new Square(20, 15), new Square(21, 15)}; // assignment
+    this.priorTail = new Square(0, 0); // assignment
+    this.key = "d"; // assignment
+    this.isOn = true; // assignment
+    this.apple = new Square(12, 15); // assignment
+    this.rnd = rnd; // assignment
+  } // end constructor
+
   public Square head {get; private set;} // property
 
   public List<Square> body {get; private set;} // property
@@ -83,16 +93,6 @@ class Game {
   public Random rnd {get; private set;} // property
 
   public string key {get; private set;} // property
-
-  public Game(Random rnd) {
-    this.head = new Square(22, 15); // assignment
-    this.body = new [] {new Square(20, 15), new Square(21, 15)}; // assignment
-    this.priorTail = new Square(0, 0); // assignment
-    this.key = "d"; // assignment
-    this.isOn = true; // assignment
-    this.apple = new Square(12, 15); // assignment
-    this.rnd = rnd; // assignment
-  } // end constructor
 
   public string toString() { // function method
     return "a Game";
@@ -140,14 +140,14 @@ class Game {
 
 class Square {
 
-  public int x {get; private set;} // property
-
-  public int y {get; private set;} // property
-
   public Square(int x, int y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public int x {get; private set;} // property
+
+  public int y {get; private set;} // property
 
   public string toString() { // function method
     return $"{this.x}, {this.y}";

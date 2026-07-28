@@ -113,6 +113,14 @@ End Class
 
 Class Rule
 
+  Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
+    Me.currentState = currentState ' assignment
+    Me.currentSymbol = currentSymbol ' assignment
+    Me.nextState = nextState ' assignment
+    Me.writeSymbol = writeSymbol ' assignment
+    Me.move = move ' assignment
+  End Sub
+
   Property currentState As String
 
   Property currentSymbol As String
@@ -122,14 +130,6 @@ Class Rule
   Property writeSymbol As String
 
   Property move As Dir
-
-  Sub New(currentState As String, currentSymbol As String, nextState As String, writeSymbol As String, move As Dir)
-    Me.currentState = currentState ' assignment
-    Me.currentSymbol = currentSymbol ' assignment
-    Me.nextState = nextState ' assignment
-    Me.writeSymbol = writeSymbol ' assignment
-    Me.move = move ' assignment
-  End Sub
 
   Function toString() As String
     Return $"{Me.currentState},{Me.currentSymbol},{Me.nextState},{Me.writeSymbol},{enumValue(Me.move)}"

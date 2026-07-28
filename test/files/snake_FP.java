@@ -72,6 +72,16 @@ static boolean hasHitEdge(Game g) { // function
 
 class Game {
 
+  public Game(Random rnd) {
+    this.head = new Square(22, 15); // assignment
+    this.body = list(new Square(20, 15), new Square(21, 15)); // assignment
+    this.priorTail = new Square(0, 0); // assignment
+    this.key = "d"; // assignment
+    this.isOn = true; // assignment
+    this.apple = new Square(12, 15); // assignment
+    this.rnd = rnd; // assignment
+  } // end constructor
+
   public Square head; // property
 
   public List<Square> body; // property
@@ -85,16 +95,6 @@ class Game {
   public Random rnd; // property
 
   public String key; // property
-
-  public Game(Random rnd) {
-    this.head = new Square(22, 15); // assignment
-    this.body = list(new Square(20, 15), new Square(21, 15)); // assignment
-    this.priorTail = new Square(0, 0); // assignment
-    this.key = "d"; // assignment
-    this.isOn = true; // assignment
-    this.apple = new Square(12, 15); // assignment
-    this.rnd = rnd; // assignment
-  } // end constructor
 
   public String toString() { // function method
     return "a Game";
@@ -142,14 +142,14 @@ class Game {
 
 class Square {
 
-  public int x; // property
-
-  public int y; // property
-
   public Square(int x, int y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public int x; // property
+
+  public int y; // property
 
   public String toString() { // function method
     return String.format("%, %", this.x, this.y);

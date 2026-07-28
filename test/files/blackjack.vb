@@ -296,12 +296,6 @@ End Class
 
 Class Card
 
-  Property suit As Suit
-
-  Property rank As String
-
-  Property faceDown As Boolean
-
   Sub New(rank As String, suit As Suit, facedown As Boolean)
     Me.rank = rank ' assignment
     Me.suit = suit ' assignment
@@ -315,6 +309,12 @@ Class Card
   Sub turnFaceDown() ' procedure method
     Me.faceDown = True ' assignment
   End Sub
+
+  Property suit As Suit
+
+  Property rank As String
+
+  Property faceDown As Boolean
 
   Function toString() As String
     Return $"{Me.rank}{symbolForSuit(Me.suit)}"
