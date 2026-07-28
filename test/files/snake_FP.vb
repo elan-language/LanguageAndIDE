@@ -70,6 +70,16 @@ End Function
 
 Class Game
 
+  Sub New(rnd As Random)
+    Me.head = New Square(22, 15) ' assignment
+    Me.body = {New Square(20, 15), New Square(21, 15)} ' assignment
+    Me.priorTail = New Square(0, 0) ' assignment
+    Me.key = "d" ' assignment
+    Me.isOn = True ' assignment
+    Me.apple = New Square(12, 15) ' assignment
+    Me.rnd = rnd ' assignment
+  End Sub
+
   Property head As Square
 
   Property body As List(Of Square)
@@ -83,16 +93,6 @@ Class Game
   Property rnd As Random
 
   Property key As String
-
-  Sub New(rnd As Random)
-    Me.head = New Square(22, 15) ' assignment
-    Me.body = {New Square(20, 15), New Square(21, 15)} ' assignment
-    Me.priorTail = New Square(0, 0) ' assignment
-    Me.key = "d" ' assignment
-    Me.isOn = True ' assignment
-    Me.apple = New Square(12, 15) ' assignment
-    Me.rnd = rnd ' assignment
-  End Sub
 
   Function toString() As String
     Return "a Game"
@@ -140,14 +140,14 @@ End Class
 
 Class Square
 
-  Property x As Integer
-
-  Property y As Integer
-
   Sub New(x As Integer, y As Integer)
     Me.x = x ' assignment
     Me.y = y ' assignment
   End Sub
+
+  Property x As Integer
+
+  Property y As Integer
 
   Function toString() As String
     Return $"{Me.x}, {Me.y}"

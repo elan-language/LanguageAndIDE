@@ -13,14 +13,14 @@ End Function
 
 Class Point
 
-  Property x As Double
-
-  Property y As Double
-
   Sub New(x As Double, y As Double)
     Me.x = x ' assignment
     Me.y = y ' assignment
   End Sub
+
+  Property x As Double
+
+  Property y As Double
 
   Function toString() As String
     Return $"Point {Me.x}, {Me.y}"

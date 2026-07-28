@@ -15,14 +15,14 @@ static (double, double) bestFitLine(List<Point> points) { // function
 
 class Point {
 
-  public double x; // property
-
-  public double y; // property
-
   public Point(double x, double y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public double x; // property
+
+  public double y; // property
 
   public String toString() { // function method
     return String.format("Point %, %", this.x, this.y);
