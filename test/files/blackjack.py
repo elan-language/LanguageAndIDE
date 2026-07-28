@@ -282,12 +282,6 @@ class Game: # concrete class
 
 class Card: # concrete class
 
-  suit: Suit # property
-
-  rank: str # property
-
-  faceDown: bool # property
-
   def __init__(self: Card, rank: str, suit: Suit, facedown: bool) -> None:
     self.rank = rank # assignment
     self.suit = suit # assignment
@@ -301,6 +295,12 @@ class Card: # concrete class
   def turnFaceDown(self: Card) -> None: # procedure method
     self.faceDown = True # assignment
   # end procedure method
+
+  suit: Suit # property
+
+  rank: str # property
+
+  faceDown: bool # property
 
   def toString(self: Card) -> str: # function method
     return f"{self.rank}{symbolForSuit(self.suit)}"

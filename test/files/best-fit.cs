@@ -13,14 +13,14 @@ static (double, double) bestFitLine(List<Point> points) { // function
 
 class Point {
 
-  public double x {get; private set;} // property
-
-  public double y {get; private set;} // property
-
   public Point(double x, double y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public double x {get; private set;} // property
+
+  public double y {get; private set;} // property
 
   public string toString() { // function method
     return $"Point {this.x}, {this.y}";

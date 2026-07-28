@@ -320,11 +320,12 @@ main
 end main
 
 class Foo
-  property p as Int
-
   constructor(p as Int)
     assign this.p to p
   end constructor
+
+  property p as Int
+
   function toString() returns String
     return ""
   end function
@@ -359,12 +360,12 @@ async function main() {
 class Foo {
   static emptyInstance() { return system.emptyClass(Foo, [[\"p\", 0]]);};
 
-  p = 0;
-
   async _initialise(p) {
     this.p = p;
     return this;
   }
+
+  p = 0;
 
   async toString() {
     return "";

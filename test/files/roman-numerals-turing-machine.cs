@@ -113,6 +113,14 @@ class TuringMachine {
 
 class Rule {
 
+  public Rule(string currentState, string currentSymbol, string nextState, string writeSymbol, Dir move) {
+    this.currentState = currentState; // assignment
+    this.currentSymbol = currentSymbol; // assignment
+    this.nextState = nextState; // assignment
+    this.writeSymbol = writeSymbol; // assignment
+    this.move = move; // assignment
+  } // end constructor
+
   public string currentState {get; private set;} // property
 
   public string currentSymbol {get; private set;} // property
@@ -122,14 +130,6 @@ class Rule {
   public string writeSymbol {get; private set;} // property
 
   public Dir move {get; private set;} // property
-
-  public Rule(string currentState, string currentSymbol, string nextState, string writeSymbol, Dir move) {
-    this.currentState = currentState; // assignment
-    this.currentSymbol = currentSymbol; // assignment
-    this.nextState = nextState; // assignment
-    this.writeSymbol = writeSymbol; // assignment
-    this.move = move; // assignment
-  } // end constructor
 
   public string toString() { // function method
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumToString(this.move)}";

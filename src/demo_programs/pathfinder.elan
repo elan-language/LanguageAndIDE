@@ -1,4 +1,4 @@
-# fdb583bf061f9eff70703ed895b1948bbd590ce433e750e48968c7699b871377 Elan 2.0.0-beta2 valid
+# 75de0e2bbe1f53fc456eaed6efe1d0280381590b6b4bc2aa7ccf50a6daba58e6 Elan 2.0.0-beta2 valid
 
 main
   variable start set to new Point(5, 5)
@@ -264,12 +264,6 @@ function emptyPoint() returns Point
 end function
 
 class Point
-  property x as Int
-
-  property y as Int
-
-  property isEmpty as Boolean
-
   constructor(x as Int, y as Int)
     if (x < 0) or (y < 0) then
       assign this.isEmpty to true
@@ -291,6 +285,12 @@ class Point
   function neighbouringPoints() returns List<of Point>
     return [new Point(this.x - 1, this.y - 1), new Point(this.x, this.y - 1), new Point(this.x + 1, this.y - 1), new Point(this.x - 1, this.y), new Point(this.x + 1, this.y), new Point(this.x - 1, this.y + 1), new Point(this.x, this.y + 1), new Point(this.x + 1, this.y + 1)]
   end function
+
+  property x as Int
+
+  property y as Int
+
+  property isEmpty as Boolean
 
   function toString() returns String
     return $"{this.x},{this.y}"

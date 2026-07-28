@@ -106,6 +106,14 @@ class TuringMachine
 end class
 
 class Rule
+  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
+    assign this.currentState to currentState
+    assign this.currentSymbol to currentSymbol
+    assign this.nextState to nextState
+    assign this.writeSymbol to writeSymbol
+    assign this.move to move
+  end constructor
+
   property currentState as String
 
   property currentSymbol as String
@@ -115,14 +123,6 @@ class Rule
   property writeSymbol as String
 
   property move as Dir
-
-  constructor(currentState as String, currentSymbol as String, nextState as String, writeSymbol as String, move as Dir)
-    assign this.currentState to currentState
-    assign this.currentSymbol to currentSymbol
-    assign this.nextState to nextState
-    assign this.writeSymbol to writeSymbol
-    assign this.move to move
-  end constructor
 
   function toString() returns String
     return $"{this.currentState},{this.currentSymbol},{this.nextState},{this.writeSymbol},{enumToString(this.move)}"

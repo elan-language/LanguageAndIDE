@@ -282,12 +282,6 @@ class Game {
 
 class Card {
 
-  public Suit suit {get; private set;} // property
-
-  public string rank {get; private set;} // property
-
-  public bool faceDown {get; private set;} // property
-
   public Card(string rank, Suit suit, bool facedown) {
     this.rank = rank; // assignment
     this.suit = suit; // assignment
@@ -301,6 +295,12 @@ class Card {
   public void turnFaceDown() { // procedure method
     this.faceDown = true; // assignment
   } // end procedure method
+
+  public Suit suit {get; private set;} // property
+
+  public string rank {get; private set;} // property
+
+  public bool faceDown {get; private set;} // property
 
   public string toString() { // function method
     return $"{this.rank}{symbolForSuit(this.suit)}";

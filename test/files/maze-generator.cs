@@ -121,14 +121,14 @@ static bool isValidQuadrant(int q) { // function
 
 class Point {
 
-  public int x {get; private set;} // property
-
-  public int y {get; private set;} // property
-
   public Point(int x, int y) {
     this.x = x; // assignment
     this.y = y; // assignment
   } // end constructor
+
+  public int x {get; private set;} // property
+
+  public int y {get; private set;} // property
 
   public string toString() { // function method
     return $"Point at {this.x}, {this.y}";
