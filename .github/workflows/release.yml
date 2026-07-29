@@ -62,6 +62,6 @@ jobs:
         server: ${{ secrets.ftp_server }}
         username: ${{ secrets.ftp_user }}
         password: ${{ secrets.ftp_password }}
-        uploads: ./out/website/ => ./
+        uploads: ./out/website/ => ./new
         dry-run: ${{ inputs.dryRun }}
         
