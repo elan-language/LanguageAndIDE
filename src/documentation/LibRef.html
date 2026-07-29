@@ -1110,7 +1110,7 @@ end main
  <li>As well as standard common dot methods, <code>Stack</code> and <code>Queue</code> also both have method <el-method>peek</el-method> to read respectively the last in and first in item without removing it.</li>
  <li>There are two ways of adding and retrieving the next item in a Stack or a Queue:
   <ul>
-   <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and system methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
+   <li>in a procedure, use procedure methods <el-method>push</el-method> and <el-method>enqueue</el-method> to add an item, and methods <el-method>pop</el-method> and <el-method>dequeue</el-method> to obtain and remove the next item,</li>
    <li>in a function, use dot methods: <el-method>withPush</el-method> and <el-method>withEnqueue</el-method> to add an item, and <el-method>withPop</el-method> and <el-method>withDequeue</el-method> to remove the next item. </li>
   </ul>
   Note that in a function you will usually need to <el-method>peek</el-method> the next item before applying <el-method>withPop</el-method> or <el-method>withDequeue</el-method> (both of which remove it).
@@ -1429,7 +1429,7 @@ end main
 
 <h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
 <ul>
- <li>The definition of the grid is made using the system method <el-method>createBlockGraphics</el-method> which initialises
+ <li>The definition of the grid is made using the library function <el-method>createBlockGraphics</el-method> which initialises
   a <code>List&lt;of List&lt;of Int&gt;&gt;</code> structure
   containing 40 columns &times; 30 rows.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in [0..39] and <i>y</i> is in [0..29].</li>
@@ -2676,23 +2676,65 @@ end function
 <h2 id="StandaloneFunctions">Standalone functions</h2>
 <p>Standalone library functions always return a value and are therefore used in contexts that expect a value, such as in the right-hand side of a <b>variable definition</b> declaration or an <b>assign variable</b>, either on their own or within a more complex expression.</p>
 <p> Standalone library functions require at least one argument to be passed (in round brackets), corresponding to the parameters defined for that function.</p>
+<p>These  methods are pure functions and so  may be referenced in your functions as well as in procedures:</p>
 
 <table class="tableMethod">
  <tr>
-  <th>system<br>method</th>
+  <th>library<br>method</th>
   <th>argument<br>types</th>
   <th>return<br>types</th>
   <th>returns</th>
- </tr><tr id="parseAsFloat">
-  <td><el-method><a href=""></a>sFloat</el-method></td>
-  <td><code>String</code></td>
-  <td><code>Float</code></td>
-  <td>Will throw an exception if the string does not parse as an integer</td>
- </tr><tr id="parseAsInt">
-  <td><el-method>asInt</el-method></td>
-  <td><code>String</code></td>
+ </tr><tr id="copy">
+  <td><el-method>copy</el-method></td>
+  <td>named value of any type</td>
+  <td>same type as argument</td>
+  <td>a copy of the named value</td>
+ </tr><tr id="createBlockGraphics">
+  <td><el-method>createBlockGraphics</el-method></td>
   <td><code>Int</code></td>
-  <td>Will throw an exception if the string does not parse as an integer</td>
+  <td><code>List&lt; of List&lt; of Int&gt;&gt;</code></td>
+  <td>a 40&times;30 array with the specified value in every cell</td>
+ </tr><tr id="createDictionary">
+  <td><el-method>createDictionary</el-method></td>
+  <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
+  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
+  <td>a Dictionary containing the specified key:value pairs</td>
+ </tr><tr id="createPopulatedList">
+  <td><el-method>createPopulatedList</el-method></td>
+  <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
+  <td><code>List&lt;of itemType&gt;</code></td>
+  <td>a <code>List</code> containing the specified number of items each initialised to the value in the second argument</td>
+ </tr><tr id="createPopulatedListofLists">
+  <td><el-method>createPopulatedListofLists</el-method></td>
+  <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's type</td>
+  <td><code>List&lt;of List&lt;of itemType&gt;&gt;</code></td>
+  <td>a <code>List</code> of length the first argument containing that number of <code>List</code>s<br>
+  each initialised to a <code>List</code> of length the second argument<br>
+  with each item therein initialised to the value in the third argument</td>
+ </tr><tr id="max">
+  <td><el-method>max</el-method></td>
+  <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
+  <td><code>Int</code> or<br> <code>Float</code></td>
+  <td>the maximum value found in the <code>List</code></td>
+ </tr><tr id="min">
+  <td><el-method>min</el-method></td>
+  <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
+  <td><code>Int</code> or<br> <code>Float</code></td>
+  <td>the minimum value found in the <code>List</code></td>
+ </tr><tr id="range">
+  <td><el-method>range</el-method></td>
+  <td><code>Int</code>, <code>Int</code></td>
+  <td><code>List</code></td>
+  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument.<br>
+  If the second argument is not greater than the first, then the empty <code>List</code> is returned</td>
+ </tr><tr id="rangeInSteps">
+  <td><el-method>rangeInSteps</el-method></td>
+  <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
+  <td><code>List</code></td>
+  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument<br>
+   in increments specified by the third argument.<br>
+   If the third argument is negative, the second argument must be less than the first,<br>
+    and the integers returned will run from the first to one <i>more</i> than the second</td>
  </tr><tr id="unicode">
   <td><el-method>unicode</el-method></td>
   <td><code>Int</code></td>
@@ -2704,21 +2746,14 @@ end function
 <div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples using standalone functions</h4>
 <div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Deconstructing the 2-tuple returned by <el-method>parseAsInt</el-method>:</p>
-  <code>variable success set to parseAsInt(s).item_0</code>
-  <code>variable value set to parseAsInt(s).item_1</code>
-<p>Always check the <code>Boolean</code> (<code>success</code>) before using the returned value (<code>value</code>) in case the latter is zero only because the parse was unsuccessful.</p>
 
-<hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>parseAsInt</el-method> and <el-method>parseAsFloat</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Test assertions that use methods <el-method>asInt</el-method> and <el-method>asFloat</el-method>:</p>
 <codeblock>test test_parse
-  assert parseAsInt("31") evaluates to (true, 31)
-  assert parseAsInt("0") evaluates to (true, 0)
-  assert parseAsInt("thirty one") evaluates to (false, 0)
-  assert parseAsInt("3.1") evaluates to (false, 0)
-  assert parseAsFloat("31") evaluates to (true, 31)
-  assert parseAsFloat("0") evaluates to (true, 0)
-  assert parseAsFloat("3.1") evaluates to (true, 3.1)
+  assert asInt("31") evaluates to 31
+  assert asInt("0") evaluates to 0
+  assert asFloat("31") evaluates to 31
+  assert asFloat("0") evaluates to 0
+  assert asFloat("3.1") evaluates to 3.1
 end test
 </codeblock>
 <h5 class="no-TOC">Notes</h5>
@@ -2733,6 +2768,27 @@ end test
   <td><code>print(unicode(0x2665))</code></td><td>&#x27f6;</td><td>&#x2665</td>
  </tr>
 </table>
+
+<hr>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Print every second item in a <code>List</code>:</p>
+<codeblock>main
+  variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
+  for n in rangeInSteps(0, numbers.length() + 1, 2)
+    print(numbers[n])
+  end for
+end main
+</codeblock>
+<hr>
+
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the <a href="#filter">Higher-order Function <el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> to print the prime numbers less than a given limit:</p>
+<codeblock>main
+  print(primesFromList(range(2, 100)))
+end main
+function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
+  # returns primes from the list assuming it starts with a prime (e.g. 2)
+  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) &gt; 0))))
+end function
+</codeblock>
 <hr>
 </div></div>
 
@@ -2908,10 +2964,9 @@ They may not be used inside a <b>function</b> that you have defined, because to 
  <li><a href="#FileInputOutput">Text file input/output <i class="fa">&#xf14c;</i></a></li>
 </ul>
 
-<h2 id="MiscMethods">Clock and random numbers</h2>
-Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function</b> because
- of their dependence on external factors, i.e. they are subject to side effects.<br>
- To obtain random numbers within a <b>function</b>, use type <a href="#Random"><code>Random</code> <i class="fa">&#xf14c;</i></a>.
+<h2 id="ClockMethod">Clock</h2>
+<p>Method <el-method>clock</el-method> returns the current value of the system clock.
+This can be useful for measuring elapsed time by comparing the values returned by two calls.</p>
 <table class="tableMethod">
  <tr>
   <th>system<br>method</th>
@@ -2922,8 +2977,23 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td><el-method>clock</el-method></td>
   <td>(none)</td>
   <td><code>Int</code></td>
-  <td>the current value (in  milliseconds) of a system clock.<br>Useful for measuring elapsed time by comparing the values returned by two calls</td>
- </tr><tr id="random">>
+  <td>the current value (in  milliseconds) of the system clock</td>
+ </tr>
+</table>
+
+<h2 id="RandomMethods">Random methods</h2>
+
+Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot be used in a <b>function</b> because
+ of their dependence on external factors, i.e. they are subject to side effects.<br>
+ To obtain random numbers within a <b>function</b>, use a variable of type <a href="#Random"><code>Random</code> <i class="fa">&#xf14c;</i></a>.
+
+<table class="tableMethod">
+ <tr>
+  <th>system<br>method</th>
+  <th>argument<br>types</th>
+  <th>return<br>types</th>
+  <th>returns</th>
+ </tr><tr id="random">
   <td><el-method>random</el-method></td>
   <td>(none)</td>
   <td><code>Float</code></td>
@@ -2935,90 +3005,6 @@ Methods <el-method>random</el-method> and <el-method>randint</el-method> cannot 
   <td>a random number in the (inclusive) range between the two arguments</td>
  </tr>
 </table>
-
-<h2 id="SystemFunctions">System functions</h2>
-<p>These  methods are pure functions and so  may be referenced in your functions as well as in procedures:</p>
-<table class="tableMethod">
- <tr>
-  <th>system<br>method</th>
-  <th>argument<br>types</th>
-  <th>return<br>types</th>
-  <th>returns</th>
- </tr>
- <tr id="copy">
-  <td><el-method>copy</el-method></td>
-  <td>named value of any type</td>
-  <td>same type as argument</td>
-  <td>a copy of the named value</td>
- </tr>
- <tr id="createDictionary">
-  <td><el-method>createDictionary</el-method></td>
-  <td><code>List</code> of 2-tuples, each containg a key:value pair</td>
-  <td><code>Dictionary&lt;of keyType, valueType&gt;</code></td>
-  <td>a Dictionary containing the specified key:value pairs</td>
- </tr><tr id="createPopulatedList">
-  <td><el-method>createPopulatedList</el-method></td>
-  <td><code>Int</code>,<br> value of <code>List</code> item's type</td>
-  <td><code>List&lt;of itemType&gt;</code></td>
-  <td>a <code>List</code> containing the specified number of items each initialised to the value in the second argument</td>
- </tr><tr id="createPopulatedListofLists">
-  <td><el-method>createPopulatedListofLists</el-method></td>
-  <td><code>Int</code>, <code>Int</code>,<br> value of <code>List</code> item's type</td>
-  <td><code>List&lt;of List&lt;of itemType&gt;&gt;</code></td>
-  <td>a <code>List</code> of length the first argument containing that number of <code>List</code>s<br>
-  each initialised to a <code>List</code> of length the second argument<br>
-  with each item therein initialised to the value in the third argument</td>
- </tr><tr id="max">
-  <td><el-method>max</el-method></td>
-  <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
-  <td><code>Int</code> or<br> <code>Float</code></td>
-  <td>the maximum value found in the <code>List</code></td>
- </tr><tr id="min">
-  <td><el-method>min</el-method></td>
-  <td><code>List&lt;of Int&gt;</code> or<br> <code>List&lt;of Float&gt;</code></td>
-  <td><code>Int</code> or<br> <code>Float</code></td>
-  <td>the minimum value found in the <code>List</code></td>
- </tr><tr id="range">
-  <td><el-method>range</el-method></td>
-  <td><code>Int</code>, <code>Int</code></td>
-  <td><code>List</code></td>
-  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument.<br>
-  If the second argument is not greater than the first, then the empty <code>List</code> is returned</td>
- </tr><tr id="rangeInSteps">
-  <td><el-method>rangeInSteps</el-method></td>
-  <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
-  <td><code>List</code></td>
-  <td>a <code>List</code> containing the integers from the first argument to one <i>less</i> than the second argument<br>
-   in increments specified by the third argument.<br>
-   If the third argument is negative, the second argument must be less than the first,<br>
-    and the integers returned will run from the first to one <i>more</i> than the second</td>
- </tr>
-</table>
-
-<div class="accordion">
-<h4 class="no-TOC acc-title" tabindex="0">Examples using <el-method>range</el-method> or <el-method>rangeInSteps</el-method></h4>
-<div class="acc-body">
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Print every second item in a <code>List</code>:</p>
-<codeblock>main
-  variable numbers set to ["zero", "one", "two", "three", "four", "five", "six"]
-  for n in rangeInSteps(0, numbers.length() + 1, 2)
-    print(numbers[n])
-  end for
-end main
-</codeblock>
-<hr>
-
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using the <a href="#filter">Higher-order Function <el-method>filter</el-method> <i class="fa">&#xf14c;</i></a> to print the prime numbers less than a given limit:</p>
-<codeblock>main
-  print(primesFromList(range(2, 100)))
-end main
-function primesFromList(li as List&lt;of Int&gt;) returns List&lt;of Int&gt;
-  # returns primes from the list assuming it starts with a prime (e.g. 2)
-  return if_(li.length() is 0, li, [li.head()].withAppendList(primesFromList(li.tail().filter(lambda n as Int => (n mod li.head()) &gt; 0))))
-end function
-</codeblock>
-<hr>
-</div></div>
 
 <h1 id="HoFs">Higher-order Functions (HoFs)</h1>
 <p>A <b>higher-order Function</b> (HoF) is one that takes in a reference to another <b>function</b> as a parameter. (Strictly speaking, a HoF may also be a function that <i>returns</i> another function,

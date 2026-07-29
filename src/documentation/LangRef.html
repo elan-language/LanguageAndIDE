@@ -905,9 +905,9 @@ enum Outcome undecided, win, lose, draw, winDouble
       might not be picked up until runtime. Whereas with the enum, writing <code>Direction.right</code> would raise an error at compilation.</li>
     </ul>
   </li>
-  <li>In order to print an enum value, or incorporated it into an interpolated string, you should first convert the
+  <li>In order to print an enum value, or incorporate it into an interpolated string, you should first convert the
     value to a string using the <el-method>enumToString</el-method> function, for example <code>enumToString(Suit.hearts)</code>
-    will convert the enum value to the string equivalent to <code>"hearts"</code>.</li>
+    will convert the enum value to the string <code>"hearts"</code>.</li>
 </ul>
 </div></div>
 </div>
@@ -1850,22 +1850,27 @@ example, which implements an 'exclusive or', need not use brackets and can rely 
 end function
 </codeblock>
 
-<h3 class="no-TOC" id="StringOperators">String operator</h3>
+<div id="StringOperator"></div>
+<h3 class="no-TOC" >String operator</h3>
 <p>The + operator is also used for concatenating <code>String</code> values.</p>
 
-<h3 class="no-TOC" id="EqualityTesting">Equality testing</h3>
-<h4 class="no-TOC">Testing equality of <code>Int</code>, <code>Float</code> or <code>Boolean</code> values</h4>
-<p>Equality testing of these Value types uses the <b>is</b> and <b>isnt</b> operators between two values and returns a <code>Boolean</code> result:</p>
+<div id="EqualityTesting"></div>
+<h3 class="no-TOC">Equality testing</h3>
+
+<h4 class="no-TOC">Testing equality of Value types: <code>Int</code>, <code>Float</code> and <code>Boolean</code></h4>
+<p>Equality testing of these Value types uses the<code>is</code> and <code>isnt</code> operators between two values and returns a <code>Boolean</code> result:</p>
 <ul>
- <li><b>isnt</b> returns the opposite of <b>is</b>.</li>
- <li><code>(a is b)</code> returns <b><code>true</code></b>, if <code>a</code> and <el-lit>b</el-lit> are both of the same type and their values are equal.
+ <li><code>isnt</code> returns the opposite of <code>is</code>.</li>
+ <li><code>(a is b)</code> returns <b><code>true</code></b>, if <code>a</code> and <code>b</code> are both of the same type and their values are equal.
  The only exception is that if one argument is of type <code>Float</code> and the other is of type <code>Int</code>,
-  then <b>is</b> will return <code>true</code> (and <b>isnt</b> will return <code>false</code>) if their values are the same,
+  then <code>is</code> will return <code>true</code> (and <code>isnt</code> will return <code>false</code>) if their values are the same,
   i.e. they are the same whole number.</li>
  <li>It is also possible to use methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method> described below.</li>
 </ul>
 
-<h4 class="no-TOC">Testing equality of <code>String</code> values and of all Reference types</h4>
+<div id="equals"></div>
+<div id="notEqualTo"></div>
+<h4 class="no-TOC">Testing equality of Reference types: including <code>String</code></h4>
 <p>Equality testing of these Reference types uses <a href="LibRef.html#CommonDotMethods">common dot methods <i class="fa">&#xf08e;</i></a> <el-method>equals</el-method> and <el-method>notEqualTo</el-method>:</p>
 <ul>
 <li>
@@ -2159,7 +2164,7 @@ are passed around in a running program:</p>
  instruction and then use the named value in the 'actual' field of the <b>assert statement</b> equal
  instruction. Some more complex expressions are permissible, but these two restrictions apply:</p>
  <ul>
-  <li>Any expression involving a binary operator such as +, <b>isnt</b>, etc.,
+  <li>Any expression involving a binary operator such as +, <code>isnt</code>, etc.,
   must have brackets around it.</li>
   <li>You may <i>not</i> use the <b>is</b> operator within the 'actual' field, because
   the parser will confuse this with the <b>is</b> keyword that is part of the <b>assert statement</b> equal instruction.</li>
