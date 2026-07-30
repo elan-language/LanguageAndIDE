@@ -344,7 +344,7 @@ export class List<T1> {
   }
 
   @elanFunction([], FunctionOptions.pure, ElanClassName("ElanSet"))
-  asSet() {
+  asHashSet() {
     return this.system!.listAsSet(this);
   }
 

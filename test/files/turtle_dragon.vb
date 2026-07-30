@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta2
+' VB.NET with Elan 2.0.0-beta3
 
 Sub main()
   Dim order = inputIntBetween("Enter order of dragon (1..12): ", 1, 12) ' variable definition

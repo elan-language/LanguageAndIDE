@@ -1,4 +1,4 @@
-# 90a662c454b679691e95d6ff357300fc373233b65d60735f21ba9cbc9ec3f948 Elan 2.0.0-beta2 valid
+# 41bf82e0a1383e77f053e04bcba0e0804c0a888d988014d69e8dcfd903ad5ca5 Elan 2.0.0-beta3 valid
 
 main
   variable grid set to createBlockGraphics(white)

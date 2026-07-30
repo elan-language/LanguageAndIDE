@@ -670,14 +670,14 @@ return [main, _tests];}`;
 
 main
   variable source set to ["apple", "orange", "pair", "apple"]
-  call printNoLine(source.asSet())
+  call printNoLine(source.asHashSet())
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let source = system.list(["apple", "orange", "pair", "apple"]);
-  await _stdlib.printNoLine(source.asSet());
+  await _stdlib.printNoLine(source.asHashSet());
 }
 return [main, _tests];}`;
 

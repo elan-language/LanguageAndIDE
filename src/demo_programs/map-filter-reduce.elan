@@ -1,4 +1,4 @@
-# d0aab945b401c7dbdb857084b2a9dd234cdb2ce41be2309221d50a979024b670 Elan 2.0.0-beta2 valid
+# bd6d8985e290dc16955ae80947143ef9ef6ac13073261dacf2b2b5b5b12115df Elan 2.0.0-beta3 valid
 
 test test_Map_Filter_Reduce
   let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
