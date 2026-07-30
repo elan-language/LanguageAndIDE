@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta2
+' VB.NET with Elan 2.0.0-beta3
 
 Const nDiscs = 7
 

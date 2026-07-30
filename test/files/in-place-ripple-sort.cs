@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta2
+// C# with Elan 2.0.0-beta3
 
 static void main() {
   var li = new [] {7, 1, 0, 4, 8, 3, 6};

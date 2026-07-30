@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta2
+# Python with Elan 2.0.0-beta3
 
 def main() -> None:
   rng = Random() # variable definition
