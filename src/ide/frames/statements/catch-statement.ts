@@ -20,6 +20,11 @@ export class CatchStatement extends SingleLineFrame implements Statement {
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new ExceptionTypeField(this);
     this.exceptionType.setPlaceholder(`type e.g. ElanRuntimeError or CustomError`);
+    // remove the isNew flag from the catch frame to allow
+    // Backspace to work on the identifier field "e" and
+    // the exception type field "CustomError" string immediately
+    // rather than trying to delete the frame, which is marked as new
+    this.hasBeenAddedTo();
     this.ghostable = false;
   }
 

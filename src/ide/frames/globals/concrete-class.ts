@@ -24,6 +24,10 @@ export class ConcreteClass extends ClassFrame {
     const newCode = this.toString.getFirstChild();
     this.toString.removeChild(newCode);
     (this.toString.getLastChild() as ReturnStatement).expr.setFieldToKnownValidText(`"undefined"`);
+    // remove the isNew flag from the return statement frame to allow
+    // Backspace to work on the "undefined" string immediately
+    // rather than trying to delete the frame, which is marked as new
+    this.toString.getLastChild().hasBeenAddedTo();
     this.getChildren().push(this.toString);
   }
 
