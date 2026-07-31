@@ -434,7 +434,7 @@ end procedure
 </div></div>
 
 <div id="AsRef"></div>
-<div id="set_Ref"></div>
+<div id="put_Ref"></div>
 <div id="value_Ref"></div>
 <div id="CallByRef"></div>
 
@@ -445,7 +445,7 @@ end procedure
 <h4 class="no-TOC">Call by reference</h4>
 <p>To change the value in named value <code>arg</code> supplied as an argument in a procedure call, both the call argument and the procedure parameter
 must use a reference (or pointer) to it defined as of type <code>AsRef</code>.
-This then allows use of the dot methods <el-method>put</el-method> (supersedes deprecated <el-method>set</el-method>) and <el-method>value</el-method> on it to change and then read its value,
+This then allows use of the dot methods <el-method>put</el-method> and <el-method>value</el-method> on it to change and then read its value,
  as in this example where <code>argRef</code> is a pointer to variable <code>arg</code> in the <b>main routine</b>,
  so that <code>arg</code> can be accessed elsewhere <i>by reference</i>:</p>
 
@@ -457,7 +457,7 @@ This then allows use of the dot methods <el-method>put</el-method> (supersedes d
 end main
 procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
-  call pointer.set(r.upperCase())
+  call pointer.put(r.upperCase())
 end procedure
 </codeblock>
 
@@ -1162,10 +1162,10 @@ end procedure
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
   assign currentDir to directionByKey(currentDir, getKey())
-  call tailRef.set(body[0])
+  call tailRef.put(body[0])
   call body.append(head)
-  call headRef.set(getAdjacentSquare(head, currentDir))
-  call currentDirRef.set(currentDir)
+  call headRef.put(getAdjacentSquare(head, currentDir))
+  call currentDirRef.put(currentDir)
 end procedure</codeblock>
 </div></div>
 
@@ -1497,10 +1497,10 @@ which is defined immediately below the main routine at the same (global) level.
   variable tail set to tailRef.value()
   variable currentDir set to currentDirRef.value()
   assign currentDir to directionByKey(currentDir, getKey())
-  call tailRef.set(body[0])
+  call tailRef.put(body[0])
   call body.append(head)
-  call headRef.set(getAdjacentSquare(head, currentDir))
-  call currentDirRef.set(currentDir)
+  call headRef.put(getAdjacentSquare(head, currentDir))
+  call currentDirRef.put(currentDir)
 end procedure
 </codeblock>
 
@@ -1709,7 +1709,7 @@ end test
 <ul>
 <li><a href="#LiteralValue">Literal value <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#NamedValue">Named value <i class="fa">&#xf14c;</i></a></li>
-<li><a href="#Operators>Operator <i class="fa">&#xf14c;</i></a> (including round brackets)</li>
+<li><a href="#Operators>Operator <i class="fa">&#xf14c;</i></a> (including brackets)</li>
 <li><a href="#FunctionRef"><b>function</b> reference <i class="fa">&#xf14c;</i></a></li>
 <li><a href="#lambda"><b>lambda</b> <i class="fa">&#xf14c;</i></a></li>
 </ul>
@@ -1816,7 +1816,7 @@ end main
 <p>Note that rounding is always down.</p>
 
 <p>Arithmetic operators follow the conventional rules for precedence i.e. 'BIDMAS' (or 'BODMAS').</p>
-<p>When combining <b>mod</b> with other operators in an expression, insert round brackets to avoid ambiguity e.g.:</p>
+<p>When combining <b>mod</b> with other operators in an expression, insert brackets to avoid ambiguity e.g.:</p>
 <table class="tablePlain">
 <tr>
  <td><code>(5 + 6) mod 3</code></td><td>&#x27f6;</td><td>2</td>
