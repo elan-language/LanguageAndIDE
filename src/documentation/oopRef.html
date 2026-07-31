@@ -510,18 +510,18 @@ end class
   <p>From the <b>Blackjack</b> demo:</p>
 
 <codeblock>
-  class Card
-  property suit as Suit
-
-  property rank as String
-
-  property faceDown as Boolean
-
+class Card
   constructor(rank as String, suit as Suit, facedown as Boolean)
     assign this.rank to rank
     assign this.suit to suit
     assign this.faceDown to facedown
   end constructor
+
+  property suit as Suit
+
+  property rank as String
+
+  property faceDown as Boolean
 
   procedure turnFaceUp()
     assign this.faceDown to false
@@ -541,13 +541,7 @@ end class
 <p>From the <b>Pathfinder</b> demo:</p>
 
 <codeblock>
-  class Point
-  property x as Int
-
-  property y as Int
-
-  property isEmpty as Boolean
-
+class Point
   constructor(x as Int, y as Int)
     if (x < 0) or (y < 0) then
       assign this.isEmpty to true
@@ -556,6 +550,12 @@ end class
       assign this.y to y
     end if
   end constructor
+
+  property x as Int
+
+  property y as Int
+
+  property isEmpty as Boolean
 
   function minDistTo(p as Point) returns Float
     return sqrt(pow((p.x - this.x), 2) + pow((p.y - this.y), 2))
