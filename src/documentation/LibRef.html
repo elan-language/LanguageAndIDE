@@ -580,7 +580,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td>function dot methods</td>
   <td>see <a href="#ListFunctions">Function dot methods on a <code>List</code> <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#DictionaryFunctions">Function dot methods on a Dictionary <i class="fa">&#xf14c;</i></a></td>
-  <td>see <a href="#SetFunctions">Function dot methods on a Set <i class="fa">&#xf14c;</i></a></td>
+  <td>see <a href="#HashSetFunctions">Function dot methods on a HashSet <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#StackFunctions">Function dot methods on a Stack <i class="fa">&#xf14c;</i></a></td>
   <td>see <a href="#QueueFunctions">Function dot methods on a Queue <i class="fa">&#xf14c;</i></a></td>
  </tr>
@@ -706,11 +706,11 @@ with specified changes: that is why all such methods have names starting '<el-me
   <th>arguments</th>
   <th>return<br>type</th>
   <th>returns</th>
- </tr><tr id="asSet">
-  <td><el-method>asSet</el-method></td>
+ </tr><tr id="asHashSet">
+  <td><el-method>asHashSet</el-method></td>
   <td>(none)</td>
   <td><code>HashSet</code></td>
-  <td>a new Set containing all the <i>unique</i> items in the <code>List</code></td>
+  <td>a new HashSet containing all the <i>unique</i> items in the <code>List</code></td>
  </tr><tr id="contains_List">
   <td><el-method>contains</el-method></td>
   <td>value</td>
@@ -842,7 +842,7 @@ with specified changes: that is why all such methods have names starting '<el-me
   <td><code>List</code></td>
   <td>a new <code>List</code> with the first item equal to the given item removed</td>
  </tr><tr id="withPut_List">
-  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
+  <td><el-method>withPut</el-method></td>
   <td><code>Int</code>,<br>value of <code>List</code> item's type</td>
   <td><code>List</code></td>
   <td>a new <code>List</code> with the item replacing that at the given index</td>
@@ -963,7 +963,7 @@ end function
   <td><code>List</code></td>
   <td>a <code>List</code> containing the values</td>
 </tr><tr id="withPut_Dictionary">
-  <td><el-method>withPut</el-method> (supersedes deprecated <el-method>withSet</el-method>)</td>
+  <td><el-method>withPut</el-method></td>
   <td>item of Dictionary key's type,<br>item of Dictionary value's type</td>
   <td><code>Dictionary</code></td>
   <td>a new Dictionary with the value replacing what was at the specified key</td>
@@ -981,13 +981,13 @@ end function
  <li>The value of a <code>HashSet</code> member may appear only once: if a member being added to a <code>HashSet</code> has the same value as an existing member in the <code>HashSet</code> then the <code>HashSet</code> remains the same as before.</li>
  <li>The values in a <code>HashSet</code> are not indexed: two HashSets with the same contents but defined in a different sequence, can still be compared correctly with methods <el-method>equals</el-method> and <el-method>notEqualTo</el-method>.</li>
  <li>There are no methods that modify an existing <code>HashSet</code>, but several (e.g. <el-method>add</el-method> and <el-method>remove</el-method>)
- return a new <code>HashSet</code> that is based on the original HashSet or HashSets with specified differences.</li>
+ return a new <code>HashSet</code> that is based on the original HashSet with specified differences.</li>
 </ul>
 <p>This enables a HashSet to work like a mathematical set so that it is possible to perform standard set operations such as <el-method>union</el-method> and <el-method>intersection</el-method>.</p>
 <p>When creating a <code>HashSet</code>, the type of its members must be specified in the form
  <code>HashSet&lt;of String&gt;</code></p>
 <p>You can add members: either individually with <el-method>add</el-method>, or many with <el-method>addFromList</el-method>.
-And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asSet</el-method> on it.</p>
+And you can create a new <code>HashSet</code> from an existing <code>List</code> by calling <el-method>asHashSet</el-method> on it.</p>
 <p>Example of creating a <code>HashSet</code> from a literal <code>List</code> and changing its content:</p>
 
 <table class="tablePlain">
@@ -1012,7 +1012,7 @@ end main
 </tr>
 </table>
 
-<h3 class="no-TOC" id="SetFunctions">Function dot methods on a <code>HashSet</code></h3>
+<h3 class="no-TOC" id="HashSetFunctions">Function dot methods on a <code>HashSet</code></h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot method</th>
@@ -1023,77 +1023,77 @@ end main
   <td><el-method>add</el-method></td>
   <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>HashSet</code></td>
-  <td>a new Set extended with the item, provided it differs from all of the Set's current members</td>
+  <td>a new HashSet extended with the item, provided it differs from all of the HashSet's current members</td>
  </tr><tr id="addFromList">
   <td><el-method>addFromList</el-method></td>
   <td><code>List</code></td>
   <td><code>HashSet</code></td>
-  <td>a new Set extended with those items from the <code>List</code> that are not already in the Set</td>
+  <td>a new HashSet extended with those items from the <code>List</code> that are not already in the HashSet</td>
  </tr><tr id="asList">
   <td><el-method>asList</el-method></td>
   <td>(none)</td>
   <td><code>List</code></td>
-  <td>a <code>List</code> containing the Set's members as <code>List</code> items</td>
- </tr><tr id="contains_Set">
+  <td>a <code>List</code> containing the HashSet's members as <code>List</code> items</td>
+ </tr><tr id="contains_HashSet">
   <td><el-method>contains</el-method></td>
   <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if the Set contains the item<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if the HashSet contains the item<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="difference">
   <td><el-method>difference</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>HashSet</code></td>
-  <td>a Set containing those members of the Set that do not occur in the argument Set</td>
- </tr><tr id="equals_Set">
+  <td>a HashSet containing those members of the HashSet that do not occur in the argument HashSet</td>
+ </tr><tr id="equals_HashSet">
   <td><el-method>equals</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if Set and argument Set contain identical values<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="notEqualTo_Set">
+  <td><code>true</code> if HashSet and argument HashSet contain identical values<br>&ndash; <code>false</code> otherwise</td>
+ </tr><tr id="notEqualTo_HashSet">
   <td><el-method>notEqualTo</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if Set and argument Set differ in their values<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if HashSet and argument HashSet differ in their values<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="intersection">
   <td><el-method>intersection</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>HashSet</code></td>
-  <td>a HashSet containing those members common to both the Set and the argument Set</td>
+  <td>a HashSet containing those members common to both the HashSet and the argument HashSet</td>
  </tr><tr id="isDisjointFrom">
   <td><el-method>isDisjointFrom</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if the Set has no items in common with the argument Set<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if the HashSet has no items in common with the argument HashSet<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isSubsetOf">
   <td><el-method>isSubsetOf</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if all the Set's items are also in the argument Set<br>&ndash; <code>false</code> otherwise</td>
+  <td><code>true</code> if all the HashSet's items are also in the argument HashSet<br>&ndash; <code>false</code> otherwise</td>
  </tr><tr id="isSupersetOf">
   <td><el-method>isSupersetOf</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>Boolean</code></td>
-  <td><code>true</code> if the Set contains all the  items that are in the argument Set<br>&ndash; <code>false</code> otherwise</td>
- </tr><tr id="length_Set">
+  <td><code>true</code> if the HashSet contains all the  items that are in the argument HashSet<br>&ndash; <code>false</code> otherwise</td>
+ </tr><tr id="length_HashSet">
   <td><el-method>length</el-method></td>
   <td>(none)</td>
   <td><code>Int</code></td>
-  <td>the number of members of the Set</td>
+  <td>the number of members of the HashSet</td>
  </tr><tr id="remove">
   <td><el-method>remove</el-method></td>
   <td>value<br>(of <code>HashSet</code> members' type)</td>
   <td><code>HashSet</code></td>
-  <td>a new Set with the argument item removed (if present)</td>
- </tr><tr id="toString_Set">
+  <td>a new HashSet with the argument item removed (if present)</td>
+ </tr><tr id="toString_HashSet">
   <td><el-method>toString</el-method></td>
   <td>(none)</td>
   <td><code>String</code></td>
-  <td>a string that is a comma+space-separated <code>List</code> of the Set's members, enclosed in brackets</td>
+  <td>a string that is a comma+space-separated <code>List</code> of the HashSet's members, enclosed in brackets</td>
  </tr><tr id="union">
   <td><el-method>union</el-method></td>
   <td><code>HashSet</code></td>
   <td><code>HashSet</code></td>
-  <td>a Set containing all the unique members of the Set and the argument Set (i.e. no duplicates)</td>
+  <td>a HashSet containing all the unique members of the HashSet and the argument HashSet (i.e. no duplicates)</td>
  </tr>
  </table>
 
@@ -2368,7 +2368,7 @@ end main
   <td><a href="#contains_String"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#contains_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#keys_Dictionary"> <i class="fa">&#xf14c;</i></a> note 4.</td>
-  <td><a href="#contains_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#contains_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2380,7 +2380,7 @@ end main
   <td><a href="#equals_String"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#equals_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Tuple"> <i class="fa">&#xf14c;</i></a></td>
@@ -2440,7 +2440,7 @@ end main
   <td><a href="#length_String"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#length_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#keys_Dictionary"> <i class="fa">&#xf14c;</i></a> note 3.</td>
-  <td><a href="#length_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#length_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#length_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#length_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
@@ -2452,7 +2452,7 @@ end main
   <td><a href="#notEqualTo_String"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#notEqualTo_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Tuple"> <i class="fa">&#xf14c;</i></a></td>
@@ -2488,7 +2488,7 @@ end main
   <td><a href="#toString_String"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="#toString_Set"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#toString_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
@@ -2534,7 +2534,6 @@ end main
  <tr><td><code>print(di.keys().contains("widget"))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
  <tr><td><code>print(di.values().contains(42))</code></td><td>&#x27f6;</td><td>true or false</td></tr>
 </table></li>
-<li><el-method>withPut</el-method> supersedes the deprecated <el-method>withSet</el-method></li>
 </ol>
 
 <h1 id="LibraryProcedures">Library procedures</h1>
