@@ -166,6 +166,13 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   private selectorControlKeys = ["d", "O", "v", "?"];
 
+  // for special handling of try/catch statements, which don't have a field
+  // in the the first line to catch the Backspace
+  private deleteParentOnBackspace = false;
+  setDeleteParentOnBackspace() {
+    this.deleteParentOnBackspace = true;
+  }
+
   processKey(e: editorEvent): boolean {
     let codeHasChanged = false;
     let key = e.key;
@@ -176,6 +183,12 @@ export abstract class AbstractSelector extends AbstractFrame {
 
     switch (key) {
       case "Backspace": {
+        // Apologies for the wild casting.  Perhaps it can be done another way.
+        const par = this.getParent() as unknown as AbstractFrame;
+        if (this.deleteParentOnBackspace && par.isNew) {
+          // it is the first selector in a new TryStatement, delete the whole TryStatement
+          par.deleteIfPermissible();
+        }
         this.text = this.text.substring(0, this.text.length - 1);
         break;
       }

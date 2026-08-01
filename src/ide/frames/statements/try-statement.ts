@@ -10,6 +10,10 @@ export class TryStatement extends FrameWithStatements {
   catch: CatchStatement;
   constructor(parent: Parent) {
     super(parent);
+    // get the StatementSelector that has just been created in the call to super()
+    // and tell it to delete the TryStatement if Backspace is the next key pressed
+    // after the try/catch statement is created, while isNew is still set.
+    (this.getChildren()[0] as StatementSelector).setDeleteParentOnBackspace();
     this.catch = new CatchStatement(this);
     this.getChildren().push(this.catch);
     this.getChildren().push(new StatementSelector(this));
