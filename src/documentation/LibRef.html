@@ -236,12 +236,11 @@ Its type is <code>Float</code>.
  <li>Any variable or expression that evaluates to an <code>Int</code> may always be used where a <code>Float</code> is expected.</li>
 </ul>
 
-<!-- <div class="accordion"> Commented out as code is not parsing - unclear why
+<div class="accordion">
 <h4 class="no-TOC acc-title" tabindex="0">Examples of standalone dot methods on a <code>Float</code></h4>
 <div class="acc-body">
 <p>Test assertions using dot methods on a <code>Float</code>:</p>
-<p>
-test test_floor
+<codeblock>test test_floor
   variable p set to pi
   variable mp set to -pi
   assert p.floor() evaluates to 3
@@ -254,9 +253,9 @@ test test_floor
   variable q set to divAsInt(1, 0).floor()
   assert q.isInfinite() evaluates to true
 end test
-</p>
+</codeblock>
 <hr>
-</div></div> -->
+</div></div>
 
 <h2 id="Boolean">Boolean</h2>
 <p>A <b>Boolean</b> value is either <code>true</code> or <code>false</code>.</p>

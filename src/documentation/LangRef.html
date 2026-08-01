@@ -627,7 +627,7 @@ end test
  because the logic of this function is quite unusual:</p>
 
 <codeblock>test test_willLive
-  assert willLive(white, 0) evaluates to false
+  assert willLive(white, 0) evaluates to false 
   assert willLive(white, 1) evaluates to false
   assert willLive(white, 2) evaluates to false
   assert willLive(white, 3) evaluates to true
@@ -645,8 +645,8 @@ end test
   assert willLive(black, 6) evaluates to false
   assert willLive(black, 7) evaluates to false
   assert willLive(black, 8) evaluates to false
-end test
-</codeblock>
+end test</codeblock>
+<p>In this case, each of these assertions will produce the message <el-msg class="ok">pass</el-msg>.</p>
 
   <p>Example from the <b>Snake &ndash; procedural</b> demo, showing the use of a variable to create data to be used within multiple assertions:</p>
 
@@ -658,8 +658,8 @@ end test
   assert getAdjacentSquare(sq, Direction.right) evaluates to [21, 15]
   # boundary
   assert getAdjacentSquare([0, 15], Direction.left) evaluates to [-1, 15]
-end test
-  </codeblock>
+end test</codeblock>
+<p>In this case also, each of these assertions will produce the message <el-msg class="ok">pass</el-msg>.</p>
 </div></div>
 
 <div class="accordion">
@@ -667,24 +667,27 @@ end test
 <div class="acc-body">
 
 <ul>
-  <li>The form of automated testing provided by Elan (for all of the supported languages) are known as 'unit testing'.</li>
+  <li>The form of automated testing provided by Elan (for all of the supported languages) is known as 'unit testing'.</li>
   <li>Some languages allow unit tests to be applied to procedures, but this is dangerous since running the tests could result
-    in unwanted damage to the system (such as writing to a database). Elan guarantees that tests are safe by restricting them to functions.</li>
-  <li>A test method must be given a name that starts with the prefix `test_` (automatically supplied) and followed, typically,
+    in unwanted change (i.e. damage) to the system (such as writing to a database). Elan guarantees that tests are safe by restricting them to functions.</li>
+  <li>The tests on a function  must be given a name that starts with the prefix 'test_' (automatically supplied) and followed, typically,
     by the name of the function.</li>
   <li>Tests are always written at global level in Elan, but they may be anywhere within the file: you could write a test
     adjacent to the function being tested, or group all the tests at the end of the file.</li>
-  <li>A test method may define variables for use in the test &ndash; for example to define a data value that will be used in several <code>assert</code> instructions.</li>
-  <li>A test method must include at least one <code>assert</code> instruction &ndash; with each one typically covering a different use case.</li>
-  <li>Each <code>assert</code> instruction must have two fields:
+  <li>A test must include at least one <code>assert</code> instruction &ndash; with each one typically covering a different use case.</li>
+  <li>Each <code>assert</code> instruction has two fields:
     <ol>
      <li>the <i>actual</i> (i.e. computed) value &ndash; which usually consists of a call to the function being tested, with specific arguments,</li>
      <li>the <i>expected</i> result.</li>
     </ol>
+    In these examples, <code>sin(pi/2)</code> is the computed value, and the 0 and 1 are the expected values giving respectively 'pass' and 'fail' messages:<br>
+     <code>assert sin(pi/2) evaluates to 1</code> <el-msg class="ok">pass</el-msg><br>
+     <code>assert sin(pi/2) evaluates to 0</code> <el-msg class="ok">fail</el-msg>
+   <li>A test may define variables for use in the test &ndash; for example to define a data value that will be used in several <code>assert</code> instructions.</li>
   <li>The tests do not form part of the executable program: you cannot call a test from within other code.</li>
   <li>Instead, all tests in a program are run automatically, each time the code compiles.</li>
   <li>The result is shown alongside each <code>assert</code> instruction, and the overall summary is shown in the
-    status panel at the top centre of the Elan IDE.</li>
+    status panel at the top of the IDE.</li>
   <li>Writing tests for every function is good practice: they confirm that your function implementations are correct, not only when you write them,
     but every time you reload the program from file or make changes.</li>
    <li>Tests also encourage you to 're-factor', improve, or extend the capability of your functions without fear that you
@@ -692,14 +695,15 @@ end test
 </ul>
 </div></div>
 
+<div id="Ignore"></div>
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
 
-<h4 class="no-TOC" id="Ignore">Ghosting tests</h4>
+<h4 class="no-TOC">Ghosting tests</h4>
 <p>To prevent a particular test from running, you can use <a href="IdeRef.html#EditInstructions"><code>ghosting</code> <i class="fa">&#xf08e;</i></a>.</p>
 <p>Even when a <b>test</b> or <b>assert statement</b> is <code>ghosted</code>, all the tests will be run and their status shown, but
-the overall test status will show the status only only the unghosted tests (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
+the overall summary 'test' will show the status of only the unghosted tests as (green <b>pass</b>, amber <b>warning</b> or red <b>fail</b>).</p>
 
 <p>You can ghost an entire test:</p>
 
@@ -745,7 +749,7 @@ end test
 </codeblock>
 
 <h4 class="no-TOC">Testing long strings</h4>
-<p>If you have a test that compares strings longer than 20 characters, any test failure message will be reduced to reporting the
+<p>If you have a test that compares strings longer than 20 characters, any test <el-msg class="error">fail</el-msg> message will be reduced to reporting the
  <i>first</i> character at which the actual (computed) and expected strings differ. In the following example, the
  programmer has accidentally missed out the `/` in the closing Html tag:</p>
 
@@ -1643,18 +1647,6 @@ end function
 <h3 class="no-TOC acc-title">Examples of an assert statement</h3>
 <div class="acc-body">
 
- <!--  <p>From the <b>Date Time</b> demo, showing asserts for normal and edge cases</p>
-
-<codeblock>test test_leap
-  # normal cases
-  assert leap(2025) evaluates to false
-  assert leap(2024) evaluates to true
-  # boundary cases
-  assert leap(1900) evaluates to false
-  assert leap(2000) evaluates to true
-end test
-</codeblock> -->
-
 <p>From the <b></b>Tower of Hanoi</p> demo, showing an assert for an error case:
 
 <codeblock>test test_colour
@@ -2060,30 +2052,30 @@ are passed around in a running program:</p>
  <tr><th></th><th colspan="4">Value types</th>
  </tr><tr>
   <td>Value data</td>
-  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><br><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><code>Boolean</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><br><a href="LibRef.html#Int"><el-topic>Integer</el-topic><br><code>Int</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#Float"><el-topic>Floating point<br>(Real) number</el-topic><br><code>Float</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><br><a href="LibRef.html#Boolean"><el-topic>Truth value</el-topic><br><code>Boolean</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
  <th></th><th colspan="4">Reference types</th>
  </tr><tr>
   <td>Standard<br>data</td>
-  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#String"><el-topic>Character string</el-topic><br><code>String</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#RegExp"><el-topic>Regular expression</el-topic><br><code>RegExp</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#List"><el-topic>List</el-topic><br><code>List</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#Dictionary"><el-topic>Look-up dictionary</el-topic><br><code>Dictionary</code> <i class="fa">&#xf08e;</i></a></td>
  </tr><tr>
   <td>structures</td>
-  <td><a href="LibRef.html#HashSet"><el-topic>HashSet</el-topic><br><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#HashSet"><el-topic>HashSet</el-topic><br><code>HashSet</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#Stack"><el-topic>LIFO stack</el-topic><br><code>Stack</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#Queue"><el-topic>FIFO queue</el-topic><br><code>Queue</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Graphics</td>
-  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>CircleVG</code><br><code>ImageVG</code><br><code>LineVG</code>
-  <br><code>RectangleVG</code><br><code>RawVG</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf14c;</i></a></td>
+  <br><code>RectangleVG</code><br><code>RawVG</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
@@ -2094,14 +2086,14 @@ are passed around in a running program:</p>
  </tr><tr>
   <td>User-defined</td>
   <td><a href="#enum"><el-topic>Enumeration</el-topic><br><code>enum</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="oopRef.html#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="oopRef.html#AbstractClass"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="oopRef.html#class"><el-topic>Concrete class</el-topic><br><code>class</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="oopRef.html#AbstractClass"><el-topic>Abstract class</el-topic><br>abstract <code>class</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Other</td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
-  <td><a href="oopRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="oopRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
   </tr>
 </table>
