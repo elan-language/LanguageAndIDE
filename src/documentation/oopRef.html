@@ -258,7 +258,7 @@ end class
     the variable <code>tail</code>, which is an instance of class <code>Square</code>. Defining a function method, or a procedure method,
     on a class has these advantages:
     <ul>
-        <li>they are invoked on an instance using 'dot-syntax' as we shown in the previous example</li>
+        <li>they are invoked on an instance using 'dot syntax' as we shown in the previous example</li>
         <li>they have access to all the properties belonging to that same instance, and  can also invoke other
             methods on the same object, in both cases prefixed by
             <el-kw class="elan">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
@@ -598,7 +598,7 @@ end class
     <li>Procedure methods make changes to the properties of the instance and/or depend on the system in some way.</li>
     <li>Any property or method may be made <i>private</i> (using an action on the context menu for the instruction), such that it may only be accessed by
     code within the same class.</li>
-    <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot-syntax; however, properties may be only be
+    <li>Once you have an instance in a variable you can access its <i>public</i> methods using dot syntax; however, properties may be only be
     <i>read</i> by external code - to modify properties from outside you need to go through a procedure method defined on that class.</li>
     <li>A class may <i>optionally</i> inherit from a single <a href="#AbstractClass">abstract class</a>.</li>
   </ul>
@@ -783,8 +783,8 @@ end class
 </div>
 
 <div id="StatementInstructions">
-<h1>Statement Instructions</h1>
-
+<h1>Statement instructions</h1>
+<h2>Statement instructions</h2>
 <p>Coding with Elan using the <b>object-oriented</b> paradigm offers the same
   <a href="LangRef.html#StatementInstructions">statement instructions used in the <b>procedural</b> paradigm</a>.
 </div>
@@ -856,7 +856,7 @@ end class
     <li>A property is initialised using an <b>assignment</b> instruction, prefixing the name of the property as in this example &ndash; <code>assign this.x to x</code> &ndash;
       the prefix means that you can have a parameter with the same name, with no risk of ambiguity.</li>
     <li>The constructor may make use of the object's <i>function</i> methods and/or global methods to calculate values to be assigned to its properties.</li>
-    <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side-effects.</li>
+    <li>However, a constructor may not call any procedure - internal or external - because constructing a new instance should have no side effects.</li>
   </ul>
 </div></div>
 </div>
@@ -888,7 +888,7 @@ end class
   <li>Every property must be initialised within a <b>constructor</b> unless it is of a numeric or Boolean type - which have default values.</li>
   <li>A property is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
   action on the context menu (or reverted to public with <b>make public</b>.</li>
-  <li>The public properties of an instance may be <i>read</i> by code outside the class using dot-syntax, but may only be modified (from outside)
+  <li>The public properties of an instance may be <i>read</i> by code outside the class using dot syntax, but may only be modified (from outside)
   via an appropriate procedure method.</li>
 </ul>
 </div></div>
@@ -897,7 +897,7 @@ end class
 <div class="accordion">
 <h3 class="no-TOC acc-title">More advanced techniques</h3>
 <div class="acc-body">
-  <h3>Optional ('Maybe') associations</h3>
+  <h3 class="no-TOC">Optional ('Maybe') associations</h3>
 
 <p>When a class property is optional, it is defined with the type <code>Maybe</code>.</p>
 <p>Before reading the property's value, you must test if it has a value with function <el-method>hasValue</el-method> which returns a <code>Boolean</code>.
@@ -971,7 +971,7 @@ end class
   <li>However, a function method may <i>read</i>, and hence depend upon, the properties of the object on which it is defined.</li>
   <li>A function method is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
   action on the context menu (or reverted to public with <b>make public</b>).</li>
-  <li>A function method may be called (within an expression) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
+  <li>A function method may be called (within an expression) on an object in code <i>outside</i> the class using dot syntax on the variable holding the instance.</li>
   <li>A function method may be invoked from within another method <i>inside</i> the class using, for example <code>this.methodName()</code>.</li>
 </ul>
 
@@ -1017,7 +1017,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   <li>However, a procedure method may <i>read</i>, and hence depend upon, the properties of the object on which it is defined.</li>
   <li>A procedure method is public by default, but may be specified as private (visible only to code inside the class) though the <b>make private</b>
   action on the context menu (or reverted to public with <b>make public</b>).</li>
-  <li>A procedure method may be called (using a <b>procedure call/b>) on an object in code <i>outside</i> the class using dot-syntax on the variable holding the instance.</li>
+  <li>A procedure method may be called (using a <b>procedure call</b>) on an object in code <i>outside</i> the class using dot syntax on the variable holding the instance.</li>
   <li>A procedure method may be called from within another method <i>inside</i> the class using, for example <code>call this.methodName()</code>.</li>
 </ul>
 
@@ -1031,7 +1031,8 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <h3 class="no-TOC acc-title">Examples of an abstract function</h3>
 <div class="acc-body">
 
-  <p>From the <b>Blackjack</b> demo, where the abstract class <code>Player</code> defines this abstract function:</p>
+  <p>From the <b>Blackjack</b> demo, where the abstract class <code>Player</code> defines this abstract function,
+which makes use of a method <el-method>getMessageHelper</el-method> that is defined as (private) concrete function method on the superclass (<code>Player</code>):</p>
 
   <codeblock>abstract function getMessage() returns String</codeblock>
 
@@ -1047,8 +1048,6 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
   end function
   </codeblock>
 </div></div>
-
-<p>which makes use of a method <el-method>getMessageHelper()</el-method> that is defined as (private) concrete function method on the superclass (<code>Player</code>).</p>
 
 <div class="accordion">
 <h3 class="no-TOC acc-title">What you need to know about an abstract function</h3>
@@ -1122,7 +1121,7 @@ another procedure on the same instance - <el-method>execute</el-method> - passin
 <h2>Comment</h2>
 <p>See <a href="LangRef.html#Comment">Comments</a></p>
 </div>
-
-<p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
+<hr>
+<p><b>Object-oriented programming Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>
 </body>
 </html>
