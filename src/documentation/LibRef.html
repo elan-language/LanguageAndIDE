@@ -1936,12 +1936,12 @@ and dot method <el-method>nextGen</el-method> to obtain a new instance of <code>
   <th>argument<br>types</th>
   <th>return<br>type</th>
   <th>returns</th>
- </tr><tr id="asFloat">
+ </tr><tr id="asFloat_Random">
   <td><el-method>asFloat</el-method></td>
   <td>(none)</td>
   <td><code>Float</code></td>
   <td>random <code>Float</code> value in the range (0.0, 1.0)</td>
- </tr><tr id="asInt">
+ </tr><tr id="asInt_Random">
   <td><el-method>asInt</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>Int</code></td>
@@ -2674,6 +2674,16 @@ end function
   <th>argument<br>types</th>
   <th>return<br>types</th>
   <th>returns</th>
+ </tr><tr id="asFloat_Int">
+  <td><el-method>asFloat</el-method></td>
+  <td><code>Int</code> or <code>Float</code></td>
+  <td><code>Float</code></td>
+  <td>value as floating point</td>
+ </tr><tr id="asInt_Float">
+  <td><el-method>asInt</el-method></td>
+  <td><code>Int</code> or <code>Float</code></td>
+  <td><code>Int</code></td>
+  <td>value as integer</td>
  </tr><tr id="copy">
   <td><el-method>copy</el-method></td>
   <td>named value of any type</td>
@@ -2833,7 +2843,13 @@ end test
 </codeblock>
 
 <h2 id="BitwiseFunctions">Bitwise functions</h2>
-    <p>These functions take in an integer value, and manipulate the bit representation of that value.</p>
+<p>These functions take in an integer value, and manipulate the bit representation of its value.</p>
+<p>Since these functions operate only on 32-bit signed numbers, the integer supplied to these functions should be in the range:
+<ul>
+ <li>Maximum: 2<sup>31</sup> &minus; 1 (which is 2,147,483,647)</li>
+ <li>Minimum value: &minus;(2<sup>31</sup> &minus; 1)</li>
+</ul>
+</p>
 
 <table class="tableMethod">
  <tr>
@@ -2899,7 +2915,8 @@ end test
 end test
 </codeblock>
 
-<p>The result of <el-method>bitNot</el-method>(<code>a</code>) being <code>-14</code> , when a is <code>13</code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><code>00000000000000000000000000001101</code>, and applying <el-method>bitNot</el-method> gives<br><code>11111111111111111111111111110010 </code>which is the value <code>-14 </code>in signed two's complement format,<br> the left-most bit being the sign (<code>0</code> positive, <code>1</code> negative).</p>
+<p>The result of <el-method>bitNot</el-method>(<code>a</code>) being <code>-14</code> , when a is <code>13</code>, might be a surprise. But this is because the bitwise functions assume that the arguments are represented as 32-bit signed binary integers. So 13 is represented as<br><code>00000000000000000000000000001101</code>, and applying <el-method>bitNot</el-method> gives<br><code>11111111111111111111111111110010 </code>which is the value <code>-14 </code>in signed two's complement format,<br>
+ the leftmost bit being the sign (<code>0</code> positive, <code>1</code> negative).</p>
 <hr>
 </div></div>
 
