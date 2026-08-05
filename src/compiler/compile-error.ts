@@ -60,7 +60,7 @@ export class DeclaredAboveCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Abstract Class '${type}' must be declared before it is used.`,
+      `Abstract class '${type}' must be declared before it is used.`,
       location,
       "ErrorMessages.html#DeclaredAboveCompileError",
     );
@@ -98,14 +98,14 @@ export class TernaryCompileError extends CompileError {
       Severity.error,
       `Cannot determine common type between ${type1} and ${type2}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#TernaryCompileError",
     );
   }
 }
 
 export class SyntaxCompileError extends CompileError {
   constructor(message: string, location: string, link = "", priority?: DisplayPriority) {
-    const linkToUse = link === "" ? "ErrorMessages.html#compile_error" : link;
+    const linkToUse = link === "" ? "ErrorMessages.html#top" : link;
     super(priority ?? DisplayPriority.second, Severity.error, message, location, linkToUse);
   }
 }
@@ -118,7 +118,7 @@ export class UndefinedSymbolCompileError extends CompileError {
       Severity.warning,
       `'${id}' is not defined${postfix}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#UndefinedSymbolCompileError",
     );
   }
 }
@@ -130,7 +130,7 @@ export class CannotCallAFunction extends CompileError {
       Severity.error,
       `Cannot call a function as a procedure.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotCallAFunction",
     );
   }
 }
@@ -142,7 +142,7 @@ export class CannotUseSystemMethodInAFunction extends CompileError {
       Severity.error,
       `Cannot use a system method in a function.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotUseSystemMethodInAFunction",
     );
   }
 }
@@ -196,7 +196,7 @@ export class CannotUseLikeAFunction extends CompileError {
       Severity.error,
       `Cannot call procedure '${id}' within an expression.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotUseLikeAFunction",
     );
   }
 }
@@ -208,7 +208,7 @@ export class CannotCallAsAMethod extends CompileError {
       Severity.error,
       `Cannot invoke ${symbolType} '${id}' as a method.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotCallAsAMethod",
     );
   }
 }
@@ -221,7 +221,7 @@ export class NotIndexableCompileError extends CompileError {
       Severity.error,
       `Cannot ${dbl}index ${type}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#NotIndexableCompileError",
     );
   }
 }
@@ -233,7 +233,7 @@ export class NotNewableCompileError extends CompileError {
       Severity.error,
       `Cannot create instance of ${type}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotCreateInstance",
     );
   }
 }
@@ -245,7 +245,7 @@ export class InvalidSourceForForLoopCompileError extends CompileError {
       Severity.error,
       `Source must evaluate to a list or string.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#SourceEvaluateListString",
     );
   }
 }
@@ -257,7 +257,7 @@ export class MustBeAbstractCompileError extends CompileError {
       Severity.error,
       `May inherit from one abstract superclass only.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustBeSingleAbstractCompileError",
     );
   }
 }
@@ -269,7 +269,7 @@ export class MustBeInterfaceCompileError extends CompileError {
       Severity.error,
       `Superclass '${type}' must be an interface.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#SuperclassInterface",
     );
   }
 }
@@ -279,9 +279,9 @@ export class MustNotBeCircularDependencyCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Class/interface '${type}' cannot inherit from itself.`,
+      `Class '${type}' cannot inherit from itself.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustNotBeCircularDependencyCompileError",
     );
   }
 }
@@ -293,7 +293,7 @@ export class MustBeSingleAbstractCompileError extends CompileError {
       Severity.error,
       `May inherit from one abstract superclass only.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustBeAbstractCompileError",
     );
   }
 }
@@ -305,7 +305,7 @@ export class PrivateMemberCompileError extends CompileError {
       Severity.error,
       `Cannot reference private member '${id}'.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#PrivateMemberCompileError",
     );
   }
 }
@@ -317,7 +317,7 @@ export class MustImplementCompileError extends CompileError {
       Severity.error,
       `${classType} must implement ${superClassType}.${id}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustImplementCompileError",
     );
   }
 }
@@ -329,7 +329,7 @@ export class MustBeConcreteCompileError extends CompileError {
       Severity.error,
       `${type} must be concrete to create instance.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustBeConcreteCompileError",
     );
   }
 }
@@ -341,7 +341,7 @@ export class ExtensionCompileError extends CompileError {
       Severity.error,
       `Cannot call extension method directly.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#ExtensionCompileError",
     );
   }
 }
@@ -353,7 +353,7 @@ export class PropertyCompileError extends CompileError {
       Severity.error,
       `Must prefix member with '${prefix}'.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MustPrefixMember",
     );
   }
 }
@@ -363,9 +363,9 @@ export class MissingParameterCompileError extends CompileError {
     super(
       DisplayPriority.third,
       Severity.warning,
-      `Missing argument(s). Expected: ${description}.`,
+      `Missing arguments. Expected: ${description}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MissingParameterCompileError",
     );
   }
 }
@@ -376,9 +376,9 @@ export class ExtraParameterCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `Too many argument(s). Expected: ${description}.`,
+      `Too many arguments. Expected: ${description}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#ExtraParameterCompileError",
     );
   }
 }
@@ -390,7 +390,7 @@ export class ParameterTypesCompileError extends CompileError {
       Severity.error,
       `Argument types. Expected: ${description}, Provided: ${provided}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#ParameterTypesCompileError",
     );
   }
 }
@@ -401,13 +401,13 @@ export class GenericParametersCompileError extends CompileError {
     const severity = actual < expected ? Severity.warning : Severity.error;
     let msg = ``;
     if (expected === 0 && actual > 0) {
-      msg = `generic type specifier was not expected here.`;
+      msg = `Generic type specifier was not expected here.`;
     } else if (expected === 1 && actual === 0) {
       msg = `Expected: generic type specifier.`;
     } else if (expected === 2 && actual < 2) {
       msg = `Expected: two generic type specifiers.`;
     } else {
-      msg = `Number of Types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
+      msg = `Number of types specified in '<of ...>' is not correct. Expected: ${expected}, Provided: ${actual}.`;
     }
     super(
       priority,
@@ -426,7 +426,7 @@ export class MutateCompileError extends CompileError {
       Severity.error,
       `May not reassign the ${purpose} '${name}'.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MutateCompileError",
     );
   }
 }
@@ -436,9 +436,9 @@ export class MutateParameterCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `May not mutate a parameter within a function or constructor.`,
+      `May not mutate parameter within a function or constructor.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#MutateParameterCompileError",
     );
   }
 }
@@ -450,7 +450,7 @@ export class NotUniqueNameCompileError extends CompileError {
       Severity.error,
       `Name '${name}' not unique in scope${postFix}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#NotUniqueNameCompileError",
     );
   }
 }
@@ -462,7 +462,7 @@ export class ParameterNameCompileError extends CompileError {
       Severity.error,
       `Parameter '${name}' may not have the same name as the method in which it is defined.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#ParamNameNotSameAsItsMethod",
     );
   }
 }
@@ -474,7 +474,7 @@ export class ReassignInFunctionCompileError extends CompileError {
       Severity.error,
       `May not set ${thing} in a function.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#ReassignInFunctionCompileError",
     );
   }
 }
@@ -484,9 +484,9 @@ export class RedefinedCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `The identifier '${id}' is already used for a ${purpose} and cannot be re-defined here.`,
+      `Identifier '${id}' is already used for a ${purpose} and cannot be redefined here.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#RedefinedCompileError",
     );
   }
 }
@@ -498,7 +498,7 @@ export class DuplicateKeyCompileError extends CompileError {
       Severity.error,
       `Duplicate Dictionary key(s).`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#DuplicateKeyCompileError",
     );
   }
 }
@@ -510,7 +510,7 @@ export class DivCompileError extends CompileError {
       Severity.advisory,
       `'div' is deprecated. Recommended code for integer division is e.g. (10/3).floor()`,
       location,
-      "ErrorMessages.html#div",
+      "ErrorMessages.html#top",
     );
   }
 }
@@ -532,9 +532,9 @@ export class ImmutableCollectionCompileError extends CompileError {
     super(
       DisplayPriority.second,
       Severity.error,
-      `An ordinary ${list ? "List" : "Dictionary"} cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable ${list ? "List" : "Dictionary"}.`,
+      `A ${list ? "List" : "Dictionary"} cannot be defined as a constant. Consider using { } instead of [ ] to define an immutable ${list ? "List" : "Dictionary"}.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#top",
     );
   }
 }

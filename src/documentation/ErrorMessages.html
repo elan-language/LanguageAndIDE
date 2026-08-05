@@ -23,7 +23,7 @@
 <div id="CompileError">
 <h1 >Compile warnings and errors</h1>
 
- <p>Compile time messages are either a <b>warning</b> or an <b>error</b>, and
+<p>Compile time messages are either a <b>warning</b> or an <b>error</b>, and
  are coloured as such:</p>
  <ul>
   <li>A <el-msg class="warning">warning</el-msg> usually indicates that the fix may involve <i>adding</i> some more code,
@@ -31,24 +31,93 @@
   <li>An <el-method><el-msg class="error">error</el-msg></el-method> usually indicates
  that you will need to <i>alter</i> code to fix the error.</li>
  </ul>
- <p>They are similar in that you will not be able to run your program until the issues are fixed. In all programming
+<p>They are similar in that you will not be able to run your program until the issues are fixed. In all programming
  languages it is a good practice treat all compile warnings as errors and fix them as soon as you see them appear.</p>
 <p> There is also an <el-msg class="advisory">advisory</el-msg> message to alert you to a deprecated facility.</p>
 
+<h6 id="CannotCallAFunction" class="no-TOC"><el-msg class="error">Cannot call a function as a procedure</el-msg></h6>
+<p>A function (or function method) is to be used within an expression, not via a <b>procedure call</b>.</p>
+
+<h6 id="CannotCallAsAMethod" class="no-TOC"><el-msg class="error">Cannot invoke ... as a method</el-msg></h6>
+<p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
+
+<h6 id="CannotUseLikeAFunction" class="no-TOC"><el-msg class="error">Cannot call procedure ... within an expression</el-msg></h6>
+<p>A procedure may be used only within a <b>procedure call</b> instruction.</p>
+
+<h6 id="CannotUseSystemMethodInAFunction" class="no-TOC"><el-msg class="error">Cannot use a system method in a function</el-msg></h6>
+<p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
+ either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <b>main routine</b>.</p>
+
+<h6 id="DeclaredAboveCompileError" class="no-TOC"><el-msg class="error">Abstract class ... must be declared before it is used</el-msg></h6>
+<p>If a class inherits from one or more abstract classes, then the latter must all have already been declared (defined) earlier in the code file.</p>
+
+<h6 id="DuplicateKeyCompileError" class="no-TOC"><el-msg class="error">Duplicate Dictionary key(s)</el-msg></h6>
+<p>Attempting to define a literal <code>Dictionary</code> <!--or <code>DictionaryImmutable</code>-->
+ with one or more duplicated keys in the definition.</p>
+
+<h6 id="ExtensionCompileError" class="no-TOC"><el-msg class="error">Cannot call extension method directly</el-msg></h6>
+<p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toString</el-method>, may be called on a named
+ value or an expression only using <a href="LangRef.html#DotSyntax">dot syntax <i class="fa">&#xf08e;</i></a>.</p>
+
+<h6 id="ExtraParameterCompileError" class="no-TOC"><el-msg class="error">Too many argument(s) ...</el-msg></h6>
+<p>A method has been passed more arguments than it expects.</p>
+
+<h6 id="GenericParametersCompileError" class="no-TOC"><el-msg class="error">...&lt;of type&gt;...</el-msg></h6>
+<p>Certain data structure types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
+ Failure to specify the '&lt;of type&gt;' on these types will give an error, as will specifying 'of type' where it is <i>not</i> required.
+ Dictionaries require types to be specified for both the keys and the values,
+ for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
+ 
+<!-- four alternative messages generated for this:
+Generic type specifier was not expected here
+Expected: generic type specifier
+Expected: two generic type specifiers
+Number of types specified in '&lt;of ...&gt;' is not correct. Expected: ... , Provided: ...
+-->
+
+<h6 id="IsDeprecated" class="no-TOC"><el-msg class="error">Code change required ...</el-msg></h6>
+<p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
+ message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
+
+<h6 id="MemberTypeCompileError" class="no-TOC"><el-msg class="error">Member ... must be of type ...</el-msg></h6>
+<p>This error occurs when a class is defined as inheriting from an abstract class,
+ and has implemented an inherited member (method or property) with the correct name, but with different types.</p>
+
+<h6 id="methodDeprecated" class="no-TOC"><el-msg class="advisory">Code change suggested. Method was deprecated in v...</el-msg></h6>
+<p>Although the method will work now, the code should be reworked to remove its dependence on a method that will disappear
+in a later version of Elan.</p>
+
+<h6 id="MissingParameterCompileError" class="no-TOC"><el-msg class="warning">Missing argument(s) ...</el-msg></h6>
+<p>The method being called expects more arguments than have been provided.</p>
+
+<h6 id="MustBeAbstractCompileError" class="no-TOC"><el-msg class="error">May inherit from one abstract superclass only</el-msg></h6>
+<p>The message is self explanatory.</p>
+
+<h6 id="MustBeBooleanCondition" class="no-TOC"><el-msg class="error">Condition of 'if' expression does not evaluate to a Boolean</el-msg></h6>
+<p><br></p>
+
+<h6 id="MustBeCompatibleDefinitionNode" class="no-TOC"><el-msg class="error">Wrong number of deconstructed variables</el-msg></h6>
+<p><br></p>
+
+<h6 id="NotGlobalFunctionRefCompileError" class="no-TOC"><el-msg class="error">Library or class function ... cannot be used without brackets</el-msg></h6>
+<p><br></p>
+
 <h6 id="TypeCompileError" class="no-TOC"><el-msg class="error">Expression must be ...</el-msg></h6>
- <p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
+<p>An expression, when evaluated, results in a value of a type that is not compatible with its 'target',
  for example: if the result of the expression is being assigned to an existing variable, or if an expression is defined 'inline' as
  an argument into a method call.</p>
 
+<h6 id="CannotCreateInstance" class="no-TOC"><el-msg class="error">Cannot create instance of ...</el-msg></h6>
+
+<h6 id="SourceEvaluateListString" class="no-TOC"><el-msg class="error">Source must evaluate to a list or string</el-msg></h6>
+
+<h6 id="CannotCompareProcFunc" class="no-TOC"><el-msg class="error">Cannot do equality operations on procedures or functions</el-msg></h6>
+<p>It is not possible to apply comparison operations to functions or procedures as themselves.
+ It is, however, possible to compare the results of two function evaluations.
+ You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
+
 <h6 id="ThisCompileError" class="no-TOC"><el-msg class="error">Cannot use 'this' outside class context</el-msg></h6>
- <p><code>this</code> may only be used within an instance method on a class to refer to the current instance.</p>
-
-<h6 id="DeclaredAboveCompileError" class="no-TOC"><el-msg class="error">Abstract class ... must be declared before it is used</el-msg></h6>
- <p>If a class inherits from one or more abstract classes, then the latter must all have already been declared (defined) earlier in the code file.</p>
-
-<h6 id="MemberTypeCompileError" class="no-TOC"><el-msg class="error">Member ... must be of type ...</el-msg></h6>
- <p>This error occurs when a class is defined as inheriting from an abstract class,
- and has implemented an inherited member (method or property) with the correct name, but with different types.</p>
+<p><code>this</code> may only be used within an instance method on a class to refer to the current instance.</p>
 
 <h6 id="TypesCompileError" class="no-TOC"><el-msg class="error">Incompatible types. Expected: ... Provided: ...</el-msg></h6>
 <p><br></p>
@@ -60,179 +129,133 @@
 <p>The named value in quotes has not been defined in the preceding code.</p>
 
 <h6 id="UndefinedSymbolCompileError" class="no-TOC"><el-msg class="error"> ... is not defined for type ...</el-msg></h6>
- <p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
-
-<h6 id="CannotCallAFunction" class="no-TOC"><el-msg class="error">Cannot call a function as a procedure</el-msg></h6>
- <p>A function (or function method) is to be used within an expression, not via a <b>procedure call</b>.</p>
-
-<h6 id="CannotUseSystemMethodInAFunction" class="no-TOC"><el-msg class="error">Cannot use a system method in a function</el-msg></h6>
- <p>A 'system method' (defined in the Standard Library) returns a value like a function does. However, because a system method
- either makes changes to the system and/or depends on external inputs, it may be used only within a procedure or the <b>main routine</b>.</p>
-
-<h6 id="IsDeprecated" class="no-TOC"><el-msg class="error">Code change required ...</el-msg></h6>
- <p>Indicates that a library method or class has been changed since the version in which your Elan code was written. The link in the
- message should take you directly to information in the Library Reference documentation on how to update your code to cope with the change.</p>
-
-<h6 id="CannotUseLikeAFunction" class="no-TOC"><el-msg class="error">Cannot call procedure ... within an expression</el-msg></h6>
- <p>A procedure may be used only within a <b>procedure call</b> instruction.</p>
+<p>Arises when 'dot calling' a member (method or property) that does not exist on the type of the named value or expression before the dot.</p>
 
 <h6 id="CannotCallAsAMethod" class="no-TOC"><el-msg class="error">Cannot invoke ... as a method</el-msg></h6>
- <p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
+<p>The code is attempting to use a free-standing method (function or procedure) as a 'dot method' on a named value or the result of an expression.</p>
 
 <h6 id="NotIndexableCompileError" class="no-TOC"><el-msg class="error">Cannot ...index ...</el-msg></h6>
- <p>An index (in square brackets) may be applied only to certain data structure types: <code>String</code>, <code>List</code>
+<p>An index (in square brackets) may be applied only to certain data structure types: <code>String</code>, <code>List</code>
  and <code>Dictionary</code>.</p>
 
 <h6 id="NotRangeableCompileError" class="no-TOC"><el-msg class="error">Cannot range ...</el-msg></h6>
- <p>A range may be applied only to certain data structure types: <code>String</code> and <code>List</code>.</p>
+<p>A range may be applied only to certain data structure types: <code>String</code> and <code>List</code>.</p>
 
 <h6 id="NotNewableCompileError" class="no-TOC"><el-msg class="error">Cannot new ...</el-msg></h6>
- <p>The type specified cannot be instantiated. Either the type is a standard language value type,
+<p>The type specified cannot be instantiated. Either the type is a standard language value type,
  or it is a user-defined <b>abstract class</b>.</p>
+ 
 <!--
 <h6 id="InvalidSourceForEachCompileError" class="no-TOC"><el-msg class="error">Source for 'each' must be a List or String</el-msg></h6>
 -->
-<h6 id="MustBeAbstractCompileError" class="no-TOC"><el-msg class="error">May inherit from one abstract superclass only</el-msg></h6>
- <p>The message is self explanatory.</p>
 
 <h6 id="MustNotBeCircularDependencyCompileError" class="no-TOC"><el-msg class="error">class ... cannot inherit from itself</el-msg></h6>
- <p>The message is self explanatory.</p>
+<p>The message is self explanatory.</p>
 
 <h6 id="MustBeSingleAbstractCompileError" class="no-TOC"><el-msg class="error">May inherit from one abstract superclass only</el-msg></h6>
 <p>The message is self explanatory.</p>
 
 <h6 id="PrivateMemberCompileError" class="no-TOC"><el-msg class="error">Cannot reference private member ...</el-msg></h6>
- <p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
+<p>A private member (method or property) may be accessed only by code within the class, or within subclasses of it.
  It may not be accessed by any code outside the class hierarchy.</p>
 
 <h6 id="MustImplementCompileError" class="no-TOC"><el-msg class="error">... must implement ...</el-msg></h6>
- <p>If a concrete class inherits from any abstract class it must implement all abstract methods defined in the abstract type (or in any super-type of the abstract class).</p>
+<p>If a concrete class inherits from any abstract class it must implement all abstract methods defined in the abstract type (or in any super-type of the abstract class).</p>
 
 <h6 id="MustBeConcreteCompileError" class="no-TOC"><el-msg class="error">... must be concrete to new</el-msg></h6>
- <p>You cannot create an instance of any abstract class: only of a concrete class.</p>
+<p>You cannot create an instance of any abstract class: only of a concrete class.</p>
 
 <!--
 <h6 id="OutParameterCompileError" class="no-TOC"><el-msg class="error">Cannot pass ... as an out parameter</el-msg></h6>
- <p>If a parameter of a procedure is marked with <b>out</b> then this means that the parameter may be
+<p>If a parameter of a procedure is marked with <b>out</b> then this means that the parameter may be
  reassigned within the procedure. Therefore you must pass in a variable that can be reassigned. You cannot pass in: a
  constant, a literal value, or a named value that is defined by a <b>let statement</b>.</p>
 -->
 
-<h6 id="ExtensionCompileError" class="no-TOC"><el-msg class="error">Cannot call extension method directly</el-msg></h6>
- <p>A method that is defined within the Library as an <b>extension method</b>, such as <el-method>toString</el-method>, may be called on a named
- value or an expression only using <a href="LangRef.html#DotSyntax">dot syntax <i class="fa">&#xf08e;</i></a>.</p>
-
 <h6 id="PropertyCompileError" class="no-TOC"><el-msg class="error">Cannot prefix function with 'property'</el-msg></h6>
- <p>The prefix <b>property.</b> may only be used before a property name: not a function name.</p>
+<p>The prefix <b>property.</b> may only be used before a property name: not a function name.</p>
 
 <h6 id="MissingParameterCompileError" class="no-TOC"><el-msg class="warning">Missing argument(s) ...</el-msg></h6>
- <p>The method being called expects more arguments than have been provided.</p>
-
-<h6 id="ExtraParameterCompileError" class="no-TOC"><el-msg class="error">Too many argument(s) ...</el-msg></h6>
- <p>A method has been passed more arguments than it expects.</p>
+<p>The method being called expects more arguments than have been provided.</p>
 
 <h6 id="ParameterTypesCompileError" class="no-TOC"><el-msg class="error">Argument types ...</el-msg></h6>
- <p>One or more arguments provided to the method are of the wrong type.</p>
-
-<h6 id="GenericParametersCompileError" class="no-TOC"><el-msg class="error">...&lt;of type&gt;...</el-msg></h6>
- <p>Certain data structure types, including <code>List</code>, must specify the type of their members, for example <code>List</code>&lt;<b>of</b> <code>Int</code>&gt;.
- Failure to specify the '&lt;of type&gt;' on these types will give an error, as will specifying 'of type' where it is <i>not</i> required.
- Dictionaries require types to be specified for both the keys and the values,
- for example: <code>Dictionary</code>&lt;of <code>String</code>, <code>Float</code>&gt;.</p>
+<p>One or more arguments provided to the method are of the wrong type.</p>
 
 <h6 id="MutateCompileError" class="no-TOC"><el-msg class="error">May not reassign the ...</el-msg></h6>
- <p>Attempting to assign, or mutate, a named value that may not be assigned in the current context.</p>
+<p>Attempting to assign, or mutate, a named value that may not be assigned in the current context.</p>
 
 <h6 id="NotUniqueNameCompileError" class="no-TOC"><el-msg class="error">Name ... not unique in scope ...</el-msg></h6>
- <p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
+<p>Attempting to create an identifier with the same name as one already defined <i>within the same scope</i>.</p>
 
 <h6 id="ReassignInFunctionCompileError" class="no-TOC"><el-msg class="error">May not set ... in a function</el-msg></h6>
- <p>A property can be reassigned only within a procedure method, not within a function, because reassigning a property is a side effect.</p>
+<p>A property can be reassigned only within a procedure method, not within a function, because reassigning a property is a side effect.</p>
 
 <h6 id="RedefinedCompileError" class="no-TOC"><el-msg class="error">The identifier ... is already used for a ... and cannot be re-defined here</el-msg></h6>
- <p>An existing named value may not be defined again within the same scope.</p>
-
-<h6 id="DuplicateKeyCompileError" class="no-TOC"><el-msg class="error">Duplicate Dictionary key(s)</el-msg></h6>
- <p>Attempting to define a literal <code>Dictionary</code> <!--or <code>DictionaryImmutable</code>-->
- with one or more duplicated keys in the definition.</p>
+<p>An existing named value may not be defined again within the same scope.</p>
 
 <h6 id="UnknownCompilerDirectiveCompileError" class="no-TOC"><el-msg class="error">a comment may not start with [ unless it is a recognised compiler directive</el-msg></h6>
- <p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
+<p>Compiler directives are a planned future capability. They will look like comments, but begin with an open square bracket.
  To avoid the possibility of ambiguity, you may not start your own comments with an open square bracket.</p>
 
-<h6 id="mustBeBooleanCondition" class="no-TOC"><el-msg class="error">Condition of 'if' expression does not evaluate to a Boolean</el-msg></h6>
+<h6 id="MustNotHaveConditionalAfterUnconditionalElse" class="no-TOC"><el-msg class="error">Cannot have any clause after unconditional 'else'</el-msg></h6>
 <p><br></p>
 
-<h6 id="mustNotHaveConditionalAfterUnconditionalElse" class="no-TOC"><el-msg class="error">Cannot have any clause after unconditional 'else'</el-msg></h6>
-<p><br></p>
-
-<h6 id="mustNotBeReservedWord" class="no-TOC"><el-msg class="error">...  is a reserved word, and may not be used as an identifier</el-msg></h6>
- <p>Most programming languages define keywords, or other 'reserved words' that may not be used as identifiers - for technical reasons.
+<h6 id="MustNotBeReservedWord" class="no-TOC"><el-msg class="error">...  is a reserved word, and may not be used as an identifier</el-msg></h6>
+<p>Most programming languages define keywords, or other 'reserved words' that may not be used as identifiers - for technical reasons.
   Because Elan supports multiple programming languages and guarantees that any program written in one language
   will convert correctly to the other languages, it must disallow the use of keywords from <i>any</i>
   of the supported languages - not just the ones defined by the language you are writing. Fortunately many
   of the keywords are common to more than one of the languages.</p>
 
-  <p>If you see this message, just alter the identifier you have defined - by extending the word, perhaps even just by adding an underscore -
+ <p>If you see this message, just alter the identifier you have defined - by extending the word, perhaps even just by adding an underscore -
     or choose a different word altogether.</p>
 
-<h6 id="mustNotBeNegativeIndex" class="no-TOC"><el-msg class="error">Index cannot be negative</el-msg></h6>
- <p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
+<h6 id="MustNotBeNegativeIndex" class="no-TOC"><el-msg class="error">Index cannot be negative</el-msg></h6>
+<p>An index into a list cannot have a negative value. If a negative is given in literal form e.g.
  a[&minus;3] then this will generate a compile error.
  If you use a named value for an index and it is negative, then this will cause a runtime error.</p>
 
-<h6 id="CannotCompareProcFunc" class="no-TOC"><el-msg class="error">Cannot do equality operations on procedures or functions</el-msg></h6>
- <p>It is not possible to apply comparison operations to functions or procedures as themselves.
- It is, however, possible to compare the results of two function evaluations.
- You may see this message because you intended to evaluate a function but forgot to add the brackets after the name.</p>
-
 <!--
-<h6 id="mustBeImmutableGenericType" class="no-TOC"><el-msg class="error">... cannot be of mutable type ...</el-msg></h6>
- <p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf08e;</i></a> must itself be an immutable type.
+<h6 id="MustBeImmutableGenericType" class="no-TOC"><el-msg class="error">... cannot be of mutable type ...</el-msg></h6>
+<p>Element type for a <a href="LibRef.html#ListImmutable">ListImmutable <i class="fa">&#xf08e;</i></a> must itself be an immutable type.
  Similarly, for an <a href="LibRef.html#DictionaryImmutable">DictionaryImmutable <i class="fa">&#xf08e;</i></a> the types for both the key and the value must be immutable ones.</p>
 -->
 
-<h6 id="mustBeValidKeyType" class="no-TOC"><el-msg class="error">... cannot have key of type ...</el-msg></h6>
- <p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable type, and not itself an indexable type.</p>
+<h6 id="MustBeValidKeyType" class="no-TOC"><el-msg class="error">... cannot have key of type ...</el-msg></h6>
+<p>The type of the key for any dictionary <a href="LibRef.html#Dictionary">Dictionary <i class="fa">&#xf08e;</i></a> must be an immutable type, and not itself an indexable type.</p>
 
-<h6 id="mustBeCompatibleDefinitionNode" class="no-TOC"><el-msg class="error">Wrong number of deconstructed variables</el-msg></h6>
-<p><br></p>
-
-<h6 id="mustBePropertyPrefixedOnMember" class="no-TOC"><el-msg class="error">referencing a property requires a prefix</el-msg></h6>
- <p>If you are referring to a property of a class <i>from code defined within the class</i> then the
+<h6 id="MustBePropertyPrefixedOnMember" class="no-TOC"><el-msg class="error">referencing a property requires a prefix</el-msg></h6>
+<p>If you are referring to a property of a class <i>from code defined within the class</i> then the
  property name must be preceded by <b>property</b>.</p>
 
 <!--
-<h6 id="mustNotBeOutParameter" class="no-TOC"><el-msg class="error">'out' parameters are only supported on procedures</el-msg></h6>
- <p>You cannot define an <b>out</b> parameter in a function (because that would
+<h6 id="MustNotBeOutParameter" class="no-TOC"><el-msg class="error">'out' parameters are only supported on procedures</el-msg></h6>
+<p>You cannot define an <b>out</b> parameter in a function (because that would
  imply the possibility of creating a side effect).</p>
 -->
 
-<h6 id="mustNotHaveDuplicateMain" class="no-TOC"><el-msg class="error">There can only be one <b>main routine</b> in a program</el-msg></h6>
+<h6 id="MustNotHaveDuplicateMain" class="no-TOC"><el-msg class="error">There can only be one <b>main routine</b> in a program</el-msg></h6>
 <p><br></p>
 
-<h6 id="mustNotBeTwoUnaryExpressions" class="no-TOC"><el-msg class="error">Unsupported operation</el-msg></h6>
- <p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
+<h6 id="MustNotBeTwoUnaryExpressions" class="no-TOC"><el-msg class="error">Unsupported operation</el-msg></h6>
+<p>You cannot chain two 'unary' operators (those that apply to a single value), such as &minus;
  or <b>not</b> successively within an expression.</p>
 
-<h6 id="paramNameNotSameAsItsMethod" class="no-TOC"> <el-msg class="error">Parameter ... may not have the same name as the method in which it is defined</el-msg></h6>
- <p>A function or procedure named e.g. 'foo' may not define a parameter with that same name.</p>
+<h6 id="ParamNameNotSameAsItsMethod" class="no-TOC"> <el-msg class="error">Parameter ... may not have the same name as the method in which it is defined</el-msg></h6>
+<p>A function or procedure named e.g. 'foo' may not define a parameter with that same name.</p>
 
-<h6 id="methodDeprecated" class="no-TOC"><el-msg class="advisory">Code change suggested. Method was deprecated in v...</el-msg></h6>
-<p>Although the method will work now, the code should be reworked to remove its dependence on a method that will disappear
-in a later version of Elan.</p>
  </div>
 
  <div id="RuntimeError">
  <h1 >Runtime errors</h1>
 
-<h6 id="TestTimeout" class="no-TOC"><el-msg class="error">Tests timed out and were aborted</el-msg></h6>
-<p>An error or infinite loop found in a test. Refer to <a href="LangRef.html#Ignore">Test, More advanced techniques, Ghosting tests <i class="fa">&#xf08e;</i></a>.</p>
-
 <h6 id="ComplexityWarning" class="no-TOC"><el-msg class="error">Overly complex expressions</el-msg></h6>
 <p>Overly complex expressions, for example involving a sequence of open brackets, can result in
 very slow parsing. We strongly recommend that you you simplify the contents of this field, for example by
 breaking out parts of it into separate <b>variable definition</b> instructions; otherwise it might become impossible to add more text.</p>
+
+<h6 id="TestTimeout" class="no-TOC"><el-msg class="error">Tests timed out and were aborted</el-msg></h6>
+<p>An error or infinite loop found in a test. Refer to <a href="LangRef.html#Ignore">Test, More advanced techniques, Ghosting tests <i class="fa">&#xf08e;</i></a>.</p>
 
 <h6 id="ReferenceError" class="no-TOC"><el-msg class="error">ReferenceError: Cannot access '[name]' before initialisation</el-msg></h6>
 <p><b>Elan Language Reference</b> go to the <a href="#top">top <i class="fa">&#xf14c;</i></a></p>

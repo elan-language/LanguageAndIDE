@@ -165,7 +165,8 @@ export function mustNotHaveConditionalAfterUnconditionalElse(
   const unconditionals = elses.filter((s) => !s.hasIf).length;
   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
     compileErrors.push(
-      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`, location),
+      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`,
+      location),
     );
   }
 }
@@ -766,7 +767,7 @@ export function mustBeValueType(
   if (!isValueTypeExcludingString(lhs) || !isValueTypeExcludingString(rhs)) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Can only compare value types with an operator. To compare reference types use '.equals'`,
+        `Can compare only value types with an operator. To compare reference types use '.equals'`,
         location,
         "",
         DisplayPriority.fourth,
@@ -988,7 +989,7 @@ export function mustBeCompatibleDefinitionNode(
 
   if (isConstant && !isValueType(rst)) {
     compileErrors.push(
-      new SyntaxCompileError(`Can only assign a value type to a constant`, location),
+      new SyntaxCompileError(`Can assign only a value type to a constant`, location),
     );
   }
 }
@@ -1355,7 +1356,7 @@ export function mustBeValidRegExp(
   compileErrors: CompileError[],
   location: string,
 ) {
-  compileErrors.push(new SyntaxCompileError(message, location, "LibRef.html#RegExpFunctions"));
+  compileErrors.push(new SyntaxCompileError(message, location, "LibRef.html#RegExp"));
 }
 
 const compilerAssertions = true;
