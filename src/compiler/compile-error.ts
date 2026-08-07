@@ -98,7 +98,7 @@ export class TernaryCompileError extends CompileError {
       Severity.error,
       `Cannot determine common type between ${type1} and ${type2}.`,
       location,
-      "ErrorMessages.html#TernaryCompileError",
+      "ErrorMessages.html#compile_error",
     );
   }
 }
