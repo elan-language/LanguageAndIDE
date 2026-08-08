@@ -430,7 +430,7 @@ end main`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Int and String.ErrorMessages.html#compile_error",
+      "Cannot determine common type between Int and String.ErrorMessages.html#TernaryCompileError",
     ]);
   });
 
@@ -517,7 +517,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Bar and Foo.ErrorMessages.html#compile_error",
+      "Cannot determine common type between Bar and Foo.ErrorMessages.html#TernaryCompileError",
       "Incompatible types. Expected: Bar, Provided: Foo.ErrorMessages.html#TypesCompileError",
     ]);
   });
@@ -551,7 +551,7 @@ end class`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Foo and Bar.ErrorMessages.html#compile_error",
+      "Cannot determine common type between Foo and Bar.ErrorMessages.html#TernaryCompileError",
     ]);
   });
 
