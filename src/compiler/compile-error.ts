@@ -196,7 +196,7 @@ export class CannotUseLikeAFunction extends CompileError {
       Severity.error,
       `Cannot call procedure '${id}' within an expression.`,
       location,
-      "ErrorMessages.html#compile_error",
+      "ErrorMessages.html#CannotUseLikeAFunction",
     );
   }
 }
