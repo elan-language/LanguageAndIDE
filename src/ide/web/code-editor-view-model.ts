@@ -761,9 +761,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
       msg.selection = [start, end];
     }
 
-    await this.handleKeyAndRender(msg, vm, tr);
     event.preventDefault();
     event.stopPropagation();
+    // I have just rearranged this code to put stopPropagation before the "await"
+    // so that it takes effect before the event handler finishes.
+    // The "await" is now redundant I think, but keeping it in case I break something
+    await this.handleKeyAndRender(msg, vm, tr);
   }
 
   async changeLanguage(l: Language, vm: IIDEViewModel, tr: TestRunner, always: boolean) {
