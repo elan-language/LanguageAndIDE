@@ -11,7 +11,6 @@ import {
   isCollapsible,
   isFrame,
   isParent,
-  isSelector,
   singleIndent,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
@@ -25,8 +24,6 @@ import { Selectable } from "./frame-interfaces/selectable";
 import {
   parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
-  parentHelper_getChildAfter,
-  parentHelper_removeAllSelectedChildren,
 } from "./parent-helpers";
 import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 
@@ -406,14 +403,7 @@ export abstract class AbstractFrame implements Frame {
       this.pasteError = "Cut Failed: At least one selected frame does not parse";
       return true;
     }
-    parentHelper_removeAllSelectedChildren(this.getParent());
-
-    const last = selected[selected.length - 1];
-    const newFocus = parentHelper_getChildAfter(this.getParent(), last);
-    newFocus.select(true, false);
-    if (!isSelector(newFocus) && !newFocus.getParent().minimumNumberOfChildrenExceeded()) {
-      newFocus.insertPeerSelector(false);
-    }
+    this.getParent().deleteSelectedChildren();
     return true;
   };
 
