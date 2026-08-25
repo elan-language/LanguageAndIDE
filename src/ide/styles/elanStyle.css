@@ -562,3 +562,13 @@ el-statement.paused-at > el-fr
   .context-menu-item.separator {
     border-top: solid 1px black;
   }
+
+el-place.trailingcomma {
+  display: none;
+}
+
+.selected > el-top > el-place.trailingcomma,
+el-field.selected ~ el-place.trailingcomma,
+el-place.trailingcomma:has(+ el-field.selected) {
+  display:inline;
+}

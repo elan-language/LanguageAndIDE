@@ -181,7 +181,11 @@ export class LanguagePython extends LanguageAbstract {
 
   paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
-    return field.text === "" ? self : `${self}, ${field.renderAsHtml()}`;
+    // if no params, wrap the comma to make it only appear
+    // when the line (or parts of it) are selected
+    // if there are params, the comma appears unconditionally
+    const comma = field.text === "" ? `<el-place class="trailingcomma">, </el-place>` : ", ";
+    return `${self}${comma}${field.renderAsHtml()}`;
   }
 
   override enumValuesListAsHtml(field: EnumValuesField): string {
