@@ -295,6 +295,9 @@ export class LanguagePython extends LanguageAbstract {
   STRING_NAME: string = "str";
   LIST_NAME: string = "list";
 
+  TUPLE_START = "tuple[";
+  TUPLE_END = "]";
+
   TRUE: string = "True";
   FALSE: string = "False";
   BINARY_PREFIX: string = "0b";

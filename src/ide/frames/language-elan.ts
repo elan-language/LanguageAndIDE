@@ -309,6 +309,9 @@ export class LanguageElan extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
+  TUPLE_START = "tuple[";
+  TUPLE_END = "]";
+
   START_OF_GENERIC: string = `<${this.OF} `;
   END_OF_GENERIC: string = `>`;
   THIS_INSTANCE: string = this.THIS;

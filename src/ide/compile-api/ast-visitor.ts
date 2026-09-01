@@ -764,6 +764,7 @@ export function transform(
   //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
   //   return new TypeAsn(typeName, [], fieldId, scope);
   // }
+  
   if (node instanceof TypeSimpleName) {
     const type = node.elanTypeName;
     return new TypeAsn(type, [], fieldId, scope);
