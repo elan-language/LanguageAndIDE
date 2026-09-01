@@ -629,9 +629,7 @@ export function transform(
 
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const type = ctx.accept(
-        new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()),
-      );
+      const type = ctx.accept(new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()));
       typeAsn.type = type;
       return typeAsn;
     }
@@ -764,10 +762,10 @@ export function transform(
   //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
   //   return new TypeAsn(typeName, [], fieldId, scope);
   // }
-  
+
   if (node instanceof TypeSimpleName) {
-    const type = node.elanTypeName;
-    return new TypeAsn(type, [], fieldId, scope);
+    const typeName = getTypeName(node.language(), FuncName, fieldId, scope);
+    return new TypeAsn(typeName, [], fieldId, scope);
   }
 
   if (node instanceof InheritanceNode) {

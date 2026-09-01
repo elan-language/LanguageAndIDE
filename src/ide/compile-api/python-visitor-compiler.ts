@@ -8,8 +8,6 @@ import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 
-
-
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
     private readonly language: Language,
@@ -25,21 +23,21 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     );
     const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  }
+  };
 
   visitTypeName = (ctx: any) => {
     const typeName = (this as any).visitChildren(ctx)[0] as AstNode;
 
     //return new TypeAsn(typeName, [], this.fieldId, this.scope);
     return typeName;
-  }
+  };
 
-  visitTypeGeneric =(ctx: any) => {
+  visitTypeGeneric = (ctx: any) => {
     const typeName = (this as any).visit(ctx.typeName()) as AstNode;
     const types = (this as any).visit(ctx.type()) as AstNode[];
 
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  }
+  };
 
   override visitType = (context: any) => {
     const typeTuple = context.typeTuple();
@@ -60,7 +58,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     }
 
     throw new Error(context.children.First().GetText());
-  }
+  };
 
   visitTerminal(ctx: any) {
     return getTypeName(this.language, ctx.getText(), this.fieldId, this.scope);

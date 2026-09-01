@@ -16,18 +16,18 @@ export class PythonVisitorSource extends PythonVisitor<string> {
       .filter((s) => this.filterTokens(s))
       .join(", ");
     return `(${types})`;
-  }
+  };
 
   visitTypeName = (ctx: any) => {
     return (this as any).visitChildren(ctx)[0] as string;
-  }
+  };
 
   visitTypeGeneric = (ctx: any) => {
     const typeName = (this as any).visit(ctx.typeName()) as string;
     const types = (this as any).visit(ctx.type()) as string[];
 
     return `${typeName}<of ${types.join(",")}>`;
-  }
+  };
 
   override visitType = (context: any) => {
     const typeTuple = context.typeTuple();
@@ -47,7 +47,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     }
 
     throw new Error(context.children.First().GetText());
-  }
+  };
 
   visitTerminal(ctx: any) {
     return ctx.symbol.text;

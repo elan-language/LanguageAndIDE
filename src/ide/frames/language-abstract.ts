@@ -251,7 +251,6 @@ export abstract class LanguageAbstract implements Language {
 
   abstract reservedWords: Set<string>;
 
-  
   abstract TUPLE_START: string;
   abstract TUPLE_END: string;
 

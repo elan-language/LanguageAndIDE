@@ -531,7 +531,6 @@ export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
 }
 
-
 export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
   switch (name) {
     case l.INT_NAME:

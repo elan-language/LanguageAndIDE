@@ -3,7 +3,6 @@
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 
-
 export class PythonVisitorHtml extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
     super();
@@ -21,12 +20,12 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     const cl = this.language.TUPLE_END;
 
     return `${op}${types}${cl}`;
-  }
+  };
 
   visitTypeName = (ctx: any) => {
     const type = (this as any).visitChildren(ctx)[0] as string;
     return `<el-type>${this.language.mapElanTypeToLanguageType(type)}</el-type>`;
-  }
+  };
 
   visitTypeGeneric = (ctx: any) => {
     const typeName = (this as any).visit(ctx.typeName()) as string;
@@ -39,7 +38,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     const end = this.language.END_OF_GENERIC.replace(">", "&gt;");
 
     return `${typeName}${op}${types.join(", ")}${end}`;
-  }
+  };
 
   override visitType = (context: any) => {
     const typeTuple = context.typeTuple();
@@ -59,7 +58,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     }
 
     throw new Error(context.children.First().GetText());
-  }
+  };
 
   visitTerminal(ctx: any) {
     return this.language.mapLanguageTypeToElanType(ctx.symbol.text);
