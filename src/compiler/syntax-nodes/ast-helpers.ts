@@ -32,6 +32,7 @@ import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
+import { ListTypeAsn } from "./list-type-asn";
 import { BooleanTypeAsn } from "./boolean-type-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";

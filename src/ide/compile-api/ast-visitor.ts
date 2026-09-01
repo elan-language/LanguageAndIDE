@@ -168,7 +168,7 @@ import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
-import { ElanElanVisitorCompiler } from "./python-visitor-compiler";
+import { PythonVisitorCompiler } from "./python-visitor-compiler";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -630,7 +630,7 @@ export function transform(
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
       const type = ctx.accept(
-        new ElanElanVisitorCompiler(node.language(), scope, node.getHtmlId()),
+        new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()),
       );
       typeAsn.type = type;
       return typeAsn;
