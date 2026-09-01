@@ -14,6 +14,8 @@
     "Education"
   ],
   "scripts": {
+    "generateg4": "node ./src/build-scripts/generate.mjs",
+    "formatg4": "antlr-format -c antlrformatrc -v src/grammars/**/*.g4",
     "preprocess-worksheets": "node ./out/src/build-scripts/preprocess-worksheets.js",
     "update-documentation": "node ./out/src/build-scripts/update-documentation.js",
     "update-build-script": "node ./out/src/build-scripts/update-build-files.js",
@@ -40,7 +42,8 @@
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
     "async-file": "2.0.2",
-    "reflect-metadata": "^0.2.2"
+    "reflect-metadata": "^0.2.2",
+    "antlr4ng": "^3.0.4"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -63,6 +66,7 @@
     "prettier": "^3.6.0",
     "source-map-support": "^0.5.21",
     "typescript": "^5.8.3",
-    "web-worker": "^1.5.0"
+    "web-worker": "^1.5.0",
+    "antlr-format-cli": "^1.2.8"
   }
 }
