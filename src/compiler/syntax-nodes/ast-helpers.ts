@@ -524,3 +524,21 @@ export function getChildSymbol(
 export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
 }
+
+
+export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
+  switch (name) {
+    case l.INT_NAME:
+      return new IntTypeAsn(fieldId);
+    case l.FLOAT_NAME:
+      return new FloatTypeAsn(fieldId);
+    case l.STRING_NAME:
+      return new StringTypeAsn(fieldId);
+    case l.BOOL_NAME:
+      return new BooleanTypeAsn(fieldId);
+    case l.LIST_NAME:
+      return new ListTypeAsn(fieldId, scope);
+    default:
+      return new TypeNameAsn(name, fieldId, scope);
+  }
+}
