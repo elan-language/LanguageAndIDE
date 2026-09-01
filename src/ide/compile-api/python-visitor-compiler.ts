@@ -2,6 +2,7 @@
 
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";

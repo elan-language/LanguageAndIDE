@@ -19,6 +19,10 @@ export abstract class AbstractParseNode implements ParseNode {
 
   constructor(public readonly file: File) {}
 
+  language() {
+    return this.file.language();
+  }
+
   setSyntaxCompletionWhenEmpty(ph: string) {
     this.completionWhenEmpty = ph;
   }
