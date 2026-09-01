@@ -7,6 +7,7 @@ import { ElanCompilerError } from "../../compiler/elan-compiler-error";
 import { thisKeyword } from "../../compiler/elan-keywords";
 import { FuncName, TupleName } from "../../compiler/symbols/elan-type-names";
 import { EnumType } from "../../compiler/symbols/enum-type";
+import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
@@ -167,6 +168,7 @@ import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
+import { ElanElanVisitorCompiler } from "./python-visitor-compiler";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -623,11 +625,14 @@ export function transform(
   }
 
   if (node instanceof TypeField) {
-    const rn = node.getRootNode();
-    if (rn && rn.status === ParseStatus.valid) {
-      const typeAsn = new TypeFieldAsn(node.getHtmlId());
+    const ctx = node.context;
 
-      typeAsn.type = transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+    if (ctx) {
+      const typeAsn = new TypeFieldAsn(node.getHtmlId());
+      const type = ctx.accept(
+        new ElanElanVisitorCompiler(node.language(), scope, node.getHtmlId()),
+      );
+      typeAsn.type = type;
       return typeAsn;
     }
     return EmptyAsn.Instance;
@@ -732,7 +737,7 @@ export function transform(
   }
 
   if (node instanceof TypeGenericNode) {
-    const type = node.qualifiedName!.elanTypeName;
+    const type = getTypeName(node.language(), node.qualifiedName!.elanTypeName, fieldId, scope);
     const generic = node.genericTypes;
     let gp = new Array<AstNode>();
     gp = transformMany(generic as CSV, fieldId, scope).items;
@@ -746,9 +751,19 @@ export function transform(
 
     const oup = node.returnType ? [transform(node.returnType, fieldId, scope)!] : [];
 
-    return new TypeAsn(FuncName, inp.concat(oup), fieldId, scope);
+    const typeName = getTypeName(node.language(), FuncName, fieldId, scope);
+    return new TypeAsn(typeName, inp.concat(oup), fieldId, scope);
   }
 
+  // if (node instanceof TypeNameUse) {
+  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
+  //   return new TypeAsn(typeName, [], fieldId, scope);
+  // }
+
+  // if (node instanceof TypeNameDef) {
+  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
+  //   return new TypeAsn(typeName, [], fieldId, scope);
+  // }
   if (node instanceof TypeSimpleName) {
     const type = node.elanTypeName;
     return new TypeAsn(type, [], fieldId, scope);
@@ -843,7 +858,9 @@ export function transform(
 
   if (node instanceof TypeTupleNode) {
     const gp = transformMany(node.types as CSV, fieldId, scope).items;
-    return new TypeAsn(TupleName, gp, fieldId, scope);
+    const typeName = getTypeName(node.language(), TupleName, fieldId, scope);
+
+    return new TypeAsn(typeName, gp, fieldId, scope);
   }
 
   if (node instanceof Index) {
