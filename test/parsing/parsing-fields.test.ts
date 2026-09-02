@@ -292,7 +292,7 @@ suite("Field Parsing Tests", () => {
       expr.parseCurrentText();
       assert.equal(expr.readParseStatus(), ParseStatus.incomplete);
       const spec = expr.getSymbolCompletionSpec();
-      assert.equal(spec.context, "foo");
+      assert.equal(spec?.context, "foo");
     });
     test("parse paramDefs with closing bracket #855", () => {
       const test = new TestFrame(

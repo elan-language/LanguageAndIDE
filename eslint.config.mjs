@@ -14,7 +14,7 @@ const compat = new FlatCompat({
 });
 
 export default [{
-    ignores: ["**/out", "**/dist", "**/*.d.ts", "**/*.html", "**/documentation/*.js", "**/ide/web-content/*.js", "**/generated/**/*.ts"],
+    ignores: ["**/out", "**/dist", "**/*.d.ts", "**/*.html", "**/documentation/*.js", "**/ide/web-content/*.js", "**/generated/**/*"],
 }, ...compat.extends("plugin:@typescript-eslint/recommended"), {
     plugins: {
         "@typescript-eslint": typescriptEslint,
