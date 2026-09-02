@@ -1,82 +1,76 @@
 
 
 
-lexer grammar Python_Lexer;
+lexer grammar Csharp_Lexer;
 
 // TODO: need to have reserved words from ALL langs defined in Lexer to test that we aren't unknowingly using them somewhere else
 // e.g. use of 'set' for a method name
 
-// START Python_Lexer
-ABSTRACT_METHOD: '@abstractmethod';
-ASSERT_EQUAL: 'assertEqual';
-AS: 'as';
-DEF: 'def';
+// START CSharp_Lexer
+STATIC: 'static';
+VOID: 'void';
+TEST_CLASS_ANNOT: OPEN_SQ_BRACKET 'TestClass' CLOSE_SQ_BRACKET;
+TEST_METHOD_ANNOT:
+    OPEN_SQ_BRACKET 'TestMethod' CLOSE_SQ_BRACKET
+;
+CONST: 'const';
+ENUM: 'enum';
+ABSTRACT: 'abstract';
+FOREACH: 'foreach';
+VAR: 'var';
+ASSERT: 'Assert'; // u/c because it is a type
+ARE_EQUAL: 'areEqual';
+SEMI_COLON: ';';
+THROW: 'throw';
+NEW: 'new';
+CATCH: 'catch';
+PUBLIC: 'public';
+PRIVATE: 'private';
+GET: 'get';
+SET: 'set';
+GET_SET:
+    OPEN_BRACE GET SEMI_COLON PRIVATE SEMI_COLON SET SEMI_COLON CLOSE_BRACE
+;
+
 CLASS: 'class';
-ELIF: 'elif';
 ELSE: 'else';
-EXCEPT: 'except';
 FOR: 'for';
 IF: 'if';
 IN: 'in';
-INIT: '__init__';
 INPUT: 'input';
 LAMBDA: 'lambda';
 MAIN: 'main';
-NONE: 'None';
-PASS: 'pass';
 PRINT: 'print';
-RAISE: 'raise';
 RETURN: 'return';
 TRY: 'try';
 WHILE: 'while';
 
-ABC: 'ABC';
-ENUM: 'Enum';
-TESTCASE: 'unittest.TestCase';
-
-ARROW: '->';
+ARROW: '=>';
 MOD: '%';
 EQUAL: '==';
 NOT_EQUAL: '!=';
-AND: 'and';
-OR: 'or';
-NOT: 'not';
+AND: '&&';
+OR: '||';
+NOT: '!';
 
-COMMENT_MARKER: '#';
-INTERPOLATED_STRING_PREFIX: 'f';
+INTERPOLATED_STRING_PREFIX: '$';
 
 INT_NAME: 'int';
-FLOAT_NAME: 'float';
+FLOAT_NAME: 'double';
 BOOL_NAME: 'bool';
-STRING_NAME: 'str';
-LIST_NAME: 'list';
+STRING_NAME: 'string';
+LIST_NAME: 'List';
 
-TRUE: 'True';
-FALSE: 'False';
 BINARY_PREFIX: '0b';
 HEX_PREFIX: '0x';
 
-THIS_INSTANCE: 'self';
+THIS_INSTANCE: 'this';
 
 TUPLE: 'tuple';
 
-FUNCTION_ANNOTATION: COMMENT_MARKER 'function';
-PROCECDURE_ANNOTATION: COMMENT_MARKER 'procedure';
-CONSTANT_ANNOTATION: COMMENT_MARKER 'constant';
-ENUM_ANNOTATION: COMMENT_MARKER 'enum';
-CONCRETE_CLASS_ANNOTATION: COMMENT_MARKER 'concrete class';
-ABSTRACT_CLASS_ANNOTATION: COMMENT_MARKER 'abstract class';
-VARIABLE_ANNOTATION: COMMENT_MARKER 'variable definition';
-ASSIGNMENT_ANNOTATION: COMMENT_MARKER 'assignment';
-INPUT_ANNOTATION: COMMENT_MARKER 'input statement';
-CALL_ANNOTATION: COMMENT_MARKER 'procedure call';
-LET_ANNOTATION: COMMENT_MARKER 'let';
-ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
-PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
-FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
-PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
+// Common
 
-COMMENT: COMMENT_MARKER ~( '\r' | '\n')*;
+COMMENT: '//' ~( '\r' | '\n')*;
 LIT_BOOLEAN:
     'true'
     | 'false'

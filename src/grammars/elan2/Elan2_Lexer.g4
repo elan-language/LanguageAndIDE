@@ -1,88 +1,82 @@
 
 
 
-lexer grammar Python_Lexer;
+lexer grammar Elan2_Lexer;
 
 // TODO: need to have reserved words from ALL langs defined in Lexer to test that we aren't unknowingly using them somewhere else
 // e.g. use of 'set' for a method name
 
-// START Python_Lexer
-ABSTRACT_METHOD: '@abstractmethod';
-ASSERT_EQUAL: 'assertEqual';
+// START RefLang_Lexer
+ABSTRACT: 'abstract';
+AND: 'and';
 AS: 'as';
-DEF: 'def';
+ASSERT: 'assert';
+ASSIGN: 'assign';
+BE: 'be';
+CALL: 'call';
+CATCH: 'catch';
 CLASS: 'class';
+CONSTANT: 'constant';
+CONSTRUCTOR: 'constructor';
+COPY: 'copy';
+DIV: 'div';
 ELIF: 'elif';
 ELSE: 'else';
-EXCEPT: 'except';
+END: 'end';
+ENUM: 'enum';
+EVALUATES: 'evaluates';
 FOR: 'for';
+FROM: 'from';
+FUNCTION: 'function';
 IF: 'if';
 IN: 'in';
-INIT: '__init__';
+INHERITS: 'inherits';
 INPUT: 'input';
 LAMBDA: 'lambda';
+LET: 'let';
 MAIN: 'main';
-NONE: 'None';
-PASS: 'pass';
+MOD: 'mod';
+NEW: 'new';
+NOT: 'not';
+OF: 'of';
+OR: 'or';
 PRINT: 'print';
-RAISE: 'raise';
+PRIVATE: 'private';
+PROCEDURE: 'procedure';
+PROPERTY: 'property';
 RETURN: 'return';
+RETURNS: 'returns';
+SET: 'set';
+STEP: 'step';
+TEST: 'test';
+THEN: 'then';
+THIS: 'this';
+THROW: 'throw';
+TO: 'to';
 TRY: 'try';
+VARIABLE: 'variable';
 WHILE: 'while';
 
-ABC: 'ABC';
-ENUM: 'Enum';
-TESTCASE: 'unittest.TestCase';
+INT_NAME: 'Int';
+FLOAT_NAME: 'Float';
+BOOL_NAME: 'Boolean';
+STRING_NAME: 'String';
+LIST_NAME: 'List';
 
-ARROW: '->';
-MOD: '%';
-EQUAL: '==';
-NOT_EQUAL: '!=';
-AND: 'and';
-OR: 'or';
-NOT: 'not';
-
-COMMENT_MARKER: '#';
-INTERPOLATED_STRING_PREFIX: 'f';
-
-INT_NAME: 'int';
-FLOAT_NAME: 'float';
-BOOL_NAME: 'bool';
-STRING_NAME: 'str';
-LIST_NAME: 'list';
-
-TRUE: 'True';
-FALSE: 'False';
-BINARY_PREFIX: '0b';
-HEX_PREFIX: '0x';
-
-THIS_INSTANCE: 'self';
-
-TUPLE: 'tuple';
-
-FUNCTION_ANNOTATION: COMMENT_MARKER 'function';
-PROCECDURE_ANNOTATION: COMMENT_MARKER 'procedure';
-CONSTANT_ANNOTATION: COMMENT_MARKER 'constant';
-ENUM_ANNOTATION: COMMENT_MARKER 'enum';
-CONCRETE_CLASS_ANNOTATION: COMMENT_MARKER 'concrete class';
-ABSTRACT_CLASS_ANNOTATION: COMMENT_MARKER 'abstract class';
-VARIABLE_ANNOTATION: COMMENT_MARKER 'variable definition';
-ASSIGNMENT_ANNOTATION: COMMENT_MARKER 'assignment';
-INPUT_ANNOTATION: COMMENT_MARKER 'input statement';
-CALL_ANNOTATION: COMMENT_MARKER 'procedure call';
-LET_ANNOTATION: COMMENT_MARKER 'let';
-ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
-PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
-FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
-PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
-
-COMMENT: COMMENT_MARKER ~( '\r' | '\n')*;
+COMMENT: '#' ~( '\r' | '\n')*;
 LIT_BOOLEAN:
     'true'
     | 'false'
 ; // In other langs, the casing may be different
 
+EQUAL: 'is';
+NOT_EQUAL: 'isnt';
+ARROW: '=>';
 POWER: '^';
+
+BINARY_PREFIX: '0b';
+HEX_PREFIX: '0x';
+INTERPOLATED_STRING_PREFIX: '$';
 // END RefLang_Lexer
 
 // START ELAN2_Lexer:
