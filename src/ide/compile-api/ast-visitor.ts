@@ -629,7 +629,7 @@ export function transform(
 
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const type = ctx.accept(new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()));
+      const type = ctx.accept(new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()))!;
       typeAsn.type = type;
       return typeAsn;
     }

@@ -1,3 +1,4 @@
+import { ParserRuleContext } from "antlr4ng";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import { PythonVisitorHtml } from "../../compile-api/python-visitor-html";
 import { PythonVisitorSource } from "../../compile-api/python-visitor-source";
@@ -53,8 +54,7 @@ export abstract class AbstractField implements Selectable, Field {
   protected showingSymbolCompletion: boolean = false;
   helpActive: boolean = false;
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  context: any | undefined;
+  context: ParserRuleContext | undefined;
 
   constructor(holder: Frame) {
     this.holder = holder;
