@@ -1,5 +1,10 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { TerminalNode } from "antlr4ng";
+import {
+  TypeTupleContext,
+  TypeNameContext,
+  TypeGenericContext,
+  TypeContext,
+} from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
@@ -11,45 +16,45 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return s.trim() && s !== "(" && s !== ")" && s !== ",";
   }
 
-  visitTypeTuple = (ctx: any) => {
-    const types = ((this as any).visitChildren(ctx) as string[])
-      .filter((s) => this.filterTokens(s))
-      .join(", ");
-    return `(${types})`;
+  visitTypeTuple = (_ctx: TypeTupleContext) => {
+    // const types = this.visitChildren(ctx) as string[])
+    //   .filter((s) => this.filterTokens(s))
+    //   .join(", ");
+    return `(${""})`;
   };
 
-  visitTypeName = (ctx: any) => {
-    return (this as any).visitChildren(ctx)[0] as string;
+  visitTypeName = (ctx: TypeNameContext) => {
+    return this.visitChildren(ctx)!;
   };
 
-  visitTypeGeneric = (ctx: any) => {
-    const typeName = (this as any).visit(ctx.typeName()) as string;
-    const types = (this as any).visit(ctx.type()) as string[];
+  visitTypeGeneric = (ctx: TypeGenericContext) => {
+    const typeName = this.visit(ctx.typeName()) as string;
+    //const types = this.visit(ctx.type_())!;
 
-    return `${typeName}<of ${types.join(",")}>`;
+    return `${typeName}<of ${""}>`;
   };
 
-  override visitType = (context: any) => {
+  override visitType = (context: TypeContext) => {
     const typeTuple = context.typeTuple();
     const typeName = context.typeName();
     const typeGeneric = context.typeGeneric();
 
     if (typeTuple) {
-      return (this as any).visit(typeTuple);
+      return this.visit(typeTuple)!;
     }
 
     if (typeName) {
-      return (this as any).visit(typeName);
+      return this.visit(typeName)!;
     }
 
     if (typeGeneric) {
-      return (this as any).visit(typeGeneric);
+      return this.visit(typeGeneric)!;
     }
 
-    throw new Error(context.children.First().GetText());
+    throw new Error(context.getText());
   };
 
-  visitTerminal(ctx: any) {
-    return ctx.symbol.text;
+  visitTerminal(ctx: TerminalNode) {
+    return ctx.symbol.text ?? "";
   }
 }

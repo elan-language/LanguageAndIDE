@@ -7,30 +7,29 @@ import { FuncName, TupleName } from "./elan-type-names";
 import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
-import { IntType } from "./int-type";
 import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
 
-const intSymbol: ElanSymbolByLanguage = {
-  symbolId: IntType.Instance.name,
-  symbolType: function (): SymbolType {
-    return IntType.Instance;
-  },
-  symbolScope: SymbolScope.program,
-  symbolIsType: true,
-  toLanguage: function (l: Language): ElanSymbol {
-    return {
-      symbolId: l.INT_NAME,
-      symbolType: function (): SymbolType {
-        return IntType.Instance;
-      },
-      symbolScope: SymbolScope.program,
-      symbolIsType: true,
-    };
-  },
-};
+// const intSymbol: ElanSymbolByLanguage = {
+//   symbolId: IntType.Instance.name,
+//   symbolType: function (): SymbolType {
+//     return IntType.Instance;
+//   },
+//   symbolScope: SymbolScope.program,
+//   symbolIsType: true,
+//   toLanguage: function (l: Language): ElanSymbol {
+//     return {
+//       symbolId: l.INT_NAME,
+//       symbolType: function (): SymbolType {
+//         return IntType.Instance;
+//       },
+//       symbolScope: SymbolScope.program,
+//       symbolIsType: true,
+//     };
+//   },
+// };
 
 const floatSymbol: ElanSymbolByLanguage = {
   symbolId: FloatType.Instance.name,
@@ -133,7 +132,7 @@ const funcSymbol: ClassSymbol = {
 };
 
 export const elanSymbols = [
-  intSymbol,
+  //intSymbol,
   floatSymbol,
   stringSymbol,
   booleanSymbol,
@@ -144,7 +143,7 @@ export const elanSymbols = [
 
 // without func symbol so that it doesn't show in symbol completion
 export const elanSymbolMatches = [
-  intSymbol,
+  //intSymbol,
   floatSymbol,
   stringSymbol,
   booleanSymbol,

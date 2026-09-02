@@ -1,10 +1,14 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
-
+import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
-import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
+import {
+  TypeContext,
+  TypeGenericContext,
+  TypeNameContext,
+  TypeTupleContext,
+} from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 
@@ -17,50 +21,52 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     super();
   }
 
-  visitTypeTuple = (ctx: any) => {
-    const types = ((this as any).visitChildren(ctx) as (IdAsn | TypeAsn)[]).filter(
-      (n) => n instanceof TypeAsn,
-    );
+  visitTypeTuple = (_ctx: TypeTupleContext) => {
+    // const types = this.visitChildren(ctx) as (IdAsn | TypeAsn)[]).filter(
+    //   (n) => n instanceof TypeAsn,
+    // );
     const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
+    return new TypeAsn(typeName, [], this.fieldId, this.scope);
   };
 
-  visitTypeName = (ctx: any) => {
-    const typeName = (this as any).visitChildren(ctx)[0] as AstNode;
-
-    //return new TypeAsn(typeName, [], this.fieldId, this.scope);
+  visitTypeName = (ctx: TypeNameContext) => {
+    const typeName = this.visitChildren(ctx)!;
     return typeName;
   };
 
-  visitTypeGeneric = (ctx: any) => {
-    const typeName = (this as any).visit(ctx.typeName()) as AstNode;
-    const types = (this as any).visit(ctx.type()) as AstNode[];
+  visitTypeGeneric = (ctx: TypeGenericContext) => {
+    const typeName = this.visit(ctx.typeName());
+    //const types = this.visit(ctx.type_());
 
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
+    // const types = ((this as any).visitChildren(ctx.type_()) as (IdAsn | TypeAsn)[]).filter(
+    //   (n) => n instanceof TypeAsn,
+    // );
+
+    return new TypeAsn(typeName!, [], this.fieldId, this.scope);
   };
 
-  override visitType = (context: any) => {
+  override visitType = (context: TypeContext) => {
     const typeTuple = context.typeTuple();
     const typeName = context.typeName();
     const typeGeneric = context.typeGeneric();
 
     if (typeTuple) {
-      return (this as any).visit(typeTuple);
+      return this.visit(typeTuple)!;
     }
 
     if (typeName) {
-      const tn = (this as any).visit(typeName);
+      const tn = this.visit(typeName)!;
       return new TypeAsn(tn, [], this.fieldId, this.scope);
     }
 
     if (typeGeneric) {
-      return (this as any).visit(typeGeneric);
+      return this.visit(typeGeneric)!;
     }
 
-    throw new Error(context.children.First().GetText());
+    throw new Error(context.getText());
   };
 
-  visitTerminal(ctx: any) {
+  visitTerminal(ctx: TerminalNode) {
     return getTypeName(this.language, ctx.getText(), this.fieldId, this.scope);
   }
 }
