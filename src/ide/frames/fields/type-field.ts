@@ -5,9 +5,7 @@ import { PythonParser } from "../../../generated/python/PythonParser";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
-import { TypeNode } from "../parse-nodes/type-node";
 import { ParseStatus } from "../status-enums";
-import { TokenType } from "../symbol-completion-helpers";
 import { AbstractField } from "./abstract-field";
 
 export class TypeField extends AbstractField {
@@ -25,17 +23,10 @@ export class TypeField extends AbstractField {
     return `${this.language().languageHtmlClass}_type`;
   }
 
-  initialiseRoot(): ParseNode {
-    this.rootNode = new TypeNode(
-      this.getFile(),
-      new Set<TokenType>([
-        TokenType.type_concrete,
-        TokenType.type_abstract,
-        TokenType.type_notInheritable,
-      ]),
-    );
-    return this.rootNode;
+  override initialiseRoot(): ParseNode {
+    return undefined as unknown as ParseNode;
   }
+
   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
     source.readToEndOfLine();
 
