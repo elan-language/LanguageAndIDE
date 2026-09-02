@@ -24,10 +24,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
       .filter((s) => this.filterTokens(s))
       .join(", ");
 
-    const op = this.language.TUPLE_START;
-    const cl = this.language.TUPLE_END;
-
-    return `${op}${types}${cl}`;
+    return `(${types})`;
   };
 
   visitTypeName = (ctx: TypeNameContext) => {
@@ -36,20 +33,14 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   };
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
-    const typeName = this.visit(ctx.typeName()) as string;
+    const typeName = this.visit(ctx.typeName());
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
       .filter((s) => this.filterTokens(s))
       .join(", ");
 
-    const op = this.language.START_OF_GENERIC.replace("<", "&lt;").replace(
-      "of",
-      "<el-kw>of</el-kw>",
-    );
-    const end = this.language.END_OF_GENERIC.replace(">", "&gt;");
-
-    return `${typeName}${op}${types}${end}`;
+    return `${typeName}[${types}]`;
   };
 
   override visitType = (context: TypeContext) => {
