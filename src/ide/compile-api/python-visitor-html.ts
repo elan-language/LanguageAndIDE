@@ -13,18 +13,21 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     super();
   }
 
-  filterTokens(s: string) {
-    return s.trim() && s !== "(" && s !== ")" && s !== ",";
+  filterTokens(s: string | null) {
+    return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
   }
 
-  visitTypeTuple = (_ctx: TypeTupleContext) => {
-    // const types = ((this as any).visitChildren(ctx) as string[])
-    //   .filter((s) => this.filterTokens(s))
-    //   .join(", ");
+  visitTypeTuple = (ctx: TypeTupleContext) => {
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
+
     const op = this.language.TUPLE_START;
     const cl = this.language.TUPLE_END;
 
-    return `${op}${""}${cl}`;
+    return `${op}${types}${cl}`;
   };
 
   visitTypeName = (ctx: TypeNameContext) => {
@@ -34,7 +37,11 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
     const typeName = this.visit(ctx.typeName()) as string;
-    //const types = this.visit(ctx.type_());
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
 
     const op = this.language.START_OF_GENERIC.replace("<", "&lt;").replace(
       "of",
@@ -42,7 +49,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     );
     const end = this.language.END_OF_GENERIC.replace(">", "&gt;");
 
-    return `${typeName}${op}${""}${end}`;
+    return `${typeName}${op}${types}${end}`;
   };
 
   override visitType = (context: TypeContext) => {

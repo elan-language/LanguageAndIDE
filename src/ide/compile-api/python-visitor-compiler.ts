@@ -21,12 +21,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     super();
   }
 
-  visitTypeTuple = (_ctx: TypeTupleContext) => {
-    // const types = this.visitChildren(ctx) as (IdAsn | TypeAsn)[]).filter(
-    //   (n) => n instanceof TypeAsn,
-    // );
+  visitTypeTuple = (ctx: TypeTupleContext) => {
     const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
-    return new TypeAsn(typeName, [], this.fieldId, this.scope);
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((t) => t instanceof TypeAsn);
+    return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };
 
   visitTypeName = (ctx: TypeNameContext) => {
@@ -35,14 +36,12 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   };
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
-    const typeName = this.visit(ctx.typeName());
-    //const types = this.visit(ctx.type_());
-
-    // const types = ((this as any).visitChildren(ctx.type_()) as (IdAsn | TypeAsn)[]).filter(
-    //   (n) => n instanceof TypeAsn,
-    // );
-
-    return new TypeAsn(typeName!, [], this.fieldId, this.scope);
+    const typeName = this.visit(ctx.typeName())!;
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((t) => t instanceof TypeAsn);
+    return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };
 
   override visitType = (context: TypeContext) => {

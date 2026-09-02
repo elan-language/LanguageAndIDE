@@ -766,14 +766,12 @@ export abstract class AbstractField implements Selectable, Field {
     return "";
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  renderFromTree(ctx: any) {
-    return ctx.accept(new PythonVisitorSource());
+  renderFromTree(ctx: ParserRuleContext) {
+    return ctx.accept(new PythonVisitorSource())!;
   }
 
-  // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  renderAsHtmlFromTree(ctx: any) {
-    return ctx.accept(new PythonVisitorHtml(this.language()));
+  renderAsHtmlFromTree(ctx: ParserRuleContext) {
+    return ctx.accept(new PythonVisitorHtml(this.language()))!;
   }
 
   renderAsElanSource(): string {
