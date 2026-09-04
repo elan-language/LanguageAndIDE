@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "ESNext",
+		"module": "nodenext",
 		"target": "ESNext",
 		"outDir": "out/src",
 		"lib": [
@@ -8,7 +8,7 @@
 		],
 		"sourceMap": true,
 		"rootDir": "src",
-		"moduleResolution": "bundler",
+		"moduleResolution": "nodenext",
 		"experimentalDecorators": true,
     	"emitDecoratorMetadata": true,
 		"resolveJsonModule": true,

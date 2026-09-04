@@ -13,7 +13,6 @@
     "Programming Languages",
     "Education"
   ],
-  "type" : "module",
   "scripts": {
     "generateg4": "node ./src/build-scripts/generate.mjs",
     "formatg4": "antlr-format -c antlrformatrc -v src/grammars/**/*.g4",

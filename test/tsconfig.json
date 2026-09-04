@@ -1,14 +1,14 @@
 {
 	"compilerOptions": {
-		"module": "ESNext",
+		"module": "nodenext",
 		"target": "ESNext",
 		"rootDir": "..",
 		"outDir": "../out/",
 		"lib": [
 			"ESNext"
 		],
+		"moduleResolution": "nodenext",
 		"sourceMap": true,
-		"moduleResolution": "bundler",
 		"experimentalDecorators": true,
     	"emitDecoratorMetadata": true,
 		"strict": true   /* enable all strict type-checking options */
