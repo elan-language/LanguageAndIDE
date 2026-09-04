@@ -1,7 +1,9 @@
 import { ParserRuleContext } from "antlr4ng";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { PythonVisitorHtml } from "../../compile-api/python-visitor-html";
-import { PythonVisitorSource } from "../../compile-api/python-visitor-source";
+import {
+  getVisitorHtmlByLanguage,
+  getVisitorSourceByLanguage,
+} from "../../compile-api/parser-helpers";
 import {
   escapeHtmlChars,
   helper_compileMsgAsHtmlNew,
@@ -767,11 +769,11 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   renderFromTree(ctx: ParserRuleContext) {
-    return ctx.accept(new PythonVisitorSource())!;
+    return ctx.accept(getVisitorSourceByLanguage(this.language())!)!;
   }
 
   renderAsHtmlFromTree(ctx: ParserRuleContext) {
-    return ctx.accept(new PythonVisitorHtml(this.language()))!;
+    return ctx.accept(getVisitorHtmlByLanguage(this.language())!)!;
   }
 
   renderAsElanSource(): string {

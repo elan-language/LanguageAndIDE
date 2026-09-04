@@ -1,7 +1,5 @@
 import * as antlr from "antlr4ng";
-import { CharStream, CommonTokenStream } from "antlr4ng";
-import { PythonLexer } from "../../../generated/python/PythonLexer";
-import { PythonParser } from "../../../generated/python/PythonParser";
+import { getParserByLanguage } from "../../compile-api/parser-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Frame } from "../frame-interfaces/frame";
 import { ParseNode } from "../frame-interfaces/parse-node";
@@ -34,17 +32,9 @@ export class TypeField extends AbstractField {
     return this.symbolCompletionAsHtml();
   }
 
-  getPythonParser(input: string) {
-    const chars = CharStream.fromString(input);
-    const lexer = new PythonLexer(chars);
-    const tokens = new CommonTokenStream(lexer);
-    const parser = new PythonParser(tokens);
-    return parser;
-  }
-
   parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
-    if (this.language().languageFullName === "Python") {
-      const parser = this.getPythonParser(text);
+    const parser = getParserByLanguage(this.language(), text);
+    if (parser) {
       return [parser, parser.type_()];
     }
     return [undefined!, undefined!];
