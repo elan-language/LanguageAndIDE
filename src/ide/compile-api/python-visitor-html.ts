@@ -24,7 +24,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
       .filter((s) => this.filterTokens(s))
       .join(", ");
 
-    return `(${types})`;
+    return `tuple[${types}]`;
   };
 
   visitTypeName = (ctx: TypeNameContext) => {

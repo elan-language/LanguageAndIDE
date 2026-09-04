@@ -64,7 +64,7 @@ export class TypeField extends AbstractField {
         this.text = text.trimStart();
       } else {
         this.setParseStatus(ParseStatus.valid);
-        this.text = this.renderAsElanSource();
+        this.text = text.trimStart();
       }
     }
   }
