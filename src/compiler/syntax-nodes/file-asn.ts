@@ -47,6 +47,24 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     if (this.scopeMap.has(id)) {
       return this.scopeMap.get(id)!;
     }
+    // Sometimes the language in the map doesn't match the language in the id.
+    // We can't make a new map for each language by making a new FileAsn
+    // because it wipes the positions of any compile errors.
+    // Make a new id with the correct language for this map.
+    // This is more efficient than doing a language-independent search
+    // through every item in the map.
+    // We extract the language being used for this map (the part before the underbar)
+    // from the first entry in the map (they all use the same language),
+    // and change the language in the id to match it.
+    const firstEntry = this.scopeMap.keys().next().value;
+    if (firstEntry) {
+      // make a new id with the correct language for this map
+      const newid =
+        firstEntry.substring(0, firstEntry.indexOf("_")) + id.substring(id.indexOf("_"));
+      if (this.scopeMap.has(newid)) {
+        return this.scopeMap.get(newid)!;
+      }
+    }
     return NullScope.Instance;
   }
 
