@@ -1,14 +1,14 @@
 import { TerminalNode } from "antlr4ng";
-import { Language } from "../frames/frame-interfaces/language";
-import { Elan2Visitor } from "../../generated/elan2/Elan2Visitor";
 import {
   TypeContext,
   TypeGenericContext,
   TypeNameContext,
   TypeTupleContext,
-} from "../../generated/elan2/Elan2Parser";
+} from "../../generated/ref-lang/RefLangParser";
+import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
+import { Language } from "../frames/frame-interfaces/language";
 
-export class RefLangVisitorHtml extends Elan2Visitor<string> {
+export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
     super();
   }

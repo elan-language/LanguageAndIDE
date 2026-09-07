@@ -3,16 +3,16 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
-import { Elan2Visitor } from "../../generated/elan2/Elan2Visitor";
-import { Language } from "../frames/frame-interfaces/language";
 import {
   TypeContext,
   TypeGenericContext,
   TypeNameContext,
   TypeTupleContext,
-} from "../../generated/elan2/Elan2Parser";
+} from "../../generated/ref-lang/RefLangParser";
+import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
+import { Language } from "../frames/frame-interfaces/language";
 
-export class RefLangVisitorCompiler extends Elan2Visitor<AstNode> {
+export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
     private readonly language: Language,
     private readonly scope: Scope,

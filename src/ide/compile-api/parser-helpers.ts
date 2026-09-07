@@ -1,9 +1,9 @@
 import { CharStream, CommonTokenStream } from "antlr4ng";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { Elan2Lexer } from "../../generated/elan2/Elan2Lexer";
-import { Elan2Parser } from "../../generated/elan2/Elan2Parser";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import { PythonParser } from "../../generated/python/PythonParser";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
+import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
 import { PythonVisitorHtml } from "./python-visitor-html";
@@ -22,9 +22,9 @@ export function getPythonParser(input: string) {
 
 export function getRefLangParser(input: string) {
   const chars = CharStream.fromString(input);
-  const lexer = new Elan2Lexer(chars);
+  const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
-  const parser = new Elan2Parser(tokens);
+  const parser = new RefLangParser(tokens);
   return parser;
 }
 

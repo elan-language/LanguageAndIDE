@@ -1,13 +1,13 @@
 import { TerminalNode } from "antlr4ng";
-import { Elan2Visitor } from "../../generated/elan2/Elan2Visitor";
 import {
   TypeContext,
   TypeGenericContext,
   TypeNameContext,
   TypeTupleContext,
-} from "../../generated/elan2/Elan2Parser";
+} from "../../generated/ref-lang/RefLangParser";
+import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 
-export class RefLangVisitorSource extends Elan2Visitor<string> {
+export class RefLangVisitorSource extends RefLangVisitor<string> {
   constructor() {
     super();
   }
