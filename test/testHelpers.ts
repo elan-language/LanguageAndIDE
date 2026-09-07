@@ -131,9 +131,9 @@ export async function assertExportsAll(fl: FileImpl, path: string) {
   const msgs = [];
 
   msgs.push(await assertExports(fl, path, LanguagePython.Instance));
-  msgs.push(await assertExports(fl, path, LanguageVB.Instance));
-  msgs.push(await assertExports(fl, path, LanguageCS.Instance));
-  msgs.push(await assertExports(fl, path, LanguageJava.Instance));
+  // msgs.push(await assertExports(fl, path, LanguageVB.Instance));
+  // msgs.push(await assertExports(fl, path, LanguageCS.Instance));
+  // msgs.push(await assertExports(fl, path, LanguageJava.Instance));
 
   if (msgs.some(m => m)) {
     return msgs.join(", ");

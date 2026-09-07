@@ -12,15 +12,18 @@ export class RefLangVisitorSource extends Elan2Visitor<string> {
     super();
   }
 
-  filterTokens(s: string) {
-    return s.trim() && s !== "(" && s !== ")" && s !== ",";
+  filterTokens(s: string | null) {
+    return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
   }
 
-  visitTypeTuple = (_ctx: TypeTupleContext) => {
-    // const types = this.visitChildren(ctx) as string[])
-    //   .filter((s) => this.filterTokens(s))
-    //   .join(", ");
-    return `(${""})`;
+  visitTypeTuple = (ctx: TypeTupleContext) => {
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
+
+    return `(${types})`;
   };
 
   visitTypeName = (ctx: TypeNameContext) => {
@@ -29,9 +32,13 @@ export class RefLangVisitorSource extends Elan2Visitor<string> {
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
     const typeName = this.visit(ctx.typeName()) as string;
-    //const types = this.visit(ctx.type_())!;
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((s) => this.filterTokens(s))
+      .join(", ");
 
-    return `${typeName}<of ${""}>`;
+    return `${typeName}<of ${types}>`;
   };
 
   override visitType = (context: TypeContext) => {
