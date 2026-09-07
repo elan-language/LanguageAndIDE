@@ -169,7 +169,7 @@ class Game
   property message as String
 
   function withPlayers(p as List<of Player>) returns Game
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.players to p
     return copyOfThis
   end function
@@ -361,13 +361,13 @@ class Dealer inherits Player
   property hasPlayed as Boolean
 
   function withStatus(status as Status) returns Dealer
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.status to status
     return copyOfThis
   end function
 
   function withHandTotal(ht as Int) returns Dealer
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.handTotal to ht
     return copyOfThis
   end function
@@ -417,19 +417,19 @@ class HumanPlayer inherits Player
   end constructor
 
   function withStatus(status as Status) returns HumanPlayer
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.status to status
     return copyOfThis
   end function
 
   function withHandTotal(ht as Int) returns HumanPlayer
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.handTotal to ht
     return copyOfThis
   end function
 
   function withCards(c as List<of Card>) returns HumanPlayer
-    let copyOfThis be copy(this)
+    variable copyOfThis set to copy(this)
     assign copyOfThis.cards to c
     return copyOfThis
   end function

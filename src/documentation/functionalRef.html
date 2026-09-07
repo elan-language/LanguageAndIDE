@@ -36,7 +36,9 @@ This changes two things: </p>
 </li>
 <li>It will change some of the options available on the <b>new code</b> menus in the editor:
     <ul>
-        <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a <b>let statement</b> (plus, of course, comments).</li>
+        <li>Within a function, the only type of instruction that you may add (above the fixed <code>return</code> instruction) is a <b>variable definition</b> (plus, of course, comments).
+        Variables may be used to evaluate parts of the final expression returned by the function - to improve readbility and/or eliminate duplication within the final expression.
+      However, you may not assign a different value to a variable defined within a function - hence the <b>assign</b> instruction is not available within this context.</li>
         <li>Within a concrete or abstract class, you may add function methods, but not procedure methods.</li>
         <li>Within a concrete or abstract class, there is a new kind of method named a <b>copy with method</b>. Actually, this is just a template for a specific form
         of function method which is particularly useful in FP.</li>
@@ -189,7 +191,7 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
   of the class are both 100% tested.</li>
 </ul>
 
-<h2>The function body should consists of a 'return', plus optional let instructions only</h2>
+<h2>The function body should consists of a 'return', plus optional variable definitions only</h2>
 
 <p>In the FP demos you will see that a significant number of functions  that simply <code>return</code> an expression to be evaluated, for example:</p>
 <codeblock>
@@ -198,31 +200,16 @@ function gameOver(g as Game) returns Boolean
 end function
 </codeblock>
 
-<p>Other functions precede the <code>return</code> by one or more <b>let statement</b>s, for example</p>
+<p>Other functions precede the <code>return</code> by one or more <b>variable definitions</b>s, for example</p>
 <codeblock>
 function hasHitEdge(g as Game) returns Boolean
-  let x be g.head.x
-  let y be g.head.y
+  variable x set to g.head.x
+  variable y set to g.head.y
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
 end function
 </codeblock>
 
-<p>A <b>let statement</b> works like a <b>variable definition</b> except that the named value created <i>may not be reassigned</i>. This may sound like
-  a local <b>constant</b>, but a <b>let statement</b> differs from a constant in that:</p>
-
-<ul>
-  <li>it may be defined by an expression rather than just by a literal value</li>
-  <li>it may refer to a <code>List</code> or other data structure, where as the (global) <b>constant</b> instruction is limited to simple value types or a string.</li>
-</ul>
-
-<p>In the four languages supported by Elan, <b>let statement</b>s
-  are really just disguised <b>variable definition</b>s, executed sequentially. But in a pure FP language such as Haskell, OCAML, or F#,
-  <b>let statement</b><s></s> (some languages permit 'let clauses' <i>within an expression</i>) are executed <i>lazily</i>, meaning that execution of a function
-    <i>starts</i> by evaluating the <i>returned</i> expression, and evaluates the sub-expressions defined in <b>let statement</b>s <i>only when or if they are needed</i>.
-   So getting used to using <b>let statement</b>s in Elan leaves you better prepared to move onto a pure FP language at a future point.
-</p>
-
-<p>A <b>let statement</b> defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
+<p>In this context, a variable defines a 'sub-expression' that will be used in another expression, for one (or more) of these reasons:</p>
 
 <ul>
   <li>To make a long expression easier to read</li>
@@ -230,8 +217,8 @@ end function
   <li>Within a test, because the 'actual' field does not support 'chained' expressions (expressions containing more than one 'dot')</li>
 </ul>
 
-<p>When running in the <b>functional</b> paradigm, <b>let statement</b> is the only type of instruction that you may add within a function,
-  and the only type in addition to an <b>assert statement</b> that may be added into a <b>test</b>. (You can still, of course, add comments.)</p>
+<p>Note that the <b>assert</b> instruction is not offered within a function, because the variables within a function (or a test) may not, following
+the initial definition, be assigned to a different value.</p>
 
 <h2>Selection is implemented using 'conditional expressions'</h2>
 
@@ -245,15 +232,15 @@ end function
 </p>
 <codeblock>
 function betterOf(wc1 as WordCount, wc2 as WordCount, possAnswers as List&lt;of String&gt;) returns WordCount
-  let isBetter be wc2.count < wc1.count
-  let isEqualAndPossAnswer be (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
+  variable isBetter set to wc2.count < wc1.count
+  variable isEqualAndPossAnswer set to (wc2.count is wc1.count) and possAnswers.contains(wc2.word)
   return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
 end function
 </codeblock>
 
 <codeblock>
 function nextCellValue(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int, y as Int) returns Int
-  let live be willLive(grid[x][y], liveNeighbours(grid, x, y))
+  variable live set to willLive(grid[x][y], liveNeighbours(grid, x, y))
   return if_(live, black, white)
 end function
 </codeblock>
@@ -329,11 +316,11 @@ but in FP this is not permitted. Data structures are never to be mutated. Instea
 a <i>copy</i> of a data structure with specified differences from the original. For example, you may write:</p>
 
 <codeblock>
-  let myNewSubjects be mySubjects.withPut(3, "Geography")
+  variable myNewSubjects set to mySubjects.withPut(3, "Geography")
 </codeblock>
 <p>or</p>
 <codeblock>
-  let myNewSubjects be mySubjects.withAppend("Music")
+  variable myNewSubjects set to mySubjects.withAppend("Music")
 </codeblock>
 
 
@@ -342,7 +329,7 @@ a <i>copy</i> of a data structure with specified differences from the original. 
   You can never actually mutate a string, such as converting it to upper case or trimming off the leading spaces. You have to write, for example:</p>
 
 <codeblock>
-  let myNewString be myString.upperCase()
+  variable myNewString set to myString.upperCase()
 </codeblock>
 
 <p>When you want to apply operations to all items in a <code>List</code> you need to use iteration, which means using
@@ -416,7 +403,7 @@ which work the same way in each language.</p>
 
 <codeblock>
 test test_Map_Filter_Reduce
-  let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
+  variable nums set to [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
   assert nums.filter(lessThan5) evaluates to [2.22, 2.5]
   assert nums.map(cube) evaluates to [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
   assert nums.reduce(1.0, product).floor() evaluates to 81480107
@@ -516,15 +503,15 @@ used in isolation or as the last of a chain. It can, of course, be followed in t
 
 <codeblock>
 function nextGeneration(grid as List&lt;of List&lt;of Int&gt;&gt;) returns List&lt;of List&lt;of Int&gt;&gt;
-  let cols be range(0, 40)
+  variable cols set to range(0, 40)
   return cols.map(lambda x as Int => nextCol(grid, x))
 end function
 </codeblock>
 
 <codeblock>
 function nextCol(grid as List&lt;of List&lt;of Int&gt;&gt;, x as Int) returns List&lt;of Int&gt;
-  let col be grid[x]
-  let rows be range(0, 30)
+  variable col set to grid[x]
+  variable rows set to range(0, 30)
   return rows.map(lambda y as Int => nextCellValue(grid, x, y))
 end function
 </codeblock>
@@ -675,14 +662,14 @@ main
 end main
 
 function randomList(rng as Random) returns (List&lt;of Int&gt;, Random)
-  let li be new List&lt;of Int&gt;()
-  let items be range(0, 10)
+  variable li set to new List&lt;of Int&gt;()
+  variable items set to range(0, 10)
   return items.reduce((li, rng), appendDiceThrow)
 end function
 
 function appendDiceThrow(tup as (List&lt;of Int&gt;, Random), row as Int) returns (List&lt;of Int&gt;, Random)
-  let col be tup.item_0
-  let rng be tup.item_1
+  variable col set to tup.item_0
+  variable rng set to tup.item_1
   return (col.withAppend(rng.asInt(1, 6)), rng.nextGen())
 end function
 </codeblock>
@@ -706,77 +693,8 @@ end function
   <a href="oopRef.html#StatementInstructions">statement instructions as offered in the <b>object-oriented</b> paradigm</a>.</p>
 
 <p>However, <i>within a function</i> coding with Elan using the <b>functional</b> paradigm allows only the return statement -
-which forms part of the function template, plus the option to precede this with one or more ...</p>
+which forms part of the function template, plus the option to precede this with one or more <b>variable definitions</b></p>
 
-<div id="let">
- <h2>Let Statement</h2>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Examples of a let statement</h3>
-<div class="acc-body">
-
-  <p>From the <b>Life - functional</b> demo:</p>
-
- <codeblock>
-function north(cell as (Int, Int)) returns (Int, Int)
-  let x be cell.item_0
-  let y be cell.item_1
-  let y2 be if_(y is 0, 29, y - 1)
-  return (x, y2)
-end function
- </codeblock>
-
- <p>The first two let statements are used to extract the two values from the 2-tuple <code>cell</code> into named values <code>x</code> and <code>y</code>.
-The third let statement, calculates the y coordinate for the cell immediately to the North, using a conditional expression to 'wrap' around to the bottom
-of the 40x30 grid if necessary.</p>
-
-<p>From the <b>Merge Sort</b> demo:</p>
-
-<codeblock>
-function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
-  let mid be divAsInt(li.length(), 2)
-  let frontHalf be li.subList(0, mid)
-  return sort(frontHalf)
-end function
-</codeblock>
-
-<p>This function could have been written without using any let statements, as:</p>
-
-<codeblock>
-function sortedFrontHalf(li as List&lt;of String&gt;) returns List&lt;of String&gt;
-  return sort(li.subList(0, divAsInt(li.length(), 2)))
-end function
-</codeblock>
-
-<b>but the use of let statements makes the intention much easier to read.</b>
-
-</div></div>
-
- <div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about a let statement</h3>
-<div class="acc-body">
-
-  <ul>
-    <li>A let statement is like a variable definition, except that the named value created <i>may not then be reassigned to another value</i>.</li>
-    <li>A let statement is therefore <i>somewhat</i> like a constant, except that:
-      <ul>
-        <li>It is defined within a function, not globally</li>
-        <li>The value assigned to the name may be defined by an expression that incorporates function parameters and/or the named values from any (previous) let statements in the function.</li>
-        <li>The value may be a data structure such as a <code>List</code></li>
-      </ul>
-    </li>
-    <li>The motivations for using let statements is to:
-      <ul>
-        <li>To eliminate duplication, where the same sub-expression would appear more than once within the final expression to be evaluated and returned by the function.</li>
-        <li>To improve readabilty. In theory it is possible to implement <i>any</i> function using just a <code>return</code> statement followed by a single expression,
-        but the expressions can quickly become very hard to read, so it is better out sub-expressions into let statement - or, if the sub-expressions might be useful in
-        in other contexts, as separate functions.</li>
-        <li>Elan does have some limits on the complexity of expressions, and breaking out sub-expressions into lets is a good way to avoid encountering those limits.</li>
-      </ul>
-    </li>
-  </ul>
-</div></div>
-</div>
 </div>
 
 <div id="MemberInstructions">

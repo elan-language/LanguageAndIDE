@@ -60,7 +60,6 @@ import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comm
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
-import { LetStatementAsn } from "../../compiler/syntax-nodes/statements/let-statement-asn";
 import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
 import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
@@ -158,7 +157,6 @@ import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { InputStatement } from "../frames/statements/input-statement";
-import { LetStatement } from "../frames/statements/let-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
@@ -315,16 +313,6 @@ export function transform(
     varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
 
     return varAsn;
-  }
-
-  if (node instanceof LetStatement) {
-    const letAsn = new LetStatementAsn(node.getHtmlId(), scope);
-    letAsn.breakpointStatus = node.breakpointStatus;
-
-    letAsn.name = transform(node.name, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
-    letAsn.expr = transform(node.expr, node.getHtmlId(), letAsn) ?? EmptyAsn.Instance;
-
-    return letAsn;
   }
 
   if (node instanceof Assignment) {

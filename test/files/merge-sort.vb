@@ -19,48 +19,48 @@ Function sort(li As List(Of String)) As List(Of String)
 End Function
 
 Function sortedFrontHalf(li As List(Of String)) As List(Of String)
-  Dim mid = divAsInt(li.length(), 2) ' let
-  Dim frontHalf = li.subList(0, mid) ' let
+  Dim mid = divAsInt(li.length(), 2) ' variable definition
+  Dim frontHalf = li.subList(0, mid) ' variable definition
   Return sort(frontHalf)
 End Function
 
 Function sortedBackHalf(li As List(Of String)) As List(Of String)
-  Dim mid = divAsInt(li.length(), 2) ' let
-  Dim backHalf = li.subList(mid, li.length()) ' let
+  Dim mid = divAsInt(li.length(), 2) ' variable definition
+  Dim backHalf = li.subList(mid, li.length()) ' variable definition
   Return sort(backHalf)
 End Function
 
 Function merge(a As List(Of String), b As List(Of String)) As List(Of String)
-  Dim oneIsEmpty = (a.length() = 0) Or (b.length() = 0) ' let
+  Dim oneIsEmpty = (a.length() = 0) Or (b.length() = 0) ' variable definition
   Return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
 End Function
 
 Function mergeNonEmpty(a As List(Of String), b As List(Of String)) As List(Of String)
-  Dim aHead = a.head() ' let
-  Dim bHead = b.head() ' let
-  Dim aTail = a.tail() ' let
-  Dim bTail = b.tail() ' let
+  Dim aHead = a.head() ' variable definition
+  Dim bHead = b.head() ' variable definition
+  Dim aTail = a.tail() ' variable definition
+  Dim bTail = b.tail() ' variable definition
   Return if_(aHead.isBefore(bHead), {aHead}.withAppendList(merge(aTail, b)), {bHead}.withAppendList(merge(a, bTail)))
 End Function
 
 <TestClass Class Test_sort
  <TestMethod> Sub test_sort()
   ' Edge case: empty
-  Dim l1 = New List(Of String)() ' let
+  Dim l1 = New List(Of String)() ' variable definition
   Assert.AreEqual(l1, sort(l1))
   ' Edge case: one item
-  Dim li2 = {"plum"} ' let
+  Dim li2 = {"plum"} ' variable definition
   Assert.AreEqual(li2, sort(li2))
   ' Happy case: odd number of members
-  Dim li3 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' let
-  Dim sorted3 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"} ' let
+  Dim li3 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' variable definition
+  Dim sorted3 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"} ' variable definition
   Assert.AreEqual(sorted3, sort(li3))
   ' Happy case: even number of members
-  Dim li4 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"} ' let
-  Dim sorted4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"} ' let
+  Dim li4 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"} ' variable definition
+  Dim sorted4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"} ' variable definition
   Assert.AreEqual(sorted4, sort(li4))
   ' Edge case: already sorted
-  Dim li5 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"} ' let
+  Dim li5 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"} ' variable definition
   Assert.AreEqual(li5, sort(li5))
  End Sub
 End Class
@@ -69,16 +69,16 @@ End Class
 <TestClass Class Test_sortedFrontHalf
  <TestMethod> Sub test_sortedFrontHalf()
   ' Edge case: one item - so front half is empty
-  Dim li1 = {"plum"} ' let
+  Dim li1 = {"plum"} ' variable definition
   Assert.AreEqual(New List(Of String)(), sortedFrontHalf(li1))
   ' Happy case: odd number of members
-  Dim li2 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' let
+  Dim li2 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' variable definition
   Assert.AreEqual({"apricot", "lemon", "lime", "plum"}, sortedFrontHalf(li2))
   ' Happy case: even number of members
-  Dim li3 = {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' let
+  Dim li3 = {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' variable definition
   Assert.AreEqual({"apricot", "lemon", "melon", "plum"}, sortedFrontHalf(li3))
   ' Edge case: already sorted
-  Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' let
+  Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' variable definition
   Assert.AreEqual({"apple", "apricot", "lemon"}, sortedFrontHalf(li4))
  End Sub
 End Class
@@ -87,16 +87,16 @@ End Class
 <TestClass Class Test_sortedBackHalf
  <TestMethod> Sub test_sortedBackHalf()
   ' Edge case: one item - so back half is whole list
-  Dim li1 = {"plum"} ' let
+  Dim li1 = {"plum"} ' variable definition
   Assert.AreEqual({"plum"}, sortedBackHalf(li1))
   ' Happy case: odd number of members
-  Dim li2 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' let
+  Dim li2 = {"plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' variable definition
   Assert.AreEqual({"apple", "melon", "orange", "pear", "strawberry"}, sortedBackHalf(li2))
   ' Happy case: even number of members
-  Dim li3 = {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' let
+  Dim li3 = {"plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"} ' variable definition
   Assert.AreEqual({"apple", "orange", "pear", "strawberry"}, sortedBackHalf(li3))
   ' Edge case: already sorted
-  Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' let
+  Dim li4 = {"apple", "apricot", "lemon", "lime", "melon", "orange", "pear"} ' variable definition
   Assert.AreEqual({"lime", "melon", "orange", "pear"}, sortedBackHalf(li4))
  End Sub
 End Class
@@ -105,20 +105,20 @@ End Class
 <TestClass Class Test_merge
  <TestMethod> Sub test_merge()
   ' Happy cases:
-  Dim l1 = {"apple", "lime", "pear"} ' let
-  Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' let
+  Dim l1 = {"apple", "lime", "pear"} ' variable definition
+  Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' variable definition
   Assert.AreEqual({"melon", "orange"}, merge({"orange"}, {"melon"}))
   Assert.AreEqual({"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, merge(l1, l2))
   Assert.AreEqual({"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, merge(l2, l1))
   ' Edge cases - empty list(s)
-  Dim le = New List(Of String)() ' let
+  Dim le = New List(Of String)() ' variable definition
   Assert.AreEqual(le, merge(le, le))
   Assert.AreEqual(l1, merge(l1, le))
   Assert.AreEqual(l2, merge(le, l2))
   ' Edge case - duplication
   Assert.AreEqual({"apple", "apple", "lime", "lime", "pear", "pear"}, merge(l1, l1))
   ' Error case lists not sorted will not produce correct result
-  Dim lu = {"lime", "pear", "apple"} ' let
+  Dim lu = {"lime", "pear", "apple"} ' variable definition
   Assert.AreEqual({"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2))
   Assert.AreEqual({"lime", "pear", "apple"}, merge(lu, le))
  End Sub
@@ -127,8 +127,8 @@ End Class
 
 <TestClass Class Test_mergeNonEmpty
  <TestMethod> Sub test_mergeNonEmpty()
-  Dim l1 = {"apple", "lime", "pear"} ' let
-  Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' let
+  Dim l1 = {"apple", "lime", "pear"} ' variable definition
+  Dim l2 = {"apricot", "lemon", "plum", "watermelon"} ' variable definition
   Assert.AreEqual({"melon", "orange"}, mergeNonEmpty({"orange"}, {"melon"}))
   Assert.AreEqual({"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, mergeNonEmpty(l1, l2))
   Assert.AreEqual({"apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"}, mergeNonEmpty(l2, l1))
@@ -141,7 +141,7 @@ End Class
   ' Error case - pass empty list
   Assert.AreEqual("Out of range index: 0 size: 0", mergeNonEmpty(New List(Of String)(), l1))
   '  Error case unsorted list
-  Dim lu = {"lime", "pear", "apple"} ' let
+  Dim lu = {"lime", "pear", "apple"} ' variable definition
   Assert.AreEqual({"apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"}, merge(lu, l2))
  End Sub
 End Class

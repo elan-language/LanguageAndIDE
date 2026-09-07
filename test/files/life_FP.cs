@@ -12,14 +12,14 @@ static void main() {
 } // end main
 
 static List<List<int>> initialGrid(Random rng) { // function
-  var grid = new List<List<int>>(); // let
-  var cols = range(0, 40); // let
+  var grid = new List<List<int>>();
+  var cols = range(0, 40);
   return cols.reduce((grid, rng), appendCol).item_0;
 } // end function
 
 [TestClass] class Test_initialGrid
 [TestMethod] static void test_initialGrid() {
-  var grid = initialGrid(new Random()); // let
+  var grid = initialGrid(new Random());
   Assert.AreEqual(black, grid[0][0]);
   Assert.AreEqual(white, grid[1][0]);
   Assert.AreEqual(white, grid[2][0]);
@@ -33,30 +33,30 @@ static List<List<int>> initialGrid(Random rng) { // function
 
 static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c) { // function
   // 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  var grid = tup.item_0; // let
-  var rng = tup.item_1; // let
-  var tup2 = initialCol(rng); // let
-  var col = tup2.item_0; // let
-  var rng2 = tup2.item_1; // let
-  var grid2 = grid.withAppend(col); // let
+  var grid = tup.item_0;
+  var rng = tup.item_1;
+  var tup2 = initialCol(rng);
+  var col = tup2.item_0;
+  var rng2 = tup2.item_1;
+  var grid2 = grid.withAppend(col);
   return (grid2, rng2);
 } // end function
 
 [TestClass] class Test_appendCol
 [TestMethod] static void test_appendCol() {
-  var emptyGrid = new List<List<int>>(); // let
-  var rng = new Random(); // let
-  var result = appendCol((emptyGrid, rng), 0); // let
-  var grid1 = result.item_0; // let
-  var col = grid1[0]; // let
+  var emptyGrid = new List<List<int>>();
+  var rng = new Random();
+  var result = appendCol((emptyGrid, rng), 0);
+  var grid1 = result.item_0;
+  var col = grid1[0];
   Assert.AreEqual(black, col[0]);
   Assert.AreEqual(white, col[1]);
   Assert.AreEqual(black, col[2]);
   Assert.AreEqual(black, col[29]);
-  var rng2 = result.item_1; // let
-  var result2 = appendCol((grid1, rng2), 1); // let
-  var grid2 = result2.item_0; // let
-  var col2 = grid2[1]; // let
+  var rng2 = result.item_1;
+  var result2 = appendCol((grid1, rng2), 1);
+  var grid2 = result2.item_0;
+  var col2 = grid2[1];
   Assert.AreEqual(white, col2[0]);
   Assert.AreEqual(black, col2[1]);
   Assert.AreEqual(black, col2[2]);
@@ -64,22 +64,22 @@ static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c)
 }} // end test
 
 static (List<int>, Random) initialCol(Random rng) { // function
-  var col = new List<int>(); // let
-  var rows = range(0, 30); // let
+  var col = new List<int>();
+  var rows = range(0, 30);
   return rows.reduce((col, rng), appendCell);
 } // end function
 
 [TestClass] class Test_initialCol
 [TestMethod] static void test_initialCol() {
-  var rng = new Random(); // let
-  var result = initialCol(rng); // let
-  var col = result.item_0; // let
+  var rng = new Random();
+  var result = initialCol(rng);
+  var col = result.item_0;
   Assert.AreEqual(black, col[0]);
   Assert.AreEqual(white, col[1]);
   Assert.AreEqual(black, col[2]);
   Assert.AreEqual(black, col[29]);
-  var rng2 = result.item_1; // let
-  var col2 = initialCol(rng2).item_0; // let
+  var rng2 = result.item_1;
+  var col2 = initialCol(rng2).item_0;
   Assert.AreEqual(white, col2[0]);
   Assert.AreEqual(black, col2[1]);
   Assert.AreEqual(black, col2[2]);
@@ -87,22 +87,22 @@ static (List<int>, Random) initialCol(Random rng) { // function
 }} // end test
 
 static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // function
-  var col = tup.item_0; // let
-  var rng = tup.item_1; // let
+  var col = tup.item_0;
+  var rng = tup.item_1;
   return (col.withAppend(blackOrWhite(rng)), rng.nextGen());
 } // end function
 
 [TestClass] class Test_appendCell
 [TestMethod] static void test_appendCell() {
-  var rng = new Random(); // let
-  var emptyList = new List<int>(); // let
-  var result = appendCell((emptyList, rng), 0); // let
-  var col = result.item_0; // let
+  var rng = new Random();
+  var emptyList = new List<int>();
+  var result = appendCell((emptyList, rng), 0);
+  var col = result.item_0;
   Assert.AreEqual(1, col.length());
   Assert.AreEqual(black, col[0]);
-  var rng2 = result.item_1; // let
-  var result2 = appendCell((col, rng2), 1); // let
-  var col2 = result2.item_0; // let
+  var rng2 = result.item_1;
+  var result2 = appendCell((col, rng2), 1);
+  var col2 = result2.item_0;
   Assert.AreEqual(2, col2.length());
   Assert.AreEqual(white, col2[1]);
 }} // end test
@@ -113,10 +113,10 @@ static int blackOrWhite(Random rng) { // function
 
 [TestClass] class Test_blackOrWhite
 [TestMethod] static void test_blackOrWhite() {
-  var rng0 = new Random(); // let
-  var rng1 = rng0.nextGen(); // let
-  var rng2 = rng1.nextGen(); // let
-  var rng3 = rng2.nextGen(); // let
+  var rng0 = new Random();
+  var rng1 = rng0.nextGen();
+  var rng2 = rng1.nextGen();
+  var rng3 = rng2.nextGen();
   Assert.AreEqual(black, blackOrWhite(rng0));
   Assert.AreEqual(white, blackOrWhite(rng1));
   Assert.AreEqual(black, blackOrWhite(rng2));
@@ -124,9 +124,9 @@ static int blackOrWhite(Random rng) { // function
 }} // end test
 
 static (int, int) north((int, int) cell) { // function
-  var x = cell.item_0; // let
-  var y = cell.item_1; // let
-  var y2 = if_(y == 0, 29, y - 1); // let
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var y2 = if_(y == 0, 29, y - 1);
   return (x, y2);
 } // end function
 
@@ -139,9 +139,9 @@ static (int, int) north((int, int) cell) { // function
 }} // end test
 
 static (int, int) south((int, int) cell) { // function
-  var x = cell.item_0; // let
-  var y = cell.item_1; // let
-  var y2 = if_(y == 29, 0, y + 1); // let
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var y2 = if_(y == 29, 0, y + 1);
   return (x, y2);
 } // end function
 
@@ -154,9 +154,9 @@ static (int, int) south((int, int) cell) { // function
 }} // end test
 
 static (int, int) east((int, int) cell) { // function
-  var x = cell.item_0; // let
-  var y = cell.item_1; // let
-  var x2 = if_(x == 39, 0, x + 1); // let
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var x2 = if_(x == 39, 0, x + 1);
   return (x2, y);
 } // end function
 
@@ -169,9 +169,9 @@ static (int, int) east((int, int) cell) { // function
 }} // end test
 
 static (int, int) west((int, int) cell) { // function
-  var x = cell.item_0; // let
-  var y = cell.item_1; // let
-  var x2 = if_(x == 0, 39, x - 1); // let
+  var x = cell.item_0;
+  var y = cell.item_1;
+  var x2 = if_(x == 0, 39, x - 1);
   return (x2, y);
 } // end function
 
@@ -236,7 +236,7 @@ static (int, int) southWest((int, int) cell) { // function
 }} // end test
 
 static List<(int, int)> neighbourCells(int x, int y) { // function
-  var c = (x, y); // let
+  var c = (x, y);
   return new [] {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
 } // end function
 
@@ -248,14 +248,14 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
 }} // end test
 
 static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
-  var neighbours = neighbourCells(x, y); // let
+  var neighbours = neighbourCells(x, y);
   return neighbours.filter((int, int) c => grid[c.item_0][c.item_1] == black).length();
 } // end function
 
 [TestClass] class Test_liveNeighbours
 [TestMethod] static void test_liveNeighbours() {
-  var grid = initialGrid(new Random()); // let
-  var live = liveNeighbours(grid, 1, 1); // let
+  var grid = initialGrid(new Random());
+  var live = liveNeighbours(grid, 1, 1);
   Assert.AreEqual(4, live);
 }} // end test
 
@@ -286,32 +286,32 @@ static bool willLive(int cell, int liveNeighbours) { // function
 }} // end test
 
 static int nextCellValue(List<List<int>> grid, int x, int y) { // function
-  var live = willLive(grid[x][y], liveNeighbours(grid, x, y)); // let
+  var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
   return if_(live, black, white);
 } // end function
 
 [TestClass] class Test_nextCellValue
 [TestMethod] static void test_nextCellValue() {
-  var grid = initialGrid(new Random()); // let
-  var nxt = nextCellValue(grid, 1, 1); // let
+  var grid = initialGrid(new Random());
+  var nxt = nextCellValue(grid, 1, 1);
   Assert.AreEqual(white, nxt);
 }} // end test
 
 static List<List<int>> nextGeneration(List<List<int>> grid) { // function
-  var cols = range(0, 40); // let
+  var cols = range(0, 40);
   return cols.map(int x => nextCol(grid, x));
 } // end function
 
 static List<int> nextCol(List<List<int>> grid, int x) { // function
-  var col = grid[x]; // let
-  var rows = range(0, 30); // let
+  var col = grid[x];
+  var rows = range(0, 30);
   return rows.map(int y => nextCellValue(grid, x, y));
 } // end function
 
 [TestClass] class Test_nextCol
 [TestMethod] static void test_nextCol() {
-  var grid = initialGrid(new Random()); // let
-  var col = nextCol(grid, 3); // let
+  var grid = initialGrid(new Random());
+  var col = nextCol(grid, 3);
   Assert.AreEqual(black, col[0]);
   Assert.AreEqual(black, col[1]);
   Assert.AreEqual(white, col[2]);

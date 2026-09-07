@@ -1,13 +1,13 @@
 ' VB.NET with Elan 2.0.0-beta3
 
 Function bestFitLine(points As List(Of Point)) As (Double, Double)
-  Dim sumX = points.sumBy(Function (p As Point) p.x) ' let
-  Dim sumXsq = points.sumBy(Function (p As Point) p.x*p.x) ' let
-  Dim sumY = points.sumBy(Function (p As Point) p.y) ' let
-  Dim sumXY = points.sumBy(Function (p As Point) p.x*p.y) ' let
-  Dim n = points.length() ' let
-  Dim a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX) ' let
-  Dim b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) ' let
+  Dim sumX = points.sumBy(Function (p As Point) p.x) ' variable definition
+  Dim sumXsq = points.sumBy(Function (p As Point) p.x*p.x) ' variable definition
+  Dim sumY = points.sumBy(Function (p As Point) p.y) ' variable definition
+  Dim sumXY = points.sumBy(Function (p As Point) p.x*p.y) ' variable definition
+  Dim n = points.length() ' variable definition
+  Dim a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX) ' variable definition
+  Dim b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX) ' variable definition
   Return (a, b)
 End Function
 
@@ -34,10 +34,10 @@ End Function
 
 <TestClass Class Test_bestFit
  <TestMethod> Sub test_bestFit()
-  Dim l1 = {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)} ' let
-  Dim a_b = bestFitLine(l1) ' let
-  Dim a = a_b.item_0 ' let
-  Dim b = a_b.item_1 ' let
+  Dim l1 = {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)} ' variable definition
+  Dim a_b = bestFitLine(l1) ' variable definition
+  Dim a = a_b.item_0 ' variable definition
+  Dim b = a_b.item_1 ' variable definition
   Assert.AreEqual(0.766, a.round(3))
   Assert.AreEqual(1.093, b.round(3))
  End Sub
@@ -46,8 +46,8 @@ End Class
 
 <TestClass Class Test_bestFit_empty
  <TestMethod> Sub test_bestFit_empty()
-  Dim l1 = New List(Of Point)() ' let
-  Dim a_b = bestFitLine(l1) ' let
+  Dim l1 = New List(Of Point)() ' variable definition
+  Dim a_b = bestFitLine(l1) ' variable definition
   ' NaN means 'Not A Number"
   Assert.AreEqual("(NaN, NaN)", a_b.toString())
  End Sub

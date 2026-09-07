@@ -23,12 +23,12 @@ End Function
 
 <TestClass Class Test_sum
  <TestMethod> Sub test_sum()
-  Dim li = {3.1, 5.02, 4, 7.73, 9.9} ' let
+  Dim li = {3.1, 5.02, 4, 7.73, 9.9} ' variable definition
   Assert.AreEqual(29.75, sum(li).round(2))
   ' edge cases: empty, and one element lists
-  Dim le = New List(Of Double)() ' let
+  Dim le = New List(Of Double)() ' variable definition
   Assert.AreEqual(0, sum(le))
-  Dim l1 = {0.6} ' let
+  Dim l1 = {0.6} ' variable definition
   Assert.AreEqual(0.6, sum(l1))
  End Sub
 End Class
@@ -40,12 +40,12 @@ End Function
 
 <TestClass Class Test_reverse
  <TestMethod> Sub test_reverse()
-  Dim l = {3.1, 5.02, 4, 7.73, 9.9} ' let
+  Dim l = {3.1, 5.02, 4, 7.73, 9.9} ' variable definition
   Assert.AreEqual({9.9, 7.73, 4, 5.02, 3.1}, reverse(l))
   ' edge cases: empty, and one element lists
-  Dim le = New List(Of Double)() ' let
+  Dim le = New List(Of Double)() ' variable definition
   Assert.AreEqual(le, reverse(le))
-  Dim l1 = {0.6} ' let
+  Dim l1 = {0.6} ' variable definition
   Assert.AreEqual(l1, reverse(l1))
  End Sub
 End Class

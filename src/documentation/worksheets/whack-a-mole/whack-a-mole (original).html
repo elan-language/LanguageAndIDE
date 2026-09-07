@@ -122,7 +122,7 @@
             <el-code-block>
                 <main class="ok multiline">
                     <el-top><el-expand>+</el-expand><el-kw>main</el-kw><el-msg></el-msg></el-top>
-                    <el-statement class="ok"><el-kw>let </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> be </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit> </el-lit>")</el-txt></el-field></el-statement>
+                    <el-statement class="ok"><el-kw>variable </el-kw><el-field id="var6" class="ok" tabindex="0"><el-txt><el-id>holes</el-id></el-txt><el-place><i>name</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field><el-kw> set to </el-kw><el-field id="expr7" class="ok" tabindex="0"><el-txt><el-kw>new</el-kw> <el-type>Array</el-type>&lt;<el-kw>of</el-kw> <el-type>String</el-type>&gt;(<el-lit>10</el-lit>, "<el-lit> </el-lit>")</el-txt></el-field></el-statement>
                     <el-statement class="ok"><el-top><el-kw>call </el-kw><el-field id="ident12" class="ok" tabindex="0"><el-txt><el-id>holes</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place><el-compl></el-compl><el-msg></el-msg></el-field>(<el-field id="args13" class="optional ok" tabindex="0"><el-txt><el-lit>1</el-lit>, "<el-lit>*</el-lit>"</el-txt></el-field>)</el-top></el-statement>
                     <el-statement class="ok empty"><el-select><el-txt></el-txt><el-place>new code</el-place></el-select></el-statement>
                     <el-kw>end main</el-kw>
@@ -227,7 +227,7 @@
             <li>Start by deleting the instruction doing the pause, and replacing it with:
 
             <el-code-block>
-                <el-statement class="ok"><el-kw>let </el-kw><el-field class="ok"><el-txt><el-id>stopTime</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-method>clock</el-method>() + <el-lit>2000</el-lit></el-txt></el-field></el-statement>
+                <el-statement class="ok"><el-kw>variable </el-kw><el-field class="ok"><el-txt><el-id>stopTime</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr36" class="ok" tabindex="0"><el-txt><el-method>clock</el-method>() + <el-lit>2000</el-lit></el-txt></el-field></el-statement>
             </el-code-block>
 
             noting that:
@@ -247,7 +247,7 @@
             <li>Within this new loop, add the instruction:
 
             <el-code-block>
-                <el-statement class="ok" ><el-kw>let </el-kw><el-field id="var44" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
+                <el-statement class="ok" ><el-kw>variable </el-kw><el-field id="var44" class="ok" tabindex="0"><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field id="expr45" class="ok" tabindex="0"><el-txt><el-method>getKey</el-method>()</el-txt></el-field></el-statement>
             </el-code-block>
 
             noting that <i>if a key has been pressed</i> (since the last time it was called), the method <el-method>getKey</el-method>

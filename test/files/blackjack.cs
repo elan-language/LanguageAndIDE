@@ -83,18 +83,18 @@ static Outcome determinePlayerOutcome(Dealer dealer, Player player) { // functio
 
 [TestClass] class Test_determinePlayerOutcome
 [TestMethod] static void test_determinePlayerOutcome() {
-  var dbj = (new Dealer(0)).with_status(Status.blackjack); // let
+  var dbj = (new Dealer(0)).with_status(Status.blackjack);
   Assert.AreEqual(Status.blackjack, dbj.status);
-  var d21 = (new Dealer(0)).with_status(Status.standing).with_handTotal(21); // let
+  var d21 = (new Dealer(0)).with_status(Status.standing).with_handTotal(21);
   Assert.AreEqual(Status.standing, d21.status);
   Assert.AreEqual(21, d21.handTotal);
-  var d17 = (new Dealer(0)).with_status(Status.standing).with_handTotal(17); // let
-  var dbu = (new Dealer(0)).with_status(Status.bust); // let
-  var pbj = (new HumanPlayer("", 0)).with_status(Status.blackjack); // let
+  var d17 = (new Dealer(0)).with_status(Status.standing).with_handTotal(17);
+  var dbu = (new Dealer(0)).with_status(Status.bust);
+  var pbj = (new HumanPlayer("", 0)).with_status(Status.blackjack);
   Assert.AreEqual(Status.blackjack, pbj.status);
-  var p21 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21); // let
-  var p17 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17); // let
-  var pbu = (new HumanPlayer("", 0)).with_status(Status.bust); // let
+  var p21 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21);
+  var p17 = (new HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17);
+  var pbu = (new HumanPlayer("", 0)).with_status(Status.bust);
   Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj));
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21));
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu));
@@ -116,16 +116,16 @@ static Card dealCard(double random) { // function
 
 [TestClass] class Test_dealCard
 [TestMethod] static void test_dealCard() {
-  var c1 = dealCard(0); // let
+  var c1 = dealCard(0);
   Assert.AreEqual("2", c1.rank);
   Assert.AreEqual(Suit.clubs, c1.suit);
-  var c2 = dealCard(0.9999999); // let
+  var c2 = dealCard(0.9999999);
   Assert.AreEqual("A", c2.rank);
   Assert.AreEqual(Suit.spades, c2.suit);
-  var c3 = dealCard(0.5); // let
+  var c3 = dealCard(0.5);
   Assert.AreEqual("8", c3.rank);
   Assert.AreEqual(Suit.hearts, c3.suit);
-  var c4 = dealCard(0.24); // let
+  var c4 = dealCard(0.24);
   Assert.AreEqual("5", c4.rank);
   Assert.AreEqual(Suit.clubs, c4.suit);
 }} // end test
@@ -162,11 +162,11 @@ static string htmlForGame(Game game) { // function
 
 [TestClass] class Test_htmlForGame
 [TestMethod] static void test_htmlForGame() {
-  var c1 = new Card("3", Suit.clubs, false); // let
-  var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("fred", 10)).with_cards(new [] {c1, c2}); // let
-  var players = (new List<Player>()).withAppend(p); // let
-  var g2 = (new Game(1)).with_players(players); // let
+  var c1 = new Card("3", Suit.clubs, false);
+  var c2 = new Card("K", Suit.spades, true);
+  var p = (new HumanPlayer("fred", 10)).with_cards(new [] {c1, c2});
+  var players = (new List<Player>()).withAppend(p);
+  var g2 = (new Game(1)).with_players(players);
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2));
 }} // end test
 
@@ -184,9 +184,9 @@ static string htmlForPlayer(Player player) { // function
 
 [TestClass] class Test_htmlForPlayer
 [TestMethod] static void test_htmlForPlayer() {
-  var c1 = new Card("3", Suit.clubs, false); // let
-  var c2 = new Card("K", Suit.spades, true); // let
-  var p = (new HumanPlayer("charlie", 10)).with_cards(new [] {c1, c2}); // let
+  var c1 = new Card("3", Suit.clubs, false);
+  var c2 = new Card("K", Suit.spades, true);
+  var p = (new HumanPlayer("charlie", 10)).with_cards(new [] {c1, c2});
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p));
 }} // end test
 

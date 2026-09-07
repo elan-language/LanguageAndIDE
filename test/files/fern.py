@@ -30,10 +30,10 @@ def main() -> None:
 
 def onepoint(s: State) -> State: # function
   # s.r.asFloat() is the current random number between 0 and 1
-  nx_ny = onestep(s.x, s.y, s.r.asFloat()) # let
-  nx = nx_ny.item_0 # let
-  ny = nx_ny.item_1 # let
-  rect = (RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25) # let
+  nx_ny = onestep(s.x, s.y, s.r.asFloat()) # variable definition
+  nx = nx_ny.item_0 # variable definition
+  ny = nx_ny.item_1 # variable definition
+  rect = (RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25) # variable definition
   # s.r.nextGen() moves the random number generator on to the next number
   return (State(rect, nx, ny, s.r.nextGen()))
 # end function
@@ -48,14 +48,14 @@ def onestep(x: float, y: float, r: float) -> tuple[float, float]: # function
   # Currently you can't make the params into one long line
   # as it makes the browser use 100% CPU
   # xx xy yx yy cx cy probablity
-  p1 = [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01] # let
-  p2 = [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85] # let
-  p3 = [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07] # let
-  p4 = [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07] # let
-  allPs = [p1, p2, p3, p4] # let
+  p1 = [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01] # variable definition
+  p2 = [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85] # variable definition
+  p3 = [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07] # variable definition
+  p4 = [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07] # variable definition
+  allPs = [p1, p2, p3, p4] # variable definition
   # use the random number r to select one of p1 to p4
   # weighted by the probabilities and put it in pp
-  pp = getparams(r, allPs, 0.0) # let
+  pp = getparams(r, allPs, 0.0) # variable definition
   return (x*pp[0] + y*pp[1] + pp[4], x*pp[2] + y*pp[3] + pp[5])
 # end function
 
@@ -68,8 +68,8 @@ def onestep(x: float, y: float, r: float) -> tuple[float, float]: # function
 # otherwise recurse with the rest of the list of params
 
 def getparams(r: float, prms: list[list[float]], cumuprob: float) -> list[float]: # function
-  head = prms.head() # let
-  cp2 = cumuprob + head[6] # let
+  head = prms.head() # variable definition
+  cp2 = cumuprob + head[6] # variable definition
   return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 # end function
 
@@ -102,10 +102,10 @@ class Test_one(unittest.TestCase):
  def test_one(self) -> None:
   self.assertEqual(roundtuple2(onestep(0.0, 0.16, 0.5)), [0.0064, 1.736])
   self.assertEqual(roundtuple2(onestep(0.0, 0.16, 0.9)), [-0.0416, 1.6352])
-  s = onepoint(State(RectangleVG(), 0.0, 0.16, Random())) # let
+  s = onepoint(State(RectangleVG(), 0.0, 0.16, Random())) # variable definition
   self.assertEqual(s.toString(), "rect at 50.0448, 62.848")
-  p1 = [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01] # let
-  p2 = [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85] # let
+  p1 = [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01] # variable definition
+  p2 = [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85] # variable definition
   self.assertEqual(getparams(0.005, [p1, p2], 0.0), p1)
   self.assertEqual(getparams(0.03, [p1, p2], 0.0), p2)
   self.assertEqual(getparams(0.03, [p2], 0.01), p2)

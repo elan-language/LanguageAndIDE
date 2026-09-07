@@ -12,14 +12,14 @@ Sub main()
 End Sub
 
 Function initialGrid(rng As Random) As List(Of List(Of Integer))
-  Dim grid = New List(Of List(Of Integer))() ' let
-  Dim cols = range(0, 40) ' let
+  Dim grid = New List(Of List(Of Integer))() ' variable definition
+  Dim cols = range(0, 40) ' variable definition
   Return cols.reduce((grid, rng), appendCol).item_0
 End Function
 
 <TestClass Class Test_initialGrid
  <TestMethod> Sub test_initialGrid()
-  Dim grid = initialGrid(New Random()) ' let
+  Dim grid = initialGrid(New Random()) ' variable definition
   Assert.AreEqual(black, grid(0)(0))
   Assert.AreEqual(white, grid(1)(0))
   Assert.AreEqual(white, grid(2)(0))
@@ -35,30 +35,30 @@ End Class
 
 Function appendCol(tup As (List(Of List(Of Integer)), Random), c As Integer) As (List(Of List(Of Integer)), Random)
   ' 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  Dim grid = tup.item_0 ' let
-  Dim rng = tup.item_1 ' let
-  Dim tup2 = initialCol(rng) ' let
-  Dim col = tup2.item_0 ' let
-  Dim rng2 = tup2.item_1 ' let
-  Dim grid2 = grid.withAppend(col) ' let
+  Dim grid = tup.item_0 ' variable definition
+  Dim rng = tup.item_1 ' variable definition
+  Dim tup2 = initialCol(rng) ' variable definition
+  Dim col = tup2.item_0 ' variable definition
+  Dim rng2 = tup2.item_1 ' variable definition
+  Dim grid2 = grid.withAppend(col) ' variable definition
   Return (grid2, rng2)
 End Function
 
 <TestClass Class Test_appendCol
  <TestMethod> Sub test_appendCol()
-  Dim emptyGrid = New List(Of List(Of Integer))() ' let
-  Dim rng = New Random() ' let
-  Dim result = appendCol((emptyGrid, rng), 0) ' let
-  Dim grid1 = result.item_0 ' let
-  Dim col = grid1(0) ' let
+  Dim emptyGrid = New List(Of List(Of Integer))() ' variable definition
+  Dim rng = New Random() ' variable definition
+  Dim result = appendCol((emptyGrid, rng), 0) ' variable definition
+  Dim grid1 = result.item_0 ' variable definition
+  Dim col = grid1(0) ' variable definition
   Assert.AreEqual(black, col(0))
   Assert.AreEqual(white, col(1))
   Assert.AreEqual(black, col(2))
   Assert.AreEqual(black, col(29))
-  Dim rng2 = result.item_1 ' let
-  Dim result2 = appendCol((grid1, rng2), 1) ' let
-  Dim grid2 = result2.item_0 ' let
-  Dim col2 = grid2(1) ' let
+  Dim rng2 = result.item_1 ' variable definition
+  Dim result2 = appendCol((grid1, rng2), 1) ' variable definition
+  Dim grid2 = result2.item_0 ' variable definition
+  Dim col2 = grid2(1) ' variable definition
   Assert.AreEqual(white, col2(0))
   Assert.AreEqual(black, col2(1))
   Assert.AreEqual(black, col2(2))
@@ -68,22 +68,22 @@ End Class
 
 
 Function initialCol(rng As Random) As (List(Of Integer), Random)
-  Dim col = New List(Of Integer)() ' let
-  Dim rows = range(0, 30) ' let
+  Dim col = New List(Of Integer)() ' variable definition
+  Dim rows = range(0, 30) ' variable definition
   Return rows.reduce((col, rng), appendCell)
 End Function
 
 <TestClass Class Test_initialCol
  <TestMethod> Sub test_initialCol()
-  Dim rng = New Random() ' let
-  Dim result = initialCol(rng) ' let
-  Dim col = result.item_0 ' let
+  Dim rng = New Random() ' variable definition
+  Dim result = initialCol(rng) ' variable definition
+  Dim col = result.item_0 ' variable definition
   Assert.AreEqual(black, col(0))
   Assert.AreEqual(white, col(1))
   Assert.AreEqual(black, col(2))
   Assert.AreEqual(black, col(29))
-  Dim rng2 = result.item_1 ' let
-  Dim col2 = initialCol(rng2).item_0 ' let
+  Dim rng2 = result.item_1 ' variable definition
+  Dim col2 = initialCol(rng2).item_0 ' variable definition
   Assert.AreEqual(white, col2(0))
   Assert.AreEqual(black, col2(1))
   Assert.AreEqual(black, col2(2))
@@ -93,22 +93,22 @@ End Class
 
 
 Function appendCell(tup As (List(Of Integer), Random), row As Integer) As (List(Of Integer), Random)
-  Dim col = tup.item_0 ' let
-  Dim rng = tup.item_1 ' let
+  Dim col = tup.item_0 ' variable definition
+  Dim rng = tup.item_1 ' variable definition
   Return (col.withAppend(blackOrWhite(rng)), rng.nextGen())
 End Function
 
 <TestClass Class Test_appendCell
  <TestMethod> Sub test_appendCell()
-  Dim rng = New Random() ' let
-  Dim emptyList = New List(Of Integer)() ' let
-  Dim result = appendCell((emptyList, rng), 0) ' let
-  Dim col = result.item_0 ' let
+  Dim rng = New Random() ' variable definition
+  Dim emptyList = New List(Of Integer)() ' variable definition
+  Dim result = appendCell((emptyList, rng), 0) ' variable definition
+  Dim col = result.item_0 ' variable definition
   Assert.AreEqual(1, col.length())
   Assert.AreEqual(black, col(0))
-  Dim rng2 = result.item_1 ' let
-  Dim result2 = appendCell((col, rng2), 1) ' let
-  Dim col2 = result2.item_0 ' let
+  Dim rng2 = result.item_1 ' variable definition
+  Dim result2 = appendCell((col, rng2), 1) ' variable definition
+  Dim col2 = result2.item_0 ' variable definition
   Assert.AreEqual(2, col2.length())
   Assert.AreEqual(white, col2(1))
  End Sub
@@ -121,10 +121,10 @@ End Function
 
 <TestClass Class Test_blackOrWhite
  <TestMethod> Sub test_blackOrWhite()
-  Dim rng0 = New Random() ' let
-  Dim rng1 = rng0.nextGen() ' let
-  Dim rng2 = rng1.nextGen() ' let
-  Dim rng3 = rng2.nextGen() ' let
+  Dim rng0 = New Random() ' variable definition
+  Dim rng1 = rng0.nextGen() ' variable definition
+  Dim rng2 = rng1.nextGen() ' variable definition
+  Dim rng3 = rng2.nextGen() ' variable definition
   Assert.AreEqual(black, blackOrWhite(rng0))
   Assert.AreEqual(white, blackOrWhite(rng1))
   Assert.AreEqual(black, blackOrWhite(rng2))
@@ -134,9 +134,9 @@ End Class
 
 
 Function north(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim y2 = if_(y = 0, 29, y - 1) ' let
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim y2 = if_(y = 0, 29, y - 1) ' variable definition
   Return (x, y2)
 End Function
 
@@ -151,9 +151,9 @@ End Class
 
 
 Function south(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim y2 = if_(y = 29, 0, y + 1) ' let
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim y2 = if_(y = 29, 0, y + 1) ' variable definition
   Return (x, y2)
 End Function
 
@@ -168,9 +168,9 @@ End Class
 
 
 Function east(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim x2 = if_(x = 39, 0, x + 1) ' let
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim x2 = if_(x = 39, 0, x + 1) ' variable definition
   Return (x2, y)
 End Function
 
@@ -185,9 +185,9 @@ End Class
 
 
 Function west(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' let
-  Dim y = cell.item_1 ' let
-  Dim x2 = if_(x = 0, 39, x - 1) ' let
+  Dim x = cell.item_0 ' variable definition
+  Dim y = cell.item_1 ' variable definition
+  Dim x2 = if_(x = 0, 39, x - 1) ' variable definition
   Return (x2, y)
 End Function
 
@@ -262,7 +262,7 @@ End Class
 
 
 Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
-  Dim c = (x, y) ' let
+  Dim c = (x, y) ' variable definition
   Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 End Function
 
@@ -276,14 +276,14 @@ End Class
 
 
 Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim neighbours = neighbourCells(x, y) ' let
+  Dim neighbours = neighbourCells(x, y) ' variable definition
   Return neighbours.filter(Function (c As (Integer, Integer)) grid(c.item_0)(c.item_1) = black).length()
 End Function
 
 <TestClass Class Test_liveNeighbours
  <TestMethod> Sub test_liveNeighbours()
-  Dim grid = initialGrid(New Random()) ' let
-  Dim live = liveNeighbours(grid, 1, 1) ' let
+  Dim grid = initialGrid(New Random()) ' variable definition
+  Dim live = liveNeighbours(grid, 1, 1) ' variable definition
   Assert.AreEqual(4, live)
  End Sub
 End Class
@@ -318,34 +318,34 @@ End Class
 
 
 Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
-  Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' let
+  Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' variable definition
   Return if_(live, black, white)
 End Function
 
 <TestClass Class Test_nextCellValue
  <TestMethod> Sub test_nextCellValue()
-  Dim grid = initialGrid(New Random()) ' let
-  Dim nxt = nextCellValue(grid, 1, 1) ' let
+  Dim grid = initialGrid(New Random()) ' variable definition
+  Dim nxt = nextCellValue(grid, 1, 1) ' variable definition
   Assert.AreEqual(white, nxt)
  End Sub
 End Class
 
 
 Function nextGeneration(grid As List(Of List(Of Integer))) As List(Of List(Of Integer))
-  Dim cols = range(0, 40) ' let
+  Dim cols = range(0, 40) ' variable definition
   Return cols.map(Function (x As Integer) nextCol(grid, x))
 End Function
 
 Function nextCol(grid As List(Of List(Of Integer)), x As Integer) As List(Of Integer)
-  Dim col = grid(x) ' let
-  Dim rows = range(0, 30) ' let
+  Dim col = grid(x) ' variable definition
+  Dim rows = range(0, 30) ' variable definition
   Return rows.map(Function (y As Integer) nextCellValue(grid, x, y))
 End Function
 
 <TestClass Class Test_nextCol
  <TestMethod> Sub test_nextCol()
-  Dim grid = initialGrid(New Random()) ' let
-  Dim col = nextCol(grid, 3) ' let
+  Dim grid = initialGrid(New Random()) ' variable definition
+  Dim col = nextCol(grid, 3) ' variable definition
   Assert.AreEqual(black, col(0))
   Assert.AreEqual(black, col(1))
   Assert.AreEqual(white, col(2))

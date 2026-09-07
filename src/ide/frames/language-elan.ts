@@ -21,7 +21,6 @@ import {
   inKeyword,
   inputKeyword,
   lambdaKeyword,
-  letKeyword,
   mainKeyword,
   newKeyword,
   ofKeyword,
@@ -95,7 +94,6 @@ import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
-import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -148,8 +146,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof InputStatement) {
       html = `<el-kw>${this.INPUT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw><el-method>inputString</el-method>(${frame.prompt.renderAsHtml()})`;
-    } else if (frame instanceof LetStatement) {
-      html = `<el-kw>${this.LET} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.BE} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-kw>${this.PRINT}</el-kw>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
@@ -261,7 +257,6 @@ export class LanguageElan extends LanguageAbstract {
   private INHERITS = inheritsKeyword;
   private INPUT = inputKeyword;
   private lambdaKeyword = lambdaKeyword;
-  private LET = letKeyword;
   private MAIN = mainKeyword;
   private NEW = newKeyword;
   private OF = ofKeyword;

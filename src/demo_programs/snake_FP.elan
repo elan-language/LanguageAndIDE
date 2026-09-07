@@ -1,4 +1,4 @@
-# 345a86c2faac923039b2b5669587e732d9fbd7bda3837d7e2b82721a12340f37 Elan 2.0.0-beta3 valid
+# 99e289004e179670a7730969be9d72c220c881a9b11925daf84c5a2073fe15f8 Elan 2.0.0-beta3 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -16,17 +16,17 @@ main
 end main
 
 function clockTick(g as Game, k as String) returns Game
-  let g2 be if_(k.equals(""), g, g.with_key(k))
-  let g3 be moveSnake(g2)
-  let g4 be eatAppleIfPoss(g3)
+  variable g2 set to if_(k.equals(""), g, g.with_key(k))
+  variable g3 set to moveSnake(g2)
+  variable g4 set to eatAppleIfPoss(g3)
   return if_(gameOver(g4), g4.with_isOn(false), g4)
 end function
 
 function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
-  let b2 be graphicsPut(b, g.apple.x, g.apple.y, red)
-  let b3 be graphicsPut(b2, g.head.x, g.head.y, green)
-  let tail be g.body[0]
-  let tailColour be if_(tail.equals(g.priorTail), green, white)
+  variable b2 set to graphicsPut(b, g.apple.x, g.apple.y, red)
+  variable b3 set to graphicsPut(b2, g.head.x, g.head.y, green)
+  variable tail set to g.body[0]
+  variable tailColour set to if_(tail.equals(g.priorTail), green, white)
   return graphicsPut(b3, tail.x, tail.y, tailColour)
 end function
 
@@ -39,17 +39,17 @@ function score(g as Game) returns Int
 end function
 
 function moveSnake(g as Game) returns Game
-  let k be g.key
-  let x be g.head.x
-  let y be g.head.y
-  let newX be if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
-  let newY be if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
+  variable k set to g.key
+  variable x set to g.head.x
+  variable y set to g.head.y
+  variable newX set to if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x))
+  variable newY set to if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y))
   return g.with_body(g.body.withAppend(g.head)).with_head(new Square(newX, newY))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
-  let tail be g.body[0]
-  let moveTail be g.body.subList(1, g.body.length())
+  variable tail set to g.body[0]
+  variable moveTail set to g.body.subList(1, g.body.length())
   return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail))
 end function
 
@@ -62,8 +62,8 @@ function gameOver(g as Game) returns Boolean
 end function
 
 function hasHitEdge(g as Game) returns Boolean
-  let x be g.head.x
-  let y be g.head.y
+  variable x set to g.head.x
+  variable y set to g.head.y
   return (x is -1) or (y is -1) or (x is 40) or (y is 30)
 end function
 
@@ -97,12 +97,12 @@ class Game
   end function
 
   function withNewApple() returns Game
-    let x be this.rnd.asInt(0, 39)
-    let rnd2 be this.rnd.nextGen()
-    let y be rnd2.asInt(0, 29)
-    let rnd3 be rnd2.nextGen()
-    let apple2 be new Square(x, y)
-    let g2 be this.with_apple(apple2).with_rnd(rnd3)
+    variable x set to this.rnd.asInt(0, 39)
+    variable rnd2 set to this.rnd.nextGen()
+    variable y set to rnd2.asInt(0, 29)
+    variable rnd3 set to rnd2.nextGen()
+    variable apple2 set to new Square(x, y)
+    variable g2 set to this.with_apple(apple2).with_rnd(rnd3)
     return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
   end function
 
@@ -153,140 +153,140 @@ class Square
 end class
 
 test test_clockTick
-  let g1 be new Game(new Random())
-  let g2 be g1.withNewApple()
-  let g3 be clockTick(g2, "s")
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.withNewApple()
+  variable g3 set to clockTick(g2, "s")
   assert g3.head evaluates to new Square(22, 16)
   assert g3.body.length() evaluates to 2
   assert g3.priorTail evaluates to g2.body[0]
   assert g3.isOn evaluates to true
-  let g4 be g3.with_apple(new Square(22, 17))
-  let g5 be clockTick(g4, "s")
+  variable g4 set to g3.with_apple(new Square(22, 17))
+  variable g5 set to clockTick(g4, "s")
   assert g5.body.length() evaluates to 3
   assert g5.priorTail evaluates to g4.priorTail
   assert g5.isOn evaluates to true
-  let g6 be g5.with_head(new Square(22, 29))
-  let g7 be clockTick(g6, "s")
+  variable g6 set to g5.with_head(new Square(22, 29))
+  variable g7 set to clockTick(g6, "s")
   assert g7.isOn evaluates to false
 end test
 
 test test_updateGraphics
-  let blocks be createBlockGraphics(white)
-  let g1 be new Game(new Random())
-  let blocks2 be updateGraphics(g1, blocks)
+  variable blocks set to createBlockGraphics(white)
+  variable g1 set to new Game(new Random())
+  variable blocks2 set to updateGraphics(g1, blocks)
   assert blocks2[12][15] evaluates to red
   assert blocks2[22][15] evaluates to green
   assert blocks2[21][15] evaluates to white
-  let g3 be clockTick(g1, "d")
-  let blocks3 be updateGraphics(g3, blocks2)
+  variable g3 set to clockTick(g1, "d")
+  variable blocks3 set to updateGraphics(g3, blocks2)
   assert blocks3[12][15] evaluates to red
   assert blocks3[22][15] evaluates to green
   assert blocks3[23][15] evaluates to green
 end test
 
 test test_testnewApple
-  let g1 be new Game(new Random())
+  variable g1 set to new Game(new Random())
   assert g1.apple evaluates to new Square(12, 15)
-  let g2 be g1.withNewApple()
+  variable g2 set to g1.withNewApple()
   assert g2.apple evaluates to new Square(12, 15)
-  let g3 be g2.withNewApple()
+  variable g3 set to g2.withNewApple()
   assert g3.apple evaluates to new Square(10, 12)
   # test that apple is never over snake
-  let g4 be (new Game(new Random()))
-  let g5 be g4.with_body([new Square(10, 12)])
-  let g6 be g5.withNewApple()
+  variable g4 set to (new Game(new Random()))
+  variable g5 set to g4.with_body([new Square(10, 12)])
+  variable g6 set to g5.withNewApple()
   assert g4.apple evaluates to new Square(12, 15)
 end test
 
 test test_score
-  let g1 be new Game(new Random())
+  variable g1 set to new Game(new Random())
   assert score(g1) evaluates to 0
-  let g2 be g1.with_body([new Square(4, 4), new Square(5, 4)])
+  variable g2 set to g1.with_body([new Square(4, 4), new Square(5, 4)])
   assert score(g2) evaluates to 0
-  let g3 be g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
+  variable g3 set to g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4)])
   assert score(g3) evaluates to 1
-  let g4 be g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
+  variable g4 set to g1.with_body([new Square(3, 4), new Square(4, 4), new Square(5, 4), new Square(5, 5)])
   assert score(g4) evaluates to 2
 end test
 
 test test_moveSnake
-  let g1 be new Game(new Random())
-  let g2 be g1.with_key("a")
-  let g3 be moveSnake(g2)
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.with_key("a")
+  variable g3 set to moveSnake(g2)
   assert g3.head evaluates to new Square(21, 15)
-  let g4 be g1.with_key("d")
-  let g5 be moveSnake(g4)
+  variable g4 set to g1.with_key("d")
+  variable g5 set to moveSnake(g4)
   assert g5.head evaluates to new Square(23, 15)
-  let g6 be g1.with_key("w")
-  let g7 be moveSnake(g6)
+  variable g6 set to g1.with_key("w")
+  variable g7 set to moveSnake(g6)
   assert g7.head evaluates to new Square(22, 14)
-  let g8 be g1.with_key("s")
-  let g9 be moveSnake(g8)
+  variable g8 set to g1.with_key("s")
+  variable g9 set to moveSnake(g8)
   assert g9.head evaluates to new Square(22, 16)
 end test
 
 test test_eatAppleIfPoss
-  let g1 be new Game(new Random())
+  variable g1 set to new Game(new Random())
   assert g1.body.length() evaluates to 2
   # negative case
-  let g2 be g1.with_apple(new Square(23, 15))
-  let g3 be eatAppleIfPoss(g2)
+  variable g2 set to g1.with_apple(new Square(23, 15))
+  variable g3 set to eatAppleIfPoss(g2)
   assert g3.body.length() evaluates to 1
   assert g3.apple evaluates to g2.apple
   assert g3.priorTail evaluates to g2.body[0]
   # positive case
-  let g4 be g2.with_head(new Square(23, 15))
-  let g5 be eatAppleIfPoss(g4)
+  variable g4 set to g2.with_head(new Square(23, 15))
+  variable g5 set to eatAppleIfPoss(g4)
   assert g5.body.length() evaluates to 2
   assert g5.apple evaluates to new Square(12, 15)
   assert g5.priorTail evaluates to g1.priorTail
 end test
 
 test test_overApple
-  let g1 be new Game(new Random())
-  let g2 be g1.with_apple(new Square(23, 15))
+  variable g1 set to new Game(new Random())
+  variable g2 set to g1.with_apple(new Square(23, 15))
   assert headOverApple(g2) evaluates to false
-  let g3 be g2.with_head(new Square(23, 15))
+  variable g3 set to g2.with_head(new Square(23, 15))
   assert headOverApple(g3) evaluates to true
 end test
 
 test test_gameOver
-  let g1 be new Game((new Random()))
+  variable g1 set to new Game((new Random()))
   assert gameOver(g1) evaluates to false
-  let g2 be g1.with_head(new Square(0, 0))
+  variable g2 set to g1.with_head(new Square(0, 0))
   assert gameOver(g2) evaluates to false
-  let g3 be g1.with_head(new Square(40, 15))
+  variable g3 set to g1.with_head(new Square(40, 15))
   assert gameOver(g3) evaluates to true
-  let g4 be g1.with_head(new Square(21, 15))
+  variable g4 set to g1.with_head(new Square(21, 15))
   assert gameOver(g4) evaluates to true
 end test
 
 test test_headIsAtEdge
-  let g1 be new Game(new Random())
+  variable g1 set to new Game(new Random())
   assert hasHitEdge(g1) evaluates to false
-  let g2 be g1.with_head(new Square(40, 15))
+  variable g2 set to g1.with_head(new Square(40, 15))
   assert hasHitEdge(g2) evaluates to true
-  let g3 be g1.with_head(new Square(-1, 15))
+  variable g3 set to g1.with_head(new Square(-1, 15))
   assert hasHitEdge(g3) evaluates to true
-  let g4 be g1.with_head(new Square(20, 30))
+  variable g4 set to g1.with_head(new Square(20, 30))
   assert hasHitEdge(g4) evaluates to true
-  let g5 be g1.with_head(new Square(20, -1))
+  variable g5 set to g1.with_head(new Square(20, -1))
   assert hasHitEdge(g5) evaluates to true
 end test
 
 test test_newSquare
-  let sq be new Square(3, 4)
+  variable sq set to new Square(3, 4)
   assert sq.x evaluates to 3
   assert sq.y evaluates to 4
 end test
 
 test test_newGame
-  let rnd be new Random()
-  let game be new Game(rnd)
-  let totest be game.rnd.equals(rnd)
+  variable rnd set to new Random()
+  variable game set to new Game(rnd)
+  variable totest set to game.rnd.equals(rnd)
   assert totest evaluates to true
   assert game.head evaluates to new Square(22, 15)
-  let body be game.body
+  variable body set to game.body
   assert body.length() evaluates to 2
   assert body[0] evaluates to new Square(20, 15)
   assert body[1] evaluates to new Square(21, 15)
