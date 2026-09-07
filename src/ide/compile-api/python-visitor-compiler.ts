@@ -5,6 +5,7 @@ import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
   TypeContext,
+  TypeFuncContext,
   TypeGenericContext,
   TypeNameContext,
   TypeTupleContext,
@@ -44,10 +45,21 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };
 
+  visitTypeFunc = (ctx: TypeFuncContext) => {
+    const typeName = getTypeName(this.language, "Func", this.fieldId, this.scope);
+    const types = ctx
+      .type_()
+      .map((t) => this.visit(t))
+      .filter((t) => t instanceof TypeAsn);
+
+    return new TypeAsn(typeName, types, this.fieldId, this.scope);
+  };
+
   override visitType = (context: TypeContext) => {
     const typeTuple = context.typeTuple();
     const typeName = context.typeName();
     const typeGeneric = context.typeGeneric();
+    const typeFunc = context.typeFunc();
 
     if (typeTuple) {
       return this.visit(typeTuple)!;
@@ -60,6 +72,10 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
     if (typeGeneric) {
       return this.visit(typeGeneric)!;
+    }
+
+    if (typeFunc) {
+      return this.visit(typeFunc)!;
     }
 
     throw new Error(context.getText());
