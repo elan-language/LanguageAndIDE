@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta3
+' VB.NET with Elan 2.0.0-beta4
 
 ' Use the W,A,S,D keys to change Snake direction
 

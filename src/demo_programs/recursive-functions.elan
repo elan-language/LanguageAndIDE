@@ -1,4 +1,4 @@
-# e1199a0f923b475a833bd7cd804fa2bbf89ef0c717e7c05cc8ac5fe98e043a04 Elan 2.0.0-beta3 valid
+# 2f65252e1a3235f95da5080486bd3c3d7afceca09688aa2338186c6bb5f70f44 Elan 2.0.0-beta4 valid
 
 function factorial(n as Int) returns Int
   return if_(n < 2, 1, n*factorial(n - 1))

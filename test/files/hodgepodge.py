@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta3
+# Python with Elan 2.0.0-beta4
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
 

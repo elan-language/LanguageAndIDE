@@ -1,4 +1,4 @@
-# 44484b0119b27d97ec3eb771f0cffa9bb2c5b669d99100e2f602dbc5b5db4ae5 Elan 2.0.0-beta3 valid
+# 08d8a0bae78f5d76f18cff3bba9b548710c2f434273b625ad21fabdaaa4e55a8 Elan 2.0.0-beta4 valid
 
 main
   variable blocks set to createBlockGraphics(black)
