@@ -61,8 +61,7 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
   commonCompile() {
     this.compileErrors = [];
     const rootSt = this.rootSymbol().symbolType();
-
-    this.name.compile();
+    const name = this.name.compile();
 
     mustMatchGenericParameters(
       this.genericParameters,
@@ -113,12 +112,14 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
         );
       }
     }
+
+    return name;
   }
 
   compile(): string {
-    this.commonCompile();
+    const name = this.commonCompile();
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-    return this.name.compile();
+    return name;
   }
 
   compileToEmptyObjectCode(): string {

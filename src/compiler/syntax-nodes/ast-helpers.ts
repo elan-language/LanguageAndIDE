@@ -534,15 +534,15 @@ export function getSuperClasses(cf: ClassAsn) {
 export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
   switch (name) {
     case l.INT_NAME:
-      return new IntTypeAsn(fieldId);
+      return new IntTypeAsn(l, fieldId);
     case l.FLOAT_NAME:
-      return new FloatTypeAsn(fieldId);
+      return new FloatTypeAsn(l, fieldId);
     case l.STRING_NAME:
-      return new StringTypeAsn(fieldId);
+      return new StringTypeAsn(l, fieldId);
     case l.BOOL_NAME:
-      return new BooleanTypeAsn(fieldId);
+      return new BooleanTypeAsn(l, fieldId);
     case l.LIST_NAME:
-      return new ListTypeAsn(fieldId, scope);
+      return new ListTypeAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
   }

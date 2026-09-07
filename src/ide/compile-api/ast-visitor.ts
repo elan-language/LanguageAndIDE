@@ -764,7 +764,7 @@ export function transform(
   // }
 
   if (node instanceof TypeSimpleName) {
-    const typeName = getTypeName(node.language(), FuncName, fieldId, scope);
+    const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
     return new TypeAsn(typeName, [], fieldId, scope);
   }
 
