@@ -40,7 +40,7 @@ export class RefLangVisitorHtml extends Elan2Visitor<string> {
       .filter((s) => this.filterTokens(s))
       .join(", ");
 
-    return `${typeName}&lt;of ${types}&gt;`;
+    return `${typeName}&lt;<el-kw>of</el-kw> ${types}&gt;`;
   };
 
   override visitType = (context: TypeContext) => {
