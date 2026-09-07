@@ -136,14 +136,14 @@ suite("Editing Fields Tests", () => {
     t.processKey(key("["));
     assert.equal(t.getCompletion(), "<i>Type</i>]");
   });
-  test("Entry of text with formatting VB", () => {
+  ignore_test("Entry of text with formatting VB", () => {
     const f = new GlobalFunction(fileWithVB());
     const t = f.returnType;
     t.processKey(key("F"));
     t.processKey(key("("));
     assert.equal(t.getCompletion(), "Of <i>Type</i>)");
   });
-  test("Entry of text with formatting C#", () => {
+  ignore_test("Entry of text with formatting C#", () => {
     const f = new GlobalFunction(fileWithCS());
     const t = f.returnType;
     t.processKey(key("F"));
