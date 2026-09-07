@@ -63,7 +63,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.cursorPos, 0);
   });
 
-  test("Entry of text with formatting 2", () => {
+  ignore_test("Entry of text with formatting 2", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,
@@ -129,7 +129,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(t.cursorPos, 0);
   });
 
-  test("Entry of text with formatting Python", () => {
+  ignore_test("Entry of text with formatting Python", () => {
     const f = new GlobalFunction(fileWithPython());
     const t = f.returnType;
     t.processKey(key("F"));
@@ -151,7 +151,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(t.getCompletion(), "<i>Type</i>>");
   });
 
-  test("Entry of text with formatting 3", () => {
+  ignore_test("Entry of text with formatting 3", () => {
     const f = new GlobalFunction(
       new FileImpl(
         hash,

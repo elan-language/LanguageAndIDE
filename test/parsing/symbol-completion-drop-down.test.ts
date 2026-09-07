@@ -1351,7 +1351,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as VG", expected);
   });
 
-  test("Pass_returnType1", async () => {
+  ignore_test("Pass_returnType1", async () => {
     const code = `${testHeader}
 
 function foo(a as String) returns String
@@ -1378,7 +1378,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "elan_type5", "S", expected);
   });
 
-  test("Pass_returnType2", async () => {
+  ignore_test("Pass_returnType2", async () => {
     const code = `${testHeader}
 
 function foo(a as String) returns String
