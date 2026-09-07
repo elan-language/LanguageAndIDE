@@ -25,7 +25,6 @@ export const inputKeyword = "input";
 export const isKeyword = "is";
 export const isntKeyword = "isnt";
 export const lambdaKeyword = "lambda";
-export const letKeyword = "let";
 export const mainKeyword = "main";
 export const modKeyword = "mod";
 export const newKeyword = "new";
@@ -92,7 +91,6 @@ const elanKeywords: string[] = [
   isKeyword,
   isntKeyword,
   lambdaKeyword,
-  letKeyword,
   mainKeyword,
   modKeyword,
   newKeyword,

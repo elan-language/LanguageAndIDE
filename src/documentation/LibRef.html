@@ -929,7 +929,7 @@ that creates the Dictionary from a List of key:value pairs as Tuples:</p>
 end main
 
 function createDictionary(kvps as List&lt;of (String, Int)&gt;) returns Dictionary&lt;of String, Int&gt;
-  let d be new Dictionary&lt;of String, Int&gt;()
+  variable d set to new Dictionary&lt;of String, Int&gt;()
   return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
 end function
 </codeblock>
@@ -3265,13 +3265,13 @@ end main
 <p>This example is taken from the <b>Best Fit</b> demo (offered when the paradigm is set to <b>functional</b>)
 to calculate the various 'sigma' (sum of) terms needed to estimate the best fit line:</p>
 <codeblock>function bestFitLine(points as List&lt;of Point&gt;) returns (Float, Float)
-  let sumX be points.sumBy(lambda p as Point => p.x)
-  let sumXsq be points.sumBy(lambda p as Point => p.x*p.x)
-  let sumY be points.sumBy(lambda p as Point => p.y)
-  let sumXY be points.sumBy(lambda p as Point => p.x*p.y)
-  let n be points.length()
-  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
-  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  variable sumX set to points.sumBy(lambda p as Point => p.x)
+  variable sumXsq set to points.sumBy(lambda p as Point => p.x*p.x)
+  variable sumY set to points.sumBy(lambda p as Point => p.y)
+  variable sumXY set to points.sumBy(lambda p as Point => p.x*p.y)
+  variable n set to points.length()
+  variable a set to (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  variable b set to (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
   return (a, b)
 end function
 </codeblock>

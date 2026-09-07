@@ -9,7 +9,6 @@ import {
   forKeyword,
   ifKeyword,
   inputKeyword,
-  letKeyword,
   printKeyword,
   throwKeyword,
   tryKeyword,
@@ -42,12 +41,6 @@ export class StatementSelector extends AbstractSelector {
         "p",
         "<b>p</b>rint statement",
         (parent: Parent) => this.factory.newPrint(parent),
-      ],
-      [
-        letKeyword,
-        "l",
-        "<b>l</b>et statement",
-        (parent: Parent) => this.factory.newLetStatement(parent),
       ],
       [
         variableKeyword,
@@ -109,25 +102,21 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix().includes(`_${tryKeyword}`);
     } else if (keyword === callKeyword || keyword === printKeyword || keyword === inputKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
-    } else if (keyword === letKeyword) {
-      result = !userEntry && (this.isWithinAFunction() || this.isWithinATest());
     } else if (keyword === assertKeyword) {
       result = this.isWithinATest();
     }
     //Then apply context-specific rules
     if (this.isWithinATest()) {
       result =
-        keyword === assertKeyword ||
-        keyword === variableKeyword ||
-        keyword === letKeyword ||
-        keyword === commentMarker;
+        keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
     }
     // Then apply paradigm rules
     if (this.getParadigm().isFunctional() && userEntry) {
       if (this.isWithinAFunction()) {
-        result = keyword === letKeyword || keyword === commentMarker;
+        result = keyword === variableKeyword || keyword === commentMarker;
       } else if (this.isWithinATest()) {
-        result = keyword === assertKeyword || keyword === letKeyword || keyword === commentMarker;
+        result =
+          keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
       }
     }
     return result;

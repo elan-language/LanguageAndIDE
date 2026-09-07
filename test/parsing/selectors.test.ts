@@ -191,7 +191,7 @@ suite("Selector tests", () => {
     );
     const func = new GlobalFunction(fl);
     const s = new StatementSelector(func);
-    assertOptions(s, ["let statement", "# comment"]);
+    assertOptions(s, ["variable definition", "# comment"]);
   });
 
   test("Selection Context - in a Procedure", () => {
@@ -257,7 +257,7 @@ suite("Selector tests", () => {
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
-    assertOptions(s, ["assert", "let statement", "# comment"]);
+    assertOptions(s, ["assert", "variable definition", "# comment"]);
   });
 
   test("Selection Context - in a Test - procedural", () => {
@@ -271,7 +271,7 @@ suite("Selector tests", () => {
     );
     const test = new TestFrame(fl);
     const s = new StatementSelector(test);
-    assertOptions(s, ["assert", "let statement", "variable definition", "# comment"]);
+    assertOptions(s, ["assert", "variable definition", "# comment"]);
   });
 
   test("Selection Context - deeper nesting  - functional", () => {
@@ -287,7 +287,7 @@ suite("Selector tests", () => {
     const if1 = new IfStatement(func);
     const wh = new WhileLoop(if1);
     const s = new StatementSelector(wh);
-    assertOptions(s, ["let statement", "# comment"]);
+    assertOptions(s, ["variable definition", "# comment"]);
   });
 
   test("Selection Context - in an IfThen", () => {
