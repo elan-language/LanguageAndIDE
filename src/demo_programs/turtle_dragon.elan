@@ -1,4 +1,4 @@
-# 20a9014f2ab325cc93970db8b1fcc0eddaf9435109ee4bf96daf60320030f54f Elan 2.0.0-beta3 valid
+# 4273ce932faeab15355a38ab01e6ec86765bd9516d5c4218407d3ca1a91a45ac Elan 2.0.0-beta4 valid
 
 main
   variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)

@@ -1,4 +1,4 @@
-# ea65e95a20cf2bee1e153996dded52348639335f2ea80ae5ff91c3eed357d3a1 Elan 2.0.0-beta3 valid
+# 0aa8427b46c3319c1bbea5d30bf77d609312076c9aa14cb98084f38044199bec Elan 2.0.0-beta4 valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]

@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta4
 
 public class Global {
 
