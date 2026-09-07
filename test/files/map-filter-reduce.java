@@ -4,7 +4,7 @@ public class Global {
 
 class Test_Map_Filter_Reduce {
 @Test static void test_Map_Filter_Reduce() {
-  var nums = list(2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5); // let
+  var nums = list(2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5);
   assertEquals(list(2.22, 2.5), nums.filter(lessThan5));
   assertEquals(list(10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63), nums.map(cube));
   assertEquals(81480107, nums.reduce(1.0, product).floor());

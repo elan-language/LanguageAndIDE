@@ -83,18 +83,18 @@ End Function
 
 <TestClass Class Test_determinePlayerOutcome
  <TestMethod> Sub test_determinePlayerOutcome()
-  Dim dbj = (New Dealer(0)).with_status(Status.blackjack) ' let
+  Dim dbj = (New Dealer(0)).with_status(Status.blackjack) ' variable definition
   Assert.AreEqual(Status.blackjack, dbj.status)
-  Dim d21 = (New Dealer(0)).with_status(Status.standing).with_handTotal(21) ' let
+  Dim d21 = (New Dealer(0)).with_status(Status.standing).with_handTotal(21) ' variable definition
   Assert.AreEqual(Status.standing, d21.status)
   Assert.AreEqual(21, d21.handTotal)
-  Dim d17 = (New Dealer(0)).with_status(Status.standing).with_handTotal(17) ' let
-  Dim dbu = (New Dealer(0)).with_status(Status.bust) ' let
-  Dim pbj = (New HumanPlayer("", 0)).with_status(Status.blackjack) ' let
+  Dim d17 = (New Dealer(0)).with_status(Status.standing).with_handTotal(17) ' variable definition
+  Dim dbu = (New Dealer(0)).with_status(Status.bust) ' variable definition
+  Dim pbj = (New HumanPlayer("", 0)).with_status(Status.blackjack) ' variable definition
   Assert.AreEqual(Status.blackjack, pbj.status)
-  Dim p21 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) ' let
-  Dim p17 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) ' let
-  Dim pbu = (New HumanPlayer("", 0)).with_status(Status.bust) ' let
+  Dim p21 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) ' variable definition
+  Dim p17 = (New HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) ' variable definition
+  Dim pbu = (New HumanPlayer("", 0)).with_status(Status.bust) ' variable definition
   Assert.AreEqual(Outcome.draw, determinePlayerOutcome(dbj, pbj))
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, p21))
   Assert.AreEqual(Outcome.lose, determinePlayerOutcome(dbj, pbu))
@@ -118,16 +118,16 @@ End Function
 
 <TestClass Class Test_dealCard
  <TestMethod> Sub test_dealCard()
-  Dim c1 = dealCard(0) ' let
+  Dim c1 = dealCard(0) ' variable definition
   Assert.AreEqual("2", c1.rank)
   Assert.AreEqual(Suit.clubs, c1.suit)
-  Dim c2 = dealCard(0.9999999) ' let
+  Dim c2 = dealCard(0.9999999) ' variable definition
   Assert.AreEqual("A", c2.rank)
   Assert.AreEqual(Suit.spades, c2.suit)
-  Dim c3 = dealCard(0.5) ' let
+  Dim c3 = dealCard(0.5) ' variable definition
   Assert.AreEqual("8", c3.rank)
   Assert.AreEqual(Suit.hearts, c3.suit)
-  Dim c4 = dealCard(0.24) ' let
+  Dim c4 = dealCard(0.24) ' variable definition
   Assert.AreEqual("5", c4.rank)
   Assert.AreEqual(Suit.clubs, c4.suit)
  End Sub
@@ -168,11 +168,11 @@ End Function
 
 <TestClass Class Test_htmlForGame
  <TestMethod> Sub test_htmlForGame()
-  Dim c1 = New Card("3", Suit.clubs, False) ' let
-  Dim c2 = New Card("K", Suit.spades, True) ' let
-  Dim p = (New HumanPlayer("fred", 10)).with_cards({c1, c2}) ' let
-  Dim players = (New List(Of Player)()).withAppend(p) ' let
-  Dim g2 = (New Game(1)).with_players(players) ' let
+  Dim c1 = New Card("3", Suit.clubs, False) ' variable definition
+  Dim c2 = New Card("K", Suit.spades, True) ' variable definition
+  Dim p = (New HumanPlayer("fred", 10)).with_cards({c1, c2}) ' variable definition
+  Dim players = (New List(Of Player)()).withAppend(p) ' variable definition
+  Dim g2 = (New Game(1)).with_players(players) ' variable definition
   Assert.AreEqual("<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>", htmlForGame(g2))
  End Sub
 End Class
@@ -192,9 +192,9 @@ End Function
 
 <TestClass Class Test_htmlForPlayer
  <TestMethod> Sub test_htmlForPlayer()
-  Dim c1 = New Card("3", Suit.clubs, False) ' let
-  Dim c2 = New Card("K", Suit.spades, True) ' let
-  Dim p = (New HumanPlayer("charlie", 10)).with_cards({c1, c2}) ' let
+  Dim c1 = New Card("3", Suit.clubs, False) ' variable definition
+  Dim c2 = New Card("K", Suit.spades, True) ' variable definition
+  Dim p = (New HumanPlayer("charlie", 10)).with_cards({c1, c2}) ' variable definition
   Assert.AreEqual("<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>", htmlForPlayer(p))
  End Sub
 End Class

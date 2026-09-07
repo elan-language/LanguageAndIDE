@@ -1,7 +1,7 @@
-# bd6d8985e290dc16955ae80947143ef9ef6ac13073261dacf2b2b5b5b12115df Elan 2.0.0-beta3 valid
+# 39c922fba863a05aec4f27a46265d2333c8a71a3592c388e88ac6b789fb343ce Elan 2.0.0-beta3 valid
 
 test test_Map_Filter_Reduce
-  let nums be [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
+  variable nums set to [2.22, 5.37, 8.97, 7.53, 8.2, 9.43, 7.74, 7.03, 9.62, 2.5]
   assert nums.filter(lessThan5) evaluates to [2.22, 2.5]
   assert nums.map(cube) evaluates to [10.94, 154.85, 721.73, 426.96, 551.37, 838.56, 463.68, 347.43, 890.28, 15.63]
   assert nums.reduce(1.0, product).floor() evaluates to 81480107

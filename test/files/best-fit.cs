@@ -1,13 +1,13 @@
 // C# with Elan 2.0.0-beta3
 
 static (double, double) bestFitLine(List<Point> points) { // function
-  var sumX = points.sumBy(Point p => p.x); // let
-  var sumXsq = points.sumBy(Point p => p.x*p.x); // let
-  var sumY = points.sumBy(Point p => p.y); // let
-  var sumXY = points.sumBy(Point p => p.x*p.y); // let
-  var n = points.length(); // let
-  var a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX); // let
-  var b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX); // let
+  var sumX = points.sumBy(Point p => p.x);
+  var sumXsq = points.sumBy(Point p => p.x*p.x);
+  var sumY = points.sumBy(Point p => p.y);
+  var sumXY = points.sumBy(Point p => p.x*p.y);
+  var n = points.length();
+  var a = (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX);
+  var b = (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX);
   return (a, b);
 } // end function
 
@@ -34,18 +34,18 @@ static Point newPoint(double x, double y) { // function
 
 [TestClass] class Test_bestFit
 [TestMethod] static void test_bestFit() {
-  var l1 = new [] {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)}; // let
-  var a_b = bestFitLine(l1); // let
-  var a = a_b.item_0; // let
-  var b = a_b.item_1; // let
+  var l1 = new [] {newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)};
+  var a_b = bestFitLine(l1);
+  var a = a_b.item_0;
+  var b = a_b.item_1;
   Assert.AreEqual(0.766, a.round(3));
   Assert.AreEqual(1.093, b.round(3));
 }} // end test
 
 [TestClass] class Test_bestFit_empty
 [TestMethod] static void test_bestFit_empty() {
-  var l1 = new List<Point>(); // let
-  var a_b = bestFitLine(l1); // let
+  var l1 = new List<Point>();
+  var a_b = bestFitLine(l1);
   // NaN means 'Not A Number"
   Assert.AreEqual("(NaN, NaN)", a_b.toString());
 }} // end test

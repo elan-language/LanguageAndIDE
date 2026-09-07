@@ -21,108 +21,108 @@ static List<String> sort(List<String> li) { // function
 } // end function
 
 static List<String> sortedFrontHalf(List<String> li) { // function
-  var mid = divAsInt(li.length(), 2); // let
-  var frontHalf = li.subList(0, mid); // let
+  var mid = divAsInt(li.length(), 2);
+  var frontHalf = li.subList(0, mid);
   return sort(frontHalf);
 } // end function
 
 static List<String> sortedBackHalf(List<String> li) { // function
-  var mid = divAsInt(li.length(), 2); // let
-  var backHalf = li.subList(mid, li.length()); // let
+  var mid = divAsInt(li.length(), 2);
+  var backHalf = li.subList(mid, li.length());
   return sort(backHalf);
 } // end function
 
 static List<String> merge(List<String> a, List<String> b) { // function
-  var oneIsEmpty = (a.length() == 0) || (b.length() == 0); // let
+  var oneIsEmpty = (a.length() == 0) || (b.length() == 0);
   return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b));
 } // end function
 
 static List<String> mergeNonEmpty(List<String> a, List<String> b) { // function
-  var aHead = a.head(); // let
-  var bHead = b.head(); // let
-  var aTail = a.tail(); // let
-  var bTail = b.tail(); // let
+  var aHead = a.head();
+  var bHead = b.head();
+  var aTail = a.tail();
+  var bTail = b.tail();
   return if_(aHead.isBefore(bHead), list(aHead).withAppendList(merge(aTail, b)), list(bHead).withAppendList(merge(a, bTail)));
 } // end function
 
 class Test_sort {
 @Test static void test_sort() {
   // Edge case: empty
-  var l1 = new List<String>(); // let
+  var l1 = new List<String>();
   assertEquals(l1, sort(l1));
   // Edge case: one item
-  var li2 = list("plum"); // let
+  var li2 = list("plum");
   assertEquals(li2, sort(li2));
   // Happy case: odd number of members
-  var li3 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"); // let
-  var sorted3 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"); // let
+  var li3 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear");
+  var sorted3 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry");
   assertEquals(sorted3, sort(li3));
   // Happy case: even number of members
-  var li4 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"); // let
-  var sorted4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"); // let
+  var li4 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry");
+  var sorted4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry");
   assertEquals(sorted4, sort(li4));
   // Edge case: already sorted
-  var li5 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"); // let
+  var li5 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry");
   assertEquals(li5, sort(li5));
 }} // end test
 
 class Test_sortedFrontHalf {
 @Test static void test_sortedFrontHalf() {
   // Edge case: one item - so front half is empty
-  var li1 = list("plum"); // let
+  var li1 = list("plum");
   assertEquals(new List<String>(), sortedFrontHalf(li1));
   // Happy case: odd number of members
-  var li2 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"); // let
+  var li2 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear");
   assertEquals(list("apricot", "lemon", "lime", "plum"), sortedFrontHalf(li2));
   // Happy case: even number of members
-  var li3 = list("plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"); // let
+  var li3 = list("plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear");
   assertEquals(list("apricot", "lemon", "melon", "plum"), sortedFrontHalf(li3));
   // Edge case: already sorted
-  var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
+  var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear");
   assertEquals(list("apple", "apricot", "lemon"), sortedFrontHalf(li4));
 }} // end test
 
 class Test_sortedBackHalf {
 @Test static void test_sortedBackHalf() {
   // Edge case: one item - so back half is whole list
-  var li1 = list("plum"); // let
+  var li1 = list("plum");
   assertEquals(list("plum"), sortedBackHalf(li1));
   // Happy case: odd number of members
-  var li2 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"); // let
+  var li2 = list("plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear");
   assertEquals(list("apple", "melon", "orange", "pear", "strawberry"), sortedBackHalf(li2));
   // Happy case: even number of members
-  var li3 = list("plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"); // let
+  var li3 = list("plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear");
   assertEquals(list("apple", "orange", "pear", "strawberry"), sortedBackHalf(li3));
   // Edge case: already sorted
-  var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear"); // let
+  var li4 = list("apple", "apricot", "lemon", "lime", "melon", "orange", "pear");
   assertEquals(list("lime", "melon", "orange", "pear"), sortedBackHalf(li4));
 }} // end test
 
 class Test_merge {
 @Test static void test_merge() {
   // Happy cases:
-  var l1 = list("apple", "lime", "pear"); // let
-  var l2 = list("apricot", "lemon", "plum", "watermelon"); // let
+  var l1 = list("apple", "lime", "pear");
+  var l2 = list("apricot", "lemon", "plum", "watermelon");
   assertEquals(list("melon", "orange"), merge(list("orange"), list("melon")));
   assertEquals(list("apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"), merge(l1, l2));
   assertEquals(list("apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"), merge(l2, l1));
   // Edge cases - empty list(s)
-  var le = new List<String>(); // let
+  var le = new List<String>();
   assertEquals(le, merge(le, le));
   assertEquals(l1, merge(l1, le));
   assertEquals(l2, merge(le, l2));
   // Edge case - duplication
   assertEquals(list("apple", "apple", "lime", "lime", "pear", "pear"), merge(l1, l1));
   // Error case lists not sorted will not produce correct result
-  var lu = list("lime", "pear", "apple"); // let
+  var lu = list("lime", "pear", "apple");
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
   assertEquals(list("lime", "pear", "apple"), merge(lu, le));
 }} // end test
 
 class Test_mergeNonEmpty {
 @Test static void test_mergeNonEmpty() {
-  var l1 = list("apple", "lime", "pear"); // let
-  var l2 = list("apricot", "lemon", "plum", "watermelon"); // let
+  var l1 = list("apple", "lime", "pear");
+  var l2 = list("apricot", "lemon", "plum", "watermelon");
   assertEquals(list("melon", "orange"), mergeNonEmpty(list("orange"), list("melon")));
   assertEquals(list("apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"), mergeNonEmpty(l1, l2));
   assertEquals(list("apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"), mergeNonEmpty(l2, l1));
@@ -135,7 +135,7 @@ class Test_mergeNonEmpty {
   // Error case - pass empty list
   assertEquals("Out of range index: 0 size: 0", mergeNonEmpty(new List<String>(), l1));
   //  Error case unsorted list
-  var lu = list("lime", "pear", "apple"); // let
+  var lu = list("lime", "pear", "apple");
   assertEquals(list("apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"), merge(lu, l2));
 }} // end test
 } // end Global

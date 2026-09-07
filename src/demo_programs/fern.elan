@@ -1,4 +1,4 @@
-# 0c95e8bdd6ff5f34aee34d0ba6c12460399ec46fccad106eabfb83437eb2d73c Elan 2.0.0-beta3 valid
+# 50fc049c8b5a4cc3f5d63293005a7a925a1307ca71b03fee97e317d0e80ba1b6 Elan 2.0.0-beta3 valid
 
 # https://en.wikipedia.org/wiki/Barnsley_fern
 # Draws a fractal image
@@ -24,10 +24,10 @@ end main
 # it is just the RectangleVG from last time.
 function onepoint(s as State) returns State
   # s.r.asFloat() is the current random number between 0 and 1
-  let nx_ny be onestep(s.x, s.y, s.r.asFloat())
-  let nx be nx_ny.item_0
-  let ny be nx_ny.item_1
-  let rect be (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25)
+  variable nx_ny set to onestep(s.x, s.y, s.r.asFloat())
+  variable nx set to nx_ny.item_0
+  variable ny set to nx_ny.item_1
+  variable rect set to (new RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(0x408040).withFillColour(0x408040).withStrokeWidth(0.25)
   # s.r.nextGen() moves the random number generator on to the next number
   return (new State(rect, nx, ny, s.r.nextGen()))
 end function
@@ -39,14 +39,14 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   # Currently you can't make the params into one long line
   # as it makes the browser use 100% CPU
   # xx xy yx yy cx cy probablity
-  let p1 be [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
-  let p2 be [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
-  let p3 be [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07]
-  let p4 be [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]
-  let allPs be [p1, p2, p3, p4]
+  variable p1 set to [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
+  variable p2 set to [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
+  variable p3 set to [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07]
+  variable p4 set to [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]
+  variable allPs set to [p1, p2, p3, p4]
   # use the random number r to select one of p1 to p4
   # weighted by the probabilities and put it in pp
-  let pp be getparams(r, allPs, 0.0)
+  variable pp set to getparams(r, allPs, 0.0)
   return (x*pp[0] + y*pp[1] + pp[4], x*pp[2] + y*pp[3] + pp[5])
 end function
 
@@ -55,8 +55,8 @@ end function
 # return the element when the cumulative probability reaches r
 # otherwise recurse with the rest of the list of params
 function getparams(r as Float, prms as List<of List<of Float>>, cumuprob as Float) returns List<of Float>
-  let head be prms.head()
-  let cp2 be cumuprob + head[6]
+  variable head set to prms.head()
+  variable cp2 set to cumuprob + head[6]
   return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 end function
 
@@ -86,10 +86,10 @@ end class
 test test_one
   assert roundtuple2(onestep(0.0, 0.16, 0.5)) evaluates to [0.0064, 1.736]
   assert roundtuple2(onestep(0.0, 0.16, 0.9)) evaluates to [-0.0416, 1.6352]
-  let s be onepoint(new State(new RectangleVG(), 0.0, 0.16, new Random()))
+  variable s set to onepoint(new State(new RectangleVG(), 0.0, 0.16, new Random()))
   assert s.toString() evaluates to "rect at 50.0448, 62.848"
-  let p1 be [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
-  let p2 be [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
+  variable p1 set to [0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01]
+  variable p2 set to [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85]
   assert getparams(0.005, [p1, p2], 0.0) evaluates to p1
   assert getparams(0.03, [p1, p2], 0.0) evaluates to p2
   assert getparams(0.03, [p2], 0.01) evaluates to p2

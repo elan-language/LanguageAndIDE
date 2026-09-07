@@ -71,8 +71,8 @@ static List<string> evaluateYellows(string attempt, string target) { // function
 } // end function
 
 static string markAttempt(string attempt, string target) { // function
-  var greens = evaluateGreens(attempt, target); // let
-  var markedAttempt = evaluateYellows(greens[0], greens[1]); // let
+  var greens = evaluateGreens(attempt, target);
+  var markedAttempt = evaluateYellows(greens[0], greens[1]);
   return markedAttempt[0];
 } // end function
 
@@ -81,16 +81,16 @@ static List<string> possibleAnswersAfterAttempt(List<string> prior, string attem
 } // end function
 
 static int maxWordCountRemainingAfterAttempt(List<string> possAnswers, string attempt) { // function
-  var d = new Dictionary<string, int>(); // let
-  var d2 = possAnswers.reduce(d, Dictionary<string, int> dd, string answer => incrementCount(dd, answer, attempt)); // let
-  var keys = d2.keys(); // let
+  var d = new Dictionary<string, int>();
+  var d2 = possAnswers.reduce(d, Dictionary<string, int> dd, string answer => incrementCount(dd, answer, attempt));
+  var keys = d2.keys();
   return keys.reduce(0, int maxSoFar, string mark => if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 } // end function
 
 static Dictionary<string, int> incrementCount(Dictionary<string, int> d, string possAnswer, string attempt) { // function
-  var mark = markAttempt(attempt, possAnswer); // let
-  var keys = d.keys(); // let
-  var count = if_(keys.contains(mark), d[mark], 0); // let
+  var mark = markAttempt(attempt, possAnswer);
+  var keys = d.keys();
+  var count = if_(keys.contains(mark), d[mark], 0);
   return d.withPut(mark, count + 1);
 } // end function
 
@@ -99,14 +99,14 @@ static List<WordCount> allRemainingWordCounts(List<string> possAnswers) { // fun
 } // end function
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<string> possAnswers) { // function
-  var isBetter = wc2.count < wc1.count; // let
-  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
+  var isBetter = wc2.count < wc1.count;
+  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word);
   return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
 } // end function
 
 static string bestAttempt(List<string> possAnswers) { // function
-  var wordCounts = allRemainingWordCounts(possAnswers); // let
-  var best = wordCounts.reduce(wordCounts.head(), WordCount bestSoFar, WordCount newWord => betterOf(bestSoFar, newWord, possAnswers)); // let
+  var wordCounts = allRemainingWordCounts(possAnswers);
+  var best = wordCounts.reduce(wordCounts.head(), WordCount bestSoFar, WordCount newWord => betterOf(bestSoFar, newWord, possAnswers));
   return best.word;
 } // end function
 
@@ -133,32 +133,32 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 
 [TestClass] class Test_betterOf
 [TestMethod] static void test_betterOf() {
-  var possAnswers = new List<string>(); // let
-  var b2 = new WordCount("B", 2); // let
-  var a3 = new WordCount("A", 3); // let
-  var a2 = new WordCount("A", 2); // let
+  var possAnswers = new List<string>();
+  var b2 = new WordCount("B", 2);
+  var a3 = new WordCount("A", 3);
+  var a2 = new WordCount("A", 2);
   Assert.AreEqual(b2, betterOf(a3, b2, possAnswers));
   Assert.AreEqual(b2, betterOf(b2, a3, possAnswers));
   Assert.AreEqual(b2, betterOf(b2, a2, possAnswers));
   Assert.AreEqual(a2, betterOf(a2, b2, possAnswers));
-  var possAnswers2 = new [] {"B"}; // let
+  var possAnswers2 = new [] {"B"};
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers2));
-  var possAnswers3 = new [] {"B", "A"}; // let
+  var possAnswers3 = new [] {"B", "A"};
   Assert.AreEqual(b2, betterOf(a2, b2, possAnswers3));
   Assert.AreEqual(a2, betterOf(b2, a2, possAnswers3));
 }} // end test
 
 [TestClass] class Test_bestAttempt
 [TestMethod] static void test_bestAttempt() {
-  var possAnswers = new [] {"ABCDE", "ABBBB", "EDCBA"}; // let
+  var possAnswers = new [] {"ABCDE", "ABBBB", "EDCBA"};
   Assert.AreEqual("EDCBA", bestAttempt(possAnswers));
-  var possAnswers2 = new [] {"ABCDE", "ABBBB", "BCDEA"}; // let
+  var possAnswers2 = new [] {"ABCDE", "ABBBB", "BCDEA"};
   Assert.AreEqual("BCDEA", bestAttempt(possAnswers2));
 }} // end test
 
 [TestClass] class Test_Wordcount
 [TestMethod] static void test_Wordcount() {
-  var wc = new WordCount("ABCDE", 3); // let
+  var wc = new WordCount("ABCDE", 3);
   Assert.AreEqual("ABCDE", wc.word);
   Assert.AreEqual(3, wc.count);
   Assert.AreEqual("ABCDE 3", wc.toString());
@@ -264,7 +264,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 
 [TestClass] class Test_possibleAnswersAfterAttempt
 [TestMethod] static void test_possibleAnswersAfterAttempt() {
-  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
+  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"};
   Assert.AreEqual(new [] {"ABCDE"}, possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
   Assert.AreEqual(new [] {"BCDEA", "CDEAB", "DEABC", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
   Assert.AreEqual(new [] {"BCDEA", "CDEAB", "EABCD"}, possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
@@ -272,8 +272,8 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 
 [TestClass] class Test_maxWordCountRemainingAfterAttempt
 [TestMethod] static void test_maxWordCountRemainingAfterAttempt() {
-  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
-  var d = new Dictionary<string, int>(); // let
+  var prior = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"};
+  var d = new Dictionary<string, int>();
   Assert.AreEqual(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"));
   Assert.AreEqual(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"));
   Assert.AreEqual(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"));
@@ -281,7 +281,7 @@ const String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED 
 
 [TestClass] class Test_allRemainingWordCounts
 [TestMethod] static void test_allRemainingWordCounts() {
-  var possAnswers = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"}; // let
-  var wordcounts = allRemainingWordCounts(possAnswers); // let
+  var possAnswers = new [] {"ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"};
+  var wordcounts = allRemainingWordCounts(possAnswers);
   Assert.AreEqual("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
 }} // end test

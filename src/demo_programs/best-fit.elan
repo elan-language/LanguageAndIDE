@@ -1,13 +1,13 @@
-# 888822e12c4a78522b606334af29c0534c7c7c95ea4cb5460fc31571bb5061e4 Elan 2.0.0-beta3 valid
+# a2ed94700ed61d574dafaeeb11fd8b9991ae45bd5f0d3f9038d2c36d418727e5 Elan 2.0.0-beta3 valid
 
 function bestFitLine(points as List<of Point>) returns (Float, Float)
-  let sumX be points.sumBy(lambda p as Point => p.x)
-  let sumXsq be points.sumBy(lambda p as Point => p.x*p.x)
-  let sumY be points.sumBy(lambda p as Point => p.y)
-  let sumXY be points.sumBy(lambda p as Point => p.x*p.y)
-  let n be points.length()
-  let a be (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
-  let b be (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
+  variable sumX set to points.sumBy(lambda p as Point => p.x)
+  variable sumXsq set to points.sumBy(lambda p as Point => p.x*p.x)
+  variable sumY set to points.sumBy(lambda p as Point => p.y)
+  variable sumXY set to points.sumBy(lambda p as Point => p.x*p.y)
+  variable n set to points.length()
+  variable a set to (sumY*sumXsq - sumX*sumXY)/(n*sumXsq - sumX*sumX)
+  variable b set to (n*sumXY - sumX*sumY)/(n*sumXsq - sumX*sumX)
   return (a, b)
 end function
 
@@ -32,17 +32,17 @@ function newPoint(x as Float, y as Float) returns Point
 end function
 
 test test_bestFit
-  let l1 be [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
-  let a_b be bestFitLine(l1)
-  let a be a_b.item_0
-  let b be a_b.item_1
+  variable l1 set to [newPoint(0.71, 1.12), newPoint(3.56, 5.36), newPoint(7.83, 9.04)]
+  variable a_b set to bestFitLine(l1)
+  variable a set to a_b.item_0
+  variable b set to a_b.item_1
   assert a.round(3) evaluates to 0.766
   assert b.round(3) evaluates to 1.093
 end test
 
 test test_bestFit_empty
-  let l1 be new List<of Point>()
-  let a_b be bestFitLine(l1)
+  variable l1 set to new List<of Point>()
+  variable a_b set to bestFitLine(l1)
   # NaN means 'Not A Number"
   assert a_b.toString() evaluates to "(NaN, NaN)"
 end test

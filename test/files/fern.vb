@@ -30,10 +30,10 @@ End Sub
 
 Function onepoint(s As State) As State
   ' s.r.asFloat() is the current random number between 0 and 1
-  Dim nx_ny = onestep(s.x, s.y, s.r.asFloat()) ' let
-  Dim nx = nx_ny.item_0 ' let
-  Dim ny = nx_ny.item_1 ' let
-  Dim rect = (New RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(&H408040).withFillColour(&H408040).withStrokeWidth(0.25) ' let
+  Dim nx_ny = onestep(s.x, s.y, s.r.asFloat()) ' variable definition
+  Dim nx = nx_ny.item_0 ' variable definition
+  Dim ny = nx_ny.item_1 ' variable definition
+  Dim rect = (New RectangleVG()).withX(nx*scale + 50).withY(75 - ny*scale).withWidth(0.5).withHeight(0.5).withFillColour(&H408040).withFillColour(&H408040).withStrokeWidth(0.25) ' variable definition
   ' s.r.nextGen() moves the random number generator on to the next number
   Return (New State(rect, nx, ny, s.r.nextGen()))
 End Function
@@ -48,14 +48,14 @@ Function onestep(x As Double, y As Double, r As Double) As (Double, Double)
   ' Currently you can't make the params into one long line
   ' as it makes the browser use 100% CPU
   ' xx xy yx yy cx cy probablity
-  Dim p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01} ' let
-  Dim p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85} ' let
-  Dim p3 = {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07} ' let
-  Dim p4 = {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07} ' let
-  Dim allPs = {p1, p2, p3, p4} ' let
+  Dim p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01} ' variable definition
+  Dim p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85} ' variable definition
+  Dim p3 = {0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07} ' variable definition
+  Dim p4 = {-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07} ' variable definition
+  Dim allPs = {p1, p2, p3, p4} ' variable definition
   ' use the random number r to select one of p1 to p4
   ' weighted by the probabilities and put it in pp
-  Dim pp = getparams(r, allPs, 0.0) ' let
+  Dim pp = getparams(r, allPs, 0.0) ' variable definition
   Return (x*pp(0) + y*pp(1) + pp(4), x*pp(2) + y*pp(3) + pp(5))
 End Function
 
@@ -68,8 +68,8 @@ End Function
 ' otherwise recurse with the rest of the list of params
 
 Function getparams(r As Double, prms As List(Of List(Of Double)), cumuprob As Double) As List(Of Double)
-  Dim head = prms.head() ' let
-  Dim cp2 = cumuprob + head(6) ' let
+  Dim head = prms.head() ' variable definition
+  Dim cp2 = cumuprob + head(6) ' variable definition
   Return if_(r < cp2, head, getparams(r, prms.tail(), cp2))
 End Function
 
@@ -102,10 +102,10 @@ End Class
  <TestMethod> Sub test_one()
   Assert.AreEqual({0.0064, 1.736}, roundtuple2(onestep(0.0, 0.16, 0.5)))
   Assert.AreEqual({-0.0416, 1.6352}, roundtuple2(onestep(0.0, 0.16, 0.9)))
-  Dim s = onepoint(New State(New RectangleVG(), 0.0, 0.16, New Random())) ' let
+  Dim s = onepoint(New State(New RectangleVG(), 0.0, 0.16, New Random())) ' variable definition
   Assert.AreEqual("rect at 50.0448, 62.848", s.toString())
-  Dim p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01} ' let
-  Dim p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85} ' let
+  Dim p1 = {0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01} ' variable definition
+  Dim p2 = {0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85} ' variable definition
   Assert.AreEqual(p1, getparams(0.005, {p1, p2}, 0.0))
   Assert.AreEqual(p2, getparams(0.03, {p1, p2}, 0.0))
   Assert.AreEqual(p2, getparams(0.03, {p2}, 0.01))

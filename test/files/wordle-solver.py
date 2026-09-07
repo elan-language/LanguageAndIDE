@@ -69,8 +69,8 @@ def evaluateYellows(attempt: str, target: str) -> list[str]: # function
 # end function
 
 def markAttempt(attempt: str, target: str) -> str: # function
-  greens = evaluateGreens(attempt, target) # let
-  markedAttempt = evaluateYellows(greens[0], greens[1]) # let
+  greens = evaluateGreens(attempt, target) # variable definition
+  markedAttempt = evaluateYellows(greens[0], greens[1]) # variable definition
   return markedAttempt[0]
 # end function
 
@@ -79,16 +79,16 @@ def possibleAnswersAfterAttempt(prior: list[str], attempt: str, mark: str) -> li
 # end function
 
 def maxWordCountRemainingAfterAttempt(possAnswers: list[str], attempt: str) -> int: # function
-  d = Dictionary[str, int]() # let
-  d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str: incrementCount(dd, answer, attempt)) # let
-  keys = d2.keys() # let
+  d = Dictionary[str, int]() # variable definition
+  d2 = possAnswers.reduce(d, lambda dd: Dictionary[str, int], answer: str: incrementCount(dd, answer, attempt)) # variable definition
+  keys = d2.keys() # variable definition
   return keys.reduce(0, lambda maxSoFar: int, mark: str: if_(d2[mark] > maxSoFar, d2[mark], maxSoFar))
 # end function
 
 def incrementCount(d: Dictionary[str, int], possAnswer: str, attempt: str) -> Dictionary[str, int]: # function
-  mark = markAttempt(attempt, possAnswer) # let
-  keys = d.keys() # let
-  count = if_(keys.contains(mark), d[mark], 0) # let
+  mark = markAttempt(attempt, possAnswer) # variable definition
+  keys = d.keys() # variable definition
+  count = if_(keys.contains(mark), d[mark], 0) # variable definition
   return d.withPut(mark, count + 1)
 # end function
 
@@ -97,14 +97,14 @@ def allRemainingWordCounts(possAnswers: list[str]) -> list[WordCount]: # functio
 # end function
 
 def betterOf(wc1: WordCount, wc2: WordCount, possAnswers: list[str]) -> WordCount: # function
-  isBetter = wc2.count < wc1.count # let
-  isEqualAndPossAnswer = (wc2.count == wc1.count) and possAnswers.contains(wc2.word) # let
+  isBetter = wc2.count < wc1.count # variable definition
+  isEqualAndPossAnswer = (wc2.count == wc1.count) and possAnswers.contains(wc2.word) # variable definition
   return if_(isBetter or isEqualAndPossAnswer, wc2, wc1)
 # end function
 
 def bestAttempt(possAnswers: list[str]) -> str: # function
-  wordCounts = allRemainingWordCounts(possAnswers) # let
-  best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount: betterOf(bestSoFar, newWord, possAnswers)) # let
+  wordCounts = allRemainingWordCounts(possAnswers) # variable definition
+  best = wordCounts.reduce(wordCounts.head(), lambda bestSoFar: WordCount, newWord: WordCount: betterOf(bestSoFar, newWord, possAnswers)) # variable definition
   return best.word
 # end function
 
@@ -131,32 +131,32 @@ allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE ABLED ABODE ABORT A
 
 class Test_betterOf(unittest.TestCase):
  def test_betterOf(self) -> None:
-  possAnswers = list[str]() # let
-  b2 = WordCount("B", 2) # let
-  a3 = WordCount("A", 3) # let
-  a2 = WordCount("A", 2) # let
+  possAnswers = list[str]() # variable definition
+  b2 = WordCount("B", 2) # variable definition
+  a3 = WordCount("A", 3) # variable definition
+  a2 = WordCount("A", 2) # variable definition
   self.assertEqual(betterOf(a3, b2, possAnswers), b2)
   self.assertEqual(betterOf(b2, a3, possAnswers), b2)
   self.assertEqual(betterOf(b2, a2, possAnswers), b2)
   self.assertEqual(betterOf(a2, b2, possAnswers), a2)
-  possAnswers2 = ["B"] # let
+  possAnswers2 = ["B"] # variable definition
   self.assertEqual(betterOf(a2, b2, possAnswers2), b2)
-  possAnswers3 = ["B", "A"] # let
+  possAnswers3 = ["B", "A"] # variable definition
   self.assertEqual(betterOf(a2, b2, possAnswers3), b2)
   self.assertEqual(betterOf(b2, a2, possAnswers3), a2)
 # end test
 
 class Test_bestAttempt(unittest.TestCase):
  def test_bestAttempt(self) -> None:
-  possAnswers = ["ABCDE", "ABBBB", "EDCBA"] # let
+  possAnswers = ["ABCDE", "ABBBB", "EDCBA"] # variable definition
   self.assertEqual(bestAttempt(possAnswers), "EDCBA")
-  possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"] # let
+  possAnswers2 = ["ABCDE", "ABBBB", "BCDEA"] # variable definition
   self.assertEqual(bestAttempt(possAnswers2), "BCDEA")
 # end test
 
 class Test_Wordcount(unittest.TestCase):
  def test_Wordcount(self) -> None:
-  wc = WordCount("ABCDE", 3) # let
+  wc = WordCount("ABCDE", 3) # variable definition
   self.assertEqual(wc.word, "ABCDE")
   self.assertEqual(wc.count, 3)
   self.assertEqual(wc.toString(), "ABCDE 3")
@@ -262,7 +262,7 @@ class Test_markAttempt(unittest.TestCase):
 
 class Test_possibleAnswersAfterAttempt(unittest.TestCase):
  def test_possibleAnswersAfterAttempt(self) -> None:
-  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
+  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable definition
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AAAAA", "*____"), ["ABCDE"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXXX", "+____"), ["BCDEA", "CDEAB", "DEABC", "EABCD"])
   self.assertEqual(possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"), ["BCDEA", "CDEAB", "EABCD"])
@@ -270,8 +270,8 @@ class Test_possibleAnswersAfterAttempt(unittest.TestCase):
 
 class Test_maxWordCountRemainingAfterAttempt(unittest.TestCase):
  def test_maxWordCountRemainingAfterAttempt(self) -> None:
-  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
-  d = Dictionary[str, int]() # let
+  prior = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable definition
+  d = Dictionary[str, int]() # variable definition
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "AAAAA"), 1)
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "AXXXX"), 4)
   self.assertEqual(maxWordCountRemainingAfterAttempt(prior, "XXXXX"), 5)
@@ -279,8 +279,8 @@ class Test_maxWordCountRemainingAfterAttempt(unittest.TestCase):
 
 class Test_allRemainingWordCounts(unittest.TestCase):
  def test_allRemainingWordCounts(self) -> None:
-  possAnswers = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # let
-  wordcounts = allRemainingWordCounts(possAnswers) # let
+  possAnswers = ["ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"] # variable definition
+  wordcounts = allRemainingWordCounts(possAnswers) # variable definition
   self.assertEqual(wordcounts.toString(), "[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]")
 # end test
 

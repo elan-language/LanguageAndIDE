@@ -71,8 +71,8 @@ static List<String> evaluateYellows(String attempt, String target) { // function
 } // end function
 
 static String markAttempt(String attempt, String target) { // function
-  var greens = evaluateGreens(attempt, target); // let
-  var markedAttempt = evaluateYellows(greens[0], greens[1]); // let
+  var greens = evaluateGreens(attempt, target);
+  var markedAttempt = evaluateYellows(greens[0], greens[1]);
   return markedAttempt[0];
 } // end function
 
@@ -81,16 +81,16 @@ static List<String> possibleAnswersAfterAttempt(List<String> prior, String attem
 } // end function
 
 static int maxWordCountRemainingAfterAttempt(List<String> possAnswers, String attempt) { // function
-  var d = new Dictionary<String, int>(); // let
-  var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt)); // let
-  var keys = d2.keys(); // let
+  var d = new Dictionary<String, int>();
+  var d2 = possAnswers.reduce(d, (Dictionary<String, int> dd, String answer) -> incrementCount(dd, answer, attempt));
+  var keys = d2.keys();
   return keys.reduce(0, (int maxSoFar, String mark) -> if_(d2[mark] > maxSoFar, d2[mark], maxSoFar));
 } // end function
 
 static Dictionary<String, int> incrementCount(Dictionary<String, int> d, String possAnswer, String attempt) { // function
-  var mark = markAttempt(attempt, possAnswer); // let
-  var keys = d.keys(); // let
-  var count = if_(keys.contains(mark), d[mark], 0); // let
+  var mark = markAttempt(attempt, possAnswer);
+  var keys = d.keys();
+  var count = if_(keys.contains(mark), d[mark], 0);
   return d.withPut(mark, count + 1);
 } // end function
 
@@ -99,14 +99,14 @@ static List<WordCount> allRemainingWordCounts(List<String> possAnswers) { // fun
 } // end function
 
 static WordCount betterOf(WordCount wc1, WordCount wc2, List<String> possAnswers) { // function
-  var isBetter = wc2.count < wc1.count; // let
-  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word); // let
+  var isBetter = wc2.count < wc1.count;
+  var isEqualAndPossAnswer = (wc2.count == wc1.count) && possAnswers.contains(wc2.word);
   return if_(isBetter || isEqualAndPossAnswer, wc2, wc1);
 } // end function
 
 static String bestAttempt(List<String> possAnswers) { // function
-  var wordCounts = allRemainingWordCounts(possAnswers); // let
-  var best = wordCounts.reduce(wordCounts.head(), (WordCount bestSoFar, WordCount newWord) -> betterOf(bestSoFar, newWord, possAnswers)); // let
+  var wordCounts = allRemainingWordCounts(possAnswers);
+  var best = wordCounts.reduce(wordCounts.head(), (WordCount bestSoFar, WordCount newWord) -> betterOf(bestSoFar, newWord, possAnswers));
   return best.word;
 } // end function
 
@@ -133,32 +133,32 @@ static final String allValidAnswers = "ABACK ABASE ABATE ABBEY ABBOT ABHOR ABIDE
 
 class Test_betterOf {
 @Test static void test_betterOf() {
-  var possAnswers = new List<String>(); // let
-  var b2 = new WordCount("B", 2); // let
-  var a3 = new WordCount("A", 3); // let
-  var a2 = new WordCount("A", 2); // let
+  var possAnswers = new List<String>();
+  var b2 = new WordCount("B", 2);
+  var a3 = new WordCount("A", 3);
+  var a2 = new WordCount("A", 2);
   assertEquals(b2, betterOf(a3, b2, possAnswers));
   assertEquals(b2, betterOf(b2, a3, possAnswers));
   assertEquals(b2, betterOf(b2, a2, possAnswers));
   assertEquals(a2, betterOf(a2, b2, possAnswers));
-  var possAnswers2 = list("B"); // let
+  var possAnswers2 = list("B");
   assertEquals(b2, betterOf(a2, b2, possAnswers2));
-  var possAnswers3 = list("B", "A"); // let
+  var possAnswers3 = list("B", "A");
   assertEquals(b2, betterOf(a2, b2, possAnswers3));
   assertEquals(a2, betterOf(b2, a2, possAnswers3));
 }} // end test
 
 class Test_bestAttempt {
 @Test static void test_bestAttempt() {
-  var possAnswers = list("ABCDE", "ABBBB", "EDCBA"); // let
+  var possAnswers = list("ABCDE", "ABBBB", "EDCBA");
   assertEquals("EDCBA", bestAttempt(possAnswers));
-  var possAnswers2 = list("ABCDE", "ABBBB", "BCDEA"); // let
+  var possAnswers2 = list("ABCDE", "ABBBB", "BCDEA");
   assertEquals("BCDEA", bestAttempt(possAnswers2));
 }} // end test
 
 class Test_Wordcount {
 @Test static void test_Wordcount() {
-  var wc = new WordCount("ABCDE", 3); // let
+  var wc = new WordCount("ABCDE", 3);
   assertEquals("ABCDE", wc.word);
   assertEquals(3, wc.count);
   assertEquals("ABCDE 3", wc.toString());
@@ -264,7 +264,7 @@ class Test_markAttempt {
 
 class Test_possibleAnswersAfterAttempt {
 @Test static void test_possibleAnswersAfterAttempt() {
-  var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
+  var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD");
   assertEquals(list("ABCDE"), possibleAnswersAfterAttempt(prior, "AAAAA", "*____"));
   assertEquals(list("BCDEA", "CDEAB", "DEABC", "EABCD"), possibleAnswersAfterAttempt(prior, "AXXXX", "+____"));
   assertEquals(list("BCDEA", "CDEAB", "EABCD"), possibleAnswersAfterAttempt(prior, "AXXBX", "+__+_"));
@@ -272,8 +272,8 @@ class Test_possibleAnswersAfterAttempt {
 
 class Test_maxWordCountRemainingAfterAttempt {
 @Test static void test_maxWordCountRemainingAfterAttempt() {
-  var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
-  var d = new Dictionary<String, int>(); // let
+  var prior = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD");
+  var d = new Dictionary<String, int>();
   assertEquals(1, maxWordCountRemainingAfterAttempt(prior, "AAAAA"));
   assertEquals(4, maxWordCountRemainingAfterAttempt(prior, "AXXXX"));
   assertEquals(5, maxWordCountRemainingAfterAttempt(prior, "XXXXX"));
@@ -281,8 +281,8 @@ class Test_maxWordCountRemainingAfterAttempt {
 
 class Test_allRemainingWordCounts {
 @Test static void test_allRemainingWordCounts() {
-  var possAnswers = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD"); // let
-  var wordcounts = allRemainingWordCounts(possAnswers); // let
+  var possAnswers = list("ABCDE", "BCDEA", "CDEAB", "DEABC", "EABCD");
+  var wordcounts = allRemainingWordCounts(possAnswers);
   assertEquals("[ABCDE 4, BCDEA 4, CDEAB 4, DEABC 4, EABCD 4]", wordcounts.toString());
 }} // end test
 } // end Global

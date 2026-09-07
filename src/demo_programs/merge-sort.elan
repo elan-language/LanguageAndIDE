@@ -1,4 +1,4 @@
-# d7b263036f5c7973facaf8a277102ebb3d804abff205233e2ae34d28186f3a96 Elan 2.0.0-beta3 valid
+# 06288e00cf4bba2c032162c8358619721de111fe2653b37b4bf0cddbe76f4676 Elan 2.0.0-beta3 valid
 
 # Implementation of the Merge sort algorithm demonstrating
 # - Decomposition of the principal function 'sort' into smaller functions,
@@ -12,103 +12,103 @@ function sort(li as List<of String>) returns List<of String>
 end function
 
 function sortedFrontHalf(li as List<of String>) returns List<of String>
-  let mid be divAsInt(li.length(), 2)
-  let frontHalf be li.subList(0, mid)
+  variable mid set to divAsInt(li.length(), 2)
+  variable frontHalf set to li.subList(0, mid)
   return sort(frontHalf)
 end function
 
 function sortedBackHalf(li as List<of String>) returns List<of String>
-  let mid be divAsInt(li.length(), 2)
-  let backHalf be li.subList(mid, li.length())
+  variable mid set to divAsInt(li.length(), 2)
+  variable backHalf set to li.subList(mid, li.length())
   return sort(backHalf)
 end function
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
-  let oneIsEmpty be (a.length() is 0) or (b.length() is 0)
+  variable oneIsEmpty set to (a.length() is 0) or (b.length() is 0)
   return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
 end function
 
 function mergeNonEmpty(a as List<of String>, b as List<of String>) returns List<of String>
-  let aHead be a.head()
-  let bHead be b.head()
-  let aTail be a.tail()
-  let bTail be b.tail()
+  variable aHead set to a.head()
+  variable bHead set to b.head()
+  variable aTail set to a.tail()
+  variable bTail set to b.tail()
   return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
 end function
 
 test test_sort
   # Edge case: empty
-  let l1 be new List<of String>()
+  variable l1 set to new List<of String>()
   assert sort(l1) evaluates to l1
   # Edge case: one item
-  let li2 be ["plum"]
+  variable li2 set to ["plum"]
   assert sort(li2) evaluates to li2
   # Happy case: odd number of members
-  let li3 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
-  let sorted3 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
+  variable li3 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable sorted3 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "plum", "strawberry"]
   assert sort(li3) evaluates to sorted3
   # Happy case: even number of members
-  let li4 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
-  let sorted4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
+  variable li4 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry"]
+  variable sorted4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "plum", "strawberry"]
   assert sort(li4) evaluates to sorted4
   # Edge case: already sorted
-  let li5 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
+  variable li5 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear", "strawberry"]
   assert sort(li5) evaluates to li5
 end test
 
 test test_sortedFrontHalf
   # Edge case: one item - so front half is empty
-  let li1 be ["plum"]
+  variable li1 set to ["plum"]
   assert sortedFrontHalf(li1) evaluates to new List<of String>()
   # Happy case: odd number of members
-  let li2 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable li2 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   assert sortedFrontHalf(li2) evaluates to ["apricot", "lemon", "lime", "plum"]
   # Happy case: even number of members
-  let li3 be ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable li3 set to ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   assert sortedFrontHalf(li3) evaluates to ["apricot", "lemon", "melon", "plum"]
   # Edge case: already sorted
-  let li4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
+  variable li4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
   assert sortedFrontHalf(li4) evaluates to ["apple", "apricot", "lemon"]
 end test
 
 test test_sortedBackHalf
   # Edge case: one item - so back half is whole list
-  let li1 be ["plum"]
+  variable li1 set to ["plum"]
   assert sortedBackHalf(li1) evaluates to ["plum"]
   # Happy case: odd number of members
-  let li2 be ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable li2 set to ["plum", "apricot", "lime", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   assert sortedBackHalf(li2) evaluates to ["apple", "melon", "orange", "pear", "strawberry"]
   # Happy case: even number of members
-  let li3 be ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
+  variable li3 set to ["plum", "apricot", "lemon", "melon", "apple", "orange", "strawberry", "pear"]
   assert sortedBackHalf(li3) evaluates to ["apple", "orange", "pear", "strawberry"]
   # Edge case: already sorted
-  let li4 be ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
+  variable li4 set to ["apple", "apricot", "lemon", "lime", "melon", "orange", "pear"]
   assert sortedBackHalf(li4) evaluates to ["lime", "melon", "orange", "pear"]
 end test
 
 test test_merge
   # Happy cases:
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum", "watermelon"]
+  variable l1 set to ["apple", "lime", "pear"]
+  variable l2 set to ["apricot", "lemon", "plum", "watermelon"]
   assert merge(["orange"], ["melon"]) evaluates to ["melon", "orange"]
   assert merge(l1, l2) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
   assert merge(l2, l1) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
   # Edge cases - empty list(s)
-  let le be new List<of String>()
+  variable le set to new List<of String>()
   assert merge(le, le) evaluates to le
   assert merge(l1, le) evaluates to l1
   assert merge(le, l2) evaluates to l2
   # Edge case - duplication
   assert merge(l1, l1) evaluates to ["apple", "apple", "lime", "lime", "pear", "pear"]
   # Error case lists not sorted will not produce correct result
-  let lu be ["lime", "pear", "apple"]
+  variable lu set to ["lime", "pear", "apple"]
   assert merge(lu, l2) evaluates to ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
   assert merge(lu, le) evaluates to ["lime", "pear", "apple"]
 end test
 
 test test_mergeNonEmpty
-  let l1 be ["apple", "lime", "pear"]
-  let l2 be ["apricot", "lemon", "plum", "watermelon"]
+  variable l1 set to ["apple", "lime", "pear"]
+  variable l2 set to ["apricot", "lemon", "plum", "watermelon"]
   assert mergeNonEmpty(["orange"], ["melon"]) evaluates to ["melon", "orange"]
   assert mergeNonEmpty(l1, l2) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
   assert mergeNonEmpty(l2, l1) evaluates to ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"]
@@ -121,6 +121,6 @@ test test_mergeNonEmpty
   # Error case - pass empty list
   assert mergeNonEmpty(new List<of String>(), l1) evaluates to "Out of range index: 0 size: 0"
   #  Error case unsorted list
-  let lu be ["lime", "pear", "apple"]
+  variable lu set to ["lime", "pear", "apple"]
   assert merge(lu, l2) evaluates to ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"]
 end test

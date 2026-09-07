@@ -21,12 +21,12 @@ def sum(li: list[float]) -> float: # function
 
 class Test_sum(unittest.TestCase):
  def test_sum(self) -> None:
-  li = [3.1, 5.02, 4, 7.73, 9.9] # let
+  li = [3.1, 5.02, 4, 7.73, 9.9] # variable definition
   self.assertEqual(sum(li).round(2), 29.75)
   # edge cases: empty, and one element lists
-  le = list[float]() # let
+  le = list[float]() # variable definition
   self.assertEqual(sum(le), 0)
-  l1 = [0.6] # let
+  l1 = [0.6] # variable definition
   self.assertEqual(sum(l1), 0.6)
 # end test
 
@@ -36,11 +36,11 @@ def reverse(li: list[float]) -> list[float]: # function
 
 class Test_reverse(unittest.TestCase):
  def test_reverse(self) -> None:
-  l = [3.1, 5.02, 4, 7.73, 9.9] # let
+  l = [3.1, 5.02, 4, 7.73, 9.9] # variable definition
   self.assertEqual(reverse(l), [9.9, 7.73, 4, 5.02, 3.1])
   # edge cases: empty, and one element lists
-  le = list[float]() # let
+  le = list[float]() # variable definition
   self.assertEqual(reverse(le), le)
-  l1 = [0.6] # let
+  l1 = [0.6] # variable definition
   self.assertEqual(reverse(l1), l1)
 # end test

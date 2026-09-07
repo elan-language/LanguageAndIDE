@@ -23,12 +23,12 @@ static double sum(List<double> li) { // function
 
 class Test_sum {
 @Test static void test_sum() {
-  var li = list(3.1, 5.02, 4, 7.73, 9.9); // let
+  var li = list(3.1, 5.02, 4, 7.73, 9.9);
   assertEquals(29.75, sum(li).round(2));
   // edge cases: empty, and one element lists
-  var le = new List<double>(); // let
+  var le = new List<double>();
   assertEquals(0, sum(le));
-  var l1 = list(0.6); // let
+  var l1 = list(0.6);
   assertEquals(0.6, sum(l1));
 }} // end test
 
@@ -38,12 +38,12 @@ static List<double> reverse(List<double> li) { // function
 
 class Test_reverse {
 @Test static void test_reverse() {
-  var l = list(3.1, 5.02, 4, 7.73, 9.9); // let
+  var l = list(3.1, 5.02, 4, 7.73, 9.9);
   assertEquals(list(9.9, 7.73, 4, 5.02, 3.1), reverse(l));
   // edge cases: empty, and one element lists
-  var le = new List<double>(); // let
+  var le = new List<double>();
   assertEquals(le, reverse(le));
-  var l1 = list(0.6); // let
+  var l1 = list(0.6);
   assertEquals(l1, reverse(l1));
 }} // end test
 } // end Global

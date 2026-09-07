@@ -83,18 +83,18 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
 
 class Test_determinePlayerOutcome(unittest.TestCase):
  def test_determinePlayerOutcome(self) -> None:
-  dbj = (Dealer(0)).with_status(Status.blackjack) # let
+  dbj = (Dealer(0)).with_status(Status.blackjack) # variable definition
   self.assertEqual(dbj.status, Status.blackjack)
-  d21 = (Dealer(0)).with_status(Status.standing).with_handTotal(21) # let
+  d21 = (Dealer(0)).with_status(Status.standing).with_handTotal(21) # variable definition
   self.assertEqual(d21.status, Status.standing)
   self.assertEqual(d21.handTotal, 21)
-  d17 = (Dealer(0)).with_status(Status.standing).with_handTotal(17) # let
-  dbu = (Dealer(0)).with_status(Status.bust) # let
-  pbj = (HumanPlayer("", 0)).with_status(Status.blackjack) # let
+  d17 = (Dealer(0)).with_status(Status.standing).with_handTotal(17) # variable definition
+  dbu = (Dealer(0)).with_status(Status.bust) # variable definition
+  pbj = (HumanPlayer("", 0)).with_status(Status.blackjack) # variable definition
   self.assertEqual(pbj.status, Status.blackjack)
-  p21 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) # let
-  p17 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) # let
-  pbu = (HumanPlayer("", 0)).with_status(Status.bust) # let
+  p21 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(21) # variable definition
+  p17 = (HumanPlayer("", 0)).with_status(Status.standing).with_handTotal(17) # variable definition
+  pbu = (HumanPlayer("", 0)).with_status(Status.bust) # variable definition
   self.assertEqual(determinePlayerOutcome(dbj, pbj), Outcome.draw)
   self.assertEqual(determinePlayerOutcome(dbj, p21), Outcome.lose)
   self.assertEqual(determinePlayerOutcome(dbj, pbu), Outcome.lose)
@@ -116,16 +116,16 @@ def dealCard(random: float) -> Card: # function
 
 class Test_dealCard(unittest.TestCase):
  def test_dealCard(self) -> None:
-  c1 = dealCard(0) # let
+  c1 = dealCard(0) # variable definition
   self.assertEqual(c1.rank, "2")
   self.assertEqual(c1.suit, Suit.clubs)
-  c2 = dealCard(0.9999999) # let
+  c2 = dealCard(0.9999999) # variable definition
   self.assertEqual(c2.rank, "A")
   self.assertEqual(c2.suit, Suit.spades)
-  c3 = dealCard(0.5) # let
+  c3 = dealCard(0.5) # variable definition
   self.assertEqual(c3.rank, "8")
   self.assertEqual(c3.suit, Suit.hearts)
-  c4 = dealCard(0.24) # let
+  c4 = dealCard(0.24) # variable definition
   self.assertEqual(c4.rank, "5")
   self.assertEqual(c4.suit, Suit.clubs)
 # end test
@@ -162,11 +162,11 @@ def htmlForGame(game: Game) -> str: # function
 
 class Test_htmlForGame(unittest.TestCase):
  def test_htmlForGame(self) -> None:
-  c1 = Card("3", Suit.clubs, False) # let
-  c2 = Card("K", Suit.spades, True) # let
-  p = (HumanPlayer("fred", 10)).with_cards([c1, c2]) # let
-  players = (list[Player]()).withAppend(p) # let
-  g2 = (Game(1)).with_players(players) # let
+  c1 = Card("3", Suit.clubs, False) # variable definition
+  c2 = Card("K", Suit.spades, True) # variable definition
+  p = (HumanPlayer("fred", 10)).with_cards([c1, c2]) # variable definition
+  players = (list[Player]()).withAppend(p) # variable definition
+  g2 = (Game(1)).with_players(players) # variable definition
   self.assertEqual(htmlForGame(g2), "<div class='game'><div class='player'><div class='details'>Dealer - 1 points </div><div class='hand'></div></div><div class='player'><div class='details'>fred - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div><div class='message'></div></div>")
 # end test
 
@@ -184,9 +184,9 @@ def htmlForPlayer(player: Player) -> str: # function
 
 class Test_htmlForPlayer(unittest.TestCase):
  def test_htmlForPlayer(self) -> None:
-  c1 = Card("3", Suit.clubs, False) # let
-  c2 = Card("K", Suit.spades, True) # let
-  p = (HumanPlayer("charlie", 10)).with_cards([c1, c2]) # let
+  c1 = Card("3", Suit.clubs, False) # variable definition
+  c2 = Card("K", Suit.spades, True) # variable definition
+  p = (HumanPlayer("charlie", 10)).with_cards([c1, c2]) # variable definition
   self.assertEqual(htmlForPlayer(p), "<div class='player'><div class='details'>charlie - 10 points - hand total: 0</div><div class='hand'><div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div><div class='card reversed'></div></div></div>")
 # end test
 
