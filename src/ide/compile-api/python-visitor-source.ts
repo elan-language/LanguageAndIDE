@@ -24,7 +24,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
       .map((t) => this.visit(t))
       .filter((s) => this.filterTokens(s))
       .join(", ");
-    return `(${types})`;
+    return `tuple[${types}]`;
   };
 
   visitTypeName = (ctx: TypeNameContext) => {

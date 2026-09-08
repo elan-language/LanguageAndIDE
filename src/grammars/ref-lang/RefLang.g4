@@ -1,3 +1,6 @@
+
+
+
 grammar RefLang;
 import RefLang_Lexer;
 
@@ -195,7 +198,7 @@ litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 enumValue: typeName DOT identifier;
 // litRegExp:;
-litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING ;
+litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 

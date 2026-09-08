@@ -1,3 +1,6 @@
+
+
+
 lexer grammar Csharp_Lexer;
 
 //START common token names; custom definitions
@@ -75,7 +78,9 @@ IF_:
 // END C#-specific tokens
 
 //START Common token names; common definitions
-COMMENT: COMMENT_MARKER ~( '\r' | '\n')*; // In other langs, the casing may be different
+COMMENT:
+    COMMENT_MARKER ~('\r' | '\n')*
+; // In other langs, the casing may be different
 
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';

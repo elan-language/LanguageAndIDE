@@ -48,6 +48,7 @@ import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
 import { StringTypeAsn } from "./string-type-asn";
 import { TypeNameAsn } from "./type-name-asn";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 
 // interface type guards
 
@@ -542,6 +543,29 @@ export function getTypeName(l: Language, name: string, fieldId: string, scope: S
     case l.BOOL_NAME:
       return new BooleanTypeAsn(l, fieldId);
     case l.LIST_NAME:
+      return new ListTypeAsn(l, fieldId, scope);
+    default:
+      return new TypeNameAsn(name, fieldId, scope);
+  }
+}
+
+export function getTypeNameById(
+  l: Language,
+  tokenId: number,
+  name: string,
+  fieldId: string,
+  scope: Scope,
+): AstNode {
+  switch (tokenId) {
+    case RefLangLexer.INT_NAME:
+      return new IntTypeAsn(l, fieldId);
+    case RefLangLexer.FLOAT_NAME:
+      return new FloatTypeAsn(l, fieldId);
+    case RefLangLexer.STRING_NAME:
+      return new StringTypeAsn(l, fieldId);
+    case RefLangLexer.BOOL_NAME:
+      return new BooleanTypeAsn(l, fieldId);
+    case RefLangLexer.LIST_NAME:
       return new ListTypeAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);

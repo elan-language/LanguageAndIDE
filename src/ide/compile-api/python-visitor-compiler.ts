@@ -1,7 +1,7 @@
 import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
+import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
   TypeContext,
@@ -82,6 +82,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   };
 
   visitTerminal(ctx: TerminalNode) {
-    return getTypeName(this.language, ctx.getText(), this.fieldId, this.scope);
+    return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 }
