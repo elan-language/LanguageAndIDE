@@ -1,8 +1,8 @@
 // C# with Elan 2.0.0-beta4
 
-const Int nDiscs = 7;
+const int nDiscs = 7;
 
-const Int delay_ms = 300;
+const int delay_ms = 300;
 
 static void main() {
   var stacks = create3Stacks(nDiscs);

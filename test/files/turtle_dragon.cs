@@ -15,9 +15,9 @@ static void main() {
   drawDragon(t, order, turns, side, corner); // procedure call
 } // end main
 
-const String left = "1";
+const string left = "1";
 
-const String right = "0";
+const string right = "0";
 
 static void drawDragon(Turtle t, int order, string turns, double side, double corner) { // procedure
   var p = (200.0/order).floor();

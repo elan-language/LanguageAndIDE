@@ -26,10 +26,14 @@ export class ConstantValueField extends AbstractField {
     return this.symbolCompletionAsHtml();
   }
 
+  // This function used to return the Elan name for the type (eg "Float")
+  // but has been changed to return the language-specific name
+  // (eg "double" for Java) which is what is needed.
+  // For minimal code change, the name of the function has not been changed.
   getElanType() {
     const scope = this.getFile().getAst(false)?.getScopeById(this.getHolder().getHtmlId());
     if (isSymbol(scope)) {
-      return scope.symbolType().name;
+      return scope.symbolType().languageSpecificName(this.getFile().language());
     }
     return "";
   }

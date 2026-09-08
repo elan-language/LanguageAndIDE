@@ -27,5 +27,5 @@ static void drawSide(double length, Turtle t) { // procedure
   } // end if
 } // end procedure
 
-static final Int side = 100; // constant
+static final int side = 100; // constant
 } // end Global

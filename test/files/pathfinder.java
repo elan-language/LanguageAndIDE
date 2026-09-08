@@ -307,13 +307,13 @@ enum Algorithm {dijkstra, aStar, heuristic}
 
 // 'infinity' need only be larger than longest possible route
 
-static final Float infinity = 2000.0; // constant
+static final double infinity = 2000.0; // constant
 
 static final String algPrompt = "Enter 'a' for A-star, 'd' for Dijkstra, 'h' for Heuristic"; // constant
 
-static final Int lightBlue = 0x80abff; // constant
+static final int lightBlue = 0x80abff; // constant
 
-static final Int orange = 0xe97132; // constant
+static final int orange = 0xe97132; // constant
 
 static Algorithm getAlgFromLetter(String letter) { // function
   var alg = Algorithm.heuristic;

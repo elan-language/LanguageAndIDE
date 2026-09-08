@@ -139,9 +139,9 @@ class Test_one {
   assertEquals(3, onepoint(0.5, 0.5, 100, p));
 }} // end test
 
-static final Int width = 200; // constant
+static final int width = 200; // constant
 
-static final Int height = 150; // constant
+static final int height = 150; // constant
 
-static final Int nmax = 360; // constant
+static final int nmax = 360; // constant
 } // end Global
