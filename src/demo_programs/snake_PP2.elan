@@ -1,0 +1,135 @@
+# f48ed883f3aee970516d686d58d606c7598787a07f73cf428ebb9cbeae410602 Elan 2.0.0-beta3 valid
+
+# Use the w,a,s,d keys to change snake's direction
+main
+  variable blocks set to createBlockGraphics(white)
+  variable head set to 2015
+  variable tail set to head
+  variable body set to [head]
+  variable currentDir set to "d"
+  variable gameOn set to true
+  variable apple set to 0
+  variable changeApplePosition set to true
+  while gameOn
+    while changeApplePosition
+      assign apple to squareNo(randint(0, 39), randint(0, 29))
+      if not body.contains(apple) then
+        assign changeApplePosition to false
+      end if
+    end while
+    call updateDisplay(blocks, head, tail, body, apple)
+    variable key set to getKey()
+    if not key.equals("") and "wasd".contains(key) then
+      assign currentDir to key
+    end if
+    assign tail to body[0]
+    call body.append(head)
+    assign head to getAdjacentSquare(head, currentDir)
+    assign gameOn to not hasHitEdge(head) and not body.contains(head)
+    if head.equals(apple) then
+      assign changeApplePosition to true
+    else
+      call body.removeAt(0)
+    end if
+    call sleep_ms(150)
+  end while
+  print($"Game Over! Score: {body.length() - 1}")
+end main
+
+procedure updateDisplay(blocks as List<of List<of Int>>, head as Int, tail as Int, body as List<of Int>, apple as Int)
+  assign blocks[x(head)][y(head)] to green
+  variable tailColour set to getTailColour(tail, body)
+  assign blocks[x(tail)][y(tail)] to tailColour
+  assign blocks[x(apple)][y(apple)] to red
+  call displayBlocks(blocks)
+end procedure
+
+function getTailColour(tail as Int, body as List<of Int>) returns Int
+  variable colour set to white
+  if body[0].equals(tail) then
+    assign colour to green
+  end if
+  return colour
+end function
+
+function hasHitEdge(head as Int) returns Boolean
+  variable headX set to x(head)
+  variable headY set to y(head)
+  return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
+end function
+
+function getAdjacentSquare(sq as Int, dir as String) returns Int
+  variable newX set to x(sq)
+  variable newY set to y(sq)
+  if dir.equals("a") then
+    assign newX to newX - 1
+  elif dir.equals("d") then
+    assign newX to newX + 1
+  elif dir.equals("w") then
+    assign newY to newY - 1
+  elif dir.equals("s") then
+    assign newY to newY + 1
+  end if
+  return squareNo(newX, newY)
+end function
+
+function squareNo(x as Int, y as Int) returns Int
+  return x*100 + y
+end function
+
+function x(sq as Int) returns Int
+  return divAsInt(sq, 100)
+end function
+
+function y(sq as Int) returns Int
+  return sq mod 100
+end function
+
+test test_square
+  assert squareNo(0, 0) evaluates to 0
+  assert squareNo(39, 29) evaluates to 3929
+  assert squareNo(-1, 15) evaluates to -85
+  assert squareNo(15, -1) evaluates to 1499
+end test
+
+test test_y
+  assert y(0500) evaluates to 0
+  assert y(0507) evaluates to 7
+  assert y(-0109) evaluates to -9
+  assert y(1499) evaluates to 99
+end test
+
+test test_x
+  assert x(0015) evaluates to 0
+  assert x(0500) evaluates to 5
+  assert x(0507) evaluates to 5
+  assert x(-0109) evaluates to -2
+end test
+
+test test_getTailColour
+  assert getTailColour(0304, [0304, 0305]) evaluates to green
+  assert getTailColour(0304, [0305, 0306]) evaluates to white
+end test
+
+test test_hasHitEdge
+  assert hasHitEdge(0000) evaluates to false
+  assert hasHitEdge(0029) evaluates to false
+  assert hasHitEdge(3900) evaluates to false
+  assert hasHitEdge(3929) evaluates to false
+  assert hasHitEdge(-0105) evaluates to true
+  assert hasHitEdge(0530) evaluates to true
+  assert hasHitEdge(4005) evaluates to true
+  assert hasHitEdge(0499) evaluates to true
+  assert hasHitEdge(1499) evaluates to true
+  assert hasHitEdge(-85) evaluates to true
+end test
+
+test test_getAdjacentSquare
+  variable sq set to 2015
+  assert getAdjacentSquare(sq, "w") evaluates to 2014
+  assert getAdjacentSquare(sq, "s") evaluates to 2016
+  assert getAdjacentSquare(sq, "a") evaluates to 1915
+  assert getAdjacentSquare(sq, "d") evaluates to 2115
+  # boundary
+  assert getAdjacentSquare(0015, "a") evaluates to -85
+end test
