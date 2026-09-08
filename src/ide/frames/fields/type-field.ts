@@ -41,7 +41,7 @@ export class TypeField extends AbstractField {
   }
 
   override parseCompleteTextUsingNode(text: string, _root: ParseNode | undefined): void {
-    if (text.length === 0) {
+    if (!text || text.length === 0) {
       this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
     } else {
       let parser: antlr.Parser;
@@ -71,5 +71,11 @@ export class TypeField extends AbstractField {
       this.context = undefined;
       throw new Error(`Parse error at ${source.getRemainingCode()}`);
     }
+  }
+
+  override setFieldToKnownValidText(text: string) {
+    this.text = text;
+    this.parseCompleteTextUsingNode(this.text, undefined);
+    this._parseStatus = ParseStatus.valid;
   }
 }

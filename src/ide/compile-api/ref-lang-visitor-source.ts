@@ -7,6 +7,7 @@ import {
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 
 export class RefLangVisitorSource extends RefLangVisitor<string> {
   constructor() {
@@ -80,6 +81,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   };
 
   visitTerminal(ctx: TerminalNode) {
-    return ctx.symbol.text ?? "";
+    const literals = RefLangLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+    return literals[ctx.symbol.type] ?? ctx.getText();
   }
 }

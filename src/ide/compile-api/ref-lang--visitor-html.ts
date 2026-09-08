@@ -8,6 +8,7 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -30,7 +31,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitTypeName = (ctx: TypeNameContext) => {
     const type = this.visitChildren(ctx) ?? "";
-    return `<el-type>${this.language.mapElanTypeToLanguageType(type)}</el-type>`;
+    return `<el-type>${type}</el-type>`;
   };
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
@@ -82,6 +83,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   visitTerminal(ctx: TerminalNode) {
-    return this.language.mapLanguageTypeToElanType(ctx.symbol.text!);
+    //return this.language.mapLanguageTypeToElanType(ctx.symbol.text!);
+    const literals = RefLangLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+    return literals[ctx.symbol.type] ?? ctx.getText();
   }
 }

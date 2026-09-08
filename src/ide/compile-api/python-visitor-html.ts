@@ -8,6 +8,7 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
+import { PythonLexer } from "../../generated/python/PythonLexer";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -30,7 +31,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
 
   visitTypeName = (ctx: TypeNameContext) => {
     const type = this.visitChildren(ctx) ?? "";
-    return `<el-type>${this.language.mapElanTypeToLanguageType(type)}</el-type>`;
+    return `<el-type>${type}</el-type>`;
   };
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
@@ -82,6 +83,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   };
 
   visitTerminal(ctx: TerminalNode) {
-    return this.language.mapLanguageTypeToElanType(ctx.symbol.text!);
+    const literals = PythonLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+    return literals[ctx.symbol.type] ?? ctx.getText();
   }
 }

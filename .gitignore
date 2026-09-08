@@ -18,7 +18,6 @@ coverage
 .nyc_output
 src/environment.ts
 src/documentation/*.css
-src/generated
 
 # Playwright
 /test-results/

@@ -7,6 +7,7 @@ import {
   TypeFuncContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
+import { PythonLexer } from "../../generated/python/PythonLexer";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
   constructor() {
@@ -79,6 +80,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   };
 
   visitTerminal(ctx: TerminalNode) {
-    return ctx.symbol.text ?? "";
+    const literals = PythonLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+    return literals[ctx.symbol.type] ?? ctx.getText();
   }
 }
