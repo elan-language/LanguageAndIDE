@@ -1,6 +1,72 @@
 lexer grammar Python_Lexer;
 
+//common token names; custom definitions
+COMMENT_MARKER: '#';
+
+INT_NAME: 'int';
+FLOAT_NAME: 'float';
+BOOL_NAME: 'bool';
+STRING_NAME: 'str';
+LIST_NAME: 'list';
+FUNC_NAME: 'Callable';
+
+TRUE: 'True';
+FALSE: 'False';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
+EQUAL: '==';
+NOT_EQUAL: '!=';
+MOD: '%';
+ARROW: '->';
+
+BINARY_PREFIX: '0b';
+HEX_PREFIX: '0x';
+INTERPOLATED_STRING_PREFIX: 'f';
+
+THIS_INSTANCE: 'self';
+//END common token names; custom definitions
+
+// START Python-specific tokens
+ABSTRACT_METHOD: '@abstractmethod';
+ASSERT_EQUAL: 'assertEqual';
+AS: 'as';
+DEF: 'def';
+CLASS: 'class';
+ELIF: 'elif';
+ELSE: 'else';
+EXCEPT: 'except';
+FOR: 'for';
+IF: 'if';
+IN: 'in';
+INIT: '__init__';
+INPUT: 'input';
+LAMBDA: 'lambda';
+MAIN: 'main';
+NONE: 'None';
+PASS: 'pass';
+PRINT: 'print';
+RAISE: 'raise';
+RETURN: 'return';
+TRY: 'try';
+WHILE: 'while';
+
+ABC: 'ABC';
+ENUM: 'Enum';
+TESTCASE: 'unittest.TestCase';
+
+POWER: '**';
+TUPLE: 'tuple';
+
+IF_:
+    'if_'
+; // Temporary solution - to be replaced by language-specific implementation
+
+//END Python-specific tokens
+
 //START Common token names; common definitions
+COMMENT: COMMENT_MARKER ~( '\r' | '\n')*; // In other langs, the casing may be different
+
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
 CLOSE_BRACE: '}';
@@ -58,8 +124,6 @@ ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
 PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
 FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
 PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
-
-COMMENT: COMMENT_MARKER ~( '\r' | '\n')*; // In other langs, the casing may be different
 
 fragment InputCharacter: ~[\r\n\u0085];
 
@@ -151,67 +215,3 @@ fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
 //END Common token names; common definitions
-
-//common token names; custom definitions
-COMMENT_MARKER: '#';
-
-INT_NAME: 'int';
-FLOAT_NAME: 'float';
-BOOL_NAME: 'bool';
-STRING_NAME: 'str';
-LIST_NAME: 'list';
-FUNC_NAME: 'Callable';
-
-TRUE: 'True';
-FALSE: 'False';
-AND: 'and';
-OR: 'or';
-NOT: 'not';
-EQUAL: '==';
-NOT_EQUAL: '!=';
-MOD: '%';
-ARROW: '->';
-
-BINARY_PREFIX: '0b';
-HEX_PREFIX: '0x';
-INTERPOLATED_STRING_PREFIX: 'f';
-
-THIS_INSTANCE: 'self';
-//END common token names; custom definitions
-
-// START Python-specific tokens
-ABSTRACT_METHOD: '@abstractmethod';
-ASSERT_EQUAL: 'assertEqual';
-AS: 'as';
-DEF: 'def';
-CLASS: 'class';
-ELIF: 'elif';
-ELSE: 'else';
-EXCEPT: 'except';
-FOR: 'for';
-IF: 'if';
-IN: 'in';
-INIT: '__init__';
-INPUT: 'input';
-LAMBDA: 'lambda';
-MAIN: 'main';
-NONE: 'None';
-PASS: 'pass';
-PRINT: 'print';
-RAISE: 'raise';
-RETURN: 'return';
-TRY: 'try';
-WHILE: 'while';
-
-ABC: 'ABC';
-ENUM: 'Enum';
-TESTCASE: 'unittest.TestCase';
-
-POWER: '**';
-TUPLE: 'tuple';
-
-IF_:
-    'if_'
-; // Temporary solution - to be replaced by language-specific implementation
-
-//END Python-specific tokens
