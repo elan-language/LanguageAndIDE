@@ -41,9 +41,10 @@
   },
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
+    "antlr4ng": "^3.0.4",
+    "antlr4ng-cli": "^2.0.0",
     "async-file": "2.0.2",
-    "reflect-metadata": "^0.2.2",
-    "antlr4ng": "^3.0.4"
+    "reflect-metadata": "^0.2.2"
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3.3.1",
@@ -55,6 +56,7 @@
     "@types/node": "22.x",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
+    "antlr-format-cli": "^1.2.8",
     "cpr": "~3.0.1",
     "diffable-html": "^6.0.1",
     "esbuild": "^0.25.0",
@@ -66,7 +68,6 @@
     "prettier": "^3.6.0",
     "source-map-support": "^0.5.21",
     "typescript": "^5.8.3",
-    "web-worker": "^1.5.0",
-    "antlr-format-cli": "^1.2.8"
+    "web-worker": "^1.5.0"
   }
 }

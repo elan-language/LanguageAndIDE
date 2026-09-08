@@ -1,95 +1,6 @@
-
-
-
 lexer grammar Python_Lexer;
 
-// TODO: need to have reserved words from ALL langs defined in Lexer to test that we aren't unknowingly using them somewhere else
-// e.g. use of 'set' for a method name
-
-// START Python_Lexer
-ABSTRACT_METHOD: '@abstractmethod';
-ASSERT_EQUAL: 'assertEqual';
-AS: 'as';
-DEF: 'def';
-CLASS: 'class';
-ELIF: 'elif';
-ELSE: 'else';
-EXCEPT: 'except';
-FOR: 'for';
-IF: 'if';
-IN: 'in';
-INIT: '__init__';
-INPUT: 'input';
-LAMBDA: 'lambda';
-MAIN: 'main';
-NONE: 'None';
-PASS: 'pass';
-PRINT: 'print';
-RAISE: 'raise';
-RETURN: 'return';
-TRY: 'try';
-WHILE: 'while';
-
-ABC: 'ABC';
-ENUM: 'Enum';
-TESTCASE: 'unittest.TestCase';
-
-ARROW: '->';
-MOD: '%';
-EQUAL: '==';
-NOT_EQUAL: '!=';
-AND: 'and';
-OR: 'or';
-NOT: 'not';
-
-COMMENT_MARKER: '#';
-INTERPOLATED_STRING_PREFIX: 'f';
-
-INT_NAME: 'int';
-FLOAT_NAME: 'float';
-BOOL_NAME: 'bool';
-STRING_NAME: 'str';
-LIST_NAME: 'list';
-FUNC_NAME: 'Callable';
-
-TRUE: 'True';
-FALSE: 'False';
-BINARY_PREFIX: '0b';
-HEX_PREFIX: '0x';
-
-THIS_INSTANCE: 'self';
-
-TUPLE: 'tuple';
-
-FUNCTION_ANNOTATION: COMMENT_MARKER 'function';
-PROCECDURE_ANNOTATION: COMMENT_MARKER 'procedure';
-CONSTANT_ANNOTATION: COMMENT_MARKER 'constant';
-ENUM_ANNOTATION: COMMENT_MARKER 'enum';
-CONCRETE_CLASS_ANNOTATION: COMMENT_MARKER 'concrete class';
-ABSTRACT_CLASS_ANNOTATION: COMMENT_MARKER 'abstract class';
-VARIABLE_ANNOTATION: COMMENT_MARKER 'variable definition';
-ASSIGNMENT_ANNOTATION: COMMENT_MARKER 'assignment';
-INPUT_ANNOTATION: COMMENT_MARKER 'input statement';
-CALL_ANNOTATION: COMMENT_MARKER 'procedure call';
-LET_ANNOTATION: COMMENT_MARKER 'let';
-ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
-PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
-FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
-PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
-
-COMMENT: COMMENT_MARKER ~( '\r' | '\n')*;
-LIT_BOOLEAN:
-    'true'
-    | 'false'
-; // In other langs, the casing may be different
-
-POWER: '^';
-// END RefLang_Lexer
-
-// START ELAN2_Lexer:
-WS: [ \t]+ -> skip;
-NL: [\r\n\f]+;
-
+//START Common token names; common definitions
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
 CLOSE_BRACE: '}';
@@ -110,9 +21,8 @@ LE: '<=';
 GE: '>=';
 DOUBLE_QUOTES: '"';
 
-IF_:
-    'if_'
-; // Temporary solution - to be replaced by language-specific implementation
+WS: [ \t]+ -> skip;
+NL: [\r\n\f]+;
 
 NAME_STARTING_TEST_: 'test_' IdentifierPartCharacter*;
 NAME_STARTING_LC: UnicodeClassLL IdentifierPartCharacter*;
@@ -125,16 +35,31 @@ LITERAL_INTEGER: [0-9] [0-9]*;
 LITERAL_FLOAT:
     LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?
 ;
-INTERPOLATED_STRING:
-    INTERPOLATED_STRING_PREFIX '"' (~["\u0085] | CommonCharacter)* '"'
-;
-// INTERPOLATED_STRING - a temp kludge pending full node-parsing of interpolated string - must precede:
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;
 
 GHOSTED: '[ghosted]';
+
+//annotations
+FUNCTION_ANNOTATION: COMMENT_MARKER 'function';
+PROCECDURE_ANNOTATION: COMMENT_MARKER 'procedure';
+CONSTANT_ANNOTATION: COMMENT_MARKER 'constant';
+ENUM_ANNOTATION: COMMENT_MARKER 'enum';
+CONCRETE_CLASS_ANNOTATION: COMMENT_MARKER 'concrete class';
+ABSTRACT_CLASS_ANNOTATION: COMMENT_MARKER 'abstract class';
+VARIABLE_ANNOTATION: COMMENT_MARKER 'variable definition';
+ASSIGNMENT_ANNOTATION: COMMENT_MARKER 'assignment';
+INPUT_ANNOTATION: COMMENT_MARKER 'input statement';
+CALL_ANNOTATION: COMMENT_MARKER 'procedure call';
+LET_ANNOTATION: COMMENT_MARKER 'let';
+ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
+PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
+FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
+PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
+
+COMMENT: COMMENT_MARKER ~( '\r' | '\n')*; // In other langs, the casing may be different
 
 fragment InputCharacter: ~[\r\n\u0085];
 
@@ -225,4 +150,68 @@ fragment HexDigit: [0-9] | [A-F] | [a-f];
 fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
-// END Elan2_Lexer
+//END Common token names; common definitions
+
+//common token names; custom definitions
+COMMENT_MARKER: '#';
+
+INT_NAME: 'int';
+FLOAT_NAME: 'float';
+BOOL_NAME: 'bool';
+STRING_NAME: 'str';
+LIST_NAME: 'list';
+FUNC_NAME: 'Callable';
+
+TRUE: 'True';
+FALSE: 'False';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
+EQUAL: '==';
+NOT_EQUAL: '!=';
+MOD: '%';
+ARROW: '->';
+
+BINARY_PREFIX: '0b';
+HEX_PREFIX: '0x';
+INTERPOLATED_STRING_PREFIX: 'f';
+
+THIS_INSTANCE: 'self';
+//END common token names; custom definitions
+
+// START Python-specific tokens
+ABSTRACT_METHOD: '@abstractmethod';
+ASSERT_EQUAL: 'assertEqual';
+AS: 'as';
+DEF: 'def';
+CLASS: 'class';
+ELIF: 'elif';
+ELSE: 'else';
+EXCEPT: 'except';
+FOR: 'for';
+IF: 'if';
+IN: 'in';
+INIT: '__init__';
+INPUT: 'input';
+LAMBDA: 'lambda';
+MAIN: 'main';
+NONE: 'None';
+PASS: 'pass';
+PRINT: 'print';
+RAISE: 'raise';
+RETURN: 'return';
+TRY: 'try';
+WHILE: 'while';
+
+ABC: 'ABC';
+ENUM: 'Enum';
+TESTCASE: 'unittest.TestCase';
+
+POWER: '**';
+TUPLE: 'tuple';
+
+IF_:
+    'if_'
+; // Temporary solution - to be replaced by language-specific implementation
+
+//END Python-specific tokens

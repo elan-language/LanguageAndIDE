@@ -1,6 +1,3 @@
-
-
-
 grammar Python;
 import Python_Lexer;
 
@@ -206,17 +203,18 @@ assertActual: expression;
 
 // START SubNodes
 litValue:
-    LIT_BOOLEAN
+    litBoolean
     | litInt
     | litFloat
     | litString
     | enumValue
 ; // litRegExp
+litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 enumValue: typeName DOT identifier;
 // litRegExp:;
-litString: LITERAL_STRING | INTERPOLATED_STRING;
+litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING ;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 

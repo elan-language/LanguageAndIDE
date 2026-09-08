@@ -1,6 +1,3 @@
-
-
-
 grammar RefLang;
 import RefLang_Lexer;
 
@@ -187,25 +184,24 @@ assertActual: expression;
 
 // START SubNodes
 litValue:
-    LIT_BOOLEAN
+    | litBoolean
     | litInt
     | litFloat
     | litString
     | enumValue
 ; // litRegExp
+litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 enumValue: typeName DOT identifier;
 // litRegExp:;
-litString: LITERAL_STRING | INTERPOLATED_STRING;
-
-thisInstance: THIS;
+litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING ;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
 identifierWithOptIndexes: identifier index*;
 
-propertyRef: thisInstance DOT identifierWithOptIndexes;
+propertyRef: THIS_INSTANCE DOT identifierWithOptIndexes;
 
 expression:
     newInstance
@@ -219,7 +215,7 @@ expression:
 term: chainHead (DOT chainable)*;
 
 chainHead:
-    thisInstance
+    THIS_INSTANCE
     | bracketedExpression
     | tuple
     | litValue
