@@ -52,6 +52,7 @@ import { TypeContext } from "./PythonParser.js";
 import { EnumValuesListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
+import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
@@ -575,6 +576,16 @@ export class PythonListener implements ParseTreeListener {
      * @param ctx the parse tree
      */
     exitLitValue?: (ctx: LitValueContext) => void;
+    /**
+     * Enter a parse tree produced by `PythonParser.litBoolean`.
+     * @param ctx the parse tree
+     */
+    enterLitBoolean?: (ctx: LitBooleanContext) => void;
+    /**
+     * Exit a parse tree produced by `PythonParser.litBoolean`.
+     * @param ctx the parse tree
+     */
+    exitLitBoolean?: (ctx: LitBooleanContext) => void;
     /**
      * Enter a parse tree produced by `PythonParser.litInt`.
      * @param ctx the parse tree

@@ -50,6 +50,7 @@ import { TypeContext } from "./CsharpParser.js";
 import { EnumValuesListContext } from "./CsharpParser.js";
 import { AssertActualContext } from "./CsharpParser.js";
 import { LitValueContext } from "./CsharpParser.js";
+import { LitBooleanContext } from "./CsharpParser.js";
 import { LitIntContext } from "./CsharpParser.js";
 import { LitFloatContext } from "./CsharpParser.js";
 import { EnumValueContext } from "./CsharpParser.js";
@@ -367,6 +368,12 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitLitValue?: (ctx: LitValueContext) => Result;
+    /**
+     * Visit a parse tree produced by `CsharpParser.litBoolean`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitLitBoolean?: (ctx: LitBooleanContext) => Result;
     /**
      * Visit a parse tree produced by `CsharpParser.litInt`.
      * @param ctx the parse tree
