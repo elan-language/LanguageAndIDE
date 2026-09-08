@@ -23,7 +23,7 @@ static void main() {
   } // end if
 } // end main
 
-const Int displayWidth = 150;
+const int displayWidth = 150;
 
 static void saveAsFile(string name, List<List<int>> b) { // procedure
   var file = createFileForWriting(name);

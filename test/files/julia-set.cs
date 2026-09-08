@@ -137,8 +137,8 @@ class Coords {
   Assert.AreEqual(3, onepoint(0.5, 0.5, 100, p));
 }} // end test
 
-const Int width = 200;
+const int width = 200;
 
-const Int height = 150;
+const int height = 150;
 
-const Int nmax = 360;
+const int nmax = 360;

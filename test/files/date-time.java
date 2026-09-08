@@ -137,11 +137,11 @@ static List<int> startDaysList(int year, List<int> startDays) { // function
 
 // Unix epoch is 1970.01.01 00:00:00 Thursday
 
-static final Int unixYear = 1970; // constant
+static final int unixYear = 1970; // constant
 
-static final Int unixWeekday = 4; // constant
+static final int unixWeekday = 4; // constant
 
-static final Int daySecs = 86400; // constant
+static final int daySecs = 86400; // constant
 
 // day and month names, and day numbers
 
