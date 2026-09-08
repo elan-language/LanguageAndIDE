@@ -46,6 +46,7 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
+import { BlockGraphics } from "./block-graphics";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -75,6 +76,9 @@ export class StdLib {
 
   @elanClassExport(HashSet)
   HashSet = HashSet;
+
+  @elanClassExport(BlockGraphics)
+  BlockGraphics = BlockGraphics;
 
   @elanClassExport(Turtle)
   Turtle = Turtle;
