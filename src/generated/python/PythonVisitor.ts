@@ -52,6 +52,7 @@ import { TypeContext } from "./PythonParser.js";
 import { EnumValuesListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
+import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
@@ -382,6 +383,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitLitValue?: (ctx: LitValueContext) => Result;
+    /**
+     * Visit a parse tree produced by `PythonParser.litBoolean`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitLitBoolean?: (ctx: LitBooleanContext) => Result;
     /**
      * Visit a parse tree produced by `PythonParser.litInt`.
      * @param ctx the parse tree

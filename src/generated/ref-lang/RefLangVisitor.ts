@@ -52,11 +52,11 @@ import { TypeContext } from "./RefLangParser.js";
 import { EnumValuesListContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
+import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
-import { ThisInstanceContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
@@ -384,6 +384,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      */
     visitLitValue?: (ctx: LitValueContext) => Result;
     /**
+     * Visit a parse tree produced by `RefLangParser.litBoolean`.
+     * @param ctx the parse tree
+     * @return the visitor result
+     */
+    visitLitBoolean?: (ctx: LitBooleanContext) => Result;
+    /**
      * Visit a parse tree produced by `RefLangParser.litInt`.
      * @param ctx the parse tree
      * @return the visitor result
@@ -407,12 +413,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
      * @return the visitor result
      */
     visitLitString?: (ctx: LitStringContext) => Result;
-    /**
-     * Visit a parse tree produced by `RefLangParser.thisInstance`.
-     * @param ctx the parse tree
-     * @return the visitor result
-     */
-    visitThisInstance?: (ctx: ThisInstanceContext) => Result;
     /**
      * Visit a parse tree produced by `RefLangParser.index`.
      * @param ctx the parse tree
