@@ -16,11 +16,8 @@ import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { GlobalSelector } from "../ide/frames/globals/global-selector";
 import { MainRoutine } from "../ide/frames/globals/main-routine";
-import { LanguageCS } from "../ide/frames/language-cs";
 import { LanguageElan } from "../ide/frames/language-elan";
-import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
-import { LanguageVB } from "../ide/frames/language-vb";
 import { Paradigm } from "../ide/frames/paradigm";
 import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
@@ -99,9 +96,9 @@ function newFileImpl(): FileImpl {
 const languages = [
   LanguageElan.Instance,
   LanguagePython.Instance,
-  LanguageCS.Instance,
-  LanguageVB.Instance,
-  LanguageJava.Instance,
+  // LanguageCS.Instance,
+  // LanguageVB.Instance,
+  // LanguageJava.Instance,
 ];
 
 async function parseAs(

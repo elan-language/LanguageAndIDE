@@ -23,6 +23,8 @@ export function getPythonParser(input: string) {
   const lexer = new PythonLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
   return parser;
 }
 
@@ -31,6 +33,8 @@ export function getRefLangParser(input: string) {
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
   return parser;
 }
 
