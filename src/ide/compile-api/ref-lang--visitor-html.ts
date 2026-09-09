@@ -1,4 +1,5 @@
 import { TerminalNode } from "antlr4ng";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
   TypeContext,
   TypeFuncContext,
@@ -8,55 +9,26 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
-import { filterTokens, getTokenText, visitType } from "./parser-helpers";
+import { getFilteredTypes, getFuncTypes, getTokenText, visitType } from "./parser-helpers";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
     super();
   }
 
-  visitTypeTuple = (ctx: TypeTupleContext) => {
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((s) => filterTokens(s))
-      .join(", ");
+  visitTypeTuple = (ctx: TypeTupleContext) => `(${getFilteredTypes(this, ctx).join(", ")})`;
 
-    return `(${types})`;
-  };
+  visitTypeName = (ctx: TypeNameContext) => `<el-type>${this.visitChildren(ctx) ?? ""}</el-type>`;
 
-  visitTypeName = (ctx: TypeNameContext) => {
-    const type = this.visitChildren(ctx) ?? "";
-    return `<el-type>${type}</el-type>`;
-  };
-
-  visitTypeGeneric = (ctx: TypeGenericContext) => {
-    const typeName = this.visit(ctx.typeName());
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((s) => filterTokens(s))
-      .join(", ");
-
-    return `${typeName}&lt;<el-kw>of</el-kw> ${types}&gt;`;
-  };
+  visitTypeGeneric = (ctx: TypeGenericContext) =>
+    `${this.visit(ctx.typeName())}&lt;<el-kw>of</el-kw> ${getFilteredTypes(this, ctx).join(", ")}&gt;`;
 
   visitTypeFunc = (ctx: TypeFuncContext) => {
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((s) => filterTokens(s));
-
-    const returnType = types[types.length - 1];
-    const inTypes = types.slice(0, -1).join(", ");
-
+    const [inTypes, returnType] = getFuncTypes(this, ctx);
     return `Func&lt;<el-kw>of</el-kw> ${inTypes} =&gt; ${returnType}&gt;`;
   };
 
-  override visitType = (context: TypeContext) => {
-    return visitType<string>(this, context);
-  };
+  visitType = (context: TypeContext) => visitType<string>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTokenText(RefLangLexer.literalNames, ctx);

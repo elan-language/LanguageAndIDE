@@ -114,3 +114,28 @@ export function visitType<T>(
 
   throw new Error(context.getText());
 }
+
+export function getTypes<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  return context.type_().map((t) => visitor.visit(t)!);
+}
+
+export function getFilteredTypes(
+  visitor: ParseTreeVisitor<string>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  return getTypes<string>(visitor, context).filter((s) => filterTokens(s));
+}
+
+export function getFuncTypes(
+  visitor: ParseTreeVisitor<string>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  const types = getFilteredTypes(visitor, context);
+  const returnType = types[types.length - 1];
+  const inTypes = types.slice(0, -1).join(", ");
+
+  return [inTypes, returnType];
+}

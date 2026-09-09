@@ -1,7 +1,7 @@
 import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
+import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
   TypeContext,
@@ -12,7 +12,7 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { visitType } from "./parser-helpers";
+import { getTypes, visitType } from "./parser-helpers";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -23,34 +23,30 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     super();
   }
 
-  visitTypeTuple = (ctx: TypeTupleContext) => {
-    const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
-    const types = ctx.type_().map((t) => this.visit(t)!);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
+  visitTypeTuple = (ctx: TypeTupleContext) =>
+    new TypeAsn(
+      getTypeName(this.language, "Tuple", this.fieldId, this.scope),
+      getTypes(this, ctx),
+      this.fieldId,
+      this.scope,
+    );
 
-  visitTypeName = (ctx: TypeNameContext) => {
-    const typeName = this.visitChildren(ctx)!;
-    return typeName;
-  };
+  visitTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
-  visitTypeGeneric = (ctx: TypeGenericContext) => {
-    const typeName = this.visit(ctx.typeName())!;
-    const types = ctx.type_().map((t) => this.visit(t)!);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
+  visitTypeGeneric = (ctx: TypeGenericContext) =>
+    new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
 
-  visitTypeFunc = (ctx: TypeFuncContext) => {
-    const typeName = getTypeName(this.language, "Func", this.fieldId, this.scope);
-    const types = ctx.type_().map((t) => this.visit(t)!);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
+  visitTypeFunc = (ctx: TypeFuncContext) =>
+    new TypeAsn(
+      getTypeName(this.language, "Func", this.fieldId, this.scope),
+      getTypes(this, ctx),
+      this.fieldId,
+      this.scope,
+    );
 
-  override visitType = (context: TypeContext) => {
-    return visitType<AstNode>(this, context);
-  };
+  visitType = (context: TypeContext) => visitType<AstNode>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
-    return getTypeName(this.language, ctx.getText(), this.fieldId, this.scope);
+    return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 }

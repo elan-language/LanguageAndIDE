@@ -12,6 +12,7 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
+import { getTypes, visitType } from "./parser-helpers";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -22,55 +23,28 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     super();
   }
 
-  visitTypeTuple = (ctx: TypeTupleContext) => {
-    const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
-    const types = ctx.type_().map((t) => this.visit(t)!);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
+  visitTypeTuple = (ctx: TypeTupleContext) =>
+    new TypeAsn(
+      getTypeName(this.language, "Tuple", this.fieldId, this.scope),
+      getTypes(this, ctx),
+      this.fieldId,
+      this.scope,
+    );
 
-  visitTypeName = (ctx: TypeNameContext) => {
-    const typeName = this.visitChildren(ctx)!;
-    return typeName;
-  };
+  visitTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
-  visitTypeGeneric = (ctx: TypeGenericContext) => {
-    const typeName = this.visit(ctx.typeName())!;
-    const types = ctx.type_().map((t) => this.visit(t)!);
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
+  visitTypeGeneric = (ctx: TypeGenericContext) =>
+    new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
 
-  visitTypeFunc = (ctx: TypeFuncContext) => {
-    const typeName = getTypeName(this.language, "Func", this.fieldId, this.scope);
-    const types = ctx.type_().map((t) => this.visit(t)!);
+  visitTypeFunc = (ctx: TypeFuncContext) =>
+    new TypeAsn(
+      getTypeName(this.language, "Func", this.fieldId, this.scope),
+      getTypes(this, ctx),
+      this.fieldId,
+      this.scope,
+    );
 
-    return new TypeAsn(typeName, types, this.fieldId, this.scope);
-  };
-
-  override visitType = (context: TypeContext) => {
-    const typeTuple = context.typeTuple();
-    const typeName = context.typeName();
-    const typeGeneric = context.typeGeneric();
-    const typeFunc = context.typeFunc();
-
-    if (typeTuple) {
-      return this.visit(typeTuple)!;
-    }
-
-    if (typeName) {
-      const tn = this.visit(typeName)!;
-      return new TypeAsn(tn, [], this.fieldId, this.scope);
-    }
-
-    if (typeGeneric) {
-      return this.visit(typeGeneric)!;
-    }
-
-    if (typeFunc) {
-      return this.visit(typeFunc)!;
-    }
-
-    throw new Error(context.getText());
-  };
+  visitType = (context: TypeContext) => visitType<AstNode>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
