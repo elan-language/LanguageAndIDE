@@ -1,13 +1,13 @@
 ' VB.NET with Elan 2.0.0-beta4
 
 Sub main()
-  Dim blocks = createBlockGraphics(white) ' variable definition
+  Dim blocks = New BlockGraphics() ' variable definition
   Dim x = 20 ' variable definition
   Dim y = 15 ' variable definition
   While True
-    blocks(x)(y) = red ' assignment
-    displayBlocks(blocks) ' procedure call
-    blocks(x)(y) = black ' assignment
+    blocks.put(x, y, red) ' procedure call
+    blocks.display() ' procedure call
+    blocks.put(x, y, black) ' procedure call
     Dim direction = randint(0, 3) ' variable definition
     If direction = 0 Then
       x = min({x + 1, 39}) ' assignment

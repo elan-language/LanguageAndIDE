@@ -1,35 +1,38 @@
 # Python with Elan 2.0.0-beta4
 
 def main() -> None:
-  grid = createBlockGraphics(white) # variable definition
+  grid = BlockGraphics() # variable definition
   fillRandom(grid) # procedure call
   while True:
-    displayBlocks(grid) # procedure call
-    gridRef = AsRef[list[list[int]]](grid) # variable definition
-    nextGeneration(gridRef) # procedure call
-    grid = gridRef.value() # assignment
+    grid.display() # procedure call
+    nextGeneration(grid) # procedure call
     sleep_ms(50) # procedure call
   # end while
 # end main
 
-def fillRandom(grid: list[list[int]]) -> None: # procedure
+def fillRandom(grid: BlockGraphics) -> None: # procedure
   for col in range(0, 40):
     for row in range(0, 30):
-      grid[col][row] = blackOrWhite(random()) # assignment
+      grid.put(col, row, blackOrWhite(random())) # procedure call
     # end for
   # end for
 # end procedure
 
-def nextGeneration(gridRef: AsRef[list[list[int]]]) -> None: # procedure
-  nextGen = createBlockGraphics(white) # variable definition
-  grid = gridRef.value() # variable definition
+def nextGeneration(grid: BlockGraphics) -> None: # procedure
+  # First, make a copy of the existing grid
+  copy = BlockGraphics() # variable definition
   for x in range(0, 40):
     for y in range(0, 30):
-      colour = nextCellValue(grid, x, y) # variable definition
-      nextGen[x][y] = colour # assignment
+      copy.put(x, y, grid.get(x, y)) # procedure call
     # end for
   # end for
-  gridRef.put(nextGen) # procedure call
+  # then calculate each new cell *from the copy*, and update the grid
+  for x in range(0, 40):
+    for y in range(0, 30):
+      colour = nextCellValue(copy, x, y) # variable definition
+      grid.put(x, y, colour) # procedure call
+    # end for
+  # end for
 # end procedure
 
 def blackOrWhite(random: float) -> int: # function
@@ -101,12 +104,12 @@ def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 # end function
 
-def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
+def liveNeighbours(grid: BlockGraphics, x: int, y: int) -> int: # function
   count = 0 # variable definition
   for cell in neighbourCells(x, y):
     cx = cell.item_0 # variable definition
     cy = cell.item_1 # variable definition
-    if grid[cx][cy] == black:
+    if grid.get(cx, cy) == black:
       count = count + 1 # assignment
     # end if
   # end for
@@ -123,9 +126,9 @@ def willLive(cell: int, liveNeighbours: int) -> bool: # function
   return result
 # end function
 
-def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
+def nextCellValue(grid: BlockGraphics, x: int, y: int) -> int: # function
   colour = white # variable definition
-  live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
+  live = willLive(grid.get(x, y), liveNeighbours(grid, x, y)) # variable definition
   if live:
     colour = black # assignment
   # end if

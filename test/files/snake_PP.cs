@@ -3,26 +3,32 @@
 // Use the w,a,s,d keys to change snake's direction
 
 static void main() {
-  var blocks = createBlockGraphics(white);
-  var head = new [] {20, 15};
+  var blocks = new BlockGraphics();
+  var head = 2015;
   var tail = head;
   var body = new [] {head};
-  var currentDir = Direction.right;
+  var currentDir = "d";
   var gameOn = true;
-  var apple = new [] {0, 0};
-  setAppleToRandomPosition(apple, body); // procedure call
+  var apple = 0;
+  var changeApplePosition = true;
   while (gameOn) {
+    while (changeApplePosition) {
+      apple = squareNo(randint(0, 39), randint(0, 29)); // assignment
+      if (!body.contains(apple)) {
+        changeApplePosition = false; // assignment
+      } // end if
+    } // end while
     updateDisplay(blocks, head, tail, body, apple); // procedure call
-    var currentDirRef = new AsRef<Direction>(currentDir);
-    var headRef = new AsRef<List<int>>(head);
-    var tailRef = new AsRef<List<int>>(tail);
-    updateSnake(currentDirRef, tailRef, headRef, body); // procedure call
-    head = headRef.value(); // assignment
-    tail = tailRef.value(); // assignment
-    currentDir = currentDirRef.value(); // assignment
-    gameOn = !hasHitEdge(head[0], head[1]) && !body.contains(head); // assignment
+    var key = getKey();
+    if (!key.equals("") && "wasd".contains(key)) {
+      currentDir = key; // assignment
+    } // end if
+    tail = body[0]; // assignment
+    body.append(head); // procedure call
+    head = getAdjacentSquare(head, currentDir); // assignment
+    gameOn = !hasHitEdge(head) && !body.contains(head); // assignment
     if (head.equals(apple)) {
-      setAppleToRandomPosition(apple, body); // procedure call
+      changeApplePosition = true; // assignment
     } else {
       body.removeAt(0); // procedure call
     } // end if
@@ -31,37 +37,15 @@ static void main() {
   Console.WriteLine($"Game Over! Score: {body.length() - 1}"); // print statement
 } // end main
 
-static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
-  var head = headRef.value();
-  var tail = tailRef.value();
-  var currentDir = currentDirRef.value();
-  currentDir = directionByKey(currentDir, getKey()); // assignment
-  tailRef.put(body[0]); // procedure call
-  body.append(head); // procedure call
-  headRef.put(getAdjacentSquare(head, currentDir)); // procedure call
-  currentDirRef.put(currentDir); // procedure call
-} // end procedure
-
-static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
-  blocks[head[0]][head[1]] = green; // assignment
+static void updateDisplay(BlockGraphics blocks, int head, int tail, List<int> body, int apple) { // procedure
+  blocks.put(x(head), y(head), green); // procedure call
   var tailColour = getTailColour(tail, body);
-  blocks[tail[0]][tail[1]] = tailColour; // assignment
-  blocks[apple[0]][apple[1]] = red; // assignment
-  displayBlocks(blocks); // procedure call
+  blocks.put(x(tail), y(tail), tailColour); // procedure call
+  blocks.put(x(apple), y(apple), red); // procedure call
+  blocks.display(); // procedure call
 } // end procedure
 
-static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure
-  var changePosition = true;
-  while (changePosition) {
-    apple[0] = randint(0, 39); // assignment
-    apple[1] = randint(0, 29); // assignment
-    if (!body.contains(apple)) {
-      changePosition = false; // assignment
-    } // end if
-  } // end while
-} // end procedure
-
-static int getTailColour(List<int> tail, List<List<int>> body) { // function
+static int getTailColour(int tail, List<int> body) { // function
   var colour = white;
   if (body[0].equals(tail)) {
     colour = green; // assignment
@@ -69,78 +53,90 @@ static int getTailColour(List<int> tail, List<List<int>> body) { // function
   return colour;
 } // end function
 
-static bool hasHitEdge(int headX, int headY) { // function
+static bool hasHitEdge(int head) { // function
+  var headX = x(head);
+  var headY = y(head);
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
 } // end function
 
-static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
-  var newX = sq[0];
-  var newY = sq[1];
-  if (dir == Direction.left) {
+static int getAdjacentSquare(int sq, string dir) { // function
+  var newX = x(sq);
+  var newY = y(sq);
+  if (dir.equals("a")) {
     newX = newX - 1; // assignment
-  } else if (dir == Direction.right) {
+  } else if (dir.equals("d")) {
     newX = newX + 1; // assignment
-  } else if (dir == Direction.up) {
+  } else if (dir.equals("w")) {
     newY = newY - 1; // assignment
-  } else if (dir == Direction.down) {
+  } else if (dir.equals("s")) {
     newY = newY + 1; // assignment
   } // end if
-  return new [] {newX, newY};
+  return squareNo(newX, newY);
 } // end function
 
-static Direction directionByKey(Direction current, string key) { // function
-  var dirn = current;
-  if (key.equals("w")) {
-    dirn = Direction.up; // assignment
-  } else if (key.equals("s")) {
-    dirn = Direction.down; // assignment
-  } else if (key.equals("a")) {
-    dirn = Direction.left; // assignment
-  } else if (key.equals("d")) {
-    dirn = Direction.right; // assignment
-  } // end if
-  return dirn;
+static int squareNo(int x, int y) { // function
+  return x*100 + y;
 } // end function
 
-enum Direction {up, down, left, right}
+static int x(int sq) { // function
+  return divAsInt(sq, 100);
+} // end function
+
+static int y(int sq) { // function
+  return sq % 100;
+} // end function
+
+[TestClass] class Test_square
+[TestMethod] static void test_square() {
+  Assert.AreEqual(0, squareNo(0, 0));
+  Assert.AreEqual(3929, squareNo(39, 29));
+  Assert.AreEqual(-85, squareNo(-1, 15));
+  Assert.AreEqual(1499, squareNo(15, -1));
+}} // end test
+
+[TestClass] class Test_y
+[TestMethod] static void test_y() {
+  Assert.AreEqual(0, y(0500));
+  Assert.AreEqual(7, y(0507));
+  Assert.AreEqual(-9, y(-0109));
+  Assert.AreEqual(99, y(1499));
+}} // end test
+
+[TestClass] class Test_x
+[TestMethod] static void test_x() {
+  Assert.AreEqual(0, x(0015));
+  Assert.AreEqual(5, x(0500));
+  Assert.AreEqual(5, x(0507));
+  Assert.AreEqual(-2, x(-0109));
+}} // end test
 
 [TestClass] class Test_getTailColour
 [TestMethod] static void test_getTailColour() {
-  Assert.AreEqual(green, getTailColour(new [] {3, 4}, new [] {new [] {3, 4}, new [] {3, 5}}));
-  Assert.AreEqual(white, getTailColour(new [] {3, 4}, new [] {new [] {3, 5}, new [] {3, 6}}));
+  Assert.AreEqual(green, getTailColour(0304, new [] {0304, 0305}));
+  Assert.AreEqual(white, getTailColour(0304, new [] {0305, 0306}));
 }} // end test
 
 [TestClass] class Test_hasHitEdge
 [TestMethod] static void test_hasHitEdge() {
-  Assert.AreEqual(false, hasHitEdge(0, 0));
-  Assert.AreEqual(false, hasHitEdge(0, 29));
-  Assert.AreEqual(false, hasHitEdge(39, 0));
-  Assert.AreEqual(false, hasHitEdge(29, 29));
-  Assert.AreEqual(true, hasHitEdge(-1, 5));
-  Assert.AreEqual(true, hasHitEdge(5, 30));
-  Assert.AreEqual(true, hasHitEdge(40, 5));
-  Assert.AreEqual(true, hasHitEdge(5, -1));
+  Assert.AreEqual(false, hasHitEdge(0000));
+  Assert.AreEqual(false, hasHitEdge(0029));
+  Assert.AreEqual(false, hasHitEdge(3900));
+  Assert.AreEqual(false, hasHitEdge(3929));
+  Assert.AreEqual(true, hasHitEdge(-0105));
+  Assert.AreEqual(true, hasHitEdge(0530));
+  Assert.AreEqual(true, hasHitEdge(4005));
+  Assert.AreEqual(true, hasHitEdge(0499));
+  Assert.AreEqual(true, hasHitEdge(1499));
+  Assert.AreEqual(true, hasHitEdge(-85));
 }} // end test
 
 [TestClass] class Test_getAdjacentSquare
 [TestMethod] static void test_getAdjacentSquare() {
-  var sq = new [] {20, 15};
-  Assert.AreEqual(new [] {20, 14}, getAdjacentSquare(sq, Direction.up));
-  Assert.AreEqual(new [] {20, 16}, getAdjacentSquare(sq, Direction.down));
-  Assert.AreEqual(new [] {19, 15}, getAdjacentSquare(sq, Direction.left));
-  Assert.AreEqual(new [] {21, 15}, getAdjacentSquare(sq, Direction.right));
+  var sq = 2015;
+  Assert.AreEqual(2014, getAdjacentSquare(sq, "w"));
+  Assert.AreEqual(2016, getAdjacentSquare(sq, "s"));
+  Assert.AreEqual(1915, getAdjacentSquare(sq, "a"));
+  Assert.AreEqual(2115, getAdjacentSquare(sq, "d"));
   // boundary
-  Assert.AreEqual(new [] {-1, 15}, getAdjacentSquare(new [] {0, 15}, Direction.left));
-}} // end test
-
-[TestClass] class Test_directionByKey
-[TestMethod] static void test_directionByKey() {
-  var current = Direction.up;
-  Assert.AreEqual(Direction.up, directionByKey(current, ""));
-  Assert.AreEqual(Direction.up, directionByKey(current, "x"));
-  Assert.AreEqual(Direction.up, directionByKey(current, "w"));
-  Assert.AreEqual(Direction.down, directionByKey(current, "s"));
-  Assert.AreEqual(Direction.left, directionByKey(current, "a"));
-  Assert.AreEqual(Direction.right, directionByKey(current, "d"));
-  Assert.AreEqual(Direction.up, directionByKey(current, "D"));
+  Assert.AreEqual(-85, getAdjacentSquare(0015, "a"));
 }} // end test

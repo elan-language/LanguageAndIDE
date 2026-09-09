@@ -1,15 +1,15 @@
-# 1f4fb3cde0c1cda36fc8c3b621c1e5a47b253cfb53b8073841abf374dde5a352 Elan 2.0.0-beta4 valid
+# 7950b2b0f7ea1bad14a57e0ece369182a2acd32ccb7ee7cac1982c3a2ce590e6 Elan 2.0.0-beta4 valid
 
 main
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   while true
     variable x set to randint(0, 19)
     variable y set to randint(0, 14)
     variable colour set to randint(0, (pow(2, 24) - 1).floor())
-    assign blocks[20 + x][15 - y] to colour
-    assign blocks[20 + x][15 + y] to colour
-    assign blocks[20 - x][15 - y] to colour
-    assign blocks[20 - x][15 + y] to colour
-    call displayBlocks(blocks)
+    call blocks.put(20 + x, 15 - y, colour)
+    call blocks.put(20 + x, 15 + y, colour)
+    call blocks.put(20 - x, 15 - y, colour)
+    call blocks.put(20 - x, 15 + y, colour)
+    call blocks.display()
   end while
 end main

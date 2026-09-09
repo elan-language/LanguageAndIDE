@@ -3,13 +3,13 @@
 # Use the W,A,S,D keys to change Snake direction
 
 def main() -> None:
-  blocks = createBlockGraphics(white) # variable definition
+  blocks = BlockGraphics() # variable definition
   rnd = Random() # variable definition
   rnd.initialiseFromClock() # procedure call
   game = (Game(rnd)).withNewApple() # variable definition
   while game.isOn:
     blocks = updateGraphics(game, blocks) # assignment
-    displayBlocks(blocks) # procedure call
+    blocks.display() # procedure call
     sleep_ms(150) # procedure call
     game = clockTick(game, getKey()) # assignment
   # end while
@@ -23,16 +23,12 @@ def clockTick(g: Game, k: str) -> Game: # function
   return if_(gameOver(g4), g4.with_isOn(False), g4)
 # end function
 
-def updateGraphics(g: Game, b: list[list[int]]) -> list[list[int]]: # function
-  b2 = graphicsPut(b, g.apple.x, g.apple.y, red) # variable definition
-  b3 = graphicsPut(b2, g.head.x, g.head.y, green) # variable definition
+def updateGraphics(g: Game, b: BlockGraphics) -> BlockGraphics: # function
+  b2 = b.withPut(g.apple.x, g.apple.y, red) # variable definition
+  b3 = b2.withPut(g.head.x, g.head.y, green) # variable definition
   tail = g.body[0] # variable definition
   tailColour = if_(tail.equals(g.priorTail), green, white) # variable definition
-  return graphicsPut(b3, tail.x, tail.y, tailColour)
-# end function
-
-def graphicsPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
+  return b3.withPut(tail.x, tail.y, tailColour)
 # end function
 
 def score(g: Game) -> int: # function
@@ -176,17 +172,17 @@ class Test_clockTick(unittest.TestCase):
 
 class Test_updateGraphics(unittest.TestCase):
  def test_updateGraphics(self) -> None:
-  blocks = createBlockGraphics(white) # variable definition
+  blocks = BlockGraphics() # variable definition
   g1 = Game(Random()) # variable definition
   blocks2 = updateGraphics(g1, blocks) # variable definition
-  self.assertEqual(blocks2[12][15], red)
-  self.assertEqual(blocks2[22][15], green)
-  self.assertEqual(blocks2[21][15], white)
+  self.assertEqual(blocks2.get(12, 15), red)
+  self.assertEqual(blocks2.get(22, 15), green)
+  self.assertEqual(blocks2.get(21, 15), white)
   g3 = clockTick(g1, "d") # variable definition
   blocks3 = updateGraphics(g3, blocks2) # variable definition
-  self.assertEqual(blocks3[12][15], red)
-  self.assertEqual(blocks3[22][15], green)
-  self.assertEqual(blocks3[23][15], green)
+  self.assertEqual(blocks3.get(12, 15), red)
+  self.assertEqual(blocks3.get(22, 15), green)
+  self.assertEqual(blocks3.get(23, 15), green)
 # end test
 
 class Test_testnewApple(unittest.TestCase):

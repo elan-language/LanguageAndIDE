@@ -1401,36 +1401,83 @@ end function
 <h1 id="Graphics">Graphic types</h1>
 
 <h2 id="BlockGraphics">Block graphics</h2>
+
+<p>(The method <el-method>createBlockGraphics</el-method> has been deprecated. The recommended way to use block graphics
+is shown below.)</p>
+
+
 <p>Block graphics provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.</p>
 <p>The graphics are defined and displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
 <p>Each block is be rendered as a solid colour.</p>
 <p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
 
 <codeblock>main
-  variable grid set to createBlockGraphics(white)
+  variable grid set to new BlockGraphics()
   while true
     variable x set to randint(0, 39)
     variable y set to randint(0, 29)
     variable colour set to randint(0, white - 1)
-    assign grid[x][y] to colour
-    call displayBlocks(grid)
+    call grid.put(x, y, colour)
+    call grid.display()
   end while
 end main
 </codeblock>
 
 <h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
 <ul>
- <li>The definition of the grid is made using the library function <el-method>createBlockGraphics</el-method> which initialises
-  a <code>List&lt;of List&lt;of Int&gt;&gt;</code> structure
-  containing 40 columns &times; 30 rows.</li>
- <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in [0..39] and <i>y</i> is in [0..29].</li>
+ <li>The type <code>BloackGraphics</code> may be passed as a parameter into a method and/or returned by a function.</li>
+ <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in the range 0 to 39 and <i>y</i> is in the range 0 to 29.</li>
  <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li>
- <li>You may create multiple such structures holding different patterns of blocks, and switch between them
- just by passing the required one as the argument to method <el-method>displayBlocks</el-method>.</li>
- <li>Any <code>List&lt;of List&lt;of Int&gt;&gt;</code> structure of the same
- 40 &times; 30 dimensions can be the argument to method <el-method>displayBlocks</el-method>.</li>
+ <li>You may create multiple instances of BlockGraphics holding different patterns of blocks, and switch between them
+ just by calling the dotted method <el-method>display</el-method> on the one to be displayed - automatically overwriting any existing blocks shown on the display.</li>
  <li>A colour is specified as an <code>Int</code>, as described under <a href="#Colours">Colours <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
+
+<h3 class="no-TOC">Function dot methods on BlockGraphics</h3>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot methods</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
+  <th>returns</th>
+ </tr><tr id="get_BlockGraphics">
+  <td><el-method>get</el-method></td>
+  <td>integer, integer</td>
+  <td>integer</td>
+  <td>returns the colour of the block specified by the x, y coordinates as the two arguments</td>
+ </tr><tr id="withPut_BlockGraphics">
+  <td><el-method>withPut</el-method></td>
+  <td>integer, integer, integer</td>
+  <td><code>BlockGraphics</code></td>
+  <td>function broadly equivalent to the <el-method>put</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
+  with specified change to one block</td>
+ </tr><tr id="withColourAll_BlockGraphics">
+  <td><el-method>withColourAll</el-method></td>
+  <td>(none)</td>
+  <td><code>BlockGraphics</code></td>
+  <td>function broadly equivalent to the <el-method>colourAll</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
+  with specified colour for all blocks.</td>
+ </tr>
+</table>
+
+<h3 class="no-TOC">Procedure dot methods on BlockGraphics</h3>
+<table class="tableMethod">
+ <tr>
+  <th>procedure<br>dot methods</th>
+  <th>argument<br>types</th>
+  <th>effect</th>
+ </tr>
+ <tr id="put_BlockGraphics">
+  <td><el-method>put</el-method></td>
+  <td>integer, integer, integer</td>
+  <td>Paints the block with the coordinates specified by the first two arguments, the colour specified as the third argument.</td>
+ </tr>
+ <tr id="colourAll_BlockGraphics">
+  <td><el-method>colourAll</el-method></td>
+  <td>integer</td>
+  <td>Paints all blocks the specified colour</td>
+  </tr>
+</table>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
 <p>Turtle graphics are implemented with output to the IDE's display pane, i.e. the 'paper' on which the turtle draws.</p>

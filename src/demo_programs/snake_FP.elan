@@ -1,14 +1,14 @@
-# 6ecd8a13114d4dd1ef6b4a619aeb69e02ccb0877ab0e9b1b0bee2059d540a4c5 Elan 2.0.0-beta4 valid
+# cdc65697016bbe2481a6ef25124c0bc38f5be219a56633a6c933cf22224ef1b2 Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   variable rnd set to new Random()
   call rnd.initialiseFromClock()
   variable game set to (new Game(rnd)).withNewApple()
   while game.isOn
     assign blocks to updateGraphics(game, blocks)
-    call displayBlocks(blocks)
+    call blocks.display()
     call sleep_ms(150)
     assign game to clockTick(game, getKey())
   end while
@@ -22,16 +22,12 @@ function clockTick(g as Game, k as String) returns Game
   return if_(gameOver(g4), g4.with_isOn(false), g4)
 end function
 
-function updateGraphics(g as Game, b as List<of List<of Int>>) returns List<of List<of Int>>
-  variable b2 set to graphicsPut(b, g.apple.x, g.apple.y, red)
-  variable b3 set to graphicsPut(b2, g.head.x, g.head.y, green)
+function updateGraphics(g as Game, b as BlockGraphics) returns BlockGraphics
+  variable b2 set to b.withPut(g.apple.x, g.apple.y, red)
+  variable b3 set to b2.withPut(g.head.x, g.head.y, green)
   variable tail set to g.body[0]
   variable tailColour set to if_(tail.equals(g.priorTail), green, white)
-  return graphicsPut(b3, tail.x, tail.y, tailColour)
-end function
-
-function graphicsPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour as Int) returns List<of List<of Int>>
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
+  return b3.withPut(tail.x, tail.y, tailColour)
 end function
 
 function score(g as Game) returns Int
@@ -171,17 +167,17 @@ test test_clockTick
 end test
 
 test test_updateGraphics
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   variable g1 set to new Game(new Random())
   variable blocks2 set to updateGraphics(g1, blocks)
-  assert blocks2[12][15] evaluates to red
-  assert blocks2[22][15] evaluates to green
-  assert blocks2[21][15] evaluates to white
+  assert blocks2.get(12, 15) evaluates to red
+  assert blocks2.get(22, 15) evaluates to green
+  assert blocks2.get(21, 15) evaluates to white
   variable g3 set to clockTick(g1, "d")
   variable blocks3 set to updateGraphics(g3, blocks2)
-  assert blocks3[12][15] evaluates to red
-  assert blocks3[22][15] evaluates to green
-  assert blocks3[23][15] evaluates to green
+  assert blocks3.get(12, 15) evaluates to red
+  assert blocks3.get(22, 15) evaluates to green
+  assert blocks3.get(23, 15) evaluates to green
 end test
 
 test test_testnewApple

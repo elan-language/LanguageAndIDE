@@ -1,5 +1,6 @@
 import "reflect-metadata";
 import { ElanInputOutput } from "../compiler-interfaces/elan-input-output";
+import { Deprecation, DeprecationSeverity } from "../compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "../elan-compiler-error";
 import {
   ElanBoolean,
@@ -19,6 +20,7 @@ import {
   elanClassExport,
   elanClassType,
   elanConstant,
+  elanDeprecated,
   elanFloatType,
   elanFunction,
   elanGenericParamT1Type,
@@ -28,6 +30,7 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { AsRef } from "./as-ref";
+import { BlockGraphics } from "./block-graphics";
 import { CircleVG } from "./circle-vg";
 import { Dictionary } from "./dictionary";
 import { ElanRuntimeError } from "./elan-runtime-error";
@@ -46,7 +49,6 @@ import { TextFileReader } from "./text-file-reader";
 import { TextFileWriter } from "./text-file-writer";
 import { Turtle } from "./turtle";
 import { VectorGraphic } from "./vector-graphic";
-import { BlockGraphics } from "./block-graphics";
 
 export class StdLib {
   constructor(io: ElanInputOutput) {
@@ -870,6 +872,13 @@ export class StdLib {
     await this.system!.elanInputOutput.clearBlockGraphics();
   }
 
+  @elanDeprecated(
+    Deprecation.methodRemoved,
+    2,
+    0,
+    "LibRef.html#BlockGraphics",
+    DeprecationSeverity.advisory,
+  )
   @elanFunction(
     ["colour"],
     FunctionOptions.pureAsync,

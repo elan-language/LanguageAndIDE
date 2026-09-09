@@ -9,7 +9,7 @@ static void main() {
   var nodes = new List<Node>();
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination); // procedure call
   var gr = initialiseGraphics(start, destination, rocks);
-  displayBlocks(gr); // procedure call
+  gr.display(); // procedure call
   var solver = new Solver(nodes, start, destination);
   while (true) {
     var k = inputStringFromOptions(algPrompt, new [] {"a", "d", "h"});
@@ -19,13 +19,13 @@ static void main() {
   } // end while
 } // end main
 
-static void runSolver(List<List<int>> gr, Point start, Point destination, List<Point> rocks, Solver solver, Algorithm alg) { // procedure
+static void runSolver(BlockGraphics gr, Point start, Point destination, List<Point> rocks, Solver solver, Algorithm alg) { // procedure
   solver.initialise(alg); // procedure call
   var gr2 = initialiseGraphics(start, destination, rocks);
   while (solver.running) {
     solver.visitNextPoint(); // procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()); // assignment
-    displayBlocks(gr2); // procedure call
+    gr2.display(); // procedure call
     sleep_ms(0); // procedure call
   } // end while
   if (solver.getLastVisited().equals(destination)) {
@@ -33,7 +33,7 @@ static void runSolver(List<List<int>> gr, Point start, Point destination, List<P
     var route = rl.item_0;
     var length = rl.item_1;
     gr2 = addRoute(gr2, route); // assignment
-    displayBlocks(gr2); // procedure call
+    gr2.display(); // procedure call
     printNoLine($"Length of route: {length.round(2)} "); // procedure call
   } else {
     printNoLine("No path found. "); // procedure call
@@ -57,13 +57,13 @@ static void createRocksAndNodes(int percentRocks, List<Point> rocks, List<Node> 
   } // end foreach
 } // end procedure
 
-static List<List<int>> initialiseGraphics(Point start, Point dest, List<Point> rocks) { // function
-  var gr = createBlockGraphics(white);
+static BlockGraphics initialiseGraphics(Point start, Point dest, List<Point> rocks) { // function
+  var gr = new BlockGraphics();
   foreach (var rock in rocks) {
-    gr = withPut(gr, rock.x, rock.y, black); // assignment
+    gr = gr.withPut(rock.x, rock.y, black); // assignment
   } // end foreach
-  gr = withPut(gr, start.x, start.y, green); // assignment
-  gr = withPut(gr, dest.x, dest.y, red); // assignment
+  gr = gr.withPut(start.x, start.y, green); // assignment
+  gr = gr.withPut(dest.x, dest.y, red); // assignment
   return gr;
 } // end function
 
@@ -71,20 +71,20 @@ static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colou
   return graphics.withPut(x, graphics[x].withPut(y, colour));
 } // end function
 
-static List<List<int>> addVisited(List<List<int>> gr, Point visited) { // function
-  return withPut(gr, visited.x, visited.y, lightBlue);
+static BlockGraphics addVisited(BlockGraphics gr, Point visited) { // function
+  return gr.withPut(visited.x, visited.y, lightBlue);
 } // end function
 
-static List<List<int>> addRoute(List<List<int>> gr, List<Point> route) { // function
-  var graphics = gr;
+static BlockGraphics addRoute(BlockGraphics gr, List<Point> route) { // function
+  var gr2 = gr;
   foreach (var p in route) {
-    graphics = withPut(graphics, p.x, p.y, orange); // assignment
+    gr2 = gr2.withPut(p.x, p.y, orange); // assignment
   } // end foreach
   var start = route[0];
   var dest = route[route.length() - 1];
-  graphics = withPut(graphics, start.x, start.y, green); // assignment
-  graphics = withPut(graphics, dest.x, dest.y, red); // assignment
-  return graphics;
+  gr2 = gr2.withPut(start.x, start.y, green); // assignment
+  gr2 = gr2.withPut(dest.x, dest.y, red); // assignment
+  return gr2;
 } // end function
 
 class Solver {

@@ -3,35 +3,38 @@
 public class Global {
 
 static void main() {
-  var grid = createBlockGraphics(white);
+  var grid = new BlockGraphics();
   fillRandom(grid); // procedure call
   while (true) {
-    displayBlocks(grid); // procedure call
-    var gridRef = new AsRef<List<List<int>>>(grid);
-    nextGeneration(gridRef); // procedure call
-    grid = gridRef.value(); // assignment
+    grid.display(); // procedure call
+    nextGeneration(grid); // procedure call
     sleep_ms(50); // procedure call
   } // end while
 } // end main
 
-static void fillRandom(List<List<int>> grid) { // procedure
+static void fillRandom(BlockGraphics grid) { // procedure
   foreach (var col in range(0, 40)) {
     foreach (var row in range(0, 30)) {
-      grid[col][row] = blackOrWhite(random()); // assignment
+      grid.put(col, row, blackOrWhite(random())); // procedure call
     } // end foreach
   } // end foreach
 } // end procedure
 
-static void nextGeneration(AsRef<List<List<int>>> gridRef) { // procedure
-  var nextGen = createBlockGraphics(white);
-  var grid = gridRef.value();
+static void nextGeneration(BlockGraphics grid) { // procedure
+  // First, make a copy of the existing grid
+  var copy = new BlockGraphics();
   foreach (var x in range(0, 40)) {
     foreach (var y in range(0, 30)) {
-      var colour = nextCellValue(grid, x, y);
-      nextGen[x][y] = colour; // assignment
+      copy.put(x, y, grid.get(x, y)); // procedure call
     } // end foreach
   } // end foreach
-  gridRef.put(nextGen); // procedure call
+  // then calculate each new cell *from the copy*, and update the grid
+  foreach (var x in range(0, 40)) {
+    foreach (var y in range(0, 30)) {
+      var colour = nextCellValue(copy, x, y);
+      grid.put(x, y, colour); // procedure call
+    } // end foreach
+  } // end foreach
 } // end procedure
 
 static int blackOrWhite(double random) { // function
@@ -103,12 +106,12 @@ static List<(int, int)> neighbourCells(int x, int y) { // function
   return list(northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c));
 } // end function
 
-static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
+static int liveNeighbours(BlockGraphics grid, int x, int y) { // function
   var count = 0;
   foreach (var cell in neighbourCells(x, y)) {
     var cx = cell.item_0;
     var cy = cell.item_1;
-    if (grid[cx][cy] == black) {
+    if (grid.get(cx, cy) == black) {
       count = count + 1; // assignment
     } // end if
   } // end foreach
@@ -125,9 +128,9 @@ static boolean willLive(int cell, int liveNeighbours) { // function
   return result;
 } // end function
 
-static int nextCellValue(List<List<int>> grid, int x, int y) { // function
+static int nextCellValue(BlockGraphics grid, int x, int y) { // function
   var colour = white;
-  var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
+  var live = willLive(grid.get(x, y), liveNeighbours(grid, x, y));
   if (live) {
     colour = black; // assignment
   } // end if

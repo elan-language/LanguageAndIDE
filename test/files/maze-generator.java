@@ -3,7 +3,8 @@
 public class Global {
 
 static void main() {
-  var blocks = createBlockGraphics(black);
+  var blocks = new BlockGraphics();
+  blocks.colourAll(black); // procedure call
   blocks = createStart(blocks); // assignment
   foreach (var i in range(0, displayWidth + 1)) {
     var x = randint(0, 39);
@@ -13,10 +14,10 @@ static void main() {
     var setTo = (random() + 0.7).floor();
     if (okToSet(p, setTo, blocks)) {
       var colour = if_(setTo == 1, white, black);
-      blocks[p.x][p.y] = colour; // assignment
+      blocks.put(p.x, p.y, colour); // procedure call
     } // end if
   } // end foreach
-  displayBlocks(blocks); // procedure call
+  blocks.display(); // procedure call
   var name = Console.ReadLine("File name to save: "); // input statement
   if (!name.equals("x")) {
     saveAsFile(name, blocks); // procedure call
@@ -25,12 +26,12 @@ static void main() {
 
 static final Int displayWidth = 150; // constant
 
-static void saveAsFile(String name, List<List<int>> b) { // procedure
+static void saveAsFile(String name, BlockGraphics b) { // procedure
   var file = createFileForWriting(name);
   foreach (var row in range(0, 30)) {
     var line = "";
     foreach (var col in range(0, 40)) {
-      var colour = b[col][row];
+      var colour = b.get(col, row);
       var symbol = if_(colour == white, " ", "X");
       line = line + symbol; // assignment
     } // end foreach
@@ -39,7 +40,7 @@ static void saveAsFile(String name, List<List<int>> b) { // procedure
   file.saveAndClose(); // procedure call
 } // end procedure
 
-static List<List<int>> createStart(List<List<int>> b) { // function
+static BlockGraphics createStart(BlockGraphics b) { // function
   var b2 = b;
   foreach (var i in rangeInSteps(0, 16, 2)) {
     b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i); // assignment
@@ -47,27 +48,23 @@ static List<List<int>> createStart(List<List<int>> b) { // function
   return b2;
 } // end function
 
-static List<List<int>> addRectangle(List<List<int>> b, int startX, int startY, int width, int depth) { // function
+static BlockGraphics addRectangle(BlockGraphics b, int startX, int startY, int width, int depth) { // function
   var paint = white;
   var b2 = b;
   foreach (var x in range(startX, startX + width + 1)) {
-    b2 = withPut(b2, x, startY, paint); // assignment
-    b2 = withPut(b2, x, startY + depth, paint); // assignment
+    b2 = b2.withPut(x, startY, paint); // assignment
+    b2 = b2.withPut(x, startY + depth, paint); // assignment
   } // end foreach
   foreach (var y in range(startY, startY + depth + 1)) {
-    b2 = withPut(b2, startX, y, paint); // assignment
-    b2 = withPut(b2, startX + width, y, paint); // assignment
+    b2 = b2.withPut(startX, y, paint); // assignment
+    b2 = b2.withPut(startX + width, y, paint); // assignment
   } // end foreach
   return b2;
 } // end function
 
-static List<List<int>> withPut(List<List<int>> graphics, int x, int y, int colour) { // function
-  return graphics.withPut(x, graphics[x].withPut(y, colour));
-} // end function
-
 // colour: 0 for black, 1 for white
 
-static boolean okToSet(Point p, int colour, List<List<int>> g) { // function
+static boolean okToSet(Point p, int colour, BlockGraphics g) { // function
   var n = p.neighbouringPoints().map((Point p) -> getValue(p, g));
   var q1 = isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8);
   var q2 = isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8);
@@ -76,10 +73,10 @@ static boolean okToSet(Point p, int colour, List<List<int>> g) { // function
   return q1 && q2 && q3 && q4;
 } // end function
 
-static int getValue(Point p, List<List<int>> b) { // function
+static int getValue(Point p, BlockGraphics b) { // function
   var result = 0;
   if ((p.x > -1) && (p.x < 40) && (p.y > -1) && (p.y < 30)) {
-    var colour = b[p.x][p.y];
+    var colour = b.get(p.x, p.y);
     result = if_(colour == black, 0, 1); // assignment
   } // end if
   return result;

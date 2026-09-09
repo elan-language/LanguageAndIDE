@@ -1,4 +1,4 @@
-# 93e2bd677ef88fba274c27a6bbdbc7d9c237e19d96a90b28fa861e5bddf9c170 Elan 2.0.0-beta4 valid
+# d5b866a284cd20aa79359f82ed50c460b94079c138521452ea68e88361871156 Elan 2.0.0-beta4 valid
 
 main
   variable start set to new Point(5, 5)
@@ -9,7 +9,7 @@ main
   variable nodes set to new List<of Node>()
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
-  call displayBlocks(gr)
+  call gr.display()
   variable solver set to new Solver(nodes, start, destination)
   while true
     variable k set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
@@ -19,13 +19,13 @@ main
   end while
 end main
 
-procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as Point, rocks as List<of Point>, solver as Solver, alg as Algorithm)
+procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, rocks as List<of Point>, solver as Solver, alg as Algorithm)
   call solver.initialise(alg)
   variable gr2 set to initialiseGraphics(start, destination, rocks)
   while solver.running
     call solver.visitNextPoint()
     assign gr2 to addVisited(gr2, solver.getLastVisited())
-    call displayBlocks(gr2)
+    call gr2.display()
     call sleep_ms(0)
   end while
   if solver.getLastVisited().equals(destination) then
@@ -33,7 +33,7 @@ procedure runSolver(gr as List<of List<of Int>>, start as Point, destination as 
     variable route set to rl.item_0
     variable length set to rl.item_1
     assign gr2 to addRoute(gr2, route)
-    call displayBlocks(gr2)
+    call gr2.display()
     call printNoLine($"Length of route: {length.round(2)} ")
   else
     call printNoLine("No path found. ")
@@ -57,13 +57,13 @@ procedure createRocksAndNodes(percentRocks as Int, rocks as List<of Point>, node
   end for
 end procedure
 
-function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns List<of List<of Int>>
-  variable gr set to createBlockGraphics(white)
+function initialiseGraphics(start as Point, dest as Point, rocks as List<of Point>) returns BlockGraphics
+  variable gr set to new BlockGraphics()
   for rock in rocks
-    assign gr to withPut(gr, rock.x, rock.y, black)
+    assign gr to gr.withPut(rock.x, rock.y, black)
   end for
-  assign gr to withPut(gr, start.x, start.y, green)
-  assign gr to withPut(gr, dest.x, dest.y, red)
+  assign gr to gr.withPut(start.x, start.y, green)
+  assign gr to gr.withPut(dest.x, dest.y, red)
   return gr
 end function
 
@@ -71,20 +71,20 @@ function withPut(graphics as List<of List<of Int>>, x as Int, y as Int, colour a
   return graphics.withPut(x, graphics[x].withPut(y, colour))
 end function
 
-function addVisited(gr as List<of List<of Int>>, visited as Point) returns List<of List<of Int>>
-  return withPut(gr, visited.x, visited.y, lightBlue)
+function addVisited(gr as BlockGraphics, visited as Point) returns BlockGraphics
+  return gr.withPut(visited.x, visited.y, lightBlue)
 end function
 
-function addRoute(gr as List<of List<of Int>>, route as List<of Point>) returns List<of List<of Int>>
-  variable graphics set to gr
+function addRoute(gr as BlockGraphics, route as List<of Point>) returns BlockGraphics
+  variable gr2 set to gr
   for p in route
-    assign graphics to withPut(graphics, p.x, p.y, orange)
+    assign gr2 to gr2.withPut(p.x, p.y, orange)
   end for
   variable start set to route[0]
   variable dest set to route[route.length() - 1]
-  assign graphics to withPut(graphics, start.x, start.y, green)
-  assign graphics to withPut(graphics, dest.x, dest.y, red)
-  return graphics
+  assign gr2 to gr2.withPut(start.x, start.y, green)
+  assign gr2 to gr2.withPut(dest.x, dest.y, red)
+  return gr2
 end function
 
 class Solver

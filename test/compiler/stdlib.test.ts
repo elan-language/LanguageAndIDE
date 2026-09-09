@@ -2156,55 +2156,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
   });
 
-  test("Pass_createGraphicsFunctions", async () => {
-    const code = `${testHeader}
-
-main
-  variable b set to new List<of List<of Int>>()
-  for i in range(0, 40)
-    variable sa set to new List<of Int>()
-    for j in range(0, 30)
-      call sa.append(white)
-    end for
-    call b.append(sa)
-  end for
-  assign b to createBlockGraphics(white)
-end main
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let b = system.initialise(await new _stdlib.List()._initialise());
-  const elan_iterelan_for6 = [..._stdlib.range(0, 40)];
-  for (const i of elan_iterelan_for6) {
-    let sa = system.initialise(await new _stdlib.List()._initialise());
-    const elan_iterelan_for13 = [..._stdlib.range(0, 30)];
-    for (const j of elan_iterelan_for13) {
-      sa.append(_stdlib.white);
-    }
-    b.append(sa);
-  }
-  b = (await _stdlib.createBlockGraphics(_stdlib.white));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
-  });
   test("Pass_createList", async () => {
     const code = `${testHeader}
 

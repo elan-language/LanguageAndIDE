@@ -9,7 +9,7 @@ Sub main()
   Dim nodes = New List(Of Node)() ' variable definition
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination) ' procedure call
   Dim gr = initialiseGraphics(start, destination, rocks) ' variable definition
-  displayBlocks(gr) ' procedure call
+  gr.display() ' procedure call
   Dim solver = New Solver(nodes, start, destination) ' variable definition
   While True
     Dim k = inputStringFromOptions(algPrompt, {"a", "d", "h"}) ' variable definition
@@ -19,13 +19,13 @@ Sub main()
   End While
 End Sub
 
-Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Point, rocks As List(Of Point), solver As Solver, alg As Algorithm) ' procedure
+Sub runSolver(gr As BlockGraphics, start As Point, destination As Point, rocks As List(Of Point), solver As Solver, alg As Algorithm) ' procedure
   solver.initialise(alg) ' procedure call
   Dim gr2 = initialiseGraphics(start, destination, rocks) ' variable definition
   While solver.running
     solver.visitNextPoint() ' procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) ' assignment
-    displayBlocks(gr2) ' procedure call
+    gr2.display() ' procedure call
     sleep_ms(0) ' procedure call
   End While
   If solver.getLastVisited().equals(destination) Then
@@ -33,7 +33,7 @@ Sub runSolver(gr As List(Of List(Of Integer)), start As Point, destination As Po
     Dim route = rl.item_0 ' variable definition
     Dim length = rl.item_1 ' variable definition
     gr2 = addRoute(gr2, route) ' assignment
-    displayBlocks(gr2) ' procedure call
+    gr2.display() ' procedure call
     printNoLine($"Length of route: {length.round(2)} ") ' procedure call
   Else
     printNoLine("No path found. ") ' procedure call
@@ -57,13 +57,13 @@ Sub createRocksAndNodes(percentRocks As Integer, rocks As List(Of Point), nodes 
   Next x
 End Sub
 
-Function initialiseGraphics(start As Point, dest As Point, rocks As List(Of Point)) As List(Of List(Of Integer))
-  Dim gr = createBlockGraphics(white) ' variable definition
+Function initialiseGraphics(start As Point, dest As Point, rocks As List(Of Point)) As BlockGraphics
+  Dim gr = New BlockGraphics() ' variable definition
   For Each rock In rocks
-    gr = withPut(gr, rock.x, rock.y, black) ' assignment
+    gr = gr.withPut(rock.x, rock.y, black) ' assignment
   Next rock
-  gr = withPut(gr, start.x, start.y, green) ' assignment
-  gr = withPut(gr, dest.x, dest.y, red) ' assignment
+  gr = gr.withPut(start.x, start.y, green) ' assignment
+  gr = gr.withPut(dest.x, dest.y, red) ' assignment
   Return gr
 End Function
 
@@ -71,20 +71,20 @@ Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integ
   Return graphics.withPut(x, graphics(x).withPut(y, colour))
 End Function
 
-Function addVisited(gr As List(Of List(Of Integer)), visited As Point) As List(Of List(Of Integer))
-  Return withPut(gr, visited.x, visited.y, lightBlue)
+Function addVisited(gr As BlockGraphics, visited As Point) As BlockGraphics
+  Return gr.withPut(visited.x, visited.y, lightBlue)
 End Function
 
-Function addRoute(gr As List(Of List(Of Integer)), route As List(Of Point)) As List(Of List(Of Integer))
-  Dim graphics = gr ' variable definition
+Function addRoute(gr As BlockGraphics, route As List(Of Point)) As BlockGraphics
+  Dim gr2 = gr ' variable definition
   For Each p In route
-    graphics = withPut(graphics, p.x, p.y, orange) ' assignment
+    gr2 = gr2.withPut(p.x, p.y, orange) ' assignment
   Next p
   Dim start = route(0) ' variable definition
   Dim dest = route(route.length() - 1) ' variable definition
-  graphics = withPut(graphics, start.x, start.y, green) ' assignment
-  graphics = withPut(graphics, dest.x, dest.y, red) ' assignment
-  Return graphics
+  gr2 = gr2.withPut(start.x, start.y, green) ' assignment
+  gr2 = gr2.withPut(dest.x, dest.y, red) ' assignment
+  Return gr2
 End Function
 
 Class Solver

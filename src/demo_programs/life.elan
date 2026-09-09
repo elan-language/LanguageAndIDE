@@ -1,35 +1,38 @@
-# 6b543d5e07c8d5ad77a9aeb1cca67bffc7f80ddcfbdf3fbcaf90882933ae18f6 Elan 2.0.0-beta4 valid
+# 269c53845629a7c57c0a11dc4cadb13cd6a89ca7060b38da32958d6579130a82 Elan 2.0.0-beta4 valid
 
 main
-  variable grid set to createBlockGraphics(white)
+  variable grid set to new BlockGraphics()
   call fillRandom(grid)
   while true
-    call displayBlocks(grid)
-    variable gridRef set to new AsRef<of List<of List<of Int>>>(grid)
-    call nextGeneration(gridRef)
-    assign grid to gridRef.value()
+    call grid.display()
+    call nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main
 
-procedure fillRandom(grid as List<of List<of Int>>)
+procedure fillRandom(grid as BlockGraphics)
   for col in range(0, 40)
     for row in range(0, 30)
-      assign grid[col][row] to blackOrWhite(random())
+      call grid.put(col, row, blackOrWhite(random()))
     end for
   end for
 end procedure
 
-procedure nextGeneration(gridRef as AsRef<of List<of List<of Int>>>)
-  variable nextGen set to createBlockGraphics(white)
-  variable grid set to gridRef.value()
+procedure nextGeneration(grid as BlockGraphics)
+  # First, make a copy of the existing grid
+  variable copy set to new BlockGraphics()
   for x in range(0, 40)
     for y in range(0, 30)
-      variable colour set to nextCellValue(grid, x, y)
-      assign nextGen[x][y] to colour
+      call copy.put(x, y, grid.get(x, y))
     end for
   end for
-  call gridRef.put(nextGen)
+  # then calculate each new cell *from the copy*, and update the grid
+  for x in range(0, 40)
+    for y in range(0, 30)
+      variable colour set to nextCellValue(copy, x, y)
+      call grid.put(x, y, colour)
+    end for
+  end for
 end procedure
 
 function blackOrWhite(random as Float) returns Int
@@ -101,12 +104,12 @@ function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
-function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+function liveNeighbours(grid as BlockGraphics, x as Int, y as Int) returns Int
   variable count set to 0
   for cell in neighbourCells(x, y)
     variable cx set to cell.item_0
     variable cy set to cell.item_1
-    if grid[cx][cy] is black then
+    if grid.get(cx, cy) is black then
       assign count to count + 1
     end if
   end for
@@ -123,9 +126,9 @@ function willLive(cell as Int, liveNeighbours as Int) returns Boolean
   return result
 end function
 
-function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
+function nextCellValue(grid as BlockGraphics, x as Int, y as Int) returns Int
   variable colour set to white
-  variable live set to willLive(grid[x][y], liveNeighbours(grid, x, y))
+  variable live set to willLive(grid.get(x, y), liveNeighbours(grid, x, y))
   if live then
     assign colour to black
   end if

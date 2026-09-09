@@ -1,7 +1,8 @@
 ' VB.NET with Elan 2.0.0-beta4
 
 Sub main()
-  Dim blocks = createBlockGraphics(black) ' variable definition
+  Dim blocks = New BlockGraphics() ' variable definition
+  blocks.colourAll(black) ' procedure call
   blocks = createStart(blocks) ' assignment
   For Each i In range(0, displayWidth + 1)
     Dim x = randint(0, 39) ' variable definition
@@ -11,10 +12,10 @@ Sub main()
     Dim setTo = (random() + 0.7).floor() ' variable definition
     If okToSet(p, setTo, blocks) Then
       Dim colour = if_(setTo = 1, white, black) ' variable definition
-      blocks(p.x)(p.y) = colour ' assignment
+      blocks.put(p.x, p.y, colour) ' procedure call
     End If
   Next i
-  displayBlocks(blocks) ' procedure call
+  blocks.display() ' procedure call
   Console.WriteLine("File name to save: ")
 
       Dim name = Console.ReadLine() ' input statement
@@ -25,12 +26,12 @@ End Sub
 
 Const displayWidth = 150
 
-Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
+Sub saveAsFile(name As String, b As BlockGraphics) ' procedure
   Dim file = createFileForWriting(name) ' variable definition
   For Each row In range(0, 30)
     Dim line = "" ' variable definition
     For Each col In range(0, 40)
-      Dim colour = b(col)(row) ' variable definition
+      Dim colour = b.get(col, row) ' variable definition
       Dim symbol = if_(colour = white, " ", "X") ' variable definition
       line = line + symbol ' assignment
     Next col
@@ -39,7 +40,7 @@ Sub saveAsFile(name As String, b As List(Of List(Of Integer))) ' procedure
   file.saveAndClose() ' procedure call
 End Sub
 
-Function createStart(b As List(Of List(Of Integer))) As List(Of List(Of Integer))
+Function createStart(b As BlockGraphics) As BlockGraphics
   Dim b2 = b ' variable definition
   For Each i In rangeInSteps(0, 16, 2)
     b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) ' assignment
@@ -47,27 +48,23 @@ Function createStart(b As List(Of List(Of Integer))) As List(Of List(Of Integer)
   Return b2
 End Function
 
-Function addRectangle(b As List(Of List(Of Integer)), startX As Integer, startY As Integer, width As Integer, depth As Integer) As List(Of List(Of Integer))
+Function addRectangle(b As BlockGraphics, startX As Integer, startY As Integer, width As Integer, depth As Integer) As BlockGraphics
   Dim paint = white ' variable definition
   Dim b2 = b ' variable definition
   For Each x In range(startX, startX + width + 1)
-    b2 = withPut(b2, x, startY, paint) ' assignment
-    b2 = withPut(b2, x, startY + depth, paint) ' assignment
+    b2 = b2.withPut(x, startY, paint) ' assignment
+    b2 = b2.withPut(x, startY + depth, paint) ' assignment
   Next x
   For Each y In range(startY, startY + depth + 1)
-    b2 = withPut(b2, startX, y, paint) ' assignment
-    b2 = withPut(b2, startX + width, y, paint) ' assignment
+    b2 = b2.withPut(startX, y, paint) ' assignment
+    b2 = b2.withPut(startX + width, y, paint) ' assignment
   Next y
   Return b2
 End Function
 
-Function withPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withPut(x, graphics(x).withPut(y, colour))
-End Function
-
 ' colour: 0 for black, 1 for white
 
-Function okToSet(p As Point, colour As Integer, g As List(Of List(Of Integer))) As Boolean
+Function okToSet(p As Point, colour As Integer, g As BlockGraphics) As Boolean
   Dim n = p.neighbouringPoints().map(Function (p As Point) getValue(p, g)) ' variable definition
   Dim q1 = isValidQuadrant(n(0) + n(1)*2 + colour*4 + n(3)*8) ' variable definition
   Dim q2 = isValidQuadrant(n(1) + n(2)*2 + n(4)*4 + colour*8) ' variable definition
@@ -76,10 +73,10 @@ Function okToSet(p As Point, colour As Integer, g As List(Of List(Of Integer))) 
   Return q1 And q2 And q3 And q4
 End Function
 
-Function getValue(p As Point, b As List(Of List(Of Integer))) As Integer
+Function getValue(p As Point, b As BlockGraphics) As Integer
   Dim result = 0 ' variable definition
   If (p.x > -1) And (p.x < 40) And (p.y > -1) And (p.y < 30) Then
-    Dim colour = b(p.x)(p.y) ' variable definition
+    Dim colour = b.get(p.x, p.y) ' variable definition
     result = if_(colour = black, 0, 1) ' assignment
   End If
   Return result

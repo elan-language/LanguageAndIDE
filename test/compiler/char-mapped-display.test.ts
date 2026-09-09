@@ -13,20 +13,20 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Char Mapped Display", () => {
+suite("Block Graphics", () => {
   test("Pass_SimpleDraw", async () => {
     const code = `${testHeader}
 
 main
-  variable g set to createBlockGraphics(white)
-  call displayBlocks(g)
+  variable g set to new BlockGraphics()
+  call g.display()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -47,21 +47,21 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, '<div style="background-color:#ffffff;">');
   });
 
-  test("Pass_withPut", async () => {
+  test("Pass_put", async () => {
     const code = `${testHeader}
 
 main
-  variable g set to createBlockGraphics(white)
-  assign g[1][0] to 4
-  call displayBlocks(g)
+  variable g set to new BlockGraphics()
+  call g.put(1, 0, 4)
+  call g.display()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  system.safeSet(g, 4, [1, 0]);
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  g.put(1, 0, 4);
+  await g.display();
 }
 return [main, _tests];}`;
 
@@ -86,16 +86,16 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable g set to createBlockGraphics(white)
-  call displayBlocks(g)
+  variable g set to new BlockGraphics()
+  call g.display()
   call clearBlocks()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  await g.display();
   await _stdlib.clearBlocks();
 }
 return [main, _tests];}`;
@@ -121,7 +121,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to createBlockGraphics(white)
+  variable g set to new BlockGraphics()
   variable a set to getKey()
   call printNoLine(a)
 end main`;
@@ -129,7 +129,7 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let a = (await _stdlib.getKey());
   await _stdlib.printNoLine(a);
 }
@@ -224,7 +224,6 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to createBlockGraphics(white)
   variable a set to getKeyWithModifier()
   call printNoLine(a)
 end main`;
@@ -232,7 +231,6 @@ end main`;
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
   let a = (await _stdlib.getKeyWithModifier());
   await _stdlib.printNoLine(a);
 }
@@ -259,14 +257,12 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable gr set to createBlockGraphics(white)
   call clearKeyBuffer()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
   await _stdlib.clearKeyBuffer();
 }
 return [main, _tests];}`;
@@ -292,13 +288,13 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable a set to createBlockGraphics(white)
+  variable g set to new BlockGraphics()
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
 }
 return [main, _tests];}`;
 

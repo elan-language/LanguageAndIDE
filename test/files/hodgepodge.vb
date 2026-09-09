@@ -42,55 +42,69 @@ Const vN = False
 
 Sub main()
   ' colour grids: hodge for display, podge for working
-  Dim podge = createBlockGraphics(healthy) ' variable definition
-  Dim hodge = New AsRef(Of List(Of List(Of Integer)))(createBlockGraphics(healthy)) ' variable definition
-  Dim blank = createBlockGraphics(healthy) ' variable definition
+  Dim podge = New BlockGraphics() ' variable definition
+  Dim hodge = New BlockGraphics() ' variable definition
+  Dim blank = New BlockGraphics() ' variable definition
   ' initial colours of grid
   updateGrid(hodge, podge, True) ' procedure call
-  While Not uniform(hodge.value())
+  While Not uniform(hodge)
     ' successive updates to grid in blank podge
     podge = blank ' assignment
     updateGrid(hodge, podge, False) ' procedure call
   End While
 End Sub
 
-Sub updateGrid(hodge As AsRef(Of List(Of List(Of Integer))), podge As List(Of List(Of Integer)), initial As Boolean) ' procedure
+Sub updateGrid(hodge As BlockGraphics, podge As BlockGraphics, initial As Boolean) ' procedure
   Dim colours = getColours() ' variable definition
   For Each j In range(0, gH)
     For Each i In range(0, gW)
       If initial Then
-        podge(i)(j) = colours(randint(0, (colours.length()) - 1)) ' assignment
+        podge.put(i, j, colours(randint(0, (colours.length()) - 1))) ' procedure call
         podge(1)(1) = &H1a001a ' assignment
       Else
-        podge(i)(j) = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()(i)(j)) ' assignment
+        podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j))) ' procedure call
       End If
     Next i
   Next j
   Dim a = 0 ' variable definition
-  hodge.put(podge) ' procedure call
-  displayBlocks(hodge.value()) ' procedure call
+  ' copy podgeValues into hodge
+  For Each j In range(0, gH)
+    For Each i In range(0, gW)
+      Dim podgeValue = podge.get(i, j) ' variable definition
+      hodge.put(i, j, podgeValue) ' procedure call
+    Next i
+  Next j
+  hodge.display() ' procedure call
   sleep_ms(50) ' procedure call
 End Sub
 
-Function uniform(grid As List(Of List(Of Integer))) As Boolean
-  Dim uniformGrid = createBlockGraphics(grid(0)(0)) ' variable definition
-  Return if_(grid.equals(uniformGrid), True, False)
+Function uniform(grid As BlockGraphics) As Boolean
+  Dim cell0 = grid.get(0, 0) ' variable definition
+  Dim isUniform = True ' variable definition
+  For Each j In range(0, gH)
+    For Each i In range(0, gW)
+      If grid.get(i, j) = cell0 Then
+        isUniform = False ' assignment
+      End If
+    Next i
+  Next j
+  Return isUniform
 End Function
 
-Function getNeighbourColours(grid As List(Of List(Of Integer)), i As Integer, j As Integer) As List(Of Integer)
+Function getNeighbourColours(grid As BlockGraphics, i As Integer, j As Integer) As List(Of Integer)
   ' grid wraps around: all cells have the same number of neighbours
   ' H and V neighbours(von Neumann)
-  Dim sL = grid((i - 1 + gW) Mod gW)(j) ' variable definition
-  Dim sR = grid((i + 1 + gW) Mod gW)(j) ' variable definition
-  Dim sA = grid(i)((j - 1 + gH) Mod gH) ' variable definition
-  Dim sB = grid(i)((j + 1 + gH) Mod gH) ' variable definition
+  Dim sL = grid.get((i - 1 + gW) Mod gW, j) ' variable definition
+  Dim sR = grid.get((i + 1 + gW) Mod gW, j) ' variable definition
+  Dim sA = grid.get(i, (j - 1 + gH) Mod gH) ' variable definition
+  Dim sB = grid.get(i, (j + 1 + gH) Mod gH) ' variable definition
   Dim neighbourColours = {sL, sR, sA, sB} ' variable definition
   If vN = False Then
     ' add diagonal neighbours (Moore)
-    Dim sLA = grid((i - 1 + gW) Mod gW)((j - 1 + gH) Mod gH) ' variable definition
-    Dim sRA = grid((i + 1 + gW) Mod gW)((j - 1 + gH) Mod gH) ' variable definition
-    Dim sLB = grid((i - 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
-    Dim sRB = grid((i + 1 + gW) Mod gW)((j + 1 + gH) Mod gH) ' variable definition
+    Dim sLA = grid.get((i - 1 + gW) Mod gW, (j - 1 + gH) Mod gH) ' variable definition
+    Dim sRA = grid.get((i + 1 + gW) Mod gW, (j - 1 + gH) Mod gH) ' variable definition
+    Dim sLB = grid.get((i - 1 + gW) Mod gW, (j + 1 + gH) Mod gH) ' variable definition
+    Dim sRB = grid.get((i + 1 + gW) Mod gW, (j + 1 + gH) Mod gH) ' variable definition
     neighbourColours = {sL, sR, sA, sB, sLA, sRA, sLB, sRB} ' assignment
   End If
   Return neighbourColours

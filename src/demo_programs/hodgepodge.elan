@@ -1,4 +1,4 @@
-# e7ebb54a23193d771b9b9b4275eae37ac3f872ea2d970ed1db33c94e82427531 Elan 2.0.0-beta4 valid
+# 9675ab6beb21a5da39ff5e4d7a2f706570709c91ef6a1a2f8293cb218b86f30f Elan 2.0.0-beta4 valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -32,55 +32,69 @@ constant vN set to false
 
 main
   # colour grids: hodge for display, podge for working
-  variable podge set to createBlockGraphics(healthy)
-  variable hodge set to new AsRef<of List<of List<of Int>>>(createBlockGraphics(healthy))
-  variable blank set to createBlockGraphics(healthy)
+  variable podge set to new BlockGraphics()
+  variable hodge set to new BlockGraphics()
+  variable blank set to new BlockGraphics()
   # initial colours of grid
   call updateGrid(hodge, podge, true)
-  while not uniform(hodge.value())
+  while not uniform(hodge)
     # successive updates to grid in blank podge
     assign podge to blank
     call updateGrid(hodge, podge, false)
   end while
 end main
 
-procedure updateGrid(hodge as AsRef<of List<of List<of Int>>>, podge as List<of List<of Int>>, initial as Boolean)
+procedure updateGrid(hodge as BlockGraphics, podge as BlockGraphics, initial as Boolean)
   variable colours set to getColours()
   for j in range(0, gH)
     for i in range(0, gW)
       if initial then
-        assign podge[i][j] to colours[randint(0, (colours.length()) - 1)]
+        call podge.put(i, j, colours[randint(0, (colours.length()) - 1)])
         [ghosted] assign podge[1][1] to 0x1a001a
       else
-        assign podge[i][j] to newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j])
+        call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j)))
       end if
     end for
   end for
   variable a set to 0
-  call hodge.put(podge)
-  call displayBlocks(hodge.value())
+  # copy podgeValues into hodge
+  for j in range(0, gH)
+    for i in range(0, gW)
+      variable podgeValue set to podge.get(i, j)
+      call hodge.put(i, j, podgeValue)
+    end for
+  end for
+  call hodge.display()
   call sleep_ms(50)
 end procedure
 
-function uniform(grid as List<of List<of Int>>) returns Boolean
-  variable uniformGrid set to createBlockGraphics(grid[0][0])
-  return if_(grid.equals(uniformGrid), true, false)
+function uniform(grid as BlockGraphics) returns Boolean
+  variable cell0 set to grid.get(0, 0)
+  variable isUniform set to true
+  for j in range(0, gH)
+    for i in range(0, gW)
+      if grid.get(i, j) is cell0 then
+        assign isUniform to false
+      end if
+    end for
+  end for
+  return isUniform
 end function
 
-function getNeighbourColours(grid as List<of List<of Int>>, i as Int, j as Int) returns List<of Int>
+function getNeighbourColours(grid as BlockGraphics, i as Int, j as Int) returns List<of Int>
   # grid wraps around: all cells have the same number of neighbours
   # H and V neighbours(von Neumann)
-  variable sL set to grid[(i - 1 + gW) mod gW][j]
-  variable sR set to grid[(i + 1 + gW) mod gW][j]
-  variable sA set to grid[i][(j - 1 + gH) mod gH]
-  variable sB set to grid[i][(j + 1 + gH) mod gH]
+  variable sL set to grid.get((i - 1 + gW) mod gW, j)
+  variable sR set to grid.get((i + 1 + gW) mod gW, j)
+  variable sA set to grid.get(i, (j - 1 + gH) mod gH)
+  variable sB set to grid.get(i, (j + 1 + gH) mod gH)
   variable neighbourColours set to [sL, sR, sA, sB]
   if vN is false then
     # add diagonal neighbours (Moore)
-    variable sLA set to grid[(i - 1 + gW) mod gW][(j - 1 + gH) mod gH]
-    variable sRA set to grid[(i + 1 + gW) mod gW][(j - 1 + gH) mod gH]
-    variable sLB set to grid[(i - 1 + gW) mod gW][(j + 1 + gH) mod gH]
-    variable sRB set to grid[(i + 1 + gW) mod gW][(j + 1 + gH) mod gH]
+    variable sLA set to grid.get((i - 1 + gW) mod gW, (j - 1 + gH) mod gH)
+    variable sRA set to grid.get((i + 1 + gW) mod gW, (j - 1 + gH) mod gH)
+    variable sLB set to grid.get((i - 1 + gW) mod gW, (j + 1 + gH) mod gH)
+    variable sRB set to grid.get((i + 1 + gW) mod gW, (j + 1 + gH) mod gH)
     assign neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
   end if
   return neighbourColours

@@ -1,35 +1,38 @@
 ' VB.NET with Elan 2.0.0-beta4
 
 Sub main()
-  Dim grid = createBlockGraphics(white) ' variable definition
+  Dim grid = New BlockGraphics() ' variable definition
   fillRandom(grid) ' procedure call
   While True
-    displayBlocks(grid) ' procedure call
-    Dim gridRef = New AsRef(Of List(Of List(Of Integer)))(grid) ' variable definition
-    nextGeneration(gridRef) ' procedure call
-    grid = gridRef.value() ' assignment
+    grid.display() ' procedure call
+    nextGeneration(grid) ' procedure call
     sleep_ms(50) ' procedure call
   End While
 End Sub
 
-Sub fillRandom(grid As List(Of List(Of Integer))) ' procedure
+Sub fillRandom(grid As BlockGraphics) ' procedure
   For Each col In range(0, 40)
     For Each row In range(0, 30)
-      grid(col)(row) = blackOrWhite(random()) ' assignment
+      grid.put(col, row, blackOrWhite(random())) ' procedure call
     Next row
   Next col
 End Sub
 
-Sub nextGeneration(gridRef As AsRef(Of List(Of List(Of Integer)))) ' procedure
-  Dim nextGen = createBlockGraphics(white) ' variable definition
-  Dim grid = gridRef.value() ' variable definition
+Sub nextGeneration(grid As BlockGraphics) ' procedure
+  ' First, make a copy of the existing grid
+  Dim copy = New BlockGraphics() ' variable definition
   For Each x In range(0, 40)
     For Each y In range(0, 30)
-      Dim colour = nextCellValue(grid, x, y) ' variable definition
-      nextGen(x)(y) = colour ' assignment
+      copy.put(x, y, grid.get(x, y)) ' procedure call
     Next y
   Next x
-  gridRef.put(nextGen) ' procedure call
+  ' then calculate each new cell *from the copy*, and update the grid
+  For Each x In range(0, 40)
+    For Each y In range(0, 30)
+      Dim colour = nextCellValue(copy, x, y) ' variable definition
+      grid.put(x, y, colour) ' procedure call
+    Next y
+  Next x
 End Sub
 
 Function blackOrWhite(random As Double) As Integer
@@ -101,12 +104,12 @@ Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer
   Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
 End Function
 
-Function liveNeighbours(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+Function liveNeighbours(grid As BlockGraphics, x As Integer, y As Integer) As Integer
   Dim count = 0 ' variable definition
   For Each cell In neighbourCells(x, y)
     Dim cx = cell.item_0 ' variable definition
     Dim cy = cell.item_1 ' variable definition
-    If grid(cx)(cy) = black Then
+    If grid.get(cx, cy) = black Then
       count = count + 1 ' assignment
     End If
   Next cell
@@ -123,9 +126,9 @@ Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
   Return result
 End Function
 
-Function nextCellValue(grid As List(Of List(Of Integer)), x As Integer, y As Integer) As Integer
+Function nextCellValue(grid As BlockGraphics, x As Integer, y As Integer) As Integer
   Dim colour = white ' variable definition
-  Dim live = willLive(grid(x)(y), liveNeighbours(grid, x, y)) ' variable definition
+  Dim live = willLive(grid.get(x, y), liveNeighbours(grid, x, y)) ' variable definition
   If live Then
     colour = black ' assignment
   End If
