@@ -3,13 +3,13 @@
 ' Use the W,A,S,D keys to change Snake direction
 
 Sub main()
-  Dim blocks = createBlockGraphics(white) ' variable definition
+  Dim blocks = New BlockGraphics() ' variable definition
   Dim rnd = New Random() ' variable definition
   rnd.initialiseFromClock() ' procedure call
   Dim game = (New Game(rnd)).withNewApple() ' variable definition
   While game.isOn
     blocks = updateGraphics(game, blocks) ' assignment
-    displayBlocks(blocks) ' procedure call
+    blocks.display() ' procedure call
     sleep_ms(150) ' procedure call
     game = clockTick(game, getKey()) ' assignment
   End While
@@ -23,16 +23,12 @@ Function clockTick(g As Game, k As String) As Game
   Return if_(gameOver(g4), g4.with_isOn(False), g4)
 End Function
 
-Function updateGraphics(g As Game, b As List(Of List(Of Integer))) As List(Of List(Of Integer))
-  Dim b2 = graphicsPut(b, g.apple.x, g.apple.y, red) ' variable definition
-  Dim b3 = graphicsPut(b2, g.head.x, g.head.y, green) ' variable definition
+Function updateGraphics(g As Game, b As BlockGraphics) As BlockGraphics
+  Dim b2 = b.withPut(g.apple.x, g.apple.y, red) ' variable definition
+  Dim b3 = b2.withPut(g.head.x, g.head.y, green) ' variable definition
   Dim tail = g.body(0) ' variable definition
   Dim tailColour = if_(tail.equals(g.priorTail), green, white) ' variable definition
-  Return graphicsPut(b3, tail.x, tail.y, tailColour)
-End Function
-
-Function graphicsPut(graphics As List(Of List(Of Integer)), x As Integer, y As Integer, colour As Integer) As List(Of List(Of Integer))
-  Return graphics.withPut(x, graphics(x).withPut(y, colour))
+  Return b3.withPut(tail.x, tail.y, tailColour)
 End Function
 
 Function score(g As Game) As Integer
@@ -178,17 +174,17 @@ End Class
 
 <TestClass Class Test_updateGraphics
  <TestMethod> Sub test_updateGraphics()
-  Dim blocks = createBlockGraphics(white) ' variable definition
+  Dim blocks = New BlockGraphics() ' variable definition
   Dim g1 = New Game(New Random()) ' variable definition
   Dim blocks2 = updateGraphics(g1, blocks) ' variable definition
-  Assert.AreEqual(red, blocks2(12)(15))
-  Assert.AreEqual(green, blocks2(22)(15))
-  Assert.AreEqual(white, blocks2(21)(15))
+  Assert.AreEqual(red, blocks2.get(12, 15))
+  Assert.AreEqual(green, blocks2.get(22, 15))
+  Assert.AreEqual(white, blocks2.get(21, 15))
   Dim g3 = clockTick(g1, "d") ' variable definition
   Dim blocks3 = updateGraphics(g3, blocks2) ' variable definition
-  Assert.AreEqual(red, blocks3(12)(15))
-  Assert.AreEqual(green, blocks3(22)(15))
-  Assert.AreEqual(green, blocks3(23)(15))
+  Assert.AreEqual(red, blocks3.get(12, 15))
+  Assert.AreEqual(green, blocks3.get(22, 15))
+  Assert.AreEqual(green, blocks3.get(23, 15))
  End Sub
 End Class
 

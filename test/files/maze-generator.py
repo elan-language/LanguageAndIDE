@@ -1,7 +1,8 @@
 # Python with Elan 2.0.0-beta4
 
 def main() -> None:
-  blocks = createBlockGraphics(black) # variable definition
+  blocks = BlockGraphics() # variable definition
+  blocks.colourAll(black) # procedure call
   blocks = createStart(blocks) # assignment
   for i in range(0, displayWidth + 1):
     x = randint(0, 39) # variable definition
@@ -11,10 +12,10 @@ def main() -> None:
     setTo = (random() + 0.7).floor() # variable definition
     if okToSet(p, setTo, blocks):
       colour = if_(setTo == 1, white, black) # variable definition
-      blocks[p.x][p.y] = colour # assignment
+      blocks.put(p.x, p.y, colour) # procedure call
     # end if
   # end for
-  displayBlocks(blocks) # procedure call
+  blocks.display() # procedure call
   name = input("File name to save: ") # input statement
   if not name.equals("x"):
     saveAsFile(name, blocks) # procedure call
@@ -23,12 +24,12 @@ def main() -> None:
 
 displayWidth = 150 # constant
 
-def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
+def saveAsFile(name: str, b: BlockGraphics) -> None: # procedure
   file = createFileForWriting(name) # variable definition
   for row in range(0, 30):
     line = "" # variable definition
     for col in range(0, 40):
-      colour = b[col][row] # variable definition
+      colour = b.get(col, row) # variable definition
       symbol = if_(colour == white, " ", "X") # variable definition
       line = line + symbol # assignment
     # end for
@@ -37,7 +38,7 @@ def saveAsFile(name: str, b: list[list[int]]) -> None: # procedure
   file.saveAndClose() # procedure call
 # end procedure
 
-def createStart(b: list[list[int]]) -> list[list[int]]: # function
+def createStart(b: BlockGraphics) -> BlockGraphics: # function
   b2 = b # variable definition
   for i in rangeInSteps(0, 16, 2):
     b2 = addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i) # assignment
@@ -45,27 +46,23 @@ def createStart(b: list[list[int]]) -> list[list[int]]: # function
   return b2
 # end function
 
-def addRectangle(b: list[list[int]], startX: int, startY: int, width: int, depth: int) -> list[list[int]]: # function
+def addRectangle(b: BlockGraphics, startX: int, startY: int, width: int, depth: int) -> BlockGraphics: # function
   paint = white # variable definition
   b2 = b # variable definition
   for x in range(startX, startX + width + 1):
-    b2 = withPut(b2, x, startY, paint) # assignment
-    b2 = withPut(b2, x, startY + depth, paint) # assignment
+    b2 = b2.withPut(x, startY, paint) # assignment
+    b2 = b2.withPut(x, startY + depth, paint) # assignment
   # end for
   for y in range(startY, startY + depth + 1):
-    b2 = withPut(b2, startX, y, paint) # assignment
-    b2 = withPut(b2, startX + width, y, paint) # assignment
+    b2 = b2.withPut(startX, y, paint) # assignment
+    b2 = b2.withPut(startX + width, y, paint) # assignment
   # end for
   return b2
 # end function
 
-def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list[int]]: # function
-  return graphics.withPut(x, graphics[x].withPut(y, colour))
-# end function
-
 # colour: 0 for black, 1 for white
 
-def okToSet(p: Point, colour: int, g: list[list[int]]) -> bool: # function
+def okToSet(p: Point, colour: int, g: BlockGraphics) -> bool: # function
   n = p.neighbouringPoints().map(lambda p: Point: getValue(p, g)) # variable definition
   q1 = isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8) # variable definition
   q2 = isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8) # variable definition
@@ -74,10 +71,10 @@ def okToSet(p: Point, colour: int, g: list[list[int]]) -> bool: # function
   return q1 and q2 and q3 and q4
 # end function
 
-def getValue(p: Point, b: list[list[int]]) -> int: # function
+def getValue(p: Point, b: BlockGraphics) -> int: # function
   result = 0 # variable definition
   if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30):
-    colour = b[p.x][p.y] # variable definition
+    colour = b.get(p.x, p.y) # variable definition
     result = if_(colour == black, 0, 1) # assignment
   # end if
   return result

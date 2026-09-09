@@ -9,7 +9,7 @@ def main() -> None:
   nodes = list[Node]() # variable definition
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination) # procedure call
   gr = initialiseGraphics(start, destination, rocks) # variable definition
-  displayBlocks(gr) # procedure call
+  gr.display() # procedure call
   solver = Solver(nodes, start, destination) # variable definition
   while True:
     k = inputStringFromOptions(algPrompt, ["a", "d", "h"]) # variable definition
@@ -19,13 +19,13 @@ def main() -> None:
   # end while
 # end main
 
-def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list[Point], solver: Solver, alg: Algorithm) -> None: # procedure
+def runSolver(gr: BlockGraphics, start: Point, destination: Point, rocks: list[Point], solver: Solver, alg: Algorithm) -> None: # procedure
   solver.initialise(alg) # procedure call
   gr2 = initialiseGraphics(start, destination, rocks) # variable definition
   while solver.running:
     solver.visitNextPoint() # procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) # assignment
-    displayBlocks(gr2) # procedure call
+    gr2.display() # procedure call
     sleep_ms(0) # procedure call
   # end while
   if solver.getLastVisited().equals(destination):
@@ -33,7 +33,7 @@ def runSolver(gr: list[list[int]], start: Point, destination: Point, rocks: list
     route = rl.item_0 # variable definition
     length = rl.item_1 # variable definition
     gr2 = addRoute(gr2, route) # assignment
-    displayBlocks(gr2) # procedure call
+    gr2.display() # procedure call
     printNoLine(f"Length of route: {length.round(2)} ") # procedure call
   else:
     printNoLine("No path found. ") # procedure call
@@ -57,13 +57,13 @@ def createRocksAndNodes(percentRocks: int, rocks: list[Point], nodes: list[Node]
   # end for
 # end procedure
 
-def initialiseGraphics(start: Point, dest: Point, rocks: list[Point]) -> list[list[int]]: # function
-  gr = createBlockGraphics(white) # variable definition
+def initialiseGraphics(start: Point, dest: Point, rocks: list[Point]) -> BlockGraphics: # function
+  gr = BlockGraphics() # variable definition
   for rock in rocks:
-    gr = withPut(gr, rock.x, rock.y, black) # assignment
+    gr = gr.withPut(rock.x, rock.y, black) # assignment
   # end for
-  gr = withPut(gr, start.x, start.y, green) # assignment
-  gr = withPut(gr, dest.x, dest.y, red) # assignment
+  gr = gr.withPut(start.x, start.y, green) # assignment
+  gr = gr.withPut(dest.x, dest.y, red) # assignment
   return gr
 # end function
 
@@ -71,20 +71,20 @@ def withPut(graphics: list[list[int]], x: int, y: int, colour: int) -> list[list
   return graphics.withPut(x, graphics[x].withPut(y, colour))
 # end function
 
-def addVisited(gr: list[list[int]], visited: Point) -> list[list[int]]: # function
-  return withPut(gr, visited.x, visited.y, lightBlue)
+def addVisited(gr: BlockGraphics, visited: Point) -> BlockGraphics: # function
+  return gr.withPut(visited.x, visited.y, lightBlue)
 # end function
 
-def addRoute(gr: list[list[int]], route: list[Point]) -> list[list[int]]: # function
-  graphics = gr # variable definition
+def addRoute(gr: BlockGraphics, route: list[Point]) -> BlockGraphics: # function
+  gr2 = gr # variable definition
   for p in route:
-    graphics = withPut(graphics, p.x, p.y, orange) # assignment
+    gr2 = gr2.withPut(p.x, p.y, orange) # assignment
   # end for
   start = route[0] # variable definition
   dest = route[route.length() - 1] # variable definition
-  graphics = withPut(graphics, start.x, start.y, green) # assignment
-  graphics = withPut(graphics, dest.x, dest.y, red) # assignment
-  return graphics
+  gr2 = gr2.withPut(start.x, start.y, green) # assignment
+  gr2 = gr2.withPut(dest.x, dest.y, red) # assignment
+  return gr2
 # end function
 
 class Solver: # concrete class

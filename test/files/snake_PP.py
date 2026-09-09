@@ -3,26 +3,32 @@
 # Use the w,a,s,d keys to change snake's direction
 
 def main() -> None:
-  blocks = createBlockGraphics(white) # variable definition
-  head = [20, 15] # variable definition
+  blocks = BlockGraphics() # variable definition
+  head = 2015 # variable definition
   tail = head # variable definition
   body = [head] # variable definition
-  currentDir = Direction.right # variable definition
+  currentDir = "d" # variable definition
   gameOn = True # variable definition
-  apple = [0, 0] # variable definition
-  setAppleToRandomPosition(apple, body) # procedure call
+  apple = 0 # variable definition
+  changeApplePosition = True # variable definition
   while gameOn:
+    while changeApplePosition:
+      apple = squareNo(randint(0, 39), randint(0, 29)) # assignment
+      if not body.contains(apple):
+        changeApplePosition = False # assignment
+      # end if
+    # end while
     updateDisplay(blocks, head, tail, body, apple) # procedure call
-    currentDirRef = AsRef[Direction](currentDir) # variable definition
-    headRef = AsRef[list[int]](head) # variable definition
-    tailRef = AsRef[list[int]](tail) # variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) # procedure call
-    head = headRef.value() # assignment
-    tail = tailRef.value() # assignment
-    currentDir = currentDirRef.value() # assignment
-    gameOn = not hasHitEdge(head[0], head[1]) and not body.contains(head) # assignment
+    key = getKey() # variable definition
+    if not key.equals("") and "wasd".contains(key):
+      currentDir = key # assignment
+    # end if
+    tail = body[0] # assignment
+    body.append(head) # procedure call
+    head = getAdjacentSquare(head, currentDir) # assignment
+    gameOn = not hasHitEdge(head) and not body.contains(head) # assignment
     if head.equals(apple):
-      setAppleToRandomPosition(apple, body) # procedure call
+      changeApplePosition = True # assignment
     else:
       body.removeAt(0) # procedure call
     # end if
@@ -31,37 +37,15 @@ def main() -> None:
   print(f"Game Over! Score: {body.length() - 1}")
 # end main
 
-def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], headRef: AsRef[list[int]], body: list[list[int]]) -> None: # procedure
-  head = headRef.value() # variable definition
-  tail = tailRef.value() # variable definition
-  currentDir = currentDirRef.value() # variable definition
-  currentDir = directionByKey(currentDir, getKey()) # assignment
-  tailRef.put(body[0]) # procedure call
-  body.append(head) # procedure call
-  headRef.put(getAdjacentSquare(head, currentDir)) # procedure call
-  currentDirRef.put(currentDir) # procedure call
-# end procedure
-
-def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure
-  blocks[head[0]][head[1]] = green # assignment
+def updateDisplay(blocks: BlockGraphics, head: int, tail: int, body: list[int], apple: int) -> None: # procedure
+  blocks.put(x(head), y(head), green) # procedure call
   tailColour = getTailColour(tail, body) # variable definition
-  blocks[tail[0]][tail[1]] = tailColour # assignment
-  blocks[apple[0]][apple[1]] = red # assignment
-  displayBlocks(blocks) # procedure call
+  blocks.put(x(tail), y(tail), tailColour) # procedure call
+  blocks.put(x(apple), y(apple), red) # procedure call
+  blocks.display() # procedure call
 # end procedure
 
-def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: # procedure
-  changePosition = True # variable definition
-  while changePosition:
-    apple[0] = randint(0, 39) # assignment
-    apple[1] = randint(0, 29) # assignment
-    if not body.contains(apple):
-      changePosition = False # assignment
-    # end if
-  # end while
-# end procedure
-
-def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
+def getTailColour(tail: int, body: list[int]) -> int: # function
   colour = white # variable definition
   if body[0].equals(tail):
     colour = green # assignment
@@ -69,84 +53,92 @@ def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
   return colour
 # end function
 
-def hasHitEdge(headX: int, headY: int) -> bool: # function
+def hasHitEdge(head: int) -> bool: # function
+  headX = x(head) # variable definition
+  headY = y(head) # variable definition
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 # end function
 
-def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
-  newX = sq[0] # variable definition
-  newY = sq[1] # variable definition
-  if dir == Direction.left:
+def getAdjacentSquare(sq: int, dir: str) -> int: # function
+  newX = x(sq) # variable definition
+  newY = y(sq) # variable definition
+  if dir.equals("a"):
     newX = newX - 1 # assignment
-  elif dir == Direction.right: # else if
+  elif dir.equals("d"): # else if
     newX = newX + 1 # assignment
-  elif dir == Direction.up: # else if
+  elif dir.equals("w"): # else if
     newY = newY - 1 # assignment
-  elif dir == Direction.down: # else if
+  elif dir.equals("s"): # else if
     newY = newY + 1 # assignment
   # end if
-  return [newX, newY]
+  return squareNo(newX, newY)
 # end function
 
-def directionByKey(current: Direction, key: str) -> Direction: # function
-  dirn = current # variable definition
-  if key.equals("w"):
-    dirn = Direction.up # assignment
-  elif key.equals("s"): # else if
-    dirn = Direction.down # assignment
-  elif key.equals("a"): # else if
-    dirn = Direction.left # assignment
-  elif key.equals("d"): # else if
-    dirn = Direction.right # assignment
-  # end if
-  return dirn
+def squareNo(x: int, y: int) -> int: # function
+  return x*100 + y
 # end function
 
-class Direction(Enum):
-  up = 1
-  down = 2
-  left = 3
-  right = 4
+def x(sq: int) -> int: # function
+  return divAsInt(sq, 100)
+# end function
+
+def y(sq: int) -> int: # function
+  return sq % 100
+# end function
+
+class Test_square(unittest.TestCase):
+ def test_square(self) -> None:
+  self.assertEqual(squareNo(0, 0), 0)
+  self.assertEqual(squareNo(39, 29), 3929)
+  self.assertEqual(squareNo(-1, 15), -85)
+  self.assertEqual(squareNo(15, -1), 1499)
+# end test
+
+class Test_y(unittest.TestCase):
+ def test_y(self) -> None:
+  self.assertEqual(y(0500), 0)
+  self.assertEqual(y(0507), 7)
+  self.assertEqual(y(-0109), -9)
+  self.assertEqual(y(1499), 99)
+# end test
+
+class Test_x(unittest.TestCase):
+ def test_x(self) -> None:
+  self.assertEqual(x(0015), 0)
+  self.assertEqual(x(0500), 5)
+  self.assertEqual(x(0507), 5)
+  self.assertEqual(x(-0109), -2)
+# end test
 
 class Test_getTailColour(unittest.TestCase):
  def test_getTailColour(self) -> None:
-  self.assertEqual(getTailColour([3, 4], [[3, 4], [3, 5]]), green)
-  self.assertEqual(getTailColour([3, 4], [[3, 5], [3, 6]]), white)
+  self.assertEqual(getTailColour(0304, [0304, 0305]), green)
+  self.assertEqual(getTailColour(0304, [0305, 0306]), white)
 # end test
 
 class Test_hasHitEdge(unittest.TestCase):
  def test_hasHitEdge(self) -> None:
-  self.assertEqual(hasHitEdge(0, 0), False)
-  self.assertEqual(hasHitEdge(0, 29), False)
-  self.assertEqual(hasHitEdge(39, 0), False)
-  self.assertEqual(hasHitEdge(29, 29), False)
-  self.assertEqual(hasHitEdge(-1, 5), True)
-  self.assertEqual(hasHitEdge(5, 30), True)
-  self.assertEqual(hasHitEdge(40, 5), True)
-  self.assertEqual(hasHitEdge(5, -1), True)
+  self.assertEqual(hasHitEdge(0000), False)
+  self.assertEqual(hasHitEdge(0029), False)
+  self.assertEqual(hasHitEdge(3900), False)
+  self.assertEqual(hasHitEdge(3929), False)
+  self.assertEqual(hasHitEdge(-0105), True)
+  self.assertEqual(hasHitEdge(0530), True)
+  self.assertEqual(hasHitEdge(4005), True)
+  self.assertEqual(hasHitEdge(0499), True)
+  self.assertEqual(hasHitEdge(1499), True)
+  self.assertEqual(hasHitEdge(-85), True)
 # end test
 
 class Test_getAdjacentSquare(unittest.TestCase):
  def test_getAdjacentSquare(self) -> None:
-  sq = [20, 15] # variable definition
-  self.assertEqual(getAdjacentSquare(sq, Direction.up), [20, 14])
-  self.assertEqual(getAdjacentSquare(sq, Direction.down), [20, 16])
-  self.assertEqual(getAdjacentSquare(sq, Direction.left), [19, 15])
-  self.assertEqual(getAdjacentSquare(sq, Direction.right), [21, 15])
+  sq = 2015 # variable definition
+  self.assertEqual(getAdjacentSquare(sq, "w"), 2014)
+  self.assertEqual(getAdjacentSquare(sq, "s"), 2016)
+  self.assertEqual(getAdjacentSquare(sq, "a"), 1915)
+  self.assertEqual(getAdjacentSquare(sq, "d"), 2115)
   # boundary
-  self.assertEqual(getAdjacentSquare([0, 15], Direction.left), [-1, 15])
-# end test
-
-class Test_directionByKey(unittest.TestCase):
- def test_directionByKey(self) -> None:
-  current = Direction.up # variable definition
-  self.assertEqual(directionByKey(current, ""), Direction.up)
-  self.assertEqual(directionByKey(current, "x"), Direction.up)
-  self.assertEqual(directionByKey(current, "w"), Direction.up)
-  self.assertEqual(directionByKey(current, "s"), Direction.down)
-  self.assertEqual(directionByKey(current, "a"), Direction.left)
-  self.assertEqual(directionByKey(current, "d"), Direction.right)
-  self.assertEqual(directionByKey(current, "D"), Direction.up)
+  self.assertEqual(getAdjacentSquare(0015, "a"), -85)
 # end test
 
 main()

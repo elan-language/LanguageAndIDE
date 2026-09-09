@@ -1,13 +1,13 @@
 // C# with Elan 2.0.0-beta4
 
 static void main() {
-  var blocks = createBlockGraphics(white);
+  var blocks = new BlockGraphics();
   var x = 20;
   var y = 15;
   while (true) {
-    blocks[x][y] = red; // assignment
-    displayBlocks(blocks); // procedure call
-    blocks[x][y] = black; // assignment
+    blocks.put(x, y, red); // procedure call
+    blocks.display(); // procedure call
+    blocks.put(x, y, black); // procedure call
     var direction = randint(0, 3);
     if (direction == 0) {
       x = min(new [] {x + 1, 39}); // assignment

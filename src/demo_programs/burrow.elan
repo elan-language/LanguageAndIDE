@@ -1,13 +1,13 @@
-# b2312691f8e684946adbe9ae0eb0cf9800d2e461db8ae4312897f64576a30e8c Elan 2.0.0-beta4 valid
+# a2da98c588438c73cc281b4ab8b163c87e3cb22db3a253f12ea889dda5c4cf9c Elan 2.0.0-beta4 valid
 
 main
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   variable x set to 20
   variable y set to 15
   while true
-    assign blocks[x][y] to red
-    call displayBlocks(blocks)
-    assign blocks[x][y] to black
+    call blocks.put(x, y, red)
+    call blocks.display()
+    call blocks.put(x, y, black)
     variable direction set to randint(0, 3)
     if direction is 0 then
       assign x to min([x + 1, 39])

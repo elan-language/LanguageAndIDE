@@ -3,13 +3,13 @@
 // Use the W,A,S,D keys to change Snake direction
 
 static void main() {
-  var blocks = createBlockGraphics(white);
+  var blocks = new BlockGraphics();
   var rnd = new Random();
   rnd.initialiseFromClock(); // procedure call
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
     blocks = updateGraphics(game, blocks); // assignment
-    displayBlocks(blocks); // procedure call
+    blocks.display(); // procedure call
     sleep_ms(150); // procedure call
     game = clockTick(game, getKey()); // assignment
   } // end while
@@ -23,16 +23,12 @@ static Game clockTick(Game g, string k) { // function
   return if_(gameOver(g4), g4.with_isOn(false), g4);
 } // end function
 
-static List<List<int>> updateGraphics(Game g, List<List<int>> b) { // function
-  var b2 = graphicsPut(b, g.apple.x, g.apple.y, red);
-  var b3 = graphicsPut(b2, g.head.x, g.head.y, green);
+static BlockGraphics updateGraphics(Game g, BlockGraphics b) { // function
+  var b2 = b.withPut(g.apple.x, g.apple.y, red);
+  var b3 = b2.withPut(g.head.x, g.head.y, green);
   var tail = g.body[0];
   var tailColour = if_(tail.equals(g.priorTail), green, white);
-  return graphicsPut(b3, tail.x, tail.y, tailColour);
-} // end function
-
-static List<List<int>> graphicsPut(List<List<int>> graphics, int x, int y, int colour) { // function
-  return graphics.withPut(x, graphics[x].withPut(y, colour));
+  return b3.withPut(tail.x, tail.y, tailColour);
 } // end function
 
 static int score(Game g) { // function
@@ -176,17 +172,17 @@ class Square {
 
 [TestClass] class Test_updateGraphics
 [TestMethod] static void test_updateGraphics() {
-  var blocks = createBlockGraphics(white);
+  var blocks = new BlockGraphics();
   var g1 = new Game(new Random());
   var blocks2 = updateGraphics(g1, blocks);
-  Assert.AreEqual(red, blocks2[12][15]);
-  Assert.AreEqual(green, blocks2[22][15]);
-  Assert.AreEqual(white, blocks2[21][15]);
+  Assert.AreEqual(red, blocks2.get(12, 15));
+  Assert.AreEqual(green, blocks2.get(22, 15));
+  Assert.AreEqual(white, blocks2.get(21, 15));
   var g3 = clockTick(g1, "d");
   var blocks3 = updateGraphics(g3, blocks2);
-  Assert.AreEqual(red, blocks3[12][15]);
-  Assert.AreEqual(green, blocks3[22][15]);
-  Assert.AreEqual(green, blocks3[23][15]);
+  Assert.AreEqual(red, blocks3.get(12, 15));
+  Assert.AreEqual(green, blocks3.get(22, 15));
+  Assert.AreEqual(green, blocks3.get(23, 15));
 }} // end test
 
 [TestClass] class Test_testnewApple

@@ -5,26 +5,32 @@ public class Global {
 // Use the w,a,s,d keys to change snake's direction
 
 static void main() {
-  var blocks = createBlockGraphics(white);
-  var head = list(20, 15);
+  var blocks = new BlockGraphics();
+  var head = 2015;
   var tail = head;
   var body = list(head);
-  var currentDir = Direction.right;
+  var currentDir = "d";
   var gameOn = true;
-  var apple = list(0, 0);
-  setAppleToRandomPosition(apple, body); // procedure call
+  var apple = 0;
+  var changeApplePosition = true;
   while (gameOn) {
+    while (changeApplePosition) {
+      apple = squareNo(randint(0, 39), randint(0, 29)); // assignment
+      if (!body.contains(apple)) {
+        changeApplePosition = false; // assignment
+      } // end if
+    } // end while
     updateDisplay(blocks, head, tail, body, apple); // procedure call
-    var currentDirRef = new AsRef<Direction>(currentDir);
-    var headRef = new AsRef<List<int>>(head);
-    var tailRef = new AsRef<List<int>>(tail);
-    updateSnake(currentDirRef, tailRef, headRef, body); // procedure call
-    head = headRef.value(); // assignment
-    tail = tailRef.value(); // assignment
-    currentDir = currentDirRef.value(); // assignment
-    gameOn = !hasHitEdge(head[0], head[1]) && !body.contains(head); // assignment
+    var key = getKey();
+    if (!key.equals("") && "wasd".contains(key)) {
+      currentDir = key; // assignment
+    } // end if
+    tail = body[0]; // assignment
+    body.append(head); // procedure call
+    head = getAdjacentSquare(head, currentDir); // assignment
+    gameOn = !hasHitEdge(head) && !body.contains(head); // assignment
     if (head.equals(apple)) {
-      setAppleToRandomPosition(apple, body); // procedure call
+      changeApplePosition = true; // assignment
     } else {
       body.removeAt(0); // procedure call
     } // end if
@@ -33,37 +39,15 @@ static void main() {
   System.out.println(String.format("Game Over! Score: %", body.length() - 1)); // print statement
 } // end main
 
-static void updateSnake(AsRef<Direction> currentDirRef, AsRef<List<int>> tailRef, AsRef<List<int>> headRef, List<List<int>> body) { // procedure
-  var head = headRef.value();
-  var tail = tailRef.value();
-  var currentDir = currentDirRef.value();
-  currentDir = directionByKey(currentDir, getKey()); // assignment
-  tailRef.put(body[0]); // procedure call
-  body.append(head); // procedure call
-  headRef.put(getAdjacentSquare(head, currentDir)); // procedure call
-  currentDirRef.put(currentDir); // procedure call
-} // end procedure
-
-static void updateDisplay(List<List<int>> blocks, List<int> head, List<int> tail, List<List<int>> body, List<int> apple) { // procedure
-  blocks[head[0]][head[1]] = green; // assignment
+static void updateDisplay(BlockGraphics blocks, int head, int tail, List<int> body, int apple) { // procedure
+  blocks.put(x(head), y(head), green); // procedure call
   var tailColour = getTailColour(tail, body);
-  blocks[tail[0]][tail[1]] = tailColour; // assignment
-  blocks[apple[0]][apple[1]] = red; // assignment
-  displayBlocks(blocks); // procedure call
+  blocks.put(x(tail), y(tail), tailColour); // procedure call
+  blocks.put(x(apple), y(apple), red); // procedure call
+  blocks.display(); // procedure call
 } // end procedure
 
-static void setAppleToRandomPosition(List<int> apple, List<List<int>> body) { // procedure
-  var changePosition = true;
-  while (changePosition) {
-    apple[0] = randint(0, 39); // assignment
-    apple[1] = randint(0, 29); // assignment
-    if (!body.contains(apple)) {
-      changePosition = false; // assignment
-    } // end if
-  } // end while
-} // end procedure
-
-static int getTailColour(List<int> tail, List<List<int>> body) { // function
+static int getTailColour(int tail, List<int> body) { // function
   var colour = white;
   if (body[0].equals(tail)) {
     colour = green; // assignment
@@ -71,79 +55,91 @@ static int getTailColour(List<int> tail, List<List<int>> body) { // function
   return colour;
 } // end function
 
-static boolean hasHitEdge(int headX, int headY) { // function
+static boolean hasHitEdge(int head) { // function
+  var headX = x(head);
+  var headY = y(head);
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
 } // end function
 
-static List<int> getAdjacentSquare(List<int> sq, Direction dir) { // function
-  var newX = sq[0];
-  var newY = sq[1];
-  if (dir == Direction.left) {
+static int getAdjacentSquare(int sq, String dir) { // function
+  var newX = x(sq);
+  var newY = y(sq);
+  if (dir.equals("a")) {
     newX = newX - 1; // assignment
-  } else if (dir == Direction.right) {
+  } else if (dir.equals("d")) {
     newX = newX + 1; // assignment
-  } else if (dir == Direction.up) {
+  } else if (dir.equals("w")) {
     newY = newY - 1; // assignment
-  } else if (dir == Direction.down) {
+  } else if (dir.equals("s")) {
     newY = newY + 1; // assignment
   } // end if
-  return list(newX, newY);
+  return squareNo(newX, newY);
 } // end function
 
-static Direction directionByKey(Direction current, String key) { // function
-  var dirn = current;
-  if (key.equals("w")) {
-    dirn = Direction.up; // assignment
-  } else if (key.equals("s")) {
-    dirn = Direction.down; // assignment
-  } else if (key.equals("a")) {
-    dirn = Direction.left; // assignment
-  } else if (key.equals("d")) {
-    dirn = Direction.right; // assignment
-  } // end if
-  return dirn;
+static int squareNo(int x, int y) { // function
+  return x*100 + y;
 } // end function
 
-enum Direction {up, down, left, right}
+static int x(int sq) { // function
+  return divAsInt(sq, 100);
+} // end function
+
+static int y(int sq) { // function
+  return sq % 100;
+} // end function
+
+class Test_square {
+@Test static void test_square() {
+  assertEquals(0, squareNo(0, 0));
+  assertEquals(3929, squareNo(39, 29));
+  assertEquals(-85, squareNo(-1, 15));
+  assertEquals(1499, squareNo(15, -1));
+}} // end test
+
+class Test_y {
+@Test static void test_y() {
+  assertEquals(0, y(0500));
+  assertEquals(7, y(0507));
+  assertEquals(-9, y(-0109));
+  assertEquals(99, y(1499));
+}} // end test
+
+class Test_x {
+@Test static void test_x() {
+  assertEquals(0, x(0015));
+  assertEquals(5, x(0500));
+  assertEquals(5, x(0507));
+  assertEquals(-2, x(-0109));
+}} // end test
 
 class Test_getTailColour {
 @Test static void test_getTailColour() {
-  assertEquals(green, getTailColour(list(3, 4), list(list(3, 4), list(3, 5))));
-  assertEquals(white, getTailColour(list(3, 4), list(list(3, 5), list(3, 6))));
+  assertEquals(green, getTailColour(0304, list(0304, 0305)));
+  assertEquals(white, getTailColour(0304, list(0305, 0306)));
 }} // end test
 
 class Test_hasHitEdge {
 @Test static void test_hasHitEdge() {
-  assertEquals(false, hasHitEdge(0, 0));
-  assertEquals(false, hasHitEdge(0, 29));
-  assertEquals(false, hasHitEdge(39, 0));
-  assertEquals(false, hasHitEdge(29, 29));
-  assertEquals(true, hasHitEdge(-1, 5));
-  assertEquals(true, hasHitEdge(5, 30));
-  assertEquals(true, hasHitEdge(40, 5));
-  assertEquals(true, hasHitEdge(5, -1));
+  assertEquals(false, hasHitEdge(0000));
+  assertEquals(false, hasHitEdge(0029));
+  assertEquals(false, hasHitEdge(3900));
+  assertEquals(false, hasHitEdge(3929));
+  assertEquals(true, hasHitEdge(-0105));
+  assertEquals(true, hasHitEdge(0530));
+  assertEquals(true, hasHitEdge(4005));
+  assertEquals(true, hasHitEdge(0499));
+  assertEquals(true, hasHitEdge(1499));
+  assertEquals(true, hasHitEdge(-85));
 }} // end test
 
 class Test_getAdjacentSquare {
 @Test static void test_getAdjacentSquare() {
-  var sq = list(20, 15);
-  assertEquals(list(20, 14), getAdjacentSquare(sq, Direction.up));
-  assertEquals(list(20, 16), getAdjacentSquare(sq, Direction.down));
-  assertEquals(list(19, 15), getAdjacentSquare(sq, Direction.left));
-  assertEquals(list(21, 15), getAdjacentSquare(sq, Direction.right));
+  var sq = 2015;
+  assertEquals(2014, getAdjacentSquare(sq, "w"));
+  assertEquals(2016, getAdjacentSquare(sq, "s"));
+  assertEquals(1915, getAdjacentSquare(sq, "a"));
+  assertEquals(2115, getAdjacentSquare(sq, "d"));
   // boundary
-  assertEquals(list(-1, 15), getAdjacentSquare(list(0, 15), Direction.left));
-}} // end test
-
-class Test_directionByKey {
-@Test static void test_directionByKey() {
-  var current = Direction.up;
-  assertEquals(Direction.up, directionByKey(current, ""));
-  assertEquals(Direction.up, directionByKey(current, "x"));
-  assertEquals(Direction.up, directionByKey(current, "w"));
-  assertEquals(Direction.down, directionByKey(current, "s"));
-  assertEquals(Direction.left, directionByKey(current, "a"));
-  assertEquals(Direction.right, directionByKey(current, "d"));
-  assertEquals(Direction.up, directionByKey(current, "D"));
+  assertEquals(-85, getAdjacentSquare(0015, "a"));
 }} // end test
 } // end Global

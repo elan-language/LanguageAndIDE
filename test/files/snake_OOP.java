@@ -5,14 +5,14 @@ public class Global {
 // Use the W,A,S,D keys to change Snake direction
 
 static void main() {
-  var blocks = createBlockGraphics(white);
+  var blocks = new BlockGraphics();
   var snake = new Snake();
   var apple = new Apple();
   apple.newRandomPosition(snake); // procedure call
   while (!snake.gameOver()) {
     snake.updateBlocks(blocks); // procedure call
     apple.updateBlocks(blocks); // procedure call
-    displayBlocks(blocks); // procedure call
+    blocks.display(); // procedure call
     sleep_ms(150); // procedure call
     snake.clockTick(getKey(), apple); // procedure call
   } // end while
@@ -50,10 +50,10 @@ class Snake {
     } // end if
   } // end procedure method
 
-  public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.head.x][this.head.y] = green; // assignment
+  public void updateBlocks(BlockGraphics blocks) { // procedure method
+    blocks.put(this.head.x, this.head.y, green); // procedure call
     if (!this.body[0].equals(this.priorTail)) {
-      blocks[this.priorTail.x][this.priorTail.y] = white; // assignment
+      blocks.put(this.priorTail.x, this.priorTail.y, white); // procedure call
     } // end if
   } // end procedure method
 
@@ -113,8 +113,8 @@ class Apple {
     } // end while
   } // end procedure method
 
-  public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.location.x][this.location.y] = red; // assignment
+  public void updateBlocks(BlockGraphics blocks) { // procedure method
+    blocks.put(this.location.x, this.location.y, red); // procedure call
   } // end procedure method
 
   public String toString() { // function method

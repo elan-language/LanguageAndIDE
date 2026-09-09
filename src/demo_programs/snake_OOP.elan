@@ -1,15 +1,15 @@
-# 5eecaf3acea1bd0d7c3ab6cf363851f8e2ada7e0a59e023dbf178a967999ceef Elan 2.0.0-beta4 valid
+# 744db1c4d949618ab5b7aabeb821200249f3223090ff0129c2758299cec9111c Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   variable snake set to new Snake()
   variable apple set to new Apple()
   call apple.newRandomPosition(snake)
   while not snake.gameOver()
     call snake.updateBlocks(blocks)
     call apple.updateBlocks(blocks)
-    call displayBlocks(blocks)
+    call blocks.display()
     call sleep_ms(150)
     call snake.clockTick(getKey(), apple)
   end while
@@ -46,10 +46,10 @@ class Snake
     end if
   end procedure
 
-  procedure updateBlocks(blocks as List<of List<of Int>>)
-    assign blocks[this.head.x][this.head.y] to green
+  procedure updateBlocks(blocks as BlockGraphics)
+    call blocks.put(this.head.x, this.head.y, green)
     if not this.body[0].equals(this.priorTail) then
-      assign blocks[this.priorTail.x][this.priorTail.y] to white
+      call blocks.put(this.priorTail.x, this.priorTail.y, white)
     end if
   end procedure
 
@@ -108,8 +108,8 @@ class Apple
     end while
   end procedure
 
-  procedure updateBlocks(blocks as List<of List<of Int>>)
-    assign blocks[this.location.x][this.location.y] to red
+  procedure updateBlocks(blocks as BlockGraphics)
+    call blocks.put(this.location.x, this.location.y, red)
   end procedure
 
   function toString() returns String

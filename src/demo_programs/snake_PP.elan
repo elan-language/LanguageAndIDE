@@ -1,27 +1,33 @@
-# abc3f7dea5e13c58025f05c9a0ccf0aaca111b8214cdfd1cb23663a6ebce2cfa Elan 2.0.0-beta4 valid
+# bb178bfa3a8be9d98c1b898b9622f6f0e4d10fdea0cd508eb7a58f70c9b56fbd Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
-  variable blocks set to createBlockGraphics(white)
-  variable head set to [20, 15]
+  variable blocks set to new BlockGraphics()
+  variable head set to 2015
   variable tail set to head
   variable body set to [head]
-  variable currentDir set to Direction.right
+  variable currentDir set to "d"
   variable gameOn set to true
-  variable apple set to [0, 0]
-  call setAppleToRandomPosition(apple, body)
+  variable apple set to 0
+  variable changeApplePosition set to true
   while gameOn
+    while changeApplePosition
+      assign apple to squareNo(randint(0, 39), randint(0, 29))
+      if not body.contains(apple) then
+        assign changeApplePosition to false
+      end if
+    end while
     call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef<of Direction>(currentDir)
-    variable headRef set to new AsRef<of List<of Int>>(head)
-    variable tailRef set to new AsRef<of List<of Int>>(tail)
-    call updateSnake(currentDirRef, tailRef, headRef, body)
-    assign head to headRef.value()
-    assign tail to tailRef.value()
-    assign currentDir to currentDirRef.value()
-    assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
+    variable key set to getKey()
+    if not key.equals("") and "wasd".contains(key) then
+      assign currentDir to key
+    end if
+    assign tail to body[0]
+    call body.append(head)
+    assign head to getAdjacentSquare(head, currentDir)
+    assign gameOn to not hasHitEdge(head) and not body.contains(head)
     if head.equals(apple) then
-      call setAppleToRandomPosition(apple, body)
+      assign changeApplePosition to true
     else
       call body.removeAt(0)
     end if
@@ -30,37 +36,15 @@ main
   print($"Game Over! Score: {body.length() - 1}")
 end main
 
-procedure updateSnake(currentDirRef as AsRef<of Direction>, tailRef as AsRef<of List<of Int>>, headRef as AsRef<of List<of Int>>, body as List<of List<of Int>>)
-  variable head set to headRef.value()
-  variable tail set to tailRef.value()
-  variable currentDir set to currentDirRef.value()
-  assign currentDir to directionByKey(currentDir, getKey())
-  call tailRef.put(body[0])
-  call body.append(head)
-  call headRef.put(getAdjacentSquare(head, currentDir))
-  call currentDirRef.put(currentDir)
-end procedure
-
-procedure updateDisplay(blocks as List<of List<of Int>>, head as List<of Int>, tail as List<of Int>, body as List<of List<of Int>>, apple as List<of Int>)
-  assign blocks[head[0]][head[1]] to green
+procedure updateDisplay(blocks as BlockGraphics, head as Int, tail as Int, body as List<of Int>, apple as Int)
+  call blocks.put(x(head), y(head), green)
   variable tailColour set to getTailColour(tail, body)
-  assign blocks[tail[0]][tail[1]] to tailColour
-  assign blocks[apple[0]][apple[1]] to red
-  call displayBlocks(blocks)
+  call blocks.put(x(tail), y(tail), tailColour)
+  call blocks.put(x(apple), y(apple), red)
+  call blocks.display()
 end procedure
 
-procedure setAppleToRandomPosition(apple as List<of Int>, body as List<of List<of Int>>)
-  variable changePosition set to true
-  while changePosition
-    assign apple[0] to randint(0, 39)
-    assign apple[1] to randint(0, 29)
-    if not body.contains(apple) then
-      assign changePosition to false
-    end if
-  end while
-end procedure
-
-function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) returns Int
+function getTailColour(tail as Int, body as List<of Int>) returns Int
   variable colour set to white
   if body[0].equals(tail) then
     assign colour to green
@@ -68,74 +52,84 @@ function getTailColour(tail as List<of Int>, body as List<of List<of Int>>) retu
   return colour
 end function
 
-function hasHitEdge(headX as Int, headY as Int) returns Boolean
+function hasHitEdge(head as Int) returns Boolean
+  variable headX set to x(head)
+  variable headY set to y(head)
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
-function getAdjacentSquare(sq as List<of Int>, dir as Direction) returns List<of Int>
-  variable newX set to sq[0]
-  variable newY set to sq[1]
-  if dir is Direction.left then
+function getAdjacentSquare(sq as Int, dir as String) returns Int
+  variable newX set to x(sq)
+  variable newY set to y(sq)
+  if dir.equals("a") then
     assign newX to newX - 1
-  elif dir is Direction.right then
+  elif dir.equals("d") then
     assign newX to newX + 1
-  elif dir is Direction.up then
+  elif dir.equals("w") then
     assign newY to newY - 1
-  elif dir is Direction.down then
+  elif dir.equals("s") then
     assign newY to newY + 1
   end if
-  return [newX, newY]
+  return squareNo(newX, newY)
 end function
 
-function directionByKey(current as Direction, key as String) returns Direction
-  variable dirn set to current
-  if key.equals("w") then
-    assign dirn to Direction.up
-  elif key.equals("s") then
-    assign dirn to Direction.down
-  elif key.equals("a") then
-    assign dirn to Direction.left
-  elif key.equals("d") then
-    assign dirn to Direction.right
-  end if
-  return dirn
+function squareNo(x as Int, y as Int) returns Int
+  return x*100 + y
 end function
 
-enum Direction up, down, left, right
+function x(sq as Int) returns Int
+  return divAsInt(sq, 100)
+end function
+
+function y(sq as Int) returns Int
+  return sq mod 100
+end function
+
+test test_square
+  assert squareNo(0, 0) evaluates to 0
+  assert squareNo(39, 29) evaluates to 3929
+  assert squareNo(-1, 15) evaluates to -85
+  assert squareNo(15, -1) evaluates to 1499
+end test
+
+test test_y
+  assert y(0500) evaluates to 0
+  assert y(0507) evaluates to 7
+  assert y(-0109) evaluates to -9
+  assert y(1499) evaluates to 99
+end test
+
+test test_x
+  assert x(0015) evaluates to 0
+  assert x(0500) evaluates to 5
+  assert x(0507) evaluates to 5
+  assert x(-0109) evaluates to -2
+end test
 
 test test_getTailColour
-  assert getTailColour([3, 4], [[3, 4], [3, 5]]) evaluates to green
-  assert getTailColour([3, 4], [[3, 5], [3, 6]]) evaluates to white
+  assert getTailColour(0304, [0304, 0305]) evaluates to green
+  assert getTailColour(0304, [0305, 0306]) evaluates to white
 end test
 
 test test_hasHitEdge
-  assert hasHitEdge(0, 0) evaluates to false
-  assert hasHitEdge(0, 29) evaluates to false
-  assert hasHitEdge(39, 0) evaluates to false
-  assert hasHitEdge(29, 29) evaluates to false
-  assert hasHitEdge(-1, 5) evaluates to true
-  assert hasHitEdge(5, 30) evaluates to true
-  assert hasHitEdge(40, 5) evaluates to true
-  assert hasHitEdge(5, -1) evaluates to true
+  assert hasHitEdge(0000) evaluates to false
+  assert hasHitEdge(0029) evaluates to false
+  assert hasHitEdge(3900) evaluates to false
+  assert hasHitEdge(3929) evaluates to false
+  assert hasHitEdge(-0105) evaluates to true
+  assert hasHitEdge(0530) evaluates to true
+  assert hasHitEdge(4005) evaluates to true
+  assert hasHitEdge(0499) evaluates to true
+  assert hasHitEdge(1499) evaluates to true
+  assert hasHitEdge(-85) evaluates to true
 end test
 
 test test_getAdjacentSquare
-  variable sq set to [20, 15]
-  assert getAdjacentSquare(sq, Direction.up) evaluates to [20, 14]
-  assert getAdjacentSquare(sq, Direction.down) evaluates to [20, 16]
-  assert getAdjacentSquare(sq, Direction.left) evaluates to [19, 15]
-  assert getAdjacentSquare(sq, Direction.right) evaluates to [21, 15]
+  variable sq set to 2015
+  assert getAdjacentSquare(sq, "w") evaluates to 2014
+  assert getAdjacentSquare(sq, "s") evaluates to 2016
+  assert getAdjacentSquare(sq, "a") evaluates to 1915
+  assert getAdjacentSquare(sq, "d") evaluates to 2115
   # boundary
-  assert getAdjacentSquare([0, 15], Direction.left) evaluates to [-1, 15]
-end test
-
-test test_directionByKey
-  variable current set to Direction.up
-  assert directionByKey(current, "") evaluates to Direction.up
-  assert directionByKey(current, "x") evaluates to Direction.up
-  assert directionByKey(current, "w") evaluates to Direction.up
-  assert directionByKey(current, "s") evaluates to Direction.down
-  assert directionByKey(current, "a") evaluates to Direction.left
-  assert directionByKey(current, "d") evaluates to Direction.right
-  assert directionByKey(current, "D") evaluates to Direction.up
+  assert getAdjacentSquare(0015, "a") evaluates to -85
 end test

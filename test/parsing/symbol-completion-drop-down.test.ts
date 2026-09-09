@@ -160,7 +160,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", " ", 74);
+    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", " ", 73);
   });
 
   test("Pass_LocalVarsCaseInsensitive1", async () => {
@@ -1583,7 +1583,10 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
+    const expected = [
+      ["BlockGraphics", "*", "*"],
+      ["Boolean", "*", "*"],
+    ] as [string, string, string][];
 
     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new B", expected);
   });
@@ -1608,6 +1611,7 @@ end main`;
 
     const expected = [
       ["AsRef", "*", "*"],
+      ["BlockGraphics", "*", "*"],
       ["Boolean", "*", "*"],
       ["CircleVG", "*", "*"],
       ["CustomError", "*", "*"],

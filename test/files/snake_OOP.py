@@ -3,14 +3,14 @@
 # Use the W,A,S,D keys to change Snake direction
 
 def main() -> None:
-  blocks = createBlockGraphics(white) # variable definition
+  blocks = BlockGraphics() # variable definition
   snake = Snake() # variable definition
   apple = Apple() # variable definition
   apple.newRandomPosition(snake) # procedure call
   while not snake.gameOver():
     snake.updateBlocks(blocks) # procedure call
     apple.updateBlocks(blocks) # procedure call
-    displayBlocks(blocks) # procedure call
+    blocks.display() # procedure call
     sleep_ms(150) # procedure call
     snake.clockTick(getKey(), apple) # procedure call
   # end while
@@ -48,10 +48,10 @@ class Snake: # concrete class
     # end if
   # end procedure method
 
-  def updateBlocks(self: Snake, blocks: list[list[int]]) -> None: # procedure method
-    blocks[self.head.x][self.head.y] = green # assignment
+  def updateBlocks(self: Snake, blocks: BlockGraphics) -> None: # procedure method
+    blocks.put(self.head.x, self.head.y, green) # procedure call
     if not self.body[0].equals(self.priorTail):
-      blocks[self.priorTail.x][self.priorTail.y] = white # assignment
+      blocks.put(self.priorTail.x, self.priorTail.y, white) # procedure call
     # end if
   # end procedure method
 
@@ -111,8 +111,8 @@ class Apple: # concrete class
     # end while
   # end procedure method
 
-  def updateBlocks(self: Apple, blocks: list[list[int]]) -> None: # procedure method
-    blocks[self.location.x][self.location.y] = red # assignment
+  def updateBlocks(self: Apple, blocks: BlockGraphics) -> None: # procedure method
+    blocks.put(self.location.x, self.location.y, red) # procedure call
   # end procedure method
 
   def toString(self: Apple) -> str: # function method

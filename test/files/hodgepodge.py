@@ -42,55 +42,69 @@ vN = False # constant
 
 def main() -> None:
   # colour grids: hodge for display, podge for working
-  podge = createBlockGraphics(healthy) # variable definition
-  hodge = AsRef[list[list[int]]](createBlockGraphics(healthy)) # variable definition
-  blank = createBlockGraphics(healthy) # variable definition
+  podge = BlockGraphics() # variable definition
+  hodge = BlockGraphics() # variable definition
+  blank = BlockGraphics() # variable definition
   # initial colours of grid
   updateGrid(hodge, podge, True) # procedure call
-  while not uniform(hodge.value()):
+  while not uniform(hodge):
     # successive updates to grid in blank podge
     podge = blank # assignment
     updateGrid(hodge, podge, False) # procedure call
   # end while
 # end main
 
-def updateGrid(hodge: AsRef[list[list[int]]], podge: list[list[int]], initial: bool) -> None: # procedure
+def updateGrid(hodge: BlockGraphics, podge: BlockGraphics, initial: bool) -> None: # procedure
   colours = getColours() # variable definition
   for j in range(0, gH):
     for i in range(0, gW):
       if initial:
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)] # assignment
+        podge.put(i, j, colours[randint(0, (colours.length()) - 1)]) # procedure call
         podge[1][1] = 0x1a001a # assignment
       else:
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]) # assignment
+        podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j))) # procedure call
       # end if
     # end for
   # end for
   a = 0 # variable definition
-  hodge.put(podge) # procedure call
-  displayBlocks(hodge.value()) # procedure call
+  # copy podgeValues into hodge
+  for j in range(0, gH):
+    for i in range(0, gW):
+      podgeValue = podge.get(i, j) # variable definition
+      hodge.put(i, j, podgeValue) # procedure call
+    # end for
+  # end for
+  hodge.display() # procedure call
   sleep_ms(50) # procedure call
 # end procedure
 
-def uniform(grid: list[list[int]]) -> bool: # function
-  uniformGrid = createBlockGraphics(grid[0][0]) # variable definition
-  return if_(grid.equals(uniformGrid), True, False)
+def uniform(grid: BlockGraphics) -> bool: # function
+  cell0 = grid.get(0, 0) # variable definition
+  isUniform = True # variable definition
+  for j in range(0, gH):
+    for i in range(0, gW):
+      if grid.get(i, j) == cell0:
+        isUniform = False # assignment
+      # end if
+    # end for
+  # end for
+  return isUniform
 # end function
 
-def getNeighbourColours(grid: list[list[int]], i: int, j: int) -> list[int]: # function
+def getNeighbourColours(grid: BlockGraphics, i: int, j: int) -> list[int]: # function
   # grid wraps around: all cells have the same number of neighbours
   # H and V neighbours(von Neumann)
-  sL = grid[(i - 1 + gW) % gW][j] # variable definition
-  sR = grid[(i + 1 + gW) % gW][j] # variable definition
-  sA = grid[i][(j - 1 + gH) % gH] # variable definition
-  sB = grid[i][(j + 1 + gH) % gH] # variable definition
+  sL = grid.get((i - 1 + gW) % gW, j) # variable definition
+  sR = grid.get((i + 1 + gW) % gW, j) # variable definition
+  sA = grid.get(i, (j - 1 + gH) % gH) # variable definition
+  sB = grid.get(i, (j + 1 + gH) % gH) # variable definition
   neighbourColours = [sL, sR, sA, sB] # variable definition
   if vN == False:
     # add diagonal neighbours (Moore)
-    sLA = grid[(i - 1 + gW) % gW][(j - 1 + gH) % gH] # variable definition
-    sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH] # variable definition
-    sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
-    sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH] # variable definition
+    sLA = grid.get((i - 1 + gW) % gW, (j - 1 + gH) % gH) # variable definition
+    sRA = grid.get((i + 1 + gW) % gW, (j - 1 + gH) % gH) # variable definition
+    sLB = grid.get((i - 1 + gW) % gW, (j + 1 + gH) % gH) # variable definition
+    sRB = grid.get((i + 1 + gW) % gW, (j + 1 + gH) % gH) # variable definition
     neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # assignment
   # end if
   return neighbourColours

@@ -3,14 +3,14 @@
 ' Use the W,A,S,D keys to change Snake direction
 
 Sub main()
-  Dim blocks = createBlockGraphics(white) ' variable definition
+  Dim blocks = New BlockGraphics() ' variable definition
   Dim snake = New Snake() ' variable definition
   Dim apple = New Apple() ' variable definition
   apple.newRandomPosition(snake) ' procedure call
   While Not snake.gameOver()
     snake.updateBlocks(blocks) ' procedure call
     apple.updateBlocks(blocks) ' procedure call
-    displayBlocks(blocks) ' procedure call
+    blocks.display() ' procedure call
     sleep_ms(150) ' procedure call
     snake.clockTick(getKey(), apple) ' procedure call
   End While
@@ -48,10 +48,10 @@ Class Snake
     End If
   End Sub
 
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.head.x)(Me.head.y) = green ' assignment
+  Sub updateBlocks(blocks As BlockGraphics) ' procedure method
+    blocks.put(Me.head.x, Me.head.y, green) ' procedure call
     If Not Me.body(0).equals(Me.priorTail) Then
-      blocks(Me.priorTail.x)(Me.priorTail.y) = white ' assignment
+      blocks.put(Me.priorTail.x, Me.priorTail.y, white) ' procedure call
     End If
   End Sub
 
@@ -111,8 +111,8 @@ Class Apple
     End While
   End Sub
 
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.location.x)(Me.location.y) = red ' assignment
+  Sub updateBlocks(blocks As BlockGraphics) ' procedure method
+    blocks.put(Me.location.x, Me.location.y, red) ' procedure call
   End Sub
 
   Function toString() As String

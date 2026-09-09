@@ -1,13 +1,13 @@
 # Python with Elan 2.0.0-beta4
 
 def main() -> None:
-  blocks = createBlockGraphics(white) # variable definition
+  blocks = BlockGraphics() # variable definition
   x = 20 # variable definition
   y = 15 # variable definition
   while True:
-    blocks[x][y] = red # assignment
-    displayBlocks(blocks) # procedure call
-    blocks[x][y] = black # assignment
+    blocks.put(x, y, red) # procedure call
+    blocks.display() # procedure call
+    blocks.put(x, y, black) # procedure call
     direction = randint(0, 3) # variable definition
     if direction == 0:
       x = min([x + 1, 39]) # assignment
