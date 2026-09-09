@@ -42,7 +42,6 @@
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
     "antlr4ng": "^3.0.4",
-    "antlr4ng-cli": "^2.0.0",
     "async-file": "2.0.2",
     "reflect-metadata": "^0.2.2"
   },
