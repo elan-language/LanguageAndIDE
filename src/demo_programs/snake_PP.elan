@@ -1,4 +1,4 @@
-# bb178bfa3a8be9d98c1b898b9622f6f0e4d10fdea0cd508eb7a58f70c9b56fbd Elan 2.0.0-beta4 valid
+# 24c57ce20fa6707029a6ce7f49a635457498f014f66e48f24a6f59b91b8509b9 Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -37,10 +37,10 @@ main
 end main
 
 procedure updateDisplay(blocks as BlockGraphics, head as Int, tail as Int, body as List<of Int>, apple as Int)
-  call blocks.put(x(head), y(head), green)
+  call blocks.put(x_coord(head), y_coord(head), green)
   variable tailColour set to getTailColour(tail, body)
-  call blocks.put(x(tail), y(tail), tailColour)
-  call blocks.put(x(apple), y(apple), red)
+  call blocks.put(x_coord(tail), y_coord(tail), tailColour)
+  call blocks.put(x_coord(apple), y_coord(apple), red)
   call blocks.display()
 end procedure
 
@@ -53,14 +53,14 @@ function getTailColour(tail as Int, body as List<of Int>) returns Int
 end function
 
 function hasHitEdge(head as Int) returns Boolean
-  variable headX set to x(head)
-  variable headY set to y(head)
+  variable headX set to x_coord(head)
+  variable headY set to y_coord(head)
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 end function
 
 function getAdjacentSquare(sq as Int, dir as String) returns Int
-  variable newX set to x(sq)
-  variable newY set to y(sq)
+  variable newX set to x_coord(sq)
+  variable newY set to y_coord(sq)
   if dir.equals("a") then
     assign newX to newX - 1
   elif dir.equals("d") then
@@ -77,11 +77,11 @@ function squareNo(x as Int, y as Int) returns Int
   return x*100 + y
 end function
 
-function x(sq as Int) returns Int
+function x_coord(sq as Int) returns Int
   return divAsInt(sq, 100)
 end function
 
-function y(sq as Int) returns Int
+function y_coord(sq as Int) returns Int
   return sq mod 100
 end function
 
@@ -93,17 +93,17 @@ test test_square
 end test
 
 test test_y
-  assert y(0500) evaluates to 0
-  assert y(0507) evaluates to 7
-  assert y(-0109) evaluates to -9
-  assert y(1499) evaluates to 99
+  assert y_coord(0500) evaluates to 0
+  assert y_coord(0507) evaluates to 7
+  assert y_coord(-0109) evaluates to -9
+  assert y_coord(1499) evaluates to 99
 end test
 
 test test_x
-  assert x(0015) evaluates to 0
-  assert x(0500) evaluates to 5
-  assert x(0507) evaluates to 5
-  assert x(-0109) evaluates to -2
+  assert x_coord(0015) evaluates to 0
+  assert x_coord(0500) evaluates to 5
+  assert x_coord(0507) evaluates to 5
+  assert x_coord(-0109) evaluates to -2
 end test
 
 test test_getTailColour

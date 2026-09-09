@@ -38,10 +38,10 @@ def main() -> None:
 # end main
 
 def updateDisplay(blocks: BlockGraphics, head: int, tail: int, body: list[int], apple: int) -> None: # procedure
-  blocks.put(x(head), y(head), green) # procedure call
+  blocks.put(x_coord(head), y_coord(head), green) # procedure call
   tailColour = getTailColour(tail, body) # variable definition
-  blocks.put(x(tail), y(tail), tailColour) # procedure call
-  blocks.put(x(apple), y(apple), red) # procedure call
+  blocks.put(x_coord(tail), y_coord(tail), tailColour) # procedure call
+  blocks.put(x_coord(apple), y_coord(apple), red) # procedure call
   blocks.display() # procedure call
 # end procedure
 
@@ -54,14 +54,14 @@ def getTailColour(tail: int, body: list[int]) -> int: # function
 # end function
 
 def hasHitEdge(head: int) -> bool: # function
-  headX = x(head) # variable definition
-  headY = y(head) # variable definition
+  headX = x_coord(head) # variable definition
+  headY = y_coord(head) # variable definition
   return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
 # end function
 
 def getAdjacentSquare(sq: int, dir: str) -> int: # function
-  newX = x(sq) # variable definition
-  newY = y(sq) # variable definition
+  newX = x_coord(sq) # variable definition
+  newY = y_coord(sq) # variable definition
   if dir.equals("a"):
     newX = newX - 1 # assignment
   elif dir.equals("d"): # else if
@@ -78,11 +78,11 @@ def squareNo(x: int, y: int) -> int: # function
   return x*100 + y
 # end function
 
-def x(sq: int) -> int: # function
+def x_coord(sq: int) -> int: # function
   return divAsInt(sq, 100)
 # end function
 
-def y(sq: int) -> int: # function
+def y_coord(sq: int) -> int: # function
   return sq % 100
 # end function
 
@@ -96,18 +96,18 @@ class Test_square(unittest.TestCase):
 
 class Test_y(unittest.TestCase):
  def test_y(self) -> None:
-  self.assertEqual(y(0500), 0)
-  self.assertEqual(y(0507), 7)
-  self.assertEqual(y(-0109), -9)
-  self.assertEqual(y(1499), 99)
+  self.assertEqual(y_coord(0500), 0)
+  self.assertEqual(y_coord(0507), 7)
+  self.assertEqual(y_coord(-0109), -9)
+  self.assertEqual(y_coord(1499), 99)
 # end test
 
 class Test_x(unittest.TestCase):
  def test_x(self) -> None:
-  self.assertEqual(x(0015), 0)
-  self.assertEqual(x(0500), 5)
-  self.assertEqual(x(0507), 5)
-  self.assertEqual(x(-0109), -2)
+  self.assertEqual(x_coord(0015), 0)
+  self.assertEqual(x_coord(0500), 5)
+  self.assertEqual(x_coord(0507), 5)
+  self.assertEqual(x_coord(-0109), -2)
 # end test
 
 class Test_getTailColour(unittest.TestCase):

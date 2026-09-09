@@ -38,10 +38,10 @@ static void main() {
 } // end main
 
 static void updateDisplay(BlockGraphics blocks, int head, int tail, List<int> body, int apple) { // procedure
-  blocks.put(x(head), y(head), green); // procedure call
+  blocks.put(x_coord(head), y_coord(head), green); // procedure call
   var tailColour = getTailColour(tail, body);
-  blocks.put(x(tail), y(tail), tailColour); // procedure call
-  blocks.put(x(apple), y(apple), red); // procedure call
+  blocks.put(x_coord(tail), y_coord(tail), tailColour); // procedure call
+  blocks.put(x_coord(apple), y_coord(apple), red); // procedure call
   blocks.display(); // procedure call
 } // end procedure
 
@@ -54,14 +54,14 @@ static int getTailColour(int tail, List<int> body) { // function
 } // end function
 
 static bool hasHitEdge(int head) { // function
-  var headX = x(head);
-  var headY = y(head);
+  var headX = x_coord(head);
+  var headY = y_coord(head);
   return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
 } // end function
 
 static int getAdjacentSquare(int sq, string dir) { // function
-  var newX = x(sq);
-  var newY = y(sq);
+  var newX = x_coord(sq);
+  var newY = y_coord(sq);
   if (dir.equals("a")) {
     newX = newX - 1; // assignment
   } else if (dir.equals("d")) {
@@ -78,11 +78,11 @@ static int squareNo(int x, int y) { // function
   return x*100 + y;
 } // end function
 
-static int x(int sq) { // function
+static int x_coord(int sq) { // function
   return divAsInt(sq, 100);
 } // end function
 
-static int y(int sq) { // function
+static int y_coord(int sq) { // function
   return sq % 100;
 } // end function
 
@@ -96,18 +96,18 @@ static int y(int sq) { // function
 
 [TestClass] class Test_y
 [TestMethod] static void test_y() {
-  Assert.AreEqual(0, y(0500));
-  Assert.AreEqual(7, y(0507));
-  Assert.AreEqual(-9, y(-0109));
-  Assert.AreEqual(99, y(1499));
+  Assert.AreEqual(0, y_coord(0500));
+  Assert.AreEqual(7, y_coord(0507));
+  Assert.AreEqual(-9, y_coord(-0109));
+  Assert.AreEqual(99, y_coord(1499));
 }} // end test
 
 [TestClass] class Test_x
 [TestMethod] static void test_x() {
-  Assert.AreEqual(0, x(0015));
-  Assert.AreEqual(5, x(0500));
-  Assert.AreEqual(5, x(0507));
-  Assert.AreEqual(-2, x(-0109));
+  Assert.AreEqual(0, x_coord(0015));
+  Assert.AreEqual(5, x_coord(0500));
+  Assert.AreEqual(5, x_coord(0507));
+  Assert.AreEqual(-2, x_coord(-0109));
 }} // end test
 
 [TestClass] class Test_getTailColour
