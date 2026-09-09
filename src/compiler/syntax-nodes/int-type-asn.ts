@@ -17,6 +17,10 @@ export class IntTypeAsn extends AbstractAstNode implements AstNode {
     return IntType.Instance.languageSpecificName(this.language);
   }
 
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
   symbolType() {
     return IntType.Instance;
   }

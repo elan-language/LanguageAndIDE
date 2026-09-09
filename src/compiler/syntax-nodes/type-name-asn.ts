@@ -24,6 +24,10 @@ export class TypeNameAsn extends AbstractAstNode implements AstIdNode {
     return this.id;
   }
 
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
   symbolType() {
     const scope = getGlobalScope(this.scope);
     return scope.resolveSymbol(this.id, true, this.scope).symbolType();

@@ -168,7 +168,7 @@ import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { ParseStatus } from "../frames/status-enums";
-import { PythonVisitorCompiler } from "./python-visitor-compiler";
+import { getVisitorCompilerByLanguage } from "./parser-helpers";
 
 export function transformMany(
   node: CSV | Multiple | Sequence,
@@ -629,7 +629,8 @@ export function transform(
 
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const type = ctx.accept(new PythonVisitorCompiler(node.language(), scope, node.getHtmlId()))!;
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope)!;
+      const type = ctx.accept(visitor)!;
       typeAsn.type = type;
       return typeAsn;
     }

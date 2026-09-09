@@ -8,21 +8,18 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { PythonLexer } from "../../generated/python/PythonLexer";
+import { filterTokens, getTokenText, visitType } from "./parser-helpers";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
   constructor() {
     super();
   }
 
-  filterTokens(s: string | null) {
-    return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
-  }
-
   visitTypeTuple = (ctx: TypeTupleContext) => {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s))
+      .filter((s) => filterTokens(s))
       .join(", ");
     return `tuple[${types}]`;
   };
@@ -36,7 +33,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s))
+      .filter((s) => filterTokens(s))
       .join(", ");
 
     return `${typeName}[${types}]`;
@@ -46,7 +43,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s));
+      .filter((s) => filterTokens(s));
 
     const returnType = types[types.length - 1];
     const inTypes = types.slice(0, -1).join(", ");
@@ -55,32 +52,10 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   };
 
   override visitType = (context: TypeContext) => {
-    const typeTuple = context.typeTuple();
-    const typeName = context.typeName();
-    const typeGeneric = context.typeGeneric();
-    const typeFunc = context.typeFunc();
-
-    if (typeTuple) {
-      return this.visit(typeTuple)!;
-    }
-
-    if (typeName) {
-      return this.visit(typeName)!;
-    }
-
-    if (typeGeneric) {
-      return this.visit(typeGeneric)!;
-    }
-
-    if (typeFunc) {
-      return this.visit(typeFunc)!;
-    }
-
-    throw new Error(context.getText());
+    return visitType<string>(this, context);
   };
 
   visitTerminal(ctx: TerminalNode) {
-    const literals = PythonLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
-    return literals[ctx.symbol.type] ?? ctx.getText();
+    return getTokenText(PythonLexer.literalNames, ctx);
   }
 }

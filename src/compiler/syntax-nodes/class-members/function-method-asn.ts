@@ -42,7 +42,7 @@ export class FunctionMethodAsn extends FunctionAsn {
 
     const rt = this.symbolType().returnType;
 
-    mustBeKnownSymbolType(rt, this.returnType.compile(), this.compileErrors, this.fieldId);
+    mustBeKnownSymbolType(rt, getId(this.returnType), this.compileErrors, this.fieldId);
 
     const returnStatement = this.getReturnAsn().expr;
     const rst = returnStatement.symbolType();

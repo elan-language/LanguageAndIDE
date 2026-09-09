@@ -1,6 +1,7 @@
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import {
+  getId,
   mustBeAssignableType,
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
@@ -27,7 +28,7 @@ export class GlobalFunctionAsn extends FunctionAsn {
 
     const rt = this.symbolType().returnType;
 
-    mustBeKnownSymbolType(rt, this.returnType.compile(), this.compileErrors, this.fieldId);
+    mustBeKnownSymbolType(rt, getId(this.returnType), this.compileErrors, this.fieldId);
 
     const returnStatement = this.getReturnAsn().expr;
     const rst = returnStatement.symbolType();

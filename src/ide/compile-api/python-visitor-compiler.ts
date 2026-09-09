@@ -24,10 +24,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   visitTypeTuple = (ctx: TypeTupleContext) => {
     const typeName = getTypeName(this.language, "Tuple", this.fieldId, this.scope);
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((t) => t instanceof TypeAsn);
+    const types = ctx.type_().map((t) => this.visit(t)!);
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };
 
@@ -38,19 +35,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   visitTypeGeneric = (ctx: TypeGenericContext) => {
     const typeName = this.visit(ctx.typeName())!;
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((t) => t instanceof TypeAsn);
+    const types = ctx.type_().map((t) => this.visit(t)!);
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };
 
   visitTypeFunc = (ctx: TypeFuncContext) => {
     const typeName = getTypeName(this.language, "Func", this.fieldId, this.scope);
-    const types = ctx
-      .type_()
-      .map((t) => this.visit(t))
-      .filter((t) => t instanceof TypeAsn);
+    const types = ctx.type_().map((t) => this.visit(t)!);
 
     return new TypeAsn(typeName, types, this.fieldId, this.scope);
   };

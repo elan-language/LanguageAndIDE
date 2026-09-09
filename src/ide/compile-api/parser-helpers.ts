@@ -1,9 +1,15 @@
-import { CharStream, CommonTokenStream } from "antlr4ng";
+import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { PythonLexer } from "../../generated/python/PythonLexer";
-import { PythonParser } from "../../generated/python/PythonParser";
+import {
+  PythonParser,
+  TypeContext as PythonTypeContext,
+} from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
-import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
+import {
+  RefLangParser,
+  TypeContext as RefLangTypeContext,
+} from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
 import { PythonVisitorHtml } from "./python-visitor-html";
@@ -70,4 +76,41 @@ export function getVisitorSourceByLanguage(l: Language) {
     default:
       return undefined;
   }
+}
+
+export function getTokenText(ll: (string | null)[], ctx: TerminalNode) {
+  const literals = ll.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+  return literals[ctx.symbol.type] ?? ctx.getText();
+}
+
+export function filterTokens(s: string | null) {
+  return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
+}
+
+export function visitType<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: PythonTypeContext | RefLangTypeContext,
+) {
+  const typeTuple = context.typeTuple();
+  const typeName = context.typeName();
+  const typeGeneric = context.typeGeneric();
+  const typeFunc = context.typeFunc();
+
+  if (typeTuple) {
+    return visitor.visit(typeTuple)!;
+  }
+
+  if (typeName) {
+    return visitor.visit(typeName)!;
+  }
+
+  if (typeGeneric) {
+    return visitor.visit(typeGeneric)!;
+  }
+
+  if (typeFunc) {
+    return visitor.visit(typeFunc)!;
+  }
+
+  throw new Error(context.getText());
 }

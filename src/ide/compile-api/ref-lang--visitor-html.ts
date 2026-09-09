@@ -9,21 +9,18 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
+import { filterTokens, getTokenText, visitType } from "./parser-helpers";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
     super();
   }
 
-  filterTokens(s: string | null) {
-    return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
-  }
-
   visitTypeTuple = (ctx: TypeTupleContext) => {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s))
+      .filter((s) => filterTokens(s))
       .join(", ");
 
     return `(${types})`;
@@ -39,7 +36,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s))
+      .filter((s) => filterTokens(s))
       .join(", ");
 
     return `${typeName}&lt;<el-kw>of</el-kw> ${types}&gt;`;
@@ -49,7 +46,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     const types = ctx
       .type_()
       .map((t) => this.visit(t))
-      .filter((s) => this.filterTokens(s));
+      .filter((s) => filterTokens(s));
 
     const returnType = types[types.length - 1];
     const inTypes = types.slice(0, -1).join(", ");
@@ -58,33 +55,10 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   override visitType = (context: TypeContext) => {
-    const typeTuple = context.typeTuple();
-    const typeName = context.typeName();
-    const typeGeneric = context.typeGeneric();
-    const typeFunc = context.typeFunc();
-
-    if (typeTuple) {
-      return this.visit(typeTuple)!;
-    }
-
-    if (typeName) {
-      return this.visit(typeName)!;
-    }
-
-    if (typeGeneric) {
-      return this.visit(typeGeneric)!;
-    }
-
-    if (typeFunc) {
-      return this.visit(typeFunc)!;
-    }
-
-    throw new Error(context.getText());
+    return visitType<string>(this, context);
   };
 
   visitTerminal(ctx: TerminalNode) {
-    //return this.language.mapLanguageTypeToElanType(ctx.symbol.text!);
-    const literals = RefLangLexer.literalNames.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
-    return literals[ctx.symbol.type] ?? ctx.getText();
+    return getTokenText(RefLangLexer.literalNames, ctx);
   }
 }

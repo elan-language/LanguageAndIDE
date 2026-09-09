@@ -17,6 +17,10 @@ export class BooleanTypeAsn extends AbstractAstNode implements AstNode {
     return BooleanType.Instance.languageSpecificName(this.language);
   }
 
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
   symbolType() {
     return BooleanType.Instance;
   }

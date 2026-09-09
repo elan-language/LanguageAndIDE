@@ -17,6 +17,10 @@ export class FloatTypeAsn extends AbstractAstNode implements AstNode {
     return FloatType.Instance.languageSpecificName(this.language);
   }
 
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
   symbolType() {
     return FloatType.Instance;
   }

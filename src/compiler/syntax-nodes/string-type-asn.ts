@@ -17,6 +17,10 @@ export class StringTypeAsn extends AbstractAstNode implements AstNode {
     return StringType.Instance.languageSpecificName(this.language);
   }
 
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
   symbolType() {
     return StringType.Instance;
   }
