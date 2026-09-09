@@ -38,10 +38,10 @@ Sub main()
 End Sub
 
 Sub updateDisplay(blocks As BlockGraphics, head As Integer, tail As Integer, body As List(Of Integer), apple As Integer) ' procedure
-  blocks.put(x(head), y(head), green) ' procedure call
+  blocks.put(x_coord(head), y_coord(head), green) ' procedure call
   Dim tailColour = getTailColour(tail, body) ' variable definition
-  blocks.put(x(tail), y(tail), tailColour) ' procedure call
-  blocks.put(x(apple), y(apple), red) ' procedure call
+  blocks.put(x_coord(tail), y_coord(tail), tailColour) ' procedure call
+  blocks.put(x_coord(apple), y_coord(apple), red) ' procedure call
   blocks.display() ' procedure call
 End Sub
 
@@ -54,14 +54,14 @@ Function getTailColour(tail As Integer, body As List(Of Integer)) As Integer
 End Function
 
 Function hasHitEdge(head As Integer) As Boolean
-  Dim headX = x(head) ' variable definition
-  Dim headY = y(head) ' variable definition
+  Dim headX = x_coord(head) ' variable definition
+  Dim headY = y_coord(head) ' variable definition
   Return (headX < 0) Or (headY < 0) Or (headX > 39) Or (headY > 29)
 End Function
 
 Function getAdjacentSquare(sq As Integer, dir As String) As Integer
-  Dim newX = x(sq) ' variable definition
-  Dim newY = y(sq) ' variable definition
+  Dim newX = x_coord(sq) ' variable definition
+  Dim newY = y_coord(sq) ' variable definition
   If dir.equals("a") Then
     newX = newX - 1 ' assignment
   ElseIf dir.equals("d") Then
@@ -78,11 +78,11 @@ Function squareNo(x As Integer, y As Integer) As Integer
   Return x*100 + y
 End Function
 
-Function x(sq As Integer) As Integer
+Function x_coord(sq As Integer) As Integer
   Return divAsInt(sq, 100)
 End Function
 
-Function y(sq As Integer) As Integer
+Function y_coord(sq As Integer) As Integer
   Return sq Mod 100
 End Function
 
@@ -98,20 +98,20 @@ End Class
 
 <TestClass Class Test_y
  <TestMethod> Sub test_y()
-  Assert.AreEqual(0, y(0500))
-  Assert.AreEqual(7, y(0507))
-  Assert.AreEqual(-9, y(-0109))
-  Assert.AreEqual(99, y(1499))
+  Assert.AreEqual(0, y_coord(0500))
+  Assert.AreEqual(7, y_coord(0507))
+  Assert.AreEqual(-9, y_coord(-0109))
+  Assert.AreEqual(99, y_coord(1499))
  End Sub
 End Class
 
 
 <TestClass Class Test_x
  <TestMethod> Sub test_x()
-  Assert.AreEqual(0, x(0015))
-  Assert.AreEqual(5, x(0500))
-  Assert.AreEqual(5, x(0507))
-  Assert.AreEqual(-2, x(-0109))
+  Assert.AreEqual(0, x_coord(0015))
+  Assert.AreEqual(5, x_coord(0500))
+  Assert.AreEqual(5, x_coord(0507))
+  Assert.AreEqual(-2, x_coord(-0109))
  End Sub
 End Class
 
