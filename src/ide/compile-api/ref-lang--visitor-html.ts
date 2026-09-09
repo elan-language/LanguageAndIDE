@@ -8,11 +8,10 @@ import {
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
-import { Language } from "../frames/frame-interfaces/language";
 import { getFilteredTypes, getFuncTypes, getTokenText, visitType } from "./parser-helpers";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
-  constructor(private readonly language: Language) {
+  constructor() {
     super();
   }
 

@@ -59,9 +59,9 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
 export function getVisitorHtmlByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
-      return new PythonVisitorHtml(l);
+      return new PythonVisitorHtml();
     case "Reference Language":
-      return new RefLangVisitorHtml(l);
+      return new RefLangVisitorHtml();
     default:
       return undefined;
   }

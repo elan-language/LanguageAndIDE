@@ -8,11 +8,10 @@ import {
   TypeTupleContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
-import { Language } from "../frames/frame-interfaces/language";
 import { getFilteredTypes, getFuncTypes, getTokenText, visitType } from "./parser-helpers";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
-  constructor(private readonly language: Language) {
+  constructor() {
     super();
   }
 
