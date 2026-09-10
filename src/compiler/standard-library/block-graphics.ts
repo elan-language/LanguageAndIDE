@@ -74,9 +74,14 @@ export class BlockGraphics {
   }
 
   //Procedures
-  @elanProcedure(["x", "y", "colour"])
+  @elanProcedure(["col", "row", "colour"])
   put(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() colour: number) {
     this.blocks[x][y] = colour;
+  }
+
+  @elanProcedure(["blockNo", "colour"])
+  putBlockNo(@elanIntType() sq: number, @elanIntType() colour: number) {
+    this.blocks[this.col(sq)][this.row(sq)] = colour;
   }
 
   @elanProcedure(["colour"])
@@ -89,12 +94,17 @@ export class BlockGraphics {
   }
 
   //Functions
-  @elanFunction(["x", "y"], FunctionOptions.pure, ElanInt)
+  @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
   get(@elanIntType() x: number, @elanIntType() y: number): number {
     return this.blocks[x][y];
   }
 
-  @elanFunction(["x", "y", "colour"], FunctionOptions.pure, ElanClass(BlockGraphics))
+  @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
+  getBlockNo(@elanIntType() sq: number): number {
+    return this.blocks[this.col(sq)][this.row(sq)];
+  }
+
+  @elanFunction(["col", "row", "colour"], FunctionOptions.pure, ElanClass(BlockGraphics))
   withPut(
     @elanIntType() x: number,
     @elanIntType() y: number,
@@ -105,9 +115,29 @@ export class BlockGraphics {
     return this.system!.initialise(new BlockGraphics(blocks));
   }
 
+  @elanFunction(["blockNo", "colour"], FunctionOptions.pure, ElanClass(BlockGraphics))
+  withPutBlockNo(@elanIntType() sq: number, @elanIntType() colour: number): BlockGraphics {
+    return this.withPut(this.col(sq), this.row(sq), colour);
+  }
+
   @elanFunction(["colour"], FunctionOptions.pure, ElanClass(BlockGraphics))
   withColourAll(@elanIntType() colour: number): BlockGraphics {
     const blocks = this.generateSingleColourGrid(colour);
     return this.system!.initialise(new BlockGraphics(blocks));
+  }
+
+  @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
+  blockNo(@elanIntType() x: number, @elanIntType() y: number): number {
+    return x * 100 + y;
+  }
+
+  @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
+  col(@elanIntType() sq: number): number {
+    return Math.floor(sq / 100);
+  }
+
+  @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
+  row(@elanIntType() sq: number): number {
+    return sq % 100;
   }
 }
