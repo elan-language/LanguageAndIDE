@@ -1,11 +1,10 @@
-# aca85e58e848ed33a9190c120248f77a0568fa03c5a7a0e084fac6f126a422e1 Elan 2.0.0-beta4 valid
+# ef8b4b6ec826f44e877953b4a50fcd68afcecc5a7fcf18864fe11d858cae4364 Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
   variable bg set to new BlockGraphics()
-  variable head set to 2015
-  variable tail set to head
-  variable body set to [head]
+  variable head set to 2115
+  variable body set to [head, 2015]
   variable currentDir set to "d"
   variable gameOn set to true
   variable apple set to 0
@@ -17,40 +16,35 @@ main
         assign changeApplePosition to false
       end if
     end while
-    call updateDisplay(bg, head, tail, body, apple)
+    call updateDisplay(bg, body, apple)
     variable key set to getKey()
     if not key.equals("") and "wasd".contains(key) then
       assign currentDir to key
     end if
-    assign tail to body[0]
-    call body.append(head)
     assign head to getAdjacentBlock(head, currentDir, bg)
-    assign gameOn to not hasHitEdge(head, bg) and not body.contains(head)
+    if hasHitEdge(head, bg) or body.contains(head) then
+      assign gameOn to false
+    else
+      call body.prepend(head)
+    end if
     if head.equals(apple) then
       assign changeApplePosition to true
     else
-      call body.removeAt(0)
+      call body.removeAt(body.length() - 1)
     end if
     call sleep_ms(150)
   end while
   print($"Game Over! Score: {body.length() - 1}")
 end main
 
-procedure updateDisplay(bg as BlockGraphics, head as Int, tail as Int, body as List<of Int>, apple as Int)
-  call bg.putBlockNo(head, green)
-  variable tailColour set to getTailColour(tail, body)
-  call bg.putBlockNo(tail, tailColour)
+procedure updateDisplay(bg as BlockGraphics, body as List<of Int>, apple as Int)
+  call bg.colourAll(white)
+  for bl in body
+    call bg.putBlockNo(bl, green)
+  end for
   call bg.putBlockNo(apple, red)
   call bg.display()
 end procedure
-
-function getTailColour(tail as Int, body as List<of Int>) returns Int
-  variable colour set to white
-  if body[0].equals(tail) then
-    assign colour to green
-  end if
-  return colour
-end function
 
 function hasHitEdge(head as Int, bg as BlockGraphics) returns Boolean
   variable headX set to bg.col(head)
@@ -72,11 +66,6 @@ function getAdjacentBlock(bl as Int, dir as String, bg as BlockGraphics) returns
   end if
   return bg.blockNo(newX, newY)
 end function
-
-test test_getTailColour
-  assert getTailColour(0304, [0304, 0305]) evaluates to green
-  assert getTailColour(0304, [0305, 0306]) evaluates to white
-end test
 
 test test_hasHitEdge
   variable bg set to new BlockGraphics()
