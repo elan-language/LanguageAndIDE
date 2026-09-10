@@ -269,6 +269,11 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   paste = (code?: string): boolean => {
+    // Get the current language to put back later
+    const oldLanguage = this.getFile().language();
+    // The text pasted in is always in Elan language
+    this.getFile().setLanguageToElan();
+
     try {
       code = (code ?? "").trim() + "\n";
 
@@ -288,6 +293,12 @@ export abstract class AbstractSelector extends AbstractFrame {
     } catch (_e) {
       this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
     }
+
+    // Set the language back to the original value.
+    // If the language has changed, this also calls
+    // resetFieldText and resetMap to translate the expressions etc
+    // to the current language, and make the map of htmlId's correct.
+    this.getFile().setLanguage(oldLanguage);
 
     return true;
   };
