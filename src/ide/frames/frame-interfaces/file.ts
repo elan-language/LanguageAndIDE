@@ -126,6 +126,7 @@ export interface File extends Parent {
 
   setLanguage(l: Language): boolean;
   language(): Language;
+  setLanguageToElan(): void;
 
   showCompletion(show: boolean): void;
   getShowCompletion(): boolean;
