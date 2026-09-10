@@ -126,18 +126,23 @@ export class BlockGraphics {
     return this.system!.initialise(new BlockGraphics(blocks));
   }
 
+  //If row and/or col is out of range, returns -1
   @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
   blockNo(@elanIntType() x: number, @elanIntType() y: number): number {
-    return x * 100 + y;
+    let result = y * 40 + x;
+    if (x < 0 || x > 39 || y < 0 || y > 29) {
+      result = -1;
+    }
+    return result;
   }
 
   @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
   col(@elanIntType() sq: number): number {
-    return Math.floor(sq / 100);
+    return sq % 40;
   }
 
   @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
   row(@elanIntType() sq: number): number {
-    return sq % 100;
+    return Math.floor(sq / 40);
   }
 }

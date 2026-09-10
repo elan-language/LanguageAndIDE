@@ -1,93 +1,76 @@
-# ef8b4b6ec826f44e877953b4a50fcd68afcecc5a7fcf18864fe11d858cae4364 Elan 2.0.0-beta4 valid
+# eb3de8f0791936cff59b3b64d50b284ccf2fb7874b8313607fa4c76f9e7aec1b Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
   variable bg set to new BlockGraphics()
-  variable head set to 2115
-  variable body set to [head, 2015]
+  variable head set to bg.blockNo(21, 15)
+  variable snake set to [head, bg.blockNo(20, 15)]
   variable currentDir set to "d"
   variable gameOn set to true
   variable apple set to 0
-  variable changeApplePosition set to true
+  variable newApple set to true
   while gameOn
-    while changeApplePosition
+    while newApple
       assign apple to bg.blockNo(randint(0, 39), randint(0, 29))
-      if not body.contains(apple) then
-        assign changeApplePosition to false
+      if not snake.contains(apple) then
+        assign newApple to false
       end if
     end while
-    call updateDisplay(bg, body, apple)
+    call updateDisplay(bg, snake, apple)
     variable key set to getKey()
     if not key.equals("") and "wasd".contains(key) then
       assign currentDir to key
     end if
     assign head to getAdjacentBlock(head, currentDir, bg)
-    if hasHitEdge(head, bg) or body.contains(head) then
+    if (head is -1) or snake.contains(head) then
       assign gameOn to false
     else
-      call body.prepend(head)
+      call snake.prepend(head)
     end if
     if head.equals(apple) then
-      assign changeApplePosition to true
+      assign newApple to true
     else
-      call body.removeAt(body.length() - 1)
+      call snake.removeAt(snake.length() - 1)
     end if
     call sleep_ms(150)
   end while
-  print($"Game Over! Score: {body.length() - 1}")
+  print($"Game Over! Score: {snake.length() - 1}")
 end main
 
-procedure updateDisplay(bg as BlockGraphics, body as List<of Int>, apple as Int)
+procedure updateDisplay(bg as BlockGraphics, snake as List<of Int>, apple as Int)
   call bg.colourAll(white)
-  for bl in body
+  for bl in snake
     call bg.putBlockNo(bl, green)
   end for
   call bg.putBlockNo(apple, red)
   call bg.display()
 end procedure
 
-function hasHitEdge(head as Int, bg as BlockGraphics) returns Boolean
-  variable headX set to bg.col(head)
-  variable headY set to bg.row(head)
-  return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
-end function
-
 function getAdjacentBlock(bl as Int, dir as String, bg as BlockGraphics) returns Int
-  variable newX set to bg.col(bl)
-  variable newY set to bg.row(bl)
+  variable newCol set to bg.col(bl)
+  variable newRow set to bg.row(bl)
   if dir.equals("a") then
-    assign newX to newX - 1
+    assign newCol to newCol - 1
   elif dir.equals("d") then
-    assign newX to newX + 1
+    assign newCol to newCol + 1
   elif dir.equals("w") then
-    assign newY to newY - 1
+    assign newRow to newRow - 1
   elif dir.equals("s") then
-    assign newY to newY + 1
+    assign newRow to newRow + 1
   end if
-  return bg.blockNo(newX, newY)
+  return bg.blockNo(newCol, newRow)
 end function
-
-test test_hasHitEdge
-  variable bg set to new BlockGraphics()
-  assert hasHitEdge(0000, bg) evaluates to false
-  assert hasHitEdge(0029, bg) evaluates to false
-  assert hasHitEdge(3900, bg) evaluates to false
-  assert hasHitEdge(3929, bg) evaluates to false
-  assert hasHitEdge(-0105, bg) evaluates to true
-  assert hasHitEdge(0530, bg) evaluates to true
-  assert hasHitEdge(4005, bg) evaluates to true
-  assert hasHitEdge(0499, bg) evaluates to true
-  assert hasHitEdge(1499, bg) evaluates to true
-  assert hasHitEdge(-85, bg) evaluates to true
-end test
 
 test test_getAdjacentBlock
   variable bg set to new BlockGraphics()
-  variable bl set to 2015
-  assert getAdjacentBlock(bl, "w", bg) evaluates to 2014
-  assert getAdjacentBlock(bl, "s", bg) evaluates to 2016
-  assert getAdjacentBlock(bl, "a", bg) evaluates to 1915
-  assert getAdjacentBlock(bl, "d", bg) evaluates to 2115
+  variable bl set to 617
+  assert getAdjacentBlock(bl, "w", bg) evaluates to 577
+  assert getAdjacentBlock(bl, "s", bg) evaluates to 657
+  assert getAdjacentBlock(bl, "a", bg) evaluates to 616
+  assert getAdjacentBlock(bl, "d", bg) evaluates to 618
   # boundary
-  assert getAdjacentBlock(0015, "a", bg) evaluates to -85
+  assert getAdjacentBlock(20, "w", bg) evaluates to -1
+  assert getAdjacentBlock(1180, "s", bg) evaluates to -1
+  assert getAdjacentBlock(40, "a", bg) evaluates to -1
+  assert getAdjacentBlock(79, "d", bg) evaluates to -1
 end test
