@@ -1,4 +1,4 @@
-# 6c968dfa6a468f1b7c657013e2652dff612a5a034283a256e29e3cdf8596eeae Elan 2.0.0-beta4 valid
+# aca85e58e848ed33a9190c120248f77a0568fa03c5a7a0e084fac6f126a422e1 Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -37,10 +37,10 @@ main
 end main
 
 procedure updateDisplay(bg as BlockGraphics, head as Int, tail as Int, body as List<of Int>, apple as Int)
-  call bg.put(bg.col(head), bg.row(head), green)
+  call bg.putBlockNo(head, green)
   variable tailColour set to getTailColour(tail, body)
-  call bg.put(bg.col(tail), bg.row(tail), tailColour)
-  call bg.put(bg.col(apple), bg.row(apple), red)
+  call bg.putBlockNo(tail, tailColour)
+  call bg.putBlockNo(apple, red)
   call bg.display()
 end procedure
 
