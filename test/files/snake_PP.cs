@@ -3,140 +3,76 @@
 // Use the w,a,s,d keys to change snake's direction
 
 static void main() {
-  var blocks = new BlockGraphics();
-  var head = 2015;
-  var tail = head;
-  var body = new [] {head};
+  var bg = new BlockGraphics();
+  var head = bg.blockNo(21, 15);
+  var snake = new [] {head, bg.blockNo(20, 15)};
   var currentDir = "d";
   var gameOn = true;
   var apple = 0;
-  var changeApplePosition = true;
+  var newApple = true;
   while (gameOn) {
-    while (changeApplePosition) {
-      apple = squareNo(randint(0, 39), randint(0, 29)); // assignment
-      if (!body.contains(apple)) {
-        changeApplePosition = false; // assignment
+    while (newApple) {
+      apple = bg.blockNo(randint(0, 39), randint(0, 29)); // assignment
+      if (!snake.contains(apple)) {
+        newApple = false; // assignment
       } // end if
     } // end while
-    updateDisplay(blocks, head, tail, body, apple); // procedure call
+    updateDisplay(bg, snake, apple); // procedure call
     var key = getKey();
     if (!key.equals("") && "wasd".contains(key)) {
       currentDir = key; // assignment
     } // end if
-    tail = body[0]; // assignment
-    body.append(head); // procedure call
-    head = getAdjacentSquare(head, currentDir); // assignment
-    gameOn = !hasHitEdge(head) && !body.contains(head); // assignment
-    if (head.equals(apple)) {
-      changeApplePosition = true; // assignment
+    head = getAdjacentBlock(head, currentDir, bg); // assignment
+    if ((head == -1) || snake.contains(head)) {
+      gameOn = false; // assignment
     } else {
-      body.removeAt(0); // procedure call
+      snake.prepend(head); // procedure call
+    } // end if
+    if (head.equals(apple)) {
+      newApple = true; // assignment
+    } else {
+      snake.removeAt(snake.length() - 1); // procedure call
     } // end if
     sleep_ms(150); // procedure call
   } // end while
-  Console.WriteLine($"Game Over! Score: {body.length() - 1}"); // print statement
+  Console.WriteLine($"Game Over! Score: {snake.length() - 1}"); // print statement
 } // end main
 
-static void updateDisplay(BlockGraphics blocks, int head, int tail, List<int> body, int apple) { // procedure
-  blocks.put(x_coord(head), y_coord(head), green); // procedure call
-  var tailColour = getTailColour(tail, body);
-  blocks.put(x_coord(tail), y_coord(tail), tailColour); // procedure call
-  blocks.put(x_coord(apple), y_coord(apple), red); // procedure call
-  blocks.display(); // procedure call
+static void updateDisplay(BlockGraphics bg, List<int> snake, int apple) { // procedure
+  bg.colourAll(white); // procedure call
+  foreach (var bl in snake) {
+    bg.putBlockNo(bl, green); // procedure call
+  } // end foreach
+  bg.putBlockNo(apple, red); // procedure call
+  bg.display(); // procedure call
 } // end procedure
 
-static int getTailColour(int tail, List<int> body) { // function
-  var colour = white;
-  if (body[0].equals(tail)) {
-    colour = green; // assignment
-  } // end if
-  return colour;
-} // end function
-
-static bool hasHitEdge(int head) { // function
-  var headX = x_coord(head);
-  var headY = y_coord(head);
-  return (headX < 0) || (headY < 0) || (headX > 39) || (headY > 29);
-} // end function
-
-static int getAdjacentSquare(int sq, string dir) { // function
-  var newX = x_coord(sq);
-  var newY = y_coord(sq);
+static int getAdjacentBlock(int bl, string dir, BlockGraphics bg) { // function
+  var newCol = bg.col(bl);
+  var newRow = bg.row(bl);
   if (dir.equals("a")) {
-    newX = newX - 1; // assignment
+    newCol = newCol - 1; // assignment
   } else if (dir.equals("d")) {
-    newX = newX + 1; // assignment
+    newCol = newCol + 1; // assignment
   } else if (dir.equals("w")) {
-    newY = newY - 1; // assignment
+    newRow = newRow - 1; // assignment
   } else if (dir.equals("s")) {
-    newY = newY + 1; // assignment
+    newRow = newRow + 1; // assignment
   } // end if
-  return squareNo(newX, newY);
+  return bg.blockNo(newCol, newRow);
 } // end function
 
-static int squareNo(int x, int y) { // function
-  return x*100 + y;
-} // end function
-
-static int x_coord(int sq) { // function
-  return divAsInt(sq, 100);
-} // end function
-
-static int y_coord(int sq) { // function
-  return sq % 100;
-} // end function
-
-[TestClass] class Test_square
-[TestMethod] static void test_square() {
-  Assert.AreEqual(0, squareNo(0, 0));
-  Assert.AreEqual(3929, squareNo(39, 29));
-  Assert.AreEqual(-85, squareNo(-1, 15));
-  Assert.AreEqual(1499, squareNo(15, -1));
-}} // end test
-
-[TestClass] class Test_y
-[TestMethod] static void test_y() {
-  Assert.AreEqual(0, y_coord(0500));
-  Assert.AreEqual(7, y_coord(0507));
-  Assert.AreEqual(-9, y_coord(-0109));
-  Assert.AreEqual(99, y_coord(1499));
-}} // end test
-
-[TestClass] class Test_x
-[TestMethod] static void test_x() {
-  Assert.AreEqual(0, x_coord(0015));
-  Assert.AreEqual(5, x_coord(0500));
-  Assert.AreEqual(5, x_coord(0507));
-  Assert.AreEqual(-2, x_coord(-0109));
-}} // end test
-
-[TestClass] class Test_getTailColour
-[TestMethod] static void test_getTailColour() {
-  Assert.AreEqual(green, getTailColour(0304, new [] {0304, 0305}));
-  Assert.AreEqual(white, getTailColour(0304, new [] {0305, 0306}));
-}} // end test
-
-[TestClass] class Test_hasHitEdge
-[TestMethod] static void test_hasHitEdge() {
-  Assert.AreEqual(false, hasHitEdge(0000));
-  Assert.AreEqual(false, hasHitEdge(0029));
-  Assert.AreEqual(false, hasHitEdge(3900));
-  Assert.AreEqual(false, hasHitEdge(3929));
-  Assert.AreEqual(true, hasHitEdge(-0105));
-  Assert.AreEqual(true, hasHitEdge(0530));
-  Assert.AreEqual(true, hasHitEdge(4005));
-  Assert.AreEqual(true, hasHitEdge(0499));
-  Assert.AreEqual(true, hasHitEdge(1499));
-  Assert.AreEqual(true, hasHitEdge(-85));
-}} // end test
-
-[TestClass] class Test_getAdjacentSquare
-[TestMethod] static void test_getAdjacentSquare() {
-  var sq = 2015;
-  Assert.AreEqual(2014, getAdjacentSquare(sq, "w"));
-  Assert.AreEqual(2016, getAdjacentSquare(sq, "s"));
-  Assert.AreEqual(1915, getAdjacentSquare(sq, "a"));
-  Assert.AreEqual(2115, getAdjacentSquare(sq, "d"));
+[TestClass] class Test_getAdjacentBlock
+[TestMethod] static void test_getAdjacentBlock() {
+  var bg = new BlockGraphics();
+  var bl = 617;
+  Assert.AreEqual(577, getAdjacentBlock(bl, "w", bg));
+  Assert.AreEqual(657, getAdjacentBlock(bl, "s", bg));
+  Assert.AreEqual(616, getAdjacentBlock(bl, "a", bg));
+  Assert.AreEqual(618, getAdjacentBlock(bl, "d", bg));
   // boundary
-  Assert.AreEqual(-85, getAdjacentSquare(0015, "a"));
+  Assert.AreEqual(-1, getAdjacentBlock(20, "w", bg));
+  Assert.AreEqual(-1, getAdjacentBlock(1180, "s", bg));
+  Assert.AreEqual(-1, getAdjacentBlock(40, "a", bg));
+  Assert.AreEqual(-1, getAdjacentBlock(79, "d", bg));
 }} // end test

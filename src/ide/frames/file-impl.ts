@@ -935,6 +935,12 @@ export class FileImpl implements File {
     return false;
   }
 
+  // A short function needed by AbstractSelector because importing
+  // LanguageElan.Instance there causes a dependency loop.
+  setLanguageToElan() {
+    this.setLanguage(LanguageElan.Instance);
+  }
+
   private resetFieldText(): void {
     parentHelper_resetFieldTextOnChildren(this);
   }
