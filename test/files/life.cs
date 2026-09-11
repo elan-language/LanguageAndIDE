@@ -4,7 +4,7 @@ static void main() {
   var grid = new BlockGraphics();
   fillRandom(grid); // procedure call
   while (true) {
-    grid.display(); // procedure call
+    displayBlockGraphics(grid); // procedure call
     nextGeneration(grid); // procedure call
     sleep_ms(50); // procedure call
   } // end while

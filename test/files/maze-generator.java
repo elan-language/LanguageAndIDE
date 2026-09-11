@@ -17,7 +17,7 @@ static void main() {
       blocks.put(p.x, p.y, colour); // procedure call
     } // end if
   } // end foreach
-  blocks.display(); // procedure call
+  displayBlockGraphics(blocks); // procedure call
   var name = Console.ReadLine("File name to save: "); // input statement
   if (!name.equals("x")) {
     saveAsFile(name, blocks); // procedure call

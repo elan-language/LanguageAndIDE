@@ -1,4 +1,4 @@
-# 744db1c4d949618ab5b7aabeb821200249f3223090ff0129c2758299cec9111c Elan 2.0.0-beta4 valid
+# 4cb726cd550d9ae401fa34ea14668d915fc9fe63eb916fad25a72e17905e4b8a Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -9,7 +9,7 @@ main
   while not snake.gameOver()
     call snake.updateBlocks(blocks)
     call apple.updateBlocks(blocks)
-    call blocks.display()
+    call displayBlockGraphics(blocks)
     call sleep_ms(150)
     call snake.clockTick(getKey(), apple)
   end while

@@ -10,6 +10,6 @@ static void main() {
     blocks.put(20 + x, 15 + y, colour); // procedure call
     blocks.put(20 - x, 15 - y, colour); // procedure call
     blocks.put(20 - x, 15 + y, colour); // procedure call
-    blocks.display(); // procedure call
+    displayBlockGraphics(blocks); // procedure call
   } // end while
 } // end main

@@ -4,8 +4,8 @@
 
 def main() -> None:
   bg = BlockGraphics() # variable definition
-  head = bg.blockNo(21, 15) # variable definition
-  snake = [head, bg.blockNo(20, 15)] # variable definition
+  head = 620 # variable definition
+  snake = [head, 619] # variable definition
   currentDir = "d" # variable definition
   gameOn = True # variable definition
   apple = 0 # variable definition
@@ -44,7 +44,7 @@ def updateDisplay(bg: BlockGraphics, snake: list[int], apple: int) -> None: # pr
     bg.putBlockNo(bl, green) # procedure call
   # end for
   bg.putBlockNo(apple, red) # procedure call
-  bg.display() # procedure call
+  displayBlockGraphics(bg) # procedure call
 # end procedure
 
 def getAdjacentBlock(bl: int, dir: str, bg: BlockGraphics) -> int: # function

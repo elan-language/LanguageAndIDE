@@ -19,14 +19,14 @@ suite("Block Graphics", () => {
 
 main
   variable g set to new BlockGraphics()
-  call g.display()
+  call displayBlockGraphics(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
   let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await g.display();
+  await _stdlib.displayBlockGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -53,7 +53,7 @@ return [main, _tests];}`;
 main
   variable g set to new BlockGraphics()
   call g.put(1, 0, 4)
-  call g.display()
+  call displayBlockGraphics(g)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -61,7 +61,7 @@ const global = new class {};
 async function main() {
   let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   g.put(1, 0, 4);
-  await g.display();
+  await _stdlib.displayBlockGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -87,7 +87,7 @@ return [main, _tests];}`;
 
 main
   variable g set to new BlockGraphics()
-  call g.display()
+  call displayBlockGraphics(g)
   call clearBlocks()
 end main`;
 
@@ -95,7 +95,7 @@ end main`;
 const global = new class {};
 async function main() {
   let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
-  await g.display();
+  await _stdlib.displayBlockGraphics(g);
   await _stdlib.clearBlocks();
 }
 return [main, _tests];}`;

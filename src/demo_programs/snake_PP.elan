@@ -1,4 +1,4 @@
-# f334773c2d6ff1aeebd560026b237219b9f0871674cb8f390d067f9e3fb7acd3 Elan 2.0.0-beta4 valid
+# 2b562d53da91a402709c3043f1ef6b3f186daa9c7366787a816b8465fd19ce5a Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -43,7 +43,7 @@ procedure updateDisplay(bg as BlockGraphics, snake as List<of Int>, apple as Int
     call bg.putBlockNo(bl, green)
   end for
   call bg.putBlockNo(apple, red)
-  call bg.display()
+  call displayBlockGraphics(bg)
 end procedure
 
 function getAdjacentBlock(bl as Int, dir as String, bg as BlockGraphics) returns Int

@@ -1,4 +1,4 @@
-# 6af88df825ef9e7ed5272048951c9e2759b2fabb152d5d7dc9327bf2465b7b89 Elan 2.0.0-beta4 valid
+# 2799f4a0a6d5da5d2d8e527db4bb8471f3384cd736604a21c940e32c5a2ca87d Elan 2.0.0-beta4 valid
 
 main
   variable blocks set to new BlockGraphics()
@@ -15,7 +15,7 @@ main
       call blocks.put(p.x, p.y, colour)
     end if
   end for
-  call blocks.display()
+  call displayBlockGraphics(blocks)
   input name set to inputString("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)

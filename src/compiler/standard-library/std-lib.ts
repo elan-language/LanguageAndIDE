@@ -847,6 +847,13 @@ export class StdLib {
     return `#${h6}`;
   }
 
+  @elanDeprecated(
+    Deprecation.methodRemoved,
+    2,
+    0,
+    "LibRef.html#BlockGraphics",
+    DeprecationSeverity.advisory,
+  )
   @elanProcedure(["blocks"], ProcedureOptions.async)
   async displayBlocks(
     @elanClassType(List, [ElanClass(List, [ElanInt])]) blocks: List<List<number>>,
@@ -864,6 +871,18 @@ export class StdLib {
     }
 
     const html = this.blocksAsHtml(blocks);
+    return await this.system!.elanInputOutput.drawBlockGraphics(html);
+  }
+
+  @elanProcedure(["blockGraphics"], ProcedureOptions.async)
+  async displayBlockGraphics(@elanClassType(BlockGraphics) blocks: BlockGraphics): Promise<void> {
+    let html = ``;
+    for (let y = 0; y < 30; y++) {
+      for (let x = 0; x < 40; x++) {
+        const colour = blocks.get(x, y);
+        html = `${html}<div style="background-color:${this.asHex(colour)};"></div>`;
+      }
+    }
     return await this.system!.elanInputOutput.drawBlockGraphics(html);
   }
 

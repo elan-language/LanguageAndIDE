@@ -10,7 +10,7 @@ def main() -> None:
   while not snake.gameOver():
     snake.updateBlocks(blocks) # procedure call
     apple.updateBlocks(blocks) # procedure call
-    blocks.display() # procedure call
+    displayBlockGraphics(blocks) # procedure call
     sleep_ms(150) # procedure call
     snake.clockTick(getKey(), apple) # procedure call
   # end while

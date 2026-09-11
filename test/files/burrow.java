@@ -8,7 +8,7 @@ static void main() {
   var y = 15;
   while (true) {
     blocks.put(x, y, red); // procedure call
-    blocks.display(); // procedure call
+    displayBlockGraphics(blocks); // procedure call
     blocks.put(x, y, black); // procedure call
     var direction = randint(0, 3);
     if (direction == 0) {

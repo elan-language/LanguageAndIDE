@@ -1,4 +1,4 @@
-# 9675ab6beb21a5da39ff5e4d7a2f706570709c91ef6a1a2f8293cb218b86f30f Elan 2.0.0-beta4 valid
+# dbaeafecdb586bf5552beb296b69c6192e18bc54adac2829f9454fc0e84162ef Elan 2.0.0-beta4 valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -64,7 +64,7 @@ procedure updateGrid(hodge as BlockGraphics, podge as BlockGraphics, initial as 
       call hodge.put(i, j, podgeValue)
     end for
   end for
-  call hodge.display()
+  call displayBlockGraphics(hodge)
   call sleep_ms(50)
 end procedure
 

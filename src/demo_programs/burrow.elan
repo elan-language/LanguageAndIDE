@@ -1,4 +1,4 @@
-# a2da98c588438c73cc281b4ab8b163c87e3cb22db3a253f12ea889dda5c4cf9c Elan 2.0.0-beta4 valid
+# 2b3750d471eb54cb94f5523fb83dafd0971d3e1d6e98ac81666a5708b62fd02d Elan 2.0.0-beta4 valid
 
 main
   variable blocks set to new BlockGraphics()
@@ -6,7 +6,7 @@ main
   variable y set to 15
   while true
     call blocks.put(x, y, red)
-    call blocks.display()
+    call displayBlockGraphics(blocks)
     call blocks.put(x, y, black)
     variable direction set to randint(0, 3)
     if direction is 0 then

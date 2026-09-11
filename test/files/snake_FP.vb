@@ -9,7 +9,7 @@ Sub main()
   Dim game = (New Game(rnd)).withNewApple() ' variable definition
   While game.isOn
     blocks = updateGraphics(game, blocks) ' assignment
-    blocks.display() ' procedure call
+    displayBlockGraphics(blocks) ' procedure call
     sleep_ms(150) ' procedure call
     game = clockTick(game, getKey()) ' assignment
   End While

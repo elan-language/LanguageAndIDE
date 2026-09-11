@@ -1,4 +1,4 @@
-# d5b866a284cd20aa79359f82ed50c460b94079c138521452ea68e88361871156 Elan 2.0.0-beta4 valid
+# f11518054ae3a4c9b505d7e596878c8d78a7853489d6b4d1a6c401ae6d8ba0e2 Elan 2.0.0-beta4 valid
 
 main
   variable start set to new Point(5, 5)
@@ -9,7 +9,7 @@ main
   variable nodes set to new List<of Node>()
   call createRocksAndNodes(percentRocks, rocks, nodes, start, destination)
   variable gr set to initialiseGraphics(start, destination, rocks)
-  call gr.display()
+  call displayBlockGraphics(gr)
   variable solver set to new Solver(nodes, start, destination)
   while true
     variable k set to inputStringFromOptions(algPrompt, ["a", "d", "h"])
@@ -25,7 +25,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
   while solver.running
     call solver.visitNextPoint()
     assign gr2 to addVisited(gr2, solver.getLastVisited())
-    call gr2.display()
+    call displayBlockGraphics(gr2)
     call sleep_ms(0)
   end while
   if solver.getLastVisited().equals(destination) then
@@ -33,7 +33,7 @@ procedure runSolver(gr as BlockGraphics, start as Point, destination as Point, r
     variable route set to rl.item_0
     variable length set to rl.item_1
     assign gr2 to addRoute(gr2, route)
-    call gr2.display()
+    call displayBlockGraphics(gr2)
     call printNoLine($"Length of route: {length.round(2)} ")
   else
     call printNoLine("No path found. ")

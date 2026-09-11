@@ -15,7 +15,7 @@ def main() -> None:
       blocks.put(p.x, p.y, colour) # procedure call
     # end if
   # end for
-  blocks.display() # procedure call
+  displayBlockGraphics(blocks) # procedure call
   name = input("File name to save: ") # input statement
   if not name.equals("x"):
     saveAsFile(name, blocks) # procedure call

@@ -74,7 +74,7 @@ def updateGrid(hodge: BlockGraphics, podge: BlockGraphics, initial: bool) -> Non
       hodge.put(i, j, podgeValue) # procedure call
     # end for
   # end for
-  hodge.display() # procedure call
+  displayBlockGraphics(hodge) # procedure call
   sleep_ms(50) # procedure call
 # end procedure
 

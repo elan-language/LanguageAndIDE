@@ -4,7 +4,7 @@ Sub main()
   Dim grid = New BlockGraphics() ' variable definition
   fillRandom(grid) ' procedure call
   While True
-    grid.display() ' procedure call
+    displayBlockGraphics(grid) ' procedure call
     nextGeneration(grid) ' procedure call
     sleep_ms(50) ' procedure call
   End While

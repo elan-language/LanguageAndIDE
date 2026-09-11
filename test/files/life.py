@@ -4,7 +4,7 @@ def main() -> None:
   grid = BlockGraphics() # variable definition
   fillRandom(grid) # procedure call
   while True:
-    grid.display() # procedure call
+    displayBlockGraphics(grid) # procedure call
     nextGeneration(grid) # procedure call
     sleep_ms(50) # procedure call
   # end while

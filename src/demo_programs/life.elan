@@ -1,10 +1,10 @@
-# 269c53845629a7c57c0a11dc4cadb13cd6a89ca7060b38da32958d6579130a82 Elan 2.0.0-beta4 valid
+# 22fbd82251596e52d42fff9610124f0f4fc601c4e681e5d8043f7229a5455839 Elan 2.0.0-beta4 valid
 
 main
   variable grid set to new BlockGraphics()
   call fillRandom(grid)
   while true
-    call grid.display()
+    call displayBlockGraphics(grid)
     call nextGeneration(grid)
     call sleep_ms(50)
   end while
