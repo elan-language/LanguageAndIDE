@@ -1,0 +1,231 @@
+# b58fea1192310b8b4ddaa437f4cec0c8f65e5544f459ab0b9fe69605657ed0cf Elan 2.0.0-beta4 valid
+
+# Use the W,A,S,D keys to change Snake direction
+# TODO get rid of apple class?
+# TODO get rid of Square class
+main
+  variable game set to new Game()
+  while not game.over()
+    call game.clockTick(getKey())
+    call displayBlockGraphics(game.blockGraphics)
+    call sleep_ms(150)
+  end while
+  print($"Game Over! Score: {game.score()}")
+end main
+
+class Game
+  constructor()
+    assign this.blockGraphics to new BlockGraphics()
+    assign this.snake to new Snake()
+    assign this.apple to new Apple()
+    assign this.newAppleNeeded to true
+  end constructor
+
+  property snake as Snake
+
+  property apple as Maybe<of Apple>
+
+  property blockGraphics as BlockGraphics
+
+  property newAppleNeeded as Boolean
+
+  procedure newApple()
+    # TODO following line should not be needed!
+    variable apple set to this.apple
+    call apple.newRandomPosition(this.snake)
+    assign this.newAppleNeeded to false
+  end procedure
+
+  procedure clockTick(key as String)
+    if this.newAppleNeeded then
+      call this.newApple()
+    end if
+    variable snake set to this.snake
+    call snake.updateBlocks(blocks)
+    call apple.updateBlocks(blocks)
+  end procedure
+
+  function over() returns Boolean
+    # TODO
+    return true
+  end function
+
+  function score() returns Int
+    return this.snake.body.length() - 1
+  end function
+
+  function toString() returns String
+    return "undefined"
+  end function
+
+end class
+
+class Snake
+  constructor()
+    variable tail set to new Square(20, 15)
+    assign this.currentDir to Direction.right
+    assign this.body to [tail]
+    assign this.head to tail.getAdjacentSquare(this.currentDir)
+    assign this.priorTail to tail
+  end constructor
+
+  # TODO could change so provide the head position & direction & constructor does rest
+  private property currentDir as Direction
+
+  private property head as Square
+
+  property body as List<of Square>
+
+  private property priorTail as Square
+
+  procedure clockTick(key as String, apple as Apple)
+    call this.setDirection(key)
+    assign this.priorTail to this.body[0]
+    variable body set to this.body
+    call body.append(this.head)
+    assign this.head to this.head.getAdjacentSquare(this.currentDir)
+    if this.head.equals(apple.location) then
+      call apple.newRandomPosition(this)
+    else
+      assign this.body to this.body.subList(1, this.body.length())
+    end if
+  end procedure
+
+  procedure updateBlocks(blocks as BlockGraphics)
+    call blocks.put(this.head.x, this.head.y, green)
+    if not this.body[0].equals(this.priorTail) then
+      call blocks.put(this.priorTail.x, this.priorTail.y, white)
+    end if
+  end procedure
+
+  function bodyCovers(sq as Square) returns Boolean
+    variable result set to false
+    for seg in this.body
+      if (seg.equals(sq)) then
+        assign result to true
+      end if
+    end for
+    return result
+  end function
+
+  function gameOver() returns Boolean
+    return this.bodyCovers(this.head) or this.head.hasHitEdge()
+  end function
+
+  private procedure setDirection(key as String)
+    if key.equals("w") then
+      assign this.currentDir to Direction.up
+    elif key.equals("s") then
+      assign this.currentDir to Direction.down
+    elif key.equals("a") then
+      assign this.currentDir to Direction.left
+    elif key.equals("d") then
+      assign this.currentDir to Direction.right
+    end if
+  end procedure
+
+  function toString() returns String
+    return $"a Snake with head at {this.head}"
+  end function
+
+end class
+
+class Apple
+  constructor()
+    assign this.location to new Square(0, 0)
+  end constructor
+
+  property location as Square
+
+  procedure newRandomPosition(snake as Snake)
+    variable changePosition set to true
+    while changePosition
+      variable ranX set to randint(0, 39)
+      variable ranY set to randint(0, 29)
+      assign this.location to new Square(ranX, ranY)
+      if not snake.bodyCovers(this.location) then
+        assign changePosition to false
+      end if
+    end while
+  end procedure
+
+  procedure updateBlocks(blocks as BlockGraphics)
+    call blocks.put(this.location.x, this.location.y, red)
+  end procedure
+
+  function toString() returns String
+    return $"an Apple at {this.location}"
+  end function
+
+end class
+
+class Square
+  constructor(x as Int, y as Int)
+    assign this.x to x
+    assign this.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  function getAdjacentSquare(d as Direction) returns Square
+    variable newX set to this.x
+    variable newY set to this.y
+    if d is Direction.left then
+      assign newX to this.x - 1
+    elif d is Direction.right then
+      assign newX to this.x + 1
+    elif d is Direction.up then
+      assign newY to this.y - 1
+    elif d is Direction.down then
+      assign newY to this.y + 1
+    end if
+    return new Square(newX, newY)
+  end function
+
+  function hasHitEdge() returns Boolean
+    return (this.x is -1) or (this.y is -1) or (this.x is 40) or (this.y is 30)
+  end function
+
+  function toString() returns String
+    return "{this.x}, {this.y}"
+  end function
+
+end class
+
+enum Direction up, down, left, right
+
+test test_snake
+  variable snake set to new Snake()
+  # bodyCovers
+  assert snake.bodyCovers(new Square(20, 15)) evaluates to true
+  assert snake.bodyCovers(new Square(21, 15)) evaluates to false
+  # gameOver, score - can only test test_for default - which is not thorough test
+  assert snake.gameOver() evaluates to false
+  assert snake.score() evaluates to 0
+end test
+
+test test_apple
+  # no tests
+end test
+
+test test_square
+  # constructor - not testable as properties are private
+  # getAdjacentSquare
+  variable sq1 set to new Square(3, 4)
+  assert sq1.getAdjacentSquare(Direction.up) evaluates to new Square(3, 3)
+  assert sq1.getAdjacentSquare(Direction.down) evaluates to new Square(3, 5)
+  assert sq1.getAdjacentSquare(Direction.left) evaluates to new Square(2, 4)
+  assert sq1.getAdjacentSquare(Direction.right) evaluates to new Square(4, 4)
+  variable sq2 set to new Square(0, 0)
+  variable sq3 set to new Square(-1, 0)
+  assert sq2.getAdjacentSquare(Direction.left) evaluates to sq3
+  # hasHitEdge
+  assert (new Square(0, 0)).hasHitEdge() evaluates to false
+  assert (new Square(39, 20)).hasHitEdge() evaluates to false
+  assert (new Square(-1, 3)).hasHitEdge() evaluates to true
+  assert (new Square(3, -1)).hasHitEdge() evaluates to true
+  assert (new Square(40, 3)).hasHitEdge() evaluates to true
+  assert (new Square(3, 30)).hasHitEdge() evaluates to true
+end test
