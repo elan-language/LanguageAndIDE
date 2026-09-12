@@ -9,7 +9,7 @@ Sub main()
   Dim nodes = New List(Of Node)() ' variable definition
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination) ' procedure call
   Dim gr = initialiseGraphics(start, destination, rocks) ' variable definition
-  gr.display() ' procedure call
+  displayBlockGraphics(gr) ' procedure call
   Dim solver = New Solver(nodes, start, destination) ' variable definition
   While True
     Dim k = inputStringFromOptions(algPrompt, {"a", "d", "h"}) ' variable definition
@@ -25,7 +25,7 @@ Sub runSolver(gr As BlockGraphics, start As Point, destination As Point, rocks A
   While solver.running
     solver.visitNextPoint() ' procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) ' assignment
-    gr2.display() ' procedure call
+    displayBlockGraphics(gr2) ' procedure call
     sleep_ms(0) ' procedure call
   End While
   If solver.getLastVisited().equals(destination) Then
@@ -33,7 +33,7 @@ Sub runSolver(gr As BlockGraphics, start As Point, destination As Point, rocks A
     Dim route = rl.item_0 ' variable definition
     Dim length = rl.item_1 ' variable definition
     gr2 = addRoute(gr2, route) ' assignment
-    gr2.display() ' procedure call
+    displayBlockGraphics(gr2) ' procedure call
     printNoLine($"Length of route: {length.round(2)} ") ' procedure call
   Else
     printNoLine("No path found. ") ' procedure call

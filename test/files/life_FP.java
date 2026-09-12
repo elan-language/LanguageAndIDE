@@ -7,106 +7,37 @@ static void main() {
   rng.initialiseFromClock(); // procedure call
   var grid = initialGrid(rng);
   while (true) {
-    displayBlocks(grid); // procedure call
+    displayBlockGraphics(grid); // procedure call
     grid = nextGeneration(grid); // assignment
     sleep_ms(50); // procedure call
   } // end while
 } // end main
 
-static List<List<int>> initialGrid(Random rng) { // function
-  var grid = new List<List<int>>();
-  var cols = range(0, 40);
-  return cols.reduce((grid, rng), appendCol).item_0;
+static BlockGraphics initialGrid(Random rng) { // function
+  var grid = new BlockGraphics();
+  var cells = range(0, 1199);
+  return cells.reduce((grid, rng), initialCell).item_0;
+} // end function
+
+static (BlockGraphics, Random) initialCell((BlockGraphics, Random) acc, int cell) { // function
+  var bg = acc.item_0;
+  var rng = acc.item_1;
+  var colour = blackOrWhite(rng);
+  return (bg.withPutBlockNo(cell, colour), rng.nextGen());
 } // end function
 
 class Test_initialGrid {
 @Test static void test_initialGrid() {
   var grid = initialGrid(new Random());
-  assertEquals(black, grid[0][0]);
-  assertEquals(white, grid[1][0]);
-  assertEquals(white, grid[2][0]);
-  assertEquals(white, grid[0][1]);
-  assertEquals(black, grid[1][1]);
-  assertEquals(white, grid[2][1]);
-  assertEquals(black, grid[0][2]);
-  assertEquals(black, grid[1][2]);
-  assertEquals(black, grid[2][2]);
-}} // end test
-
-static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c) { // function
-  // 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  var grid = tup.item_0;
-  var rng = tup.item_1;
-  var tup2 = initialCol(rng);
-  var col = tup2.item_0;
-  var rng2 = tup2.item_1;
-  var grid2 = grid.withAppend(col);
-  return (grid2, rng2);
-} // end function
-
-class Test_appendCol {
-@Test static void test_appendCol() {
-  var emptyGrid = new List<List<int>>();
-  var rng = new Random();
-  var result = appendCol((emptyGrid, rng), 0);
-  var grid1 = result.item_0;
-  var col = grid1[0];
-  assertEquals(black, col[0]);
-  assertEquals(white, col[1]);
-  assertEquals(black, col[2]);
-  assertEquals(black, col[29]);
-  var rng2 = result.item_1;
-  var result2 = appendCol((grid1, rng2), 1);
-  var grid2 = result2.item_0;
-  var col2 = grid2[1];
-  assertEquals(white, col2[0]);
-  assertEquals(black, col2[1]);
-  assertEquals(black, col2[2]);
-  assertEquals(white, col2[29]);
-}} // end test
-
-static (List<int>, Random) initialCol(Random rng) { // function
-  var col = new List<int>();
-  var rows = range(0, 30);
-  return rows.reduce((col, rng), appendCell);
-} // end function
-
-class Test_initialCol {
-@Test static void test_initialCol() {
-  var rng = new Random();
-  var result = initialCol(rng);
-  var col = result.item_0;
-  assertEquals(black, col[0]);
-  assertEquals(white, col[1]);
-  assertEquals(black, col[2]);
-  assertEquals(black, col[29]);
-  var rng2 = result.item_1;
-  var col2 = initialCol(rng2).item_0;
-  assertEquals(white, col2[0]);
-  assertEquals(black, col2[1]);
-  assertEquals(black, col2[2]);
-  assertEquals(white, col2[29]);
-}} // end test
-
-static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // function
-  var col = tup.item_0;
-  var rng = tup.item_1;
-  return (col.withAppend(blackOrWhite(rng)), rng.nextGen());
-} // end function
-
-class Test_appendCell {
-@Test static void test_appendCell() {
-  var rng = new Random();
-  var emptyList = new List<int>();
-  var result = appendCell((emptyList, rng), 0);
-  var col = result.item_0;
-  assertEquals(1, col.length());
-  assertEquals(black, col[0]);
-  var rng2 = result.item_1;
-  var result2 = appendCell((col, rng2), 1);
-  var col2 = result2.item_0;
-  assertEquals(2, col2.length());
-  assertEquals(white, col2[1]);
+  assertEquals(black, grid.get(0, 0));
+  assertEquals(white, grid.get(1, 0));
+  assertEquals(black, grid.get(2, 0));
+  assertEquals(white, grid.get(0, 1));
+  assertEquals(black, grid.get(1, 1));
+  assertEquals(white, grid.get(2, 1));
+  assertEquals(black, grid.get(0, 2));
+  assertEquals(white, grid.get(1, 2));
+  assertEquals(black, grid.get(2, 2));
 }} // end test
 
 static int blackOrWhite(Random rng) { // function
@@ -125,139 +56,152 @@ class Test_blackOrWhite {
   assertEquals(black, blackOrWhite(rng3));
 }} // end test
 
-static (int, int) north((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int x(int cell) { // function
+  return cell % 40;
+} // end function
+
+static int y(int cell) { // function
+  return divAsInt(cell, 40);
+} // end function
+
+static int cellNo(int x, int y) { // function
+  return y*40 + x;
+} // end function
+
+static int north(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var y2 = if_(y == 0, 29, y - 1);
-  return (x, y2);
+  return cellNo(x, y2);
 } // end function
 
 class Test_north {
 @Test static void test_north() {
-  assertEquals((3, 3), north((3, 4)));
-  assertEquals((39, 29), north((39, 0)));
-  assertEquals((0, 28), north((0, 29)));
-  assertEquals((39, 28), north((39, 29)));
+  assertEquals(84, north(124));
+  assertEquals(1160, north(0));
+  assertEquals(1199, north(39));
+  assertEquals(1159, north(1199));
+  assertEquals(1120, north(1160));
 }} // end test
 
-static (int, int) south((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int south(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var y2 = if_(y == 29, 0, y + 1);
-  return (x, y2);
+  return cellNo(x, y2);
 } // end function
 
 class Test_south {
 @Test static void test_south() {
-  assertEquals((3, 5), south((3, 4)));
-  assertEquals((39, 1), south((39, 0)));
-  assertEquals((0, 0), south((0, 29)));
-  assertEquals((39, 0), south((39, 29)));
+  assertEquals(164, south(124));
+  assertEquals(40, south(0));
+  assertEquals(79, south(39));
+  assertEquals(39, south(1199));
+  assertEquals(0, south(1160));
 }} // end test
 
-static (int, int) east((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int east(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var x2 = if_(x == 39, 0, x + 1);
-  return (x2, y);
+  return cellNo(x2, y);
 } // end function
 
 class Test_east {
 @Test static void test_east() {
-  assertEquals((11, 2), east((10, 2)));
-  assertEquals((0, 0), east((39, 0)));
-  assertEquals((1, 1), east((0, 1)));
-  assertEquals((0, 29), east((39, 29)));
+  assertEquals(125, east(124));
+  assertEquals(1, east(0));
+  assertEquals(0, east(39));
+  assertEquals(1160, east(1199));
+  assertEquals(1161, east(1160));
 }} // end test
 
-static (int, int) west((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int west(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var x2 = if_(x == 0, 39, x - 1);
-  return (x2, y);
+  return cellNo(x2, y);
 } // end function
 
 class Test_west {
 @Test static void test_west() {
-  assertEquals((2, 4), west((3, 4)));
-  assertEquals((38, 0), west((39, 0)));
-  assertEquals((39, 0), west((0, 0)));
-  assertEquals((39, 29), west((0, 29)));
+  assertEquals(123, west(124));
+  assertEquals(39, west(0));
+  assertEquals(38, west(39));
+  assertEquals(1198, west(1199));
+  assertEquals(1199, west(1160));
 }} // end test
 
-static (int, int) northEast((int, int) cell) { // function
+static int northEast(int cell) { // function
   return north(east(cell));
 } // end function
 
 class Test_northEast {
 @Test static void test_northEast() {
-  assertEquals((4, 3), northEast((3, 4)));
-  assertEquals((1, 29), northEast((0, 0)));
-  assertEquals((0, 29), northEast((39, 0)));
-  assertEquals((1, 28), northEast((0, 29)));
-  assertEquals((0, 28), northEast((39, 29)));
+  assertEquals(85, northEast(124));
+  assertEquals(1161, northEast(0));
+  assertEquals(1160, northEast(39));
+  assertEquals(1120, northEast(1199));
+  assertEquals(1121, northEast(1160));
 }} // end test
 
-static (int, int) northWest((int, int) cell) { // function
+static int northWest(int cell) { // function
   return north(west(cell));
 } // end function
 
 class Test_northWest {
 @Test static void test_northWest() {
-  assertEquals((2, 3), northWest((3, 4)));
-  assertEquals((39, 29), northWest((0, 0)));
-  assertEquals((38, 29), northWest((39, 0)));
-  assertEquals((39, 28), northWest((0, 29)));
-  assertEquals((38, 28), northWest((39, 29)));
+  assertEquals(83, northWest(124));
+  assertEquals(1199, northWest(0));
+  assertEquals(1198, northWest(39));
+  assertEquals(1158, northWest(1199));
+  assertEquals(1159, northWest(1160));
 }} // end test
 
-class Test_southEast {
-@Test static void test_southEast() {
-  assertEquals((4, 5), southEast((3, 4)));
-  assertEquals((1, 1), southEast((0, 0)));
-  assertEquals((0, 1), southEast((39, 0)));
-  assertEquals((1, 0), southEast((0, 29)));
-  assertEquals((0, 0), southEast((39, 29)));
-}} // end test
-
-static (int, int) southEast((int, int) cell) { // function
+static int southEast(int cell) { // function
   return south(east(cell));
 } // end function
 
-static (int, int) southWest((int, int) cell) { // function
+class Test_southEast {
+@Test static void test_southEast() {
+  assertEquals(165, southEast(124));
+  assertEquals(41, southEast(0));
+  assertEquals(40, southEast(39));
+  assertEquals(0, southEast(1199));
+  assertEquals(1, southEast(1160));
+}} // end test
+
+static int southWest(int cell) { // function
   return south(west(cell));
 } // end function
 
 class Test_southWest {
 @Test static void test_southWest() {
-  assertEquals((2, 5), southWest((3, 4)));
-  assertEquals((39, 1), southWest((0, 0)));
-  assertEquals((38, 1), southWest((39, 0)));
-  assertEquals((39, 0), southWest((0, 29)));
-  assertEquals((38, 0), southWest((39, 29)));
+  assertEquals(163, southWest(124));
+  assertEquals(79, southWest(0));
+  assertEquals(78, southWest(39));
+  assertEquals(38, southWest(1199));
+  assertEquals(39, southWest(1160));
 }} // end test
 
-static List<(int, int)> neighbourCells(int x, int y) { // function
-  var c = (x, y);
+static List<int> neighbourCells(int c) { // function
   return list(northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c));
 } // end function
 
 class Test_neighbourCells {
 @Test static void test_neighbourCells() {
-  assertEquals(list((2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)), neighbourCells(3, 4));
-  assertEquals(list((39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)), neighbourCells(0, 0));
-  assertEquals(list((38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)), neighbourCells(39, 29));
+  assertEquals(list(83, 84, 85, 123, 125, 163, 164, 165), neighbourCells(124));
 }} // end test
 
-static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
-  var neighbours = neighbourCells(x, y);
-  return neighbours.filter(((int, int) c) -> grid[c.item_0][c.item_1] == black).length();
+static int liveNeighbours(BlockGraphics grid, int cell) { // function
+  var neighbours = neighbourCells(cell);
+  return neighbours.filter((int c) -> grid.getBlockNo(c) == black).length();
 } // end function
 
 class Test_liveNeighbours {
 @Test static void test_liveNeighbours() {
   var grid = initialGrid(new Random());
-  var live = liveNeighbours(grid, 1, 1);
+  var live = liveNeighbours(grid, 41);
   assertEquals(4, live);
 }} // end test
 
@@ -287,36 +231,24 @@ class Test_willLive {
   assertEquals(false, willLive(black, 8));
 }} // end test
 
-static int nextCellValue(List<List<int>> grid, int x, int y) { // function
-  var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
+static int nextCellValue(BlockGraphics grid, int cell) { // function
+  var live = willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell));
   return if_(live, black, white);
+} // end function
+
+static BlockGraphics updateCellValue(BlockGraphics oldGrid, BlockGraphics newGrid, int cell) { // function
+  return newGrid.withPutBlockNo(cell, nextCellValue(oldGrid, cell));
 } // end function
 
 class Test_nextCellValue {
 @Test static void test_nextCellValue() {
   var grid = initialGrid(new Random());
-  var nxt = nextCellValue(grid, 1, 1);
+  var nxt = nextCellValue(grid, 41);
   assertEquals(white, nxt);
 }} // end test
 
-static List<List<int>> nextGeneration(List<List<int>> grid) { // function
-  var cols = range(0, 40);
-  return cols.map((int x) -> nextCol(grid, x));
+static BlockGraphics nextGeneration(BlockGraphics oldGrid) { // function
+  var emptyGrid = new BlockGraphics();
+  return range(0, 1199).reduce(emptyGrid, (BlockGraphics newGrid, int c) -> updateCellValue(oldGrid, newGrid, c));
 } // end function
-
-static List<int> nextCol(List<List<int>> grid, int x) { // function
-  var col = grid[x];
-  var rows = range(0, 30);
-  return rows.map((int y) -> nextCellValue(grid, x, y));
-} // end function
-
-class Test_nextCol {
-@Test static void test_nextCol() {
-  var grid = initialGrid(new Random());
-  var col = nextCol(grid, 3);
-  assertEquals(black, col[0]);
-  assertEquals(black, col[1]);
-  assertEquals(white, col[2]);
-  assertEquals(black, col[29]);
-}} // end test
 } // end Global

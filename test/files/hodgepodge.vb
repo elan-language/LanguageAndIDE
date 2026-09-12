@@ -74,7 +74,7 @@ Sub updateGrid(hodge As BlockGraphics, podge As BlockGraphics, initial As Boolea
       hodge.put(i, j, podgeValue) ' procedure call
     Next i
   Next j
-  hodge.display() ' procedure call
+  displayBlockGraphics(hodge) ' procedure call
   sleep_ms(50) ' procedure call
 End Sub
 

@@ -11,7 +11,7 @@ static void main() {
   var game = (new Game(rnd)).withNewApple();
   while (game.isOn) {
     blocks = updateGraphics(game, blocks); // assignment
-    blocks.display(); // procedure call
+    displayBlockGraphics(blocks); // procedure call
     sleep_ms(150); // procedure call
     game = clockTick(game, getKey()); // assignment
   } // end while

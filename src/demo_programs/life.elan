@@ -1,10 +1,10 @@
-# 269c53845629a7c57c0a11dc4cadb13cd6a89ca7060b38da32958d6579130a82 Elan 2.0.0-beta4 valid
+# b17a2e2879dde61c93e646bc1ed59542c72e5a59a5130dc6d74929ce3ba2d0f8 Elan 2.0.0-beta4 valid
 
 main
   variable grid set to new BlockGraphics()
   call fillRandom(grid)
   while true
-    call grid.display()
+    call displayBlockGraphics(grid)
     call nextGeneration(grid)
     call sleep_ms(50)
   end while
@@ -21,17 +21,13 @@ end procedure
 procedure nextGeneration(grid as BlockGraphics)
   # First, make a copy of the existing grid
   variable copy set to new BlockGraphics()
-  for x in range(0, 40)
-    for y in range(0, 30)
-      call copy.put(x, y, grid.get(x, y))
-    end for
+  for cell in range(0, 1199)
+    call copy.putBlockNo(cell, grid.getBlockNo(cell))
   end for
   # then calculate each new cell *from the copy*, and update the grid
-  for x in range(0, 40)
-    for y in range(0, 30)
-      variable colour set to nextCellValue(copy, x, y)
-      call grid.put(x, y, colour)
-    end for
+  for cell in range(0, 1199)
+    variable colour set to nextCellValue(copy, cell)
+    call grid.putBlockNo(cell, colour)
   end for
 end procedure
 
@@ -43,169 +39,142 @@ function blackOrWhite(random as Float) returns Int
   return result
 end function
 
-function north(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
-  variable y2 set to y - 1
-  if y2 is -1 then
-    assign y2 to 29
-  end if
-  return (x, y2)
+function x(cell as Int) returns Int
+  return cell mod 40
 end function
 
-function south(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
-  variable y2 set to y + 1
-  if y2 is 30 then
-    assign y2 to 0
-  end if
-  return (x, y2)
+function y(cell as Int) returns Int
+  return divAsInt(cell, 40)
 end function
 
-function east(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
-  variable x2 set to x + 1
-  if x2 is 40 then
-    assign x2 to 0
-  end if
-  return (x2, y)
+function cellNo(x as Int, y as Int) returns Int
+  return y*40 + x
 end function
 
-function west(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
-  variable x2 set to x - 1
-  if x2 is -1 then
-    assign x2 to 39
-  end if
-  return (x2, y)
-end function
-
-function northEast(cell as (Int, Int)) returns (Int, Int)
-  return north(east(cell))
-end function
-
-function northWest(cell as (Int, Int)) returns (Int, Int)
-  return north(west(cell))
-end function
-
-function southEast(cell as (Int, Int)) returns (Int, Int)
-  return south(east(cell))
-end function
-
-function southWest(cell as (Int, Int)) returns (Int, Int)
-  return south(west(cell))
-end function
-
-function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
-  variable c set to (x, y)
-  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
-end function
-
-function liveNeighbours(grid as BlockGraphics, x as Int, y as Int) returns Int
-  variable count set to 0
-  for cell in neighbourCells(x, y)
-    variable cx set to cell.item_0
-    variable cy set to cell.item_1
-    if grid.get(cx, cy) is black then
-      assign count to count + 1
-    end if
-  end for
-  return count
-end function
-
-function willLive(cell as Int, liveNeighbours as Int) returns Boolean
-  variable result set to false
-  if cell is black then
-    assign result to (liveNeighbours > 1) and (liveNeighbours < 4)
-  else
-    assign result to liveNeighbours is 3
-  end if
-  return result
-end function
-
-function nextCellValue(grid as BlockGraphics, x as Int, y as Int) returns Int
-  variable colour set to white
-  variable live set to willLive(grid.get(x, y), liveNeighbours(grid, x, y))
-  if live then
-    assign colour to black
-  end if
-  return colour
+function north(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
+  variable y2 set to if_(y is 0, 29, y - 1)
+  return cellNo(x, y2)
 end function
 
 test test_north
-  assert north((3, 4)) evaluates to (3, 3)
-  assert north((39, 0)) evaluates to (39, 29)
-  assert north((0, 29)) evaluates to (0, 28)
-  assert north((39, 29)) evaluates to (39, 28)
+  assert north(124) evaluates to 84
+  assert north(0) evaluates to 1160
+  assert north(39) evaluates to 1199
+  assert north(1199) evaluates to 1159
+  assert north(1160) evaluates to 1120
 end test
+
+function south(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
+  variable y2 set to if_(y is 29, 0, y + 1)
+  return cellNo(x, y2)
+end function
 
 test test_south
-  assert south((3, 4)) evaluates to (3, 5)
-  assert south((39, 0)) evaluates to (39, 1)
-  assert south((0, 29)) evaluates to (0, 0)
-  assert south((39, 29)) evaluates to (39, 0)
+  assert south(124) evaluates to 164
+  assert south(0) evaluates to 40
+  assert south(39) evaluates to 79
+  assert south(1199) evaluates to 39
+  assert south(1160) evaluates to 0
 end test
+
+function east(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
+  variable x2 set to if_(x is 39, 0, x + 1)
+  return cellNo(x2, y)
+end function
 
 test test_east
-  assert east((10, 2)) evaluates to (11, 2)
-  assert east((39, 0)) evaluates to (0, 0)
-  assert east((0, 1)) evaluates to (1, 1)
-  assert east((39, 29)) evaluates to (0, 29)
+  assert east(124) evaluates to 125
+  assert east(0) evaluates to 1
+  assert east(39) evaluates to 0
+  assert east(1199) evaluates to 1160
+  assert east(1160) evaluates to 1161
 end test
+
+function west(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
+  variable x2 set to if_(x is 0, 39, x - 1)
+  return cellNo(x2, y)
+end function
 
 test test_west
-  assert west((3, 4)) evaluates to (2, 4)
-  assert west((39, 0)) evaluates to (38, 0)
-  assert west((0, 0)) evaluates to (39, 0)
-  assert west((0, 29)) evaluates to (39, 29)
+  assert west(124) evaluates to 123
+  assert west(0) evaluates to 39
+  assert west(39) evaluates to 38
+  assert west(1199) evaluates to 1198
+  assert west(1160) evaluates to 1199
 end test
+
+function northEast(cell as Int) returns Int
+  return north(east(cell))
+end function
 
 test test_northEast
-  assert northEast((3, 4)) evaluates to (4, 3)
-  assert northEast((0, 0)) evaluates to (1, 29)
-  assert northEast((39, 0)) evaluates to (0, 29)
-  assert northEast((0, 29)) evaluates to (1, 28)
-  assert northEast((39, 29)) evaluates to (0, 28)
+  assert northEast(124) evaluates to 85
+  assert northEast(0) evaluates to 1161
+  assert northEast(39) evaluates to 1160
+  assert northEast(1199) evaluates to 1120
+  assert northEast(1160) evaluates to 1121
 end test
 
-test test_southEast
-  assert southEast((3, 4)) evaluates to (4, 5)
-  assert southEast((0, 0)) evaluates to (1, 1)
-  assert southEast((39, 0)) evaluates to (0, 1)
-  assert southEast((0, 29)) evaluates to (1, 0)
-  assert southEast((39, 29)) evaluates to (0, 0)
-end test
+function northWest(cell as Int) returns Int
+  return north(west(cell))
+end function
 
 test test_northWest
-  assert northWest((3, 4)) evaluates to (2, 3)
-  assert northWest((0, 0)) evaluates to (39, 29)
-  assert northWest((39, 0)) evaluates to (38, 29)
-  assert northWest((0, 29)) evaluates to (39, 28)
-  assert northWest((39, 29)) evaluates to (38, 28)
+  assert northWest(124) evaluates to 83
+  assert northWest(0) evaluates to 1199
+  assert northWest(39) evaluates to 1198
+  assert northWest(1199) evaluates to 1158
+  assert northWest(1160) evaluates to 1159
 end test
+
+function southEast(cell as Int) returns Int
+  return south(east(cell))
+end function
+
+test test_southEast
+  assert southEast(124) evaluates to 165
+  assert southEast(0) evaluates to 41
+  assert southEast(39) evaluates to 40
+  assert southEast(1199) evaluates to 0
+  assert southEast(1160) evaluates to 1
+end test
+
+function southWest(cell as Int) returns Int
+  return south(west(cell))
+end function
 
 test test_southWest
-  assert southWest((3, 4)) evaluates to (2, 5)
-  assert southWest((0, 0)) evaluates to (39, 1)
-  assert southWest((39, 0)) evaluates to (38, 1)
-  assert southWest((0, 29)) evaluates to (39, 0)
-  assert southWest((39, 29)) evaluates to (38, 0)
+  assert southWest(124) evaluates to 163
+  assert southWest(0) evaluates to 79
+  assert southWest(39) evaluates to 78
+  assert southWest(1199) evaluates to 38
+  assert southWest(1160) evaluates to 39
 end test
 
-test test_blackOrWhite
-  assert blackOrWhite(0) evaluates to black
-  assert blackOrWhite(0.499) evaluates to black
-  assert blackOrWhite(0.5) evaluates to black
-  assert blackOrWhite(0.501) evaluates to white
-  assert blackOrWhite(1) evaluates to white
-end test
+function neighbourCells(c as Int) returns List<of Int>
+  return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
+end function
 
 test test_neighbourCells
-  assert neighbourCells(3, 4) evaluates to [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
+  assert neighbourCells(124) evaluates to [83, 84, 85, 123, 125, 163, 164, 165]
 end test
+
+function liveNeighbours(grid as BlockGraphics, cell as Int) returns Int
+  variable neighbours set to neighbourCells(cell)
+  return neighbours.filter(lambda c as Int => grid.getBlockNo(c) is black).length()
+end function
+
+function willLive(cell as Int, liveNeighbours as Int) returns Boolean
+  return ((cell is black) and (liveNeighbours > 1) and (liveNeighbours < 4)) or ((cell is white) and (liveNeighbours is 3))
+end function
 
 test test_willLive
   assert willLive(white, 0) evaluates to false
@@ -226,4 +195,21 @@ test test_willLive
   assert willLive(black, 6) evaluates to false
   assert willLive(black, 7) evaluates to false
   assert willLive(black, 8) evaluates to false
+end test
+
+function nextCellValue(grid as BlockGraphics, cell as Int) returns Int
+  variable colour set to white
+  variable live set to willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell))
+  if live then
+    assign colour to black
+  end if
+  return colour
+end function
+
+test test_blackOrWhite
+  assert blackOrWhite(0) evaluates to black
+  assert blackOrWhite(0.499) evaluates to black
+  assert blackOrWhite(0.5) evaluates to black
+  assert blackOrWhite(0.501) evaluates to white
+  assert blackOrWhite(1) evaluates to white
 end test

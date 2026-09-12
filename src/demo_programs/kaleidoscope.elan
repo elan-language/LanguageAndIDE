@@ -1,4 +1,4 @@
-# 7950b2b0f7ea1bad14a57e0ece369182a2acd32ccb7ee7cac1982c3a2ce590e6 Elan 2.0.0-beta4 valid
+# e2a9423e7cf455e2f92bcbdf7933b5ac82020c0ea8818b85412426bd2b13d64a Elan 2.0.0-beta4 valid
 
 main
   variable blocks set to new BlockGraphics()
@@ -10,6 +10,6 @@ main
     call blocks.put(20 + x, 15 + y, colour)
     call blocks.put(20 - x, 15 - y, colour)
     call blocks.put(20 - x, 15 + y, colour)
-    call blocks.display()
+    call displayBlockGraphics(blocks)
   end while
 end main

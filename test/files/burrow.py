@@ -6,7 +6,7 @@ def main() -> None:
   y = 15 # variable definition
   while True:
     blocks.put(x, y, red) # procedure call
-    blocks.display() # procedure call
+    displayBlockGraphics(blocks) # procedure call
     blocks.put(x, y, black) # procedure call
     direction = randint(0, 3) # variable definition
     if direction == 0:

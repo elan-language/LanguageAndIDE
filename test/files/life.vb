@@ -4,7 +4,7 @@ Sub main()
   Dim grid = New BlockGraphics() ' variable definition
   fillRandom(grid) ' procedure call
   While True
-    grid.display() ' procedure call
+    displayBlockGraphics(grid) ' procedure call
     nextGeneration(grid) ' procedure call
     sleep_ms(50) ' procedure call
   End While
@@ -21,18 +21,14 @@ End Sub
 Sub nextGeneration(grid As BlockGraphics) ' procedure
   ' First, make a copy of the existing grid
   Dim copy = New BlockGraphics() ' variable definition
-  For Each x In range(0, 40)
-    For Each y In range(0, 30)
-      copy.put(x, y, grid.get(x, y)) ' procedure call
-    Next y
-  Next x
+  For Each cell In range(0, 1199)
+    copy.putBlockNo(cell, grid.getBlockNo(cell)) ' procedure call
+  Next cell
   ' then calculate each new cell *from the copy*, and update the grid
-  For Each x In range(0, 40)
-    For Each y In range(0, 30)
-      Dim colour = nextCellValue(copy, x, y) ' variable definition
-      grid.put(x, y, colour) ' procedure call
-    Next y
-  Next x
+  For Each cell In range(0, 1199)
+    Dim colour = nextCellValue(copy, cell) ' variable definition
+    grid.putBlockNo(cell, colour) ' procedure call
+  Next cell
 End Sub
 
 Function blackOrWhite(random As Double) As Integer
@@ -43,199 +39,169 @@ Function blackOrWhite(random As Double) As Integer
   Return result
 End Function
 
-Function north(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' variable definition
-  Dim y = cell.item_1 ' variable definition
-  Dim y2 = y - 1 ' variable definition
-  If y2 = -1 Then
-    y2 = 29 ' assignment
-  End If
-  Return (x, y2)
+Function x(cell As Integer) As Integer
+  Return cell Mod 40
 End Function
 
-Function south(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' variable definition
-  Dim y = cell.item_1 ' variable definition
-  Dim y2 = y + 1 ' variable definition
-  If y2 = 30 Then
-    y2 = 0 ' assignment
-  End If
-  Return (x, y2)
+Function y(cell As Integer) As Integer
+  Return divAsInt(cell, 40)
 End Function
 
-Function east(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' variable definition
-  Dim y = cell.item_1 ' variable definition
-  Dim x2 = x + 1 ' variable definition
-  If x2 = 40 Then
-    x2 = 0 ' assignment
-  End If
-  Return (x2, y)
+Function cellNo(x As Integer, y As Integer) As Integer
+  Return y*40 + x
 End Function
 
-Function west(cell As (Integer, Integer)) As (Integer, Integer)
-  Dim x = cell.item_0 ' variable definition
-  Dim y = cell.item_1 ' variable definition
-  Dim x2 = x - 1 ' variable definition
-  If x2 = -1 Then
-    x2 = 39 ' assignment
-  End If
-  Return (x2, y)
-End Function
-
-Function northEast(cell As (Integer, Integer)) As (Integer, Integer)
-  Return north(east(cell))
-End Function
-
-Function northWest(cell As (Integer, Integer)) As (Integer, Integer)
-  Return north(west(cell))
-End Function
-
-Function southEast(cell As (Integer, Integer)) As (Integer, Integer)
-  Return south(east(cell))
-End Function
-
-Function southWest(cell As (Integer, Integer)) As (Integer, Integer)
-  Return south(west(cell))
-End Function
-
-Function neighbourCells(x As Integer, y As Integer) As List(Of (Integer, Integer))
-  Dim c = (x, y) ' variable definition
-  Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
-End Function
-
-Function liveNeighbours(grid As BlockGraphics, x As Integer, y As Integer) As Integer
-  Dim count = 0 ' variable definition
-  For Each cell In neighbourCells(x, y)
-    Dim cx = cell.item_0 ' variable definition
-    Dim cy = cell.item_1 ' variable definition
-    If grid.get(cx, cy) = black Then
-      count = count + 1 ' assignment
-    End If
-  Next cell
-  Return count
-End Function
-
-Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
-  Dim result = False ' variable definition
-  If cell = black Then
-    result = (liveNeighbours > 1) And (liveNeighbours < 4) ' assignment
-  Else
-    result = liveNeighbours = 3 ' assignment
-  End If
-  Return result
-End Function
-
-Function nextCellValue(grid As BlockGraphics, x As Integer, y As Integer) As Integer
-  Dim colour = white ' variable definition
-  Dim live = willLive(grid.get(x, y), liveNeighbours(grid, x, y)) ' variable definition
-  If live Then
-    colour = black ' assignment
-  End If
-  Return colour
+Function north(cell As Integer) As Integer
+  Dim x = x(cell) ' variable definition
+  Dim y = y(cell) ' variable definition
+  Dim y2 = if_(y = 0, 29, y - 1) ' variable definition
+  Return cellNo(x, y2)
 End Function
 
 <TestClass Class Test_north
  <TestMethod> Sub test_north()
-  Assert.AreEqual((3, 3), north((3, 4)))
-  Assert.AreEqual((39, 29), north((39, 0)))
-  Assert.AreEqual((0, 28), north((0, 29)))
-  Assert.AreEqual((39, 28), north((39, 29)))
+  Assert.AreEqual(84, north(124))
+  Assert.AreEqual(1160, north(0))
+  Assert.AreEqual(1199, north(39))
+  Assert.AreEqual(1159, north(1199))
+  Assert.AreEqual(1120, north(1160))
  End Sub
 End Class
 
+
+Function south(cell As Integer) As Integer
+  Dim x = x(cell) ' variable definition
+  Dim y = y(cell) ' variable definition
+  Dim y2 = if_(y = 29, 0, y + 1) ' variable definition
+  Return cellNo(x, y2)
+End Function
 
 <TestClass Class Test_south
  <TestMethod> Sub test_south()
-  Assert.AreEqual((3, 5), south((3, 4)))
-  Assert.AreEqual((39, 1), south((39, 0)))
-  Assert.AreEqual((0, 0), south((0, 29)))
-  Assert.AreEqual((39, 0), south((39, 29)))
+  Assert.AreEqual(164, south(124))
+  Assert.AreEqual(40, south(0))
+  Assert.AreEqual(79, south(39))
+  Assert.AreEqual(39, south(1199))
+  Assert.AreEqual(0, south(1160))
  End Sub
 End Class
 
+
+Function east(cell As Integer) As Integer
+  Dim x = x(cell) ' variable definition
+  Dim y = y(cell) ' variable definition
+  Dim x2 = if_(x = 39, 0, x + 1) ' variable definition
+  Return cellNo(x2, y)
+End Function
 
 <TestClass Class Test_east
  <TestMethod> Sub test_east()
-  Assert.AreEqual((11, 2), east((10, 2)))
-  Assert.AreEqual((0, 0), east((39, 0)))
-  Assert.AreEqual((1, 1), east((0, 1)))
-  Assert.AreEqual((0, 29), east((39, 29)))
+  Assert.AreEqual(125, east(124))
+  Assert.AreEqual(1, east(0))
+  Assert.AreEqual(0, east(39))
+  Assert.AreEqual(1160, east(1199))
+  Assert.AreEqual(1161, east(1160))
  End Sub
 End Class
 
+
+Function west(cell As Integer) As Integer
+  Dim x = x(cell) ' variable definition
+  Dim y = y(cell) ' variable definition
+  Dim x2 = if_(x = 0, 39, x - 1) ' variable definition
+  Return cellNo(x2, y)
+End Function
 
 <TestClass Class Test_west
  <TestMethod> Sub test_west()
-  Assert.AreEqual((2, 4), west((3, 4)))
-  Assert.AreEqual((38, 0), west((39, 0)))
-  Assert.AreEqual((39, 0), west((0, 0)))
-  Assert.AreEqual((39, 29), west((0, 29)))
+  Assert.AreEqual(123, west(124))
+  Assert.AreEqual(39, west(0))
+  Assert.AreEqual(38, west(39))
+  Assert.AreEqual(1198, west(1199))
+  Assert.AreEqual(1199, west(1160))
  End Sub
 End Class
 
+
+Function northEast(cell As Integer) As Integer
+  Return north(east(cell))
+End Function
 
 <TestClass Class Test_northEast
  <TestMethod> Sub test_northEast()
-  Assert.AreEqual((4, 3), northEast((3, 4)))
-  Assert.AreEqual((1, 29), northEast((0, 0)))
-  Assert.AreEqual((0, 29), northEast((39, 0)))
-  Assert.AreEqual((1, 28), northEast((0, 29)))
-  Assert.AreEqual((0, 28), northEast((39, 29)))
+  Assert.AreEqual(85, northEast(124))
+  Assert.AreEqual(1161, northEast(0))
+  Assert.AreEqual(1160, northEast(39))
+  Assert.AreEqual(1120, northEast(1199))
+  Assert.AreEqual(1121, northEast(1160))
  End Sub
 End Class
 
 
-<TestClass Class Test_southEast
- <TestMethod> Sub test_southEast()
-  Assert.AreEqual((4, 5), southEast((3, 4)))
-  Assert.AreEqual((1, 1), southEast((0, 0)))
-  Assert.AreEqual((0, 1), southEast((39, 0)))
-  Assert.AreEqual((1, 0), southEast((0, 29)))
-  Assert.AreEqual((0, 0), southEast((39, 29)))
- End Sub
-End Class
-
+Function northWest(cell As Integer) As Integer
+  Return north(west(cell))
+End Function
 
 <TestClass Class Test_northWest
  <TestMethod> Sub test_northWest()
-  Assert.AreEqual((2, 3), northWest((3, 4)))
-  Assert.AreEqual((39, 29), northWest((0, 0)))
-  Assert.AreEqual((38, 29), northWest((39, 0)))
-  Assert.AreEqual((39, 28), northWest((0, 29)))
-  Assert.AreEqual((38, 28), northWest((39, 29)))
+  Assert.AreEqual(83, northWest(124))
+  Assert.AreEqual(1199, northWest(0))
+  Assert.AreEqual(1198, northWest(39))
+  Assert.AreEqual(1158, northWest(1199))
+  Assert.AreEqual(1159, northWest(1160))
  End Sub
 End Class
 
+
+Function southEast(cell As Integer) As Integer
+  Return south(east(cell))
+End Function
+
+<TestClass Class Test_southEast
+ <TestMethod> Sub test_southEast()
+  Assert.AreEqual(165, southEast(124))
+  Assert.AreEqual(41, southEast(0))
+  Assert.AreEqual(40, southEast(39))
+  Assert.AreEqual(0, southEast(1199))
+  Assert.AreEqual(1, southEast(1160))
+ End Sub
+End Class
+
+
+Function southWest(cell As Integer) As Integer
+  Return south(west(cell))
+End Function
 
 <TestClass Class Test_southWest
  <TestMethod> Sub test_southWest()
-  Assert.AreEqual((2, 5), southWest((3, 4)))
-  Assert.AreEqual((39, 1), southWest((0, 0)))
-  Assert.AreEqual((38, 1), southWest((39, 0)))
-  Assert.AreEqual((39, 0), southWest((0, 29)))
-  Assert.AreEqual((38, 0), southWest((39, 29)))
+  Assert.AreEqual(163, southWest(124))
+  Assert.AreEqual(79, southWest(0))
+  Assert.AreEqual(78, southWest(39))
+  Assert.AreEqual(38, southWest(1199))
+  Assert.AreEqual(39, southWest(1160))
  End Sub
 End Class
 
 
-<TestClass Class Test_blackOrWhite
- <TestMethod> Sub test_blackOrWhite()
-  Assert.AreEqual(black, blackOrWhite(0))
-  Assert.AreEqual(black, blackOrWhite(0.499))
-  Assert.AreEqual(black, blackOrWhite(0.5))
-  Assert.AreEqual(white, blackOrWhite(0.501))
-  Assert.AreEqual(white, blackOrWhite(1))
- End Sub
-End Class
-
+Function neighbourCells(c As Integer) As List(Of Integer)
+  Return {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)}
+End Function
 
 <TestClass Class Test_neighbourCells
  <TestMethod> Sub test_neighbourCells()
-  Assert.AreEqual({(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4))
+  Assert.AreEqual({83, 84, 85, 123, 125, 163, 164, 165}, neighbourCells(124))
  End Sub
 End Class
 
+
+Function liveNeighbours(grid As BlockGraphics, cell As Integer) As Integer
+  Dim neighbours = neighbourCells(cell) ' variable definition
+  Return neighbours.filter(Function (c As Integer) grid.getBlockNo(c) = black).length()
+End Function
+
+Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
+  Return ((cell = black) And (liveNeighbours > 1) And (liveNeighbours < 4)) Or ((cell = white) And (liveNeighbours = 3))
+End Function
 
 <TestClass Class Test_willLive
  <TestMethod> Sub test_willLive()
@@ -257,6 +223,26 @@ End Class
   Assert.AreEqual(False, willLive(black, 6))
   Assert.AreEqual(False, willLive(black, 7))
   Assert.AreEqual(False, willLive(black, 8))
+ End Sub
+End Class
+
+
+Function nextCellValue(grid As BlockGraphics, cell As Integer) As Integer
+  Dim colour = white ' variable definition
+  Dim live = willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell)) ' variable definition
+  If live Then
+    colour = black ' assignment
+  End If
+  Return colour
+End Function
+
+<TestClass Class Test_blackOrWhite
+ <TestMethod> Sub test_blackOrWhite()
+  Assert.AreEqual(black, blackOrWhite(0))
+  Assert.AreEqual(black, blackOrWhite(0.499))
+  Assert.AreEqual(black, blackOrWhite(0.5))
+  Assert.AreEqual(white, blackOrWhite(0.501))
+  Assert.AreEqual(white, blackOrWhite(1))
  End Sub
 End Class
 

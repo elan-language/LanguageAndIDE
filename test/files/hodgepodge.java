@@ -76,7 +76,7 @@ static void updateGrid(BlockGraphics hodge, BlockGraphics podge, boolean initial
       hodge.put(i, j, podgeValue); // procedure call
     } // end foreach
   } // end foreach
-  hodge.display(); // procedure call
+  displayBlockGraphics(hodge); // procedure call
   sleep_ms(50); // procedure call
 } // end procedure
 

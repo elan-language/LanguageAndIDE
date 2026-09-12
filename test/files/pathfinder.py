@@ -9,7 +9,7 @@ def main() -> None:
   nodes = list[Node]() # variable definition
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination) # procedure call
   gr = initialiseGraphics(start, destination, rocks) # variable definition
-  gr.display() # procedure call
+  displayBlockGraphics(gr) # procedure call
   solver = Solver(nodes, start, destination) # variable definition
   while True:
     k = inputStringFromOptions(algPrompt, ["a", "d", "h"]) # variable definition
@@ -25,7 +25,7 @@ def runSolver(gr: BlockGraphics, start: Point, destination: Point, rocks: list[P
   while solver.running:
     solver.visitNextPoint() # procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()) # assignment
-    gr2.display() # procedure call
+    displayBlockGraphics(gr2) # procedure call
     sleep_ms(0) # procedure call
   # end while
   if solver.getLastVisited().equals(destination):
@@ -33,7 +33,7 @@ def runSolver(gr: BlockGraphics, start: Point, destination: Point, rocks: list[P
     route = rl.item_0 # variable definition
     length = rl.item_1 # variable definition
     gr2 = addRoute(gr2, route) # assignment
-    gr2.display() # procedure call
+    displayBlockGraphics(gr2) # procedure call
     printNoLine(f"Length of route: {length.round(2)} ") # procedure call
   else:
     printNoLine("No path found. ") # procedure call

@@ -5,106 +5,37 @@ static void main() {
   rng.initialiseFromClock(); // procedure call
   var grid = initialGrid(rng);
   while (true) {
-    displayBlocks(grid); // procedure call
+    displayBlockGraphics(grid); // procedure call
     grid = nextGeneration(grid); // assignment
     sleep_ms(50); // procedure call
   } // end while
 } // end main
 
-static List<List<int>> initialGrid(Random rng) { // function
-  var grid = new List<List<int>>();
-  var cols = range(0, 40);
-  return cols.reduce((grid, rng), appendCol).item_0;
+static BlockGraphics initialGrid(Random rng) { // function
+  var grid = new BlockGraphics();
+  var cells = range(0, 1199);
+  return cells.reduce((grid, rng), initialCell).item_0;
+} // end function
+
+static (BlockGraphics, Random) initialCell((BlockGraphics, Random) acc, int cell) { // function
+  var bg = acc.item_0;
+  var rng = acc.item_1;
+  var colour = blackOrWhite(rng);
+  return (bg.withPutBlockNo(cell, colour), rng.nextGen());
 } // end function
 
 [TestClass] class Test_initialGrid
 [TestMethod] static void test_initialGrid() {
   var grid = initialGrid(new Random());
-  Assert.AreEqual(black, grid[0][0]);
-  Assert.AreEqual(white, grid[1][0]);
-  Assert.AreEqual(white, grid[2][0]);
-  Assert.AreEqual(white, grid[0][1]);
-  Assert.AreEqual(black, grid[1][1]);
-  Assert.AreEqual(white, grid[2][1]);
-  Assert.AreEqual(black, grid[0][2]);
-  Assert.AreEqual(black, grid[1][2]);
-  Assert.AreEqual(black, grid[2][2]);
-}} // end test
-
-static (List<List<int>>, Random) appendCol((List<List<int>>, Random) tup, int c) { // function
-  // 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  var grid = tup.item_0;
-  var rng = tup.item_1;
-  var tup2 = initialCol(rng);
-  var col = tup2.item_0;
-  var rng2 = tup2.item_1;
-  var grid2 = grid.withAppend(col);
-  return (grid2, rng2);
-} // end function
-
-[TestClass] class Test_appendCol
-[TestMethod] static void test_appendCol() {
-  var emptyGrid = new List<List<int>>();
-  var rng = new Random();
-  var result = appendCol((emptyGrid, rng), 0);
-  var grid1 = result.item_0;
-  var col = grid1[0];
-  Assert.AreEqual(black, col[0]);
-  Assert.AreEqual(white, col[1]);
-  Assert.AreEqual(black, col[2]);
-  Assert.AreEqual(black, col[29]);
-  var rng2 = result.item_1;
-  var result2 = appendCol((grid1, rng2), 1);
-  var grid2 = result2.item_0;
-  var col2 = grid2[1];
-  Assert.AreEqual(white, col2[0]);
-  Assert.AreEqual(black, col2[1]);
-  Assert.AreEqual(black, col2[2]);
-  Assert.AreEqual(white, col2[29]);
-}} // end test
-
-static (List<int>, Random) initialCol(Random rng) { // function
-  var col = new List<int>();
-  var rows = range(0, 30);
-  return rows.reduce((col, rng), appendCell);
-} // end function
-
-[TestClass] class Test_initialCol
-[TestMethod] static void test_initialCol() {
-  var rng = new Random();
-  var result = initialCol(rng);
-  var col = result.item_0;
-  Assert.AreEqual(black, col[0]);
-  Assert.AreEqual(white, col[1]);
-  Assert.AreEqual(black, col[2]);
-  Assert.AreEqual(black, col[29]);
-  var rng2 = result.item_1;
-  var col2 = initialCol(rng2).item_0;
-  Assert.AreEqual(white, col2[0]);
-  Assert.AreEqual(black, col2[1]);
-  Assert.AreEqual(black, col2[2]);
-  Assert.AreEqual(white, col2[29]);
-}} // end test
-
-static (List<int>, Random) appendCell((List<int>, Random) tup, int row) { // function
-  var col = tup.item_0;
-  var rng = tup.item_1;
-  return (col.withAppend(blackOrWhite(rng)), rng.nextGen());
-} // end function
-
-[TestClass] class Test_appendCell
-[TestMethod] static void test_appendCell() {
-  var rng = new Random();
-  var emptyList = new List<int>();
-  var result = appendCell((emptyList, rng), 0);
-  var col = result.item_0;
-  Assert.AreEqual(1, col.length());
-  Assert.AreEqual(black, col[0]);
-  var rng2 = result.item_1;
-  var result2 = appendCell((col, rng2), 1);
-  var col2 = result2.item_0;
-  Assert.AreEqual(2, col2.length());
-  Assert.AreEqual(white, col2[1]);
+  Assert.AreEqual(black, grid.get(0, 0));
+  Assert.AreEqual(white, grid.get(1, 0));
+  Assert.AreEqual(black, grid.get(2, 0));
+  Assert.AreEqual(white, grid.get(0, 1));
+  Assert.AreEqual(black, grid.get(1, 1));
+  Assert.AreEqual(white, grid.get(2, 1));
+  Assert.AreEqual(black, grid.get(0, 2));
+  Assert.AreEqual(white, grid.get(1, 2));
+  Assert.AreEqual(black, grid.get(2, 2));
 }} // end test
 
 static int blackOrWhite(Random rng) { // function
@@ -123,139 +54,152 @@ static int blackOrWhite(Random rng) { // function
   Assert.AreEqual(black, blackOrWhite(rng3));
 }} // end test
 
-static (int, int) north((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int x(int cell) { // function
+  return cell % 40;
+} // end function
+
+static int y(int cell) { // function
+  return divAsInt(cell, 40);
+} // end function
+
+static int cellNo(int x, int y) { // function
+  return y*40 + x;
+} // end function
+
+static int north(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var y2 = if_(y == 0, 29, y - 1);
-  return (x, y2);
+  return cellNo(x, y2);
 } // end function
 
 [TestClass] class Test_north
 [TestMethod] static void test_north() {
-  Assert.AreEqual((3, 3), north((3, 4)));
-  Assert.AreEqual((39, 29), north((39, 0)));
-  Assert.AreEqual((0, 28), north((0, 29)));
-  Assert.AreEqual((39, 28), north((39, 29)));
+  Assert.AreEqual(84, north(124));
+  Assert.AreEqual(1160, north(0));
+  Assert.AreEqual(1199, north(39));
+  Assert.AreEqual(1159, north(1199));
+  Assert.AreEqual(1120, north(1160));
 }} // end test
 
-static (int, int) south((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int south(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var y2 = if_(y == 29, 0, y + 1);
-  return (x, y2);
+  return cellNo(x, y2);
 } // end function
 
 [TestClass] class Test_south
 [TestMethod] static void test_south() {
-  Assert.AreEqual((3, 5), south((3, 4)));
-  Assert.AreEqual((39, 1), south((39, 0)));
-  Assert.AreEqual((0, 0), south((0, 29)));
-  Assert.AreEqual((39, 0), south((39, 29)));
+  Assert.AreEqual(164, south(124));
+  Assert.AreEqual(40, south(0));
+  Assert.AreEqual(79, south(39));
+  Assert.AreEqual(39, south(1199));
+  Assert.AreEqual(0, south(1160));
 }} // end test
 
-static (int, int) east((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int east(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var x2 = if_(x == 39, 0, x + 1);
-  return (x2, y);
+  return cellNo(x2, y);
 } // end function
 
 [TestClass] class Test_east
 [TestMethod] static void test_east() {
-  Assert.AreEqual((11, 2), east((10, 2)));
-  Assert.AreEqual((0, 0), east((39, 0)));
-  Assert.AreEqual((1, 1), east((0, 1)));
-  Assert.AreEqual((0, 29), east((39, 29)));
+  Assert.AreEqual(125, east(124));
+  Assert.AreEqual(1, east(0));
+  Assert.AreEqual(0, east(39));
+  Assert.AreEqual(1160, east(1199));
+  Assert.AreEqual(1161, east(1160));
 }} // end test
 
-static (int, int) west((int, int) cell) { // function
-  var x = cell.item_0;
-  var y = cell.item_1;
+static int west(int cell) { // function
+  var x = x(cell);
+  var y = y(cell);
   var x2 = if_(x == 0, 39, x - 1);
-  return (x2, y);
+  return cellNo(x2, y);
 } // end function
 
 [TestClass] class Test_west
 [TestMethod] static void test_west() {
-  Assert.AreEqual((2, 4), west((3, 4)));
-  Assert.AreEqual((38, 0), west((39, 0)));
-  Assert.AreEqual((39, 0), west((0, 0)));
-  Assert.AreEqual((39, 29), west((0, 29)));
+  Assert.AreEqual(123, west(124));
+  Assert.AreEqual(39, west(0));
+  Assert.AreEqual(38, west(39));
+  Assert.AreEqual(1198, west(1199));
+  Assert.AreEqual(1199, west(1160));
 }} // end test
 
-static (int, int) northEast((int, int) cell) { // function
+static int northEast(int cell) { // function
   return north(east(cell));
 } // end function
 
 [TestClass] class Test_northEast
 [TestMethod] static void test_northEast() {
-  Assert.AreEqual((4, 3), northEast((3, 4)));
-  Assert.AreEqual((1, 29), northEast((0, 0)));
-  Assert.AreEqual((0, 29), northEast((39, 0)));
-  Assert.AreEqual((1, 28), northEast((0, 29)));
-  Assert.AreEqual((0, 28), northEast((39, 29)));
+  Assert.AreEqual(85, northEast(124));
+  Assert.AreEqual(1161, northEast(0));
+  Assert.AreEqual(1160, northEast(39));
+  Assert.AreEqual(1120, northEast(1199));
+  Assert.AreEqual(1121, northEast(1160));
 }} // end test
 
-static (int, int) northWest((int, int) cell) { // function
+static int northWest(int cell) { // function
   return north(west(cell));
 } // end function
 
 [TestClass] class Test_northWest
 [TestMethod] static void test_northWest() {
-  Assert.AreEqual((2, 3), northWest((3, 4)));
-  Assert.AreEqual((39, 29), northWest((0, 0)));
-  Assert.AreEqual((38, 29), northWest((39, 0)));
-  Assert.AreEqual((39, 28), northWest((0, 29)));
-  Assert.AreEqual((38, 28), northWest((39, 29)));
+  Assert.AreEqual(83, northWest(124));
+  Assert.AreEqual(1199, northWest(0));
+  Assert.AreEqual(1198, northWest(39));
+  Assert.AreEqual(1158, northWest(1199));
+  Assert.AreEqual(1159, northWest(1160));
 }} // end test
 
-[TestClass] class Test_southEast
-[TestMethod] static void test_southEast() {
-  Assert.AreEqual((4, 5), southEast((3, 4)));
-  Assert.AreEqual((1, 1), southEast((0, 0)));
-  Assert.AreEqual((0, 1), southEast((39, 0)));
-  Assert.AreEqual((1, 0), southEast((0, 29)));
-  Assert.AreEqual((0, 0), southEast((39, 29)));
-}} // end test
-
-static (int, int) southEast((int, int) cell) { // function
+static int southEast(int cell) { // function
   return south(east(cell));
 } // end function
 
-static (int, int) southWest((int, int) cell) { // function
+[TestClass] class Test_southEast
+[TestMethod] static void test_southEast() {
+  Assert.AreEqual(165, southEast(124));
+  Assert.AreEqual(41, southEast(0));
+  Assert.AreEqual(40, southEast(39));
+  Assert.AreEqual(0, southEast(1199));
+  Assert.AreEqual(1, southEast(1160));
+}} // end test
+
+static int southWest(int cell) { // function
   return south(west(cell));
 } // end function
 
 [TestClass] class Test_southWest
 [TestMethod] static void test_southWest() {
-  Assert.AreEqual((2, 5), southWest((3, 4)));
-  Assert.AreEqual((39, 1), southWest((0, 0)));
-  Assert.AreEqual((38, 1), southWest((39, 0)));
-  Assert.AreEqual((39, 0), southWest((0, 29)));
-  Assert.AreEqual((38, 0), southWest((39, 29)));
+  Assert.AreEqual(163, southWest(124));
+  Assert.AreEqual(79, southWest(0));
+  Assert.AreEqual(78, southWest(39));
+  Assert.AreEqual(38, southWest(1199));
+  Assert.AreEqual(39, southWest(1160));
 }} // end test
 
-static List<(int, int)> neighbourCells(int x, int y) { // function
-  var c = (x, y);
+static List<int> neighbourCells(int c) { // function
   return new [] {northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)};
 } // end function
 
 [TestClass] class Test_neighbourCells
 [TestMethod] static void test_neighbourCells() {
-  Assert.AreEqual(new [] {(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)}, neighbourCells(3, 4));
-  Assert.AreEqual(new [] {(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)}, neighbourCells(0, 0));
-  Assert.AreEqual(new [] {(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)}, neighbourCells(39, 29));
+  Assert.AreEqual(new [] {83, 84, 85, 123, 125, 163, 164, 165}, neighbourCells(124));
 }} // end test
 
-static int liveNeighbours(List<List<int>> grid, int x, int y) { // function
-  var neighbours = neighbourCells(x, y);
-  return neighbours.filter((int, int) c => grid[c.item_0][c.item_1] == black).length();
+static int liveNeighbours(BlockGraphics grid, int cell) { // function
+  var neighbours = neighbourCells(cell);
+  return neighbours.filter(int c => grid.getBlockNo(c) == black).length();
 } // end function
 
 [TestClass] class Test_liveNeighbours
 [TestMethod] static void test_liveNeighbours() {
   var grid = initialGrid(new Random());
-  var live = liveNeighbours(grid, 1, 1);
+  var live = liveNeighbours(grid, 41);
   Assert.AreEqual(4, live);
 }} // end test
 
@@ -285,35 +229,23 @@ static bool willLive(int cell, int liveNeighbours) { // function
   Assert.AreEqual(false, willLive(black, 8));
 }} // end test
 
-static int nextCellValue(List<List<int>> grid, int x, int y) { // function
-  var live = willLive(grid[x][y], liveNeighbours(grid, x, y));
+static int nextCellValue(BlockGraphics grid, int cell) { // function
+  var live = willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell));
   return if_(live, black, white);
+} // end function
+
+static BlockGraphics updateCellValue(BlockGraphics oldGrid, BlockGraphics newGrid, int cell) { // function
+  return newGrid.withPutBlockNo(cell, nextCellValue(oldGrid, cell));
 } // end function
 
 [TestClass] class Test_nextCellValue
 [TestMethod] static void test_nextCellValue() {
   var grid = initialGrid(new Random());
-  var nxt = nextCellValue(grid, 1, 1);
+  var nxt = nextCellValue(grid, 41);
   Assert.AreEqual(white, nxt);
 }} // end test
 
-static List<List<int>> nextGeneration(List<List<int>> grid) { // function
-  var cols = range(0, 40);
-  return cols.map(int x => nextCol(grid, x));
+static BlockGraphics nextGeneration(BlockGraphics oldGrid) { // function
+  var emptyGrid = new BlockGraphics();
+  return range(0, 1199).reduce(emptyGrid, BlockGraphics newGrid, int c => updateCellValue(oldGrid, newGrid, c));
 } // end function
-
-static List<int> nextCol(List<List<int>> grid, int x) { // function
-  var col = grid[x];
-  var rows = range(0, 30);
-  return rows.map(int y => nextCellValue(grid, x, y));
-} // end function
-
-[TestClass] class Test_nextCol
-[TestMethod] static void test_nextCol() {
-  var grid = initialGrid(new Random());
-  var col = nextCol(grid, 3);
-  Assert.AreEqual(black, col[0]);
-  Assert.AreEqual(black, col[1]);
-  Assert.AreEqual(white, col[2]);
-  Assert.AreEqual(black, col[29]);
-}} // end test

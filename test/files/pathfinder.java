@@ -11,7 +11,7 @@ static void main() {
   var nodes = new List<Node>();
   createRocksAndNodes(percentRocks, rocks, nodes, start, destination); // procedure call
   var gr = initialiseGraphics(start, destination, rocks);
-  gr.display(); // procedure call
+  displayBlockGraphics(gr); // procedure call
   var solver = new Solver(nodes, start, destination);
   while (true) {
     var k = inputStringFromOptions(algPrompt, list("a", "d", "h"));
@@ -27,7 +27,7 @@ static void runSolver(BlockGraphics gr, Point start, Point destination, List<Poi
   while (solver.running) {
     solver.visitNextPoint(); // procedure call
     gr2 = addVisited(gr2, solver.getLastVisited()); // assignment
-    gr2.display(); // procedure call
+    displayBlockGraphics(gr2); // procedure call
     sleep_ms(0); // procedure call
   } // end while
   if (solver.getLastVisited().equals(destination)) {
@@ -35,7 +35,7 @@ static void runSolver(BlockGraphics gr, Point start, Point destination, List<Poi
     var route = rl.item_0;
     var length = rl.item_1;
     gr2 = addRoute(gr2, route); // assignment
-    gr2.display(); // procedure call
+    displayBlockGraphics(gr2); // procedure call
     printNoLine(String.format("Length of route: % ", length.round(2))); // procedure call
   } else {
     printNoLine("No path found. "); // procedure call

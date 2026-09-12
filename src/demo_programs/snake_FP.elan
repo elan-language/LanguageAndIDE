@@ -1,4 +1,4 @@
-# cdc65697016bbe2481a6ef25124c0bc38f5be219a56633a6c933cf22224ef1b2 Elan 2.0.0-beta4 valid
+# bddcb15232b3db0969a4873afe629cdd3206f610cc27beff462a68250638de4f Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -8,7 +8,7 @@ main
   variable game set to (new Game(rnd)).withNewApple()
   while game.isOn
     assign blocks to updateGraphics(game, blocks)
-    call blocks.display()
+    call displayBlockGraphics(blocks)
     call sleep_ms(150)
     assign game to clockTick(game, getKey())
   end while

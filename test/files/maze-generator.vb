@@ -15,7 +15,7 @@ Sub main()
       blocks.put(p.x, p.y, colour) ' procedure call
     End If
   Next i
-  blocks.display() ' procedure call
+  displayBlockGraphics(blocks) ' procedure call
   Console.WriteLine("File name to save: ")
 
       Dim name = Console.ReadLine() ' input statement

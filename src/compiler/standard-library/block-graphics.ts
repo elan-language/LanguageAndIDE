@@ -7,7 +7,6 @@ import {
   elanIntType,
   elanProcedure,
   FunctionOptions,
-  ProcedureOptions,
 } from "../elan-type-annotations";
 import { System } from "../system";
 
@@ -54,25 +53,6 @@ export class BlockGraphics {
     return blocks;
   }
 
-  @elanProcedure([], ProcedureOptions.async)
-  async display(): Promise<void> {
-    let html = ``;
-    for (let y = 0; y < 30; y++) {
-      for (let x = 0; x < 40; x++) {
-        //const colour = blocks.read(x, y);
-        const colour = this.blocks[x][y];
-        html = `${html}<div style="background-color:${this.asHex(colour)};"></div>`;
-      }
-    }
-    return await this.system!.elanInputOutput.drawBlockGraphics(html);
-  }
-
-  private asHex(n: number): string {
-    const h = "000000" + n.toString(16);
-    const h6 = h.substring(h.length - 6);
-    return `#${h6}`;
-  }
-
   //Procedures
   @elanProcedure(["col", "row", "colour"])
   put(@elanIntType() x: number, @elanIntType() y: number, @elanIntType() colour: number) {
@@ -93,15 +73,18 @@ export class BlockGraphics {
     }
   }
 
-  //Functions
+  //If out of bounds returns -1
   @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
   get(@elanIntType() x: number, @elanIntType() y: number): number {
     return this.blocks[x][y];
   }
 
+  //If out of bounds returns -1
   @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
   getBlockNo(@elanIntType() sq: number): number {
-    return this.blocks[this.col(sq)][this.row(sq)];
+    const x = this.col(sq);
+    const y = this.row(sq);
+    return this.get(x, y);
   }
 
   @elanFunction(["col", "row", "colour"], FunctionOptions.pure, ElanClass(BlockGraphics))

@@ -4,8 +4,8 @@
 
 static void main() {
   var bg = new BlockGraphics();
-  var head = bg.blockNo(21, 15);
-  var snake = new [] {head, bg.blockNo(20, 15)};
+  var head = 620;
+  var snake = new [] {head, 619};
   var currentDir = "d";
   var gameOn = true;
   var apple = 0;
@@ -44,7 +44,7 @@ static void updateDisplay(BlockGraphics bg, List<int> snake, int apple) { // pro
     bg.putBlockNo(bl, green); // procedure call
   } // end foreach
   bg.putBlockNo(apple, red); // procedure call
-  bg.display(); // procedure call
+  displayBlockGraphics(bg); // procedure call
 } // end procedure
 
 static int getAdjacentBlock(int bl, string dir, BlockGraphics bg) { // function

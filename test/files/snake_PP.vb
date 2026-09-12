@@ -4,8 +4,8 @@
 
 Sub main()
   Dim bg = New BlockGraphics() ' variable definition
-  Dim head = bg.blockNo(21, 15) ' variable definition
-  Dim snake = {head, bg.blockNo(20, 15)} ' variable definition
+  Dim head = 620 ' variable definition
+  Dim snake = {head, 619} ' variable definition
   Dim currentDir = "d" ' variable definition
   Dim gameOn = True ' variable definition
   Dim apple = 0 ' variable definition
@@ -44,7 +44,7 @@ Sub updateDisplay(bg As BlockGraphics, snake As List(Of Integer), apple As Integ
     bg.putBlockNo(bl, green) ' procedure call
   Next bl
   bg.putBlockNo(apple, red) ' procedure call
-  bg.display() ' procedure call
+  displayBlockGraphics(bg) ' procedure call
 End Sub
 
 Function getAdjacentBlock(bl As Integer, dir As String, bg As BlockGraphics) As Integer

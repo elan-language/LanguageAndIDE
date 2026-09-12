@@ -5,106 +5,37 @@ def main() -> None:
   rng.initialiseFromClock() # procedure call
   grid = initialGrid(rng) # variable definition
   while True:
-    displayBlocks(grid) # procedure call
+    displayBlockGraphics(grid) # procedure call
     grid = nextGeneration(grid) # assignment
     sleep_ms(50) # procedure call
   # end while
 # end main
 
-def initialGrid(rng: Random) -> list[list[int]]: # function
-  grid = list[list[int]]() # variable definition
-  cols = range(0, 40) # variable definition
-  return cols.reduce((grid, rng), appendCol).item_0
+def initialGrid(rng: Random) -> BlockGraphics: # function
+  grid = BlockGraphics() # variable definition
+  cells = range(0, 1199) # variable definition
+  return cells.reduce((grid, rng), initialCell).item_0
+# end function
+
+def initialCell(acc: tuple[BlockGraphics, Random], cell: int) -> tuple[BlockGraphics, Random]: # function
+  bg = acc.item_0 # variable definition
+  rng = acc.item_1 # variable definition
+  colour = blackOrWhite(rng) # variable definition
+  return (bg.withPutBlockNo(cell, colour), rng.nextGen())
 # end function
 
 class Test_initialGrid(unittest.TestCase):
  def test_initialGrid(self) -> None:
   grid = initialGrid(Random()) # variable definition
-  self.assertEqual(grid[0][0], black)
-  self.assertEqual(grid[1][0], white)
-  self.assertEqual(grid[2][0], white)
-  self.assertEqual(grid[0][1], white)
-  self.assertEqual(grid[1][1], black)
-  self.assertEqual(grid[2][1], white)
-  self.assertEqual(grid[0][2], black)
-  self.assertEqual(grid[1][2], black)
-  self.assertEqual(grid[2][2], black)
-# end test
-
-def appendCol(tup: tuple[list[list[int]], Random], c: int) -> tuple[list[list[int]], Random]: # function
-  # 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  grid = tup.item_0 # variable definition
-  rng = tup.item_1 # variable definition
-  tup2 = initialCol(rng) # variable definition
-  col = tup2.item_0 # variable definition
-  rng2 = tup2.item_1 # variable definition
-  grid2 = grid.withAppend(col) # variable definition
-  return (grid2, rng2)
-# end function
-
-class Test_appendCol(unittest.TestCase):
- def test_appendCol(self) -> None:
-  emptyGrid = list[list[int]]() # variable definition
-  rng = Random() # variable definition
-  result = appendCol((emptyGrid, rng), 0) # variable definition
-  grid1 = result.item_0 # variable definition
-  col = grid1[0] # variable definition
-  self.assertEqual(col[0], black)
-  self.assertEqual(col[1], white)
-  self.assertEqual(col[2], black)
-  self.assertEqual(col[29], black)
-  rng2 = result.item_1 # variable definition
-  result2 = appendCol((grid1, rng2), 1) # variable definition
-  grid2 = result2.item_0 # variable definition
-  col2 = grid2[1] # variable definition
-  self.assertEqual(col2[0], white)
-  self.assertEqual(col2[1], black)
-  self.assertEqual(col2[2], black)
-  self.assertEqual(col2[29], white)
-# end test
-
-def initialCol(rng: Random) -> tuple[list[int], Random]: # function
-  col = list[int]() # variable definition
-  rows = range(0, 30) # variable definition
-  return rows.reduce((col, rng), appendCell)
-# end function
-
-class Test_initialCol(unittest.TestCase):
- def test_initialCol(self) -> None:
-  rng = Random() # variable definition
-  result = initialCol(rng) # variable definition
-  col = result.item_0 # variable definition
-  self.assertEqual(col[0], black)
-  self.assertEqual(col[1], white)
-  self.assertEqual(col[2], black)
-  self.assertEqual(col[29], black)
-  rng2 = result.item_1 # variable definition
-  col2 = initialCol(rng2).item_0 # variable definition
-  self.assertEqual(col2[0], white)
-  self.assertEqual(col2[1], black)
-  self.assertEqual(col2[2], black)
-  self.assertEqual(col2[29], white)
-# end test
-
-def appendCell(tup: tuple[list[int], Random], row: int) -> tuple[list[int], Random]: # function
-  col = tup.item_0 # variable definition
-  rng = tup.item_1 # variable definition
-  return (col.withAppend(blackOrWhite(rng)), rng.nextGen())
-# end function
-
-class Test_appendCell(unittest.TestCase):
- def test_appendCell(self) -> None:
-  rng = Random() # variable definition
-  emptyList = list[int]() # variable definition
-  result = appendCell((emptyList, rng), 0) # variable definition
-  col = result.item_0 # variable definition
-  self.assertEqual(col.length(), 1)
-  self.assertEqual(col[0], black)
-  rng2 = result.item_1 # variable definition
-  result2 = appendCell((col, rng2), 1) # variable definition
-  col2 = result2.item_0 # variable definition
-  self.assertEqual(col2.length(), 2)
-  self.assertEqual(col2[1], white)
+  self.assertEqual(grid.get(0, 0), black)
+  self.assertEqual(grid.get(1, 0), white)
+  self.assertEqual(grid.get(2, 0), black)
+  self.assertEqual(grid.get(0, 1), white)
+  self.assertEqual(grid.get(1, 1), black)
+  self.assertEqual(grid.get(2, 1), white)
+  self.assertEqual(grid.get(0, 2), black)
+  self.assertEqual(grid.get(1, 2), white)
+  self.assertEqual(grid.get(2, 2), black)
 # end test
 
 def blackOrWhite(rng: Random) -> int: # function
@@ -123,139 +54,152 @@ class Test_blackOrWhite(unittest.TestCase):
   self.assertEqual(blackOrWhite(rng3), black)
 # end test
 
-def north(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # variable definition
-  y = cell.item_1 # variable definition
+def x(cell: int) -> int: # function
+  return cell % 40
+# end function
+
+def y(cell: int) -> int: # function
+  return divAsInt(cell, 40)
+# end function
+
+def cellNo(x: int, y: int) -> int: # function
+  return y*40 + x
+# end function
+
+def north(cell: int) -> int: # function
+  x = x(cell) # variable definition
+  y = y(cell) # variable definition
   y2 = if_(y == 0, 29, y - 1) # variable definition
-  return (x, y2)
+  return cellNo(x, y2)
 # end function
 
 class Test_north(unittest.TestCase):
  def test_north(self) -> None:
-  self.assertEqual(north((3, 4)), (3, 3))
-  self.assertEqual(north((39, 0)), (39, 29))
-  self.assertEqual(north((0, 29)), (0, 28))
-  self.assertEqual(north((39, 29)), (39, 28))
+  self.assertEqual(north(124), 84)
+  self.assertEqual(north(0), 1160)
+  self.assertEqual(north(39), 1199)
+  self.assertEqual(north(1199), 1159)
+  self.assertEqual(north(1160), 1120)
 # end test
 
-def south(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # variable definition
-  y = cell.item_1 # variable definition
+def south(cell: int) -> int: # function
+  x = x(cell) # variable definition
+  y = y(cell) # variable definition
   y2 = if_(y == 29, 0, y + 1) # variable definition
-  return (x, y2)
+  return cellNo(x, y2)
 # end function
 
 class Test_south(unittest.TestCase):
  def test_south(self) -> None:
-  self.assertEqual(south((3, 4)), (3, 5))
-  self.assertEqual(south((39, 0)), (39, 1))
-  self.assertEqual(south((0, 29)), (0, 0))
-  self.assertEqual(south((39, 29)), (39, 0))
+  self.assertEqual(south(124), 164)
+  self.assertEqual(south(0), 40)
+  self.assertEqual(south(39), 79)
+  self.assertEqual(south(1199), 39)
+  self.assertEqual(south(1160), 0)
 # end test
 
-def east(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # variable definition
-  y = cell.item_1 # variable definition
+def east(cell: int) -> int: # function
+  x = x(cell) # variable definition
+  y = y(cell) # variable definition
   x2 = if_(x == 39, 0, x + 1) # variable definition
-  return (x2, y)
+  return cellNo(x2, y)
 # end function
 
 class Test_east(unittest.TestCase):
  def test_east(self) -> None:
-  self.assertEqual(east((10, 2)), (11, 2))
-  self.assertEqual(east((39, 0)), (0, 0))
-  self.assertEqual(east((0, 1)), (1, 1))
-  self.assertEqual(east((39, 29)), (0, 29))
+  self.assertEqual(east(124), 125)
+  self.assertEqual(east(0), 1)
+  self.assertEqual(east(39), 0)
+  self.assertEqual(east(1199), 1160)
+  self.assertEqual(east(1160), 1161)
 # end test
 
-def west(cell: tuple[int, int]) -> tuple[int, int]: # function
-  x = cell.item_0 # variable definition
-  y = cell.item_1 # variable definition
+def west(cell: int) -> int: # function
+  x = x(cell) # variable definition
+  y = y(cell) # variable definition
   x2 = if_(x == 0, 39, x - 1) # variable definition
-  return (x2, y)
+  return cellNo(x2, y)
 # end function
 
 class Test_west(unittest.TestCase):
  def test_west(self) -> None:
-  self.assertEqual(west((3, 4)), (2, 4))
-  self.assertEqual(west((39, 0)), (38, 0))
-  self.assertEqual(west((0, 0)), (39, 0))
-  self.assertEqual(west((0, 29)), (39, 29))
+  self.assertEqual(west(124), 123)
+  self.assertEqual(west(0), 39)
+  self.assertEqual(west(39), 38)
+  self.assertEqual(west(1199), 1198)
+  self.assertEqual(west(1160), 1199)
 # end test
 
-def northEast(cell: tuple[int, int]) -> tuple[int, int]: # function
+def northEast(cell: int) -> int: # function
   return north(east(cell))
 # end function
 
 class Test_northEast(unittest.TestCase):
  def test_northEast(self) -> None:
-  self.assertEqual(northEast((3, 4)), (4, 3))
-  self.assertEqual(northEast((0, 0)), (1, 29))
-  self.assertEqual(northEast((39, 0)), (0, 29))
-  self.assertEqual(northEast((0, 29)), (1, 28))
-  self.assertEqual(northEast((39, 29)), (0, 28))
+  self.assertEqual(northEast(124), 85)
+  self.assertEqual(northEast(0), 1161)
+  self.assertEqual(northEast(39), 1160)
+  self.assertEqual(northEast(1199), 1120)
+  self.assertEqual(northEast(1160), 1121)
 # end test
 
-def northWest(cell: tuple[int, int]) -> tuple[int, int]: # function
+def northWest(cell: int) -> int: # function
   return north(west(cell))
 # end function
 
 class Test_northWest(unittest.TestCase):
  def test_northWest(self) -> None:
-  self.assertEqual(northWest((3, 4)), (2, 3))
-  self.assertEqual(northWest((0, 0)), (39, 29))
-  self.assertEqual(northWest((39, 0)), (38, 29))
-  self.assertEqual(northWest((0, 29)), (39, 28))
-  self.assertEqual(northWest((39, 29)), (38, 28))
+  self.assertEqual(northWest(124), 83)
+  self.assertEqual(northWest(0), 1199)
+  self.assertEqual(northWest(39), 1198)
+  self.assertEqual(northWest(1199), 1158)
+  self.assertEqual(northWest(1160), 1159)
 # end test
 
-class Test_southEast(unittest.TestCase):
- def test_southEast(self) -> None:
-  self.assertEqual(southEast((3, 4)), (4, 5))
-  self.assertEqual(southEast((0, 0)), (1, 1))
-  self.assertEqual(southEast((39, 0)), (0, 1))
-  self.assertEqual(southEast((0, 29)), (1, 0))
-  self.assertEqual(southEast((39, 29)), (0, 0))
-# end test
-
-def southEast(cell: tuple[int, int]) -> tuple[int, int]: # function
+def southEast(cell: int) -> int: # function
   return south(east(cell))
 # end function
 
-def southWest(cell: tuple[int, int]) -> tuple[int, int]: # function
+class Test_southEast(unittest.TestCase):
+ def test_southEast(self) -> None:
+  self.assertEqual(southEast(124), 165)
+  self.assertEqual(southEast(0), 41)
+  self.assertEqual(southEast(39), 40)
+  self.assertEqual(southEast(1199), 0)
+  self.assertEqual(southEast(1160), 1)
+# end test
+
+def southWest(cell: int) -> int: # function
   return south(west(cell))
 # end function
 
 class Test_southWest(unittest.TestCase):
  def test_southWest(self) -> None:
-  self.assertEqual(southWest((3, 4)), (2, 5))
-  self.assertEqual(southWest((0, 0)), (39, 1))
-  self.assertEqual(southWest((39, 0)), (38, 1))
-  self.assertEqual(southWest((0, 29)), (39, 0))
-  self.assertEqual(southWest((39, 29)), (38, 0))
+  self.assertEqual(southWest(124), 163)
+  self.assertEqual(southWest(0), 79)
+  self.assertEqual(southWest(39), 78)
+  self.assertEqual(southWest(1199), 38)
+  self.assertEqual(southWest(1160), 39)
 # end test
 
-def neighbourCells(x: int, y: int) -> list[tuple[int, int]]: # function
-  c = (x, y) # variable definition
+def neighbourCells(c: int) -> list[int]: # function
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 # end function
 
 class Test_neighbourCells(unittest.TestCase):
  def test_neighbourCells(self) -> None:
-  self.assertEqual(neighbourCells(3, 4), [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)])
-  self.assertEqual(neighbourCells(0, 0), [(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)])
-  self.assertEqual(neighbourCells(39, 29), [(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)])
+  self.assertEqual(neighbourCells(124), [83, 84, 85, 123, 125, 163, 164, 165])
 # end test
 
-def liveNeighbours(grid: list[list[int]], x: int, y: int) -> int: # function
-  neighbours = neighbourCells(x, y) # variable definition
-  return neighbours.filter(lambda c: tuple[int, int]: grid[c.item_0][c.item_1] == black).length()
+def liveNeighbours(grid: BlockGraphics, cell: int) -> int: # function
+  neighbours = neighbourCells(cell) # variable definition
+  return neighbours.filter(lambda c: int: grid.getBlockNo(c) == black).length()
 # end function
 
 class Test_liveNeighbours(unittest.TestCase):
  def test_liveNeighbours(self) -> None:
   grid = initialGrid(Random()) # variable definition
-  live = liveNeighbours(grid, 1, 1) # variable definition
+  live = liveNeighbours(grid, 41) # variable definition
   self.assertEqual(live, 4)
 # end test
 
@@ -285,37 +229,25 @@ class Test_willLive(unittest.TestCase):
   self.assertEqual(willLive(black, 8), False)
 # end test
 
-def nextCellValue(grid: list[list[int]], x: int, y: int) -> int: # function
-  live = willLive(grid[x][y], liveNeighbours(grid, x, y)) # variable definition
+def nextCellValue(grid: BlockGraphics, cell: int) -> int: # function
+  live = willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell)) # variable definition
   return if_(live, black, white)
+# end function
+
+def updateCellValue(oldGrid: BlockGraphics, newGrid: BlockGraphics, cell: int) -> BlockGraphics: # function
+  return newGrid.withPutBlockNo(cell, nextCellValue(oldGrid, cell))
 # end function
 
 class Test_nextCellValue(unittest.TestCase):
  def test_nextCellValue(self) -> None:
   grid = initialGrid(Random()) # variable definition
-  nxt = nextCellValue(grid, 1, 1) # variable definition
+  nxt = nextCellValue(grid, 41) # variable definition
   self.assertEqual(nxt, white)
 # end test
 
-def nextGeneration(grid: list[list[int]]) -> list[list[int]]: # function
-  cols = range(0, 40) # variable definition
-  return cols.map(lambda x: int: nextCol(grid, x))
+def nextGeneration(oldGrid: BlockGraphics) -> BlockGraphics: # function
+  emptyGrid = BlockGraphics() # variable definition
+  return range(0, 1199).reduce(emptyGrid, lambda newGrid: BlockGraphics, c: int: updateCellValue(oldGrid, newGrid, c))
 # end function
-
-def nextCol(grid: list[list[int]], x: int) -> list[int]: # function
-  col = grid[x] # variable definition
-  rows = range(0, 30) # variable definition
-  return rows.map(lambda y: int: nextCellValue(grid, x, y))
-# end function
-
-class Test_nextCol(unittest.TestCase):
- def test_nextCol(self) -> None:
-  grid = initialGrid(Random()) # variable definition
-  col = nextCol(grid, 3) # variable definition
-  self.assertEqual(col[0], black)
-  self.assertEqual(col[1], black)
-  self.assertEqual(col[2], white)
-  self.assertEqual(col[29], black)
-# end test
 
 main()

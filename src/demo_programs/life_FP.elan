@@ -1,106 +1,40 @@
-# d075a3d04f82c5801eb96a57d4b92ace9421c0a80d938a7abfd15ed33325c34a Elan 2.0.0-beta4 valid
+# 9fe56259e16bc6a7abe4c7d615411023090127177c0ec1261c92d81b3a60dcc4 Elan 2.0.0-beta4 valid
 
 main
   variable rng set to new Random()
   call rng.initialiseFromClock()
   variable grid set to initialGrid(rng)
   while true
-    call displayBlocks(grid)
+    call displayBlockGraphics(grid)
     assign grid to nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main
 
-function initialGrid(rng as Random) returns List<of List<of Int>>
-  variable grid set to new List<of List<of Int>>()
-  variable cols set to range(0, 40)
-  return cols.reduce((grid, rng), appendCol).item_0
+function initialGrid(rng as Random) returns BlockGraphics
+  variable grid set to new BlockGraphics()
+  variable cells set to range(0, 1199)
+  return cells.reduce((grid, rng), initialCell).item_0
+end function
+
+function initialCell(acc as (BlockGraphics, Random), cell as Int) returns (BlockGraphics, Random)
+  variable bg set to acc.item_0
+  variable rng set to acc.item_1
+  variable colour set to blackOrWhite(rng)
+  return (bg.withPutBlockNo(cell, colour), rng.nextGen())
 end function
 
 test test_initialGrid
   variable grid set to initialGrid(new Random())
-  assert grid[0][0] evaluates to black
-  assert grid[1][0] evaluates to white
-  assert grid[2][0] evaluates to white
-  assert grid[0][1] evaluates to white
-  assert grid[1][1] evaluates to black
-  assert grid[2][1] evaluates to white
-  assert grid[0][2] evaluates to black
-  assert grid[1][2] evaluates to black
-  assert grid[2][2] evaluates to black
-end test
-
-function appendCol(tup as (List<of List<of Int>>, Random), c as Int) returns (List<of List<of Int>>, Random)
-  # 'c' is not used, but is needed for compatibility with function signature for 'reduce'
-  variable grid set to tup.item_0
-  variable rng set to tup.item_1
-  variable tup2 set to initialCol(rng)
-  variable col set to tup2.item_0
-  variable rng2 set to tup2.item_1
-  variable grid2 set to grid.withAppend(col)
-  return (grid2, rng2)
-end function
-
-test test_appendCol
-  variable emptyGrid set to new List<of List<of Int>>()
-  variable rng set to new Random()
-  variable result set to appendCol((emptyGrid, rng), 0)
-  variable grid1 set to result.item_0
-  variable col set to grid1[0]
-  assert col[0] evaluates to black
-  assert col[1] evaluates to white
-  assert col[2] evaluates to black
-  assert col[29] evaluates to black
-  variable rng2 set to result.item_1
-  variable result2 set to appendCol((grid1, rng2), 1)
-  variable grid2 set to result2.item_0
-  variable col2 set to grid2[1]
-  assert col2[0] evaluates to white
-  assert col2[1] evaluates to black
-  assert col2[2] evaluates to black
-  assert col2[29] evaluates to white
-end test
-
-function initialCol(rng as Random) returns (List<of Int>, Random)
-  variable col set to new List<of Int>()
-  variable rows set to range(0, 30)
-  return rows.reduce((col, rng), appendCell)
-end function
-
-test test_initialCol
-  variable rng set to new Random()
-  variable result set to initialCol(rng)
-  variable col set to result.item_0
-  assert col[0] evaluates to black
-  assert col[1] evaluates to white
-  assert col[2] evaluates to black
-  assert col[29] evaluates to black
-  variable rng2 set to result.item_1
-  variable col2 set to initialCol(rng2).item_0
-  assert col2[0] evaluates to white
-  assert col2[1] evaluates to black
-  assert col2[2] evaluates to black
-  assert col2[29] evaluates to white
-end test
-
-function appendCell(tup as (List<of Int>, Random), row as Int) returns (List<of Int>, Random)
-  variable col set to tup.item_0
-  variable rng set to tup.item_1
-  return (col.withAppend(blackOrWhite(rng)), rng.nextGen())
-end function
-
-test test_appendCell
-  variable rng set to new Random()
-  variable emptyList set to new List<of Int>()
-  variable result set to appendCell((emptyList, rng), 0)
-  variable col set to result.item_0
-  assert col.length() evaluates to 1
-  assert col[0] evaluates to black
-  variable rng2 set to result.item_1
-  variable result2 set to appendCell((col, rng2), 1)
-  variable col2 set to result2.item_0
-  assert col2.length() evaluates to 2
-  assert col2[1] evaluates to white
+  assert grid.get(0, 0) evaluates to black
+  assert grid.get(1, 0) evaluates to white
+  assert grid.get(2, 0) evaluates to black
+  assert grid.get(0, 1) evaluates to white
+  assert grid.get(1, 1) evaluates to black
+  assert grid.get(2, 1) evaluates to white
+  assert grid.get(0, 2) evaluates to black
+  assert grid.get(1, 2) evaluates to white
+  assert grid.get(2, 2) evaluates to black
 end test
 
 function blackOrWhite(rng as Random) returns Int
@@ -118,129 +52,142 @@ test test_blackOrWhite
   assert blackOrWhite(rng3) evaluates to black
 end test
 
-function north(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
+function x(cell as Int) returns Int
+  return cell mod 40
+end function
+
+function y(cell as Int) returns Int
+  return divAsInt(cell, 40)
+end function
+
+function cellNo(x as Int, y as Int) returns Int
+  return y*40 + x
+end function
+
+function north(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
   variable y2 set to if_(y is 0, 29, y - 1)
-  return (x, y2)
+  return cellNo(x, y2)
 end function
 
 test test_north
-  assert north((3, 4)) evaluates to (3, 3)
-  assert north((39, 0)) evaluates to (39, 29)
-  assert north((0, 29)) evaluates to (0, 28)
-  assert north((39, 29)) evaluates to (39, 28)
+  assert north(124) evaluates to 84
+  assert north(0) evaluates to 1160
+  assert north(39) evaluates to 1199
+  assert north(1199) evaluates to 1159
+  assert north(1160) evaluates to 1120
 end test
 
-function south(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
+function south(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
   variable y2 set to if_(y is 29, 0, y + 1)
-  return (x, y2)
+  return cellNo(x, y2)
 end function
 
 test test_south
-  assert south((3, 4)) evaluates to (3, 5)
-  assert south((39, 0)) evaluates to (39, 1)
-  assert south((0, 29)) evaluates to (0, 0)
-  assert south((39, 29)) evaluates to (39, 0)
+  assert south(124) evaluates to 164
+  assert south(0) evaluates to 40
+  assert south(39) evaluates to 79
+  assert south(1199) evaluates to 39
+  assert south(1160) evaluates to 0
 end test
 
-function east(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
+function east(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
   variable x2 set to if_(x is 39, 0, x + 1)
-  return (x2, y)
+  return cellNo(x2, y)
 end function
 
 test test_east
-  assert east((10, 2)) evaluates to (11, 2)
-  assert east((39, 0)) evaluates to (0, 0)
-  assert east((0, 1)) evaluates to (1, 1)
-  assert east((39, 29)) evaluates to (0, 29)
+  assert east(124) evaluates to 125
+  assert east(0) evaluates to 1
+  assert east(39) evaluates to 0
+  assert east(1199) evaluates to 1160
+  assert east(1160) evaluates to 1161
 end test
 
-function west(cell as (Int, Int)) returns (Int, Int)
-  variable x set to cell.item_0
-  variable y set to cell.item_1
+function west(cell as Int) returns Int
+  variable x set to x(cell)
+  variable y set to y(cell)
   variable x2 set to if_(x is 0, 39, x - 1)
-  return (x2, y)
+  return cellNo(x2, y)
 end function
 
 test test_west
-  assert west((3, 4)) evaluates to (2, 4)
-  assert west((39, 0)) evaluates to (38, 0)
-  assert west((0, 0)) evaluates to (39, 0)
-  assert west((0, 29)) evaluates to (39, 29)
+  assert west(124) evaluates to 123
+  assert west(0) evaluates to 39
+  assert west(39) evaluates to 38
+  assert west(1199) evaluates to 1198
+  assert west(1160) evaluates to 1199
 end test
 
-function northEast(cell as (Int, Int)) returns (Int, Int)
+function northEast(cell as Int) returns Int
   return north(east(cell))
 end function
 
 test test_northEast
-  assert northEast((3, 4)) evaluates to (4, 3)
-  assert northEast((0, 0)) evaluates to (1, 29)
-  assert northEast((39, 0)) evaluates to (0, 29)
-  assert northEast((0, 29)) evaluates to (1, 28)
-  assert northEast((39, 29)) evaluates to (0, 28)
+  assert northEast(124) evaluates to 85
+  assert northEast(0) evaluates to 1161
+  assert northEast(39) evaluates to 1160
+  assert northEast(1199) evaluates to 1120
+  assert northEast(1160) evaluates to 1121
 end test
 
-function northWest(cell as (Int, Int)) returns (Int, Int)
+function northWest(cell as Int) returns Int
   return north(west(cell))
 end function
 
 test test_northWest
-  assert northWest((3, 4)) evaluates to (2, 3)
-  assert northWest((0, 0)) evaluates to (39, 29)
-  assert northWest((39, 0)) evaluates to (38, 29)
-  assert northWest((0, 29)) evaluates to (39, 28)
-  assert northWest((39, 29)) evaluates to (38, 28)
+  assert northWest(124) evaluates to 83
+  assert northWest(0) evaluates to 1199
+  assert northWest(39) evaluates to 1198
+  assert northWest(1199) evaluates to 1158
+  assert northWest(1160) evaluates to 1159
 end test
 
-test test_southEast
-  assert southEast((3, 4)) evaluates to (4, 5)
-  assert southEast((0, 0)) evaluates to (1, 1)
-  assert southEast((39, 0)) evaluates to (0, 1)
-  assert southEast((0, 29)) evaluates to (1, 0)
-  assert southEast((39, 29)) evaluates to (0, 0)
-end test
-
-function southEast(cell as (Int, Int)) returns (Int, Int)
+function southEast(cell as Int) returns Int
   return south(east(cell))
 end function
 
-function southWest(cell as (Int, Int)) returns (Int, Int)
+test test_southEast
+  assert southEast(124) evaluates to 165
+  assert southEast(0) evaluates to 41
+  assert southEast(39) evaluates to 40
+  assert southEast(1199) evaluates to 0
+  assert southEast(1160) evaluates to 1
+end test
+
+function southWest(cell as Int) returns Int
   return south(west(cell))
 end function
 
 test test_southWest
-  assert southWest((3, 4)) evaluates to (2, 5)
-  assert southWest((0, 0)) evaluates to (39, 1)
-  assert southWest((39, 0)) evaluates to (38, 1)
-  assert southWest((0, 29)) evaluates to (39, 0)
-  assert southWest((39, 29)) evaluates to (38, 0)
+  assert southWest(124) evaluates to 163
+  assert southWest(0) evaluates to 79
+  assert southWest(39) evaluates to 78
+  assert southWest(1199) evaluates to 38
+  assert southWest(1160) evaluates to 39
 end test
 
-function neighbourCells(x as Int, y as Int) returns List<of (Int, Int)>
-  variable c set to (x, y)
+function neighbourCells(c as Int) returns List<of Int>
   return [northWest(c), north(c), northEast(c), west(c), east(c), southWest(c), south(c), southEast(c)]
 end function
 
 test test_neighbourCells
-  assert neighbourCells(3, 4) evaluates to [(2, 3), (3, 3), (4, 3), (2, 4), (4, 4), (2, 5), (3, 5), (4, 5)]
-  assert neighbourCells(0, 0) evaluates to [(39, 29), (0, 29), (1, 29), (39, 0), (1, 0), (39, 1), (0, 1), (1, 1)]
-  assert neighbourCells(39, 29) evaluates to [(38, 28), (39, 28), (0, 28), (38, 29), (0, 29), (38, 0), (39, 0), (0, 0)]
+  assert neighbourCells(124) evaluates to [83, 84, 85, 123, 125, 163, 164, 165]
 end test
 
-function liveNeighbours(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
-  variable neighbours set to neighbourCells(x, y)
-  return neighbours.filter(lambda c as (Int, Int) => grid[c.item_0][c.item_1] is black).length()
+function liveNeighbours(grid as BlockGraphics, cell as Int) returns Int
+  variable neighbours set to neighbourCells(cell)
+  return neighbours.filter(lambda c as Int => grid.getBlockNo(c) is black).length()
 end function
 
 test test_liveNeighbours
   variable grid set to initialGrid(new Random())
-  variable live set to liveNeighbours(grid, 1, 1)
+  variable live set to liveNeighbours(grid, 41)
   assert live evaluates to 4
 end test
 
@@ -269,33 +216,22 @@ test test_willLive
   assert willLive(black, 8) evaluates to false
 end test
 
-function nextCellValue(grid as List<of List<of Int>>, x as Int, y as Int) returns Int
-  variable live set to willLive(grid[x][y], liveNeighbours(grid, x, y))
+function nextCellValue(grid as BlockGraphics, cell as Int) returns Int
+  variable live set to willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell))
   return if_(live, black, white)
+end function
+
+function updateCellValue(oldGrid as BlockGraphics, newGrid as BlockGraphics, cell as Int) returns BlockGraphics
+  return newGrid.withPutBlockNo(cell, nextCellValue(oldGrid, cell))
 end function
 
 test test_nextCellValue
   variable grid set to initialGrid(new Random())
-  variable nxt set to nextCellValue(grid, 1, 1)
+  variable nxt set to nextCellValue(grid, 41)
   assert nxt evaluates to white
 end test
 
-function nextGeneration(grid as List<of List<of Int>>) returns List<of List<of Int>>
-  variable cols set to range(0, 40)
-  return cols.map(lambda x as Int => nextCol(grid, x))
+function nextGeneration(oldGrid as BlockGraphics) returns BlockGraphics
+  variable emptyGrid set to new BlockGraphics()
+  return range(0, 1199).reduce(emptyGrid, lambda newGrid as BlockGraphics, c as Int => updateCellValue(oldGrid, newGrid, c))
 end function
-
-function nextCol(grid as List<of List<of Int>>, x as Int) returns List<of Int>
-  variable col set to grid[x]
-  variable rows set to range(0, 30)
-  return rows.map(lambda y as Int => nextCellValue(grid, x, y))
-end function
-
-test test_nextCol
-  variable grid set to initialGrid(new Random())
-  variable col set to nextCol(grid, 3)
-  assert col[0] evaluates to black
-  assert col[1] evaluates to black
-  assert col[2] evaluates to white
-  assert col[29] evaluates to black
-end test
