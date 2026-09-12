@@ -12,7 +12,7 @@ def main() -> None:
   newApple = True # variable definition
   while gameOn:
     while newApple:
-      apple = bg.blockNo(randint(0, 39), randint(0, 29)) # assignment
+      apple = bg.calculateBlockNo(randint(0, 39), randint(0, 29)) # assignment
       if not snake.contains(apple):
         newApple = False # assignment
       # end if
@@ -59,7 +59,7 @@ def getAdjacentBlock(bl: int, dir: str, bg: BlockGraphics) -> int: # function
   elif dir.equals("s"): # else if
     newRow = newRow + 1 # assignment
   # end if
-  return bg.blockNo(newCol, newRow)
+  return bg.calculateBlockNo(newCol, newRow)
 # end function
 
 class Test_getAdjacentBlock(unittest.TestCase):

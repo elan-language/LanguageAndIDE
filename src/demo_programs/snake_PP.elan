@@ -1,4 +1,4 @@
-# 2b562d53da91a402709c3043f1ef6b3f186daa9c7366787a816b8465fd19ce5a Elan 2.0.0-beta4 valid
+# 501ac28a6d74aa19d2583a21872013be24002b5639981c1259efff0bf7a7ced6 Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
 main
@@ -11,7 +11,7 @@ main
   variable newApple set to true
   while gameOn
     while newApple
-      assign apple to bg.blockNo(randint(0, 39), randint(0, 29))
+      assign apple to bg.calculateBlockNo(randint(0, 39), randint(0, 29))
       if not snake.contains(apple) then
         assign newApple to false
       end if
@@ -58,7 +58,7 @@ function getAdjacentBlock(bl as Int, dir as String, bg as BlockGraphics) returns
   elif dir.equals("s") then
     assign newRow to newRow + 1
   end if
-  return bg.blockNo(newCol, newRow)
+  return bg.calculateBlockNo(newCol, newRow)
 end function
 
 test test_getAdjacentBlock

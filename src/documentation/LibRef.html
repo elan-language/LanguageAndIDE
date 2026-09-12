@@ -1418,7 +1418,7 @@ is shown below.)</p>
     variable y set to randint(0, 29)
     variable colour set to randint(0, white - 1)
     call grid.put(x, y, colour)
-    call grid.display()
+    call displayBlockGraphics(grid)
   end while
 end main
 </codeblock>
@@ -1428,37 +1428,11 @@ end main
  <li>The type <code>BloackGraphics</code> may be passed as a parameter into a method and/or returned by a function.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in the range 0 to 39 and <i>y</i> is in the range 0 to 29.</li>
  <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li>
+ <li>Alternatively, they may be referenced by 'block number' (<code>blockNo</code>), which range from 0 (top-left) to 1199 (bottom-right).</li>
  <li>You may create multiple instances of BlockGraphics holding different patterns of blocks, and switch between them
  just by calling the dotted method <el-method>display</el-method> on the one to be displayed - automatically overwriting any existing blocks shown on the display.</li>
  <li>A colour is specified as an <code>Int</code>, as described under <a href="#Colours">Colours <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
-
-<h3 class="no-TOC">Function dot methods on BlockGraphics</h3>
-<table class="tableMethod">
- <tr>
-  <th>function<br>dot methods</th>
-  <th>argument<br>types</th>
-  <th>return<br>type</th>
-  <th>returns</th>
- </tr><tr id="get_BlockGraphics">
-  <td><el-method>get</el-method></td>
-  <td>integer, integer</td>
-  <td>integer</td>
-  <td>returns the colour of the block specified by the x, y coordinates as the two arguments</td>
- </tr><tr id="withPut_BlockGraphics">
-  <td><el-method>withPut</el-method></td>
-  <td>integer, integer, integer</td>
-  <td><code>BlockGraphics</code></td>
-  <td>function broadly equivalent to the <el-method>put</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
-  with specified change to one block</td>
- </tr><tr id="withColourAll_BlockGraphics">
-  <td><el-method>withColourAll</el-method></td>
-  <td>(none)</td>
-  <td><code>BlockGraphics</code></td>
-  <td>function broadly equivalent to the <el-method>colourAll</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
-  with specified colour for all blocks.</td>
- </tr>
-</table>
 
 <h3 class="no-TOC">Procedure dot methods on BlockGraphics</h3>
 <table class="tableMethod">
@@ -1470,13 +1444,79 @@ end main
  <tr id="put_BlockGraphics">
   <td><el-method>put</el-method></td>
   <td>integer, integer, integer</td>
-  <td>Paints the block with the coordinates specified by the first two arguments, the colour specified as the third argument.</td>
+  <td>Paints the block with the coordinates (column, row) specified by the first two arguments, with the colour specified as the third argument.</td>
+ </tr>
+<tr id="putBlockNo_BlockGraphics">
+  <td><el-method>putBlockNo</el-method></td>
+  <td>integer, integer</td>
+  <td>Paints the block specified by the first argument, with the colour specified as the second argument.</td>
  </tr>
  <tr id="colourAll_BlockGraphics">
   <td><el-method>colourAll</el-method></td>
   <td>integer</td>
   <td>Paints all blocks the specified colour</td>
   </tr>
+</table>
+
+<h3 class="no-TOC">Function dot methods on BlockGraphics</h3>
+<table class="tableMethod">
+ <tr>
+  <th>function<br>dot methods</th>
+  <th>argument<br>types</th>
+  <th>return<br>type</th>
+  <th>returns</th>
+ </tr>
+ <tr id="get_BlockGraphics">
+  <td><el-method>get</el-method></td>
+  <td>integer, integer</td>
+  <td>integer</td>
+  <td>returns the colour of the block specified by the (column, row) coordinates as the two arguments</td>
+ </tr>
+  <tr id="getBlockNo_BlockGraphics">
+  <td><el-method>getBlockNo</el-method></td>
+  <td>integer</td>
+  <td>integer</td>
+  <td>returns the colour of the block specified by the the argument</td>
+ </tr>
+ <tr id="withPut_BlockGraphics">
+  <td><el-method>withPut</el-method></td>
+  <td>integer, integer, integer</td>
+  <td><code>BlockGraphics</code></td>
+  <td>function broadly equivalent to the <el-method>put</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
+  with specified change to one block</td>
+ </tr>
+  <tr id="withPutBlockNo_BlockGraphics">
+  <td><el-method>withPutBlockNo</el-method></td>
+  <td>integer, integer</td>
+  <td><code>BlockGraphics</code></td>
+  <td>function broadly equivalent to the <el-method>putBlockNo</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
+  with specified change to one block</td>
+ </tr>
+ <tr id="withColourAll_BlockGraphics">
+  <td><el-method>withColourAll</el-method></td>
+  <td>(none)</td>
+  <td><code>BlockGraphics</code></td>
+  <td>function broadly equivalent to the <el-method>colourAll</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
+  with specified colour for all blocks.</td>
+ </tr>
+  <tr id="calculateBlockNo_BlockGraphics">
+  <td><el-method>calculateBlockNo</el-method></td>
+  <td>integer, integer</td>
+  <td>integer</td>
+  <td>returns the block number for the specified (column, row) coordinates as the two arguments</td>
+ </tr>
+   <tr id="col_BlockGraphics">
+  <td><el-method>col</el-method></td>
+  <td>integer</td>
+  <td>integer</td>
+  <td>returns the column number for the specified block number</td>
+ </tr>
+    <tr id="row_BlockGraphics">
+  <td><el-method>row</el-method></td>
+  <td>integer</td>
+  <td>integer</td>
+  <td>returns the row number for the specified block number</td>
+ </tr>
 </table>
 
 <h2 id="TurtleGraphics">Turtle graphics</h2>
