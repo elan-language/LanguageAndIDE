@@ -73,15 +73,18 @@ export class BlockGraphics {
     }
   }
 
-  //Functions
+  //If out of bounds returns -1
   @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
   get(@elanIntType() x: number, @elanIntType() y: number): number {
     return this.blocks[x][y];
   }
 
+  //If out of bounds returns -1
   @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
   getBlockNo(@elanIntType() sq: number): number {
-    return this.blocks[this.col(sq)][this.row(sq)];
+    const x = this.row(sq);
+    const y = this.row(sq);
+    return this.get(x, y);
   }
 
   @elanFunction(["col", "row", "colour"], FunctionOptions.pure, ElanClass(BlockGraphics))
