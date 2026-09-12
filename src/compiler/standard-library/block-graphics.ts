@@ -82,7 +82,7 @@ export class BlockGraphics {
   //If out of bounds returns -1
   @elanFunction(["blockNo"], FunctionOptions.pure, ElanInt)
   getBlockNo(@elanIntType() sq: number): number {
-    const x = this.row(sq);
+    const x = this.col(sq);
     const y = this.row(sq);
     return this.get(x, y);
   }
