@@ -111,7 +111,7 @@ export class BlockGraphics {
 
   //If row and/or col is out of range, returns -1
   @elanFunction(["col", "row"], FunctionOptions.pure, ElanInt)
-  blockNo(@elanIntType() x: number, @elanIntType() y: number): number {
+  calculateBlockNo(@elanIntType() x: number, @elanIntType() y: number): number {
     let result = y * 40 + x;
     if (x < 0 || x > 39 || y < 0 || y > 29) {
       result = -1;

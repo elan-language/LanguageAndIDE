@@ -12,7 +12,7 @@ static void main() {
   var newApple = true;
   while (gameOn) {
     while (newApple) {
-      apple = bg.blockNo(randint(0, 39), randint(0, 29)); // assignment
+      apple = bg.calculateBlockNo(randint(0, 39), randint(0, 29)); // assignment
       if (!snake.contains(apple)) {
         newApple = false; // assignment
       } // end if
@@ -59,7 +59,7 @@ static int getAdjacentBlock(int bl, string dir, BlockGraphics bg) { // function
   } else if (dir.equals("s")) {
     newRow = newRow + 1; // assignment
   } // end if
-  return bg.blockNo(newCol, newRow);
+  return bg.calculateBlockNo(newCol, newRow);
 } // end function
 
 [TestClass] class Test_getAdjacentBlock

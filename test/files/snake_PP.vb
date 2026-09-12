@@ -12,7 +12,7 @@ Sub main()
   Dim newApple = True ' variable definition
   While gameOn
     While newApple
-      apple = bg.blockNo(randint(0, 39), randint(0, 29)) ' assignment
+      apple = bg.calculateBlockNo(randint(0, 39), randint(0, 29)) ' assignment
       If Not snake.contains(apple) Then
         newApple = False ' assignment
       End If
@@ -59,7 +59,7 @@ Function getAdjacentBlock(bl As Integer, dir As String, bg As BlockGraphics) As 
   ElseIf dir.equals("s") Then
     newRow = newRow + 1 ' assignment
   End If
-  Return bg.blockNo(newCol, newRow)
+  Return bg.calculateBlockNo(newCol, newRow)
 End Function
 
 <TestClass Class Test_getAdjacentBlock
