@@ -1,4 +1,4 @@
-# ea9b35ef31f496083b5aa58c4381ea6672d2da0587e140352b31c3ca480850f2 Elan 2.0.0-beta4 valid
+# 48ee2112c29e8764fbfa0fecf74ee1aa86481448fb62346d718e49596c25fff7 Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
 main
@@ -49,7 +49,7 @@ class Game
     call snake.moveHead(this.currentDir)
     if snake.bodyCovers(this.apple) then
       assign this.newAppleNeeded to true
-    else
+    elif not snake.dead then
       call snake.moveTail()
     end if
   end procedure
