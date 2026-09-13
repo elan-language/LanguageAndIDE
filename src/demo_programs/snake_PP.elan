@@ -1,36 +1,36 @@
-# 501ac28a6d74aa19d2583a21872013be24002b5639981c1259efff0bf7a7ced6 Elan 2.0.0-beta4 valid
+# 9d933978298d7bc8e50ae382c56fa1eb575ad85e0c18b4d36c0da2ef8bd1be3c Elan 2.0.0-beta4 valid
 
 # Use the w,a,s,d keys to change snake's direction
+constant width set to 40
+
+constant height set to 30
+
 main
   variable bg set to new BlockGraphics()
-  variable head set to 620
-  variable snake set to [head, 619]
+  variable head set to 621
+  variable snake set to [head - 1, head]
   variable currentDir set to "d"
   variable gameOn set to true
-  variable apple set to 0
-  variable newApple set to true
+  variable apple set to -1
   while gameOn
-    while newApple
-      assign apple to bg.calculateBlockNo(randint(0, 39), randint(0, 29))
-      if not snake.contains(apple) then
-        assign newApple to false
-      end if
+    while (apple is -1) or snake.contains(apple)
+      assign apple to randint(0, width*height)
     end while
     call updateDisplay(bg, snake, apple)
     variable key set to getKey()
     if not key.equals("") and "wasd".contains(key) then
       assign currentDir to key
     end if
-    assign head to getAdjacentBlock(head, currentDir, bg)
+    assign head to getAdjacentBlock(head, currentDir)
     if (head is -1) or snake.contains(head) then
       assign gameOn to false
     else
-      call snake.prepend(head)
+      call snake.append(head)
     end if
     if head.equals(apple) then
-      assign newApple to true
+      assign apple to -1
     else
-      call snake.removeAt(snake.length() - 1)
+      call snake.removeAt(0)
     end if
     call sleep_ms(150)
   end while
@@ -46,31 +46,34 @@ procedure updateDisplay(bg as BlockGraphics, snake as List<of Int>, apple as Int
   call displayBlockGraphics(bg)
 end procedure
 
-function getAdjacentBlock(bl as Int, dir as String, bg as BlockGraphics) returns Int
-  variable newCol set to bg.col(bl)
-  variable newRow set to bg.row(bl)
-  if dir.equals("a") then
-    assign newCol to newCol - 1
-  elif dir.equals("d") then
-    assign newCol to newCol + 1
-  elif dir.equals("w") then
+function getAdjacentBlock(bl as Int, dir as String) returns Int
+  variable adj set to -1
+  variable newCol set to bl mod width
+  variable newRow set to divAsInt(bl, width)
+  if dir.equals("w") then
     assign newRow to newRow - 1
+  elif dir.equals("a") then
+    assign newCol to newCol - 1
   elif dir.equals("s") then
     assign newRow to newRow + 1
+  elif dir.equals("d") then
+    assign newCol to newCol + 1
   end if
-  return bg.calculateBlockNo(newCol, newRow)
+  if (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height) then
+    assign adj to newRow*width + newCol
+  end if
+  return adj
 end function
 
 test test_getAdjacentBlock
-  variable bg set to new BlockGraphics()
   variable bl set to 617
-  assert getAdjacentBlock(bl, "w", bg) evaluates to 577
-  assert getAdjacentBlock(bl, "s", bg) evaluates to 657
-  assert getAdjacentBlock(bl, "a", bg) evaluates to 616
-  assert getAdjacentBlock(bl, "d", bg) evaluates to 618
+  assert getAdjacentBlock(bl, "w") evaluates to 577
+  assert getAdjacentBlock(bl, "a") evaluates to 616
+  assert getAdjacentBlock(bl, "s") evaluates to 657
+  assert getAdjacentBlock(bl, "d") evaluates to 618
   # boundary
-  assert getAdjacentBlock(20, "w", bg) evaluates to -1
-  assert getAdjacentBlock(1180, "s", bg) evaluates to -1
-  assert getAdjacentBlock(40, "a", bg) evaluates to -1
-  assert getAdjacentBlock(79, "d", bg) evaluates to -1
+  assert getAdjacentBlock(20, "w") evaluates to -1
+  assert getAdjacentBlock(40, "a") evaluates to -1
+  assert getAdjacentBlock(1180, "s") evaluates to -1
+  assert getAdjacentBlock(79, "d") evaluates to -1
 end test
