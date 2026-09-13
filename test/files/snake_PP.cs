@@ -2,36 +2,36 @@
 
 // Use the w,a,s,d keys to change snake's direction
 
+const int width = 40;
+
+const int height = 30;
+
 static void main() {
   var bg = new BlockGraphics();
-  var head = 620;
-  var snake = new [] {head, 619};
+  var head = 621;
+  var snake = new [] {head - 1, head};
   var currentDir = "d";
   var gameOn = true;
-  var apple = 0;
-  var newApple = true;
+  var apple = -1;
   while (gameOn) {
-    while (newApple) {
-      apple = bg.calculateBlockNo(randint(0, 39), randint(0, 29)); // assignment
-      if (!snake.contains(apple)) {
-        newApple = false; // assignment
-      } // end if
+    while ((apple == -1) || snake.contains(apple)) {
+      apple = randint(0, width*height); // assignment
     } // end while
     updateDisplay(bg, snake, apple); // procedure call
     var key = getKey();
     if (!key.equals("") && "wasd".contains(key)) {
       currentDir = key; // assignment
     } // end if
-    head = getAdjacentBlock(head, currentDir, bg); // assignment
+    head = getAdjacentBlock(head, currentDir); // assignment
     if ((head == -1) || snake.contains(head)) {
       gameOn = false; // assignment
     } else {
-      snake.prepend(head); // procedure call
+      snake.append(head); // procedure call
     } // end if
     if (head.equals(apple)) {
-      newApple = true; // assignment
+      apple = -1; // assignment
     } else {
-      snake.removeAt(snake.length() - 1); // procedure call
+      snake.removeAt(0); // procedure call
     } // end if
     sleep_ms(150); // procedure call
   } // end while
@@ -47,32 +47,35 @@ static void updateDisplay(BlockGraphics bg, List<int> snake, int apple) { // pro
   displayBlockGraphics(bg); // procedure call
 } // end procedure
 
-static int getAdjacentBlock(int bl, string dir, BlockGraphics bg) { // function
-  var newCol = bg.col(bl);
-  var newRow = bg.row(bl);
-  if (dir.equals("a")) {
-    newCol = newCol - 1; // assignment
-  } else if (dir.equals("d")) {
-    newCol = newCol + 1; // assignment
-  } else if (dir.equals("w")) {
+static int getAdjacentBlock(int bl, string dir) { // function
+  var adj = -1;
+  var newCol = bl % width;
+  var newRow = divAsInt(bl, width);
+  if (dir.equals("w")) {
     newRow = newRow - 1; // assignment
+  } else if (dir.equals("a")) {
+    newCol = newCol - 1; // assignment
   } else if (dir.equals("s")) {
     newRow = newRow + 1; // assignment
+  } else if (dir.equals("d")) {
+    newCol = newCol + 1; // assignment
   } // end if
-  return bg.calculateBlockNo(newCol, newRow);
+  if ((newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height)) {
+    adj = newRow*width + newCol; // assignment
+  } // end if
+  return adj;
 } // end function
 
 [TestClass] class Test_getAdjacentBlock
 [TestMethod] static void test_getAdjacentBlock() {
-  var bg = new BlockGraphics();
   var bl = 617;
-  Assert.AreEqual(577, getAdjacentBlock(bl, "w", bg));
-  Assert.AreEqual(657, getAdjacentBlock(bl, "s", bg));
-  Assert.AreEqual(616, getAdjacentBlock(bl, "a", bg));
-  Assert.AreEqual(618, getAdjacentBlock(bl, "d", bg));
+  Assert.AreEqual(577, getAdjacentBlock(bl, "w"));
+  Assert.AreEqual(616, getAdjacentBlock(bl, "a"));
+  Assert.AreEqual(657, getAdjacentBlock(bl, "s"));
+  Assert.AreEqual(618, getAdjacentBlock(bl, "d"));
   // boundary
-  Assert.AreEqual(-1, getAdjacentBlock(20, "w", bg));
-  Assert.AreEqual(-1, getAdjacentBlock(1180, "s", bg));
-  Assert.AreEqual(-1, getAdjacentBlock(40, "a", bg));
-  Assert.AreEqual(-1, getAdjacentBlock(79, "d", bg));
+  Assert.AreEqual(-1, getAdjacentBlock(20, "w"));
+  Assert.AreEqual(-1, getAdjacentBlock(40, "a"));
+  Assert.AreEqual(-1, getAdjacentBlock(1180, "s"));
+  Assert.AreEqual(-1, getAdjacentBlock(79, "d"));
 }} // end test
