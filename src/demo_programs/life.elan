@@ -1,4 +1,4 @@
-# b17a2e2879dde61c93e646bc1ed59542c72e5a59a5130dc6d74929ce3ba2d0f8 Elan 2.0.0-beta4 valid
+# c41085954a27d13f0e90e971c3a703966c945d0e924a6cba465ef2b6477a94c4 Elan 2.0.0-beta5 valid
 
 main
   variable grid set to new BlockGraphics()

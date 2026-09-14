@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta4
+' VB.NET with Elan 2.0.0-beta5
 
 ' Implementation of the Merge sort algorithm demonstrating
 

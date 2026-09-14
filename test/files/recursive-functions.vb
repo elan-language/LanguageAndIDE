@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta4
+' VB.NET with Elan 2.0.0-beta5
 
 Function factorial(n As Integer) As Integer
   Return if_(n < 2, 1, n*factorial(n - 1))

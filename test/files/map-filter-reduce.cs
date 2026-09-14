@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta4
+// C# with Elan 2.0.0-beta5
 
 [TestClass] class Test_Map_Filter_Reduce
 [TestMethod] static void test_Map_Filter_Reduce() {
