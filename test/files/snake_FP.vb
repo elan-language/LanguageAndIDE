@@ -2,12 +2,17 @@
 
 ' Use the W,A,S,D keys to change Snake direction
 
+Const width = 40
+
+Const height = 30
+
 Sub main()
-  Dim blocks = New BlockGraphics() ' variable definition
   Dim rnd = New Random() ' variable definition
   rnd.initialiseFromClock() ' procedure call
-  Dim game = (New Game(rnd)).withNewApple() ' variable definition
+  Dim game = New Game(rnd) ' variable definition
   While game.isOn
+    game = if_(game.apple = -1, withNewApple(game), game) ' assignment
+    Dim blocks = New BlockGraphics() ' variable definition
     blocks = updateGraphics(game, blocks) ' assignment
     displayBlockGraphics(blocks) ' procedure call
     sleep_ms(150) ' procedure call
@@ -23,31 +28,28 @@ Function clockTick(g As Game, k As String) As Game
   Return if_(gameOver(g4), g4.with_isOn(False), g4)
 End Function
 
-Function updateGraphics(g As Game, b As BlockGraphics) As BlockGraphics
-  Dim b2 = b.withPut(g.apple.x, g.apple.y, red) ' variable definition
-  Dim b3 = b2.withPut(g.head.x, g.head.y, green) ' variable definition
-  Dim tail = g.body(0) ' variable definition
-  Dim tailColour = if_(tail.equals(g.priorTail), green, white) ' variable definition
-  Return b3.withPut(tail.x, tail.y, tailColour)
+Function updateGraphics(g As Game, bg As BlockGraphics) As BlockGraphics
+  Dim bg2 = g.body.reduce(bg, Function (b As BlockGraphics, bl As Integer) b.withPutBlockNo(bl, green)) ' variable definition
+  Return bg2.withPutBlockNo(g.apple, red)
 End Function
 
 Function score(g As Game) As Integer
-  Return g.body.length() - 2
+  Return g.body.length() - 1
 End Function
 
 Function moveSnake(g As Game) As Game
   Dim k = g.key ' variable definition
-  Dim x = g.head.x ' variable definition
-  Dim y = g.head.y ' variable definition
-  Dim newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) ' variable definition
-  Dim newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) ' variable definition
-  Return g.with_body(g.body.withAppend(g.head)).with_head(New Square(newX, newY))
+  Dim col = g.head Mod width ' variable definition
+  Dim row = divAsInt(g.head, width) ' variable definition
+  Dim newCol = if_(k.equals("a"), col - 1, if_(k.equals("d"), col + 1, col)) ' variable definition
+  Dim newRow = if_(k.equals("w"), row - 1, if_(k.equals("s"), row + 1, row)) ' variable definition
+  Dim inBounds = (newCol >= 0) And (newCol < width) And (newRow >= 0) And (newRow < height) ' variable definition
+  Dim newHead = if_(inBounds, newRow*width + newCol, -1) ' variable definition
+  Return if_((newHead = -1) Or selfCollision(newHead, g), g.with_isOn(False), g.with_body(g.body.withAppend(newHead)).with_head(newHead))
 End Function
 
 Function eatAppleIfPoss(g As Game) As Game
-  Dim tail = g.body(0) ' variable definition
-  Dim moveTail = g.body.subList(1, g.body.length()) ' variable definition
-  Return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail))
+  Return if_(headOverApple(g), withNewApple(g), g.with_body(g.body.withRemoveAt(0)))
 End Function
 
 Function headOverApple(g As Game) As Boolean
@@ -55,34 +57,45 @@ Function headOverApple(g As Game) As Boolean
 End Function
 
 Function gameOver(g As Game) As Boolean
-  Return g.body.contains(g.head) Or hasHitEdge(g)
+  ' TODO not currently checking for self-collision
+  Return hasHitEdge(g)
+End Function
+
+Function selfCollision(newHead As Integer, g As Game) As Boolean
+  Return g.body.contains(newHead)
 End Function
 
 Function hasHitEdge(g As Game) As Boolean
-  Dim x = g.head.x ' variable definition
-  Dim y = g.head.y ' variable definition
-  Return (x = -1) Or (y = -1) Or (x = 40) Or (y = 30)
+  Return g.head = -1
+End Function
+
+Function appleIsUnderBody(g As Game) As Boolean
+  Return g.body.contains(g.apple)
+End Function
+
+Function withNewApple(g As Game) As Game
+  Dim apple2 = g.rnd.asInt(0, width*height - 1) ' variable definition
+  Dim rnd2 = g.rnd.nextGen() ' variable definition
+  Dim g2 = g.with_apple(apple2).with_rnd(rnd2) ' variable definition
+  Return if_(Not appleIsUnderBody(g2), g2, withNewApple(g))
 End Function
 
 Class Game
 
   Sub New(rnd As Random)
-    Me.head = New Square(22, 15) ' assignment
-    Me.body = {New Square(20, 15), New Square(21, 15)} ' assignment
-    Me.priorTail = New Square(0, 0) ' assignment
+    Me.head = 620 ' assignment
+    Me.body = {Me.head - 1, Me.head} ' assignment
     Me.key = "d" ' assignment
     Me.isOn = True ' assignment
-    Me.apple = New Square(12, 15) ' assignment
+    Me.apple = -1 ' assignment
     Me.rnd = rnd ' assignment
   End Sub
 
-  Property head As Square
+  Property head As Integer
 
-  Property body As List(Of Square)
+  Property body As List(Of Integer)
 
-  Property priorTail As Square
-
-  Property apple As Square
+  Property apple As Integer
 
   Property isOn As Boolean
 
@@ -94,29 +107,15 @@ Class Game
     Return "a Game"
   End Function
 
-  Function withNewApple() As Game
-    Dim x = Me.rnd.asInt(0, 39) ' variable definition
-    Dim rnd2 = Me.rnd.nextGen() ' variable definition
-    Dim y = rnd2.asInt(0, 29) ' variable definition
-    Dim rnd3 = rnd2.nextGen() ' variable definition
-    Dim apple2 = New Square(x, y) ' variable definition
-    Dim g2 = Me.with_apple(apple2).with_rnd(rnd3) ' variable definition
-    Return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
-  End Function
-
-  Function with_head(head As Square) As Game
+  Function with_head(head As Integer) As Game
     Return copyWith(Me, "head", head)
   End Function
 
-  Function with_body(body As List(Of Square)) As Game
+  Function with_body(body As List(Of Integer)) As Game
     Return copyWith(Me, "body", body)
   End Function
 
-  Function with_priorTail(priorTail As Square) As Game
-    Return copyWith(Me, "priorTail", priorTail)
-  End Function
-
-  Function with_apple(apple As Square) As Game
+  Function with_apple(apple As Integer) As Game
     Return copyWith(Me, "apple", apple)
   End Function
 
@@ -134,24 +133,7 @@ Class Game
 
 End Class
 
-Class Square
-
-  Sub New(x As Integer, y As Integer)
-    Me.x = x ' assignment
-    Me.y = y ' assignment
-  End Sub
-
-  Property x As Integer
-
-  Property y As Integer
-
-  Function toString() As String
-    Return $"{Me.x}, {Me.y}"
-  End Function
-
-End Class
-
-<TestClass Class Test_clockTick
+[ghosted] <TestClass Class Test_clockTick
  <TestMethod> Sub test_clockTick()
   Dim g1 = New Game(New Random()) ' variable definition
   Dim g2 = g1.withNewApple() ' variable definition
@@ -172,7 +154,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_updateGraphics
+[ghosted] <TestClass Class Test_updateGraphics
  <TestMethod> Sub test_updateGraphics()
   Dim blocks = New BlockGraphics() ' variable definition
   Dim g1 = New Game(New Random()) ' variable definition
@@ -189,7 +171,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_testnewApple
+[ghosted] <TestClass Class Test_testnewApple
  <TestMethod> Sub test_testnewApple()
   Dim g1 = New Game(New Random()) ' variable definition
   Assert.AreEqual(New Square(12, 15), g1.apple)
@@ -206,7 +188,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_score
+[ghosted] <TestClass Class Test_score
  <TestMethod> Sub test_score()
   Dim g1 = New Game(New Random()) ' variable definition
   Assert.AreEqual(0, score(g1))
@@ -220,7 +202,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_moveSnake
+[ghosted] <TestClass Class Test_moveSnake
  <TestMethod> Sub test_moveSnake()
   Dim g1 = New Game(New Random()) ' variable definition
   Dim g2 = g1.with_key("a") ' variable definition
@@ -239,7 +221,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_eatAppleIfPoss
+[ghosted] <TestClass Class Test_eatAppleIfPoss
  <TestMethod> Sub test_eatAppleIfPoss()
   Dim g1 = New Game(New Random()) ' variable definition
   Assert.AreEqual(2, g1.body.length())
@@ -259,7 +241,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_overApple
+[ghosted] <TestClass Class Test_overApple
  <TestMethod> Sub test_overApple()
   Dim g1 = New Game(New Random()) ' variable definition
   Dim g2 = g1.with_apple(New Square(23, 15)) ' variable definition
@@ -270,7 +252,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_gameOver
+[ghosted] <TestClass Class Test_gameOver
  <TestMethod> Sub test_gameOver()
   Dim g1 = New Game((New Random())) ' variable definition
   Assert.AreEqual(False, gameOver(g1))
@@ -284,7 +266,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_headIsAtEdge
+[ghosted] <TestClass Class Test_headIsAtEdge
  <TestMethod> Sub test_headIsAtEdge()
   Dim g1 = New Game(New Random()) ' variable definition
   Assert.AreEqual(False, hasHitEdge(g1))
@@ -300,7 +282,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_newSquare
+[ghosted] <TestClass Class Test_newSquare
  <TestMethod> Sub test_newSquare()
   Dim sq = New Square(3, 4) ' variable definition
   Assert.AreEqual(3, sq.x)
@@ -309,7 +291,7 @@ End Class
 End Class
 
 
-<TestClass Class Test_newGame
+[ghosted] <TestClass Class Test_newGame
  <TestMethod> Sub test_newGame()
   Dim rnd = New Random() ' variable definition
   Dim game = New Game(rnd) ' variable definition

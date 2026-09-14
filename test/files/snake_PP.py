@@ -11,9 +11,9 @@ def main() -> None:
   head = 621 # variable definition
   snake = [head - 1, head] # variable definition
   currentDir = "d" # variable definition
-  gameOn = True # variable definition
+  gameIsOn = True # variable definition
   apple = -1 # variable definition
-  while gameOn:
+  while gameIsOn:
     while (apple == -1) or snake.contains(apple):
       apple = randint(0, width*height) # assignment
     # end while
@@ -24,7 +24,7 @@ def main() -> None:
     # end if
     head = getAdjacentBlock(head, currentDir) # assignment
     if (head == -1) or snake.contains(head):
-      gameOn = False # assignment
+      gameIsOn = False # assignment
     else:
       snake.append(head) # procedure call
     # end if

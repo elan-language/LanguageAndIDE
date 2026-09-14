@@ -11,9 +11,9 @@ Sub main()
   Dim head = 621 ' variable definition
   Dim snake = {head - 1, head} ' variable definition
   Dim currentDir = "d" ' variable definition
-  Dim gameOn = True ' variable definition
+  Dim gameIsOn = True ' variable definition
   Dim apple = -1 ' variable definition
-  While gameOn
+  While gameIsOn
     While (apple = -1) Or snake.contains(apple)
       apple = randint(0, width*height) ' assignment
     End While
@@ -24,7 +24,7 @@ Sub main()
     End If
     head = getAdjacentBlock(head, currentDir) ' assignment
     If (head = -1) Or snake.contains(head) Then
-      gameOn = False ' assignment
+      gameIsOn = False ' assignment
     Else
       snake.append(head) ' procedure call
     End If

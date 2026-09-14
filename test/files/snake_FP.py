@@ -2,12 +2,17 @@
 
 # Use the W,A,S,D keys to change Snake direction
 
+width = 40 # constant
+
+height = 30 # constant
+
 def main() -> None:
-  blocks = BlockGraphics() # variable definition
   rnd = Random() # variable definition
   rnd.initialiseFromClock() # procedure call
-  game = (Game(rnd)).withNewApple() # variable definition
+  game = Game(rnd) # variable definition
   while game.isOn:
+    game = if_(game.apple == -1, withNewApple(game), game) # assignment
+    blocks = BlockGraphics() # variable definition
     blocks = updateGraphics(game, blocks) # assignment
     displayBlockGraphics(blocks) # procedure call
     sleep_ms(150) # procedure call
@@ -23,31 +28,28 @@ def clockTick(g: Game, k: str) -> Game: # function
   return if_(gameOver(g4), g4.with_isOn(False), g4)
 # end function
 
-def updateGraphics(g: Game, b: BlockGraphics) -> BlockGraphics: # function
-  b2 = b.withPut(g.apple.x, g.apple.y, red) # variable definition
-  b3 = b2.withPut(g.head.x, g.head.y, green) # variable definition
-  tail = g.body[0] # variable definition
-  tailColour = if_(tail.equals(g.priorTail), green, white) # variable definition
-  return b3.withPut(tail.x, tail.y, tailColour)
+def updateGraphics(g: Game, bg: BlockGraphics) -> BlockGraphics: # function
+  bg2 = g.body.reduce(bg, lambda b: BlockGraphics, bl: int: b.withPutBlockNo(bl, green)) # variable definition
+  return bg2.withPutBlockNo(g.apple, red)
 # end function
 
 def score(g: Game) -> int: # function
-  return g.body.length() - 2
+  return g.body.length() - 1
 # end function
 
 def moveSnake(g: Game) -> Game: # function
   k = g.key # variable definition
-  x = g.head.x # variable definition
-  y = g.head.y # variable definition
-  newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x)) # variable definition
-  newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y)) # variable definition
-  return g.with_body(g.body.withAppend(g.head)).with_head(Square(newX, newY))
+  col = g.head % width # variable definition
+  row = divAsInt(g.head, width) # variable definition
+  newCol = if_(k.equals("a"), col - 1, if_(k.equals("d"), col + 1, col)) # variable definition
+  newRow = if_(k.equals("w"), row - 1, if_(k.equals("s"), row + 1, row)) # variable definition
+  inBounds = (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height) # variable definition
+  newHead = if_(inBounds, newRow*width + newCol, -1) # variable definition
+  return if_((newHead == -1) or selfCollision(newHead, g), g.with_isOn(False), g.with_body(g.body.withAppend(newHead)).with_head(newHead))
 # end function
 
 def eatAppleIfPoss(g: Game) -> Game: # function
-  tail = g.body[0] # variable definition
-  moveTail = g.body.subList(1, g.body.length()) # variable definition
-  return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail))
+  return if_(headOverApple(g), withNewApple(g), g.with_body(g.body.withRemoveAt(0)))
 # end function
 
 def headOverApple(g: Game) -> bool: # function
@@ -55,34 +57,45 @@ def headOverApple(g: Game) -> bool: # function
 # end function
 
 def gameOver(g: Game) -> bool: # function
-  return g.body.contains(g.head) or hasHitEdge(g)
+  # TODO not currently checking for self-collision
+  return hasHitEdge(g)
+# end function
+
+def selfCollision(newHead: int, g: Game) -> bool: # function
+  return g.body.contains(newHead)
 # end function
 
 def hasHitEdge(g: Game) -> bool: # function
-  x = g.head.x # variable definition
-  y = g.head.y # variable definition
-  return (x == -1) or (y == -1) or (x == 40) or (y == 30)
+  return g.head == -1
+# end function
+
+def appleIsUnderBody(g: Game) -> bool: # function
+  return g.body.contains(g.apple)
+# end function
+
+def withNewApple(g: Game) -> Game: # function
+  apple2 = g.rnd.asInt(0, width*height - 1) # variable definition
+  rnd2 = g.rnd.nextGen() # variable definition
+  g2 = g.with_apple(apple2).with_rnd(rnd2) # variable definition
+  return if_(not appleIsUnderBody(g2), g2, withNewApple(g))
 # end function
 
 class Game: # concrete class
 
   def __init__(self: Game, rnd: Random) -> None:
-    self.head = Square(22, 15) # assignment
-    self.body = [Square(20, 15), Square(21, 15)] # assignment
-    self.priorTail = Square(0, 0) # assignment
+    self.head = 620 # assignment
+    self.body = [self.head - 1, self.head] # assignment
     self.key = "d" # assignment
     self.isOn = True # assignment
-    self.apple = Square(12, 15) # assignment
+    self.apple = -1 # assignment
     self.rnd = rnd # assignment
   # end constructor
 
-  head: Square # property
+  head: int # property
 
-  body: list[Square] # property
+  body: list[int] # property
 
-  priorTail: Square # property
-
-  apple: Square # property
+  apple: int # property
 
   isOn: bool # property
 
@@ -94,29 +107,15 @@ class Game: # concrete class
     return "a Game"
   # end function method
 
-  def withNewApple(self: Game) -> Game: # function method
-    x = self.rnd.asInt(0, 39) # variable definition
-    rnd2 = self.rnd.nextGen() # variable definition
-    y = rnd2.asInt(0, 29) # variable definition
-    rnd3 = rnd2.nextGen() # variable definition
-    apple2 = Square(x, y) # variable definition
-    g2 = self.with_apple(apple2).with_rnd(rnd3) # variable definition
-    return if_(g2.body.contains(apple2), g2.withNewApple(), g2)
-  # end function method
-
-  def with_head(self: Game, head: Square) -> Game: # function method
+  def with_head(self: Game, head: int) -> Game: # function method
     return copyWith(self, "head", head)
   # end function method
 
-  def with_body(self: Game, body: list[Square]) -> Game: # function method
+  def with_body(self: Game, body: list[int]) -> Game: # function method
     return copyWith(self, "body", body)
   # end function method
 
-  def with_priorTail(self: Game, priorTail: Square) -> Game: # function method
-    return copyWith(self, "priorTail", priorTail)
-  # end function method
-
-  def with_apple(self: Game, apple: Square) -> Game: # function method
+  def with_apple(self: Game, apple: int) -> Game: # function method
     return copyWith(self, "apple", apple)
   # end function method
 
@@ -134,24 +133,7 @@ class Game: # concrete class
 
 # end class
 
-class Square: # concrete class
-
-  def __init__(self: Square, x: int, y: int) -> None:
-    self.x = x # assignment
-    self.y = y # assignment
-  # end constructor
-
-  x: int # property
-
-  y: int # property
-
-  def toString(self: Square) -> str: # function method
-    return f"{self.x}, {self.y}"
-  # end function method
-
-# end class
-
-class Test_clockTick(unittest.TestCase):
+[ghosted] class Test_clockTick(unittest.TestCase):
  def test_clockTick(self) -> None:
   g1 = Game(Random()) # variable definition
   g2 = g1.withNewApple() # variable definition
@@ -170,7 +152,7 @@ class Test_clockTick(unittest.TestCase):
   self.assertEqual(g7.isOn, False)
 # end test
 
-class Test_updateGraphics(unittest.TestCase):
+[ghosted] class Test_updateGraphics(unittest.TestCase):
  def test_updateGraphics(self) -> None:
   blocks = BlockGraphics() # variable definition
   g1 = Game(Random()) # variable definition
@@ -185,7 +167,7 @@ class Test_updateGraphics(unittest.TestCase):
   self.assertEqual(blocks3.get(23, 15), green)
 # end test
 
-class Test_testnewApple(unittest.TestCase):
+[ghosted] class Test_testnewApple(unittest.TestCase):
  def test_testnewApple(self) -> None:
   g1 = Game(Random()) # variable definition
   self.assertEqual(g1.apple, Square(12, 15))
@@ -200,7 +182,7 @@ class Test_testnewApple(unittest.TestCase):
   self.assertEqual(g4.apple, Square(12, 15))
 # end test
 
-class Test_score(unittest.TestCase):
+[ghosted] class Test_score(unittest.TestCase):
  def test_score(self) -> None:
   g1 = Game(Random()) # variable definition
   self.assertEqual(score(g1), 0)
@@ -212,7 +194,7 @@ class Test_score(unittest.TestCase):
   self.assertEqual(score(g4), 2)
 # end test
 
-class Test_moveSnake(unittest.TestCase):
+[ghosted] class Test_moveSnake(unittest.TestCase):
  def test_moveSnake(self) -> None:
   g1 = Game(Random()) # variable definition
   g2 = g1.with_key("a") # variable definition
@@ -229,7 +211,7 @@ class Test_moveSnake(unittest.TestCase):
   self.assertEqual(g9.head, Square(22, 16))
 # end test
 
-class Test_eatAppleIfPoss(unittest.TestCase):
+[ghosted] class Test_eatAppleIfPoss(unittest.TestCase):
  def test_eatAppleIfPoss(self) -> None:
   g1 = Game(Random()) # variable definition
   self.assertEqual(g1.body.length(), 2)
@@ -247,7 +229,7 @@ class Test_eatAppleIfPoss(unittest.TestCase):
   self.assertEqual(g5.priorTail, g1.priorTail)
 # end test
 
-class Test_overApple(unittest.TestCase):
+[ghosted] class Test_overApple(unittest.TestCase):
  def test_overApple(self) -> None:
   g1 = Game(Random()) # variable definition
   g2 = g1.with_apple(Square(23, 15)) # variable definition
@@ -256,7 +238,7 @@ class Test_overApple(unittest.TestCase):
   self.assertEqual(headOverApple(g3), True)
 # end test
 
-class Test_gameOver(unittest.TestCase):
+[ghosted] class Test_gameOver(unittest.TestCase):
  def test_gameOver(self) -> None:
   g1 = Game((Random())) # variable definition
   self.assertEqual(gameOver(g1), False)
@@ -268,7 +250,7 @@ class Test_gameOver(unittest.TestCase):
   self.assertEqual(gameOver(g4), True)
 # end test
 
-class Test_headIsAtEdge(unittest.TestCase):
+[ghosted] class Test_headIsAtEdge(unittest.TestCase):
  def test_headIsAtEdge(self) -> None:
   g1 = Game(Random()) # variable definition
   self.assertEqual(hasHitEdge(g1), False)
@@ -282,14 +264,14 @@ class Test_headIsAtEdge(unittest.TestCase):
   self.assertEqual(hasHitEdge(g5), True)
 # end test
 
-class Test_newSquare(unittest.TestCase):
+[ghosted] class Test_newSquare(unittest.TestCase):
  def test_newSquare(self) -> None:
   sq = Square(3, 4) # variable definition
   self.assertEqual(sq.x, 3)
   self.assertEqual(sq.y, 4)
 # end test
 
-class Test_newGame(unittest.TestCase):
+[ghosted] class Test_newGame(unittest.TestCase):
  def test_newGame(self) -> None:
   rnd = Random() # variable definition
   game = Game(rnd) # variable definition

@@ -4,10 +4,13 @@ public class Global {
 
 // Use the W,A,S,D keys to change Snake direction
 
+static final int width = 40; // constant
+
+static final int height = 30; // constant
+
 static void main() {
-  var board = new Board();
-  var game = new Game(board);
-  while (!game.over()) {
+  var game = new Game();
+  while (game.isOn) {
     game.clockTick(getKey()); // procedure call
     var blocks = new BlockGraphics();
     game.updateBlocks(blocks); // procedure call
@@ -19,29 +22,27 @@ static void main() {
 
 class Game {
 
-  public Game(Board board) {
-    this.board = board; // assignment
-    this.snake = new Snake(board); // assignment
-    this.currentDir = Direction.right; // assignment
+  public Game() {
+    this.snake = new Snake(620); // assignment
+    this.currentDir = "d"; // assignment
     this.newAppleNeeded = true; // assignment
+    this.isOn = true; // assignment
   } // end constructor
-
-  public Board board; // property
 
   private Snake snake; // private property
 
-  private Direction currentDir; // private property
+  private String currentDir; // private property
 
   private int apple; // private property
 
   private boolean newAppleNeeded; // private property
 
+  public boolean isOn; // property
+
   public void newAppleIfNeeded() { // procedure method
-    while (this.newAppleNeeded) {
-      this.apple = randint(0, this.board.maxSquareNo()); // assignment
-      if (!this.snake.bodyCovers(this.apple)) {
-        this.newAppleNeeded = false; // assignment
-      } // end if
+    while (this.newAppleNeeded || this.snake.bodyCovers(this.apple)) {
+      this.apple = randint(0, width*height - 1); // assignment
+      this.newAppleNeeded = false; // assignment
     } // end while
   } // end procedure method
 
@@ -56,6 +57,9 @@ class Game {
     } else if (!snake.dead) {
       snake.moveTail(); // procedure call
     } // end if
+    if (snake.dead) {
+      this.isOn = false; // assignment
+    } // end if
   } // end procedure method
 
   public void updateBlocks(BlockGraphics blocks) { // procedure method
@@ -66,23 +70,13 @@ class Game {
   } // end procedure method
 
   public void setDirectionIfKeyPress(String key) { // procedure method
-    if (key.equals("w")) {
-      this.currentDir = Direction.up; // assignment
-    } else if (key.equals("s")) {
-      this.currentDir = Direction.down; // assignment
-    } else if (key.equals("a")) {
-      this.currentDir = Direction.left; // assignment
-    } else if (key.equals("d")) {
-      this.currentDir = Direction.right; // assignment
+    if (!key.equals("") && "wasd".contains(key)) {
+      this.currentDir = key; // assignment
     } // end if
   } // end procedure method
 
   public int score() { // function method
     return this.snake.length() - 1;
-  } // end function method
-
-  public boolean over() { // function method
-    return this.snake.dead;
   } // end function method
 
   public String toString() { // function method
@@ -93,45 +87,46 @@ class Game {
 
 class Snake {
 
-  public Snake(Board board) {
-    this.board = board; // assignment
-    this.body = list(620, 619); // assignment
+  public Snake(int head) {
+    this.head = head; // assignment
+    this.body = list(this.head - 1, this.head); // assignment
   } // end constructor
+
+  public int head; // property
 
   private List<int> body; // private property
 
-  public Board board; // property
-
   public boolean dead; // property
 
-  public void moveHead(Direction dir) { // procedure method
-    var head = this.body[0];
-    var col = this.board.col(head);
-    var row = this.board.row(head);
-    if (dir == Direction.left) {
-      col = col - 1; // assignment
-    } else if (dir == Direction.right) {
-      col = col + 1; // assignment
-    } else if (dir == Direction.up) {
-      row = row - 1; // assignment
-    } else if (dir == Direction.down) {
-      row = row + 1; // assignment
+  public void moveHead(String dir) { // procedure method
+    var newCol = this.head % width;
+    var newRow = divAsInt(this.head, width);
+    if (dir.equals("w")) {
+      newRow = newRow - 1; // assignment
+    } else if (dir.equals("a")) {
+      newCol = newCol - 1; // assignment
+    } else if (dir.equals("s")) {
+      newRow = newRow + 1; // assignment
+    } else if (dir.equals("d")) {
+      newCol = newCol + 1; // assignment
     } // end if
-    var newHead = this.board.squareNo(col, row);
-    var board = this.board;
-    if (!this.board.isInBounds(col, row) || this.body.contains(newHead)) {
+    this.head = -1; // assignment
+    if ((newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height)) {
+      this.head = newRow*width + newCol; // assignment
+    } // end if
+    if ((this.head == -1) || this.body.contains(this.head)) {
       this.dead = true; // assignment
     } else {
       //  3502
       var body = this.body;
-      body.prepend(newHead); // procedure call
+      body.append(this.head); // procedure call
     } // end if
   } // end procedure method
 
   public void moveTail() { // procedure method
     // 3502
     var body = this.body;
-    body.removeAt(this.length() - 1); // procedure call
+    body.removeAt(0); // procedure call
   } // end procedure method
 
   public void addToBlocks(BlockGraphics blocks) { // procedure method
@@ -149,47 +144,8 @@ class Snake {
   } // end function method
 
   public String toString() { // function method
-    return String.format("a Snake of length%", this.length());
+    return String.format("a Snake", );
   } // end function method
 
 } // end class
-
-class Board {
-
-  public Board() {
-    this.width = 40; // assignment
-    this.height = 30; // assignment
-  } // end constructor
-
-  private int width; // private property
-
-  private int height; // private property
-
-  public int squareNo(int col, int row) { // function method
-    return row*this.width + col;
-  } // end function method
-
-  public int maxSquareNo() { // function method
-    return this.width*this.height - 1;
-  } // end function method
-
-  public int col(int squareNo) { // function method
-    return squareNo % this.width;
-  } // end function method
-
-  public int row(int squareNo) { // function method
-    return divAsInt(squareNo, this.width);
-  } // end function method
-
-  public boolean isInBounds(int col, int row) { // function method
-    return (col >= 0) && (col < this.width) && (row >= 0) && (row < this.height);
-  } // end function method
-
-  public String toString() { // function method
-    return "undefined";
-  } // end function method
-
-} // end class
-
-enum Direction {up, down, left, right}
 } // end Global

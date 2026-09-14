@@ -2,12 +2,17 @@
 
 // Use the W,A,S,D keys to change Snake direction
 
+const int width = 40;
+
+const int height = 30;
+
 static void main() {
-  var blocks = new BlockGraphics();
   var rnd = new Random();
   rnd.initialiseFromClock(); // procedure call
-  var game = (new Game(rnd)).withNewApple();
+  var game = new Game(rnd);
   while (game.isOn) {
+    game = if_(game.apple == -1, withNewApple(game), game); // assignment
+    var blocks = new BlockGraphics();
     blocks = updateGraphics(game, blocks); // assignment
     displayBlockGraphics(blocks); // procedure call
     sleep_ms(150); // procedure call
@@ -23,31 +28,28 @@ static Game clockTick(Game g, string k) { // function
   return if_(gameOver(g4), g4.with_isOn(false), g4);
 } // end function
 
-static BlockGraphics updateGraphics(Game g, BlockGraphics b) { // function
-  var b2 = b.withPut(g.apple.x, g.apple.y, red);
-  var b3 = b2.withPut(g.head.x, g.head.y, green);
-  var tail = g.body[0];
-  var tailColour = if_(tail.equals(g.priorTail), green, white);
-  return b3.withPut(tail.x, tail.y, tailColour);
+static BlockGraphics updateGraphics(Game g, BlockGraphics bg) { // function
+  var bg2 = g.body.reduce(bg, BlockGraphics b, int bl => b.withPutBlockNo(bl, green));
+  return bg2.withPutBlockNo(g.apple, red);
 } // end function
 
 static int score(Game g) { // function
-  return g.body.length() - 2;
+  return g.body.length() - 1;
 } // end function
 
 static Game moveSnake(Game g) { // function
   var k = g.key;
-  var x = g.head.x;
-  var y = g.head.y;
-  var newX = if_(k.equals("a"), x - 1, if_(k.equals("d"), x + 1, x));
-  var newY = if_(k.equals("w"), y - 1, if_(k.equals("s"), y + 1, y));
-  return g.with_body(g.body.withAppend(g.head)).with_head(new Square(newX, newY));
+  var col = g.head % width;
+  var row = divAsInt(g.head, width);
+  var newCol = if_(k.equals("a"), col - 1, if_(k.equals("d"), col + 1, col));
+  var newRow = if_(k.equals("w"), row - 1, if_(k.equals("s"), row + 1, row));
+  var inBounds = (newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height);
+  var newHead = if_(inBounds, newRow*width + newCol, -1);
+  return if_((newHead == -1) || selfCollision(newHead, g), g.with_isOn(false), g.with_body(g.body.withAppend(newHead)).with_head(newHead));
 } // end function
 
 static Game eatAppleIfPoss(Game g) { // function
-  var tail = g.body[0];
-  var moveTail = g.body.subList(1, g.body.length());
-  return if_(headOverApple(g), g.withNewApple(), g.with_priorTail(tail).with_body(moveTail));
+  return if_(headOverApple(g), withNewApple(g), g.with_body(g.body.withRemoveAt(0)));
 } // end function
 
 static bool headOverApple(Game g) { // function
@@ -55,34 +57,45 @@ static bool headOverApple(Game g) { // function
 } // end function
 
 static bool gameOver(Game g) { // function
-  return g.body.contains(g.head) || hasHitEdge(g);
+  // TODO not currently checking for self-collision
+  return hasHitEdge(g);
+} // end function
+
+static bool selfCollision(int newHead, Game g) { // function
+  return g.body.contains(newHead);
 } // end function
 
 static bool hasHitEdge(Game g) { // function
-  var x = g.head.x;
-  var y = g.head.y;
-  return (x == -1) || (y == -1) || (x == 40) || (y == 30);
+  return g.head == -1;
+} // end function
+
+static bool appleIsUnderBody(Game g) { // function
+  return g.body.contains(g.apple);
+} // end function
+
+static Game withNewApple(Game g) { // function
+  var apple2 = g.rnd.asInt(0, width*height - 1);
+  var rnd2 = g.rnd.nextGen();
+  var g2 = g.with_apple(apple2).with_rnd(rnd2);
+  return if_(!appleIsUnderBody(g2), g2, withNewApple(g));
 } // end function
 
 class Game {
 
   public Game(Random rnd) {
-    this.head = new Square(22, 15); // assignment
-    this.body = new [] {new Square(20, 15), new Square(21, 15)}; // assignment
-    this.priorTail = new Square(0, 0); // assignment
+    this.head = 620; // assignment
+    this.body = new [] {this.head - 1, this.head}; // assignment
     this.key = "d"; // assignment
     this.isOn = true; // assignment
-    this.apple = new Square(12, 15); // assignment
+    this.apple = -1; // assignment
     this.rnd = rnd; // assignment
   } // end constructor
 
-  public Square head {get; private set;} // property
+  public int head {get; private set;} // property
 
-  public List<Square> body {get; private set;} // property
+  public List<int> body {get; private set;} // property
 
-  public Square priorTail {get; private set;} // property
-
-  public Square apple {get; private set;} // property
+  public int apple {get; private set;} // property
 
   public bool isOn {get; private set;} // property
 
@@ -94,29 +107,15 @@ class Game {
     return "a Game";
   } // end function method
 
-  public Game withNewApple() { // function method
-    var x = this.rnd.asInt(0, 39);
-    var rnd2 = this.rnd.nextGen();
-    var y = rnd2.asInt(0, 29);
-    var rnd3 = rnd2.nextGen();
-    var apple2 = new Square(x, y);
-    var g2 = this.with_apple(apple2).with_rnd(rnd3);
-    return if_(g2.body.contains(apple2), g2.withNewApple(), g2);
-  } // end function method
-
-  public Game with_head(Square head) { // function method
+  public Game with_head(int head) { // function method
     return copyWith(this, "head", head);
   } // end function method
 
-  public Game with_body(List<Square> body) { // function method
+  public Game with_body(List<int> body) { // function method
     return copyWith(this, "body", body);
   } // end function method
 
-  public Game with_priorTail(Square priorTail) { // function method
-    return copyWith(this, "priorTail", priorTail);
-  } // end function method
-
-  public Game with_apple(Square apple) { // function method
+  public Game with_apple(int apple) { // function method
     return copyWith(this, "apple", apple);
   } // end function method
 
@@ -134,24 +133,7 @@ class Game {
 
 } // end class
 
-class Square {
-
-  public Square(int x, int y) {
-    this.x = x; // assignment
-    this.y = y; // assignment
-  } // end constructor
-
-  public int x {get; private set;} // property
-
-  public int y {get; private set;} // property
-
-  public string toString() { // function method
-    return $"{this.x}, {this.y}";
-  } // end function method
-
-} // end class
-
-[TestClass] class Test_clockTick
+[ghosted] [TestClass] class Test_clockTick
 [TestMethod] static void test_clockTick() {
   var g1 = new Game(new Random());
   var g2 = g1.withNewApple();
@@ -170,7 +152,7 @@ class Square {
   Assert.AreEqual(false, g7.isOn);
 }} // end test
 
-[TestClass] class Test_updateGraphics
+[ghosted] [TestClass] class Test_updateGraphics
 [TestMethod] static void test_updateGraphics() {
   var blocks = new BlockGraphics();
   var g1 = new Game(new Random());
@@ -185,7 +167,7 @@ class Square {
   Assert.AreEqual(green, blocks3.get(23, 15));
 }} // end test
 
-[TestClass] class Test_testnewApple
+[ghosted] [TestClass] class Test_testnewApple
 [TestMethod] static void test_testnewApple() {
   var g1 = new Game(new Random());
   Assert.AreEqual(new Square(12, 15), g1.apple);
@@ -200,7 +182,7 @@ class Square {
   Assert.AreEqual(new Square(12, 15), g4.apple);
 }} // end test
 
-[TestClass] class Test_score
+[ghosted] [TestClass] class Test_score
 [TestMethod] static void test_score() {
   var g1 = new Game(new Random());
   Assert.AreEqual(0, score(g1));
@@ -212,7 +194,7 @@ class Square {
   Assert.AreEqual(2, score(g4));
 }} // end test
 
-[TestClass] class Test_moveSnake
+[ghosted] [TestClass] class Test_moveSnake
 [TestMethod] static void test_moveSnake() {
   var g1 = new Game(new Random());
   var g2 = g1.with_key("a");
@@ -229,7 +211,7 @@ class Square {
   Assert.AreEqual(new Square(22, 16), g9.head);
 }} // end test
 
-[TestClass] class Test_eatAppleIfPoss
+[ghosted] [TestClass] class Test_eatAppleIfPoss
 [TestMethod] static void test_eatAppleIfPoss() {
   var g1 = new Game(new Random());
   Assert.AreEqual(2, g1.body.length());
@@ -247,7 +229,7 @@ class Square {
   Assert.AreEqual(g1.priorTail, g5.priorTail);
 }} // end test
 
-[TestClass] class Test_overApple
+[ghosted] [TestClass] class Test_overApple
 [TestMethod] static void test_overApple() {
   var g1 = new Game(new Random());
   var g2 = g1.with_apple(new Square(23, 15));
@@ -256,7 +238,7 @@ class Square {
   Assert.AreEqual(true, headOverApple(g3));
 }} // end test
 
-[TestClass] class Test_gameOver
+[ghosted] [TestClass] class Test_gameOver
 [TestMethod] static void test_gameOver() {
   var g1 = new Game((new Random()));
   Assert.AreEqual(false, gameOver(g1));
@@ -268,7 +250,7 @@ class Square {
   Assert.AreEqual(true, gameOver(g4));
 }} // end test
 
-[TestClass] class Test_headIsAtEdge
+[ghosted] [TestClass] class Test_headIsAtEdge
 [TestMethod] static void test_headIsAtEdge() {
   var g1 = new Game(new Random());
   Assert.AreEqual(false, hasHitEdge(g1));
@@ -282,14 +264,14 @@ class Square {
   Assert.AreEqual(true, hasHitEdge(g5));
 }} // end test
 
-[TestClass] class Test_newSquare
+[ghosted] [TestClass] class Test_newSquare
 [TestMethod] static void test_newSquare() {
   var sq = new Square(3, 4);
   Assert.AreEqual(3, sq.x);
   Assert.AreEqual(4, sq.y);
 }} // end test
 
-[TestClass] class Test_newGame
+[ghosted] [TestClass] class Test_newGame
 [TestMethod] static void test_newGame() {
   var rnd = new Random();
   var game = new Game(rnd);

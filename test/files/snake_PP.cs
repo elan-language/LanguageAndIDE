@@ -11,9 +11,9 @@ static void main() {
   var head = 621;
   var snake = new [] {head - 1, head};
   var currentDir = "d";
-  var gameOn = true;
+  var gameIsOn = true;
   var apple = -1;
-  while (gameOn) {
+  while (gameIsOn) {
     while ((apple == -1) || snake.contains(apple)) {
       apple = randint(0, width*height); // assignment
     } // end while
@@ -24,7 +24,7 @@ static void main() {
     } // end if
     head = getAdjacentBlock(head, currentDir); // assignment
     if ((head == -1) || snake.contains(head)) {
-      gameOn = false; // assignment
+      gameIsOn = false; // assignment
     } else {
       snake.append(head); // procedure call
     } // end if
