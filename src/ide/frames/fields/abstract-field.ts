@@ -31,6 +31,8 @@ import {
   SymbolCompletionSpec,
 } from "../symbol-completion-helpers";
 import { SymbolWrapper } from "../symbol-wrapper";
+import { PythonParser } from "../../../generated/python/PythonParser";
+import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
 
 export enum FieldType {
   type,
@@ -75,9 +77,13 @@ export class AbstractField implements Selectable, Field {
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
 
-    if (this.fieldType !== undefined) {
+    if (this.useAntlr) {
       this.readToDelimiter = (source: CodeSource) => source.readToEndOfLine();
     }
+  }
+
+  get useAntlr() {
+    return this.fieldType !== undefined;
   }
 
   get useHtmlTags() {
@@ -161,7 +167,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   parseCompleteText(text: string) {
-    if (this.fieldType !== undefined) {
+    if (this.useAntlr) {
       this.parseCompleteTextUsingAntlr(text);
     } else {
       const root = this.initialiseRoot();
@@ -822,22 +828,16 @@ export class AbstractField implements Selectable, Field {
     return html;
   }
 
-  // renderAsExport(): string {
-  //   return this.readParseStatus() === ParseStatus.valid
-  //     ? removeHtmlTagsAndEscChars(this.textAsHtml())
-  //     : this.rootNode!.matchedText;
-  // }
-
   indent(): string {
     return "";
   }
 
   renderFromTree(ctx: ParserRuleContext) {
-    return ctx.accept(getVisitorSourceByLanguage(this.language())!)!;
+    return ctx.accept(getVisitorSourceByLanguage(this.language()))!;
   }
 
   renderAsHtmlFromTree(ctx: ParserRuleContext) {
-    return ctx.accept(getVisitorHtmlByLanguage(this.language())!)!;
+    return ctx.accept(getVisitorHtmlByLanguage(this.language()))!;
   }
 
   renderAsElanSource(): string {
@@ -1015,12 +1015,18 @@ export class AbstractField implements Selectable, Field {
     }
   }
 
+  getRuleContextByField(parser: PythonParser | RefLangParser) {
+    switch (this.fieldType) {
+      case FieldType.type:
+        return parser.type_();
+      default:
+        throw Error("Unsupported field type " + this.fieldType);
+    }
+  }
+
   parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
     const parser = getParserByLanguage(this.language(), text);
-    if (parser) {
-      return [parser, parser.type_()];
-    }
-    return [undefined!, undefined!];
+    return [parser, this.getRuleContextByField(parser)];
   }
 
   parseCompleteTextUsingAntlr(text: string): void {

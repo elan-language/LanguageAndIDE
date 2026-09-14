@@ -45,7 +45,7 @@ export function getParserByLanguage(l: Language, input: string) {
     case "Reference Language":
       return getRefLangParser(input);
     default:
-      return undefined;
+      throw Error("Unsupported language " + l.languageFullName);
   }
 }
 
@@ -56,7 +56,7 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
     case "Reference Language":
       return new RefLangVisitorCompiler(l, scope, fieldId);
     default:
-      return undefined;
+      throw Error("Unsupported language " + l.languageFullName);
   }
 }
 
@@ -67,7 +67,7 @@ export function getVisitorHtmlByLanguage(l: Language) {
     case "Reference Language":
       return new RefLangVisitorHtml();
     default:
-      return undefined;
+      throw Error("Unsupported language " + l.languageFullName);
   }
 }
 
@@ -78,7 +78,7 @@ export function getVisitorSourceByLanguage(l: Language) {
     case "Reference Language":
       return new RefLangVisitorSource();
     default:
-      return undefined;
+      throw Error("Unsupported language " + l.languageFullName);
   }
 }
 

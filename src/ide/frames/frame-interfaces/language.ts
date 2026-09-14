@@ -91,7 +91,4 @@ export interface Language {
 
   // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
   reservedWords: Set<string>;
-
-  mapElanTypeToLanguageType(s: string): string;
-  mapLanguageTypeToElanType(s: string): string;
 }

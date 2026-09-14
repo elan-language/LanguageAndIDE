@@ -628,7 +628,7 @@ export function transform(
 
     if (ctx) {
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope)!;
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
       const type = ctx.accept(visitor)!;
       typeAsn.type = type;
       return typeAsn;
