@@ -1,10 +1,13 @@
-# 34c77bffe728e4a02a238736ca781b37b2e2649e2864756ed12a4822817f1799 Elan 2.0.0-beta5 valid
+# 47ca254f540d10fe9fdf09d1db643d84a7eddb0b4f5d2081cfd491854a949758 Elan 2.0.0-beta5 valid
 
 # Use the W,A,S,D keys to change Snake direction
+constant width set to 40
+
+constant height set to 30
+
 main
-  variable board set to new Board()
-  variable game set to new Game(board)
-  while not game.over()
+  variable game set to new Game()
+  while game.isOn
     call game.clockTick(getKey())
     variable blocks set to new BlockGraphics()
     call game.updateBlocks(blocks)
@@ -15,29 +18,27 @@ main
 end main
 
 class Game
-  constructor(board as Board)
-    assign this.board to board
-    assign this.snake to new Snake(board)
-    assign this.currentDir to Direction.right
+  constructor()
+    assign this.snake to new Snake(620)
+    assign this.currentDir to "d"
     assign this.newAppleNeeded to true
+    assign this.isOn to true
   end constructor
-
-  property board as Board
 
   private property snake as Snake
 
-  private property currentDir as Direction
+  private property currentDir as String
 
   private property apple as Int
 
   private property newAppleNeeded as Boolean
 
+  property isOn as Boolean
+
   procedure newAppleIfNeeded()
-    while this.newAppleNeeded
-      assign this.apple to randint(0, this.board.maxSquareNo())
-      if not this.snake.bodyCovers(this.apple) then
-        assign this.newAppleNeeded to false
-      end if
+    while this.newAppleNeeded or this.snake.bodyCovers(this.apple)
+      assign this.apple to randint(0, width*height - 1)
+      assign this.newAppleNeeded to false
     end while
   end procedure
 
@@ -52,6 +53,9 @@ class Game
     elif not snake.dead then
       call snake.moveTail()
     end if
+    if snake.dead then
+      assign this.isOn to false
+    end if
   end procedure
 
   procedure updateBlocks(blocks as BlockGraphics)
@@ -62,23 +66,13 @@ class Game
   end procedure
 
   procedure setDirectionIfKeyPress(key as String)
-    if key.equals("w") then
-      assign this.currentDir to Direction.up
-    elif key.equals("s") then
-      assign this.currentDir to Direction.down
-    elif key.equals("a") then
-      assign this.currentDir to Direction.left
-    elif key.equals("d") then
-      assign this.currentDir to Direction.right
+    if not key.equals("") and "wasd".contains(key) then
+      assign this.currentDir to key
     end if
   end procedure
 
   function score() returns Int
     return this.snake.length() - 1
-  end function
-
-  function over() returns Boolean
-    return this.snake.dead
   end function
 
   function toString() returns String
@@ -88,45 +82,46 @@ class Game
 end class
 
 class Snake
-  constructor(board as Board)
-    assign this.board to board
-    assign this.body to [620, 619]
+  constructor(head as Int)
+    assign this.head to head
+    assign this.body to [this.head - 1, this.head]
   end constructor
+
+  property head as Int
 
   private property body as List<of Int>
 
-  property board as Board
-
   property dead as Boolean
 
-  procedure moveHead(dir as Direction)
-    variable head set to this.body[0]
-    variable col set to this.board.col(head)
-    variable row set to this.board.row(head)
-    if dir is Direction.left then
-      assign col to col - 1
-    elif dir is Direction.right then
-      assign col to col + 1
-    elif dir is Direction.up then
-      assign row to row - 1
-    elif dir is Direction.down then
-      assign row to row + 1
+  procedure moveHead(dir as String)
+    variable newCol set to this.head mod width
+    variable newRow set to divAsInt(this.head, width)
+    if dir.equals("w") then
+      assign newRow to newRow - 1
+    elif dir.equals("a") then
+      assign newCol to newCol - 1
+    elif dir.equals("s") then
+      assign newRow to newRow + 1
+    elif dir.equals("d") then
+      assign newCol to newCol + 1
     end if
-    variable newHead set to this.board.squareNo(col, row)
-    variable board set to this.board
-    if not this.board.isInBounds(col, row) or this.body.contains(newHead) then
+    assign this.head to -1
+    if (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height) then
+      assign this.head to newRow*width + newCol
+    end if
+    if (this.head is -1) or this.body.contains(this.head) then
       assign this.dead to true
     else
       #  3502
       variable body set to this.body
-      call body.prepend(newHead)
+      call body.append(this.head)
     end if
   end procedure
 
   procedure moveTail()
     # 3502
     variable body set to this.body
-    call body.removeAt(this.length() - 1)
+    call body.removeAt(0)
   end procedure
 
   procedure addToBlocks(blocks as BlockGraphics)
@@ -144,45 +139,7 @@ class Snake
   end function
 
   function toString() returns String
-    return $"a Snake of length{this.length()}"
+    return $"a Snake"
   end function
 
 end class
-
-class Board
-  constructor()
-    assign this.width to 40
-    assign this.height to 30
-  end constructor
-
-  private property width as Int
-
-  private property height as Int
-
-  function squareNo(col as Int, row as Int) returns Int
-    return row*this.width + col
-  end function
-
-  function maxSquareNo() returns Int
-    return this.width*this.height - 1
-  end function
-
-  function col(squareNo as Int) returns Int
-    return squareNo mod this.width
-  end function
-
-  function row(squareNo as Int) returns Int
-    return divAsInt(squareNo, this.width)
-  end function
-
-  function isInBounds(col as Int, row as Int) returns Boolean
-    return (col >= 0) and (col < this.width) and (row >= 0) and (row < this.height)
-  end function
-
-  function toString() returns String
-    return "undefined"
-  end function
-
-end class
-
-enum Direction up, down, left, right

@@ -1,4 +1,4 @@
-# 74bede9b5632ec0c8313d544244914c64ebf527049804fb01c62662e111570a5 Elan 2.0.0-beta5 valid
+# ac38b4bf6c96fcc6d4c81f0edc25081b31218ace9c9797e33634ed85c1fcfe43 Elan 2.0.0-beta5 valid
 
 # Use the w,a,s,d keys to change snake's direction
 constant width set to 40
@@ -10,9 +10,9 @@ main
   variable head set to 621
   variable snake set to [head - 1, head]
   variable currentDir set to "d"
-  variable gameOn set to true
+  variable gameIsOn set to true
   variable apple set to -1
-  while gameOn
+  while gameIsOn
     while (apple is -1) or snake.contains(apple)
       assign apple to randint(0, width*height)
     end while
@@ -23,7 +23,7 @@ main
     end if
     assign head to getAdjacentBlock(head, currentDir)
     if (head is -1) or snake.contains(head) then
-      assign gameOn to false
+      assign gameIsOn to false
     else
       call snake.append(head)
     end if

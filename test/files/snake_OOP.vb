@@ -2,10 +2,13 @@
 
 ' Use the W,A,S,D keys to change Snake direction
 
+Const width = 40
+
+Const height = 30
+
 Sub main()
-  Dim board = New Board() ' variable definition
-  Dim game = New Game(board) ' variable definition
-  While Not game.over()
+  Dim game = New Game() ' variable definition
+  While game.isOn
     game.clockTick(getKey()) ' procedure call
     Dim blocks = New BlockGraphics() ' variable definition
     game.updateBlocks(blocks) ' procedure call
@@ -17,29 +20,27 @@ End Sub
 
 Class Game
 
-  Sub New(board As Board)
-    Me.board = board ' assignment
-    Me.snake = New Snake(board) ' assignment
-    Me.currentDir = Direction.right ' assignment
+  Sub New()
+    Me.snake = New Snake(620) ' assignment
+    Me.currentDir = "d" ' assignment
     Me.newAppleNeeded = True ' assignment
+    Me.isOn = True ' assignment
   End Sub
-
-  Property board As Board
 
   Private Property snake As Snake
 
-  Private Property currentDir As Direction
+  Private Property currentDir As String
 
   Private Property apple As Integer
 
   Private Property newAppleNeeded As Boolean
 
+  Property isOn As Boolean
+
   Sub newAppleIfNeeded() ' procedure method
-    While Me.newAppleNeeded
-      Me.apple = randint(0, Me.board.maxSquareNo()) ' assignment
-      If Not Me.snake.bodyCovers(Me.apple) Then
-        Me.newAppleNeeded = False ' assignment
-      End If
+    While Me.newAppleNeeded Or Me.snake.bodyCovers(Me.apple)
+      Me.apple = randint(0, width*height - 1) ' assignment
+      Me.newAppleNeeded = False ' assignment
     End While
   End Sub
 
@@ -54,6 +55,9 @@ Class Game
     ElseIf Not snake.dead Then
       snake.moveTail() ' procedure call
     End If
+    If snake.dead Then
+      Me.isOn = False ' assignment
+    End If
   End Sub
 
   Sub updateBlocks(blocks As BlockGraphics) ' procedure method
@@ -64,23 +68,13 @@ Class Game
   End Sub
 
   Sub setDirectionIfKeyPress(key As String) ' procedure method
-    If key.equals("w") Then
-      Me.currentDir = Direction.up ' assignment
-    ElseIf key.equals("s") Then
-      Me.currentDir = Direction.down ' assignment
-    ElseIf key.equals("a") Then
-      Me.currentDir = Direction.left ' assignment
-    ElseIf key.equals("d") Then
-      Me.currentDir = Direction.right ' assignment
+    If Not key.equals("") And "wasd".contains(key) Then
+      Me.currentDir = key ' assignment
     End If
   End Sub
 
   Function score() As Integer
     Return Me.snake.length() - 1
-  End Function
-
-  Function over() As Boolean
-    Return Me.snake.dead
   End Function
 
   Function toString() As String
@@ -91,45 +85,46 @@ End Class
 
 Class Snake
 
-  Sub New(board As Board)
-    Me.board = board ' assignment
-    Me.body = {620, 619} ' assignment
+  Sub New(head As Integer)
+    Me.head = head ' assignment
+    Me.body = {Me.head - 1, Me.head} ' assignment
   End Sub
+
+  Property head As Integer
 
   Private Property body As List(Of Integer)
 
-  Property board As Board
-
   Property dead As Boolean
 
-  Sub moveHead(dir As Direction) ' procedure method
-    Dim head = Me.body(0) ' variable definition
-    Dim col = Me.board.col(head) ' variable definition
-    Dim row = Me.board.row(head) ' variable definition
-    If dir = Direction.left Then
-      col = col - 1 ' assignment
-    ElseIf dir = Direction.right Then
-      col = col + 1 ' assignment
-    ElseIf dir = Direction.up Then
-      row = row - 1 ' assignment
-    ElseIf dir = Direction.down Then
-      row = row + 1 ' assignment
+  Sub moveHead(dir As String) ' procedure method
+    Dim newCol = Me.head Mod width ' variable definition
+    Dim newRow = divAsInt(Me.head, width) ' variable definition
+    If dir.equals("w") Then
+      newRow = newRow - 1 ' assignment
+    ElseIf dir.equals("a") Then
+      newCol = newCol - 1 ' assignment
+    ElseIf dir.equals("s") Then
+      newRow = newRow + 1 ' assignment
+    ElseIf dir.equals("d") Then
+      newCol = newCol + 1 ' assignment
     End If
-    Dim newHead = Me.board.squareNo(col, row) ' variable definition
-    Dim board = Me.board ' variable definition
-    If Not Me.board.isInBounds(col, row) Or Me.body.contains(newHead) Then
+    Me.head = -1 ' assignment
+    If (newCol >= 0) And (newCol < width) And (newRow >= 0) And (newRow < height) Then
+      Me.head = newRow*width + newCol ' assignment
+    End If
+    If (Me.head = -1) Or Me.body.contains(Me.head) Then
       Me.dead = True ' assignment
     Else
       '  3502
       Dim body = Me.body ' variable definition
-      body.prepend(newHead) ' procedure call
+      body.append(Me.head) ' procedure call
     End If
   End Sub
 
   Sub moveTail() ' procedure method
     ' 3502
     Dim body = Me.body ' variable definition
-    body.removeAt(Me.length() - 1) ' procedure call
+    body.removeAt(0) ' procedure call
   End Sub
 
   Sub addToBlocks(blocks As BlockGraphics) ' procedure method
@@ -147,51 +142,7 @@ Class Snake
   End Function
 
   Function toString() As String
-    Return $"a Snake of length{Me.length()}"
+    Return $"a Snake"
   End Function
 
 End Class
-
-Class Board
-
-  Sub New()
-    Me.width = 40 ' assignment
-    Me.height = 30 ' assignment
-  End Sub
-
-  Private Property width As Integer
-
-  Private Property height As Integer
-
-  Function squareNo(col As Integer, row As Integer) As Integer
-    Return row*Me.width + col
-  End Function
-
-  Function maxSquareNo() As Integer
-    Return Me.width*Me.height - 1
-  End Function
-
-  Function col(squareNo As Integer) As Integer
-    Return squareNo Mod Me.width
-  End Function
-
-  Function row(squareNo As Integer) As Integer
-    Return divAsInt(squareNo, Me.width)
-  End Function
-
-  Function isInBounds(col As Integer, row As Integer) As Boolean
-    Return (col >= 0) And (col < Me.width) And (row >= 0) And (row < Me.height)
-  End Function
-
-  Function toString() As String
-    Return "undefined"
-  End Function
-
-End Class
-
-Enum Direction 
-  up = 0
-  down = 1
-  left = 2
-  right = 3
-End Enum
