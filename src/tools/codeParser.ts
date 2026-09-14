@@ -101,7 +101,7 @@ const languages = [
   // LanguageJava.Instance,
 ];
 
-async function parseAs(
+export async function parseAs(
   _what: string,
   parserFunc: (f: FileImpl) => [
     {
@@ -114,7 +114,7 @@ async function parseAs(
   code: string,
   delimiter?: string,
 ): Promise<TransformedCode | undefined> {
-  // const ms = Date.now();
+  const ms = Date.now();
   // console.log(`    Parse as ${_what} '${code.trim()}'`);
 
   const codeSource = new CodeSourceFromString(code + (delimiter ? delimiter : ""));
@@ -132,7 +132,9 @@ async function parseAs(
       codeSource.getRemainingCode().trim() ||
       (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid)
     ) {
-      // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
+      console.log(
+        `    Parse as ${_what} failed after ${Date.now() - ms}ms - ${(parser as FileImpl).parseError} - ${codeSource.getRemainingCode().trim()}`,
+      );
       return undefined;
     }
 
@@ -148,10 +150,10 @@ async function parseAs(
 
     incrementCount(_what);
 
-    // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
+    //console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
     return allCode as TransformedCode;
   } catch (_e) {
-    // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
+    //console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
     return undefined;
   }
 }
@@ -262,7 +264,7 @@ function FileWithHeaderParserAndRender(
   return [file, { textAsHtml: async () => await file.renderAsHtml(false) }];
 }
 
-function FileParserAndRender(file: FileImpl): [
+export function FileParserAndRender(file: FileImpl): [
   {
     parseFrom(source: CodeSource): void;
   },

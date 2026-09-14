@@ -14,6 +14,7 @@
     "Education"
   ],
   "scripts": {
+    "generatePythonTests": "node ./out/src/build-scripts/generate-python-tests.js",
     "generateg4": "node ./src/build-scripts/generate.mjs",
     "formatg4": "antlr-format -c antlrformatrc -v src/grammars/**/*.g4",
     "preprocess-worksheets": "node ./out/src/build-scripts/preprocess-worksheets.js",
