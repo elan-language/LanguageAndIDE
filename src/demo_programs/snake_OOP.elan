@@ -1,4 +1,4 @@
-# c63df36b8b7f846059521025e1df4663596347f98be812bcf046abe6b493ae67 Elan 2.0.0-beta5 valid
+# 47ca254f540d10fe9fdf09d1db643d84a7eddb0b4f5d2081cfd491854a949758 Elan 2.0.0-beta5 valid
 
 # Use the W,A,S,D keys to change Snake direction
 constant width set to 40
@@ -7,7 +7,7 @@ constant height set to 30
 
 main
   variable game set to new Game()
-  while game.gameOn
+  while game.isOn
     call game.clockTick(getKey())
     variable blocks set to new BlockGraphics()
     call game.updateBlocks(blocks)
@@ -19,21 +19,21 @@ end main
 
 class Game
   constructor()
-    assign this.snake to new Snake()
-    assign this.currentDir to Direction.right
+    assign this.snake to new Snake(620)
+    assign this.currentDir to "d"
     assign this.newAppleNeeded to true
-    assign this.gameOn to true
+    assign this.isOn to true
   end constructor
 
   private property snake as Snake
 
-  private property currentDir as Direction
+  private property currentDir as String
 
   private property apple as Int
 
   private property newAppleNeeded as Boolean
 
-  property gameOn as Boolean
+  property isOn as Boolean
 
   procedure newAppleIfNeeded()
     while this.newAppleNeeded or this.snake.bodyCovers(this.apple)
@@ -54,7 +54,7 @@ class Game
       call snake.moveTail()
     end if
     if snake.dead then
-      assign this.gameOn to false
+      assign this.isOn to false
     end if
   end procedure
 
@@ -66,14 +66,8 @@ class Game
   end procedure
 
   procedure setDirectionIfKeyPress(key as String)
-    if key.equals("w") then
-      assign this.currentDir to Direction.up
-    elif key.equals("s") then
-      assign this.currentDir to Direction.down
-    elif key.equals("a") then
-      assign this.currentDir to Direction.left
-    elif key.equals("d") then
-      assign this.currentDir to Direction.right
+    if not key.equals("") and "wasd".contains(key) then
+      assign this.currentDir to key
     end if
   end procedure
 
@@ -88,8 +82,8 @@ class Game
 end class
 
 class Snake
-  constructor()
-    assign this.head to 620
+  constructor(head as Int)
+    assign this.head to head
     assign this.body to [this.head - 1, this.head]
   end constructor
 
@@ -99,21 +93,21 @@ class Snake
 
   property dead as Boolean
 
-  procedure moveHead(dir as Direction)
-    variable col set to this.head mod width
-    variable row set to divAsInt(this.head, width)
-    if dir is Direction.left then
-      assign col to col - 1
-    elif dir is Direction.right then
-      assign col to col + 1
-    elif dir is Direction.up then
-      assign row to row - 1
-    elif dir is Direction.down then
-      assign row to row + 1
+  procedure moveHead(dir as String)
+    variable newCol set to this.head mod width
+    variable newRow set to divAsInt(this.head, width)
+    if dir.equals("w") then
+      assign newRow to newRow - 1
+    elif dir.equals("a") then
+      assign newCol to newCol - 1
+    elif dir.equals("s") then
+      assign newRow to newRow + 1
+    elif dir.equals("d") then
+      assign newCol to newCol + 1
     end if
     assign this.head to -1
-    if (col >= 0) and (col < width) and (row >= 0) and (row < height) then
-      assign this.head to row*width + col
+    if (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height) then
+      assign this.head to newRow*width + newCol
     end if
     if (this.head is -1) or this.body.contains(this.head) then
       assign this.dead to true
@@ -145,9 +139,7 @@ class Snake
   end function
 
   function toString() returns String
-    return $"a Snake of length{this.length()}"
+    return $"a Snake"
   end function
 
 end class
-
-enum Direction up, down, left, right
