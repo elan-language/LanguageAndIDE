@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta4
+' VB.NET with Elan 2.0.0-beta5
 
 Sub main()
   Dim bubbles = New List(Of CircleVG)() ' variable definition

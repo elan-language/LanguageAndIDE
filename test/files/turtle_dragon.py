@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta4
+# Python with Elan 2.0.0-beta5
 
 def main() -> None:
   order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) # variable definition

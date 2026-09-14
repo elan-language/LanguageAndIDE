@@ -1,4 +1,4 @@
-# 2b3750d471eb54cb94f5523fb83dafd0971d3e1d6e98ac81666a5708b62fd02d Elan 2.0.0-beta4 valid
+# 98abee19ef3b114c1307aa0e8b51ce605c8e4bd36ace6eeb71fc9cc93075510d Elan 2.0.0-beta5 valid
 
 main
   variable blocks set to new BlockGraphics()
