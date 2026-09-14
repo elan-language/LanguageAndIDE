@@ -1,7 +1,6 @@
-# 447ff5cfdea8e3af100aa0e7402ad41ba5e274d4dedf56e0cd6cb11d901b291d Elan 2.0.0-beta4 valid
+# 5e1157019bf676489522842ef83d483b97d2152ea1ecf4e9d0594b5753e5baa8 Elan 2.0.0-beta4 valid
 
 # Use the W,A,S,D keys to change Snake direction
-# TODO align list order with other implementations
 constant width set to 40
 
 constant height set to 30
@@ -45,11 +44,11 @@ function moveSnake(g as Game) returns Game
   variable newRow set to if_(k.equals("w"), row - 1, if_(k.equals("s"), row + 1, row))
   variable inBounds set to (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height)
   variable newHead set to if_(inBounds, newRow*width + newCol, -1)
-  return if_((newHead is -1) or selfCollision(newHead, g), g.with_isOn(false), g.with_body(g.body.withPrepend(newHead)).with_head(newHead))
+  return if_((newHead is -1) or selfCollision(newHead, g), g.with_isOn(false), g.with_body(g.body.withAppend(newHead)).with_head(newHead))
 end function
 
 function eatAppleIfPoss(g as Game) returns Game
-  return if_(headOverApple(g), withNewApple(g), g.with_body(g.body.withRemoveAt(g.body.length() - 1)))
+  return if_(headOverApple(g), withNewApple(g), g.with_body(g.body.withRemoveAt(0)))
 end function
 
 function headOverApple(g as Game) returns Boolean
@@ -83,7 +82,7 @@ end function
 class Game
   constructor(rnd as Random)
     assign this.head to 620
-    assign this.body to [this.head, this.head - 1]
+    assign this.body to [this.head - 1, this.head]
     assign this.key to "d"
     assign this.isOn to true
     assign this.apple to -1
