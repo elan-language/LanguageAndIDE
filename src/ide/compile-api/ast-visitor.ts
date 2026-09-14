@@ -80,10 +80,9 @@ import { Constructor } from "../frames/class-members/constructor";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
-import { AbstractField } from "../frames/fields/abstract-field";
+import { AbstractField, FieldType } from "../frames/fields/abstract-field";
 import { ArgListField } from "../frames/fields/arg-list-field";
 import { InheritsFromField } from "../frames/fields/inherits-from-field";
-import { TypeField } from "../frames/fields/type-field";
 import { FileImpl } from "../frames/file-impl";
 import { isSelector } from "../frames/frame-helpers";
 import { Field } from "../frames/frame-interfaces/field";
@@ -624,7 +623,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof TypeField) {
+  if (node instanceof AbstractField && node.fieldType === FieldType.type) {
     const ctx = node.context;
 
     if (ctx) {

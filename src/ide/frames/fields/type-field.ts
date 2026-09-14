@@ -1,81 +1,81 @@
-import * as antlr from "antlr4ng";
-import { getParserByLanguage } from "../../compile-api/parser-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
-import { Frame } from "../frame-interfaces/frame";
-import { ParseNode } from "../frame-interfaces/parse-node";
-import { ParseStatus } from "../status-enums";
-import { AbstractField } from "./abstract-field";
+// import * as antlr from "antlr4ng";
+// import { getParserByLanguage } from "../../compile-api/parser-helpers";
+// import { CodeSource } from "../frame-interfaces/code-source";
+// import { Frame } from "../frame-interfaces/frame";
+// import { ParseNode } from "../frame-interfaces/parse-node";
+// import { ParseStatus } from "../status-enums";
+// import { AbstractField } from "./abstract-field";
 
-export class TypeField extends AbstractField {
-  constructor(holder: Frame) {
-    super(holder);
-    this.useHtmlTags = true;
-    this.setPlaceholder("<i>Type</i>");
-  }
+// export class TypeField extends AbstractField {
+//   constructor(holder: Frame) {
+//     super(holder);
+//     this.useHtmlTags = true;
+//     this.setPlaceholder("<i>Type</i>");
+//   }
 
-  helpId(): string {
-    return "TypeField";
-  }
+//   helpId(): string {
+//     return "TypeField";
+//   }
 
-  getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_type`;
-  }
+//   getIdPrefix(): string {
+//     return `${this.language().languageHtmlClass}_type`;
+//   }
 
-  override initialiseRoot(): ParseNode {
-    return undefined as unknown as ParseNode;
-  }
+//   override initialiseRoot(): ParseNode {
+//     return undefined as unknown as ParseNode;
+//   }
 
-  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
-    source.readToEndOfLine();
+//   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
+//     source.readToEndOfLine();
 
-  symbolCompletion(): string {
-    return this.symbolCompletionAsHtml();
-  }
+//   symbolCompletion(): string {
+//     return this.symbolCompletionAsHtml();
+//   }
 
-  parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
-    const parser = getParserByLanguage(this.language(), text);
-    if (parser) {
-      return [parser, parser.type_()];
-    }
-    return [undefined!, undefined!];
-  }
+//   parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
+//     const parser = getParserByLanguage(this.language(), text);
+//     if (parser) {
+//       return [parser, parser.type_()];
+//     }
+//     return [undefined!, undefined!];
+//   }
 
-  override parseCompleteTextUsingNode(text: string, _root: ParseNode | undefined): void {
-    if (!text || text.length === 0) {
-      this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
-    } else {
-      let parser: antlr.Parser;
-      [parser, this.context] = this.parseByLanguage(text);
-      const parsed = this.context.getText();
+//   override parseCompleteTextUsingNode(text: string, _root: ParseNode | undefined): void {
+//     if (!text || text.length === 0) {
+//       this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
+//     } else {
+//       let parser: antlr.Parser;
+//       [parser, this.context] = this.parseByLanguage(text);
+//       const parsed = this.context.getText();
 
-      if (parsed !== text.replaceAll(" ", "") || parser.numberOfSyntaxErrors > 0) {
-        this.setParseStatus(ParseStatus.invalid);
-        this.context = undefined;
-        this.text = text.trimStart();
-      } else {
-        this.setParseStatus(ParseStatus.valid);
-        this.text = text.trimStart();
-      }
-    }
-  }
+//       if (parsed !== text.replaceAll(" ", "") || parser.numberOfSyntaxErrors > 0) {
+//         this.setParseStatus(ParseStatus.invalid);
+//         this.context = undefined;
+//         this.text = text.trimStart();
+//       } else {
+//         this.setParseStatus(ParseStatus.valid);
+//         this.text = text.trimStart();
+//       }
+//     }
+//   }
 
-  override parseFrom(source: CodeSource): void {
-    this.rootNode = undefined;
-    this.holder.hasBeenAddedTo();
-    const text = this.readToDelimiter(source);
+//   override parseFrom(source: CodeSource): void {
+//     this.rootNode = undefined;
+//     this.holder.hasBeenAddedTo();
+//     const text = this.readToDelimiter(source);
 
-    this.parseCompleteTextUsingNode(text, undefined);
-    if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
-      this._parseStatus = ParseStatus.valid;
-    } else if (this._parseStatus === ParseStatus.invalid) {
-      this.context = undefined;
-      throw new Error(`Parse error at ${source.getRemainingCode()}`);
-    }
-  }
+//     this.parseCompleteTextUsingNode(text, undefined);
+//     if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
+//       this._parseStatus = ParseStatus.valid;
+//     } else if (this._parseStatus === ParseStatus.invalid) {
+//       this.context = undefined;
+//       throw new Error(`Parse error at ${source.getRemainingCode()}`);
+//     }
+//   }
 
-  override setFieldToKnownValidText(text: string) {
-    this.text = text;
-    this.parseCompleteTextUsingNode(this.text, undefined);
-    this._parseStatus = ParseStatus.valid;
-  }
-}
+//   override setFieldToKnownValidText(text: string) {
+//     this.text = text;
+//     this.parseCompleteTextUsingNode(this.text, undefined);
+//     this._parseStatus = ParseStatus.valid;
+//   }
+// }

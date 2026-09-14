@@ -5,10 +5,10 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
+import { AbstractField, FieldType } from "../ide/frames/fields/abstract-field";
 import { ArgListField } from "../ide/frames/fields/arg-list-field";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { ParamListField } from "../ide/frames/fields/param-list-field";
-import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
@@ -175,8 +175,8 @@ function parseAsKeyword(code: string): TransformedCode | undefined {
   return undefined;
 }
 
-function TypeParserAndRender(file: FileImpl): [TypeField, { textAsHtml(): Promise<string> }] {
-  const fr = new TypeField(new GlobalFunction(file));
+function TypeParserAndRender(file: FileImpl): [AbstractField, { textAsHtml(): Promise<string> }] {
+  const fr = new AbstractField(new GlobalFunction(file), FieldType.type);
   return [fr, { textAsHtml: async () => fr.textAsHtml() }];
 }
 

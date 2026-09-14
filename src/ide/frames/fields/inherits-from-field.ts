@@ -40,7 +40,7 @@ export class InheritsFromField extends AbstractField {
       if (languageHtml === "") {
         result = super.renderAsHtml();
       } else {
-        result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${languageHtml}</el-txt><el-place>${this._placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+        result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${languageHtml}</el-txt><el-place>${this.placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
       }
     }
     return result;

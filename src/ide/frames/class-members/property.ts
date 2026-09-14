@@ -1,8 +1,8 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
+import { AbstractField, FieldType } from "../fields/abstract-field";
 import { IdentifierField } from "../fields/identifier-field";
-import { TypeField } from "../fields/type-field";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
@@ -21,12 +21,12 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   isProperty = true;
   isAbstract = false;
   name: IdentifierField;
-  type: TypeField;
+  type: AbstractField;
   public isPrivate: boolean = false;
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.name = new IdentifierField(this);
-    this.type = new TypeField(this);
+    this.type = new AbstractField(this, FieldType.type);
     this.isPrivate = priv;
     this.canHaveBreakPoint = false;
   }

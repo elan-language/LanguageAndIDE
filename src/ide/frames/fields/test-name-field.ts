@@ -7,7 +7,7 @@ import { AbstractField } from "./abstract-field";
 export class TestNameField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this._placeholder = "test_name";
+    this.placeholder = "test_name";
   }
 
   helpId(): string {

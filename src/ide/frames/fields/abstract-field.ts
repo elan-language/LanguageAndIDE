@@ -1,6 +1,8 @@
+import * as antlr from "antlr4ng";
 import { ParserRuleContext } from "antlr4ng";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
 import {
+  getParserByLanguage,
   getVisitorHtmlByLanguage,
   getVisitorSourceByLanguage,
 } from "../../compile-api/parser-helpers";
@@ -30,12 +32,17 @@ import {
 } from "../symbol-completion-helpers";
 import { SymbolWrapper } from "../symbol-wrapper";
 
-export abstract class AbstractField implements Selectable, Field {
+export enum FieldType {
+  type,
+}
+
+// rename when refactoring complete
+export class AbstractField implements Selectable, Field {
   public isField: boolean = true;
   text: string = "";
-  protected _placeholder: string = "";
+  private _placeholder: string = "";
   protected placeholderIsCode: boolean = false;
-  protected useHtmlTags: boolean = false;
+  private _useHtmlTags: boolean = false;
   private id: string = "";
   protected selected: boolean = false;
   private focused: boolean = false;
@@ -57,14 +64,46 @@ export abstract class AbstractField implements Selectable, Field {
   helpActive: boolean = false;
 
   context: ParserRuleContext | undefined;
+  fieldType: FieldType | undefined;
 
-  constructor(holder: Frame) {
+  constructor(holder: Frame, fieldType?: FieldType | undefined) {
     this.holder = holder;
+    this.fieldType = fieldType;
     const map = holder.getMap();
     this.id = `${this.getFile().getNextId()}`;
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
+
+    if (this.fieldType !== undefined) {
+      this.readToDelimiter = (source: CodeSource) => source.readToEndOfLine();
+    }
+  }
+
+  get useHtmlTags() {
+    switch (this.fieldType) {
+      case FieldType.type:
+        return true;
+      default:
+        return this._useHtmlTags;
+    }
+  }
+
+  set useHtmlTags(b: boolean) {
+    this._useHtmlTags = b;
+  }
+
+  get placeholder() {
+    switch (this.fieldType) {
+      case FieldType.type:
+        return "<i>Type</i>";
+      default:
+        return this._placeholder;
+    }
+  }
+
+  set placeholder(s: string) {
+    this._placeholder = s;
   }
 
   get htmlId() {
@@ -79,13 +118,24 @@ export abstract class AbstractField implements Selectable, Field {
     return this.holder.getFile();
   }
 
-  abstract helpId(): string;
+  helpId(): string {
+    switch (this.fieldType) {
+      case FieldType.type:
+        return "TypeField";
+      default:
+        return "";
+    }
+  }
 
   getHtmlId(): string {
     return this.htmlId;
   }
-  abstract initialiseRoot(): ParseNode;
-  abstract readToDelimiter: (source: CodeSource) => string;
+
+  initialiseRoot(): ParseNode {
+    return undefined as unknown as ParseNode;
+  }
+
+  readToDelimiter?: (source: CodeSource) => string;
 
   showHelp() {
     this.helpActive = true;
@@ -96,19 +146,26 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   parseCurrentText(): void {
-    const root = this.initialiseRoot();
-    this.parseCompleteTextUsingNode(this.text, root);
+    this.parseCompleteText(this.text);
   }
 
   parseFrom(source: CodeSource): void {
     this.holder.hasBeenAddedTo();
-    const text = this.readToDelimiter(source);
-    const root = this.initialiseRoot();
-    this.parseCompleteTextUsingNode(text, root);
+    const text = this.readToDelimiter!(source);
+    this.parseCompleteText(text);
     if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
       this._parseStatus = ParseStatus.valid;
     } else if (this._parseStatus === ParseStatus.invalid) {
       throw new Error(`Parse error at ${source.getRemainingCode()}`);
+    }
+  }
+
+  parseCompleteText(text: string) {
+    if (this.fieldType !== undefined) {
+      this.parseCompleteTextUsingAntlr(text);
+    } else {
+      const root = this.initialiseRoot();
+      this.parseCompleteTextUsingNode(text, root);
     }
   }
 
@@ -581,9 +638,16 @@ export abstract class AbstractField implements Selectable, Field {
   getHolder(): Frame {
     return this.holder;
   }
+
   getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_text`;
+    switch (this.fieldType) {
+      case FieldType.type:
+        return `${this.language().languageHtmlClass}_type`;
+      default:
+        return `${this.language().languageHtmlClass}_text`;
+    }
   }
+
   focus(): void {
     this.focused = true;
   }
@@ -655,7 +719,7 @@ export abstract class AbstractField implements Selectable, Field {
   }
 
   setPlaceholder(placeholder: string): void {
-    this._placeholder = placeholder;
+    this.placeholder = placeholder;
   }
 
   public textAsHtml(): string {
@@ -753,7 +817,7 @@ export abstract class AbstractField implements Selectable, Field {
       const content = this.getCompletion().replace("<of", "&lt;of");
       completion = `<el-compl>${content}</el-compl>`;
     }
-    let html = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this._placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+    let html = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
     html = this.language().postProcessHtml(html);
     return html;
   }
@@ -786,8 +850,7 @@ export abstract class AbstractField implements Selectable, Field {
 
   setFieldToKnownValidText(text: string) {
     this.text = text;
-    const root = this.initialiseRoot();
-    this.parseCompleteTextUsingNode(this.text, root);
+    this.parseCompleteText(this.text);
     this._parseStatus = ParseStatus.valid;
   }
 
@@ -924,7 +987,14 @@ export abstract class AbstractField implements Selectable, Field {
     return popupAsHtml;
   }
 
-  abstract symbolCompletion(): string;
+  symbolCompletion(): string {
+    switch (this.fieldType) {
+      case FieldType.type:
+        return this.symbolCompletionAsHtml();
+      default:
+        return "";
+    }
+  }
 
   isWithinAGhostedFrame() {
     return this.getHolder().isGhostedOrWithinAGhostedFrame();
@@ -941,6 +1011,33 @@ export abstract class AbstractField implements Selectable, Field {
       const text = this.renderFromTree(this.context);
       if (text !== this.text) {
         this.setFieldToKnownValidText(text);
+      }
+    }
+  }
+
+  parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
+    const parser = getParserByLanguage(this.language(), text);
+    if (parser) {
+      return [parser, parser.type_()];
+    }
+    return [undefined!, undefined!];
+  }
+
+  parseCompleteTextUsingAntlr(text: string): void {
+    if (!text || text.length === 0) {
+      this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
+    } else {
+      let parser: antlr.Parser;
+      [parser, this.context] = this.parseByLanguage(text);
+      const parsed = this.context.getText();
+
+      if (parsed !== text.replaceAll(" ", "") || parser.numberOfSyntaxErrors > 0) {
+        this.setParseStatus(ParseStatus.invalid);
+        this.context = undefined;
+        this.text = text.trimStart();
+      } else {
+        this.setParseStatus(ParseStatus.valid);
+        this.text = text.trimStart();
       }
     }
   }
