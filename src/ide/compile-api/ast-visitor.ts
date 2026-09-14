@@ -753,16 +753,6 @@ export function transform(
     return new TypeAsn(typeName, inp.concat(oup), fieldId, scope);
   }
 
-  // if (node instanceof TypeNameUse) {
-  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
-  //   return new TypeAsn(typeName, [], fieldId, scope);
-  // }
-
-  // if (node instanceof TypeNameDef) {
-  //   const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
-  //   return new TypeAsn(typeName, [], fieldId, scope);
-  // }
-
   if (node instanceof TypeSimpleName) {
     const typeName = getTypeName(node.language(), node.matchedText, fieldId, scope);
     return new TypeAsn(typeName, [], fieldId, scope);
