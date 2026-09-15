@@ -3,7 +3,6 @@ import assert from "assert";
 import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
 import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
-import { IdentifierField } from "../../src/ide/frames/fields/identifier-field";
 import { InheritsFromField } from "../../src/ide/frames/fields/inherits-from-field";
 import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
@@ -36,6 +35,7 @@ import {
   T00_emptyFile,
   twoConstants,
 } from "./model-generating-functions";
+import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -63,7 +63,7 @@ suite("Editing Frames", () => {
   test("Enter on a field goes to next field owned by same frame (except the last/field field).", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const ident2 = file.getById("elan_ident2") as IdentifierField;
+    const ident2 = file.getById("elan_ident2") as AbstractField;
     ident2.select();
     assert.equal(ident2.isSelected(), true);
     ident2.processKey(enter());
@@ -73,7 +73,7 @@ suite("Editing Frames", () => {
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
     assert.equal(file.getChildren().length, 2);
-    const select0 = file.getById("elan_select0") as IdentifierField;
+    const select0 = file.getById("elan_select0") as AbstractField;
     assert.equal(select0.isSelected(), true);
   });
   test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
@@ -94,7 +94,7 @@ suite("Editing Frames", () => {
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
     const c = file.getById("elan_const1") as ConstantGlobal;
-    const ident2 = file.getById("elan_ident2") as IdentifierField;
+    const ident2 = file.getById("elan_ident2") as AbstractField;
     const text3 = file.getById("elan_text3") as ConstantValueField;
     c.select(true, false);
     assert.equal(c.isSelected(), true);
@@ -208,7 +208,7 @@ suite("Editing Frames", () => {
 
   test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModel(`./out/test/files/test644.elan`);
-    const runner = await createTestRunner();
+    const _runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("elan_var3");
     var3.select();
@@ -221,7 +221,7 @@ suite("Editing Frames", () => {
   });
   test("#666 able to move a frame past a selector", async () => {
     const file = await loadFileAsModel(`./out/test/files/test666.elan`);
-    const runner = await createTestRunner();
+    const _runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
     const var3 = file.getById("elan_var3");
     var3.select();
@@ -273,7 +273,7 @@ suite("Editing Frames", () => {
     const file = T00_emptyFile();
     const sel0 = file.getById("elan_select0");
     sel0.processKey(key("t"));
-    const desc = file.getById("elan_ident3") as IdentifierField;
+    const desc = file.getById("elan_ident3") as AbstractField;
     desc.processKey(key("x"));
     desc.processKey(key("y"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);

@@ -1,5 +1,101 @@
 lexer grammar RefLang_Lexer;
 
+// START common keywords
+CLASS: 'class';
+ELIF: 'elif';
+ELSE: 'else';
+ENUM: 'enum';
+FOR: 'for';
+IF: 'if';
+IN: 'in';
+INPUT: 'input';
+LAMBDA: 'lambda';
+MAIN: 'main';
+PRINT: 'print';
+RETURN: 'return';
+TRY: 'try';
+WHILE: 'while';
+
+IF_:
+    'if_'
+; // Temporary solution - to be replaced by language-specific implementation
+
+// END common keywords
+
+// START RefLang-specifiFc tokens
+ABSTRACT: 'abstract';
+ASSERT: 'assert';
+ASSIGN: 'assign';
+BE: 'be';
+CALL: 'call';
+CATCH: 'catch';
+CONSTANT: 'constant';
+CONSTRUCTOR: 'constructor';
+COPY: 'copy';
+DIV: 'div';
+END: 'end';
+EVALUATES: 'evaluates';
+FROM: 'from';
+FUNCTION: 'function';
+INHERITS: 'inherits';
+LET: 'let';
+NEW: 'new';
+PRIVATE: 'private';
+PROCEDURE: 'procedure';
+PROPERTY: 'property';
+RETURNS: 'returns';
+SET: 'set';
+STEP: 'step';
+TEST: 'test';
+THEN: 'then';
+THROW: 'throw';
+TO: 'to';
+VARIABLE: 'variable';
+// END RefLang-specific tokens
+
+// START Python-specific tokens
+ABSTRACT_METHOD: '@abstractmethod';
+ASSERT_EQUAL: 'assertEqual';
+AS: 'as';
+DEF: 'def';
+EXCEPT: 'except';
+INIT: '__init__';
+NONE: 'None';
+PASS: 'pass';
+RAISE: 'raise';
+ABC: 'ABC';
+TESTCASE: 'unittest.TestCase';
+TUPLE: 'tuple';
+//END Python-specific tokens
+
+//START common token names; custom definitions
+COMMENT_MARKER: '#';
+
+INT_NAME: 'Int';
+FLOAT_NAME: 'Float';
+BOOL_NAME: 'Boolean';
+STRING_NAME: 'String';
+LIST_NAME: 'List';
+FUNC_NAME: 'Func';
+
+TRUE: 'true';
+FALSE: 'false';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
+EQUAL: 'is';
+NOT_EQUAL: 'isnt';
+MOD: 'mod';
+ARROW: '=>';
+POWER: '**';
+
+BINARY_PREFIX: '0b';
+HEX_PREFIX: '0x';
+INTERPOLATED_STRING_PREFIX: '$';
+
+THIS_INSTANCE: 'this';
+//END common token names; custom definitions
+
 //START Common token names; common definitions
 COMMENT:
     COMMENT_MARKER ~('\r' | '\n')*
@@ -153,85 +249,3 @@ fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
 //END Common token names; common definitions
-
-//START common token names; custom definitions
-COMMENT_MARKER: '#';
-
-INT_NAME: 'Int';
-FLOAT_NAME: 'Float';
-BOOL_NAME: 'Boolean';
-STRING_NAME: 'String';
-LIST_NAME: 'List';
-FUNC_NAME: 'Func';
-
-TRUE: 'true';
-FALSE: 'false';
-AND: 'and';
-OR: 'or';
-NOT: 'not';
-EQUAL: 'is';
-NOT_EQUAL: 'isnt';
-MOD: 'mod';
-ARROW: '=>';
-
-BINARY_PREFIX: '0b';
-HEX_PREFIX: '0x';
-INTERPOLATED_STRING_PREFIX: '$';
-
-THIS_INSTANCE: 'this';
-//END common token names; custom definitions
-
-// START RefLang-specifiFc tokens
-ABSTRACT: 'abstract';
-AS: 'as';
-ASSERT: 'assert';
-ASSIGN: 'assign';
-BE: 'be';
-CALL: 'call';
-CATCH: 'catch';
-CLASS: 'class';
-CONSTANT: 'constant';
-CONSTRUCTOR: 'constructor';
-COPY: 'copy';
-DIV: 'div';
-ELIF: 'elif';
-ELSE: 'else';
-END: 'end';
-ENUM: 'enum';
-EVALUATES: 'evaluates';
-FOR: 'for';
-FROM: 'from';
-FUNCTION: 'function';
-IF: 'if';
-IN: 'in';
-INHERITS: 'inherits';
-INPUT: 'input';
-LAMBDA: 'lambda';
-LET: 'let';
-MAIN: 'main';
-NEW: 'new';
-OF: 'of';
-PRINT: 'print';
-PRIVATE: 'private';
-PROCEDURE: 'procedure';
-PROPERTY: 'property';
-RETURN: 'return';
-RETURNS: 'returns';
-SET: 'set';
-STEP: 'step';
-TEST: 'test';
-THEN: 'then';
-THROW: 'throw';
-TO: 'to';
-TRY: 'try';
-VARIABLE: 'variable';
-WHILE: 'while';
-
-POWER: '^';
-
-IF_:
-    'if_'
-; // Temporary solution - to be replaced by language-specific implementation
-
-// END RefLang-specific tokens
-
