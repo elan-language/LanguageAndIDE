@@ -1,6 +1,6 @@
 import { asKeyword, catchKeyword } from "../../../compiler/elan-keywords";
+import { AbstractField, identifierField } from "../fields/abstract-field";
 import { ExceptionTypeField } from "../fields/exception-type-field";
-import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -10,12 +10,12 @@ import { SingleLineFrame } from "../single-line-frame";
 export class CatchStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCatch = true;
-  variable: IdentifierField;
+  variable: AbstractField;
   exceptionType: ExceptionTypeField;
 
   constructor(parent: Parent) {
     super(parent);
-    this.variable = new IdentifierField(this);
+    this.variable = new AbstractField(this, identifierField);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new ExceptionTypeField(this);

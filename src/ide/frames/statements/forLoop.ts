@@ -1,7 +1,6 @@
 import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
-
+import { AbstractField, identifierField } from "../fields/abstract-field";
 import { ExpressionField } from "../fields/expression-field";
-import { IdentifierField } from "../fields/identifier-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -11,11 +10,11 @@ import { FrameWithStatements } from "../frame-with-statements";
 
 export class ForLoop extends FrameWithStatements implements Statement {
   isStatement = true;
-  variable: IdentifierField;
+  variable: AbstractField;
   iter: ExpressionField;
   constructor(parent: File | Parent) {
     super(parent);
-    this.variable = new IdentifierField(this);
+    this.variable = new AbstractField(this, identifierField);
     this.variable.setPlaceholder("<i>item</i>");
     this.iter = new ExpressionField(this);
     this.iter.setPlaceholder("<i>source</i>");

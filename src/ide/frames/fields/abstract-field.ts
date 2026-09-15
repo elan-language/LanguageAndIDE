@@ -37,6 +37,7 @@ import { SymbolWrapper } from "../symbol-wrapper";
 export enum FieldType {
   type,
   paramsList,
+  identifier,
 }
 
 export class FieldSpec {
@@ -79,6 +80,18 @@ export const paramsListField: FieldSpec = new FieldSpec(
   true,
   (parser: PythonParser | RefLangParser) => parser.paramsList(),
   (source: CodeSource) => source.readToNonMatchingCloseBracket(),
+);
+
+export const identifierField: FieldSpec = new FieldSpec(
+  FieldType.identifier,
+  false,
+  "<i>name</i>",
+  "IdentifierField",
+  "_ident",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.identifier(),
+  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
 );
 
 // rename when refactoring complete
