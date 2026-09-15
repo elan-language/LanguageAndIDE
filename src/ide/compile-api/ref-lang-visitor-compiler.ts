@@ -7,6 +7,7 @@ import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn"
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  IdentifierContext,
   ParamDefContext,
   ParamsListContext,
   TypeContext,
@@ -18,6 +19,7 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -54,6 +56,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
+
+  visitIdentifier = (ctx: IdentifierContext) =>
+    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   visitParamsList = (ctx: ParamsListContext) => {
     const paramDefs = getParamDefs(this, ctx);

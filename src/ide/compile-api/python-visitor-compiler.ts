@@ -4,6 +4,7 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  IdentifierContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -13,6 +14,7 @@ import {
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getTypes, visitTypeHelper } from "./parser-helpers";
+import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -49,4 +51,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
+
+  visitIdentifier = (ctx: IdentifierContext) =>
+    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 }

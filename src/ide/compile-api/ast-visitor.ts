@@ -636,6 +636,28 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.paramsList) {
+    const ctx = node.context;
+
+    if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
+      const paramList = ctx.accept(visitor)!;
+      return paramList;
+    }
+    return EmptyAsn.Instance;
+  }
+
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.identifier) {
+    const ctx = node.context;
+
+    if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
+      const id = ctx.accept(visitor)!;
+      return id;
+    }
+    return EmptyAsn.Instance;
+  }
+
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
   }
