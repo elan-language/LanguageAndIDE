@@ -2,8 +2,13 @@ import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
+import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
+import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  ParamDefContext,
+  ParamsListContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -12,7 +17,7 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getTypes, visitTypeHelper } from "./parser-helpers";
+import { getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -44,17 +49,23 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitType = (context: TypeContext) => visitTypeHelper<AstNode>(this, context);
+  visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
 
   visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 
-  //  visitParamsList = (ctx: ParamsListContext) => getParamDefs<AstNode>(this, ctx);
+  visitParamsList = (ctx: ParamsListContext) => {
+    const paramDefs = getParamDefs(this, ctx);
+    const paramsList = new ParamListAsn(this.fieldId, this.scope);
+    paramsList.parms = new CsvAsn(paramDefs, this.fieldId);
+    return paramsList;
+  };
 
-  //   visitIdentifier = (ctx: IdentifierContext) =>
-  //     ;
+  visitParamDef = (ctx: ParamDefContext) => {
+    const identifier = ctx.identifier().NAME_STARTING_LC().getText();
+    const type = this.visit(ctx.type())!;
 
-  //   visitParamDef = (ctx: ParamDefContext) =>
-  //     `${this.visit(ctx.identifier())} <el-kw>as</el-kw> ${this.visit(ctx.type())}`;
+    return new ParamDefAsn(identifier, type, this.fieldId, this.scope);
+  };
 }

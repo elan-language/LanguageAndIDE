@@ -46,7 +46,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   visitIdentifier = (ctx: IdentifierContext) =>
-    `<el-id>${this.visit(ctx.NAME_STARTING_LC())}</el-id>`;
+    `<el-id>${ctx.NAME_STARTING_LC().getText()}</el-id>`;
 
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())}: ${this.visit(ctx.type())}`;

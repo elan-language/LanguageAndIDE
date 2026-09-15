@@ -132,7 +132,7 @@ export function getParamDefs<T>(
   visitor: ParseTreeVisitor<T>,
   context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
 ) {
-  return context.paramDef().map((t) => visitor.visit(t)!);
+  return context.paramDef()?.map((t) => visitor.visit(t)!) ?? [];
 }
 
 export function getFilteredTypes(

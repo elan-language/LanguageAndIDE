@@ -49,7 +49,9 @@ export class FieldSpec {
     public helpId: string,
     public idPrefix: string,
     public symbolCompletion: boolean,
+    public optional: boolean,
     getRuleContextByField: (parser: PythonParser | RefLangParser) => ParserRuleContext,
+    public readToDelimiter: (source: CodeSource) => string,
   ) {
     this.getRuleContextByField = getRuleContextByField;
   }
@@ -62,7 +64,9 @@ export const typeField: FieldSpec = new FieldSpec(
   "TypeField",
   "_type",
   true,
+  false,
   (parser: PythonParser | RefLangParser) => parser.type_(),
+  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const paramsListField: FieldSpec = new FieldSpec(
@@ -72,7 +76,9 @@ export const paramsListField: FieldSpec = new FieldSpec(
   "ParamListField",
   "_params",
   true,
+  true,
   (parser: PythonParser | RefLangParser) => parser.paramsList(),
+  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
 );
 
 // rename when refactoring complete
@@ -114,8 +120,9 @@ export class AbstractField implements Selectable, Field {
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
 
-    if (this.useAntlr) {
-      this.readToDelimiter = (source: CodeSource) => source.readToEndOfLine();
+    if (fieldSpec) {
+      this.readToDelimiter = fieldSpec.readToDelimiter;
+      this.setOptional(fieldSpec.optional);
     }
   }
 
@@ -1006,7 +1013,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   symbolCompletion(): string {
-    return this.fieldSpec && this.fieldSpec.symbolCompletion ? this.symbolCompletion() : "";
+    return this.fieldSpec && this.fieldSpec.symbolCompletion ? this.symbolCompletionAsHtml() : "";
   }
 
   isWithinAGhostedFrame() {

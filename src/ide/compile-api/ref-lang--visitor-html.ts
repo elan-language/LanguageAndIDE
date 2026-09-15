@@ -42,10 +42,12 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return getTokenText(RefLangLexer.literalNames, ctx);
   }
 
-  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+  visitParamsList = (ctx: ParamsListContext) => {
+    return `${getParamDefs<string>(this, ctx).join(", ")}`;
+  };
 
   visitIdentifier = (ctx: IdentifierContext) =>
-    `<el-id>${this.visit(ctx.NAME_STARTING_LC())}</el-id>`;
+    `<el-id>${ctx.NAME_STARTING_LC().getText()}</el-id>`;
 
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())} <el-kw>as</el-kw> ${this.visit(ctx.type())}`;

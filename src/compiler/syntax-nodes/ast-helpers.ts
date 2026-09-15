@@ -26,13 +26,13 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
+import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
-import { ListTypeAsn } from "./list-type-asn";
 import { BooleanTypeAsn } from "./boolean-type-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";
@@ -44,11 +44,11 @@ import { FunctionAsn } from "./globals/function-asn";
 import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
 import { IntTypeAsn } from "./int-type-asn";
+import { ListTypeAsn } from "./list-type-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
 import { StringTypeAsn } from "./string-type-asn";
 import { TypeNameAsn } from "./type-name-asn";
-import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 
 // interface type guards
 
