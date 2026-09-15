@@ -15,7 +15,8 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     super();
   }
 
-  visitTypeTuple = (ctx: TypeTupleContext) => `tuple[${getFilteredTypes(this, ctx).join(", ")}]`;
+  visitTypeTuple = (ctx: TypeTupleContext) =>
+    `<el-kw>tuple</el-kw>[${getFilteredTypes(this, ctx).join(", ")}]`;
 
   visitTypeName = (ctx: TypeNameContext) => `<el-type>${this.visitChildren(ctx) ?? ""}</el-type>`;
 
@@ -24,7 +25,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
 
   visitTypeFunc = (ctx: TypeFuncContext) => {
     const [inTypes, returnType] = getFuncTypes(this, ctx);
-    return `Callable[[${inTypes}]${returnType}]`;
+    return `<el-type>Callable</el-type>[[${inTypes}], ${returnType}]`;
   };
 
   visitType = (context: TypeContext) => visitType<string>(this, context);
