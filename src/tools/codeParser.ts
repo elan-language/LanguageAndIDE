@@ -5,7 +5,7 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
-import { AbstractField, FieldType } from "../ide/frames/fields/abstract-field";
+import { AbstractField, paramsListField, typeField } from "../ide/frames/fields/abstract-field";
 import { ArgListField } from "../ide/frames/fields/arg-list-field";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { FileImpl } from "../ide/frames/file-impl";
@@ -177,7 +177,7 @@ function parseAsKeyword(code: string): TransformedCode | undefined {
 }
 
 function TypeParserAndRender(file: FileImpl): [AbstractField, { textAsHtml(): Promise<string> }] {
-  const fr = new AbstractField(new GlobalFunction(file), FieldType.type);
+  const fr = new AbstractField(new GlobalFunction(file), typeField);
   return [fr, { textAsHtml: async () => fr.textAsHtml() }];
 }
 
@@ -244,7 +244,7 @@ function ParameterParserAndRender(
   file: FileImpl,
 ): [AbstractField, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
-  const pp = new AbstractField(gf, FieldType.paramsList);
+  const pp = new AbstractField(gf, paramsListField);
 
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }

@@ -1,6 +1,8 @@
 import * as antlr from "antlr4ng";
 import { ParserRuleContext } from "antlr4ng";
 import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
+import { PythonParser } from "../../../generated/python/PythonParser";
+import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
 import {
   getParserByLanguage,
   getVisitorHtmlByLanguage,
@@ -31,13 +33,47 @@ import {
   SymbolCompletionSpec,
 } from "../symbol-completion-helpers";
 import { SymbolWrapper } from "../symbol-wrapper";
-import { PythonParser } from "../../../generated/python/PythonParser";
-import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
 
 export enum FieldType {
   type,
   paramsList,
 }
+
+export class FieldSpec {
+  public getRuleContextByField: (parser: PythonParser | RefLangParser) => ParserRuleContext;
+
+  constructor(
+    public fieldType: FieldType,
+    public useHtmlTag: boolean,
+    public placeholder: string,
+    public helpId: string,
+    public idPrefix: string,
+    public symbolCompletion: boolean,
+    getRuleContextByField: (parser: PythonParser | RefLangParser) => ParserRuleContext,
+  ) {
+    this.getRuleContextByField = getRuleContextByField;
+  }
+}
+
+export const typeField: FieldSpec = new FieldSpec(
+  FieldType.type,
+  true,
+  "<i>Type</i>",
+  "TypeField",
+  "_type",
+  true,
+  (parser: PythonParser | RefLangParser) => parser.type_(),
+);
+
+export const paramsListField: FieldSpec = new FieldSpec(
+  FieldType.paramsList,
+  true,
+  "<i>parameter definitions</i>",
+  "ParamListField",
+  "_params",
+  true,
+  (parser: PythonParser | RefLangParser) => parser.paramsList(),
+);
 
 // rename when refactoring complete
 export class AbstractField implements Selectable, Field {
@@ -67,11 +103,11 @@ export class AbstractField implements Selectable, Field {
   helpActive: boolean = false;
 
   context: ParserRuleContext | undefined;
-  fieldType: FieldType | undefined;
+  fieldSpec: FieldSpec | undefined;
 
-  constructor(holder: Frame, fieldType?: FieldType | undefined) {
+  constructor(holder: Frame, fieldSpec?: FieldSpec | undefined) {
     this.holder = holder;
-    this.fieldType = fieldType;
+    this.fieldSpec = fieldSpec;
     const map = holder.getMap();
     this.id = `${this.getFile().getNextId()}`;
     map.set(this.htmlId, this);
@@ -84,18 +120,11 @@ export class AbstractField implements Selectable, Field {
   }
 
   get useAntlr() {
-    return this.fieldType !== undefined;
+    return this.fieldSpec !== undefined;
   }
 
   get useHtmlTags() {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return true;
-      case FieldType.paramsList:
-        return true;
-      default:
-        return this._useHtmlTags;
-    }
+    return this.fieldSpec ? this.fieldSpec.useHtmlTag : this._useHtmlTags;
   }
 
   set useHtmlTags(b: boolean) {
@@ -103,14 +132,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   get placeholder() {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return "<i>Type</i>";
-      case FieldType.paramsList:
-        return "<i>parameter definitions</i>";
-      default:
-        return this._placeholder;
-    }
+    return this.fieldSpec ? this.fieldSpec.placeholder : this._placeholder;
   }
 
   set placeholder(s: string) {
@@ -130,14 +152,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   helpId(): string {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return "TypeField";
-      case FieldType.paramsList:
-        return "ParamListField";
-      default:
-        return "";
-    }
+    return this.fieldSpec ? this.fieldSpec.helpId : "";
   }
 
   getHtmlId(): string {
@@ -653,14 +668,8 @@ export class AbstractField implements Selectable, Field {
   }
 
   getIdPrefix(): string {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return `${this.language().languageHtmlClass}_type`;
-      case FieldType.paramsList:
-        return `${this.language().languageHtmlClass}_params`;
-      default:
-        return `${this.language().languageHtmlClass}_text`;
-    }
+    const specific = this.fieldSpec ? this.fieldSpec.idPrefix : "_text";
+    return `${this.language().languageHtmlClass}${specific}`;
   }
 
   focus(): void {
@@ -997,14 +1006,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   symbolCompletion(): string {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return this.symbolCompletionAsHtml();
-      case FieldType.paramsList:
-        return this.symbolCompletionAsHtml();
-      default:
-        return "";
-    }
+    return this.fieldSpec && this.fieldSpec.symbolCompletion ? this.symbolCompletion() : "";
   }
 
   isWithinAGhostedFrame() {
@@ -1026,14 +1028,11 @@ export class AbstractField implements Selectable, Field {
     }
   }
 
-  getRuleContextByField(parser: PythonParser | RefLangParser) {
-    switch (this.fieldType) {
-      case FieldType.type:
-        return parser.type_();
-      case FieldType.paramsList:
-        return parser.paramsList();
-      default:
-        throw Error("Unsupported field type " + this.fieldType);
+  getRuleContextByField(parser: PythonParser | RefLangParser): ParserRuleContext {
+    if (this.fieldSpec) {
+      return this.fieldSpec.getRuleContextByField(parser);
+    } else {
+      throw Error("No fieldSpec.");
     }
   }
 

@@ -1,5 +1,5 @@
 import { abstractProcedureKeywords } from "../../../compiler/elan-keywords";
-import { AbstractField, FieldType } from "../fields/abstract-field";
+import { AbstractField, paramsListField } from "../fields/abstract-field";
 import { MethodNameField } from "../fields/method-name-field";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -16,7 +16,7 @@ export class AbstractProcedure extends SingleLineFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new MethodNameField(this);
-    this.params = new AbstractField(this, FieldType.paramsList);
+    this.params = new AbstractField(this, paramsListField);
     this.canHaveBreakPoint = false;
   }
 
