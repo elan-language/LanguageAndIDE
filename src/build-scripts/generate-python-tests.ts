@@ -25,7 +25,7 @@ export function FileParserAndExport(file: FileImpl): [
 
   return [
     { parseFrom: (source: CodeSource) => file.parseBodyFrom(source) },
-    { textAsHtml: async () => await file.renderAsSource() },
+    { textAsHtml: async () => await file.renderAsExport() },
   ];
 }
 
@@ -45,7 +45,7 @@ export async function processTestFile(fileName: string) {
     for (const code of array) {
       const toConvert = code.replace("${testHeader}", "").replaceAll("`", "").trim();
       console.warn(toConvert.slice(0, 20));
-      const pyCode = await convertCode(code);
+      const pyCode = await convertCode(toConvert);
       console.warn("py: " + pyCode);
       source = source.replace(code, `\`\$\{testHeader} ${pyCode}\``);
     }
@@ -81,3 +81,7 @@ export async function processTestsInDirectory(dir: string) {
 }
 
 processTestsInDirectory(tests);
+
+export function processTestFiles() {
+  processTestsInDirectory(tests);
+}
