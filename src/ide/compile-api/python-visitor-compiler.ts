@@ -12,7 +12,7 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getTypes, visitType } from "./parser-helpers";
+import { getTypes, visitTypeHelper } from "./parser-helpers";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -44,7 +44,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.scope,
     );
 
-  visitType = (context: TypeContext) => visitType<AstNode>(this, context);
+  visitType = (context: TypeContext) => visitTypeHelper<AstNode>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);

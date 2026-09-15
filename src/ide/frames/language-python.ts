@@ -4,9 +4,9 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { AbstractField } from "./fields/abstract-field";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritsFromField } from "./fields/inherits-from-field";
-import { ParamListField } from "./fields/param-list-field";
 import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -179,7 +179,7 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  paramsListAsHtml(frame: MemberFrame, field: ParamListField): string {
+  paramsListAsHtml(frame: MemberFrame, field: AbstractField): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     // if no params, wrap the comma to make it only appear
     // when the line (or parts of it) are selected

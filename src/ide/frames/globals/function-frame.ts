@@ -6,7 +6,6 @@ import {
 } from "../../../compiler/elan-keywords";
 import { AbstractField, FieldType } from "../fields/abstract-field";
 import { MethodNameField } from "../fields/method-name-field";
-import { ParamListField } from "../fields/param-list-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -17,7 +16,7 @@ import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
   public name: MethodNameField;
-  public params: ParamListField;
+  public params: AbstractField;
   public returnType: AbstractField;
   isFunction = true;
   abstract file: File;
@@ -25,7 +24,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   constructor(parent: Parent) {
     super(parent);
     this.name = new MethodNameField(this);
-    this.params = new ParamListField(this);
+    this.params = new AbstractField(this, FieldType.paramsList);
     this.returnType = new AbstractField(this, FieldType.type);
     this.getChildren().push(new ReturnStatement(this));
   }

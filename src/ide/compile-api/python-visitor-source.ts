@@ -1,6 +1,9 @@
 import { TerminalNode } from "antlr4ng";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
+  IdentifierContext,
+  ParamDefContext,
+  ParamsListContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -8,7 +11,13 @@ import {
   TypeTupleContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
-import { getFilteredTypes, getFuncTypes, getTokenText, visitType } from "./parser-helpers";
+import {
+  getFilteredTypes,
+  getFuncTypes,
+  getParamDefs,
+  getTokenText,
+  visitTypeHelper,
+} from "./parser-helpers";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
   constructor() {
@@ -27,9 +36,16 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return `Callable[[${inTypes}]${returnType}]`;
   };
 
-  override visitType = (context: TypeContext) => visitType<string>(this, context);
+  override visitType = (context: TypeContext) => visitTypeHelper<string>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTokenText(PythonLexer.literalNames, ctx);
   }
+
+  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+
+  visitIdentifier = (ctx: IdentifierContext) => this.visit(ctx.NAME_STARTING_LC())!;
+
+  visitParamDef = (ctx: ParamDefContext) =>
+    `${this.visit(ctx.identifier())}: ${this.visit(ctx.type())}`;
 }

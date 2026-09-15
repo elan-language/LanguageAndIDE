@@ -36,6 +36,7 @@ import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
 
 export enum FieldType {
   type,
+  paramsList,
 }
 
 // rename when refactoring complete
@@ -90,6 +91,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return true;
+      case FieldType.paramsList:
+        return true;
       default:
         return this._useHtmlTags;
     }
@@ -103,6 +106,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return "<i>Type</i>";
+      case FieldType.paramsList:
+        return "<i>parameter definitions</i>";
       default:
         return this._placeholder;
     }
@@ -128,6 +133,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return "TypeField";
+      case FieldType.paramsList:
+        return "ParamListField";
       default:
         return "";
     }
@@ -649,6 +656,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return `${this.language().languageHtmlClass}_type`;
+      case FieldType.paramsList:
+        return `${this.language().languageHtmlClass}_params`;
       default:
         return `${this.language().languageHtmlClass}_text`;
     }
@@ -991,6 +1000,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return this.symbolCompletionAsHtml();
+      case FieldType.paramsList:
+        return this.symbolCompletionAsHtml();
       default:
         return "";
     }
@@ -1019,6 +1030,8 @@ export class AbstractField implements Selectable, Field {
     switch (this.fieldType) {
       case FieldType.type:
         return parser.type_();
+      case FieldType.paramsList:
+        return parser.paramsList();
       default:
         throw Error("Unsupported field type " + this.fieldType);
     }

@@ -8,7 +8,6 @@ import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { AbstractField, FieldType } from "../ide/frames/fields/abstract-field";
 import { ArgListField } from "../ide/frames/fields/arg-list-field";
 import { ExpressionField } from "../ide/frames/fields/expression-field";
-import { ParamListField } from "../ide/frames/fields/param-list-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
@@ -114,7 +113,7 @@ export async function parseAs(
   code: string,
   delimiter?: string,
 ): Promise<TransformedCode | undefined> {
-  const ms = Date.now();
+  // const ms = Date.now();
   // console.log(`    Parse as ${_what} '${code.trim()}'`);
 
   const codeSource = new CodeSourceFromString(code + (delimiter ? delimiter : ""));
@@ -132,9 +131,9 @@ export async function parseAs(
       codeSource.getRemainingCode().trim() ||
       (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid)
     ) {
-      console.log(
-        `    Parse as ${_what} failed after ${Date.now() - ms}ms - ${(parser as FileImpl).parseError} - ${codeSource.getRemainingCode().trim()}`,
-      );
+      // console.log(
+      //  `    Parse as ${_what} failed after ${Date.now() - ms}ms - ${(parser as FileImpl).parseError} - ${codeSource.getRemainingCode().trim()}`,
+      //);
       return undefined;
     }
 
@@ -243,9 +242,9 @@ function ExpressionrParserAndRender(
 
 function ParameterParserAndRender(
   file: FileImpl,
-): [ParamListField, { textAsHtml(): Promise<string> }] {
+): [AbstractField, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
-  const pp = new ParamListField(gf);
+  const pp = new AbstractField(gf, FieldType.paramsList);
 
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }

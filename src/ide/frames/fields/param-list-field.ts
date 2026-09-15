@@ -1,44 +1,44 @@
-import { CodeSource } from "../frame-interfaces/code-source";
-import { Frame } from "../frame-interfaces/frame";
-import { ParseNode } from "../frame-interfaces/parse-node";
-import { ParamListNode } from "../parse-nodes/param-list-node";
-import { AbstractField } from "./abstract-field";
+// import { CodeSource } from "../frame-interfaces/code-source";
+// import { Frame } from "../frame-interfaces/frame";
+// import { ParseNode } from "../frame-interfaces/parse-node";
+// import { ParamListNode } from "../parse-nodes/param-list-node";
+// import { AbstractField } from "./abstract-field";
 
-export class ParamListField extends AbstractField {
-  constructor(holder: Frame) {
-    super(holder);
-    this.setPlaceholder("<i>parameter definitions</i>");
-    this.useHtmlTags = true;
-    this.setOptional(true);
-  }
+// export class ParamListField extends AbstractField {
+//   constructor(holder: Frame) {
+//     super(holder);
+//     this.setPlaceholder("<i>parameter definitions</i>");
+//     this.useHtmlTags = true;
+//     this.setOptional(true);
+//   }
 
-  helpId(): string {
-    return "ParamListField";
-  }
+//   helpId(): string {
+//     return "ParamListField";
+//   }
 
-  getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_params`;
-  }
-  public contentAsSource(): string {
-    if (this.text) {
-      return this.text;
-    } else {
-      return "";
-    }
-  }
-  initialiseRoot(): ParseNode {
-    this.rootNode = new ParamListNode(this.getFile());
-    return this.rootNode;
-  }
+//   getIdPrefix(): string {
+//     return `${this.language().languageHtmlClass}_params`;
+//   }
+//   public contentAsSource(): string {
+//     if (this.text) {
+//       return this.text;
+//     } else {
+//       return "";
+//     }
+//   }
+//   initialiseRoot(): ParseNode {
+//     this.rootNode = new ParamListNode(this.getFile());
+//     return this.rootNode;
+//   }
 
-  readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
-    source.readToNonMatchingCloseBracket();
+//   readToDelimiter: (source: CodeSource) => string = (source: CodeSource) =>
+//     source.readToNonMatchingCloseBracket();
 
-  isEndMarker(key: string) {
-    return this.text === "" && key === ")";
-  }
+//   isEndMarker(key: string) {
+//     return this.text === "" && key === ")";
+//   }
 
-  symbolCompletion(): string {
-    return this.symbolCompletionAsHtml();
-  }
-}
+//   symbolCompletion(): string {
+//     return this.symbolCompletionAsHtml();
+//   }
+// }

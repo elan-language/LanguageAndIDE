@@ -4,11 +4,13 @@ import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
   PythonParser,
   TypeContext as PythonTypeContext,
+  ParamDefContext as PythonParamDefContext,
 } from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
   RefLangParser,
   TypeContext as RefLangTypeContext,
+  ParamDefContext as RefLangParamDefContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
@@ -91,7 +93,7 @@ export function filterTokens(s: string | null) {
   return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
 }
 
-export function visitType<T>(
+export function visitTypeHelper<T>(
   visitor: ParseTreeVisitor<T>,
   context: PythonTypeContext | RefLangTypeContext,
 ) {
@@ -124,6 +126,13 @@ export function getTypes<T>(
   context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
 ) {
   return context.type_().map((t) => visitor.visit(t)!);
+}
+
+export function getParamDefs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
+) {
+  return context.paramDef().map((t) => visitor.visit(t)!);
 }
 
 export function getFilteredTypes(

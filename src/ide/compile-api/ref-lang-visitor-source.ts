@@ -1,6 +1,9 @@
 import { TerminalNode } from "antlr4ng";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
+  IdentifierContext,
+  ParamDefContext,
+  ParamsListContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -8,7 +11,13 @@ import {
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
-import { getFilteredTypes, getFuncTypes, getTokenText, visitType } from "./parser-helpers";
+import {
+  getFilteredTypes,
+  getFuncTypes,
+  getParamDefs,
+  getTokenText,
+  visitTypeHelper,
+} from "./parser-helpers";
 
 export class RefLangVisitorSource extends RefLangVisitor<string> {
   constructor() {
@@ -27,9 +36,16 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     return `Func<of ${inTypes} => ${returnType}>`;
   };
 
-  visitType = (context: TypeContext) => visitType<string>(this, context);
+  visitType = (context: TypeContext) => visitTypeHelper<string>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTokenText(RefLangLexer.literalNames, ctx);
   }
+
+  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+
+  visitIdentifier = (ctx: IdentifierContext) => this.visit(ctx.NAME_STARTING_LC())!;
+
+  visitParamDef = (ctx: ParamDefContext) =>
+    `${this.visit(ctx.identifier())} as ${this.visit(ctx.type())}`;
 }

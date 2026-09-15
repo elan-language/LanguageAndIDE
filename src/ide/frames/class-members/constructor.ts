@@ -1,5 +1,5 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
-import { ParamListField } from "../fields/param-list-field";
+import { AbstractField, FieldType } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
@@ -11,10 +11,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
   isMember = true;
   isAbstract = false;
   private = false;
-  public params: ParamListField;
+  public params: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.params = new ParamListField(this);
+    this.params = new AbstractField(this, FieldType.paramsList);
   }
   isPrivate: boolean = false;
 
