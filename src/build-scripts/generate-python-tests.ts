@@ -1,4 +1,4 @@
-import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
+import { readdirSync, readFileSync, rename, statSync, writeFileSync } from "node:fs";
 import { parseAs } from "../tools/codeParser";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
@@ -9,6 +9,13 @@ const tests = `${rootdir}/test/compiler/`;
 
 function loadFile(fileName: string): string {
   return readFileSync(fileName, "utf-8");
+}
+
+function renameFile(oldName: string, newName: string): void {
+  rename(oldName, newName, (err) => {
+    if (err) throw err;
+    console.log("Rename complete!");
+  });
 }
 
 function saveFile(fileName: string, newContent: string) {
@@ -51,7 +58,7 @@ export async function processTestFile(fileName: string) {
     }
   }
 
-  saveFile(fileName.replace(".test.", ".test.py."), source);
+  saveFile(fileName.replace(".test.", ".py.test."), source);
 }
 
 let _currentDir = "";
@@ -80,8 +87,25 @@ export async function processTestsInDirectory(dir: string) {
   }
 }
 
-processTestsInDirectory(tests);
+export async function renameTestsInDirectory(dir: string) {
+  setCurrentDir(dir);
+
+  for (const fn of getTests(dir)) {
+    const nn = fn.replace(".test.", ".ref-lang.test.");
+    renameFile(`${dir}${fn}`, `${dir}${nn}`);
+  }
+
+  for (const sd of getTestsSubdir(dir)) {
+    await renameTestsInDirectory(`${dir}${sd}/`);
+  }
+}
+
+//processTestsInDirectory(tests);
 
 export function processTestFiles() {
   processTestsInDirectory(tests);
+}
+
+export function renameTestFiles() {
+  renameTestsInDirectory(tests);
 }
