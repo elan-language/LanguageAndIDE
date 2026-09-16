@@ -138,6 +138,7 @@ export class LanguageJava extends LanguageCfamily {
   EXTENDS = "extends";
   IMPLEMENTS = "implements";
   BOOL_NAME: string = "boolean";
+  FUNC_NAME: string = "Func";
 
   public STRING_NAME: string = "String";
 

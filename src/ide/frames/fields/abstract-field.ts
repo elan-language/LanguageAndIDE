@@ -233,7 +233,9 @@ export class AbstractField implements Selectable, Field {
   }
 
   getCompletion(): string {
-    return this.rootNode ? this.rootNode.getSyntaxCompletionAsHtml() : "";
+    return this.rootNode
+      ? this.rootNode.getSyntaxCompletionAsHtml()
+      : (this.fieldSpec?.placeholder ?? "");
   }
 
   getPlainTextCompletion(): string {

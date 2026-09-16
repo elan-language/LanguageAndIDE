@@ -303,6 +303,7 @@ export class LanguageElan extends LanguageAbstract {
   BOOL_NAME: string = "Boolean";
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
+  FUNC_NAME: string = "Func";
 
   TRUE: string = "true";
   FALSE: string = "false";

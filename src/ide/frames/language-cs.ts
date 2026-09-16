@@ -74,6 +74,7 @@ export class LanguageCS extends LanguageCfamily {
   IMPLEMENTS = "";
   INTERPOLATED_STRING_PREFIX: string = "$";
   BOOL_NAME: string = "bool";
+  FUNC_NAME: string = "Func";
 
   renderTopAsHtml(frame: Frame): string {
     let html = "";

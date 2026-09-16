@@ -230,6 +230,7 @@ export abstract class LanguageAbstract implements Language {
   abstract STRING_NAME: string;
   abstract LIST_NAME: string;
   abstract NEW_INSTANCE_PREFIX: string;
+  abstract FUNC_NAME: string;
 
   abstract TRUE: string;
   abstract FALSE: string;

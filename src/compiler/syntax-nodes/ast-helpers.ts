@@ -571,3 +571,28 @@ export function getTypeNameById(
       return new TypeNameAsn(name, fieldId, scope);
   }
 }
+
+export function getTokenTextByName(l: Language, name: string): string {
+  switch (name) {
+    case "int":
+    case "Int":
+      return l.INT_NAME;
+    case "float":
+    case "Float":
+      return l.FLOAT_NAME;
+    case "str":
+    case "String":
+      return l.STRING_NAME;
+    case "bool":
+    case "Boolean":
+      return l.BOOL_NAME;
+    case "List":
+    case "list":
+      return l.LIST_NAME;
+    case "Callable":
+    case "Func":
+      return l.FUNC_NAME;
+    default:
+      return name;
+  }
+}

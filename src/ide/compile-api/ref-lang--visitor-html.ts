@@ -1,6 +1,7 @@
 import { TerminalNode } from "antlr4ng";
-import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
+import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
+  IdentifierContext,
   ParamDefContext,
   ParamsListContext,
   TypeContext,
@@ -8,19 +9,13 @@ import {
   TypeGenericContext,
   TypeNameContext,
   TypeTupleContext,
-  IdentifierContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
-import {
-  getFilteredTypes,
-  getFuncTypes,
-  getParamDefs,
-  getTokenText,
-  visitTypeHelper,
-} from "./parser-helpers";
+import { Language } from "../frames/frame-interfaces/language";
+import { getFilteredTypes, getFuncTypes, getParamDefs, visitTypeHelper } from "./parser-helpers";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
-  constructor() {
+  constructor(private readonly language: Language) {
     super();
   }
 
@@ -39,7 +34,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
 
   visitTerminal(ctx: TerminalNode) {
-    return getTokenText(RefLangLexer.literalNames, ctx);
+    return getTokenTextByName(this.language, ctx.getText());
   }
 
   visitParamsList = (ctx: ParamsListContext) => {

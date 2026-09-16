@@ -65,9 +65,9 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
 export function getVisitorHtmlByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
-      return new PythonVisitorHtml();
+      return new PythonVisitorHtml(l);
     case "Reference Language":
-      return new RefLangVisitorHtml();
+      return new RefLangVisitorHtml(l);
     default:
       throw Error("Unsupported language " + l.languageFullName);
   }
@@ -76,9 +76,9 @@ export function getVisitorHtmlByLanguage(l: Language) {
 export function getVisitorSourceByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
-      return new PythonVisitorSource();
+      return new PythonVisitorSource(l);
     case "Reference Language":
-      return new RefLangVisitorSource();
+      return new RefLangVisitorSource(l);
     default:
       throw Error("Unsupported language " + l.languageFullName);
   }

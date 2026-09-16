@@ -1,5 +1,5 @@
 import { TerminalNode } from "antlr4ng";
-import { PythonLexer } from "../../generated/python/PythonLexer";
+import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   IdentifierContext,
   ParamDefContext,
@@ -11,16 +11,11 @@ import {
   TypeTupleContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
-import {
-  getFilteredTypes,
-  getFuncTypes,
-  getParamDefs,
-  getTokenText,
-  visitTypeHelper,
-} from "./parser-helpers";
+import { Language } from "../frames/frame-interfaces/language";
+import { getFilteredTypes, getFuncTypes, getParamDefs, visitTypeHelper } from "./parser-helpers";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
-  constructor() {
+  constructor(private readonly language: Language) {
     super();
   }
 
@@ -40,7 +35,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
 
   visitTerminal(ctx: TerminalNode) {
-    return getTokenText(PythonLexer.literalNames, ctx);
+    return getTokenTextByName(this.language, ctx.getText());
   }
 
   visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;

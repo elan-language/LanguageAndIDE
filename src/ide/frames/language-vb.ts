@@ -285,6 +285,7 @@ export class LanguageVB extends LanguageAbstract {
   STRING_NAME: string = "String";
   LIST_NAME: string = "List";
   NEW_INSTANCE_PREFIX = this.NEW;
+  FUNC_NAME: string = "Func";
 
   TRUE: string = "True";
   FALSE: string = "False";
