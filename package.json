@@ -34,7 +34,7 @@
     "pretest": "npm run dev-compile && npm run compile-test && npm run compile-test-api && cpr ./test/files ./out/test/files -o && cpr ./src/demo_programs ./out/test/demo_programs -o",
     "lint": "eslint src",
     "build-tests": "mocha --timeout 10000 out/test/**/*.slowtest.js",
-    "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.test.js",
+    "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.ref-lang.test.js",
     "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
     "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\"",

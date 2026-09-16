@@ -111,6 +111,7 @@ export async function parseAs(
     },
   ],
   code: string,
+  failOnError: boolean,
   delimiter?: string,
 ): Promise<TransformedCode | undefined> {
   // const ms = Date.now();
@@ -128,8 +129,9 @@ export async function parseAs(
     }
 
     if (
-      codeSource.getRemainingCode().trim() ||
-      (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid)
+      failOnError &&
+      (codeSource.getRemainingCode().trim() ||
+        (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid))
     ) {
       // console.log(
       //  `    Parse as ${_what} failed after ${Date.now() - ms}ms - ${(parser as FileImpl).parseError} - ${codeSource.getRemainingCode().trim()}`,
@@ -295,19 +297,19 @@ export async function processInnerCode(code: string): Promise<TransformedCode> {
   const hasHeader = code.includes("guest default_profile valid");
   return (
     parseAsKeyword(code) ||
-    (await parseAs("Type", TypeParserAndRender, code)) ||
-    (await parseAs("Expression", ExpressionrParserAndRender, code)) ||
-    (await parseAs("Statement", StatementParserAndRender, code)) ||
-    (await parseAs("Function", FunctionParserAndRender, code)) ||
-    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code)) ||
-    (await parseAs("Main", MainParserAndRender, code)) ||
-    (await parseAs("Member", MemberParserAndRender, code)) ||
-    (await parseAs("AbstractMember", AbstractMemberParserAndRender, code)) ||
-    (await parseAs("Parameter", ParameterParserAndRender, code.trim(), ")")) ||
-    (await parseAs("Lambda", LambdaParserAndRender, code.trim(), ")")) ||
+    (await parseAs("Type", TypeParserAndRender, code, true)) ||
+    (await parseAs("Expression", ExpressionrParserAndRender, code, true)) ||
+    (await parseAs("Statement", StatementParserAndRender, code, true)) ||
+    (await parseAs("Function", FunctionParserAndRender, code, true)) ||
+    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code, true)) ||
+    (await parseAs("Main", MainParserAndRender, code, true)) ||
+    (await parseAs("Member", MemberParserAndRender, code, true)) ||
+    (await parseAs("AbstractMember", AbstractMemberParserAndRender, code, true)) ||
+    (await parseAs("Parameter", ParameterParserAndRender, code.trim(), true, ")")) ||
+    (await parseAs("Lambda", LambdaParserAndRender, code.trim(), true, ")")) ||
     (hasHeader
-      ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code)
-      : await parseAs("File", FileParserAndRender, code)) ||
+      ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code, true)
+      : await parseAs("File", FileParserAndRender, code, true)) ||
     failedToParse(code)
   );
 }

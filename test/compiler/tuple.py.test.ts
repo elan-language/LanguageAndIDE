@@ -1,0 +1,603 @@
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testPythonHeader,
+  transforms,
+} from "./compiler-test-helpers";
+
+suite("Python Tuple", () => {
+  test("Pass_CreatingTuplesAndReadingContentsByItem", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  try:
+    raise CustomError("fail")
+  except FooException as e: # catch
+    printNoLine("") # procedure call
+  # end try
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  printNoLine(x) # procedure call
+  f = x.item_0 # variable definition
+  s = x.item_1 # variable definition
+  printNoLine(f) # procedure call
+  printNoLine(s) # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.tuple([3, "Apple"]);
+  await _stdlib.printNoLine(x);
+  let f = x[0];
+  let s = x[1];
+  await _stdlib.printNoLine(f);
+  await _stdlib.printNoLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "(3, Apple)3Apple");
+  });
+
+  test("Pass_FunctionReturnsTupleItem", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  printNoLine(x) # procedure call
+  f = x.item_0 # variable definition
+  s = x.item_1 # variable definition
+  printNoLine(f) # procedure call
+  printNoLine(s) # procedure call
+# end main
+
+def main() -> None:
+  x = f() # variable definition
+  printNoLine(x) # procedure call
+  fst = x.item_0 # variable definition
+  snd = x.item_1 # variable definition
+  printNoLine(fst) # procedure call
+  printNoLine(snd) # procedure call
+# end main
+
+def f() -> tuple[str, str]: # function
+  return ("1", "2")
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = (await global.f());
+  await _stdlib.printNoLine(x);
+  let fst = x[0];
+  let snd = x[1];
+  await _stdlib.printNoLine(fst);
+  await _stdlib.printNoLine(snd);
+}
+
+async function f() {
+  return system.tuple(["1", "2"]);
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "(1, 2)12");
+  });
+
+  test("Pass_IndexFunctionReturnsTuple", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = f() # variable definition
+  printNoLine(x) # procedure call
+  fst = x.item_0 # variable definition
+  snd = x.item_1 # variable definition
+  printNoLine(fst) # procedure call
+  printNoLine(snd) # procedure call
+# end main
+
+def main() -> None:
+  t = f() # variable definition
+  fst = t.item_0 # variable definition
+  printNoLine(fst) # procedure call
+# end main
+
+def f() -> tuple[str, str]: # function
+  return ("1", "2")
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let t = (await global.f());
+  let fst = t[0];
+  await _stdlib.printNoLine(fst);
+}
+
+async function f() {
+  return system.tuple(["1", "2"]);
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_IndexGenericFunctionReturnsTuple", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  t = f() # variable definition
+  fst = t.item_0 # variable definition
+  printNoLine(fst) # procedure call
+# end main
+
+def main() -> None:
+  a = [(1, 2)] # variable definition
+  t = a.reduce((1, 1), lambda i: tuple[int, int], j: tuple[int, int]: j) # variable definition
+  fst = t.item_0 # variable definition
+  printNoLine(fst) # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.tuple([1, 2])]);
+  let t = (await a.reduce(system.tuple([1, 1]), async (i, j) => j));
+  let fst = t[0];
+  await _stdlib.printNoLine(fst);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_FunctionTupleParameter", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = [(1, 2)] # variable definition
+  t = a.reduce((1, 1), lambda i: tuple[int, int], j: tuple[int, int]: j) # variable definition
+  fst = t.item_0 # variable definition
+  printNoLine(fst) # procedure call
+# end main
+
+def main() -> None:
+  x = "one" # variable definition
+  y = "two" # variable definition
+  printNoLine(f((x, y))) # procedure call
+# end main
+
+def f(t: tuple[str, str]) -> str: # function
+  first = t.item_0 # variable definition
+  return first
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = "one";
+  let y = "two";
+  await _stdlib.printNoLine((await global.f(system.tuple([x, y]))));
+}
+
+async function f(t) {
+  let first = t[0];
+  return first;
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "one");
+  });
+
+  test("Pass_AssignANewTupleOfSameType", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = "one" # variable definition
+  y = "two" # variable definition
+  printNoLine(f((x, y))) # procedure call
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = (4, "Pear") # assignment
+  printNoLine(x) # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.tuple([3, "Apple"]);
+  x = system.tuple([4, "Pear"]);
+  await _stdlib.printNoLine(x);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "(4, Pear)");
+  });
+
+  test("Pass_item in expression", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = (4, "Pear") # assignment
+  printNoLine(x) # procedure call
+# end main
+
+def main() -> None:
+  p = [1, 2, 3, 4, 5] # variable definition
+  x = (3, 4) # variable definition
+  y = x.item_0 + x.item_1 # variable definition
+  z = p[x.item_0] # variable definition
+  q = abs(x.item_1) # variable definition
+  s = abs(p[x.item_1]) # variable definition
+  printNoLine(y) # procedure call
+  printNoLine(z) # procedure call
+  printNoLine(q) # procedure call
+  printNoLine(s) # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let p = system.list([1, 2, 3, 4, 5]);
+  let x = system.tuple([3, 4]);
+  let y = x[0] + x[1];
+  let z = system.safeIndex(p, x[0]);
+  let q = _stdlib.abs(x[1]);
+  let s = _stdlib.abs(system.safeIndex(p, x[1]));
+  await _stdlib.printNoLine(y);
+  await _stdlib.printNoLine(z);
+  await _stdlib.printNoLine(q);
+  await _stdlib.printNoLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7445");
+  });
+
+  test("Fail_AssignItemToWrongType", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  p = [1, 2, 3, 4, 5] # variable definition
+  x = (3, 4) # variable definition
+  y = x.item_0 + x.item_1 # variable definition
+  z = p[x.item_0] # variable definition
+  q = abs(x.item_1) # variable definition
+  s = abs(p[x.item_1]) # variable definition
+  printNoLine(y) # procedure call
+  printNoLine(z) # procedure call
+  printNoLine(q) # procedure call
+  printNoLine(s) # procedure call
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  y = 4 # variable definition
+  y = x.item_1 # assignment
+  printNoLine(y) # procedure call
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_ImmutableSoCannotAssignAnItem", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  y = 4 # variable definition
+  y = x.item_1 # assignment
+  printNoLine(y) # procedure call
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x.item_0 =  # assignment
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_AssignANewTupleOfWrongType", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x.item_0 =  # assignment
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = ("4", "Pear") # assignment
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: (Int, String), Provided: (String, String).ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_DifferentSizeTuples1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = ("4", "Pear") # assignment
+# end main
+
+def main() -> None:
+  x = (3, "Apple", 4) # variable definition
+  x = (4, "Pear") # assignment
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: (Int, String, Int), Provided: (Int, String).ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_DifferentSizeTuples2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple", 4) # variable definition
+  x = (4, "Pear") # assignment
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = (4, "Pear", 3) # assignment
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: (Int, String), Provided: (Int, String, Int).ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_itemOutOfRange", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  x = (4, "Pear", 3) # assignment
+# end main
+
+def main() -> None:
+  x = (3, "Apple") # variable definition
+  y = x.item_2 # variable definition
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'item_2' is not defined for type '(Int, String)'.ErrorMessages.html#compile_error",
+    ]);
+  });
+});

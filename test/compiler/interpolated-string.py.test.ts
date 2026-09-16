@@ -1,0 +1,287 @@
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testPythonHeader,
+  transforms,
+} from "./compiler-test-helpers";
+
+suite("Python Strings", () => {
+  test("Pass_SingleInsideDoubleQuotes", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = "Hello " + input("") # variable definition
+  printNoLine(a) # procedure call
+# end main
+
+def main() -> None:
+  printNoLine("'Hello,' she said.") # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine("'Hello,' she said.");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, `'Hello,' she said.`);
+  });
+  test("Pass_InterpolatedAndNonInterpolatedString", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine("'Hello,' she said.") # procedure call
+# end main
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine(f"{a} {b} {c}") # procedure call
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  let b = "Apple";
+  let c = system.list([1, 2, 3]);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(a)} \${await _stdlib.toString(b)} \${await _stdlib.toString(c)}\`);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]");
+  });
+
+  test("Fail_missingBrace", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine(f"{a} {b} {c}") # procedure call
+# end main
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine($"{a {b} {c}") # procedure call
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_extraBrace", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine($"{a {b} {c}") # procedure call
+# end main
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine($"{a} {b} {{c}") # procedure call
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Pass_InterpolatedEmpty", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = 1 # variable definition
+  b = "Apple" # variable definition
+  c = [1, 2, 3] # variable definition
+  printNoLine($"{a} {b} {{c}") # procedure call
+# end main
+
+def main() -> None:
+  a = f"" # variable definition
+  printNoLine(a) # procedure call
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = "";
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+  test("Pass_InterpolatedOneSpace", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = f"" # variable definition
+  printNoLine(a) # procedure call
+# end main
+
+def main() -> None:
+  a = f" " # variable definition
+  printNoLine(a) # procedure call
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = " ";
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, " ");
+  });
+
+  test("Fail_InterpolatedEnumValue", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = f" " # variable definition
+  printNoLine(a) # procedure call
+# end main
+
+def main() -> None:
+  printNoLine(f"{Fruit.apple}") # procedure call
+# end main
+
+class Fruit(Enum):
+  apple = 1
+  orange = 2
+  pear = 3
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String firstErrorMessages.html#compile_error",
+    ]);
+  });
+});

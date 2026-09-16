@@ -37,7 +37,7 @@ export function FileParserAndExport(file: FileImpl): [
 }
 
 async function convertCode(code: string) {
-  const result = await parseAs("File", FileParserAndExport, code);
+  const result = await parseAs("File", FileParserAndExport, code, false);
   return result ? result[1] : "";
 }
 
@@ -52,13 +52,19 @@ export async function processTestFile(fileName: string) {
     for (const code of array) {
       const toConvert = code.replace("${testHeader}", "").replaceAll("`", "").trim();
       console.warn(toConvert.slice(0, 20));
-      const pyCode = await convertCode(toConvert);
+      const pyCode = (await convertCode(toConvert)).replace(
+        "# Python with Elan 2.0.0-beta3",
+        "${testPythonHeader}",
+      );
+
       console.warn("py: " + pyCode);
-      source = source.replace(code, `\`\$\{testHeader} ${pyCode}\``);
+      source = source.replace(code, `\`${pyCode}\``);
     }
   }
+  source = source.replace("testHeader", "testPythonHeader");
+  source = source.replace('suite("', 'suite("Python ');
 
-  saveFile(fileName.replace(".test.", ".py.test."), source);
+  saveFile(fileName.replace(".ref-lang.test.", ".py.test."), source);
 }
 
 let _currentDir = "";
@@ -68,7 +74,7 @@ export function setCurrentDir(dir: string) {
 }
 
 export function getTests(sourceDir: string): string[] {
-  return readdirSync(sourceDir).filter((s) => s.endsWith(".test.ts"));
+  return readdirSync(sourceDir).filter((s) => s.endsWith(".ref-lang.test.ts"));
 }
 
 export function getTestsSubdir(sourceDir: string): string[] {
@@ -100,7 +106,7 @@ export async function renameTestsInDirectory(dir: string) {
   }
 }
 
-//processTestsInDirectory(tests);
+processTestsInDirectory(tests);
 
 export function processTestFiles() {
   processTestsInDirectory(tests);
