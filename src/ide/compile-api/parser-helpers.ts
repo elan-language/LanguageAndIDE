@@ -35,8 +35,8 @@ export function getRefLangParser(input: string) {
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  parser.removeParseListeners();
-  parser.removeErrorListeners();
+  // parser.removeParseListeners();
+  // parser.removeErrorListeners();
   return parser;
 }
 

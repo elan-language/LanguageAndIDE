@@ -40,6 +40,7 @@ FUNCTION: 'function';
 INHERITS: 'inherits';
 LET: 'let';
 NEW: 'new';
+OF: 'of';
 PRIVATE: 'private';
 PROCEDURE: 'procedure';
 PROPERTY: 'property';

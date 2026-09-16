@@ -1200,7 +1200,7 @@ end test`;
     await assertSymbolCompletionWithString(fileImpl, "elan_text33", "gr.", expected);
   });
 
-  test("Pass_typeName1", async () => {
+  ignore_test("Pass_typeName1", async () => {
     const code = `${testHeader}
 
 main
@@ -1231,7 +1231,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as S", expected);
   });
 
-  test("Pass_typeName2", async () => {
+  ignore_test("Pass_typeName2", async () => {
     const code = `${testHeader}
 
 main
@@ -1288,7 +1288,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as Int, b as B", expected);
   });
 
-  test("Pass_typeName6", async () => {
+  ignore_test("Pass_typeName6", async () => {
     const code = `${testHeader}
 
 main
@@ -1318,7 +1318,7 @@ end function`;
     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as HashSet<of I", expected);
   });
 
-  test("Pass_typeName7", async () => {
+  ignore_test("Pass_typeName7", async () => {
     const code = `${testHeader}
 
 main

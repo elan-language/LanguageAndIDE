@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -434,7 +435,8 @@ end procedure`;
     ]);
   });
 
-  test("Fail_PassLambdaWithWrongTypes1", async () => {
+  // no longer supported
+  ignore_test("Fail_PassLambdaWithWrongTypes1", async () => {
     const code = `${testHeader}
 
 main
@@ -490,7 +492,8 @@ end procedure`;
     ]);
   });
 
-  test("Fail_InvokeLambdaWithWrongTypes", async () => {
+  // no longer supported
+  ignore_test("Fail_InvokeLambdaWithWrongTypes", async () => {
     const code = `${testHeader}
 
 main

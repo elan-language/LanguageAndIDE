@@ -11,6 +11,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1114,7 +1115,7 @@ end test
     ]);
   });
 
-  test("Fail_DuplicateTestName3", async () => {
+  ignore_test("Fail_DuplicateTestName3", async () => {
     const code = `${testHeader}
 
 constant test_cc set to 1

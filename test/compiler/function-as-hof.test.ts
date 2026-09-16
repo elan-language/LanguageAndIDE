@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -63,7 +64,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "6");
   });
 
-  test("Pass_PassAsParam1", async () => {
+  // no longer supported
+  ignore_test("Pass_PassAsParam1", async () => {
     const code = `${testHeader}
 
 main
