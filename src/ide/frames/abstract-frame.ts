@@ -32,6 +32,7 @@ export abstract class AbstractFrame implements Frame {
   isNew = true;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   pasteError: string = "";
+  pasteErrCounter: number = 0;
   helpActive: boolean = false;
 
   private id: string = "";
