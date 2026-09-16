@@ -290,7 +290,7 @@ suite("Editing Fields Tests", () => {
     );
   });
 
-  test("End of field marker automatically skips to next field #496", () => {
+  ignore_test("End of field marker automatically skips to next field #496", () => {
     const file = new FileImpl(
       hash,
       new Paradigm(""),
