@@ -113,12 +113,12 @@ export const testNameFieldSpec: FieldSpec = new FieldSpec(
 
 export const exceptionTypeFieldSpec: FieldSpec = new FieldSpec(
   FieldType.exceptionType,
-  "<i>exception type</i>",
+  "<i>type e.g. ElanRuntimeError or CustomError</i>",
   "TypeField",
   "_type",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => parser.testName(),
+  (parser: PythonParser | RefLangParser) => parser.typeName(),
   (source: CodeSource) => source.readUntil(/\s/),
   "CustomError",
 );

@@ -1,6 +1,9 @@
 import { asKeyword, catchKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, identifierFieldSpec } from "../fields/abstract-field";
-import { ExceptionTypeField } from "../fields/exception-type-field";
+import {
+  AbstractField,
+  exceptionTypeFieldSpec,
+  identifierFieldSpec,
+} from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -11,14 +14,14 @@ export class CatchStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCatch = true;
   variable: AbstractField;
-  exceptionType: ExceptionTypeField;
+  exceptionType: AbstractField;
 
   constructor(parent: Parent) {
     super(parent);
     this.variable = new AbstractField(this, identifierFieldSpec);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
-    this.exceptionType = new ExceptionTypeField(this);
+    this.exceptionType = new AbstractField(this, exceptionTypeFieldSpec);
     this.exceptionType.setPlaceholder(`type e.g. ElanRuntimeError or CustomError`);
     // remove the isNew flag from the catch frame to allow
     // Backspace to work on the identifier field "e" and
