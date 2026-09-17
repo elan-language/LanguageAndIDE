@@ -35,14 +35,23 @@ import {
 import { SymbolWrapper } from "../symbol-wrapper";
 
 export enum FieldType {
-  type,
-  paramsList,
-  identifier,
-  testName,
-  exceptionType,
-  exceptionMessage,
-  typeName,
+  argList,
+  assertActual,
+  assignable,
   comment,
+  constantValue,
+  enumValues,
+  exceptionMessage,
+  exceptionType,
+  expression,
+  identifier,
+  inheritsFrom,
+  methodName,
+  procRef,
+  paramsList,
+  testName,
+  type,
+  typeName,
 }
 
 export class FieldSpec {
