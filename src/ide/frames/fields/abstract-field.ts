@@ -206,6 +206,18 @@ export const procRefFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
+export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.enumValues,
+  "<i>values</i>",
+  "EnumValuesField",
+  "_enumVals",
+  false,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.enumValuesList(),
+  (source: CodeSource) => source.readToEndOfLine(),
+  "",
+);
+
 // rename when refactoring complete
 export class AbstractField implements Selectable, Field {
   public isField: boolean = true;
