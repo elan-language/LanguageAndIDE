@@ -29,7 +29,6 @@ import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
-import { GlobalCommentAsn } from "../../compiler/syntax-nodes/globals/global-comment-asn";
 import { GlobalConstantAsn } from "../../compiler/syntax-nodes/globals/global-constant-asn";
 import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
@@ -80,6 +79,7 @@ import { Constructor } from "../frames/class-members/constructor";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
+import { CommentFrame } from "../frames/comment-frame";
 import { AbstractField, FieldType } from "../frames/fields/abstract-field";
 import { ArgListField } from "../frames/fields/arg-list-field";
 import { InheritsFromField } from "../frames/fields/inherits-from-field";
@@ -92,7 +92,6 @@ import { AbstractClass } from "../frames/globals/abstract-class";
 import { ConcreteClass } from "../frames/globals/concrete-class";
 import { ConstantGlobal } from "../frames/globals/constant-global";
 import { Enum } from "../frames/globals/enum";
-import { GlobalComment } from "../frames/globals/global-comment";
 import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { MainRoutine } from "../frames/globals/main-routine";
@@ -152,7 +151,6 @@ import { UnaryExpression } from "../frames/parse-nodes/unary-expression";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { Assignment } from "../frames/statements/assignment";
 import { CatchStatement } from "../frames/statements/catch-statement";
-import { CommentStatement } from "../frames/statements/comment-statement";
 import { ElseClause } from "../frames/statements/else-clause";
 import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
@@ -240,14 +238,6 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), testAsn)) as AstNode[];
 
     return testAsn;
-  }
-
-  if (node instanceof GlobalComment) {
-    const commentAsn = new GlobalCommentAsn(node.getHtmlId(), scope);
-
-    commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
-
-    return commentAsn;
   }
 
   if (node instanceof ConcreteClass) {
@@ -381,7 +371,7 @@ export function transform(
     return returnAsn;
   }
 
-  if (node instanceof CommentStatement) {
+  if (node instanceof CommentFrame) {
     const commentAsn = new CommentStatementAsn(node.getHtmlId(), scope);
     commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
     return commentAsn;

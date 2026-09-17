@@ -154,7 +154,7 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   "_comment",
   false,
   true,
-  (parser: PythonParser | RefLangParser) => parser.commentStatement(),
+  (parser: PythonParser | RefLangParser) => parser.comment(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

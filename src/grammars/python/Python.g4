@@ -17,7 +17,7 @@ global:
     | enum
     | concreteClass
     | abstractClass
-    | commentGlobal
+    | comment
 ;
 
 main:
@@ -38,7 +38,7 @@ test:
         assert
         | letStatement
         | variableDefinition
-        | commentStatement
+        | comment
     )* COMMENT NL
 ;
 
@@ -60,7 +60,7 @@ concreteClass:
         | property
         | functionMethod
         | procedureMethod
-        | commentMember
+        | comment
     )* COMMENT NL
 ;
 
@@ -71,11 +71,11 @@ abstractClass:
         | procedureMethod
         | abstractFunction
         | abstractProcedure
-        | commentMember
+        | comment
     )* COMMENT NL
 ;
 
-commentGlobal: COMMENT NL;
+comment: COMMENT NL;
 
 // Statements
 ordinaryStatement:
@@ -89,7 +89,7 @@ ordinaryStatement:
     | procedureCall
     | tryStatement
     | throwStatement
-    | commentStatement
+    | comment
 ;
 
 print: PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
@@ -130,7 +130,6 @@ tryStatement:
 throwStatement:
     RAISE typeName OPEN_BRACKET litString CLOSE_BRACKET NL
 ;
-commentStatement: COMMENT NL;
 
 assert:
     THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET NL
@@ -172,8 +171,6 @@ abstractProcedure:
     ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW NONE COLON NL
         PASS COMMENT NL
 ;
-
-commentMember: COMMENT? NL;
 // END Frames
 
 // START Fields

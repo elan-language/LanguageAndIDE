@@ -4,6 +4,7 @@ import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
+import { CommentFrame } from "./comment-frame";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -13,7 +14,6 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
-import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainRoutine } from "./globals/main-routine";
@@ -29,12 +29,11 @@ import { Space } from "./parse-nodes/parse-node-helpers";
 import { PunctuationNode } from "./parse-nodes/punctuation-node";
 import { SpaceNode } from "./parse-nodes/space-node";
 import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { TypeNode } from "./parse-nodes/type-node";
+import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
-import { CommentStatement } from "./statements/comment-statement";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -88,7 +87,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()});`;
     } else if (frame instanceof CatchStatement) {
       html = `} <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
-    } else if (frame instanceof CommentStatement) {
+    } else if (frame instanceof CommentFrame) {
       html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ElseIfClause) {
       html = `} <el-kw>${this.ELSE} ${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
@@ -96,8 +95,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `} <el-kw>${this.ELSE} {`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${frame.values.renderAsHtml()}}`;
-    } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof LetStatement) {
       html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof ReturnStatement) {

@@ -1,10 +1,10 @@
+import { CommentFrame } from "./comment-frame";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
-import { CommentStatement } from "./statements/comment-statement";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -69,6 +69,6 @@ export class StatementFactoryImpl implements StatementFactory {
     return new WhileLoop(parent);
   }
   public newComment(parent: Parent): Frame {
-    return new CommentStatement(parent);
+    return new CommentFrame(parent);
   }
 }

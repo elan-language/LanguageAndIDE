@@ -12,7 +12,7 @@ import { ConstantContext } from "./RefLangParser.js";
 import { EnumContext } from "./RefLangParser.js";
 import { ConcreteClassContext } from "./RefLangParser.js";
 import { AbstractClassContext } from "./RefLangParser.js";
-import { CommentGlobalContext } from "./RefLangParser.js";
+import { CommentContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
@@ -30,14 +30,12 @@ import { ReturnStatementContext } from "./RefLangParser.js";
 import { ElseIfClauseContext } from "./RefLangParser.js";
 import { ElseClauseContext } from "./RefLangParser.js";
 import { CatchStatementContext } from "./RefLangParser.js";
-import { CommentStatementContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
 import { FunctionMethodContext } from "./RefLangParser.js";
 import { ProcedureMethodContext } from "./RefLangParser.js";
 import { AbstractFunctionContext } from "./RefLangParser.js";
 import { AbstractProcedureContext } from "./RefLangParser.js";
-import { CommentMemberContext } from "./RefLangParser.js";
 import { IdentifierContext } from "./RefLangParser.js";
 import { AssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
@@ -185,15 +183,15 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitAbstractClass?: (ctx: AbstractClassContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.commentGlobal`.
+   * Enter a parse tree produced by `RefLangParser.comment`.
    * @param ctx the parse tree
    */
-  enterCommentGlobal?: (ctx: CommentGlobalContext) => void;
+  enterComment?: (ctx: CommentContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.commentGlobal`.
+   * Exit a parse tree produced by `RefLangParser.comment`.
    * @param ctx the parse tree
    */
-  exitCommentGlobal?: (ctx: CommentGlobalContext) => void;
+  exitComment?: (ctx: CommentContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.ordinaryStatement`.
    * @param ctx the parse tree
@@ -365,16 +363,6 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitCatchStatement?: (ctx: CatchStatementContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.commentStatement`.
-   * @param ctx the parse tree
-   */
-  enterCommentStatement?: (ctx: CommentStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.commentStatement`.
-   * @param ctx the parse tree
-   */
-  exitCommentStatement?: (ctx: CommentStatementContext) => void;
-  /**
    * Enter a parse tree produced by `RefLangParser.constructorMember`.
    * @param ctx the parse tree
    */
@@ -434,16 +422,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAbstractProcedure?: (ctx: AbstractProcedureContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.commentMember`.
-   * @param ctx the parse tree
-   */
-  enterCommentMember?: (ctx: CommentMemberContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.commentMember`.
-   * @param ctx the parse tree
-   */
-  exitCommentMember?: (ctx: CommentMemberContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.identifier`.
    * @param ctx the parse tree

@@ -53,7 +53,7 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.file.createGlobalComment(),
+        (_parent: Parent) => this.file.createComment(),
       ],
     ];
   }

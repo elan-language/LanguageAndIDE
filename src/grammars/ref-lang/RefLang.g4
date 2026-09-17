@@ -17,7 +17,7 @@ global:
     | enum
     | concreteClass
     | abstractClass
-    | commentGlobal
+    | comment
 ;
 
 main: GHOSTED? MAIN NL ordinaryStatement* END MAIN NL;
@@ -35,7 +35,7 @@ test:
         assert
         | letStatement
         | variableDefinition
-        | commentStatement
+        | comment
     )* END TEST NL
 ;
 
@@ -53,7 +53,7 @@ concreteClass:
         | property
         | functionMethod
         | procedureMethod
-        | commentMember
+        | comment
     )* END CLASS NL
 ;
 
@@ -64,11 +64,11 @@ abstractClass:
         | procedureMethod
         | abstractFunction
         | abstractProcedure
-        | commentMember
+        | comment
     )* END CLASS NL
 ;
 
-commentGlobal: COMMENT NL;
+comment: COMMENT NL;
 
 // Statements
 ordinaryStatement:
@@ -82,7 +82,7 @@ ordinaryStatement:
     | procedureCall
     | tryStatement
     | throwStatement
-    | commentStatement
+    | comment
 ;
 
 ifStatement:
@@ -125,7 +125,6 @@ returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: GHOSTED? ELIF expression THEN NL;
 elseClause: GHOSTED? ELSE NL; // TODO
 catchStatement: GHOSTED? CATCH identifier AS typeName NL;
-commentStatement: COMMENT NL;
 
 // Members
 constructorMember:
@@ -153,8 +152,6 @@ abstractFunction:
 abstractProcedure:
     GHOSTED? ABSTRACT PROCEDURE methodName OPEN_BRACKET paramsList? CLOSE_BRACKET NL
 ;
-
-commentMember: COMMENT? NL;
 // END Frames
 
 // START Fields

@@ -2,7 +2,6 @@ import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
-import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { Paradigm } from "../../src/ide/frames/paradigm";
@@ -13,6 +12,7 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
@@ -233,7 +233,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Ensure Html tag in a comment is not recognised - #840", () => {
-    const comment = new GlobalComment(
+    const comment = new CommentFrame(
       new FileImpl(
         hash,
         new Paradigm(""),
@@ -261,7 +261,7 @@ suite("Editing Fields Tests", () => {
   });
 
   test("Ensure - leading spaces in a comment OK", () => {
-    const comment = new GlobalComment(
+    const comment = new CommentFrame(
       new FileImpl(
         hash,
         new Paradigm(""),

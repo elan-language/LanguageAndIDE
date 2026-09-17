@@ -7,7 +7,6 @@ import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
-import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
@@ -15,6 +14,7 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { transforms } from "../compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "../testHelpers";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
@@ -28,8 +28,8 @@ suite("Field Parsing Tests", () => {
         false,
       ),
     );
-    const commentStatement = new CommentStatement(main);
-    const text = commentStatement.text;
+    const comment = new CommentFrame(main);
+    const text = comment.text;
     assert.equal(text.textAsSource(), "");
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("Hello");
@@ -51,8 +51,8 @@ suite("Field Parsing Tests", () => {
         false,
       ),
     );
-    const commentStatement = new CommentStatement(main);
-    const text = commentStatement.text;
+    const comment = new CommentFrame(main);
+    const text = comment.text;
     assert.equal(text.textAsSource(), "");
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("  Hello   World ");

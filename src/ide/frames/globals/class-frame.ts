@@ -11,6 +11,7 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
+import { CommentFrame } from "../comment-frame";
 import { InheritsFromField } from "../fields/inherits-from-field";
 import { Regexes } from "../fields/regexes";
 import { TypeNameField } from "../fields/type-name-field";
@@ -47,7 +48,6 @@ import {
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
-import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
@@ -235,7 +235,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return new AbstractProcedure(this);
   }
   createComment(): Frame {
-    return new CommentStatement(this);
+    return new CommentFrame(this);
   }
 
   public getConstructor(): Constructor {

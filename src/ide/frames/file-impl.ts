@@ -33,13 +33,13 @@ import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
-import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Paradigm } from "./paradigm";
 
+import { CommentFrame } from "./comment-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
 import { LanguageElan } from "./language-elan";
@@ -605,8 +605,8 @@ export class FileImpl implements File {
   createAbstractClass(): Frame {
     return new AbstractClass(this);
   }
-  createGlobalComment(): Frame {
-    return new GlobalComment(this);
+  createComment(): Frame {
+    return new CommentFrame(this);
   }
   createConstant(): Frame {
     return new ConstantGlobal(this);
