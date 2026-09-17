@@ -45,7 +45,6 @@ export class FieldSpec {
 
   constructor(
     public fieldType: FieldType,
-    public useHtmlTag: boolean,
     public placeholder: string,
     public helpId: string,
     public idPrefix: string,
@@ -53,6 +52,7 @@ export class FieldSpec {
     public optional: boolean,
     getRuleContextByField: (parser: PythonParser | RefLangParser) => ParserRuleContext,
     public readToDelimiter: (source: CodeSource) => string,
+    public initialText: string,
   ) {
     this.getRuleContextByField = getRuleContextByField;
   }
@@ -60,7 +60,6 @@ export class FieldSpec {
 
 export const typeField: FieldSpec = new FieldSpec(
   FieldType.type,
-  true,
   "<i>Type</i>",
   "TypeField",
   "_type",
@@ -68,11 +67,11 @@ export const typeField: FieldSpec = new FieldSpec(
   false,
   (parser: PythonParser | RefLangParser) => parser.type_(),
   (source: CodeSource) => source.readToEndOfLine(),
+  "",
 );
 
 export const paramsListField: FieldSpec = new FieldSpec(
   FieldType.paramsList,
-  true,
   "<i>parameter definitions</i>",
   "ParamListField",
   "_params",
@@ -80,11 +79,11 @@ export const paramsListField: FieldSpec = new FieldSpec(
   true,
   (parser: PythonParser | RefLangParser) => parser.paramsList(),
   (source: CodeSource) => source.readToNonMatchingCloseBracket(),
+  "",
 );
 
 export const identifierField: FieldSpec = new FieldSpec(
   FieldType.identifier,
-  false,
   "<i>name</i>",
   "IdentifierField",
   "_ident",
@@ -92,6 +91,7 @@ export const identifierField: FieldSpec = new FieldSpec(
   false,
   (parser: PythonParser | RefLangParser) => parser.identifier(),
   (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
+  "",
 );
 
 // rename when refactoring complete
@@ -144,7 +144,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   get useHtmlTags() {
-    return this.fieldSpec ? this.fieldSpec.useHtmlTag : this._useHtmlTags;
+    return this._useHtmlTags;
   }
 
   set useHtmlTags(b: boolean) {
