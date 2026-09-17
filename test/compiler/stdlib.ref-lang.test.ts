@@ -648,7 +648,7 @@ return [main, _tests];}`;
   test("Pass_maths_tests", async () => {
     const code = `${testHeader}
 
-test maths
+test test_maths
   assert pi evaluates to 3.141592653589793
   assert abs(-3.7) evaluates to 3.7
   assert acos(0.5).round(3) evaluates to 1.047

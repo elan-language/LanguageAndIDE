@@ -4,6 +4,7 @@ import {
   IdentifierContext,
   ParamDefContext,
   ParamsListContext,
+  TestNameContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -43,4 +44,6 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())} as ${this.visit(ctx.type())}`;
+
+  visitTestName = (ctx: TestNameContext) => `${ctx.NAME_STARTING_TEST_().getText()}`;
 }

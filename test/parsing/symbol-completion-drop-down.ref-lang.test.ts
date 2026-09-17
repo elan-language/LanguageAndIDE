@@ -1174,7 +1174,7 @@ class Foo
 
 end class
 
-test tt
+test test_tt
   variable gr set to new Foo()
   assert gr.ff() evaluates to 0
 end test`;

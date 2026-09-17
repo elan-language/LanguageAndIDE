@@ -2,6 +2,7 @@ import assert from "assert";
 
 import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
+import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
 import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
 import { InheritsFromField } from "../../src/ide/frames/fields/inherits-from-field";
 import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
@@ -35,7 +36,6 @@ import {
   T00_emptyFile,
   twoConstants,
 } from "./model-generating-functions";
-import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -274,9 +274,13 @@ suite("Editing Frames", () => {
     const sel0 = file.getById("elan_select0");
     sel0.processKey(key("t"));
     const desc = file.getById("elan_ident3") as AbstractField;
+    desc.processKey(key("t"));
+    desc.processKey(key("e"));
+    desc.processKey(key("s"));
+    desc.processKey(key("t"));
+    desc.processKey(key("_"));
     desc.processKey(key("x"));
-    desc.processKey(key("y"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);
-    assert.equal(desc.renderAsElanSource(), "test_xy");
+    assert.equal(desc.renderAsElanSource(), "test_x");
   });
 });

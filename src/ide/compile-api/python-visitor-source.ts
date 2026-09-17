@@ -4,6 +4,7 @@ import {
   IdentifierContext,
   ParamDefContext,
   ParamsListContext,
+  TestNameContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -43,4 +44,6 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())}: ${this.visit(ctx.type())}`;
+
+  visitTestName = (ctx: TestNameContext) => `${ctx.NAME_STARTING_TEST_().getText()}`;
 }
