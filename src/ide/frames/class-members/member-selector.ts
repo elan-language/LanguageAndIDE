@@ -103,7 +103,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     let result = true;
     // First apply universal instruction-specific rules
     if (keyword.startsWith(privateKeyword)) {
-      result = !userEntry;
+      result = !userEntry || this.sourcePasting;
     } else if (keyword.startsWith(abstractKeyword)) {
       result = this.class.isAbstract || this.class.isInterface;
     } else if (this.class.isInterface) {
