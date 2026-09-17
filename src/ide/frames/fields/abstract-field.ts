@@ -100,7 +100,6 @@ export class AbstractField implements Selectable, Field {
   text: string = "";
   private _placeholder: string = "";
   protected placeholderIsCode: boolean = false;
-  private _useHtmlTags: boolean = false;
   private id: string = "";
   protected selected: boolean = false;
   private focused: boolean = false;
@@ -141,14 +140,6 @@ export class AbstractField implements Selectable, Field {
 
   get useAntlr() {
     return this.fieldSpec !== undefined;
-  }
-
-  get useHtmlTags() {
-    return this._useHtmlTags;
-  }
-
-  set useHtmlTags(b: boolean) {
-    this._useHtmlTags = b;
   }
 
   get placeholder() {

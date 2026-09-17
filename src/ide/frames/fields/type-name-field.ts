@@ -8,7 +8,6 @@ import { AbstractField } from "./abstract-field";
 export class TypeNameField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this.useHtmlTags = true;
     this.setPlaceholder("Name");
   }
 

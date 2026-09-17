@@ -8,7 +8,6 @@ import { AbstractField } from "./abstract-field";
 export class ExceptionTypeField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
-    this.useHtmlTags = true;
     this.setFieldToKnownValidText("CustomError");
     this.setPlaceholder("<i>exception type</i>");
   }
