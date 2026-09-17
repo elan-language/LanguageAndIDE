@@ -230,6 +230,30 @@ export const expressionFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
+export const assertActualFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.assertActual,
+  "<i>actual (computed) value</i>",
+  "AssertActualField",
+  "", // not specified in Field ?
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.assertActual(),
+  (source: CodeSource) => source.readToEndOfLine(), // TODO Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
+  "",
+);
+
+export const assignable: FieldSpec = new FieldSpec(
+  FieldType.assignable,
+  "<i>variable</i>",
+  "AssignableField",
+  "_ident",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.assignable(),
+  (source: CodeSource) => source.readToEndOfLine(), // TODO: Needs changing so that lambda can be set up differently in field constructor
+  "",
+);
+
 // rename when refactoring complete
 export class AbstractField implements Selectable, Field {
   public isField: boolean = true;
