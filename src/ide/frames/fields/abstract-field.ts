@@ -168,6 +168,44 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
+export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.inheritsFrom,
+  "<i>inheritance</i>",
+  "InheritsFromField",
+  "_text",
+  true,
+  true,
+  (parser: PythonParser | RefLangParser) => parser.comment(), // TODO: g4 does not yet provide for inheritance
+  (source: CodeSource) => source.readToEndOfLine(),
+  "",
+);
+
+//TODO Need to add 'endMarkers' as another property
+export const methodNameFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.methodName,
+  "<i>name</i>",
+  "MethodNameField",
+  "_text",
+  true,
+  true,
+  (parser: PythonParser | RefLangParser) => parser.methodName(), // TODO: g4 does not yet provide for inheritance
+  (source: CodeSource) => source.readToEndOfLine(),
+  "",
+);
+
+//TODO: this is going to change, significantly, to handle the whole (qualified) method invocation
+export const procRefFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.procRef,
+  "<i>procedureName</i>",
+  "ProcRefField",
+  "_ident",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.procedureCall(), // TODO: g4 does not yet provide for inheritance
+  (source: CodeSource) => source.readUntil(/\(/),
+  "",
+);
+
 // rename when refactoring complete
 export class AbstractField implements Selectable, Field {
   public isField: boolean = true;
