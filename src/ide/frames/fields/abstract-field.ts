@@ -38,6 +38,11 @@ export enum FieldType {
   type,
   paramsList,
   identifier,
+  testName,
+  exceptionType,
+  exceptionMessage,
+  typeName,
+  comment,
 }
 
 export class FieldSpec {
@@ -91,6 +96,66 @@ export const identifierField: FieldSpec = new FieldSpec(
   false,
   (parser: PythonParser | RefLangParser) => parser.identifier(),
   (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
+  "",
+);
+
+export const testNameField: FieldSpec = new FieldSpec(
+  FieldType.identifier,
+  "test_name",
+  "IdentifierField",
+  "_ident",
+  false,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.testName(),
+  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
+  "",
+);
+
+export const exceptionTypeField: FieldSpec = new FieldSpec(
+  FieldType.exceptionType,
+  "<i>exception type</i>",
+  "TypeField",
+  "_type",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.testName(),
+  (source: CodeSource) => source.readUntil(/\s/),
+  "CustomError",
+);
+
+export const exceptionMessageField: FieldSpec = new FieldSpec(
+  FieldType.exceptionMessage,
+  "<i>message</i>",
+  "ExceptionMessageField",
+  "_msg",
+  false,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.litString(),
+  (source: CodeSource) => source.readToEndOfLine(),
+  "",
+);
+
+export const typeNameField: FieldSpec = new FieldSpec(
+  FieldType.typeName,
+  "<i>Name</i>",
+  "TypeNameField",
+  "_type",
+  false,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.typeName(),
+  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
+  "",
+);
+
+export const commentField: FieldSpec = new FieldSpec(
+  FieldType.comment,
+  "<i>comment</i>",
+  "CommentField",
+  "_comment",
+  false,
+  true,
+  (parser: PythonParser | RefLangParser) => parser.commentStatement(),
+  (source: CodeSource) => source.readToEndOfLine(),
   "",
 );
 
