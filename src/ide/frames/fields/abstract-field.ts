@@ -218,6 +218,18 @@ export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
+export const expressionFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.expression,
+  "<i>value or expression</i>",
+  "ExpressionField",
+  "_expr",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.expression(),
+  (source: CodeSource) => source.readToEndOfLine(), // TODO: Needs changing so that lambda can be set up differently in field constructor
+  "",
+);
+
 // rename when refactoring complete
 export class AbstractField implements Selectable, Field {
   public isField: boolean = true;
