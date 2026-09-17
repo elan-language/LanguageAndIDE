@@ -63,7 +63,7 @@ export class FieldSpec {
   }
 }
 
-export const typeField: FieldSpec = new FieldSpec(
+export const typeFieldSpec: FieldSpec = new FieldSpec(
   FieldType.type,
   "<i>Type</i>",
   "TypeField",
@@ -75,7 +75,7 @@ export const typeField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const paramsListField: FieldSpec = new FieldSpec(
+export const paramsListFieldSpec: FieldSpec = new FieldSpec(
   FieldType.paramsList,
   "<i>parameter definitions</i>",
   "ParamListField",
@@ -87,7 +87,7 @@ export const paramsListField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const identifierField: FieldSpec = new FieldSpec(
+export const identifierFieldSpec: FieldSpec = new FieldSpec(
   FieldType.identifier,
   "<i>name</i>",
   "IdentifierField",
@@ -99,7 +99,7 @@ export const identifierField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const testNameField: FieldSpec = new FieldSpec(
+export const testNameFieldSpec: FieldSpec = new FieldSpec(
   FieldType.identifier,
   "test_name",
   "IdentifierField",
@@ -111,7 +111,7 @@ export const testNameField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const exceptionTypeField: FieldSpec = new FieldSpec(
+export const exceptionTypeFieldSpec: FieldSpec = new FieldSpec(
   FieldType.exceptionType,
   "<i>exception type</i>",
   "TypeField",
@@ -123,7 +123,7 @@ export const exceptionTypeField: FieldSpec = new FieldSpec(
   "CustomError",
 );
 
-export const exceptionMessageField: FieldSpec = new FieldSpec(
+export const exceptionMessageFieldSpec: FieldSpec = new FieldSpec(
   FieldType.exceptionMessage,
   "<i>message</i>",
   "ExceptionMessageField",
@@ -135,7 +135,7 @@ export const exceptionMessageField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const typeNameField: FieldSpec = new FieldSpec(
+export const typeNameFieldSpec: FieldSpec = new FieldSpec(
   FieldType.typeName,
   "<i>Name</i>",
   "TypeNameField",
@@ -147,7 +147,7 @@ export const typeNameField: FieldSpec = new FieldSpec(
   "",
 );
 
-export const commentField: FieldSpec = new FieldSpec(
+export const commentFieldSpec: FieldSpec = new FieldSpec(
   FieldType.comment,
   "<i>comment</i>",
   "CommentField",

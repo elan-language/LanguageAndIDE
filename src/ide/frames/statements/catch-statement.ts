@@ -1,5 +1,5 @@
 import { asKeyword, catchKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, identifierField } from "../fields/abstract-field";
+import { AbstractField, identifierFieldSpec } from "../fields/abstract-field";
 import { ExceptionTypeField } from "../fields/exception-type-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -15,7 +15,7 @@ export class CatchStatement extends SingleLineFrame implements Statement {
 
   constructor(parent: Parent) {
     super(parent);
-    this.variable = new AbstractField(this, identifierField);
+    this.variable = new AbstractField(this, identifierFieldSpec);
     this.variable.setPlaceholder("<i>variableName</i>");
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new ExceptionTypeField(this);

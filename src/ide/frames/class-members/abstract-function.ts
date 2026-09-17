@@ -4,7 +4,7 @@ import {
   functionKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import { AbstractField, paramsListField, typeField } from "../fields/abstract-field";
+import { AbstractField, paramsListFieldSpec, typeFieldSpec } from "../fields/abstract-field";
 import { MethodNameField } from "../fields/method-name-field";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -24,8 +24,8 @@ export class AbstractFunction extends SingleLineFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new MethodNameField(this);
-    this.params = new AbstractField(this, paramsListField);
-    this.returnType = new AbstractField(this, typeField);
+    this.params = new AbstractField(this, paramsListFieldSpec);
+    this.returnType = new AbstractField(this, typeFieldSpec);
     this.canHaveBreakPoint = false;
   }
 
