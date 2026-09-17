@@ -18,6 +18,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   isStatement = true;
   text: string = "";
   overtyper = new Overtyper();
+  sourcePasting = false;
 
   constructor(parent: Parent) {
     super(parent);
@@ -66,6 +67,13 @@ export abstract class AbstractSelector extends AbstractFrame {
         .replace("[", "")
         .replace("] ", "");
     }
+
+    // Pseudo-global variable to minimise changes to optionsFilteredByContext
+    // and the things it calls, in all the selector sub-classes.
+    // If refactoring, make userEntry three-valued (pasting, populating menu, loading file).
+    // This is to allow "private" when pasting but not in the context menu.
+    // Used by MemberSelector, because "private" only applies to members.
+    this.sourcePasting = source.pasting;
 
     const options = this.optionsFilteredByContext(source.pasting).filter((o) =>
       source.isMatch(o[0]),
