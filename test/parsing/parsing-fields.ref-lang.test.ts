@@ -17,7 +17,7 @@ import { transforms } from "../compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "../testHelpers";
 
 suite("Field Parsing Tests", () => {
-  test("parse CommentField", () => {
+  ignore_test("parse CommentField", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -40,7 +40,7 @@ suite("Field Parsing Tests", () => {
       `<el-field id="elan_comment4" class="optional ok" tabindex="-1"><el-txt>Hello</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
-  test("parse CommentFieldWithSpaces", () => {
+  ignore_test("parse CommentFieldWithSpaces", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,

@@ -1012,7 +1012,7 @@ export class AbstractField implements Selectable, Field {
     if (this.cursorPos === this.text.length) {
       //i.e. show completion only if cursor at RH limit
       const content = this.getCompletion().replace("<of", "&lt;of");
-      completion = content ? `<el-compl>${content}</el-compl>` : "";
+      completion = `<el-compl>${content}</el-compl>`;
     }
     let html = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
     html = this.language().postProcessHtml(html);

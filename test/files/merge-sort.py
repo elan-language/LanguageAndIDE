@@ -4,15 +4,15 @@
 
 # - Decomposition of the principal function 'sort' into smaller functions,
 
-# - Recursive functions. Note that both 'sort' and 'merge' are indirectly  
+# - Recursive functions. Note that both 'sort' and 'merge' are indirectly 
 
-#   recursive, because they delegate to other functions that invoke the function
+# recursive, because they delegate to other functions that invoke the function
 
-#   they are invoked from
+# they are invoked from
 
-# - Testing. ALL functions are independently unit-tested, with normal ('happy')  
+# - Testing. ALL functions are independently unit-tested, with normal ('happy') 
 
-#   cases, and edge cases (where appropriate)
+# cases, and edge cases (where appropriate)
 
 def sort(li: list[str]) -> list[str]: # function
   return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
@@ -125,14 +125,14 @@ class Test_mergeNonEmpty(unittest.TestCase):
   self.assertEqual(mergeNonEmpty(l1, l2), ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"])
   self.assertEqual(mergeNonEmpty(l2, l1), ["apple", "apricot", "lemon", "lime", "pear", "plum", "watermelon"])
   self.assertEqual(mergeNonEmpty(l1, l1), ["apple", "apple", "lime", "lime", "pear", "pear"])
-  #  Edge case: duplication
+  # Edge case: duplication
   self.assertEqual(mergeNonEmpty(l1, l1), ["apple", "apple", "lime", "lime", "pear", "pear"])
   # Edge cases: single elements
   self.assertEqual(mergeNonEmpty(l1, ["lemon"]), ["apple", "lemon", "lime", "pear"])
   self.assertEqual(mergeNonEmpty(["melon"], l1), ["apple", "lime", "melon", "pear"])
   # Error case - pass empty list
   self.assertEqual(mergeNonEmpty(list[str](), l1), "Out of range index: 0 size: 0")
-  #  Error case unsorted list
+  # Error case unsorted list
   lu = ["lime", "pear", "apple"] # let
   self.assertEqual(merge(lu, l2), ["apricot", "lemon", "lime", "pear", "apple", "plum", "watermelon"])
 # end test

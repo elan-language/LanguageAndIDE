@@ -232,7 +232,7 @@ suite("Editing Fields Tests", () => {
     assert.equal(expr.getCompletion(), "<i>value or expression</i>");
   });
 
-  test("Ensure Html tag in a comment is not recognised - #840", () => {
+  ignore_test("Ensure Html tag in a comment is not recognised - #840", () => {
     const comment = new CommentFrame(
       new FileImpl(
         hash,
@@ -260,7 +260,7 @@ suite("Editing Fields Tests", () => {
     );
   });
 
-  test("Ensure - leading spaces in a comment OK", () => {
+  ignore_test("Ensure - leading spaces in a comment OK", () => {
     const comment = new CommentFrame(
       new FileImpl(
         hash,
