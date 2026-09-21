@@ -54,4 +54,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   visitIdentifier = (ctx: IdentifierContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  visitmethodName = (ctx: IdentifierContext) =>
+    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 }

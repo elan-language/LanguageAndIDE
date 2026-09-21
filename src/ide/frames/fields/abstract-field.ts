@@ -187,9 +187,9 @@ export const methodNameFieldSpec: FieldSpec = new FieldSpec(
   "MethodNameField",
   "_text",
   true,
-  true,
+  false,
   (parser: PythonParser | RefLangParser) => parser.methodName(), // TODO: g4 does not yet provide for inheritance
-  (source: CodeSource) => source.readToEndOfLine(),
+  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
   "",
 );
 

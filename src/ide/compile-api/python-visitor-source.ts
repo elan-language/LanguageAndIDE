@@ -43,6 +43,8 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitIdentifier = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
 
+  visitMethodName = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())}: ${this.visit(ctx.type())}`;
 

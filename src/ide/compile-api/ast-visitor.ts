@@ -637,7 +637,11 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.identifier) {
+  if (
+    node instanceof AbstractField &&
+    (node.fieldSpec?.fieldType === FieldType.identifier ||
+      node.fieldSpec?.fieldType === FieldType.methodName)
+  ) {
     const ctx = node.context;
 
     if (ctx) {
