@@ -51,7 +51,6 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
   visitCommentText = (ctx: CommentTextContext) => {
-    const txt = ctx.getText().replace("# ", "");
-    return txt;
+    return ctx.getText();
   };
 }

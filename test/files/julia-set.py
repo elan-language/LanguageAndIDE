@@ -1,6 +1,6 @@
 # Python with Elan 2.0.0-beta3
 
-# After image is displayed, press: 
+# After image is displayed, press:  
 
 # - z to zoom in, x to zoom out
 
@@ -8,7 +8,7 @@
 
 # - g, j and y, h to change shape
 
-#   
+#  
 
 # Acknowledgements:
 

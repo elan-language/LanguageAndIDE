@@ -63,7 +63,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     `<el-method>${ctx.NAME_STARTING_TEST_().getText()}</el-method>`;
 
   visitCommentText = (ctx: CommentTextContext) => {
-    const txt = ctx.getText().replace("#", "");
+    const txt = ctx.getText();
     return escapeMultipleSpaces(escapeHtmlChars(txt));
   };
 }

@@ -59,7 +59,7 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}# ${this.textIncludingMarkerSymboAndSpace.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${this.textIncludingMarkerSymboAndSpace.renderAsElanSource()}`;
   }
 
   override deleteIfPermissible(): void {
