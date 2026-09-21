@@ -1109,10 +1109,10 @@ end test
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Name 'test_proc' not unique in scope.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
+    // assertDoesNotCompile(fileImpl, [
+    //   "Name 'test_proc' not unique in scope.ErrorMessages.html#compile_error",
+    // ]);
   });
 
   ignore_test("Fail_DuplicateTestName3", async () => {

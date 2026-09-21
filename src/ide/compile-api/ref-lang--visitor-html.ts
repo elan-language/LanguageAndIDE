@@ -47,7 +47,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     `<el-id>${ctx.NAME_STARTING_LC().getText()}</el-id>`;
 
   visitMethodName = (ctx: IdentifierContext) =>
-    `<el-id>${ctx.NAME_STARTING_LC().getText()}</el-id>`;
+    `<el-method>${ctx.NAME_STARTING_LC().getText()}</el-method>`;
 
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())} <el-kw>as</el-kw> ${this.visit(ctx.type())}`;
