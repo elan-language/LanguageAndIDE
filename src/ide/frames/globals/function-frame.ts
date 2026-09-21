@@ -4,8 +4,12 @@ import {
   returnKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import { AbstractField, paramsListFieldSpec, typeFieldSpec } from "../fields/abstract-field";
-import { MethodNameField } from "../fields/method-name-field";
+import {
+  AbstractField,
+  methodNameFieldSpec,
+  paramsListFieldSpec,
+  typeFieldSpec,
+} from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -15,7 +19,7 @@ import { Paradigm } from "../paradigm";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
-  public name: MethodNameField;
+  public name: AbstractField;
   public params: AbstractField;
   public returnType: AbstractField;
   isFunction = true;
@@ -23,7 +27,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new MethodNameField(this);
+    this.name = new AbstractField(this, methodNameFieldSpec);
     this.params = new AbstractField(this, paramsListFieldSpec);
     this.returnType = new AbstractField(this, typeFieldSpec);
     this.getChildren().push(new ReturnStatement(this));

@@ -43,6 +43,8 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitIdentifier = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
 
+  visitMethodName = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())} as ${this.visit(ctx.type())}`;
 

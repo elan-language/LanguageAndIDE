@@ -61,6 +61,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   visitIdentifier = (ctx: IdentifierContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
+  visitMethodName = (ctx: IdentifierContext) =>
+    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
   visitParamsList = (ctx: ParamsListContext) => {
     const paramDefs = getParamDefs(this, ctx);
     const paramsList = new ParamListAsn(this.fieldId, this.scope);

@@ -1,6 +1,5 @@
 import { procedureKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, paramsListFieldSpec } from "../fields/abstract-field";
-import { MethodNameField } from "../fields/method-name-field";
+import { AbstractField, methodNameFieldSpec, paramsListFieldSpec } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -8,14 +7,14 @@ import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export abstract class ProcedureFrame extends FrameWithStatements {
-  public name: MethodNameField;
+  public name: AbstractField;
   public params: AbstractField;
   file: File;
 
   constructor(parent: Parent) {
     super(parent);
     this.file = parent as File;
-    this.name = new MethodNameField(this);
+    this.name = new AbstractField(this, methodNameFieldSpec);
     this.params = new AbstractField(this, paramsListFieldSpec);
   }
   isProcedure = true;
