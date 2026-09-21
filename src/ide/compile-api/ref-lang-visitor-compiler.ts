@@ -4,10 +4,10 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
+import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
-  CommentTextContext,
   IdentifierContext,
   ParamDefContext,
   ParamsListContext,
@@ -20,7 +20,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(

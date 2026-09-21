@@ -14,7 +14,14 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getFilteredTypes, getFuncTypes, getParamDefs, visitTypeHelper } from "./parser-helpers";
+import {
+  escapeMultipleSpaces,
+  getFilteredTypes,
+  getFuncTypes,
+  getParamDefs,
+  visitTypeHelper,
+} from "./parser-helpers";
+import { escapeHtmlChars } from "../frames/frame-helpers";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -55,5 +62,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitTestName = (ctx: TestNameContext) =>
     `<el-method>${ctx.NAME_STARTING_TEST_().getText()}</el-method>`;
 
-  visitCommentText = (ctx: CommentTextContext) => `<el-comment>${ctx.getText()}</el-comment>`;
+  visitCommentText = (ctx: CommentTextContext) => {
+    const txt = ctx.getText().replace("# ", "");
+    return escapeMultipleSpaces(escapeHtmlChars(txt));
+  };
 }

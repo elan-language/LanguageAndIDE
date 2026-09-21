@@ -133,7 +133,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof CatchStatement) {
       html = `<el-kw>${this.CATCH} ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
-      html = `${frame.textIncludingMarkerSymboAndSpace.renderAsHtml()}`;
+      html = `<el-kw># </el-kw>${frame.textIncludingMarkerSymboAndSpace.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;

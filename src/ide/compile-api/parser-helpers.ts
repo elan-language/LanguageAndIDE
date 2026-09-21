@@ -158,3 +158,9 @@ export function handleLeadingAndMultipleSpaces(raw: string): string {
   const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
   return withNbsp.join("").trimEnd();
 }
+
+export function escapeMultipleSpaces(raw: string): string {
+  const words = raw.split(" ");
+  const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+  return withNbsp.join("").trimEnd();
+}

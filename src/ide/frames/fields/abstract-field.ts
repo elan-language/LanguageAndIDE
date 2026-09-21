@@ -165,7 +165,7 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   true,
   (parser: PythonParser | RefLangParser) => parser.commentText(),
   (source: CodeSource) => source.readToEndOfLine(),
-  "# ", //TODO: needs to start with the comment marker for the language
+  "", //TODO: needs to start with the comment marker for the language
 );
 
 export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
@@ -1012,7 +1012,7 @@ export class AbstractField implements Selectable, Field {
     if (this.cursorPos === this.text.length) {
       //i.e. show completion only if cursor at RH limit
       const content = this.getCompletion().replace("<of", "&lt;of");
-      completion = `<el-compl>${content}</el-compl>`;
+      completion = content ? `<el-compl>${content}</el-compl>` : "";
     }
     let html = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
     html = this.language().postProcessHtml(html);
@@ -1234,7 +1234,7 @@ export class AbstractField implements Selectable, Field {
     } else {
       let parser: antlr.Parser;
       [parser, this.context] = this.parseByLanguage(text);
-      const parsed = this.context.getText();
+      const parsed = this.context.getText().replaceAll(" ", "");
 
       if (parsed !== text.replaceAll(" ", "") || parser.numberOfSyntaxErrors > 0) {
         this.setParseStatus(ParseStatus.invalid);

@@ -14,7 +14,14 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getFilteredTypes, getFuncTypes, getParamDefs, visitTypeHelper } from "./parser-helpers";
+import {
+  escapeMultipleSpaces,
+  getFilteredTypes,
+  getFuncTypes,
+  getParamDefs,
+  visitTypeHelper,
+} from "./parser-helpers";
+import { escapeHtmlChars } from "../frames/frame-helpers";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -54,5 +61,8 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   visitTestName = (ctx: TestNameContext) =>
     `<el-method>${ctx.NAME_STARTING_TEST_().getText()}</el-method>`;
 
-  visitCommentText = (ctx: CommentTextContext) => `<el-comment>${ctx.getText()}</el-comment>`;
+  visitCommentText = (ctx: CommentTextContext) => {
+    const txt = ctx.getText().replace("# ", "");
+    return escapeMultipleSpaces(escapeHtmlChars(txt));
+  };
 }
