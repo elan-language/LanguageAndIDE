@@ -189,7 +189,7 @@ export const methodNameFieldSpec: FieldSpec = new FieldSpec(
   true,
   true,
   (parser: PythonParser | RefLangParser) => parser.methodName(), // TODO: g4 does not yet provide for inheritance
-  (source: CodeSource) => source.readToEndOfLine(),
+  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
   "",
 );
 
@@ -238,7 +238,7 @@ export const assertActualFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertActual(),
-  (source: CodeSource) => source.readToEndOfLine(), // TODO Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
+  (source: CodeSource) => source.readUntil(/\s/),  // TODO Valid for most cases but not a robust rule. Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
   "",
 );
 
@@ -250,7 +250,7 @@ export const assignable: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assignable(),
-  (source: CodeSource) => source.readToEndOfLine(), // TODO: Needs changing so that lambda can be set up differently in field constructor
+  (source: CodeSource) => source.readUntil(/\s/), //TODO: needs confirmation
   "",
 );
 
