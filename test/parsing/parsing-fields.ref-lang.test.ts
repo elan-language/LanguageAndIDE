@@ -13,7 +13,7 @@ import { VariableStatement } from "../../src/ide/frames/statements/variable-stat
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
-import { transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "../testHelpers";
 
 suite("Field Parsing Tests", () => {
