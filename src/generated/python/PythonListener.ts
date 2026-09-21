@@ -13,6 +13,7 @@ import { EnumContext } from "./PythonParser.js";
 import { ConcreteClassContext } from "./PythonParser.js";
 import { AbstractClassContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
+import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
 import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
@@ -192,6 +193,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitComment?: (ctx: CommentContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.commentText`.
+   * @param ctx the parse tree
+   */
+  enterCommentText?: (ctx: CommentTextContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.commentText`.
+   * @param ctx the parse tree
+   */
+  exitCommentText?: (ctx: CommentTextContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.ordinaryStatement`.
    * @param ctx the parse tree

@@ -163,9 +163,9 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   "_comment",
   false,
   true,
-  (parser: PythonParser | RefLangParser) => parser.comment(),
+  (parser: PythonParser | RefLangParser) => parser.commentText(),
   (source: CodeSource) => source.readToEndOfLine(),
-  "",
+  "# ", //TODO: needs to start with the comment marker for the language
 );
 
 export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
@@ -238,7 +238,7 @@ export const assertActualFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertActual(),
-  (source: CodeSource) => source.readUntil(/\s/),  // TODO Valid for most cases but not a robust rule. Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
+  (source: CodeSource) => source.readUntil(/\s/), // TODO Valid for most cases but not a robust rule. Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
   "",
 );
 
@@ -1017,6 +1017,20 @@ export class AbstractField implements Selectable, Field {
     let html = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${this.textAsHtml()}</el-txt><el-place>${this.placeholder}</el-place>${completion}${this.getMessage()}${this.helpAsHtml()}</el-field>`;
     html = this.language().postProcessHtml(html);
     return html;
+  }
+
+  //TODO: From comment field:
+  renderAsHtmlIfComment(): string {
+    const txt = this.isSelected()
+      ? this.textAsHtml()
+      : this.escapeMultipleSpaces(escapeHtmlChars(this.textAsHtml()));
+    return `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${txt}</el-txt><el-place>${this.placeholder}</el-place><el-compl>${this.getCompletion()}</el-compl>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
+  }
+
+  private escapeMultipleSpaces(raw: string): string {
+    const words = raw.split(" ");
+    const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+    return withNbsp.join("").trimEnd();
   }
 
   indent(): string {

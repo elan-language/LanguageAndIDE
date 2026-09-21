@@ -1,6 +1,7 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../../src/ide/frames/class-members/function-method";
 import { Property } from "../../src/ide/frames/class-members/property";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
@@ -11,7 +12,6 @@ import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { ElseClause } from "../../src/ide/frames/statements/else-clause";
 import { ElseIfClause } from "../../src/ide/frames/statements/elseIf-clause";
 import { ForLoop } from "../../src/ide/frames/statements/forLoop";
@@ -38,7 +38,7 @@ export function T01_helloWorld() {
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const comment = new CommentFrame(m);
-  comment.text.setFieldToKnownValidText(`My first program`);
+  comment.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
   const pr = new ProcedureCall(m);
   pr.proc.setFieldToKnownValidText('printNoLine')
@@ -52,13 +52,13 @@ export function T02_comments() {
   const f = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
   const gc = new CommentFrame(f);
-  gc.text.setFieldToKnownValidText("Comment 1");
+  gc.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText("Comment 1");
   f.addChildBefore(gc, gs);
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const sc2 = new CommentFrame(m);
-  sc2.text.setFieldToKnownValidText("Comment 2");
+  sc2.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText("Comment 2");
   m.addChildBefore(sc2, ss);
   f.updateAllParseStatus();
   return f;
@@ -201,7 +201,7 @@ export function T09_emptyMainAndClassWithGlobalSelector() {
 export function getTestFrame(fn: string): FileImpl {
   try {
     return eval(`${fn}()`);
-  } catch (e) {
+  } catch (_e) {
     return new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   }
 }

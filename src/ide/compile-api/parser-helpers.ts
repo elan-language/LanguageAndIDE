@@ -35,8 +35,8 @@ export function getRefLangParser(input: string) {
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  parser.removeParseListeners();
-  parser.removeErrorListeners();
+  /*   parser.removeParseListeners();
+  parser.removeErrorListeners(); */
   return parser;
 }
 
@@ -151,4 +151,10 @@ export function getFuncTypes(
   const inTypes = types.slice(0, -1).join(", ");
 
   return [inTypes, returnType];
+}
+
+export function handleLeadingAndMultipleSpaces(raw: string): string {
+  const words = raw.split(" ");
+  const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+  return withNbsp.join("").trimEnd();
 }

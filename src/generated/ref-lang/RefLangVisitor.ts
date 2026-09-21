@@ -13,6 +13,7 @@ import { EnumContext } from "./RefLangParser.js";
 import { ConcreteClassContext } from "./RefLangParser.js";
 import { AbstractClassContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
+import { CommentTextContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
@@ -151,6 +152,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitComment?: (ctx: CommentContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.commentText`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCommentText?: (ctx: CommentTextContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.ordinaryStatement`.
    * @param ctx the parse tree

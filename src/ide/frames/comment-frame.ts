@@ -1,5 +1,5 @@
 import { commentMarker } from "../../compiler/elan-keywords";
-import { CommentField } from "./fields/comment-field";
+import { AbstractField, commentFieldSpec } from "./fields/abstract-field";
 import { singleIndent } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Field } from "./frame-interfaces/field";
@@ -15,10 +15,10 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   private = false;
   protected canHaveBreakPoint = false;
 
-  public text: CommentField;
+  public textIncludingMarkerSymboAndSpace: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.text = new CommentField(this);
+    this.textIncludingMarkerSymboAndSpace = new AbstractField(this, commentFieldSpec);
   }
 
   initialKeywords(): string {
@@ -27,13 +27,12 @@ export class CommentFrame extends SingleLineFrame implements Statement {
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    source.remove("# ");
-    this.text.parseFrom(source);
+    this.textIncludingMarkerSymboAndSpace.parseFrom(source);
     source.removeNewLine();
   }
 
   getFields(): Field[] {
-    return [this.text];
+    return [this.textIncludingMarkerSymboAndSpace];
   }
 
   getIdPrefix(): string {
@@ -60,7 +59,7 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}# ${this.text.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}# ${this.textIncludingMarkerSymboAndSpace.renderAsElanSource()}`;
   }
 
   override deleteIfPermissible(): void {

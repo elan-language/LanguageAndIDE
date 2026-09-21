@@ -243,7 +243,7 @@ suite("Editing Fields Tests", () => {
         false,
       ),
     );
-    const field = comment.text;
+    const field = comment.textIncludingMarkerSymboAndSpace;
     field.select();
     field.processKey(key("<"));
     field.processKey(key("p"));
@@ -271,7 +271,7 @@ suite("Editing Fields Tests", () => {
         false,
       ),
     );
-    const field = comment.text;
+    const field = comment.textIncludingMarkerSymboAndSpace;
     field.select();
     field.processKey(key(" "));
     field.processKey(key("f"));

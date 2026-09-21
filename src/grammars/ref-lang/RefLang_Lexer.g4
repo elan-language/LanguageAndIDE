@@ -98,8 +98,7 @@ THIS_INSTANCE: 'this';
 //END common token names; custom definitions
 
 //START Common token names; common definitions
-COMMENT:
-    COMMENT_MARKER ~('\r' | '\n')*
+COMMENT: COMMENT_MARKER ~('\r' | '\n')*
 ; // In other langs, the casing may be different
 
 SINGLE_EQUALS: '=';

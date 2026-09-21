@@ -7,6 +7,7 @@ import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn"
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  CommentTextContext,
   IdentifierContext,
   ParamDefContext,
   ParamsListContext,

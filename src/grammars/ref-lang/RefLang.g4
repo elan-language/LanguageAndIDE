@@ -5,7 +5,7 @@ grammar RefLang;
 import RefLang_Lexer;
 
 // START Elan2_Frames
-file: COMMENT? global* NL* EOF;
+file: COMMENT_TEXT? global* NL* EOF;
 
 // Globals
 global:
@@ -68,7 +68,9 @@ abstractClass:
     )* END CLASS NL
 ;
 
-comment: COMMENT NL;
+comment: commentText NL;
+
+commentText: COMMENT;
 
 // Statements
 ordinaryStatement:

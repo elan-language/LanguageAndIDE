@@ -13,6 +13,7 @@ import { EnumContext } from "./PythonParser.js";
 import { ConcreteClassContext } from "./PythonParser.js";
 import { AbstractClassContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
+import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
 import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
@@ -151,6 +152,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitComment?: (ctx: CommentContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.commentText`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCommentText?: (ctx: CommentTextContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.ordinaryStatement`.
    * @param ctx the parse tree

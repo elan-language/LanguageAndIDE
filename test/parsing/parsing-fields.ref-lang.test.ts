@@ -1,5 +1,6 @@
 import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
@@ -14,7 +15,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { transforms } from "../compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "../testHelpers";
-import { CommentFrame } from "../../src/ide/frames/comment-frame";
 
 suite("Field Parsing Tests", () => {
   test("parse CommentField", () => {
@@ -29,10 +29,10 @@ suite("Field Parsing Tests", () => {
       ),
     );
     const comment = new CommentFrame(main);
-    const text = comment.text;
+    const text = comment.textIncludingMarkerSymboAndSpace;
     assert.equal(text.textAsSource(), "");
     assert.equal(text.readParseStatus(), ParseStatus.valid);
-    text.setFieldToKnownValidText("Hello");
+    text.setFieldToKnownValidText("# Hello");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
@@ -52,10 +52,10 @@ suite("Field Parsing Tests", () => {
       ),
     );
     const comment = new CommentFrame(main);
-    const text = comment.text;
+    const text = comment.textIncludingMarkerSymboAndSpace;
     assert.equal(text.textAsSource(), "");
     assert.equal(text.readParseStatus(), ParseStatus.valid);
-    text.setFieldToKnownValidText("  Hello   World ");
+    text.setFieldToKnownValidText("#  Hello   World ");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(

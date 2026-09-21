@@ -1,7 +1,7 @@
 import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
-  CommentContext,
+  CommentTextContext,
   IdentifierContext,
   ParamDefContext,
   ParamsListContext,
@@ -46,7 +46,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifier())} as ${this.visit(ctx.type())}`;
 
-  visitTestName = (ctx: TestNameContext) => `${ctx.NAME_STARTING_TEST_().getText()}`;
+  visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
-  visitComment = (ctx: CommentContext) => ctx.COMMENT().getText();
+  visitCommentText = (ctx: CommentTextContext) => ctx.getText();
 }

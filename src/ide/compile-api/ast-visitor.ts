@@ -373,7 +373,9 @@ export function transform(
 
   if (node instanceof CommentFrame) {
     const commentAsn = new CommentStatementAsn(node.getHtmlId(), scope);
-    commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
+    commentAsn.text =
+      transform(node.textIncludingMarkerSymboAndSpace, node.getHtmlId(), commentAsn) ??
+      EmptyAsn.Instance;
     return commentAsn;
   }
 

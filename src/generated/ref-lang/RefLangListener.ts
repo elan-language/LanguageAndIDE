@@ -13,6 +13,7 @@ import { EnumContext } from "./RefLangParser.js";
 import { ConcreteClassContext } from "./RefLangParser.js";
 import { AbstractClassContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
+import { CommentTextContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
@@ -192,6 +193,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitComment?: (ctx: CommentContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.commentText`.
+   * @param ctx the parse tree
+   */
+  enterCommentText?: (ctx: CommentTextContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.commentText`.
+   * @param ctx the parse tree
+   */
+  exitCommentText?: (ctx: CommentTextContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.ordinaryStatement`.
    * @param ctx the parse tree

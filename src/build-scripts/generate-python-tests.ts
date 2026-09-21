@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, rename, statSync, writeFileSync } from "node:fs";
-import { parseAs } from "../tools/codeParser";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
+import { parseAs } from "../tools/codeParser";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -13,7 +13,9 @@ function loadFile(fileName: string): string {
 
 function renameFile(oldName: string, newName: string): void {
   rename(oldName, newName, (err) => {
-    if (err) throw err;
+    if (err) {
+      throw err;
+    }
     console.log("Rename complete!");
   });
 }

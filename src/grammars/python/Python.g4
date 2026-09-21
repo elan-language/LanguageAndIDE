@@ -75,7 +75,9 @@ abstractClass:
     )* COMMENT NL
 ;
 
-comment: COMMENT NL;
+comment: commentText NL;
+
+commentText: COMMENT;
 
 // Statements
 ordinaryStatement:
