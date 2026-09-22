@@ -37,6 +37,11 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { PythonParser } from "../src/generated/python/PythonParser";
+import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
+import { ParserRuleContext } from "antlr4ng";
+import { LanguageElan } from "../src/ide/frames/language-elan";
 
 // flag to update test files
 const updateTestFiles = false;
@@ -577,6 +582,49 @@ export function testNodeParse(
   }
   if (exprt && exprt !== "") {
     assert.equal(node.renderAsExport(), exprt);
+  }
+}
+
+export function testAntlrParse(
+  language : Language,
+  rule: (parser: PythonParser | RefLangParser) => ParserRuleContext,
+  text: string,
+  status: ParseStatus,
+  matchedText: string,
+  remainingText: string,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) {
+  const parser = getParserByLanguage(language, text);
+  const context = rule(parser); 
+  const parsedText =  context.getText().replaceAll(" ", "");
+  const errors = parser.numberOfSyntaxErrors;
+  const parseStatus = errors > 0 ? ParseStatus.invalid : parsedText === "" ? ParseStatus.empty : ParseStatus.valid;
+
+  assert.equal(status, parseStatus, `Parsing: '${text}'`);
+
+  if (matchedText !== "") {
+    assert.equal(parsedText, matchedText.replaceAll(" ", ""));
+  }
+
+  text.replaceAll(" ", "");
+  const remainingTextAfterParse = text.replace(parsedText, "");
+
+  if (remainingText !== "") {
+    assert.equal(remainingTextAfterParse, remainingText);
+  }
+
+  if (elanSource !== "") {
+    assert.equal(getVisitorSourceByLanguage(LanguageElan.Instance).visit(context), elanSource);
+  }
+
+  if (html && html !== "") {
+    assert.equal(getVisitorHtmlByLanguage(language).visit(context), html);
+  }
+
+  if (exprt && exprt !== "") {
+    assert.equal(getVisitorSourceByLanguage(language), exprt);
   }
 }
 

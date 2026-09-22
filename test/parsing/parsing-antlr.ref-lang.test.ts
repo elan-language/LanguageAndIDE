@@ -1,0 +1,2561 @@
+import { PythonParser } from "../../src/generated/python/PythonParser";
+import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { testAntlrParse } from "../testHelpers";
+
+type Parser = RefLangParser | PythonParser;
+
+suite("Parsing Antlr Rules RefLang", () => {
+  //   const f = new FileImpl(
+  //     hash,
+  //     new Paradigm(""),
+  //     "",
+  //     transforms(),
+  //     new StdLib(new StubInputOutput()),
+  //     false,
+  //     true,
+  //   );
+  //   test("UnaryExpression", () => {
+  //     testNodeParse(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
+  //     testNodeParse(
+  //       new UnaryExpression(f),
+  //       " not foo",
+  //       ParseStatus.valid,
+  //       " not foo",
+  //       "",
+  //       "not foo",
+  //       "",
+  //     );
+  //     testNodeParse(new UnaryExpression(f), "-", ParseStatus.incomplete, "-", "", "-", "");
+  //     testNodeParse(new UnaryExpression(f), "+4", ParseStatus.invalid, "", "+4", "", "");
+  //   });
+  //   test("IndexableTerm", () => {
+  //     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+  //   });
+  //   test("Term2", () => {
+  //     testNodeParse(new Term(f), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+  //   });
+  //   test("Expression", () => {
+  //     testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(new ExprNode(f), "a", ParseStatus.valid, "a", "", "a", "");
+  //     testNodeParse(new ExprNode(f), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
+  //     testNodeParse(new ExprNode(f), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
+  //     testNodeParse(new ExprNode(f), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
+  //     testNodeParse(new ExprNode(f), "+", ParseStatus.invalid, "", "+", "");
+  //     testNodeParse(new ExprNode(f), "+b", ParseStatus.invalid, "", "+b", "");
+  //     testNodeParse(new ExprNode(f), "a +", ParseStatus.incomplete, "a +", "", "a + ");
+  //     testNodeParse(new ExprNode(f), "a %", ParseStatus.valid, "a", " %", "a");
+  //     testNodeParse(new ExprNode(f), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
+  //     testNodeParse(new ExprNode(f), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "new List<of String>()",
+  //       ParseStatus.valid,
+  //       "new List<of String>()",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "points.foo(0.0)",
+  //       ParseStatus.valid,
+  //       "points.foo(0.0)",
+  //       "",
+  //       "points.foo(0.0)",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "this",
+  //       ParseStatus.valid,
+  //       "this",
+  //       "",
+  //       "this",
+  //       "<el-kw>this</el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "thisWidget",
+  //       ParseStatus.valid,
+  //       "thisWidget",
+  //       "",
+  //       "thisWidget",
+  //       "<el-id>thisWidget</el-id>",
+  //     );
+  //     // empty data structures
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "new List<of Int>()",
+  //       ParseStatus.valid,
+  //       "new List<of Int>()",
+  //       "",
+  //       "",
+  //       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
+  //     );
+  //     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //       ParseStatus.invalid,
+  //       "",
+  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("Lambda as argument", () => {
+  //     testNodeParse(
+  //       new ArgumentNode(f),
+  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //       ParseStatus.valid,
+  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("Identifier", () => {
+  //     testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
+  //     testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
+  //     testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
+  //     testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
+  //     testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
+  //     testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+  //     // Can be a keyword - because that will be rejected at compile stage, not parse stage
+  //     testNodeParse(new IdentifierNode(f), `new`, ParseStatus.invalid, "", "new", "");
+  //     testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
+  //     testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
+  //     testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
+  //     testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
+  //     testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
+  //   });
+
+  test("Identifier", () => {
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      ``,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `  `,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `a`,
+      ParseStatus.valid,
+      `a`,
+      "",
+      "a",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `aB_d`,
+      ParseStatus.valid,
+      `aB_d`,
+      "",
+      "aB_d",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `abc `,
+      ParseStatus.valid,
+      `abc`,
+      " ",
+      "abc",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `Abc`,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `abc-de`,
+      ParseStatus.valid,
+      `abc`,
+      "-de",
+      "abc",
+    );
+    // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `new`,
+      ParseStatus.invalid,
+      "",
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `global`,
+      ParseStatus.valid,
+      `global`,
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `x as`,
+      ParseStatus.valid,
+      `x`,
+      " as",
+      "x",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `_a`,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `_`,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+    );
+    testAntlrParse(
+      LanguageElan.Instance,
+      (p: Parser) => p.identifier(),
+      `()_a`,
+      ParseStatus.invalid,
+      ``,
+      "",
+      "",
+    );
+  });
+
+  //   test("LitString - single chars", () => {
+  //     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new LitString(f), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
+  //     testNodeParse(new LitString(f), `"a`, ParseStatus.incomplete, `"a`, "", `"a`, "");
+  //     testNodeParse(new LitString(f), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
+  //     testNodeParse(new LitString(f), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
+  //   });
+  //   test("LitString - bug #328", () => {
+  //     testNodeParse(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
+  //     testNodeParse(new LitString(f), `$"{a} `, ParseStatus.incomplete, `$"{a} `, "", "", "");
+  //   });
+  //   test("LitInt", () => {
+  //     testNodeParse(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new LitInt(f), "   ", ParseStatus.invalid, "", "   ", "", "");
+  //     testNodeParse(new LitInt(f), "123", ParseStatus.valid, "123", "", "123", "");
+  //     testNodeParse(new LitInt(f), "-123", ParseStatus.valid, "-123", "", "-123", "");
+  //     testNodeParse(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
+  //     testNodeParse(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
+  //     testNodeParse(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
+  //     testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, "123", "a", "123", "");
+  //     testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
+  //     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
+  //   });
+
+  //   test("LitInt_HexAndBinary", () => {
+  //     testNodeParse(
+  //       new LitInt(f),
+  //       "0xfa3c",
+  //       ParseStatus.valid,
+  //       "fa3c",
+  //       "",
+  //       "0xfa3c",
+  //       "<el-lit>0xfa3c</el-lit>",
+  //       "0xfa3c",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       "0xfffe",
+  //       ParseStatus.valid,
+  //       "0xfffe",
+  //       "",
+  //       "0xfffe",
+  //       "<el-lit>0xfffe</el-lit>",
+  //       "0xfffe",
+  //     );
+  //     testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "fa3", "g", "0xfa3", "");
+  //     testNodeParse(new LitInt(f), "&Hfa3", ParseStatus.invalid, "", "&Hfa3", "", ""); //VB format in El
+  //     testNodeParse(
+  //       new LitInt(fileWithVB()),
+  //       "&Hfa3",
+  //       ParseStatus.valid,
+  //       "fa3",
+  //       "",
+  //       "0xfa3",
+  //       "<el-lit>&Hfa3</el-lit>",
+  //       "&Hfa3",
+  //     ); //VB format in VB
+  //     testNodeParse(
+  //       new LitInt(f),
+  //       "0b01101",
+  //       ParseStatus.valid,
+  //       "01101",
+  //       "",
+  //       "0b01101",
+  //       "<el-lit>0b01101</el-lit>",
+  //     );
+  //     testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0110", "2", "0b0110", "");
+  //     testNodeParse(new LitInt(f), "&B0110", ParseStatus.invalid, "", "&B0110", "", ""); //VB syntax
+  //     testNodeParse(
+  //       new LitInt(fileWithVB()),
+  //       "&B0110",
+  //       ParseStatus.valid,
+  //       "0110",
+  //       "",
+  //       "0b0110",
+  //       "<el-lit>&B0110</el-lit>",
+  //       "&B0110",
+  //     ); //VB syntax
+  //   });
+  //   test("LitFloat", () => {
+  //     testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(new LitFloat(f), "1.0", ParseStatus.valid, "1.0", "", "1.0");
+  //     testNodeParse(new LitFloat(f), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
+  //     testNodeParse(new LitFloat(f), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
+  //     testNodeParse(new LitFloat(f), "1.-0", ParseStatus.invalid, "", "1.-0", "");
+  //     testNodeParse(new LitFloat(f), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
+  //     testNodeParse(new LitFloat(f), "1", ParseStatus.incomplete, "1", "", "1");
+  //     testNodeParse(new LitFloat(f), "1.", ParseStatus.incomplete, "1.", "", "1.");
+  //     testNodeParse(new LitFloat(f), "1. ", ParseStatus.invalid, "", "1. ", "");
+  //     testNodeParse(new LitFloat(f), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
+  //     testNodeParse(new LitFloat(f), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
+  //     testNodeParse(new LitFloat(f), "1.1E-5", ParseStatus.valid, "1.1E-5", "", "1.1E-5");
+  //   });
+  //   test("Keyword", () => {
+  //     testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       "abstract ",
+  //       ParseStatus.valid,
+  //       "abstract",
+  //       " ",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       "abstract(x",
+  //       ParseStatus.valid,
+  //       "abstract",
+  //       "(x",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       "abstractx",
+  //       ParseStatus.invalid,
+  //       "",
+  //       "abstractx",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       "abstract immutable",
+  //       ParseStatus.valid,
+  //       "abstract",
+  //       " immutable",
+  //       "abstract",
+  //     );
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       " abs",
+  //       ParseStatus.incomplete,
+  //       " abs",
+  //       "",
+  //       "abs",
+  //     );
+  //     testNodeParse(
+  //       new KeywordNode(f, abstractKeyword),
+  //       " abscract",
+  //       ParseStatus.invalid,
+  //       "",
+  //       " abscract",
+  //       "",
+  //     );
+  //   });
+  //   test("BracketedExpression", () => {
+  //     testNodeParse(
+  //       new BracketedExpression(f),
+  //       "(3 + 4)",
+  //       ParseStatus.valid,
+  //       "(3 + 4)",
+  //       "",
+  //       "(3 + 4)",
+  //       "",
+  //     );
+
+  //     testNodeParse(new BracketedExpression(f), "", ParseStatus.empty, "", "", "");
+  //     testNodeParse(new BracketedExpression(f), "(3)", ParseStatus.valid, "(3)", "", "(3)", "");
+
+  //     testNodeParse(
+  //       new BracketedExpression(f),
+  //       "(a and not b)",
+  //       ParseStatus.valid,
+  //       "(a and not b)",
+  //       "",
+  //       "(a and not b)",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new BracketedExpression(f),
+  //       "(3 * 4 + x)",
+  //       ParseStatus.valid,
+  //       "(3 * 4 + x)",
+  //       "",
+  //       "(3*4 + x)",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new BracketedExpression(f),
+  //       "(3 * (4 + x))",
+  //       ParseStatus.valid,
+  //       "(3 * (4 + x))",
+  //       "",
+  //       "(3*(4 + x))",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new BracketedExpression(f),
+  //       "(a and not b",
+  //       ParseStatus.incomplete,
+  //       "(a and not b",
+  //       "",
+  //       "(a and not b",
+  //     );
+  //     //testNodeParse(new BracketedExpression(), "(a and not b  ", ParseStatus.incomplete, "(a and not b  ", "", "(a and not b"); TODO
+  //     testNodeParse(new BracketedExpression(f), "(", ParseStatus.incomplete, "(", "", "(");
+  //     testNodeParse(new BracketedExpression(f), "()", ParseStatus.invalid, "", "()", "");
+  //   });
+  //   test("Optional", () => {
+  //     testNodeParse(
+  //       new OptionalNode(f, new LitInt(f)),
+  //       "123 a",
+  //       ParseStatus.valid,
+  //       "123",
+  //       " a",
+  //       "123",
+  //     );
+  //     testNodeParse(new OptionalNode(f, new LitInt(f)), "abc", ParseStatus.valid, "", "abc", "");
+  //     testNodeParse(
+  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
+  //       " abstract",
+  //       ParseStatus.valid,
+  //       " abstract",
+  //       "",
+  //       "abstract",
+  //       "<el-kw>abstract</el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
+  //       "abs",
+  //       ParseStatus.incomplete,
+  //       "abs",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
+  //       "abscract",
+  //       ParseStatus.valid,
+  //       "",
+  //       "abscract",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
+  //       "",
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
+  //       "  ",
+  //       ParseStatus.incomplete,
+  //       "  ",
+  //       "",
+  //       "",
+  //     );
+  //   });
+
+  //   test("Multiple", () => {
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), `)`, ParseStatus.valid, ``, ")", "");
+  //     testNodeParse(
+  //       new Multiple(f, () => new LitInt(f), 1),
+  //       `1 0 33`,
+  //       ParseStatus.valid,
+  //       `1 0 33`,
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), `1`, ParseStatus.valid, `1`, "", "");
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(
+  //       new Multiple(f, () => new LitInt(f), 1),
+  //       `5 6 a`,
+  //       ParseStatus.valid,
+  //       `5 6`,
+  //       " a",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new LitInt(f), 1),
+  //       `7   `,
+  //       ParseStatus.valid,
+  //       `7`,
+  //       "   ",
+  //       "",
+  //     );
+
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
+  //       `foo foo`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "bar"), 1),
+  //       `bar ba`,
+  //       ParseStatus.incomplete,
+  //       "bar ba",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
+  //       `foo`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
+  //       `fo`,
+  //       ParseStatus.incomplete,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
+  //       `foo,foo`,
+  //       ParseStatus.valid,
+  //       "",
+  //       ",foo",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
+  //       `foofoo`,
+  //       ParseStatus.invalid,
+  //       "",
+  //       "foofoo",
+  //       "",
+  //     );
+  //   });
+  //   test("CommaNode", () => {
+  //     testNodeParse(new CommaNode(f), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new CommaNode(f), `,`, ParseStatus.valid, ``, "", ", ");
+  //     testNodeParse(new CommaNode(f), ` ,`, ParseStatus.valid, `,`, "", ", ");
+  //     testNodeParse(new CommaNode(f), `,    `, ParseStatus.valid, ``, "", ", ");
+  //     testNodeParse(new CommaNode(f), `.`, ParseStatus.invalid, ``, ".", "");
+  //     testNodeParse(new CommaNode(f), `,,`, ParseStatus.valid, `,`, ",", "");
+  //   });
+  //   test("CSV", () => {
+  //     testNodeParse(
+  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
+  //       `a,a,a`,
+  //       ParseStatus.valid,
+  //       `a,a,a`,
+  //       "",
+  //       "a, a, a",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
+  //       `a,`,
+  //       ParseStatus.incomplete,
+  //       `a,`,
+  //       "",
+  //       "a, ",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
+  //       `x`,
+  //       ParseStatus.valid,
+  //       ``,
+  //       "x",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new PunctuationNode(f, "a"), 1),
+  //       `x`,
+  //       ParseStatus.invalid,
+  //       ``,
+  //       "x",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
+  //       `a,a,x`,
+  //       ParseStatus.valid,
+  //       `a,a`,
+  //       ",x",
+  //       "a, a",
+  //     );
+  //     testNodeParse(new CSV(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
+  //     testNodeParse(new CSV(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new CSV(f, () => new LitInt(f), 0), `2`, ParseStatus.valid, `2`, "", "");
+  //     testNodeParse(new CSV(f, () => new LitInt(f), 1), `2`, ParseStatus.valid, `2`, "", "");
+  //     testNodeParse(
+  //       new CSV(f, () => new LitString(f), 0),
+  //       `"apple","orange", "pear"`,
+  //       ParseStatus.valid,
+  //       `"apple","orange", "pear"`,
+  //       "",
+  //       `"apple", "orange", "pear"`,
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       `a,b,c`,
+  //       ParseStatus.valid,
+  //       `a,b,c`,
+  //       "",
+  //       "a, b, c",
+  //     );
+  //     testNodeParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, ParseStatus.valid, ``, "1", "");
+  //     testNodeParse(
+  //       new CSV(f, () => new IdentifierNode(f), 1),
+  //       `1`,
+  //       ParseStatus.invalid,
+  //       ``,
+  //       "1",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       `a,1`,
+  //       ParseStatus.valid,
+  //       `a`,
+  //       ",1",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       `a,b,1`,
+  //       ParseStatus.valid,
+  //       `a,b`,
+  //       ",1",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new ExprNode(f), 0),
+  //       `a + b, c, 1`,
+  //       ParseStatus.valid,
+  //       `a + b, c, 1`,
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new CSV(f, () => new ExprNode(f), 0), `)`, ParseStatus.valid, ``, ")", "");
+
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
+  //       `foo, foo`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), `foo`, ParseStatus.valid, "", "");
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
+  //       `fook`,
+  //       ParseStatus.invalid,
+  //       "",
+  //       "fook",
+  //     );
+  //     testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), ``, ParseStatus.valid, "", "");
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
+  //       `fo`,
+  //       ParseStatus.incomplete,
+  //       "fo",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
+  //       `fo`,
+  //       ParseStatus.incomplete,
+  //       "fo",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
+  //       `foo, fo`,
+  //       ParseStatus.incomplete,
+  //       "foo, fo",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
+  //       `foo,`,
+  //       ParseStatus.incomplete,
+  //       "foo,",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
+  //       `foo, `,
+  //       ParseStatus.incomplete,
+  //       "foo, ",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
+  //       `foo,fo`,
+  //       ParseStatus.incomplete,
+  //       "foo,fo",
+  //       "",
+  //       "foo, fo",
+  //     );
+
+  //     testNodeParse(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
+  //   });
+  //   test("IdentifierWithOptIndexes", () => {
+  //     testNodeParse(new IdentifierWithOptIndexes(f), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new IdentifierWithOptIndexes(f), `bar`, ParseStatus.valid, `bar`, "", "");
+  //     testNodeParse(
+  //       new IdentifierWithOptIndexes(f),
+  //       `bar[foo]`,
+  //       ParseStatus.valid,
+  //       `bar[foo]`,
+  //       "",
+  //       "",
+  //     );
+  //     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
+  //   });
+
+  //   test("Function Call", () => {
+  //     testNodeParse(new MethodCallNode(f), ``, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(new MethodCallNode(f), `  `, ParseStatus.empty, ``, "", "");
+  //     testNodeParse(
+  //       new MethodCallNode(f),
+  //       `foo()`,
+  //       ParseStatus.valid,
+  //       `foo()`,
+  //       "",
+  //       "foo()",
+  //       "<el-method>foo</el-method>()",
+  //     );
+  //     testNodeParse(
+  //       new MethodCallNode(f),
+  //       `bar(x, 1, "hello")`,
+  //       ParseStatus.valid,
+  //       `bar(x, 1, "hello")`,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new MethodCallNode(f), `yon`, ParseStatus.incomplete, `yon`, "", "");
+  //     testNodeParse(new MethodCallNode(f), `yon `, ParseStatus.invalid, ``, "yon ", "");
+  //     testNodeParse(new MethodCallNode(f), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
+  //     testNodeParse(new MethodCallNode(f), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
+  //     testNodeParse(new MethodCallNode(f), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
+  //     testNodeParse(new MethodCallNode(f), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
+  //     testNodeParse(new MethodCallNode(f), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
+  //     testNodeParse(
+  //       new MethodCallNode(f),
+  //       `foo(a)`,
+  //       ParseStatus.valid,
+  //       ``,
+  //       "",
+  //       "foo(a)",
+  //       "<el-method>foo</el-method>(<el-id>a</el-id>)",
+  //     );
+  //     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+  //   });
+  //   test("TypeSimpleName", () => {
+  //     testNodeParse(
+  //       new TypeSimpleName(f),
+  //       `Foo`,
+  //       ParseStatus.valid,
+  //       "Foo",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>",
+  //     );
+  //     testNodeParse(new TypeSimpleName(f), `foo`, ParseStatus.invalid, "", "foo", "");
+  //   });
+  //   test("TypeSimpleOrGeneric", () => {
+  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
+  //     testNodeParse(new TypeSimpleOrGeneric(f), `foo`, ParseStatus.invalid, "", "foo", "");
+  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<`, ParseStatus.incomplete, "Foo<", "", "");
+  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<of`, ParseStatus.incomplete, "Foo<of", "", "");
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(f),
+  //       `Foo<of Bar`,
+  //       ParseStatus.incomplete,
+  //       "Foo<of Bar",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<ofBar`, ParseStatus.valid, "", "<ofBar", "");
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(f),
+  //       `Foo<of Bar>`,
+  //       ParseStatus.valid,
+  //       "Foo<of Bar>",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
+  //     );
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(f),
+  //       `Dictionary<of Bar, Yon>`,
+  //       ParseStatus.valid,
+  //       "Dictionary<of Bar, Yon>",
+  //       "",
+  //       "",
+  //       "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
+  //     );
+  //   });
+  //   test("TypeSimpleOrGeneric_Languages", () => {
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(fileWithPython()),
+  //       `Foo[Bar]`,
+  //       ParseStatus.valid,
+  //       "Foo[Bar]",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>[<el-type>Bar</el-type>]",
+  //       "Foo[Bar]",
+  //     );
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(fileWithPython()),
+  //       `list[int]`,
+  //       ParseStatus.valid,
+  //       "list[int]",
+  //       "",
+  //       "",
+  //       "<el-type>list</el-type>[<el-type>int</el-type>]",
+  //       "list[int]",
+  //     );
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(fileWithVB()),
+  //       `Foo(Of Bar)`, //This should properly be 'Of'
+  //       ParseStatus.valid,
+  //       "Foo(Of Bar)",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>(<el-kw>Of</el-kw> <el-type>Bar</el-type>)",
+  //     );
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(fileWithCS()),
+  //       `Foo<Bar>`,
+  //       ParseStatus.valid,
+  //       "Foo<Bar>",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
+  //     );
+  //     testNodeParse(
+  //       new TypeSimpleOrGeneric(fileWithJava()),
+  //       `Foo<Bar>`,
+  //       ParseStatus.valid,
+  //       "Foo<Bar>",
+  //       "",
+  //       "",
+  //       "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
+  //     );
+  //   });
+  //   test("TypeNode", () => {
+  //     //Single
+  //     testNodeParse(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
+  //     testNodeParse(new TypeNode(f), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
+  //     testNodeParse(
+  //       new TypeNode(f),
+  //       `(Foo, Bar, Yon`,
+  //       ParseStatus.incomplete,
+  //       "(Foo, Bar, Yon",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new TypeNode(f),
+  //       `(Foo, (Bar, Yon, Qux))`,
+  //       ParseStatus.valid,
+  //       "(Foo, (Bar, Yon, Qux))",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new TypeNode(f),
+  //       `(Foo, Bar< of Yon>)`,
+  //       ParseStatus.valid,
+  //       "(Foo, Bar< of Yon>)",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("TypeNode - Func", () => {
+  //     testNodeParse(
+  //       new TypeNode(f),
+  //       `Func<of Foo, Bar => Yon>`,
+  //       ParseStatus.valid,
+  //       "Func<of Foo, Bar => Yon>",
+  //       "",
+  //       "",
+  //     ); //Single
+  //   });
+  //   test("TypeNode - library qualifier", () => {
+  //     testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.invalid, "", "", ""); //Single
+  //   });
+  //   test("TypeNode - other qualifier", () => {
+  //     testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
+  //   });
+  //   test("TupleNode", () => {
+  //     testNodeParse(new TupleNode(f), `(3,4)`, ParseStatus.valid, "", "", "");
+  //     testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
+  //     testNodeParse(new TupleNode(f), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
+  //     testNodeParse(
+  //       new TupleNode(f),
+  //       `(3,"a", "hello", 4.1, true`,
+  //       ParseStatus.incomplete,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
+  //     testNodeParse(new TupleNode(f), `tuple[3,4]`, ParseStatus.invalid, "", "tuple[3,4]", "");
+  //     testNodeParse(new TupleNode(f), `(a,b)`, ParseStatus.valid, "(a,b)", "", "");
+  //     testNodeParse(new TupleNode(f), `(`, ParseStatus.incomplete, "(", "", "");
+  //     testNodeParse(new TupleNode(f), `(3`, ParseStatus.incomplete, "(3", "", "");
+  //     testNodeParse(new TupleNode(f), `(3)`, ParseStatus.invalid, "", "(3)", "");
+  //     testNodeParse(new TupleNode(f), `()`, ParseStatus.invalid, "", "()", "");
+  //     testNodeParse(new TupleNode(f), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "");
+  //     testNodeParse(
+  //       new TupleNode(f),
+  //       `(foo, 3, bar(a), x)`,
+  //       ParseStatus.valid,
+  //       "(foo, 3, bar(a), x)",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new TupleNode(f), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
+  //     testNodeParse(
+  //       new TupleNode(f),
+  //       `(foo, 3, bar(a), x`,
+  //       ParseStatus.incomplete,
+  //       "(foo, 3, bar(a), x",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new TupleNode(f),
+  //       `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //     );
+  //   });
+  //   test("Lambda", () => {
+  //     testNodeParse(
+  //       new Lambda(f),
+  //       `lambda x as Int => x * x`,
+  //       ParseStatus.valid,
+  //       "lambda x as Int => x * x",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new Lambda(f), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
+  //     testNodeParse(
+  //       new Lambda(f),
+  //       `lambda x => x * x`,
+  //       ParseStatus.invalid,
+  //       "",
+  //       "lambda x => x * x",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Lambda(f),
+  //       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new Lambda(f),
+  //       `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //     );
+  //   });
+  //   test("IfExpr", () => {
+  //     testNodeParse(
+  //       new IfExpr(f),
+  //       `if_(cell, Colour.green, Colour.black)`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+  //     );
+  //     testNodeParse(
+  //       new IfExpr(f),
+  //       `if_(cell, Colour.green, Colour.black) + 1`,
+  //       ParseStatus.valid,
+  //       "if_(cell, Colour.green, Colour.black)",
+  //       " + 1",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       `if_(cell, Colour.red, Colour.blue) + 1`,
+  //       ParseStatus.valid,
+  //       "if_(cell, Colour.red, Colour.blue) + 1",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new IfExpr(f), `if_(cell, Colour.amber`, ParseStatus.incomplete, "", "", "");
+  //     testNodeParse(
+  //       new IfExpr(f),
+  //       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new IfExpr(f),
+  //       `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new IfExpr(f),
+  //       `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("ParamDefNode", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(f),
+  //       `x as String`,
+  //       ParseStatus.valid,
+  //       "x as String",
+  //       "",
+  //       "x as String",
+  //       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
+  //     );
+  //     testNodeParse(new ParamDefNode(f), `z`, ParseStatus.incomplete, "z", "", "");
+  //     testNodeParse(new ParamDefNode(f), `w as`, ParseStatus.incomplete, "w as", "", "");
+  //     testNodeParse(new ParamDefNode(f), `A`, ParseStatus.invalid, "", "A", "");
+  //     testNodeParse(new ParamDefNode(f), `v String`, ParseStatus.invalid, "", "v String", "");
+  //   });
+  //   test("ParamDefNode_Python", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithPython()),
+  //       `x: str`,
+  //       ParseStatus.valid,
+  //       "x: str",
+  //       "",
+  //       "",
+  //       "<el-id>x</el-id>: <el-type>str</el-type>",
+  //       "x: str",
+  //     );
+  //   });
+  //   test("ParamDefNode_VB", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithVB()),
+  //       `x As String`,
+  //       ParseStatus.valid,
+  //       "x As String",
+  //       "",
+  //       "",
+  //       "<el-id>x</el-id><el-kw> As </el-kw><el-type>String</el-type>",
+  //       "x As String",
+  //     );
+  //   });
+  //   test("ParamDefNode_CS", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithCS()),
+  //       `string x`,
+  //       ParseStatus.valid,
+  //       `string x`,
+  //       "",
+  //       "",
+  //       `<el-type>string</el-type> <el-id>x</el-id>`,
+  //       `string x`,
+  //     );
+  //   });
+  //   test("ParamDefNode_Java", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithJava()),
+  //       `String x`,
+  //       ParseStatus.valid,
+  //       `String x`,
+  //       "",
+  //       "",
+  //       `<el-type>String</el-type> <el-id>x</el-id>`,
+  //       `String x`,
+  //     );
+  //   });
+  //   test("Param List", () => {
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `A as string`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "A as string",
+  //       "",
+  //     ); //i.e. all leftover
+  //     testNodeParse(new CSV(f, () => new ParamDefNode(f), 0), ``, ParseStatus.valid, "", "", "");
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `a as String`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `a as String, bb as Int, foo as Bar`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `a`,
+  //       ParseStatus.incomplete,
+  //       "a",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `a as String,`,
+  //       ParseStatus.incomplete,
+  //       "a as String,",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       `a as String, bb as`,
+  //       ParseStatus.incomplete,
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("Literal", () => {
+  //     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
+  //     testNodeParse(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
+  //   });
+  //   test("SpaceNode", () => {
+  //     testNodeParse(new SpaceNode(f, Space.ignored), ``, ParseStatus.valid, "", "", "", "");
+  //     testNodeParse(new SpaceNode(f, Space.ignored), ` `, ParseStatus.valid, "", "", "", "");
+  //     testNodeParse(new SpaceNode(f, Space.ignored), `  `, ParseStatus.valid, "", "", "", "");
+  //     testNodeParse(new SpaceNode(f, Space.added), ``, ParseStatus.valid, "", "", " ", " ");
+  //     testNodeParse(new SpaceNode(f, Space.added), ` `, ParseStatus.valid, "", "", " ", " ");
+  //     testNodeParse(new SpaceNode(f, Space.added), `  `, ParseStatus.valid, "", "", " ", " ");
+  //     testNodeParse(new SpaceNode(f, Space.required), ``, ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new SpaceNode(f, Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
+  //     testNodeParse(new SpaceNode(f, Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
+  //   });
+  //   test("New Instance", () => {
+  //     testNodeParse(new NewInstance(f), ``, ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new NewInstance(f), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
+  //     testNodeParse(new NewInstance(f), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
+  //     testNodeParse(
+  //       new NewInstance(f),
+  //       "new List<of String>()",
+  //       ParseStatus.valid,
+  //       "new List<of String>()",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new NewInstance(fileWithPython()),
+  //       `Foo()`,
+  //       ParseStatus.valid,
+  //       "Foo()",
+  //       "",
+  //       "new Foo()",
+  //       "<el-type>Foo</el-type>()",
+  //       `Foo()`,
+  //     );
+  //     testNodeParse(
+  //       new NewInstance(fileWithCS()),
+  //       `new Foo()`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "new Foo()",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new NewInstance(fileWithJava()),
+  //       `new Foo()`,
+  //       ParseStatus.valid,
+  //       "",
+  //       "",
+  //       "new Foo()",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new NewInstance(fileWithVB()),
+  //       `New Foo()`,
+  //       ParseStatus.valid,
+  //       "New Foo()",
+  //       "",
+  //       "new Foo()",
+  //       "<el-kw>New</el-kw> <el-type>Foo</el-type>()",
+  //       "New Foo()",
+  //     );
+  //   });
+  //   test("String Interpolation", () => {
+  //     testNodeParse(new LitStringInterpolatedInsert(f), ``, ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(
+  //       new LitStringInterpolatedInsert(f),
+  //       "{x + 1}",
+  //       ParseStatus.valid,
+  //       "{x + 1}",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new LitStringInterpolatedInsert(f),
+  //       "{x",
+  //       ParseStatus.incomplete,
+  //       "{x",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(new LitStringInterpolatedInsert(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+  //   });
+  //   test("LitString", () => {
+  //     testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
+  //     testNodeParse(
+  //       new LitString(f),
+  //       `"abc"`,
+  //       ParseStatus.valid,
+  //       `"abc"`,
+  //       "",
+  //       "",
+  //       `"<el-lit>abc</el-lit>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitString(f),
+  //       `"abc def"`,
+  //       ParseStatus.valid,
+  //       `"abc def"`,
+  //       "",
+  //       "",
+  //       `"<el-lit>abc def</el-lit>"`,
+  //     );
+  //     testNodeParse(new LitString(f), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
+  //     testNodeParse(new LitString(f), `"`, ParseStatus.incomplete, `"`, "", "", "");
+  //     testNodeParse(new LitString(f), `abc`, ParseStatus.invalid, "", "abc", "", "");
+  //     testNodeParse(new LitString(f), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
+  //     testNodeParse(new LitString(f), `'abc"`, ParseStatus.invalid, ``, `'abc"`, "", "");
+  //     testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
+  //     testNodeParse(
+  //       new LitStringOrdinary(f),
+  //       `"{curly braces}"`,
+  //       ParseStatus.valid,
+  //       `"{curly braces}"`,
+  //       "",
+  //       `"{curly braces}"`,
+  //       `"<el-lit>{curly braces}</el-lit>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringOrdinary(f),
+  //       `"&#123;curly braces&#125;"`,
+  //       ParseStatus.valid,
+  //       `"&#123;curly braces&#125;"`,
+  //       "",
+  //       `"&#123;curly braces&#125;"`,
+  //       `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+  //     );
+  //   });
+  //   test("Embedded Html tags", () => {
+  //     testNodeParse(
+  //       new LitStringOrdinary(f),
+  //       `"<p>abc</p>"`,
+  //       ParseStatus.valid,
+  //       `"<p>abc</p>"`,
+  //       "",
+  //       `"<p>abc</p>"`,
+  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringText(f, /^[^"]*/),
+  //       `<p>`,
+  //       ParseStatus.valid,
+  //       `<p>`,
+  //       "",
+  //       `<p>`,
+  //       `<el-lit>&lt;p&gt;</el-lit>`,
+  //       `<p>`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringInterpolated(f),
+  //       `$"<p>{2 + 3}</p>"`,
+  //       ParseStatus.valid,
+  //       `$"<p>{2 + 3}</p>"`,
+  //       "",
+  //       `$"<p>{2 + 3}</p>"`,
+  //       `$"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
+  //       `$"<p>{2 + 3}</p>"`,
+  //     );
+  //     // In other langs
+  //     testNodeParse(
+  //       new LitStringOrdinary(fileWithPython()),
+  //       `"<p>abc</p>"`,
+  //       ParseStatus.valid,
+  //       `"<p>abc</p>"`,
+  //       "",
+  //       `"<p>abc</p>"`,
+  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+  //       `"<p>abc</p>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringOrdinary(fileWithVB()),
+  //       `"<p>abc</p>"`,
+  //       ParseStatus.valid,
+  //       `"<p>abc</p>"`,
+  //       "",
+  //       `"<p>abc</p>"`,
+  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+  //       `"<p>abc</p>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringOrdinary(fileWithCS()),
+  //       `"<p>abc</p>"`,
+  //       ParseStatus.valid,
+  //       `"<p>abc</p>"`,
+  //       "",
+  //       `"<p>abc</p>"`,
+  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+  //       `"<p>abc</p>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringOrdinary(fileWithJava()),
+  //       `"<p>abc</p>"`,
+  //       ParseStatus.valid,
+  //       `"<p>abc</p>"`,
+  //       "",
+  //       `"<p>abc</p>"`,
+  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+  //       `"<p>abc</p>"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringInterpolated(fileWithPython()),
+  //       `f"<p>{2 + 3}</p>"`,
+  //       ParseStatus.valid,
+  //       `f"<p>{2 + 3}</p>"`,
+  //       "",
+  //       `$"<p>{2 + 3}</p>"`,
+  //       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
+  //       `f"<p>{2 + 3}</p>"`,
+  //     );
+  //   });
+  //   test("Interpolated strings", () => {
+  //     testNodeParse(new LitString(f), `$""`, ParseStatus.valid, "", "");
+  //     testNodeParse(new LitString(f), `$"x"`, ParseStatus.valid, "", "");
+  //     testNodeParse(new LitString(f), `$" "`, ParseStatus.valid, "", "");
+  //     testNodeParse(new LitString(f), `$"{}"`, ParseStatus.invalid, "", "");
+  //     testNodeParse(new LitString(f), `$"{x}"`, ParseStatus.valid, "", "");
+  //     testNodeParse(new LitString(f), `$"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
+  //     testNodeParse(
+  //       new LitStringInterpolated(f),
+  //       `$"{curly}"`,
+  //       ParseStatus.valid,
+  //       `$"{curly}"`,
+  //       "",
+  //       `$"{curly}"`,
+  //       `$"{<el-id>curly</el-id>}"`,
+  //     );
+  //     testNodeParse(
+  //       new LitStringInterpolated(f), // but with braces
+  //       `$"&#123;curly braces&#125;"`,
+  //       ParseStatus.valid,
+  //       `$"&#123;curly braces&#125;"`,
+  //       "",
+  //       `$"&#123;curly braces&#125;"`,
+  //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+  //     );
+  //   });
+  //   test("Bug #290", () => {
+  //     testNodeParse(new LitInt(f), `3`, ParseStatus.valid, "3", "");
+  //     testNodeParse(new LitInt(f), `3 `, ParseStatus.valid, "3", " ");
+
+  //     testNodeParse(new LitValueNode(f), `3 `, ParseStatus.valid, "3", " ");
+  //     testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+
+  //     testNodeParse(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+  //   });
+
+  //   test("InstanceProcRef", () => {
+  //     testNodeParse(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
+  //     testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
+  //     testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
+  //     testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", ""); //As that would be picked up by ThisProcRef
+  //   });
+  //   test("ThisProcRef", () => {
+  //     testNodeParse(new ThisProcRef(f), `this.bar`, ParseStatus.valid, "", "");
+  //   });
+  //   test("ProcRefNode", () => {
+  //     testNodeParse(new ProcRefNode(f), `foo`, ParseStatus.valid, "", "");
+  //     testNodeParse(new ProcRefNode(f), `bar.foo`, ParseStatus.valid, "", "");
+  //     testNodeParse(new ProcRefNode(f), `this.foo`, ParseStatus.valid, "", "");
+  //     testNodeParse(new ProcRefNode(f), `this.foo.bar`, ParseStatus.valid, "", ".bar");
+  //   });
+  //   // test("#339 call dot function on a literal", () => {
+  //   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `bar.length()`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `bar.asList()`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
+  //   //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
+  //   // });
+
+  //   test("#670 new parse node structure for terms & expressions", () => {
+  //     testNodeParse(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
+  //     testNodeParse(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
+  //     testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, "this", "");
+  //     testNodeParse(new TermSimple(f), `abc(defg, hi)`, ParseStatus.valid, "abc(defg, hi)", "");
+  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
+  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
+  //     // testNodeParse(
+  //     //   new TermSimpleWithOptIndex(f),
+  //     //   `abc.subList(1, 2)`,
+  //     //   ParseStatus.valid,
+  //     //   "abc.subList(1, 2)",
+  //     //   "",
+  //     // );
+  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc", "[1, 2]");
+  //     testNodeParse(
+  //       new TermSimpleWithOptIndex(f),
+  //       `abc(defg, hi)[0]`,
+  //       ParseStatus.valid,
+  //       "abc(defg, hi)[0]",
+  //       "",
+  //     );
+  //     testNodeParse(new ExprNode(f), `(defg, hi)`, ParseStatus.valid, "(defg, hi)", ""); // tuple
+  //     testNodeParse(new TermSimple(f), `[defg, hi]`, ParseStatus.valid, "[defg, hi]", "");
+  //     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
+  //     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
+  //     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
+  //     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
+  //     testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, `this`, "");
+  //     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
+  //     testNodeParse(new TermSimple(f), `a`, ParseStatus.valid, `a`, "");
+  //     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
+  //     testNodeParse(new DotAfter(f, new TermSimple(f)), `.a`, ParseStatus.invalid, ``, ".a");
+  //     testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
+  //     testNodeParse(
+  //       new TermChained(f),
+  //       `a[1].b().subList(1, 2).c(d)[e][f]`,
+  //       ParseStatus.valid,
+  //       `a[1].b().subList(1, 2).c(d)[e][f]`,
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new TermChained(f),
+  //       `this.a[1].b().c(d)[e]`,
+  //       ParseStatus.valid,
+  //       `this.a[1].b().c(d)[e]`,
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new TermChained(f),
+  //       `this.a.b()`,
+  //       ParseStatus.valid,
+  //       `this.a.b()`,
+  //       "",
+  //       "this.a.b()",
+  //       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
+  //       ParseStatus.valid,
+  //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       `this.a[1].b().c(d)[e]`,
+  //       ParseStatus.valid,
+  //       `this.a[1].b().c(d)[e]`,
+  //       "",
+  //     );
+  //     testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref`, " foo");
+  //     testNodeParse(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
+  //   });
+  //   test("OperatorAmbiguity#728", () => {
+  //     //Test operations
+  //     testNodeParse(new BinaryOperation(f), ``, ParseStatus.empty, "", "", "", "");
+  //     testNodeParse(new BinaryOperation(f), ` `, ParseStatus.incomplete, " ", "", " ", " ");
+  //     testNodeParse(new BinaryOperation(f), `+`, ParseStatus.valid, "+", "", " + ", " + ");
+  //     testNodeParse(new BinaryOperation(f), ` +`, ParseStatus.valid, " +", "", " + ", " + ");
+  //     testNodeParse(new BinaryOperation(f), ` + `, ParseStatus.valid, " + ", "", " + ", " + ");
+  //     testNodeParse(new BinaryOperation(f), `*`, ParseStatus.valid, "*", "", "*", "*");
+  //     testNodeParse(new BinaryOperation(f), ` *`, ParseStatus.valid, " *", "", "*", "*");
+  //     testNodeParse(new BinaryOperation(f), ` * `, ParseStatus.valid, " * ", "", "*", "*");
+  //     testNodeParse(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " &gt;= ");
+  //     testNodeParse(new BinaryOperation(f), ` >=`, ParseStatus.valid, " >=", "", " >= ", " &gt;= ");
+  //     testNodeParse(new BinaryOperation(f), ` >= `, ParseStatus.valid, " >= ", "", " >= ", " &gt;= ");
+  //     testNodeParse(new BinaryOperation(f), `>`, ParseStatus.valid, ">", "", " > ", " &gt; ");
+  //     testNodeParse(new BinaryOperation(f), ` >`, ParseStatus.valid, " >", "", " > ", " &gt; ");
+  //     testNodeParse(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " &gt; ");
+  //     testNodeParse(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " &gt; ");
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       `is`,
+  //       ParseStatus.valid,
+  //       "is",
+  //       "",
+  //       " is ",
+  //       "<el-kw> is </el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       `is `,
+  //       ParseStatus.valid,
+  //       "is ",
+  //       "",
+  //       " is ",
+  //       "<el-kw> is </el-kw>",
+  //     );
+  //     testNodeParse(new BinaryOperation(f), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       `isnt`,
+  //       ParseStatus.valid,
+  //       "isnt",
+  //       "",
+  //       " isnt ",
+  //       "<el-kw> isnt </el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       ` and `,
+  //       ParseStatus.valid,
+  //       " and ",
+  //       "",
+  //       " and ",
+  //       "<el-kw> and </el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       `and`,
+  //       ParseStatus.valid,
+  //       "and",
+  //       "",
+  //       " and ",
+  //       "<el-kw> and </el-kw>",
+  //     );
+  //     testNodeParse(
+  //       new BinaryOperation(f),
+  //       `anda`,
+  //       ParseStatus.valid,
+  //       "and",
+  //       "a",
+  //       " and ",
+  //       "<el-kw> and </el-kw>",
+  //     );
+
+  //     testNodeParse(new BinaryOperation(f), `an`, ParseStatus.incomplete, "an", "", "an", "an");
+  //     testNodeParse(new BinaryOperation(f), `not`, ParseStatus.invalid, "", "not", "", "");
+
+  //     //test expressions
+  //     testNodeParse(
+  //       new BinaryExpression(f),
+  //       `true and false`,
+  //       ParseStatus.valid,
+  //       `true and false`,
+  //       "",
+  //       "",
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(f),
+  //       `"a"+  "b"`,
+  //       ParseStatus.valid,
+  //       `"a"+  "b"`,
+  //       "",
+  //       `"a" + "b"`,
+  //     );
+  //     testNodeParse(new BinaryExpression(f), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3+");
+  //     testNodeParse(new BinaryExpression(f), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 +");
+  //     testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
+  //     testNodeParse(
+  //       new BinaryExpression(f),
+  //       `3+4`,
+  //       ParseStatus.valid,
+  //       "3+4",
+  //       "",
+  //       "3 + 4",
+  //       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(f),
+  //       `3>=4`,
+  //       ParseStatus.valid,
+  //       "3>=4",
+  //       "",
+  //       "3 >= 4",
+  //       "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
+  //     );
+  //     testNodeParse(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3 > ");
+  //     testNodeParse(new BinaryExpression(f), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
+  //     testNodeParse(new BinaryExpression(f), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
+  //     testNodeParse(new BinaryExpression(f), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
+  //     testNodeParse(new BinaryExpression(f), `3 > 4`, ParseStatus.valid, "3 > 4", "", "3 > 4");
+  //     testNodeParse(new BinaryExpression(f), `3>=`, ParseStatus.incomplete, "3>=", "", "3 >= ");
+  //     testNodeParse(new BinaryExpression(f), `3>=4`, ParseStatus.valid, "3>=4", "", "3 >= 4");
+  //     testNodeParse(
+  //       new BinaryExpression(f),
+  //       `3 is 4`,
+  //       ParseStatus.valid,
+  //       "3 is 4",
+  //       "",
+  //       "3 is 4",
+  //       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
+  //     );
+  //   });
+  //   test("BinaryExpression_Python", () => {
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithPython()),
+  //       `10 % 3`,
+  //       ParseStatus.valid,
+  //       `10 % 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+  //       `10 % 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithPython()),
+  //       `10 == 3`,
+  //       ParseStatus.valid,
+  //       `10 == 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> == <el-lit>3</el-lit>",
+  //       `10 == 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithPython()),
+  //       `10 != 3`,
+  //       ParseStatus.valid,
+  //       `10 != 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+  //       `10 != 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithPython()),
+  //       `a and b`,
+  //       ParseStatus.valid,
+  //       `a and b`,
+  //       "",
+  //       "",
+  //       "<el-id>a</el-id><el-kw> and </el-kw><el-id>b</el-id>",
+  //       `a and b`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithPython()),
+  //       `a or b`,
+  //       ParseStatus.valid,
+  //       `a or b`,
+  //       "",
+  //       "",
+  //       "<el-id>a</el-id><el-kw> or </el-kw><el-id>b</el-id>",
+  //       `a or b`,
+  //     );
+  //   });
+  //   test("BinaryExpression_VB", () => {
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithVB()),
+  //       `10 Mod 3`,
+  //       ParseStatus.valid,
+  //       `10 Mod 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit><el-kw> Mod </el-kw><el-lit>3</el-lit>",
+  //       `10 Mod 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithVB()),
+  //       `10 = 3`,
+  //       ParseStatus.valid,
+  //       `10 = 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> = <el-lit>3</el-lit>",
+  //       `10 = 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithVB()),
+  //       `10 <> 3`,
+  //       ParseStatus.valid,
+  //       `10 <> 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> &lt;&gt; <el-lit>3</el-lit>",
+  //       `10 <> 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithVB()),
+  //       `a And b`,
+  //       ParseStatus.valid,
+  //       `a And b`,
+  //       "",
+  //       "",
+  //       "<el-id>a</el-id><el-kw> And </el-kw><el-id>b</el-id>",
+  //       `a And b`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithVB()),
+  //       `a Or b`,
+  //       ParseStatus.valid,
+  //       `a Or b`,
+  //       "",
+  //       "",
+  //       "<el-id>a</el-id><el-kw> Or </el-kw><el-id>b</el-id>",
+  //       `a Or b`,
+  //     );
+  //   });
+  //   test("BinaryExpression_C#", () => {
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithCS()),
+  //       `10 % 3`,
+  //       ParseStatus.valid,
+  //       `10 % 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+  //       `10 % 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithCS()),
+  //       `10 % 3`,
+  //       ParseStatus.valid,
+  //       `10 % 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+  //       `10 % 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithCS()),
+  //       `10 != 3`,
+  //       ParseStatus.valid,
+  //       `10 != 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+  //       `10 != 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithCS()),
+  //       `10 && 3`,
+  //       ParseStatus.valid,
+  //       `10 && 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
+  //       `10 && 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithCS()),
+  //       `10 || 3`,
+  //       ParseStatus.valid,
+  //       `10 || 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> || <el-lit>3</el-lit>",
+  //       `10 || 3`,
+  //     );
+  //   });
+  //   test("BinaryExpression_Java", () => {
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithJava()),
+  //       `10 % 3`,
+  //       ParseStatus.valid,
+  //       `10 % 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+  //       `10 % 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithJava()),
+  //       `10 % 3`,
+  //       ParseStatus.valid,
+  //       `10 % 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
+  //       `10 % 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithJava()),
+  //       `10 != 3`,
+  //       ParseStatus.valid,
+  //       `10 != 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
+  //       `10 != 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithJava()),
+  //       `10 && 3`,
+  //       ParseStatus.valid,
+  //       `10 && 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
+  //       `10 && 3`,
+  //     );
+  //     testNodeParse(
+  //       new BinaryExpression(fileWithJava()),
+  //       `10 || 3`,
+  //       ParseStatus.valid,
+  //       `10 || 3`,
+  //       "",
+  //       "",
+  //       "<el-lit>10</el-lit> || <el-lit>3</el-lit>",
+  //       `10 || 3`,
+  //     );
+  //   });
+  //   test("RevisedParseMethodForAbstractSequence#857", () => {
+  //     testActiveNodeAndDone(new test_seq1(f), `foo 45`, ParseStatus.valid, LitInt.name, false);
+  //     testActiveNodeAndDone(new test_seq1(f), `foo `, ParseStatus.incomplete, LitInt.name, false);
+  //     testActiveNodeAndDone(new test_seq1(f), `foo`, ParseStatus.incomplete, SpaceNode.name, false);
+  //     testActiveNodeAndDone(new test_seq2(f), `3.1 end`, ParseStatus.valid, KeywordNode.name, true);
+  //     testActiveNodeAndDone(
+  //       new test_seq2(f),
+  //       `3.1 en`,
+  //       ParseStatus.incomplete,
+  //       KeywordNode.name,
+  //       false,
+  //     );
+  //     testActiveNodeAndDone(
+  //       new LitFloat(f),
+  //       `3.`,
+  //       ParseStatus.incomplete,
+  //       RegExMatchNode.name,
+  //       false,
+  //     );
+  //     testActiveNodeAndDone(new LitFloat(f), `3.1`, ParseStatus.valid, RegExMatchNode.name, false);
+  //     testActiveNodeAndDone(
+  //       new test_seq2(f),
+  //       `3.1`,
+  //       ParseStatus.incomplete,
+  //       RegExMatchNode.name, //for exponent. Should technically still be the RegexMatchNode for fractional part
+  //       // since it could be extended. But unimportand as there is no symbol completion for any literal
+  //       false,
+  //     );
+  //     testActiveNodeAndDone(
+  //       new CSV(f, () => new LitInt(f), 2),
+  //       `12,34`,
+  //       ParseStatus.valid,
+  //       LitInt.name,
+  //       false,
+  //     );
+  //     testActiveNodeAndDone(
+  //       new CSV(f, () => new LitInt(f), 1),
+  //       `12`,
+  //       ParseStatus.valid,
+  //       LitInt.name,
+  //       false,
+  //     );
+  //     testActiveNodeAndDone(
+  //       new CSV(f, () => new LitInt(f), 1),
+  //       `12,`,
+  //       ParseStatus.incomplete,
+  //       LitInt.name,
+  //       false,
+  //     );
+  //   });
+  //   test("LitRegExp", () => {
+  //     testNodeParse(
+  //       new LitRegExp(f),
+  //       `/abc+.*/`,
+  //       ParseStatus.valid,
+  //       `/abc+.*/`,
+  //       "",
+  //       "/abc+.*/",
+  //       `/<el-regex>abc+.*</el-regex>/`,
+  //     );
+  //   });
+  //   test("LitRegExp with flags", () => {
+  //     testNodeParse(
+  //       new LitRegExp(f),
+  //       `/abc+.*/gm`,
+  //       ParseStatus.valid,
+  //       `/abc+.*/gm`,
+  //       "",
+  //       "/abc+.*/gm",
+  //       `/<el-regex>abc+.*</el-regex>/<el-regex>gm</el-regex>`,
+  //     );
+  //   });
+  //   test("LitRegExp with invalid flags", () => {
+  //     testNodeParse(
+  //       new LitRegExp(f),
+  //       `/abc+.*/x`,
+  //       ParseStatus.valid,
+  //       `/abc+.*/`,
+  //       "x",
+  //       "/abc+.*/",
+  //       `/<el-regex>abc+.*</el-regex>/`,
+  //     );
+  //   });
+  //   test("not(a+b)", () => {
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       `not (a+b)`,
+  //       ParseStatus.valid,
+  //       `not (a+b)`,
+  //       "",
+  //       "not (a + b)",
+  //       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
+  //     );
+  //     testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
+  //     testNodeParse(new ExprNode(f), `not (a+b)`, ParseStatus.valid, `not (a+b)`, "", "", ``);
+  //   });
+  //   test("Parse list of list of floats", () => {
+  //     testNodeParse(
+  //       new ExprNode(f),
+  //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
+  //       ParseStatus.valid,
+  //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
+  //       "",
+  //     );
+  //   });
+  //   test("Parse list of floats 2", () => {
+  //     testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
+  //   });
+
+  //   ignore_test("Six open brackets", () => {
+  //     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
+  //   });
+  //   test("Image", () => {
+  //     testNodeParse(
+  //       new RegExMatchNode(f, Regexes.url),
+  //       "http://website.com/images/image1.png",
+  //       ParseStatus.valid,
+  //       "http://website.com/images/image1.png",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("UnaryExpression_VB", () => {
+  //     testNodeParse(
+  //       new UnaryExpression(fileWithVB()),
+  //       `Not a`,
+  //       ParseStatus.valid,
+  //       `Not a`,
+  //       "",
+  //       "",
+  //       "<el-kw>Not</el-kw> <el-id>a</el-id>",
+  //       `Not a`,
+  //     );
+  //     testNodeParse(
+  //       new UnaryExpression(fileWithVB()),
+  //       `N`,
+  //       ParseStatus.incomplete,
+  //       `N`,
+  //       "",
+  //       "",
+  //       "N",
+  //       ``,
+  //     );
+  //     testNodeParse(
+  //       new ExprNode(fileWithVB()),
+  //       `Not a`,
+  //       ParseStatus.valid,
+  //       `Not a`,
+  //       "",
+  //       "",
+  //       "<el-kw>Not</el-kw> <el-id>a</el-id>",
+  //       `Not a`,
+  //     );
+  //   });
+  //   test("TypeTupleNode", () => {
+  //     testNodeParse(
+  //       new TypeTupleNode(f),
+  //       "(Int, String)",
+  //       ParseStatus.valid,
+  //       "(Int, String)",
+  //       "",
+  //       "(Int, String)",
+  //       "(<el-type>Int</el-type>, <el-type>String</el-type>)",
+  //       "(Int, String)",
+  //     );
+  //     testNodeParse(
+  //       new TypeTupleNode(fileWithPython()),
+  //       "tuple[int, str]",
+  //       ParseStatus.valid,
+  //       "tuple[int, str]",
+  //       "",
+  //       "",
+  //       "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+  //       "tuple[int, str]",
+  //     );
+  //     testNodeParse(
+  //       new TypeNode(fileWithPython()),
+  //       "tuple[int, str]",
+  //       ParseStatus.valid,
+  //       "tuple[int, str]",
+  //       "",
+  //       "",
+  //       "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
+  //       "tuple[int, str]",
+  //     );
+  //     testNodeParse(
+  //       new TypeTupleNode(fileWithVB()),
+  //       "(Integer, String)",
+  //       ParseStatus.valid,
+  //       "(Integer, String)",
+  //       "",
+  //       "",
+  //       "(<el-type>Integer</el-type>, <el-type>String</el-type>)",
+  //       "(Integer, String)",
+  //     );
+  //     testNodeParse(
+  //       new TypeTupleNode(fileWithCS()),
+  //       "(int, string)",
+  //       ParseStatus.valid,
+  //       "(int, string)",
+  //       "",
+  //       "",
+  //       "(<el-type>int</el-type>, <el-type>string</el-type>)",
+  //       "(int, string)",
+  //     );
+  //     testNodeParse(
+  //       new TypeTupleNode(fileWithJava()),
+  //       "(int, String)",
+  //       ParseStatus.valid,
+  //       "(int, String)",
+  //       "",
+  //       "",
+  //       "(<el-type>int</el-type>, <el-type>String</el-type>)",
+  //       "(int, String)",
+  //     );
+  //   });
+  //   test("LitStringInterpolated", () => {
+  //     testNodeParse(
+  //       new LitStringInterpolated(f),
+  //       `$"{a} plus {b} equals {a + b}"`,
+  //       ParseStatus.valid,
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       "",
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       "",
+  //       '$"{a} plus {b} equals {a + b}"',
+  //     );
+  //   });
+  //   test("CSV expression", () => {
+  //     return testNodeParse(
+  //       new CSV(fileWithJava(), () => new ExprNode(f), 3),
+  //       `a, b, a + b)`,
+  //       ParseStatus.valid,
+  //       "a, b, a + b",
+  //       ")",
+  //       "a, b, a + b",
+  //       "",
+  //       "a, b, a + b",
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java1", () => {
+  //     return testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("%", a)`,
+  //       ParseStatus.valid,
+  //       '$"{a}"',
+  //       "",
+  //       '$"{a}"',
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java2", () => {
+  //     return testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("%", 1)`,
+  //       ParseStatus.valid,
+  //       '$"{1}"',
+  //       "",
+  //       '$"{1}"',
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java3", () => {
+  //     return testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("% plus % equals %", a, b, a + b)`,
+  //       ParseStatus.valid,
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       "",
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       '<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>%<el-lit> plus </el-lit>%<el-lit> equals </el-lit>%</el-lit>", <el-id>a</el-id>, <el-id>b</el-id>, <el-id>a</el-id> + <el-id>b</el-id>)',
+  //       'String.format("% plus % equals %", a, b, a + b)',
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java4", () => {
+  //     testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("max %, % equals %", a, b, max(a, b))`,
+  //       ParseStatus.valid,
+  //       '$"max {a}, {b} equals {max(a, b)}"',
+  //       "",
+  //       '$"max {a}, {b} equals {max(a, b)}"',
+  //       "",
+  //       `String.format("max %, % equals %", a, b, max(a, b))`,
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java5", () => {
+  //     testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("result % %", 50)`,
+  //       ParseStatus.invalid,
+  //       "",
+  //       `String.format("result % %", 50)`,
+  //       "",
+  //       "",
+  //     );
+  //   });
+  //   test("LitStringInterpolated_in_Java6", () => {
+  //     testNodeParse(
+  //       new LitStringInterpolated(fileWithJava()),
+  //       `String.format("result % %", 50, percent)`,
+  //       ParseStatus.valid,
+  //       '$"result {50} {percent}"',
+  //       "",
+  //       "",
+  //       "",
+  //       'String.format("result % %", 50, percent)',
+  //     );
+  //   });
+  //   test("List", () => {
+  //     testNodeParse(
+  //       new ListNode(f, () => new LitInt(f)),
+  //       `[1, 2, 3]`,
+  //       ParseStatus.valid,
+  //       `[1, 2, 3]`,
+  //       "",
+  //       `[1, 2, 3]`,
+  //       `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
+  //       `[1, 2, 3]`,
+  //     );
+  //   });
+  //   test("List incomplete", () => {
+  //     testNodeParse(
+  //       new ListNode(f, () => new LitInt(f)),
+  //       `[`,
+  //       ParseStatus.incomplete,
+  //       `[`,
+  //       "",
+  //       `[`,
+  //       "[",
+  //       `[`,
+  //     );
+  //   });
+  //   test("List incomplete VB", () => {
+  //     testNodeParse(
+  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+  //       `{`,
+  //       ParseStatus.incomplete,
+  //       `{`,
+  //       "",
+  //       ``,
+  //       "{",
+  //       `{`,
+  //     );
+  //   });
+  //   test("List incomplete VB 2", () => {
+  //     testNodeParse(
+  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+  //       `{1, 2`,
+  //       ParseStatus.incomplete,
+  //       `{1, 2`,
+  //       "",
+  //       `{1, 2`,
+  //       `{1, 2`,
+  //       `{1, 2`,
+  //     );
+  //   });
+  //   test("List complete VB", () => {
+  //     testNodeParse(
+  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
+  //       `{1, 2, 3}`,
+  //       ParseStatus.valid,
+  //       `{1, 2, 3}`,
+  //       "",
+  //       `[1, 2, 3]`,
+  //       "{<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}",
+  //       `{1, 2, 3}`,
+  //     );
+  //   });
+  //   test("LitStringOrdinary VB", () => {
+  //     testNodeParse(
+  //       new LitStringOrdinary(fileWithVB()),
+  //       `"`,
+  //       ParseStatus.incomplete,
+  //       `"`,
+  //       "",
+  //       `"`,
+  //       `"`,
+  //       '"',
+  //     );
+  //   });
+  //   test("ParamDef VB", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithVB()),
+  //       `a As Integer`,
+  //       ParseStatus.valid,
+  //       `a As Integer`,
+  //       "",
+  //       `a as Int`,
+  //       "<el-id>a</el-id><el-kw> As </el-kw><el-type>Integer</el-type>",
+  //       `a As Integer`,
+  //     );
+  //   });
+  //   test("ParamDef VB incomplete", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithVB()),
+  //       `a A`,
+  //       ParseStatus.incomplete,
+  //       `a A`,
+  //       "",
+  //       `a A`,
+  //       `<el-id>a</el-id><el-kw> As </el-kw>`,
+  //       `a A`,
+  //     );
+  //   });
+  //   test("ParamDef C# valid", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithCS()),
+  //       `List<int> a`,
+  //       ParseStatus.valid,
+  //       `List<int> a`,
+  //       "",
+  //       `a as List<of Int>`,
+  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; <el-id>a</el-id>`,
+  //       `List<int> a`,
+  //     );
+  //   });
+  //   test("ParamDef C# incomplete 1", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithCS()),
+  //       `List<int>`,
+  //       ParseStatus.incomplete,
+  //       `List<int>`,
+  //       "",
+  //       `List<int>`,
+  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
+  //       `List<int>`,
+  //     );
+  //   });
+  //   test("ParamDef C# incomplete 2", () => {
+  //     testNodeParse(
+  //       new ParamDefNode(fileWithCS()),
+  //       `List<int> `,
+  //       ParseStatus.incomplete,
+  //       `List<int> `,
+  //       "",
+  //       `List<int> `,
+  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
+  //       `List<int> `,
+  //     );
+  //   });
+  //   test("Type VB", () => {
+  //     testNodeParse(
+  //       new TypeNode(fileWithVB()),
+  //       `Integer`,
+  //       ParseStatus.valid,
+  //       `Integer`,
+  //       "",
+  //       `Int`,
+  //       "<el-type>Integer</el-type>",
+  //       `Integer`,
+  //     );
+  //   });
+  //   test("Type VB2", () => {
+  //     testNodeParse(
+  //       new TypeNode(fileWithVB()),
+  //       `Inte`,
+  //       ParseStatus.valid,
+  //       `Inte`,
+  //       "",
+  //       `Inte`,
+  //       "<el-type>Inte</el-type>",
+  //       `Inte`,
+  //     );
+  //   });
+  //   test("Type incomplete Elan", () => {
+  //     testNodeParse(
+  //       new TypeSimpleName(f),
+  //       `Inte`,
+  //       ParseStatus.valid,
+  //       `Inte`,
+  //       "",
+  //       `Inte`,
+  //       "<el-type>Inte</el-type>",
+  //       `Inte`,
+  //     );
+  //   });
+  //   test("ParamList VB", () => {
+  //     testNodeParse(
+  //       new ParamListNode(fileWithVB()),
+  //       `a As Integer, b As Integer`,
+  //       ParseStatus.valid,
+  //       `a As Integer, b As Integer`,
+  //       "",
+  //       `a as Int, b as Int`,
+  //       "",
+  //       `a As Integer, b As Integer`,
+  //     );
+  //   });
+  //   test("ParamList VB incomplete", () => {
+  //     testNodeParse(
+  //       new ParamListNode(fileWithVB()),
+  //       `a As Integer, b`,
+  //       ParseStatus.incomplete,
+  //       `a As Integer, b`,
+  //       "",
+  //       `a as Int, b`,
+  //       "",
+  //       `a As Integer, b`,
+  //     );
+  //   });
+  //   test("ParamList VB incomplete 2", () => {
+  //     testNodeParse(
+  //       new ParamListNode(fileWithVB()),
+  //       `a As Integer, b A`,
+  //       ParseStatus.incomplete,
+  //       `a As Integer, b A`,
+  //       "",
+  //       `a as Int, b A`,
+  //       "",
+  //       `a As Integer, b A`,
+  //     );
+  //   });
+
+  //   test("LitBoolean", () => {
+  //     testNodeParse(
+  //       new LitBoolean(f),
+  //       `true`,
+  //       ParseStatus.valid,
+  //       `true`,
+  //       "",
+  //       `true`,
+  //       "<el-kw>true</el-kw>",
+  //       `true`,
+  //     );
+  //   });
+  //   test("LitBoolean - case insensitive", () => {
+  //     testNodeParse(
+  //       new LitBoolean(f),
+  //       `True`,
+  //       ParseStatus.valid,
+  //       `True`,
+  //       "",
+  //       `true`,
+  //       "<el-kw>true</el-kw>",
+  //       `true`,
+  //     );
+  //   });
+  //   test("LitBoolean - case insensitive VB", () => {
+  //     testNodeParse(
+  //       new LitBoolean(fileWithVB()),
+  //       `true`,
+  //       ParseStatus.valid,
+  //       `true`,
+  //       "",
+  //       `true`,
+  //       "<el-kw>True</el-kw>",
+  //       `True`,
+  //     );
+  //   });
+  //   test("Expr - i in type C#  - #2737", () => {
+  //     testNodeParse(
+  //       new TypeSimpleName(fileWithCS()),
+  //       `i`,
+  //       ParseStatus.incomplete,
+  //       `i`,
+  //       "",
+  //       `i`,
+  //       "<el-type>i</el-type>",
+  //       `i`,
+  //     );
+  //     testNodeParse(new TypeSimpleName(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
+  //     testNodeParse(
+  //       new TypeSimpleName(fileWithCS()),
+  //       `int`,
+  //       ParseStatus.valid,
+  //       `int`,
+  //       "",
+  //       `Int`,
+  //       "<el-type>int</el-type>",
+  //       `int`,
+  //     );
+  //   });
+  //   test("ThisInstance", () => {
+  //     testNodeParse(
+  //       new ThisInstance(f),
+  //       `this`,
+  //       ParseStatus.valid,
+  //       `this`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>this</el-kw>",
+  //       `this`,
+  //     );
+  //     testNodeParse(
+  //       new ThisInstance(f),
+  //       `This`,
+  //       ParseStatus.valid,
+  //       `this`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>this</el-kw>",
+  //       `this`,
+  //     );
+  //     testNodeParse(new ThisInstance(f), `th`, ParseStatus.incomplete, `th`, "", `th`, "th", `th`);
+  //     testNodeParse(new ThisInstance(f), `Th`, ParseStatus.incomplete, `Th`, "", `Th`, "Th", `Th`);
+  //     testNodeParse(
+  //       new ThisInstance(fileWithPython()),
+  //       `self`,
+  //       ParseStatus.valid,
+  //       `self`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>self</el-kw>",
+  //       `self`,
+  //     );
+  //     testNodeParse(
+  //       new ThisInstance(fileWithVB()),
+  //       `Me`,
+  //       ParseStatus.valid,
+  //       `Me`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>Me</el-kw>",
+  //       `Me`,
+  //     );
+  //     testNodeParse(
+  //       new ThisInstance(fileWithVB()),
+  //       `me`,
+  //       ParseStatus.valid,
+  //       `Me`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>Me</el-kw>",
+  //       `Me`,
+  //     );
+  //     testNodeParse(
+  //       new ThisInstance(fileWithCS()),
+  //       `this`,
+  //       ParseStatus.valid,
+  //       `this`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>this</el-kw>",
+  //       `this`,
+  //     );
+  //     testNodeParse(
+  //       new ThisInstance(fileWithJava()),
+  //       `this`,
+  //       ParseStatus.valid,
+  //       `this`,
+  //       "",
+  //       `this`,
+  //       "<el-kw>this</el-kw>",
+  //       `this`,
+  //     );
+  //   });
+});
+
+// class test_seq1 extends AbstractSequence {
+//   parseText(text: string): void {
+//     this.addElement(new KeywordNode(this.file, "foo"));
+//     this.addElement(new SpaceNode(this.file, Space.required));
+//     this.addElement(new LitInt(this.file));
+//     super.parseText(text);
+//   }
+// }
+
+// class test_seq2 extends AbstractSequence {
+//   parseText(text: string): void {
+//     this.addElement(new LitFloat(this.file));
+//     this.addElement(new SpaceNode(this.file, Space.required));
+//     this.addElement(new KeywordNode(this.file, "end"));
+//     super.parseText(text);
+//   }
+// }
