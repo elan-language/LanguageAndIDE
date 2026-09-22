@@ -162,7 +162,7 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   "CommentField",
   "_comment",
   false,
-  true,
+  false,
   (parser: PythonParser | RefLangParser) => parser.commentText(),
   (source: CodeSource) => source.readToEndOfLine(),
   "", //TODO: needs to start with the comment marker for the language

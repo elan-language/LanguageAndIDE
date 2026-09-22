@@ -31,13 +31,16 @@ suite("Field Parsing Tests", () => {
     const comment = new CommentFrame(main);
     const text = comment.textIncludingMarkerSymboAndSpace;
     assert.equal(text.textAsSource(), "");
+    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
+    text.setFieldToKnownValidText("#");
+    text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("# Hello");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      `<el-field id="elan_comment4" class="optional ok" tabindex="-1"><el-txt># Hello</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt># Hello</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
   test("parse CommentFieldWithSpaces", () => {
@@ -54,13 +57,13 @@ suite("Field Parsing Tests", () => {
     const comment = new CommentFrame(main);
     const text = comment.textIncludingMarkerSymboAndSpace;
     assert.equal(text.textAsSource(), "");
-    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
     text.setFieldToKnownValidText("#   Hello   World ");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
     assert.equal(
       text.renderAsHtml(),
-      '<el-field id="elan_comment4" class="optional ok" tabindex="-1"><el-txt># &nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt># &nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
   });
   test("parse varDefField", () => {

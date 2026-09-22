@@ -175,12 +175,12 @@ suite("Editing Fields Tests", () => {
     assert.equal(field.text, "# <p>");
     assert.equal(
       field.renderAsHtml(),
-      '<el-field id="elan_comment2" class="selected focused optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="5" data-cursorend="5" size="4" style="width: 5ch" value="# <p>" tabindex="-1"></el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_comment2" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="5" data-cursorend="5" size="4" style="width: 5ch" value="# <p>" tabindex="-1"></el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     field.processKey(tab());
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="elan_comment2" class="optional ok" tabindex="-1"><el-txt># &lt;p&gt;</el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      `<el-field id="elan_comment2" class="ok" tabindex="-1"><el-txt># &lt;p&gt;</el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
     );
   });
 
