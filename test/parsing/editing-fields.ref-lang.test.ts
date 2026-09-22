@@ -1,5 +1,6 @@
 import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
@@ -12,7 +13,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
-import { CommentFrame } from "../../src/ide/frames/comment-frame";
 
 suite("Editing Fields Tests", () => {
   test("Entry of text with formatting", () => {
@@ -34,11 +34,10 @@ suite("Editing Fields Tests", () => {
     expr.processKey(key(" "));
     assert.equal(expr.text, "3 ");
     assert.equal(expr.cursorPos, 2);
-    assert.equal(expr.getCompletion(), "<i>operator </i><i>value or expression</i>");
     expr.processKey(key("+"));
     assert.equal(expr.text, "3 +");
     assert.equal(expr.cursorPos, 3);
-    assert.equal(expr.getCompletion(), "<i>value or expression</i>");
+    assert.equal(expr.getCompletion(), "");
     expr.processKey(key("4"));
     assert.equal(expr.text, "3 + 4");
     assert.equal(expr.cursorPos, 5);

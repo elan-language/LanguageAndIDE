@@ -158,7 +158,7 @@ export const typeNameFieldSpec: FieldSpec = new FieldSpec(
 
 export const commentFieldSpec: FieldSpec = new FieldSpec(
   FieldType.comment,
-  "<i>comment</i>",
+  "# <i>comment</i>",
   "CommentField",
   "_comment",
   false,
@@ -384,9 +384,7 @@ export class AbstractField implements Selectable, Field {
   }
 
   getCompletion(): string {
-    return this.rootNode
-      ? this.rootNode.getSyntaxCompletionAsHtml()
-      : (this.fieldSpec?.placeholder ?? "");
+    return ""; // Syntax completion disabled by defaul, pending new, simpler approach #3491
   }
 
   getPlainTextCompletion(): string {
@@ -1234,7 +1232,7 @@ export class AbstractField implements Selectable, Field {
     } else {
       let parser: antlr.Parser;
       [parser, this.context] = this.parseByLanguage(text);
-      const parsed = this.context.getText().replaceAll(" ", "");
+      const parsed = this.context.getText().replaceAll(" ", ""); // ?
 
       if (parsed !== text.replaceAll(" ", "") || parser.numberOfSyntaxErrors > 0) {
         this.setParseStatus(ParseStatus.invalid);
