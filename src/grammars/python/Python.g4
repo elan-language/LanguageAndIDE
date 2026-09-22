@@ -5,7 +5,7 @@ grammar Python;
 import Python_Lexer;
 
 // START Elan2_Frames
-file: COMMENT? global* NL* EOF;
+file: comment? global* NL* EOF;
 
 // Globals
 global:

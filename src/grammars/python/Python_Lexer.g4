@@ -69,8 +69,6 @@ TUPLE: 'tuple';
 //END Python-specific tokens
 
 //START common token names; custom definitions
-COMMENT_MARKER: '#';
-
 INT_NAME: 'int';
 FLOAT_NAME: 'float';
 BOOL_NAME: 'bool';
@@ -97,10 +95,6 @@ THIS_INSTANCE: 'self';
 //END common token names; custom definitions
 
 //START Common token names; common definitions
-COMMENT:
-    COMMENT_MARKER ~('\r' | '\n')*
-; // In other langs, the casing may be different
-
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
 CLOSE_BRACE: '}';
@@ -142,22 +136,23 @@ TEXT: CommonCharacter+;
 
 GHOSTED: '[ghosted]';
 
-//annotations
-FUNCTION_ANNOTATION: COMMENT_MARKER 'function';
-PROCECDURE_ANNOTATION: COMMENT_MARKER 'procedure';
-CONSTANT_ANNOTATION: COMMENT_MARKER 'constant';
-ENUM_ANNOTATION: COMMENT_MARKER 'enum';
-CONCRETE_CLASS_ANNOTATION: COMMENT_MARKER 'concrete class';
-ABSTRACT_CLASS_ANNOTATION: COMMENT_MARKER 'abstract class';
-VARIABLE_ANNOTATION: COMMENT_MARKER 'variable definition';
-ASSIGNMENT_ANNOTATION: COMMENT_MARKER 'assignment';
-INPUT_ANNOTATION: COMMENT_MARKER 'input statement';
-CALL_ANNOTATION: COMMENT_MARKER 'procedure call';
-LET_ANNOTATION: COMMENT_MARKER 'let';
-ELSE_IF_ANNOTATION: COMMENT_MARKER 'else if';
-PROPERTY_ANNOTATION: COMMENT_MARKER 'property';
-FUNCTION_METHOD_ANNOTATION: COMMENT_MARKER 'function method';
-PROCEDURE_METHOD_ANNOTATION: COMMENT_MARKER 'procedure method';
+//comments & annotations
+FUNCTION_ANNOTATION: '# function';
+PROCECDURE_ANNOTATION: '# procedure';
+CONSTANT_ANNOTATION: '# constant';
+ENUM_ANNOTATION: '# enum';
+CONCRETE_CLASS_ANNOTATION: '# concrete class';
+ABSTRACT_CLASS_ANNOTATION: '# abstract class';
+VARIABLE_ANNOTATION: '# variable definition';
+ASSIGNMENT_ANNOTATION: '# assignment';
+INPUT_ANNOTATION: '# input statement';
+CALL_ANNOTATION: '# procedure call';
+LET_ANNOTATION: '# let';
+ELSE_IF_ANNOTATION: '# else if';
+PROPERTY_ANNOTATION: '# property';
+FUNCTION_METHOD_ANNOTATION: '# function method';
+PROCEDURE_METHOD_ANNOTATION: '# procedure method';
+COMMENT: '#' ~('\r' | '\n')*; 
 
 fragment InputCharacter: ~[\r\n\u0085];
 

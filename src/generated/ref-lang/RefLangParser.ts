@@ -135,7 +135,6 @@ export class RefLangParser extends antlr.Parser {
   public static readonly FUNCTION_METHOD_ANNOTATION = 122;
   public static readonly PROCEDURE_METHOD_ANNOTATION = 123;
   public static readonly COMMENT = 124;
-  public static readonly COMMENT_TEXT = 125;
   public static readonly RULE_file = 0;
   public static readonly RULE_global = 1;
   public static readonly RULE_main = 2;
@@ -465,7 +464,6 @@ export class RefLangParser extends antlr.Parser {
     "FUNCTION_METHOD_ANNOTATION",
     "PROCEDURE_METHOD_ANNOTATION",
     "COMMENT",
-    "COMMENT_TEXT",
   ];
   public static readonly ruleNames = [
     "file",
@@ -586,14 +584,14 @@ export class RefLangParser extends antlr.Parser {
       {
         this.state = 151;
         this.errorHandler.sync(this);
-        _la = this.tokenStream.LA(1);
-        if (_la === 125) {
-          {
-            this.state = 150;
-            this.match(RefLangParser.COMMENT_TEXT);
-          }
+        switch (this.interpreter.adaptivePredict(this.tokenStream, 0, this.context)) {
+          case 1:
+            {
+              this.state = 150;
+              this.comment();
+            }
+            break;
         }
-
         this.state = 156;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
@@ -4121,7 +4119,7 @@ export class RefLangParser extends antlr.Parser {
   }
 
   public static readonly _serializedATN: number[] = [
-    4, 1, 125, 882, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4, 2, 5, 7, 5, 2, 6, 7,
+    4, 1, 124, 882, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4, 2, 5, 7, 5, 2, 6, 7,
     6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7, 10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13,
     2, 14, 7, 14, 2, 15, 7, 15, 2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7,
     20, 2, 21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 2, 24, 7, 24, 2, 25, 7, 25, 2, 26, 7, 26, 2, 27,
@@ -4211,7 +4209,7 @@ export class RefLangParser extends antlr.Parser {
     764, 1, 0, 0, 0, 120, 772, 1, 0, 0, 0, 122, 776, 1, 0, 0, 0, 124, 779, 1, 0, 0, 0, 126, 783, 1,
     0, 0, 0, 128, 796, 1, 0, 0, 0, 130, 803, 1, 0, 0, 0, 132, 805, 1, 0, 0, 0, 134, 813, 1, 0, 0, 0,
     136, 817, 1, 0, 0, 0, 138, 830, 1, 0, 0, 0, 140, 845, 1, 0, 0, 0, 142, 855, 1, 0, 0, 0, 144,
-    863, 1, 0, 0, 0, 146, 874, 1, 0, 0, 0, 148, 877, 1, 0, 0, 0, 150, 152, 5, 125, 0, 0, 151, 150,
+    863, 1, 0, 0, 0, 146, 874, 1, 0, 0, 0, 148, 877, 1, 0, 0, 0, 150, 152, 3, 20, 10, 0, 151, 150,
     1, 0, 0, 0, 151, 152, 1, 0, 0, 0, 152, 156, 1, 0, 0, 0, 153, 155, 3, 2, 1, 0, 154, 153, 1, 0, 0,
     0, 155, 158, 1, 0, 0, 0, 156, 154, 1, 0, 0, 0, 156, 157, 1, 0, 0, 0, 157, 162, 1, 0, 0, 0, 158,
     156, 1, 0, 0, 0, 159, 161, 5, 97, 0, 0, 160, 159, 1, 0, 0, 0, 161, 164, 1, 0, 0, 0, 162, 160, 1,
@@ -4454,8 +4452,8 @@ export class FileContext extends antlr.ParserRuleContext {
   public EOF(): antlr.TerminalNode {
     return this.getToken(RefLangParser.EOF, 0)!;
   }
-  public COMMENT_TEXT(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.COMMENT_TEXT, 0);
+  public comment(): CommentContext | null {
+    return this.getRuleContext(0, CommentContext);
   }
   public global(): GlobalContext[];
   public global(i: number): GlobalContext | null;
