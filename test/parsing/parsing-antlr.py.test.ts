@@ -297,15 +297,15 @@ suite("Parsing Antlr Rules Python", () => {
       "1.1e-5",
       "<el-lit>1.1e-5</el-lit>",
     );
-    // testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
-    // testAntlrParse(
-    //   getLitFloatRule(),
-    //   "1.1E-5",
-    //   true,
-    //   "1.1E-5",
-    //   "1.1E-5",
-    //   "<el-lit>1.1E-5</el-lit>",
-    //);
+    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
+    testAntlrParse(
+      getLitFloatRule(),
+      "1.1E-5",
+      true,
+      "1.1E-5",
+      "1.1E-5",
+      "<el-lit>1.1E-5</el-lit>",
+    );
   });
   //   test("Keyword", () => {
   //     testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");

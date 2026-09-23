@@ -293,16 +293,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "1.1e-5",
       "<el-lit>1.1e-5</el-lit>",
     );
-    // Cap E not in the accepted text for some reason
-    // testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
-    // testAntlrParse(
-    //   getLitFloatRule(),
-    //   "1.1E-5",
-    //   true,
-    //   "1.1E-5",
-    //   "1.1E-5",
-    //   "<el-lit>1.1E-5</el-lit>",
-    // );
+    //Cap E not in the accepted text for some reason
+    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
+    testAntlrParse(
+      getLitFloatRule(),
+      "1.1E-5",
+      true,
+      "1.1E-5",
+      "1.1E-5",
+      "<el-lit>1.1E-5</el-lit>",
+    );
   });
   //   test("Keyword", () => {
   //     testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
