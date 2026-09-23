@@ -3,6 +3,7 @@ import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   CommentTextContext,
   IdentifierContext,
+  LitFloatContext,
   LitIntContext,
   ParamDefContext,
   ParamsListContext,
@@ -67,4 +68,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
 
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
+
+  visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
 }

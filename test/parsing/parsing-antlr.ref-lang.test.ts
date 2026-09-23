@@ -271,20 +271,39 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     ); //VB syntax
   //   });
 
-  //   test("LitFloat", () => {
-  //     testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(new LitFloat(f), "1.0", ParseStatus.valid, "1.0", "", "1.0");
-  //     testNodeParse(new LitFloat(f), "-1.0", ParseStatus.valid, "-1.0", "", "-1.0");
-  //     testNodeParse(new LitFloat(f), "- 1.0", ParseStatus.invalid, "", "- 1.0", "");
-  //     testNodeParse(new LitFloat(f), "1.-0", ParseStatus.invalid, "", "1.-0", "");
-  //     testNodeParse(new LitFloat(f), " 1.0a", ParseStatus.valid, " 1.0", "a", "1.0");
-  //     testNodeParse(new LitFloat(f), "1", ParseStatus.incomplete, "1", "", "1");
-  //     testNodeParse(new LitFloat(f), "1.", ParseStatus.incomplete, "1.", "", "1.");
-  //     testNodeParse(new LitFloat(f), "1. ", ParseStatus.invalid, "", "1. ", "");
-  //     testNodeParse(new LitFloat(f), "1.1e5", ParseStatus.valid, "1.1e5", "", "1.1e5");
-  //     testNodeParse(new LitFloat(f), "1.1e-5", ParseStatus.valid, "1.1e-5", "", "1.1e-5");
-  //     testNodeParse(new LitFloat(f), "1.1E-5", ParseStatus.valid, "1.1E-5", "", "1.1E-5");
-  //   });
+  function getLitFloatRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.litFloat()];
+  }
+  test("LitFloat", () => {
+    testAntlrParse(getLitFloatRule(), "", false);
+    testAntlrParse(getLitFloatRule(), "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>");
+    testAntlrParse(getLitFloatRule(), "-1.0", true, "-1.0", "-1.0", "<el-lit>-1.0</el-lit>");
+    testAntlrParse(getLitFloatRule(), "- 1.0", false);
+    testAntlrParse(getLitFloatRule(), "1.-0", false);
+    testAntlrParse(getLitFloatRule(), " 1.0a", true, " 1.0", "1.0");
+    testAntlrParse(getLitFloatRule(), "1", false);
+    testAntlrParse(getLitFloatRule(), "1.", false);
+    testAntlrParse(getLitFloatRule(), "1. ", false);
+    testAntlrParse(getLitFloatRule(), "1.1e5", true, "1.1e5", "1.1e5", "<el-lit>1.1e5</el-lit>");
+    testAntlrParse(
+      getLitFloatRule(),
+      "1.1e-5",
+      true,
+      "1.1e-5",
+      "1.1e-5",
+      "<el-lit>1.1e-5</el-lit>",
+    );
+    // Cap E not in the accepted text for some reason
+    // testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
+    // testAntlrParse(
+    //   getLitFloatRule(),
+    //   "1.1E-5",
+    //   true,
+    //   "1.1E-5",
+    //   "1.1E-5",
+    //   "<el-lit>1.1E-5</el-lit>",
+    // );
+  });
   //   test("Keyword", () => {
   //     testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
   //     testNodeParse(

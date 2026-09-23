@@ -127,10 +127,10 @@ NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
 
 LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
-LITERAL_INTEGER: MINUS? [0-9] [0-9]*;
+LITERAL_INTEGER: [-]?[0-9][0-9]*;
 
 LITERAL_FLOAT:
-    MINUS? LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?
+    LITERAL_INTEGER DOT [0-9]+ ExponentPart?
 ;
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 
@@ -165,7 +165,7 @@ fragment NewLineCharacter:
     | '\u0085' // Next Line 
 ;
 
-fragment ExponentPart: [e] (PLUS | MINUS)? LITERAL_INTEGER;
+fragment ExponentPart: ('e'|'E') (PLUS | MINUS)? [0-9][0-9]*;
 
 fragment CommonCharacter:
     SimpleEscapeSequence

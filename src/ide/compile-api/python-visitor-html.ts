@@ -3,6 +3,7 @@ import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   CommentTextContext,
   IdentifierContext,
+  LitFloatContext,
   LitIntContext,
   ParamDefContext,
   ParamsListContext,
@@ -14,6 +15,7 @@ import {
   TypeTupleContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
+import { escapeHtmlChars } from "../frames/frame-helpers";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
@@ -27,7 +29,6 @@ import {
   type,
   visitTypeHelper,
 } from "./parser-helpers";
-import { escapeHtmlChars } from "../frames/frame-helpers";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -68,4 +69,6 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
 
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
+
+  visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
 }
