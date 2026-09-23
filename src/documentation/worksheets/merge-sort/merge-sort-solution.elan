@@ -1,4 +1,4 @@
-# 8a0b4ed63c3c370fd194b4a1ba0c39073abd3af244d0ca98acdd40d2153743fe Elan 2.0.0-alpha valid
+# 9185d970839acaa13ebd773fa37236b4f5b89cf65e9fa6f5fab2fba4fdfcd850 Elan 2.0.0-beta5 valid
 
 function sort(li as List<of String>) returns List<of String>
   variable result set to li

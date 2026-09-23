@@ -1,4 +1,4 @@
-# a3139e9a614f60365ae09d2e5185e7b4ac35c38473dbfe04565798a90edaa289 Python with Elan 2.0.0-beta5 valid
+# cd6a8d768e04721057ebfb00d5cf99346b7f492aaa4ab58554ba2956636bbe05 Python with Elan 2.0.0-beta5 valid
 
 constant nDiscs set to 7
 
@@ -10,7 +10,7 @@ main
   call moveMultiple(nDiscs, stacks, 0, 2, 1)
 end main
 
-procedure moveMultiple(n as Int, stacks as List<of List<of Int>>, fromStack as Int, toStack as Int, spare as Int)
+procedure moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int)
   if n is 1 then
     call moveOne(stacks, fromStack, toStack)
   else
@@ -20,14 +20,14 @@ procedure moveMultiple(n as Int, stacks as List<of List<of Int>>, fromStack as I
   end if
 end procedure
 
-procedure moveOne(stacks as List<of List<of Int>>, fromStack as Int, toStack as Int)
+procedure moveOne(stacks: list[list[int]], fromStack: int, toStack: int)
   variable disc set to top(stacks[fromStack])
   call stacks[fromStack].removeFirst(disc)
   call stacks[toStack].append(disc)
   call display(stacks)
 end procedure
 
-procedure display(stacks as List<of List<of Int>>)
+procedure display(stacks: list[list[int]])
   call clearAllDisplays()
   variable vg set to createVectorGraphics()
   for i in range(0, 3)
@@ -37,14 +37,14 @@ procedure display(stacks as List<of List<of Int>>)
   call sleep_ms(delay_ms)
 end procedure
 
-procedure drawStack(s as List<of Int>, peg as Int, vg as List<of VectorGraphic>)
+procedure drawStack(s: list[int], peg: int, vg: list[VectorGraphic])
   for n in range(0, s.length())
     variable discVG set to createDisc(s[n], peg, n)
     call vg.append(discVG)
   end for
 end procedure
 
-function createDisc(disc as Int, peg as Int, vertical as Int) returns RectangleVG
+function createDisc(disc: int, peg: int, vertical: int) returns RectangleVG
   variable r set to new RectangleVG()
   return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
 end function
@@ -69,7 +69,7 @@ test test_createDisc
   # Error cases - none identified
 end test
 
-function create3Stacks(nDiscs as Int) returns List<of List<of Int>>
+function create3Stacks(nDiscs: int) returns list[list[int]]
   variable s0 set to rangeInSteps(nDiscs, 0, -1)
   variable s1 set to new List<of Int>()
   variable s2 set to new List<of Int>()
@@ -87,7 +87,7 @@ test test_create3Stacks
   assert create3Stacks(-1) evaluates to "Loop will not terminate when start < end start with negative step"
 end test
 
-function colour(disc as Int) returns Int
+function colour(disc: int) returns int
   variable colours set to [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC]
   return colours[disc - 1]
 end function
@@ -102,7 +102,7 @@ test test_colour
   assert colour(11) evaluates to "Out of range index: 10 size: 10"
 end test
 
-function top(s as List<of Int>) returns Int
+function top(s: list[int]) returns int
   return s[s.length() - 1]
 end function
 
