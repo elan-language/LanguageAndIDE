@@ -1,4 +1,4 @@
-# 60abbfa5d040bbefe827a9484f7f8b8ea36cc62a959d5ba595e048fe759c0307 Elan 2.0.0-beta3 valid
+# cd6a8d768e04721057ebfb00d5cf99346b7f492aaa4ab58554ba2956636bbe05 Python with Elan 2.0.0-beta5 valid
 
 constant nDiscs set to 7
 
@@ -7,37 +7,27 @@ constant delay_ms set to 300
 main
   variable stacks set to create3Stacks(nDiscs)
   call display(stacks)
-  while stacks[2].length() isnt nDiscs
-    if (stacks[0].length() mod 2) is 0 then
-      call moveBetween(stacks, 0, 1)
-      call moveBetween(stacks, 0, 2)
-      call moveBetween(stacks, 1, 2)
-    else
-      call moveBetween(stacks, 0, 2)
-      call moveBetween(stacks, 0, 1)
-      call moveBetween(stacks, 1, 2)
-    end if
-  end while
+  call moveMultiple(nDiscs, stacks, 0, 2, 1)
 end main
 
-procedure moveBetween(stacks as List<of List<of Int>>, fromStack as Int, toStack as Int)
-  variable a set to stacks[fromStack]
-  variable b set to stacks[toStack]
-  if b.length() < nDiscs then
-    if (a.length() > 0) and ((b.length() is 0) or (top(a) < top(b))) then
-      variable disc set to top(a)
-      call a.removeFirst(disc)
-      call b.append(disc)
-    elif b.length() > 0 then
-      variable disc set to top(b)
-      call b.removeFirst(disc)
-      call a.append(disc)
-    end if
+procedure moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int)
+  if n is 1 then
+    call moveOne(stacks, fromStack, toStack)
+  else
+    call moveMultiple(n - 1, stacks, fromStack, spare, toStack)
+    call moveOne(stacks, fromStack, toStack)
+    call moveMultiple(n - 1, stacks, spare, toStack, fromStack)
   end if
+end procedure
+
+procedure moveOne(stacks: list[list[int]], fromStack: int, toStack: int)
+  variable disc set to top(stacks[fromStack])
+  call stacks[fromStack].removeFirst(disc)
+  call stacks[toStack].append(disc)
   call display(stacks)
 end procedure
 
-procedure display(stacks as List<of List<of Int>>)
+procedure display(stacks: list[list[int]])
   call clearAllDisplays()
   variable vg set to createVectorGraphics()
   for i in range(0, 3)
@@ -47,14 +37,14 @@ procedure display(stacks as List<of List<of Int>>)
   call sleep_ms(delay_ms)
 end procedure
 
-procedure drawStack(s as List<of Int>, peg as Int, vg as List<of VectorGraphic>)
+procedure drawStack(s: list[int], peg: int, vg: list[VectorGraphic])
   for n in range(0, s.length())
     variable discVG set to createDisc(s[n], peg, n)
     call vg.append(discVG)
   end for
 end procedure
 
-function createDisc(disc as Int, peg as Int, vertical as Int) returns RectangleVG
+function createDisc(disc: int, peg: int, vertical: int) returns RectangleVG
   variable r set to new RectangleVG()
   return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
 end function
@@ -79,7 +69,7 @@ test test_createDisc
   # Error cases - none identified
 end test
 
-function create3Stacks(nDiscs as Int) returns List<of List<of Int>>
+function create3Stacks(nDiscs: int) returns list[list[int]]
   variable s0 set to rangeInSteps(nDiscs, 0, -1)
   variable s1 set to new List<of Int>()
   variable s2 set to new List<of Int>()
@@ -97,7 +87,7 @@ test test_create3Stacks
   assert create3Stacks(-1) evaluates to "Loop will not terminate when start < end start with negative step"
 end test
 
-function colour(disc as Int) returns Int
+function colour(disc: int) returns int
   variable colours set to [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC]
   return colours[disc - 1]
 end function
@@ -112,7 +102,7 @@ test test_colour
   assert colour(11) evaluates to "Out of range index: 10 size: 10"
 end test
 
-function top(s as List<of Int>) returns Int
+function top(s: list[int]) returns int
   return s[s.length() - 1]
 end function
 

@@ -1,4 +1,4 @@
-# 725d72fa257782c5d183bd5ea1618bae5e56672bf8715472a51d508dab5f5502 Elan 2.0.0-alpha valid
+# 89f8832d7587658c4d2035c36611b6ea1cad08e7ebd5781a0c590cfb428c34fc Elan 2.0.0-beta5 valid
 
 function foo() returns List<of Int>
   return [0]

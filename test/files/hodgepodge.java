@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta5
 
 public class Global {
 
@@ -10,19 +10,19 @@ public class Global {
 
 // gW, gH : grid width, height
 
-static final Int gW = 40; // constant
+static final int gW = 40; // constant
 
-static final Int gH = 30; // constant
+static final int gH = 30; // constant
 
 // iR : infection rate (1..20)
 
-static final Int iR = 1; // constant
+static final int iR = 1; // constant
 
 // w1, w2 : weighting factors (low integers)
 
-static final Int w1 = 4; // constant
+static final int w1 = 4; // constant
 
-static final Int w2 = 1; // constant
+static final int w2 = 1; // constant
 
 // colours : cellColour.s in descending order of RGB value
 
@@ -30,9 +30,9 @@ static final Int w2 = 1; // constant
 
 // colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
 
-static final Int healthy = white; // constant
+static final int healthy = white; // constant
 
-static final Int ill = black; // constant
+static final int ill = black; // constant
 
 static List<int> getColours() { // function
   return list(healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill);
@@ -40,59 +40,73 @@ static List<int> getColours() { // function
 
 // vN : neighbourhood: von Neumann (4) true, Moore (8) false
 
-static final Boolean vN = false; // constant
+static final boolean vN = false; // constant
 
 static void main() {
   // colour grids: hodge for display, podge for working
-  var podge = createBlockGraphics(healthy);
-  var hodge = new AsRef<List<List<int>>>(createBlockGraphics(healthy));
-  var blank = createBlockGraphics(healthy);
+  var podge = new BlockGraphics();
+  var hodge = new BlockGraphics();
+  var blank = new BlockGraphics();
   // initial colours of grid
   updateGrid(hodge, podge, true); // procedure call
-  while (!uniform(hodge.value())) {
+  while (!uniform(hodge)) {
     // successive updates to grid in blank podge
     podge = blank; // assignment
     updateGrid(hodge, podge, false); // procedure call
   } // end while
 } // end main
 
-static void updateGrid(AsRef<List<List<int>>> hodge, List<List<int>> podge, boolean initial) { // procedure
+static void updateGrid(BlockGraphics hodge, BlockGraphics podge, boolean initial) { // procedure
   var colours = getColours();
   foreach (var j in range(0, gH)) {
     foreach (var i in range(0, gW)) {
       if (initial) {
-        podge[i][j] = colours[randint(0, (colours.length()) - 1)]; // assignment
+        podge.put(i, j, colours[randint(0, (colours.length()) - 1)]); // procedure call
         podge[1][1] = 0x1a001a; // assignment
       } else {
-        podge[i][j] = newColour(getNeighbourColours(hodge.value(), i, j), hodge.value()[i][j]); // assignment
+        podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j))); // procedure call
       } // end if
     } // end foreach
   } // end foreach
   var a = 0;
-  hodge.put(podge); // procedure call
-  displayBlocks(hodge.value()); // procedure call
+  // copy podgeValues into hodge
+  foreach (var j in range(0, gH)) {
+    foreach (var i in range(0, gW)) {
+      var podgeValue = podge.get(i, j);
+      hodge.put(i, j, podgeValue); // procedure call
+    } // end foreach
+  } // end foreach
+  displayBlockGraphics(hodge); // procedure call
   sleep_ms(50); // procedure call
 } // end procedure
 
-static boolean uniform(List<List<int>> grid) { // function
-  var uniformGrid = createBlockGraphics(grid[0][0]);
-  return if_(grid.equals(uniformGrid), true, false);
+static boolean uniform(BlockGraphics grid) { // function
+  var cell0 = grid.get(0, 0);
+  var isUniform = true;
+  foreach (var j in range(0, gH)) {
+    foreach (var i in range(0, gW)) {
+      if (grid.get(i, j) == cell0) {
+        isUniform = false; // assignment
+      } // end if
+    } // end foreach
+  } // end foreach
+  return isUniform;
 } // end function
 
-static List<int> getNeighbourColours(List<List<int>> grid, int i, int j) { // function
+static List<int> getNeighbourColours(BlockGraphics grid, int i, int j) { // function
   // grid wraps around: all cells have the same number of neighbours
   // H and V neighbours(von Neumann)
-  var sL = grid[(i - 1 + gW) % gW][j];
-  var sR = grid[(i + 1 + gW) % gW][j];
-  var sA = grid[i][(j - 1 + gH) % gH];
-  var sB = grid[i][(j + 1 + gH) % gH];
+  var sL = grid.get((i - 1 + gW) % gW, j);
+  var sR = grid.get((i + 1 + gW) % gW, j);
+  var sA = grid.get(i, (j - 1 + gH) % gH);
+  var sB = grid.get(i, (j + 1 + gH) % gH);
   var neighbourColours = list(sL, sR, sA, sB);
   if (vN == false) {
     // add diagonal neighbours (Moore)
-    var sLA = grid[(i - 1 + gW) % gW][(j - 1 + gH) % gH];
-    var sRA = grid[(i + 1 + gW) % gW][(j - 1 + gH) % gH];
-    var sLB = grid[(i - 1 + gW) % gW][(j + 1 + gH) % gH];
-    var sRB = grid[(i + 1 + gW) % gW][(j + 1 + gH) % gH];
+    var sLA = grid.get((i - 1 + gW) % gW, (j - 1 + gH) % gH);
+    var sRA = grid.get((i + 1 + gW) % gW, (j - 1 + gH) % gH);
+    var sLB = grid.get((i - 1 + gW) % gW, (j + 1 + gH) % gH);
+    var sRB = grid.get((i + 1 + gW) % gW, (j + 1 + gH) % gH);
     neighbourColours = list(sL, sR, sA, sB, sLA, sRA, sLB, sRB); // assignment
   } // end if
   return neighbourColours;

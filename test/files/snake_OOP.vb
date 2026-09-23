@@ -1,208 +1,148 @@
-' VB.NET with Elan 2.0.0-beta3
+' VB.NET with Elan 2.0.0-beta5
 
 ' Use the W,A,S,D keys to change Snake direction
 
+Const width = 40
+
+Const height = 30
+
 Sub main()
-  Dim blocks = createBlockGraphics(white) ' variable definition
-  Dim snake = New Snake() ' variable definition
-  Dim apple = New Apple() ' variable definition
-  apple.newRandomPosition(snake) ' procedure call
-  While Not snake.gameOver()
-    snake.updateBlocks(blocks) ' procedure call
-    apple.updateBlocks(blocks) ' procedure call
-    displayBlocks(blocks) ' procedure call
+  Dim game = New Game() ' variable definition
+  While game.isOn
+    game.clockTick(getKey()) ' procedure call
+    Dim blocks = New BlockGraphics() ' variable definition
+    game.updateBlocks(blocks) ' procedure call
+    displayBlockGraphics(blocks) ' procedure call
     sleep_ms(150) ' procedure call
-    snake.clockTick(getKey(), apple) ' procedure call
   End While
-  Console.WriteLine($"Game Over! Score: {snake.score()}") ' print statement
+  Console.WriteLine($"Game Over! Score: {game.score()}") ' print statement
 End Sub
 
-Class Snake
+Class Game
 
   Sub New()
-    Dim tail = New Square(20, 15) ' variable definition
-    Me.currentDir = Direction.right ' assignment
-    Me.body = {tail} ' assignment
-    Me.head = tail.getAdjacentSquare(Me.currentDir) ' assignment
-    Me.priorTail = tail ' assignment
+    Me.snake = New Snake(620) ' assignment
+    Me.currentDir = "d" ' assignment
+    Me.newAppleNeeded = True ' assignment
+    Me.isOn = True ' assignment
   End Sub
 
-  Private Property currentDir As Direction
+  Private Property snake As Snake
 
-  Private Property head As Square
+  Private Property currentDir As String
 
-  Private Property body As List(Of Square)
+  Private Property apple As Integer
 
-  Private Property priorTail As Square
+  Private Property newAppleNeeded As Boolean
 
-  Sub clockTick(key As String, apple As Apple) ' procedure method
-    Me.setDirection(key) ' procedure call
-    Me.priorTail = Me.body(0) ' assignment
-    Dim body = Me.body ' variable definition
-    body.append(Me.head) ' procedure call
-    Me.head = Me.head.getAdjacentSquare(Me.currentDir) ' assignment
-    If Me.head.equals(apple.location) Then
-      apple.newRandomPosition(Me) ' procedure call
-    Else
-      Me.body = Me.body.subList(1, Me.body.length()) ' assignment
+  Property isOn As Boolean
+
+  Sub newAppleIfNeeded() ' procedure method
+    While Me.newAppleNeeded Or Me.snake.bodyCovers(Me.apple)
+      Me.apple = randint(0, width*height - 1) ' assignment
+      Me.newAppleNeeded = False ' assignment
+    End While
+  End Sub
+
+  Sub clockTick(key As String) ' procedure method
+    Me.newAppleIfNeeded() ' procedure call
+    Me.setDirectionIfKeyPress(key) ' procedure call
+    '  TODO 3502
+    Dim snake = Me.snake ' variable definition
+    snake.moveHead(Me.currentDir) ' procedure call
+    If snake.bodyCovers(Me.apple) Then
+      Me.newAppleNeeded = True ' assignment
+    ElseIf Not snake.dead Then
+      snake.moveTail() ' procedure call
+    End If
+    If snake.dead Then
+      Me.isOn = False ' assignment
     End If
   End Sub
 
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.head.x)(Me.head.y) = green ' assignment
-    If Not Me.body(0).equals(Me.priorTail) Then
-      blocks(Me.priorTail.x)(Me.priorTail.y) = white ' assignment
+  Sub updateBlocks(blocks As BlockGraphics) ' procedure method
+    '  TODO 3502
+    Dim snake = Me.snake ' variable definition
+    snake.addToBlocks(blocks) ' procedure call
+    blocks.putBlockNo(Me.apple, red) ' procedure call
+  End Sub
+
+  Sub setDirectionIfKeyPress(key As String) ' procedure method
+    If Not key.equals("") And "wasd".contains(key) Then
+      Me.currentDir = key ' assignment
     End If
   End Sub
 
   Function score() As Integer
-    Return Me.body.length() - 1
+    Return Me.snake.length() - 1
   End Function
 
-  Function bodyCovers(sq As Square) As Boolean
-    Dim result = False ' variable definition
-    For Each seg In Me.body
-      If (seg.equals(sq)) Then
-        result = True ' assignment
-      End If
-    Next seg
-    Return result
+  Function toString() As String
+    Return "undefined"
   End Function
 
-  Function gameOver() As Boolean
-    Return Me.bodyCovers(Me.head) Or Me.head.hasHitEdge()
-  End Function
+End Class
 
-  Private Sub setDirection(key As String) ' private procedure method
-    If key.equals("w") Then
-      Me.currentDir = Direction.up ' assignment
-    ElseIf key.equals("s") Then
-      Me.currentDir = Direction.down ' assignment
-    ElseIf key.equals("a") Then
-      Me.currentDir = Direction.left ' assignment
-    ElseIf key.equals("d") Then
-      Me.currentDir = Direction.right ' assignment
+Class Snake
+
+  Sub New(head As Integer)
+    Me.head = head ' assignment
+    Me.body = {Me.head - 1, Me.head} ' assignment
+  End Sub
+
+  Property head As Integer
+
+  Private Property body As List(Of Integer)
+
+  Property dead As Boolean
+
+  Sub moveHead(dir As String) ' procedure method
+    Dim newCol = Me.head Mod width ' variable definition
+    Dim newRow = divAsInt(Me.head, width) ' variable definition
+    If dir.equals("w") Then
+      newRow = newRow - 1 ' assignment
+    ElseIf dir.equals("a") Then
+      newCol = newCol - 1 ' assignment
+    ElseIf dir.equals("s") Then
+      newRow = newRow + 1 ' assignment
+    ElseIf dir.equals("d") Then
+      newCol = newCol + 1 ' assignment
+    End If
+    Me.head = -1 ' assignment
+    If (newCol >= 0) And (newCol < width) And (newRow >= 0) And (newRow < height) Then
+      Me.head = newRow*width + newCol ' assignment
+    End If
+    If (Me.head = -1) Or Me.body.contains(Me.head) Then
+      Me.dead = True ' assignment
+    Else
+      '  3502
+      Dim body = Me.body ' variable definition
+      body.append(Me.head) ' procedure call
     End If
   End Sub
 
-  Function toString() As String
-    Return $"a Snake with head at {Me.head}"
+  Sub moveTail() ' procedure method
+    ' 3502
+    Dim body = Me.body ' variable definition
+    body.removeAt(0) ' procedure call
+  End Sub
+
+  Sub addToBlocks(blocks As BlockGraphics) ' procedure method
+    For Each block In Me.body
+      blocks.putBlockNo(block, green) ' procedure call
+    Next block
+  End Sub
+
+  Function bodyCovers(sq As Integer) As Boolean
+    Return Me.body.contains(sq)
   End Function
 
-End Class
-
-Class Apple
-
-  Sub New()
-    Me.location = New Square(0, 0) ' assignment
-  End Sub
-
-  Property location As Square
-
-  Sub newRandomPosition(snake As Snake) ' procedure method
-    Dim changePosition = True ' variable definition
-    While changePosition
-      Dim ranX = randint(0, 39) ' variable definition
-      Dim ranY = randint(0, 29) ' variable definition
-      Me.location = New Square(ranX, ranY) ' assignment
-      If Not snake.bodyCovers(Me.location) Then
-        changePosition = False ' assignment
-      End If
-    End While
-  End Sub
-
-  Sub updateBlocks(blocks As List(Of List(Of Integer))) ' procedure method
-    blocks(Me.location.x)(Me.location.y) = red ' assignment
-  End Sub
-
-  Function toString() As String
-    Return $"an Apple at {Me.location}"
-  End Function
-
-End Class
-
-Class Square
-
-  Sub New(x As Integer, y As Integer)
-    Me.x = x ' assignment
-    Me.y = y ' assignment
-  End Sub
-
-  Property x As Integer
-
-  Property y As Integer
-
-  Function getAdjacentSquare(d As Direction) As Square
-    Dim newX = Me.x ' variable definition
-    Dim newY = Me.y ' variable definition
-    If d = Direction.left Then
-      newX = Me.x - 1 ' assignment
-    ElseIf d = Direction.right Then
-      newX = Me.x + 1 ' assignment
-    ElseIf d = Direction.up Then
-      newY = Me.y - 1 ' assignment
-    ElseIf d = Direction.down Then
-      newY = Me.y + 1 ' assignment
-    End If
-    Return New Square(newX, newY)
-  End Function
-
-  Function hasHitEdge() As Boolean
-    Return (Me.x = -1) Or (Me.y = -1) Or (Me.x = 40) Or (Me.y = 30)
+  Function length() As Integer
+    Return Me.body.length()
   End Function
 
   Function toString() As String
-    Return "{this.x}, {this.y}"
+    Return $"a Snake"
   End Function
 
 End Class
-
-Enum Direction 
-  up = 0
-  down = 1
-  left = 2
-  right = 3
-End Enum
-
-<TestClass Class Test_snake
- <TestMethod> Sub test_snake()
-  Dim snake = New Snake() ' variable definition
-  ' bodyCovers
-  Assert.AreEqual(True, snake.bodyCovers(New Square(20, 15)))
-  Assert.AreEqual(False, snake.bodyCovers(New Square(21, 15)))
-  ' gameOver, score - can only test test_for default - which is not thorough test
-  Assert.AreEqual(False, snake.gameOver())
-  Assert.AreEqual(0, snake.score())
- End Sub
-End Class
-
-
-<TestClass Class Test_apple
- <TestMethod> Sub test_apple()
-  ' no tests
- End Sub
-End Class
-
-
-<TestClass Class Test_square
- <TestMethod> Sub test_square()
-  ' constructor - not testable as properties are private
-  ' getAdjacentSquare
-  Dim sq1 = New Square(3, 4) ' variable definition
-  Assert.AreEqual(New Square(3, 3), sq1.getAdjacentSquare(Direction.up))
-  Assert.AreEqual(New Square(3, 5), sq1.getAdjacentSquare(Direction.down))
-  Assert.AreEqual(New Square(2, 4), sq1.getAdjacentSquare(Direction.left))
-  Assert.AreEqual(New Square(4, 4), sq1.getAdjacentSquare(Direction.right))
-  Dim sq2 = New Square(0, 0) ' variable definition
-  Dim sq3 = New Square(-1, 0) ' variable definition
-  Assert.AreEqual(sq3, sq2.getAdjacentSquare(Direction.left))
-  ' hasHitEdge
-  Assert.AreEqual(False, (New Square(0, 0)).hasHitEdge())
-  Assert.AreEqual(False, (New Square(39, 20)).hasHitEdge())
-  Assert.AreEqual(True, (New Square(-1, 3)).hasHitEdge())
-  Assert.AreEqual(True, (New Square(3, -1)).hasHitEdge())
-  Assert.AreEqual(True, (New Square(40, 3)).hasHitEdge())
-  Assert.AreEqual(True, (New Square(3, 30)).hasHitEdge())
- End Sub
-End Class
-

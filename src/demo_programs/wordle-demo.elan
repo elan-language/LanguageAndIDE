@@ -1,12 +1,12 @@
-# 5e26bc86890e055e6548a3566125dd3ce842ec170e2c5febb4a5efd2e62a9330 Elan 2.0.0-alpha valid
+# 7df04ec5c85be06d7e0a52344a73af2f6fdb5122fc6b76a25334d58489cf87eb Elan 2.0.0-beta5 valid
 
-constant allWords set to "AAHED ZYMIC"
+constant allWords set to "AAHED ABACK ZONAL ZYMIC"
 
 constant allValidAnswers set to "ABACK ZONAL"
 
 main
   while true
-    variable choice set to inputIntBetween("1 to solve puzzle reassign by computer\n2 to reassign a puzzle for computer to solve\n3 to test test_effectiveness of computer's algorithm\n4 to look up word", 1, 4)
+    variable choice set to inputIntBetween("1 to solve puzzle set by computer\n2 to set a puzzle for computer to solve\n3 to test effectiveness of computer's algorithm\n4 to look up word", 1, 4)
     call clearAllDisplays()
     call executeOption(choice)
     call pressAnyKeyToContinue()
@@ -44,7 +44,8 @@ procedure playGame()
     assign used[letter] to " "
   end for
   call displayHtml(drawGrid(grid) + drawKeyboard(used))
-  variable target set to allValidAnswers.split(" ")[randint(0, 2308)]
+  variable allValidWords set to allValidAnswers.split(" ")
+  variable target set to allValidWords[randint(0, allValidWords.length() - 1)]
   variable attemptNo set to 0
   variable solved set to false
   while (attemptNo < 6) and (not solved)
@@ -78,7 +79,7 @@ procedure enterAttempt(attemptNo as Int, grid as List<of List<of String>>, used 
     if (k.equals("BACKSPACE")) and (chNo > 0) then
       assign chNo to chNo - 1
       assign grid[chNo][attemptNo] to ""
-      assign word to word[0..chNo]
+      assign word to word.subString(0, chNo)
       call clearPrintedText()
     elif (chNo < 5) and isUCLetter(k) then
       assign grid[chNo][attemptNo] to k
@@ -190,10 +191,11 @@ procedure analyse()
     assign weightedSum to weightedSum + (i*outcomes[i])
   end for
   call clearPrintedText()
-  variable solved set to (success/2309.0*100).floor()
+  variable numPossAnswers set to allValidAnswers.split(" ").length()
+  variable solved set to (success*1.0/numPossAnswers*100).floor()
   variable avg set to divAsFloat(weightedSum, success).round(2)
   variable pc set to "%"
-  print($"For all 2309 possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
+  print($"For all {numPossAnswers} possible answers,\nthe current reverse-game algorithm \nsolved {solved}{pc} within 6 attempts,\nwith an average of {avg} attempts.")
 end procedure
 
 function isUCLetter(k as String) returns Boolean

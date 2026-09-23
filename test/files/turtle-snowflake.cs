@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta3
+// C# with Elan 2.0.0-beta5
 
 static void main() {
   var t = new Turtle();
@@ -25,4 +25,4 @@ static void drawSide(double length, Turtle t) { // procedure
   } // end if
 } // end procedure
 
-const Int side = 100;
+const int side = 100;

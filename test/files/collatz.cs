@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta3
+// C# with Elan 2.0.0-beta5
 
 // A program to investigate the Collatz Conjecture
 
@@ -52,4 +52,4 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 } // end function
 
-const Int grey = 0x808080;
+const int grey = 0x808080;

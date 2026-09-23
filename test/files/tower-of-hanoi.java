@@ -1,10 +1,10 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta5
 
 public class Global {
 
-static final Int nDiscs = 7; // constant
+static final int nDiscs = 7; // constant
 
-static final Int delay_ms = 300; // constant
+static final int delay_ms = 300; // constant
 
 static void main() {
   var stacks = create3Stacks(nDiscs);

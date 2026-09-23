@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta3
+' VB.NET with Elan 2.0.0-beta5
 
 ' A program to investigate the Collatz Conjecture
 

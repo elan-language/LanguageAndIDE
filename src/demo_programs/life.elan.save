@@ -1,56 +1,43 @@
-# 140b29aa24237d48ac63cba031afd1781ebd726f93638b9919672304d12d9537 Elan 2.0.0-beta5 valid
+# c41085954a27d13f0e90e971c3a703966c945d0e924a6cba465ef2b6477a94c4 Elan 2.0.0-beta5 valid
 
 main
-  variable rng set to new Random()
-  call rng.initialiseFromClock()
-  variable grid set to initialGrid(rng)
+  variable grid set to new BlockGraphics()
+  call fillRandom(grid)
   while true
     call displayBlockGraphics(grid)
-    assign grid to nextGeneration(grid)
+    call nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main
 
-function initialGrid(rng as Random) returns BlockGraphics
-  variable grid set to new BlockGraphics()
-  variable cells set to range(0, 1199)
-  return cells.reduce((grid, rng), initialCell).item_0
+procedure fillRandom(grid as BlockGraphics)
+  for col in range(0, 40)
+    for row in range(0, 30)
+      call grid.put(col, row, blackOrWhite(random()))
+    end for
+  end for
+end procedure
+
+procedure nextGeneration(grid as BlockGraphics)
+  # First, make a copy of the existing grid
+  variable copy set to new BlockGraphics()
+  for cell in range(0, 1199)
+    call copy.putBlockNo(cell, grid.getBlockNo(cell))
+  end for
+  # then calculate each new cell *from the copy*, and update the grid
+  for cell in range(0, 1199)
+    variable colour set to nextCellValue(copy, cell)
+    call grid.putBlockNo(cell, colour)
+  end for
+end procedure
+
+function blackOrWhite(random as Float) returns Int
+  variable result set to black
+  if random > 0.5 then
+    assign result to white
+  end if
+  return result
 end function
-
-function initialCell(acc as (BlockGraphics, Random), cell as Int) returns (BlockGraphics, Random)
-  variable bg set to acc.item_0
-  variable rng set to acc.item_1
-  variable colour set to blackOrWhite(rng)
-  return (bg.withPutBlockNo(cell, colour), rng.nextGen())
-end function
-
-test test_initialGrid
-  variable grid set to initialGrid(new Random())
-  assert grid.get(0, 0) evaluates to black
-  assert grid.get(1, 0) evaluates to white
-  assert grid.get(2, 0) evaluates to black
-  assert grid.get(0, 1) evaluates to white
-  assert grid.get(1, 1) evaluates to black
-  assert grid.get(2, 1) evaluates to white
-  assert grid.get(0, 2) evaluates to black
-  assert grid.get(1, 2) evaluates to white
-  assert grid.get(2, 2) evaluates to black
-end test
-
-function blackOrWhite(rng as Random) returns Int
-  return if_(rng.asFloat() > 0.5, white, black)
-end function
-
-test test_blackOrWhite
-  variable rng0 set to new Random()
-  variable rng1 set to rng0.nextGen()
-  variable rng2 set to rng1.nextGen()
-  variable rng3 set to rng2.nextGen()
-  assert blackOrWhite(rng0) evaluates to black
-  assert blackOrWhite(rng1) evaluates to white
-  assert blackOrWhite(rng2) evaluates to black
-  assert blackOrWhite(rng3) evaluates to black
-end test
 
 function x(cell as Int) returns Int
   return cell mod 40
@@ -185,12 +172,6 @@ function liveNeighbours(grid as BlockGraphics, cell as Int) returns Int
   return neighbours.filter(lambda c as Int => grid.getBlockNo(c) is black).length()
 end function
 
-test test_liveNeighbours
-  variable grid set to initialGrid(new Random())
-  variable live set to liveNeighbours(grid, 41)
-  assert live evaluates to 4
-end test
-
 function willLive(cell as Int, liveNeighbours as Int) returns Boolean
   return ((cell is black) and (liveNeighbours > 1) and (liveNeighbours < 4)) or ((cell is white) and (liveNeighbours is 3))
 end function
@@ -217,21 +198,18 @@ test test_willLive
 end test
 
 function nextCellValue(grid as BlockGraphics, cell as Int) returns Int
+  variable colour set to white
   variable live set to willLive(grid.getBlockNo(cell), liveNeighbours(grid, cell))
-  return if_(live, black, white)
+  if live then
+    assign colour to black
+  end if
+  return colour
 end function
 
-function updateCellValue(oldGrid as BlockGraphics, newGrid as BlockGraphics, cell as Int) returns BlockGraphics
-  return newGrid.withPutBlockNo(cell, nextCellValue(oldGrid, cell))
-end function
-
-test test_nextCellValue
-  variable grid set to initialGrid(new Random())
-  variable nxt set to nextCellValue(grid, 41)
-  assert nxt evaluates to white
+test test_blackOrWhite
+  assert blackOrWhite(0) evaluates to black
+  assert blackOrWhite(0.499) evaluates to black
+  assert blackOrWhite(0.5) evaluates to black
+  assert blackOrWhite(0.501) evaluates to white
+  assert blackOrWhite(1) evaluates to white
 end test
-
-function nextGeneration(oldGrid as BlockGraphics) returns BlockGraphics
-  variable emptyGrid set to new BlockGraphics()
-  return range(0, 1199).reduce(emptyGrid, lambda newGrid as BlockGraphics, c as Int => updateCellValue(oldGrid, newGrid, c))
-end function

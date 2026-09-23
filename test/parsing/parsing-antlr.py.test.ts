@@ -135,126 +135,48 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
 
   test("Identifier", () => {
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      ``,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-    );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `  `,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-    );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `a`,
-      ParseStatus.valid,
-      `a`,
-      "",
-      "a",
-      "",
-    );
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), ``, false, ``, "");
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `  `, false, ``, "");
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `a`, true, `a`, "a", "");
     testAntlrParse(
       LanguagePython.Instance,
       (p: Parser) => p.identifier(),
       `aB_d`,
-      ParseStatus.valid,
+      true,
       `aB_d`,
-      "",
       "aB_d",
     );
     testAntlrParse(
       LanguagePython.Instance,
       (p: Parser) => p.identifier(),
       `abc `,
-      ParseStatus.valid,
+      true,
       `abc`,
-      " ",
       "abc",
     );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `Abc`,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-    );
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `Abc`, false, ``, "");
     testAntlrParse(
       LanguagePython.Instance,
       (p: Parser) => p.identifier(),
       `abc-de`,
-      ParseStatus.valid,
+      true,
       `abc`,
-      "-de",
       "abc",
     );
     // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `new`,
-      ParseStatus.invalid,
-      "",
-      "",
-      "",
-    );
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `new`, false, "", "");
     testAntlrParse(
       LanguagePython.Instance,
       (p: Parser) => p.identifier(),
       `global`,
-      ParseStatus.valid,
+      true,
       `global`,
       "",
-      "",
     );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `x as`,
-      ParseStatus.valid,
-      `x`,
-      " as",
-      "x",
-    );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `_a`,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-      "",
-    );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `_`,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-    );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `()_a`,
-      ParseStatus.invalid,
-      ``,
-      "",
-      "",
-    );
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `x as`, true, `x`, "x");
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `_a`, false, ``, "", "");
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `_`, false, ``, "");
+    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `()_a`, false, ``, "");
   });
 
   //   test("LitString - single chars", () => {

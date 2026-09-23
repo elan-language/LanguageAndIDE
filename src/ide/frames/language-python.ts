@@ -53,7 +53,6 @@ import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { InputStatement } from "./statements/input-statement";
-import { LetStatement } from "./statements/let-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -81,7 +80,6 @@ export class LanguagePython extends LanguageAbstract {
     if (
       frame instanceof VariableStatement ||
       frame instanceof ConstantGlobal ||
-      frame instanceof LetStatement ||
       frame instanceof FunctionFrame ||
       frame instanceof ElseIfClause ||
       frame instanceof ProcedureFrame ||
@@ -126,8 +124,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof InputStatement) {
       html = `${frame.name.renderAsHtml()} = <el-method>input</el-method>(${frame.prompt.renderAsHtml()})`;
-    } else if (frame instanceof LetStatement) {
-      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-method>print</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
