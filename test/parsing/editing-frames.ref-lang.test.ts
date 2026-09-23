@@ -5,7 +5,6 @@ import { MemberSelector } from "../../src/ide/frames/class-members/member-select
 import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
 import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
 import { InheritsFromField } from "../../src/ide/frames/fields/inherits-from-field";
-import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
@@ -79,7 +78,7 @@ suite("Editing Frames", () => {
   test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
     const file = classWithConstructor();
     assert.equal(file.getChildren().length, 2);
-    const className = file.getById("elan_type2") as TypeNameField;
+    const className = file.getById("elan_type2") as AbstractField;
     className.select();
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
