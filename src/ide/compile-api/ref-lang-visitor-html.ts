@@ -1,10 +1,12 @@
 import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
+  ArgListContext,
   CommentTextContext,
   IdentifierContext,
   LitFloatContext,
   LitIntContext,
+  MethodCallContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -18,6 +20,7 @@ import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
+  getArgs,
   getFilteredTypes,
   getFuncTypes,
   getParamDefs,
@@ -66,6 +69,16 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitCommentText = (ctx: CommentTextContext) =>
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
+
+  visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
+
+  visitMethodCall = (ctx: MethodCallContext) => {
+    const argList = ctx.argList();
+    const args = argList ? this.visit(argList) : "";
+    const name = this.visit(ctx.methodName());
+
+    return `${name}(${args})`;
+  };
 
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
 

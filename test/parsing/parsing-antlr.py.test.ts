@@ -764,6 +764,52 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
   //   });
+
+  function getMethodCallRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.methodCall()];
+  }
+
+  test("Function Call", () => {
+    testAntlrParse(getMethodCallRule(), ``, false);
+    testAntlrParse(getMethodCallRule(), `  `, false);
+    testAntlrParse(
+      getMethodCallRule(),
+      `foo()`,
+      true,
+      `foo()`,
+      "foo()",
+      "<el-method>foo</el-method>()",
+      "foo()",
+      "foo()",
+    );
+    testAntlrParse(
+      getMethodCallRule(),
+      `bar(x, 1, "hello")`,
+      true,
+      `bar(x, 1, "hello")`,
+      `bar(x, 1, "hello")`,
+      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, \"hello\")`, // do fix when string done
+      `bar(x, 1, "hello")`,
+      `bar(x, 1, "hello")`,
+    );
+    testAntlrParse(getMethodCallRule(), `yon`, false);
+    testAntlrParse(getMethodCallRule(), `yon `, false);
+    testAntlrParse(getMethodCallRule(), `yon(`, false);
+    testAntlrParse(getMethodCallRule(), `yon(a`, false);
+    testAntlrParse(getMethodCallRule(), `yon(a,`, false);
+    testAntlrParse(getMethodCallRule(), `Foo()`, false);
+    testAntlrParse(getMethodCallRule(), `foo[]`, false);
+    testAntlrParse(
+      getMethodCallRule(),
+      `foo(a)`,
+      true,
+      ``,
+      "foo(a)",
+      "<el-method>foo</el-method>(<el-id>a</el-id>)",
+    );
+    testAntlrParse(getMethodCallRule(), `isBefore(b[0])`, true, ``, "", "");
+  });
+
   //   test("TypeSimpleName", () => {
   //     testNodeParse(
   //       new TypeSimpleName(f),

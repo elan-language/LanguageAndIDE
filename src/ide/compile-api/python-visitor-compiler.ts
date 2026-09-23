@@ -5,6 +5,7 @@ import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-he
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
   IdentifierContext,
+  MethodCallContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -13,8 +14,9 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getTypes, visitTypeHelper } from "./parser-helpers";
+import { getArgs, getTypes, visitTypeHelper } from "./parser-helpers";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -55,6 +57,14 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   visitIdentifier = (ctx: IdentifierContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitmethodName = (ctx: IdentifierContext) =>
+  visitMethodName = (ctx: IdentifierContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  visitMethodCall = (ctx: MethodCallContext) => {
+    const args = ctx.argList();
+    const argList = args ? getArgs(this, args).filter((a) => a) : [];
+    const name = ctx.methodName().getText();
+
+    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
+  };
 }

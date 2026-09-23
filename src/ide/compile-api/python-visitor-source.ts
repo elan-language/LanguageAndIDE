@@ -1,8 +1,10 @@
 import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
+  ArgListContext,
   CommentTextContext,
   IdentifierContext,
+  MethodCallContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -14,7 +16,13 @@ import {
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getFilteredTypes, getFuncTypes, getParamDefs, visitTypeHelper } from "./parser-helpers";
+import {
+  getArgs,
+  getFilteredTypes,
+  getFuncTypes,
+  getParamDefs,
+  visitTypeHelper,
+} from "./parser-helpers";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -52,5 +60,15 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitCommentText = (ctx: CommentTextContext) => {
     return ctx.getText();
+  };
+
+  visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
+
+  visitMethodCall = (ctx: MethodCallContext) => {
+    const argList = ctx.argList();
+    const args = argList ? this.visit(argList) : "";
+    const name = this.visit(ctx.methodName());
+
+    return `${name}(${args})`;
   };
 }

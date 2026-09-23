@@ -5,12 +5,14 @@ import {
   PythonParser,
   TypeContext as PythonTypeContext,
   ParamDefContext as PythonParamDefContext,
+  ArgumentContext as PythonArgumentContext,
 } from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
   RefLangParser,
   TypeContext as RefLangTypeContext,
   ParamDefContext as RefLangParamDefContext,
+  ArgumentContext as RefLangArgumentContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
@@ -133,6 +135,13 @@ export function getParamDefs<T>(
   context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
 ) {
   return context.paramDef()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
+export function getArgs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] },
+) {
+  return context.argument()?.map((t) => visitor.visit(t)!) ?? [];
 }
 
 export function getFilteredTypes(

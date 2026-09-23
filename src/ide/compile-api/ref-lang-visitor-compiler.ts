@@ -4,11 +4,13 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
+import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
   IdentifierContext,
+  MethodCallContext,
   ParamDefContext,
   ParamsListContext,
   TypeContext,
@@ -19,7 +21,7 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -75,5 +77,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const type = this.visit(ctx.type())!;
 
     return new ParamDefAsn(identifier, type, this.fieldId, this.scope);
+  };
+
+  visitMethodCall = (ctx: MethodCallContext) => {
+    const args = ctx.argList();
+    const argList = args ? getArgs(this, args).filter((a) => a) : [];
+    const name = ctx.methodName().getText();
+
+    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
   };
 }
