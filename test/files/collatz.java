@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta5
 
 public class Global {
 
@@ -54,5 +54,5 @@ static double scy(int pi, int max) { // function
   return 70 - divAsFloat((pi - 1)*65, (max - 1));
 } // end function
 
-static final Int grey = 0x808080; // constant
+static final int grey = 0x808080; // constant
 } // end Global

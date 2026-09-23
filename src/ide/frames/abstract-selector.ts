@@ -18,6 +18,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   isStatement = true;
   text: string = "";
   overtyper = new Overtyper();
+  sourcePasting = false;
 
   constructor(parent: Parent) {
     super(parent);
@@ -66,6 +67,13 @@ export abstract class AbstractSelector extends AbstractFrame {
         .replace("[", "")
         .replace("] ", "");
     }
+
+    // Pseudo-global variable to minimise changes to optionsFilteredByContext
+    // and the things it calls, in all the selector sub-classes.
+    // If refactoring, make userEntry three-valued (pasting, populating menu, loading file).
+    // This is to allow "private" when pasting but not in the context menu.
+    // Used by MemberSelector, because "private" only applies to members.
+    this.sourcePasting = source.pasting;
 
     const options = this.optionsFilteredByContext(source.pasting).filter((o) =>
       source.isMatch(o[0]),
@@ -153,7 +161,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     const message = this.isSelected()
       ? "press Enter, or <i>right</i>-click here, to view options"
       : "new code";
-    return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top></${this.outerHtmlTag}>`;
+    return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top>${this.compileMsgAsHtml()}</${this.outerHtmlTag}>`;
   }
 
   renderAsElanSource(): string {
@@ -269,6 +277,12 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   paste = (code?: string): boolean => {
+    // Get the current language to put back later
+    const oldLanguage = this.getFile().language();
+    // The text pasted in is always in Elan language
+    this.getFile().setLanguageToElan();
+    let result = true;
+
     try {
       code = (code ?? "").trim() + "\n";
 
@@ -282,14 +296,25 @@ export abstract class AbstractSelector extends AbstractFrame {
         const selector = isSelector(frame)
           ? frame
           : parentHelper_insertOrGotoChildSelector(this.getParent(), false, frame);
-        selector.paste(remainingCode);
+        result = selector.paste(remainingCode);
       }
-      this.getFile().removeAllSelectorsThatCanBe();
+      // Don't delete selectors on error,
+      // to avoid deleting this selector with the error message
+      if (result) {
+        this.getFile().removeAllSelectorsThatCanBe();
+      }
     } catch (_e) {
       this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
+      result = false;
     }
 
-    return true;
+    // Set the language back to the original value.
+    // If the language has changed, this also calls
+    // resetFieldText and resetMap to translate the expressions etc
+    // to the current language, and make the map of htmlId's correct.
+    this.getFile().setLanguage(oldLanguage);
+
+    return result;
   };
 
   canBePastedIn(frame: Frame): boolean {

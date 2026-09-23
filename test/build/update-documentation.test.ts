@@ -48,10 +48,10 @@
 //   print(di["beta"])
 // end main
 
-// function createDictionary(kvps as List<of (String, Int)>) returns Dictionary<of String, Int>
-//   let d be new Dictionary<of String, Int>()
-//   return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
-// end function`;
+function createDictionary(kvps as List<of (String, Int)>) returns Dictionary<of String, Int>
+  variable d set to new Dictionary<of String, Int>()
+  return kvps.reduce(d, lambda d as Dictionary<of String, Int>, kvp as (String, Int) => d.withPut(kvp.item_0, kvp.item_1))
+end function`;
 
 //     const actual = await processInnerCode(code);
 
@@ -111,16 +111,8 @@
 
 //     const actual = await processInnerCode(code);
 
-//     assert.strictEqual(actual[0].startsWith("<el-main"), true);
-//   });
-
-//   test("process let", async () => {
-//     const code = `let a be 1`;
-
-//     const actual = await processInnerCode(code);
-
-//     assert.strictEqual(actual[0].startsWith("<el-statement"), true);
-//   });
+    assert.strictEqual(actual[0].startsWith("<el-main"), true);
+  });
 
 //   ignore_test("process return", async () => {
 //     const code = `return 1`;

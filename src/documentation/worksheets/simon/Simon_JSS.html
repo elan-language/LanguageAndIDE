@@ -101,7 +101,7 @@
       <el-code-block>
         <main class="ok multiline" id="main3">
           <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-lit>15</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
+          <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-lit>15</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit></el-txt></el-field></el-statement>
           <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
           <el-kw>end main</el-kw>
         </main>
@@ -147,7 +147,7 @@
         Add the following immediately above the <el-kw>let</el-kw>
         that defines <el-id>circle</el-id>:
         <el-code-block>
-          <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+          <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
         </el-code-block>
         Again, this could have been an Array - because we won't be needing to extend it.
         But if we already know the values, it is <i>easier to define a 'literal' List</i> - using
@@ -169,9 +169,9 @@
         <el-code-block>
           <main class="ok multiline" id="main3">
             <el-top><el-expand>+</el-expand><el-kw>main</el-kw></el-top>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end main</el-kw>
           </main>
@@ -234,14 +234,14 @@
           <el-code-block>
             <main class="ok multiline">
             <el-top><el-kw>main</el-kw></el-top>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-lit>1</el-lit></el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayMove</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt><el-id>move</el-id></el-txt></el-field>)</el-top></el-statement>
             <el-kw>end main</el-kw>
             </main>
             <el-proc class="ok multiline">
             <el-top><el-kw>procedure </el-kw><el-method><el-field><el-txt>displayMove</el-txt></el-field></el-method>(<el-field class="optional ok"><el-txt><el-id>move</el-id> <el-kw>as</el-kw> <el-type>Int</el-type></el-txt></el-field>)</el-top>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
-            <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>colours</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt>[<el-id>red</el-id>, <el-id>yellow</el-id>, <el-id>blue</el-id>, <el-id>green</el-id>]</el-txt></el-field></el-statement>
+            <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>circle</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-kw>new</el-kw> <el-type>CircleVG</el-type>()<el-kw> with </el-kw><br /><el-id>centreX</el-id><el-kw> reassign to </el-kw><el-id>move</el-id>*<el-lit>20</el-lit> - <el-lit>5</el-lit>, <br /><el-id>centreY</el-id><el-kw> set to </el-kw><el-lit>15</el-lit>, <br /><el-id>radius</el-id><el-kw> reassign to </el-kw><el-lit>10</el-lit>, <br /><el-id>strokeWidth</el-id><el-kw> set to </el-kw><el-lit>0</el-lit>, <br /><el-id>fillColour</el-id><el-kw> set to </el-kw><el-id>colours</el-id>[<el-id>move</el-id> - <el-lit>1</el-lit>]</el-txt></el-field></el-statement>
             <el-statement><el-top><el-kw>call </el-kw><el-field><el-txt><el-method>displayVectorGraphics</el-method></el-txt></el-field>(<el-field class="optional ok"><el-txt>[<el-id>circle</el-id>]</el-txt></el-field>)</el-top></el-statement>
             <el-kw>end procedure</el-kw>
             </el-proc>
@@ -453,16 +453,16 @@
       used an <el-method>input</el-method> method, but that would also require <b>Enter</b> to be pressed after each key
       which would be cumbersome in the game Simon. So instead add these two instructions within <el-method>playersTurn</el-method>:
       <el-code-block>
-        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
-        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
+        <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+        <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>valid</el-id>, <el-id>move</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-method>parseAsInt</el-method>(<el-id>k</el-id>)</el-txt></el-field></el-statement>
       </el-code-block>
       The intent of the first instruction should be fairly clear, but what is the second one for? Why couldn't we just write, say:
       <el-code-block>
-        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
+        <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>move</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt><el-method>waitForKey</el-method>()</el-txt></el-field></el-statement>
       </el-code-block>
       The problem is that if you press, say, the 1 key, the <el-method>waitForKey</el-method> method returns a single-character
       <i>string</i> - equivalent to this instruction, say:<el-code-block>
-        <el-statement><el-kw>let </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> be </el-kw><el-field><el-txt>"<el-lit>1</el-lit>"</el-txt></el-field></el-statement>
+        <el-statement><el-kw>variable </el-kw><el-field><el-txt><el-id>k</el-id></el-txt></el-field><el-kw> set to </el-kw><el-field><el-txt>"<el-lit>1</el-lit>"</el-txt></el-field></el-statement>
       </el-code-block>
       but we really need it <i>as an integer value</i> so that we can compare it to the integer values stored in <el-id>sequence</el-id>.
       <el-method>parseAsInt</el-method> takes a string argument and attempts to turn it into an <i>integer</i> value.

@@ -1,7 +1,6 @@
 import {
   ClassOption,
   elanClass,
-  ElanClass,
   elanFloatType,
   elanFunction,
   elanIntType,
@@ -12,14 +11,13 @@ import {
 } from "../elan-type-annotations";
 import { System } from "../system";
 import { CircleVG } from "./circle-vg";
-import { GraphicsBase } from "./graphics-base";
 import { LineVG } from "./line-vg";
 import { List } from "./list";
 import { StdLib } from "./std-lib";
 import { VectorGraphic } from "./vector-graphic";
 
-@elanClass(ClassOption.concrete, [], [], [], [ElanClass(GraphicsBase)])
-export class Turtle extends GraphicsBase {
+@elanClass(ClassOption.concrete, [], [], [])
+export class Turtle {
   // this must = implemented by hand on all stdlib classes
   static emptyInstance() {
     return new Turtle();
@@ -37,7 +35,6 @@ export class Turtle extends GraphicsBase {
   }
 
   constructor() {
-    super();
     this.x = 0;
     this.y = 0;
     this.heading = 0;

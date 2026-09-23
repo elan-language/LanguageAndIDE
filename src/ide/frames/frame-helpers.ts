@@ -117,11 +117,41 @@ export function renderBackslashNasABreak(str: string): string {
   return escapeHtmlChars(str).replaceAll(/\\n/g, "<br>");
 }
 
+/* I made this code as simple as I could,
+but I still find it hard to understand, hence a long explanation.
+The idea is to make the function return the pasteError string
+twice before clearing it.
+If the user's program contains tests, the code it rendered twice,
+so the pasteError disappears immediately if only returned once
+and then cleared.
+So we make it return it twice before it is cleared.
+So the user has to click once (if the program has tests) or
+twice (if the program doesn't have tests) to make it disappear.
+If the program has parse errors or compile errors the tests are not run
+and it takes two clicks.
+We use a counter so that it could be changed to three times easily
+(by changing 1 to 2).
+The counter is initialised to 0 so that the "loc" object (Frame, AbstractFrame)
+doesn't need to be changed if we want to change the limit.
+And we reset the counter to zero when we are done so that it
+doesn't have to be set when pasteError is set (in multiple places).
+It think it needs a little table:
+  Counter    pasteError  Returns     Counter  pasteError
+  before     before                  after    after
+    0         empty       empty        0       empty
+    0         non-empty   pasteError   1       non-empty
+    1         non-empty   pasteError   0       empty
+ */
 export function helper_pastePopUp(loc: Frame | Field): string {
   let popup = "";
   if (isFrame(loc) && loc.pasteError) {
     popup = `<div class="context-menu"><div>${loc.pasteError}</div></div>`;
-    loc.pasteError = "";
+    if (loc.pasteErrCounter === 1) {
+      loc.pasteError = "";
+      loc.pasteErrCounter = 0;
+    } else {
+      loc.pasteErrCounter++;
+    }
   }
   return popup;
 }

@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta3
+// C# with Elan 2.0.0-beta5
 
 // Turing Machine that converts a Year from decimal to roman numerals
 
@@ -31,9 +31,9 @@ static void main() {
   Console.WriteLine($"The roman numeral equivalent for {dec} is {tm.tape.trim()}"); // print statement
 } // end main
 
-const String initState = "init";
+const string initState = "init";
 
-const String haltState = "halt";
+const string haltState = "halt";
 
 class TuringMachine {
 

@@ -1,152 +1,83 @@
-# Python with Elan 2.0.0-beta3
+# Python with Elan 2.0.0-beta5
 
 # Use the w,a,s,d keys to change snake's direction
 
+width = 40 # constant
+
+height = 30 # constant
+
 def main() -> None:
-  blocks = createBlockGraphics(white) # variable definition
-  head = [20, 15] # variable definition
-  tail = head # variable definition
-  body = [head] # variable definition
-  currentDir = Direction.right # variable definition
-  gameOn = True # variable definition
-  apple = [0, 0] # variable definition
-  setAppleToRandomPosition(apple, body) # procedure call
-  while gameOn:
-    updateDisplay(blocks, head, tail, body, apple) # procedure call
-    currentDirRef = AsRef[Direction](currentDir) # variable definition
-    headRef = AsRef[list[int]](head) # variable definition
-    tailRef = AsRef[list[int]](tail) # variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) # procedure call
-    head = headRef.value() # assignment
-    tail = tailRef.value() # assignment
-    currentDir = currentDirRef.value() # assignment
-    gameOn = not hasHitEdge(head[0], head[1]) and not body.contains(head) # assignment
-    if head.equals(apple):
-      setAppleToRandomPosition(apple, body) # procedure call
+  bg = BlockGraphics() # variable definition
+  head = 621 # variable definition
+  snake = [head - 1, head] # variable definition
+  currentDir = "d" # variable definition
+  gameIsOn = True # variable definition
+  apple = -1 # variable definition
+  while gameIsOn:
+    while (apple == -1) or snake.contains(apple):
+      apple = randint(0, width*height) # assignment
+    # end while
+    updateDisplay(bg, snake, apple) # procedure call
+    key = getKey() # variable definition
+    if not key.equals("") and "wasd".contains(key):
+      currentDir = key # assignment
+    # end if
+    head = getAdjacentBlock(head, currentDir) # assignment
+    if (head == -1) or snake.contains(head):
+      gameIsOn = False # assignment
     else:
-      body.removeAt(0) # procedure call
+      snake.append(head) # procedure call
+    # end if
+    if head.equals(apple):
+      apple = -1 # assignment
+    else:
+      snake.removeAt(0) # procedure call
     # end if
     sleep_ms(150) # procedure call
   # end while
-  print(f"Game Over! Score: {body.length() - 1}")
+  print(f"Game Over! Score: {snake.length() - 1}")
 # end main
 
-def updateSnake(currentDirRef: AsRef[Direction], tailRef: AsRef[list[int]], headRef: AsRef[list[int]], body: list[list[int]]) -> None: # procedure
-  head = headRef.value() # variable definition
-  tail = tailRef.value() # variable definition
-  currentDir = currentDirRef.value() # variable definition
-  currentDir = directionByKey(currentDir, getKey()) # assignment
-  tailRef.put(body[0]) # procedure call
-  body.append(head) # procedure call
-  headRef.put(getAdjacentSquare(head, currentDir)) # procedure call
-  currentDirRef.put(currentDir) # procedure call
+def updateDisplay(bg: BlockGraphics, snake: list[int], apple: int) -> None: # procedure
+  bg.colourAll(white) # procedure call
+  for bl in snake:
+    bg.putBlockNo(bl, green) # procedure call
+  # end for
+  bg.putBlockNo(apple, red) # procedure call
+  displayBlockGraphics(bg) # procedure call
 # end procedure
 
-def updateDisplay(blocks: list[list[int]], head: list[int], tail: list[int], body: list[list[int]], apple: list[int]) -> None: # procedure
-  blocks[head[0]][head[1]] = green # assignment
-  tailColour = getTailColour(tail, body) # variable definition
-  blocks[tail[0]][tail[1]] = tailColour # assignment
-  blocks[apple[0]][apple[1]] = red # assignment
-  displayBlocks(blocks) # procedure call
-# end procedure
-
-def setAppleToRandomPosition(apple: list[int], body: list[list[int]]) -> None: # procedure
-  changePosition = True # variable definition
-  while changePosition:
-    apple[0] = randint(0, 39) # assignment
-    apple[1] = randint(0, 29) # assignment
-    if not body.contains(apple):
-      changePosition = False # assignment
-    # end if
-  # end while
-# end procedure
-
-def getTailColour(tail: list[int], body: list[list[int]]) -> int: # function
-  colour = white # variable definition
-  if body[0].equals(tail):
-    colour = green # assignment
+def getAdjacentBlock(bl: int, dir: str) -> int: # function
+  adj = -1 # variable definition
+  newCol = bl % width # variable definition
+  newRow = divAsInt(bl, width) # variable definition
+  if dir.equals("w"):
+    newRow = newRow - 1 # assignment
+  elif dir.equals("a"): # else if
+    newCol = newCol - 1 # assignment
+  elif dir.equals("s"): # else if
+    newRow = newRow + 1 # assignment
+  elif dir.equals("d"): # else if
+    newCol = newCol + 1 # assignment
   # end if
-  return colour
-# end function
-
-def hasHitEdge(headX: int, headY: int) -> bool: # function
-  return (headX < 0) or (headY < 0) or (headX > 39) or (headY > 29)
-# end function
-
-def getAdjacentSquare(sq: list[int], dir: Direction) -> list[int]: # function
-  newX = sq[0] # variable definition
-  newY = sq[1] # variable definition
-  if dir == Direction.left:
-    newX = newX - 1 # assignment
-  elif dir == Direction.right: # else if
-    newX = newX + 1 # assignment
-  elif dir == Direction.up: # else if
-    newY = newY - 1 # assignment
-  elif dir == Direction.down: # else if
-    newY = newY + 1 # assignment
+  if (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height):
+    adj = newRow*width + newCol # assignment
   # end if
-  return [newX, newY]
+  return adj
 # end function
 
-def directionByKey(current: Direction, key: str) -> Direction: # function
-  dirn = current # variable definition
-  if key.equals("w"):
-    dirn = Direction.up # assignment
-  elif key.equals("s"): # else if
-    dirn = Direction.down # assignment
-  elif key.equals("a"): # else if
-    dirn = Direction.left # assignment
-  elif key.equals("d"): # else if
-    dirn = Direction.right # assignment
-  # end if
-  return dirn
-# end function
-
-class Direction(Enum):
-  up = 1
-  down = 2
-  left = 3
-  right = 4
-
-class Test_getTailColour(unittest.TestCase):
- def test_getTailColour(self) -> None:
-  self.assertEqual(getTailColour([3, 4], [[3, 4], [3, 5]]), green)
-  self.assertEqual(getTailColour([3, 4], [[3, 5], [3, 6]]), white)
-# end test
-
-class Test_hasHitEdge(unittest.TestCase):
- def test_hasHitEdge(self) -> None:
-  self.assertEqual(hasHitEdge(0, 0), False)
-  self.assertEqual(hasHitEdge(0, 29), False)
-  self.assertEqual(hasHitEdge(39, 0), False)
-  self.assertEqual(hasHitEdge(29, 29), False)
-  self.assertEqual(hasHitEdge(-1, 5), True)
-  self.assertEqual(hasHitEdge(5, 30), True)
-  self.assertEqual(hasHitEdge(40, 5), True)
-  self.assertEqual(hasHitEdge(5, -1), True)
-# end test
-
-class Test_getAdjacentSquare(unittest.TestCase):
- def test_getAdjacentSquare(self) -> None:
-  sq = [20, 15] # variable definition
-  self.assertEqual(getAdjacentSquare(sq, Direction.up), [20, 14])
-  self.assertEqual(getAdjacentSquare(sq, Direction.down), [20, 16])
-  self.assertEqual(getAdjacentSquare(sq, Direction.left), [19, 15])
-  self.assertEqual(getAdjacentSquare(sq, Direction.right), [21, 15])
+class Test_getAdjacentBlock(unittest.TestCase):
+ def test_getAdjacentBlock(self) -> None:
+  bl = 617 # variable definition
+  self.assertEqual(getAdjacentBlock(bl, "w"), 577)
+  self.assertEqual(getAdjacentBlock(bl, "a"), 616)
+  self.assertEqual(getAdjacentBlock(bl, "s"), 657)
+  self.assertEqual(getAdjacentBlock(bl, "d"), 618)
   # boundary
-  self.assertEqual(getAdjacentSquare([0, 15], Direction.left), [-1, 15])
-# end test
-
-class Test_directionByKey(unittest.TestCase):
- def test_directionByKey(self) -> None:
-  current = Direction.up # variable definition
-  self.assertEqual(directionByKey(current, ""), Direction.up)
-  self.assertEqual(directionByKey(current, "x"), Direction.up)
-  self.assertEqual(directionByKey(current, "w"), Direction.up)
-  self.assertEqual(directionByKey(current, "s"), Direction.down)
-  self.assertEqual(directionByKey(current, "a"), Direction.left)
-  self.assertEqual(directionByKey(current, "d"), Direction.right)
-  self.assertEqual(directionByKey(current, "D"), Direction.up)
+  self.assertEqual(getAdjacentBlock(20, "w"), -1)
+  self.assertEqual(getAdjacentBlock(40, "a"), -1)
+  self.assertEqual(getAdjacentBlock(1180, "s"), -1)
+  self.assertEqual(getAdjacentBlock(79, "d"), -1)
 # end test
 
 main()

@@ -32,6 +32,7 @@ export abstract class AbstractFrame implements Frame {
   isNew = true;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   pasteError: string = "";
+  pasteErrCounter: number = 0;
   helpActive: boolean = false;
 
   private id: string = "";
@@ -248,6 +249,7 @@ export abstract class AbstractFrame implements Frame {
       case "ArrowUp": {
         if (e.modKey.control) {
           this.up();
+          codeHasChanged = true;
         } else {
           this.selectSingleOrMulti(this.getPreviousPeerFrame(), e.modKey.shift);
         }
@@ -256,6 +258,7 @@ export abstract class AbstractFrame implements Frame {
       case "ArrowDown": {
         if (e.modKey.control) {
           this.down();
+          codeHasChanged = true;
         } else {
           this.selectSingleOrMulti(this.getNextPeerFrame(), e.modKey.shift);
         }

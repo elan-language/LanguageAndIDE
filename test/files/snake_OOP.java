@@ -1,200 +1,151 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta5
 
 public class Global {
 
 // Use the W,A,S,D keys to change Snake direction
 
+static final int width = 40; // constant
+
+static final int height = 30; // constant
+
 static void main() {
-  var blocks = createBlockGraphics(white);
-  var snake = new Snake();
-  var apple = new Apple();
-  apple.newRandomPosition(snake); // procedure call
-  while (!snake.gameOver()) {
-    snake.updateBlocks(blocks); // procedure call
-    apple.updateBlocks(blocks); // procedure call
-    displayBlocks(blocks); // procedure call
+  var game = new Game();
+  while (game.isOn) {
+    game.clockTick(getKey()); // procedure call
+    var blocks = new BlockGraphics();
+    game.updateBlocks(blocks); // procedure call
+    displayBlockGraphics(blocks); // procedure call
     sleep_ms(150); // procedure call
-    snake.clockTick(getKey(), apple); // procedure call
   } // end while
-  System.out.println(String.format("Game Over! Score: %", snake.score())); // print statement
+  System.out.println(String.format("Game Over! Score: %", game.score())); // print statement
 } // end main
 
-class Snake {
+class Game {
 
-  public Snake() {
-    var tail = new Square(20, 15);
-    this.currentDir = Direction.right; // assignment
-    this.body = list(tail); // assignment
-    this.head = tail.getAdjacentSquare(this.currentDir); // assignment
-    this.priorTail = tail; // assignment
+  public Game() {
+    this.snake = new Snake(620); // assignment
+    this.currentDir = "d"; // assignment
+    this.newAppleNeeded = true; // assignment
+    this.isOn = true; // assignment
   } // end constructor
 
-  private Direction currentDir; // private property
+  private Snake snake; // private property
 
-  private Square head; // private property
+  private String currentDir; // private property
 
-  private List<Square> body; // private property
+  private int apple; // private property
 
-  private Square priorTail; // private property
+  private boolean newAppleNeeded; // private property
 
-  public void clockTick(String key, Apple apple) { // procedure method
-    this.setDirection(key); // procedure call
-    this.priorTail = this.body[0]; // assignment
-    var body = this.body;
-    body.append(this.head); // procedure call
-    this.head = this.head.getAdjacentSquare(this.currentDir); // assignment
-    if (this.head.equals(apple.location)) {
-      apple.newRandomPosition(this); // procedure call
-    } else {
-      this.body = this.body.subList(1, this.body.length()); // assignment
+  public boolean isOn; // property
+
+  public void newAppleIfNeeded() { // procedure method
+    while (this.newAppleNeeded || this.snake.bodyCovers(this.apple)) {
+      this.apple = randint(0, width*height - 1); // assignment
+      this.newAppleNeeded = false; // assignment
+    } // end while
+  } // end procedure method
+
+  public void clockTick(String key) { // procedure method
+    this.newAppleIfNeeded(); // procedure call
+    this.setDirectionIfKeyPress(key); // procedure call
+    //  TODO 3502
+    var snake = this.snake;
+    snake.moveHead(this.currentDir); // procedure call
+    if (snake.bodyCovers(this.apple)) {
+      this.newAppleNeeded = true; // assignment
+    } else if (!snake.dead) {
+      snake.moveTail(); // procedure call
+    } // end if
+    if (snake.dead) {
+      this.isOn = false; // assignment
     } // end if
   } // end procedure method
 
-  public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.head.x][this.head.y] = green; // assignment
-    if (!this.body[0].equals(this.priorTail)) {
-      blocks[this.priorTail.x][this.priorTail.y] = white; // assignment
+  public void updateBlocks(BlockGraphics blocks) { // procedure method
+    //  TODO 3502
+    var snake = this.snake;
+    snake.addToBlocks(blocks); // procedure call
+    blocks.putBlockNo(this.apple, red); // procedure call
+  } // end procedure method
+
+  public void setDirectionIfKeyPress(String key) { // procedure method
+    if (!key.equals("") && "wasd".contains(key)) {
+      this.currentDir = key; // assignment
     } // end if
   } // end procedure method
 
   public int score() { // function method
-    return this.body.length() - 1;
+    return this.snake.length() - 1;
   } // end function method
 
-  public boolean bodyCovers(Square sq) { // function method
-    var result = false;
-    foreach (var seg in this.body) {
-      if ((seg.equals(sq))) {
-        result = true; // assignment
-      } // end if
+  public String toString() { // function method
+    return "undefined";
+  } // end function method
+
+} // end class
+
+class Snake {
+
+  public Snake(int head) {
+    this.head = head; // assignment
+    this.body = list(this.head - 1, this.head); // assignment
+  } // end constructor
+
+  public int head; // property
+
+  private List<int> body; // private property
+
+  public boolean dead; // property
+
+  public void moveHead(String dir) { // procedure method
+    var newCol = this.head % width;
+    var newRow = divAsInt(this.head, width);
+    if (dir.equals("w")) {
+      newRow = newRow - 1; // assignment
+    } else if (dir.equals("a")) {
+      newCol = newCol - 1; // assignment
+    } else if (dir.equals("s")) {
+      newRow = newRow + 1; // assignment
+    } else if (dir.equals("d")) {
+      newCol = newCol + 1; // assignment
+    } // end if
+    this.head = -1; // assignment
+    if ((newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height)) {
+      this.head = newRow*width + newCol; // assignment
+    } // end if
+    if ((this.head == -1) || this.body.contains(this.head)) {
+      this.dead = true; // assignment
+    } else {
+      //  3502
+      var body = this.body;
+      body.append(this.head); // procedure call
+    } // end if
+  } // end procedure method
+
+  public void moveTail() { // procedure method
+    // 3502
+    var body = this.body;
+    body.removeAt(0); // procedure call
+  } // end procedure method
+
+  public void addToBlocks(BlockGraphics blocks) { // procedure method
+    foreach (var block in this.body) {
+      blocks.putBlockNo(block, green); // procedure call
     } // end foreach
-    return result;
-  } // end function method
-
-  public boolean gameOver() { // function method
-    return this.bodyCovers(this.head) || this.head.hasHitEdge();
-  } // end function method
-
-  private void setDirection(String key) { // private procedure method
-    if (key.equals("w")) {
-      this.currentDir = Direction.up; // assignment
-    } else if (key.equals("s")) {
-      this.currentDir = Direction.down; // assignment
-    } else if (key.equals("a")) {
-      this.currentDir = Direction.left; // assignment
-    } else if (key.equals("d")) {
-      this.currentDir = Direction.right; // assignment
-    } // end if
   } // end procedure method
 
-  public String toString() { // function method
-    return String.format("a Snake with head at %", this.head);
+  public boolean bodyCovers(int sq) { // function method
+    return this.body.contains(sq);
   } // end function method
 
-} // end class
-
-class Apple {
-
-  public Apple() {
-    this.location = new Square(0, 0); // assignment
-  } // end constructor
-
-  public Square location; // property
-
-  public void newRandomPosition(Snake snake) { // procedure method
-    var changePosition = true;
-    while (changePosition) {
-      var ranX = randint(0, 39);
-      var ranY = randint(0, 29);
-      this.location = new Square(ranX, ranY); // assignment
-      if (!snake.bodyCovers(this.location)) {
-        changePosition = false; // assignment
-      } // end if
-    } // end while
-  } // end procedure method
-
-  public void updateBlocks(List<List<int>> blocks) { // procedure method
-    blocks[this.location.x][this.location.y] = red; // assignment
-  } // end procedure method
-
-  public String toString() { // function method
-    return String.format("an Apple at %", this.location);
-  } // end function method
-
-} // end class
-
-class Square {
-
-  public Square(int x, int y) {
-    this.x = x; // assignment
-    this.y = y; // assignment
-  } // end constructor
-
-  public int x; // property
-
-  public int y; // property
-
-  public Square getAdjacentSquare(Direction d) { // function method
-    var newX = this.x;
-    var newY = this.y;
-    if (d == Direction.left) {
-      newX = this.x - 1; // assignment
-    } else if (d == Direction.right) {
-      newX = this.x + 1; // assignment
-    } else if (d == Direction.up) {
-      newY = this.y - 1; // assignment
-    } else if (d == Direction.down) {
-      newY = this.y + 1; // assignment
-    } // end if
-    return new Square(newX, newY);
-  } // end function method
-
-  public boolean hasHitEdge() { // function method
-    return (this.x == -1) || (this.y == -1) || (this.x == 40) || (this.y == 30);
+  public int length() { // function method
+    return this.body.length();
   } // end function method
 
   public String toString() { // function method
-    return "{this.x}, {this.y}";
+    return String.format("a Snake", );
   } // end function method
 
 } // end class
-
-enum Direction {up, down, left, right}
-
-class Test_snake {
-@Test static void test_snake() {
-  var snake = new Snake();
-  // bodyCovers
-  assertEquals(true, snake.bodyCovers(new Square(20, 15)));
-  assertEquals(false, snake.bodyCovers(new Square(21, 15)));
-  // gameOver, score - can only test test_for default - which is not thorough test
-  assertEquals(false, snake.gameOver());
-  assertEquals(0, snake.score());
-}} // end test
-
-class Test_apple {
-@Test static void test_apple() {
-  // no tests
-}} // end test
-
-class Test_square {
-@Test static void test_square() {
-  // constructor - not testable as properties are private
-  // getAdjacentSquare
-  var sq1 = new Square(3, 4);
-  assertEquals(new Square(3, 3), sq1.getAdjacentSquare(Direction.up));
-  assertEquals(new Square(3, 5), sq1.getAdjacentSquare(Direction.down));
-  assertEquals(new Square(2, 4), sq1.getAdjacentSquare(Direction.left));
-  assertEquals(new Square(4, 4), sq1.getAdjacentSquare(Direction.right));
-  var sq2 = new Square(0, 0);
-  var sq3 = new Square(-1, 0);
-  assertEquals(sq3, sq2.getAdjacentSquare(Direction.left));
-  // hasHitEdge
-  assertEquals(false, (new Square(0, 0)).hasHitEdge());
-  assertEquals(false, (new Square(39, 20)).hasHitEdge());
-  assertEquals(true, (new Square(-1, 3)).hasHitEdge());
-  assertEquals(true, (new Square(3, -1)).hasHitEdge());
-  assertEquals(true, (new Square(40, 3)).hasHitEdge());
-  assertEquals(true, (new Square(3, 30)).hasHitEdge());
-}} // end test
 } // end Global

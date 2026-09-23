@@ -1,159 +1,83 @@
-' VB.NET with Elan 2.0.0-beta3
+' VB.NET with Elan 2.0.0-beta5
 
 ' Use the w,a,s,d keys to change snake's direction
 
+Const width = 40
+
+Const height = 30
+
 Sub main()
-  Dim blocks = createBlockGraphics(white) ' variable definition
-  Dim head = {20, 15} ' variable definition
-  Dim tail = head ' variable definition
-  Dim body = {head} ' variable definition
-  Dim currentDir = Direction.right ' variable definition
-  Dim gameOn = True ' variable definition
-  Dim apple = {0, 0} ' variable definition
-  setAppleToRandomPosition(apple, body) ' procedure call
-  While gameOn
-    updateDisplay(blocks, head, tail, body, apple) ' procedure call
-    Dim currentDirRef = New AsRef(Of Direction)(currentDir) ' variable definition
-    Dim headRef = New AsRef(Of List(Of Integer))(head) ' variable definition
-    Dim tailRef = New AsRef(Of List(Of Integer))(tail) ' variable definition
-    updateSnake(currentDirRef, tailRef, headRef, body) ' procedure call
-    head = headRef.value() ' assignment
-    tail = tailRef.value() ' assignment
-    currentDir = currentDirRef.value() ' assignment
-    gameOn = Not hasHitEdge(head(0), head(1)) And Not body.contains(head) ' assignment
-    If head.equals(apple) Then
-      setAppleToRandomPosition(apple, body) ' procedure call
+  Dim bg = New BlockGraphics() ' variable definition
+  Dim head = 621 ' variable definition
+  Dim snake = {head - 1, head} ' variable definition
+  Dim currentDir = "d" ' variable definition
+  Dim gameIsOn = True ' variable definition
+  Dim apple = -1 ' variable definition
+  While gameIsOn
+    While (apple = -1) Or snake.contains(apple)
+      apple = randint(0, width*height) ' assignment
+    End While
+    updateDisplay(bg, snake, apple) ' procedure call
+    Dim key = getKey() ' variable definition
+    If Not key.equals("") And "wasd".contains(key) Then
+      currentDir = key ' assignment
+    End If
+    head = getAdjacentBlock(head, currentDir) ' assignment
+    If (head = -1) Or snake.contains(head) Then
+      gameIsOn = False ' assignment
     Else
-      body.removeAt(0) ' procedure call
+      snake.append(head) ' procedure call
+    End If
+    If head.equals(apple) Then
+      apple = -1 ' assignment
+    Else
+      snake.removeAt(0) ' procedure call
     End If
     sleep_ms(150) ' procedure call
   End While
-  Console.WriteLine($"Game Over! Score: {body.length() - 1}") ' print statement
+  Console.WriteLine($"Game Over! Score: {snake.length() - 1}") ' print statement
 End Sub
 
-Sub updateSnake(currentDirRef As AsRef(Of Direction), tailRef As AsRef(Of List(Of Integer)), headRef As AsRef(Of List(Of Integer)), body As List(Of List(Of Integer))) ' procedure
-  Dim head = headRef.value() ' variable definition
-  Dim tail = tailRef.value() ' variable definition
-  Dim currentDir = currentDirRef.value() ' variable definition
-  currentDir = directionByKey(currentDir, getKey()) ' assignment
-  tailRef.put(body(0)) ' procedure call
-  body.append(head) ' procedure call
-  headRef.put(getAdjacentSquare(head, currentDir)) ' procedure call
-  currentDirRef.put(currentDir) ' procedure call
+Sub updateDisplay(bg As BlockGraphics, snake As List(Of Integer), apple As Integer) ' procedure
+  bg.colourAll(white) ' procedure call
+  For Each bl In snake
+    bg.putBlockNo(bl, green) ' procedure call
+  Next bl
+  bg.putBlockNo(apple, red) ' procedure call
+  displayBlockGraphics(bg) ' procedure call
 End Sub
 
-Sub updateDisplay(blocks As List(Of List(Of Integer)), head As List(Of Integer), tail As List(Of Integer), body As List(Of List(Of Integer)), apple As List(Of Integer)) ' procedure
-  blocks(head(0))(head(1)) = green ' assignment
-  Dim tailColour = getTailColour(tail, body) ' variable definition
-  blocks(tail(0))(tail(1)) = tailColour ' assignment
-  blocks(apple(0))(apple(1)) = red ' assignment
-  displayBlocks(blocks) ' procedure call
-End Sub
-
-Sub setAppleToRandomPosition(apple As List(Of Integer), body As List(Of List(Of Integer))) ' procedure
-  Dim changePosition = True ' variable definition
-  While changePosition
-    apple(0) = randint(0, 39) ' assignment
-    apple(1) = randint(0, 29) ' assignment
-    If Not body.contains(apple) Then
-      changePosition = False ' assignment
-    End If
-  End While
-End Sub
-
-Function getTailColour(tail As List(Of Integer), body As List(Of List(Of Integer))) As Integer
-  Dim colour = white ' variable definition
-  If body(0).equals(tail) Then
-    colour = green ' assignment
+Function getAdjacentBlock(bl As Integer, dir As String) As Integer
+  Dim adj = -1 ' variable definition
+  Dim newCol = bl Mod width ' variable definition
+  Dim newRow = divAsInt(bl, width) ' variable definition
+  If dir.equals("w") Then
+    newRow = newRow - 1 ' assignment
+  ElseIf dir.equals("a") Then
+    newCol = newCol - 1 ' assignment
+  ElseIf dir.equals("s") Then
+    newRow = newRow + 1 ' assignment
+  ElseIf dir.equals("d") Then
+    newCol = newCol + 1 ' assignment
   End If
-  Return colour
-End Function
-
-Function hasHitEdge(headX As Integer, headY As Integer) As Boolean
-  Return (headX < 0) Or (headY < 0) Or (headX > 39) Or (headY > 29)
-End Function
-
-Function getAdjacentSquare(sq As List(Of Integer), dir As Direction) As List(Of Integer)
-  Dim newX = sq(0) ' variable definition
-  Dim newY = sq(1) ' variable definition
-  If dir = Direction.left Then
-    newX = newX - 1 ' assignment
-  ElseIf dir = Direction.right Then
-    newX = newX + 1 ' assignment
-  ElseIf dir = Direction.up Then
-    newY = newY - 1 ' assignment
-  ElseIf dir = Direction.down Then
-    newY = newY + 1 ' assignment
+  If (newCol >= 0) And (newCol < width) And (newRow >= 0) And (newRow < height) Then
+    adj = newRow*width + newCol ' assignment
   End If
-  Return {newX, newY}
+  Return adj
 End Function
 
-Function directionByKey(current As Direction, key As String) As Direction
-  Dim dirn = current ' variable definition
-  If key.equals("w") Then
-    dirn = Direction.up ' assignment
-  ElseIf key.equals("s") Then
-    dirn = Direction.down ' assignment
-  ElseIf key.equals("a") Then
-    dirn = Direction.left ' assignment
-  ElseIf key.equals("d") Then
-    dirn = Direction.right ' assignment
-  End If
-  Return dirn
-End Function
-
-Enum Direction 
-  up = 0
-  down = 1
-  left = 2
-  right = 3
-End Enum
-
-<TestClass Class Test_getTailColour
- <TestMethod> Sub test_getTailColour()
-  Assert.AreEqual(green, getTailColour({3, 4}, {{3, 4}, {3, 5}}))
-  Assert.AreEqual(white, getTailColour({3, 4}, {{3, 5}, {3, 6}}))
- End Sub
-End Class
-
-
-<TestClass Class Test_hasHitEdge
- <TestMethod> Sub test_hasHitEdge()
-  Assert.AreEqual(False, hasHitEdge(0, 0))
-  Assert.AreEqual(False, hasHitEdge(0, 29))
-  Assert.AreEqual(False, hasHitEdge(39, 0))
-  Assert.AreEqual(False, hasHitEdge(29, 29))
-  Assert.AreEqual(True, hasHitEdge(-1, 5))
-  Assert.AreEqual(True, hasHitEdge(5, 30))
-  Assert.AreEqual(True, hasHitEdge(40, 5))
-  Assert.AreEqual(True, hasHitEdge(5, -1))
- End Sub
-End Class
-
-
-<TestClass Class Test_getAdjacentSquare
- <TestMethod> Sub test_getAdjacentSquare()
-  Dim sq = {20, 15} ' variable definition
-  Assert.AreEqual({20, 14}, getAdjacentSquare(sq, Direction.up))
-  Assert.AreEqual({20, 16}, getAdjacentSquare(sq, Direction.down))
-  Assert.AreEqual({19, 15}, getAdjacentSquare(sq, Direction.left))
-  Assert.AreEqual({21, 15}, getAdjacentSquare(sq, Direction.right))
+<TestClass Class Test_getAdjacentBlock
+ <TestMethod> Sub test_getAdjacentBlock()
+  Dim bl = 617 ' variable definition
+  Assert.AreEqual(577, getAdjacentBlock(bl, "w"))
+  Assert.AreEqual(616, getAdjacentBlock(bl, "a"))
+  Assert.AreEqual(657, getAdjacentBlock(bl, "s"))
+  Assert.AreEqual(618, getAdjacentBlock(bl, "d"))
   ' boundary
-  Assert.AreEqual({-1, 15}, getAdjacentSquare({0, 15}, Direction.left))
- End Sub
-End Class
-
-
-<TestClass Class Test_directionByKey
- <TestMethod> Sub test_directionByKey()
-  Dim current = Direction.up ' variable definition
-  Assert.AreEqual(Direction.up, directionByKey(current, ""))
-  Assert.AreEqual(Direction.up, directionByKey(current, "x"))
-  Assert.AreEqual(Direction.up, directionByKey(current, "w"))
-  Assert.AreEqual(Direction.down, directionByKey(current, "s"))
-  Assert.AreEqual(Direction.left, directionByKey(current, "a"))
-  Assert.AreEqual(Direction.right, directionByKey(current, "d"))
-  Assert.AreEqual(Direction.up, directionByKey(current, "D"))
+  Assert.AreEqual(-1, getAdjacentBlock(20, "w"))
+  Assert.AreEqual(-1, getAdjacentBlock(40, "a"))
+  Assert.AreEqual(-1, getAdjacentBlock(1180, "s"))
+  Assert.AreEqual(-1, getAdjacentBlock(79, "d"))
  End Sub
 End Class
 

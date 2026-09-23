@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-beta3
+// Java with Elan 2.0.0-beta5
 
 public class Global {
 
@@ -27,5 +27,5 @@ static void drawSide(double length, Turtle t) { // procedure
   } // end if
 } // end procedure
 
-static final Int side = 100; // constant
+static final int side = 100; // constant
 } // end Global
