@@ -9,7 +9,9 @@ import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  ChainableContext,
   IdentifierContext,
+  IndexContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -22,6 +24,8 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -85,5 +89,29 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const name = ctx.methodName().getText();
 
     return new FuncCallAsn(name, argList, this.fieldId, this.scope);
+  };
+
+  visitIndex = (ctx: IndexContext) => {
+    const expr = this.visit(ctx.expression()) ?? EmptyAsn.Instance;
+    return new IndexAsn(expr, this.fieldId, this.scope);
+  };
+
+  visitChainable = (ctx: ChainableContext) => {
+    const indices = ctx
+      .index()
+      .map((i) => this.visit(i))
+      .filter((i) => i) as IndexAsn[];
+    const methodCall = ctx.methodCall();
+    const identifier = ctx.identifier();
+    const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
+
+    let precedingNode = prefix!;
+
+    for (const index of indices) {
+      index.updateScopeAndChain(this.scope, precedingNode);
+      precedingNode = index;
+    }
+
+    return prefix!;
   };
 }

@@ -722,46 +722,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
   //   });
 
-  //   test("Function Call", () => {
-  //     testNodeParse(new MethodCallNode(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new MethodCallNode(f), `  `, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(
-  //       new MethodCallNode(f),
-  //       `foo()`,
-  //       ParseStatus.valid,
-  //       `foo()`,
-  //       "",
-  //       "foo()",
-  //       "<el-method>foo</el-method>()",
-  //     );
-  //     testNodeParse(
-  //       new MethodCallNode(f),
-  //       `bar(x, 1, "hello")`,
-  //       ParseStatus.valid,
-  //       `bar(x, 1, "hello")`,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testNodeParse(new MethodCallNode(f), `yon`, ParseStatus.incomplete, `yon`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon `, ParseStatus.invalid, ``, "yon ", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
-  //     testNodeParse(new MethodCallNode(f), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-  //     testNodeParse(
-  //       new MethodCallNode(f),
-  //       `foo(a)`,
-  //       ParseStatus.valid,
-  //       ``,
-  //       "",
-  //       "foo(a)",
-  //       "<el-method>foo</el-method>(<el-id>a</el-id>)",
-  //     );
-  //     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
-  //   });
-
   function getMethodCallRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguageElan.Instance, (p: Parser) => p.methodCall()];
   }
@@ -1465,18 +1425,18 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testNodeParse(new ProcRefNode(f), `this.foo`, ParseStatus.valid, "", "");
   //     testNodeParse(new ProcRefNode(f), `this.foo.bar`, ParseStatus.valid, "", ".bar");
   //   });
-  //   // test("#339 call dot function on a literal", () => {
-  //   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.length()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.asList()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
-  //   // });
 
+  // test("#339 call dot function on a literal", () => {
+  //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `bar.length()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `bar.asList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
+  //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
+  //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
+  // });
   //   test("#670 new parse node structure for terms & expressions", () => {
   //     testNodeParse(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
   //     testNodeParse(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
@@ -2540,6 +2500,46 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `this`,
   //     );
   //   });
+
+  function getIndexRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.index()];
+  }
+
+  test("index", () => {
+    testAntlrParse(getIndexRule(), ``, false);
+    testAntlrParse(getIndexRule(), ` `, false);
+    //testAntlrParse(getIndexRule(), `[]`, false);
+    testAntlrParse(getIndexRule(), `[1]`, true, "[1]", "[1]", "[<el-lit>1</el-lit>]", "[1]", "1");
+    testAntlrParse(getIndexRule(), `[a]`, true, "[a]", "[a]", "[<el-id>a</el-id>]", "[a]", "a");
+  });
+
+  function getChainableRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.chainable()];
+  }
+
+  test("chainable", () => {
+    testAntlrParse(getChainableRule(), ``, false);
+    testAntlrParse(getChainableRule(), ` `, false);
+    //testAntlrParse(getChainableRule(), `a[]`, false);
+    testAntlrParse(
+      getChainableRule(),
+      `a[1]`,
+      true,
+      "a[1]",
+      "a[1]",
+      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
+      "a[1]",
+    );
+    testAntlrParse(
+      getChainableRule(),
+      `a[b]`,
+      true,
+      "a[b]",
+      "a[b]",
+      "<el-id>a</el-id>[<el-id>b</el-id>]",
+      "a[b]",
+    );
+  });
 });
 
 // class test_seq1 extends AbstractSequence {

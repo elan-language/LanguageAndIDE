@@ -2,8 +2,10 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  ChainableContext,
   CommentTextContext,
   IdentifierContext,
+  IndexContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -70,5 +72,21 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     const name = this.visit(ctx.methodName());
 
     return `${name}(${args})`;
+  };
+
+  visitIndex = (ctx: IndexContext) => {
+    const expr = this.visit(ctx.expression()) ?? "";
+    return `[${expr}]`;
+  };
+
+  visitChainable = (ctx: ChainableContext) => {
+    const indices = ctx
+      .index()
+      .map((i) => this.visit(i))
+      .join("");
+    const methodCall = ctx.methodCall();
+    const identifier = ctx.identifier();
+    const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
+    return `${prefix}${indices}`;
   };
 }
