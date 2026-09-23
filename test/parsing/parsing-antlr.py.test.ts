@@ -1,10 +1,7 @@
-import { PythonParser } from "../../src/generated/python/PythonParser";
-import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
+import { ParserRuleContext } from "antlr4ng";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { ParseStatus } from "../../src/ide/frames/status-enums";
-import { testAntlrParse } from "../testHelpers";
-
-type Parser = RefLangParser | PythonParser;
+import { testAntlrParse, Parser } from "../testHelpers";
 
 suite("Parsing Antlr Rules Python", () => {
   //   const f = new FileImpl(
@@ -134,49 +131,43 @@ suite("Parsing Antlr Rules Python", () => {
   //     testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
   //   });
 
+  function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.identifier()];
+  }
+
   test("Identifier", () => {
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), ``, false, ``, "");
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `  `, false, ``, "");
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `a`, true, `a`, "a", "");
+    testAntlrParse(getIdRule(), ``, false);
+    testAntlrParse(getIdRule(), `  `, false);
+    testAntlrParse(getIdRule(), `a`, true, `a`, "a", "<el-id>a</el-id>", "a", "a");
     testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
+      getIdRule(),
       `aB_d`,
       true,
       `aB_d`,
       "aB_d",
+      "<el-id>aB_d</el-id>",
+      "aB_d",
+      "aB_d",
     );
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `abc `,
-      true,
-      `abc`,
-      "abc",
-    );
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `Abc`, false, ``, "");
-    testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
-      `abc-de`,
-      true,
-      `abc`,
-      "abc",
-    );
+    testAntlrParse(getIdRule(), `abc `, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
+    testAntlrParse(getIdRule(), `Abc`, false);
+    testAntlrParse(getIdRule(), `abc-de`, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
     // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `new`, false, "", "");
+    testAntlrParse(getIdRule(), `new`, false);
     testAntlrParse(
-      LanguagePython.Instance,
-      (p: Parser) => p.identifier(),
+      getIdRule(),
       `global`,
       true,
       `global`,
-      "",
+      "global",
+      "<el-id>global</el-id>",
+      "global",
+      "global",
     );
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `x as`, true, `x`, "x");
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `_a`, false, ``, "", "");
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `_`, false, ``, "");
-    testAntlrParse(LanguagePython.Instance, (p: Parser) => p.identifier(), `()_a`, false, ``, "");
+    testAntlrParse(getIdRule(), `x as`, true, `x`, "x", "<el-id>x</el-id>", "x", "x");
+    testAntlrParse(getIdRule(), `_a`, false);
+    testAntlrParse(getIdRule(), `_`, false);
+    testAntlrParse(getIdRule(), `()_a`, false);
   });
 
   //   test("LitString - single chars", () => {

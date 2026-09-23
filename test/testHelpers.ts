@@ -39,9 +39,10 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 import { PythonParser } from "../src/generated/python/PythonParser";
 import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
-import { getParserByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
+import { getParserByLanguage, getVisitorCompilerByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
 import { ParserRuleContext } from "antlr4ng";
 import { LanguageElan } from "../src/ide/frames/language-elan";
+import { FileAsn } from "../src/compiler/syntax-nodes/file-asn";
 
 // flag to update test files
 const updateTestFiles = false;
@@ -585,16 +586,33 @@ export function testNodeParse(
   }
 }
 
+export type Parser = RefLangParser | PythonParser;
+
+const file = new FileImpl(
+  hash,
+  new Paradigm(""),
+  "",
+  transforms(),
+  new StdLib(new StubInputOutput()),
+  false,
+  true,
+);
+
+const rootScope = new FileAsn(file.libraryScope, file.getVersion(), file.language());
+
+
 export function testAntlrParse(
-  language : Language,
-  rule: (parser: PythonParser | RefLangParser) => ParserRuleContext,
+  languageAndRule :  [Language,
+      rule: (parser: Parser) => ParserRuleContext],
   text: string,
   parses: boolean,
-  matchedText: string,
+  matchedText = "",
   elanSource = "",
   html = "",
   exprt = "",
+  objectCode = ""
 ) {
+  const [language, rule] = languageAndRule;
   const parser = getParserByLanguage(language, text);
   const context = rule(parser); 
   const parsedText =  context.getText().replaceAll(" ", "");
@@ -616,7 +634,11 @@ export function testAntlrParse(
   }
 
   if (exprt && exprt !== "") {
-    assert.equal(getVisitorSourceByLanguage(language), exprt);
+    assert.equal(getVisitorSourceByLanguage(language).visit(context), exprt);
+  }
+
+  if (objectCode && objectCode !== "") {
+    assert.equal(getVisitorCompilerByLanguage(language, "", rootScope).visit(context)?.compile(), objectCode);
   }
 }
 

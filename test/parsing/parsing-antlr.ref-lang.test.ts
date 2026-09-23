@@ -1,21 +1,28 @@
+import { ParserRuleContext } from "antlr4ng";
 import { PythonParser } from "../../src/generated/python/PythonParser";
 import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
-import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { testAntlrParse } from "../testHelpers";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
+import { transforms } from "../compiler/compiler-test-helpers";
+import { hash } from "../../src/ide/util";
 
 type Parser = RefLangParser | PythonParser;
 
 suite("Parsing Antlr Rules RefLang", () => {
-  //   const f = new FileImpl(
-  //     hash,
-  //     new Paradigm(""),
-  //     "",
-  //     transforms(),
-  //     new StdLib(new StubInputOutput()),
-  //     false,
-  //     true,
-  //   );
+  const f = new FileImpl(
+    hash,
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
   //   test("UnaryExpression", () => {
   //     testNodeParse(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
   //     testNodeParse(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
@@ -134,49 +141,43 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
   //   });
 
+  function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.identifier()];
+  }
+
   test("Identifier", () => {
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), ``, false, ``, "");
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `  `, false, ``, "");
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `a`, true, `a`, "a", "");
+    testAntlrParse(getIdRule(), ``, false);
+    testAntlrParse(getIdRule(), `  `, false);
+    testAntlrParse(getIdRule(), `a`, true, `a`, "a", "<el-id>a</el-id>", "a", "a");
     testAntlrParse(
-      LanguageElan.Instance,
-      (p: Parser) => p.identifier(),
+      getIdRule(),
       `aB_d`,
       true,
       `aB_d`,
       "aB_d",
+      "<el-id>aB_d</el-id>",
+      "aB_d",
+      "aB_d",
     );
-    testAntlrParse(
-      LanguageElan.Instance,
-      (p: Parser) => p.identifier(),
-      `abc `,
-      true,
-      `abc`,
-      "abc",
-    );
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `Abc`, false, ``, "");
-    testAntlrParse(
-      LanguageElan.Instance,
-      (p: Parser) => p.identifier(),
-      `abc-de`,
-      true,
-      `abc`,
-      "abc",
-    );
+    testAntlrParse(getIdRule(), `abc `, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
+    testAntlrParse(getIdRule(), `Abc`, false);
+    testAntlrParse(getIdRule(), `abc-de`, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
     // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `new`, false, "", "");
+    testAntlrParse(getIdRule(), `new`, false);
     testAntlrParse(
-      LanguageElan.Instance,
-      (p: Parser) => p.identifier(),
+      getIdRule(),
       `global`,
       true,
       `global`,
-      "",
+      "global",
+      "<el-id>global</el-id>",
+      "global",
+      "global",
     );
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `x as`, true, `x`, "x");
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `_a`, false, ``, "", "");
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `_`, false, ``, "");
-    testAntlrParse(LanguageElan.Instance, (p: Parser) => p.identifier(), `()_a`, false, ``, "");
+    testAntlrParse(getIdRule(), `x as`, true, `x`, "x", "<el-id>x</el-id>", "x", "x");
+    testAntlrParse(getIdRule(), `_a`, false);
+    testAntlrParse(getIdRule(), `_`, false);
+    testAntlrParse(getIdRule(), `()_a`, false);
   });
 
   //   test("LitString - single chars", () => {
