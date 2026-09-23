@@ -7,7 +7,7 @@ import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { AbstractField } from "./fields/abstract-field";
 import { EnumValuesField } from "./fields/enum-values-field";
-import { InheritsFromField } from "./fields/inherits-from-field";
+import { InheritedTypeField } from "./fields/inherited-type-field";
 import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -143,9 +143,9 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.inheritsFromTextAsHtml(frame.inheritance)}:`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${frame.inheritance.renderAsHtml()}:`;
+      html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.inheritsFromTextAsHtml(frame.inheritance)}:`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof ForLoop) {
@@ -185,11 +185,11 @@ export class LanguagePython extends LanguageAbstract {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string {
+  inheritsFromTextAsHtml(field: InheritedTypeField): string {
     let result = "";
     const frame = field.getHolder() as ClassFrame;
     if (frame.doesInherit()) {
-      result = `(${field.default_renderasHtml()})`;
+      result = `(${field.renderAsHtml()})`;
     } else if (frame.isAbstract) {
       result = `(<el-type>ABC</el-type>)`;
     }

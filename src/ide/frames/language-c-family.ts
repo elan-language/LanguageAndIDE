@@ -126,9 +126,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)} {`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)} {`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {

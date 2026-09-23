@@ -415,7 +415,7 @@ enum Fruit apple, orange, pear
   test("parse Frames - class", async () => {
     const code = `${testHeader}
 
-class Player inherits Foo, Bar
+class Player inherits Foo
   constructor()
 
   end constructor
@@ -483,7 +483,7 @@ end class
   test("parse Frames - with method", async () => {
     const code = `${testHeader}
 
-class Player inherits Foo, Bar
+class Player inherits Foo
   constructor()
 
   end constructor

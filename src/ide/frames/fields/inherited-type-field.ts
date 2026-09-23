@@ -4,7 +4,7 @@ import { ParseNode } from "../frame-interfaces/parse-node";
 import { InheritanceNode } from "../parse-nodes/inheritanceNode";
 import { AbstractField } from "./abstract-field";
 
-export class InheritsFromField extends AbstractField {
+export class InheritedTypeField extends AbstractField {
   constructor(holder: Frame) {
     super(holder);
     this.setOptional(true);
@@ -29,24 +29,5 @@ export class InheritsFromField extends AbstractField {
 
   symbolCompletion(): string {
     return this.symbolCompletionAsHtml();
-  }
-
-  override renderAsHtml(): string {
-    let result = "";
-    if (this.isSelected()) {
-      result = ` ${super.renderAsHtml()}`;
-    } else {
-      const languageHtml = this.getFile().language().inheritsFromTextAsHtml(this);
-      if (languageHtml === "") {
-        result = super.renderAsHtml();
-      } else {
-        result = `<el-field id="${this.htmlId}" class="${this.cls()}" tabindex="-1"><el-txt>${languageHtml}</el-txt><el-place>${this.placeholder}</el-place>${this.getMessage()}${this.helpAsHtml()}</el-field>`;
-      }
-    }
-    return result;
-  }
-
-  default_renderasHtml(): string {
-    return super.renderAsHtml();
   }
 }
