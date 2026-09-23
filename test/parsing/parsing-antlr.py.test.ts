@@ -201,7 +201,16 @@ suite("Parsing Antlr Rules Python", () => {
   test("LitInt", () => {
     testAntlrParse(getLitIntRule(), "", false);
     testAntlrParse(getLitIntRule(), "   ", false);
-    testAntlrParse(getLitIntRule(), "123", true, "123", "123", "");
+    testAntlrParse(
+      getLitIntRule(),
+      "123",
+      true,
+      "123",
+      "123",
+      "<el-lit>123</el-lit>",
+      "123",
+      "123",
+    );
     //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
     testAntlrParse(getLitIntRule(), "- 123", false);
     testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");

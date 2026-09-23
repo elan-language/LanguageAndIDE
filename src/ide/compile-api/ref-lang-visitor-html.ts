@@ -3,6 +3,7 @@ import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   CommentTextContext,
   IdentifierContext,
+  LitIntContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -19,6 +20,11 @@ import {
   getFilteredTypes,
   getFuncTypes,
   getParamDefs,
+  id,
+  kw,
+  lit,
+  method,
+  type,
   visitTypeHelper,
 } from "./parser-helpers";
 import { escapeHtmlChars } from "../frames/frame-helpers";
@@ -30,14 +36,14 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitTypeTuple = (ctx: TypeTupleContext) => `(${getFilteredTypes(this, ctx).join(", ")})`;
 
-  visitTypeName = (ctx: TypeNameContext) => `<el-type>${this.visitChildren(ctx) ?? ""}</el-type>`;
+  visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
   visitTypeGeneric = (ctx: TypeGenericContext) =>
-    `${this.visit(ctx.typeName())}&lt;<el-kw>of</el-kw> ${getFilteredTypes(this, ctx).join(", ")}&gt;`;
+    `${this.visit(ctx.typeName())}&lt;${kw("of")} ${getFilteredTypes(this, ctx).join(", ")}&gt;`;
 
   visitTypeFunc = (ctx: TypeFuncContext) => {
     const [inTypes, returnType] = getFuncTypes(this, ctx);
-    return `Func&lt;<el-kw>of</el-kw> ${inTypes} =&gt; ${returnType}&gt;`;
+    return `Func&lt;${kw("of")} ${inTypes} =&gt; ${returnType}&gt;`;
   };
 
   visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
@@ -50,20 +56,19 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return `${getParamDefs<string>(this, ctx).join(", ")}`;
   };
 
-  visitIdentifier = (ctx: IdentifierContext) =>
-    `<el-id>${ctx.NAME_STARTING_LC().getText()}</el-id>`;
+  visitIdentifier = (ctx: IdentifierContext) => id(ctx.NAME_STARTING_LC().getText());
 
-  visitMethodName = (ctx: IdentifierContext) =>
-    `<el-method>${ctx.NAME_STARTING_LC().getText()}</el-method>`;
+  visitMethodName = (ctx: IdentifierContext) => method(ctx.NAME_STARTING_LC().getText());
 
   visitParamDef = (ctx: ParamDefContext) =>
-    `${this.visit(ctx.identifier())} <el-kw>as</el-kw> ${this.visit(ctx.type())}`;
+    `${this.visit(ctx.identifier())} ${kw("as")} ${this.visit(ctx.type())}`;
 
-  visitTestName = (ctx: TestNameContext) =>
-    `<el-method>${ctx.NAME_STARTING_TEST_().getText()}</el-method>`;
+  visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
 
   visitCommentText = (ctx: CommentTextContext) => {
     const txt = ctx.getText();
     return escapeMultipleSpaces(escapeHtmlChars(txt));
   };
+
+  visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
 }

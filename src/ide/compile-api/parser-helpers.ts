@@ -16,7 +16,7 @@ import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
 import { PythonVisitorHtml } from "./python-visitor-html";
 import { PythonVisitorSource } from "./python-visitor-source";
-import { RefLangVisitorHtml } from "./ref-lang--visitor-html";
+import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 
@@ -163,4 +163,28 @@ export function escapeMultipleSpaces(raw: string): string {
   const words = raw.split(" ");
   const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
   return withNbsp.join("").trimEnd();
+}
+
+export function wrap(s: string, tag: string) {
+  return `<${tag}>${s}</${tag}>`;
+}
+
+export function lit(s: string) {
+  return wrap(s, "el-lit");
+}
+
+export function type(s: string) {
+  return wrap(s, "el-type");
+}
+
+export function kw(s: string) {
+  return wrap(s, "el-kw");
+}
+
+export function id(s: string) {
+  return wrap(s, "el-id");
+}
+
+export function method(s: string) {
+  return wrap(s, "el-method");
 }

@@ -196,7 +196,16 @@ suite("Parsing Antlr Rules RefLang", () => {
   test("LitInt", () => {
     testAntlrParse(getLitIntRule(), "", false);
     testAntlrParse(getLitIntRule(), "   ", false);
-    testAntlrParse(getLitIntRule(), "123", true, "123", "123", "");
+    testAntlrParse(
+      getLitIntRule(),
+      "123",
+      true,
+      "123",
+      "123",
+      "<el-lit>123</el-lit>",
+      "123",
+      "123",
+    );
     //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
     testAntlrParse(getLitIntRule(), "- 123", false);
     testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
@@ -261,6 +270,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "&B0110",
   //     ); //VB syntax
   //   });
+
   //   test("LitFloat", () => {
   //     testNodeParse(new LitFloat(f), "", ParseStatus.empty, "", "", "");
   //     testNodeParse(new LitFloat(f), "1.0", ParseStatus.valid, "1.0", "", "1.0");
