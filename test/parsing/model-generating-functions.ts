@@ -172,7 +172,7 @@ export function T05_classes() {
 
   const cl2 = new ConcreteClass(f);
   const ms2 = cl2.getFirstSelectorAsDirectChild();
-  cl2.inheritance.setFieldToKnownValidText("inherits Foo, Bar");
+  cl2.inheritance.setFieldToKnownValidText("inherits Foo");
   f.addChildBefore(cl2, gs);
   cl2.name.setFieldToKnownValidText("Card");
   const p2 = new Property(cl2);
