@@ -305,7 +305,7 @@
   <content>
     <ul>
       <li>Within a function it is not possible to <i>mutate</i> a data structure: for example by <code>call a.put(3, 5)</code>)
-        Instead you should use the <el-method>withPut</el-method> dotted-function on the array, which returns a new array with the change made,
+        Instead you should use the <el-method>withPut</el-method> dot method on the array, which returns a new array with the change made,
       which may be assigned back into the original variable (<code>outcomes</code>).
       <li>To increment the value of an element by one you will need to read the <i>existing</i> value of that element. This <i>can</i>
       be done in a separate instruction, but it can also be done 'inline' so that the whole update can be written as a single instruction.</li>
@@ -360,7 +360,7 @@
   <li>Because we don't know how long this analysis may take, at the beginning of <code>main</code> print the message 'Starting...' onto the display.</li>
   <li>The <code>constant</code> <code>allValidTargetWords</code> is a single string containing 2,315 words separated by spaces. However, the
   function <el-method>analyseAlgorithm</el-method> expects a <i>list</i> of words, where each member of the list is a single word, with no spaces.
-  If you are not familiar with how to do this, look up the various dotted-methods available on a <el-type>String</el-type> <help>LibRef.html#String</help>.</li>
+  If you are not familiar with how to do this, look up the various dot methods available on a <el-type>String</el-type> <help>LibRef.html#String</help>.</li>
   <li>Evaluate the function <el-method>analyseAlgorithm</el-method>, passing in the <code>"ARISE"</code> as the chosen first attempt, and the list of inputStringWithLimits
   you have just created from <code>allValidTargetWords</code>. Because this will pass back <i>two</i> values as a tuple, look up how to 'deconstruct' a tuple (<help>LibRef.Html#DeconstructTuple</help>)
   into two values named <code>successPercent</code> and <code>average</code>. (You can do this in a <code>let</code> instruction.)</li>
