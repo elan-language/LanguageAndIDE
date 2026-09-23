@@ -52,7 +52,7 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { EnumValuesField } from "./fields/enum-values-field";
-import { InheritsFromField } from "./fields/inherits-from-field";
+import { InheritedTypeField } from "./fields/inherited-type-field";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -174,9 +174,9 @@ export class LanguageElan extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${frame.inheritance.renderAsHtml()}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof ForLoop) {
@@ -203,11 +203,9 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: InheritsFromField): string {
+  inheritsFromTextAsHtml(field: InheritedTypeField): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit()
-      ? ` <el-kw>${this.INHERITS}</el-kw> ${field.default_renderasHtml()}`
-      : ``;
+    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.renderAsHtml()}` : ``;
   }
 
   renderTopAsExport(_frame: Frame): string {

@@ -4,7 +4,7 @@ import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
 import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
 import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
-import { InheritsFromField } from "../../src/ide/frames/fields/inherits-from-field";
+import { InheritedTypeField } from "../../src/ide/frames/fields/inherited-type-field";
 import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
@@ -84,7 +84,7 @@ suite("Editing Frames", () => {
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("elan_text3") as InheritsFromField;
+    const text3 = file.getById("elan_text3") as InheritedTypeField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);

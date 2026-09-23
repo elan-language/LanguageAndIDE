@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ParserRuleContext } from "antlr4ng";
 import assert from "assert";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
@@ -12,6 +13,9 @@ import { IntType } from "../src/compiler/symbols/int-type";
 import { StringType } from "../src/compiler/symbols/string-type";
 import { UnknownType } from "../src/compiler/symbols/unknown-type";
 import { TestStatus } from "../src/compiler/test-status";
+import { PythonParser } from "../src/generated/python/PythonParser";
+import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
@@ -23,6 +27,7 @@ import { Language } from "../src/ide/frames/frame-interfaces/language";
 import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
 import { MainRoutine } from "../src/ide/frames/globals/main-routine";
 import { LanguageCS } from "../src/ide/frames/language-cs";
+import { LanguageElan } from "../src/ide/frames/language-elan";
 import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageVB } from "../src/ide/frames/language-vb";
@@ -37,11 +42,6 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { PythonParser } from "../src/generated/python/PythonParser";
-import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
-import { getParserByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
-import { ParserRuleContext } from "antlr4ng";
-import { LanguageElan } from "../src/ide/frames/language-elan";
 
 // flag to update test files
 const updateTestFiles = false;
