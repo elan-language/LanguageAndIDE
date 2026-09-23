@@ -124,22 +124,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //   });
-  //   test("Identifier", () => {
-  //     testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
-  //     testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
-  //     testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
-  //     testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
-  //     testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
-  //     testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
-  //     // Can be a keyword - because that will be rejected at compile stage, not parse stage
-  //     testNodeParse(new IdentifierNode(f), `new`, ParseStatus.invalid, "", "new", "");
-  //     testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
-  //     testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
-  //     testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
-  //     testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
-  //     testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
-  //   });
 
   function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguageElan.Instance, (p: Parser) => p.identifier()];
@@ -191,6 +175,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testNodeParse(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
   //     testNodeParse(new LitString(f), `$"{a} `, ParseStatus.incomplete, `$"{a} `, "", "", "");
   //   });
+
   //   test("LitInt", () => {
   //     testNodeParse(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
   //     testNodeParse(new LitInt(f), "   ", ParseStatus.invalid, "", "   ", "", "");
@@ -203,6 +188,23 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
   //     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
   //   });
+
+  function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.litInt()];
+  }
+
+  test("LitInt", () => {
+    testAntlrParse(getLitIntRule(), "", false);
+    testAntlrParse(getLitIntRule(), "   ", false);
+    testAntlrParse(getLitIntRule(), "123", true, "123", "123", "");
+    //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
+    testAntlrParse(getLitIntRule(), "- 123", false);
+    testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
+    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
+    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
+    //testAntlrParse(getLitIntRule(), "1.23", true, "1", "1", "");
+    testAntlrParse(getLitIntRule(), "a", false);
+  });
 
   //   test("LitInt_HexAndBinary", () => {
   //     testNodeParse(

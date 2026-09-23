@@ -194,6 +194,23 @@ suite("Parsing Antlr Rules Python", () => {
   //     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
   //   });
 
+  function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litInt()];
+  }
+
+  test("LitInt", () => {
+    testAntlrParse(getLitIntRule(), "", false);
+    testAntlrParse(getLitIntRule(), "   ", false);
+    testAntlrParse(getLitIntRule(), "123", true, "123", "123", "");
+    //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
+    testAntlrParse(getLitIntRule(), "- 123", false);
+    testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
+    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
+    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
+    //testAntlrParse(getLitIntRule(), "1.23", true, "1", "1", "");
+    testAntlrParse(getLitIntRule(), "a", false);
+  });
+
   //   test("LitInt_HexAndBinary", () => {
   //     testNodeParse(
   //       new LitInt(f),
