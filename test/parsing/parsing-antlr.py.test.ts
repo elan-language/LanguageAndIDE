@@ -1,7 +1,7 @@
 import { ParserRuleContext } from "antlr4ng";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { testAntlrParse, Parser } from "../testHelpers";
+import { Parser, testAntlrParse } from "../testHelpers";
 
 suite("Parsing Antlr Rules Python", () => {
   //   const f = new FileImpl(
@@ -213,10 +213,10 @@ suite("Parsing Antlr Rules Python", () => {
     );
     //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
     testAntlrParse(getLitIntRule(), "- 123", false);
-    testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
-    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
-    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
-    //testAntlrParse(getLitIntRule(), "1.23", true, "1", "1", "");
+    testAntlrParse(getLitIntRule(), "1-23", true, "1");
+    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456");
+    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123");
+    testAntlrParse(getLitIntRule(), "1.23", false);
     testAntlrParse(getLitIntRule(), "a", false);
   });
 
