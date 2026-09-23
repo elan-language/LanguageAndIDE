@@ -186,7 +186,7 @@ assertActual: expression;
 
 // START SubNodes
 litValue:
-    | litBoolean
+    litBoolean
     | litInt
     | litFloat
     | litString

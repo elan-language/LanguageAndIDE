@@ -2508,7 +2508,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   test("index", () => {
     testAntlrParse(getIndexRule(), ``, false);
     testAntlrParse(getIndexRule(), ` `, false);
-    //testAntlrParse(getIndexRule(), `[]`, false);
+    testAntlrParse(getIndexRule(), `[]`, false);
     testAntlrParse(getIndexRule(), `[1]`, true, "[1]", "[1]", "[<el-lit>1</el-lit>]", "[1]", "1");
     testAntlrParse(getIndexRule(), `[a]`, true, "[a]", "[a]", "[<el-id>a</el-id>]", "[a]", "a");
   });
@@ -2520,7 +2520,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   test("chainable", () => {
     testAntlrParse(getChainableRule(), ``, false);
     testAntlrParse(getChainableRule(), ` `, false);
-    //testAntlrParse(getChainableRule(), `a[]`, false);
+    testAntlrParse(getChainableRule(), `a[]`, false);
     testAntlrParse(
       getChainableRule(),
       `a[1]`,
