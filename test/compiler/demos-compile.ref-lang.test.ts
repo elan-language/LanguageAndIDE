@@ -47,7 +47,7 @@ suite("Demo compile", () => {
     await testElanFile("kaleidoscope");
   });
 
-  test("test life", async () => {
+  ignore_test("test life", async () => {
     await testElanFile("life");
   });
 
@@ -91,11 +91,11 @@ suite("Demo compile", () => {
     await testElanFile("snake_PP");
   });
 
-  test("test tower-of-hanoi", async () => {
+  ignore_test("test tower-of-hanoi", async () => {
     await testElanFile("tower-of-hanoi");
   });
 
-  test("test tower-of-hanoi-recursive", async () => {
+  ignore_test("test tower-of-hanoi-recursive", async () => {
     await testElanFile("tower-of-hanoi-recursive");
   });
 

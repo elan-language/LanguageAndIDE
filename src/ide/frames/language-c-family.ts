@@ -93,8 +93,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `} <el-kw>${this.ELSE} {`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${frame.values.renderAsHtml()}}`;
-    } else if (frame instanceof GlobalComment) {
-      html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
+      // } else if (frame instanceof GlobalComment) {
+      //   html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof Assignment) {
