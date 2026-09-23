@@ -1405,7 +1405,6 @@ end function
 <p>(The method <el-method>createBlockGraphics</el-method> has been deprecated. The recommended way to use block graphics
 is shown below.)</p>
 
-
 <p>Block graphics provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.</p>
 <p>The graphics are defined and displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
 <p>Each block is be rendered as a solid colour.</p>
@@ -1425,40 +1424,40 @@ end main
 
 <h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
 <ul>
- <li>The type <code>BloackGraphics</code> may be passed as a parameter into a method and/or returned by a function.</li>
+ <li>The type <code>BloackGraphics</code> may be passed as a parameter into a method and may be returned by a function.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in the range 0 to 39 and <i>y</i> is in the range 0 to 29.</li>
  <li><i>x</i>,<i>y</i> is 0,0 at the top left cell of the grid, positive <i>x</i> to the right, positive <i>y</i> downwards.</li>
- <li>Alternatively, they may be referenced by 'block number' (<code>blockNo</code>), which range from 0 (top-left) to 1199 (bottom-right).</li>
- <li>You may create multiple instances of BlockGraphics holding different patterns of blocks, and switch between them
- just by calling the dotted method <el-method>display</el-method> on the one to be displayed - automatically overwriting any existing blocks shown on the display.</li>
+ <li>Alternatively, they may be referenced by 'block number' (<code>blockNo</code>), which ranges from 0 (top-left) to 1199 (bottom-right).</li>
+ <li>You may create multiple instances of <code>BlockGraphics</code> holding different patterns of blocks, and switch between them
+ just by calling the dot method <el-method>display</el-method> on the one to be displayed, automatically replacing any existing blocks shown in the display.</li>
  <li>A colour is specified as an <code>Int</code>, as described under <a href="#Colours">Colours <i class="fa">&#xf14c;</i></a>.</li>
 </ul>
 
-<h3 class="no-TOC">Procedure dot methods on BlockGraphics</h3>
+<h3 class="no-TOC">Procedure dot methods on a BlockGraphics</h3>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>dot methods</th>
   <th>argument<br>types</th>
-  <th>effect</th>
+  <th>action</th>
  </tr>
  <tr id="put_BlockGraphics">
   <td><el-method>put</el-method></td>
-  <td>integer, integer, integer</td>
-  <td>Paints the block with the coordinates (column, row) specified by the first two arguments, with the colour specified as the third argument.</td>
+  <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
+  <td>paints the block at the coordinates (column, row) specified by the first two arguments, with the colour specified as the third argument</td>
  </tr>
 <tr id="putBlockNo_BlockGraphics">
   <td><el-method>putBlockNo</el-method></td>
-  <td>integer, integer</td>
-  <td>Paints the block specified by the first argument, with the colour specified as the second argument.</td>
+  <td>Int</code>, <code>Int</code></td>
+  <td>paints the block specified by the first argument, with the colour specified as the second argument</td>
  </tr>
  <tr id="colourAll_BlockGraphics">
   <td><el-method>colourAll</el-method></td>
-  <td>integer</td>
-  <td>Paints all blocks the specified colour</td>
+  <td><code>Int</code></td>
+  <td>paints all blocks the specified colour</td>
   </tr>
 </table>
 
-<h3 class="no-TOC">Function dot methods on BlockGraphics</h3>
+<h3 class="no-TOC">Function dot methods on a BlockGraphics</h3>
 <table class="tableMethod">
  <tr>
   <th>function<br>dot methods</th>
@@ -1468,54 +1467,54 @@ end main
  </tr>
  <tr id="get_BlockGraphics">
   <td><el-method>get</el-method></td>
-  <td>integer, integer</td>
-  <td>integer</td>
-  <td>returns the colour of the block specified by the (column, row) coordinates as the two arguments</td>
+  <td><code>Int</code>, <code>Int</code></td>
+  <td><code>Int</code></td>
+  <td>colour of the block specified by the (column, row) coordinates in the two arguments</td>
  </tr>
   <tr id="getBlockNo_BlockGraphics">
   <td><el-method>getBlockNo</el-method></td>
-  <td>integer</td>
-  <td>integer</td>
-  <td>returns the colour of the block specified by the the argument</td>
+  <td><code>Int</code></td>
+  <td><code>Int</code></td>
+  <td>colour of the block specified by the the argument</td>
  </tr>
  <tr id="withPut_BlockGraphics">
   <td><el-method>withPut</el-method></td>
-  <td>integer, integer, integer</td>
+  <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
   <td><code>BlockGraphics</code></td>
-  <td>function broadly equivalent to the <el-method>put</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
-  with specified change to one block</td>
+  <td>copy of the existing <code>BlockGraphics</code> with specified change to one block<br>
+   (similar to procedure method <el-method>put</el-method>)</td>
  </tr>
   <tr id="withPutBlockNo_BlockGraphics">
   <td><el-method>withPutBlockNo</el-method></td>
-  <td>integer, integer</td>
+  <td><code>Int</code>, <code>Int</code></td>
   <td><code>BlockGraphics</code></td>
-  <td>function broadly equivalent to the <el-method>putBlockNo</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
-  with specified change to one block</td>
+  <td>copy of the existing <code>BlockGraphics</code> with specified change to one block<br>
+   (similar to procedure method <el-method>putBlockNo</el-method>)</td>
  </tr>
  <tr id="withColourAll_BlockGraphics">
   <td><el-method>withColourAll</el-method></td>
-  <td>(none)</td>
+  <td><code>Int</code></td>
   <td><code>BlockGraphics</code></td>
-  <td>function broadly equivalent to the <el-method>colourAll</el-method> procedure. Returns a copy of the existing <code>BlockGraphics</code>
-  with specified colour for all blocks.</td>
+  <td>copy of the existing <code>BlockGraphics</code> with specified colour in all blocks<br>
+   (similar to procedure method <el-method>colourAll</el-method>)</td>
  </tr>
   <tr id="calculateBlockNo_BlockGraphics">
   <td><el-method>calculateBlockNo</el-method></td>
-  <td>integer, integer</td>
-  <td>integer</td>
-  <td>returns the block number for the specified (column, row) coordinates as the two arguments</td>
+  <td><code>Int</code>, <code>Int</code></td>
+  <td><code>Int</code></td>
+  <td>block number for the specified (column, row) coordinates in the two arguments</td>
  </tr>
    <tr id="col_BlockGraphics">
   <td><el-method>col</el-method></td>
-  <td>integer</td>
-  <td>integer</td>
-  <td>returns the column number for the specified block number</td>
+  <td><code>Int</code></td>
+  <td><code>Int</code></td>
+  <td>column number of the specified block number</td>
  </tr>
     <tr id="row_BlockGraphics">
   <td><el-method>row</el-method></td>
-  <td>integer</td>
-  <td>integer</td>
-  <td>returns the row number for the specified block number</td>
+  <td><code>Int</code></td>
+  <td><code>Int</code></td>
+  <td>row number of the specified block number</td>
  </tr>
 </table>
 
@@ -2412,7 +2411,7 @@ end main
  <tr>
   <th>Dot method</th>
   <th colspan="3"> Value type</th>
-  <th colspan="6">Reference type</th>
+  <th colspan="7">Reference type</th>
   <th>Tuple</th>
  </tr><tr><!---->
   <td></td>
@@ -2425,11 +2424,13 @@ end main
   <td><a href="#HashSet"><code>HashSet</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#Stack"><code>Stack</code> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#Queue"><code>Queue</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#BlockGraphics"><code>BlockGraphics</code> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
  </tr><tr><!---->
   <td id="ceiling"><el-method>ceiling</el-method></td>
   <td><a href="#ceiling_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
   <td><a href="#ceiling_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2450,6 +2451,7 @@ end main
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="equals"><el-method>equals</el-method></td>
   <td><a href="#equals_Int"> <i class="fa">&#xf14c;</i></a></td>
@@ -2461,11 +2463,13 @@ end main
   <td><a href="#equals_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#equals_BlockGraphics"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#equals_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="floor"><el-method>floor</el-method></td>
   <td><a href="#floor_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
   <td><a href="#floor_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2486,10 +2490,12 @@ end main
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="isInfinite"><el-method>isInfinite</el-method></td>
   <td><a href="#isInfinite_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
   <td><a href="#isInfinite_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2510,6 +2516,7 @@ end main
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="length"><el-method>length</el-method></td>
   <td></td>
@@ -2522,6 +2529,7 @@ end main
   <td><a href="#length_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#length_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="notEqualTo"><el-method>notEqualTo</el-method></td>
   <td><a href="#notEqualTo_Int"> <i class="fa">&#xf14c;</i></a></td>
@@ -2533,6 +2541,7 @@ end main
   <td><a href="#notEqualTo_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td><a href="#notEqualTo_BlockGraphics"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#notEqualTo_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="peek"><el-method>peek</el-method></td>
@@ -2546,10 +2555,12 @@ end main
   <td><a href="#peek_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#peek_Queue"> <i class="fa">&#xf14c;</i></a></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="round"><el-method>round</el-method></td>
   <td><a href="#round_Float"> <i class="fa">&#xf14c;</i></a> note 2.</td>
   <td><a href="#round_Float"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
@@ -2569,6 +2580,7 @@ end main
   <td><a href="#toString_HashSet"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Stack"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#toString_Queue"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td><a href="#toString_Tuple"> <i class="fa">&#xf14c;</i></a></td>
  </tr><tr><!---->
   <td id="withPut"><el-method>withPut</el-method> note 5.</td>
@@ -2582,6 +2594,7 @@ end main
   <td></td>
   <td></td>
   <td></td>
+  <td></td>
  </tr><tr><!---->
   <td id="withRemoveAt"><el-method>withRemoveAt</el-method></td>
   <td></td>
@@ -2590,6 +2603,7 @@ end main
   <td></td>
   <td><a href="#withRemoveAt_List"> <i class="fa">&#xf14c;</i></a></td>
   <td><a href="#withRemoveAt_Dictionary"> <i class="fa">&#xf14c;</i></a></td>
+  <td></td>
   <td></td>
   <td></td>
   <td></td>
