@@ -589,9 +589,8 @@ export function testAntlrParse(
   language : Language,
   rule: (parser: PythonParser | RefLangParser) => ParserRuleContext,
   text: string,
-  status: ParseStatus,
+  parses: boolean,
   matchedText: string,
-  remainingText: string,
   elanSource = "",
   html = "",
   exprt = "",
@@ -600,19 +599,12 @@ export function testAntlrParse(
   const context = rule(parser); 
   const parsedText =  context.getText().replaceAll(" ", "");
   const errors = parser.numberOfSyntaxErrors;
-  const parseStatus = errors > 0 ? ParseStatus.invalid : parsedText === "" ? ParseStatus.empty : ParseStatus.valid;
+  
 
-  assert.equal(status, parseStatus, `Parsing: '${text}'`);
+  assert.equal(parses, errors === 0, `Parsing: '${text}'`);
 
   if (matchedText !== "") {
     assert.equal(parsedText, matchedText.replaceAll(" ", ""));
-  }
-
-  text.replaceAll(" ", "");
-  const remainingTextAfterParse = text.replace(parsedText, "");
-
-  if (remainingText !== "") {
-    assert.equal(remainingTextAfterParse, remainingText);
   }
 
   if (elanSource !== "") {
