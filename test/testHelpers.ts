@@ -12,10 +12,11 @@ import { FloatType } from "../src/compiler/symbols/float-type";
 import { IntType } from "../src/compiler/symbols/int-type";
 import { StringType } from "../src/compiler/symbols/string-type";
 import { UnknownType } from "../src/compiler/symbols/unknown-type";
+import { FileAsn } from "../src/compiler/syntax-nodes/file-asn";
 import { TestStatus } from "../src/compiler/test-status";
 import { PythonParser } from "../src/generated/python/PythonParser";
 import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
-import { getParserByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
+import { getParserByLanguage, getVisitorCompilerByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
@@ -42,12 +43,6 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { PythonParser } from "../src/generated/python/PythonParser";
-import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
-import { getParserByLanguage, getVisitorCompilerByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
-import { ParserRuleContext } from "antlr4ng";
-import { LanguageElan } from "../src/ide/frames/language-elan";
-import { FileAsn } from "../src/compiler/syntax-nodes/file-asn";
 
 // flag to update test files
 const updateTestFiles = false;
