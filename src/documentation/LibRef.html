@@ -1422,7 +1422,7 @@ is shown below.)</p>
 end main
 </codeblock>
 
-<h4 class="no-TOC" id="createBlockGraphics">Notes</h4>
+<h4 class="no-TOC">Notes</h4>
 <ul>
  <li>The type <code>BloackGraphics</code> may be passed as a parameter into a method and may be returned by a function.</li>
  <li>Each cell of the grid is referenced by integers <i>x</i>,<i>y</i> where <i>x</i> is in the range 0 to 39 and <i>y</i> is in the range 0 to 29.</li>
@@ -1445,12 +1445,12 @@ end main
   <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
   <td>paints the block at the coordinates (column, row) specified by the first two arguments, with the colour specified as the third argument</td>
  </tr>
-<tr id="putBlockNo_BlockGraphics">
+<tr id="putBlockNo">
   <td><el-method>putBlockNo</el-method></td>
   <td>Int</code>, <code>Int</code></td>
   <td>paints the block specified by the first argument, with the colour specified as the second argument</td>
  </tr>
- <tr id="colourAll_BlockGraphics">
+ <tr id="colourAll">
   <td><el-method>colourAll</el-method></td>
   <td><code>Int</code></td>
   <td>paints all blocks the specified colour</td>
@@ -1465,52 +1465,52 @@ end main
   <th>return<br>type</th>
   <th>returns</th>
  </tr>
- <tr id="get_BlockGraphics">
+ <tr id="get">
   <td><el-method>get</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>Int</code></td>
   <td>colour of the block specified by the (column, row) coordinates in the two arguments</td>
  </tr>
-  <tr id="getBlockNo_BlockGraphics">
+  <tr id="getBlockNo">
   <td><el-method>getBlockNo</el-method></td>
   <td><code>Int</code></td>
   <td><code>Int</code></td>
   <td>colour of the block specified by the the argument</td>
  </tr>
- <tr id="withPut_BlockGraphics">
+ <tr id="withPut">
   <td><el-method>withPut</el-method></td>
   <td><code>Int</code>, <code>Int</code>, <code>Int</code></td>
   <td><code>BlockGraphics</code></td>
   <td>copy of the existing <code>BlockGraphics</code> with specified change to one block<br>
    (similar to procedure method <el-method>put</el-method>)</td>
  </tr>
-  <tr id="withPutBlockNo_BlockGraphics">
+  <tr id="withPutBlockNo">
   <td><el-method>withPutBlockNo</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>BlockGraphics</code></td>
   <td>copy of the existing <code>BlockGraphics</code> with specified change to one block<br>
    (similar to procedure method <el-method>putBlockNo</el-method>)</td>
  </tr>
- <tr id="withColourAll_BlockGraphics">
+ <tr id="withColourAll">
   <td><el-method>withColourAll</el-method></td>
   <td><code>Int</code></td>
   <td><code>BlockGraphics</code></td>
   <td>copy of the existing <code>BlockGraphics</code> with specified colour in all blocks<br>
    (similar to procedure method <el-method>colourAll</el-method>)</td>
  </tr>
-  <tr id="calculateBlockNo_BlockGraphics">
+  <tr id="calculateBlockNo">
   <td><el-method>calculateBlockNo</el-method></td>
   <td><code>Int</code>, <code>Int</code></td>
   <td><code>Int</code></td>
   <td>block number for the specified (column, row) coordinates in the two arguments</td>
  </tr>
-   <tr id="col_BlockGraphics">
+   <tr id="col">
   <td><el-method>col</el-method></td>
   <td><code>Int</code></td>
   <td><code>Int</code></td>
   <td>column number of the specified block number</td>
  </tr>
-    <tr id="row_BlockGraphics">
+    <tr id="row">
   <td><el-method>row</el-method></td>
   <td><code>Int</code></td>
   <td><code>Int</code></td>
@@ -2214,7 +2214,7 @@ end main
 <h3 class="no-TOC" id="TextFileWriter">Writing text files</h3>
 <p>The <code>TextFileWriter</code> class is used to write textual data to a file.</p>
 <p>An instance is created by the system method <el-method>createFileForWriting</el-method>.</p>
-<p>The available procedure methods are:</p>
+<p>The available dot procedure methods are:</p>
 <table class="tableMethod">
  <tr>
   <th>procedure<br>method</th>
