@@ -1,15 +1,15 @@
 import { ParserRuleContext } from "antlr4ng";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { PythonParser } from "../../src/generated/python/PythonParser";
 import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
+import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
-import { testAntlrParse } from "../testHelpers";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { transforms } from "../compiler/compiler-test-helpers";
 import { hash } from "../../src/ide/util";
+import { transforms } from "../compiler/compiler-test-helpers";
+import { testAntlrParse } from "../testHelpers";
 
 type Parser = RefLangParser | PythonParser;
 
@@ -197,12 +197,12 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getLitIntRule(), "", false);
     testAntlrParse(getLitIntRule(), "   ", false);
     testAntlrParse(getLitIntRule(), "123", true, "123", "123", "");
-    //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
+    testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
     testAntlrParse(getLitIntRule(), "- 123", false);
     testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
     testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
     testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
-    //testAntlrParse(getLitIntRule(), "1.23", true, "1", "1", "");
+    testAntlrParse(getLitIntRule(), "1.23", false);
     testAntlrParse(getLitIntRule(), "a", false);
   });
 
