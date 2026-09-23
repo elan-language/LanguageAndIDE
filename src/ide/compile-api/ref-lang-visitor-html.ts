@@ -52,9 +52,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
-  visitParamsList = (ctx: ParamsListContext) => {
-    return `${getParamDefs<string>(this, ctx).join(", ")}`;
-  };
+  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   visitIdentifier = (ctx: IdentifierContext) => id(ctx.NAME_STARTING_LC().getText());
 
@@ -65,10 +63,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
 
-  visitCommentText = (ctx: CommentTextContext) => {
-    const txt = ctx.getText();
-    return escapeMultipleSpaces(escapeHtmlChars(txt));
-  };
+  visitCommentText = (ctx: CommentTextContext) =>
+    escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
 
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
 }
