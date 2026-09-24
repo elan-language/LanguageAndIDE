@@ -473,12 +473,22 @@ suite("Parsing Antlr Rules RefLang", () => {
     return [LanguageElan.Instance, (p: Parser) => p.term()];
   }
 
-  test("Expression", () => {
+  test("Term", () => {
     testAntlrParse(getTermRule(), "123", true);
     testAntlrParse(getTermRule(), "1.0", true);
     testAntlrParse(getTermRule(), "true", true);
     testAntlrParse(getTermRule(), `"hello"`, true);
     testAntlrParse(getTermRule(), "Foo.bar", true);
+    testAntlrParse(
+      getTermRule(),
+      `foo()`,
+      true,
+      `foo()`,
+      "foo()",
+      "<el-method>foo</el-method>()",
+      "foo()",
+      "foo()",
+    );
     //TODO add an example of each sub-rule
   });
 
@@ -492,7 +502,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getExpressionRule(), "true", true);
     testAntlrParse(getExpressionRule(), `"hello"`, true);
     testAntlrParse(getExpressionRule(), "Foo.bar", true);
-    //TODO add an example of each sub-rule
+    testAntlrParse(
+      getTermRule(),
+      `foo()`,
+      true,
+      `foo()`,
+      "foo()",
+      "<el-method>foo</el-method>()",
+      "foo()",
+      "foo()",
+    );
   });
 
   //   test("BracketedExpression", () => {
@@ -866,7 +885,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     return [LanguageElan.Instance, (p: Parser) => p.methodCall()];
   }
 
-  test("Function Call", () => {
+  test("Method Call", () => {
     testAntlrParse(getMethodCallRule(), ``, false);
     testAntlrParse(getMethodCallRule(), `  `, false);
     testAntlrParse(
@@ -2460,6 +2479,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[b]",
       "<el-id>a</el-id>[<el-id>b</el-id>]",
       "a[b]",
+    );
+    testAntlrParse(
+      getChainableRule(),
+      `foo()`,
+      true,
+      `foo()`,
+      "foo()",
+      "<el-method>foo</el-method>()",
+      "foo()",
+      "foo()",
     );
   });
 });

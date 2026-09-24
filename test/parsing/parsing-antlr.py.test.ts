@@ -1,7 +1,6 @@
 import { ParserRuleContext } from "antlr4ng";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { ignore_test } from "../compiler/compiler-test-helpers";
 import { Parser, testAntlrParse } from "../testHelpers";
 
 suite("Parsing Antlr Rules Python", () => {
