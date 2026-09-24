@@ -164,17 +164,53 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getIdRule(), `()_a`, false);
   });
 
-  //   test("LitString - single chars", () => {
-  //     testAntlrParse(getLitStringRule(), "", false);
-  //     testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"a"`, "");
-  //     testAntlrParse(getLitStringRule(), `"a`, false);
-  //     testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"9"`, "");
-  //     testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `" "`, "");
-  //   });
-  //   test("LitString - bug #328", () => {
-  //     testAntlrParse(getLitStringRule(), `" `, false);
-  //     testAntlrParse(getLitStringRule(), `$"{a} `, false);
-  //   });
+  function getLitStringRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.litString()];
+  }
+
+  test("LitString - single chars", () => {
+    testAntlrParse(getLitStringRule(), "", false);
+    testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `"a`, false);
+    testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" `, false);
+    testAntlrParse(getLitStringRule(), `$"{a} `, false);
+    testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
+    testAntlrParse(getLitStringRule(), `"abc`, false);
+    testAntlrParse(getLitStringRule(), `"`, false);
+    testAntlrParse(getLitStringRule(), `abc`, false);
+    testAntlrParse(getLitStringRule(), `'abc'`, false);
+    testAntlrParse(getLitStringRule(), `'abc"`, false);
+    testAntlrParse(getLitStringRule(), `"abc'`, false);
+  });
+
+  test("Interpolated strings", () => {
+    testAntlrParse(getLitStringRule(), `$""`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
+    // testAntlrParse(getLitStringRule(), `$"{}"`, false);
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(),
+    //       `$"{curly}"`,
+    //       true,
+    //       `$"{curly}"`,
+    //       "",
+    //       `$"{curly}"`,
+    //       `$"{<el-id>curly</el-id>}"`,
+    //     );
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(), // but with braces
+    //       `$"&#123;curly braces&#125;"`,
+    //       true,
+    //       `$"&#123;curly braces&#125;"`,
+    //       "",
+    //       `$"&#123;curly braces&#125;"`,
+    //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+    //     );
+  });
 
   function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguageElan.Instance, (p: Parser) => p.litInt()];
@@ -732,7 +768,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       true,
       `bar(x, 1, "hello")`,
       `bar(x, 1, "hello")`,
-      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, \"hello\")`, // do fix when string done
+      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, "<el-lit>hello</el-lit>")`,
       `bar(x, 1, "hello")`,
       `bar(x, 1, "hello")`,
     );
@@ -1229,32 +1265,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //     testAntlrParse(getLitStringInterpolatedInsertRule(), "{}", false);
   //   });
-  //   test("LitString", () => {
-  //     testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
-  //     testAntlrParse(
-  //       getLitStringRule(),
-  //       `"abc"`,
-  //       true,
-  //       `"abc"`,
-  //       "",
-  //       "",
-  //       `"<el-lit>abc</el-lit>"`,
-  //     );
-  //     testAntlrParse(
-  //       getLitStringRule(),
-  //       `"abc def"`,
-  //       true,
-  //       `"abc def"`,
-  //       "",
-  //       "",
-  //       `"<el-lit>abc def</el-lit>"`,
-  //     );
-  //     testAntlrParse(getLitStringRule(), `"abc`, false);
-  //     testAntlrParse(getLitStringRule(), `"`, false);
-  //     testAntlrParse(getLitStringRule(), `abc`, false);
-  //     testAntlrParse(getLitStringRule(), `'abc'`, false);
-  //     testAntlrParse(getLitStringRule(), `'abc"`, false);
-  //     testAntlrParse(getLitStringRule(), `"abc'`, false);
   //     testAntlrParse(
   //       getLitStringOrdinaryRule(),
   //       `"{curly braces}"`,
@@ -1354,32 +1364,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `$"<p>{2 + 3}</p>"`,
   //       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
   //       `f"<p>{2 + 3}</p>"`,
-  //     );
-  //   });
-  //   test("Interpolated strings", () => {
-  //     testAntlrParse(getLitStringRule(), `$""`, true, "", "");
-  //     testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
-  //     testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
-  //     testAntlrParse(getLitStringRule(), `$"{}"`, false);
-  //     testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
-  //     testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule(),
-  //       `$"{curly}"`,
-  //       true,
-  //       `$"{curly}"`,
-  //       "",
-  //       `$"{curly}"`,
-  //       `$"{<el-id>curly</el-id>}"`,
-  //     );
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule(), // but with braces
-  //       `$"&#123;curly braces&#125;"`,
-  //       true,
-  //       `$"&#123;curly braces&#125;"`,
-  //       "",
-  //       `$"&#123;curly braces&#125;"`,
-  //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
   //     );
   //   });
   //   test("Bug #290", () => {

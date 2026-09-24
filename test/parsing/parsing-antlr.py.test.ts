@@ -170,29 +170,53 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(getIdRule(), `()_a`, false);
   });
 
-  //   test("LitString - single chars", () => {
-  //     testAntlrParse(getLitStringRule(), "", false);
-  //     testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"a"`, "");
-  //     testAntlrParse(getLitStringRule(), `"a`, false);
-  //     testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"9"`, "");
-  //     testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `" "`, "");
-  //   });
-  //   test("LitString - bug #328", () => {
-  //     testAntlrParse(getLitStringRule(), `" `, false);
-  //     testAntlrParse(getLitStringRule(), `$"{a} `, false);
-  //   });
-  //   test("LitInt", () => {
-  //     testAntlrParse(getLitIntRule(), "", false);
-  //     testAntlrParse(getLitIntRule(), "   ", false);
-  //     testAntlrParse(getLitIntRule(), "123", true, "123", "", "123", "");
-  //     testAntlrParse(getLitIntRule(), "-123", true, "-123", "", "-123", "");
-  //     testAntlrParse(getLitIntRule(), "- 123", false);
-  //     testAntlrParse(getLitIntRule(), "1-23", true, "1", "-23", "", "");
-  //     testAntlrParse(getLitIntRule(), "456  ", true, "456", "  ", "456", "");
-  //     testAntlrParse(getLitIntRule(), " 123a", true, "123", "a", "123", "");
-  //     testAntlrParse(getLitIntRule(), "1.23", true, "1", ".23", "1", "");
-  //     testAntlrParse(getLitIntRule(), "a", false);
-  //   });
+  function getLitStringRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litString()];
+  }
+
+  test("LitString - single chars", () => {
+    testAntlrParse(getLitStringRule(), "", false);
+    testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `"a`, false);
+    testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" `, false);
+    testAntlrParse(getLitStringRule(), `$"{a} `, false);
+    testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
+    testAntlrParse(getLitStringRule(), `"abc`, false);
+    testAntlrParse(getLitStringRule(), `"`, false);
+    testAntlrParse(getLitStringRule(), `abc`, false);
+    testAntlrParse(getLitStringRule(), `'abc'`, false);
+    testAntlrParse(getLitStringRule(), `'abc"`, false);
+    testAntlrParse(getLitStringRule(), `"abc'`, false);
+  });
+
+  test("Interpolated strings", () => {
+    testAntlrParse(getLitStringRule(), `$""`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
+    // testAntlrParse(getLitStringRule(), `$"{}"`, false);
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(),
+    //       `$"{curly}"`,
+    //       true,
+    //       `$"{curly}"`,
+    //       "",
+    //       `$"{curly}"`,
+    //       `$"{<el-id>curly</el-id>}"`,
+    //     );
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(), // but with braces
+    //       `$"&#123;curly braces&#125;"`,
+    //       true,
+    //       `$"&#123;curly braces&#125;"`,
+    //       "",
+    //       `$"&#123;curly braces&#125;"`,
+    //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+    //     );
+  });
 
   function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguagePython.Instance, (p: Parser) => p.litInt()];
@@ -788,7 +812,7 @@ suite("Parsing Antlr Rules Python", () => {
       true,
       `bar(x, 1, "hello")`,
       `bar(x, 1, "hello")`,
-      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, \"hello\")`, // do fix when string done
+      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, "<el-lit>hello</el-lit>")`,
       `bar(x, 1, "hello")`,
       `bar(x, 1, "hello")`,
     );

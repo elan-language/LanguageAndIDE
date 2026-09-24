@@ -9,6 +9,7 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
+  LitStringContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -104,4 +105,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
 
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
+
+  visitLitString = (ctx: LitStringContext) => this.visitChildren(ctx)? `"${lit(this.visitChildren(ctx)!.slice(1,-1))}"` : "";
 }
