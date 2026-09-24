@@ -6,6 +6,7 @@ import {
   CommentTextContext,
   IdentifierContext,
   IndexContext,
+  LitBooleanContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
@@ -101,4 +102,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
 
   visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
+
+  visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 }

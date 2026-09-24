@@ -4,6 +4,7 @@ import {
   ArgListContext,
   CommentTextContext,
   IdentifierContext,
+  LitBooleanContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
@@ -84,4 +85,6 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
 
   visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
+
+    visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 }

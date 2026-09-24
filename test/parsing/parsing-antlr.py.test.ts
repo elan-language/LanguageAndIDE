@@ -17,7 +17,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getUnaryExpressionRule(), "", false);
   //     testAntlrParse(getUnaryExpressionRule(), "-3", true, "-3", "", "-3", "");
   //     testAntlrParse(
-  //       new UnaryExpression(f),
+  //       getUnaryExpressionRule(),
   //       " not foo",
   //       true,
   //       " not foo",
@@ -222,7 +222,7 @@ suite("Parsing Antlr Rules Python", () => {
 
   //   test("LitInt_HexAndBinary", () => {
   //     testAntlrParse(
-  //       new LitInt(f),
+  //       getLitIntRule(),
   //       "0xfa3c",
   //       true,
   //       "fa3c",
@@ -254,7 +254,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "&Hfa3",
   //     ); //VB format in VB
   //     testAntlrParse(
-  //       new LitInt(f),
+  //       getLitIntRule(),
   //       "0b01101",
   //       true,
   //       "01101",
@@ -360,7 +360,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
-  //       new BracketedExpression(f),
+  //       getBracketedExpressionRule(),
   //       "(3 + 4)",
   //       true,
   //       "(3 + 4)",
@@ -373,7 +373,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getBracketedExpressionRule(), "(3)", true, "(3)", "", "(3)", "");
 
   //     testAntlrParse(
-  //       new BracketedExpression(f),
+  //       getBracketedExpressionRule(),
   //       "(a and not b)",
   //       true,
   //       "(a and not b)",
@@ -382,7 +382,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new BracketedExpression(f),
+  //       getBracketedExpressionRule(),
   //       "(3 * 4 + x)",
   //       true,
   //       "(3 * 4 + x)",
@@ -391,7 +391,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new BracketedExpression(f),
+  //       getBracketedExpressionRule(),
   //       "(3 * (4 + x))",
   //       true,
   //       "(3 * (4 + x))",
@@ -400,7 +400,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new BracketedExpression(f),
+  //       getBracketedExpressionRule(),
   //       "(a and not b",
   //       false,
   //       "(a and not b",
@@ -413,14 +413,14 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("Optional", () => {
   //     testAntlrParse(
-  //       new OptionalNode(f, new LitInt(f)),
+  //       new OptionalNode(f, getLitIntRule()),
   //       "123 a",
   //       true,
   //       "123",
   //       " a",
   //       "123",
   //     );
-  //     testAntlrParse(new OptionalNode(f, new LitInt(f)), "abc", true, "", "abc", "");
+  //     testAntlrParse(new OptionalNode(f, getLitIntRule()), "abc", true, "", "abc", "");
   //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       " abstract",
@@ -465,22 +465,22 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
 
   //   test("Multiple", () => {
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), ``, true, ``, "", "");
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), ``, false);
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), `)`, true, ``, ")", "");
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 1), ``, false);
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 0), `)`, true, ``, ")", "");
   //     testAntlrParse(
-  //       new Multiple(f, () => new LitInt(f), 1),
+  //       new Multiple(f, () => getLitIntRule(), 1),
   //       `1 0 33`,
   //       true,
   //       `1 0 33`,
   //       "",
   //       "",
   //     );
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), `1`, true, `1`, "", "");
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), ``, true, ``, "", "");
-  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), ``, false);
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 1), `1`, true, `1`, "", "");
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new Multiple(f, () => getLitIntRule(), 1), ``, false);
   //     testAntlrParse(
-  //       new Multiple(f, () => new LitInt(f), 1),
+  //       new Multiple(f, () => getLitIntRule(), 1),
   //       `5 6 a`,
   //       true,
   //       `5 6`,
@@ -488,7 +488,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new Multiple(f, () => new LitInt(f), 1),
+  //       new Multiple(f, () => getLitIntRule(), 1),
   //       `7   `,
   //       true,
   //       `7`,
@@ -594,12 +594,12 @@ suite("Parsing Antlr Rules Python", () => {
   //       ",x",
   //       "a, a",
   //     );
-  //     testAntlrParse(new CSV(f, () => new LitInt(f), 0), ``, true, ``, "", "");
-  //     testAntlrParse(new CSV(f, () => new LitInt(f), 1), ``, false);
-  //     testAntlrParse(new CSV(f, () => new LitInt(f), 0), `2`, true, `2`, "", "");
-  //     testAntlrParse(new CSV(f, () => new LitInt(f), 1), `2`, true, `2`, "", "");
+  //     testAntlrParse(new CSV(f, () => getLitIntRule(), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new CSV(f, () => getLitIntRule(), 1), ``, false);
+  //     testAntlrParse(new CSV(f, () => getLitIntRule(), 0), `2`, true, `2`, "", "");
+  //     testAntlrParse(new CSV(f, () => getLitIntRule(), 1), `2`, true, `2`, "", "");
   //     testAntlrParse(
-  //       new CSV(f, () => new LitString(f), 0),
+  //       new CSV(f, () => getLitStringRule(), 0),
   //       `"apple","orange", "pear"`,
   //       true,
   //       `"apple","orange", "pear"`,
@@ -715,7 +715,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getIdentifierWithOptIndexesRule(), ``, false);
   //     testAntlrParse(getIdentifierWithOptIndexesRule(), `bar`, true, `bar`, "", "");
   //     testAntlrParse(
-  //       new IdentifierWithOptIndexes(f),
+  //       getIdentifierWithOptIndexesRule(),
   //       `bar[foo]`,
   //       true,
   //       `bar[foo]`,
@@ -812,7 +812,7 @@ suite("Parsing Antlr Rules Python", () => {
 
   //   test("TypeSimpleName", () => {
   //     testAntlrParse(
-  //       new TypeSimpleName(f),
+  //       getTypeSimpleNameRule(),
   //       `Foo`,
   //       true,
   //       "Foo",
@@ -828,7 +828,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<`, false);
   //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<of`, false);
   //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(f),
+  //       getTypeSimpleOrGenericRule(),
   //       `Foo<of Bar`,
   //       false,
   //       "Foo<of Bar",
@@ -837,7 +837,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<ofBar`, true, "", "<ofBar", "");
   //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(f),
+  //       getTypeSimpleOrGenericRule(),
   //       `Foo<of Bar>`,
   //       true,
   //       "Foo<of Bar>",
@@ -846,7 +846,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
   //     );
   //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(f),
+  //       getTypeSimpleOrGenericRule(),
   //       `Dictionary<of Bar, Yon>`,
   //       true,
   //       "Dictionary<of Bar, Yon>",
@@ -997,7 +997,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("Lambda", () => {
   //     testAntlrParse(
-  //       new Lambda(f),
+  //       getLambdaRule(),
   //       `lambda x as Int => x * x`,
   //       true,
   //       "lambda x as Int => x * x",
@@ -1006,7 +1006,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testAntlrParse(getLambdaRule(), `lambda x`, false);
   //     testAntlrParse(
-  //       new Lambda(f),
+  //       getLambdaRule(),
   //       `lambda x => x * x`,
   //       false,
   //       "",
@@ -1014,7 +1014,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new Lambda(f),
+  //       getLambdaRule(),
   //       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
   //       true,
   //       "",
@@ -1022,7 +1022,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new Lambda(f),
+  //       getLambdaRule(),
   //       `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
   //       true,
   //       "",
@@ -1032,7 +1032,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("IfExpr", () => {
   //     testAntlrParse(
-  //       new IfExpr(f),
+  //       getIfExprRule(),
   //       `if_(cell, Colour.green, Colour.black)`,
   //       true,
   //       "",
@@ -1041,7 +1041,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
   //     );
   //     testAntlrParse(
-  //       new IfExpr(f),
+  //       getIfExprRule(),
   //       `if_(cell, Colour.green, Colour.black) + 1`,
   //       true,
   //       "if_(cell, Colour.green, Colour.black)",
@@ -1060,7 +1060,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testAntlrParse(getIfExprRule(), `if_(cell, Colour.amber`, false);
   //     testAntlrParse(
-  //       new IfExpr(f),
+  //       getIfExprRule(),
   //       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
   //       true,
   //       "",
@@ -1068,7 +1068,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new IfExpr(f),
+  //       getIfExprRule(),
   //       `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
   //       true,
   //       "",
@@ -1076,7 +1076,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new IfExpr(f),
+  //       getIfExprRule(),
   //       `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
   //       true,
   //       "",
@@ -1218,7 +1218,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getNewInstanceRule(), `new Foo()`, true, "", "", "new Foo()", "");
   //     testAntlrParse(getNewInstanceRule(), `newFoo()`, false);
   //     testAntlrParse(
-  //       new NewInstance(f),
+  //       getNewInstanceRule(),
   //       "new List<of String>()",
   //       true,
   //       "new List<of String>()",
@@ -1266,7 +1266,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule(), ``, false);
   //     testAntlrParse(
-  //       new LitStringInterpolatedInsert(f),
+  //       getLitStringInterpolatedInsertRule(),
   //       "{x + 1}",
   //       true,
   //       "{x + 1}",
@@ -1275,7 +1275,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new LitStringInterpolatedInsert(f),
+  //       getLitStringInterpolatedInsertRule(),
   //       "{x",
   //       false,
   //       "{x",
@@ -1288,7 +1288,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   test("LitString", () => {
   //     testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
   //     testAntlrParse(
-  //       new LitString(f),
+  //       getLitStringRule(),
   //       `"abc"`,
   //       true,
   //       `"abc"`,
@@ -1297,7 +1297,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       `"<el-lit>abc</el-lit>"`,
   //     );
   //     testAntlrParse(
-  //       new LitString(f),
+  //       getLitStringRule(),
   //       `"abc def"`,
   //       true,
   //       `"abc def"`,
@@ -1312,7 +1312,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getLitStringRule(), `'abc"`, false);
   //     testAntlrParse(getLitStringRule(), `"abc'`, false);
   //     testAntlrParse(
-  //       new LitStringOrdinary(f),
+  //       getLitStringOrdinaryRule(),
   //       `"{curly braces}"`,
   //       true,
   //       `"{curly braces}"`,
@@ -1321,7 +1321,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       `"<el-lit>{curly braces}</el-lit>"`,
   //     );
   //     testAntlrParse(
-  //       new LitStringOrdinary(f),
+  //       getLitStringOrdinaryRule(),
   //       `"&#123;curly braces&#125;"`,
   //       true,
   //       `"&#123;curly braces&#125;"`,
@@ -1332,7 +1332,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("Embedded Html tags", () => {
   //     testAntlrParse(
-  //       new LitStringOrdinary(f),
+  //       getLitStringOrdinaryRule(),
   //       `"<p>abc</p>"`,
   //       true,
   //       `"<p>abc</p>"`,
@@ -1351,7 +1351,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       `<p>`,
   //     );
   //     testAntlrParse(
-  //       new LitStringInterpolated(f),
+  //       getLitStringInterpolatedRule(),
   //       `$"<p>{2 + 3}</p>"`,
   //       true,
   //       `$"<p>{2 + 3}</p>"`,
@@ -1420,7 +1420,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
   //     testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
   //     testAntlrParse(
-  //       new LitStringInterpolated(f),
+  //       getLitStringInterpolatedRule(),
   //       `$"{curly}"`,
   //       true,
   //       `$"{curly}"`,
@@ -1429,7 +1429,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       `$"{<el-id>curly</el-id>}"`,
   //     );
   //     testAntlrParse(
-  //       new LitStringInterpolated(f), // but with braces
+  //       getLitStringInterpolatedRule(), // but with braces
   //       `$"&#123;curly braces&#125;"`,
   //       true,
   //       `$"&#123;curly braces&#125;"`,
@@ -1488,7 +1488,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1]`, true, "abc[1]", "");
   //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1][2]`, true, "abc[1]", "[2]");
   //     // testAntlrParse(
-  //     //   new TermSimpleWithOptIndex(f),
+  //     //   getTermSimpleWithOptIndexRule(),
   //     //   `abc.subList(1, 2)`,
   //     //   true,
   //     //   "abc.subList(1, 2)",
@@ -1496,7 +1496,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     // );
   //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1, 2]`, true, "abc", "[1, 2]");
   //     testAntlrParse(
-  //       new TermSimpleWithOptIndex(f),
+  //       getTermSimpleWithOptIndexRule(),
   //       `abc(defg, hi)[0]`,
   //       true,
   //       "abc(defg, hi)[0]",
@@ -1512,24 +1512,24 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(new PunctuationNode(f, DOT), `.`, true, `.`, "");
   //     testAntlrParse(getTermSimpleRule(), `a`, true, `a`, "");
   //     testAntlrParse(getDottedTermRule(), `.a`, true, `.a`, "");
-  //     testAntlrParse(new DotAfter(f, new TermSimple(f)), `.a`, false);
+  //     testAntlrParse(new DotAfter(f, getTermSimpleRule()), `.a`, false);
   //     testAntlrParse(getTermChainedRule(), `this.a`, true, `this.a`, "");
   //     testAntlrParse(
-  //       new TermChained(f),
+  //       getTermChainedRule(),
   //       `a[1].b().subList(1, 2).c(d)[e][f]`,
   //       true,
   //       `a[1].b().subList(1, 2).c(d)[e][f]`,
   //       "",
   //     );
   //     testAntlrParse(
-  //       new TermChained(f),
+  //       getTermChainedRule(),
   //       `this.a[1].b().c(d)[e]`,
   //       true,
   //       `this.a[1].b().c(d)[e]`,
   //       "",
   //     );
   //     testAntlrParse(
-  //       new TermChained(f),
+  //       getTermChainedRule(),
   //       `this.a.b()`,
   //       true,
   //       `this.a.b()`,
@@ -1572,7 +1572,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getBinaryOperationRule(), `> `, true, "> ", "", " > ", " &gt; ");
   //     testAntlrParse(getBinaryOperationRule(), ` > `, true, " > ", "", " > ", " &gt; ");
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       `is`,
   //       true,
   //       "is",
@@ -1581,7 +1581,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-kw> is </el-kw>",
   //     );
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       `is `,
   //       true,
   //       "is ",
@@ -1591,7 +1591,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testAntlrParse(getBinaryOperationRule(), `isn`, false);
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       `isnt`,
   //       true,
   //       "isnt",
@@ -1600,7 +1600,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-kw> isnt </el-kw>",
   //     );
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       ` and `,
   //       true,
   //       " and ",
@@ -1609,7 +1609,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-kw> and </el-kw>",
   //     );
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       `and`,
   //       true,
   //       "and",
@@ -1618,7 +1618,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-kw> and </el-kw>",
   //     );
   //     testAntlrParse(
-  //       new BinaryOperation(f),
+  //       getBinaryOperationRule(),
   //       `anda`,
   //       true,
   //       "and",
@@ -1632,7 +1632,7 @@ suite("Parsing Antlr Rules Python", () => {
 
   //     //test expressions
   //     testAntlrParse(
-  //       new BinaryExpression(f),
+  //       getBinaryExpressionRule(),
   //       `true and false`,
   //       true,
   //       `true and false`,
@@ -1640,7 +1640,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new BinaryExpression(f),
+  //       getBinaryExpressionRule(),
   //       `"a"+  "b"`,
   //       true,
   //       `"a"+  "b"`,
@@ -1651,7 +1651,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getBinaryExpressionRule(), `3 +`, false);
   //     testAntlrParse(getBinaryExpressionRule(), `3 `, false);
   //     testAntlrParse(
-  //       new BinaryExpression(f),
+  //       getBinaryExpressionRule(),
   //       `3+4`,
   //       true,
   //       "3+4",
@@ -1660,7 +1660,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
   //     );
   //     testAntlrParse(
-  //       new BinaryExpression(f),
+  //       getBinaryExpressionRule(),
   //       `3>=4`,
   //       true,
   //       "3>=4",
@@ -1676,7 +1676,7 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getBinaryExpressionRule(), `3>=`, false);
   //     testAntlrParse(getBinaryExpressionRule(), `3>=4`, true, "3>=4", "", "3 >= 4");
   //     testAntlrParse(
-  //       new BinaryExpression(f),
+  //       getBinaryExpressionRule(),
   //       `3 is 4`,
   //       true,
   //       "3 is 4",
@@ -1906,13 +1906,13 @@ suite("Parsing Antlr Rules Python", () => {
   //       false,
   //     );
   //     testActiveNodeAndDone(
-  //       new LitFloat(f),
+  //       getLitFloatRule(),
   //       `3.`,
   //       false,
   //       RegExMatchNode.name,
   //       false,
   //     );
-  //     testActiveNodeAndDone(new LitFloat(f), `3.1`, true, RegExMatchNode.name, false);
+  //     testActiveNodeAndDone(getLitFloatRule(), `3.1`, true, RegExMatchNode.name, false);
   //     testActiveNodeAndDone(
   //       new test_seq2(f),
   //       `3.1`,
@@ -1922,21 +1922,21 @@ suite("Parsing Antlr Rules Python", () => {
   //       false,
   //     );
   //     testActiveNodeAndDone(
-  //       new CSV(f, () => new LitInt(f), 2),
+  //       new CSV(f, () => getLitIntRule(), 2),
   //       `12,34`,
   //       true,
   //       LitInt.name,
   //       false,
   //     );
   //     testActiveNodeAndDone(
-  //       new CSV(f, () => new LitInt(f), 1),
+  //       new CSV(f, () => getLitIntRule(), 1),
   //       `12`,
   //       true,
   //       LitInt.name,
   //       false,
   //     );
   //     testActiveNodeAndDone(
-  //       new CSV(f, () => new LitInt(f), 1),
+  //       new CSV(f, () => getLitIntRule(), 1),
   //       `12,`,
   //       false,
   //       LitInt.name,
@@ -1945,7 +1945,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("LitRegExp", () => {
   //     testAntlrParse(
-  //       new LitRegExp(f),
+  //       getLitRegExpRule(),
   //       `/abc+.*/`,
   //       true,
   //       `/abc+.*/`,
@@ -1956,7 +1956,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("LitRegExp with flags", () => {
   //     testAntlrParse(
-  //       new LitRegExp(f),
+  //       getLitRegExpRule(),
   //       `/abc+.*/gm`,
   //       true,
   //       `/abc+.*/gm`,
@@ -1967,7 +1967,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("LitRegExp with invalid flags", () => {
   //     testAntlrParse(
-  //       new LitRegExp(f),
+  //       getLitRegExpRule(),
   //       `/abc+.*/x`,
   //       true,
   //       `/abc+.*/`,
@@ -2112,7 +2112,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("LitStringInterpolated", () => {
   //     testAntlrParse(
-  //       new LitStringInterpolated(f),
+  //       getLitStringInterpolatedRule(),
   //       `$"{a} plus {b} equals {a + b}"`,
   //       true,
   //       '$"{a} plus {b} equals {a + b}"',
@@ -2207,7 +2207,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("List", () => {
   //     testAntlrParse(
-  //       new ListNode(f, () => new LitInt(f)),
+  //       new ListNode(f, () => getLitIntRule()),
   //       `[1, 2, 3]`,
   //       true,
   //       `[1, 2, 3]`,
@@ -2219,7 +2219,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("List incomplete", () => {
   //     testAntlrParse(
-  //       new ListNode(f, () => new LitInt(f)),
+  //       new ListNode(f, () => getLitIntRule()),
   //       `[`,
   //       false,
   //       `[`,
@@ -2363,7 +2363,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("Type incomplete Elan", () => {
   //     testAntlrParse(
-  //       new TypeSimpleName(f),
+  //       getTypeSimpleNameRule(),
   //       `Inte`,
   //       true,
   //       `Inte`,
@@ -2410,42 +2410,37 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
 
-  //   test("LitBoolean", () => {
-  //     testAntlrParse(
-  //       new LitBoolean(f),
-  //       `true`,
-  //       true,
-  //       `true`,
-  //       "",
-  //       `true`,
-  //       "<el-kw>true</el-kw>",
-  //       `true`,
-  //     );
-  //   });
-  //   test("LitBoolean - case insensitive", () => {
-  //     testAntlrParse(
-  //       new LitBoolean(f),
-  //       `True`,
-  //       true,
-  //       `True`,
-  //       "",
-  //       `true`,
-  //       "<el-kw>true</el-kw>",
-  //       `true`,
-  //     );
-  //   });
-  //   test("LitBoolean - case insensitive VB", () => {
-  //     testAntlrParse(
-  //       new LitBoolean(fileWithVB()),
-  //       `true`,
-  //       true,
-  //       `true`,
-  //       "",
-  //       `true`,
-  //       "<el-kw>True</el-kw>",
-  //       `True`,
-  //     );
-  //   });
+  function getLitBooleanRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litBoolean()];
+  }
+
+  test("LitBoolean", () => {
+    testAntlrParse(
+      getLitBooleanRule(),
+      `True`,
+      true,
+      `True`,
+      `True`,
+      "<el-kw>True</el-kw>",
+      `True`,
+    );
+  });
+  test("LitBoolean", () => {
+    testAntlrParse(
+      getLitBooleanRule(),
+      `False`,
+      true,
+      `False`,
+      `False`,
+      "<el-kw>False</el-kw>",
+      `False`,
+    );
+  });
+
+  test("LitBoolean - case sensitive", () => {
+    testAntlrParse(getLitBooleanRule(), `true`, false);
+  });
+
   //   test("Expr - i in type C#  - #2737", () => {
   //     testAntlrParse(
   //       new TypeSimpleName(fileWithCS()),
@@ -2471,7 +2466,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("ThisInstance", () => {
   //     testAntlrParse(
-  //       new ThisInstance(f),
+  //       getThisInstanceRule(),
   //       `this`,
   //       true,
   //       `this`,
@@ -2481,7 +2476,7 @@ suite("Parsing Antlr Rules Python", () => {
   //       `this`,
   //     );
   //     testAntlrParse(
-  //       new ThisInstance(f),
+  //       getThisInstanceRule(),
   //       `This`,
   //       true,
   //       `this`,
