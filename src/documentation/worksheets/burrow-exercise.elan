@@ -1,21 +1,17 @@
 # 0b02066526a7b8c5c429b6599c8d6eb2e5fbd68581fcf0388d4ea6552db8628a Elan 2.0.0-alpha valid
 
 # Exercise: learn how to use simple Block Graphics, writing a program called 'burrow'
-# 1. Create a main routine and within that add a 'let' statement defining a value named
-#    'blocks' as a new Array2D of type Int, and with arguments 40, 30 (corresponding to
-#    the width and height of the Display in blocks) and 'white' as the initial (Int)
-#    value for each block
+# 1. Create a main routine and within that add an 'assign' statement defining a value named 'blocks' as a new  structure of type BlockGraphics.
 # 2. Define two variables 'x' and 'y' with initial values of 20 and 15 respectively,
 #    being the coordinates of the centre of the display
 # 3. Call the '.put' procedure-method on 'blocks' passing in arguments x, y, and 'red'
-# 4. Call the procedure displayBlocks, passing in 'blocks' as the argument
+# 4. Call the procedure displayBlockGraphics, passing in 'blocks' as the argument
 # Run the program to check that this displays a red block in the centre of the Display
 # 5. After the other instructions in main, add an infinite loop ('while true')
 # 6. Select the first of the existing call instructions, then Shift-↓ to also select
 #    the second one, cut them (Ctrl+x) then select the 'new code' within the while loop
 #    and paste them there with Ctrl+v.
-# 7. After the displayBlocks call, add another call to 'blocks.put' to change the block
-#    at x, y to black
+# 7. After the displayBlockGraphics call, add another call to 'blocks.put' to change the block at x, y to black
 # 8. Add a new 'let' defining 'direction' as being a random integer in the range 0 to 3
 #    (as soon as you start typing random you will see a suitable method for this)
 # 9. Add an 'if' statement that tests if the direction is zero and if so increments 
