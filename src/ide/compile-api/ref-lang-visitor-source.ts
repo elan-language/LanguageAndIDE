@@ -6,6 +6,8 @@ import {
   CommentTextContext,
   IdentifierContext,
   IndexContext,
+  LitFloatContext,
+  LitIntContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -63,6 +65,12 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   visitCommentText = (ctx: CommentTextContext) => {
     return ctx.getText();
   };
+
+  visitLitInt = (ctx: LitIntContext) =>
+    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
+
+  visitLitFloat = (ctx: LitFloatContext) =>
+    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
 
   visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 

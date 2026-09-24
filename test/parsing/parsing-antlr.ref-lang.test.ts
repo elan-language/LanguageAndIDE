@@ -229,6 +229,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "123",
       "123",
     );
+    testAntlrParse(
+      getLitIntRule(),
+      "007",
+      true,
+      "007",
+      "007",
+      "<el-lit>007</el-lit>",
+      "007",
+      "007",
+    );
     testAntlrParse(getLitIntRule(), "-123", false); //Should parse as unaryExpression
     testAntlrParse(getLitIntRule(), "- 123", false);
     testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
@@ -238,61 +248,48 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getLitIntRule(), "a", false);
   });
 
-  //   test("LitInt_HexAndBinary", () => {
-  //     testAntlrParse(
-  //       getLitIntRule(),
-  //       "0xfa3c",
-  //       true,
-  //       "fa3c",
-  //       "",
-  //       "0xfa3c",
-  //       "<el-lit>0xfa3c</el-lit>",
-  //       "0xfa3c",
-  //     );
-  //     testAntlrParse(
-  //       getExprRule(),
-  //       "0xfffe",
-  //       true,
-  //       "0xfffe",
-  //       "",
-  //       "0xfffe",
-  //       "<el-lit>0xfffe</el-lit>",
-  //       "0xfffe",
-  //     );
-  //     testAntlrParse(getLitIntRule(), "0xfa3g", true, "fa3", "g", "0xfa3", "");
-  //     testAntlrParse(getLitIntRule(), "&Hfa3", false); //VB format in El
-  //     testAntlrParse(
-  //       new LitInt(fileWithVB()),
-  //       "&Hfa3",
-  //       true,
-  //       "fa3",
-  //       "",
-  //       "0xfa3",
-  //       "<el-lit>&Hfa3</el-lit>",
-  //       "&Hfa3",
-  //     ); //VB format in VB
-  //     testAntlrParse(
-  //       getLitIntRule(),
-  //       "0b01101",
-  //       true,
-  //       "01101",
-  //       "",
-  //       "0b01101",
-  //       "<el-lit>0b01101</el-lit>",
-  //     );
-  //     testAntlrParse(getLitIntRule(), "0b01102", true, "0110", "2", "0b0110", "");
-  //     testAntlrParse(getLitIntRule(), "&B0110", false); //VB syntax
-  //     testAntlrParse(
-  //       new LitInt(fileWithVB()),
-  //       "&B0110",
-  //       true,
-  //       "0110",
-  //       "",
-  //       "0b0110",
-  //       "<el-lit>&B0110</el-lit>",
-  //       "&B0110",
-  //     ); //VB syntax
-  //   });
+  test("LitInt_Hex", () => {
+    testAntlrParse(
+      getLitIntRule(),
+      "0xfa3c",
+      true,
+      "0xfa3c",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+    );
+    testAntlrParse(
+      getLitIntRule(),
+      "0xfa3C",
+      true,
+      "0xfa3C",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+    );
+    testAntlrParse(getLitIntRule(), "0Xfffe", true, "0");
+
+    testAntlrParse(getLitIntRule(), "0x", false);
+    testAntlrParse(getLitIntRule(), "xfa3a", false);
+    testAntlrParse(getLitIntRule(), "fa3c", false);
+    testAntlrParse(getLitIntRule(), "0xfa3g", true, "0xfa3");
+    testAntlrParse(getLitIntRule(), "&Hfa3", false); //VB format
+  });
+  test("LitInt_Binary", () => {
+    testAntlrParse(
+      getLitIntRule(),
+      "0b01101",
+      true,
+      "0b01101",
+      "0b01101",
+      "<el-lit>0b01101</el-lit>",
+    );
+    testAntlrParse(getLitIntRule(), "0b0", true, "0b0", "0b0", "<el-lit>0b0</el-lit>");
+    testAntlrParse(getLitIntRule(), "0b", false);
+    testAntlrParse(getLitIntRule(), "0b01102", true, "0b0110");
+    testAntlrParse(getLitIntRule(), "b01101", false);
+    testAntlrParse(getLitIntRule(), "&B0110", false); //VB syntax
+  });
 
   function getLitFloatRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguageElan.Instance, (p: Parser) => p.litFloat()];
@@ -317,67 +314,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "<el-lit>1.1e-5</el-lit>",
     );
     //Cap E not in the accepted text for some reason
-    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1E5", "<el-lit>1.1E5</el-lit>");
+    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1e5", "<el-lit>1.1e5</el-lit>");
     testAntlrParse(
       getLitFloatRule(),
       "1.1E-5",
       true,
       "1.1E-5",
-      "1.1E-5",
-      "<el-lit>1.1E-5</el-lit>",
+      "1.1e-5",
+      "<el-lit>1.1e-5</el-lit>",
     );
   });
-  //   test("Keyword", () => {
-  //     testAntlrParse(new KeywordNode(f, abstractKeyword), "", false);
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       "abstract ",
-  //       true,
-  //       "abstract",
-  //       " ",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       "abstract(x",
-  //       true,
-  //       "abstract",
-  //       "(x",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       "abstractx",
-  //       false,
-  //       "",
-  //       "abstractx",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       "abstract immutable",
-  //       true,
-  //       "abstract",
-  //       " immutable",
-  //       "abstract",
-  //     );
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       " abs",
-  //       false,
-  //       " abs",
-  //       "",
-  //       "abs",
-  //     );
-  //     testAntlrParse(
-  //       new KeywordNode(f, abstractKeyword),
-  //       " abscract",
-  //       false,
-  //       "",
-  //       " abscract",
-  //       "",
-  //     );
-  //   });
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),

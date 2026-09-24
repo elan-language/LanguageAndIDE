@@ -100,11 +100,14 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return `${prefix}${indices}`;
   };
 
-  visitLitInt = (ctx: LitIntContext) => lit(this.visitChildren(ctx) ?? "");
+  visitLitInt = (ctx: LitIntContext) =>
+    this.visitChildren(ctx) ? lit(this.visitChildren(ctx)!.toLowerCase()) : "";
 
-  visitLitFloat = (ctx: LitFloatContext) => lit(this.visitChildren(ctx) ?? "");
+  visitLitFloat = (ctx: LitFloatContext) =>
+    this.visitChildren(ctx) ? lit(this.visitChildren(ctx)!.toLowerCase()) : "";
 
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
-  visitLitString = (ctx: LitStringContext) => this.visitChildren(ctx)? `"${lit(this.visitChildren(ctx)!.slice(1,-1))}"` : "";
+  visitLitString = (ctx: LitStringContext) =>
+    this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
 }
