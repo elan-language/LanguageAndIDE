@@ -367,6 +367,19 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getEnumValueRule(), `foo.bar`, false);
     testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
   });
+
+  function LitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.litValue()];
+  }
+
+  test("LitValue", () => {
+    testAntlrParse(LitValueRule(), "123", true);
+    testAntlrParse(LitValueRule(), "1.0", true);
+    testAntlrParse(LitValueRule(), "true", true);
+    testAntlrParse(LitValueRule(), `"hello"`, true);
+    testAntlrParse(LitValueRule(), "Foo.bar", true);
+  });
+
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),

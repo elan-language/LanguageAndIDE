@@ -373,6 +373,19 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(getEnumValueRule(), `foo.bar`, false);
     testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
   });
+
+  function LitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litValue()];
+  }
+
+  test("LitValue", () => {
+    testAntlrParse(LitValueRule(), "123", true);
+    testAntlrParse(LitValueRule(), "1.0", true);
+    testAntlrParse(LitValueRule(), "True", true);
+    testAntlrParse(LitValueRule(), `"hello"`, true);
+    testAntlrParse(LitValueRule(), "Foo.bar", true);
+  });
+
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),
