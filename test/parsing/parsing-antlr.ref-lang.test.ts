@@ -324,6 +324,35 @@ suite("Parsing Antlr Rules RefLang", () => {
       "<el-lit>1.1e-5</el-lit>",
     );
   });
+  function getLitBooleanRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.litBoolean()];
+  }
+
+  test("LitBoolean", () => {
+    testAntlrParse(
+      getLitBooleanRule(),
+      `true`,
+      true,
+      `true`,
+      `true`,
+      "<el-kw>true</el-kw>",
+      `true`,
+    );
+  });
+  test("LitBoolean", () => {
+    testAntlrParse(
+      getLitBooleanRule(),
+      `false`,
+      true,
+      `false`,
+      `false`,
+      "<el-kw>false</el-kw>",
+      `false`,
+    );
+  });
+  test("LitBoolean - case sensitive", () => {
+    testAntlrParse(getLitBooleanRule(), `True`, false);
+  });
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),
@@ -2284,35 +2313,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
 
-  function getLitBooleanRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguageElan.Instance, (p: Parser) => p.litBoolean()];
-  }
-
-  test("LitBoolean", () => {
-    testAntlrParse(
-      getLitBooleanRule(),
-      `true`,
-      true,
-      `true`,
-      `true`,
-      "<el-kw>true</el-kw>",
-      `true`,
-    );
-  });
-  test("LitBoolean", () => {
-    testAntlrParse(
-      getLitBooleanRule(),
-      `false`,
-      true,
-      `false`,
-      `false`,
-      "<el-kw>false</el-kw>",
-      `false`,
-    );
-  });
-  test("LitBoolean - case sensitive", () => {
-    testAntlrParse(getLitBooleanRule(), `True`, false);
-  });
   //   test("Expr - i in type C#  - #2737", () => {
   //     testAntlrParse(
   //       new TypeSimpleName(fileWithCS()),
