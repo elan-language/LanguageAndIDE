@@ -655,7 +655,7 @@ with specified changes: that is why all such methods have names starting '<el-me
  <li>Use method <a href="#createPopulatedListofLists"><el-method>createPopulatedListofLists</el-method> <i class="fa">&#xf14c;</i></a> to set the size of, and initial value in, every <i>x,y</i> position:<br>
    <code>variable array2D set to  createPopulatedListofLists(cols, rows, value)</code></li>
 <li>For the special case of <a href="#BlockGraphics">Block graphics <i class="fa">&#xf14c;</i></a>, use 40 columns and 30 rows or (more simply):<br>
-   <code>variable grid set to createBlockGraphics(value)</code></li>
+   <code>variable grid set to new BlockGraphics()</code></li>
 </ul>
 
 <p>The item at index <code>ix</code>,<code>iy</code> in a 2D array can be accessed and changed
@@ -2790,11 +2790,6 @@ end function
   <td>named value of any type</td>
   <td>same type as argument</td>
   <td>a copy of the named value</td>
- </tr><tr id="createBlockGraphics">
-  <td><el-method>createBlockGraphics</el-method></td>
-  <td><code>Int</code></td>
-  <td><code>List&lt; of List&lt; of Int&gt;&gt;</code></td>
-  <td>a 40&times;30 array with the specified value in every cell</td>
  </tr><tr id="createDictionary">
   <td><el-method>createDictionary</el-method></td>
   <td><code>List</code> of 2-tuples, each containg a key:value pair</td>

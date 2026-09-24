@@ -267,7 +267,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
     the result will always be floating point.
     But if <i>both</i> values are of integer type then you must use either <code>divAsInt(a, b)</code> or <code>divAsFloat(a, b)</code>
     to make clear which result you are looking for (<el-method>divAsInt</el-method> will round <i>down</i> the result if necessary).</li>
-  <li>A 2-dimensional arrays is implemented as a list of lists.</li>
+  <li>A 2-dimensional array is implemented as a list of lists.</li>
   <li>Negative index values and index <i>ranges</i> are not supported.</li>
   <li>Passing by reference is done by wrapping a parameter of type <code>Int</code>, say, in <code>AsRef&lt;of Int&gt;</code>.</li>
 </ul>
@@ -291,13 +291,13 @@ generates a non-editable class named Global, and all global instructions are cre
 <p>From the <b>Burrow</b> demo. For very simple applications like this, the main routine is the whole program:</p>
 
 <codeblock>main
-  variable blocks set to createBlockGraphics(white)
+  variable blocks set to new BlockGraphics()
   variable x set to 20
   variable y set to 15
   while true
-    assign blocks[x][y] to red
-    call displayBlocks(blocks)
-    assign blocks[x][y] to black
+    call blocks.put(x, y, red)
+    call displayBlockGraphics(blocks)
+    call blocks.put(x, y, black)
     variable direction set to randint(0, 3)
     if direction is 0 then
       assign x to min([x + 1, 39])
@@ -325,14 +325,13 @@ end main
 <p>From the <b>Life &ndash; procedural</b> demo. The whole program is 157 instructions (including tests), but the main routine contains just 9.
 It is good practice to <i>keep the main routine small</i>.</p>
 
-<codeblock>main
-  variable grid set to createBlockGraphics(white)
+<codeblock>
+main
+  variable grid set to new BlockGraphics()
   call fillRandom(grid)
   while true
-    call displayBlocks(grid)
-    variable gridRef set to new AsRef&lt;of List&lt;of List&lt;of Int&gt;&gt;&gt;(grid)
-    call nextGeneration(gridRef)
-    assign grid to gridRef.value()
+    call displayBlockGraphics(grid)
+    call nextGeneration(grid)
     call sleep_ms(50)
   end while
 end main
@@ -1015,32 +1014,35 @@ end main
 <p>From the <b>Snake &ndash; procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
 
   <codeblock>main
-  variable blocks set to createBlockGraphics(white)
-  variable head set to [20, 15]
-  variable tail set to head
-  variable body set to [head]
-  variable currentDir set to Direction.right
-  variable gameOn set to true
-  variable apple set to [0, 0]
-  call setAppleToRandomPosition(apple, body)
-  while gameOn
-    call updateDisplay(blocks, head, tail, body, apple)
-    variable currentDirRef set to new AsRef&lt;of Direction&gt;(currentDir)
-    variable headRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(head)
-    variable tailRef set to new AsRef&lt;of List&lt;of Int&gt;&gt;(tail)
-    call updateSnake(currentDirRef, tailRef, headRef, body)
-    assign head to headRef.value()
-    assign tail to tailRef.value()
-    assign currentDir to currentDirRef.value()
-    assign gameOn to not hasHitEdge(head[0], head[1]) and not body.contains(head)
-    if head.equals(apple) then
-      call setAppleToRandomPosition(apple, body)
+  variable bg set to new BlockGraphics()
+  variable head set to 621
+  variable snake set to [head - 1, head]
+  variable currentDir set to "d"
+  variable gameIsOn set to true
+  variable apple set to -1
+  while gameIsOn
+    while (apple is -1) or snake.contains(apple)
+      assign apple to randint(0, width*height)
+    end while
+    call updateDisplay(bg, snake, apple)
+    variable key set to getKey()
+    if not key.equals("") and "wasd".contains(key) then
+      assign currentDir to key
+    end if
+    assign head to getAdjacentBlock(head, currentDir)
+    if (head is -1) or snake.contains(head) then
+      assign gameIsOn to false
     else
-      call body.removeAt(0)
+      call snake.append(head)
+    end if
+    if head.equals(apple) then
+      assign apple to -1
+    else
+      call snake.removeAt(0)
     end if
     call sleep_ms(150)
   end while
-  print($"Game Over! Score: {body.length() - 1}")
+  print($"Game Over! Score: {snake.length() - 1}")
 end main
   </codeblock>
 </div></div>
@@ -1102,7 +1104,7 @@ end main
 <p>From the <b>Life &ndash; procedural</b> demo where a variable is initialised using an expression, in this
 case a function call:</p>
 
-<codeblock>variable grid set to createBlockGraphics(white)</codeblock>
+<codeblock>variable colour set to nextCellValue(copy, cell)</codeblock>
 
 <p>Example from the <b>Ripple Sort</b> demo where a variable being initialised using a literal <code>List</code> of integers:</p>
 
@@ -2075,7 +2077,7 @@ are passed around in a running program:</p>
   <td><a href="LibRef.html#TurtleGraphics"><el-topic>Turtle graphics</el-topic><br><code>Turtle</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="LibRef.html#VectorGraphics"><el-topic>SVG vector graphics</el-topic><br><code>CircleVG</code><br><code>ImageVG</code><br><code>LineVG</code>
   <br><code>RectangleVG</code><br><code>RawVG</code> <i class="fa">&#xf08e;</i></a></td>
-  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>List&lt;of List&lt;of Int&gt;&gt;</code> <i class="fa">&#xf08e;</i></a></td>
+  <td><a href="LibRef.html#BlockGraphics"><el-topic>Block graphics<br>(2D array)</el-topic><br><code>BlockGraphics</code> <i class="fa">&#xf08e;</i></a></td>
   <td></td>
  </tr><tr>
   <td>Data I/O</td>
@@ -2093,8 +2095,10 @@ are passed around in a running program:</p>
   <td>Other</td>
   <td><a href="LibRef.html#Random"><el-topic>Random number</el-topic><br><code>Random</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="#CallByRef"><el-topic>Argument reference</el-topic><br><code>AsRef</code> <i class="fa">&#xf14c;</i></a></td>
+  <td><el-topic>Error messages</el-topic><br>
+  <a href="LangRef.html#CustomError"><code>CustomError</code> <i class="fa">&#xf08e;</i></a>
+  <a href="LangRef.html#ElanRuntimeError"><br><code>ElanRuntimeError</code> <i class="fa">&#xf08e;</i></a></td>
   <td><a href="oopRef.html#Maybe"><el-topic>Optional property</el-topic><br><code>Maybe</code> <i class="fa">&#xf08e;</i></a></td>
-  <td></td>
   </tr>
 </table>
 
