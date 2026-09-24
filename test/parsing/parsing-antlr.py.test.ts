@@ -1,6 +1,7 @@
 import { ParserRuleContext } from "antlr4ng";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 import { Parser, testAntlrParse } from "../testHelpers";
 
 suite("Parsing Antlr Rules Python", () => {
@@ -374,36 +375,36 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
   });
 
-  function LitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+  function getLitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguagePython.Instance, (p: Parser) => p.litValue()];
   }
 
   test("LitValue", () => {
-    testAntlrParse(LitValueRule(), "123", true);
-    testAntlrParse(LitValueRule(), "1.0", true);
-    testAntlrParse(LitValueRule(), "True", true);
-    testAntlrParse(LitValueRule(), `"hello"`, true);
-    testAntlrParse(LitValueRule(), "Foo.bar", true);
+    testAntlrParse(getLitValueRule(), "123", true);
+    testAntlrParse(getLitValueRule(), "1.0", true);
+    testAntlrParse(getLitValueRule(), "True", true);
+    testAntlrParse(getLitValueRule(), `"hello"`, true);
+    testAntlrParse(getLitValueRule(), "Foo.bar", true);
   });
 
-  function BinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+  function getBinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguagePython.Instance, (p: Parser) => p.binaryOperator()];
   }
 
   test("BinaryOperator", () => {
-    testAntlrParse(BinaryOperatorRule(), "==", true, "==", " == ", " == ");
-    testAntlrParse(BinaryOperatorRule(), "!=", true, "!=", " != ", " != ");
-    testAntlrParse(BinaryOperatorRule(), ">", true, ">", " > ", " > ");
-    testAntlrParse(BinaryOperatorRule(), "<", true, "<", " < ", " < ");
-    testAntlrParse(BinaryOperatorRule(), ">=", true, ">=", " >= ", " >= ");
-    testAntlrParse(BinaryOperatorRule(), "<=", true, "<=", " <= ", " <= ");
-    testAntlrParse(BinaryOperatorRule(), "*", true, "*", "*", "*");
-    testAntlrParse(BinaryOperatorRule(), "/", true, "/", "/", "/");
-    testAntlrParse(BinaryOperatorRule(), "+", true, "+", " + ", " + ");
-    testAntlrParse(BinaryOperatorRule(), "-", true, "-", " - ", " - ");
-    testAntlrParse(BinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
-    testAntlrParse(BinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
-    testAntlrParse(BinaryOperatorRule(), "%", true, "%", " % ", " % ");
+    testAntlrParse(getBinaryOperatorRule(), "==", true, "==", " == ", " == ");
+    testAntlrParse(getBinaryOperatorRule(), "!=", true, "!=", " != ", " != ");
+    testAntlrParse(getBinaryOperatorRule(), ">", true, ">", " > ", " > ");
+    testAntlrParse(getBinaryOperatorRule(), "<", true, "<", " < ", " < ");
+    testAntlrParse(getBinaryOperatorRule(), ">=", true, ">=", " >= ", " >= ");
+    testAntlrParse(getBinaryOperatorRule(), "<=", true, "<=", " <= ", " <= ");
+    testAntlrParse(getBinaryOperatorRule(), "*", true, "*", "*", "*");
+    testAntlrParse(getBinaryOperatorRule(), "/", true, "/", "/", "/");
+    testAntlrParse(getBinaryOperatorRule(), "+", true, "+", " + ", " + ");
+    testAntlrParse(getBinaryOperatorRule(), "-", true, "-", " - ", " - ");
+    testAntlrParse(getBinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
+    testAntlrParse(getBinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
+    testAntlrParse(getBinaryOperatorRule(), "%", true, "%", " % ", " % ");
   });
 
   //   test("BracketedExpression", () => {

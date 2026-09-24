@@ -2,6 +2,7 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  BinaryExpressionContext,
   BinaryOperatorContext,
   CommentTextContext,
   EnumValueContext,
@@ -110,4 +111,8 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     } 
     return html;
   }  
+
+    // visitBinaryExpression = (ctx: BinaryExpressionContext) => 
+    //   `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
+  
 }

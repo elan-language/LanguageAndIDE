@@ -368,16 +368,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
   });
 
-  function LitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+  function getLitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
     return [LanguageElan.Instance, (p: Parser) => p.litValue()];
   }
 
   test("LitValue", () => {
-    testAntlrParse(LitValueRule(), "123", true);
-    testAntlrParse(LitValueRule(), "1.0", true);
-    testAntlrParse(LitValueRule(), "true", true);
-    testAntlrParse(LitValueRule(), `"hello"`, true);
-    testAntlrParse(LitValueRule(), "Foo.bar", true);
+    testAntlrParse(getLitValueRule(), "123", true);
+    testAntlrParse(getLitValueRule(), "1.0", true);
+    testAntlrParse(getLitValueRule(), "true", true);
+    testAntlrParse(getLitValueRule(), `"hello"`, true);
+    testAntlrParse(getLitValueRule(), "Foo.bar", true);
   });
 
   function BinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
@@ -398,6 +398,101 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(BinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
     testAntlrParse(BinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
     testAntlrParse(BinaryOperatorRule(), "mod", true, "mod", " mod ", "<el-kw> mod </el-kw>");
+  });
+
+  function getBinaryExpressionRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.binaryExpression()];
+  }
+
+  test("BinaryExpression", () => {
+    testAntlrParse(
+      getBinaryExpressionRule(),
+      `true and false`,
+      true,
+      `true and false`,
+      `true and false`,
+      "<el-kw>true</el-kw><el-kw> and </el-kw><el-kw>false</el-kw>",
+    );
+    testAntlrParse(
+      getBinaryExpressionRule(),
+      `a+3`,
+      true,
+      `a+3`,
+      `a + 3`,
+      "<el-id>a</el-id> + <el-lit>3</el-lit>",
+    );
+    testAntlrParse(
+      getBinaryExpressionRule(),
+      `a * 3`,
+      true,
+      `a * 3`,
+      `a*3`,
+      "<el-id>a</el-id>*<el-lit>3</el-lit>",
+    );
+    // testAntlrParse(getBinaryExpressionRule(), `"a"+  "b"`, true, `"a"+  "b"`, "", `"a" + "b"`);
+    // testAntlrParse(getBinaryExpressionRule(), `3+`, false);
+    // testAntlrParse(getBinaryExpressionRule(), `3 +`, false);
+    // testAntlrParse(getBinaryExpressionRule(), `3 `, false);
+    // testAntlrParse(
+    //   getBinaryExpressionRule(),
+    //   `3+4`,
+    //   true,
+    //   "3+4",
+    //   "",
+    //   "3 + 4",
+    //   "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
+    // );
+    // testAntlrParse(
+    //   getBinaryExpressionRule(),
+    //   `3>=4`,
+    //   true,
+    //   "3>=4",
+    //   "",
+    //   "3 >= 4",
+    //   "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
+    // );
+    // testAntlrParse(getBinaryExpressionRule(), `3>`, false);
+    // testAntlrParse(getBinaryExpressionRule(), `3> `, false);
+    // testAntlrParse(getBinaryExpressionRule(), `3> 4`, true, "3> 4", "", "3 > 4");
+    // testAntlrParse(getBinaryExpressionRule(), `3>4`, true, "3>4", "", "3 > 4");
+    // testAntlrParse(getBinaryExpressionRule(), `3 > 4`, true, "3 > 4", "", "3 > 4");
+    // testAntlrParse(getBinaryExpressionRule(), `3>=`, false);
+    // testAntlrParse(getBinaryExpressionRule(), `3>=4`, true, "3>=4", "", "3 >= 4");
+    // testAntlrParse(
+    //   getBinaryExpressionRule(),
+    //   `3 is 4`,
+    //   true,
+    //   "3 is 4",
+    //   "",
+    //   "3 is 4",
+    //   "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
+    // );
+  });
+
+  function getTermRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.term()];
+  }
+
+  test("Expression", () => {
+    testAntlrParse(getTermRule(), "123", true);
+    testAntlrParse(getTermRule(), "1.0", true);
+    testAntlrParse(getTermRule(), "true", true);
+    testAntlrParse(getTermRule(), `"hello"`, true);
+    testAntlrParse(getTermRule(), "Foo.bar", true);
+    //TODO add an example of each sub-rule
+  });
+
+  function getExpressionRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.expression()];
+  }
+
+  test("Expression", () => {
+    testAntlrParse(getExpressionRule(), "123", true);
+    testAntlrParse(getExpressionRule(), "1.0", true);
+    testAntlrParse(getExpressionRule(), "true", true);
+    testAntlrParse(getExpressionRule(), `"hello"`, true);
+    testAntlrParse(getExpressionRule(), "Foo.bar", true);
+    //TODO add an example of each sub-rule
   });
 
   //   test("BracketedExpression", () => {
@@ -1504,137 +1599,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getExprRule(), `ref foo`, true, `ref`, " foo");
   //     testAntlrParse(getExprRule(), `ref `, false);
   //   });
-  //   test("OperatorAmbiguity#728", () => {
-  //     //Test operations
-  //     testAntlrParse(getBinaryOperationRule(), ``, false);
-  //     testAntlrParse(getBinaryOperationRule(), ` `, false);
-  //     testAntlrParse(getBinaryOperationRule(), `+`, true, "+", "", " + ", " + ");
-  //     testAntlrParse(getBinaryOperationRule(), ` +`, true, " +", "", " + ", " + ");
-  //     testAntlrParse(getBinaryOperationRule(), ` + `, true, " + ", "", " + ", " + ");
-  //     testAntlrParse(getBinaryOperationRule(), `*`, true, "*", "", "*", "*");
-  //     testAntlrParse(getBinaryOperationRule(), ` *`, true, " *", "", "*", "*");
-  //     testAntlrParse(getBinaryOperationRule(), ` * `, true, " * ", "", "*", "*");
-  //     testAntlrParse(getBinaryOperationRule(), `>=`, true, ">=", "", " >= ", " &gt;= ");
-  //     testAntlrParse(getBinaryOperationRule(), ` >=`, true, " >=", "", " >= ", " &gt;= ");
-  //     testAntlrParse(getBinaryOperationRule(), ` >= `, true, " >= ", "", " >= ", " &gt;= ");
-  //     testAntlrParse(getBinaryOperationRule(), `>`, true, ">", "", " > ", " &gt; ");
-  //     testAntlrParse(getBinaryOperationRule(), ` >`, true, " >", "", " > ", " &gt; ");
-  //     testAntlrParse(getBinaryOperationRule(), `> `, true, "> ", "", " > ", " &gt; ");
-  //     testAntlrParse(getBinaryOperationRule(), ` > `, true, " > ", "", " > ", " &gt; ");
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       `is`,
-  //       true,
-  //       "is",
-  //       "",
-  //       " is ",
-  //       "<el-kw> is </el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       `is `,
-  //       true,
-  //       "is ",
-  //       "",
-  //       " is ",
-  //       "<el-kw> is </el-kw>",
-  //     );
-  //     testAntlrParse(getBinaryOperationRule(), `isn`, false);
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       `isnt`,
-  //       true,
-  //       "isnt",
-  //       "",
-  //       " isnt ",
-  //       "<el-kw> isnt </el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       ` and `,
-  //       true,
-  //       " and ",
-  //       "",
-  //       " and ",
-  //       "<el-kw> and </el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       `and`,
-  //       true,
-  //       "and",
-  //       "",
-  //       " and ",
-  //       "<el-kw> and </el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryOperationRule(),
-  //       `anda`,
-  //       true,
-  //       "and",
-  //       "a",
-  //       " and ",
-  //       "<el-kw> and </el-kw>",
-  //     );
 
-  //     testAntlrParse(getBinaryOperationRule(), `an`, false);
-  //     testAntlrParse(getBinaryOperationRule(), `not`, false);
-
-  //     //test expressions
-  //     testAntlrParse(
-  //       getBinaryExpressionRule(),
-  //       `true and false`,
-  //       true,
-  //       `true and false`,
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryExpressionRule(),
-  //       `"a"+  "b"`,
-  //       true,
-  //       `"a"+  "b"`,
-  //       "",
-  //       `"a" + "b"`,
-  //     );
-  //     testAntlrParse(getBinaryExpressionRule(), `3+`, false);
-  //     testAntlrParse(getBinaryExpressionRule(), `3 +`, false);
-  //     testAntlrParse(getBinaryExpressionRule(), `3 `, false);
-  //     testAntlrParse(
-  //       getBinaryExpressionRule(),
-  //       `3+4`,
-  //       true,
-  //       "3+4",
-  //       "",
-  //       "3 + 4",
-  //       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
-  //     );
-  //     testAntlrParse(
-  //       getBinaryExpressionRule(),
-  //       `3>=4`,
-  //       true,
-  //       "3>=4",
-  //       "",
-  //       "3 >= 4",
-  //       "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
-  //     );
-  //     testAntlrParse(getBinaryExpressionRule(), `3>`, false);
-  //     testAntlrParse(getBinaryExpressionRule(), `3> `, false);
-  //     testAntlrParse(getBinaryExpressionRule(), `3> 4`, true, "3> 4", "", "3 > 4");
-  //     testAntlrParse(getBinaryExpressionRule(), `3>4`, true, "3>4", "", "3 > 4");
-  //     testAntlrParse(getBinaryExpressionRule(), `3 > 4`, true, "3 > 4", "", "3 > 4");
-  //     testAntlrParse(getBinaryExpressionRule(), `3>=`, false);
-  //     testAntlrParse(getBinaryExpressionRule(), `3>=4`, true, "3>=4", "", "3 >= 4");
-  //     testAntlrParse(
-  //       getBinaryExpressionRule(),
-  //       `3 is 4`,
-  //       true,
-  //       "3 is 4",
-  //       "",
-  //       "3 is 4",
-  //       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
-  //     );
-  //   });
   //   test("BinaryExpression_Python", () => {
   //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),

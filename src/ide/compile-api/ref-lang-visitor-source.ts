@@ -2,10 +2,12 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  BinaryExpressionContext,
   BinaryOperatorContext,
   ChainableContext,
   CommentTextContext,
   EnumValueContext,
+  ExpressionContext,
   IdentifierContext,
   IndexContext,
   LitFloatContext,
@@ -13,6 +15,7 @@ import {
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
+  TermContext,
   TestNameContext,
   TypeContext,
   TypeFuncContext,
@@ -112,4 +115,10 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
       } 
       return src;
     }  
+
+  visitTerm = (ctx: TermContext) => this.visitChildren(ctx) ?? "";
+  visitExpression = (ctx: ExpressionContext) => this.visitChildren(ctx) ?? "";
+
+    visitBinaryExpression = (ctx: BinaryExpressionContext) => 
+      `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
 }

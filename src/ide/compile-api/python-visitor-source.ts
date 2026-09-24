@@ -2,6 +2,8 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  BinaryExpressionContext,
+  BinaryOperatorContext,
   CommentTextContext,
   EnumValueContext,
   IdentifierContext,
@@ -84,6 +86,8 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   visitEnumValue = (ctx: EnumValueContext) =>
       `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
 
+  visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
+
   private formatBinaryOp(txt: string): string {
     let src = txt;
     if (txt !== "*" && txt !== "/") {
@@ -91,4 +95,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     } 
     return src;
   }  
+
+    // visitBinaryExpression = (ctx: BinaryExpressionContext) => 
+    //   `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
 }

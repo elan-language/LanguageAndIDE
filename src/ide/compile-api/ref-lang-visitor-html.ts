@@ -2,10 +2,12 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  BinaryExpressionContext,
   BinaryOperatorContext,
   ChainableContext,
   CommentTextContext,
   EnumValueContext,
+  ExpressionContext,
   IdentifierContext,
   IndexContext,
   LitBooleanContext,
@@ -15,6 +17,7 @@ import {
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
+  TermContext,
   TestNameContext,
   TypeContext,
   TypeFuncContext,
@@ -23,6 +26,7 @@ import {
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
+import { escapeHtmlChars } from "../frames/frame-helpers";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
@@ -37,7 +41,7 @@ import {
   type,
   visitTypeHelper,
 } from "./parser-helpers";
-import { escapeHtmlChars } from "../frames/frame-helpers";
+
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -114,7 +118,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${type(ctx.typeName().getText())}.${id(ctx.identifier().getText())}`;
+    `${this.visitTypeName(ctx.typeName())}.${this.visitIdentifier(ctx.identifier())}`;
+   // `${type(ctx.typeName().getText())}.${id(ctx.identifier().getText())}`; // TODO: this solution won't work in general. How do I get the Html from the typeName and the identifier?
 
   visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
 
@@ -128,4 +133,9 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return html;
   }  
 
+  visitTerm = (ctx: TermContext) => this.visitChildren(ctx) ?? "";
+  visitExpression = (ctx: ExpressionContext) => this.visitChildren(ctx) ?? "";
+
+    visitBinaryExpression = (ctx: BinaryExpressionContext) => 
+      `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
 }
