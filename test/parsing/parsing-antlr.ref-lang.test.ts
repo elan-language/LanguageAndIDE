@@ -206,7 +206,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "123",
       "123",
     );
-    //testAntlrParse(getLitIntRule(), "-123", true, "-123", "-123", "");
+    testAntlrParse(getLitIntRule(), "-123", false); //Should parse as unaryExpression
     testAntlrParse(getLitIntRule(), "- 123", false);
     testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
     testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
@@ -277,7 +277,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   test("LitFloat", () => {
     testAntlrParse(getLitFloatRule(), "", false);
     testAntlrParse(getLitFloatRule(), "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>");
-    testAntlrParse(getLitFloatRule(), "-1.0", true, "-1.0", "-1.0", "<el-lit>-1.0</el-lit>");
+    testAntlrParse(getLitFloatRule(), "-1.0", false); // Should parse as a unaryExpression
     testAntlrParse(getLitFloatRule(), "- 1.0", false);
     testAntlrParse(getLitFloatRule(), "1.-0", false);
     testAntlrParse(getLitFloatRule(), " 1.0a", true, " 1.0", "1.0");
