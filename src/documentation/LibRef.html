@@ -661,7 +661,7 @@ with specified changes: that is why all such methods have names starting '<el-me
 <p>The item at index <code>ix</code>,<code>iy</code> in a 2D array can be accessed and changed
  using its two coordinates in square brackets:</p>
 <ul>
-  <li><code>variable value set to  array2D[ix][iy]</code></li>
+  <li><code>variable value set to array2D[ix][iy]</code></li>
   <li><code>assign array2D[ix][iy] to 7</code></li>
 </ul>
 
@@ -1400,15 +1400,17 @@ end function
 
 <h1 id="Graphics">Graphic types</h1>
 
+<div id="displayBlockGraphics"></div>
 <h2 id="BlockGraphics">Block graphics</h2>
 
 <p>(The method <el-method>createBlockGraphics</el-method> has been deprecated. The recommended way to use block graphics
 is shown below.)</p>
-
 <p>Block graphics provides a simple way to create low resolution graphics, ideal for simple but engaging games for example.</p>
 <p>The graphics are defined and displayed on a grid that is 40 blocks wide by 30 blocks high.</p>
 <p>Each block is be rendered as a solid colour.</p>
-<p>An example of block graphics to produce a rapidly changing pattern of coloured blocks:</p>
+<p>You use the  <code>BlockGraphics</code> type to hold an array then, having populated a BlockGraphics variable,
+you display it with procedure <el-method>displayBlockGraphics</el-method>, as in this example,
+which produces a rapidly changing pattern of coloured blocks:</p>
 
 <codeblock>main
   variable grid set to new BlockGraphics()
