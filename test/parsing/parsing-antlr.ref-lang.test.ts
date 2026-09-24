@@ -46,27 +46,27 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getTermRule(), "a", true, "a", "", "a", "");
   //   });
   //   test("Expression", () => {
-  //     testAntlrParse(getExprNodeRule(), "", false);
-  //     testAntlrParse(getExprNodeRule(), "", false);
-  //     testAntlrParse(getExprNodeRule(), "a", true, "a", "", "a", "");
-  //     testAntlrParse(getExprNodeRule(), "a + b", true, "a + b", "", "a + b", "");
-  //     testAntlrParse(getExprNodeRule(), "a * -b", true, "a * -b", "", "a*-b", "");
-  //     testAntlrParse(getExprNodeRule(), "a + b- c", true, "", "", "a + b - c", "");
-  //     testAntlrParse(getExprNodeRule(), "+", false);
-  //     testAntlrParse(getExprNodeRule(), "+b", false);
-  //     testAntlrParse(getExprNodeRule(), "a +", false);
-  //     testAntlrParse(getExprNodeRule(), "a %", true, "a", " %", "a");
-  //     testAntlrParse(getExprNodeRule(), "3 * 4 + x", true, "3 * 4 + x", "", "3*4 + x", "");
-  //     testAntlrParse(getExprNodeRule(), "3* foo(5)", true, "", "", "3*foo(5)", "");
+  //     testAntlrParse(getExprRule(), "", false);
+  //     testAntlrParse(getExprRule(), "", false);
+  //     testAntlrParse(getExprRule(), "a", true, "a", "", "a", "");
+  //     testAntlrParse(getExprRule(), "a + b", true, "a + b", "", "a + b", "");
+  //     testAntlrParse(getExprRule(), "a * -b", true, "a * -b", "", "a*-b", "");
+  //     testAntlrParse(getExprRule(), "a + b- c", true, "", "", "a + b - c", "");
+  //     testAntlrParse(getExprRule(), "+", false);
+  //     testAntlrParse(getExprRule(), "+b", false);
+  //     testAntlrParse(getExprRule(), "a +", false);
+  //     testAntlrParse(getExprRule(), "a %", true, "a", " %", "a");
+  //     testAntlrParse(getExprRule(), "3 * 4 + x", true, "3 * 4 + x", "", "3*4 + x", "");
+  //     testAntlrParse(getExprRule(), "3* foo(5)", true, "", "", "3*foo(5)", "");
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "new List<of String>()",
   //       true,
   //       "new List<of String>()",
   //       "",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "points.foo(0.0)",
   //       true,
   //       "points.foo(0.0)",
@@ -75,7 +75,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "this",
   //       true,
   //       "this",
@@ -84,7 +84,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "<el-kw>this</el-kw>",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "thisWidget",
   //       true,
   //       "thisWidget",
@@ -94,7 +94,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //     // empty data structures
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "new List<of Int>()",
   //       true,
   //       "new List<of Int>()",
@@ -102,9 +102,9 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
   //     );
-  //     testAntlrParse(getExprNodeRule(), `""`, true, `""`, "", "", `""`);
+  //     testAntlrParse(getExprRule(), `""`, true, `""`, "", "", `""`);
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //       false,
   //       "",
@@ -115,7 +115,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("Lambda as argument", () => {
   //     testAntlrParse(
-  //       new ArgumentNode(f),
+  //       getArgumentRule(),
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //       true,
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
@@ -227,7 +227,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "0xfa3c",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       "0xfffe",
   //       true,
   //       "0xfffe",
@@ -543,12 +543,12 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
   //   test("CommaNode", () => {
-  //     testAntlrParse(getCommaNodeRule(), ``, false);
-  //     testAntlrParse(getCommaNodeRule(), `,`, true, ``, "", ", ");
-  //     testAntlrParse(getCommaNodeRule(), ` ,`, true, `,`, "", ", ");
-  //     testAntlrParse(getCommaNodeRule(), `,    `, true, ``, "", ", ");
-  //     testAntlrParse(getCommaNodeRule(), `.`, false);
-  //     testAntlrParse(getCommaNodeRule(), `,,`, true, `,`, ",", "");
+  //     testAntlrParse(getCommaRule(), ``, false);
+  //     testAntlrParse(getCommaRule(), `,`, true, ``, "", ", ");
+  //     testAntlrParse(getCommaRule(), ` ,`, true, `,`, "", ", ");
+  //     testAntlrParse(getCommaRule(), `,    `, true, ``, "", ", ");
+  //     testAntlrParse(getCommaRule(), `.`, false);
+  //     testAntlrParse(getCommaRule(), `,,`, true, `,`, ",", "");
   //   });
   //   test("CSV", () => {
   //     testAntlrParse(
@@ -604,16 +604,16 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `"apple", "orange", "pear"`,
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       new CSV(f, () => getIdentifierRule(), 0),
   //       `a,b,c`,
   //       true,
   //       `a,b,c`,
   //       "",
   //       "a, b, c",
   //     );
-  //     testAntlrParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, true, ``, "1", "");
+  //     testAntlrParse(new CSV(f, () => getIdentifierRule(), 0), `1`, true, ``, "1", "");
   //     testAntlrParse(
-  //       new CSV(f, () => new IdentifierNode(f), 1),
+  //       new CSV(f, () => getIdentifierRule(), 1),
   //       `1`,
   //       false,
   //       ``,
@@ -621,7 +621,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       new CSV(f, () => getIdentifierRule(), 0),
   //       `a,1`,
   //       true,
   //       `a`,
@@ -629,7 +629,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new IdentifierNode(f), 0),
+  //       new CSV(f, () => getIdentifierRule(), 0),
   //       `a,b,1`,
   //       true,
   //       `a,b`,
@@ -637,14 +637,14 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new ExprNode(f), 0),
+  //       new CSV(f, () => getExprRule(), 0),
   //       `a + b, c, 1`,
   //       true,
   //       `a + b, c, 1`,
   //       "",
   //       "",
   //     );
-  //     testAntlrParse(new CSV(f, () => new ExprNode(f), 0), `)`, true, ``, ")", "");
+  //     testAntlrParse(new CSV(f, () => getExprRule(), 0), `)`, true, ``, ")", "");
 
   //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
@@ -706,7 +706,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "foo, fo",
   //     );
 
-  //     testAntlrParse(new CSV(f, () => new ExprNode(f), 0), ``, true, "", "");
+  //     testAntlrParse(new CSV(f, () => getExprRule(), 0), ``, true, "", "");
   //   });
   //   test("IdentifierWithOptIndexes", () => {
   //     testAntlrParse(getIdentifierWithOptIndexesRule(), ``, false);
@@ -863,10 +863,10 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("TypeNode", () => {
   //     //Single
-  //     testAntlrParse(getTypeNodeRule(), `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
-  //     testAntlrParse(getTypeNodeRule(), `(Foo)`, false);
+  //     testAntlrParse(getTypeRule(), `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
+  //     testAntlrParse(getTypeRule(), `(Foo)`, false);
   //     testAntlrParse(
-  //       new TypeNode(f),
+  //       getTypeRule(),
   //       `(Foo, Bar, Yon`,
   //       false,
   //       "(Foo, Bar, Yon",
@@ -874,7 +874,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new TypeNode(f),
+  //       getTypeRule(),
   //       `(Foo, (Bar, Yon, Qux))`,
   //       true,
   //       "(Foo, (Bar, Yon, Qux))",
@@ -882,7 +882,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new TypeNode(f),
+  //       getTypeRule(),
   //       `(Foo, Bar< of Yon>)`,
   //       true,
   //       "(Foo, Bar< of Yon>)",
@@ -892,7 +892,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("TypeNode - Func", () => {
   //     testAntlrParse(
-  //       new TypeNode(f),
+  //       getTypeRule(),
   //       `Func<of Foo, Bar => Yon>`,
   //       true,
   //       "Func<of Foo, Bar => Yon>",
@@ -901,42 +901,42 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     ); //Single
   //   });
   //   test("TypeNode - library qualifier", () => {
-  //     testAntlrParse(getTypeNodeRule(), `library.Random`, false); //Single
+  //     testAntlrParse(getTypeRule(), `library.Random`, false); //Single
   //   });
   //   test("TypeNode - other qualifier", () => {
-  //     testAntlrParse(getTypeNodeRule(), `global.Random`, false); //Single
+  //     testAntlrParse(getTypeRule(), `global.Random`, false); //Single
   //   });
   //   test("TupleNode", () => {
-  //     testAntlrParse(getTupleNodeRule(), `(3,4)`, true, "", "", "");
-  //     testAntlrParse(getTupleNodeRule(), `(3,"a", "hello", 4.1, true)`, true, "", "", "");
-  //     testAntlrParse(getTupleNodeRule(), `((3,4), ("a", true))`, true, "", "", "");
+  //     testAntlrParse(getTupleRule(), `(3,4)`, true, "", "", "");
+  //     testAntlrParse(getTupleRule(), `(3,"a", "hello", 4.1, true)`, true, "", "", "");
+  //     testAntlrParse(getTupleRule(), `((3,4), ("a", true))`, true, "", "", "");
   //     testAntlrParse(
-  //       new TupleNode(f),
+  //       getTupleRule(),
   //       `(3,"a", "hello", 4.1, true`,
   //       false,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testAntlrParse(getTupleNodeRule(), `(3,"a", "hello", 4.1,`, false);
-  //     testAntlrParse(getTupleNodeRule(), `tuple[3,4]`, false);
-  //     testAntlrParse(getTupleNodeRule(), `(a,b)`, true, "(a,b)", "", "");
-  //     testAntlrParse(getTupleNodeRule(), `(`, false);
-  //     testAntlrParse(getTupleNodeRule(), `(3`, false);
-  //     testAntlrParse(getTupleNodeRule(), `(3)`, false);
-  //     testAntlrParse(getTupleNodeRule(), `()`, false);
-  //     testAntlrParse(getTupleNodeRule(), `("foo", 3)`, true, '("foo", 3)', "", "", "");
+  //     testAntlrParse(getTupleRule(), `(3,"a", "hello", 4.1,`, false);
+  //     testAntlrParse(getTupleRule(), `tuple[3,4]`, false);
+  //     testAntlrParse(getTupleRule(), `(a,b)`, true, "(a,b)", "", "");
+  //     testAntlrParse(getTupleRule(), `(`, false);
+  //     testAntlrParse(getTupleRule(), `(3`, false);
+  //     testAntlrParse(getTupleRule(), `(3)`, false);
+  //     testAntlrParse(getTupleRule(), `()`, false);
+  //     testAntlrParse(getTupleRule(), `("foo", 3)`, true, '("foo", 3)', "", "", "");
   //     testAntlrParse(
-  //       new TupleNode(f),
+  //       getTupleRule(),
   //       `(foo, 3, bar(a), x)`,
   //       true,
   //       "(foo, 3, bar(a), x)",
   //       "",
   //       "",
   //     );
-  //     testAntlrParse(getTupleNodeRule(), `(foo)`, false);
+  //     testAntlrParse(getTupleRule(), `(foo)`, false);
   //     testAntlrParse(
-  //       new TupleNode(f),
+  //       getTupleRule(),
   //       `(foo, 3, bar(a), x`,
   //       false,
   //       "(foo, 3, bar(a), x",
@@ -944,7 +944,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new TupleNode(f),
+  //       getTupleRule(),
   //       `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
   //       true,
   //       "",
@@ -1007,7 +1007,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       `if_(cell, Colour.red, Colour.blue) + 1`,
   //       true,
   //       "if_(cell, Colour.red, Colour.blue) + 1",
@@ -1043,7 +1043,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("ParamDefNode", () => {
   //     testAntlrParse(
-  //       new ParamDefNode(f),
+  //       getParamDefRule(),
   //       `x as String`,
   //       true,
   //       "x as String",
@@ -1051,10 +1051,10 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "x as String",
   //       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
   //     );
-  //     testAntlrParse(getParamDefNodeRule(), `z`, false);
-  //     testAntlrParse(getParamDefNodeRule(), `w as`, false);
-  //     testAntlrParse(getParamDefNodeRule(), `A`, false);
-  //     testAntlrParse(getParamDefNodeRule(), `v String`, false);
+  //     testAntlrParse(getParamDefRule(), `z`, false);
+  //     testAntlrParse(getParamDefRule(), `w as`, false);
+  //     testAntlrParse(getParamDefRule(), `A`, false);
+  //     testAntlrParse(getParamDefRule(), `v String`, false);
   //   });
   //   test("ParamDefNode_Python", () => {
   //     testAntlrParse(
@@ -1106,16 +1106,16 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("Param List", () => {
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `A as string`,
   //       true,
   //       "",
   //       "A as string",
   //       "",
   //     ); //i.e. all leftover
-  //     testAntlrParse(new CSV(f, () => new ParamDefNode(f), 0), ``, true, "", "", "");
+  //     testAntlrParse(new CSV(f, () => getParamDefRule(), 0), ``, true, "", "", "");
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `a as String`,
   //       true,
   //       "",
@@ -1123,7 +1123,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `a as String, bb as Int, foo as Bar`,
   //       true,
   //       "",
@@ -1131,7 +1131,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `a`,
   //       false,
   //       "a",
@@ -1139,7 +1139,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `a as String,`,
   //       false,
   //       "a as String,",
@@ -1147,7 +1147,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => new ParamDefNode(f), 0),
+  //       new CSV(f, () => getParamDefRule(), 0),
   //       `a as String, bb as`,
   //       false,
   //       "",
@@ -1156,8 +1156,8 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
   //   test("Literal", () => {
-  //     testAntlrParse(getLitValueNodeRule(), `"hello"`, true, "", "", "");
-  //     testAntlrParse(getLitValueNodeRule(), `123`, true, "", "", "");
+  //     testAntlrParse(getLitValueRule(), `"hello"`, true, "", "", "");
+  //     testAntlrParse(getLitValueRule(), `123`, true, "", "", "");
   //   });
   //   test("SpaceNode", () => {
   //     testAntlrParse(new SpaceNode(f, Space.ignored), ``, true, "", "", "", "");
@@ -1399,10 +1399,10 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getLitIntRule(), `3`, true, "3", "");
   //     testAntlrParse(getLitIntRule(), `3 `, true, "3", " ");
 
-  //     testAntlrParse(getLitValueNodeRule(), `3 `, true, "3", " ");
+  //     testAntlrParse(getLitValueRule(), `3 `, true, "3", " ");
   //     testAntlrParse(getBinaryExpressionRule(), `3 `, false);
 
-  //     testAntlrParse(getExprNodeRule(), `3 `, false);
+  //     testAntlrParse(getExprRule(), `3 `, false);
   //   });
 
   //   test("InstanceProcRef", () => {
@@ -1420,22 +1420,22 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getThisProcRefRule(), `this.bar`, true, "", "");
   //   });
   //   test("ProcRefNode", () => {
-  //     testAntlrParse(getProcRefNodeRule(), `foo`, true, "", "");
-  //     testAntlrParse(getProcRefNodeRule(), `bar.foo`, true, "", "");
-  //     testAntlrParse(getProcRefNodeRule(), `this.foo`, true, "", "");
-  //     testAntlrParse(getProcRefNodeRule(), `this.foo.bar`, true, "", ".bar");
+  //     testAntlrParse(getProcRefRule(), `foo`, true, "", "");
+  //     testAntlrParse(getProcRefRule(), `bar.foo`, true, "", "");
+  //     testAntlrParse(getProcRefRule(), `this.foo`, true, "", "");
+  //     testAntlrParse(getProcRefRule(), `this.foo.bar`, true, "", ".bar");
   //   });
 
   // test("#339 call dot function on a literal", () => {
-  //   testAntlrParse(getMethodCallNodeRule(), `length(bar)`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `bar.length()`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `bar.asList()`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `length(bar)`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `bar.length()`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `bar.asList()`, true, "", "");
   //   testAntlrParse(new LiteralNode(), `{1,2,3,4,5}`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `{1,2,3,4,5}.asList()`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `"Hello World".length()`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `12.3.toString()`, true, "", "");
-  //   testAntlrParse(getMethodCallNodeRule(), `bar.`, false);
-  //   testAntlrParse(getMethodCallNodeRule(), `bar`, false);
+  //   testAntlrParse(getMethodCallRule(), `{1,2,3,4,5}.asList()`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `"Hello World".length()`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `12.3.toString()`, true, "", "");
+  //   testAntlrParse(getMethodCallRule(), `bar.`, false);
+  //   testAntlrParse(getMethodCallRule(), `bar`, false);
   // });
   //   test("#670 new parse node structure for terms & expressions", () => {
   //     testAntlrParse(getTermSimpleRule(), `abc`, true, "abc", "");
@@ -1459,7 +1459,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "abc(defg, hi)[0]",
   //       "",
   //     );
-  //     testAntlrParse(getExprNodeRule(), `(defg, hi)`, true, "(defg, hi)", ""); // tuple
+  //     testAntlrParse(getExprRule(), `(defg, hi)`, true, "(defg, hi)", ""); // tuple
   //     testAntlrParse(getTermSimpleRule(), `[defg, hi]`, true, "[defg, hi]", "");
   //     testAntlrParse(getTermSimpleRule(), `345`, true, "345", "");
   //     testAntlrParse(getTermSimpleRule(), `-345`, true, "-345", "");
@@ -1495,21 +1495,21 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
   //       true,
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
   //       "",
   //     );
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       `this.a[1].b().c(d)[e]`,
   //       true,
   //       `this.a[1].b().c(d)[e]`,
   //       "",
   //     );
-  //     testAntlrParse(getExprNodeRule(), `ref foo`, true, `ref`, " foo");
-  //     testAntlrParse(getExprNodeRule(), `ref `, false);
+  //     testAntlrParse(getExprRule(), `ref foo`, true, `ref`, " foo");
+  //     testAntlrParse(getExprRule(), `ref `, false);
   //   });
   //   test("OperatorAmbiguity#728", () => {
   //     //Test operations
@@ -1935,7 +1935,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("not(a+b)", () => {
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       `not (a+b)`,
   //       true,
   //       `not (a+b)`,
@@ -1943,12 +1943,12 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "not (a + b)",
   //       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
   //     );
-  //     testAntlrParse(getExprNodeRule(), `not(a+b)`, false);
-  //     testAntlrParse(getExprNodeRule(), `not (a+b)`, true, `not (a+b)`, "", "", ``);
+  //     testAntlrParse(getExprRule(), `not(a+b)`, false);
+  //     testAntlrParse(getExprRule(), `not (a+b)`, true, `not (a+b)`, "", "", ``);
   //   });
   //   test("Parse list of list of floats", () => {
   //     testAntlrParse(
-  //       new ExprNode(f),
+  //       getExprRule(),
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
   //       true,
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
@@ -1956,11 +1956,11 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
   //   test("Parse list of floats 2", () => {
-  //     testAntlrParse(getExprNodeRule(), `[0.0]`, true, `[0.0]`, "");
+  //     testAntlrParse(getExprRule(), `[0.0]`, true, `[0.0]`, "");
   //   });
 
   //   ignore_test("Six open brackets", () => {
-  //     testAntlrParse(getExprNodeRule(), `((((((3))))))`, true, `((((((3))))))`, "");
+  //     testAntlrParse(getExprRule(), `((((((3))))))`, true, `((((((3))))))`, "");
   //   });
   //   test("Image", () => {
   //     testAntlrParse(
@@ -2007,7 +2007,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("TypeTupleNode", () => {
   //     testAntlrParse(
-  //       new TypeTupleNode(f),
+  //       getTypeTupleRule(),
   //       "(Int, String)",
   //       true,
   //       "(Int, String)",
@@ -2081,7 +2081,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("CSV expression", () => {
   //     return testAntlrParse(
-  //       new CSV(fileWithJava(), () => new ExprNode(f), 3),
+  //       new CSV(fileWithJava(), () => getExprRule(), 3),
   //       `a, b, a + b)`,
   //       true,
   //       "a, b, a + b",
