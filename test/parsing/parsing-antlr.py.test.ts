@@ -14,89 +14,89 @@ suite("Parsing Antlr Rules Python", () => {
   //     true,
   //   );
   //   test("UnaryExpression", () => {
-  //     testNodeParse(new UnaryExpression(f), "", ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new UnaryExpression(f), "-3", ParseStatus.valid, "-3", "", "-3", "");
-  //     testNodeParse(
+  //     testAntlrParse(getUnaryExpressionRule(), "", false);
+  //     testAntlrParse(getUnaryExpressionRule(), "-3", true, "-3", "", "-3", "");
+  //     testAntlrParse(
   //       new UnaryExpression(f),
   //       " not foo",
-  //       ParseStatus.valid,
+  //       true,
   //       " not foo",
   //       "",
   //       "not foo",
   //       "",
   //     );
-  //     testNodeParse(new UnaryExpression(f), "-", ParseStatus.incomplete, "-", "", "-", "");
-  //     testNodeParse(new UnaryExpression(f), "+4", ParseStatus.invalid, "", "+4", "", "");
+  //     testAntlrParse(getUnaryExpressionRule(), "-", false);
+  //     testAntlrParse(getUnaryExpressionRule(), "+4", false);
   //   });
   //   test("IndexableTerm", () => {
-  //     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+  //     testAntlrParse(getTermRule(), "a", true, "a", "", "a", "");
   //   });
   //   test("Term2", () => {
-  //     testNodeParse(new Term(f), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(new Term(f), "a", ParseStatus.valid, "a", "", "a", "");
+  //     testAntlrParse(getTermRule(), "", false);
+  //     testAntlrParse(getTermRule(), "a", true, "a", "", "a", "");
   //   });
   //   test("Expression", () => {
-  //     testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(new ExprNode(f), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(new ExprNode(f), "a", ParseStatus.valid, "a", "", "a", "");
-  //     testNodeParse(new ExprNode(f), "a + b", ParseStatus.valid, "a + b", "", "a + b", "");
-  //     testNodeParse(new ExprNode(f), "a * -b", ParseStatus.valid, "a * -b", "", "a*-b", "");
-  //     testNodeParse(new ExprNode(f), "a + b- c", ParseStatus.valid, "", "", "a + b - c", "");
-  //     testNodeParse(new ExprNode(f), "+", ParseStatus.invalid, "", "+", "");
-  //     testNodeParse(new ExprNode(f), "+b", ParseStatus.invalid, "", "+b", "");
-  //     testNodeParse(new ExprNode(f), "a +", ParseStatus.incomplete, "a +", "", "a + ");
-  //     testNodeParse(new ExprNode(f), "a %", ParseStatus.valid, "a", " %", "a");
-  //     testNodeParse(new ExprNode(f), "3 * 4 + x", ParseStatus.valid, "3 * 4 + x", "", "3*4 + x", "");
-  //     testNodeParse(new ExprNode(f), "3* foo(5)", ParseStatus.valid, "", "", "3*foo(5)", "");
-  //     testNodeParse(
+  //     testAntlrParse(getExprNodeRule(), "", false);
+  //     testAntlrParse(getExprNodeRule(), "", false);
+  //     testAntlrParse(getExprNodeRule(), "a", true, "a", "", "a", "");
+  //     testAntlrParse(getExprNodeRule(), "a + b", true, "a + b", "", "a + b", "");
+  //     testAntlrParse(getExprNodeRule(), "a * -b", true, "a * -b", "", "a*-b", "");
+  //     testAntlrParse(getExprNodeRule(), "a + b- c", true, "", "", "a + b - c", "");
+  //     testAntlrParse(getExprNodeRule(), "+", false);
+  //     testAntlrParse(getExprNodeRule(), "+b", false);
+  //     testAntlrParse(getExprNodeRule(), "a +", false);
+  //     testAntlrParse(getExprNodeRule(), "a %", true, "a", " %", "a");
+  //     testAntlrParse(getExprNodeRule(), "3 * 4 + x", true, "3 * 4 + x", "", "3*4 + x", "");
+  //     testAntlrParse(getExprNodeRule(), "3* foo(5)", true, "", "", "3*foo(5)", "");
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "new List<of String>()",
-  //       ParseStatus.valid,
+  //       true,
   //       "new List<of String>()",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "points.foo(0.0)",
-  //       ParseStatus.valid,
+  //       true,
   //       "points.foo(0.0)",
   //       "",
   //       "points.foo(0.0)",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "this",
-  //       ParseStatus.valid,
+  //       true,
   //       "this",
   //       "",
   //       "this",
   //       "<el-kw>this</el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "thisWidget",
-  //       ParseStatus.valid,
+  //       true,
   //       "thisWidget",
   //       "",
   //       "thisWidget",
   //       "<el-id>thisWidget</el-id>",
   //     );
   //     // empty data structures
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "new List<of Int>()",
-  //       ParseStatus.valid,
+  //       true,
   //       "new List<of Int>()",
   //       "",
   //       "",
   //       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
   //     );
-  //     testNodeParse(new ExprNode(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-  //     testNodeParse(
+  //     testAntlrParse(getExprNodeRule(), `""`, true, `""`, "", "", `""`);
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //       "",
@@ -104,10 +104,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Lambda as argument", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ArgumentNode(f),
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       ParseStatus.valid,
+  //       true,
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //       "",
   //       "",
@@ -115,20 +115,20 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Identifier", () => {
-  //     testNodeParse(new IdentifierNode(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new IdentifierNode(f), `  `, ParseStatus.invalid, ``, "", "");
-  //     testNodeParse(new IdentifierNode(f), `a`, ParseStatus.valid, `a`, "", "a", "");
-  //     testNodeParse(new IdentifierNode(f), `aB_d`, ParseStatus.valid, `aB_d`, "", "aB_d");
-  //     testNodeParse(new IdentifierNode(f), `abc `, ParseStatus.valid, `abc`, " ", "abc");
-  //     testNodeParse(new IdentifierNode(f), `Abc`, ParseStatus.invalid, ``, "Abc", "");
-  //     testNodeParse(new IdentifierNode(f), `abc-de`, ParseStatus.valid, `abc`, "-de", "abc");
+  //     testAntlrParse(getIdentifierNodeRule(), ``, false);
+  //     testAntlrParse(getIdentifierNodeRule(), `  `, false);
+  //     testAntlrParse(getIdentifierNodeRule(), `a`, true, `a`, "", "a", "");
+  //     testAntlrParse(getIdentifierNodeRule(), `aB_d`, true, `aB_d`, "", "aB_d");
+  //     testAntlrParse(getIdentifierNodeRule(), `abc `, true, `abc`, " ", "abc");
+  //     testAntlrParse(getIdentifierNodeRule(), `Abc`, false);
+  //     testAntlrParse(getIdentifierNodeRule(), `abc-de`, true, `abc`, "-de", "abc");
   //     // Can be a keyword - because that will be rejected at compile stage, not parse stage
-  //     testNodeParse(new IdentifierNode(f), `new`, ParseStatus.invalid, "", "new", "");
-  //     testNodeParse(new IdentifierNode(f), `global`, ParseStatus.valid, `global`, "", "");
-  //     testNodeParse(new IdentifierNode(f), `x as`, ParseStatus.valid, `x`, " as", "x");
-  //     testNodeParse(new IdentifierNode(f), `_a`, ParseStatus.valid, `_a`, "", "_a", "");
-  //     testNodeParse(new IdentifierNode(f), `_`, ParseStatus.invalid, ``, "_", "");
-  //     testNodeParse(new IdentifierNode(f), `()_a`, ParseStatus.invalid, ``, "()_a", "");
+  //     testAntlrParse(getIdentifierNodeRule(), `new`, false);
+  //     testAntlrParse(getIdentifierNodeRule(), `global`, true, `global`, "", "");
+  //     testAntlrParse(getIdentifierNodeRule(), `x as`, true, `x`, " as", "x");
+  //     testAntlrParse(getIdentifierNodeRule(), `_a`, true, `_a`, "", "_a", "");
+  //     testAntlrParse(getIdentifierNodeRule(), `_`, false);
+  //     testAntlrParse(getIdentifierNodeRule(), `()_a`, false);
   //   });
 
   function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
@@ -171,27 +171,27 @@ suite("Parsing Antlr Rules Python", () => {
   });
 
   //   test("LitString - single chars", () => {
-  //     testNodeParse(new LitString(f), "", ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new LitString(f), `"a"`, ParseStatus.valid, `"a"`, "", `"a"`, "");
-  //     testNodeParse(new LitString(f), `"a`, ParseStatus.incomplete, `"a`, "", `"a`, "");
-  //     testNodeParse(new LitString(f), `"9"`, ParseStatus.valid, `"9"`, "", `"9"`, "");
-  //     testNodeParse(new LitString(f), `" "`, ParseStatus.valid, `" "`, "", `" "`, "");
+  //     testAntlrParse(getLitStringRule(), "", false);
+  //     testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"a"`, "");
+  //     testAntlrParse(getLitStringRule(), `"a`, false);
+  //     testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"9"`, "");
+  //     testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `" "`, "");
   //   });
   //   test("LitString - bug #328", () => {
-  //     testNodeParse(new LitString(f), `" `, ParseStatus.incomplete, `" `, "", `" `, "");
-  //     testNodeParse(new LitString(f), `$"{a} `, ParseStatus.incomplete, `$"{a} `, "", "", "");
+  //     testAntlrParse(getLitStringRule(), `" `, false);
+  //     testAntlrParse(getLitStringRule(), `$"{a} `, false);
   //   });
   //   test("LitInt", () => {
-  //     testNodeParse(new LitInt(f), "", ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new LitInt(f), "   ", ParseStatus.invalid, "", "   ", "", "");
-  //     testNodeParse(new LitInt(f), "123", ParseStatus.valid, "123", "", "123", "");
-  //     testNodeParse(new LitInt(f), "-123", ParseStatus.valid, "-123", "", "-123", "");
-  //     testNodeParse(new LitInt(f), "- 123", ParseStatus.invalid, "", "- 123", "", "");
-  //     testNodeParse(new LitInt(f), "1-23", ParseStatus.valid, "1", "-23", "", "");
-  //     testNodeParse(new LitInt(f), "456  ", ParseStatus.valid, "456", "  ", "456", "");
-  //     testNodeParse(new LitInt(f), " 123a", ParseStatus.valid, "123", "a", "123", "");
-  //     testNodeParse(new LitInt(f), "1.23", ParseStatus.valid, "1", ".23", "1", "");
-  //     testNodeParse(new LitInt(f), "a", ParseStatus.invalid, "", "a", "", "");
+  //     testAntlrParse(getLitIntRule(), "", false);
+  //     testAntlrParse(getLitIntRule(), "   ", false);
+  //     testAntlrParse(getLitIntRule(), "123", true, "123", "", "123", "");
+  //     testAntlrParse(getLitIntRule(), "-123", true, "-123", "", "-123", "");
+  //     testAntlrParse(getLitIntRule(), "- 123", false);
+  //     testAntlrParse(getLitIntRule(), "1-23", true, "1", "-23", "", "");
+  //     testAntlrParse(getLitIntRule(), "456  ", true, "456", "  ", "456", "");
+  //     testAntlrParse(getLitIntRule(), " 123a", true, "123", "a", "123", "");
+  //     testAntlrParse(getLitIntRule(), "1.23", true, "1", ".23", "1", "");
+  //     testAntlrParse(getLitIntRule(), "a", false);
   //   });
 
   function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
@@ -221,53 +221,53 @@ suite("Parsing Antlr Rules Python", () => {
   });
 
   //   test("LitInt_HexAndBinary", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitInt(f),
   //       "0xfa3c",
-  //       ParseStatus.valid,
+  //       true,
   //       "fa3c",
   //       "",
   //       "0xfa3c",
   //       "<el-lit>0xfa3c</el-lit>",
   //       "0xfa3c",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       "0xfffe",
-  //       ParseStatus.valid,
+  //       true,
   //       "0xfffe",
   //       "",
   //       "0xfffe",
   //       "<el-lit>0xfffe</el-lit>",
   //       "0xfffe",
   //     );
-  //     testNodeParse(new LitInt(f), "0xfa3g", ParseStatus.valid, "fa3", "g", "0xfa3", "");
-  //     testNodeParse(new LitInt(f), "&Hfa3", ParseStatus.invalid, "", "&Hfa3", "", ""); //VB format in El
-  //     testNodeParse(
+  //     testAntlrParse(getLitIntRule(), "0xfa3g", true, "fa3", "g", "0xfa3", "");
+  //     testAntlrParse(getLitIntRule(), "&Hfa3", false); //VB format in El
+  //     testAntlrParse(
   //       new LitInt(fileWithVB()),
   //       "&Hfa3",
-  //       ParseStatus.valid,
+  //       true,
   //       "fa3",
   //       "",
   //       "0xfa3",
   //       "<el-lit>&Hfa3</el-lit>",
   //       "&Hfa3",
   //     ); //VB format in VB
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitInt(f),
   //       "0b01101",
-  //       ParseStatus.valid,
+  //       true,
   //       "01101",
   //       "",
   //       "0b01101",
   //       "<el-lit>0b01101</el-lit>",
   //     );
-  //     testNodeParse(new LitInt(f), "0b01102", ParseStatus.valid, "0110", "2", "0b0110", "");
-  //     testNodeParse(new LitInt(f), "&B0110", ParseStatus.invalid, "", "&B0110", "", ""); //VB syntax
-  //     testNodeParse(
+  //     testAntlrParse(getLitIntRule(), "0b01102", true, "0110", "2", "0b0110", "");
+  //     testAntlrParse(getLitIntRule(), "&B0110", false); //VB syntax
+  //     testAntlrParse(
   //       new LitInt(fileWithVB()),
   //       "&B0110",
-  //       ParseStatus.valid,
+  //       true,
   //       "0110",
   //       "",
   //       "0b0110",
@@ -308,156 +308,156 @@ suite("Parsing Antlr Rules Python", () => {
     );
   });
   //   test("Keyword", () => {
-  //     testNodeParse(new KeywordNode(f, abstractKeyword), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new KeywordNode(f, abstractKeyword), "", false);
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       "abstract ",
-  //       ParseStatus.valid,
+  //       true,
   //       "abstract",
   //       " ",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       "abstract(x",
-  //       ParseStatus.valid,
+  //       true,
   //       "abstract",
   //       "(x",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       "abstractx",
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       "abstractx",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       "abstract immutable",
-  //       ParseStatus.valid,
+  //       true,
   //       "abstract",
   //       " immutable",
   //       "abstract",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       " abs",
-  //       ParseStatus.incomplete,
+  //       false,
   //       " abs",
   //       "",
   //       "abs",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new KeywordNode(f, abstractKeyword),
   //       " abscract",
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       " abscract",
   //       "",
   //     );
   //   });
   //   test("BracketedExpression", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BracketedExpression(f),
   //       "(3 + 4)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(3 + 4)",
   //       "",
   //       "(3 + 4)",
   //       "",
   //     );
 
-  //     testNodeParse(new BracketedExpression(f), "", ParseStatus.empty, "", "", "");
-  //     testNodeParse(new BracketedExpression(f), "(3)", ParseStatus.valid, "(3)", "", "(3)", "");
+  //     testAntlrParse(getBracketedExpressionRule(), "", false);
+  //     testAntlrParse(getBracketedExpressionRule(), "(3)", true, "(3)", "", "(3)", "");
 
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BracketedExpression(f),
   //       "(a and not b)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(a and not b)",
   //       "",
   //       "(a and not b)",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BracketedExpression(f),
   //       "(3 * 4 + x)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(3 * 4 + x)",
   //       "",
   //       "(3*4 + x)",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BracketedExpression(f),
   //       "(3 * (4 + x))",
-  //       ParseStatus.valid,
+  //       true,
   //       "(3 * (4 + x))",
   //       "",
   //       "(3*(4 + x))",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BracketedExpression(f),
   //       "(a and not b",
-  //       ParseStatus.incomplete,
+  //       false,
   //       "(a and not b",
   //       "",
   //       "(a and not b",
   //     );
-  //     //testNodeParse(new BracketedExpression(), "(a and not b  ", ParseStatus.incomplete, "(a and not b  ", "", "(a and not b"); TODO
-  //     testNodeParse(new BracketedExpression(f), "(", ParseStatus.incomplete, "(", "", "(");
-  //     testNodeParse(new BracketedExpression(f), "()", ParseStatus.invalid, "", "()", "");
+  //     //testAntlrParse(new BracketedExpression(), "(a and not b  ", false); TODO
+  //     testAntlrParse(getBracketedExpressionRule(), "(", false);
+  //     testAntlrParse(getBracketedExpressionRule(), "()", false);
   //   });
   //   test("Optional", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new OptionalNode(f, new LitInt(f)),
   //       "123 a",
-  //       ParseStatus.valid,
+  //       true,
   //       "123",
   //       " a",
   //       "123",
   //     );
-  //     testNodeParse(new OptionalNode(f, new LitInt(f)), "abc", ParseStatus.valid, "", "abc", "");
-  //     testNodeParse(
+  //     testAntlrParse(new OptionalNode(f, new LitInt(f)), "abc", true, "", "abc", "");
+  //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       " abstract",
-  //       ParseStatus.valid,
+  //       true,
   //       " abstract",
   //       "",
   //       "abstract",
   //       "<el-kw>abstract</el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       "abs",
-  //       ParseStatus.incomplete,
+  //       false,
   //       "abs",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       "abscract",
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "abscract",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       "",
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
   //       "  ",
-  //       ParseStatus.incomplete,
+  //       false,
   //       "  ",
   //       "",
   //       "",
@@ -465,304 +465,304 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
 
   //   test("Multiple", () => {
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), `)`, ParseStatus.valid, ``, ")", "");
-  //     testNodeParse(
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), ``, false);
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), `)`, true, ``, ")", "");
+  //     testAntlrParse(
   //       new Multiple(f, () => new LitInt(f), 1),
   //       `1 0 33`,
-  //       ParseStatus.valid,
+  //       true,
   //       `1 0 33`,
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), `1`, ParseStatus.valid, `1`, "", "");
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-  //     testNodeParse(new Multiple(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), `1`, true, `1`, "", "");
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new Multiple(f, () => new LitInt(f), 1), ``, false);
+  //     testAntlrParse(
   //       new Multiple(f, () => new LitInt(f), 1),
   //       `5 6 a`,
-  //       ParseStatus.valid,
+  //       true,
   //       `5 6`,
   //       " a",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new LitInt(f), 1),
   //       `7   `,
-  //       ParseStatus.valid,
+  //       true,
   //       `7`,
   //       "   ",
   //       "",
   //     );
 
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
   //       `foo foo`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "bar"), 1),
   //       `bar ba`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "bar ba",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
   //       `foo`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
   //       `fo`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
   //       `foo,foo`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       ",foo",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
   //       `foofoo`,
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       "foofoo",
   //       "",
   //     );
   //   });
   //   test("CommaNode", () => {
-  //     testNodeParse(new CommaNode(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new CommaNode(f), `,`, ParseStatus.valid, ``, "", ", ");
-  //     testNodeParse(new CommaNode(f), ` ,`, ParseStatus.valid, `,`, "", ", ");
-  //     testNodeParse(new CommaNode(f), `,    `, ParseStatus.valid, ``, "", ", ");
-  //     testNodeParse(new CommaNode(f), `.`, ParseStatus.invalid, ``, ".", "");
-  //     testNodeParse(new CommaNode(f), `,,`, ParseStatus.valid, `,`, ",", "");
+  //     testAntlrParse(getCommaNodeRule(), ``, false);
+  //     testAntlrParse(getCommaNodeRule(), `,`, true, ``, "", ", ");
+  //     testAntlrParse(getCommaNodeRule(), ` ,`, true, `,`, "", ", ");
+  //     testAntlrParse(getCommaNodeRule(), `,    `, true, ``, "", ", ");
+  //     testAntlrParse(getCommaNodeRule(), `.`, false);
+  //     testAntlrParse(getCommaNodeRule(), `,,`, true, `,`, ",", "");
   //   });
   //   test("CSV", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
   //       `a,a,a`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a,a,a`,
   //       "",
   //       "a, a, a",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
   //       `a,`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `a,`,
   //       "",
   //       "a, ",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
   //       `x`,
-  //       ParseStatus.valid,
+  //       true,
   //       ``,
   //       "x",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new PunctuationNode(f, "a"), 1),
   //       `x`,
-  //       ParseStatus.invalid,
+  //       false,
   //       ``,
   //       "x",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
   //       `a,a,x`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a,a`,
   //       ",x",
   //       "a, a",
   //     );
-  //     testNodeParse(new CSV(f, () => new LitInt(f), 0), ``, ParseStatus.valid, ``, "", "");
-  //     testNodeParse(new CSV(f, () => new LitInt(f), 1), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new CSV(f, () => new LitInt(f), 0), `2`, ParseStatus.valid, `2`, "", "");
-  //     testNodeParse(new CSV(f, () => new LitInt(f), 1), `2`, ParseStatus.valid, `2`, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new CSV(f, () => new LitInt(f), 0), ``, true, ``, "", "");
+  //     testAntlrParse(new CSV(f, () => new LitInt(f), 1), ``, false);
+  //     testAntlrParse(new CSV(f, () => new LitInt(f), 0), `2`, true, `2`, "", "");
+  //     testAntlrParse(new CSV(f, () => new LitInt(f), 1), `2`, true, `2`, "", "");
+  //     testAntlrParse(
   //       new CSV(f, () => new LitString(f), 0),
   //       `"apple","orange", "pear"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"apple","orange", "pear"`,
   //       "",
   //       `"apple", "orange", "pear"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new IdentifierNode(f), 0),
   //       `a,b,c`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a,b,c`,
   //       "",
   //       "a, b, c",
   //     );
-  //     testNodeParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, ParseStatus.valid, ``, "1", "");
-  //     testNodeParse(
+  //     testAntlrParse(new CSV(f, () => new IdentifierNode(f), 0), `1`, true, ``, "1", "");
+  //     testAntlrParse(
   //       new CSV(f, () => new IdentifierNode(f), 1),
   //       `1`,
-  //       ParseStatus.invalid,
+  //       false,
   //       ``,
   //       "1",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new IdentifierNode(f), 0),
   //       `a,1`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a`,
   //       ",1",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new IdentifierNode(f), 0),
   //       `a,b,1`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a,b`,
   //       ",1",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ExprNode(f), 0),
   //       `a + b, c, 1`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a + b, c, 1`,
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new CSV(f, () => new ExprNode(f), 0), `)`, ParseStatus.valid, ``, ")", "");
+  //     testAntlrParse(new CSV(f, () => new ExprNode(f), 0), `)`, true, ``, ")", "");
 
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
   //       `foo, foo`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), `foo`, ParseStatus.valid, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), `foo`, true, "", "");
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
   //       `fook`,
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       "fook",
   //     );
-  //     testNodeParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), ``, ParseStatus.valid, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), ``, true, "", "");
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
   //       `fo`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "fo",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
   //       `fo`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "fo",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
   //       `foo, fo`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "foo, fo",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
   //       `foo,`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "foo,",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
   //       `foo, `,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "foo, ",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
   //       `foo,fo`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "foo,fo",
   //       "",
   //       "foo, fo",
   //     );
 
-  //     testNodeParse(new CSV(f, () => new ExprNode(f), 0), ``, ParseStatus.valid, "", "");
+  //     testAntlrParse(new CSV(f, () => new ExprNode(f), 0), ``, true, "", "");
   //   });
   //   test("IdentifierWithOptIndexes", () => {
-  //     testNodeParse(new IdentifierWithOptIndexes(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new IdentifierWithOptIndexes(f), `bar`, ParseStatus.valid, `bar`, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getIdentifierWithOptIndexesRule(), ``, false);
+  //     testAntlrParse(getIdentifierWithOptIndexesRule(), `bar`, true, `bar`, "", "");
+  //     testAntlrParse(
   //       new IdentifierWithOptIndexes(f),
   //       `bar[foo]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `bar[foo]`,
   //       "",
   //       "",
   //     );
-  //     //testNodeParse(new InstanceNode(), `bar[foo][0]`, ParseStatus.valid, `bar[foo][0]`, "", "");
+  //     //testAntlrParse(new InstanceNode(), `bar[foo][0]`, true, `bar[foo][0]`, "", "");
   //   });
 
   //   test("Function Call", () => {
-  //     testNodeParse(new MethodCallNode(f), ``, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(new MethodCallNode(f), `  `, ParseStatus.empty, ``, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getMethodCallNodeRule(), ``, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `  `, false);
+  //     testAntlrParse(
   //       new MethodCallNode(f),
   //       `foo()`,
-  //       ParseStatus.valid,
+  //       true,
   //       `foo()`,
   //       "",
   //       "foo()",
   //       "<el-method>foo</el-method>()",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new MethodCallNode(f),
   //       `bar(x, 1, "hello")`,
-  //       ParseStatus.valid,
+  //       true,
   //       `bar(x, 1, "hello")`,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new MethodCallNode(f), `yon`, ParseStatus.incomplete, `yon`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon `, ParseStatus.invalid, ``, "yon ", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(`, ParseStatus.incomplete, `yon(`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(a`, ParseStatus.incomplete, `yon(a`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `yon(a,`, ParseStatus.incomplete, `yon(a,`, "", "");
-  //     testNodeParse(new MethodCallNode(f), `Foo()`, ParseStatus.invalid, ``, "Foo()", "");
-  //     testNodeParse(new MethodCallNode(f), `foo[]`, ParseStatus.invalid, ``, "foo[]", "");
-  //     testNodeParse(
+  //     testAntlrParse(getMethodCallNodeRule(), `yon`, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `yon `, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `yon(`, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `yon(a`, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `yon(a,`, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `Foo()`, false);
+  //     testAntlrParse(getMethodCallNodeRule(), `foo[]`, false);
+  //     testAntlrParse(
   //       new MethodCallNode(f),
   //       `foo(a)`,
-  //       ParseStatus.valid,
+  //       true,
   //       ``,
   //       "",
   //       "foo(a)",
   //       "<el-method>foo</el-method>(<el-id>a</el-id>)",
   //     );
-  //     testNodeParse(new MethodCallNode(f), `isBefore(b[0])`, ParseStatus.valid, ``, "", "");
+  //     testAntlrParse(getMethodCallNodeRule(), `isBefore(b[0])`, true, ``, "", "");
   //   });
 
   function getMethodCallRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
@@ -811,44 +811,44 @@ suite("Parsing Antlr Rules Python", () => {
   });
 
   //   test("TypeSimpleName", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleName(f),
   //       `Foo`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo",
   //       "",
   //       "",
   //       "<el-type>Foo</el-type>",
   //     );
-  //     testNodeParse(new TypeSimpleName(f), `foo`, ParseStatus.invalid, "", "foo", "");
+  //     testAntlrParse(getTypeSimpleNameRule(), `foo`, false);
   //   });
   //   test("TypeSimpleOrGeneric", () => {
-  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo`, ParseStatus.valid, "Foo", "", "", "");
-  //     testNodeParse(new TypeSimpleOrGeneric(f), `foo`, ParseStatus.invalid, "", "foo", "");
-  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<`, ParseStatus.incomplete, "Foo<", "", "");
-  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<of`, ParseStatus.incomplete, "Foo<of", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo`, true, "Foo", "", "", "");
+  //     testAntlrParse(getTypeSimpleOrGenericRule(), `foo`, false);
+  //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<`, false);
+  //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<of`, false);
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(f),
   //       `Foo<of Bar`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "Foo<of Bar",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new TypeSimpleOrGeneric(f), `Foo<ofBar`, ParseStatus.valid, "", "<ofBar", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTypeSimpleOrGenericRule(), `Foo<ofBar`, true, "", "<ofBar", "");
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(f),
   //       `Foo<of Bar>`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo<of Bar>",
   //       "",
   //       "",
   //       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(f),
   //       `Dictionary<of Bar, Yon>`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Dictionary<of Bar, Yon>",
   //       "",
   //       "",
@@ -856,48 +856,48 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("TypeSimpleOrGeneric_Languages", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(fileWithPython()),
   //       `Foo[Bar]`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo[Bar]",
   //       "",
   //       "",
   //       "<el-type>Foo</el-type>[<el-type>Bar</el-type>]",
   //       "Foo[Bar]",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(fileWithPython()),
   //       `list[int]`,
-  //       ParseStatus.valid,
+  //       true,
   //       "list[int]",
   //       "",
   //       "",
   //       "<el-type>list</el-type>[<el-type>int</el-type>]",
   //       "list[int]",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(fileWithVB()),
   //       `Foo(Of Bar)`, //This should properly be 'Of'
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo(Of Bar)",
   //       "",
   //       "",
   //       "<el-type>Foo</el-type>(<el-kw>Of</el-kw> <el-type>Bar</el-type>)",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(fileWithCS()),
   //       `Foo<Bar>`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo<Bar>",
   //       "",
   //       "",
   //       "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleOrGeneric(fileWithJava()),
   //       `Foo<Bar>`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo<Bar>",
   //       "",
   //       "",
@@ -906,204 +906,204 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //   test("TypeNode", () => {
   //     //Single
-  //     testNodeParse(new TypeNode(f), `(Foo, Bar)`, ParseStatus.valid, "(Foo, Bar)", "", "");
-  //     testNodeParse(new TypeNode(f), `(Foo)`, ParseStatus.invalid, "", "(Foo)", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTypeNodeRule(), `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
+  //     testAntlrParse(getTypeNodeRule(), `(Foo)`, false);
+  //     testAntlrParse(
   //       new TypeNode(f),
   //       `(Foo, Bar, Yon`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "(Foo, Bar, Yon",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(f),
   //       `(Foo, (Bar, Yon, Qux))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "(Foo, (Bar, Yon, Qux))",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(f),
   //       `(Foo, Bar< of Yon>)`,
-  //       ParseStatus.valid,
+  //       true,
   //       "(Foo, Bar< of Yon>)",
   //       "",
   //       "",
   //     );
   //   });
   //   test("TypeNode - Func", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(f),
   //       `Func<of Foo, Bar => Yon>`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Func<of Foo, Bar => Yon>",
   //       "",
   //       "",
   //     ); //Single
   //   });
   //   test("TypeNode - library qualifier", () => {
-  //     testNodeParse(new TypeNode(f), `library.Random`, ParseStatus.invalid, "", "", ""); //Single
+  //     testAntlrParse(getTypeNodeRule(), `library.Random`, false); //Single
   //   });
   //   test("TypeNode - other qualifier", () => {
-  //     testNodeParse(new TypeNode(f), `global.Random`, ParseStatus.invalid, "", "global.Random", ""); //Single
+  //     testAntlrParse(getTypeNodeRule(), `global.Random`, false); //Single
   //   });
   //   test("TupleNode", () => {
-  //     testNodeParse(new TupleNode(f), `(3,4)`, ParseStatus.valid, "", "", "");
-  //     testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1, true)`, ParseStatus.valid, "", "", "");
-  //     testNodeParse(new TupleNode(f), `((3,4), ("a", true))`, ParseStatus.valid, "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTupleNodeRule(), `(3,4)`, true, "", "", "");
+  //     testAntlrParse(getTupleNodeRule(), `(3,"a", "hello", 4.1, true)`, true, "", "", "");
+  //     testAntlrParse(getTupleNodeRule(), `((3,4), ("a", true))`, true, "", "", "");
+  //     testAntlrParse(
   //       new TupleNode(f),
   //       `(3,"a", "hello", 4.1, true`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new TupleNode(f), `(3,"a", "hello", 4.1,`, ParseStatus.incomplete, "", "", "");
-  //     testNodeParse(new TupleNode(f), `tuple[3,4]`, ParseStatus.invalid, "", "tuple[3,4]", "");
-  //     testNodeParse(new TupleNode(f), `(a,b)`, ParseStatus.valid, "(a,b)", "", "");
-  //     testNodeParse(new TupleNode(f), `(`, ParseStatus.incomplete, "(", "", "");
-  //     testNodeParse(new TupleNode(f), `(3`, ParseStatus.incomplete, "(3", "", "");
-  //     testNodeParse(new TupleNode(f), `(3)`, ParseStatus.invalid, "", "(3)", "");
-  //     testNodeParse(new TupleNode(f), `()`, ParseStatus.invalid, "", "()", "");
-  //     testNodeParse(new TupleNode(f), `("foo", 3)`, ParseStatus.valid, '("foo", 3)', "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTupleNodeRule(), `(3,"a", "hello", 4.1,`, false);
+  //     testAntlrParse(getTupleNodeRule(), `tuple[3,4]`, false);
+  //     testAntlrParse(getTupleNodeRule(), `(a,b)`, true, "(a,b)", "", "");
+  //     testAntlrParse(getTupleNodeRule(), `(`, false);
+  //     testAntlrParse(getTupleNodeRule(), `(3`, false);
+  //     testAntlrParse(getTupleNodeRule(), `(3)`, false);
+  //     testAntlrParse(getTupleNodeRule(), `()`, false);
+  //     testAntlrParse(getTupleNodeRule(), `("foo", 3)`, true, '("foo", 3)', "", "", "");
+  //     testAntlrParse(
   //       new TupleNode(f),
   //       `(foo, 3, bar(a), x)`,
-  //       ParseStatus.valid,
+  //       true,
   //       "(foo, 3, bar(a), x)",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new TupleNode(f), `(foo)`, ParseStatus.invalid, "", "(foo)", "");
-  //     testNodeParse(
+  //     testAntlrParse(getTupleNodeRule(), `(foo)`, false);
+  //     testAntlrParse(
   //       new TupleNode(f),
   //       `(foo, 3, bar(a), x`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "(foo, 3, bar(a), x",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TupleNode(f),
   //       `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //     );
   //   });
   //   test("Lambda", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Lambda(f),
   //       `lambda x as Int => x * x`,
-  //       ParseStatus.valid,
+  //       true,
   //       "lambda x as Int => x * x",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new Lambda(f), `lambda x`, ParseStatus.incomplete, "lambda x", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getLambdaRule(), `lambda x`, false);
+  //     testAntlrParse(
   //       new Lambda(f),
   //       `lambda x => x * x`,
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       "lambda x => x * x",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Lambda(f),
   //       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new Lambda(f),
   //       `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //     );
   //   });
   //   test("IfExpr", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new IfExpr(f),
   //       `if_(cell, Colour.green, Colour.black)`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new IfExpr(f),
   //       `if_(cell, Colour.green, Colour.black) + 1`,
-  //       ParseStatus.valid,
+  //       true,
   //       "if_(cell, Colour.green, Colour.black)",
   //       " + 1",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       `if_(cell, Colour.red, Colour.blue) + 1`,
-  //       ParseStatus.valid,
+  //       true,
   //       "if_(cell, Colour.red, Colour.blue) + 1",
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new IfExpr(f), `if_(cell, Colour.amber`, ParseStatus.incomplete, "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getIfExprRule(), `if_(cell, Colour.amber`, false);
+  //     testAntlrParse(
   //       new IfExpr(f),
   //       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new IfExpr(f),
   //       `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new IfExpr(f),
   //       `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
   //   });
   //   test("ParamDefNode", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(f),
   //       `x as String`,
-  //       ParseStatus.valid,
+  //       true,
   //       "x as String",
   //       "",
   //       "x as String",
   //       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
   //     );
-  //     testNodeParse(new ParamDefNode(f), `z`, ParseStatus.incomplete, "z", "", "");
-  //     testNodeParse(new ParamDefNode(f), `w as`, ParseStatus.incomplete, "w as", "", "");
-  //     testNodeParse(new ParamDefNode(f), `A`, ParseStatus.invalid, "", "A", "");
-  //     testNodeParse(new ParamDefNode(f), `v String`, ParseStatus.invalid, "", "v String", "");
+  //     testAntlrParse(getParamDefNodeRule(), `z`, false);
+  //     testAntlrParse(getParamDefNodeRule(), `w as`, false);
+  //     testAntlrParse(getParamDefNodeRule(), `A`, false);
+  //     testAntlrParse(getParamDefNodeRule(), `v String`, false);
   //   });
   //   test("ParamDefNode_Python", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithPython()),
   //       `x: str`,
-  //       ParseStatus.valid,
+  //       true,
   //       "x: str",
   //       "",
   //       "",
@@ -1112,10 +1112,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDefNode_VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithVB()),
   //       `x As String`,
-  //       ParseStatus.valid,
+  //       true,
   //       "x As String",
   //       "",
   //       "",
@@ -1124,10 +1124,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDefNode_CS", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithCS()),
   //       `string x`,
-  //       ParseStatus.valid,
+  //       true,
   //       `string x`,
   //       "",
   //       "",
@@ -1136,10 +1136,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDefNode_Java", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithJava()),
   //       `String x`,
-  //       ParseStatus.valid,
+  //       true,
   //       `String x`,
   //       "",
   //       "",
@@ -1148,114 +1148,114 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Param List", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `A as string`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "A as string",
   //       "",
   //     ); //i.e. all leftover
-  //     testNodeParse(new CSV(f, () => new ParamDefNode(f), 0), ``, ParseStatus.valid, "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(new CSV(f, () => new ParamDefNode(f), 0), ``, true, "", "", "");
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `a as String`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `a as String, bb as Int, foo as Bar`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `a`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "a",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `a as String,`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "a as String,",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new CSV(f, () => new ParamDefNode(f), 0),
   //       `a as String, bb as`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       "",
   //       "",
   //       "",
   //     );
   //   });
   //   test("Literal", () => {
-  //     testNodeParse(new LitValueNode(f), `"hello"`, ParseStatus.valid, "", "", "");
-  //     testNodeParse(new LitValueNode(f), `123`, ParseStatus.valid, "", "", "");
+  //     testAntlrParse(getLitValueNodeRule(), `"hello"`, true, "", "", "");
+  //     testAntlrParse(getLitValueNodeRule(), `123`, true, "", "", "");
   //   });
   //   test("SpaceNode", () => {
-  //     testNodeParse(new SpaceNode(f, Space.ignored), ``, ParseStatus.valid, "", "", "", "");
-  //     testNodeParse(new SpaceNode(f, Space.ignored), ` `, ParseStatus.valid, "", "", "", "");
-  //     testNodeParse(new SpaceNode(f, Space.ignored), `  `, ParseStatus.valid, "", "", "", "");
-  //     testNodeParse(new SpaceNode(f, Space.added), ``, ParseStatus.valid, "", "", " ", " ");
-  //     testNodeParse(new SpaceNode(f, Space.added), ` `, ParseStatus.valid, "", "", " ", " ");
-  //     testNodeParse(new SpaceNode(f, Space.added), `  `, ParseStatus.valid, "", "", " ", " ");
-  //     testNodeParse(new SpaceNode(f, Space.required), ``, ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new SpaceNode(f, Space.required), ` `, ParseStatus.valid, "", "", " ", " ");
-  //     testNodeParse(new SpaceNode(f, Space.required), `  `, ParseStatus.valid, "", "", " ", " ");
+  //     testAntlrParse(new SpaceNode(f, Space.ignored), ``, true, "", "", "", "");
+  //     testAntlrParse(new SpaceNode(f, Space.ignored), ` `, true, "", "", "", "");
+  //     testAntlrParse(new SpaceNode(f, Space.ignored), `  `, true, "", "", "", "");
+  //     testAntlrParse(new SpaceNode(f, Space.added), ``, true, "", "", " ", " ");
+  //     testAntlrParse(new SpaceNode(f, Space.added), ` `, true, "", "", " ", " ");
+  //     testAntlrParse(new SpaceNode(f, Space.added), `  `, true, "", "", " ", " ");
+  //     testAntlrParse(new SpaceNode(f, Space.required), ``, false);
+  //     testAntlrParse(new SpaceNode(f, Space.required), ` `, true, "", "", " ", " ");
+  //     testAntlrParse(new SpaceNode(f, Space.required), `  `, true, "", "", " ", " ");
   //   });
   //   test("New Instance", () => {
-  //     testNodeParse(new NewInstance(f), ``, ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new NewInstance(f), `new Foo()`, ParseStatus.valid, "", "", "new Foo()", "");
-  //     testNodeParse(new NewInstance(f), `newFoo()`, ParseStatus.invalid, "", "newFoo()", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getNewInstanceRule(), ``, false);
+  //     testAntlrParse(getNewInstanceRule(), `new Foo()`, true, "", "", "new Foo()", "");
+  //     testAntlrParse(getNewInstanceRule(), `newFoo()`, false);
+  //     testAntlrParse(
   //       new NewInstance(f),
   //       "new List<of String>()",
-  //       ParseStatus.valid,
+  //       true,
   //       "new List<of String>()",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new NewInstance(fileWithPython()),
   //       `Foo()`,
-  //       ParseStatus.valid,
+  //       true,
   //       "Foo()",
   //       "",
   //       "new Foo()",
   //       "<el-type>Foo</el-type>()",
   //       `Foo()`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new NewInstance(fileWithCS()),
   //       `new Foo()`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "new Foo()",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new NewInstance(fileWithJava()),
   //       `new Foo()`,
-  //       ParseStatus.valid,
+  //       true,
   //       "",
   //       "",
   //       "new Foo()",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new NewInstance(fileWithVB()),
   //       `New Foo()`,
-  //       ParseStatus.valid,
+  //       true,
   //       "New Foo()",
   //       "",
   //       "new Foo()",
@@ -1264,66 +1264,66 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("String Interpolation", () => {
-  //     testNodeParse(new LitStringInterpolatedInsert(f), ``, ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getLitStringInterpolatedInsertRule(), ``, false);
+  //     testAntlrParse(
   //       new LitStringInterpolatedInsert(f),
   //       "{x + 1}",
-  //       ParseStatus.valid,
+  //       true,
   //       "{x + 1}",
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolatedInsert(f),
   //       "{x",
-  //       ParseStatus.incomplete,
+  //       false,
   //       "{x",
   //       "",
   //       "",
   //       "",
   //     );
-  //     testNodeParse(new LitStringInterpolatedInsert(f), "{}", ParseStatus.invalid, "", "{}", "", "");
+  //     testAntlrParse(getLitStringInterpolatedInsertRule(), "{}", false);
   //   });
   //   test("LitString", () => {
-  //     testNodeParse(new LitString(f), `""`, ParseStatus.valid, `""`, "", "", `""`);
-  //     testNodeParse(
+  //     testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
+  //     testAntlrParse(
   //       new LitString(f),
   //       `"abc"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"abc"`,
   //       "",
   //       "",
   //       `"<el-lit>abc</el-lit>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitString(f),
   //       `"abc def"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"abc def"`,
   //       "",
   //       "",
   //       `"<el-lit>abc def</el-lit>"`,
   //     );
-  //     testNodeParse(new LitString(f), `"abc`, ParseStatus.incomplete, `"abc`, "", "", "");
-  //     testNodeParse(new LitString(f), `"`, ParseStatus.incomplete, `"`, "", "", "");
-  //     testNodeParse(new LitString(f), `abc`, ParseStatus.invalid, "", "abc", "", "");
-  //     testNodeParse(new LitString(f), `'abc'`, ParseStatus.invalid, "", "'abc'", "", "");
-  //     testNodeParse(new LitString(f), `'abc"`, ParseStatus.invalid, ``, `'abc"`, "", "");
-  //     testNodeParse(new LitString(f), `"abc'`, ParseStatus.incomplete, `"abc'`, "", "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getLitStringRule(), `"abc`, false);
+  //     testAntlrParse(getLitStringRule(), `"`, false);
+  //     testAntlrParse(getLitStringRule(), `abc`, false);
+  //     testAntlrParse(getLitStringRule(), `'abc'`, false);
+  //     testAntlrParse(getLitStringRule(), `'abc"`, false);
+  //     testAntlrParse(getLitStringRule(), `"abc'`, false);
+  //     testAntlrParse(
   //       new LitStringOrdinary(f),
   //       `"{curly braces}"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"{curly braces}"`,
   //       "",
   //       `"{curly braces}"`,
   //       `"<el-lit>{curly braces}</el-lit>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(f),
   //       `"&#123;curly braces&#125;"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"&#123;curly braces&#125;"`,
   //       "",
   //       `"&#123;curly braces&#125;"`,
@@ -1331,29 +1331,29 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Embedded Html tags", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(f),
   //       `"<p>abc</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"<p>abc</p>"`,
   //       "",
   //       `"<p>abc</p>"`,
   //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringText(f, /^[^"]*/),
   //       `<p>`,
-  //       ParseStatus.valid,
+  //       true,
   //       `<p>`,
   //       "",
   //       `<p>`,
   //       `<el-lit>&lt;p&gt;</el-lit>`,
   //       `<p>`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(f),
   //       `$"<p>{2 + 3}</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `$"<p>{2 + 3}</p>"`,
   //       "",
   //       `$"<p>{2 + 3}</p>"`,
@@ -1361,50 +1361,50 @@ suite("Parsing Antlr Rules Python", () => {
   //       `$"<p>{2 + 3}</p>"`,
   //     );
   //     // In other langs
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(fileWithPython()),
   //       `"<p>abc</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"<p>abc</p>"`,
   //       "",
   //       `"<p>abc</p>"`,
   //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
   //       `"<p>abc</p>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(fileWithVB()),
   //       `"<p>abc</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"<p>abc</p>"`,
   //       "",
   //       `"<p>abc</p>"`,
   //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
   //       `"<p>abc</p>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(fileWithCS()),
   //       `"<p>abc</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"<p>abc</p>"`,
   //       "",
   //       `"<p>abc</p>"`,
   //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
   //       `"<p>abc</p>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(fileWithJava()),
   //       `"<p>abc</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"<p>abc</p>"`,
   //       "",
   //       `"<p>abc</p>"`,
   //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
   //       `"<p>abc</p>"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(fileWithPython()),
   //       `f"<p>{2 + 3}</p>"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `f"<p>{2 + 3}</p>"`,
   //       "",
   //       `$"<p>{2 + 3}</p>"`,
@@ -1413,25 +1413,25 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Interpolated strings", () => {
-  //     testNodeParse(new LitString(f), `$""`, ParseStatus.valid, "", "");
-  //     testNodeParse(new LitString(f), `$"x"`, ParseStatus.valid, "", "");
-  //     testNodeParse(new LitString(f), `$" "`, ParseStatus.valid, "", "");
-  //     testNodeParse(new LitString(f), `$"{}"`, ParseStatus.invalid, "", "");
-  //     testNodeParse(new LitString(f), `$"{x}"`, ParseStatus.valid, "", "");
-  //     testNodeParse(new LitString(f), `$"{a} times {b} equals{c}"`, ParseStatus.valid, "", "");
-  //     testNodeParse(
+  //     testAntlrParse(getLitStringRule(), `$""`, true, "", "");
+  //     testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
+  //     testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
+  //     testAntlrParse(getLitStringRule(), `$"{}"`, false);
+  //     testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
+  //     testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
+  //     testAntlrParse(
   //       new LitStringInterpolated(f),
   //       `$"{curly}"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `$"{curly}"`,
   //       "",
   //       `$"{curly}"`,
   //       `$"{<el-id>curly</el-id>}"`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(f), // but with braces
   //       `$"&#123;curly braces&#125;"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `$"&#123;curly braces&#125;"`,
   //       "",
   //       `$"&#123;curly braces&#125;"`,
@@ -1439,246 +1439,246 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Bug #290", () => {
-  //     testNodeParse(new LitInt(f), `3`, ParseStatus.valid, "3", "");
-  //     testNodeParse(new LitInt(f), `3 `, ParseStatus.valid, "3", " ");
+  //     testAntlrParse(getLitIntRule(), `3`, true, "3", "");
+  //     testAntlrParse(getLitIntRule(), `3 `, true, "3", " ");
 
-  //     testNodeParse(new LitValueNode(f), `3 `, ParseStatus.valid, "3", " ");
-  //     testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+  //     testAntlrParse(getLitValueNodeRule(), `3 `, true, "3", " ");
+  //     testAntlrParse(getBinaryExpressionRule(), `3 `, false);
 
-  //     testNodeParse(new ExprNode(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ");
+  //     testAntlrParse(getExprNodeRule(), `3 `, false);
   //   });
 
   //   test("InstanceProcRef", () => {
-  //     testNodeParse(new InstanceProcRef(f), `bar.foo`, ParseStatus.valid, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `bar.`, ParseStatus.incomplete, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `bar.foo.yon`, ParseStatus.valid, "", ".yon");
-  //     testNodeParse(new InstanceProcRef(f), `bar.foo[2]`, ParseStatus.valid, "", "[2]");
-  //     testNodeParse(new InstanceProcRef(f), `bar`, ParseStatus.incomplete, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `global.bar`, ParseStatus.valid, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `library.bar`, ParseStatus.valid, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `x[3].bar`, ParseStatus.valid, "", "");
-  //     testNodeParse(new InstanceProcRef(f), `this.bar`, ParseStatus.invalid, "", ""); //As that would be picked up by ThisProcRef
+  //     testAntlrParse(getInstanceProcRefRule(), `bar.foo`, true, "", "");
+  //     testAntlrParse(getInstanceProcRefRule(), `bar.`, false);
+  //     testAntlrParse(getInstanceProcRefRule(), `bar.foo.yon`, true, "", ".yon");
+  //     testAntlrParse(getInstanceProcRefRule(), `bar.foo[2]`, true, "", "[2]");
+  //     testAntlrParse(getInstanceProcRefRule(), `bar`, false);
+  //     testAntlrParse(getInstanceProcRefRule(), `global.bar`, true, "", "");
+  //     testAntlrParse(getInstanceProcRefRule(), `library.bar`, true, "", "");
+  //     testAntlrParse(getInstanceProcRefRule(), `x[3].bar`, true, "", "");
+  //     testAntlrParse(getInstanceProcRefRule(), `this.bar`, false); //As that would be picked up by ThisProcRef
   //   });
   //   test("ThisProcRef", () => {
-  //     testNodeParse(new ThisProcRef(f), `this.bar`, ParseStatus.valid, "", "");
+  //     testAntlrParse(getThisProcRefRule(), `this.bar`, true, "", "");
   //   });
   //   test("ProcRefNode", () => {
-  //     testNodeParse(new ProcRefNode(f), `foo`, ParseStatus.valid, "", "");
-  //     testNodeParse(new ProcRefNode(f), `bar.foo`, ParseStatus.valid, "", "");
-  //     testNodeParse(new ProcRefNode(f), `this.foo`, ParseStatus.valid, "", "");
-  //     testNodeParse(new ProcRefNode(f), `this.foo.bar`, ParseStatus.valid, "", ".bar");
+  //     testAntlrParse(getProcRefNodeRule(), `foo`, true, "", "");
+  //     testAntlrParse(getProcRefNodeRule(), `bar.foo`, true, "", "");
+  //     testAntlrParse(getProcRefNodeRule(), `this.foo`, true, "", "");
+  //     testAntlrParse(getProcRefNodeRule(), `this.foo.bar`, true, "", ".bar");
   //   });
   //   // test("#339 call dot function on a literal", () => {
-  //   //   testNodeParse(new MethodCallNode(f), `length(bar)`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.length()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.asList()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new LiteralNode(), `{1,2,3,4,5}`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `{1,2,3,4,5}.asList()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `"Hello World".length()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `12.3.toString()`, ParseStatus.valid, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar.`, ParseStatus.incomplete, "", "");
-  //   //   testNodeParse(new MethodCallNode(f), `bar`, ParseStatus.incomplete, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `length(bar)`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `bar.length()`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `bar.asList()`, true, "", "");
+  //   //   testAntlrParse(new LiteralNode(), `{1,2,3,4,5}`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `{1,2,3,4,5}.asList()`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `"Hello World".length()`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `12.3.toString()`, true, "", "");
+  //   //   testAntlrParse(getMethodCallNodeRule(), `bar.`, false);
+  //   //   testAntlrParse(getMethodCallNodeRule(), `bar`, false);
   //   // });
 
   //   test("#670 new parse node structure for terms & expressions", () => {
-  //     testNodeParse(new TermSimple(f), `abc`, ParseStatus.valid, "abc", "");
-  //     testNodeParse(new TermSimple(f), `abc()`, ParseStatus.valid, "abc()", "");
-  //     testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, "this", "");
-  //     testNodeParse(new TermSimple(f), `abc(defg, hi)`, ParseStatus.valid, "abc(defg, hi)", "");
-  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1]`, ParseStatus.valid, "abc[1]", "");
-  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1][2]`, ParseStatus.valid, "abc[1]", "[2]");
-  //     // testNodeParse(
+  //     testAntlrParse(getTermSimpleRule(), `abc`, true, "abc", "");
+  //     testAntlrParse(getTermSimpleRule(), `abc()`, true, "abc()", "");
+  //     testAntlrParse(getTermSimpleRule(), `this`, true, "this", "");
+  //     testAntlrParse(getTermSimpleRule(), `abc(defg, hi)`, true, "abc(defg, hi)", "");
+  //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1]`, true, "abc[1]", "");
+  //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1][2]`, true, "abc[1]", "[2]");
+  //     // testAntlrParse(
   //     //   new TermSimpleWithOptIndex(f),
   //     //   `abc.subList(1, 2)`,
-  //     //   ParseStatus.valid,
+  //     //   true,
   //     //   "abc.subList(1, 2)",
   //     //   "",
   //     // );
-  //     testNodeParse(new TermSimpleWithOptIndex(f), `abc[1, 2]`, ParseStatus.valid, "abc", "[1, 2]");
-  //     testNodeParse(
+  //     testAntlrParse(getTermSimpleWithOptIndexRule(), `abc[1, 2]`, true, "abc", "[1, 2]");
+  //     testAntlrParse(
   //       new TermSimpleWithOptIndex(f),
   //       `abc(defg, hi)[0]`,
-  //       ParseStatus.valid,
+  //       true,
   //       "abc(defg, hi)[0]",
   //       "",
   //     );
-  //     testNodeParse(new ExprNode(f), `(defg, hi)`, ParseStatus.valid, "(defg, hi)", ""); // tuple
-  //     testNodeParse(new TermSimple(f), `[defg, hi]`, ParseStatus.valid, "[defg, hi]", "");
-  //     testNodeParse(new TermSimple(f), `345`, ParseStatus.valid, "345", "");
-  //     testNodeParse(new TermSimple(f), `-345`, ParseStatus.valid, "-345", "");
-  //     testNodeParse(new TermSimple(f), `not a`, ParseStatus.valid, "not a", "");
-  //     testNodeParse(new TermSimple(f), `(3 + a)`, ParseStatus.valid, "(3 + a)", "");
-  //     testNodeParse(new TermSimple(f), `this`, ParseStatus.valid, `this`, "");
-  //     testNodeParse(new PunctuationNode(f, DOT), `.`, ParseStatus.valid, `.`, "");
-  //     testNodeParse(new TermSimple(f), `a`, ParseStatus.valid, `a`, "");
-  //     testNodeParse(new DottedTerm(f), `.a`, ParseStatus.valid, `.a`, "");
-  //     testNodeParse(new DotAfter(f, new TermSimple(f)), `.a`, ParseStatus.invalid, ``, ".a");
-  //     testNodeParse(new TermChained(f), `this.a`, ParseStatus.valid, `this.a`, "");
-  //     testNodeParse(
+  //     testAntlrParse(getExprNodeRule(), `(defg, hi)`, true, "(defg, hi)", ""); // tuple
+  //     testAntlrParse(getTermSimpleRule(), `[defg, hi]`, true, "[defg, hi]", "");
+  //     testAntlrParse(getTermSimpleRule(), `345`, true, "345", "");
+  //     testAntlrParse(getTermSimpleRule(), `-345`, true, "-345", "");
+  //     testAntlrParse(getTermSimpleRule(), `not a`, true, "not a", "");
+  //     testAntlrParse(getTermSimpleRule(), `(3 + a)`, true, "(3 + a)", "");
+  //     testAntlrParse(getTermSimpleRule(), `this`, true, `this`, "");
+  //     testAntlrParse(new PunctuationNode(f, DOT), `.`, true, `.`, "");
+  //     testAntlrParse(getTermSimpleRule(), `a`, true, `a`, "");
+  //     testAntlrParse(getDottedTermRule(), `.a`, true, `.a`, "");
+  //     testAntlrParse(new DotAfter(f, new TermSimple(f)), `.a`, false);
+  //     testAntlrParse(getTermChainedRule(), `this.a`, true, `this.a`, "");
+  //     testAntlrParse(
   //       new TermChained(f),
   //       `a[1].b().subList(1, 2).c(d)[e][f]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a[1].b().subList(1, 2).c(d)[e][f]`,
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TermChained(f),
   //       `this.a[1].b().c(d)[e]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this.a[1].b().c(d)[e]`,
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TermChained(f),
   //       `this.a.b()`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this.a.b()`,
   //       "",
   //       "this.a.b()",
   //       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       `this.a[1].b().c(d)[e]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this.a[1].b().c(d)[e]`,
   //       "",
   //     );
-  //     testNodeParse(new ExprNode(f), `ref foo`, ParseStatus.valid, `ref`, " foo");
-  //     testNodeParse(new ExprNode(f), `ref `, ParseStatus.incomplete, `ref `, "");
+  //     testAntlrParse(getExprNodeRule(), `ref foo`, true, `ref`, " foo");
+  //     testAntlrParse(getExprNodeRule(), `ref `, false);
   //   });
   //   test("OperatorAmbiguity#728", () => {
   //     //Test operations
-  //     testNodeParse(new BinaryOperation(f), ``, ParseStatus.empty, "", "", "", "");
-  //     testNodeParse(new BinaryOperation(f), ` `, ParseStatus.incomplete, " ", "", " ", " ");
-  //     testNodeParse(new BinaryOperation(f), `+`, ParseStatus.valid, "+", "", " + ", " + ");
-  //     testNodeParse(new BinaryOperation(f), ` +`, ParseStatus.valid, " +", "", " + ", " + ");
-  //     testNodeParse(new BinaryOperation(f), ` + `, ParseStatus.valid, " + ", "", " + ", " + ");
-  //     testNodeParse(new BinaryOperation(f), `*`, ParseStatus.valid, "*", "", "*", "*");
-  //     testNodeParse(new BinaryOperation(f), ` *`, ParseStatus.valid, " *", "", "*", "*");
-  //     testNodeParse(new BinaryOperation(f), ` * `, ParseStatus.valid, " * ", "", "*", "*");
-  //     testNodeParse(new BinaryOperation(f), `>=`, ParseStatus.valid, ">=", "", " >= ", " &gt;= ");
-  //     testNodeParse(new BinaryOperation(f), ` >=`, ParseStatus.valid, " >=", "", " >= ", " &gt;= ");
-  //     testNodeParse(new BinaryOperation(f), ` >= `, ParseStatus.valid, " >= ", "", " >= ", " &gt;= ");
-  //     testNodeParse(new BinaryOperation(f), `>`, ParseStatus.valid, ">", "", " > ", " &gt; ");
-  //     testNodeParse(new BinaryOperation(f), ` >`, ParseStatus.valid, " >", "", " > ", " &gt; ");
-  //     testNodeParse(new BinaryOperation(f), `> `, ParseStatus.valid, "> ", "", " > ", " &gt; ");
-  //     testNodeParse(new BinaryOperation(f), ` > `, ParseStatus.valid, " > ", "", " > ", " &gt; ");
-  //     testNodeParse(
+  //     testAntlrParse(getBinaryOperationRule(), ``, false);
+  //     testAntlrParse(getBinaryOperationRule(), ` `, false);
+  //     testAntlrParse(getBinaryOperationRule(), `+`, true, "+", "", " + ", " + ");
+  //     testAntlrParse(getBinaryOperationRule(), ` +`, true, " +", "", " + ", " + ");
+  //     testAntlrParse(getBinaryOperationRule(), ` + `, true, " + ", "", " + ", " + ");
+  //     testAntlrParse(getBinaryOperationRule(), `*`, true, "*", "", "*", "*");
+  //     testAntlrParse(getBinaryOperationRule(), ` *`, true, " *", "", "*", "*");
+  //     testAntlrParse(getBinaryOperationRule(), ` * `, true, " * ", "", "*", "*");
+  //     testAntlrParse(getBinaryOperationRule(), `>=`, true, ">=", "", " >= ", " &gt;= ");
+  //     testAntlrParse(getBinaryOperationRule(), ` >=`, true, " >=", "", " >= ", " &gt;= ");
+  //     testAntlrParse(getBinaryOperationRule(), ` >= `, true, " >= ", "", " >= ", " &gt;= ");
+  //     testAntlrParse(getBinaryOperationRule(), `>`, true, ">", "", " > ", " &gt; ");
+  //     testAntlrParse(getBinaryOperationRule(), ` >`, true, " >", "", " > ", " &gt; ");
+  //     testAntlrParse(getBinaryOperationRule(), `> `, true, "> ", "", " > ", " &gt; ");
+  //     testAntlrParse(getBinaryOperationRule(), ` > `, true, " > ", "", " > ", " &gt; ");
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       `is`,
-  //       ParseStatus.valid,
+  //       true,
   //       "is",
   //       "",
   //       " is ",
   //       "<el-kw> is </el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       `is `,
-  //       ParseStatus.valid,
+  //       true,
   //       "is ",
   //       "",
   //       " is ",
   //       "<el-kw> is </el-kw>",
   //     );
-  //     testNodeParse(new BinaryOperation(f), `isn`, ParseStatus.incomplete, "isn", "", "isn", "isn");
-  //     testNodeParse(
+  //     testAntlrParse(getBinaryOperationRule(), `isn`, false);
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       `isnt`,
-  //       ParseStatus.valid,
+  //       true,
   //       "isnt",
   //       "",
   //       " isnt ",
   //       "<el-kw> isnt </el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       ` and `,
-  //       ParseStatus.valid,
+  //       true,
   //       " and ",
   //       "",
   //       " and ",
   //       "<el-kw> and </el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       `and`,
-  //       ParseStatus.valid,
+  //       true,
   //       "and",
   //       "",
   //       " and ",
   //       "<el-kw> and </el-kw>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryOperation(f),
   //       `anda`,
-  //       ParseStatus.valid,
+  //       true,
   //       "and",
   //       "a",
   //       " and ",
   //       "<el-kw> and </el-kw>",
   //     );
 
-  //     testNodeParse(new BinaryOperation(f), `an`, ParseStatus.incomplete, "an", "", "an", "an");
-  //     testNodeParse(new BinaryOperation(f), `not`, ParseStatus.invalid, "", "not", "", "");
+  //     testAntlrParse(getBinaryOperationRule(), `an`, false);
+  //     testAntlrParse(getBinaryOperationRule(), `not`, false);
 
   //     //test expressions
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(f),
   //       `true and false`,
-  //       ParseStatus.valid,
+  //       true,
   //       `true and false`,
   //       "",
   //       "",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(f),
   //       `"a"+  "b"`,
-  //       ParseStatus.valid,
+  //       true,
   //       `"a"+  "b"`,
   //       "",
   //       `"a" + "b"`,
   //     );
-  //     testNodeParse(new BinaryExpression(f), `3+`, ParseStatus.incomplete, "3+", "", "3 + ", "3+");
-  //     testNodeParse(new BinaryExpression(f), `3 +`, ParseStatus.incomplete, "3 +", "", "3 + ", "3 +");
-  //     testNodeParse(new BinaryExpression(f), `3 `, ParseStatus.incomplete, "3 ", "", "3 ", "3 ");
-  //     testNodeParse(
+  //     testAntlrParse(getBinaryExpressionRule(), `3+`, false);
+  //     testAntlrParse(getBinaryExpressionRule(), `3 +`, false);
+  //     testAntlrParse(getBinaryExpressionRule(), `3 `, false);
+  //     testAntlrParse(
   //       new BinaryExpression(f),
   //       `3+4`,
-  //       ParseStatus.valid,
+  //       true,
   //       "3+4",
   //       "",
   //       "3 + 4",
   //       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(f),
   //       `3>=4`,
-  //       ParseStatus.valid,
+  //       true,
   //       "3>=4",
   //       "",
   //       "3 >= 4",
   //       "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
   //     );
-  //     testNodeParse(new BinaryExpression(f), `3>`, ParseStatus.incomplete, "3>", "", "3 > ");
-  //     testNodeParse(new BinaryExpression(f), `3> `, ParseStatus.incomplete, "3> ", "", "3 > ");
-  //     testNodeParse(new BinaryExpression(f), `3> 4`, ParseStatus.valid, "3> 4", "", "3 > 4");
-  //     testNodeParse(new BinaryExpression(f), `3>4`, ParseStatus.valid, "3>4", "", "3 > 4");
-  //     testNodeParse(new BinaryExpression(f), `3 > 4`, ParseStatus.valid, "3 > 4", "", "3 > 4");
-  //     testNodeParse(new BinaryExpression(f), `3>=`, ParseStatus.incomplete, "3>=", "", "3 >= ");
-  //     testNodeParse(new BinaryExpression(f), `3>=4`, ParseStatus.valid, "3>=4", "", "3 >= 4");
-  //     testNodeParse(
+  //     testAntlrParse(getBinaryExpressionRule(), `3>`, false);
+  //     testAntlrParse(getBinaryExpressionRule(), `3> `, false);
+  //     testAntlrParse(getBinaryExpressionRule(), `3> 4`, true, "3> 4", "", "3 > 4");
+  //     testAntlrParse(getBinaryExpressionRule(), `3>4`, true, "3>4", "", "3 > 4");
+  //     testAntlrParse(getBinaryExpressionRule(), `3 > 4`, true, "3 > 4", "", "3 > 4");
+  //     testAntlrParse(getBinaryExpressionRule(), `3>=`, false);
+  //     testAntlrParse(getBinaryExpressionRule(), `3>=4`, true, "3>=4", "", "3 >= 4");
+  //     testAntlrParse(
   //       new BinaryExpression(f),
   //       `3 is 4`,
-  //       ParseStatus.valid,
+  //       true,
   //       "3 is 4",
   //       "",
   //       "3 is 4",
@@ -1686,50 +1686,50 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("BinaryExpression_Python", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),
   //       `10 % 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 % 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
   //       `10 % 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),
   //       `10 == 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 == 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> == <el-lit>3</el-lit>",
   //       `10 == 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),
   //       `10 != 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 != 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
   //       `10 != 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),
   //       `a and b`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a and b`,
   //       "",
   //       "",
   //       "<el-id>a</el-id><el-kw> and </el-kw><el-id>b</el-id>",
   //       `a and b`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithPython()),
   //       `a or b`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a or b`,
   //       "",
   //       "",
@@ -1738,50 +1738,50 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("BinaryExpression_VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithVB()),
   //       `10 Mod 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 Mod 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit><el-kw> Mod </el-kw><el-lit>3</el-lit>",
   //       `10 Mod 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithVB()),
   //       `10 = 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 = 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> = <el-lit>3</el-lit>",
   //       `10 = 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithVB()),
   //       `10 <> 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 <> 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> &lt;&gt; <el-lit>3</el-lit>",
   //       `10 <> 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithVB()),
   //       `a And b`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a And b`,
   //       "",
   //       "",
   //       "<el-id>a</el-id><el-kw> And </el-kw><el-id>b</el-id>",
   //       `a And b`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithVB()),
   //       `a Or b`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a Or b`,
   //       "",
   //       "",
@@ -1790,50 +1790,50 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("BinaryExpression_C#", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithCS()),
   //       `10 % 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 % 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
   //       `10 % 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithCS()),
   //       `10 % 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 % 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
   //       `10 % 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithCS()),
   //       `10 != 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 != 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
   //       `10 != 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithCS()),
   //       `10 && 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 && 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
   //       `10 && 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithCS()),
   //       `10 || 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 || 3`,
   //       "",
   //       "",
@@ -1842,50 +1842,50 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("BinaryExpression_Java", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithJava()),
   //       `10 % 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 % 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
   //       `10 % 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithJava()),
   //       `10 % 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 % 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> % <el-lit>3</el-lit>",
   //       `10 % 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithJava()),
   //       `10 != 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 != 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> != <el-lit>3</el-lit>",
   //       `10 != 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithJava()),
   //       `10 && 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 && 3`,
   //       "",
   //       "",
   //       "<el-lit>10</el-lit> && <el-lit>3</el-lit>",
   //       `10 && 3`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new BinaryExpression(fileWithJava()),
   //       `10 || 3`,
-  //       ParseStatus.valid,
+  //       true,
   //       `10 || 3`,
   //       "",
   //       "",
@@ -1894,29 +1894,29 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("RevisedParseMethodForAbstractSequence#857", () => {
-  //     testActiveNodeAndDone(new test_seq1(f), `foo 45`, ParseStatus.valid, LitInt.name, false);
-  //     testActiveNodeAndDone(new test_seq1(f), `foo `, ParseStatus.incomplete, LitInt.name, false);
-  //     testActiveNodeAndDone(new test_seq1(f), `foo`, ParseStatus.incomplete, SpaceNode.name, false);
-  //     testActiveNodeAndDone(new test_seq2(f), `3.1 end`, ParseStatus.valid, KeywordNode.name, true);
+  //     testActiveNodeAndDone(new test_seq1(f), `foo 45`, true, LitInt.name, false);
+  //     testActiveNodeAndDone(new test_seq1(f), `foo `, false);
+  //     testActiveNodeAndDone(new test_seq1(f), `foo`, false);
+  //     testActiveNodeAndDone(new test_seq2(f), `3.1 end`, true, KeywordNode.name, true);
   //     testActiveNodeAndDone(
   //       new test_seq2(f),
   //       `3.1 en`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       KeywordNode.name,
   //       false,
   //     );
   //     testActiveNodeAndDone(
   //       new LitFloat(f),
   //       `3.`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       RegExMatchNode.name,
   //       false,
   //     );
-  //     testActiveNodeAndDone(new LitFloat(f), `3.1`, ParseStatus.valid, RegExMatchNode.name, false);
+  //     testActiveNodeAndDone(new LitFloat(f), `3.1`, true, RegExMatchNode.name, false);
   //     testActiveNodeAndDone(
   //       new test_seq2(f),
   //       `3.1`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       RegExMatchNode.name, //for exponent. Should technically still be the RegexMatchNode for fractional part
   //       // since it could be extended. But unimportand as there is no symbol completion for any literal
   //       false,
@@ -1924,30 +1924,30 @@ suite("Parsing Antlr Rules Python", () => {
   //     testActiveNodeAndDone(
   //       new CSV(f, () => new LitInt(f), 2),
   //       `12,34`,
-  //       ParseStatus.valid,
+  //       true,
   //       LitInt.name,
   //       false,
   //     );
   //     testActiveNodeAndDone(
   //       new CSV(f, () => new LitInt(f), 1),
   //       `12`,
-  //       ParseStatus.valid,
+  //       true,
   //       LitInt.name,
   //       false,
   //     );
   //     testActiveNodeAndDone(
   //       new CSV(f, () => new LitInt(f), 1),
   //       `12,`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       LitInt.name,
   //       false,
   //     );
   //   });
   //   test("LitRegExp", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitRegExp(f),
   //       `/abc+.*/`,
-  //       ParseStatus.valid,
+  //       true,
   //       `/abc+.*/`,
   //       "",
   //       "/abc+.*/",
@@ -1955,10 +1955,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitRegExp with flags", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitRegExp(f),
   //       `/abc+.*/gm`,
-  //       ParseStatus.valid,
+  //       true,
   //       `/abc+.*/gm`,
   //       "",
   //       "/abc+.*/gm",
@@ -1966,10 +1966,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitRegExp with invalid flags", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitRegExp(f),
   //       `/abc+.*/x`,
-  //       ParseStatus.valid,
+  //       true,
   //       `/abc+.*/`,
   //       "x",
   //       "/abc+.*/",
@@ -1977,39 +1977,39 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("not(a+b)", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       `not (a+b)`,
-  //       ParseStatus.valid,
+  //       true,
   //       `not (a+b)`,
   //       "",
   //       "not (a + b)",
   //       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
   //     );
-  //     testNodeParse(new ExprNode(f), `not(a+b)`, ParseStatus.invalid, ``, "not(a+b)", "", ``);
-  //     testNodeParse(new ExprNode(f), `not (a+b)`, ParseStatus.valid, `not (a+b)`, "", "", ``);
+  //     testAntlrParse(getExprNodeRule(), `not(a+b)`, false);
+  //     testAntlrParse(getExprNodeRule(), `not (a+b)`, true, `not (a+b)`, "", "", ``);
   //   });
   //   test("Parse list of list of floats", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(f),
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
   //       "",
   //     );
   //   });
   //   test("Parse list of floats 2", () => {
-  //     testNodeParse(new ExprNode(f), `[0.0]`, ParseStatus.valid, `[0.0]`, "");
+  //     testAntlrParse(getExprNodeRule(), `[0.0]`, true, `[0.0]`, "");
   //   });
 
   //   ignore_test("Six open brackets", () => {
-  //     testNodeParse(new ExprNode(f), `((((((3))))))`, ParseStatus.valid, `((((((3))))))`, "");
+  //     testAntlrParse(getExprNodeRule(), `((((((3))))))`, true, `((((((3))))))`, "");
   //   });
   //   test("Image", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new RegExMatchNode(f, Regexes.url),
   //       "http://website.com/images/image1.png",
-  //       ParseStatus.valid,
+  //       true,
   //       "http://website.com/images/image1.png",
   //       "",
   //       "",
@@ -2017,30 +2017,30 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("UnaryExpression_VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new UnaryExpression(fileWithVB()),
   //       `Not a`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Not a`,
   //       "",
   //       "",
   //       "<el-kw>Not</el-kw> <el-id>a</el-id>",
   //       `Not a`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new UnaryExpression(fileWithVB()),
   //       `N`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `N`,
   //       "",
   //       "",
   //       "N",
   //       ``,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ExprNode(fileWithVB()),
   //       `Not a`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Not a`,
   //       "",
   //       "",
@@ -2049,60 +2049,60 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("TypeTupleNode", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeTupleNode(f),
   //       "(Int, String)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(Int, String)",
   //       "",
   //       "(Int, String)",
   //       "(<el-type>Int</el-type>, <el-type>String</el-type>)",
   //       "(Int, String)",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeTupleNode(fileWithPython()),
   //       "tuple[int, str]",
-  //       ParseStatus.valid,
+  //       true,
   //       "tuple[int, str]",
   //       "",
   //       "",
   //       "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
   //       "tuple[int, str]",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(fileWithPython()),
   //       "tuple[int, str]",
-  //       ParseStatus.valid,
+  //       true,
   //       "tuple[int, str]",
   //       "",
   //       "",
   //       "<el-kw>tuple</el-kw>[<el-type>int</el-type>, <el-type>str</el-type>]",
   //       "tuple[int, str]",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeTupleNode(fileWithVB()),
   //       "(Integer, String)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(Integer, String)",
   //       "",
   //       "",
   //       "(<el-type>Integer</el-type>, <el-type>String</el-type>)",
   //       "(Integer, String)",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeTupleNode(fileWithCS()),
   //       "(int, string)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(int, string)",
   //       "",
   //       "",
   //       "(<el-type>int</el-type>, <el-type>string</el-type>)",
   //       "(int, string)",
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeTupleNode(fileWithJava()),
   //       "(int, String)",
-  //       ParseStatus.valid,
+  //       true,
   //       "(int, String)",
   //       "",
   //       "",
@@ -2111,10 +2111,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(f),
   //       `$"{a} plus {b} equals {a + b}"`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"{a} plus {b} equals {a + b}"',
   //       "",
   //       '$"{a} plus {b} equals {a + b}"',
@@ -2123,10 +2123,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("CSV expression", () => {
-  //     return testNodeParse(
+  //     return testAntlrParse(
   //       new CSV(fileWithJava(), () => new ExprNode(f), 3),
   //       `a, b, a + b)`,
-  //       ParseStatus.valid,
+  //       true,
   //       "a, b, a + b",
   //       ")",
   //       "a, b, a + b",
@@ -2135,10 +2135,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java1", () => {
-  //     return testNodeParse(
+  //     return testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("%", a)`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"{a}"',
   //       "",
   //       '$"{a}"',
@@ -2147,10 +2147,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java2", () => {
-  //     return testNodeParse(
+  //     return testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("%", 1)`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"{1}"',
   //       "",
   //       '$"{1}"',
@@ -2159,10 +2159,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java3", () => {
-  //     return testNodeParse(
+  //     return testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("% plus % equals %", a, b, a + b)`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"{a} plus {b} equals {a + b}"',
   //       "",
   //       '$"{a} plus {b} equals {a + b}"',
@@ -2171,10 +2171,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java4", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("max %, % equals %", a, b, max(a, b))`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"max {a}, {b} equals {max(a, b)}"',
   //       "",
   //       '$"max {a}, {b} equals {max(a, b)}"',
@@ -2183,10 +2183,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java5", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("result % %", 50)`,
-  //       ParseStatus.invalid,
+  //       false,
   //       "",
   //       `String.format("result % %", 50)`,
   //       "",
@@ -2194,10 +2194,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringInterpolated_in_Java6", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringInterpolated(fileWithJava()),
   //       `String.format("result % %", 50, percent)`,
-  //       ParseStatus.valid,
+  //       true,
   //       '$"result {50} {percent}"',
   //       "",
   //       "",
@@ -2206,10 +2206,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("List", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ListNode(f, () => new LitInt(f)),
   //       `[1, 2, 3]`,
-  //       ParseStatus.valid,
+  //       true,
   //       `[1, 2, 3]`,
   //       "",
   //       `[1, 2, 3]`,
@@ -2218,10 +2218,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("List incomplete", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ListNode(f, () => new LitInt(f)),
   //       `[`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `[`,
   //       "",
   //       `[`,
@@ -2230,10 +2230,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("List incomplete VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
   //       `{`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `{`,
   //       "",
   //       ``,
@@ -2242,10 +2242,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("List incomplete VB 2", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
   //       `{1, 2`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `{1, 2`,
   //       "",
   //       `{1, 2`,
@@ -2254,10 +2254,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("List complete VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
   //       `{1, 2, 3}`,
-  //       ParseStatus.valid,
+  //       true,
   //       `{1, 2, 3}`,
   //       "",
   //       `[1, 2, 3]`,
@@ -2266,10 +2266,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitStringOrdinary VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitStringOrdinary(fileWithVB()),
   //       `"`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `"`,
   //       "",
   //       `"`,
@@ -2278,10 +2278,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDef VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithVB()),
   //       `a As Integer`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a As Integer`,
   //       "",
   //       `a as Int`,
@@ -2290,10 +2290,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDef VB incomplete", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithVB()),
   //       `a A`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `a A`,
   //       "",
   //       `a A`,
@@ -2302,10 +2302,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDef C# valid", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithCS()),
   //       `List<int> a`,
-  //       ParseStatus.valid,
+  //       true,
   //       `List<int> a`,
   //       "",
   //       `a as List<of Int>`,
@@ -2314,10 +2314,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDef C# incomplete 1", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithCS()),
   //       `List<int>`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `List<int>`,
   //       "",
   //       `List<int>`,
@@ -2326,10 +2326,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamDef C# incomplete 2", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamDefNode(fileWithCS()),
   //       `List<int> `,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `List<int> `,
   //       "",
   //       `List<int> `,
@@ -2338,10 +2338,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Type VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(fileWithVB()),
   //       `Integer`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Integer`,
   //       "",
   //       `Int`,
@@ -2350,10 +2350,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Type VB2", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeNode(fileWithVB()),
   //       `Inte`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Inte`,
   //       "",
   //       `Inte`,
@@ -2362,10 +2362,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Type incomplete Elan", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleName(f),
   //       `Inte`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Inte`,
   //       "",
   //       `Inte`,
@@ -2374,10 +2374,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamList VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamListNode(fileWithVB()),
   //       `a As Integer, b As Integer`,
-  //       ParseStatus.valid,
+  //       true,
   //       `a As Integer, b As Integer`,
   //       "",
   //       `a as Int, b as Int`,
@@ -2386,10 +2386,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamList VB incomplete", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamListNode(fileWithVB()),
   //       `a As Integer, b`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `a As Integer, b`,
   //       "",
   //       `a as Int, b`,
@@ -2398,10 +2398,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ParamList VB incomplete 2", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ParamListNode(fileWithVB()),
   //       `a As Integer, b A`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `a As Integer, b A`,
   //       "",
   //       `a as Int, b A`,
@@ -2411,10 +2411,10 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
 
   //   test("LitBoolean", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitBoolean(f),
   //       `true`,
-  //       ParseStatus.valid,
+  //       true,
   //       `true`,
   //       "",
   //       `true`,
@@ -2423,10 +2423,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitBoolean - case insensitive", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitBoolean(f),
   //       `True`,
-  //       ParseStatus.valid,
+  //       true,
   //       `True`,
   //       "",
   //       `true`,
@@ -2435,10 +2435,10 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("LitBoolean - case insensitive VB", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new LitBoolean(fileWithVB()),
   //       `true`,
-  //       ParseStatus.valid,
+  //       true,
   //       `true`,
   //       "",
   //       `true`,
@@ -2447,21 +2447,21 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("Expr - i in type C#  - #2737", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new TypeSimpleName(fileWithCS()),
   //       `i`,
-  //       ParseStatus.incomplete,
+  //       false,
   //       `i`,
   //       "",
   //       `i`,
   //       "<el-type>i</el-type>",
   //       `i`,
   //     );
-  //     testNodeParse(new TypeSimpleName(fileWithCS()), `j`, ParseStatus.invalid, ``, "j", ``, "", ``);
-  //     testNodeParse(
+  //     testAntlrParse(new TypeSimpleName(fileWithCS()), `j`, false);
+  //     testAntlrParse(
   //       new TypeSimpleName(fileWithCS()),
   //       `int`,
-  //       ParseStatus.valid,
+  //       true,
   //       `int`,
   //       "",
   //       `Int`,
@@ -2470,72 +2470,72 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //   });
   //   test("ThisInstance", () => {
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(f),
   //       `this`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this`,
   //       "",
   //       `this`,
   //       "<el-kw>this</el-kw>",
   //       `this`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(f),
   //       `This`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this`,
   //       "",
   //       `this`,
   //       "<el-kw>this</el-kw>",
   //       `this`,
   //     );
-  //     testNodeParse(new ThisInstance(f), `th`, ParseStatus.incomplete, `th`, "", `th`, "th", `th`);
-  //     testNodeParse(new ThisInstance(f), `Th`, ParseStatus.incomplete, `Th`, "", `Th`, "Th", `Th`);
-  //     testNodeParse(
+  //     testAntlrParse(getThisInstanceRule(), `th`, false);
+  //     testAntlrParse(getThisInstanceRule(), `Th`, false);
+  //     testAntlrParse(
   //       new ThisInstance(fileWithPython()),
   //       `self`,
-  //       ParseStatus.valid,
+  //       true,
   //       `self`,
   //       "",
   //       `this`,
   //       "<el-kw>self</el-kw>",
   //       `self`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(fileWithVB()),
   //       `Me`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Me`,
   //       "",
   //       `this`,
   //       "<el-kw>Me</el-kw>",
   //       `Me`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(fileWithVB()),
   //       `me`,
-  //       ParseStatus.valid,
+  //       true,
   //       `Me`,
   //       "",
   //       `this`,
   //       "<el-kw>Me</el-kw>",
   //       `Me`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(fileWithCS()),
   //       `this`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this`,
   //       "",
   //       `this`,
   //       "<el-kw>this</el-kw>",
   //       `this`,
   //     );
-  //     testNodeParse(
+  //     testAntlrParse(
   //       new ThisInstance(fileWithJava()),
   //       `this`,
-  //       ParseStatus.valid,
+  //       true,
   //       `this`,
   //       "",
   //       `this`,
