@@ -83,4 +83,12 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   
   visitEnumValue = (ctx: EnumValueContext) =>
       `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
+
+  private formatBinaryOp(txt: string): string {
+    let src = txt;
+    if (txt !== "*" && txt !== "/") {
+      src = ` ${txt} `;
+    } 
+    return src;
+  }  
 }

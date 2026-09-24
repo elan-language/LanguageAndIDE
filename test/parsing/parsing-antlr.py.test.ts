@@ -386,6 +386,26 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(LitValueRule(), "Foo.bar", true);
   });
 
+  function BinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.binaryOperator()];
+  }
+
+  test("BinaryOperator", () => {
+    testAntlrParse(BinaryOperatorRule(), "==", true, "==", " == ", " == ");
+    testAntlrParse(BinaryOperatorRule(), "!=", true, "!=", " != ", " != ");
+    testAntlrParse(BinaryOperatorRule(), ">", true, ">", " > ", " > ");
+    testAntlrParse(BinaryOperatorRule(), "<", true, "<", " < ", " < ");
+    testAntlrParse(BinaryOperatorRule(), ">=", true, ">=", " >= ", " >= ");
+    testAntlrParse(BinaryOperatorRule(), "<=", true, "<=", " <= ", " <= ");
+    testAntlrParse(BinaryOperatorRule(), "*", true, "*", "*", "*");
+    testAntlrParse(BinaryOperatorRule(), "/", true, "/", "/", "/");
+    testAntlrParse(BinaryOperatorRule(), "+", true, "+", " + ", " + ");
+    testAntlrParse(BinaryOperatorRule(), "-", true, "-", " - ", " - ");
+    testAntlrParse(BinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), "%", true, "%", " % ", " % ");
+  });
+
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),

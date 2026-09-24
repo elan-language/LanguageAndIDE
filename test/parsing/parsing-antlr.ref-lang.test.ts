@@ -380,6 +380,26 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(LitValueRule(), "Foo.bar", true);
   });
 
+  function BinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.binaryOperator()];
+  }
+
+  test("BinaryOperator", () => {
+    testAntlrParse(BinaryOperatorRule(), "is", true, "is", " is ", "<el-kw> is </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), "isnt", true, "isnt", " isnt ", "<el-kw> isnt </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), ">", true, ">", " > ", " > ");
+    testAntlrParse(BinaryOperatorRule(), "<", true, "<", " < ", " < ");
+    testAntlrParse(BinaryOperatorRule(), ">=", true, ">=", " >= ", " >= ");
+    testAntlrParse(BinaryOperatorRule(), "<=", true, "<=", " <= ", " <= ");
+    testAntlrParse(BinaryOperatorRule(), "*", true, "*", "*", "*");
+    testAntlrParse(BinaryOperatorRule(), "/", true, "/", "/", "/");
+    testAntlrParse(BinaryOperatorRule(), "+", true, "+", " + ", " + ");
+    testAntlrParse(BinaryOperatorRule(), "-", true, "-", " - ", " - ");
+    testAntlrParse(BinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
+    testAntlrParse(BinaryOperatorRule(), "mod", true, "mod", " mod ", "<el-kw> mod </el-kw>");
+  });
+
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
   //       getBracketedExpressionRule(),

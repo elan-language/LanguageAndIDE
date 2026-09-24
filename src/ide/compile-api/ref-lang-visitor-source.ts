@@ -2,6 +2,7 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  BinaryOperatorContext,
   ChainableContext,
   CommentTextContext,
   EnumValueContext,
@@ -101,4 +102,14 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitEnumValue = (ctx: EnumValueContext) =>
     `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
+
+    visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
+  
+    private formatBinaryOp(txt: string): string {
+      let src = txt;
+      if (txt !== "*" && txt !== "/") {
+        src = ` ${txt} `;
+      } 
+      return src;
+    }  
 }
