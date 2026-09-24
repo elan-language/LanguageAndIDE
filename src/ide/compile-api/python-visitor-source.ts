@@ -3,6 +3,7 @@ import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
   CommentTextContext,
+  EnumValueContext,
   IdentifierContext,
   LitFloatContext,
   LitIntContext,
@@ -78,5 +79,8 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const name = this.visit(ctx.methodName());
 
     return `${name}(${args})`;
-  };
+  };  
+  
+  visitEnumValue = (ctx: EnumValueContext) =>
+      `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
 }

@@ -3,6 +3,7 @@ import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
   CommentTextContext,
+  EnumValueContext,
   IdentifierContext,
   LitBooleanContext,
   LitFloatContext,
@@ -93,4 +94,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
 
   visitLitString = (ctx: LitStringContext) =>
     this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
+
+  visitEnumValue = (ctx: EnumValueContext) =>
+    `${type(ctx.typeName().getText())}.${id(ctx.identifier().getText())}`;
 }

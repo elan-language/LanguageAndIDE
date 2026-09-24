@@ -338,8 +338,6 @@ suite("Parsing Antlr Rules RefLang", () => {
       "<el-kw>true</el-kw>",
       `true`,
     );
-  });
-  test("LitBoolean", () => {
     testAntlrParse(
       getLitBooleanRule(),
       `false`,
@@ -349,9 +347,25 @@ suite("Parsing Antlr Rules RefLang", () => {
       "<el-kw>false</el-kw>",
       `false`,
     );
-  });
-  test("LitBoolean - case sensitive", () => {
     testAntlrParse(getLitBooleanRule(), `True`, false);
+  });
+
+  function getEnumValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguageElan.Instance, (p: Parser) => p.enumValue()];
+  }
+
+  test("EnumValue", () => {
+    testAntlrParse(
+      getEnumValueRule(),
+      `Foo.bar`,
+      true,
+      `Foo.bar`,
+      `Foo.bar`,
+      "<el-type>Foo</el-type>.<el-id>bar</el-id>",
+      ``,
+    );
+    testAntlrParse(getEnumValueRule(), `foo.bar`, false);
+    testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
   });
   //   test("BracketedExpression", () => {
   //     testAntlrParse(

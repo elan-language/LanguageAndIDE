@@ -4,6 +4,7 @@ import {
   ArgListContext,
   ChainableContext,
   CommentTextContext,
+  EnumValueContext,
   IdentifierContext,
   IndexContext,
   LitFloatContext,
@@ -97,4 +98,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
     return `${prefix}${indices}`;
   };
+
+  visitEnumValue = (ctx: EnumValueContext) =>
+    `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
 }
