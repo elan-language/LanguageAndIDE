@@ -65,6 +65,8 @@ import { ThisInstanceContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
+import { NegateNumericContext } from "./RefLangParser.js";
+import { NegateLogicalContext } from "./RefLangParser.js";
 import { BinaryExpressionContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
@@ -714,6 +716,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitUnaryExpression?: (ctx: UnaryExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.negateNumeric`.
+   * @param ctx the parse tree
+   */
+  enterNegateNumeric?: (ctx: NegateNumericContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.negateNumeric`.
+   * @param ctx the parse tree
+   */
+  exitNegateNumeric?: (ctx: NegateNumericContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.negateLogical`.
+   * @param ctx the parse tree
+   */
+  enterNegateLogical?: (ctx: NegateLogicalContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.negateLogical`.
+   * @param ctx the parse tree
+   */
+  exitNegateLogical?: (ctx: NegateLogicalContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.binaryExpression`.
    * @param ctx the parse tree

@@ -65,6 +65,8 @@ import { ThisInstanceContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
+import { NegateNumericContext } from "./RefLangParser.js";
+import { NegateLogicalContext } from "./RefLangParser.js";
 import { BinaryExpressionContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
@@ -465,6 +467,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitUnaryExpression?: (ctx: UnaryExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.negateNumeric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateNumeric?: (ctx: NegateNumericContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.negateLogical`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateLogical?: (ctx: NegateLogicalContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.binaryExpression`.
    * @param ctx the parse tree

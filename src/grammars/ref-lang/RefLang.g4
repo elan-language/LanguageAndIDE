@@ -231,7 +231,10 @@ thisInstance: THIS_INSTANCE;
 chainable: ( identifier | methodCall) index*;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
-unaryExpression: (MINUS | NOT) term;
+unaryExpression: negateNumeric | negateLogical;
+negateNumeric: MINUS term;
+negateLogical: NOT term;
+
 binaryExpression:
     term binaryOperator expression
 ; // ? expression binaryOperator expression ?

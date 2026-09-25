@@ -14,6 +14,8 @@ import {
   LitIntContext,
   LitStringContext,
   MethodCallContext,
+  NegateLogicalContext,
+  NegateNumericContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -128,4 +130,14 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
+
+  visitNegateNumeric = (ctx: NegateNumericContext) =>
+    `${this.visit(ctx.MINUS())}${this.visit(ctx.term())}`;
+  visitNegateLogical = (ctx: NegateLogicalContext) => {
+    let not = ctx.NOT().getText();
+    if (/^[A-Za-z]+$/.test(not)) {
+      not = kw(`${not} `);
+    }
+    return `${not}${this.visit(ctx.term())}`;
+  };
 }

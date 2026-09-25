@@ -16,7 +16,9 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, `"hello"`, true); // litString
     testAntlrParse(expression, "Foo.bar", true); // enumValue
     testAntlrParse(expression, `foo(3, a)`, true); // methodCall
-    testAntlrParse(expression, `a*3`, true); // binaryExpression
+    testAntlrParse(expression, `-3`, true); // negateNumeric
+    testAntlrParse(expression, `not foo()`, true); // unaryExpression
+    testAntlrParse(expression, `3*a`, true); // binaryExpression
     testAntlrParse(expression, `foo()[c].bar(3)[b]`, true); // chainable
     //TODO add an example of each sub-rule, tested
   });
@@ -226,6 +228,25 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(methodCall, `isBefore(b[0])`, true, ``, "", "");
   });
 
+  test("Unary Expression", () => {
+    const unaryExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.unaryExpression(),
+    ];
+    testAntlrParse(unaryExpression, "", false);
+    testAntlrParse(unaryExpression, "-3", true, "-3", "-3", "-<el-lit>3</el-lit>");
+    testAntlrParse(
+      unaryExpression,
+      " not foo",
+      true,
+      " not foo",
+      "not foo",
+      "<el-kw>not </el-kw><el-id>foo</el-id>",
+    );
+    testAntlrParse(unaryExpression, "-", false);
+    testAntlrParse(unaryExpression, "+4", false);
+  });
+
   test("BinaryOperator", () => {
     const binaryOperator: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
@@ -277,7 +298,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
-  test("index", () => {
+  test("Index", () => {
     const index: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.index(),
@@ -289,7 +310,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(index, `[a]`, true, "[a]", "[a]", "[<el-id>a</el-id>]", "[a]", "a");
   });
 
-  test("chainable", () => {
+  test("Chainable", () => {
     const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.chainable(),
@@ -317,21 +338,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
-  //   test("UnaryExpression", () => {
-  //     testAntlrParse(getUnaryExpressionRule, "", false);
-  //     testAntlrParse(getUnaryExpressionRule, "-3", true, "-3", "", "-3", "");
-  //     testAntlrParse(
-  //       getUnaryExpressionRule,
-  //       " not foo",
-  //       true,
-  //       " not foo",
-  //       "",
-  //       "not foo",
-  //       "",
-  //     );
-  //     testAntlrParse(getUnaryExpressionRule, "-", false);
-  //     testAntlrParse(getUnaryExpressionRule, "+4", false);
-  //   });
   //   test("IndexableTerm", () => {
   //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
   //   });
