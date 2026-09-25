@@ -19,6 +19,7 @@ import {
   MethodCallContext,
   NegateLogicalContext,
   NegateNumericContext,
+  NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -161,4 +162,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
     return `${method("if_")}(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
   };
+
+  visitNewInstance = (ctx: NewInstanceContext) =>
+    `${kw("new")} ${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
 }

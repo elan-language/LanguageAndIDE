@@ -174,6 +174,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litInt, " 123a", true, "123", "123", "");
     testAntlrParse(litInt, "1.23", false);
     testAntlrParse(litInt, "a", false);
+    testAntlrParse(litInt, `3 `, true, `3`);
     // Hex
     testAntlrParse(litInt, "0xfa3c", true, "0xfa3c", "0xfa3c", "<el-lit>0xfa3c</el-lit>", "0xfa3c");
     testAntlrParse(litInt, "0xfa3C", true, "0xfa3C", "0xfa3c", "<el-lit>0xfa3c</el-lit>", "0xfa3c");
@@ -604,6 +605,30 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(paramsList, ``, false);
   });
 
+  test("New Instance", () => {
+    const newInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.newInstance(),
+    ];
+    testAntlrParse(newInstance, ``, false);
+    testAntlrParse(
+      newInstance,
+      `new Foo(1)`,
+      true,
+      "new Foo(1)",
+      "new Foo(1)",
+      "<el-kw>new</el-kw> <el-type>Foo</el-type>(<el-lit>1</el-lit>)",
+    );
+    testAntlrParse(newInstance, `newFoo()`, false);
+    testAntlrParse(
+      newInstance,
+      "new List<of String>()",
+      true,
+      "new List<of String>()",
+      "new List<of String>()",
+    );
+  });
+
   // test("Tuple", () => {
   //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
@@ -651,71 +676,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   );
   // });
 
-  //   test("Literal", () => {
-  //     testAntlrParse(getLitValueRule, `"hello"`, true, "", "", "");
-  //     testAntlrParse(getLitValueRule, `123`, true, "", "", "");
-  //   });
-  //   test("SpaceNode", () => {
-  //     testAntlrParse(new SpaceNode(f, Space.ignored), ``, true, "", "", "", "");
-  //     testAntlrParse(new SpaceNode(f, Space.ignored), ` `, true, "", "", "", "");
-  //     testAntlrParse(new SpaceNode(f, Space.ignored), `  `, true, "", "", "", "");
-  //     testAntlrParse(new SpaceNode(f, Space.added), ``, true, "", "", " ", " ");
-  //     testAntlrParse(new SpaceNode(f, Space.added), ` `, true, "", "", " ", " ");
-  //     testAntlrParse(new SpaceNode(f, Space.added), `  `, true, "", "", " ", " ");
-  //     testAntlrParse(new SpaceNode(f, Space.required), ``, false);
-  //     testAntlrParse(new SpaceNode(f, Space.required), ` `, true, "", "", " ", " ");
-  //     testAntlrParse(new SpaceNode(f, Space.required), `  `, true, "", "", " ", " ");
-  //   });
-  //   test("New Instance", () => {
-  //     testAntlrParse(getNewInstanceRule, ``, false);
-  //     testAntlrParse(getNewInstanceRule, `new Foo()`, true, "", "", "new Foo()", "");
-  //     testAntlrParse(getNewInstanceRule, `newFoo()`, false);
-  //     testAntlrParse(
-  //       getNewInstanceRule,
-  //       "new List<of String>()",
-  //       true,
-  //       "new List<of String>()",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new NewInstance(fileWithPython()),
-  //       `Foo()`,
-  //       true,
-  //       "Foo()",
-  //       "",
-  //       "new Foo()",
-  //       "<el-type>Foo</el-type>()",
-  //       `Foo()`,
-  //     );
-  //     testAntlrParse(
-  //       new NewInstance(fileWithCS()),
-  //       `new Foo()`,
-  //       true,
-  //       "",
-  //       "",
-  //       "new Foo()",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new NewInstance(fileWithJava()),
-  //       `new Foo()`,
-  //       true,
-  //       "",
-  //       "",
-  //       "new Foo()",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new NewInstance(fileWithVB()),
-  //       `New Foo()`,
-  //       true,
-  //       "New Foo()",
-  //       "",
-  //       "new Foo()",
-  //       "<el-kw>New</el-kw> <el-type>Foo</el-type>()",
-  //       "New Foo()",
-  //     );
-  //   });
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
   //     testAntlrParse(
@@ -838,15 +798,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
   //       `f"<p>{2 + 3}</p>"`,
   //     );
-  //   });
-  //   test("Bug #290", () => {
-  //     testAntlrParse(getLitIntRule, `3`, true, "3", "");
-  //     testAntlrParse(getLitIntRule, `3 `, true, "3", " ");
-
-  //     testAntlrParse(getLitValueRule, `3 `, true, "3", " ");
-  //     testAntlrParse(binaryExpression, `3 `, false);
-
-  //     testAntlrParse(expression, `3 `, false);
   //   });
 
   //   test("InstanceProcRef", () => {
