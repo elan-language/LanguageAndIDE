@@ -492,7 +492,35 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(type_, `(Foo, Bar< of Yon>)`, true, "(Foo, Bar< of Yon>)", "", "");
     testAntlrParse(type_, `Func<of Foo, Bar => Yon>`, true, "Func<of Foo, Bar => Yon>", "", ""); //Single
   });
-  // test("TupleNode", () => {
+
+  test("lambda", () => {
+    const lambda: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.lambda(),
+    ];
+    testAntlrParse(lambda, `lambda x as Int => x * x`, true, "lambda x as Int => x * x", "", "");
+    testAntlrParse(lambda, `lambda x`, false);
+    testAntlrParse(lambda, `lambda x => x * x`, true); // parameter types are optional!
+    testAntlrParse(
+      lambda,
+      `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
+      true,
+      "",
+      "",
+      "",
+    );
+    //TODO: pending parse of tuple (not tupleType)
+    // testAntlrParse(
+    //   lambda,
+    //   `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+    //   true,
+    //   "",
+    //   "",
+    //   "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+    // );
+  });
+
+  // test("Tuple", () => {
   //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `((3,4), ("a", true))`, true, "", "", "");
@@ -539,72 +567,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   );
   // });
 
-  //   test("IndexableTerm", () => {
-  //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
-  //   });
-  //   test("Term2", () => {
-  //     testAntlrParse(getTermRule, "", false);
-  //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
-  //   });
-  //   test("Expression", () => {
-
-  //     testAntlrParse(
-  //       expression,
-  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       false,
-  //       "",
-  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       "",
-  //       "",
-  //     );
-  //   });
-  //   test("Lambda as argument", () => {
-  //     testAntlrParse(
-  //       getArgumentRule,
-  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       true,
-  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //   });
-
-  //   test("Lambda", () => {
-  //     testAntlrParse(
-  //       getLambdaRule,
-  //       `lambda x as Int => x * x`,
-  //       true,
-  //       "lambda x as Int => x * x",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getLambdaRule, `lambda x`, false);
-  //     testAntlrParse(
-  //       getLambdaRule,
-  //       `lambda x => x * x`,
-  //       false,
-  //       "",
-  //       "lambda x => x * x",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getLambdaRule,
-  //       `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getLambdaRule,
-  //       `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-  //       true,
-  //       "",
-  //       "",
-  //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //     );
-  //   });
   //   test("IfExpr", () => {
   //     testAntlrParse(
   //       getIfExprRule,

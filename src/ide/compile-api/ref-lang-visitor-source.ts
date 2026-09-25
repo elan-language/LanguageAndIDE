@@ -10,6 +10,7 @@ import {
   EnumValueContext,
   IdentifierContext,
   IndexContext,
+  LambdaContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
@@ -124,4 +125,11 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     `(${this.visit(ctx.expression())})`;
+
+  visitLambda = (ctx: LambdaContext) =>{
+    const lambda = this.visit(ctx.LAMBDA()) ?? "";
+    const arrow = this.visit(ctx.ARROW());
+    const params = ctx.paramsList() ? this.visit(ctx.paramsList()!) : "";
+    return `${lambda} ${params} ${arrow} ${this.visit(ctx.expression())}`;
+  };
 }
