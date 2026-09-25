@@ -458,13 +458,13 @@ suite("Parsing Antlr Rules RefLang", () => {
   });
 
   test("Type", () => {
-    const typeRule: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+    const type_: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.type_(),
     ];
-    testAntlrParse(typeRule, `Foo`, true, "Foo", "Foo", "<el-type>Foo</el-type>");
+    testAntlrParse(type_, `Foo`, true, "Foo", "Foo", "<el-type>Foo</el-type>");
     testAntlrParse(
-      typeRule,
+      type_,
       `Foo<of Bar>`,
       true,
       "Foo<of Bar>",
@@ -472,20 +472,72 @@ suite("Parsing Antlr Rules RefLang", () => {
       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
     );
     testAntlrParse(
-      typeRule,
+      type_,
       `Dictionary<of Bar, Yon>`,
       true,
       "Dictionary<of Bar, Yon>",
       "Dictionary<of Bar, Yon>",
       "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
     );
-    testAntlrParse(typeRule, `foo`, false);
-    testAntlrParse(typeRule, `Foo<`, false);
-    testAntlrParse(typeRule, `Foo<>`, false);
-    testAntlrParse(typeRule, `Foo<of`, false);
-    testAntlrParse(typeRule, `Foo<of Bar`, false);
-    testAntlrParse(typeRule, `Foo<ofBar>`, false);
+    testAntlrParse(type_, `foo`, false);
+    testAntlrParse(type_, `Foo<`, false);
+    testAntlrParse(type_, `Foo<>`, false);
+    testAntlrParse(type_, `Foo<of`, false);
+    testAntlrParse(type_, `Foo<of Bar`, false);
+    testAntlrParse(type_, `Foo<ofBar>`, false);
+    testAntlrParse(type_, `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
+    testAntlrParse(type_, `(Foo)`, false);
+    testAntlrParse(type_, `(Foo, Bar, Yon`, false);
+    testAntlrParse(type_, `(Foo, (Bar, Yon, Qux))`, true, "(Foo, (Bar, Yon, Qux))", "", "");
+    testAntlrParse(type_, `(Foo, Bar< of Yon>)`, true, "(Foo, Bar< of Yon>)", "", "");
+    testAntlrParse(type_, `Func<of Foo, Bar => Yon>`, true, "Func<of Foo, Bar => Yon>", "", ""); //Single
   });
+  // test("TupleNode", () => {
+  //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
+  //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
+  //   testAntlrParse(getTupleRule, `((3,4), ("a", true))`, true, "", "", "");
+  //   testAntlrParse(
+  //     getTupleRule,
+  //     `(3,"a", "hello", 4.1, true`,
+  //     false,
+  //     "",
+  //     "",
+  //     "",
+  //   );
+  //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1,`, false);
+  //   testAntlrParse(getTupleRule, `tuple[3,4]`, false);
+  //   testAntlrParse(getTupleRule, `(a,b)`, true, "(a,b)", "", "");
+  //   testAntlrParse(getTupleRule, `(`, false);
+  //   testAntlrParse(getTupleRule, `(3`, false);
+  //   testAntlrParse(getTupleRule, `(3)`, false);
+  //   testAntlrParse(getTupleRule, `()`, false);
+  //   testAntlrParse(getTupleRule, `("foo", 3)`, true, '("foo", 3)', "", "", "");
+  //   testAntlrParse(
+  //     getTupleRule,
+  //     `(foo, 3, bar(a), x)`,
+  //     true,
+  //     "(foo, 3, bar(a), x)",
+  //     "",
+  //     "",
+  //   );
+  //   testAntlrParse(getTupleRule, `(foo)`, false);
+  //   testAntlrParse(
+  //     getTupleRule,
+  //     `(foo, 3, bar(a), x`,
+  //     false,
+  //     "(foo, 3, bar(a), x",
+  //     "",
+  //     "",
+  //   );
+  //   testAntlrParse(
+  //     getTupleRule,
+  //     `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+  //     true,
+  //     "",
+  //     "",
+  //     "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+  //   );
+  // });
 
   //   test("IndexableTerm", () => {
   //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
@@ -518,97 +570,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
 
-  //   test("TypeNode", () => {
-  //     //Single
-  //     testAntlrParse(getTypeRule, `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
-  //     testAntlrParse(getTypeRule, `(Foo)`, false);
-  //     testAntlrParse(
-  //       getTypeRule,
-  //       `(Foo, Bar, Yon`,
-  //       false,
-  //       "(Foo, Bar, Yon",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getTypeRule,
-  //       `(Foo, (Bar, Yon, Qux))`,
-  //       true,
-  //       "(Foo, (Bar, Yon, Qux))",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getTypeRule,
-  //       `(Foo, Bar< of Yon>)`,
-  //       true,
-  //       "(Foo, Bar< of Yon>)",
-  //       "",
-  //       "",
-  //     );
-  //   });
-  //   test("TypeNode - Func", () => {
-  //     testAntlrParse(
-  //       getTypeRule,
-  //       `Func<of Foo, Bar => Yon>`,
-  //       true,
-  //       "Func<of Foo, Bar => Yon>",
-  //       "",
-  //       "",
-  //     ); //Single
-  //   });
-  //   test("TypeNode - library qualifier", () => {
-  //     testAntlrParse(getTypeRule, `library.Random`, false); //Single
-  //   });
-  //   test("TypeNode - other qualifier", () => {
-  //     testAntlrParse(getTypeRule, `global.Random`, false); //Single
-  //   });
-  //   test("TupleNode", () => {
-  //     testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
-  //     testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
-  //     testAntlrParse(getTupleRule, `((3,4), ("a", true))`, true, "", "", "");
-  //     testAntlrParse(
-  //       getTupleRule,
-  //       `(3,"a", "hello", 4.1, true`,
-  //       false,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1,`, false);
-  //     testAntlrParse(getTupleRule, `tuple[3,4]`, false);
-  //     testAntlrParse(getTupleRule, `(a,b)`, true, "(a,b)", "", "");
-  //     testAntlrParse(getTupleRule, `(`, false);
-  //     testAntlrParse(getTupleRule, `(3`, false);
-  //     testAntlrParse(getTupleRule, `(3)`, false);
-  //     testAntlrParse(getTupleRule, `()`, false);
-  //     testAntlrParse(getTupleRule, `("foo", 3)`, true, '("foo", 3)', "", "", "");
-  //     testAntlrParse(
-  //       getTupleRule,
-  //       `(foo, 3, bar(a), x)`,
-  //       true,
-  //       "(foo, 3, bar(a), x)",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getTupleRule, `(foo)`, false);
-  //     testAntlrParse(
-  //       getTupleRule,
-  //       `(foo, 3, bar(a), x`,
-  //       false,
-  //       "(foo, 3, bar(a), x",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getTupleRule,
-  //       `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-  //       true,
-  //       "",
-  //       "",
-  //       "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //     );
-  //   });
   //   test("Lambda", () => {
   //     testAntlrParse(
   //       getLambdaRule,
