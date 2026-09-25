@@ -570,6 +570,40 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(ifExpr, `if(cell, Colour.amber, Colour.green)`, false);
   });
 
+  test("ParamDefNode", () => {
+    const paramDef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.paramDef(),
+    ];
+    testAntlrParse(
+      paramDef,
+      `x as String`,
+      true,
+      "x as String",
+      "x as String",
+      "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
+    );
+    testAntlrParse(paramDef, `z`, false);
+    testAntlrParse(paramDef, `w as`, false);
+    testAntlrParse(paramDef, `A`, false);
+    testAntlrParse(paramDef, `v String`, false);
+  });
+
+  test("Param List", () => {
+    const paramsList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.paramsList(),
+    ];
+    testAntlrParse(paramsList, `a as String`, true);
+    testAntlrParse(paramsList, `a as String, bb as Int, foo as Bar`, true);
+
+    testAntlrParse(paramsList, `a as String,`, false);
+    testAntlrParse(paramsList, `a as String, bb as`, false);
+    testAntlrParse(paramsList, `a`, false, "");
+    testAntlrParse(paramsList, `A as string`, false);
+    testAntlrParse(paramsList, ``, false);
+  });
+
   // test("Tuple", () => {
   //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
@@ -617,120 +651,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   );
   // });
 
-  //   test("ParamDefNode", () => {
-  //     testAntlrParse(
-  //       getParamDefRule,
-  //       `x as String`,
-  //       true,
-  //       "x as String",
-  //       "",
-  //       "x as String",
-  //       "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
-  //     );
-  //     testAntlrParse(getParamDefRule, `z`, false);
-  //     testAntlrParse(getParamDefRule, `w as`, false);
-  //     testAntlrParse(getParamDefRule, `A`, false);
-  //     testAntlrParse(getParamDefRule, `v String`, false);
-  //   });
-  //   test("ParamDefNode_Python", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithPython()),
-  //       `x: str`,
-  //       true,
-  //       "x: str",
-  //       "",
-  //       "",
-  //       "<el-id>x</el-id>: <el-type>str</el-type>",
-  //       "x: str",
-  //     );
-  //   });
-  //   test("ParamDefNode_VB", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithVB()),
-  //       `x As String`,
-  //       true,
-  //       "x As String",
-  //       "",
-  //       "",
-  //       "<el-id>x</el-id><el-kw> As </el-kw><el-type>String</el-type>",
-  //       "x As String",
-  //     );
-  //   });
-  //   test("ParamDefNode_CS", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithCS()),
-  //       `string x`,
-  //       true,
-  //       `string x`,
-  //       "",
-  //       "",
-  //       `<el-type>string</el-type> <el-id>x</el-id>`,
-  //       `string x`,
-  //     );
-  //   });
-  //   test("ParamDefNode_Java", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithJava()),
-  //       `String x`,
-  //       true,
-  //       `String x`,
-  //       "",
-  //       "",
-  //       `<el-type>String</el-type> <el-id>x</el-id>`,
-  //       `String x`,
-  //     );
-  //   });
-  //   test("Param List", () => {
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `A as string`,
-  //       true,
-  //       "",
-  //       "A as string",
-  //       "",
-  //     ); //i.e. all leftover
-  //     testAntlrParse(new CSV(f, () => getParamDefRule, 0), ``, true, "", "", "");
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `a as String`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `a as String, bb as Int, foo as Bar`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `a`,
-  //       false,
-  //       "a",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `a as String,`,
-  //       false,
-  //       "a as String,",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getParamDefRule, 0),
-  //       `a as String, bb as`,
-  //       false,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //   });
   //   test("Literal", () => {
   //     testAntlrParse(getLitValueRule, `"hello"`, true, "", "", "");
   //     testAntlrParse(getLitValueRule, `123`, true, "", "", "");
