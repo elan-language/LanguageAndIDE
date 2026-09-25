@@ -9,15 +9,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       LanguageElan.Instance,
       (p: Parser) => p.expression(),
     ];
-    testAntlrParse(expression, "bar", true);
-    testAntlrParse(expression, "123", true);
-    testAntlrParse(expression, "1.0", true);
-    testAntlrParse(expression, "true", true);
-    testAntlrParse(expression, `"hello"`, true);
-    testAntlrParse(expression, "Foo.bar", true);
-    testAntlrParse(expression, `foo()`, true);
-
-    //TODO add an example of each sub-rule
+    testAntlrParse(expression, "bar1_foo", true); // identifier
+    testAntlrParse(expression, "123", true); // litInt
+    testAntlrParse(expression, "1.0e-4", true); // litFloat
+    testAntlrParse(expression, "true", true); // litBoolean
+    testAntlrParse(expression, `"hello"`, true); // litString
+    testAntlrParse(expression, "Foo.bar", true); // enumValue
+    testAntlrParse(expression, `foo(3, a)`, true); // methodCall
+    testAntlrParse(expression, `a*3`, true); // binaryExpression
+    testAntlrParse(expression, `foo()[c].bar(3)[b]`, true); // chainable
+    //TODO add an example of each sub-rule, tested
   });
 
   test("Identifier", () => {
@@ -286,6 +287,34 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(index, `[]`, false);
     testAntlrParse(index, `[1]`, true, "[1]", "[1]", "[<el-lit>1</el-lit>]", "[1]", "1");
     testAntlrParse(index, `[a]`, true, "[a]", "[a]", "[<el-id>a</el-id>]", "[a]", "a");
+  });
+
+  test("chainable", () => {
+    const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.chainable(),
+    ];
+    testAntlrParse(chainable, ``, false);
+    testAntlrParse(chainable, ` `, false);
+    //testAntlrParse(chainable, `a[]`, false);
+    testAntlrParse(
+      chainable,
+      `a[1]`,
+      true,
+      "a[1]",
+      "a[1]",
+      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
+      "a[1]",
+    );
+    testAntlrParse(
+      chainable,
+      `a[b]`,
+      true,
+      "a[b]",
+      "a[b]",
+      "<el-id>a</el-id>[<el-id>b</el-id>]",
+      "a[b]",
+    );
   });
 
   //   test("UnaryExpression", () => {
