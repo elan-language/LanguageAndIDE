@@ -296,6 +296,41 @@ suite("Parsing Antlr Rules RefLang", () => {
       `a*3`,
       "<el-id>a</el-id>*<el-lit>3</el-lit>",
     );
+    testAntlrParse(binaryExpression, `"a"+  "b"`, true);
+    testAntlrParse(binaryExpression, `3+`, false);
+    testAntlrParse(binaryExpression, `3 +`, false);
+    testAntlrParse(binaryExpression, `3 `, false);
+    testAntlrParse(
+      binaryExpression,
+      `3+4`,
+      true,
+      "3+4",
+      "3 + 4",
+      "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
+    );
+    testAntlrParse(
+      binaryExpression,
+      `3>=4`,
+      true,
+      "3>=4",
+      "3 >= 4",
+      "<el-lit>3</el-lit> >= <el-lit>4</el-lit>",
+    );
+    testAntlrParse(binaryExpression, `3>`, false);
+    testAntlrParse(binaryExpression, `3> `, false);
+    testAntlrParse(binaryExpression, `3> 4`, true, "3> 4", "3 > 4");
+    testAntlrParse(binaryExpression, `3>4`, true, "3>4", "3 > 4");
+    testAntlrParse(binaryExpression, `3 > 4`, true, "3 > 4", "3 > 4");
+    testAntlrParse(binaryExpression, `3>=`, false);
+    testAntlrParse(binaryExpression, `3>=4`, true, "3>=4", "3 >= 4");
+    testAntlrParse(
+      binaryExpression,
+      `3 is 4`,
+      true,
+      "3 is 4",
+      "3 is 4",
+      "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
+    );
   });
 
   test("Index", () => {
@@ -425,44 +460,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
 
-  // testAntlrParse(getBinaryExpressionRule, `"a"+  "b"`, true, `"a"+  "b"`, "", `"a" + "b"`);
-  // testAntlrParse(getBinaryExpressionRule, `3+`, false);
-  // testAntlrParse(getBinaryExpressionRule, `3 +`, false);
-  // testAntlrParse(getBinaryExpressionRule, `3 `, false);
-  // testAntlrParse(
-  //   getBinaryExpressionRule,
-  //   `3+4`,
-  //   true,
-  //   "3+4",
-  //   "",
-  //   "3 + 4",
-  //   "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
-  // );
-  // testAntlrParse(
-  //   getBinaryExpressionRule,
-  //   `3>=4`,
-  //   true,
-  //   "3>=4",
-  //   "",
-  //   "3 >= 4",
-  //   "<el-lit>3</el-lit> &gt;= <el-lit>4</el-lit>",
-  // );
-  // testAntlrParse(getBinaryExpressionRule, `3>`, false);
-  // testAntlrParse(getBinaryExpressionRule, `3> `, false);
-  // testAntlrParse(getBinaryExpressionRule, `3> 4`, true, "3> 4", "", "3 > 4");
-  // testAntlrParse(getBinaryExpressionRule, `3>4`, true, "3>4", "", "3 > 4");
-  // testAntlrParse(getBinaryExpressionRule, `3 > 4`, true, "3 > 4", "", "3 > 4");
-  // testAntlrParse(getBinaryExpressionRule, `3>=`, false);
-  // testAntlrParse(getBinaryExpressionRule, `3>=4`, true, "3>=4", "", "3 >= 4");
-  // testAntlrParse(
-  //   getBinaryExpressionRule,
-  //   `3 is 4`,
-  //   true,
-  //   "3 is 4",
-  //   "",
-  //   "3 is 4",
-  //   "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
-  // );
   //});
 
   //   test("BracketedExpression", () => {
@@ -1413,7 +1410,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getLitIntRule, `3 `, true, "3", " ");
 
   //     testAntlrParse(getLitValueRule, `3 `, true, "3", " ");
-  //     testAntlrParse(getBinaryExpressionRule, `3 `, false);
+  //     testAntlrParse(binaryExpression, `3 `, false);
 
   //     testAntlrParse(getExprRule, `3 `, false);
   //   });
