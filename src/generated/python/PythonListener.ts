@@ -61,6 +61,7 @@ import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
@@ -673,6 +674,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitChainHead?: (ctx: ChainHeadContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  exitThisInstance?: (ctx: ThisInstanceContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree

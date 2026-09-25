@@ -61,6 +61,7 @@ import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
@@ -440,6 +441,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree

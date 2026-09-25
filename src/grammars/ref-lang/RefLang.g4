@@ -217,13 +217,16 @@ expression:
 term: chainHead (DOT chainable)*;
 
 chainHead:
-    THIS_INSTANCE
+    thisInstance
     | bracketedExpression
     | tuple
     | litValue
     | list
     | chainable
 ;
+
+thisInstance: THIS_INSTANCE;
+
 
 chainable: ( identifier | methodCall) index*;
 

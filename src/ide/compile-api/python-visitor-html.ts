@@ -86,11 +86,9 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return `${name}(${args})`;
   };
 
-  visitLitInt = (ctx: LitIntContext) =>
-    this.visitChildren(ctx) ? lit(this.visitChildren(ctx)!.toLowerCase()) : "";
+  visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  visitLitFloat = (ctx: LitFloatContext) =>
-    this.visitChildren(ctx) ? lit(this.visitChildren(ctx)!.toLowerCase()) : "";
+  visitLitFloat = (ctx: LitFloatContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
@@ -98,21 +96,19 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${type(ctx.typeName().getText())}.${id(ctx.identifier().getText())}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
 
-    visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
-
-    private formatBinaryOp(txt: string): string {
+  visitBinaryOperator = (ctx: BinaryOperatorContext) => {
+    const txt = ctx.getText();
     let html = txt;
-    if (/^[A-Za-z]+$/.test(txt)) { // a keyword
+    if (/^[A-Za-z]+$/.test(txt)) {
       html = kw(` ${txt} `);
     } else if (txt !== "*" && txt !== "/") {
-        html = ` ${txt} `;
-    } 
+      html = ` ${txt} `;
+    }
     return html;
-  }  
+  };
 
-    // visitBinaryExpression = (ctx: BinaryExpressionContext) => 
-    //   `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
-  
+  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
 }

@@ -63,15 +63,11 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
-  visitCommentText = (ctx: CommentTextContext) => {
-    return ctx.getText();
-  };
+  visitCommentText = (ctx: CommentTextContext) => ctx.getText();
 
-  visitLitInt = (ctx: LitIntContext) =>
-    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
+  visitLitInt = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
-  visitLitFloat = (ctx: LitFloatContext) =>
-    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
+  visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
   visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 
@@ -81,21 +77,16 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const name = this.visit(ctx.methodName());
 
     return `${name}(${args})`;
-  };  
-  
+  };
+
   visitEnumValue = (ctx: EnumValueContext) =>
-      `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
 
-  visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
+  visitBinaryOperator = (ctx: BinaryOperatorContext) => {
+    const txt = ctx.getText();
+    return txt !== "*" && txt !== "/" ? ` ${txt} ` : txt;
+  };
 
-  private formatBinaryOp(txt: string): string {
-    let src = txt;
-    if (txt !== "*" && txt !== "/") {
-      src = ` ${txt} `;
-    } 
-    return src;
-  }  
-
-    // visitBinaryExpression = (ctx: BinaryExpressionContext) => 
-    //   `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
+  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
 }

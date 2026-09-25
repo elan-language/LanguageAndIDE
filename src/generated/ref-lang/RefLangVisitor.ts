@@ -61,6 +61,7 @@ import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainHeadContext } from "./RefLangParser.js";
+import { ThisInstanceContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
@@ -440,6 +441,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree

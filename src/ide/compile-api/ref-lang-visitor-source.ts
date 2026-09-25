@@ -7,7 +7,6 @@ import {
   ChainableContext,
   CommentTextContext,
   EnumValueContext,
-  ExpressionContext,
   IdentifierContext,
   IndexContext,
   LitFloatContext,
@@ -15,7 +14,6 @@ import {
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
-  TermContext,
   TestNameContext,
   TypeContext,
   TypeFuncContext,
@@ -67,15 +65,11 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
-  visitCommentText = (ctx: CommentTextContext) => {
-    return ctx.getText();
-  };
+  visitCommentText = (ctx: CommentTextContext) => ctx.getText();
 
-  visitLitInt = (ctx: LitIntContext) =>
-    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
+  visitLitInt = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
-  visitLitFloat = (ctx: LitFloatContext) =>
-    this.visitChildren(ctx) ? this.visitChildren(ctx)!.toLowerCase() : "";
+  visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
   visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 
@@ -104,21 +98,13 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${ctx.typeName().getText()}.${ctx.identifier().getText()}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
 
-    visitBinaryOperator = (ctx: BinaryOperatorContext) => this.formatBinaryOp(ctx.getText());
-  
-    private formatBinaryOp(txt: string): string {
-      let src = txt;
-      if (txt !== "*" && txt !== "/") {
-        src = ` ${txt} `;
-      } 
-      return src;
-    }  
+  visitBinaryOperator = (ctx: BinaryOperatorContext) => {
+    const txt = ctx.getText();
+    return txt !== "*" && txt !== "/" ? ` ${txt} ` : txt;
+  };
 
-  visitTerm = (ctx: TermContext) => this.visitChildren(ctx) ?? "";
-  visitExpression = (ctx: ExpressionContext) => this.visitChildren(ctx) ?? "";
-
-    visitBinaryExpression = (ctx: BinaryExpressionContext) => 
-      `${this.visitTerm(ctx.term())}${this.visitBinaryOperator(ctx.binaryOperator())}${this.visitExpression(ctx.expression())}`;
+  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
 }
