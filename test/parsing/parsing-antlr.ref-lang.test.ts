@@ -629,6 +629,32 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
+  // test("List", () => {
+  //   const list: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+  //     LanguageElan.Instance,
+  //     (p: Parser) => p.list(),
+  //   ];
+  //   testAntlrParse(
+  //     list,
+  //     `[1, 2, 3]`,
+  //     true,
+  //     `[1, 2, 3]`,
+  //     `[1, 2, 3]`,
+  //     `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
+  //     `[1, 2, 3]`,
+  //   );
+  //       testAntlrParse(
+  //     list,
+  //     `[a, b]`,
+  //     true,
+  //   `[a, b]`,
+  //   `[a, b]`,
+  //     `[<el-id>a</el-id>, <el-id>b</el-id>]`,
+  //     `[a, b]`,
+  //   );
+  //   testAntlrParse(list, `[`, false, `[`, "", `[`, "[", `[`);
+  // });
+
   // test("Tuple", () => {
   //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
@@ -1427,162 +1453,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       'String.format("result % %", 50, percent)',
   //     );
   //   });
-  //   test("List", () => {
-  //     testAntlrParse(
-  //       new ListNode(f, () => getLitIntRule),
-  //       `[1, 2, 3]`,
-  //       true,
-  //       `[1, 2, 3]`,
-  //       "",
-  //       `[1, 2, 3]`,
-  //       `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
-  //       `[1, 2, 3]`,
-  //     );
-  //   });
-  //   test("List incomplete", () => {
-  //     testAntlrParse(
-  //       new ListNode(f, () => getLitIntRule),
-  //       `[`,
-  //       false,
-  //       `[`,
-  //       "",
-  //       `[`,
-  //       "[",
-  //       `[`,
-  //     );
-  //   });
-  //   test("List incomplete VB", () => {
-  //     testAntlrParse(
-  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
-  //       `{`,
-  //       false,
-  //       `{`,
-  //       "",
-  //       ``,
-  //       "{",
-  //       `{`,
-  //     );
-  //   });
-  //   test("List incomplete VB 2", () => {
-  //     testAntlrParse(
-  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
-  //       `{1, 2`,
-  //       false,
-  //       `{1, 2`,
-  //       "",
-  //       `{1, 2`,
-  //       `{1, 2`,
-  //       `{1, 2`,
-  //     );
-  //   });
-  //   test("List complete VB", () => {
-  //     testAntlrParse(
-  //       new ListNode(fileWithVB(), () => new LitInt(fileWithVB())),
-  //       `{1, 2, 3}`,
-  //       true,
-  //       `{1, 2, 3}`,
-  //       "",
-  //       `[1, 2, 3]`,
-  //       "{<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>}",
-  //       `{1, 2, 3}`,
-  //     );
-  //   });
-  //   test("LitStringOrdinary VB", () => {
-  //     testAntlrParse(
-  //       new LitStringOrdinary(fileWithVB()),
-  //       `"`,
-  //       false,
-  //       `"`,
-  //       "",
-  //       `"`,
-  //       `"`,
-  //       '"',
-  //     );
-  //   });
-  //   test("ParamDef VB", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithVB()),
-  //       `a As Integer`,
-  //       true,
-  //       `a As Integer`,
-  //       "",
-  //       `a as Int`,
-  //       "<el-id>a</el-id><el-kw> As </el-kw><el-type>Integer</el-type>",
-  //       `a As Integer`,
-  //     );
-  //   });
-  //   test("ParamDef VB incomplete", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithVB()),
-  //       `a A`,
-  //       false,
-  //       `a A`,
-  //       "",
-  //       `a A`,
-  //       `<el-id>a</el-id><el-kw> As </el-kw>`,
-  //       `a A`,
-  //     );
-  //   });
-  //   test("ParamDef C# valid", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithCS()),
-  //       `List<int> a`,
-  //       true,
-  //       `List<int> a`,
-  //       "",
-  //       `a as List<of Int>`,
-  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; <el-id>a</el-id>`,
-  //       `List<int> a`,
-  //     );
-  //   });
-  //   test("ParamDef C# incomplete 1", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithCS()),
-  //       `List<int>`,
-  //       false,
-  //       `List<int>`,
-  //       "",
-  //       `List<int>`,
-  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
-  //       `List<int>`,
-  //     );
-  //   });
-  //   test("ParamDef C# incomplete 2", () => {
-  //     testAntlrParse(
-  //       new ParamDefNode(fileWithCS()),
-  //       `List<int> `,
-  //       false,
-  //       `List<int> `,
-  //       "",
-  //       `List<int> `,
-  //       `<el-type>List</el-type>&lt;<el-type>int</el-type>&gt; `,
-  //       `List<int> `,
-  //     );
-  //   });
-  //   test("Type VB", () => {
-  //     testAntlrParse(
-  //       new TypeNode(fileWithVB()),
-  //       `Integer`,
-  //       true,
-  //       `Integer`,
-  //       "",
-  //       `Int`,
-  //       "<el-type>Integer</el-type>",
-  //       `Integer`,
-  //     );
-  //   });
-  //   test("Type VB2", () => {
-  //     testAntlrParse(
-  //       new TypeNode(fileWithVB()),
-  //       `Inte`,
-  //       true,
-  //       `Inte`,
-  //       "",
-  //       `Inte`,
-  //       "<el-type>Inte</el-type>",
-  //       `Inte`,
-  //     );
-  //   });
+
   //   test("Type incomplete Elan", () => {
   //     testAntlrParse(
   //       typeName,
