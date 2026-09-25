@@ -4,15 +4,315 @@ import { LanguagePython } from "../../src/ide/frames/language-python";
 import { Parser, testAntlrParse } from "../testHelpers";
 
 suite("Parsing Antlr Rules Python", () => {
-  //   const f = new FileImpl(
-  //     hash,
-  //     new Paradigm(""),
-  //     "",
-  //     transforms(),
-  //     new StdLib(new StubInputOutput()),
-  //     false,
-  //     true,
-  //   );
+  function getExpressionRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.expression()];
+  }
+  test("Expression", () => {
+    testAntlrParse(getExpressionRule(), "bar", true);
+    testAntlrParse(getExpressionRule(), "123", true);
+    testAntlrParse(getExpressionRule(), "1.0", true);
+    testAntlrParse(getExpressionRule(), "true", true);
+    testAntlrParse(getExpressionRule(), `"hello"`, true);
+    testAntlrParse(getExpressionRule(), "Foo.bar", true);
+    testAntlrParse(getExpressionRule(), `foo()`, true);
+
+    //TODO add an example of each sub-rule
+  });
+  function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.identifier()];
+  }
+
+  test("Identifier", () => {
+    testAntlrParse(getIdRule(), ``, false);
+    testAntlrParse(getIdRule(), `  `, false);
+    testAntlrParse(getIdRule(), `a`, true, `a`, "a", "<el-id>a</el-id>", "a", "a");
+    testAntlrParse(
+      getIdRule(),
+      `aB_d`,
+      true,
+      `aB_d`,
+      "aB_d",
+      "<el-id>aB_d</el-id>",
+      "aB_d",
+      "aB_d",
+    );
+    testAntlrParse(getIdRule(), `abc `, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
+    testAntlrParse(getIdRule(), `Abc`, false);
+    testAntlrParse(getIdRule(), `abc-de`, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
+    // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
+    testAntlrParse(getIdRule(), `new`, false);
+    testAntlrParse(
+      getIdRule(),
+      `global`,
+      true,
+      `global`,
+      "global",
+      "<el-id>global</el-id>",
+      "global",
+      "global",
+    );
+    testAntlrParse(getIdRule(), `x as`, true, `x`, "x", "<el-id>x</el-id>", "x", "x");
+    testAntlrParse(getIdRule(), `_a`, false);
+    testAntlrParse(getIdRule(), `_`, false);
+    testAntlrParse(getIdRule(), `()_a`, false);
+  });
+
+  function getLitStringRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litString()];
+  }
+
+  test("LitString", () => {
+    testAntlrParse(getLitStringRule(), "", false);
+    testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `"a`, false);
+    testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
+    testAntlrParse(getLitStringRule(), `" `, false);
+    testAntlrParse(getLitStringRule(), `$"{a} `, false);
+    testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
+    testAntlrParse(getLitStringRule(), `"abc`, false);
+    testAntlrParse(getLitStringRule(), `"`, false);
+    testAntlrParse(getLitStringRule(), `abc`, false);
+    testAntlrParse(getLitStringRule(), `'abc'`, false);
+    testAntlrParse(getLitStringRule(), `'abc"`, false);
+    testAntlrParse(getLitStringRule(), `"abc'`, false);
+  });
+
+  test("Interpolated strings", () => {
+    testAntlrParse(getLitStringRule(), `$""`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
+    testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
+    // testAntlrParse(getLitStringRule(), `$"{}"`, false);
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(),
+    //       `$"{curly}"`,
+    //       true,
+    //       `$"{curly}"`,
+    //       "",
+    //       `$"{curly}"`,
+    //       `$"{<el-id>curly</el-id>}"`,
+    //     );
+    //     testAntlrParse(
+    //       getLitStringInterpolatedRule(), // but with braces
+    //       `$"&#123;curly braces&#125;"`,
+    //       true,
+    //       `$"&#123;curly braces&#125;"`,
+    //       "",
+    //       `$"&#123;curly braces&#125;"`,
+    //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+    //     );
+  });
+
+  function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litInt()];
+  }
+
+  test("LitInt", () => {
+    testAntlrParse(getLitIntRule(), "", false);
+    testAntlrParse(getLitIntRule(), "   ", false);
+    testAntlrParse(
+      getLitIntRule(),
+      "123",
+      true,
+      "123",
+      "123",
+      "<el-lit>123</el-lit>",
+      "123",
+      "123",
+    );
+    testAntlrParse(
+      getLitIntRule(),
+      "007",
+      true,
+      "007",
+      "007",
+      "<el-lit>007</el-lit>",
+      "007",
+      "007",
+    );
+    testAntlrParse(getLitIntRule(), "-123", false); //Should parse as unaryExpression
+    testAntlrParse(getLitIntRule(), "- 123", false);
+    testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
+    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
+    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
+    testAntlrParse(getLitIntRule(), "1.23", false);
+    testAntlrParse(getLitIntRule(), "a", false);
+    //Hex
+    testAntlrParse(
+      getLitIntRule(),
+      "0xfa3c",
+      true,
+      "0xfa3c",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+    );
+    testAntlrParse(
+      getLitIntRule(),
+      "0xfa3C",
+      true,
+      "0xfa3C",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+    );
+    testAntlrParse(getLitIntRule(), "0Xfffe", true, "0");
+
+    testAntlrParse(getLitIntRule(), "0x", false);
+    testAntlrParse(getLitIntRule(), "xfa3a", false);
+    testAntlrParse(getLitIntRule(), "fa3c", false);
+    testAntlrParse(getLitIntRule(), "0xfa3g", true, "0xfa3");
+    testAntlrParse(getLitIntRule(), "&Hfa3", false); //VB format
+    // Binary
+    testAntlrParse(
+      getLitIntRule(),
+      "0b01101",
+      true,
+      "0b01101",
+      "0b01101",
+      "<el-lit>0b01101</el-lit>",
+    );
+    testAntlrParse(getLitIntRule(), "0b0", true, "0b0", "0b0", "<el-lit>0b0</el-lit>");
+    testAntlrParse(getLitIntRule(), "0b", false);
+    testAntlrParse(getLitIntRule(), "0b01102", true, "0b0110");
+    testAntlrParse(getLitIntRule(), "b01101", false);
+    testAntlrParse(getLitIntRule(), "&B0110", false); //VB syntax
+  });
+
+  function getLitFloatRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litFloat()];
+  }
+  test("LitFloat", () => {
+    testAntlrParse(getLitFloatRule(), "", false);
+    testAntlrParse(getLitFloatRule(), "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>");
+    testAntlrParse(getLitFloatRule(), "-1.0", false); // Should parse as a unaryExpression
+    testAntlrParse(getLitFloatRule(), "- 1.0", false);
+    testAntlrParse(getLitFloatRule(), "1.-0", false);
+    testAntlrParse(getLitFloatRule(), " 1.0a", true, " 1.0", "1.0");
+    testAntlrParse(getLitFloatRule(), "1", false);
+    testAntlrParse(getLitFloatRule(), "1.", false);
+    testAntlrParse(getLitFloatRule(), "1. ", false);
+    // With exponent:
+    testAntlrParse(getLitFloatRule(), "1.1e5", true, "1.1e5", "1.1e5", "<el-lit>1.1e5</el-lit>");
+    testAntlrParse(
+      getLitFloatRule(),
+      "1.1e-5",
+      true,
+      "1.1e-5",
+      "1.1e-5",
+      "<el-lit>1.1e-5</el-lit>",
+    );
+    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1e5", "<el-lit>1.1e5</el-lit>");
+    testAntlrParse(
+      getLitFloatRule(),
+      "1.1E-5",
+      true,
+      "1.1E-5",
+      "1.1e-5",
+      "<el-lit>1.1e-5</el-lit>",
+    );
+  });
+
+  function getLitBooleanRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litBoolean()];
+  }
+  test("LitBoolean", () => {
+    testAntlrParse(
+      getLitBooleanRule(),
+      `True`,
+      true,
+      `True`,
+      `True`,
+      "<el-kw>True</el-kw>",
+      `True`,
+    );
+    testAntlrParse(
+      getLitBooleanRule(),
+      `False`,
+      true,
+      `False`,
+      `False`,
+      "<el-kw>False</el-kw>",
+      `False`,
+    );
+    testAntlrParse(getLitBooleanRule(), `true`, false);
+  });
+
+  function getEnumValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.enumValue()];
+  }
+  test("EnumValue", () => {
+    testAntlrParse(
+      getEnumValueRule(),
+      `Foo.bar`,
+      true,
+      `Foo.bar`,
+      `Foo.bar`,
+      "<el-type>Foo</el-type>.<el-id>bar</el-id>",
+      ``,
+    );
+    testAntlrParse(getEnumValueRule(), `foo.bar`, false);
+    testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
+  });
+
+  function getLitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.litValue()];
+  }
+
+  test("LitValue", () => {
+    testAntlrParse(getLitValueRule(), "123", true);
+    testAntlrParse(getLitValueRule(), "1.0", true);
+    testAntlrParse(getLitValueRule(), "True", true);
+    testAntlrParse(getLitValueRule(), `"hello"`, true);
+    testAntlrParse(getLitValueRule(), "Foo.bar", true);
+  });
+
+  function getMethodCallRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
+    return [LanguagePython.Instance, (p: Parser) => p.methodCall()];
+  }
+  test("Method Call", () => {
+    testAntlrParse(getMethodCallRule(), ``, false);
+    testAntlrParse(getMethodCallRule(), `  `, false);
+    testAntlrParse(
+      getMethodCallRule(),
+      `foo()`,
+      true,
+      `foo()`,
+      "foo()",
+      "<el-method>foo</el-method>()",
+      "foo()",
+      "foo()",
+    );
+    testAntlrParse(
+      getMethodCallRule(),
+      `bar(x, 1, "hello")`,
+      true,
+      `bar(x, 1, "hello")`,
+      `bar(x, 1, "hello")`,
+      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, "<el-lit>hello</el-lit>")`,
+      `bar(x, 1, "hello")`,
+      `bar(x, 1, "hello")`,
+    );
+    testAntlrParse(getMethodCallRule(), `yon`, false);
+    testAntlrParse(getMethodCallRule(), `yon `, false);
+    testAntlrParse(getMethodCallRule(), `yon(`, false);
+    testAntlrParse(getMethodCallRule(), `yon(a`, false);
+    testAntlrParse(getMethodCallRule(), `yon(a,`, false);
+    testAntlrParse(getMethodCallRule(), `Foo()`, false);
+    testAntlrParse(getMethodCallRule(), `foo[]`, false);
+    testAntlrParse(
+      getMethodCallRule(),
+      `foo(a)`,
+      true,
+      ``,
+      "foo(a)",
+      "<el-method>foo</el-method>(<el-id>a</el-id>)",
+    );
+    testAntlrParse(getMethodCallRule(), `isBefore(b[0])`, true, ``, "", "");
+  });
+
   //   test("UnaryExpression", () => {
   //     testAntlrParse(getUnaryExpressionRule(), "", false);
   //     testAntlrParse(getUnaryExpressionRule(), "-3", true, "-3", "", "-3", "");
@@ -130,281 +430,6 @@ suite("Parsing Antlr Rules Python", () => {
   //     testAntlrParse(getIdentifierRule(), `_`, false);
   //     testAntlrParse(getIdentifierRule(), `()_a`, false);
   //   });
-
-  function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.identifier()];
-  }
-
-  test("Identifier", () => {
-    testAntlrParse(getIdRule(), ``, false);
-    testAntlrParse(getIdRule(), `  `, false);
-    testAntlrParse(getIdRule(), `a`, true, `a`, "a", "<el-id>a</el-id>", "a", "a");
-    testAntlrParse(
-      getIdRule(),
-      `aB_d`,
-      true,
-      `aB_d`,
-      "aB_d",
-      "<el-id>aB_d</el-id>",
-      "aB_d",
-      "aB_d",
-    );
-    testAntlrParse(getIdRule(), `abc `, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
-    testAntlrParse(getIdRule(), `Abc`, false);
-    testAntlrParse(getIdRule(), `abc-de`, true, `abc`, "abc", "<el-id>abc</el-id>", "abc", "abc");
-    // Can be a keyword - because that will be RefLangParser | PythonParserompile stage, not parse stage
-    testAntlrParse(getIdRule(), `new`, false);
-    testAntlrParse(
-      getIdRule(),
-      `global`,
-      true,
-      `global`,
-      "global",
-      "<el-id>global</el-id>",
-      "global",
-      "global",
-    );
-    testAntlrParse(getIdRule(), `x as`, true, `x`, "x", "<el-id>x</el-id>", "x", "x");
-    testAntlrParse(getIdRule(), `_a`, false);
-    testAntlrParse(getIdRule(), `_`, false);
-    testAntlrParse(getIdRule(), `()_a`, false);
-  });
-
-  function getLitStringRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.litString()];
-  }
-
-  test("LitString - single chars", () => {
-    testAntlrParse(getLitStringRule(), "", false);
-    testAntlrParse(getLitStringRule(), `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "");
-    testAntlrParse(getLitStringRule(), `"a`, false);
-    testAntlrParse(getLitStringRule(), `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "");
-    testAntlrParse(getLitStringRule(), `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
-    testAntlrParse(getLitStringRule(), `" `, false);
-    testAntlrParse(getLitStringRule(), `$"{a} `, false);
-    testAntlrParse(getLitStringRule(), `""`, true, `""`, "", "", `""`);
-    testAntlrParse(getLitStringRule(), `"abc`, false);
-    testAntlrParse(getLitStringRule(), `"`, false);
-    testAntlrParse(getLitStringRule(), `abc`, false);
-    testAntlrParse(getLitStringRule(), `'abc'`, false);
-    testAntlrParse(getLitStringRule(), `'abc"`, false);
-    testAntlrParse(getLitStringRule(), `"abc'`, false);
-  });
-
-  test("Interpolated strings", () => {
-    testAntlrParse(getLitStringRule(), `$""`, true, "", "");
-    testAntlrParse(getLitStringRule(), `$"x"`, true, "", "");
-    testAntlrParse(getLitStringRule(), `$" "`, true, "", "");
-    testAntlrParse(getLitStringRule(), `$"{x}"`, true, "", "");
-    testAntlrParse(getLitStringRule(), `$"{a} times {b} equals{c}"`, true, "", "");
-    // testAntlrParse(getLitStringRule(), `$"{}"`, false);
-    //     testAntlrParse(
-    //       getLitStringInterpolatedRule(),
-    //       `$"{curly}"`,
-    //       true,
-    //       `$"{curly}"`,
-    //       "",
-    //       `$"{curly}"`,
-    //       `$"{<el-id>curly</el-id>}"`,
-    //     );
-    //     testAntlrParse(
-    //       getLitStringInterpolatedRule(), // but with braces
-    //       `$"&#123;curly braces&#125;"`,
-    //       true,
-    //       `$"&#123;curly braces&#125;"`,
-    //       "",
-    //       `$"&#123;curly braces&#125;"`,
-    //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-    //     );
-  });
-
-  function getLitIntRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.litInt()];
-  }
-
-  test("LitInt", () => {
-    testAntlrParse(getLitIntRule(), "", false);
-    testAntlrParse(getLitIntRule(), "   ", false);
-    testAntlrParse(
-      getLitIntRule(),
-      "123",
-      true,
-      "123",
-      "123",
-      "<el-lit>123</el-lit>",
-      "123",
-      "123",
-    );
-    testAntlrParse(
-      getLitIntRule(),
-      "007",
-      true,
-      "007",
-      "007",
-      "<el-lit>007</el-lit>",
-      "007",
-      "007",
-    );
-    testAntlrParse(getLitIntRule(), "-123", false); //Should parse as unaryExpression
-    testAntlrParse(getLitIntRule(), "- 123", false);
-    testAntlrParse(getLitIntRule(), "1-23", true, "1", "", "");
-    testAntlrParse(getLitIntRule(), "456  ", true, "456", "456", "");
-    testAntlrParse(getLitIntRule(), " 123a", true, "123", "123", "");
-    testAntlrParse(getLitIntRule(), "1.23", false);
-    testAntlrParse(getLitIntRule(), "a", false);
-  });
-
-  test("LitInt_Hex", () => {
-    testAntlrParse(
-      getLitIntRule(),
-      "0xfa3c",
-      true,
-      "0xfa3c",
-      "0xfa3c",
-      "<el-lit>0xfa3c</el-lit>",
-      "0xfa3c",
-    );
-    testAntlrParse(
-      getLitIntRule(),
-      "0xfa3C",
-      true,
-      "0xfa3C",
-      "0xfa3c",
-      "<el-lit>0xfa3c</el-lit>",
-      "0xfa3c",
-    );
-    testAntlrParse(getLitIntRule(), "0Xfffe", true, "0");
-
-    testAntlrParse(getLitIntRule(), "0x", false);
-    testAntlrParse(getLitIntRule(), "xfa3a", false);
-    testAntlrParse(getLitIntRule(), "fa3c", false);
-    testAntlrParse(getLitIntRule(), "0xfa3g", true, "0xfa3");
-    testAntlrParse(getLitIntRule(), "&Hfa3", false); //VB format
-  });
-  test("LitInt_Binary", () => {
-    testAntlrParse(
-      getLitIntRule(),
-      "0b01101",
-      true,
-      "0b01101",
-      "0b01101",
-      "<el-lit>0b01101</el-lit>",
-    );
-    testAntlrParse(getLitIntRule(), "0b0", true, "0b0", "0b0", "<el-lit>0b0</el-lit>");
-    testAntlrParse(getLitIntRule(), "0b", false);
-    testAntlrParse(getLitIntRule(), "0b01102", true, "0b0110");
-    testAntlrParse(getLitIntRule(), "b01101", false);
-    testAntlrParse(getLitIntRule(), "&B0110", false); //VB syntax
-  });
-
-  function getLitFloatRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.litFloat()];
-  }
-  test("LitFloat", () => {
-    testAntlrParse(getLitFloatRule(), "", false);
-    testAntlrParse(getLitFloatRule(), "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>");
-    testAntlrParse(getLitFloatRule(), "-1.0", false); // Should parse as a unaryExpression
-    testAntlrParse(getLitFloatRule(), "- 1.0", false);
-    testAntlrParse(getLitFloatRule(), "1.-0", false);
-    testAntlrParse(getLitFloatRule(), " 1.0a", true, " 1.0", "1.0");
-    testAntlrParse(getLitFloatRule(), "1", false);
-    testAntlrParse(getLitFloatRule(), "1.", false);
-    testAntlrParse(getLitFloatRule(), "1. ", false);
-    testAntlrParse(getLitFloatRule(), "1.1e5", true, "1.1e5", "1.1e5", "<el-lit>1.1e5</el-lit>");
-    testAntlrParse(
-      getLitFloatRule(),
-      "1.1e-5",
-      true,
-      "1.1e-5",
-      "1.1e-5",
-      "<el-lit>1.1e-5</el-lit>",
-    );
-    //Cap E not in the accepted text for some reason
-    testAntlrParse(getLitFloatRule(), "1.1E5", true, "1.1E5", "1.1e5", "<el-lit>1.1e5</el-lit>");
-    testAntlrParse(
-      getLitFloatRule(),
-      "1.1E-5",
-      true,
-      "1.1E-5",
-      "1.1e-5",
-      "<el-lit>1.1e-5</el-lit>",
-    );
-  });
-  function getLitBooleanRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.litBoolean()];
-  }
-
-  test("LitBoolean", () => {
-    testAntlrParse(
-      getLitBooleanRule(),
-      `True`,
-      true,
-      `True`,
-      `True`,
-      "<el-kw>True</el-kw>",
-      `True`,
-    );
-    testAntlrParse(
-      getLitBooleanRule(),
-      `False`,
-      true,
-      `False`,
-      `False`,
-      "<el-kw>False</el-kw>",
-      `False`,
-    );
-    testAntlrParse(getLitBooleanRule(), `true`, false);
-  });
-
-  function getEnumValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.enumValue()];
-  }
-
-  test("EnumValue", () => {
-    testAntlrParse(
-      getEnumValueRule(),
-      `Foo.bar`,
-      true,
-      `Foo.bar`,
-      `Foo.bar`,
-      "<el-type>Foo</el-type>.<el-id>bar</el-id>",
-      ``,
-    );
-    testAntlrParse(getEnumValueRule(), `foo.bar`, false);
-    testAntlrParse(getEnumValueRule(), `Foo.Bar`, false);
-  });
-
-  function getLitValueRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.litValue()];
-  }
-
-  test("LitValue", () => {
-    testAntlrParse(getLitValueRule(), "123", true);
-    testAntlrParse(getLitValueRule(), "1.0", true);
-    testAntlrParse(getLitValueRule(), "True", true);
-    testAntlrParse(getLitValueRule(), `"hello"`, true);
-    testAntlrParse(getLitValueRule(), "Foo.bar", true);
-  });
-
-  function getBinaryOperatorRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.binaryOperator()];
-  }
-
-  test("BinaryOperator", () => {
-    testAntlrParse(getBinaryOperatorRule(), "==", true, "==", " == ", " == ");
-    testAntlrParse(getBinaryOperatorRule(), "!=", true, "!=", " != ", " != ");
-    testAntlrParse(getBinaryOperatorRule(), ">", true, ">", " > ", " > ");
-    testAntlrParse(getBinaryOperatorRule(), "<", true, "<", " < ", " < ");
-    testAntlrParse(getBinaryOperatorRule(), ">=", true, ">=", " >= ", " >= ");
-    testAntlrParse(getBinaryOperatorRule(), "<=", true, "<=", " <= ", " <= ");
-    testAntlrParse(getBinaryOperatorRule(), "*", true, "*", "*", "*");
-    testAntlrParse(getBinaryOperatorRule(), "/", true, "/", "/", "/");
-    testAntlrParse(getBinaryOperatorRule(), "+", true, "+", " + ", " + ");
-    testAntlrParse(getBinaryOperatorRule(), "-", true, "-", " - ", " - ");
-    testAntlrParse(getBinaryOperatorRule(), "and", true, "and", " and ", "<el-kw> and </el-kw>");
-    testAntlrParse(getBinaryOperatorRule(), "or", true, "or", " or ", "<el-kw> or </el-kw>");
-    testAntlrParse(getBinaryOperatorRule(), "%", true, "%", " % ", " % ");
-  });
 
   //   test("BracketedExpression", () => {
   //     testAntlrParse(
@@ -812,51 +837,6 @@ suite("Parsing Antlr Rules Python", () => {
   //     );
   //     testAntlrParse(getMethodCallRule(), `isBefore(b[0])`, true, ``, "", "");
   //   });
-
-  function getMethodCallRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.methodCall()];
-  }
-
-  test("Function Call", () => {
-    testAntlrParse(getMethodCallRule(), ``, false);
-    testAntlrParse(getMethodCallRule(), `  `, false);
-    testAntlrParse(
-      getMethodCallRule(),
-      `foo()`,
-      true,
-      `foo()`,
-      "foo()",
-      "<el-method>foo</el-method>()",
-      "foo()",
-      "foo()",
-    );
-    testAntlrParse(
-      getMethodCallRule(),
-      `bar(x, 1, "hello")`,
-      true,
-      `bar(x, 1, "hello")`,
-      `bar(x, 1, "hello")`,
-      `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, "<el-lit>hello</el-lit>")`,
-      `bar(x, 1, "hello")`,
-      `bar(x, 1, "hello")`,
-    );
-    testAntlrParse(getMethodCallRule(), `yon`, false);
-    testAntlrParse(getMethodCallRule(), `yon `, false);
-    testAntlrParse(getMethodCallRule(), `yon(`, false);
-    testAntlrParse(getMethodCallRule(), `yon(a`, false);
-    testAntlrParse(getMethodCallRule(), `yon(a,`, false);
-    testAntlrParse(getMethodCallRule(), `Foo()`, false);
-    testAntlrParse(getMethodCallRule(), `foo[]`, false);
-    testAntlrParse(
-      getMethodCallRule(),
-      `foo(a)`,
-      true,
-      ``,
-      "foo(a)",
-      "<el-method>foo</el-method>(<el-id>a</el-id>)",
-    );
-    testAntlrParse(getMethodCallRule(), `isBefore(b[0])`, true, ``, "", "");
-  });
 
   //   test("TypeSimpleName", () => {
   //     testAntlrParse(
