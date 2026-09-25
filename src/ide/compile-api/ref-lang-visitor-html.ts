@@ -4,6 +4,7 @@ import {
   ArgListContext,
   BinaryExpressionContext,
   BinaryOperatorContext,
+  BracketedExpressionContext,
   ChainableContext,
   CommentTextContext,
   EnumValueContext,
@@ -133,6 +134,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitNegateNumeric = (ctx: NegateNumericContext) =>
     `${this.visit(ctx.MINUS())}${this.visit(ctx.term())}`;
+
   visitNegateLogical = (ctx: NegateLogicalContext) => {
     let not = ctx.NOT().getText();
     if (/^[A-Za-z]+$/.test(not)) {
@@ -140,4 +142,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     }
     return `${not}${this.visit(ctx.term())}`;
   };
+
+  visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+    `(${this.visit(ctx.expression())})`;
 }

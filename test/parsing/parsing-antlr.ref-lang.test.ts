@@ -19,7 +19,51 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, `-3`, true); // negateNumeric
     testAntlrParse(expression, `not foo()`, true); // unaryExpression
     testAntlrParse(expression, `3*a`, true); // binaryExpression
-    testAntlrParse(expression, `foo()[c].bar(3)[b]`, true); // chainable
+    testAntlrParse(expression, `foo()[c].bar(3)[b]`, true, "foo()[c].bar(3)[b]"); // chainable
+    testAntlrParse(expression, "", false);
+    testAntlrParse(expression, "", false);
+    testAntlrParse(expression, "a", true);
+    testAntlrParse(expression, "a + b", true);
+    testAntlrParse(expression, "a * -b", true, "a * -b");
+    testAntlrParse(expression, "(a and not b)", true, "(a and not b)");
+    // testAntlrParse(expression, "a + b- c", true, "", "", "a + b - c", "");
+    // testAntlrParse(expression, "+", false);
+    // testAntlrParse(expression, "+b", false);
+    // testAntlrParse(expression, "a +", false);
+    // testAntlrParse(expression, "a %", true, "a", " %", "a");
+    // testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x", "");
+    // testAntlrParse(expression, "3* foo(5)", true, "", "3*foo(5)", "");
+    // testAntlrParse(expression, "new List<of String>()", true, "new List<of String>()", "");
+    // testAntlrParse(
+    //   expression,
+    //   "points.foo(0.0)",
+    //   true,
+    //   "points.foo(0.0)",
+    //   "",
+    //   "points.foo(0.0)",
+    //   "",
+    // );
+    // testAntlrParse(expression, "this", true, "this", "", "this", "<el-kw>this</el-kw>");
+    // testAntlrParse(
+    //   expression,
+    //   "thisWidget",
+    //   true,
+    //   "thisWidget",
+    //   "",
+    //   "thisWidget",
+    //   "<el-id>thisWidget</el-id>",
+    // );
+    // // empty data structures
+    // testAntlrParse(
+    //   expression,
+    //   "new List<of Int>()",
+    //   true,
+    //   "new List<of Int>()",
+    //   "",
+    //   "",
+    //   "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
+    // );
+
     //TODO add an example of each sub-rule, tested
   });
 
@@ -331,6 +375,14 @@ suite("Parsing Antlr Rules RefLang", () => {
       "3 is 4",
       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
     );
+    testAntlrParse(
+      binaryExpression,
+      "a and not b",
+      true,
+      "a and not b",
+      "a and not b",
+      "<el-id>a</el-id><el-kw> and </el-kw><el-kw>not </el-kw><el-id>b</el-id>",
+    );
   });
 
   test("Index", () => {
@@ -373,6 +425,38 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
+  test("BracketedExpression", () => {
+    const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.bracketedExpression(),
+    ];
+    testAntlrParse(bracketedExpression, "(3 + 4)", true, "(3 + 4)", "(3 + 4)", "");
+
+    testAntlrParse(bracketedExpression, "", false);
+    testAntlrParse(bracketedExpression, "(3)", true, "(3)", "(3)", "");
+
+    testAntlrParse(
+      bracketedExpression,
+      "(a and not b)",
+      true,
+      "(a and not b)",
+      "(a and not b)",
+      "",
+    );
+    testAntlrParse(bracketedExpression, "(3 * 4 + x)", true, "(3 * 4 + x)", "(3*4 + x)", "");
+    testAntlrParse(bracketedExpression, "(3 * (4 + x))", true, "(3 * (4 + x))", "(3*(4 + x))", "");
+    testAntlrParse(
+      bracketedExpression,
+      "(a and not b)",
+      true,
+      "(a and not b)",
+      "(a and not b)",
+      "(<el-id>a</el-id><el-kw> and </el-kw><el-kw>not </el-kw><el-id>b</el-id>)",
+    );
+    testAntlrParse(bracketedExpression, "(", false);
+    testAntlrParse(bracketedExpression, "()", false);
+  });
+
   //   test("IndexableTerm", () => {
   //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
   //   });
@@ -381,65 +465,9 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
   //   });
   //   test("Expression", () => {
-  //     testAntlrParse(getExprRule, "", false);
-  //     testAntlrParse(getExprRule, "", false);
-  //     testAntlrParse(getExprRule, "a", true, "a", "", "a", "");
-  //     testAntlrParse(getExprRule, "a + b", true, "a + b", "", "a + b", "");
-  //     testAntlrParse(getExprRule, "a * -b", true, "a * -b", "", "a*-b", "");
-  //     testAntlrParse(getExprRule, "a + b- c", true, "", "", "a + b - c", "");
-  //     testAntlrParse(getExprRule, "+", false);
-  //     testAntlrParse(getExprRule, "+b", false);
-  //     testAntlrParse(getExprRule, "a +", false);
-  //     testAntlrParse(getExprRule, "a %", true, "a", " %", "a");
-  //     testAntlrParse(getExprRule, "3 * 4 + x", true, "3 * 4 + x", "", "3*4 + x", "");
-  //     testAntlrParse(getExprRule, "3* foo(5)", true, "", "", "3*foo(5)", "");
+
   //     testAntlrParse(
-  //       getExprRule,
-  //       "new List<of String>()",
-  //       true,
-  //       "new List<of String>()",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getExprRule,
-  //       "points.foo(0.0)",
-  //       true,
-  //       "points.foo(0.0)",
-  //       "",
-  //       "points.foo(0.0)",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getExprRule,
-  //       "this",
-  //       true,
-  //       "this",
-  //       "",
-  //       "this",
-  //       "<el-kw>this</el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       getExprRule,
-  //       "thisWidget",
-  //       true,
-  //       "thisWidget",
-  //       "",
-  //       "thisWidget",
-  //       "<el-id>thisWidget</el-id>",
-  //     );
-  //     // empty data structures
-  //     testAntlrParse(
-  //       getExprRule,
-  //       "new List<of Int>()",
-  //       true,
-  //       "new List<of Int>()",
-  //       "",
-  //       "",
-  //       "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
-  //     );
-  //     testAntlrParse(getExprRule, `""`, true, `""`, "", "", `""`);
-  //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       "lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
   //       false,
   //       "",
@@ -462,59 +490,6 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   //});
 
-  //   test("BracketedExpression", () => {
-  //     testAntlrParse(
-  //       getBracketedExpressionRule,
-  //       "(3 + 4)",
-  //       true,
-  //       "(3 + 4)",
-  //       "",
-  //       "(3 + 4)",
-  //       "",
-  //     );
-
-  //     testAntlrParse(getBracketedExpressionRule, "", false);
-  //     testAntlrParse(getBracketedExpressionRule, "(3)", true, "(3)", "", "(3)", "");
-
-  //     testAntlrParse(
-  //       getBracketedExpressionRule,
-  //       "(a and not b)",
-  //       true,
-  //       "(a and not b)",
-  //       "",
-  //       "(a and not b)",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getBracketedExpressionRule,
-  //       "(3 * 4 + x)",
-  //       true,
-  //       "(3 * 4 + x)",
-  //       "",
-  //       "(3*4 + x)",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getBracketedExpressionRule,
-  //       "(3 * (4 + x))",
-  //       true,
-  //       "(3 * (4 + x))",
-  //       "",
-  //       "(3*(4 + x))",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getBracketedExpressionRule,
-  //       "(a and not b",
-  //       false,
-  //       "(a and not b",
-  //       "",
-  //       "(a and not b",
-  //     );
-  //     //testAntlrParse(new BracketedExpression(), "(a and not b  ", false); TODO
-  //     testAntlrParse(getBracketedExpressionRule, "(", false);
-  //     testAntlrParse(getBracketedExpressionRule, "()", false);
-  //   });
   //   test("Optional", () => {
   //     testAntlrParse(
   //       new OptionalNode(f, getLitIntRule),
@@ -744,14 +719,14 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       new CSV(f, () => getExprRule, 0),
+  //       new CSV(f, () => expression, 0),
   //       `a + b, c, 1`,
   //       true,
   //       `a + b, c, 1`,
   //       "",
   //       "",
   //     );
-  //     testAntlrParse(new CSV(f, () => getExprRule, 0), `)`, true, ``, ")", "");
+  //     testAntlrParse(new CSV(f, () => expression, 0), `)`, true, ``, ")", "");
 
   //     testAntlrParse(
   //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
@@ -813,7 +788,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "foo, fo",
   //     );
 
-  //     testAntlrParse(new CSV(f, () => getExprRule, 0), ``, true, "", "");
+  //     testAntlrParse(new CSV(f, () => expression, 0), ``, true, "", "");
   //   });
   //   test("IdentifierWithOptIndexes", () => {
   //     testAntlrParse(getIdentifierWithOptIndexesRule, ``, false);
@@ -1069,7 +1044,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "",
   //     );
   //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       `if_(cell, Colour.red, Colour.blue) + 1`,
   //       true,
   //       "if_(cell, Colour.red, Colour.blue) + 1",
@@ -1412,7 +1387,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getLitValueRule, `3 `, true, "3", " ");
   //     testAntlrParse(binaryExpression, `3 `, false);
 
-  //     testAntlrParse(getExprRule, `3 `, false);
+  //     testAntlrParse(expression, `3 `, false);
   //   });
 
   //   test("InstanceProcRef", () => {
@@ -1469,7 +1444,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "abc(defg, hi)[0]",
   //       "",
   //     );
-  //     testAntlrParse(getExprRule, `(defg, hi)`, true, "(defg, hi)", ""); // tuple
+  //     testAntlrParse(expression, `(defg, hi)`, true, "(defg, hi)", ""); // tuple
   //     testAntlrParse(getTermSimpleRule, `[defg, hi]`, true, "[defg, hi]", "");
   //     testAntlrParse(getTermSimpleRule, `345`, true, "345", "");
   //     testAntlrParse(getTermSimpleRule, `-345`, true, "-345", "");
@@ -1505,21 +1480,21 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
   //     );
   //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
   //       true,
   //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
   //       "",
   //     );
   //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       `this.a[1].b().c(d)[e]`,
   //       true,
   //       `this.a[1].b().c(d)[e]`,
   //       "",
   //     );
-  //     testAntlrParse(getExprRule, `ref foo`, true, `ref`, " foo");
-  //     testAntlrParse(getExprRule, `ref `, false);
+  //     testAntlrParse(expression, `ref foo`, true, `ref`, " foo");
+  //     testAntlrParse(expression, `ref `, false);
   //   });
 
   //   test("BinaryExpression_Python", () => {
@@ -1815,7 +1790,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("not(a+b)", () => {
   //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       `not (a+b)`,
   //       true,
   //       `not (a+b)`,
@@ -1823,12 +1798,12 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       "not (a + b)",
   //       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
   //     );
-  //     testAntlrParse(getExprRule, `not(a+b)`, false);
-  //     testAntlrParse(getExprRule, `not (a+b)`, true, `not (a+b)`, "", "", ``);
+  //     testAntlrParse(expression, `not(a+b)`, false);
+  //     testAntlrParse(expression, `not (a+b)`, true, `not (a+b)`, "", "", ``);
   //   });
   //   test("Parse list of list of floats", () => {
   //     testAntlrParse(
-  //       getExprRule,
+  //       expression,
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
   //       true,
   //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
@@ -1836,11 +1811,11 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
   //   test("Parse list of floats 2", () => {
-  //     testAntlrParse(getExprRule, `[0.0]`, true, `[0.0]`, "");
+  //     testAntlrParse(expression, `[0.0]`, true, `[0.0]`, "");
   //   });
 
   //   ignore_test("Six open brackets", () => {
-  //     testAntlrParse(getExprRule, `((((((3))))))`, true, `((((((3))))))`, "");
+  //     testAntlrParse(expression, `((((((3))))))`, true, `((((((3))))))`, "");
   //   });
   //   test("Image", () => {
   //     testAntlrParse(
@@ -1961,7 +1936,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("CSV expression", () => {
   //     return testAntlrParse(
-  //       new CSV(fileWithJava(), () => getExprRule, 3),
+  //       new CSV(fileWithJava(), () => expression, 3),
   //       `a, b, a + b)`,
   //       true,
   //       "a, b, a + b",

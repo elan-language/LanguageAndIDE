@@ -1439,7 +1439,7 @@ export class PythonParser extends antlr.Parser {
         ) {
           {
             this.state = 347;
-            this.expression(0);
+            this.expression();
           }
         }
 
@@ -1471,7 +1471,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 354;
         this.match(PythonParser.EQUAL);
         this.state = 355;
-        this.expression(0);
+        this.expression();
         this.state = 356;
         this.match(PythonParser.VARIABLE_ANNOTATION);
         this.state = 357;
@@ -1500,7 +1500,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 360;
         this.match(PythonParser.EQUAL);
         this.state = 361;
-        this.expression(0);
+        this.expression();
         this.state = 362;
         this.match(PythonParser.ASSIGNMENT_ANNOTATION);
         this.state = 363;
@@ -1533,7 +1533,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 368;
         this.match(PythonParser.OPEN_BRACKET);
         this.state = 369;
-        this.expression(0);
+        this.expression();
         this.state = 370;
         this.match(PythonParser.CLOSE_BRACKET);
         this.state = 371;
@@ -1563,7 +1563,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 374;
         this.match(PythonParser.IF);
         this.state = 375;
-        this.expression(0);
+        this.expression();
         this.state = 376;
         this.match(PythonParser.COLON);
         this.state = 377;
@@ -1655,7 +1655,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 389;
         this.match(PythonParser.WHILE);
         this.state = 390;
-        this.expression(0);
+        this.expression();
         this.state = 391;
         this.match(PythonParser.COLON);
         this.state = 392;
@@ -1707,7 +1707,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 404;
         this.match(PythonParser.IN);
         this.state = 405;
-        this.expression(0);
+        this.expression();
         this.state = 406;
         this.match(PythonParser.COLON);
         this.state = 407;
@@ -1885,7 +1885,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 451;
         this.match(PythonParser.COMMA);
         this.state = 452;
-        this.expression(0);
+        this.expression();
         this.state = 453;
         this.match(PythonParser.CLOSE_BRACKET);
         this.state = 454;
@@ -1914,7 +1914,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 457;
         this.match(PythonParser.EQUAL);
         this.state = 458;
-        this.expression(0);
+        this.expression();
         this.state = 459;
         this.match(PythonParser.LET_ANNOTATION);
         this.state = 460;
@@ -1941,7 +1941,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 462;
         this.match(PythonParser.RETURN);
         this.state = 463;
-        this.expression(0);
+        this.expression();
         this.state = 464;
         this.match(PythonParser.NL);
       }
@@ -1966,7 +1966,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 466;
         this.match(PythonParser.ELIF);
         this.state = 467;
-        this.expression(0);
+        this.expression();
         this.state = 468;
         this.match(PythonParser.COLON);
         this.state = 469;
@@ -2655,7 +2655,7 @@ export class PythonParser extends antlr.Parser {
           this.enterOuterAlt(localContext, 2);
           {
             this.state = 611;
-            this.expression(0);
+            this.expression();
           }
           break;
         default:
@@ -2804,7 +2804,7 @@ export class PythonParser extends antlr.Parser {
       this.enterOuterAlt(localContext, 1);
       {
         this.state = 636;
-        this.expression(0);
+        this.expression();
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -3027,7 +3027,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 660;
         this.match(PythonParser.OPEN_SQ_BRACKET);
         this.state = 661;
-        this.expression(0);
+        this.expression();
         this.state = 662;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
       }
@@ -3104,99 +3104,62 @@ export class PythonParser extends antlr.Parser {
     }
     return localContext;
   }
-
-  public expression(): ExpressionContext;
-  public expression(_p: number): ExpressionContext;
-  public expression(_p?: number): ExpressionContext {
-    if (_p === undefined) {
-      _p = 0;
-    }
-
-    let parentContext = this.context;
-    let parentState = this.state;
-    let localContext = new ExpressionContext(this.context, parentState);
-    let previousContext = localContext;
-    let _startState = 112;
-    this.enterRecursionRule(localContext, 112, PythonParser.RULE_expression, _p);
+  public expression(): ExpressionContext {
+    let localContext = new ExpressionContext(this.context, this.state);
+    this.enterRule(localContext, 112, PythonParser.RULE_expression);
     try {
-      let alternative: number;
-      this.enterOuterAlt(localContext, 1);
-      {
-        this.state = 688;
-        this.errorHandler.sync(this);
-        switch (this.interpreter.adaptivePredict(this.tokenStream, 45, this.context)) {
-          case 1:
-            {
-              this.state = 676;
-              this.newInstance();
-            }
-            break;
-          case 2:
-            {
-              this.state = 677;
-              this.unaryExpression();
-            }
-            break;
-          case 3:
-            {
-              this.state = 678;
-              this.term();
-            }
-            break;
-          case 4:
-            {
-              this.state = 679;
-              this.match(PythonParser.IF_);
-              this.state = 680;
-              this.match(PythonParser.OPEN_BRACKET);
-              this.state = 681;
-              this.expression(0);
-              this.state = 682;
-              this.match(PythonParser.COMMA);
-              this.state = 683;
-              this.expression(0);
-              this.state = 684;
-              this.match(PythonParser.COMMA);
-              this.state = 685;
-              this.expression(0);
-              this.state = 686;
-              this.match(PythonParser.CLOSE_BRACKET);
-            }
-            break;
-        }
-        this.context!.stop = this.tokenStream.LT(-1);
-        this.state = 696;
-        this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 46, this.context);
-        while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
-          if (alternative === 1) {
-            if (this.parseListeners != null) {
-              this.triggerExitRuleEvent();
-            }
-            previousContext = localContext;
-            {
-              {
-                localContext = new ExpressionContext(parentContext, parentState);
-                this.pushNewRecursionContext(
-                  localContext,
-                  _startState,
-                  PythonParser.RULE_expression,
-                );
-                this.state = 690;
-                if (!this.precpred(this.context, 2)) {
-                  throw this.createFailedPredicateException("this.precpred(this.context, 2)");
-                }
-                this.state = 691;
-                this.binaryOperator();
-                this.state = 692;
-                this.expression(3);
-              }
-            }
+      this.state = 688;
+      this.errorHandler.sync(this);
+      switch (this.interpreter.adaptivePredict(this.tokenStream, 45, this.context)) {
+        case 1:
+          this.enterOuterAlt(localContext, 1);
+          {
+            this.state = 675;
+            this.newInstance();
           }
-          this.state = 698;
-          this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 46, this.context);
-        }
+          break;
+        case 2:
+          this.enterOuterAlt(localContext, 2);
+          {
+            this.state = 676;
+            this.unaryExpression();
+          }
+          break;
+        case 3:
+          this.enterOuterAlt(localContext, 3);
+          {
+            this.state = 677;
+            this.term();
+          }
+          break;
+        case 4:
+          this.enterOuterAlt(localContext, 4);
+          {
+            this.state = 678;
+            this.binaryExpression();
+          }
+          break;
+        case 5:
+          this.enterOuterAlt(localContext, 5);
+          {
+            this.state = 679;
+            this.match(PythonParser.IF_);
+            this.state = 680;
+            this.match(PythonParser.OPEN_BRACKET);
+            this.state = 681;
+            this.expression();
+            this.state = 682;
+            this.match(PythonParser.COMMA);
+            this.state = 683;
+            this.expression();
+            this.state = 684;
+            this.match(PythonParser.COMMA);
+            this.state = 685;
+            this.expression();
+            this.state = 686;
+            this.match(PythonParser.CLOSE_BRACKET);
+          }
+          break;
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -3206,36 +3169,34 @@ export class PythonParser extends antlr.Parser {
         throw re;
       }
     } finally {
-      this.unrollRecursionContexts(parentContext);
+      this.exitRule();
     }
     return localContext;
   }
   public term(): TermContext {
     let localContext = new TermContext(this.context, this.state);
     this.enterRule(localContext, 114, PythonParser.RULE_term);
+    let _la: number;
     try {
-      let alternative: number;
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 699;
+        this.state = 690;
         this.chainHead();
-        this.state = 704;
+        this.state = 695;
         this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 47, this.context);
-        while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
-          if (alternative === 1) {
+        _la = this.tokenStream.LA(1);
+        while (_la === 83) {
+          {
             {
-              {
-                this.state = 700;
-                this.match(PythonParser.DOT);
-                this.state = 701;
-                this.chainable();
-              }
+              this.state = 691;
+              this.match(PythonParser.DOT);
+              this.state = 692;
+              this.chainable();
             }
           }
-          this.state = 706;
+          this.state = 697;
           this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 47, this.context);
+          _la = this.tokenStream.LA(1);
         }
       }
     } catch (re) {
@@ -3254,48 +3215,48 @@ export class PythonParser extends antlr.Parser {
     let localContext = new ChainHeadContext(this.context, this.state);
     this.enterRule(localContext, 116, PythonParser.RULE_chainHead);
     try {
-      this.state = 713;
+      this.state = 704;
       this.errorHandler.sync(this);
-      switch (this.interpreter.adaptivePredict(this.tokenStream, 48, this.context)) {
+      switch (this.interpreter.adaptivePredict(this.tokenStream, 47, this.context)) {
         case 1:
           this.enterOuterAlt(localContext, 1);
           {
-            this.state = 707;
+            this.state = 698;
             this.thisInstance();
           }
           break;
         case 2:
           this.enterOuterAlt(localContext, 2);
           {
-            this.state = 708;
+            this.state = 699;
             this.bracketedExpression();
           }
           break;
         case 3:
           this.enterOuterAlt(localContext, 3);
           {
-            this.state = 709;
+            this.state = 700;
             this.tuple();
           }
           break;
         case 4:
           this.enterOuterAlt(localContext, 4);
           {
-            this.state = 710;
+            this.state = 701;
             this.litValue();
           }
           break;
         case 5:
           this.enterOuterAlt(localContext, 5);
           {
-            this.state = 711;
+            this.state = 702;
             this.list();
           }
           break;
         case 6:
           this.enterOuterAlt(localContext, 6);
           {
-            this.state = 712;
+            this.state = 703;
             this.chainable();
           }
           break;
@@ -3318,7 +3279,7 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 715;
+        this.state = 706;
         this.match(PythonParser.THIS_INSTANCE);
       }
     } catch (re) {
@@ -3336,41 +3297,39 @@ export class PythonParser extends antlr.Parser {
   public chainable(): ChainableContext {
     let localContext = new ChainableContext(this.context, this.state);
     this.enterRule(localContext, 120, PythonParser.RULE_chainable);
+    let _la: number;
     try {
-      let alternative: number;
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 719;
+        this.state = 710;
         this.errorHandler.sync(this);
-        switch (this.interpreter.adaptivePredict(this.tokenStream, 49, this.context)) {
+        switch (this.interpreter.adaptivePredict(this.tokenStream, 48, this.context)) {
           case 1:
             {
-              this.state = 717;
+              this.state = 708;
               this.identifier();
             }
             break;
           case 2:
             {
-              this.state = 718;
+              this.state = 709;
               this.methodCall();
             }
             break;
         }
-        this.state = 724;
+        this.state = 715;
         this.errorHandler.sync(this);
-        alternative = this.interpreter.adaptivePredict(this.tokenStream, 50, this.context);
-        while (alternative !== 2 && alternative !== antlr.ATN.INVALID_ALT_NUMBER) {
-          if (alternative === 1) {
+        _la = this.tokenStream.LA(1);
+        while (_la === 79) {
+          {
             {
-              {
-                this.state = 721;
-                this.index();
-              }
+              this.state = 712;
+              this.index();
             }
           }
-          this.state = 726;
+          this.state = 717;
           this.errorHandler.sync(this);
-          alternative = this.interpreter.adaptivePredict(this.tokenStream, 50, this.context);
+          _la = this.tokenStream.LA(1);
         }
       }
     } catch (re) {
@@ -3391,11 +3350,11 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 727;
+        this.state = 718;
         this.match(PythonParser.OPEN_BRACKET);
-        this.state = 728;
-        this.expression(0);
-        this.state = 729;
+        this.state = 719;
+        this.expression();
+        this.state = 720;
         this.match(PythonParser.CLOSE_BRACKET);
       }
     } catch (re) {
@@ -3417,7 +3376,7 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 731;
+        this.state = 722;
         _la = this.tokenStream.LA(1);
         if (!(_la === 66 || _la === 87)) {
           this.errorHandler.recoverInline(this);
@@ -3425,7 +3384,7 @@ export class PythonParser extends antlr.Parser {
           this.errorHandler.reportMatch(this);
           this.consume();
         }
-        this.state = 732;
+        this.state = 723;
         this.term();
       }
     } catch (re) {
@@ -3446,12 +3405,12 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 734;
+        this.state = 725;
         this.term();
-        this.state = 735;
+        this.state = 726;
         this.binaryOperator();
-        this.state = 736;
-        this.expression(0);
+        this.state = 727;
+        this.expression();
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -3472,31 +3431,31 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 738;
+        this.state = 729;
         this.match(PythonParser.OPEN_BRACKET);
-        this.state = 739;
-        this.expression(0);
-        this.state = 740;
+        this.state = 730;
+        this.expression();
+        this.state = 731;
         this.match(PythonParser.COMMA);
-        this.state = 741;
-        this.expression(0);
-        this.state = 746;
+        this.state = 732;
+        this.expression();
+        this.state = 737;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         while (_la === 84) {
           {
             {
-              this.state = 742;
+              this.state = 733;
               this.match(PythonParser.COMMA);
-              this.state = 743;
-              this.expression(0);
+              this.state = 734;
+              this.expression();
             }
           }
-          this.state = 748;
+          this.state = 739;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
-        this.state = 749;
+        this.state = 740;
         this.match(PythonParser.CLOSE_BRACKET);
       }
     } catch (re) {
@@ -3518,8 +3477,77 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 751;
+        this.state = 742;
         this.methodName();
+        this.state = 743;
+        this.match(PythonParser.OPEN_BRACKET);
+        this.state = 745;
+        this.errorHandler.sync(this);
+        _la = this.tokenStream.LA(1);
+        if (
+          _la === 9 ||
+          _la === 15 ||
+          (((_la - 55) & ~0x1f) === 0 && ((1 << (_la - 55)) & 85461503) !== 0) ||
+          (((_la - 87) & ~0x1f) === 0 && ((1 << (_la - 87)) & 260097) !== 0)
+        ) {
+          {
+            this.state = 744;
+            this.argList();
+          }
+        }
+
+        this.state = 747;
+        this.match(PythonParser.CLOSE_BRACKET);
+      }
+    } catch (re) {
+      if (re instanceof antlr.RecognitionException) {
+        this.errorHandler.reportError(this, re);
+        this.errorHandler.recover(this, re);
+      } else {
+        throw re;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localContext;
+  }
+  public binaryOperator(): BinaryOperatorContext {
+    let localContext = new BinaryOperatorContext(this.context, this.state);
+    this.enterRule(localContext, 132, PythonParser.RULE_binaryOperator);
+    let _la: number;
+    try {
+      this.enterOuterAlt(localContext, 1);
+      {
+        this.state = 749;
+        _la = this.tokenStream.LA(1);
+        if (!(((_la - 64) & ~0x1f) === 0 && ((1 << (_la - 64)) & 1069547579) !== 0)) {
+          this.errorHandler.recoverInline(this);
+        } else {
+          this.errorHandler.reportMatch(this);
+          this.consume();
+        }
+      }
+    } catch (re) {
+      if (re instanceof antlr.RecognitionException) {
+        this.errorHandler.reportError(this, re);
+        this.errorHandler.recover(this, re);
+      } else {
+        throw re;
+      }
+    } finally {
+      this.exitRule();
+    }
+    return localContext;
+  }
+  public newInstance(): NewInstanceContext {
+    let localContext = new NewInstanceContext(this.context, this.state);
+    this.enterRule(localContext, 134, PythonParser.RULE_newInstance);
+    let _la: number;
+    try {
+      this.enterOuterAlt(localContext, 1);
+      {
+        this.state = 751;
+        this.type_();
         this.state = 752;
         this.match(PythonParser.OPEN_BRACKET);
         this.state = 754;
@@ -3552,86 +3580,17 @@ export class PythonParser extends antlr.Parser {
     }
     return localContext;
   }
-  public binaryOperator(): BinaryOperatorContext {
-    let localContext = new BinaryOperatorContext(this.context, this.state);
-    this.enterRule(localContext, 132, PythonParser.RULE_binaryOperator);
-    let _la: number;
-    try {
-      this.enterOuterAlt(localContext, 1);
-      {
-        this.state = 758;
-        _la = this.tokenStream.LA(1);
-        if (!(((_la - 64) & ~0x1f) === 0 && ((1 << (_la - 64)) & 1069547579) !== 0)) {
-          this.errorHandler.recoverInline(this);
-        } else {
-          this.errorHandler.reportMatch(this);
-          this.consume();
-        }
-      }
-    } catch (re) {
-      if (re instanceof antlr.RecognitionException) {
-        this.errorHandler.reportError(this, re);
-        this.errorHandler.recover(this, re);
-      } else {
-        throw re;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localContext;
-  }
-  public newInstance(): NewInstanceContext {
-    let localContext = new NewInstanceContext(this.context, this.state);
-    this.enterRule(localContext, 134, PythonParser.RULE_newInstance);
-    let _la: number;
-    try {
-      this.enterOuterAlt(localContext, 1);
-      {
-        this.state = 760;
-        this.type_();
-        this.state = 761;
-        this.match(PythonParser.OPEN_BRACKET);
-        this.state = 763;
-        this.errorHandler.sync(this);
-        _la = this.tokenStream.LA(1);
-        if (
-          _la === 9 ||
-          _la === 15 ||
-          (((_la - 55) & ~0x1f) === 0 && ((1 << (_la - 55)) & 85461503) !== 0) ||
-          (((_la - 87) & ~0x1f) === 0 && ((1 << (_la - 87)) & 260097) !== 0)
-        ) {
-          {
-            this.state = 762;
-            this.argList();
-          }
-        }
-
-        this.state = 765;
-        this.match(PythonParser.CLOSE_BRACKET);
-      }
-    } catch (re) {
-      if (re instanceof antlr.RecognitionException) {
-        this.errorHandler.reportError(this, re);
-        this.errorHandler.recover(this, re);
-      } else {
-        throw re;
-      }
-    } finally {
-      this.exitRule();
-    }
-    return localContext;
-  }
   public paramDef(): ParamDefContext {
     let localContext = new ParamDefContext(this.context, this.state);
     this.enterRule(localContext, 136, PythonParser.RULE_paramDef);
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 767;
+        this.state = 758;
         this.identifier();
-        this.state = 768;
+        this.state = 759;
         this.match(PythonParser.COLON);
-        this.state = 769;
+        this.state = 760;
         this.type_();
       }
     } catch (re) {
@@ -3653,29 +3612,29 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 771;
+        this.state = 762;
         this.typeName();
-        this.state = 772;
+        this.state = 763;
         this.match(PythonParser.OPEN_SQ_BRACKET);
-        this.state = 773;
+        this.state = 764;
         this.type_();
-        this.state = 778;
+        this.state = 769;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         while (_la === 84) {
           {
             {
-              this.state = 774;
+              this.state = 765;
               this.match(PythonParser.COMMA);
-              this.state = 775;
+              this.state = 766;
               this.type_();
             }
           }
-          this.state = 780;
+          this.state = 771;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
-        this.state = 781;
+        this.state = 772;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
       }
     } catch (re) {
@@ -3697,37 +3656,37 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 783;
+        this.state = 774;
         this.match(PythonParser.FUNC_NAME);
-        this.state = 784;
+        this.state = 775;
         this.match(PythonParser.OPEN_SQ_BRACKET);
-        this.state = 785;
+        this.state = 776;
         this.match(PythonParser.OPEN_SQ_BRACKET);
-        this.state = 786;
+        this.state = 777;
         this.type_();
-        this.state = 791;
+        this.state = 782;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         while (_la === 84) {
           {
             {
-              this.state = 787;
+              this.state = 778;
               this.match(PythonParser.COMMA);
-              this.state = 788;
+              this.state = 779;
               this.type_();
             }
           }
-          this.state = 793;
+          this.state = 784;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
-        this.state = 794;
+        this.state = 785;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
-        this.state = 795;
+        this.state = 786;
         this.match(PythonParser.COMMA);
-        this.state = 796;
+        this.state = 787;
         this.type_();
-        this.state = 797;
+        this.state = 788;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
       }
     } catch (re) {
@@ -3749,29 +3708,29 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 799;
+        this.state = 790;
         this.match(PythonParser.TUPLE);
-        this.state = 800;
+        this.state = 791;
         this.match(PythonParser.OPEN_SQ_BRACKET);
-        this.state = 801;
+        this.state = 792;
         this.type_();
-        this.state = 804;
+        this.state = 795;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         do {
           {
             {
-              this.state = 802;
+              this.state = 793;
               this.match(PythonParser.COMMA);
-              this.state = 803;
+              this.state = 794;
               this.type_();
             }
           }
-          this.state = 806;
+          this.state = 797;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         } while (_la === 84);
-        this.state = 808;
+        this.state = 799;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
       }
     } catch (re) {
@@ -3792,14 +3751,14 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 810;
+        this.state = 801;
         this.match(PythonParser.LAMBDA);
-        this.state = 811;
+        this.state = 802;
         this.argList();
-        this.state = 812;
+        this.state = 803;
         this.match(PythonParser.COLON);
-        this.state = 813;
-        this.expression(0);
+        this.state = 804;
+        this.expression();
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -3820,27 +3779,27 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 815;
+        this.state = 806;
         this.match(PythonParser.OPEN_SQ_BRACKET);
-        this.state = 816;
-        this.expression(0);
-        this.state = 821;
+        this.state = 807;
+        this.expression();
+        this.state = 812;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
         while (_la === 84) {
           {
             {
-              this.state = 817;
+              this.state = 808;
               this.match(PythonParser.COMMA);
-              this.state = 818;
-              this.expression(0);
+              this.state = 809;
+              this.expression();
             }
           }
-          this.state = 823;
+          this.state = 814;
           this.errorHandler.sync(this);
           _la = this.tokenStream.LA(1);
         }
-        this.state = 824;
+        this.state = 815;
         this.match(PythonParser.CLOSE_SQ_BRACKET);
       }
     } catch (re) {
@@ -3861,9 +3820,9 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 826;
+        this.state = 817;
         this.match(PythonParser.INTERPOLATED_STRING_PREFIX);
-        this.state = 827;
+        this.state = 818;
         this.match(PythonParser.LITERAL_STRING);
       }
     } catch (re) {
@@ -3884,11 +3843,11 @@ export class PythonParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 829;
+        this.state = 820;
         this.term();
-        this.state = 830;
+        this.state = 821;
         this.match(PythonParser.POWER);
-        this.state = 831;
+        this.state = 822;
         this.term();
       }
     } catch (re) {
@@ -3904,27 +3863,8 @@ export class PythonParser extends antlr.Parser {
     return localContext;
   }
 
-  public override sempred(
-    localContext: antlr.ParserRuleContext | null,
-    ruleIndex: number,
-    predIndex: number,
-  ): boolean {
-    switch (ruleIndex) {
-      case 56:
-        return this.expression_sempred(localContext as ExpressionContext, predIndex);
-    }
-    return true;
-  }
-  private expression_sempred(localContext: ExpressionContext | null, predIndex: number): boolean {
-    switch (predIndex) {
-      case 0:
-        return this.precpred(this.context, 2);
-    }
-    return true;
-  }
-
   public static readonly _serializedATN: number[] = [
-    4, 1, 123, 834, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4, 2, 5, 7, 5, 2, 6, 7,
+    4, 1, 123, 825, 2, 0, 7, 0, 2, 1, 7, 1, 2, 2, 7, 2, 2, 3, 7, 3, 2, 4, 7, 4, 2, 5, 7, 5, 2, 6, 7,
     6, 2, 7, 7, 7, 2, 8, 7, 8, 2, 9, 7, 9, 2, 10, 7, 10, 2, 11, 7, 11, 2, 12, 7, 12, 2, 13, 7, 13,
     2, 14, 7, 14, 2, 15, 7, 15, 2, 16, 7, 16, 2, 17, 7, 17, 2, 18, 7, 18, 2, 19, 7, 19, 2, 20, 7,
     20, 2, 21, 7, 21, 2, 22, 7, 22, 2, 23, 7, 23, 2, 24, 7, 24, 2, 25, 7, 25, 2, 26, 7, 26, 2, 27,
@@ -3976,87 +3916,86 @@ export class PythonParser extends antlr.Parser {
     49, 1, 49, 1, 50, 1, 50, 1, 51, 1, 51, 1, 51, 1, 51, 1, 52, 3, 52, 657, 8, 52, 1, 52, 1, 52, 1,
     53, 1, 53, 1, 53, 1, 53, 1, 54, 1, 54, 5, 54, 667, 8, 54, 10, 54, 12, 54, 670, 9, 54, 1, 55, 1,
     55, 1, 55, 1, 55, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56, 1, 56,
-    1, 56, 1, 56, 3, 56, 689, 8, 56, 1, 56, 1, 56, 1, 56, 1, 56, 5, 56, 695, 8, 56, 10, 56, 12, 56,
-    698, 9, 56, 1, 57, 1, 57, 1, 57, 5, 57, 703, 8, 57, 10, 57, 12, 57, 706, 9, 57, 1, 58, 1, 58, 1,
-    58, 1, 58, 1, 58, 1, 58, 3, 58, 714, 8, 58, 1, 59, 1, 59, 1, 60, 1, 60, 3, 60, 720, 8, 60, 1,
-    60, 5, 60, 723, 8, 60, 10, 60, 12, 60, 726, 9, 60, 1, 61, 1, 61, 1, 61, 1, 61, 1, 62, 1, 62, 1,
-    62, 1, 63, 1, 63, 1, 63, 1, 63, 1, 64, 1, 64, 1, 64, 1, 64, 1, 64, 1, 64, 5, 64, 745, 8, 64, 10,
-    64, 12, 64, 748, 9, 64, 1, 64, 1, 64, 1, 65, 1, 65, 1, 65, 3, 65, 755, 8, 65, 1, 65, 1, 65, 1,
-    66, 1, 66, 1, 67, 1, 67, 1, 67, 3, 67, 764, 8, 67, 1, 67, 1, 67, 1, 68, 1, 68, 1, 68, 1, 68, 1,
-    69, 1, 69, 1, 69, 1, 69, 1, 69, 5, 69, 777, 8, 69, 10, 69, 12, 69, 780, 9, 69, 1, 69, 1, 69, 1,
-    70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 5, 70, 790, 8, 70, 10, 70, 12, 70, 793, 9, 70, 1, 70, 1,
-    70, 1, 70, 1, 70, 1, 70, 1, 71, 1, 71, 1, 71, 1, 71, 1, 71, 4, 71, 805, 8, 71, 11, 71, 12, 71,
-    806, 1, 71, 1, 71, 1, 72, 1, 72, 1, 72, 1, 72, 1, 72, 1, 73, 1, 73, 1, 73, 1, 73, 5, 73, 820, 8,
-    73, 10, 73, 12, 73, 823, 9, 73, 1, 73, 1, 73, 1, 74, 1, 74, 1, 74, 1, 75, 1, 75, 1, 75, 1, 75,
-    1, 75, 0, 1, 112, 76, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30, 32, 34, 36, 38,
-    40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78, 80, 82, 84, 86,
-    88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120, 122, 124, 126,
-    128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 0, 5, 2, 0, 56, 60, 99, 99, 1, 0,
-    62, 63, 1, 0, 100, 102, 2, 0, 66, 66, 87, 87, 3, 0, 64, 65, 67, 69, 86, 93, 852, 0, 153, 1, 0,
-    0, 0, 2, 178, 1, 0, 0, 0, 4, 180, 1, 0, 0, 0, 6, 198, 1, 0, 0, 0, 8, 221, 1, 0, 0, 0, 10, 240,
-    1, 0, 0, 0, 12, 261, 1, 0, 0, 0, 14, 267, 1, 0, 0, 0, 16, 279, 1, 0, 0, 0, 18, 303, 1, 0, 0, 0,
-    20, 327, 1, 0, 0, 0, 22, 330, 1, 0, 0, 0, 24, 343, 1, 0, 0, 0, 26, 345, 1, 0, 0, 0, 28, 353, 1,
-    0, 0, 0, 30, 359, 1, 0, 0, 0, 32, 365, 1, 0, 0, 0, 34, 374, 1, 0, 0, 0, 36, 389, 1, 0, 0, 0, 38,
-    402, 1, 0, 0, 0, 40, 417, 1, 0, 0, 0, 42, 421, 1, 0, 0, 0, 44, 439, 1, 0, 0, 0, 46, 446, 1, 0,
-    0, 0, 48, 456, 1, 0, 0, 0, 50, 462, 1, 0, 0, 0, 52, 466, 1, 0, 0, 0, 54, 472, 1, 0, 0, 0, 56,
-    476, 1, 0, 0, 0, 58, 482, 1, 0, 0, 0, 60, 502, 1, 0, 0, 0, 62, 508, 1, 0, 0, 0, 64, 531, 1, 0,
-    0, 0, 66, 552, 1, 0, 0, 0, 68, 569, 1, 0, 0, 0, 70, 586, 1, 0, 0, 0, 72, 590, 1, 0, 0, 0, 74,
-    592, 1, 0, 0, 0, 76, 594, 1, 0, 0, 0, 78, 596, 1, 0, 0, 0, 80, 600, 1, 0, 0, 0, 82, 602, 1, 0,
-    0, 0, 84, 612, 1, 0, 0, 0, 86, 614, 1, 0, 0, 0, 88, 626, 1, 0, 0, 0, 90, 628, 1, 0, 0, 0, 92,
-    636, 1, 0, 0, 0, 94, 643, 1, 0, 0, 0, 96, 645, 1, 0, 0, 0, 98, 647, 1, 0, 0, 0, 100, 649, 1, 0,
-    0, 0, 102, 651, 1, 0, 0, 0, 104, 656, 1, 0, 0, 0, 106, 660, 1, 0, 0, 0, 108, 664, 1, 0, 0, 0,
-    110, 671, 1, 0, 0, 0, 112, 688, 1, 0, 0, 0, 114, 699, 1, 0, 0, 0, 116, 713, 1, 0, 0, 0, 118,
-    715, 1, 0, 0, 0, 120, 719, 1, 0, 0, 0, 122, 727, 1, 0, 0, 0, 124, 731, 1, 0, 0, 0, 126, 734, 1,
-    0, 0, 0, 128, 738, 1, 0, 0, 0, 130, 751, 1, 0, 0, 0, 132, 758, 1, 0, 0, 0, 134, 760, 1, 0, 0, 0,
-    136, 767, 1, 0, 0, 0, 138, 771, 1, 0, 0, 0, 140, 783, 1, 0, 0, 0, 142, 799, 1, 0, 0, 0, 144,
-    810, 1, 0, 0, 0, 146, 815, 1, 0, 0, 0, 148, 826, 1, 0, 0, 0, 150, 829, 1, 0, 0, 0, 152, 154, 3,
-    20, 10, 0, 153, 152, 1, 0, 0, 0, 153, 154, 1, 0, 0, 0, 154, 158, 1, 0, 0, 0, 155, 157, 3, 2, 1,
-    0, 156, 155, 1, 0, 0, 0, 157, 160, 1, 0, 0, 0, 158, 156, 1, 0, 0, 0, 158, 159, 1, 0, 0, 0, 159,
-    164, 1, 0, 0, 0, 160, 158, 1, 0, 0, 0, 161, 163, 5, 96, 0, 0, 162, 161, 1, 0, 0, 0, 163, 166, 1,
-    0, 0, 0, 164, 162, 1, 0, 0, 0, 164, 165, 1, 0, 0, 0, 165, 167, 1, 0, 0, 0, 166, 164, 1, 0, 0, 0,
-    167, 168, 5, 0, 0, 1, 168, 1, 1, 0, 0, 0, 169, 179, 3, 4, 2, 0, 170, 179, 3, 6, 3, 0, 171, 179,
-    3, 8, 4, 0, 172, 179, 3, 10, 5, 0, 173, 179, 3, 12, 6, 0, 174, 179, 3, 14, 7, 0, 175, 179, 3,
-    16, 8, 0, 176, 179, 3, 18, 9, 0, 177, 179, 3, 20, 10, 0, 178, 169, 1, 0, 0, 0, 178, 170, 1, 0,
-    0, 0, 178, 171, 1, 0, 0, 0, 178, 172, 1, 0, 0, 0, 178, 173, 1, 0, 0, 0, 178, 174, 1, 0, 0, 0,
-    178, 175, 1, 0, 0, 0, 178, 176, 1, 0, 0, 0, 178, 177, 1, 0, 0, 0, 179, 3, 1, 0, 0, 0, 180, 181,
-    5, 47, 0, 0, 181, 182, 5, 10, 0, 0, 182, 183, 5, 81, 0, 0, 183, 184, 5, 82, 0, 0, 184, 185, 5,
-    82, 0, 0, 185, 186, 5, 70, 0, 0, 186, 187, 5, 50, 0, 0, 187, 188, 5, 85, 0, 0, 188, 192, 5, 96,
-    0, 0, 189, 191, 3, 24, 12, 0, 190, 189, 1, 0, 0, 0, 191, 194, 1, 0, 0, 0, 192, 190, 1, 0, 0, 0,
-    192, 193, 1, 0, 0, 0, 193, 195, 1, 0, 0, 0, 194, 192, 1, 0, 0, 0, 195, 196, 5, 123, 0, 0, 196,
-    197, 5, 96, 0, 0, 197, 5, 1, 0, 0, 0, 198, 199, 5, 47, 0, 0, 199, 200, 3, 74, 37, 0, 200, 202,
-    5, 81, 0, 0, 201, 203, 3, 86, 43, 0, 202, 201, 1, 0, 0, 0, 202, 203, 1, 0, 0, 0, 203, 204, 1, 0,
-    0, 0, 204, 205, 5, 82, 0, 0, 205, 206, 5, 70, 0, 0, 206, 207, 3, 88, 44, 0, 207, 208, 5, 85, 0,
-    0, 208, 209, 5, 108, 0, 0, 209, 214, 5, 96, 0, 0, 210, 213, 3, 48, 24, 0, 211, 213, 3, 24, 12,
-    0, 212, 210, 1, 0, 0, 0, 212, 211, 1, 0, 0, 0, 213, 216, 1, 0, 0, 0, 214, 212, 1, 0, 0, 0, 214,
-    215, 1, 0, 0, 0, 215, 217, 1, 0, 0, 0, 216, 214, 1, 0, 0, 0, 217, 218, 3, 50, 25, 0, 218, 219,
-    5, 123, 0, 0, 219, 220, 5, 96, 0, 0, 220, 7, 1, 0, 0, 0, 221, 222, 5, 1, 0, 0, 222, 223, 3, 76,
-    38, 0, 223, 224, 5, 81, 0, 0, 224, 225, 5, 54, 0, 0, 225, 226, 5, 82, 0, 0, 226, 227, 5, 123, 0,
-    0, 227, 234, 5, 96, 0, 0, 228, 233, 3, 46, 23, 0, 229, 233, 3, 48, 24, 0, 230, 233, 3, 28, 14,
-    0, 231, 233, 3, 20, 10, 0, 232, 228, 1, 0, 0, 0, 232, 229, 1, 0, 0, 0, 232, 230, 1, 0, 0, 0,
-    232, 231, 1, 0, 0, 0, 233, 236, 1, 0, 0, 0, 234, 232, 1, 0, 0, 0, 234, 235, 1, 0, 0, 0, 235,
-    237, 1, 0, 0, 0, 236, 234, 1, 0, 0, 0, 237, 238, 5, 123, 0, 0, 238, 239, 5, 96, 0, 0, 239, 9, 1,
-    0, 0, 0, 240, 241, 5, 47, 0, 0, 241, 242, 3, 74, 37, 0, 242, 244, 5, 81, 0, 0, 243, 245, 3, 86,
-    43, 0, 244, 243, 1, 0, 0, 0, 244, 245, 1, 0, 0, 0, 245, 246, 1, 0, 0, 0, 246, 247, 5, 82, 0, 0,
-    247, 248, 5, 70, 0, 0, 248, 249, 5, 50, 0, 0, 249, 250, 5, 85, 0, 0, 250, 251, 5, 109, 0, 0,
-    251, 255, 5, 96, 0, 0, 252, 254, 3, 24, 12, 0, 253, 252, 1, 0, 0, 0, 254, 257, 1, 0, 0, 0, 255,
-    253, 1, 0, 0, 0, 255, 256, 1, 0, 0, 0, 256, 258, 1, 0, 0, 0, 257, 255, 1, 0, 0, 0, 258, 259, 5,
-    123, 0, 0, 259, 260, 5, 96, 0, 0, 260, 11, 1, 0, 0, 0, 261, 262, 3, 70, 35, 0, 262, 263, 5, 67,
-    0, 0, 263, 264, 3, 80, 40, 0, 264, 265, 5, 110, 0, 0, 265, 266, 5, 96, 0, 0, 266, 13, 1, 0, 0,
-    0, 267, 268, 5, 1, 0, 0, 268, 269, 3, 78, 39, 0, 269, 270, 5, 81, 0, 0, 270, 271, 5, 4, 0, 0,
-    271, 272, 5, 82, 0, 0, 272, 273, 5, 85, 0, 0, 273, 274, 5, 111, 0, 0, 274, 275, 5, 96, 0, 0,
-    275, 276, 3, 90, 45, 0, 276, 277, 5, 96, 0, 0, 277, 278, 5, 123, 0, 0, 278, 15, 1, 0, 0, 0, 279,
-    280, 5, 1, 0, 0, 280, 285, 3, 78, 39, 0, 281, 282, 5, 81, 0, 0, 282, 283, 3, 78, 39, 0, 283,
-    284, 5, 82, 0, 0, 284, 286, 1, 0, 0, 0, 285, 281, 1, 0, 0, 0, 285, 286, 1, 0, 0, 0, 286, 287, 1,
-    0, 0, 0, 287, 288, 5, 85, 0, 0, 288, 289, 5, 112, 0, 0, 289, 297, 5, 96, 0, 0, 290, 296, 3, 58,
-    29, 0, 291, 296, 3, 60, 30, 0, 292, 296, 3, 62, 31, 0, 293, 296, 3, 64, 32, 0, 294, 296, 3, 20,
-    10, 0, 295, 290, 1, 0, 0, 0, 295, 291, 1, 0, 0, 0, 295, 292, 1, 0, 0, 0, 295, 293, 1, 0, 0, 0,
-    295, 294, 1, 0, 0, 0, 296, 299, 1, 0, 0, 0, 297, 295, 1, 0, 0, 0, 297, 298, 1, 0, 0, 0, 298,
-    300, 1, 0, 0, 0, 299, 297, 1, 0, 0, 0, 300, 301, 5, 123, 0, 0, 301, 302, 5, 96, 0, 0, 302, 17,
-    1, 0, 0, 0, 303, 304, 5, 1, 0, 0, 304, 309, 3, 78, 39, 0, 305, 306, 5, 81, 0, 0, 306, 310, 3,
-    78, 39, 0, 307, 308, 5, 53, 0, 0, 308, 310, 5, 82, 0, 0, 309, 305, 1, 0, 0, 0, 309, 307, 1, 0,
-    0, 0, 310, 311, 1, 0, 0, 0, 311, 312, 5, 113, 0, 0, 312, 321, 5, 96, 0, 0, 313, 320, 3, 60, 30,
-    0, 314, 320, 3, 62, 31, 0, 315, 320, 3, 64, 32, 0, 316, 320, 3, 66, 33, 0, 317, 320, 3, 68, 34,
-    0, 318, 320, 3, 20, 10, 0, 319, 313, 1, 0, 0, 0, 319, 314, 1, 0, 0, 0, 319, 315, 1, 0, 0, 0,
+    1, 56, 1, 56, 3, 56, 689, 8, 56, 1, 57, 1, 57, 1, 57, 5, 57, 694, 8, 57, 10, 57, 12, 57, 697, 9,
+    57, 1, 58, 1, 58, 1, 58, 1, 58, 1, 58, 1, 58, 3, 58, 705, 8, 58, 1, 59, 1, 59, 1, 60, 1, 60, 3,
+    60, 711, 8, 60, 1, 60, 5, 60, 714, 8, 60, 10, 60, 12, 60, 717, 9, 60, 1, 61, 1, 61, 1, 61, 1,
+    61, 1, 62, 1, 62, 1, 62, 1, 63, 1, 63, 1, 63, 1, 63, 1, 64, 1, 64, 1, 64, 1, 64, 1, 64, 1, 64,
+    5, 64, 736, 8, 64, 10, 64, 12, 64, 739, 9, 64, 1, 64, 1, 64, 1, 65, 1, 65, 1, 65, 3, 65, 746, 8,
+    65, 1, 65, 1, 65, 1, 66, 1, 66, 1, 67, 1, 67, 1, 67, 3, 67, 755, 8, 67, 1, 67, 1, 67, 1, 68, 1,
+    68, 1, 68, 1, 68, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 5, 69, 768, 8, 69, 10, 69, 12, 69, 771, 9,
+    69, 1, 69, 1, 69, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 5, 70, 781, 8, 70, 10, 70, 12, 70,
+    784, 9, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 71, 1, 71, 1, 71, 1, 71, 1, 71, 4, 71, 796, 8,
+    71, 11, 71, 12, 71, 797, 1, 71, 1, 71, 1, 72, 1, 72, 1, 72, 1, 72, 1, 72, 1, 73, 1, 73, 1, 73,
+    1, 73, 5, 73, 811, 8, 73, 10, 73, 12, 73, 814, 9, 73, 1, 73, 1, 73, 1, 74, 1, 74, 1, 74, 1, 75,
+    1, 75, 1, 75, 1, 75, 1, 75, 0, 0, 76, 0, 2, 4, 6, 8, 10, 12, 14, 16, 18, 20, 22, 24, 26, 28, 30,
+    32, 34, 36, 38, 40, 42, 44, 46, 48, 50, 52, 54, 56, 58, 60, 62, 64, 66, 68, 70, 72, 74, 76, 78,
+    80, 82, 84, 86, 88, 90, 92, 94, 96, 98, 100, 102, 104, 106, 108, 110, 112, 114, 116, 118, 120,
+    122, 124, 126, 128, 130, 132, 134, 136, 138, 140, 142, 144, 146, 148, 150, 0, 5, 2, 0, 56, 60,
+    99, 99, 1, 0, 62, 63, 1, 0, 100, 102, 2, 0, 66, 66, 87, 87, 3, 0, 64, 65, 67, 69, 86, 93, 843,
+    0, 153, 1, 0, 0, 0, 2, 178, 1, 0, 0, 0, 4, 180, 1, 0, 0, 0, 6, 198, 1, 0, 0, 0, 8, 221, 1, 0, 0,
+    0, 10, 240, 1, 0, 0, 0, 12, 261, 1, 0, 0, 0, 14, 267, 1, 0, 0, 0, 16, 279, 1, 0, 0, 0, 18, 303,
+    1, 0, 0, 0, 20, 327, 1, 0, 0, 0, 22, 330, 1, 0, 0, 0, 24, 343, 1, 0, 0, 0, 26, 345, 1, 0, 0, 0,
+    28, 353, 1, 0, 0, 0, 30, 359, 1, 0, 0, 0, 32, 365, 1, 0, 0, 0, 34, 374, 1, 0, 0, 0, 36, 389, 1,
+    0, 0, 0, 38, 402, 1, 0, 0, 0, 40, 417, 1, 0, 0, 0, 42, 421, 1, 0, 0, 0, 44, 439, 1, 0, 0, 0, 46,
+    446, 1, 0, 0, 0, 48, 456, 1, 0, 0, 0, 50, 462, 1, 0, 0, 0, 52, 466, 1, 0, 0, 0, 54, 472, 1, 0,
+    0, 0, 56, 476, 1, 0, 0, 0, 58, 482, 1, 0, 0, 0, 60, 502, 1, 0, 0, 0, 62, 508, 1, 0, 0, 0, 64,
+    531, 1, 0, 0, 0, 66, 552, 1, 0, 0, 0, 68, 569, 1, 0, 0, 0, 70, 586, 1, 0, 0, 0, 72, 590, 1, 0,
+    0, 0, 74, 592, 1, 0, 0, 0, 76, 594, 1, 0, 0, 0, 78, 596, 1, 0, 0, 0, 80, 600, 1, 0, 0, 0, 82,
+    602, 1, 0, 0, 0, 84, 612, 1, 0, 0, 0, 86, 614, 1, 0, 0, 0, 88, 626, 1, 0, 0, 0, 90, 628, 1, 0,
+    0, 0, 92, 636, 1, 0, 0, 0, 94, 643, 1, 0, 0, 0, 96, 645, 1, 0, 0, 0, 98, 647, 1, 0, 0, 0, 100,
+    649, 1, 0, 0, 0, 102, 651, 1, 0, 0, 0, 104, 656, 1, 0, 0, 0, 106, 660, 1, 0, 0, 0, 108, 664, 1,
+    0, 0, 0, 110, 671, 1, 0, 0, 0, 112, 688, 1, 0, 0, 0, 114, 690, 1, 0, 0, 0, 116, 704, 1, 0, 0, 0,
+    118, 706, 1, 0, 0, 0, 120, 710, 1, 0, 0, 0, 122, 718, 1, 0, 0, 0, 124, 722, 1, 0, 0, 0, 126,
+    725, 1, 0, 0, 0, 128, 729, 1, 0, 0, 0, 130, 742, 1, 0, 0, 0, 132, 749, 1, 0, 0, 0, 134, 751, 1,
+    0, 0, 0, 136, 758, 1, 0, 0, 0, 138, 762, 1, 0, 0, 0, 140, 774, 1, 0, 0, 0, 142, 790, 1, 0, 0, 0,
+    144, 801, 1, 0, 0, 0, 146, 806, 1, 0, 0, 0, 148, 817, 1, 0, 0, 0, 150, 820, 1, 0, 0, 0, 152,
+    154, 3, 20, 10, 0, 153, 152, 1, 0, 0, 0, 153, 154, 1, 0, 0, 0, 154, 158, 1, 0, 0, 0, 155, 157,
+    3, 2, 1, 0, 156, 155, 1, 0, 0, 0, 157, 160, 1, 0, 0, 0, 158, 156, 1, 0, 0, 0, 158, 159, 1, 0, 0,
+    0, 159, 164, 1, 0, 0, 0, 160, 158, 1, 0, 0, 0, 161, 163, 5, 96, 0, 0, 162, 161, 1, 0, 0, 0, 163,
+    166, 1, 0, 0, 0, 164, 162, 1, 0, 0, 0, 164, 165, 1, 0, 0, 0, 165, 167, 1, 0, 0, 0, 166, 164, 1,
+    0, 0, 0, 167, 168, 5, 0, 0, 1, 168, 1, 1, 0, 0, 0, 169, 179, 3, 4, 2, 0, 170, 179, 3, 6, 3, 0,
+    171, 179, 3, 8, 4, 0, 172, 179, 3, 10, 5, 0, 173, 179, 3, 12, 6, 0, 174, 179, 3, 14, 7, 0, 175,
+    179, 3, 16, 8, 0, 176, 179, 3, 18, 9, 0, 177, 179, 3, 20, 10, 0, 178, 169, 1, 0, 0, 0, 178, 170,
+    1, 0, 0, 0, 178, 171, 1, 0, 0, 0, 178, 172, 1, 0, 0, 0, 178, 173, 1, 0, 0, 0, 178, 174, 1, 0, 0,
+    0, 178, 175, 1, 0, 0, 0, 178, 176, 1, 0, 0, 0, 178, 177, 1, 0, 0, 0, 179, 3, 1, 0, 0, 0, 180,
+    181, 5, 47, 0, 0, 181, 182, 5, 10, 0, 0, 182, 183, 5, 81, 0, 0, 183, 184, 5, 82, 0, 0, 184, 185,
+    5, 82, 0, 0, 185, 186, 5, 70, 0, 0, 186, 187, 5, 50, 0, 0, 187, 188, 5, 85, 0, 0, 188, 192, 5,
+    96, 0, 0, 189, 191, 3, 24, 12, 0, 190, 189, 1, 0, 0, 0, 191, 194, 1, 0, 0, 0, 192, 190, 1, 0, 0,
+    0, 192, 193, 1, 0, 0, 0, 193, 195, 1, 0, 0, 0, 194, 192, 1, 0, 0, 0, 195, 196, 5, 123, 0, 0,
+    196, 197, 5, 96, 0, 0, 197, 5, 1, 0, 0, 0, 198, 199, 5, 47, 0, 0, 199, 200, 3, 74, 37, 0, 200,
+    202, 5, 81, 0, 0, 201, 203, 3, 86, 43, 0, 202, 201, 1, 0, 0, 0, 202, 203, 1, 0, 0, 0, 203, 204,
+    1, 0, 0, 0, 204, 205, 5, 82, 0, 0, 205, 206, 5, 70, 0, 0, 206, 207, 3, 88, 44, 0, 207, 208, 5,
+    85, 0, 0, 208, 209, 5, 108, 0, 0, 209, 214, 5, 96, 0, 0, 210, 213, 3, 48, 24, 0, 211, 213, 3,
+    24, 12, 0, 212, 210, 1, 0, 0, 0, 212, 211, 1, 0, 0, 0, 213, 216, 1, 0, 0, 0, 214, 212, 1, 0, 0,
+    0, 214, 215, 1, 0, 0, 0, 215, 217, 1, 0, 0, 0, 216, 214, 1, 0, 0, 0, 217, 218, 3, 50, 25, 0,
+    218, 219, 5, 123, 0, 0, 219, 220, 5, 96, 0, 0, 220, 7, 1, 0, 0, 0, 221, 222, 5, 1, 0, 0, 222,
+    223, 3, 76, 38, 0, 223, 224, 5, 81, 0, 0, 224, 225, 5, 54, 0, 0, 225, 226, 5, 82, 0, 0, 226,
+    227, 5, 123, 0, 0, 227, 234, 5, 96, 0, 0, 228, 233, 3, 46, 23, 0, 229, 233, 3, 48, 24, 0, 230,
+    233, 3, 28, 14, 0, 231, 233, 3, 20, 10, 0, 232, 228, 1, 0, 0, 0, 232, 229, 1, 0, 0, 0, 232, 230,
+    1, 0, 0, 0, 232, 231, 1, 0, 0, 0, 233, 236, 1, 0, 0, 0, 234, 232, 1, 0, 0, 0, 234, 235, 1, 0, 0,
+    0, 235, 237, 1, 0, 0, 0, 236, 234, 1, 0, 0, 0, 237, 238, 5, 123, 0, 0, 238, 239, 5, 96, 0, 0,
+    239, 9, 1, 0, 0, 0, 240, 241, 5, 47, 0, 0, 241, 242, 3, 74, 37, 0, 242, 244, 5, 81, 0, 0, 243,
+    245, 3, 86, 43, 0, 244, 243, 1, 0, 0, 0, 244, 245, 1, 0, 0, 0, 245, 246, 1, 0, 0, 0, 246, 247,
+    5, 82, 0, 0, 247, 248, 5, 70, 0, 0, 248, 249, 5, 50, 0, 0, 249, 250, 5, 85, 0, 0, 250, 251, 5,
+    109, 0, 0, 251, 255, 5, 96, 0, 0, 252, 254, 3, 24, 12, 0, 253, 252, 1, 0, 0, 0, 254, 257, 1, 0,
+    0, 0, 255, 253, 1, 0, 0, 0, 255, 256, 1, 0, 0, 0, 256, 258, 1, 0, 0, 0, 257, 255, 1, 0, 0, 0,
+    258, 259, 5, 123, 0, 0, 259, 260, 5, 96, 0, 0, 260, 11, 1, 0, 0, 0, 261, 262, 3, 70, 35, 0, 262,
+    263, 5, 67, 0, 0, 263, 264, 3, 80, 40, 0, 264, 265, 5, 110, 0, 0, 265, 266, 5, 96, 0, 0, 266,
+    13, 1, 0, 0, 0, 267, 268, 5, 1, 0, 0, 268, 269, 3, 78, 39, 0, 269, 270, 5, 81, 0, 0, 270, 271,
+    5, 4, 0, 0, 271, 272, 5, 82, 0, 0, 272, 273, 5, 85, 0, 0, 273, 274, 5, 111, 0, 0, 274, 275, 5,
+    96, 0, 0, 275, 276, 3, 90, 45, 0, 276, 277, 5, 96, 0, 0, 277, 278, 5, 123, 0, 0, 278, 15, 1, 0,
+    0, 0, 279, 280, 5, 1, 0, 0, 280, 285, 3, 78, 39, 0, 281, 282, 5, 81, 0, 0, 282, 283, 3, 78, 39,
+    0, 283, 284, 5, 82, 0, 0, 284, 286, 1, 0, 0, 0, 285, 281, 1, 0, 0, 0, 285, 286, 1, 0, 0, 0, 286,
+    287, 1, 0, 0, 0, 287, 288, 5, 85, 0, 0, 288, 289, 5, 112, 0, 0, 289, 297, 5, 96, 0, 0, 290, 296,
+    3, 58, 29, 0, 291, 296, 3, 60, 30, 0, 292, 296, 3, 62, 31, 0, 293, 296, 3, 64, 32, 0, 294, 296,
+    3, 20, 10, 0, 295, 290, 1, 0, 0, 0, 295, 291, 1, 0, 0, 0, 295, 292, 1, 0, 0, 0, 295, 293, 1, 0,
+    0, 0, 295, 294, 1, 0, 0, 0, 296, 299, 1, 0, 0, 0, 297, 295, 1, 0, 0, 0, 297, 298, 1, 0, 0, 0,
+    298, 300, 1, 0, 0, 0, 299, 297, 1, 0, 0, 0, 300, 301, 5, 123, 0, 0, 301, 302, 5, 96, 0, 0, 302,
+    17, 1, 0, 0, 0, 303, 304, 5, 1, 0, 0, 304, 309, 3, 78, 39, 0, 305, 306, 5, 81, 0, 0, 306, 310,
+    3, 78, 39, 0, 307, 308, 5, 53, 0, 0, 308, 310, 5, 82, 0, 0, 309, 305, 1, 0, 0, 0, 309, 307, 1,
+    0, 0, 0, 310, 311, 1, 0, 0, 0, 311, 312, 5, 113, 0, 0, 312, 321, 5, 96, 0, 0, 313, 320, 3, 60,
+    30, 0, 314, 320, 3, 62, 31, 0, 315, 320, 3, 64, 32, 0, 316, 320, 3, 66, 33, 0, 317, 320, 3, 68,
+    34, 0, 318, 320, 3, 20, 10, 0, 319, 313, 1, 0, 0, 0, 319, 314, 1, 0, 0, 0, 319, 315, 1, 0, 0, 0,
     319, 316, 1, 0, 0, 0, 319, 317, 1, 0, 0, 0, 319, 318, 1, 0, 0, 0, 320, 323, 1, 0, 0, 0, 321,
     319, 1, 0, 0, 0, 321, 322, 1, 0, 0, 0, 322, 324, 1, 0, 0, 0, 323, 321, 1, 0, 0, 0, 324, 325, 5,
     123, 0, 0, 325, 326, 5, 96, 0, 0, 326, 19, 1, 0, 0, 0, 327, 328, 3, 22, 11, 0, 328, 329, 5, 96,
@@ -4152,53 +4091,51 @@ export class PythonParser extends antlr.Parser {
     5, 79, 0, 0, 661, 662, 3, 112, 56, 0, 662, 663, 5, 80, 0, 0, 663, 107, 1, 0, 0, 0, 664, 668, 3,
     70, 35, 0, 665, 667, 3, 106, 53, 0, 666, 665, 1, 0, 0, 0, 667, 670, 1, 0, 0, 0, 668, 666, 1, 0,
     0, 0, 668, 669, 1, 0, 0, 0, 669, 109, 1, 0, 0, 0, 670, 668, 1, 0, 0, 0, 671, 672, 5, 75, 0, 0,
-    672, 673, 5, 83, 0, 0, 673, 674, 3, 108, 54, 0, 674, 111, 1, 0, 0, 0, 675, 676, 6, 56, -1, 0,
-    676, 689, 3, 134, 67, 0, 677, 689, 3, 124, 62, 0, 678, 689, 3, 114, 57, 0, 679, 680, 5, 15, 0,
+    672, 673, 5, 83, 0, 0, 673, 674, 3, 108, 54, 0, 674, 111, 1, 0, 0, 0, 675, 689, 3, 134, 67, 0,
+    676, 689, 3, 124, 62, 0, 677, 689, 3, 114, 57, 0, 678, 689, 3, 126, 63, 0, 679, 680, 5, 15, 0,
     0, 680, 681, 5, 81, 0, 0, 681, 682, 3, 112, 56, 0, 682, 683, 5, 84, 0, 0, 683, 684, 3, 112, 56,
     0, 684, 685, 5, 84, 0, 0, 685, 686, 3, 112, 56, 0, 686, 687, 5, 82, 0, 0, 687, 689, 1, 0, 0, 0,
-    688, 675, 1, 0, 0, 0, 688, 677, 1, 0, 0, 0, 688, 678, 1, 0, 0, 0, 688, 679, 1, 0, 0, 0, 689,
-    696, 1, 0, 0, 0, 690, 691, 10, 2, 0, 0, 691, 692, 3, 132, 66, 0, 692, 693, 3, 112, 56, 3, 693,
-    695, 1, 0, 0, 0, 694, 690, 1, 0, 0, 0, 695, 698, 1, 0, 0, 0, 696, 694, 1, 0, 0, 0, 696, 697, 1,
-    0, 0, 0, 697, 113, 1, 0, 0, 0, 698, 696, 1, 0, 0, 0, 699, 704, 3, 116, 58, 0, 700, 701, 5, 83,
-    0, 0, 701, 703, 3, 120, 60, 0, 702, 700, 1, 0, 0, 0, 703, 706, 1, 0, 0, 0, 704, 702, 1, 0, 0, 0,
-    704, 705, 1, 0, 0, 0, 705, 115, 1, 0, 0, 0, 706, 704, 1, 0, 0, 0, 707, 714, 3, 118, 59, 0, 708,
-    714, 3, 122, 61, 0, 709, 714, 3, 128, 64, 0, 710, 714, 3, 94, 47, 0, 711, 714, 3, 146, 73, 0,
-    712, 714, 3, 120, 60, 0, 713, 707, 1, 0, 0, 0, 713, 708, 1, 0, 0, 0, 713, 709, 1, 0, 0, 0, 713,
-    710, 1, 0, 0, 0, 713, 711, 1, 0, 0, 0, 713, 712, 1, 0, 0, 0, 714, 117, 1, 0, 0, 0, 715, 716, 5,
-    75, 0, 0, 716, 119, 1, 0, 0, 0, 717, 720, 3, 70, 35, 0, 718, 720, 3, 130, 65, 0, 719, 717, 1, 0,
-    0, 0, 719, 718, 1, 0, 0, 0, 720, 724, 1, 0, 0, 0, 721, 723, 3, 106, 53, 0, 722, 721, 1, 0, 0, 0,
-    723, 726, 1, 0, 0, 0, 724, 722, 1, 0, 0, 0, 724, 725, 1, 0, 0, 0, 725, 121, 1, 0, 0, 0, 726,
-    724, 1, 0, 0, 0, 727, 728, 5, 81, 0, 0, 728, 729, 3, 112, 56, 0, 729, 730, 5, 82, 0, 0, 730,
-    123, 1, 0, 0, 0, 731, 732, 7, 3, 0, 0, 732, 733, 3, 114, 57, 0, 733, 125, 1, 0, 0, 0, 734, 735,
-    3, 114, 57, 0, 735, 736, 3, 132, 66, 0, 736, 737, 3, 112, 56, 0, 737, 127, 1, 0, 0, 0, 738, 739,
-    5, 81, 0, 0, 739, 740, 3, 112, 56, 0, 740, 741, 5, 84, 0, 0, 741, 746, 3, 112, 56, 0, 742, 743,
-    5, 84, 0, 0, 743, 745, 3, 112, 56, 0, 744, 742, 1, 0, 0, 0, 745, 748, 1, 0, 0, 0, 746, 744, 1,
-    0, 0, 0, 746, 747, 1, 0, 0, 0, 747, 749, 1, 0, 0, 0, 748, 746, 1, 0, 0, 0, 749, 750, 5, 82, 0,
-    0, 750, 129, 1, 0, 0, 0, 751, 752, 3, 74, 37, 0, 752, 754, 5, 81, 0, 0, 753, 755, 3, 82, 41, 0,
-    754, 753, 1, 0, 0, 0, 754, 755, 1, 0, 0, 0, 755, 756, 1, 0, 0, 0, 756, 757, 5, 82, 0, 0, 757,
-    131, 1, 0, 0, 0, 758, 759, 7, 4, 0, 0, 759, 133, 1, 0, 0, 0, 760, 761, 3, 88, 44, 0, 761, 763,
-    5, 81, 0, 0, 762, 764, 3, 82, 41, 0, 763, 762, 1, 0, 0, 0, 763, 764, 1, 0, 0, 0, 764, 765, 1, 0,
-    0, 0, 765, 766, 5, 82, 0, 0, 766, 135, 1, 0, 0, 0, 767, 768, 3, 70, 35, 0, 768, 769, 5, 85, 0,
-    0, 769, 770, 3, 88, 44, 0, 770, 137, 1, 0, 0, 0, 771, 772, 3, 78, 39, 0, 772, 773, 5, 79, 0, 0,
-    773, 778, 3, 88, 44, 0, 774, 775, 5, 84, 0, 0, 775, 777, 3, 88, 44, 0, 776, 774, 1, 0, 0, 0,
-    777, 780, 1, 0, 0, 0, 778, 776, 1, 0, 0, 0, 778, 779, 1, 0, 0, 0, 779, 781, 1, 0, 0, 0, 780,
-    778, 1, 0, 0, 0, 781, 782, 5, 80, 0, 0, 782, 139, 1, 0, 0, 0, 783, 784, 5, 61, 0, 0, 784, 785,
-    5, 79, 0, 0, 785, 786, 5, 79, 0, 0, 786, 791, 3, 88, 44, 0, 787, 788, 5, 84, 0, 0, 788, 790, 3,
-    88, 44, 0, 789, 787, 1, 0, 0, 0, 790, 793, 1, 0, 0, 0, 791, 789, 1, 0, 0, 0, 791, 792, 1, 0, 0,
-    0, 792, 794, 1, 0, 0, 0, 793, 791, 1, 0, 0, 0, 794, 795, 5, 80, 0, 0, 795, 796, 5, 84, 0, 0,
-    796, 797, 3, 88, 44, 0, 797, 798, 5, 80, 0, 0, 798, 141, 1, 0, 0, 0, 799, 800, 5, 55, 0, 0, 800,
-    801, 5, 79, 0, 0, 801, 804, 3, 88, 44, 0, 802, 803, 5, 84, 0, 0, 803, 805, 3, 88, 44, 0, 804,
-    802, 1, 0, 0, 0, 805, 806, 1, 0, 0, 0, 806, 804, 1, 0, 0, 0, 806, 807, 1, 0, 0, 0, 807, 808, 1,
-    0, 0, 0, 808, 809, 5, 80, 0, 0, 809, 143, 1, 0, 0, 0, 810, 811, 5, 9, 0, 0, 811, 812, 3, 82, 41,
-    0, 812, 813, 5, 85, 0, 0, 813, 814, 3, 112, 56, 0, 814, 145, 1, 0, 0, 0, 815, 816, 5, 79, 0, 0,
-    816, 821, 3, 112, 56, 0, 817, 818, 5, 84, 0, 0, 818, 820, 3, 112, 56, 0, 819, 817, 1, 0, 0, 0,
-    820, 823, 1, 0, 0, 0, 821, 819, 1, 0, 0, 0, 821, 822, 1, 0, 0, 0, 822, 824, 1, 0, 0, 0, 823,
-    821, 1, 0, 0, 0, 824, 825, 5, 80, 0, 0, 825, 147, 1, 0, 0, 0, 826, 827, 5, 74, 0, 0, 827, 828,
-    5, 104, 0, 0, 828, 149, 1, 0, 0, 0, 829, 830, 3, 114, 57, 0, 830, 831, 5, 71, 0, 0, 831, 832, 3,
-    114, 57, 0, 832, 151, 1, 0, 0, 0, 58, 153, 158, 164, 178, 192, 202, 212, 214, 232, 234, 244,
-    255, 285, 295, 297, 309, 319, 321, 343, 348, 381, 383, 396, 411, 426, 433, 486, 496, 512, 522,
-    524, 535, 546, 558, 575, 590, 600, 607, 612, 619, 626, 633, 643, 656, 668, 688, 696, 704, 713,
-    719, 724, 746, 754, 763, 778, 791, 806, 821,
+    688, 675, 1, 0, 0, 0, 688, 676, 1, 0, 0, 0, 688, 677, 1, 0, 0, 0, 688, 678, 1, 0, 0, 0, 688,
+    679, 1, 0, 0, 0, 689, 113, 1, 0, 0, 0, 690, 695, 3, 116, 58, 0, 691, 692, 5, 83, 0, 0, 692, 694,
+    3, 120, 60, 0, 693, 691, 1, 0, 0, 0, 694, 697, 1, 0, 0, 0, 695, 693, 1, 0, 0, 0, 695, 696, 1, 0,
+    0, 0, 696, 115, 1, 0, 0, 0, 697, 695, 1, 0, 0, 0, 698, 705, 3, 118, 59, 0, 699, 705, 3, 122, 61,
+    0, 700, 705, 3, 128, 64, 0, 701, 705, 3, 94, 47, 0, 702, 705, 3, 146, 73, 0, 703, 705, 3, 120,
+    60, 0, 704, 698, 1, 0, 0, 0, 704, 699, 1, 0, 0, 0, 704, 700, 1, 0, 0, 0, 704, 701, 1, 0, 0, 0,
+    704, 702, 1, 0, 0, 0, 704, 703, 1, 0, 0, 0, 705, 117, 1, 0, 0, 0, 706, 707, 5, 75, 0, 0, 707,
+    119, 1, 0, 0, 0, 708, 711, 3, 70, 35, 0, 709, 711, 3, 130, 65, 0, 710, 708, 1, 0, 0, 0, 710,
+    709, 1, 0, 0, 0, 711, 715, 1, 0, 0, 0, 712, 714, 3, 106, 53, 0, 713, 712, 1, 0, 0, 0, 714, 717,
+    1, 0, 0, 0, 715, 713, 1, 0, 0, 0, 715, 716, 1, 0, 0, 0, 716, 121, 1, 0, 0, 0, 717, 715, 1, 0, 0,
+    0, 718, 719, 5, 81, 0, 0, 719, 720, 3, 112, 56, 0, 720, 721, 5, 82, 0, 0, 721, 123, 1, 0, 0, 0,
+    722, 723, 7, 3, 0, 0, 723, 724, 3, 114, 57, 0, 724, 125, 1, 0, 0, 0, 725, 726, 3, 114, 57, 0,
+    726, 727, 3, 132, 66, 0, 727, 728, 3, 112, 56, 0, 728, 127, 1, 0, 0, 0, 729, 730, 5, 81, 0, 0,
+    730, 731, 3, 112, 56, 0, 731, 732, 5, 84, 0, 0, 732, 737, 3, 112, 56, 0, 733, 734, 5, 84, 0, 0,
+    734, 736, 3, 112, 56, 0, 735, 733, 1, 0, 0, 0, 736, 739, 1, 0, 0, 0, 737, 735, 1, 0, 0, 0, 737,
+    738, 1, 0, 0, 0, 738, 740, 1, 0, 0, 0, 739, 737, 1, 0, 0, 0, 740, 741, 5, 82, 0, 0, 741, 129, 1,
+    0, 0, 0, 742, 743, 3, 74, 37, 0, 743, 745, 5, 81, 0, 0, 744, 746, 3, 82, 41, 0, 745, 744, 1, 0,
+    0, 0, 745, 746, 1, 0, 0, 0, 746, 747, 1, 0, 0, 0, 747, 748, 5, 82, 0, 0, 748, 131, 1, 0, 0, 0,
+    749, 750, 7, 4, 0, 0, 750, 133, 1, 0, 0, 0, 751, 752, 3, 88, 44, 0, 752, 754, 5, 81, 0, 0, 753,
+    755, 3, 82, 41, 0, 754, 753, 1, 0, 0, 0, 754, 755, 1, 0, 0, 0, 755, 756, 1, 0, 0, 0, 756, 757,
+    5, 82, 0, 0, 757, 135, 1, 0, 0, 0, 758, 759, 3, 70, 35, 0, 759, 760, 5, 85, 0, 0, 760, 761, 3,
+    88, 44, 0, 761, 137, 1, 0, 0, 0, 762, 763, 3, 78, 39, 0, 763, 764, 5, 79, 0, 0, 764, 769, 3, 88,
+    44, 0, 765, 766, 5, 84, 0, 0, 766, 768, 3, 88, 44, 0, 767, 765, 1, 0, 0, 0, 768, 771, 1, 0, 0,
+    0, 769, 767, 1, 0, 0, 0, 769, 770, 1, 0, 0, 0, 770, 772, 1, 0, 0, 0, 771, 769, 1, 0, 0, 0, 772,
+    773, 5, 80, 0, 0, 773, 139, 1, 0, 0, 0, 774, 775, 5, 61, 0, 0, 775, 776, 5, 79, 0, 0, 776, 777,
+    5, 79, 0, 0, 777, 782, 3, 88, 44, 0, 778, 779, 5, 84, 0, 0, 779, 781, 3, 88, 44, 0, 780, 778, 1,
+    0, 0, 0, 781, 784, 1, 0, 0, 0, 782, 780, 1, 0, 0, 0, 782, 783, 1, 0, 0, 0, 783, 785, 1, 0, 0, 0,
+    784, 782, 1, 0, 0, 0, 785, 786, 5, 80, 0, 0, 786, 787, 5, 84, 0, 0, 787, 788, 3, 88, 44, 0, 788,
+    789, 5, 80, 0, 0, 789, 141, 1, 0, 0, 0, 790, 791, 5, 55, 0, 0, 791, 792, 5, 79, 0, 0, 792, 795,
+    3, 88, 44, 0, 793, 794, 5, 84, 0, 0, 794, 796, 3, 88, 44, 0, 795, 793, 1, 0, 0, 0, 796, 797, 1,
+    0, 0, 0, 797, 795, 1, 0, 0, 0, 797, 798, 1, 0, 0, 0, 798, 799, 1, 0, 0, 0, 799, 800, 5, 80, 0,
+    0, 800, 143, 1, 0, 0, 0, 801, 802, 5, 9, 0, 0, 802, 803, 3, 82, 41, 0, 803, 804, 5, 85, 0, 0,
+    804, 805, 3, 112, 56, 0, 805, 145, 1, 0, 0, 0, 806, 807, 5, 79, 0, 0, 807, 812, 3, 112, 56, 0,
+    808, 809, 5, 84, 0, 0, 809, 811, 3, 112, 56, 0, 810, 808, 1, 0, 0, 0, 811, 814, 1, 0, 0, 0, 812,
+    810, 1, 0, 0, 0, 812, 813, 1, 0, 0, 0, 813, 815, 1, 0, 0, 0, 814, 812, 1, 0, 0, 0, 815, 816, 5,
+    80, 0, 0, 816, 147, 1, 0, 0, 0, 817, 818, 5, 74, 0, 0, 818, 819, 5, 104, 0, 0, 819, 149, 1, 0,
+    0, 0, 820, 821, 3, 114, 57, 0, 821, 822, 5, 71, 0, 0, 822, 823, 3, 114, 57, 0, 823, 151, 1, 0,
+    0, 0, 57, 153, 158, 164, 178, 192, 202, 212, 214, 232, 234, 244, 255, 285, 295, 297, 309, 319,
+    321, 343, 348, 381, 383, 396, 411, 426, 433, 486, 496, 512, 522, 524, 535, 546, 558, 575, 590,
+    600, 607, 612, 619, 626, 633, 643, 656, 668, 688, 695, 704, 710, 715, 737, 745, 754, 769, 782,
+    797, 812,
   ];
 
   private static __ATN: antlr.ATN;
@@ -7031,6 +6968,9 @@ export class ExpressionContext extends antlr.ParserRuleContext {
   public term(): TermContext | null {
     return this.getRuleContext(0, TermContext);
   }
+  public binaryExpression(): BinaryExpressionContext | null {
+    return this.getRuleContext(0, BinaryExpressionContext);
+  }
   public IF_(): antlr.TerminalNode | null {
     return this.getToken(PythonParser.IF_, 0);
   }
@@ -7057,9 +6997,6 @@ export class ExpressionContext extends antlr.ParserRuleContext {
   }
   public CLOSE_BRACKET(): antlr.TerminalNode | null {
     return this.getToken(PythonParser.CLOSE_BRACKET, 0);
-  }
-  public binaryOperator(): BinaryOperatorContext | null {
-    return this.getRuleContext(0, BinaryOperatorContext);
   }
   public override get ruleIndex(): number {
     return PythonParser.RULE_expression;

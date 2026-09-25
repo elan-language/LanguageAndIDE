@@ -228,7 +228,7 @@ expression:
     newInstance
     | unaryExpression
     | term
-    | expression binaryOperator expression
+    | binaryExpression
     | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
     // specified inline anticipating Python's `expression IF expression ( ELIF expression )* ELSE expression
 ;
