@@ -59,6 +59,7 @@ import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
+import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
 import { ThisInstanceContext } from "./PythonParser.js";
@@ -654,6 +655,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitExpression?: (ctx: ExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.ifClause`.
+   * @param ctx the parse tree
+   */
+  enterIfClause?: (ctx: IfClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.ifClause`.
+   * @param ctx the parse tree
+   */
+  exitIfClause?: (ctx: IfClauseContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.term`.
    * @param ctx the parse tree

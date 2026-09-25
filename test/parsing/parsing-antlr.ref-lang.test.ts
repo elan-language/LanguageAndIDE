@@ -1,4 +1,5 @@
 import { ParserRuleContext } from "antlr4ng";
+import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Parser, testAntlrParse } from "../testHelpers";
@@ -26,6 +27,20 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "a + b", true);
     testAntlrParse(expression, "a * -b", true, "a * -b");
     testAntlrParse(expression, "(a and not b)", true, "(a and not b)");
+    testAntlrParse(
+      // using lambda as argument
+      expression,
+      `foo(lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))`,
+      true,
+      `foo(lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))`,
+    );
+    testAntlrParse(
+      // if expression
+      expression,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+      true,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+    );
     // testAntlrParse(expression, "a + b- c", true, "", "", "a + b - c", "");
     // testAntlrParse(expression, "+", false);
     // testAntlrParse(expression, "+b", false);
@@ -520,6 +535,41 @@ suite("Parsing Antlr Rules RefLang", () => {
     // );
   });
 
+  test("IfExpr", () => {
+    const ifExpr: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => (p as RefLangParser).ifExpression(), // TODO: this rule exists only on RefLang
+    ];
+    testAntlrParse(
+      ifExpr,
+      `if_(cell, Colour.green, Colour.black)`,
+      true,
+      `if_(cell, Colour.green, Colour.black)`,
+      `if_(cell, Colour.green, Colour.black)`,
+      "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+    );
+    testAntlrParse(
+      ifExpr,
+      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+      true,
+      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+    );
+    testAntlrParse(
+      ifExpr,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+      true,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+    );
+    testAntlrParse(
+      ifExpr,
+      `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
+      true,
+      `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
+    );
+    testAntlrParse(ifExpr, `if_(cell, Colour.amber)`, false);
+    testAntlrParse(ifExpr, `if(cell, Colour.amber, Colour.green)`, false);
+  });
+
   // test("Tuple", () => {
   //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
   //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
@@ -567,60 +617,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   );
   // });
 
-  //   test("IfExpr", () => {
-  //     testAntlrParse(
-  //       getIfExprRule,
-  //       `if_(cell, Colour.green, Colour.black)`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
-  //     );
-  //     testAntlrParse(
-  //       getIfExprRule,
-  //       `if_(cell, Colour.green, Colour.black) + 1`,
-  //       true,
-  //       "if_(cell, Colour.green, Colour.black)",
-  //       " + 1",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       expression,
-  //       `if_(cell, Colour.red, Colour.blue) + 1`,
-  //       true,
-  //       "if_(cell, Colour.red, Colour.blue) + 1",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getIfExprRule, `if_(cell, Colour.amber`, false);
-  //     testAntlrParse(
-  //       getIfExprRule,
-  //       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getIfExprRule,
-  //       `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getIfExprRule,
-  //       `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //   });
   //   test("ParamDefNode", () => {
   //     testAntlrParse(
   //       getParamDefRule,

@@ -229,9 +229,10 @@ expression:
     | unaryExpression
     | term
     | binaryExpression
-    | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
-    // specified inline anticipating Python's `expression IF expression ( ELIF expression )* ELSE expression
+    | expression ifClause
 ;
+
+ifClause: IF expression ( ELIF expression )* ELSE expression;
 
 term: chainHead (DOT chainable)*;
 

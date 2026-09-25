@@ -9,6 +9,7 @@ import {
   CommentTextContext,
   EnumValueContext,
   IdentifierContext,
+  IfExpressionContext,
   IndexContext,
   LambdaContext,
   LitFloatContext,
@@ -126,10 +127,17 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     `(${this.visit(ctx.expression())})`;
 
-  visitLambda = (ctx: LambdaContext) =>{
+  visitLambda = (ctx: LambdaContext) => {
     const lambda = this.visit(ctx.LAMBDA()) ?? "";
     const arrow = this.visit(ctx.ARROW());
     const params = ctx.paramsList() ? this.visit(ctx.paramsList()!) : "";
     return `${lambda} ${params} ${arrow} ${this.visit(ctx.expression())}`;
+  };
+
+  visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
+    const exprIfTrue = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
+    const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
+    return `if_(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
   };
 }

@@ -59,6 +59,7 @@ import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
+import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
 import { ThisInstanceContext } from "./PythonParser.js";
@@ -429,6 +430,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitExpression?: (ctx: ExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.ifClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfClause?: (ctx: IfClauseContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.term`.
    * @param ctx the parse tree
