@@ -457,6 +457,36 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(bracketedExpression, "()", false);
   });
 
+  test("Type", () => {
+    const typeRule: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.type_(),
+    ];
+    testAntlrParse(typeRule, `Foo`, true, "Foo", "Foo", "<el-type>Foo</el-type>");
+    testAntlrParse(
+      typeRule,
+      `Foo<of Bar>`,
+      true,
+      "Foo<of Bar>",
+      "Foo<of Bar>",
+      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
+    );
+    testAntlrParse(
+      typeRule,
+      `Dictionary<of Bar, Yon>`,
+      true,
+      "Dictionary<of Bar, Yon>",
+      "Dictionary<of Bar, Yon>",
+      "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
+    );
+    testAntlrParse(typeRule, `foo`, false);
+    testAntlrParse(typeRule, `Foo<`, false);
+    testAntlrParse(typeRule, `Foo<>`, false);
+    testAntlrParse(typeRule, `Foo<of`, false);
+    testAntlrParse(typeRule, `Foo<of Bar`, false);
+    testAntlrParse(typeRule, `Foo<ofBar>`, false);
+  });
+
   //   test("IndexableTerm", () => {
   //     testAntlrParse(getTermRule, "a", true, "a", "", "a", "");
   //   });
@@ -488,416 +518,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     );
   //   });
 
-  //});
-
-  //   test("Optional", () => {
-  //     testAntlrParse(
-  //       new OptionalNode(f, getLitIntRule),
-  //       "123 a",
-  //       true,
-  //       "123",
-  //       " a",
-  //       "123",
-  //     );
-  //     testAntlrParse(new OptionalNode(f, getLitIntRule), "abc", true, "", "abc", "");
-  //     testAntlrParse(
-  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
-  //       " abstract",
-  //       true,
-  //       " abstract",
-  //       "",
-  //       "abstract",
-  //       "<el-kw>abstract</el-kw>",
-  //     );
-  //     testAntlrParse(
-  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
-  //       "abs",
-  //       false,
-  //       "abs",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
-  //       "abscract",
-  //       true,
-  //       "",
-  //       "abscract",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
-  //       "",
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new OptionalNode(f, new KeywordNode(f, abstractKeyword)),
-  //       "  ",
-  //       false,
-  //       "  ",
-  //       "",
-  //       "",
-  //     );
-  //   });
-
-  //   test("Multiple", () => {
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 0), ``, true, ``, "", "");
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 1), ``, false);
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 0), `)`, true, ``, ")", "");
-  //     testAntlrParse(
-  //       new Multiple(f, () => getLitIntRule, 1),
-  //       `1 0 33`,
-  //       true,
-  //       `1 0 33`,
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 1), `1`, true, `1`, "", "");
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 0), ``, true, ``, "", "");
-  //     testAntlrParse(new Multiple(f, () => getLitIntRule, 1), ``, false);
-  //     testAntlrParse(
-  //       new Multiple(f, () => getLitIntRule, 1),
-  //       `5 6 a`,
-  //       true,
-  //       `5 6`,
-  //       " a",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => getLitIntRule, 1),
-  //       `7   `,
-  //       true,
-  //       `7`,
-  //       "   ",
-  //       "",
-  //     );
-
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
-  //       `foo foo`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "bar"), 1),
-  //       `bar ba`,
-  //       false,
-  //       "bar ba",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
-  //       `foo`,
-  //       true,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
-  //       `fo`,
-  //       false,
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
-  //       `foo,foo`,
-  //       true,
-  //       "",
-  //       ",foo",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new Multiple(f, () => new KeywordNode(f, "foo"), 1),
-  //       `foofoo`,
-  //       false,
-  //       "",
-  //       "foofoo",
-  //       "",
-  //     );
-  //   });
-  //   test("CommaNode", () => {
-  //     testAntlrParse(getCommaRule, ``, false);
-  //     testAntlrParse(getCommaRule, `,`, true, ``, "", ", ");
-  //     testAntlrParse(getCommaRule, ` ,`, true, `,`, "", ", ");
-  //     testAntlrParse(getCommaRule, `,    `, true, ``, "", ", ");
-  //     testAntlrParse(getCommaRule, `.`, false);
-  //     testAntlrParse(getCommaRule, `,,`, true, `,`, ",", "");
-  //   });
-  //   test("CSV", () => {
-  //     testAntlrParse(
-  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
-  //       `a,a,a`,
-  //       true,
-  //       `a,a,a`,
-  //       "",
-  //       "a, a, a",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
-  //       `a,`,
-  //       false,
-  //       `a,`,
-  //       "",
-  //       "a, ",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
-  //       `x`,
-  //       true,
-  //       ``,
-  //       "x",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new PunctuationNode(f, "a"), 1),
-  //       `x`,
-  //       false,
-  //       ``,
-  //       "x",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new PunctuationNode(f, "a"), 0),
-  //       `a,a,x`,
-  //       true,
-  //       `a,a`,
-  //       ",x",
-  //       "a, a",
-  //     );
-  //     testAntlrParse(new CSV(f, () => getLitIntRule, 0), ``, true, ``, "", "");
-  //     testAntlrParse(new CSV(f, () => getLitIntRule, 1), ``, false);
-  //     testAntlrParse(new CSV(f, () => getLitIntRule, 0), `2`, true, `2`, "", "");
-  //     testAntlrParse(new CSV(f, () => getLitIntRule, 1), `2`, true, `2`, "", "");
-  //     testAntlrParse(
-  //       new CSV(f, () => getLitStringRule, 0),
-  //       `"apple","orange", "pear"`,
-  //       true,
-  //       `"apple","orange", "pear"`,
-  //       "",
-  //       `"apple", "orange", "pear"`,
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getIdentifierRule, 0),
-  //       `a,b,c`,
-  //       true,
-  //       `a,b,c`,
-  //       "",
-  //       "a, b, c",
-  //     );
-  //     testAntlrParse(new CSV(f, () => getIdentifierRule, 0), `1`, true, ``, "1", "");
-  //     testAntlrParse(
-  //       new CSV(f, () => getIdentifierRule, 1),
-  //       `1`,
-  //       false,
-  //       ``,
-  //       "1",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getIdentifierRule, 0),
-  //       `a,1`,
-  //       true,
-  //       `a`,
-  //       ",1",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => getIdentifierRule, 0),
-  //       `a,b,1`,
-  //       true,
-  //       `a,b`,
-  //       ",1",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => expression, 0),
-  //       `a + b, c, 1`,
-  //       true,
-  //       `a + b, c, 1`,
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(new CSV(f, () => expression, 0), `)`, true, ``, ")", "");
-
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
-  //       `foo, foo`,
-  //       true,
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), `foo`, true, "", "");
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
-  //       `fook`,
-  //       false,
-  //       "",
-  //       "fook",
-  //     );
-  //     testAntlrParse(new CSV(f, () => new KeywordNode(f, "foo"), 0), ``, true, "", "");
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 1),
-  //       `fo`,
-  //       false,
-  //       "fo",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 0),
-  //       `fo`,
-  //       false,
-  //       "fo",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
-  //       `foo, fo`,
-  //       false,
-  //       "foo, fo",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
-  //       `foo,`,
-  //       false,
-  //       "foo,",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
-  //       `foo, `,
-  //       false,
-  //       "foo, ",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       new CSV(f, () => new KeywordNode(f, "foo"), 2),
-  //       `foo,fo`,
-  //       false,
-  //       "foo,fo",
-  //       "",
-  //       "foo, fo",
-  //     );
-
-  //     testAntlrParse(new CSV(f, () => expression, 0), ``, true, "", "");
-  //   });
-  //   test("IdentifierWithOptIndexes", () => {
-  //     testAntlrParse(getIdentifierWithOptIndexesRule, ``, false);
-  //     testAntlrParse(getIdentifierWithOptIndexesRule, `bar`, true, `bar`, "", "");
-  //     testAntlrParse(
-  //       getIdentifierWithOptIndexesRule,
-  //       `bar[foo]`,
-  //       true,
-  //       `bar[foo]`,
-  //       "",
-  //       "",
-  //     );
-  //     //testAntlrParse(new InstanceNode(), `bar[foo][0]`, true, `bar[foo][0]`, "", "");
-  //   });
-
-  //   test("TypeSimpleName", () => {
-  //     testAntlrParse(
-  //       getTypeSimpleNameRule,
-  //       `Foo`,
-  //       true,
-  //       "Foo",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>",
-  //     );
-  //     testAntlrParse(getTypeSimpleNameRule, `foo`, false);
-  //   });
-  //   test("TypeSimpleOrGeneric", () => {
-  //     testAntlrParse(getTypeSimpleOrGenericRule, `Foo`, true, "Foo", "", "", "");
-  //     testAntlrParse(getTypeSimpleOrGenericRule, `foo`, false);
-  //     testAntlrParse(getTypeSimpleOrGenericRule, `Foo<`, false);
-  //     testAntlrParse(getTypeSimpleOrGenericRule, `Foo<of`, false);
-  //     testAntlrParse(
-  //       getTypeSimpleOrGenericRule,
-  //       `Foo<of Bar`,
-  //       false,
-  //       "Foo<of Bar",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getTypeSimpleOrGenericRule, `Foo<ofBar`, true, "", "<ofBar", "");
-  //     testAntlrParse(
-  //       getTypeSimpleOrGenericRule,
-  //       `Foo<of Bar>`,
-  //       true,
-  //       "Foo<of Bar>",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
-  //     );
-  //     testAntlrParse(
-  //       getTypeSimpleOrGenericRule,
-  //       `Dictionary<of Bar, Yon>`,
-  //       true,
-  //       "Dictionary<of Bar, Yon>",
-  //       "",
-  //       "",
-  //       "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
-  //     );
-  //   });
-  //   test("TypeSimpleOrGeneric_Languages", () => {
-  //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(fileWithPython()),
-  //       `Foo[Bar]`,
-  //       true,
-  //       "Foo[Bar]",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>[<el-type>Bar</el-type>]",
-  //       "Foo[Bar]",
-  //     );
-  //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(fileWithPython()),
-  //       `list[int]`,
-  //       true,
-  //       "list[int]",
-  //       "",
-  //       "",
-  //       "<el-type>list</el-type>[<el-type>int</el-type>]",
-  //       "list[int]",
-  //     );
-  //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(fileWithVB()),
-  //       `Foo(Of Bar)`, //This should properly be 'Of'
-  //       true,
-  //       "Foo(Of Bar)",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>(<el-kw>Of</el-kw> <el-type>Bar</el-type>)",
-  //     );
-  //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(fileWithCS()),
-  //       `Foo<Bar>`,
-  //       true,
-  //       "Foo<Bar>",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
-  //     );
-  //     testAntlrParse(
-  //       new TypeSimpleOrGeneric(fileWithJava()),
-  //       `Foo<Bar>`,
-  //       true,
-  //       "Foo<Bar>",
-  //       "",
-  //       "",
-  //       "<el-type>Foo</el-type>&lt;<el-type>Bar</el-type>&gt;",
-  //     );
-  //   });
   //   test("TypeNode", () => {
   //     //Single
   //     testAntlrParse(getTypeRule, `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
@@ -2175,7 +1795,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //   test("Type incomplete Elan", () => {
   //     testAntlrParse(
-  //       getTypeSimpleNameRule,
+  //       typeName,
   //       `Inte`,
   //       true,
   //       `Inte`,
