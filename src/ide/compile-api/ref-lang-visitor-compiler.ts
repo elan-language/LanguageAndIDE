@@ -106,12 +106,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
 
     let precedingNode = prefix!;
+    let lastNode = prefix;
 
     for (const index of indices) {
       index.updateScopeAndChain(this.scope, precedingNode);
       precedingNode = index;
+      lastNode = index;
     }
 
-    return prefix!;
+    return lastNode!;
   };
 }
