@@ -155,26 +155,86 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litString, `$" "`, true, "", "");
     testAntlrParse(litString, `$"{x}"`, true, "", "");
     testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
-    // testAntlrParse(getLitStringRule, `$"{}"`, false);
-    //     testAntlrParse(
-    //       getLitStringInterpolatedRule,
-    //       `$"{curly}"`,
-    //       true,
-    //       `$"{curly}"`,
-    //       "",
-    //       `$"{curly}"`,
-    //       `$"{<el-id>curly</el-id>}"`,
-    //     );
-    //     testAntlrParse(
-    //       getLitStringInterpolatedRule, // but with braces
-    //       `$"&#123;curly braces&#125;"`,
-    //       true,
-    //       `$"&#123;curly braces&#125;"`,
-    //       "",
-    //       `$"&#123;curly braces&#125;"`,
-    //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-    //     );
+    testAntlrParse(
+      litString,
+      `"{curly braces}"`,
+      true,
+      `"{curly braces}"`,
+      `"{curly braces}"`,
+      `"<el-lit>{curly braces}</el-lit>"`,
+    );
+    testAntlrParse(
+      litString,
+      `"&#123;curly braces&#125;"`,
+      true,
+      `"&#123;curly braces&#125;"`,
+      `"&#123;curly braces&#125;"`,
+      `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+    );
+    // TODO litString with embedded Html tags
+    // testAntlrParse(
+    //   litString,
+    //   `"<p>abc</p>"`,
+    //   true,
+    //   `"<p>abc</p>"`,
+    //   `"<p>abc</p>"`,
+    //   `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+    // );
+    //   test("String Interpolation", () => {
   });
+
+  // TODO Interpolated strings
+  // testAntlrParse(getLitStringRule, `$"{}"`, false);
+  //     testAntlrParse(
+  //       getLitStringInterpolatedRule,
+  //       `$"{curly}"`,
+  //       true,
+  //       `$"{curly}"`,
+  //       "",
+  //       `$"{curly}"`,
+  //       `$"{<el-id>curly</el-id>}"`,
+  //     );
+  //     testAntlrParse(
+  //       getLitStringInterpolatedRule, // but with braces
+  //       `$"&#123;curly braces&#125;"`,
+  //       true,
+  //       `$"&#123;curly braces&#125;"`,
+  //       "",
+  //       `$"&#123;curly braces&#125;"`,
+  //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
+  //     );
+  //    testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
+  //     testAntlrParse(
+  //       getLitStringInterpolatedInsertRule,
+  //       "{x + 1}",
+  //       true,
+  //       "{x + 1}",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testAntlrParse(
+  //       getLitStringInterpolatedInsertRule,
+  //       "{x",
+  //       false,
+  //       "{x",
+  //       "",
+  //       "",
+  //       "",
+  //     );
+  //     testAntlrParse(getLitStringInterpolatedInsertRule, "{}", false);
+  //     testAntlrParse(
+  //       getLitStringInterpolatedRule,
+  //       `$"{a} plus {b} equals {a + b}"`,
+  //       true,
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       "",
+  //       '$"{a} plus {b} equals {a + b}"',
+  //       "",
+  //       '$"{a} plus {b} equals {a + b}"',
+  //     );
+  //   });
+  //  });
 
   test("Lit Int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
@@ -372,6 +432,15 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
     testAntlrParse(unaryExpression, "-", false);
     testAntlrParse(unaryExpression, "+4", false);
+    testAntlrParse(
+      unaryExpression,
+      `not (a+b)`,
+      true,
+      `not (a+b)`,
+      "not (a + b)",
+      `<el-kw>not </el-kw>(<el-id>a</el-id> + <el-id>b</el-id>)`,
+    );
+    testAntlrParse(unaryExpression, `not(a+b)`, true, `not(a+b)`, `not (a + b)`);
   });
 
   test("BinaryOperator", () => {
@@ -647,6 +716,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
     testAntlrParse(bracketedExpression, "(", false);
     testAntlrParse(bracketedExpression, "()", false);
+    testAntlrParse(bracketedExpression, `((((((3))))))`, true, `((((((3))))))`);
   });
 
   test("Type", () => {
@@ -831,6 +901,12 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(list, `[`, false);
     testAntlrParse(list, `[]`, false);
     testAntlrParse(list, `1, 2, 3`, false);
+    testAntlrParse(
+      list,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
+      true,
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
+    );
   });
 
   test("Tuple", () => {
@@ -1053,168 +1129,4 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(procRef, `bar`, true, `bar`);
     testAntlrParse(procRef, `x[3].bar`, true, "", "");
   });
-
-  //   test("String Interpolation", () => {
-  //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
-  //     testAntlrParse(
-  //       getLitStringInterpolatedInsertRule,
-  //       "{x + 1}",
-  //       true,
-  //       "{x + 1}",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getLitStringInterpolatedInsertRule,
-  //       "{x",
-  //       false,
-  //       "{x",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getLitStringInterpolatedInsertRule, "{}", false);
-  //   });
-  //     testAntlrParse(
-  //       getLitStringOrdinaryRule,
-  //       `"{curly braces}"`,
-  //       true,
-  //       `"{curly braces}"`,
-  //       "",
-  //       `"{curly braces}"`,
-  //       `"<el-lit>{curly braces}</el-lit>"`,
-  //     );
-  //     testAntlrParse(
-  //       getLitStringOrdinaryRule,
-  //       `"&#123;curly braces&#125;"`,
-  //       true,
-  //       `"&#123;curly braces&#125;"`,
-  //       "",
-  //       `"&#123;curly braces&#125;"`,
-  //       `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-  //     );
-  //   });
-  //   test("Embedded Html tags", () => {
-  //     testAntlrParse(
-  //       getLitStringOrdinaryRule,
-  //       `"<p>abc</p>"`,
-  //       true,
-  //       `"<p>abc</p>"`,
-  //       "",
-  //       `"<p>abc</p>"`,
-  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-  //     );
-  //     testAntlrParse(
-  //       new LitStringText(f, /^[^"]*/),
-  //       `<p>`,
-  //       true,
-  //       `<p>`,
-  //       "",
-  //       `<p>`,
-  //       `<el-lit>&lt;p&gt;</el-lit>`,
-  //       `<p>`,
-  //     );
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule,
-  //       `$"<p>{2 + 3}</p>"`,
-  //       true,
-  //       `$"<p>{2 + 3}</p>"`,
-  //       "",
-  //       `$"<p>{2 + 3}</p>"`,
-  //       `$"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
-  //       `$"<p>{2 + 3}</p>"`,
-  //     );
-  //
-
-  //   test("not(a+b)", () => {
-  //     testAntlrParse(
-  //       expression,
-  //       `not (a+b)`,
-  //       true,
-  //       `not (a+b)`,
-  //       "",
-  //       "not (a + b)",
-  //       `<el-kw>not</el-kw> (<el-id>a</el-id> + <el-id>b</el-id>)`,
-  //     );
-  //     testAntlrParse(expression, `not(a+b)`, false);
-  //     testAntlrParse(expression, `not (a+b)`, true, `not (a+b)`, "", "", ``);
-  //   });
-  //   test("Parse list of list of floats", () => {
-  //     testAntlrParse(
-  //       expression,
-  //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
-  //       true,
-  //       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
-  //       "",
-  //     );
-  //   });
-  //   test("Parse list of floats 2", () => {
-  //     testAntlrParse(expression, `[0.0]`, true, `[0.0]`, "");
-  //   });
-
-  //   ignore_test("Six open brackets", () => {
-  //     testAntlrParse(expression, `((((((3))))))`, true, `((((((3))))))`, "");
-  //   });
-  //   test("Image", () => {
-  //     testAntlrParse(
-  //       new RegExMatchNode(f, Regexes.url),
-  //       "http://website.com/images/image1.png",
-  //       true,
-  //       "http://website.com/images/image1.png",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //   });
-
-  //   test("LitStringInterpolated", () => {
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule,
-  //       `$"{a} plus {b} equals {a + b}"`,
-  //       true,
-  //       '$"{a} plus {b} equals {a + b}"',
-  //       "",
-  //       '$"{a} plus {b} equals {a + b}"',
-  //       "",
-  //       '$"{a} plus {b} equals {a + b}"',
-  //     );
-  //   });
-
-  //   test("Type incomplete Elan", () => {
-  //     testAntlrParse(
-  //       typeName,
-  //       `Inte`,
-  //       true,
-  //       `Inte`,
-  //       "",
-  //       `Inte`,
-  //       "<el-type>Inte</el-type>",
-  //       `Inte`,
-  //     );
-  //   });
-  //   test("Expr - i in type C#  - #2737", () => {
-  //     testAntlrParse(
-  //       new TypeSimpleName(fileWithCS()),
-  //       `i`,
-  //       false,
-  //       `i`,
-  //       "",
-  //       `i`,
-  //       "<el-type>i</el-type>",
-  //       `i`,
-  //     );
-  //     testAntlrParse(new TypeSimpleName(fileWithCS()), `j`, false);
-  //     testAntlrParse(
-  //       new TypeSimpleName(fileWithCS()),
-  //       `int`,
-  //       true,
-  //       `int`,
-  //       "",
-  //       `Int`,
-  //       "<el-type>int</el-type>",
-  //       `int`,
-  //     );
-  //   });
-  //
 });
