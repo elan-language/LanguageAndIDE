@@ -170,6 +170,4 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
       `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
   
   visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
-
-  visitThisInstance = (ctx: ThisInstanceContext) => `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
 }

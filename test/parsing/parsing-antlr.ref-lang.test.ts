@@ -35,6 +35,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "a + b", true);
     testAntlrParse(expression, "a * -b", true, "a * -b");
     testAntlrParse(expression, "(a and not b)", true, "(a and not b)");
+    testAntlrParse(expression, `-345`, true, "-345");
     testAntlrParse(
       // using lambda as argument
       expression,
@@ -49,45 +50,54 @@ suite("Parsing Antlr Rules RefLang", () => {
       true,
       `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
     );
-    // testAntlrParse(expression, "a + b- c", true, "", "", "a + b - c", "");
-    // testAntlrParse(expression, "+", false);
-    // testAntlrParse(expression, "+b", false);
-    // testAntlrParse(expression, "a +", false);
-    // testAntlrParse(expression, "a %", true, "a", " %", "a");
-    // testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x", "");
-    // testAntlrParse(expression, "3* foo(5)", true, "", "3*foo(5)", "");
-    // testAntlrParse(expression, "new List<of String>()", true, "new List<of String>()", "");
-    // testAntlrParse(
-    //   expression,
-    //   "points.foo(0.0)",
-    //   true,
-    //   "points.foo(0.0)",
-    //   "",
-    //   "points.foo(0.0)",
-    //   "",
-    // );
-    // testAntlrParse(expression, "this", true, "this", "", "this", "<el-kw>this</el-kw>");
-    // testAntlrParse(
-    //   expression,
-    //   "thisWidget",
-    //   true,
-    //   "thisWidget",
-    //   "",
-    //   "thisWidget",
-    //   "<el-id>thisWidget</el-id>",
-    // );
-    // // empty data structures
-    // testAntlrParse(
-    //   expression,
-    //   "new List<of Int>()",
-    //   true,
-    //   "new List<of Int>()",
-    //   "",
-    //   "",
-    //   "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
-    // );
-
-    //TODO add an example of each sub-rule, tested
+    testAntlrParse(expression, `this`, true, `this`, `this`, "<el-kw>this</el-kw>", `this`);
+    testAntlrParse(
+      expression,
+      "a + b- c",
+      true,
+      "a + b- c",
+      "a + b - c",
+      "<el-id>a</el-id> + <el-id>b</el-id> - <el-id>c</el-id>",
+    );
+    testAntlrParse(expression, "+", false);
+    testAntlrParse(expression, "+b", false);
+    testAntlrParse(expression, "a +", false);
+    testAntlrParse(expression, "a %", true, "a");
+    testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x");
+    testAntlrParse(expression, "3* foo(5)", true, "3* foo(5)", "3*foo(5)", "");
+    testAntlrParse(
+      expression,
+      "new List<of String>()",
+      true,
+      "new List<of String>()",
+      "new List<of String>()",
+    );
+    testAntlrParse(
+      expression,
+      "points.foo(0.0)",
+      true,
+      "points.foo(0.0)",
+      "points.foo(0.0)",
+      "<el-id>points</el-id>.<el-method>foo</el-method>(<el-lit>0.0</el-lit>)",
+    );
+    testAntlrParse(expression, "this", true, "this", "this", "<el-kw>this</el-kw>");
+    testAntlrParse(
+      expression,
+      "thisWidget",
+      true,
+      "thisWidget",
+      "thisWidget",
+      "<el-id>thisWidget</el-id>",
+    );
+    // empty data structures
+    testAntlrParse(
+      expression,
+      "new List<of Int>()",
+      true,
+      "new List<of Int>()",
+      "",
+      "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
+    );
   });
 
   test("Identifier", () => {
@@ -303,6 +313,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(unaryExpression, "", false);
     testAntlrParse(unaryExpression, "-3", true, "-3", "-3", "-<el-lit>3</el-lit>");
+    testAntlrParse(unaryExpression, `-345`, true, "-345");
     testAntlrParse(
       unaryExpression,
       " not foo",
@@ -753,13 +764,63 @@ suite("Parsing Antlr Rules RefLang", () => {
       (p: Parser) => p.term(),
     ];
     testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`);
+    testAntlrParse(term, `length(bar)`, true, `length(bar)`);
+    testAntlrParse(term, `bar.length()`, true, `bar.length()`);
+    testAntlrParse(term, `bar.asList()`, true, `bar.asList()`);
+    testAntlrParse(term, `[1,2,3,4,5].asList()`, true, `[1,2,3,4,5].asList()`);
+    testAntlrParse(term, `"Hello World".length()`, true, `"Hello World".length()`);
+    testAntlrParse(term, `12.3.toString()`, true, `12.3.toString()`);
+    testAntlrParse(term, `bar.`, false);
+    testAntlrParse(term, `abc`, true, "abc", "");
+    testAntlrParse(term, `abc()`, true, "abc()", "");
+    testAntlrParse(term, `this`, true, "this", "");
+    testAntlrParse(term, `abc(defg, hi)`, true, "abc(defg, hi)", "");
+    testAntlrParse(term, `abc[1]`, true, "abc[1]", "");
+    testAntlrParse(term, `abc[1][2]`, true, "abc[1][2]", "abc[1][2]");
+    testAntlrParse(term, `abc.subList(1, 2)`, true, "abc.subList(1, 2)", "abc.subList(1, 2)");
+    testAntlrParse(term, `abc[1, 2]`, false);
+    testAntlrParse(term, `abc(defg, hi)[0]`, true, "abc(defg, hi)[0]", "");
+    testAntlrParse(term, `(defg, hi)`, true, "(defg, hi)", ""); // tuple
+    testAntlrParse(term, `[defg, hi]`, true, "[defg, hi]", "");
+    testAntlrParse(term, `345`, true, "345", "");
+    testAntlrParse(term, `-345`, false);
+    testAntlrParse(term, `(-345)`, true);
+    testAntlrParse(term, `not a`, false, "not a", "");
+    testAntlrParse(term, `(not a)`, true, `(not a)`);
+    testAntlrParse(term, `(3 + a)`, true, "(3 + a)", "");
+    testAntlrParse(term, `this`, true, `this`, "");
+    testAntlrParse(term, `a`, true, `a`, "");
+    testAntlrParse(term, `this.a`, true, `this.a`, "");
+    testAntlrParse(
+      term,
+      `a[1].b().subList(1, 2).c(d)[e][f]`,
+      true,
+      `a[1].b().subList(1, 2).c(d)[e][f]`,
+      "",
+    );
+    testAntlrParse(term, `this.a[1].b().c(d)[e]`, true, `this.a[1].b().c(d)[e]`, "");
+    testAntlrParse(
+      term,
+      `this.a.b()`,
+      true,
+      `this.a.b()`,
+      "this.a.b()",
+      "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
+    );
+    testAntlrParse(
+      term,
+      `a[1].b().subList(1, 2).c(d).e.f[g]`,
+      true,
+      `a[1].b().subList(1, 2).c(d).e.f[g]`,
+    );
+    testAntlrParse(term, `this.a[1].b().c(d)[e]`, true, `this.a[1].b().c(d)[e]`);
   });
   test("ThisInstance", () => {
     const thisInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.thisInstance(),
     ];
-    testAntlrParse(thisInstance, `this`, true, `this`, "", `this`, "<el-kw>this</el-kw>", `this`);
+    testAntlrParse(thisInstance, `this`, true, `this`, `this`, "<el-kw>this</el-kw>", `this`);
     testAntlrParse(thisInstance, `This`, false);
     testAntlrParse(thisInstance, `th`, false);
     testAntlrParse(thisInstance, `Th`, false);
@@ -836,58 +897,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `$"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
   //       `$"<p>{2 + 3}</p>"`,
   //     );
-  //     // In other langs
-  //     testAntlrParse(
-  //       new LitStringOrdinary(fileWithPython()),
-  //       `"<p>abc</p>"`,
-  //       true,
-  //       `"<p>abc</p>"`,
-  //       "",
-  //       `"<p>abc</p>"`,
-  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-  //       `"<p>abc</p>"`,
-  //     );
-  //     testAntlrParse(
-  //       new LitStringOrdinary(fileWithVB()),
-  //       `"<p>abc</p>"`,
-  //       true,
-  //       `"<p>abc</p>"`,
-  //       "",
-  //       `"<p>abc</p>"`,
-  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-  //       `"<p>abc</p>"`,
-  //     );
-  //     testAntlrParse(
-  //       new LitStringOrdinary(fileWithCS()),
-  //       `"<p>abc</p>"`,
-  //       true,
-  //       `"<p>abc</p>"`,
-  //       "",
-  //       `"<p>abc</p>"`,
-  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-  //       `"<p>abc</p>"`,
-  //     );
-  //     testAntlrParse(
-  //       new LitStringOrdinary(fileWithJava()),
-  //       `"<p>abc</p>"`,
-  //       true,
-  //       `"<p>abc</p>"`,
-  //       "",
-  //       `"<p>abc</p>"`,
-  //       `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-  //       `"<p>abc</p>"`,
-  //     );
-  //     testAntlrParse(
-  //       new LitStringInterpolated(fileWithPython()),
-  //       `f"<p>{2 + 3}</p>"`,
-  //       true,
-  //       `f"<p>{2 + 3}</p>"`,
-  //       "",
-  //       `$"<p>{2 + 3}</p>"`,
-  //       `f"<el-lit>&lt;p&gt;</el-lit>{<el-lit>2</el-lit> + <el-lit>3</el-lit>}<el-lit>&lt;/p&gt;</el-lit>"`,
-  //       `f"<p>{2 + 3}</p>"`,
-  //     );
-  //   });
+  //
 
   //   test("InstanceProcRef", () => {
   //     testAntlrParse(getInstanceProcRefRule, `bar.foo`, true, "", "");
@@ -909,92 +919,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   //     testAntlrParse(getProcRefRule, `this.foo`, true, "", "");
   //     testAntlrParse(getProcRefRule, `this.foo.bar`, true, "", ".bar");
   //   });
-
-  // test("#339 call dot function on a literal", () => {
-  //   testAntlrParse(getMethodCallRule, `length(bar)`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `bar.length()`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `bar.asList()`, true, "", "");
-  //   testAntlrParse(new LiteralNode(), `{1,2,3,4,5}`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `{1,2,3,4,5}.asList()`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `"Hello World".length()`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `12.3.toString()`, true, "", "");
-  //   testAntlrParse(getMethodCallRule, `bar.`, false);
-  //   testAntlrParse(getMethodCallRule, `bar`, false);
-  // });
-  //   test("#670 new parse node structure for terms & expressions", () => {
-  //     testAntlrParse(getTermSimpleRule, `abc`, true, "abc", "");
-  //     testAntlrParse(getTermSimpleRule, `abc()`, true, "abc()", "");
-  //     testAntlrParse(getTermSimpleRule, `this`, true, "this", "");
-  //     testAntlrParse(getTermSimpleRule, `abc(defg, hi)`, true, "abc(defg, hi)", "");
-  //     testAntlrParse(getTermSimpleWithOptIndexRule, `abc[1]`, true, "abc[1]", "");
-  //     testAntlrParse(getTermSimpleWithOptIndexRule, `abc[1][2]`, true, "abc[1]", "[2]");
-  //     // testAntlrParse(
-  //     //   getTermSimpleWithOptIndexRule,
-  //     //   `abc.subList(1, 2)`,
-  //     //   true,
-  //     //   "abc.subList(1, 2)",
-  //     //   "",
-  //     // );
-  //     testAntlrParse(getTermSimpleWithOptIndexRule, `abc[1, 2]`, true, "abc", "[1, 2]");
-  //     testAntlrParse(
-  //       getTermSimpleWithOptIndexRule,
-  //       `abc(defg, hi)[0]`,
-  //       true,
-  //       "abc(defg, hi)[0]",
-  //       "",
-  //     );
-  //     testAntlrParse(expression, `(defg, hi)`, true, "(defg, hi)", ""); // tuple
-  //     testAntlrParse(getTermSimpleRule, `[defg, hi]`, true, "[defg, hi]", "");
-  //     testAntlrParse(getTermSimpleRule, `345`, true, "345", "");
-  //     testAntlrParse(getTermSimpleRule, `-345`, true, "-345", "");
-  //     testAntlrParse(getTermSimpleRule, `not a`, true, "not a", "");
-  //     testAntlrParse(getTermSimpleRule, `(3 + a)`, true, "(3 + a)", "");
-  //     testAntlrParse(getTermSimpleRule, `this`, true, `this`, "");
-  //     testAntlrParse(new PunctuationNode(f, DOT), `.`, true, `.`, "");
-  //     testAntlrParse(getTermSimpleRule, `a`, true, `a`, "");
-  //     testAntlrParse(getDottedTermRule, `.a`, true, `.a`, "");
-  //     testAntlrParse(new DotAfter(f, getTermSimpleRule), `.a`, false);
-  //     testAntlrParse(getTermChainedRule, `this.a`, true, `this.a`, "");
-  //     testAntlrParse(
-  //       getTermChainedRule,
-  //       `a[1].b().subList(1, 2).c(d)[e][f]`,
-  //       true,
-  //       `a[1].b().subList(1, 2).c(d)[e][f]`,
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getTermChainedRule,
-  //       `this.a[1].b().c(d)[e]`,
-  //       true,
-  //       `this.a[1].b().c(d)[e]`,
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getTermChainedRule,
-  //       `this.a.b()`,
-  //       true,
-  //       `this.a.b()`,
-  //       "",
-  //       "this.a.b()",
-  //       "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
-  //     );
-  //     testAntlrParse(
-  //       expression,
-  //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
-  //       true,
-  //       `a[1].b().subList(1, 2).c(d).e.f[g]`,
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       expression,
-  //       `this.a[1].b().c(d)[e]`,
-  //       true,
-  //       `this.a[1].b().c(d)[e]`,
-  //       "",
-  //     );
-  //     testAntlrParse(expression, `ref foo`, true, `ref`, " foo");
-  //     testAntlrParse(expression, `ref `, false);
-  //   });
+  //  });
 
   //   test("LitRegExp", () => {
   //     testAntlrParse(
