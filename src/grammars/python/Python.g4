@@ -124,7 +124,7 @@ forLoop:
 procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-procRef: (term DOT)? methodName;
+procRef: term;
 
 tryStatement:
     TRY NL ordinaryStatement* catchStatement ordinaryStatement* COMMENT NL

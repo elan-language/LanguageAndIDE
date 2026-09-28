@@ -121,7 +121,7 @@ inputStatement:
 procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-procRef: (term DOT)? methodName;
+procRef: term;
 
 throwStatement:
     GHOSTED? THROW typeName litString NL

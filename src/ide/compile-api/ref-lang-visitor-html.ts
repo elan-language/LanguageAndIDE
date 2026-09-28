@@ -27,7 +27,6 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
-  ProcRefContext,
   TermContext,
   TestNameContext,
   ThisInstanceContext,
@@ -203,9 +202,4 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitLitRegExp = (ctx: LitRegExpContext) =>
     this.visitChildren(ctx) ? `/${regex(this.visitChildren(ctx)!.slice(1, -1))}/` : "";
-
-  visitProcRef = (ctx: ProcRefContext) =>
-    ctx.term()
-      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.methodName())}`
-      : (this.visit(ctx.methodName()) ?? "");
 }
