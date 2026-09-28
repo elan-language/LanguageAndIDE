@@ -500,7 +500,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(chainHead, ``, false);
     testAntlrParse(chainHead, ` `, false);
-    testAntlrParse(chainHead, `this`, true, "this", "this", "this", "this", "this"); // pending html impl of <el-kw>this<el-kw>
+    testAntlrParse(chainHead, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this"); // pending html impl of <el-kw>this<el-kw>
     testAntlrParse(chainHead, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
     testAntlrParse(chainHead, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
     testAntlrParse(
