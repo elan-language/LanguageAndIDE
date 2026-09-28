@@ -220,14 +220,14 @@ term: chainHead (DOT chainable)*;
 chainHead:
     thisInstance
     | bracketedExpression
-    | tuple
     | litValue
     | list
+    | dictionary
+    | tuple
     | chainable
 ;
 
 thisInstance: THIS_INSTANCE;
-
 
 chainable: ( identifier | methodCall) index*;
 
@@ -239,9 +239,27 @@ negateLogical: NOT term;
 binaryExpression:
     term binaryOperator expression
 ; // ? expression binaryOperator expression ?
-tuple:
-    OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET
+
+list:
+    OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET
 ;
+
+expressionList: expression (COMMA expression)*;
+
+tuple:
+    OPEN_BRACKET tupleElementList CLOSE_BRACKET
+;
+
+tupleElementList: expression (COMMA expression)+; // min 2 elements
+
+dictionary:
+    OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET
+;
+
+kvpList: kvp  (COMMA kvp)*;
+
+kvp: OPEN_SQ_BRACKET expression COMMA expression CLOSE_SQ_BRACKET;
+
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
 binaryOperator:
@@ -271,10 +289,6 @@ typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
 typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 
 lambda: LAMBDA (paramsList | argList) ARROW expression;
-
-list:
-    OPEN_SQ_BRACKET expression (COMMA expression)* CLOSE_SQ_BRACKET
-;
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
 

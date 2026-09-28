@@ -7,11 +7,13 @@ import {
   BracketedExpressionContext,
   ChainableContext,
   CommentTextContext,
+  DictionaryContext,
   EnumValueContext,
   IdentifierContext,
   IfExpressionContext,
   IndexContext,
   LambdaContext,
+  ListContext,
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
@@ -23,6 +25,7 @@ import {
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
+  TupleContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -35,8 +38,10 @@ import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
   getArgs,
+  getExpressions,
   getFilteredTypes,
   getFuncTypes,
+  getKVPs,
   getParamDefs,
   id,
   kw,
@@ -165,4 +170,13 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitNewInstance = (ctx: NewInstanceContext) =>
     `${kw("new")} ${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
+
+  visitList = (ctx: ListContext) =>
+    `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
+
+  visitTuple = (ctx: TupleContext) =>
+    `(${getExpressions<string>(this, ctx.tupleElementList()).join(", ")})`;
+
+  visitDictionary = (ctx: DictionaryContext) =>
+    `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
 }

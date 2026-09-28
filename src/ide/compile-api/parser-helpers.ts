@@ -2,24 +2,27 @@ import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "a
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
+  ArgumentContext as PythonArgumentContext,
+  ExpressionContext as PythonExpressionContext,
+  ParamDefContext as PythonParamDefContext,
   PythonParser,
   TypeContext as PythonTypeContext,
-  ParamDefContext as PythonParamDefContext,
-  ArgumentContext as PythonArgumentContext,
 } from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
+  ArgumentContext as RefLangArgumentContext,
+  ExpressionContext as RefLangExpressionContext,
+  ParamDefContext as RefLangParamDefContext,
   RefLangParser,
   TypeContext as RefLangTypeContext,
-  ParamDefContext as RefLangParamDefContext,
-  ArgumentContext as RefLangArgumentContext,
+  KvpContext as RefLangKvpContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
 import { PythonVisitorHtml } from "./python-visitor-html";
 import { PythonVisitorSource } from "./python-visitor-source";
-import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
+import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 
 export function getPythonParser(input: string) {
@@ -142,6 +145,20 @@ export function getArgs<T>(
   context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] },
 ) {
   return context.argument()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
+export function getExpressions<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { expression: () => (PythonExpressionContext | RefLangExpressionContext)[] },
+) {
+  return context.expression()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
+export function getKVPs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { kvp: () => RefLangKvpContext[] }, //TODO add Python equiv
+) {
+  return context.kvp()?.map((t) => visitor.visit(t)!) ?? [];
 }
 
 export function getFilteredTypes(

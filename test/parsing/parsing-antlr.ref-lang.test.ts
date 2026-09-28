@@ -629,78 +629,67 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
-  // test("List", () => {
-  //   const list: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-  //     LanguageElan.Instance,
-  //     (p: Parser) => p.list(),
-  //   ];
-  //   testAntlrParse(
-  //     list,
-  //     `[1, 2, 3]`,
-  //     true,
-  //     `[1, 2, 3]`,
-  //     `[1, 2, 3]`,
-  //     `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
-  //     `[1, 2, 3]`,
-  //   );
-  //       testAntlrParse(
-  //     list,
-  //     `[a, b]`,
-  //     true,
-  //   `[a, b]`,
-  //   `[a, b]`,
-  //     `[<el-id>a</el-id>, <el-id>b</el-id>]`,
-  //     `[a, b]`,
-  //   );
-  //   testAntlrParse(list, `[`, false, `[`, "", `[`, "[", `[`);
-  // });
+  test("List", () => {
+    const list: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.list(),
+    ];
+    testAntlrParse(
+      list,
+      `[1, 2, 3]`,
+      true,
+      `[1, 2, 3]`,
+      `[1, 2, 3]`,
+      `[<el-lit>1</el-lit>, <el-lit>2</el-lit>, <el-lit>3</el-lit>]`,
+      `[1, 2, 3]`,
+    );
+    testAntlrParse(
+      list,
+      `[a, b]`,
+      true,
+      `[a, b]`,
+      `[a, b]`,
+      `[<el-id>a</el-id>, <el-id>b</el-id>]`,
+      `[a, b]`,
+    );
+    testAntlrParse(list, `[`, false);
+  });
 
-  // test("Tuple", () => {
-  //   testAntlrParse(getTupleRule, `(3,4)`, true, "", "", "");
-  //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1, true)`, true, "", "", "");
-  //   testAntlrParse(getTupleRule, `((3,4), ("a", true))`, true, "", "", "");
-  //   testAntlrParse(
-  //     getTupleRule,
-  //     `(3,"a", "hello", 4.1, true`,
-  //     false,
-  //     "",
-  //     "",
-  //     "",
-  //   );
-  //   testAntlrParse(getTupleRule, `(3,"a", "hello", 4.1,`, false);
-  //   testAntlrParse(getTupleRule, `tuple[3,4]`, false);
-  //   testAntlrParse(getTupleRule, `(a,b)`, true, "(a,b)", "", "");
-  //   testAntlrParse(getTupleRule, `(`, false);
-  //   testAntlrParse(getTupleRule, `(3`, false);
-  //   testAntlrParse(getTupleRule, `(3)`, false);
-  //   testAntlrParse(getTupleRule, `()`, false);
-  //   testAntlrParse(getTupleRule, `("foo", 3)`, true, '("foo", 3)', "", "", "");
-  //   testAntlrParse(
-  //     getTupleRule,
-  //     `(foo, 3, bar(a), x)`,
-  //     true,
-  //     "(foo, 3, bar(a), x)",
-  //     "",
-  //     "",
-  //   );
-  //   testAntlrParse(getTupleRule, `(foo)`, false);
-  //   testAntlrParse(
-  //     getTupleRule,
-  //     `(foo, 3, bar(a), x`,
-  //     false,
-  //     "(foo, 3, bar(a), x",
-  //     "",
-  //     "",
-  //   );
-  //   testAntlrParse(
-  //     getTupleRule,
-  //     `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-  //     true,
-  //     "",
-  //     "",
-  //     "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-  //   );
-  // });
+  test("Tuple", () => {
+    const tuple: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.tuple(),
+    ];
+    testAntlrParse(
+      tuple,
+      `(3,4)`,
+      true,
+      "(3,4)",
+      "(3, 4)",
+      "(<el-lit>3</el-lit>, <el-lit>4</el-lit>)",
+    );
+    testAntlrParse(tuple, `(3,"a", "hello", 4.1, true)`, true, `(3,"a", "hello", 4.1, true)`);
+    testAntlrParse(tuple, `((3,4), ("a", true))`, true, `((3,4), ("a", true))`);
+    testAntlrParse(tuple, `(3,"a", "hello", 4.1, true`, false);
+    testAntlrParse(tuple, `(3,"a", "hello", 4.1,`, false);
+    testAntlrParse(tuple, `tuple[3,4]`, false);
+    testAntlrParse(tuple, `(a,b)`, true, "(a,b)");
+    testAntlrParse(tuple, `(`, false);
+    testAntlrParse(tuple, `(3`, false);
+    testAntlrParse(tuple, `(3)`, false);
+    testAntlrParse(tuple, `()`, false);
+    testAntlrParse(tuple, `("foo", 3)`, true, '("foo", 3)');
+    testAntlrParse(tuple, `(foo, 3, bar(a), x)`, true, "(foo, 3, bar(a), x)");
+    testAntlrParse(tuple, `(foo)`, false);
+    testAntlrParse(tuple, `(foo, 3, bar(a), x`, false);
+    // testAntlrParse(
+    //   tuple,
+    //   `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+    //   true,
+    //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+    //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+    // ); TODO - not currently working as propertyRef e.g. 'a.attempt' not covered.
+  });
 
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
