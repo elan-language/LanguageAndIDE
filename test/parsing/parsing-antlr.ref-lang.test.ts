@@ -892,7 +892,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `[1,2,3,4,5].asList()`, true, `[1,2,3,4,5].asList()`);
     testAntlrParse(term, `"Hello World".length()`, true, `"Hello World".length()`);
     testAntlrParse(term, `12.3.toString()`, true, `12.3.toString()`);
-    testAntlrParse(term, `bar.`, true, `bar`);
+    testAntlrParse(term, `bar.`, false);
     testAntlrParse(term, `abc`, true, "abc", "");
     testAntlrParse(term, `abc()`, true, "abc()", "");
     testAntlrParse(term, `this`, true, "this", "");
