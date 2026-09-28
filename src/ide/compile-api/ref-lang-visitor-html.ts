@@ -19,6 +19,7 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
+  LitRegExpContext,
   LitStringContext,
   MethodCallContext,
   NegateLogicalContext,
@@ -52,6 +53,7 @@ import {
   kw,
   lit,
   method,
+  regex,
   type,
   visitTypeHelper,
 } from "./parser-helpers";
@@ -109,9 +111,12 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   visitChainable = (ctx: ChainableContext) => {
-    const indices = ctx.index() ?
-      ctx.index().map((i) => this.visit(i)).join("") :
-      "";
+    const indices = ctx.index()
+      ? ctx
+          .index()
+          .map((i) => this.visit(i))
+          .join("")
+      : "";
     const methodCall = ctx.methodCall();
     const identifier = ctx.identifier();
     const prefix = methodCall ? this.visit(methodCall!) : this.visit(identifier!);
@@ -192,5 +197,9 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
 
-  visitThisInstance = (ctx: ThisInstanceContext) => `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
+  visitThisInstance = (ctx: ThisInstanceContext) =>
+    `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
+
+  visitLitRegExp = (ctx: LitRegExpContext) =>
+    this.visitChildren(ctx) ? `/${regex(this.visitChildren(ctx)!.slice(1, -1))}/` : "";
 }

@@ -53,8 +53,9 @@ import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
-import { EnumValueContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
+import { EnumValueContext } from "./PythonParser.js";
+import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
@@ -399,17 +400,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitFloat?: (ctx: LitFloatContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitString?: (ctx: LitStringContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitEnumValue?: (ctx: EnumValueContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.litString`.
+   * Visit a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitString?: (ctx: LitStringContext) => Result;
+  visitLitRegExp?: (ctx: LitRegExpContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.index`.
    * @param ctx the parse tree

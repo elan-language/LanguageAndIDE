@@ -26,7 +26,6 @@ import {
   ParamsListContext,
   TermContext,
   TestNameContext,
-  ThisInstanceContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -103,9 +102,12 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   };
 
   visitChainable = (ctx: ChainableContext) => {
-    const indices = ctx.index() ?
-      ctx.index().map((i) => this.visit(i)).join("") :
-      "";
+    const indices = ctx.index()
+      ? ctx
+          .index()
+          .map((i) => this.visit(i))
+          .join("")
+      : "";
     const methodCall = ctx.methodCall();
     const identifier = ctx.identifier();
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
@@ -167,7 +169,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`;
 
   visitTerm = (ctx: TermContext) =>
-      `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
-  
+    `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
+
   visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
 }

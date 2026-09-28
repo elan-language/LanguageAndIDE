@@ -53,8 +53,9 @@ import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
-import { EnumValueContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
+import { EnumValueContext } from "./PythonParser.js";
+import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
@@ -600,6 +601,16 @@ export class PythonListener implements ParseTreeListener {
    */
   exitLitFloat?: (ctx: LitFloatContext) => void;
   /**
+   * Enter a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   */
+  enterLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   */
+  exitLitString?: (ctx: LitStringContext) => void;
+  /**
    * Enter a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -610,15 +621,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.litString`.
+   * Enter a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    */
-  enterLitString?: (ctx: LitStringContext) => void;
+  enterLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.litString`.
+   * Exit a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    */
-  exitLitString?: (ctx: LitStringContext) => void;
+  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.index`.
    * @param ctx the parse tree

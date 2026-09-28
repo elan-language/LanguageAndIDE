@@ -129,10 +129,8 @@ NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
 LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
-
-LITERAL_FLOAT:
-    LITERAL_INTEGER DOT [0-9]+ ExponentPart?
-;
+LITERAL_FLOAT:   LITERAL_INTEGER DOT [0-9]+ ExponentPart?;
+LITERAL_REGEXP: '/'  (~[/] | CommonCharacter)+  '/' ; //('g'|'m'|'i'|'s'|'x'|'u'|'U`'|'D'|'A'|'J'|'n'|'r')* TODO
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;

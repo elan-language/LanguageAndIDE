@@ -224,3 +224,7 @@ export function id(s: string) {
 export function method(s: string) {
   return wrap(s, "el-method");
 }
+
+export function regex(s: string) {
+  return wrap(s, "el-regex");
+}

@@ -826,6 +826,33 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(thisInstance, `Th`, false);
   });
 
+  test("LitRegExp", () => {
+    const litRegExp: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.litRegExp(),
+    ];
+    testAntlrParse(
+      litRegExp,
+      `/abc+.*/`,
+      true,
+      `/abc+.*/`,
+      "/abc+.*/",
+      `/<el-regex>abc+.*</el-regex>/`,
+    );
+    // TODO
+    // testAntlrParse(
+    //   litRegExp,
+    //   `/abc+.*/gm`,
+    //   true,
+    //   `/abc+.*/gm`,
+    //   "/abc+.*/gm",
+    //   `/<el-regex>abc+.*</el-regex>/<el-regex>gm</el-regex>`,
+    // );
+    // testAntlrParse(litRegExp, `/abc+.*/x`, true, `/abc+.*/`);
+    testAntlrParse(litRegExp, `/abc+.*`, false);
+    testAntlrParse(litRegExp, `//`, false);
+  });
+
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
   //     testAntlrParse(
@@ -921,39 +948,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //   });
   //  });
 
-  //   test("LitRegExp", () => {
-  //     testAntlrParse(
-  //       getLitRegExpRule,
-  //       `/abc+.*/`,
-  //       true,
-  //       `/abc+.*/`,
-  //       "",
-  //       "/abc+.*/",
-  //       `/<el-regex>abc+.*</el-regex>/`,
-  //     );
-  //   });
-  //   test("LitRegExp with flags", () => {
-  //     testAntlrParse(
-  //       getLitRegExpRule,
-  //       `/abc+.*/gm`,
-  //       true,
-  //       `/abc+.*/gm`,
-  //       "",
-  //       "/abc+.*/gm",
-  //       `/<el-regex>abc+.*</el-regex>/<el-regex>gm</el-regex>`,
-  //     );
-  //   });
-  //   test("LitRegExp with invalid flags", () => {
-  //     testAntlrParse(
-  //       getLitRegExpRule,
-  //       `/abc+.*/x`,
-  //       true,
-  //       `/abc+.*/`,
-  //       "x",
-  //       "/abc+.*/",
-  //       `/<el-regex>abc+.*</el-regex>/`,
-  //     );
-  //   });
   //   test("not(a+b)", () => {
   //     testAntlrParse(
   //       expression,

@@ -53,8 +53,9 @@ import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
-import { EnumValueContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { EnumValueContext } from "./RefLangParser.js";
+import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
@@ -604,6 +605,16 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitFloat?: (ctx: LitFloatContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   */
+  enterLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   */
+  exitLitString?: (ctx: LitStringContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -614,15 +625,15 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.litString`.
+   * Enter a parse tree produced by `RefLangParser.litRegExp`.
    * @param ctx the parse tree
    */
-  enterLitString?: (ctx: LitStringContext) => void;
+  enterLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.litString`.
+   * Exit a parse tree produced by `RefLangParser.litRegExp`.
    * @param ctx the parse tree
    */
-  exitLitString?: (ctx: LitStringContext) => void;
+  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.index`.
    * @param ctx the parse tree
