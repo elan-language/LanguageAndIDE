@@ -66,7 +66,7 @@ export class NewAsn extends AbstractAstNode implements AstNode {
       code = `system.initialise(await new ${scope}${type.className}()._initialise(${parametersAsString}))`;
     } else {
       mustBeNewable(typeAsString, this.compileErrors, this.fieldId);
-      code = "";
+      code = `system.initialise(await new ${typeAsString}()._initialise(${parametersAsString}))`;
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

@@ -622,21 +622,29 @@ suite("Parsing Antlr Rules RefLang", () => {
       LanguageElan.Instance,
       (p: Parser) => p.bracketedExpression(),
     ];
-    testAntlrParse(bracketedExpression, "(3 + 4)", true, "(3 + 4)", "(3 + 4)", "");
-
+    testAntlrParse(
+      bracketedExpression,
+      "(3 + 4)",
+      true,
+      "(3 + 4)",
+      "(3 + 4)",
+      "(<el-lit>3</el-lit> + <el-lit>4</el-lit>)",
+      "(3 + 4)",
+    );
     testAntlrParse(bracketedExpression, "", false);
-    testAntlrParse(bracketedExpression, "(3)", true, "(3)", "(3)", "");
-
+    testAntlrParse(bracketedExpression, "(3)", true, "(3)", "(3)", "(<el-lit>3</el-lit>)", "(3)");
     testAntlrParse(
       bracketedExpression,
       "(a and not b)",
       true,
       "(a and not b)",
       "(a and not b)",
-      "",
+      "(<el-id>a</el-id><el-kw> and </el-kw><el-kw>not </el-kw><el-id>b</el-id>)",
+      "(a and not b)",
+      "(a && !b)",
     );
-    testAntlrParse(bracketedExpression, "(3 * 4 + x)", true, "(3 * 4 + x)", "(3*4 + x)", "");
-    testAntlrParse(bracketedExpression, "(3 * (4 + x))", true, "(3 * (4 + x))", "(3*(4 + x))", "");
+    testAntlrParse(bracketedExpression, "(3 * 4 + x)", true, "(3 * 4 + x)", "(3*4 + x)");
+    testAntlrParse(bracketedExpression, "(3 * (4 + x))", true, "(3 * (4 + x))", "(3*(4 + x))");
     testAntlrParse(
       bracketedExpression,
       "(a and not b)",
@@ -724,12 +732,18 @@ suite("Parsing Antlr Rules RefLang", () => {
       `if_(cell, Colour.green, Colour.black)`,
       `if_(cell, Colour.green, Colour.black)`,
       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+      "",
+      "(cell ? Colour.green : Colour.black)",
     );
     testAntlrParse(
       ifExpr,
       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
       true,
       `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+      "",
+      "",
+      "",
+      '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (isYellow(target, n) ? setChar(n, "+") : setChar(n, "_")))',
     );
     testAntlrParse(
       ifExpr,
@@ -794,6 +808,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       "new Foo(1)",
       "new Foo(1)",
       "<el-kw>new</el-kw> <el-type>Foo</el-type>(<el-lit>1</el-lit>)",
+      "",
+      "system.initialise(await new Foo()._initialise(1))",
     );
     testAntlrParse(newInstance, `newFoo()`, false);
     testAntlrParse(
@@ -802,6 +818,9 @@ suite("Parsing Antlr Rules RefLang", () => {
       true,
       "new List<of String>()",
       "new List<of String>()",
+      "",
+      "",
+      "system.initialise(await new _stdlib.List()._initialise())",
     );
   });
 
