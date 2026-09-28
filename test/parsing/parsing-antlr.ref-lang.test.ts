@@ -754,6 +754,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`);
   });
+  test("ThisInstance", () => {
+    const thisInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.thisInstance(),
+    ];
+    testAntlrParse(thisInstance, `this`, true, `this`, "", `this`, "<el-kw>this</el-kw>", `this`);
+    testAntlrParse(thisInstance, `This`, false);
+    testAntlrParse(thisInstance, `th`, false);
+    testAntlrParse(thisInstance, `Th`, false);
+  });
 
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
@@ -1108,78 +1118,5 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `int`,
   //     );
   //   });
-  //   test("ThisInstance", () => {
-  //     testAntlrParse(
-  //       getThisInstanceRule,
-  //       `this`,
-  //       true,
-  //       `this`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>this</el-kw>",
-  //       `this`,
-  //     );
-  //     testAntlrParse(
-  //       getThisInstanceRule,
-  //       `This`,
-  //       true,
-  //       `this`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>this</el-kw>",
-  //       `this`,
-  //     );
-  //     testAntlrParse(getThisInstanceRule, `th`, false);
-  //     testAntlrParse(getThisInstanceRule, `Th`, false);
-  //     testAntlrParse(
-  //       new ThisInstance(fileWithPython()),
-  //       `self`,
-  //       true,
-  //       `self`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>self</el-kw>",
-  //       `self`,
-  //     );
-  //     testAntlrParse(
-  //       new ThisInstance(fileWithVB()),
-  //       `Me`,
-  //       true,
-  //       `Me`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>Me</el-kw>",
-  //       `Me`,
-  //     );
-  //     testAntlrParse(
-  //       new ThisInstance(fileWithVB()),
-  //       `me`,
-  //       true,
-  //       `Me`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>Me</el-kw>",
-  //       `Me`,
-  //     );
-  //     testAntlrParse(
-  //       new ThisInstance(fileWithCS()),
-  //       `this`,
-  //       true,
-  //       `this`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>this</el-kw>",
-  //       `this`,
-  //     );
-  //     testAntlrParse(
-  //       new ThisInstance(fileWithJava()),
-  //       `this`,
-  //       true,
-  //       `this`,
-  //       "",
-  //       `this`,
-  //       "<el-kw>this</el-kw>",
-  //       `this`,
-  //     );
-  //   });
+  //
 });
