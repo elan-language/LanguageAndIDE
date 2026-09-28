@@ -19,6 +19,10 @@ import {
   IdentifierContext,
   IndexContext,
   ListContext,
+  LitBooleanContext,
+  LitFloatContext,
+  LitIntContext,
+  LitStringContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -32,6 +36,10 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
+import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
+import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
+import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -144,5 +152,39 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
     return new LiteralTupleAsn(items, this.fieldId);
+  };
+
+  visitLitInt = (ctx: LitIntContext) => {
+    const binary = ctx.LITERAL_BINARY();
+    const hex = ctx.LITERAL_HEX();
+    const int = ctx.LITERAL_INTEGER();
+
+    const isBinary = binary !== null;
+    const isHex = hex !== null;
+
+    let value = (hex ?? binary ?? int!).getText();
+
+    if (isBinary) {
+      value = value.replace("0b", "");
+    }
+
+    if (isHex) {
+      value = value.replace("0x", "");
+    }
+
+    return new LiteralIntAsn(value, isBinary, isHex, this.fieldId);
+  };
+
+  visitLitFloat = (ctx: LitFloatContext) => {
+    return new LiteralFloatAsn(ctx.getText(), this.fieldId);
+  };
+
+  visitLitBoolean = (ctx: LitBooleanContext) => {
+    const isTrue = ctx.TRUE() !== null;
+    return new LiteralBooleanAsn(isTrue, this.fieldId);
+  };
+
+  visitLitString = (ctx: LitStringContext) => {
+    return new LiteralStringAsn(ctx.getText(), this.fieldId);
   };
 }

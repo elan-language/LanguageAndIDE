@@ -136,9 +136,9 @@ suite("Parsing Antlr Rules RefLang", () => {
       (p: Parser) => p.litString(),
     ];
     testAntlrParse(litString, "", false);
-    testAntlrParse(litString, `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "");
+    testAntlrParse(litString, `"a"`, true, `"a"`, "", `"<el-lit>a</el-lit>"`, "", '"a"');
     testAntlrParse(litString, `"a`, false);
-    testAntlrParse(litString, `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "");
+    testAntlrParse(litString, `"9"`, true, `"9"`, "", `"<el-lit>9</el-lit>"`, "", '"9"');
     testAntlrParse(litString, `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
     testAntlrParse(litString, `" `, false);
     testAntlrParse(litString, `$"{a} `, false);
@@ -184,7 +184,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litInt, "", false);
     testAntlrParse(litInt, "   ", false);
     testAntlrParse(litInt, "123", true, "123", "123", "<el-lit>123</el-lit>", "123", "123");
-    testAntlrParse(litInt, "007", true, "007", "007", "<el-lit>007</el-lit>", "007", "007");
+    testAntlrParse(litInt, "007", true, "007", "007", "<el-lit>007</el-lit>", "007", "7");
     testAntlrParse(litInt, "-123", false); //Should parse as unaryExpression
     testAntlrParse(litInt, "- 123", false);
     testAntlrParse(litInt, "1-23", true, "1", "", "");
@@ -194,8 +194,26 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litInt, "a", false);
     testAntlrParse(litInt, `3 `, true, `3`);
     // Hex
-    testAntlrParse(litInt, "0xfa3c", true, "0xfa3c", "0xfa3c", "<el-lit>0xfa3c</el-lit>", "0xfa3c");
-    testAntlrParse(litInt, "0xfa3C", true, "0xfa3C", "0xfa3c", "<el-lit>0xfa3c</el-lit>", "0xfa3c");
+    testAntlrParse(
+      litInt,
+      "0xfa3c",
+      true,
+      "0xfa3c",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+      "64060",
+    );
+    testAntlrParse(
+      litInt,
+      "0xfa3C",
+      true,
+      "0xfa3C",
+      "0xfa3c",
+      "<el-lit>0xfa3c</el-lit>",
+      "0xfa3c",
+      "64060",
+    );
     testAntlrParse(litInt, "0Xfffe", true, "0");
 
     testAntlrParse(litInt, "0x", false);
@@ -204,7 +222,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litInt, "0xfa3g", true, "0xfa3");
     testAntlrParse(litInt, "&Hfa3", false); //VB format
     // Binary
-    testAntlrParse(litInt, "0b01101", true, "0b01101", "0b01101", "<el-lit>0b01101</el-lit>");
+    testAntlrParse(
+      litInt,
+      "0b01101",
+      true,
+      "0b01101",
+      "0b01101",
+      "<el-lit>0b01101</el-lit>",
+      "0b01101",
+      "13",
+    );
     testAntlrParse(litInt, "0b0", true, "0b0", "0b0", "<el-lit>0b0</el-lit>");
     testAntlrParse(litInt, "0b", false);
     testAntlrParse(litInt, "0b01102", true, "0b0110");
