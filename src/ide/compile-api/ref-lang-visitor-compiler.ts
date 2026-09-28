@@ -27,6 +27,7 @@ import {
   ChainableContext,
   EnumValueContext,
   IdentifierContext,
+  IfExpressionContext,
   IndexContext,
   ListContext,
   LitBooleanContext,
@@ -36,6 +37,7 @@ import {
   MethodCallContext,
   NegateLogicalContext,
   NegateNumericContext,
+  NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
   TupleContext,
@@ -48,6 +50,8 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
+import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -217,5 +221,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const lhs = this.visit(ctx.term())!;
     const rhs = this.visit(ctx.expression())!;
     return new BinaryExprAsn(op, lhs, rhs, this.fieldId, this.scope);
+  };
+
+  visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx.expression(0)!)!;
+    const lhs = this.visit(ctx.expression(1)!)!;
+    const rhs = this.visit(ctx.expression(2)!)!;
+    return new IfExprAsn(condition, lhs, rhs, this.fieldId, this.scope);
+  };
+
+  visitNewInstance = (ctx: NewInstanceContext) => {
+    const type = this.visit(ctx.type()) as TypeAsn;
+    const argList = ctx.argList();
+    const params = argList ? getArgs(this, argList) : [];
+    return new NewAsn(type, params, this.fieldId, this.scope);
   };
 }
