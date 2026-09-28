@@ -474,6 +474,38 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
+  test("ChainHead", () => {
+    const chainHead: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.chainHead(),
+    ];
+    testAntlrParse(chainHead, ``, false);
+    testAntlrParse(chainHead, ` `, false);
+    testAntlrParse(chainHead, `this`, true, "this", "this", "this", "this", "this"); // pending html impl of <el-kw>this<el-kw>
+    testAntlrParse(chainHead, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
+    testAntlrParse(chainHead, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
+    testAntlrParse(
+      chainHead,
+      `[1]`,
+      true,
+      "[1]",
+      "[1]",
+      "[<el-lit>1</el-lit>]",
+      "[1]",
+      "system.list([1])",
+    );
+    // testAntlrParse(
+    //   chainHead,
+    //   `[[1, 1]]`,
+    //   true,
+    //   `[[1, 1]]`,
+    //   `[[1, 1]]`,
+    //   "[[<el-lit>1</el-lit>, <el-lit>1</el-lit>]]",
+    //   `[[1, 1]]`,
+    //   "system.list([1])",
+    // );
+  });
+
   test("BracketedExpression", () => {
     const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,

@@ -2,16 +2,22 @@ import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
+  BracketedExpressionContext,
   ChainableContext,
   IdentifierContext,
   IndexContext,
+  ListContext,
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
@@ -24,8 +30,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
-import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -115,5 +119,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     }
 
     return lastNode!;
+  };
+
+  visitBracketedExpression = (ctx: BracketedExpressionContext) => {
+    const expresssion = this.visit(ctx.expression())!;
+    return new BracketedAsn(expresssion, this.fieldId);
+  };
+
+  visitList = (ctx: ListContext) => {
+    const items = ctx
+      .expressionList()
+      .expression()
+      .map((e) => this.visit(e))
+      .filter((e) => e) as AstNode[];
+    return new LiteralListAsn(items, this.fieldId, this.scope);
   };
 }
