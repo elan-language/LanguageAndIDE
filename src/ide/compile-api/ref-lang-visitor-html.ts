@@ -12,6 +12,7 @@ import {
   IdentifierContext,
   IfExpressionContext,
   IndexContext,
+  KvpContext,
   LambdaContext,
   ListContext,
   LitBooleanContext,
@@ -179,4 +180,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitDictionary = (ctx: DictionaryContext) =>
     `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
+
+  visitKvp = (ctx: KvpContext) => `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`; 
 }

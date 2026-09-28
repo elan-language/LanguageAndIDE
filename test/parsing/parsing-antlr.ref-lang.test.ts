@@ -653,6 +653,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       `[a, b]`,
     );
     testAntlrParse(list, `[`, false);
+    testAntlrParse(list, `[]`, false);
+    testAntlrParse(list, `1, 2, 3`, false);
   });
 
   test("Tuple", () => {
@@ -680,15 +682,47 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(tuple, `()`, false);
     testAntlrParse(tuple, `("foo", 3)`, true, '("foo", 3)');
     testAntlrParse(tuple, `(foo, 3, bar(a), x)`, true, "(foo, 3, bar(a), x)");
-    testAntlrParse(tuple, `(foo)`, false);
     testAntlrParse(tuple, `(foo, 3, bar(a), x`, false);
+    testAntlrParse(tuple, `(`, false);
+    testAntlrParse(tuple, `()`, false);
+    testAntlrParse(tuple, `(foo)`, false);
+    testAntlrParse(tuple, `foo, bar`, false);
+    // TODO - not currently working as propertyRef e.g. 'a.attempt' not covered.
     // testAntlrParse(
     //   tuple,
     //   `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
     //   true,
     //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
     //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-    // ); TODO - not currently working as propertyRef e.g. 'a.attempt' not covered.
+    // );
+  });
+
+  test("Dictionary", () => {
+    const dict: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.dictionary(),
+    ];
+    testAntlrParse(
+      dict,
+      `[["a",1],["b",3]]`,
+      true,
+      `[["a",1],["b",3]]`,
+      `[["a", 1], ["b", 3]]`,
+      `[["<el-lit>a</el-lit>", <el-lit>1</el-lit>], ["<el-lit>b</el-lit>", <el-lit>3</el-lit>]]`,
+    );
+    testAntlrParse(
+      dict,
+      `[["c",true]]`,
+      true,
+      `[["c",true]]`,
+      `[["c", true]]`,
+      `[["<el-lit>c</el-lit>", <el-kw>true</el-kw>]]`,
+    );
+    testAntlrParse(dict, `[`, false);
+    testAntlrParse(dict, `[]`, false);
+    testAntlrParse(dict, `["a",1],["b",3]`, false);
+    testAntlrParse(dict, `["a",1,"b",3]`, false);
+    testAntlrParse(dict, `["a":1,"b":3]`, false);
   });
 
   //   test("String Interpolation", () => {
