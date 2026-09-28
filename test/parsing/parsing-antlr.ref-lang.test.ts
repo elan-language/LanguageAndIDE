@@ -420,7 +420,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(chainable, ``, false);
     testAntlrParse(chainable, ` `, false);
-    //testAntlrParse(chainable, `a[]`, false);
+    testAntlrParse(chainable, `a[]`, false);
     testAntlrParse(
       chainable,
       `a[1]`,
@@ -429,6 +429,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[1]",
       "<el-id>a</el-id>[<el-lit>1</el-lit>]",
       "a[1]",
+      "system.safeIndex(a, 1)",
     );
     testAntlrParse(
       chainable,
@@ -438,6 +439,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[b]",
       "<el-id>a</el-id>[<el-id>b</el-id>]",
       "a[b]",
+      "system.safeIndex(a, b)",
     );
   });
 
