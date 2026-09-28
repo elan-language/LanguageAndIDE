@@ -68,6 +68,9 @@ import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
 import { TupleContext } from "./PythonParser.js";
+import { DictionaryContext } from "./PythonParser.js";
+import { KvpListContext } from "./PythonParser.js";
+import { KvpContext } from "./PythonParser.js";
 import { MethodCallContext } from "./PythonParser.js";
 import { BinaryOperatorContext } from "./PythonParser.js";
 import { NewInstanceContext } from "./PythonParser.js";
@@ -745,6 +748,36 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTuple?: (ctx: TupleContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  enterDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  exitDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  enterKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  exitKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.kvp`.
+   * @param ctx the parse tree
+   */
+  enterKvp?: (ctx: KvpContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.kvp`.
+   * @param ctx the parse tree
+   */
+  exitKvp?: (ctx: KvpContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.methodCall`.
    * @param ctx the parse tree

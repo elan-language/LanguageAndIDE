@@ -257,6 +257,14 @@ binaryExpression:
 tuple:
     OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET
 ;
+dictionary:
+    OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET
+;
+
+kvpList: kvp  (COMMA kvp)*;
+
+kvp: expression COLON expression;
+
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
 binaryOperator:

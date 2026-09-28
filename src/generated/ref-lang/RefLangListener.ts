@@ -69,7 +69,13 @@ import { UnaryExpressionContext } from "./RefLangParser.js";
 import { NegateNumericContext } from "./RefLangParser.js";
 import { NegateLogicalContext } from "./RefLangParser.js";
 import { BinaryExpressionContext } from "./RefLangParser.js";
+import { ListContext } from "./RefLangParser.js";
+import { ExpressionListContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
+import { TupleElementListContext } from "./RefLangParser.js";
+import { DictionaryContext } from "./RefLangParser.js";
+import { KvpListContext } from "./RefLangParser.js";
+import { KvpContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
 import { BinaryOperatorContext } from "./RefLangParser.js";
 import { NewInstanceContext } from "./RefLangParser.js";
@@ -78,7 +84,6 @@ import { TypeGenericContext } from "./RefLangParser.js";
 import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
-import { ListContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { PowerContext } from "./RefLangParser.js";
 
@@ -758,6 +763,26 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitBinaryExpression?: (ctx: BinaryExpressionContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.list`.
+   * @param ctx the parse tree
+   */
+  enterList?: (ctx: ListContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.list`.
+   * @param ctx the parse tree
+   */
+  exitList?: (ctx: ListContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.expressionList`.
+   * @param ctx the parse tree
+   */
+  enterExpressionList?: (ctx: ExpressionListContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.expressionList`.
+   * @param ctx the parse tree
+   */
+  exitExpressionList?: (ctx: ExpressionListContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.tuple`.
    * @param ctx the parse tree
    */
@@ -767,6 +792,46 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTuple?: (ctx: TupleContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.tupleElementList`.
+   * @param ctx the parse tree
+   */
+  enterTupleElementList?: (ctx: TupleElementListContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.tupleElementList`.
+   * @param ctx the parse tree
+   */
+  exitTupleElementList?: (ctx: TupleElementListContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  enterDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  exitDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  enterKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  exitKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.kvp`.
+   * @param ctx the parse tree
+   */
+  enterKvp?: (ctx: KvpContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.kvp`.
+   * @param ctx the parse tree
+   */
+  exitKvp?: (ctx: KvpContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.methodCall`.
    * @param ctx the parse tree
@@ -847,16 +912,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitLambda?: (ctx: LambdaContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.list`.
-   * @param ctx the parse tree
-   */
-  enterList?: (ctx: ListContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.list`.
-   * @param ctx the parse tree
-   */
-  exitList?: (ctx: ListContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree

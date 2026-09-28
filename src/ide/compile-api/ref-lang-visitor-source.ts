@@ -7,11 +7,14 @@ import {
   BracketedExpressionContext,
   ChainableContext,
   CommentTextContext,
+  DictionaryContext,
   EnumValueContext,
   IdentifierContext,
   IfExpressionContext,
   IndexContext,
+  KvpContext,
   LambdaContext,
+  ListContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
@@ -21,6 +24,7 @@ import {
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
+  TupleContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -31,8 +35,10 @@ import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   getArgs,
+  getExpressions,
   getFilteredTypes,
   getFuncTypes,
+  getKVPs,
   getParamDefs,
   visitTypeHelper,
 } from "./parser-helpers";
@@ -144,4 +150,15 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitNewInstance = (ctx: NewInstanceContext) =>
     `new ${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
+
+  visitList = (ctx: ListContext) =>
+    `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
+
+  visitTuple = (ctx: TupleContext) =>
+    `(${getExpressions<string>(this, ctx.tupleElementList()).join(", ")})`;
+
+  visitDictionary = (ctx: DictionaryContext) =>
+    `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
+
+  visitKvp = (ctx: KvpContext) => `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`; 
 }

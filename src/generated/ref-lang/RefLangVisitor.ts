@@ -69,7 +69,13 @@ import { UnaryExpressionContext } from "./RefLangParser.js";
 import { NegateNumericContext } from "./RefLangParser.js";
 import { NegateLogicalContext } from "./RefLangParser.js";
 import { BinaryExpressionContext } from "./RefLangParser.js";
+import { ListContext } from "./RefLangParser.js";
+import { ExpressionListContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
+import { TupleElementListContext } from "./RefLangParser.js";
+import { DictionaryContext } from "./RefLangParser.js";
+import { KvpListContext } from "./RefLangParser.js";
+import { KvpContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
 import { BinaryOperatorContext } from "./RefLangParser.js";
 import { NewInstanceContext } from "./RefLangParser.js";
@@ -78,7 +84,6 @@ import { TypeGenericContext } from "./RefLangParser.js";
 import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
-import { ListContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { PowerContext } from "./RefLangParser.js";
 
@@ -493,11 +498,47 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitBinaryExpression?: (ctx: BinaryExpressionContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.list`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitList?: (ctx: ListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.expressionList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.tuple`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitTuple?: (ctx: TupleContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.tupleElementList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTupleElementList?: (ctx: TupleElementListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.dictionary`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionary?: (ctx: DictionaryContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.kvpList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvpList?: (ctx: KvpListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.kvp`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvp?: (ctx: KvpContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.methodCall`.
    * @param ctx the parse tree
@@ -546,12 +587,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLambda?: (ctx: LambdaContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.list`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitList?: (ctx: ListContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree

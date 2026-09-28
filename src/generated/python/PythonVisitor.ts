@@ -68,6 +68,9 @@ import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
 import { TupleContext } from "./PythonParser.js";
+import { DictionaryContext } from "./PythonParser.js";
+import { KvpListContext } from "./PythonParser.js";
+import { KvpContext } from "./PythonParser.js";
 import { MethodCallContext } from "./PythonParser.js";
 import { BinaryOperatorContext } from "./PythonParser.js";
 import { NewInstanceContext } from "./PythonParser.js";
@@ -484,6 +487,24 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTuple?: (ctx: TupleContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.dictionary`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionary?: (ctx: DictionaryContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.kvpList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvpList?: (ctx: KvpListContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.kvp`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvp?: (ctx: KvpContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.methodCall`.
    * @param ctx the parse tree
