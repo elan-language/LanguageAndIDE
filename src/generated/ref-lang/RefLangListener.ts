@@ -53,8 +53,9 @@ import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
-import { EnumValueContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { EnumValueContext } from "./RefLangParser.js";
+import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
@@ -62,8 +63,9 @@ import { ExpressionContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainHeadContext } from "./RefLangParser.js";
-import { ThisInstanceContext } from "./RefLangParser.js";
+import { ChainTailContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
+import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
 import { NegateNumericContext } from "./RefLangParser.js";
@@ -603,6 +605,16 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitFloat?: (ctx: LitFloatContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   */
+  enterLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   */
+  exitLitString?: (ctx: LitStringContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -613,15 +625,15 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.litString`.
+   * Enter a parse tree produced by `RefLangParser.litRegExp`.
    * @param ctx the parse tree
    */
-  enterLitString?: (ctx: LitStringContext) => void;
+  enterLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.litString`.
+   * Exit a parse tree produced by `RefLangParser.litRegExp`.
    * @param ctx the parse tree
    */
-  exitLitString?: (ctx: LitStringContext) => void;
+  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.index`.
    * @param ctx the parse tree
@@ -693,15 +705,15 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitChainHead?: (ctx: ChainHeadContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.thisInstance`.
+   * Enter a parse tree produced by `RefLangParser.chainTail`.
    * @param ctx the parse tree
    */
-  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  enterChainTail?: (ctx: ChainTailContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.thisInstance`.
+   * Exit a parse tree produced by `RefLangParser.chainTail`.
    * @param ctx the parse tree
    */
-  exitThisInstance?: (ctx: ThisInstanceContext) => void;
+  exitChainTail?: (ctx: ChainTailContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree
@@ -712,6 +724,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitChainable?: (ctx: ChainableContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  exitThisInstance?: (ctx: ThisInstanceContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.bracketedExpression`.
    * @param ctx the parse tree

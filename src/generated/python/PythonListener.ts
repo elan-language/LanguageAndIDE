@@ -53,8 +53,9 @@ import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
-import { EnumValueContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
+import { EnumValueContext } from "./PythonParser.js";
+import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
@@ -62,8 +63,9 @@ import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
-import { ThisInstanceContext } from "./PythonParser.js";
+import { ChainTailContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
@@ -599,6 +601,16 @@ export class PythonListener implements ParseTreeListener {
    */
   exitLitFloat?: (ctx: LitFloatContext) => void;
   /**
+   * Enter a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   */
+  enterLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   */
+  exitLitString?: (ctx: LitStringContext) => void;
+  /**
    * Enter a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -609,15 +621,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.litString`.
+   * Enter a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    */
-  enterLitString?: (ctx: LitStringContext) => void;
+  enterLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.litString`.
+   * Exit a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    */
-  exitLitString?: (ctx: LitStringContext) => void;
+  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.index`.
    * @param ctx the parse tree
@@ -689,15 +701,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitChainHead?: (ctx: ChainHeadContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.thisInstance`.
+   * Enter a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    */
-  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  enterChainTail?: (ctx: ChainTailContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.thisInstance`.
+   * Exit a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    */
-  exitThisInstance?: (ctx: ThisInstanceContext) => void;
+  exitChainTail?: (ctx: ChainTailContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree
@@ -708,6 +720,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitChainable?: (ctx: ChainableContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  exitThisInstance?: (ctx: ThisInstanceContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.bracketedExpression`.
    * @param ctx the parse tree

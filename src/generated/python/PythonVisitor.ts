@@ -53,8 +53,9 @@ import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
-import { EnumValueContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
+import { EnumValueContext } from "./PythonParser.js";
+import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { PropertyRefContext } from "./PythonParser.js";
@@ -62,8 +63,9 @@ import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
-import { ThisInstanceContext } from "./PythonParser.js";
+import { ChainTailContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
@@ -398,17 +400,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitFloat?: (ctx: LitFloatContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.litString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitString?: (ctx: LitStringContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitEnumValue?: (ctx: EnumValueContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.litString`.
+   * Visit a parse tree produced by `PythonParser.litRegExp`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitString?: (ctx: LitStringContext) => Result;
+  visitLitRegExp?: (ctx: LitRegExpContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.index`.
    * @param ctx the parse tree
@@ -452,17 +460,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.thisInstance`.
+   * Visit a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
+  visitChainTail?: (ctx: ChainTailContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.bracketedExpression`.
    * @param ctx the parse tree

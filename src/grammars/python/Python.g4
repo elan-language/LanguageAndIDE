@@ -214,9 +214,9 @@ litValue:
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-enumValue: typeName DOT identifier;
-// litRegExp:;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
+enumValue: typeName DOT identifier;
+litRegExp: LITERAL_REGEXP ;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
@@ -234,20 +234,22 @@ expression:
 
 ifClause: IF expression ( ELIF expression )* ELSE expression;
 
-term: chainHead (DOT chainable)*;
+term: chainHead chainTail?;
 
 chainHead:
     thisInstance
     | bracketedExpression
-    | tuple
     | litValue
     | list
+    | dictionary
+    | tuple
     | chainable
 ;
 
-thisInstance: THIS_INSTANCE;
-
+chainTail: (DOT chainable)+;
 chainable: ( identifier | methodCall) index*;
+
+thisInstance: THIS_INSTANCE;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: (MINUS | NOT) term;

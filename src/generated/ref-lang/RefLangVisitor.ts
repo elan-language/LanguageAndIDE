@@ -53,8 +53,9 @@ import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
-import { EnumValueContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { EnumValueContext } from "./RefLangParser.js";
+import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
@@ -62,8 +63,9 @@ import { ExpressionContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainHeadContext } from "./RefLangParser.js";
-import { ThisInstanceContext } from "./RefLangParser.js";
+import { ChainTailContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
+import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
 import { NegateNumericContext } from "./RefLangParser.js";
@@ -402,17 +404,23 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitFloat?: (ctx: LitFloatContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitString?: (ctx: LitStringContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitEnumValue?: (ctx: EnumValueContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.litString`.
+   * Visit a parse tree produced by `RefLangParser.litRegExp`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitString?: (ctx: LitStringContext) => Result;
+  visitLitRegExp?: (ctx: LitRegExpContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.index`.
    * @param ctx the parse tree
@@ -456,17 +464,23 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * Visit a parse tree produced by `RefLangParser.chainTail`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
+  visitChainTail?: (ctx: ChainTailContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.bracketedExpression`.
    * @param ctx the parse tree
