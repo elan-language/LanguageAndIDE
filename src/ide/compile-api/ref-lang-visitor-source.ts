@@ -24,6 +24,7 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
+  ProcRefContext,
   TermContext,
   TestNameContext,
   TupleContext,
@@ -166,10 +167,15 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
 
   visitKvp = (ctx: KvpContext) =>
-    `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`;
+    `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
   visitTerm = (ctx: TermContext) =>
     `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
 
   visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
+
+  visitProcRef = (ctx: ProcRefContext) =>
+    ctx.term()
+      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.methodName())}`
+      : (this.visit(ctx.methodName()) ?? "");
 }

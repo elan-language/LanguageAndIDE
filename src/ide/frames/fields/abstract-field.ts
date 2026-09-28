@@ -188,12 +188,11 @@ export const methodNameFieldSpec: FieldSpec = new FieldSpec(
   "_ident",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => parser.methodName(), // TODO: g4 does not yet provide for inheritance
+  (parser: PythonParser | RefLangParser) => parser.methodName(),
   (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
   "",
 );
 
-//TODO: this is going to change, significantly, to handle the whole (qualified) method invocation
 export const procRefFieldSpec: FieldSpec = new FieldSpec(
   FieldType.procRef,
   "<i>procedureName</i>",
@@ -201,7 +200,7 @@ export const procRefFieldSpec: FieldSpec = new FieldSpec(
   "_ident",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => parser.procedureCall(), // TODO: g4 does not yet provide for inheritance
+  (parser: PythonParser | RefLangParser) => parser.procRef(),
   (source: CodeSource) => source.readUntil(/\(/),
   "",
 );

@@ -121,9 +121,10 @@ forLoop:
     FOR identifier IN expression COLON NL ordinaryStatement* COMMENT NL
 ;
 
-procedureCall:
-    term CALL_ANNOTATION NL
-; // Compiler to check that term ends in a methodCall, and that the method is a procedure
+procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+    GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
+;
+procRef: (term DOT)? methodName;
 
 tryStatement:
     TRY NL ordinaryStatement* catchStatement ordinaryStatement* COMMENT NL
