@@ -245,7 +245,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       (p: Parser) => p.litFloat(),
     ];
     testAntlrParse(litFloat, "", false);
-    testAntlrParse(litFloat, "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>");
+    testAntlrParse(litFloat, "1.0", true, "1.0", "1.0", "<el-lit>1.0</el-lit>", "1.0", "1");
     testAntlrParse(litFloat, "-1.0", false); // Should parse as a unaryExpression
     testAntlrParse(litFloat, "- 1.0", false);
     testAntlrParse(litFloat, "1.-0", false);
@@ -254,7 +254,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litFloat, "1.", false);
     testAntlrParse(litFloat, "1. ", false);
     // with exponent:
-    testAntlrParse(litFloat, "1.1e5", true, "1.1e5", "1.1e5", "<el-lit>1.1e5</el-lit>");
+    testAntlrParse(
+      litFloat,
+      "1.1e5",
+      true,
+      "1.1e5",
+      "1.1e5",
+      "<el-lit>1.1e5</el-lit>",
+      "1.1e5",
+      "110000",
+    );
     testAntlrParse(litFloat, "1.1e-5", true, "1.1e-5", "1.1e-5", "<el-lit>1.1e-5</el-lit>");
     testAntlrParse(litFloat, "1.1E5", true, "1.1E5", "1.1e5", "<el-lit>1.1e5</el-lit>");
     testAntlrParse(litFloat, "1.1E-5", true, "1.1E-5", "1.1e-5", "<el-lit>1.1e-5</el-lit>");
@@ -265,8 +274,17 @@ suite("Parsing Antlr Rules RefLang", () => {
       LanguageElan.Instance,
       (p: Parser) => p.litBoolean(),
     ];
-    testAntlrParse(litBoolean, `true`, true, `true`, `true`, "<el-kw>true</el-kw>", `true`);
-    testAntlrParse(litBoolean, `false`, true, `false`, `false`, "<el-kw>false</el-kw>", `false`);
+    testAntlrParse(litBoolean, `true`, true, `true`, `true`, "<el-kw>true</el-kw>", `true`, "true");
+    testAntlrParse(
+      litBoolean,
+      `false`,
+      true,
+      `false`,
+      `false`,
+      "<el-kw>false</el-kw>",
+      `false`,
+      "false",
+    );
     testAntlrParse(litBoolean, `True`, false);
   });
 
@@ -283,6 +301,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `Foo.bar`,
       "<el-type>Foo</el-type>.<el-id>bar</el-id>",
       ``,
+      "Foo.bar",
     );
     testAntlrParse(enumValue, `foo.bar`, false);
     testAntlrParse(enumValue, `Foo.Bar`, false);
@@ -339,7 +358,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       (p: Parser) => p.unaryExpression(),
     ];
     testAntlrParse(unaryExpression, "", false);
-    testAntlrParse(unaryExpression, "-3", true, "-3", "-3", "-<el-lit>3</el-lit>");
+    testAntlrParse(unaryExpression, "-3", true, "-3", "-3", "-<el-lit>3</el-lit>", "-3", "(-3)");
     testAntlrParse(unaryExpression, `-345`, true, "-345");
     testAntlrParse(
       unaryExpression,
@@ -348,6 +367,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       " not foo",
       "not foo",
       "<el-kw>not </el-kw><el-id>foo</el-id>",
+      "not foo",
+      "!foo",
     );
     testAntlrParse(unaryExpression, "-", false);
     testAntlrParse(unaryExpression, "+4", false);
@@ -385,6 +406,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       `true and false`,
       `true and false`,
       "<el-kw>true</el-kw><el-kw> and </el-kw><el-kw>false</el-kw>",
+      `true and false`,
+      `true && false`,
     );
     testAntlrParse(
       binaryExpression,
@@ -393,6 +416,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       `a+3`,
       `a + 3`,
       "<el-id>a</el-id> + <el-lit>3</el-lit>",
+      `a + 3`,
+      `a + 3`,
     );
     testAntlrParse(
       binaryExpression,
@@ -401,6 +426,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       `a * 3`,
       `a*3`,
       "<el-id>a</el-id>*<el-lit>3</el-lit>",
+      `a*3`,
+      `a * 3`,
     );
     testAntlrParse(binaryExpression, `"a"+  "b"`, true);
     testAntlrParse(binaryExpression, `3+`, false);
@@ -413,6 +440,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       "3+4",
       "3 + 4",
       "<el-lit>3</el-lit> + <el-lit>4</el-lit>",
+      "3 + 4",
+      "3 + 4",
     );
     testAntlrParse(
       binaryExpression,
@@ -421,6 +450,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       "3>=4",
       "3 >= 4",
       "<el-lit>3</el-lit> >= <el-lit>4</el-lit>",
+      "3 >= 4",
+      "3 >= 4",
     );
     testAntlrParse(binaryExpression, `3>`, false);
     testAntlrParse(binaryExpression, `3> `, false);
@@ -436,6 +467,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       "3 is 4",
       "3 is 4",
       "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
+      "3 is 4",
+      "3 === 4",
     );
     testAntlrParse(
       binaryExpression,
@@ -444,6 +477,8 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a and not b",
       "a and not b",
       "<el-id>a</el-id><el-kw> and </el-kw><el-kw>not </el-kw><el-id>b</el-id>",
+      "a and not b",
+      "a && !b",
     );
   });
 

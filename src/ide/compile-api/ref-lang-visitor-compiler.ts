@@ -1,7 +1,9 @@
 import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { EnumType } from "../../compiler/symbols/enum-type";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
@@ -9,13 +11,21 @@ import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn"
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
+import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
+import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
+import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
+import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
+import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import {
+  BinaryExpressionContext,
   BracketedExpressionContext,
   ChainableContext,
+  EnumValueContext,
   IdentifierContext,
   IndexContext,
   ListContext,
@@ -24,6 +34,8 @@ import {
   LitIntContext,
   LitStringContext,
   MethodCallContext,
+  NegateLogicalContext,
+  NegateNumericContext,
   ParamDefContext,
   ParamsListContext,
   TupleContext,
@@ -36,10 +48,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
-import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
-import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
-import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -186,5 +194,28 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   visitLitString = (ctx: LitStringContext) => {
     return new LiteralStringAsn(ctx.getText(), this.fieldId);
+  };
+
+  visitEnumValue = (ctx: EnumValueContext) => {
+    const id = ctx.identifier().getText();
+    const type = new EnumType(ctx.typeName().getText());
+    return new LiteralEnumAsn(id, type, this.fieldId, this.scope);
+  };
+
+  visitNegateLogical = (ctx: NegateLogicalContext) => {
+    const operand = this.visit(ctx.term())!;
+    return new UnaryExprAsn("not", operand, this.fieldId, this.scope);
+  };
+
+  visitNegateNumeric = (ctx: NegateNumericContext) => {
+    const operand = this.visit(ctx.term())!;
+    return new UnaryExprAsn("-", operand, this.fieldId, this.scope);
+  };
+
+  visitBinaryExpression = (ctx: BinaryExpressionContext) => {
+    const op = ctx.binaryOperator().getText();
+    const lhs = this.visit(ctx.term())!;
+    const rhs = this.visit(ctx.expression())!;
+    return new BinaryExprAsn(op, lhs, rhs, this.fieldId, this.scope);
   };
 }
