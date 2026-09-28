@@ -23,6 +23,7 @@ import { IfStatementContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
+import { ProcRefContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
@@ -219,6 +220,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.procRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProcRef?: (ctx: ProcRefContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.tryStatement`.
    * @param ctx the parse tree

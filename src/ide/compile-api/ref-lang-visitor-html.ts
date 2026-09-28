@@ -27,6 +27,7 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
+  ProcRefContext,
   TermContext,
   TestNameContext,
   ThisInstanceContext,
@@ -190,7 +191,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
 
   visitKvp = (ctx: KvpContext) =>
-    `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`;
+    `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
   visitTerm = (ctx: TermContext) =>
     `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
@@ -202,4 +203,9 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitLitRegExp = (ctx: LitRegExpContext) =>
     this.visitChildren(ctx) ? `/${regex(this.visitChildren(ctx)!.slice(1, -1))}/` : "";
+
+  visitProcRef = (ctx: ProcRefContext) =>
+    ctx.term()
+      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.methodName())}`
+      : (this.visit(ctx.methodName()) ?? "");
 }

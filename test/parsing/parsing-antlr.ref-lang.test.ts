@@ -694,25 +694,24 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(
       dict,
-      `[["a",1],["b",3]]`,
+      `["a":1,"b":3]`,
       true,
-      `[["a",1],["b",3]]`,
-      `[["a", 1], ["b", 3]]`,
-      `[["<el-lit>a</el-lit>", <el-lit>1</el-lit>], ["<el-lit>b</el-lit>", <el-lit>3</el-lit>]]`,
+      `["a":1,"b":3]`,
+      `["a":1, "b":3]`,
+      `["<el-lit>a</el-lit>":<el-lit>1</el-lit>, "<el-lit>b</el-lit>":<el-lit>3</el-lit>]`,
     );
     testAntlrParse(
       dict,
-      `[["c",true]]`,
+      `["c":true]`,
       true,
-      `[["c",true]]`,
-      `[["c", true]]`,
-      `[["<el-lit>c</el-lit>", <el-kw>true</el-kw>]]`,
+      `["c":true]`,
+      `["c":true]`,
+      `["<el-lit>c</el-lit>":<el-kw>true</el-kw>]`,
     );
     testAntlrParse(dict, `[`, false);
     testAntlrParse(dict, `[]`, false);
-    testAntlrParse(dict, `["a",1],["b",3]`, false);
-    testAntlrParse(dict, `["a",1,"b",3]`, false);
-    testAntlrParse(dict, `["a":1,"b":3]`, false);
+    testAntlrParse(dict, `["a":1`, false);
+    testAntlrParse(dict, `["a":1 ,"b"]`, false);
   });
 
   test("Chainable", () => {
@@ -770,7 +769,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `[1,2,3,4,5].asList()`, true, `[1,2,3,4,5].asList()`);
     testAntlrParse(term, `"Hello World".length()`, true, `"Hello World".length()`);
     testAntlrParse(term, `12.3.toString()`, true, `12.3.toString()`);
-    testAntlrParse(term, `bar.`, false);
+    testAntlrParse(term, `bar.`, true, `bar`);
     testAntlrParse(term, `abc`, true, "abc", "");
     testAntlrParse(term, `abc()`, true, "abc()", "");
     testAntlrParse(term, `this`, true, "this", "");
@@ -853,6 +852,25 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litRegExp, `//`, false);
   });
 
+  // test("InstanceProcRef", () => {
+  //   const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+  //     LanguageElan.Instance,
+  //     (p: Parser) => p.procRef(),
+  //   ];
+  //   testAntlrParse(procRef, `foo`, true, "", "");
+  //   testAntlrParse(procRef, `bar.foo`, true, "", "");
+  //   testAntlrParse(procRef, `this.foo`, true, "", "");
+  //   testAntlrParse(procRef, `this.foo.bar`, true, "", ".bar");
+  //   testAntlrParse(procRef, `bar.foo`, true, "", "");
+  //   testAntlrParse(procRef, `bar.`, false);
+  //   testAntlrParse(procRef, `bar.foo.yon`, true, "", ".yon");
+  //   testAntlrParse(procRef, `bar.foo[2]`, true, "", "[2]");
+  //   testAntlrParse(procRef, `bar`, false);
+  //   testAntlrParse(procRef, `global.bar`, true, "", "");
+  //   testAntlrParse(procRef, `library.bar`, true, "", "");
+  //   testAntlrParse(procRef, `x[3].bar`, true, "", "");
+  // });
+
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
   //     testAntlrParse(
@@ -925,28 +943,6 @@ suite("Parsing Antlr Rules RefLang", () => {
   //       `$"<p>{2 + 3}</p>"`,
   //     );
   //
-
-  //   test("InstanceProcRef", () => {
-  //     testAntlrParse(getInstanceProcRefRule, `bar.foo`, true, "", "");
-  //     testAntlrParse(getInstanceProcRefRule, `bar.`, false);
-  //     testAntlrParse(getInstanceProcRefRule, `bar.foo.yon`, true, "", ".yon");
-  //     testAntlrParse(getInstanceProcRefRule, `bar.foo[2]`, true, "", "[2]");
-  //     testAntlrParse(getInstanceProcRefRule, `bar`, false);
-  //     testAntlrParse(getInstanceProcRefRule, `global.bar`, true, "", "");
-  //     testAntlrParse(getInstanceProcRefRule, `library.bar`, true, "", "");
-  //     testAntlrParse(getInstanceProcRefRule, `x[3].bar`, true, "", "");
-  //     testAntlrParse(getInstanceProcRefRule, `this.bar`, false); //As that would be picked up by ThisProcRef
-  //   });
-  //   test("ThisProcRef", () => {
-  //     testAntlrParse(getThisProcRefRule, `this.bar`, true, "", "");
-  //   });
-  //   test("ProcRefNode", () => {
-  //     testAntlrParse(getProcRefRule, `foo`, true, "", "");
-  //     testAntlrParse(getProcRefRule, `bar.foo`, true, "", "");
-  //     testAntlrParse(getProcRefRule, `this.foo`, true, "", "");
-  //     testAntlrParse(getProcRefRule, `this.foo.bar`, true, "", ".bar");
-  //   });
-  //  });
 
   //   test("not(a+b)", () => {
   //     testAntlrParse(

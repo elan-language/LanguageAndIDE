@@ -117,9 +117,12 @@ assignment: GHOSTED? ASSIGN assignable TO expression NL;
 inputStatement:
     GHOSTED? INPUT identifier SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
 ;
-procedureCall:
-    GHOSTED? CALL term NL
-; // Compiler to check that term ends in a methodCall, and that the method is a procedure
+
+procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+    GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
+;
+procRef: (term DOT)? methodName;
+
 throwStatement:
     GHOSTED? THROW typeName litString NL
 ; // TODO: currently has typeNameUse 
@@ -262,7 +265,7 @@ dictionary:
 
 kvpList: kvp  (COMMA kvp)*;
 
-kvp: OPEN_SQ_BRACKET expression COMMA expression CLOSE_SQ_BRACKET;
+kvp: expression COLON expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 

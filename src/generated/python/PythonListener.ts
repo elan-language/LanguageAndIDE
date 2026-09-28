@@ -23,6 +23,7 @@ import { IfStatementContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
+import { ProcRefContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
@@ -300,6 +301,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitProcedureCall?: (ctx: ProcedureCallContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.procRef`.
+   * @param ctx the parse tree
+   */
+  enterProcRef?: (ctx: ProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.procRef`.
+   * @param ctx the parse tree
+   */
+  exitProcRef?: (ctx: ProcRefContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.tryStatement`.
    * @param ctx the parse tree
