@@ -62,8 +62,9 @@ import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
-import { ThisInstanceContext } from "./PythonParser.js";
+import { ChainTailContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
@@ -689,15 +690,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitChainHead?: (ctx: ChainHeadContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.thisInstance`.
+   * Enter a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    */
-  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  enterChainTail?: (ctx: ChainTailContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.thisInstance`.
+   * Exit a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    */
-  exitThisInstance?: (ctx: ThisInstanceContext) => void;
+  exitChainTail?: (ctx: ChainTailContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree
@@ -708,6 +709,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitChainable?: (ctx: ChainableContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  exitThisInstance?: (ctx: ThisInstanceContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.bracketedExpression`.
    * @param ctx the parse tree

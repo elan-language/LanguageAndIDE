@@ -62,8 +62,9 @@ import { ExpressionContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainHeadContext } from "./RefLangParser.js";
-import { ThisInstanceContext } from "./RefLangParser.js";
+import { ChainTailContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
+import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
 import { UnaryExpressionContext } from "./RefLangParser.js";
 import { NegateNumericContext } from "./RefLangParser.js";
@@ -456,17 +457,23 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * Visit a parse tree produced by `RefLangParser.chainTail`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
+  visitChainTail?: (ctx: ChainTailContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.bracketedExpression`.
    * @param ctx the parse tree

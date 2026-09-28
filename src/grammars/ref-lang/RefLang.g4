@@ -215,7 +215,7 @@ expression:
 
 ifExpression:  IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET;
 
-term: chainHead (DOT chainable)*;
+term: chainHead chainTail?;
 
 chainHead:
     thisInstance
@@ -227,9 +227,12 @@ chainHead:
     | chainable
 ;
 
+chainTail: (DOT chainable)+;
+chainable: ( identifier | methodCall) index*;
+
 thisInstance: THIS_INSTANCE;
 
-chainable: ( identifier | methodCall) index*;
+
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: negateNumeric | negateLogical;

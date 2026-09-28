@@ -20,6 +20,14 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, `-3`, true); // negateNumeric
     testAntlrParse(expression, `not foo()`, true); // unaryExpression
     testAntlrParse(expression, `3*a`, true); // binaryExpression
+    testAntlrParse(
+      expression,
+      `foo.bar`,
+      true,
+      `foo.bar`,
+      `foo.bar`,
+      `<el-id>foo</el-id>.<el-id>bar</el-id>`,
+    ); //property on a reference
     testAntlrParse(expression, `foo()[c].bar(3)[b]`, true, "foo()[c].bar(3)[b]"); // chainable
     testAntlrParse(expression, "", false);
     testAntlrParse(expression, "", false);
@@ -413,34 +421,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(index, `[a]`, true, "[a]", "[a]", "[<el-id>a</el-id>]", "[a]", "a");
   });
 
-  test("Chainable", () => {
-    const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.chainable(),
-    ];
-    testAntlrParse(chainable, ``, false);
-    testAntlrParse(chainable, ` `, false);
-    //testAntlrParse(chainable, `a[]`, false);
-    testAntlrParse(
-      chainable,
-      `a[1]`,
-      true,
-      "a[1]",
-      "a[1]",
-      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
-      "a[1]",
-    );
-    testAntlrParse(
-      chainable,
-      `a[b]`,
-      true,
-      "a[b]",
-      "a[b]",
-      "<el-id>a</el-id>[<el-id>b</el-id>]",
-      "a[b]",
-    );
-  });
-
   test("BracketedExpression", () => {
     const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
@@ -687,14 +667,13 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(tuple, `()`, false);
     testAntlrParse(tuple, `(foo)`, false);
     testAntlrParse(tuple, `foo, bar`, false);
-    // TODO - not currently working as propertyRef e.g. 'a.attempt' not covered.
-    // testAntlrParse(
-    //   tuple,
-    //   `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-    //   true,
-    //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-    //   "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
-    // );
+    testAntlrParse(
+      tuple,
+      `(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+      true,
+      "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+      "(setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))",
+    );
   });
 
   test("Dictionary", () => {
@@ -723,6 +702,57 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(dict, `["a",1],["b",3]`, false);
     testAntlrParse(dict, `["a",1,"b",3]`, false);
     testAntlrParse(dict, `["a":1,"b":3]`, false);
+  });
+
+  test("Chainable", () => {
+    const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.chainable(),
+    ];
+    testAntlrParse(chainable, `b`, true, "b", "b", "<el-id>b</el-id>", "b");
+    testAntlrParse(chainable, ``, false);
+    testAntlrParse(chainable, ` `, false);
+    testAntlrParse(chainable, `a[]`, false);
+
+    testAntlrParse(
+      chainable,
+      `a[1]`,
+      true,
+      "a[1]",
+      "a[1]",
+      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
+      "a[1]",
+    );
+    testAntlrParse(
+      chainable,
+      `a[b]`,
+      true,
+      "a[b]",
+      "a[b]",
+      "<el-id>a</el-id>[<el-id>b</el-id>]",
+      "a[b]",
+    );
+  });
+  test("ChainHead", () => {
+    const chainHead: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.chainHead(),
+    ];
+    testAntlrParse(chainHead, `a`, true, `a`, `a`, `<el-id>a</el-id>`);
+  });
+  test("ChainTail", () => {
+    const chainTail: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.chainTail(),
+    ];
+    testAntlrParse(chainTail, `.b`, true, `.b`, `.b`, `.<el-id>b</el-id>`);
+  });
+  test("Term", () => {
+    const term: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.term(),
+    ];
+    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`);
   });
 
   //   test("String Interpolation", () => {

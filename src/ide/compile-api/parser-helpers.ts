@@ -4,18 +4,21 @@ import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
   ArgumentContext as PythonArgumentContext,
   ExpressionContext as PythonExpressionContext,
+  KvpContext as PythonKvpContext,
   ParamDefContext as PythonParamDefContext,
   PythonParser,
   TypeContext as PythonTypeContext,
+  ChainableContext as PythonChainableContext,
 } from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
   ArgumentContext as RefLangArgumentContext,
   ExpressionContext as RefLangExpressionContext,
+  KvpContext as RefLangKvpContext,
   ParamDefContext as RefLangParamDefContext,
   RefLangParser,
   TypeContext as RefLangTypeContext,
-  KvpContext as RefLangKvpContext,
+  ChainableContext as RefLangChainableContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
@@ -147,6 +150,13 @@ export function getArgs<T>(
   return context.argument()?.map((t) => visitor.visit(t)!) ?? [];
 }
 
+export function getChainables<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { chainable: () => (PythonChainableContext | RefLangChainableContext)[] },
+) {
+  return context.chainable()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
 export function getExpressions<T>(
   visitor: ParseTreeVisitor<T>,
   context: { expression: () => (PythonExpressionContext | RefLangExpressionContext)[] },
@@ -156,7 +166,7 @@ export function getExpressions<T>(
 
 export function getKVPs<T>(
   visitor: ParseTreeVisitor<T>,
-  context: { kvp: () => RefLangKvpContext[] }, //TODO add Python equiv
+  context: { kvp: () => (PythonKvpContext | RefLangKvpContext)[] }, //TODO add Python equiv
 ) {
   return context.kvp()?.map((t) => visitor.visit(t)!) ?? [];
 }

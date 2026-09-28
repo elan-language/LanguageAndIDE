@@ -6,6 +6,7 @@ import {
   BinaryOperatorContext,
   BracketedExpressionContext,
   ChainableContext,
+  ChainTailContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
@@ -25,6 +26,7 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
+  TermContext,
   TestNameContext,
   TupleContext,
   TypeContext,
@@ -39,6 +41,7 @@ import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
   getArgs,
+  getChainables,
   getExpressions,
   getFilteredTypes,
   getFuncTypes,
@@ -105,13 +108,12 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   visitChainable = (ctx: ChainableContext) => {
-    const indices = ctx
-      .index()
-      .map((i) => this.visit(i))
-      .join("");
+    const indices = ctx.index() ?
+      ctx.index().map((i) => this.visit(i)).join("") :
+      "";
     const methodCall = ctx.methodCall();
     const identifier = ctx.identifier();
-    const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
+    const prefix = methodCall ? this.visit(methodCall!) : this.visit(identifier!);
     return `${prefix}${indices}`;
   };
 
@@ -181,5 +183,11 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitDictionary = (ctx: DictionaryContext) =>
     `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
 
-  visitKvp = (ctx: KvpContext) => `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`; 
+  visitKvp = (ctx: KvpContext) =>
+    `[${this.visit(ctx.expression(0)!)}, ${this.visit(ctx.expression(1)!)}]`;
+
+  visitTerm = (ctx: TermContext) =>
+    `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
+
+  visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
 }

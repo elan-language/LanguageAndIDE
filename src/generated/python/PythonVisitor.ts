@@ -62,8 +62,9 @@ import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
 import { ChainHeadContext } from "./PythonParser.js";
-import { ThisInstanceContext } from "./PythonParser.js";
+import { ChainTailContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
+import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
@@ -452,17 +453,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitChainHead?: (ctx: ChainHeadContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.thisInstance`.
+   * Visit a parse tree produced by `PythonParser.chainTail`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
+  visitChainTail?: (ctx: ChainTailContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.bracketedExpression`.
    * @param ctx the parse tree

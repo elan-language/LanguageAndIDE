@@ -234,20 +234,22 @@ expression:
 
 ifClause: IF expression ( ELIF expression )* ELSE expression;
 
-term: chainHead (DOT chainable)*;
+term: chainHead chainTail?;
 
 chainHead:
     thisInstance
     | bracketedExpression
-    | tuple
     | litValue
     | list
+    | dictionary
+    | tuple
     | chainable
 ;
 
-thisInstance: THIS_INSTANCE;
-
+chainTail: (DOT chainable)+;
 chainable: ( identifier | methodCall) index*;
+
+thisInstance: THIS_INSTANCE;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: (MINUS | NOT) term;
