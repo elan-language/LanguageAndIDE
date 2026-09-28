@@ -522,7 +522,37 @@ suite("Parsing Antlr Rules RefLang", () => {
     //   "[[<el-lit>1</el-lit>, <el-lit>1</el-lit>]]",
     //   `[[1, 1]]`,
     //   "system.list([1])",
-    // );
+    // ); dictionary ?
+    testAntlrParse(
+      chainHead,
+      `(1, a, "fred")`,
+      true,
+      `(1, a, "fred")`,
+      `(1, a, "fred")`,
+      `(<el-lit>1</el-lit>, <el-id>a</el-id>, "<el-lit>fred</el-lit>")`,
+      `(1, a, "fred")`,
+      'system.tuple([1, a, "fred"])',
+    );
+    testAntlrParse(
+      chainHead,
+      `a[1]`,
+      true,
+      `a[1]`,
+      `a[1]`,
+      `<el-id>a</el-id>[<el-lit>1</el-lit>]`,
+      `a[1]`,
+      `system.safeIndex(a, 1)`,
+    );
+    testAntlrParse(
+      chainHead,
+      `f()[1]`,
+      true,
+      "f()[1]",
+      "f()[1]",
+      "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
+      "f()[1]",
+      "system.safeIndex(f(), 1)",
+    );
   });
 
   test("BracketedExpression", () => {

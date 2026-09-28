@@ -10,6 +10,7 @@ import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
+import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
@@ -21,6 +22,7 @@ import {
   MethodCallContext,
   ParamDefContext,
   ParamsListContext,
+  TupleContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -133,5 +135,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
     return new LiteralListAsn(items, this.fieldId, this.scope);
+  };
+
+  visitTuple = (ctx: TupleContext) => {
+    const items = ctx
+      .tupleElementList()
+      .expression()
+      .map((e) => this.visit(e))
+      .filter((e) => e) as AstNode[];
+    return new LiteralTupleAsn(items, this.fieldId);
   };
 }
