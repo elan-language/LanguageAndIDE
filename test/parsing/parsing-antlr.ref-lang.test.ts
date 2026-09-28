@@ -441,6 +441,37 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[b]",
       "system.safeIndex(a, b)",
     );
+    testAntlrParse(chainable, `a`, true, "a", "a", "<el-id>a</el-id>", "a", "a");
+    testAntlrParse(
+      chainable,
+      `f()`,
+      true,
+      "f()",
+      "f()",
+      "<el-method>f</el-method>()",
+      "f()",
+      "f()",
+    );
+    testAntlrParse(
+      chainable,
+      `f()[1]`,
+      true,
+      "f()[1]",
+      "f()[1]",
+      "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
+      "f()[1]",
+      "system.safeIndex(f(), 1)",
+    );
+    testAntlrParse(
+      chainable,
+      `f()[1][2]`,
+      true,
+      "f()[1][2]",
+      "f()[1][2]",
+      "<el-method>f</el-method>()[<el-lit>1</el-lit>][<el-lit>2</el-lit>]",
+      "f()[1][2]",
+      "system.safeIndex(system.safeIndex(f(), 1), 2)",
+    );
   });
 
   test("BracketedExpression", () => {
