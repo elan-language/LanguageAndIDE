@@ -24,7 +24,6 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
-  ProcRefContext,
   TermContext,
   TestNameContext,
   TupleContext,
@@ -173,9 +172,4 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
 
   visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
-
-  visitProcRef = (ctx: ProcRefContext) =>
-    ctx.term()
-      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.methodName())}`
-      : (this.visit(ctx.methodName()) ?? "");
 }

@@ -973,7 +973,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `[1,2,3,4,5].asList()`, true, `[1,2,3,4,5].asList()`);
     testAntlrParse(term, `"Hello World".length()`, true, `"Hello World".length()`);
     testAntlrParse(term, `12.3.toString()`, true, `12.3.toString()`);
-    testAntlrParse(term, `bar.`, true, `bar`);
+    testAntlrParse(term, `bar.`, false);
     testAntlrParse(term, `abc`, true, "abc", "");
     testAntlrParse(term, `abc()`, true, "abc()", "");
     testAntlrParse(term, `this`, true, "this", "");
@@ -1056,24 +1056,22 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litRegExp, `//`, false);
   });
 
-  // test("InstanceProcRef", () => {
-  //   const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-  //     LanguageElan.Instance,
-  //     (p: Parser) => p.procRef(),
-  //   ];
-  //   testAntlrParse(procRef, `foo`, true, "", "");
-  //   testAntlrParse(procRef, `bar.foo`, true, "", "");
-  //   testAntlrParse(procRef, `this.foo`, true, "", "");
-  //   testAntlrParse(procRef, `this.foo.bar`, true, "", ".bar");
-  //   testAntlrParse(procRef, `bar.foo`, true, "", "");
-  //   testAntlrParse(procRef, `bar.`, false);
-  //   testAntlrParse(procRef, `bar.foo.yon`, true, "", ".yon");
-  //   testAntlrParse(procRef, `bar.foo[2]`, true, "", "[2]");
-  //   testAntlrParse(procRef, `bar`, false);
-  //   testAntlrParse(procRef, `global.bar`, true, "", "");
-  //   testAntlrParse(procRef, `library.bar`, true, "", "");
-  //   testAntlrParse(procRef, `x[3].bar`, true, "", "");
-  // });
+  test("InstanceProcRef", () => {
+    const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguageElan.Instance,
+      (p: Parser) => p.procRef(),
+    ];
+    testAntlrParse(procRef, `foo`, true);
+    testAntlrParse(procRef, `bar.foo`, true, `bar.foo`, `bar.foo`);
+    testAntlrParse(procRef, `this.foo`, true, "", "");
+    testAntlrParse(procRef, `this.foo.bar`, true, "this.foo.bar");
+    testAntlrParse(procRef, `bar.foo`, true, "", "");
+    testAntlrParse(procRef, `bar.`, false);
+    testAntlrParse(procRef, `bar.foo.yon`, true, `bar.foo.yon`);
+    testAntlrParse(procRef, `bar.foo[2]`, true, `bar.foo[2]`);
+    testAntlrParse(procRef, `bar`, true, `bar`);
+    testAntlrParse(procRef, `x[3].bar`, true, "", "");
+  });
 
   //   test("String Interpolation", () => {
   //     testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
