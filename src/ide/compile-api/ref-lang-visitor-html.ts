@@ -6,7 +6,6 @@ import {
   BinaryOperatorContext,
   BracketedExpressionContext,
   ChainableContext,
-  ChainTailContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
@@ -43,7 +42,6 @@ import { Language } from "../frames/frame-interfaces/language";
 import {
   escapeMultipleSpaces,
   getArgs,
-  getChainables,
   getExpressions,
   getFilteredTypes,
   getFuncTypes,
@@ -130,7 +128,9 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
   visitLitString = (ctx: LitStringContext) =>
-    this.visitChildren(ctx) ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"` : "";
+    this.visitChildren(ctx)
+      ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"`
+      : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
@@ -192,10 +192,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  visitTerm = (ctx: TermContext) =>
-    `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
-
-  visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
+  visitTerm = (_ctx: TermContext) => "";
+  // `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
 
   visitThisInstance = (ctx: ThisInstanceContext) =>
     `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;

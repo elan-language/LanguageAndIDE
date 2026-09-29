@@ -8,7 +8,6 @@ import {
   ParamDefContext as PythonParamDefContext,
   PythonParser,
   TypeContext as PythonTypeContext,
-  ChainableContext as PythonChainableContext,
 } from "../../generated/python/PythonParser";
 import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
@@ -18,7 +17,6 @@ import {
   ParamDefContext as RefLangParamDefContext,
   RefLangParser,
   TypeContext as RefLangTypeContext,
-  ChainableContext as RefLangChainableContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
@@ -148,13 +146,6 @@ export function getArgs<T>(
   context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] },
 ) {
   return context.argument()?.map((t) => visitor.visit(t)!) ?? [];
-}
-
-export function getChainables<T>(
-  visitor: ParseTreeVisitor<T>,
-  context: { chainable: () => (PythonChainableContext | RefLangChainableContext)[] },
-) {
-  return context.chainable()?.map((t) => visitor.visit(t)!) ?? [];
 }
 
 export function getExpressions<T>(

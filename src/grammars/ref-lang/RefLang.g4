@@ -219,25 +219,18 @@ expression:
 
 ifExpression:  IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET;
 
-term: chainHead chainTail?;
-
-chainHead:
-    thisInstance
+term: thisInstance
     | bracketedExpression
     | litValue
     | list
     | dictionary
     | tuple
     | chainable
+    | term DOT chainable
 ;
-
-chainTail: (DOT chainable)+;
 chainable: ( identifier | methodCall) index*;
 
 thisInstance: THIS_INSTANCE;
-
-
-
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: negateNumeric | negateLogical;
 negateNumeric: MINUS term;

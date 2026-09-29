@@ -6,7 +6,6 @@ import {
   BinaryOperatorContext,
   BracketedExpressionContext,
   ChainableContext,
-  ChainTailContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
@@ -37,7 +36,6 @@ import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   getArgs,
-  getChainables,
   getExpressions,
   getFilteredTypes,
   getFuncTypes,
@@ -168,8 +166,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  visitTerm = (ctx: TermContext) =>
-    `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
-
-  visitChainTail = (ctx: ChainTailContext) => `.${getChainables<string>(this, ctx).join(".")}`;
+  visitTerm = (_ctx: TermContext) => "";
+  //
+  //`${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
 }

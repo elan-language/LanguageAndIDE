@@ -622,68 +622,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     );
   });
 
-  test("ChainHead", () => {
-    const chainHead: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.chainHead(),
-    ];
-    testAntlrParse(chainHead, ``, false);
-    testAntlrParse(chainHead, ` `, false);
-    testAntlrParse(chainHead, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this"); // pending html impl of <el-kw>this<el-kw>
-    testAntlrParse(chainHead, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
-    testAntlrParse(chainHead, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
-    testAntlrParse(
-      chainHead,
-      `[1]`,
-      true,
-      "[1]",
-      "[1]",
-      "[<el-lit>1</el-lit>]",
-      "[1]",
-      "system.list([1])",
-    );
-    // testAntlrParse(
-    //   chainHead,
-    //   `[[1, 1]]`,
-    //   true,
-    //   `[[1, 1]]`,
-    //   `[[1, 1]]`,
-    //   "[[<el-lit>1</el-lit>, <el-lit>1</el-lit>]]",
-    //   `[[1, 1]]`,
-    //   "system.list([1])",
-    // ); dictionary ?
-    testAntlrParse(
-      chainHead,
-      `(1, a, "fred")`,
-      true,
-      `(1, a, "fred")`,
-      `(1, a, "fred")`,
-      `(<el-lit>1</el-lit>, <el-id>a</el-id>, "<el-lit>fred</el-lit>")`,
-      `(1, a, "fred")`,
-      'system.tuple([1, a, "fred"])',
-    );
-    testAntlrParse(
-      chainHead,
-      `a[1]`,
-      true,
-      `a[1]`,
-      `a[1]`,
-      `<el-id>a</el-id>[<el-lit>1</el-lit>]`,
-      `a[1]`,
-      `system.safeIndex(a, 1)`,
-    );
-    testAntlrParse(
-      chainHead,
-      `f()[1]`,
-      true,
-      "f()[1]",
-      "f()[1]",
-      "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
-      "f()[1]",
-      "system.safeIndex(f(), 1)",
-    );
-  });
-
   test("BracketedExpression", () => {
     const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
@@ -1021,25 +959,67 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[b]",
     );
   });
-  test("ChainHead", () => {
-    const chainHead: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.chainHead(),
-    ];
-    testAntlrParse(chainHead, `a`, true, `a`, `a`, `<el-id>a</el-id>`);
-  });
-  test("ChainTail", () => {
-    const chainTail: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.chainTail(),
-    ];
-    testAntlrParse(chainTail, `.b`, true, `.b`, `.b`, `.<el-id>b</el-id>`);
-  });
+
   test("Term", () => {
     const term: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.term(),
     ];
+    testAntlrParse(term, ``, false);
+    testAntlrParse(term, ` `, false);
+    testAntlrParse(term, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this"); // pending html impl of <el-kw>this<el-kw>
+    testAntlrParse(term, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
+    testAntlrParse(term, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
+    testAntlrParse(
+      term,
+      `[1]`,
+      true,
+      "[1]",
+      "[1]",
+      "[<el-lit>1</el-lit>]",
+      "[1]",
+      "system.list([1])",
+    );
+    // testAntlrParse(
+    //   term,
+    //   `[[1, 1]]`,
+    //   true,
+    //   `[[1, 1]]`,
+    //   `[[1, 1]]`,
+    //   "[[<el-lit>1</el-lit>, <el-lit>1</el-lit>]]",
+    //   `[[1, 1]]`,
+    //   "system.list([1])",
+    // ); dictionary ?
+    testAntlrParse(
+      term,
+      `(1, a, "fred")`,
+      true,
+      `(1, a, "fred")`,
+      `(1, a, "fred")`,
+      `(<el-lit>1</el-lit>, <el-id>a</el-id>, "<el-lit>fred</el-lit>")`,
+      `(1, a, "fred")`,
+      'system.tuple([1, a, "fred"])',
+    );
+    testAntlrParse(
+      term,
+      `a[1]`,
+      true,
+      `a[1]`,
+      `a[1]`,
+      `<el-id>a</el-id>[<el-lit>1</el-lit>]`,
+      `a[1]`,
+      `system.safeIndex(a, 1)`,
+    );
+    testAntlrParse(
+      term,
+      `f()[1]`,
+      true,
+      "f()[1]",
+      "f()[1]",
+      "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
+      "f()[1]",
+      "system.safeIndex(f(), 1)",
+    );
     testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "a.b");
     testAntlrParse(term, `length(bar)`, true, `length(bar)`, "", "", "length(bar)");
     testAntlrParse(term, `bar.length()`, true, `bar.length()`, "", "", "bar.length()");

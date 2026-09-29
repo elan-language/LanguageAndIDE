@@ -63,8 +63,6 @@ import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
-import { ChainHeadContext } from "./RefLangParser.js";
-import { ChainTailContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
@@ -705,26 +703,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTerm?: (ctx: TermContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.chainHead`.
-   * @param ctx the parse tree
-   */
-  enterChainHead?: (ctx: ChainHeadContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.chainHead`.
-   * @param ctx the parse tree
-   */
-  exitChainHead?: (ctx: ChainHeadContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.chainTail`.
-   * @param ctx the parse tree
-   */
-  enterChainTail?: (ctx: ChainTailContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.chainTail`.
-   * @param ctx the parse tree
-   */
-  exitChainTail?: (ctx: ChainTailContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree
