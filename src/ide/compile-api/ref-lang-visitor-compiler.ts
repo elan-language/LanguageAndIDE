@@ -53,6 +53,8 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
+import { ChainableAsn } from "../../compiler/syntax-nodes/chainable-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -132,41 +134,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const identifier = ctx.identifier();
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
 
-    let precedingNode = prefix!;
-    let lastNode = prefix;
-
-    for (const index of indices) {
-      index.updateScopeAndChain(this.scope, precedingNode);
-      precedingNode = index;
-      lastNode = index;
-    }
-
-    return lastNode!;
+    return new ChainableAsn(prefix!, indices, this.fieldId, this.scope);
   };
 
-  // visitChainTail = (ctx: ChainTailContext) => {
-  //   const chainables = ctx
-  //     .chainable()
-  //     .map((c) => this.visit(c))
-  //     .map((n) => (n instanceof IdDefAsn ? new IdAsn(n.id, n.fieldId, n.scope) : n))
-  //     .filter((c) => c) as AstNode[];
-  //   return new CsvAsn(chainables, this.fieldId);
-  // };
+  visitTerm = (ctx: TermContext) => {
+    const hasDot = !!ctx.DOT();
 
-  visitTerm = (_ctx: TermContext) => {
-    // const head = ctx.chainHead();
-    // const tail = ctx.chainTail();
+    if (hasDot) {
+      const lhs = this.visit(ctx.term()!)!;
+      const rhs = this.visit(ctx.chainable()!)!;
+      return new TermAsn(lhs, rhs, this.fieldId, this.scope);
+    }
 
-    // const headAsn = this.visit(head)!;
-    // const tailAsn = tail ? this.visit(tail)! : undefined;
-    // let returnNode = headAsn;
-
-    // if (isAstCollectionNode(tailAsn)) {
-    //   returnNode = new CompositeAsn(headAsn, tailAsn, this.fieldId, this.scope);
-    // }
-
-    // return returnNode;
-    throw new Error();
+    return new TermAsn(this.visitChildren(ctx)!, undefined, this.fieldId, this.scope);
   };
 
   visitBracketedExpression = (ctx: BracketedExpressionContext) => {
