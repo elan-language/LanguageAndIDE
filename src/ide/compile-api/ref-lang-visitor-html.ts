@@ -130,7 +130,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
   visitLitString = (ctx: LitStringContext) =>
-    this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
+    this.visitChildren(ctx) ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"` : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
