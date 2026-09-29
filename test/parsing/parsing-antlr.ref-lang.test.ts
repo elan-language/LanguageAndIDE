@@ -1123,18 +1123,18 @@ suite("Parsing Antlr Rules RefLang", () => {
       true,
       `/abc+.*/`,
       "/abc+.*/",
-      `/<el-regex>abc+.*</el-regex>/`,
+      `<el-regex>/abc+.*/</el-regex>`,
     );
-    // TODO
-    // testAntlrParse(
-    //   litRegExp,
-    //   `/abc+.*/gm`,
-    //   true,
-    //   `/abc+.*/gm`,
-    //   "/abc+.*/gm",
-    //   `/<el-regex>abc+.*</el-regex>/<el-regex>gm</el-regex>`,
-    // );
-    // testAntlrParse(litRegExp, `/abc+.*/x`, true, `/abc+.*/`);
+    testAntlrParse(
+      litRegExp,
+      `/abc+.*/gm`,
+      true,
+      `/abc+.*/gm`,
+      "/abc+.*/gm",
+      `<el-regex>/abc+.*/gm</el-regex>`,
+    );
+    testAntlrParse(litRegExp, `/abc+.*/ gm`, true, `/abc+.*/`);
+    testAntlrParse(litRegExp, `/abc+.*/v`, true, `/abc+.*/`);
     testAntlrParse(litRegExp, `/abc+.*`, false);
     testAntlrParse(litRegExp, `//`, false);
   });

@@ -205,5 +205,5 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
 
   visitLitRegExp = (ctx: LitRegExpContext) =>
-    this.visitChildren(ctx) ? `/${regex(this.visitChildren(ctx)!.slice(1, -1))}/` : "";
+    this.visitChildren(ctx) ? regex(this.visitChildren(ctx)!) : "";
 }
