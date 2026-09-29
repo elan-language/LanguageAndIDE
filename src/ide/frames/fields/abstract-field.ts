@@ -298,7 +298,10 @@ export abstract class AbstractField implements Selectable, Field {
       }
       case "v": {
         if (e.modKey.control) {
-          const toPaste = e.optionalData ?? "";
+          // Replace control characters in the range
+          // NUL (\x00) to US (\x1F) with spaces
+          // This includes newlines (\r and \n) and tabs
+          const toPaste = (e.optionalData ?? "").replace(/[\x00-\x1F]/g, " ");
           this.deleteExistingSelection();
           for (const c of toPaste) {
             this.processInput(c);
