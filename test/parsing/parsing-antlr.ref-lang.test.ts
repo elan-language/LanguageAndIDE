@@ -967,9 +967,9 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(term, ``, false);
     testAntlrParse(term, ` `, false);
-    testAntlrParse(term, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this"); // pending html impl of <el-kw>this<el-kw>
-    testAntlrParse(term, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
     testAntlrParse(term, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
+    testAntlrParse(term, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
+    testAntlrParse(term, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this");
     testAntlrParse(
       term,
       `[1]`,
@@ -980,16 +980,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "[1]",
       "system.list([1])",
     );
-    // testAntlrParse(
-    //   term,
-    //   `[[1, 1]]`,
-    //   true,
-    //   `[[1, 1]]`,
-    //   `[[1, 1]]`,
-    //   "[[<el-lit>1</el-lit>, <el-lit>1</el-lit>]]",
-    //   `[[1, 1]]`,
-    //   "system.list([1])",
-    // ); dictionary ?
+    testAntlrParse(
+      term,
+      `["a":1]`,
+      true,
+      `["a":1]`,
+      `["a":1]`,
+      `["<el-lit>a</el-lit>":<el-lit>1</el-lit>]`,
+      ``,
+      "system.list([1])",
+    );
     testAntlrParse(
       term,
       `(1, a, "fred")`,

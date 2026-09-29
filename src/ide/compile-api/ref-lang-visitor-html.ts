@@ -192,8 +192,10 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  visitTerm = (_ctx: TermContext) => "";
-  // `${this.visit(ctx.chainHead())}${ctx.chainTail() ? this.visit(ctx.chainTail()!) : ""}`;
+  visitTerm = (ctx: TermContext) =>
+    ctx.term()
+      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
+      : (this.visitChildren(ctx) ?? "");
 
   visitThisInstance = (ctx: ThisInstanceContext) =>
     `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
