@@ -31,6 +31,7 @@ import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BooleanTypeAsn } from "./boolean-type-asn";
@@ -68,7 +69,7 @@ export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {
   return !!n && "rootSymbolType" in n;
 }
 
-export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
+export function isAstCollectionNode(n: AstNode | undefined): n is AstCollectionNode {
   return !!n && "items" in n;
 }
 
@@ -82,6 +83,10 @@ export function isRootNode(n?: Scope | AstNode): n is RootAstNode {
 
 export function isAstTypeNode(n?: AstNode): n is AstTypeNode {
   return !!n && "compileToEmptyObjectCode" in n;
+}
+
+export function isAstChainedNode(n?: AstNode): n is ChainedAsn {
+  return !!n && "updateScopeAndChain" in n;
 }
 
 // type type-guards

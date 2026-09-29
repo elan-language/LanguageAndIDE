@@ -8,7 +8,7 @@ export class IdDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,
-    private readonly scope: Scope,
+    public readonly scope: Scope,
   ) {
     super();
   }

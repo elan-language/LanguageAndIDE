@@ -2,14 +2,21 @@ import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
-import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import {
+  getTypeName,
+  getTypeNameById,
+  isAstCollectionNode,
+} from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
+import { CompositeAsn } from "../../compiler/syntax-nodes/composite-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
+import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
 import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
@@ -18,6 +25,7 @@ import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
 import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
+import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
@@ -25,6 +33,7 @@ import {
   BinaryExpressionContext,
   BracketedExpressionContext,
   ChainableContext,
+  ChainTailContext,
   EnumValueContext,
   IdentifierContext,
   IfExpressionContext,
@@ -40,6 +49,7 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamsListContext,
+  TermContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -50,8 +60,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
-import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -141,6 +149,30 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     }
 
     return lastNode!;
+  };
+
+  visitChainTail = (ctx: ChainTailContext) => {
+    const chainables = ctx
+      .chainable()
+      .map((c) => this.visit(c))
+      .map((n) => (n instanceof IdDefAsn ? new IdAsn(n.id, n.fieldId, n.scope) : n))
+      .filter((c) => c) as AstNode[];
+    return new CsvAsn(chainables, this.fieldId);
+  };
+
+  visitTerm = (ctx: TermContext) => {
+    const head = ctx.chainHead();
+    const tail = ctx.chainTail();
+
+    const headAsn = this.visit(head)!;
+    const tailAsn = tail ? this.visit(tail)! : undefined;
+    let returnNode = headAsn;
+
+    if (isAstCollectionNode(tailAsn)) {
+      returnNode = new CompositeAsn(headAsn, tailAsn, this.fieldId, this.scope);
+    }
+
+    return returnNode;
   };
 
   visitBracketedExpression = (ctx: BracketedExpressionContext) => {

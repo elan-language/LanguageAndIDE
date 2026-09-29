@@ -813,7 +813,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "",
       "",
       "",
-      '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (isYellow(target, n) ? setChar(n, "+") : setChar(n, "_")))',
+      '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (attempt.isYellow(target, n) ? attempt.setChar(n, "+") : attempt.setChar(n, "_")))',
     );
     testAntlrParse(
       ifExpr,
@@ -1042,7 +1042,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       LanguageElan.Instance,
       (p: Parser) => p.term(),
     ];
-    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`);
+    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "a.b");
     testAntlrParse(term, `length(bar)`, true, `length(bar)`);
     testAntlrParse(term, `bar.length()`, true, `bar.length()`);
     testAntlrParse(term, `bar.asList()`, true, `bar.asList()`);
