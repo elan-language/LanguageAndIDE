@@ -610,7 +610,7 @@ export function testAntlrParse(
   elanSource = "",
   html = "",
   exprt = "",
-  _objectCode = ""
+  objectCode = ""
 ) {
   const [language, rule] = languageAndRule;
   const parser = getParserByLanguage(language, text);
@@ -637,9 +637,9 @@ export function testAntlrParse(
     assert.equal(getVisitorSourceByLanguage(language).visit(context), exprt);
   }
 
-  // if (objectCode && objectCode !== "") {
-  //   assert.equal(getVisitorCompilerByLanguage(language, "", rootScope).visit(context)?.compile(), objectCode);
-  // }
+  if (objectCode && objectCode !== "") {
+    assert.equal(getVisitorCompilerByLanguage(language, "", rootScope).visit(context)?.compile(), objectCode);
+  }
 }
 
 export function fileWithPython(): FileImpl {
