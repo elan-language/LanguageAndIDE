@@ -9,8 +9,8 @@ import {
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
+  ExpressionContext,
   IdentifierContext,
-  IfExpressionContext,
   IndexContext,
   KvpContext,
   LambdaContext,
@@ -170,11 +170,15 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return `${kw(lambda)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 
-  visitIfExpression = (ctx: IfExpressionContext) => {
-    const condition = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
-    const exprIfTrue = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
-    const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
-    return `${method("if_")}(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
+  visitExpression = (ctx: ExpressionContext) => {
+    if (ctx.expression().length > 0) {
+      const condition = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
+      const exprIfTrue = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
+      const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
+      return `${method("if_")}(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
+    } else {
+      return this.visitChildren(ctx) ?? "";
+    }
   };
 
   visitNewInstance = (ctx: NewInstanceContext) =>

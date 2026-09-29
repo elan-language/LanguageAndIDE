@@ -61,7 +61,6 @@ import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
-import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
@@ -450,12 +449,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitExpression?: (ctx: ExpressionContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.ifExpression`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIfExpression?: (ctx: IfExpressionContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.term`.
    * @param ctx the parse tree

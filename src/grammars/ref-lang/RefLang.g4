@@ -214,10 +214,8 @@ expression:
     | unaryExpression
     | term
     | binaryExpression
-    | ifExpression
+    | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
 ;
-
-ifExpression:  IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET;
 
 term: thisInstance
     | bracketedExpression

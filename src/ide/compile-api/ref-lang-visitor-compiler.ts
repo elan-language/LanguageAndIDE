@@ -28,8 +28,8 @@ import {
   BracketedExpressionContext,
   ChainableContext,
   EnumValueContext,
+  ExpressionContext,
   IdentifierContext,
-  IfExpressionContext,
   IndexContext,
   ListContext,
   LitBooleanContext,
@@ -249,11 +249,15 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new BinaryExprAsn(op, lhs, rhs, this.fieldId, this.scope);
   };
 
-  visitIfExpression = (ctx: IfExpressionContext) => {
-    const condition = this.visit(ctx.expression(0)!)!;
-    const lhs = this.visit(ctx.expression(1)!)!;
-    const rhs = this.visit(ctx.expression(2)!)!;
-    return new IfExprAsn(condition, lhs, rhs, this.fieldId, this.scope);
+  visitExpression = (ctx: ExpressionContext) => {
+    if (ctx.expression().length > 0) {
+      const condition = this.visit(ctx.expression(0)!)!;
+      const lhs = this.visit(ctx.expression(1)!)!;
+      const rhs = this.visit(ctx.expression(2)!)!;
+      return new IfExprAsn(condition, lhs, rhs, this.fieldId, this.scope);
+    } else {
+      return this.visitChildren(ctx)!;
+    }
   };
 
   visitNewInstance = (ctx: NewInstanceContext) => {

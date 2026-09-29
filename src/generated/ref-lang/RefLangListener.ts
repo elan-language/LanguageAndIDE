@@ -61,7 +61,6 @@ import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
-import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
@@ -683,16 +682,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitExpression?: (ctx: ExpressionContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.ifExpression`.
-   * @param ctx the parse tree
-   */
-  enterIfExpression?: (ctx: IfExpressionContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.ifExpression`.
-   * @param ctx the parse tree
-   */
-  exitIfExpression?: (ctx: IfExpressionContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.term`.
    * @param ctx the parse tree
