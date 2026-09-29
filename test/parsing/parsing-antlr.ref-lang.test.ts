@@ -171,16 +171,14 @@ suite("Parsing Antlr Rules RefLang", () => {
       `"&#123;curly braces&#125;"`,
       `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
     );
-    // TODO litString with embedded Html tags
-    // testAntlrParse(
-    //   litString,
-    //   `"<p>abc</p>"`,
-    //   true,
-    //   `"<p>abc</p>"`,
-    //   `"<p>abc</p>"`,
-    //   `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
-    // );
-    //   test("String Interpolation", () => {
+    testAntlrParse(
+      litString,
+      `"<p>abc</p>"`,
+      true,
+      `"<p>abc</p>"`,
+      `"<p>abc</p>"`,
+      `"<el-lit>&lt;p&gt;abc&lt;/p&gt;</el-lit>"`,
+    );
   });
 
   // TODO Interpolated strings
