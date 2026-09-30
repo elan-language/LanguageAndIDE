@@ -1,3 +1,6 @@
+
+
+
 lexer grammar RefLang_Lexer;
 
 // START common keywords
@@ -98,7 +101,6 @@ THIS_INSTANCE: 'this';
 //START Common token names; common definitions
 // In other langs, the casing may be different
 
-
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
 CLOSE_BRACE: '}';
@@ -129,8 +131,23 @@ NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
 LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
-LITERAL_FLOAT:   LITERAL_INTEGER DOT [0-9]+ ExponentPart?;
-LITERAL_REGEXP: '/'  (~[/] | CommonCharacter)+  '/' ('g'|'m'|'i'|'s'|'x'|'u'|'U`'|'D'|'A'|'J'|'n'|'r')*;
+LITERAL_FLOAT: LITERAL_INTEGER DOT [0-9]+ ExponentPart?;
+LITERAL_REGEXP:
+    '/' (~[/] | CommonCharacter)+ '/' (
+        'g'
+        | 'm'
+        | 'i'
+        | 's'
+        | 'x'
+        | 'u'
+        | 'U`'
+        | 'D'
+        | 'A'
+        | 'J'
+        | 'n'
+        | 'r'
+    )*
+;
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
@@ -154,7 +171,7 @@ ELSE_IF_ANNOTATION: '# else if';
 PROPERTY_ANNOTATION: '# property';
 FUNCTION_METHOD_ANNOTATION: '# function method';
 PROCEDURE_METHOD_ANNOTATION: '# procedure method';
-COMMENT: '#' ~('\r' | '\n')*; 
+COMMENT: '#' ~('\r' | '\n')*;
 
 fragment InputCharacter: ~[\r\n\u0085];
 
@@ -164,7 +181,7 @@ fragment NewLineCharacter:
     | '\u0085' // Next Line 
 ;
 
-fragment ExponentPart: ('e'|'E') (PLUS | MINUS)? [0-9][0-9]*;
+fragment ExponentPart: ('e' | 'E') (PLUS | MINUS)? [0-9][0-9]*;
 
 fragment CommonCharacter:
     SimpleEscapeSequence

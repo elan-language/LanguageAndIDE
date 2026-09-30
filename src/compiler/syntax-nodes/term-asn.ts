@@ -7,6 +7,7 @@ export class TermAsn extends AbstractAstNode {
   constructor(
     public readonly lhs: AstNode,
     public readonly rhs: AstNode | undefined,
+    public readonly index: AstNode | undefined,
     public readonly fieldId: string,
     public readonly scope: Scope,
   ) {
@@ -18,7 +19,13 @@ export class TermAsn extends AbstractAstNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return this.rhs ? `${this.lhs.compile()}.${this.rhs.compile()}` : this.lhs.compile();
+    let code = this.rhs ? `${this.lhs.compile()}.${this.rhs.compile()}` : this.lhs.compile();
+
+    if (this.index) {
+      code = `system.safeIndex(${code}, ${this.index.compile()})`;
+    }
+
+    return code;
   }
 
   symbolType() {

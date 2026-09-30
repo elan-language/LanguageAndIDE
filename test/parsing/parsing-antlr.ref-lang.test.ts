@@ -568,27 +568,27 @@ suite("Parsing Antlr Rules RefLang", () => {
     ];
     testAntlrParse(chainable, ``, false);
     testAntlrParse(chainable, ` `, false);
-    testAntlrParse(chainable, `a[]`, false);
-    testAntlrParse(
-      chainable,
-      `a[1]`,
-      true,
-      "a[1]",
-      "a[1]",
-      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
-      "a[1]",
-      "system.safeIndex(a, 1)",
-    );
-    testAntlrParse(
-      chainable,
-      `a[b]`,
-      true,
-      "a[b]",
-      "a[b]",
-      "<el-id>a</el-id>[<el-id>b</el-id>]",
-      "a[b]",
-      "system.safeIndex(a, b)",
-    );
+    //testAntlrParse(chainable, `a[]`, false);
+    // testAntlrParse(
+    //   chainable,
+    //   `a[1]`,
+    //   true,
+    //   "a[1]",
+    //   "a[1]",
+    //   "<el-id>a</el-id>[<el-lit>1</el-lit>]",
+    //   "a[1]",
+    //   "system.safeIndex(a, 1)",
+    // );
+    // testAntlrParse(
+    //   chainable,
+    //   `a[b]`,
+    //   true,
+    //   "a[b]",
+    //   "a[b]",
+    //   "<el-id>a</el-id>[<el-id>b</el-id>]",
+    //   "a[b]",
+    //   "system.safeIndex(a, b)",
+    // );
     testAntlrParse(chainable, `a`, true, "a", "a", "<el-id>a</el-id>", "a", "a");
     testAntlrParse(
       chainable,
@@ -600,26 +600,26 @@ suite("Parsing Antlr Rules RefLang", () => {
       "f()",
       "f()",
     );
-    testAntlrParse(
-      chainable,
-      `f()[1]`,
-      true,
-      "f()[1]",
-      "f()[1]",
-      "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
-      "f()[1]",
-      "system.safeIndex(f(), 1)",
-    );
-    testAntlrParse(
-      chainable,
-      `f()[1][2]`,
-      true,
-      "f()[1][2]",
-      "f()[1][2]",
-      "<el-method>f</el-method>()[<el-lit>1</el-lit>][<el-lit>2</el-lit>]",
-      "f()[1][2]",
-      "system.safeIndex(system.safeIndex(f(), 1), 2)",
-    );
+    // testAntlrParse(
+    //   chainable,
+    //   `f()[1]`,
+    //   true,
+    //   "f()[1]",
+    //   "f()[1]",
+    //   "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
+    //   "f()[1]",
+    //   "system.safeIndex(f(), 1)",
+    // );
+    // testAntlrParse(
+    //   chainable,
+    //   `f()[1][2]`,
+    //   true,
+    //   "f()[1][2]",
+    //   "f()[1][2]",
+    //   "<el-method>f</el-method>()[<el-lit>1</el-lit>][<el-lit>2</el-lit>]",
+    //   "f()[1][2]",
+    //   "system.safeIndex(system.safeIndex(f(), 1), 2)",
+    // );
   });
 
   test("BracketedExpression", () => {
@@ -937,26 +937,26 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(chainable, `b`, true, "b", "b", "<el-id>b</el-id>", "b");
     testAntlrParse(chainable, ``, false);
     testAntlrParse(chainable, ` `, false);
-    testAntlrParse(chainable, `a[]`, false);
+    // testAntlrParse(chainable, `a[]`, false);
 
-    testAntlrParse(
-      chainable,
-      `a[1]`,
-      true,
-      "a[1]",
-      "a[1]",
-      "<el-id>a</el-id>[<el-lit>1</el-lit>]",
-      "a[1]",
-    );
-    testAntlrParse(
-      chainable,
-      `a[b]`,
-      true,
-      "a[b]",
-      "a[b]",
-      "<el-id>a</el-id>[<el-id>b</el-id>]",
-      "a[b]",
-    );
+    // testAntlrParse(
+    //   chainable,
+    //   `a[1]`,
+    //   true,
+    //   "a[1]",
+    //   "a[1]",
+    //   "<el-id>a</el-id>[<el-lit>1</el-lit>]",
+    //   "a[1]",
+    // );
+    // testAntlrParse(
+    //   chainable,
+    //   `a[b]`,
+    //   true,
+    //   "a[b]",
+    //   "a[b]",
+    //   "<el-id>a</el-id>[<el-id>b</el-id>]",
+    //   "a[b]",
+    // );
   });
 
   test("Term", () => {
@@ -1082,8 +1082,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "",
       "",
       "",
-      "system.safeIndex(a, 1).b().subList(1, 2).system.safeIndex(system.safeIndex(c(d), e), f)",
-      //"system.safeIndex(system.safeIndex(system.safeIndex(a, 1).b().subList(1, 2).c(d), e), f)",
+      "system.safeIndex(system.safeIndex(system.safeIndex(a, 1).b().subList(1, 2).c(d), e), f)",
     );
     testAntlrParse(term, `this.a[1].b().c(d)[e]`, true, `this.a[1].b().c(d)[e]`, "");
     testAntlrParse(

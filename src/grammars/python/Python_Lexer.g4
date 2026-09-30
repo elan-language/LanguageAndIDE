@@ -1,3 +1,6 @@
+
+
+
 lexer grammar Python_Lexer;
 
 // START common keywords
@@ -125,10 +128,10 @@ NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
 LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
-LITERAL_FLOAT:
-    LITERAL_INTEGER DOT [0-9]+ ExponentPart?
-;
-LITERAL_REGEXP: '/'  (~[/] | CommonCharacter)+  '/'; // ('g'|'m'|'i'|'s'|'x'|'u'|'U`'|'D'|'A'|'J'|'n'|'r')* TODO
+LITERAL_FLOAT: LITERAL_INTEGER DOT [0-9]+ ExponentPart?;
+LITERAL_REGEXP:
+    '/' (~[/] | CommonCharacter)+ '/'
+; // ('g'|'m'|'i'|'s'|'x'|'u'|'U`'|'D'|'A'|'J'|'n'|'r')* TODO
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
@@ -152,7 +155,7 @@ ELSE_IF_ANNOTATION: '# else if';
 PROPERTY_ANNOTATION: '# property';
 FUNCTION_METHOD_ANNOTATION: '# function method';
 PROCEDURE_METHOD_ANNOTATION: '# procedure method';
-COMMENT: '#' ~('\r' | '\n')*; 
+COMMENT: '#' ~('\r' | '\n')*;
 
 fragment InputCharacter: ~[\r\n\u0085];
 
@@ -162,7 +165,8 @@ fragment NewLineCharacter:
     | '\u0085' // Next Line 
 ;
 
-fragment ExponentPart: ('e'|'E') (PLUS | MINUS)? LITERAL_INTEGER;
+fragment ExponentPart: ('e' | 'E') (PLUS | MINUS)? LITERAL_INTEGER
+;
 
 fragment CommonCharacter:
     SimpleEscapeSequence
@@ -244,6 +248,3 @@ fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
 //END Common token names; common definitions
-
-
-

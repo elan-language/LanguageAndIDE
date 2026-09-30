@@ -121,7 +121,8 @@ forLoop:
     FOR identifier IN expression COLON NL ordinaryStatement* COMMENT NL
 ;
 
-procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+procedureCall:
+        //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
 procRef: term;
@@ -217,7 +218,7 @@ litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
 enumValue: typeName DOT identifier;
-litRegExp: LITERAL_REGEXP ;
+litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
@@ -233,7 +234,7 @@ expression:
     | expression ifClause
 ;
 
-ifClause: IF expression ( ELIF expression )* ELSE expression;
+ifClause: IF expression ( ELIF expression)* ELSE expression;
 
 term: chainHead chainTail?;
 
@@ -260,11 +261,9 @@ binaryExpression:
 tuple:
     OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET
 ;
-dictionary:
-    OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET
-;
+dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
 
-kvpList: kvp  (COMMA kvp)*;
+kvpList: kvp (COMMA kvp)*;
 
 kvp: expression COLON expression;
 

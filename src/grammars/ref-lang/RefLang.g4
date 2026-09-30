@@ -118,7 +118,8 @@ inputStatement:
     GHOSTED? INPUT identifier SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
 ;
 
-procedureCall: //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+procedureCall:
+        //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
 procRef: term;
@@ -201,7 +202,7 @@ litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
 enumValue: typeName DOT identifier;
-litRegExp: LITERAL_REGEXP ;
+litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
@@ -217,16 +218,20 @@ expression:
     | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
 ;
 
-term: thisInstance
+term:
+    thisInstance
     | bracketedExpression
     | litValue
     | list
     | dictionary
     | tuple
-    | chainable
+    | identifier
+    | methodCall
+    | term index
     | term DOT chainable
 ;
-chainable: ( identifier | methodCall) index*;
+
+chainable: identifier | methodCall;
 
 thisInstance: THIS_INSTANCE;
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
@@ -238,23 +243,19 @@ binaryExpression:
     term binaryOperator expression
 ; // ? expression binaryOperator expression ?
 
-list:
-    OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET
-;
+list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
 
 expressionList: expression (COMMA expression)*;
 
-tuple:
-    OPEN_BRACKET tupleElementList CLOSE_BRACKET
-;
+tuple: OPEN_BRACKET tupleElementList CLOSE_BRACKET;
 
-tupleElementList: expression (COMMA expression)+; // min 2 elements
+tupleElementList:
+    expression (COMMA expression)+
+; // min 2 elements
 
-dictionary:
-    OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET
-;
+dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
 
-kvpList: kvp  (COMMA kvp)*;
+kvpList: kvp (COMMA kvp)*;
 
 kvp: expression COLON expression;
 

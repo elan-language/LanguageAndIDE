@@ -100,16 +100,16 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   };
 
   visitChainable = (ctx: ChainableContext) => {
-    const indices = ctx.index()
-      ? ctx
-          .index()
-          .map((i) => this.visit(i))
-          .join("")
-      : "";
+    // const indices = ctx.index()
+    //   ? ctx
+    //       .index()
+    //       .map((i) => this.visit(i))
+    //       .join("")
+    //   : "";
     const methodCall = ctx.methodCall();
     const identifier = ctx.identifier();
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
-    return `${prefix}${indices}`;
+    return `${prefix}`;
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>
@@ -171,7 +171,9 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
   visitTerm = (ctx: TermContext) =>
-    ctx.term()
+    ctx.DOT()
       ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
-      : (this.visitChildren(ctx) ?? "");
+      : ctx.term()
+        ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
+        : (this.visitChildren(ctx) ?? "");
 }

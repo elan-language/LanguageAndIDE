@@ -12,7 +12,9 @@ import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
+import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
 import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
 import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
 import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
@@ -21,12 +23,12 @@ import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
+import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import {
   BinaryExpressionContext,
   BracketedExpressionContext,
-  ChainableContext,
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
@@ -55,10 +57,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
-import { ChainableAsn } from "../../compiler/syntax-nodes/chainable-asn";
-import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
-import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -129,17 +127,17 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new IndexAsn(expr, this.fieldId, this.scope);
   };
 
-  visitChainable = (ctx: ChainableContext) => {
-    const indices = ctx
-      .index()
-      .map((i) => this.visit(i))
-      .filter((i) => i) as IndexAsn[];
-    const methodCall = ctx.methodCall();
-    const identifier = ctx.identifier();
-    const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
+  // visitChainable = (ctx: ChainableContext) => {
+  //   const indices = ctx
+  //     .index()
+  //     .map((i) => this.visit(i))
+  //     .filter((i) => i) as IndexAsn[];
+  //   const methodCall = ctx.methodCall();
+  //   const identifier = ctx.identifier();
+  //   const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
 
-    return new ChainableAsn(prefix!, indices, this.fieldId, this.scope);
-  };
+  //   return new ChainableAsn(prefix!, indices, this.fieldId, this.scope);
+  // };
 
   visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();
@@ -147,10 +145,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     if (hasDot) {
       const lhs = this.visit(ctx.term()!)!;
       const rhs = this.visit(ctx.chainable()!)!;
-      return new TermAsn(lhs, rhs, this.fieldId, this.scope);
+      return new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
     }
 
-    return new TermAsn(this.visitChildren(ctx)!, undefined, this.fieldId, this.scope);
+    const index = ctx.index();
+
+    if (index) {
+      const lhs = this.visit(ctx.term()!)!;
+      const idx = this.visit(index)!;
+
+      return new TermAsn(lhs, undefined, idx, this.fieldId, this.scope);
+    }
+
+    return new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
   };
 
   visitBracketedExpression = (ctx: BracketedExpressionContext) => {
