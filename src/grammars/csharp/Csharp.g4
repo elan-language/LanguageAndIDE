@@ -117,9 +117,7 @@ tryStatement: //TODO - see #3444
 assert:
     ASSERT DOT ARE_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET SEMI_COLON NL
 ;
-letStatement:
-    VAR identifier SINGLE_EQUALS expression SEMI_COLON COMMENT NL
-;
+
 print:
     PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
 ;
