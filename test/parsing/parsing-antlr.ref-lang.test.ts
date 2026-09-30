@@ -730,32 +730,32 @@ suite("Parsing Antlr Rules RefLang", () => {
       LanguageElan.Instance,
       (p: Parser) => (p as RefLangParser).expression(),
     ];
-    // testAntlrParse(
-    //   expr,
-    //   `if_(cell, Colour.green, Colour.black)`,
-    //   true,
-    //   `if_(cell, Colour.green, Colour.black)`,
-    //   `if_(cell, Colour.green, Colour.black)`,
-    //   "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
-    //   "",
-    //   "(cell ? Colour.green : Colour.black)",
-    // );
-    // testAntlrParse(
-    //   expr,
-    //   `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-    //   true,
-    //   `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-    //   "",
-    //   "",
-    //   "",
-    //   '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (attempt.isYellow(target, n) ? attempt.setChar(n, "+") : attempt.setChar(n, "_")))',
-    // );
-    // testAntlrParse(
-    //   expr,
-    //   `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-    //   true,
-    //   `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-    // );
+    testAntlrParse(
+      expr,
+      `if_(cell, Colour.green, Colour.black)`,
+      true,
+      `if_(cell, Colour.green, Colour.black)`,
+      `if_(cell, Colour.green, Colour.black)`,
+      "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+      "",
+      "(cell ? Colour.green : Colour.black)",
+    );
+    testAntlrParse(
+      expr,
+      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+      true,
+      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
+      "",
+      "",
+      "",
+      '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (attempt.isYellow(target, n) ? attempt.setChar(n, "+") : attempt.setChar(n, "_")))',
+    );
+    testAntlrParse(
+      expr,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+      true,
+      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+    );
     testAntlrParse(
       expr,
       `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
