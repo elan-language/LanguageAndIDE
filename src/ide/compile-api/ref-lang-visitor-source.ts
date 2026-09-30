@@ -5,7 +5,6 @@ import {
   BinaryExpressionContext,
   BinaryOperatorContext,
   BracketedExpressionContext,
-  ChainableContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
@@ -101,19 +100,6 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   visitIndex = (ctx: IndexContext) => {
     const expr = this.visit(ctx.expression()) ?? "";
     return `[${expr}]`;
-  };
-
-  visitChainable = (ctx: ChainableContext) => {
-    // const indices = ctx.index()
-    //   ? ctx
-    //       .index()
-    //       .map((i) => this.visit(i))
-    //       .join("")
-    //   : "";
-    const methodCall = ctx.methodCall();
-    const identifier = ctx.identifierUse();
-    const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
-    return `${prefix}`;
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>

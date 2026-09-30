@@ -113,12 +113,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return paramsList;
   };
 
-  visitParamDef = (ctx: ParamDefContext) => {
-    const identifier = ctx.identifierDef().NAME_STARTING_LC().getText();
-    const type = this.visit(ctx.type())!;
-
-    return new ParamDefAsn(identifier, type, this.fieldId, this.scope);
-  };
+  visitParamDef = (ctx: ParamDefContext) =>
+    new ParamDefAsn(
+      ctx.identifierDef().NAME_STARTING_LC().getText(),
+      this.visit(ctx.type())!,
+      this.fieldId,
+      this.scope,
+    );
 
   visitMethodCall = (ctx: MethodCallContext) => {
     const args = ctx.argList();
@@ -128,22 +129,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new FuncCallAsn(name, argList, this.fieldId, this.scope);
   };
 
-  visitIndex = (ctx: IndexContext) => {
-    const expr = this.visit(ctx.expression()) ?? EmptyAsn.Instance;
-    return new IndexAsn(expr, this.fieldId, this.scope);
-  };
-
-  // visitChainable = (ctx: ChainableContext) => {
-  //   const indices = ctx
-  //     .index()
-  //     .map((i) => this.visit(i))
-  //     .filter((i) => i) as IndexAsn[];
-  //   const methodCall = ctx.methodCall();
-  //   const identifier = ctx.identifier();
-  //   const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
-
-  //   return new ChainableAsn(prefix!, indices, this.fieldId, this.scope);
-  // };
+  visitIndex = (ctx: IndexContext) =>
+    new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
 
   visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();
@@ -166,10 +153,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
   };
 
-  visitBracketedExpression = (ctx: BracketedExpressionContext) => {
-    const expresssion = this.visit(ctx.expression())!;
-    return new BracketedAsn(expresssion, this.fieldId);
-  };
+  visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+    new BracketedAsn(this.visit(ctx.expression())!, this.fieldId);
 
   visitList = (ctx: ListContext) => {
     const items = ctx
@@ -180,12 +165,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralListAsn(items, this.fieldId, this.scope);
   };
 
-  visitKvp = (ctx: KvpContext) => {
-    const key = this.visit(ctx.expression(0)!)!;
-    const value = this.visit(ctx.expression(1)!)!;
-
-    return new KvpAsn(key, value, this.fieldId);
-  };
+  visitKvp = (ctx: KvpContext) =>
+    new KvpAsn(this.visit(ctx.expression(0)!)!, this.visit(ctx.expression(1)!)!, this.fieldId);
 
   visitDictionary = (ctx: DictionaryContext) => {
     const items = ctx
@@ -226,41 +207,35 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralIntAsn(value, isBinary, isHex, this.fieldId);
   };
 
-  visitLitFloat = (ctx: LitFloatContext) => {
-    return new LiteralFloatAsn(ctx.getText(), this.fieldId);
-  };
+  visitLitFloat = (ctx: LitFloatContext) => new LiteralFloatAsn(ctx.getText(), this.fieldId);
 
-  visitLitBoolean = (ctx: LitBooleanContext) => {
-    const isTrue = ctx.TRUE() !== null;
-    return new LiteralBooleanAsn(isTrue, this.fieldId);
-  };
+  visitLitBoolean = (ctx: LitBooleanContext) =>
+    new LiteralBooleanAsn(ctx.TRUE() !== null, this.fieldId);
 
-  visitLitString = (ctx: LitStringContext) => {
-    return new LiteralStringAsn(ctx.getText(), this.fieldId);
-  };
+  visitLitString = (ctx: LitStringContext) => new LiteralStringAsn(ctx.getText(), this.fieldId);
 
-  visitEnumValue = (ctx: EnumValueContext) => {
-    const id = ctx.identifierUse().getText();
-    const type = new EnumType(ctx.typeName().getText());
-    return new LiteralEnumAsn(id, type, this.fieldId, this.scope);
-  };
+  visitEnumValue = (ctx: EnumValueContext) =>
+    new LiteralEnumAsn(
+      ctx.identifierUse().getText(),
+      new EnumType(ctx.typeName().getText()),
+      this.fieldId,
+      this.scope,
+    );
 
-  visitNegateLogical = (ctx: NegateLogicalContext) => {
-    const operand = this.visit(ctx.term())!;
-    return new UnaryExprAsn("not", operand, this.fieldId, this.scope);
-  };
+  visitNegateLogical = (ctx: NegateLogicalContext) =>
+    new UnaryExprAsn("not", this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  visitNegateNumeric = (ctx: NegateNumericContext) => {
-    const operand = this.visit(ctx.term())!;
-    return new UnaryExprAsn("-", operand, this.fieldId, this.scope);
-  };
+  visitNegateNumeric = (ctx: NegateNumericContext) =>
+    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  visitBinaryExpression = (ctx: BinaryExpressionContext) => {
-    const op = ctx.binaryOperator().getText();
-    const lhs = this.visit(ctx.term())!;
-    const rhs = this.visit(ctx.expression())!;
-    return new BinaryExprAsn(op, lhs, rhs, this.fieldId, this.scope);
-  };
+  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+    new BinaryExprAsn(
+      ctx.binaryOperator().getText(),
+      this.visit(ctx.term())!,
+      this.visit(ctx.expression())!,
+      this.fieldId,
+      this.scope,
+    );
 
   visitExpression = (ctx: ExpressionContext) => {
     if (ctx.expression().length > 0) {
