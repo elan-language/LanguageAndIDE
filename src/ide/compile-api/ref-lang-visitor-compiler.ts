@@ -27,10 +27,12 @@ import {
   BinaryExpressionContext,
   BracketedExpressionContext,
   ChainableContext,
+  DictionaryContext,
   EnumValueContext,
   ExpressionContext,
   IdentifierContext,
   IndexContext,
+  KvpContext,
   ListContext,
   LitBooleanContext,
   LitFloatContext,
@@ -55,6 +57,8 @@ import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ChainableAsn } from "../../compiler/syntax-nodes/chainable-asn";
+import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
+import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -161,6 +165,22 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
     return new LiteralListAsn(items, this.fieldId, this.scope);
+  };
+
+  visitKvp = (ctx: KvpContext) => {
+    const key = this.visit(ctx.expression(0)!)!;
+    const value = this.visit(ctx.expression(1)!)!;
+
+    return new KvpAsn(key, value, this.fieldId);
+  };
+
+  visitDictionary = (ctx: DictionaryContext) => {
+    const items = ctx
+      .kvpList()
+      .kvp()
+      .map((e) => this.visit(e))
+      .filter((e) => e) as KvpAsn[];
+    return new LiteralDictionaryAsn(items, this.fieldId, this.scope);
   };
 
   visitTuple = (ctx: TupleContext) => {

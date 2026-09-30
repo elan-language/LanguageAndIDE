@@ -979,16 +979,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "[1]",
       "system.list([1])",
     );
-    // testAntlrParse(
-    //   term,
-    //   `["a":1]`,
-    //   true,
-    //   `["a":1]`,
-    //   `["a":1]`,
-    //   `["<el-lit>a</el-lit>":<el-lit>1</el-lit>]`,
-    //   ``,
-    //   "system.list([1])",
-    // );
+    testAntlrParse(
+      term,
+      `["a":1]`,
+      true,
+      `["a":1]`,
+      `["a":1]`,
+      `["<el-lit>a</el-lit>":<el-lit>1</el-lit>]`,
+      ``,
+      'system.dictionary([["a", 1]])',
+    );
     testAntlrParse(
       term,
       `(1, a, "fred")`,
