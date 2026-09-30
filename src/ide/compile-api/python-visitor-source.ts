@@ -6,10 +6,12 @@ import {
   BinaryOperatorContext,
   CommentTextContext,
   EnumValueContext,
-  IdentifierContext,
+  IdentifierDefContext,
+  IdentifierUseContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
+  MethodNameContext,
   ParamDefContext,
   ParamsListContext,
   TestNameContext,
@@ -54,12 +56,14 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
-  visitIdentifier = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+  visitIdentifierDef = (ctx: IdentifierDefContext) => ctx.NAME_STARTING_LC().getText();
 
-  visitMethodName = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+  visitIdentifierUse = (ctx: IdentifierUseContext) => ctx.NAME_STARTING_LC().getText();
+
+  visitMethodName = (ctx: MethodNameContext) => ctx.NAME_STARTING_LC().getText();
 
   visitParamDef = (ctx: ParamDefContext) =>
-    `${this.visit(ctx.identifier())}: ${this.visit(ctx.type())}`;
+    `${this.visit(ctx.identifierDef())}: ${this.visit(ctx.type())}`;
 
   visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
@@ -80,7 +84,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
   visitBinaryOperator = (ctx: BinaryOperatorContext) => {
     const txt = ctx.getText();

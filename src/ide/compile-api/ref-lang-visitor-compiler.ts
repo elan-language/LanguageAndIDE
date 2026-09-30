@@ -32,7 +32,8 @@ import {
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
-  IdentifierContext,
+  IdentifierDefContext,
+  IdentifierUseContext,
   IndexContext,
   KvpContext,
   ListContext,
@@ -41,6 +42,7 @@ import {
   LitIntContext,
   LitStringContext,
   MethodCallContext,
+  MethodNameContext,
   NegateLogicalContext,
   NegateNumericContext,
   NewInstanceContext,
@@ -57,6 +59,7 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -94,10 +97,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 
-  visitIdentifier = (ctx: IdentifierContext) =>
+  visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitMethodName = (ctx: IdentifierContext) =>
+  visitIdentifierUse = (ctx: IdentifierUseContext) =>
+    new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  visitMethodName = (ctx: MethodNameContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   visitParamsList = (ctx: ParamsListContext) => {
@@ -108,7 +114,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   visitParamDef = (ctx: ParamDefContext) => {
-    const identifier = ctx.identifier().NAME_STARTING_LC().getText();
+    const identifier = ctx.identifierDef().NAME_STARTING_LC().getText();
     const type = this.visit(ctx.type())!;
 
     return new ParamDefAsn(identifier, type, this.fieldId, this.scope);
@@ -234,7 +240,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   visitEnumValue = (ctx: EnumValueContext) => {
-    const id = ctx.identifier().getText();
+    const id = ctx.identifierUse().getText();
     const type = new EnumType(ctx.typeName().getText());
     return new LiteralEnumAsn(id, type, this.fieldId, this.scope);
   };

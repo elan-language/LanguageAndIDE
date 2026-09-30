@@ -38,7 +38,8 @@ import { FunctionMethodContext } from "./PythonParser.js";
 import { ProcedureMethodContext } from "./PythonParser.js";
 import { AbstractFunctionContext } from "./PythonParser.js";
 import { AbstractProcedureContext } from "./PythonParser.js";
-import { IdentifierContext } from "./PythonParser.js";
+import { IdentifierDefContext } from "./PythonParser.js";
+import { IdentifierUseContext } from "./PythonParser.js";
 import { AssignableContext } from "./PythonParser.js";
 import { MethodNameContext } from "./PythonParser.js";
 import { TestNameContext } from "./PythonParser.js";
@@ -311,11 +312,17 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitAbstractProcedure?: (ctx: AbstractProcedureContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.identifier`.
+   * Visit a parse tree produced by `PythonParser.identifierDef`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitIdentifier?: (ctx: IdentifierContext) => Result;
+  visitIdentifierDef?: (ctx: IdentifierDefContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.identifierUse`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.assignable`.
    * @param ctx the parse tree

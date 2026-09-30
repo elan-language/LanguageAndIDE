@@ -38,7 +38,8 @@ import { FunctionMethodContext } from "./RefLangParser.js";
 import { ProcedureMethodContext } from "./RefLangParser.js";
 import { AbstractFunctionContext } from "./RefLangParser.js";
 import { AbstractProcedureContext } from "./RefLangParser.js";
-import { IdentifierContext } from "./RefLangParser.js";
+import { IdentifierDefContext } from "./RefLangParser.js";
+import { IdentifierUseContext } from "./RefLangParser.js";
 import { AssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
@@ -312,11 +313,17 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitAbstractProcedure?: (ctx: AbstractProcedureContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.identifier`.
+   * Visit a parse tree produced by `RefLangParser.identifierDef`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitIdentifier?: (ctx: IdentifierContext) => Result;
+  visitIdentifierDef?: (ctx: IdentifierDefContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.identifierUse`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.assignable`.
    * @param ctx the parse tree

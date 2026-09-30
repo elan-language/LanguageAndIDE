@@ -38,7 +38,8 @@ import { FunctionMethodContext } from "./RefLangParser.js";
 import { ProcedureMethodContext } from "./RefLangParser.js";
 import { AbstractFunctionContext } from "./RefLangParser.js";
 import { AbstractProcedureContext } from "./RefLangParser.js";
-import { IdentifierContext } from "./RefLangParser.js";
+import { IdentifierDefContext } from "./RefLangParser.js";
+import { IdentifierUseContext } from "./RefLangParser.js";
 import { AssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
@@ -453,15 +454,25 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitAbstractProcedure?: (ctx: AbstractProcedureContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.identifier`.
+   * Enter a parse tree produced by `RefLangParser.identifierDef`.
    * @param ctx the parse tree
    */
-  enterIdentifier?: (ctx: IdentifierContext) => void;
+  enterIdentifierDef?: (ctx: IdentifierDefContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.identifier`.
+   * Exit a parse tree produced by `RefLangParser.identifierDef`.
    * @param ctx the parse tree
    */
-  exitIdentifier?: (ctx: IdentifierContext) => void;
+  exitIdentifierDef?: (ctx: IdentifierDefContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierUse?: (ctx: IdentifierUseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierUse?: (ctx: IdentifierUseContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.assignable`.
    * @param ctx the parse tree

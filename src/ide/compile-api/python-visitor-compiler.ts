@@ -4,8 +4,10 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import {
-  IdentifierContext,
+  IdentifierDefContext,
+  IdentifierUseContext,
   MethodCallContext,
+  MethodNameContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -54,10 +56,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 
-  visitIdentifier = (ctx: IdentifierContext) =>
+  visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitMethodName = (ctx: IdentifierContext) =>
+  visitIdentifierUse = (ctx: IdentifierUseContext) =>
+    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  visitMethodName = (ctx: MethodNameContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   visitMethodCall = (ctx: MethodCallContext) => {

@@ -2,6 +2,7 @@ import { ParserRuleContext } from "antlr4ng";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
 import { Parser, testAntlrParse } from "../testHelpers";
+import { PythonParser } from "../../src/generated/python/PythonParser";
 
 suite("Parsing Antlr Rules Python", () => {
   function getExpressionRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
@@ -19,7 +20,7 @@ suite("Parsing Antlr Rules Python", () => {
     //TODO add an example of each sub-rule
   });
   function getIdRule(): [Language, rule: (parser: Parser) => ParserRuleContext] {
-    return [LanguagePython.Instance, (p: Parser) => p.identifier()];
+    return [LanguagePython.Instance, (p: Parser) => (p as PythonParser).identifierDef()];
   }
 
   test("Identifier", () => {

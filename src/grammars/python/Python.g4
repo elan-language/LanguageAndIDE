@@ -47,7 +47,9 @@ procedure:
         ordinaryStatement* COMMENT NL
 ;
 
-constant: identifier EQUAL constantValue CONSTANT_ANNOTATION NL;
+constant:
+    identifierDef EQUAL constantValue CONSTANT_ANNOTATION NL
+;
 
 enum:
     CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL enumValuesList NL
@@ -96,13 +98,13 @@ ordinaryStatement:
 
 print: PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
 variableDefinition:
-    identifier EQUAL expression VARIABLE_ANNOTATION NL
+    identifierDef EQUAL expression VARIABLE_ANNOTATION NL
 ;
 assignment:
     assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
 ;
 inputStatement:
-    identifier EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET INPUT_ANNOTATION NL
+    identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET INPUT_ANNOTATION NL
 ;
 
 ifStatement:
@@ -118,11 +120,11 @@ whileLoop:
 ;
 
 forLoop:
-    FOR identifier IN expression COLON NL ordinaryStatement* COMMENT NL
+    FOR identifierDef IN expression COLON NL ordinaryStatement* COMMENT NL
 ;
 
 procedureCall:
-        //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+    //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
 procRef: term;
@@ -138,11 +140,11 @@ throwStatement:
 assert:
     THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET NL
 ;
-letStatement: identifier EQUAL expression LET_ANNOTATION NL;
+letStatement: identifierDef EQUAL expression LET_ANNOTATION NL;
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: ELIF expression COLON ELSE_IF_ANNOTATION NL;
 elseClause: ELSE COLON NL;
-catchStatement: EXCEPT typeName AS identifier NL;
+catchStatement: EXCEPT typeName AS identifierDef NL;
 
 // Members
 constructorMember:
@@ -151,7 +153,7 @@ constructorMember:
         NL
 ;
 
-property: identifier COLON type PROPERTY_ANNOTATION NL;
+property: identifierDef COLON type PROPERTY_ANNOTATION NL;
 
 functionMethod:
     DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON
@@ -178,7 +180,8 @@ abstractProcedure:
 // END Frames
 
 // START Fields
-identifier: NAME_STARTING_LC;
+identifierDef: NAME_STARTING_LC;
+identifierUse: NAME_STARTING_LC;
 assignable: identifierWithOptIndexes | propertyRef;
 
 methodName: NAME_STARTING_LC;
@@ -192,7 +195,7 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: litValue | identifier;
+constantValue: litValue | identifierUse;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -200,7 +203,7 @@ paramsList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-enumValuesList: identifier (COMMA identifier)*;
+enumValuesList: identifierDef (COMMA identifierDef)*;
 
 assertActual: expression;
 // END Fields
@@ -217,12 +220,12 @@ litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
-enumValue: typeName DOT identifier;
+enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
-identifierWithOptIndexes: identifier index*;
+identifierWithOptIndexes: identifierUse index*;
 
 propertyRef: THIS_INSTANCE DOT identifierWithOptIndexes;
 
@@ -249,7 +252,7 @@ chainHead:
 ;
 
 chainTail: (DOT chainable)+;
-chainable: ( identifier | methodCall) index*;
+chainable: ( identifierUse | methodCall) index*;
 
 thisInstance: THIS_INSTANCE;
 
@@ -287,7 +290,7 @@ binaryOperator:
 
 newInstance: type OPEN_BRACKET argList? CLOSE_BRACKET;
 
-paramDef: identifier COLON type;
+paramDef: identifierDef COLON type;
 
 typeGeneric:
     typeName OPEN_SQ_BRACKET type (COMMA type)* CLOSE_SQ_BRACKET

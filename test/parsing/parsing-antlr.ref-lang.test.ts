@@ -103,7 +103,7 @@ suite("Parsing Antlr Rules RefLang", () => {
   test("Identifier", () => {
     const identifier: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
-      (p: Parser) => p.identifier(),
+      (p: Parser) => (p as RefLangParser).identifierUse(),
     ];
     testAntlrParse(identifier, ``, false);
     testAntlrParse(identifier, `  `, false);

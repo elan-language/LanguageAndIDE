@@ -44,7 +44,9 @@ procedure:
         PROCEDURE NL
 ;
 
-constant: GHOSTED? CONSTANT identifier SET TO constantValue NL;
+constant:
+    GHOSTED? CONSTANT identifierDef SET TO constantValue NL
+;
 enum: GHOSTED? ENUM typeName enumValuesList NL;
 
 concreteClass:
@@ -100,7 +102,7 @@ whileLoop:
 ;
 
 forLoop:
-    GHOSTED? FOR identifier IN expression NL ordinaryStatement* END FOR NL
+    GHOSTED? FOR identifierDef IN expression NL ordinaryStatement* END FOR NL
 ;
 
 tryStatement:
@@ -108,18 +110,18 @@ tryStatement:
 ;
 
 assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
-letStatement: GHOSTED? LET identifier BE expression NL;
+letStatement: GHOSTED? LET identifierDef BE expression NL;
 print: GHOSTED? PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
 variableDefinition:
-    GHOSTED? VARIABLE identifier SET TO expression NL
+    GHOSTED? VARIABLE identifierDef SET TO expression NL
 ;
 assignment: GHOSTED? ASSIGN assignable TO expression NL;
 inputStatement:
-    GHOSTED? INPUT identifier SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
+    GHOSTED? INPUT identifierDef SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
 ;
 
 procedureCall:
-        //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+    //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
 procRef: term;
@@ -130,7 +132,7 @@ throwStatement:
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: GHOSTED? ELIF expression THEN NL;
 elseClause: GHOSTED? ELSE NL; // TODO
-catchStatement: GHOSTED? CATCH identifier AS typeName NL;
+catchStatement: GHOSTED? CATCH identifierDef AS typeName NL;
 
 // Members
 constructorMember:
@@ -138,7 +140,7 @@ constructorMember:
         CONSTRUCTOR NL
 ;
 
-property: PRIVATE? PROPERTY identifier AS type NL;
+property: PRIVATE? PROPERTY identifierDef AS type NL;
 
 functionMethod:
     GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
@@ -161,7 +163,8 @@ abstractProcedure:
 // END Frames
 
 // START Fields
-identifier: NAME_STARTING_LC;
+identifierDef: NAME_STARTING_LC;
+identifierUse: NAME_STARTING_LC;
 assignable: identifierWithOptIndexes | propertyRef;
 
 methodName: NAME_STARTING_LC;
@@ -175,7 +178,7 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: litValue | identifier;
+constantValue: litValue | identifierUse;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -183,7 +186,7 @@ paramsList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-enumValuesList: identifier (COMMA identifier)*;
+enumValuesList: identifierDef (COMMA identifierDef)*;
 
 assertActual: expression;
 // END Fields
@@ -201,12 +204,12 @@ litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
-enumValue: typeName DOT identifier;
+enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
-identifierWithOptIndexes: identifier index*;
+identifierWithOptIndexes: identifierUse index*;
 
 propertyRef: THIS_INSTANCE DOT identifierWithOptIndexes;
 
@@ -225,13 +228,13 @@ term:
     | list
     | dictionary
     | tuple
-    | identifier
+    | identifierUse
     | methodCall
     | term index
     | term DOT chainable
 ;
 
-chainable: identifier | methodCall;
+chainable: identifierUse | methodCall;
 
 thisInstance: THIS_INSTANCE;
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
@@ -279,7 +282,7 @@ binaryOperator:
 
 newInstance: NEW type OPEN_BRACKET argList? CLOSE_BRACKET;
 
-paramDef: identifier AS type;
+paramDef: identifierDef AS type;
 
 typeGeneric: typeName LT OF type (COMMA type)* GT;
 

@@ -10,7 +10,8 @@ import {
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
-  IdentifierContext,
+  IdentifierDefContext,
+  IdentifierUseContext,
   IndexContext,
   KvpContext,
   LambdaContext,
@@ -21,6 +22,7 @@ import {
   LitRegExpContext,
   LitStringContext,
   MethodCallContext,
+  MethodNameContext,
   NegateLogicalContext,
   NegateNumericContext,
   NewInstanceContext,
@@ -81,12 +83,14 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
-  visitIdentifier = (ctx: IdentifierContext) => id(ctx.NAME_STARTING_LC().getText());
+  visitIdentifierDef = (ctx: IdentifierDefContext) => id(ctx.NAME_STARTING_LC().getText());
 
-  visitMethodName = (ctx: IdentifierContext) => method(ctx.NAME_STARTING_LC().getText());
+  visitIdentifierUse = (ctx: IdentifierUseContext) => id(ctx.NAME_STARTING_LC().getText());
+
+  visitMethodName = (ctx: MethodNameContext) => method(ctx.NAME_STARTING_LC().getText());
 
   visitParamDef = (ctx: ParamDefContext) =>
-    `${this.visit(ctx.identifier())} ${kw("as")} ${this.visit(ctx.type())}`;
+    `${this.visit(ctx.identifierDef())} ${kw("as")} ${this.visit(ctx.type())}`;
 
   visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
 
@@ -116,7 +120,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     //       .join("")
     //   : "";
     const methodCall = ctx.methodCall();
-    const identifier = ctx.identifier();
+    const identifier = ctx.identifierUse();
     const prefix = methodCall ? this.visit(methodCall!) : this.visit(identifier!);
     return `${prefix}`;
   };
@@ -133,7 +137,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
       : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
   visitBinaryOperator = (ctx: BinaryOperatorContext) => {
     const txt = ctx.getText();

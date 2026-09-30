@@ -38,7 +38,8 @@ import { FunctionMethodContext } from "./PythonParser.js";
 import { ProcedureMethodContext } from "./PythonParser.js";
 import { AbstractFunctionContext } from "./PythonParser.js";
 import { AbstractProcedureContext } from "./PythonParser.js";
-import { IdentifierContext } from "./PythonParser.js";
+import { IdentifierDefContext } from "./PythonParser.js";
+import { IdentifierUseContext } from "./PythonParser.js";
 import { AssignableContext } from "./PythonParser.js";
 import { MethodNameContext } from "./PythonParser.js";
 import { TestNameContext } from "./PythonParser.js";
@@ -452,15 +453,25 @@ export class PythonListener implements ParseTreeListener {
    */
   exitAbstractProcedure?: (ctx: AbstractProcedureContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.identifier`.
+   * Enter a parse tree produced by `PythonParser.identifierDef`.
    * @param ctx the parse tree
    */
-  enterIdentifier?: (ctx: IdentifierContext) => void;
+  enterIdentifierDef?: (ctx: IdentifierDefContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.identifier`.
+   * Exit a parse tree produced by `PythonParser.identifierDef`.
    * @param ctx the parse tree
    */
-  exitIdentifier?: (ctx: IdentifierContext) => void;
+  exitIdentifierDef?: (ctx: IdentifierDefContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierUse?: (ctx: IdentifierUseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierUse?: (ctx: IdentifierUseContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.assignable`.
    * @param ctx the parse tree

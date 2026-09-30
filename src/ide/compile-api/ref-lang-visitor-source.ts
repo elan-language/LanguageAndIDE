@@ -10,7 +10,8 @@ import {
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
-  IdentifierContext,
+  IdentifierDefContext,
+  IdentifierUseContext,
   IndexContext,
   KvpContext,
   LambdaContext,
@@ -18,6 +19,7 @@ import {
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
+  MethodNameContext,
   NegateLogicalContext,
   NegateNumericContext,
   NewInstanceContext,
@@ -69,12 +71,14 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
-  visitIdentifier = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+  visitIdentifierDef = (ctx: IdentifierDefContext) => ctx.NAME_STARTING_LC().getText();
 
-  visitMethodName = (ctx: IdentifierContext) => ctx.NAME_STARTING_LC().getText();
+  visitIdentifierUse = (ctx: IdentifierUseContext) => ctx.NAME_STARTING_LC().getText();
+
+  visitMethodName = (ctx: MethodNameContext) => ctx.NAME_STARTING_LC().getText();
 
   visitParamDef = (ctx: ParamDefContext) =>
-    `${this.visit(ctx.identifier())} as ${this.visit(ctx.type())}`;
+    `${this.visit(ctx.identifierDef())} as ${this.visit(ctx.type())}`;
 
   visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
@@ -107,13 +111,13 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     //       .join("")
     //   : "";
     const methodCall = ctx.methodCall();
-    const identifier = ctx.identifier();
+    const identifier = ctx.identifierUse();
     const prefix = methodCall ? this.visit(methodCall) : this.visit(identifier!);
     return `${prefix}`;
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>
-    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifier())}`;
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
   visitBinaryOperator = (ctx: BinaryOperatorContext) => {
     const txt = ctx.getText();
