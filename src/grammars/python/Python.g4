@@ -27,8 +27,7 @@ main:
 
 function:
     DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON FUNCTION_ANNOTATION NL (
-        letStatement
-        | ordinaryStatement
+        ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
         COMMENT NL
 ;
@@ -36,7 +35,6 @@ function:
 test:
     CLASS testName OPEN_BRACKET TESTCASE CLOSE_BRACKET COMMENT NL (
         assert
-        | letStatement
         | variableDefinition
         | comment
     )* COMMENT NL
@@ -138,7 +136,6 @@ throwStatement:
 assert:
     THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET NL
 ;
-letStatement: identifier EQUAL expression LET_ANNOTATION NL;
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: ELIF expression COLON ELSE_IF_ANNOTATION NL;
 elseClause: ELSE COLON NL;
@@ -156,8 +153,7 @@ property: identifier COLON type PROPERTY_ANNOTATION NL;
 functionMethod:
     DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON
         FUNCTION_METHOD_ANNOTATION NL (
-        letStatement
-        | ordinaryStatement
+         ordinaryStatement
     )* returnStatement COMMENT NL
 ;
 

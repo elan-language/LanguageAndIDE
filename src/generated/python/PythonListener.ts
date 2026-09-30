@@ -27,7 +27,6 @@ import { ProcRefContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
-import { LetStatementContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
 import { ElseIfClauseContext } from "./PythonParser.js";
 import { ElseClauseContext } from "./PythonParser.js";
@@ -341,16 +340,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssert?: (ctx: AssertContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  enterLetStatement?: (ctx: LetStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  exitLetStatement?: (ctx: LetStatementContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.returnStatement`.
    * @param ctx the parse tree
