@@ -17,8 +17,13 @@ export class ChainableAsn extends AbstractAstNode {
     this.compileErrors = [];
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+    let code = this.idOrMethodCall.compile();
 
-    return `${this.idOrMethodCall.compile()}`;
+    for (const i of this.indices) {
+      code = `system.safeIndex(${code}, ${i.compile()})`;
+    }
+
+    return `${code}`;
   }
 
   symbolType() {
