@@ -27,7 +27,6 @@ import { ProcRefContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
-import { LetStatementContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
 import { ElseIfClauseContext } from "./PythonParser.js";
 import { ElseClauseContext } from "./PythonParser.js";
@@ -245,12 +244,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssert?: (ctx: AssertContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.letStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitLetStatement?: (ctx: LetStatementContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.returnStatement`.
    * @param ctx the parse tree

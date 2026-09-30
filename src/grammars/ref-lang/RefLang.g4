@@ -24,8 +24,7 @@ main: GHOSTED? MAIN NL ordinaryStatement* END MAIN NL;
 
 function:
     GHOSTED? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
-        letStatement
-        | ordinaryStatement
+        ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement END
         FUNCTION NL
 ;
@@ -33,7 +32,6 @@ function:
 test:
     GHOSTED? TEST testName NL (
         assert
-        | letStatement
         | variableDefinition
         | comment
     )* END TEST NL
@@ -110,7 +108,6 @@ tryStatement:
 ;
 
 assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
-letStatement: GHOSTED? LET identifierDef BE expression NL;
 print: GHOSTED? PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
 variableDefinition:
     GHOSTED? VARIABLE identifierDef SET TO expression NL
@@ -144,8 +141,7 @@ property: PRIVATE? PROPERTY identifierDef AS type NL;
 
 functionMethod:
     GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
-        letStatement
-        | ordinaryStatement
+        ordinaryStatement
     )* returnStatement END FUNCTION NL
 ;
 

@@ -19,7 +19,6 @@ import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
 import { TryStatementContext } from "./CsharpParser.js";
 import { AssertContext } from "./CsharpParser.js";
-import { LetStatementContext } from "./CsharpParser.js";
 import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
@@ -251,16 +250,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssert?: (ctx: AssertContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  enterLetStatement?: (ctx: LetStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  exitLetStatement?: (ctx: LetStatementContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.print`.
    * @param ctx the parse tree

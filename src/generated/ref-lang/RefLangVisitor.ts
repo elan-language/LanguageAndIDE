@@ -20,7 +20,6 @@ import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
-import { LetStatementContext } from "./RefLangParser.js";
 import { PrintContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
@@ -204,12 +203,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssert?: (ctx: AssertContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.letStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitLetStatement?: (ctx: LetStatementContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.print`.
    * @param ctx the parse tree

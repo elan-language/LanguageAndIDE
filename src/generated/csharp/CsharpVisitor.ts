@@ -19,7 +19,6 @@ import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
 import { TryStatementContext } from "./CsharpParser.js";
 import { AssertContext } from "./CsharpParser.js";
-import { LetStatementContext } from "./CsharpParser.js";
 import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
@@ -186,12 +185,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssert?: (ctx: AssertContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.letStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitLetStatement?: (ctx: LetStatementContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.print`.
    * @param ctx the parse tree

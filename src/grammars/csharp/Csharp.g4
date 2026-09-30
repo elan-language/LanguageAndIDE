@@ -27,8 +27,7 @@ main:
 
 function:
     STATIC type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
-        letStatement
-        | ordinaryStatement
+        ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
         CLOSE_BRACE COMMENT NL
 ;
@@ -36,7 +35,6 @@ function:
 test:
     TEST_CLASS_ANNOT CLASS typeName NL TEST_METHOD_ANNOT STATIC VOID testName (
         assert
-        | letStatement
         | variableDefinition
         | commentLine
     )* CLOSE_BRACE COMMENT NL
@@ -118,9 +116,7 @@ tryStatement: //TODO - see #3444
 assert:
     ASSERT DOT ARE_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET SEMI_COLON NL
 ;
-letStatement:
-    VAR identifier SINGLE_EQUALS expression SEMI_COLON COMMENT NL
-;
+
 print:
     PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
 ;
@@ -158,8 +154,7 @@ property: PUBLIC type identifier GET_SET COMMENT NL;
 
 functionMethod:
     PUBLIC type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
-        letStatement
-        | ordinaryStatement
+        ordinaryStatement
     )* returnStatement CLOSE_BRACE COMMENT NL
 ;
 

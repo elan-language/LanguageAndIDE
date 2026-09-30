@@ -20,7 +20,6 @@ import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
-import { LetStatementContext } from "./RefLangParser.js";
 import { PrintContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
@@ -273,16 +272,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssert?: (ctx: AssertContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  enterLetStatement?: (ctx: LetStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.letStatement`.
-   * @param ctx the parse tree
-   */
-  exitLetStatement?: (ctx: LetStatementContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.print`.
    * @param ctx the parse tree
