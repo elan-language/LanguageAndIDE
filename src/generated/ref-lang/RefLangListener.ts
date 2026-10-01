@@ -59,7 +59,6 @@ import { EnumValueContext } from "./RefLangParser.js";
 import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
-import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
@@ -662,16 +661,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  enterPropertyRef?: (ctx: PropertyRefContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  exitPropertyRef?: (ctx: PropertyRefContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.expression`.
    * @param ctx the parse tree

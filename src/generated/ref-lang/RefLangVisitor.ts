@@ -59,7 +59,6 @@ import { EnumValueContext } from "./RefLangParser.js";
 import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
-import { PropertyRefContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
@@ -437,12 +436,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.propertyRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPropertyRef?: (ctx: PropertyRefContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.expression`.
    * @param ctx the parse tree
