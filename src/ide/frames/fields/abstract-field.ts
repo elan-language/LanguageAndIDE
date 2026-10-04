@@ -521,11 +521,14 @@ export abstract class AbstractField implements Selectable, Field {
     const propertyPrefix = `${thisInstance}.`;
     const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 
-    if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
-      this.text = "";
+    if (this.text.endsWith(propertyPrefix) && appendText.startsWith(propertyPrefix)) {
+      // remove the trailing propertyPrefix
+      this.text = this.text.slice(0, -propertyPrefix.length);
     }
 
-    const optSpace = this.text && this.selectedSymbolCompletion?.isKeyword ? " " : "";
+    // add a space before keyword unless this.text is empty or ends with an open-bracket or space
+    const optSpace =
+      /[^[({ ]$/.test(this.text) && this.selectedSymbolCompletion?.isKeyword ? " " : "";
 
     this.text = `${this.text}${optSpace}${appendText}`;
     this.selectedSymbolCompletion = undefined;
