@@ -103,7 +103,7 @@ export const identifierFieldSpec: FieldSpec = new FieldSpec(
   "_ident",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => (parser as RefLangParser).identifierDef(),
+  (parser: PythonParser | RefLangParser) => parser.identifierDef(),
   (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
   "",
 );
