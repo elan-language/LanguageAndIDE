@@ -2,6 +2,7 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  AssignableContext,
   BinaryExpressionContext,
   BinaryOperatorContext,
   BracketedExpressionContext,
@@ -166,4 +167,14 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
       : ctx.term()
         ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
         : (this.visitChildren(ctx) ?? "");
+
+  visitAssignable = (ctx: AssignableContext) => {
+    if (ctx.THIS_INSTANCE()) {
+      return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}}`;
+    } else if (ctx.index()) {
+      return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
+    } else {
+      return this.visitChildren(ctx)!;
+    }
+  };
 }
