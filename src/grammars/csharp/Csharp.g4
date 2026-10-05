@@ -189,7 +189,12 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: litValue | identifier;
+constantValue: 
+    litBoolean
+    | litInt
+    | litFloat
+    | litString
+    ;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
