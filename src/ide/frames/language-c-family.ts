@@ -1,4 +1,3 @@
-import { isSymbol } from "../../compiler/symbols/symbol-helpers";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -13,7 +12,6 @@ import { Frame } from "./frame-interfaces/frame";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
-import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
 import { FunctionFrame } from "./globals/function-frame";
 import { GlobalFunction } from "./globals/global-function";
@@ -289,13 +287,5 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   c_langs_enumValues(field: EnumValuesField): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }
-
-  getConstantType(frame: ConstantGlobal) {
-    const scope = frame.getFile().getAst(false)?.getScopeById(frame.getHtmlId());
-    if (isSymbol(scope)) {
-      return scope.symbolType().languageSpecificName(frame.getFile().language());
-    }
-    return "";
   }
 }

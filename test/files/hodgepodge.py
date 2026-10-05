@@ -28,9 +28,9 @@ w2 = 1 # constant
 
 # colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
 
-healthy = white # constant
+healthy = 0xffffff # constant
 
-ill = black # constant
+ill = 0x000000 # constant
 
 def getColours() -> list[int]: # function
   return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]

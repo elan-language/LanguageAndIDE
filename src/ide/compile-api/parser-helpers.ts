@@ -219,3 +219,17 @@ export function method(s: string) {
 export function regex(s: string) {
   return wrap(s, "el-regex");
 }
+
+export function getConstantType(text: string, language: Language) {
+  let typeName = "";
+  if (text.startsWith(`"`)) {
+    typeName = language.STRING_NAME;
+  } else if (text === language.TRUE || text === language.FALSE) {
+    typeName = language.BOOL_NAME;
+  } else if (/[0-9]\..*/.test(text)) {
+    typeName = language.FLOAT_NAME;
+  } else if (/[0-9].*/.test(text)) {
+    typeName = language.INT_NAME;
+  }
+  return typeName;
+}

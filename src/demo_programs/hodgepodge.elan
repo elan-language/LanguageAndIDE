@@ -1,4 +1,4 @@
-# 584c6a9bfa5c1b184c78400d4af1058531133a460aa31210641657e5fdc494a7 Elan 2.0.0-beta5 valid
+# cd7189bff2f2ae267d75681ec6bfec9ad52584e1b1abcef1c7410ecba4c1db48 Elan 2.0.0-beta5 valid
 
 # Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
@@ -19,9 +19,9 @@ constant w2 set to 1
 # colours : cellColour.s in descending order of RGB value
 # state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
 # colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
-constant healthy set to white
+constant healthy set to 0xffffff
 
-constant ill set to black
+constant ill set to 0x000000
 
 function getColours() returns List<of Int>
   return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]
