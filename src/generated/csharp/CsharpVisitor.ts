@@ -35,7 +35,8 @@ import { FunctionMethodContext } from "./CsharpParser.js";
 import { ProcedureMethodContext } from "./CsharpParser.js";
 import { AbstractFunctionContext } from "./CsharpParser.js";
 import { AbstractProcedureContext } from "./CsharpParser.js";
-import { IdentifierContext } from "./CsharpParser.js";
+import { IdentifierDefContext } from "./CsharpParser.js";
+import { IdentifierUseContext } from "./CsharpParser.js";
 import { AssignableContext } from "./CsharpParser.js";
 import { MethodNameContext } from "./CsharpParser.js";
 import { TestNameContext } from "./CsharpParser.js";
@@ -54,8 +55,6 @@ import { LitFloatContext } from "./CsharpParser.js";
 import { EnumValueContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
-import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
-import { PropertyRefContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
 import { ChainHeadContext } from "./CsharpParser.js";
@@ -282,11 +281,17 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitAbstractProcedure?: (ctx: AbstractProcedureContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.identifier`.
+   * Visit a parse tree produced by `CsharpParser.identifierDef`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitIdentifier?: (ctx: IdentifierContext) => Result;
+  visitIdentifierDef?: (ctx: IdentifierDefContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.identifierUse`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.assignable`.
    * @param ctx the parse tree
@@ -395,18 +400,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitIndex?: (ctx: IndexContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.propertyRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPropertyRef?: (ctx: PropertyRefContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.expression`.
    * @param ctx the parse tree

@@ -35,7 +35,8 @@ import { FunctionMethodContext } from "./CsharpParser.js";
 import { ProcedureMethodContext } from "./CsharpParser.js";
 import { AbstractFunctionContext } from "./CsharpParser.js";
 import { AbstractProcedureContext } from "./CsharpParser.js";
-import { IdentifierContext } from "./CsharpParser.js";
+import { IdentifierDefContext } from "./CsharpParser.js";
+import { IdentifierUseContext } from "./CsharpParser.js";
 import { AssignableContext } from "./CsharpParser.js";
 import { MethodNameContext } from "./CsharpParser.js";
 import { TestNameContext } from "./CsharpParser.js";
@@ -54,8 +55,6 @@ import { LitFloatContext } from "./CsharpParser.js";
 import { EnumValueContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
-import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
-import { PropertyRefContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
 import { ChainHeadContext } from "./CsharpParser.js";
@@ -411,15 +410,25 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitAbstractProcedure?: (ctx: AbstractProcedureContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.identifier`.
+   * Enter a parse tree produced by `CsharpParser.identifierDef`.
    * @param ctx the parse tree
    */
-  enterIdentifier?: (ctx: IdentifierContext) => void;
+  enterIdentifierDef?: (ctx: IdentifierDefContext) => void;
   /**
-   * Exit a parse tree produced by `CsharpParser.identifier`.
+   * Exit a parse tree produced by `CsharpParser.identifierDef`.
    * @param ctx the parse tree
    */
-  exitIdentifier?: (ctx: IdentifierContext) => void;
+  exitIdentifierDef?: (ctx: IdentifierDefContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierUse?: (ctx: IdentifierUseContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.identifierUse`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierUse?: (ctx: IdentifierUseContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.assignable`.
    * @param ctx the parse tree
@@ -600,26 +609,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitIndex?: (ctx: IndexContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  enterPropertyRef?: (ctx: PropertyRefContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  exitPropertyRef?: (ctx: PropertyRefContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.expression`.
    * @param ctx the parse tree
