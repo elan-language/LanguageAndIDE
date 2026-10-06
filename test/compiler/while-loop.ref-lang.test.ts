@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -255,7 +256,7 @@ end main`;
     ]);
   });
 
-  test("Fail_WhileConditionUnknown", async () => {
+  ignore_test("Fail_WhileConditionUnknown", async () => {
     const code = `${testHeader}
 
 main

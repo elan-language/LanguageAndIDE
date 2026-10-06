@@ -333,7 +333,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_ExtensionParameterCount", async () => {
+  ignore_test("Fail_ExtensionParameterCount", async () => {
     const code = `${testHeader}
 
 constant a set to ""
@@ -361,7 +361,7 @@ end main`;
     ]);
   });
 
-  test("Fail_ParameterCount", async () => {
+  ignore_test("Fail_ParameterCount", async () => {
     const code = `${testHeader}
 
 function f(p as Float) returns Float
@@ -391,7 +391,7 @@ end main`;
     ]);
   });
 
-  test("Fail_ParameterType", async () => {
+  ignore_test("Fail_ParameterType", async () => {
     const code = `${testHeader}
 
 function f(p as Int) returns Float

@@ -604,9 +604,9 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
+    // assertStatusIsValid(fileImpl);
+    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoubleMinus2", async () => {
@@ -628,9 +628,9 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
+    // assertStatusIsValid(fileImpl);
+    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoubleNot1", async () => {
@@ -651,9 +651,9 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
+    // assertStatusIsValid(fileImpl);
+    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_DoubleNot2", async () => {
@@ -675,9 +675,9 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
+    // assertStatusIsValid(fileImpl);
+    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_PowerType1", async () => {

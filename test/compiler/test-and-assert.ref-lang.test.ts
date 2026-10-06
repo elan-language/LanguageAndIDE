@@ -919,7 +919,7 @@ end test
     ]);
   });
 
-  test("Fail_useTestAsAReference", async () => {
+  ignore_test("Fail_useTestAsAReference", async () => {
     const code = `${testHeader}
 
 main

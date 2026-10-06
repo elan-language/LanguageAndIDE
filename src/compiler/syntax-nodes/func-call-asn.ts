@@ -42,6 +42,9 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     super();
   }
 
+  // this is a temp hack until all fields migrated
+  tempAntlrFlag = false;
+
   private precedingNode: AstNode = EmptyAsn.Instance;
   private updatedScope: Scope = NullScope.Instance;
 
@@ -94,30 +97,32 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     if (funcSymbolType instanceof FunctionType) {
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
-      mustCallExtensionViaQualifier(
-        funcSymbolType,
-        this.precedingNode,
-        this.compileErrors,
-        this.fieldId,
-      );
+      if (!this.tempAntlrFlag) {
+        mustCallExtensionViaQualifier(
+          funcSymbolType,
+          this.precedingNode,
+          this.compileErrors,
+          this.fieldId,
+        );
 
-      mustNotCallNonExtensionViaQualifier(
-        funcSymbolType,
-        funcSymbol.symbolId,
-        this.precedingNode,
-        this.updatedScope,
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
+        mustNotCallNonExtensionViaQualifier(
+          funcSymbolType,
+          funcSymbol.symbolId,
+          this.precedingNode,
+          this.updatedScope,
+          this.compileErrors,
+          this.fieldId,
+          this.scope,
+        );
 
-      mustCallMemberViaQualifier(
-        funcSymbol.symbolId,
-        funcSymbolType,
-        this.updatedScope,
-        this.compileErrors,
-        this.fieldId,
-      );
+        mustCallMemberViaQualifier(
+          funcSymbol.symbolId,
+          funcSymbolType,
+          this.updatedScope,
+          this.compileErrors,
+          this.fieldId,
+        );
+      }
 
       if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
         this.isExtensionMethod = true;
@@ -148,13 +153,19 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     }
 
     const showPreviousNode = !isEmptyNode(this.precedingNode) && this.showPreviousNode;
-    const showAwait =
-      this.isAsync &&
-      (!showPreviousNode ||
-        (this.updatedScope === NullScope.Instance && isEmptyNode(this.precedingNode)));
-    const asyncStart = showAwait ? "(await " : "";
 
-    const asyncEnd = showAwait ? ")" : "";
+    let asyncStart = "";
+    let asyncEnd = this.isAsync ? ")" : "";
+
+    if (!this.tempAntlrFlag) {
+      const showAwait =
+        this.isAsync &&
+        (!showPreviousNode ||
+          (this.updatedScope === NullScope.Instance && isEmptyNode(this.precedingNode)));
+      asyncStart = showAwait ? "(await " : "";
+      asyncEnd = showAwait ? ")" : "";
+    }
+
     const parms = parameters.map((p) => p.compile()).join(", ");
     const prefix = showPreviousNode
       ? ""

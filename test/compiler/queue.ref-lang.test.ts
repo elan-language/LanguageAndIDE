@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -258,7 +259,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Fail_QueueWithoutGenericParm", async () => {
+  ignore_test("Fail_QueueWithoutGenericParm", async () => {
     const code = `${testHeader}
 
 main

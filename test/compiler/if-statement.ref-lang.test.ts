@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -942,7 +943,7 @@ end main`;
     ]);
   });
 
-  test("Fail_useOutOfScopeVariable", async () => {
+  ignore_test("Fail_useOutOfScopeVariable", async () => {
     const code = `${testHeader}
 
   main

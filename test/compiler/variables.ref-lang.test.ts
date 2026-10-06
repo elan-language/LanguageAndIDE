@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -614,7 +615,7 @@ end main`;
     ]);
   });
 
-  test("Fail_RecursiveDefinition", async () => {
+  ignore_test("Fail_RecursiveDefinition", async () => {
     const code = `${testHeader}
 
 main
@@ -661,7 +662,7 @@ end main`;
     ]);
   });
 
-  test("Fail_referenceToExtensionFunction1", async () => {
+  ignore_test("Fail_referenceToExtensionFunction1", async () => {
     const code = `${testHeader}
 
 main

@@ -1,9 +1,17 @@
 import { mustBeIndexableType } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
-import { getGlobalScope, isClassType, isFunction } from "../symbols/symbol-helpers";
+import {
+  getGlobalScope,
+  //isClass,
+  isClassType,
+  isFunction,
+  isScope,
+} from "../symbols/symbol-helpers";
+import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { getIndexAndOfType, isAstIdNode } from "./ast-helpers";
 import { FuncCallAsn } from "./func-call-asn";
@@ -24,25 +32,42 @@ export class TermAsn extends AbstractAstNode {
       return this.asyncCount(astNode.lhs) + this.asyncCount(astNode.rhs);
     }
     if (astNode instanceof FuncCallAsn) {
-      return 1;
+      astNode.compile();
+      return astNode.isAsync ? 1 : 0;
     }
     return 0;
   }
 
   wrap(ast: AstNode) {
     let code = ast.compile();
-    const asyncCount = this.asyncCount(ast);
+    const asyncCount = this.asyncCount(this);
 
-    for (let i = 0; i < asyncCount; i++) {
-      code = `(await ${code})`;
+    if (!(this.scope instanceof TermAsn)) {
+      for (let i = 0; i < asyncCount; i++) {
+        code = `(await ${code}`;
+      }
     }
     return code;
+  }
+
+  setup() {
+    // todo kludges
+    if (this.rhs instanceof FuncCallAsn) {
+      const lhsSt = this.lhs.symbolType();
+      let scope = this.scope;
+      if (isClassType(lhsSt)) {
+        //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
+        scope = lhsSt;
+      }
+
+      this.rhs.updateScopeAndChain(scope, this.lhs);
+    }
   }
 
   compile(): string {
     this.compileErrors = [];
 
-    let code = this.rhs ? `${this.wrap(this.lhs)}.${this.wrap(this.rhs)}` : this.wrap(this.lhs);
+    let code = this.rhs ? `${this.wrap(this.lhs)}.${this.rhs.compile()}` : this.wrap(this.lhs);
 
     if (this.index) {
       mustBeIndexableType(
@@ -53,7 +78,7 @@ export class TermAsn extends AbstractAstNode {
         this.fieldId,
         this.scope,
       );
-      code = `system.safeIndex(${code}, ${this.index.compile()})`;
+      code = `system.safeIndex(${this.lhs.compile()}, ${this.index.compile()})`;
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
@@ -84,6 +109,7 @@ export class TermAsn extends AbstractAstNode {
   }
 
   symbolType() {
+    this.setup();
     return this.getBaseSymbolType(this);
   }
 
@@ -93,5 +119,16 @@ export class TermAsn extends AbstractAstNode {
       : this.rhs
         ? `${this.lhs}.${this.rhs}`
         : this.lhs;
+  }
+
+  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
+    if (isScope(this.rhs as unknown as Scope)) {
+      return (this.rhs as unknown as Scope).resolveSymbol(id, caseSensitive, initialScope);
+    }
+    if (isScope(this.lhs as unknown as ElanSymbol)) {
+      return (this.lhs as unknown as Scope).resolveSymbol(id, caseSensitive, initialScope);
+    }
+
+    return new UnknownSymbol(id);
   }
 }

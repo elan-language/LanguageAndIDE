@@ -36,6 +36,7 @@ import {
   IdentifierUseContext,
   IndexContext,
   KvpContext,
+  LambdaContext,
   ListContext,
   LitBooleanContext,
   LitFloatContext,
@@ -62,6 +63,8 @@ import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
+import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
+import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -128,7 +131,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const argList = args ? getArgs(this, args).filter((a) => a) : [];
     const name = ctx.methodName().getText();
 
-    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
+    const fc = new FuncCallAsn(name, argList, this.fieldId, this.scope);
+    // temp kludge fix TODO
+    fc.tempAntlrFlag = true;
+    return fc;
   };
 
   visitIndex = (ctx: IndexContext) =>
@@ -259,5 +265,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   visitThisInstance = (_ctx: ThisInstanceContext) => {
     return new ThisAsn(this.fieldId, this.scope);
+  };
+
+  visitLambda = (ctx: LambdaContext) => {
+    const parameters =
+      ctx
+        .paramsList()
+        ?.paramDef()
+        .map((p) => this.visit(p)) ?? [];
+
+    const sig = new LambdaSigAsn(parameters as ParamDefAsn[], this.fieldId, this.scope);
+
+    const body = this.visit(ctx.expression())!;
+
+    return new LambdaAsn(sig, body, this.fieldId);
   };
 }

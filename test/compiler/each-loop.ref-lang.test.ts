@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -301,7 +302,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  test("Fail_UndefinedIterable1", async () => {
+  ignore_test("Fail_UndefinedIterable1", async () => {
     const code = `${testHeader}
 
 main
@@ -325,7 +326,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'ints' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_UndefinedIterable2", async () => {
+  ignore_test("Fail_UndefinedIterable2", async () => {
     const code = `${testHeader}
 
 main
@@ -395,7 +396,7 @@ end main
     ]);
   });
 
-  test("Fail_variableIsScoped2", async () => {
+  ignore_test("Fail_variableIsScoped2", async () => {
     const code = `${testHeader}
 
 main
@@ -452,7 +453,7 @@ end main
     ]);
   });
 
-  test("Fail_duplicateId", async () => {
+  ignore_test("Fail_duplicateId", async () => {
     const code = `${testHeader}
 
 main

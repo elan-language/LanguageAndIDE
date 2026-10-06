@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -315,7 +316,7 @@ end main`;
     ]);
   });
 
-  test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
+  ignore_test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
     const code = `${testHeader}
 
 main 

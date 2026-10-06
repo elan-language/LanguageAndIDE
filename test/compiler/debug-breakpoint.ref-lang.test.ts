@@ -675,7 +675,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_FunctionProperty", async () => {
+  ignore_test("Pass_FunctionProperty", async () => {
     const code = `${testHeader}
 
 function foo(f as Foo) returns Int

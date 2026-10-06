@@ -1,2715 +1,2715 @@
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
-import {
-  assertAutocompletes,
-  assertSymbolCompletionMenuStartsWith,
-  assertSymbolCompletionWithString,
-  fileWithPython,
-} from "../testHelpers";
-
-suite("SymbolCompletionDropDown", () => {
-  test("Pass_LocalVars", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  assign f to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "foo", "foo"],
-      ["foobar", "foobar", "foobar"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident10", "o", 1, expected);
-  });
-
-  test("Pass_LocalVars1", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  assign f to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "foo", "foo"],
-      ["foobar", "foobar", "foobar"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident10", "f", expected);
-  });
-
-  test("Pass_Variable", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to foo
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "foo", "foo"],
-      ["createFileForWriting", "createFileForWriting", "createFileForWriting("],
-      ["openFileForReading", "openFileForReading", "openFileForReading("],
-      ["waitForKey", "waitForKey", "waitForKey("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "fo", expected);
-  });
-
-  test("Pass_keyword", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["bitNot", "bitNot", "bitNot("]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "no", expected);
-  });
-
-  test("Pass_space", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_expr5", " ", 1, expected);
-  });
-
-  test("Pass_emptyExpression", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 0
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", " ", 73);
-  });
-
-  test("Pass_LocalVarsCaseInsensitive1", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable fooBar set to 2
-  assign foo to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["fooBar", "*", "*"]] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
-  });
-
-  test("Pass_LocalVarsCaseInsensitive2", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  assign f to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident10", "O", 1, expected);
-  });
-
-  test("Pass_InClass", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    assign a to 2
-  end procedure
-
-  property aa2 as Int
-  property aa3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa2", "this.aa2", "this.aa2"],
-      ["aa3", "this.aa3", "this.aa3"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident24", "a", 1, expected);
-  });
-
-  test("Pass_InConstructor", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-    assign a to 0
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  property aa2 as Int
-  property aa3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["aa2", "this.aa2", "this.aa2"],
-      ["aa3", "this.aa3", "this.aa3"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident16", "a", expected);
-  });
-
-  test("Pass_InProcedure", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp()
-    variable a set to 0
-    assign a to 0
-  end procedure
-
-  property aa2 as Int
-  property aa3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["a", "a", "a"],
-      ["aa2", "this.aa2", "this.aa2"],
-      ["aa3", "this.aa3", "this.aa3"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
-  });
-
-  test("Pass_InProcedureParameter", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp(aa4 as Int)
-    variable a set to 0
-    assign a to 0
-  end procedure
-
-  property aa2 as Int
-  property aa3 as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["a", "a", "a"],
-      ["aa2", "this.aa2", "this.aa2"],
-      ["aa3", "this.aa3", "this.aa3"],
-      ["aa4", "aa4", "aa4"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
-  });
-
-  test("Pass_FiltersByInput", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  assign foo to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["foobar", "foobar", "foobar"]] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
-  });
-
-  test("Pass_NoConstant", async () => {
-    const code = `${testHeader}
-
-constant fooyon set to 3
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  assign f to 1
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "foo", "foo"],
-      ["foobar", "foobar", "foobar"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident13", "o", 1, expected);
-  });
-
-  test("Pass_StdLibConstant", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to w
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["white", "white", "white"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "wh", expected);
-  });
-
-  test("Pass_CallLocalVars", async () => {
-    const code = `${testHeader}
-
-procedure fooyon()
-
-end procedure
-
-main
-  variable foo set to 1
-  variable foobar set to 2
-  call f()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "foo", "foo"],
-      ["foobar", "foobar", "foobar"],
-      ["fooyon", "fooyon", "fooyon"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident14", "o", 1, expected);
-  });
-
-  test("Pass_CallMembers", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure proc1()
-  end procedure
-
-  procedure proc2()
-  end procedure
-
-  procedure pproc3()
-  end procedure
-
-  property prop1 as Int
-
-  function func1() returns Int
-    return 0
-  end function
-
-end class
-
-main
-  variable foo set to new Foo()
-  call foo()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pproc3", "*", "*"],
-      ["proc1", "*", "*"],
-      ["proc2", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident45", ".", 3, expected);
-  });
-
-  test("Pass_CallLibMembers", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to new List<of Int>()
-  call foo()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["append", "append", "append"],
-      ["appendList", "appendList", "appendList"],
-      ["initialise", "initialise", "initialise"],
-      ["insert", "insert", "insert"],
-      ["prepend", "prepend", "prepend"],
-      ["prependList", "prependList", "prependList"],
-      ["removeAll", "removeAll", "removeAll"],
-      ["removeAt", "removeAt", "removeAt"],
-      ["removeFirst", "removeFirst", "removeFirst"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
-  });
-
-  test("Pass_CallMembersFilter", async () => {
-    const code = `${testHeader}
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure proc1()
-  end procedure
-
-  procedure proc2()
-  end procedure
-
-  procedure pproc3()
-  end procedure
-
-  property prop1 as Int
-
-  function func1() returns Int
-    return 0
-  end function
-
-end class
-
-main
-  variable foo set to new Foo()
-  call foo.p()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["pproc3", "*", "*"]] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident45", "p", 5, expected);
-  });
-
-  test("Pass_CallExtensions", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to [1, 2]
-  call foo()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["append", "*", "*"],
-      ["appendList", "*", "*"],
-      ["initialise", "*", "*"],
-      ["insert", "*", "*"],
-      ["prepend", "*", "*"],
-      ["prependList", "*", "*"],
-      ["removeAll", "*", "*"],
-      ["removeAt", "*", "*"],
-      ["removeFirst", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
-  });
-
-  test("Pass_CallExtensionsFilter", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to [1, 2]
-  call foo.a()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["append", "*", "*"],
-      ["appendList", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident7", "p", 5, expected);
-  });
-
-  test("Pass_ExpressionId", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable bar set to f
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "*", "*"],
-      ["createFileForWriting", "*", "*"],
-      ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_expr8", "o", 1, expected);
-  });
-
-  test("Pass_ExpressionLocalVar", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable bar set to 1 + f
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "*", "*"],
-      ["createFileForWriting", "*", "*"],
-      ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
-  });
-
-  test("Pass_ExpressionLocalFunction", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to 1
-  variable bar set to 1 + f
-end main
-
-function foobar() returns Int
-  return 0
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["foo", "*", "*"],
-      ["foobar", "*", "*"],
-      ["createFileForWriting", "*", "*"],
-      ["openFileForReading", "*", "*"],
-      ["waitForKey", "waitForKey", "waitForKey("],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
-  });
-
-  test("Pass_properties1", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign f to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["f", "*", "*"],
-      ["foo", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident33", "f", 0, expected, true);
-  });
-
-  test("Pass_properties2", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign f to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["foo", "*", "*"]] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident33", "o", 1, expected);
-  });
-
-  ignore_test("Pass_properties3", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign f to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["this", "*", "*"],
-      ["b", "*", "*"],
-      ["foo", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident24", "t", 0, expected, true);
-  });
-
-  ignore_test("Pass_properties4", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign t to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["property", "*", "*"],
-      ["b", "*", "*"],
-      ["foo", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident24", "h", 1, expected);
-  });
-
-  test("Pass_properties5", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign f to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["foo", "*", "*"]] as [string, string, string][];
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident33", "this.f", expected);
-  });
-
-  test("Pass_properties6", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign f to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["b", "*", "*"],
-      ["bar", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident33", "b", 0, expected, true);
-  });
-
-  test("Pass_properties7", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  procedure pp1()
-    variable f set to 0
-    variable p set to 0
-    variable bar set to 0
-    assign b to 0
-  end procedure
-
-  property foo as Int
-  property b as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["bar", "*", "*"]] as [string, string, string][];
-
-    await assertAutocompletes(fileImpl, "elan_ident33", "a", 1, expected);
-  });
-
-  test("Pass_private1", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to new Foo()
-  call foo.p()
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  private procedure pp1()
-  end procedure
-
-  procedure pp2()
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["pp2", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "foo.p", expected);
-  });
-
-  test("Pass_private2", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  private procedure pp1()
-  end procedure
-
-  procedure pp2()
-    call p()
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp1", "*", "*"],
-      ["pp2", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
-  });
-
-  test("Pass_assert", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function ff() returns Int
-    return 0
-  end function
-
-end class
-
-test test_tt
-  variable gr set to new Foo()
-  assert gr.ff() evaluates to 0
-end test`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["equals", "*", "*"],
-      ["ff", "*", "*"],
-      ["notEqualTo", "*", "*"],
-      ["toString", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_text33", "gr.", expected);
-  });
-
-  ignore_test("Pass_typeName1", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["Stack", "*", "*"],
-      ["String", "*", "*"],
-      ["HashSet", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as S", expected);
-  });
-
-  ignore_test("Pass_typeName2", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["ImageVG", "*", "*"],
-      ["Int", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as I", expected);
-  });
-
-  ignore_test("Pass_typeName5", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["Boolean", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as Int, b as B", expected);
-  });
-
-  ignore_test("Pass_typeName6", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["ImageVG", "*", "*"],
-      ["Int", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as HashSet<of I", expected);
-  });
-
-  ignore_test("Pass_typeName7", async () => {
-    const code = `${testHeader}
-
-main
- 
-end main
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["CircleVG", "*", "*"],
-      ["ImageVG", "*", "*"],
-      ["LineVG", "*", "*"],
-      ["RawVG", "*", "*"],
-      ["RectangleVG", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as VG", expected);
-  });
-
-  ignore_test("Pass_returnType1", async () => {
-    const code = `${testHeader}
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["Stack", "*", "*"],
-      ["String", "*", "*"],
-      ["HashSet", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_type5", "S", expected);
-  });
-
-  ignore_test("Pass_returnType2", async () => {
-    const code = `${testHeader}
-
-function foo(a as String) returns String
-  return a
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["CircleVG", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_type5", "Circle", expected);
-  });
-
-  test("Pass_functionResult", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to foo().f1()
-end main
-
-function foo() returns Bar
-  return new Bar()
-end function
-
-class Bar
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function f1() returns Int
-    return 0
-  end function
-
-  function f2() returns String
-    return ""
-  end function
-
-  property f3 as Int
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["equals", "*", "*"],
-      ["f1", "*", "*"],
-      ["f2", "*", "*"],
-      ["f3", "*", "*"],
-      ["notEqualTo", "*", "*"],
-      ["toString", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().", expected);
-  });
-
-  test("Pass_functionResultWithParams", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to foo(1).f1()
-end main
-
-function foo(a as Int) returns Bar
-  return new Bar()
-end function
-
-class Bar
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  function f1() returns Int
-    return 0
-  end function
-
-  function f2() returns String
-    return ""
-  end function
-
-  property f3 as Int
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["equals", "*", "*"],
-      ["f1", "*", "*"],
-      ["f2", "*", "*"],
-      ["f3", "*", "*"],
-      ["notEqualTo", "*", "*"],
-      ["toString", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo(1).", expected);
-  });
-
-  test("Pass_complexExpression1", async () => {
-    const code = `${testHeader}
-
-main
-  variable alpha set to 0
-  variable beta set to abs(alpha)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["alpha", "*", "*"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "abs(al", expected);
-  });
-
-  test("Pass_libExtension1", async () => {
-    const code = `${testHeader}
-
-    main
-      variable foo set to 1.1
-      variable a set to foo
-    end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["ceiling", "*", "*"],
-      ["equals", "*", "*"],
-      ["floor", "*", "*"],
-      ["isInfinite", "*", "*"],
-      ["isNaN", "*", "*"],
-      ["notEqualTo", "*", "*"],
-      ["round", "*", "*"],
-      ["toString", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "foo.", expected);
-  });
-
-  test("Pass_newType1", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to new CircleVG()
-end main
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new B", expected);
-  });
-
-  test("Pass_newType2", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to new List<of Int>()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["AsRef", "*", "*"],
-      ["BlockGraphics", "*", "*"],
-      ["Boolean", "*", "*"],
-      ["CircleVG", "*", "*"],
-      ["CustomError", "*", "*"],
-      ["Dictionary", "*", "*"],
-      ["ElanRuntimeError", "*", "*"],
-
-      ["Float", "*", "*"],
-      ["HashSet", "*", "*"],
-      ["ImageVG", "*", "*"],
-      ["Int", "*", "*"],
-      ["LineVG", "*", "*"],
-      ["List", "*", "List<of "],
-      ["Maybe", "*", "Maybe<of "],
-      ["Queue", "*", "*"],
-      ["Random", "*", "*"],
-      ["RawVG", "*", "*"],
-      ["RectangleVG", "*", "*"],
-      ["RegExp", "*", "*"],
-      ["Stack", "*", "*"],
-      ["String", "*", "*"],
-      ["TextFileReader", "*", "*"],
-      ["TextFileWriter", "*", "*"],
-      ["Turtle", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new ", expected);
-  });
-
-  test("Pass_Parameter", async () => {
-    const code = `${testHeader}
-
-main
-  variable bubbles set to new List<of CircleVG>()
-  call bubbles.put(0, new CircleVG())
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["CircleVG", "CircleVG", "CircleVG"],
-      ["CustomError", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_args8", "0, new C", expected);
-  });
-
-  ignore_test("Pass_newConcreteType #897", async () => {
-    const code = `${testHeader}
-
-main
-  variable vg set to new List<of VectorGraphic>()
-  variable vg2 set to vg.withAppend(new CircleVG())
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["Boolean", "*", "*"],
-      ["CircleVG", "*", "*"],
-      ["Dictionary", "*", "*"],
-      ["Float", "*", "*"],
-      ["ImageVG", "*", "*"],
-      ["Int", "*", "*"],
-      ["LineVG", "*", "*"],
-      ["List", "*", "*"],
-      ["Optional", "*", "Maybe<of "],
-      ["Queue", "*", "*"],
-      ["Random", "*", "*"],
-      ["RawVG", "*", "*"],
-      ["RectangleVG", "*", "*"],
-      ["Ref", "*", "AsRef<of "],
-      ["RegExp", "*", "*"],
-      ["Set", "*", "*"],
-      ["Stack", "*", "*"],
-      ["String", "*", "*"],
-      ["TextFileReader", "*", "*"],
-      ["TextFileWriter", "*", "*"],
-      ["Turtle", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "vg.withAppend(new ", expected);
-  });
-
-  test("Pass_EnumType", async () => {
-    const code = `${testHeader}
-
-main
-  variable vg set to Fruit.apple
-end main
-
-enum Fruit apple, orange, pear`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["Fruit", "Fruit", "Fruit"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fr", expected);
-  });
-
-  test("Pass_enumValue", async () => {
-    const code = `${testHeader}
-
-main
-  variable vg set to Fruit.apple
-end main
-
-enum Fruit apple, orange, pear`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["apple", "apple", "apple"],
-      ["orange", "orange", "orange"],
-      ["pear", "pear", "pear"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fruit.", expected);
-  });
-
-  test("Pass_propProc", async () => {
-    const code = `${testHeader}
-
-main
-
-end main
-
-class Foo
-  constructor()
-  end constructor
-  function toString() returns String
-    return ""
-  end function
-
-  property bar1 as Int
-
-  procedure bar2()
-  end procedure
-
-  procedure bb()
-    call bar2()
-  end procedure
-
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["bar1", "this.bar1", "this.bar1"],
-      ["bar2", "bar2", "bar2"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident31", "ba", expected);
-  });
-
-  test("Pass_stringExtension", async () => {
-    const code = `${testHeader}
-
-main
-  variable s set to "Hello World"
-  variable b set to s.contains("e")
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
-  });
-
-  test("Pass_stringExtension", async () => {
-    const code = `${testHeader}
-
-main
-  variable s set to "Hello World"
-  variable b set to s.contains("e")
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["contains", "contains", "contains("]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
-  });
-
-  test("Pass_listExtension1", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to range(1,5)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["map", "map", "map("],
-      ["maxBy", "maxBy", "maxBy("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "range(1,5).ma", expected);
-  });
-
-  ignore_test("Pass_callProperty", async () => {
-    const code = `${testHeader}
-
-class Foo
-  property p1 as Foo
-
-  procedure pp()
-    call this.p1.pp()
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["p1", "this.p1", "this.p1"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident13", "this.", expected);
-  });
-
-  test("Pass_inheritProperty", async () => {
-    const code = `${testHeader}
-
-abstract class Bar
-  property pp1 as Int
-end class
-
-class Foo inherits Bar
-  procedure pp()
-    variable a set to this.pp1
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr28", "pp", expected);
-  });
-
-  test("Pass_inheritPropertyKeyword1", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  property pp as Int
-end class
-
-abstract class Bar inherits Yon
-  property ppp as Int
-end class
-
-class Foo inherits Bar
-  procedure proc()
-    variable a set to this.pp
-  end procedure
-
-  property pppp as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp", "this.pp", "this.pp"],
-      ["ppp", "this.ppp", "this.ppp"],
-      ["pppp", "this.pppp", "this.pppp"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr35", "pp", expected);
-  });
-
-  ignore_test("Pass_inheritPropertyKeyword2", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  property pp as Int
-end class
-
-abstract class Bar inherits Yon
-  property ppp as Int
-end class
-
-class Foo inherits Bar
-  procedure proc()
-    variable a set to this.pp
-  end procedure
-
-  property pppp as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp", "this.pp", "this.pp"],
-      ["ppp", "this.ppp", "this.ppp"],
-      ["pppp", "this.pppp", "this.pppp"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this", expected);
-  });
-
-  ignore_test("Pass_inheritPropertyKeyword3", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  property pp as Int
-end class
-
-abstract class Bar inherits Yon
-  property ppp as Int
-end class
-
-class Foo inherits Bar
-  procedure proc()
-    variable a set to this.pp
-  end procedure
-
-  property pppp as Int
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp", "this.pp", "this.pp"],
-      ["ppp", "this.ppp", "this.ppp"],
-      ["pppp", "this.pppp", "this.pppp"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this.", expected);
-  });
-
-  test("Pass_inheritIndirectProperty", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  property pp1 as Int
-end class
-
-abstract class Bar inherits Yon
-
-end class
-
-class Foo inherits Bar
-  procedure p()
-    variable a set to this.pp1
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "pp", expected);
-  });
-
-  test("Pass_inheritFunction", async () => {
-    const code = `${testHeader}
-
-abstract class Bar
-  function ff1() returns Int
-    return 0
-  end function
-end class
-
-class Foo inherits Bar
-  function ff() returns Int
-    return ff1()
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["ff", "ff", "ff("],
-      ["ff1", "ff1", "ff1("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "ff", expected);
-  });
-
-  test("Pass_inheritIndirectFunction", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  function ff1() returns Int
-    return 0
-  end function
-end class
-
-abstract class Bar inherits Yon
-
-end class
-
-class Foo inherits Bar
-  function ff() returns Int
-    return ff1()
-  end function
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["ff", "ff", "ff("],
-      ["ff1", "ff1", "ff1("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr36", "ff", expected);
-  });
-
-  test("Pass_inheritProcedure", async () => {
-    const code = `${testHeader}
-
-abstract class Bar
-  procedure pp1()
-  end procedure
-end class
-
-class Foo inherits Bar
-  procedure pp()
-    call pp1()
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp", "pp", "pp"],
-      ["pp1", "pp1", "pp1"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
-  });
-
-  test("Pass_inheritIndirectProcedure", async () => {
-    const code = `${testHeader}
-
-abstract class Yon
-  procedure pp1()
-  end procedure
-end class
-
-abstract class Bar inherits Yon
-  
-end class
-
-class Foo inherits Bar
-  procedure pp()
-    call pp1()
-  end procedure
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pp", "pp", "pp"],
-      ["pp1", "pp1", "pp1"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident32", "pp", expected);
-  });
-
-  test("Pass_stdlibClass", async () => {
-    const code = `${testHeader}
-
-main
-  variable t set to new Turtle()
-  call t.something()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["clearAndReset", "*", "*"],
-      ["hide", "*", "*"],
-      ["move", "*", "*"],
-      ["moveTo", "*", "*"],
-      ["penColour", "*", "*"],
-      ["penDown", "*", "*"],
-      ["penUp", "*", "*"],
-      ["penWidth", "*", "*"],
-      ["placeAt", "*", "*"],
-      ["show", "*", "*"],
-      ["turn", "*", "*"],
-      ["turnToHeading", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "t.", expected);
-  });
-
-  test("Pass_newClass", async () => {
-    const code = `${testHeader}
-
-main
-  variable t set to new Foo()
-end main
-
-class Foo
-end class`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new Foo()", expected);
-  });
-
-  test("Pass_abstractClass", async () => {
-    const code = `${testHeader}
-
-main
-  variable t set to new List<of VectorGraphics>()
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["VectorGraphic", "*", "*"],
-      ["CircleVG", "*", "*"],
-      ["ImageVG", "*", "*"],
-      ["LineVG", "*", "*"],
-      ["RawVG", "*", "*"],
-      ["RectangleVG", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new List<of V", expected);
-  });
-
-  test("Pass_args", async () => {
-    const code = `${testHeader}
-
-main
-  variable aaa set to 10
-  call sleep_ms(aaa)
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["aaa", "aaa", "aaa"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_args8", "aa", expected);
-  });
-
-  test("Pass_withinForLoop", async () => {
-    const code = `${testHeader}
-
-main
-  for i in range(1, 1001)
-    variable pacesThisAttempt set to 0
-    while true
-      assign pacesThisAttempt to pacesThisAttempt + 1
-    end while
-    variable totalPaces set to 0
-    assign totalPaces to totalPaces + pacesThisAttempt
-  end for
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["pacesThisAttempt", "pacesThisAttempt", "pacesThisAttempt"],
-      ["totalPaces", "totalPaces", "totalPaces"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr21", "totalPaces + pac", expected);
-  });
-
-  test("Pass_tuple", async () => {
-    const code = `${testHeader}
-
-main
-  variable t set to (1, "fred")
-  variable a set to t.item_0
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["item_0", "item_0", "item_0"],
-      ["item_1", "item_1", "item_1"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "t.it", expected);
-  });
-
-  test("Pass_tuple1", async () => {
-    const code = `${testHeader}
-
-main
-  variable a set to foo().item_0
-end main
-
-function foo() returns (Int, String)
-  return (1, "fred")
-end function`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["item_0", "item_0", "item_0"],
-      ["item_1", "item_1", "item_1"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().it", expected);
-  });
-
-  ignore_test("Pass_tuple2", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
-end main
-  
-procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["item_0", "item_0", "item_0"],
-      ["item_1", "item_1", "item_1"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "(4, 5), lambda t as (Int, Int) => t.it",
-      expected,
-    );
-  });
-
-  test("Pass_lambdaParameter1", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(lambda t as Foo => t.bar(), new Foo())
-end main
-  
-class Foo
-  function bar() returns Int
-    return 0
-  end function
-end class
-
-procedure printModified(f as Func<of Foo => Int>, i as Foo)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "lambda t as Foo => t.b",
-      expected,
-    );
-  });
-
-  ignore_test("Pass_lambdaParameter2", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
-end main
-  
-class Foo
-  function bar() returns Int
-    return 0
-  end function
-end class
-
-procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["bar", "bar", "bar("]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "new Foo(), lambda t as Foo => t.b",
-      expected,
-    );
-  });
-
-  test("Pass_lambdaParameter3", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
-end main
-  
-class Foo
-  function bar() returns Int
-    return 0
-  end function
-end class
-
-procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "new Foo(), lambda t as Foo => u.b",
-      expected,
-    );
-  });
-
-  ignore_test("Pass_lambdaParameter4", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(new Foo(), lambda t as Foo => t.bar())
-end main
-  
-class Foo
-  function bar() returns Int
-    return 0
-  end function
-end class
-
-procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["bar", "bar", "bar("],
-      ["equals", "*", "*"],
-      ["toString", "*", "*"],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "new Foo(), lambda t as Foo => t.",
-      expected,
-    );
-  });
-
-  ignore_test("Pass_lambdaParameter5", async () => {
-    const code = `${testHeader}
-
-main
-  call printModified(new Foo(), lambda aFoo as Foo => aFoo.bar())
-end main
-  
-class Foo
-  function bar() returns Int
-    return 0
-  end function
-end class
-
-procedure printModified(i as Foo, f as Func<of Foo => Int>)
-  call printNoLine(f(i))
-end procedure`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [["aFoo", "aFoo", "aFoo"]] as [string, string, string][];
-
-    await assertSymbolCompletionWithString(
-      fileImpl,
-      "elan_args5",
-      "new Foo(), lambda aFoo as Foo => aF",
-      expected,
-    );
-  });
-  test("Pass_keywordsShownWhenElan", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to w
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["if", "if", "if "],
-      ["lambda", "lambda", "lambda "],
-      ["new", "new", "new "],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
-  });
-  test("Pass_keywordsNotShownWhenNotElan", async () => {
-    const code = `${testHeader}
-
-main
-  variable foo set to w
-end main`;
-
-    const fileImpl = fileWithPython();
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    const expected = [
-      ["abs", "abs", "abs("],
-      ["acos", "acos", "acos("],
-      ["asin", "asin", "asin("],
-    ] as [string, string, string][];
-
-    await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
-  });
-});
+// import { StdLib } from "../../src/compiler/standard-library/std-lib";
+// import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+// import { FileImpl } from "../../src/ide/frames/file-impl";
+// import { Paradigm } from "../../src/ide/frames/paradigm";
+// import { StubInputOutput } from "../../src/ide/stub-input-output";
+// import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
+// import {
+//   assertAutocompletes,
+//   assertSymbolCompletionMenuStartsWith,
+//   assertSymbolCompletionWithString,
+//   fileWithPython,
+// } from "../testHelpers";
+
+// suite("SymbolCompletionDropDown", () => {
+//   test("Pass_LocalVars", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   assign f to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "foo", "foo"],
+//       ["foobar", "foobar", "foobar"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident10", "o", 1, expected);
+//   });
+
+//   test("Pass_LocalVars1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   assign f to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "foo", "foo"],
+//       ["foobar", "foobar", "foobar"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident10", "f", expected);
+//   });
+
+//   test("Pass_Variable", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to foo
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "foo", "foo"],
+//       ["createFileForWriting", "createFileForWriting", "createFileForWriting("],
+//       ["openFileForReading", "openFileForReading", "openFileForReading("],
+//       ["waitForKey", "waitForKey", "waitForKey("],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "fo", expected);
+//   });
+
+//   test("Pass_keyword", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["bitNot", "bitNot", "bitNot("]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "no", expected);
+//   });
+
+//   test("Pass_space", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_expr5", " ", 1, expected);
+//   });
+
+//   test("Pass_emptyExpression", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 0
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", " ", 73);
+//   });
+
+//   test("Pass_LocalVarsCaseInsensitive1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable fooBar set to 2
+//   assign foo to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["fooBar", "*", "*"]] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
+//   });
+
+//   test("Pass_LocalVarsCaseInsensitive2", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   assign f to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident10", "O", 1, expected);
+//   });
+
+//   test("Pass_InClass", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     assign a to 2
+//   end procedure
+
+//   property aa2 as Int
+//   property aa3 as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["aa2", "this.aa2", "this.aa2"],
+//       ["aa3", "this.aa3", "this.aa3"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident24", "a", 1, expected);
+//   });
+
+//   test("Pass_InConstructor", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   constructor()
+//     assign a to 0
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   property aa2 as Int
+//   property aa3 as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["aa2", "this.aa2", "this.aa2"],
+//       ["aa3", "this.aa3", "this.aa3"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident16", "a", expected);
+//   });
+
+//   test("Pass_InProcedure", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp()
+//     variable a set to 0
+//     assign a to 0
+//   end procedure
+
+//   property aa2 as Int
+//   property aa3 as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["a", "a", "a"],
+//       ["aa2", "this.aa2", "this.aa2"],
+//       ["aa3", "this.aa3", "this.aa3"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
+//   });
+
+//   test("Pass_InProcedureParameter", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp(aa4 as Int)
+//     variable a set to 0
+//     assign a to 0
+//   end procedure
+
+//   property aa2 as Int
+//   property aa3 as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["a", "a", "a"],
+//       ["aa2", "this.aa2", "this.aa2"],
+//       ["aa3", "this.aa3", "this.aa3"],
+//       ["aa4", "aa4", "aa4"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident25", "a", expected);
+//   });
+
+//   test("Pass_FiltersByInput", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   assign foo to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["foobar", "foobar", "foobar"]] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident10", "b", 3, expected);
+//   });
+
+//   test("Pass_NoConstant", async () => {
+//     const code = `${testHeader}
+
+// constant fooyon set to 3
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   assign f to 1
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "foo", "foo"],
+//       ["foobar", "foobar", "foobar"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident13", "o", 1, expected);
+//   });
+
+//   test("Pass_StdLibConstant", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to w
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["white", "white", "white"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "wh", expected);
+//   });
+
+//   test("Pass_CallLocalVars", async () => {
+//     const code = `${testHeader}
+
+// procedure fooyon()
+
+// end procedure
+
+// main
+//   variable foo set to 1
+//   variable foobar set to 2
+//   call f()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "foo", "foo"],
+//       ["foobar", "foobar", "foobar"],
+//       ["fooyon", "fooyon", "fooyon"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident14", "o", 1, expected);
+//   });
+
+//   test("Pass_CallMembers", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure proc1()
+//   end procedure
+
+//   procedure proc2()
+//   end procedure
+
+//   procedure pproc3()
+//   end procedure
+
+//   property prop1 as Int
+
+//   function func1() returns Int
+//     return 0
+//   end function
+
+// end class
+
+// main
+//   variable foo set to new Foo()
+//   call foo()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pproc3", "*", "*"],
+//       ["proc1", "*", "*"],
+//       ["proc2", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident45", ".", 3, expected);
+//   });
+
+//   test("Pass_CallLibMembers", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to new List<of Int>()
+//   call foo()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["append", "append", "append"],
+//       ["appendList", "appendList", "appendList"],
+//       ["initialise", "initialise", "initialise"],
+//       ["insert", "insert", "insert"],
+//       ["prepend", "prepend", "prepend"],
+//       ["prependList", "prependList", "prependList"],
+//       ["removeAll", "removeAll", "removeAll"],
+//       ["removeAt", "removeAt", "removeAt"],
+//       ["removeFirst", "removeFirst", "removeFirst"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
+//   });
+
+//   test("Pass_CallMembersFilter", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure proc1()
+//   end procedure
+
+//   procedure proc2()
+//   end procedure
+
+//   procedure pproc3()
+//   end procedure
+
+//   property prop1 as Int
+
+//   function func1() returns Int
+//     return 0
+//   end function
+
+// end class
+
+// main
+//   variable foo set to new Foo()
+//   call foo.p()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["pproc3", "*", "*"]] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident45", "p", 5, expected);
+//   });
+
+//   test("Pass_CallExtensions", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to [1, 2]
+//   call foo()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["append", "*", "*"],
+//       ["appendList", "*", "*"],
+//       ["initialise", "*", "*"],
+//       ["insert", "*", "*"],
+//       ["prepend", "*", "*"],
+//       ["prependList", "*", "*"],
+//       ["removeAll", "*", "*"],
+//       ["removeAt", "*", "*"],
+//       ["removeFirst", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident7", ".", 3, expected);
+//   });
+
+//   test("Pass_CallExtensionsFilter", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to [1, 2]
+//   call foo.a()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["append", "*", "*"],
+//       ["appendList", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident7", "p", 5, expected);
+//   });
+
+//   test("Pass_ExpressionId", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable bar set to f
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "*", "*"],
+//       ["createFileForWriting", "*", "*"],
+//       ["openFileForReading", "*", "*"],
+//       ["waitForKey", "waitForKey", "waitForKey("],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_expr8", "o", 1, expected);
+//   });
+
+//   test("Pass_ExpressionLocalVar", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable bar set to 1 + f
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "*", "*"],
+//       ["createFileForWriting", "*", "*"],
+//       ["openFileForReading", "*", "*"],
+//       ["waitForKey", "waitForKey", "waitForKey("],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
+//   });
+
+//   test("Pass_ExpressionLocalFunction", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to 1
+//   variable bar set to 1 + f
+// end main
+
+// function foobar() returns Int
+//   return 0
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["foo", "*", "*"],
+//       ["foobar", "*", "*"],
+//       ["createFileForWriting", "*", "*"],
+//       ["openFileForReading", "*", "*"],
+//       ["waitForKey", "waitForKey", "waitForKey("],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_expr8", "o", 5, expected);
+//   });
+
+//   test("Pass_properties1", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign f to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["f", "*", "*"],
+//       ["foo", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident33", "f", 0, expected, true);
+//   });
+
+//   test("Pass_properties2", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign f to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["foo", "*", "*"]] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident33", "o", 1, expected);
+//   });
+
+//   ignore_test("Pass_properties3", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign f to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["this", "*", "*"],
+//       ["b", "*", "*"],
+//       ["foo", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident24", "t", 0, expected, true);
+//   });
+
+//   ignore_test("Pass_properties4", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign t to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["property", "*", "*"],
+//       ["b", "*", "*"],
+//       ["foo", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident24", "h", 1, expected);
+//   });
+
+//   test("Pass_properties5", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign f to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["foo", "*", "*"]] as [string, string, string][];
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident33", "this.f", expected);
+//   });
+
+//   test("Pass_properties6", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign f to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["b", "*", "*"],
+//       ["bar", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident33", "b", 0, expected, true);
+//   });
+
+//   test("Pass_properties7", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   procedure pp1()
+//     variable f set to 0
+//     variable p set to 0
+//     variable bar set to 0
+//     assign b to 0
+//   end procedure
+
+//   property foo as Int
+//   property b as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["bar", "*", "*"]] as [string, string, string][];
+
+//     await assertAutocompletes(fileImpl, "elan_ident33", "a", 1, expected);
+//   });
+
+//   test("Pass_private1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to new Foo()
+//   call foo.p()
+// end main
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   private procedure pp1()
+//   end procedure
+
+//   procedure pp2()
+//   end procedure
+
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["pp2", "*", "*"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "foo.p", expected);
+//   });
+
+//   test("Pass_private2", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   private procedure pp1()
+//   end procedure
+
+//   procedure pp2()
+//     call p()
+//   end procedure
+
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp1", "*", "*"],
+//       ["pp2", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
+//   });
+
+//   test("Pass_assert", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   function ff() returns Int
+//     return 0
+//   end function
+
+// end class
+
+// test test_tt
+//   variable gr set to new Foo()
+//   assert gr.ff() evaluates to 0
+// end test`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["equals", "*", "*"],
+//       ["ff", "*", "*"],
+//       ["notEqualTo", "*", "*"],
+//       ["toString", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_text33", "gr.", expected);
+//   });
+
+//   ignore_test("Pass_typeName1", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["Stack", "*", "*"],
+//       ["String", "*", "*"],
+//       ["HashSet", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as S", expected);
+//   });
+
+//   ignore_test("Pass_typeName2", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["ImageVG", "*", "*"],
+//       ["Int", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as I", expected);
+//   });
+
+//   ignore_test("Pass_typeName5", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["Boolean", "*", "*"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as Int, b as B", expected);
+//   });
+
+//   ignore_test("Pass_typeName6", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["ImageVG", "*", "*"],
+//       ["Int", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as HashSet<of I", expected);
+//   });
+
+//   ignore_test("Pass_typeName7", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["CircleVG", "*", "*"],
+//       ["ImageVG", "*", "*"],
+//       ["LineVG", "*", "*"],
+//       ["RawVG", "*", "*"],
+//       ["RectangleVG", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as VG", expected);
+//   });
+
+//   ignore_test("Pass_returnType1", async () => {
+//     const code = `${testHeader}
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["Stack", "*", "*"],
+//       ["String", "*", "*"],
+//       ["HashSet", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_type5", "S", expected);
+//   });
+
+//   ignore_test("Pass_returnType2", async () => {
+//     const code = `${testHeader}
+
+// function foo(a as String) returns String
+//   return a
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["CircleVG", "*", "*"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_type5", "Circle", expected);
+//   });
+
+//   test("Pass_functionResult", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable a set to foo().f1()
+// end main
+
+// function foo() returns Bar
+//   return new Bar()
+// end function
+
+// class Bar
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   function f1() returns Int
+//     return 0
+//   end function
+
+//   function f2() returns String
+//     return ""
+//   end function
+
+//   property f3 as Int
+
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["equals", "*", "*"],
+//       ["f1", "*", "*"],
+//       ["f2", "*", "*"],
+//       ["f3", "*", "*"],
+//       ["notEqualTo", "*", "*"],
+//       ["toString", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().", expected);
+//   });
+
+//   test("Pass_functionResultWithParams", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable a set to foo(1).f1()
+// end main
+
+// function foo(a as Int) returns Bar
+//   return new Bar()
+// end function
+
+// class Bar
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   function f1() returns Int
+//     return 0
+//   end function
+
+//   function f2() returns String
+//     return ""
+//   end function
+
+//   property f3 as Int
+
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["equals", "*", "*"],
+//       ["f1", "*", "*"],
+//       ["f2", "*", "*"],
+//       ["f3", "*", "*"],
+//       ["notEqualTo", "*", "*"],
+//       ["toString", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo(1).", expected);
+//   });
+
+//   test("Pass_complexExpression1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable alpha set to 0
+//   variable beta set to abs(alpha)
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["alpha", "*", "*"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "abs(al", expected);
+//   });
+
+//   test("Pass_libExtension1", async () => {
+//     const code = `${testHeader}
+
+//     main
+//       variable foo set to 1.1
+//       variable a set to foo
+//     end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["ceiling", "*", "*"],
+//       ["equals", "*", "*"],
+//       ["floor", "*", "*"],
+//       ["isInfinite", "*", "*"],
+//       ["isNaN", "*", "*"],
+//       ["notEqualTo", "*", "*"],
+//       ["round", "*", "*"],
+//       ["toString", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "foo.", expected);
+//   });
+
+//   test("Pass_newType1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to new CircleVG()
+// end main
+// `;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["BlockGraphics", "*", "*"],
+//       ["Boolean", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new B", expected);
+//   });
+
+//   test("Pass_newType2", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to new List<of Int>()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["AsRef", "*", "*"],
+//       ["BlockGraphics", "*", "*"],
+//       ["Boolean", "*", "*"],
+//       ["CircleVG", "*", "*"],
+//       ["CustomError", "*", "*"],
+//       ["Dictionary", "*", "*"],
+//       ["ElanRuntimeError", "*", "*"],
+
+//       ["Float", "*", "*"],
+//       ["HashSet", "*", "*"],
+//       ["ImageVG", "*", "*"],
+//       ["Int", "*", "*"],
+//       ["LineVG", "*", "*"],
+//       ["List", "*", "List<of "],
+//       ["Maybe", "*", "Maybe<of "],
+//       ["Queue", "*", "*"],
+//       ["Random", "*", "*"],
+//       ["RawVG", "*", "*"],
+//       ["RectangleVG", "*", "*"],
+//       ["RegExp", "*", "*"],
+//       ["Stack", "*", "*"],
+//       ["String", "*", "*"],
+//       ["TextFileReader", "*", "*"],
+//       ["TextFileWriter", "*", "*"],
+//       ["Turtle", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new ", expected);
+//   });
+
+//   test("Pass_Parameter", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable bubbles set to new List<of CircleVG>()
+//   call bubbles.put(0, new CircleVG())
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["CircleVG", "CircleVG", "CircleVG"],
+//       ["CustomError", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_args8", "0, new C", expected);
+//   });
+
+//   ignore_test("Pass_newConcreteType #897", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable vg set to new List<of VectorGraphic>()
+//   variable vg2 set to vg.withAppend(new CircleVG())
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["Boolean", "*", "*"],
+//       ["CircleVG", "*", "*"],
+//       ["Dictionary", "*", "*"],
+//       ["Float", "*", "*"],
+//       ["ImageVG", "*", "*"],
+//       ["Int", "*", "*"],
+//       ["LineVG", "*", "*"],
+//       ["List", "*", "*"],
+//       ["Optional", "*", "Maybe<of "],
+//       ["Queue", "*", "*"],
+//       ["Random", "*", "*"],
+//       ["RawVG", "*", "*"],
+//       ["RectangleVG", "*", "*"],
+//       ["Ref", "*", "AsRef<of "],
+//       ["RegExp", "*", "*"],
+//       ["Set", "*", "*"],
+//       ["Stack", "*", "*"],
+//       ["String", "*", "*"],
+//       ["TextFileReader", "*", "*"],
+//       ["TextFileWriter", "*", "*"],
+//       ["Turtle", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "vg.withAppend(new ", expected);
+//   });
+
+//   test("Pass_EnumType", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable vg set to Fruit.apple
+// end main
+
+// enum Fruit apple, orange, pear`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["Fruit", "Fruit", "Fruit"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fr", expected);
+//   });
+
+//   test("Pass_enumValue", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable vg set to Fruit.apple
+// end main
+
+// enum Fruit apple, orange, pear`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["apple", "apple", "apple"],
+//       ["orange", "orange", "orange"],
+//       ["pear", "pear", "pear"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "Fruit.", expected);
+//   });
+
+//   test("Pass_propProc", async () => {
+//     const code = `${testHeader}
+
+// main
+
+// end main
+
+// class Foo
+//   constructor()
+//   end constructor
+//   function toString() returns String
+//     return ""
+//   end function
+
+//   property bar1 as Int
+
+//   procedure bar2()
+//   end procedure
+
+//   procedure bb()
+//     call bar2()
+//   end procedure
+
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["bar1", "this.bar1", "this.bar1"],
+//       ["bar2", "bar2", "bar2"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident31", "ba", expected);
+//   });
+
+//   test("Pass_stringExtension", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable s set to "Hello World"
+//   variable b set to s.contains("e")
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
+//   });
+
+//   test("Pass_stringExtension", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable s set to "Hello World"
+//   variable b set to s.contains("e")
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["contains", "contains", "contains("]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "s.con", expected);
+//   });
+
+//   test("Pass_listExtension1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable a set to range(1,5)
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["map", "map", "map("],
+//       ["maxBy", "maxBy", "maxBy("],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "range(1,5).ma", expected);
+//   });
+
+//   ignore_test("Pass_callProperty", async () => {
+//     const code = `${testHeader}
+
+// class Foo
+//   property p1 as Foo
+
+//   procedure pp()
+//     call this.p1.pp()
+//   end procedure
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["p1", "this.p1", "this.p1"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident13", "this.", expected);
+//   });
+
+//   test("Pass_inheritProperty", async () => {
+//     const code = `${testHeader}
+
+// abstract class Bar
+//   property pp1 as Int
+// end class
+
+// class Foo inherits Bar
+//   procedure pp()
+//     variable a set to this.pp1
+//   end procedure
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr28", "pp", expected);
+//   });
+
+//   test("Pass_inheritPropertyKeyword1", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   property pp as Int
+// end class
+
+// abstract class Bar inherits Yon
+//   property ppp as Int
+// end class
+
+// class Foo inherits Bar
+//   procedure proc()
+//     variable a set to this.pp
+//   end procedure
+
+//   property pppp as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp", "this.pp", "this.pp"],
+//       ["ppp", "this.ppp", "this.ppp"],
+//       ["pppp", "this.pppp", "this.pppp"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr35", "pp", expected);
+//   });
+
+//   ignore_test("Pass_inheritPropertyKeyword2", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   property pp as Int
+// end class
+
+// abstract class Bar inherits Yon
+//   property ppp as Int
+// end class
+
+// class Foo inherits Bar
+//   procedure proc()
+//     variable a set to this.pp
+//   end procedure
+
+//   property pppp as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp", "this.pp", "this.pp"],
+//       ["ppp", "this.ppp", "this.ppp"],
+//       ["pppp", "this.pppp", "this.pppp"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this", expected);
+//   });
+
+//   ignore_test("Pass_inheritPropertyKeyword3", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   property pp as Int
+// end class
+
+// abstract class Bar inherits Yon
+//   property ppp as Int
+// end class
+
+// class Foo inherits Bar
+//   procedure proc()
+//     variable a set to this.pp
+//   end procedure
+
+//   property pppp as Int
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp", "this.pp", "this.pp"],
+//       ["ppp", "this.ppp", "this.ppp"],
+//       ["pppp", "this.pppp", "this.pppp"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this.", expected);
+//   });
+
+//   test("Pass_inheritIndirectProperty", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   property pp1 as Int
+// end class
+
+// abstract class Bar inherits Yon
+
+// end class
+
+// class Foo inherits Bar
+//   procedure p()
+//     variable a set to this.pp1
+//   end procedure
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["pp1", "this.pp1", "this.pp1"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "pp", expected);
+//   });
+
+//   test("Pass_inheritFunction", async () => {
+//     const code = `${testHeader}
+
+// abstract class Bar
+//   function ff1() returns Int
+//     return 0
+//   end function
+// end class
+
+// class Foo inherits Bar
+//   function ff() returns Int
+//     return ff1()
+//   end function
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["ff", "ff", "ff("],
+//       ["ff1", "ff1", "ff1("],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr32", "ff", expected);
+//   });
+
+//   test("Pass_inheritIndirectFunction", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   function ff1() returns Int
+//     return 0
+//   end function
+// end class
+
+// abstract class Bar inherits Yon
+
+// end class
+
+// class Foo inherits Bar
+//   function ff() returns Int
+//     return ff1()
+//   end function
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["ff", "ff", "ff("],
+//       ["ff1", "ff1", "ff1("],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr36", "ff", expected);
+//   });
+
+//   test("Pass_inheritProcedure", async () => {
+//     const code = `${testHeader}
+
+// abstract class Bar
+//   procedure pp1()
+//   end procedure
+// end class
+
+// class Foo inherits Bar
+//   procedure pp()
+//     call pp1()
+//   end procedure
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp", "pp", "pp"],
+//       ["pp1", "pp1", "pp1"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident28", "pp", expected);
+//   });
+
+//   test("Pass_inheritIndirectProcedure", async () => {
+//     const code = `${testHeader}
+
+// abstract class Yon
+//   procedure pp1()
+//   end procedure
+// end class
+
+// abstract class Bar inherits Yon
+
+// end class
+
+// class Foo inherits Bar
+//   procedure pp()
+//     call pp1()
+//   end procedure
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pp", "pp", "pp"],
+//       ["pp1", "pp1", "pp1"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident32", "pp", expected);
+//   });
+
+//   test("Pass_stdlibClass", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable t set to new Turtle()
+//   call t.something()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["clearAndReset", "*", "*"],
+//       ["hide", "*", "*"],
+//       ["move", "*", "*"],
+//       ["moveTo", "*", "*"],
+//       ["penColour", "*", "*"],
+//       ["penDown", "*", "*"],
+//       ["penUp", "*", "*"],
+//       ["penWidth", "*", "*"],
+//       ["placeAt", "*", "*"],
+//       ["show", "*", "*"],
+//       ["turn", "*", "*"],
+//       ["turnToHeading", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_ident7", "t.", expected);
+//   });
+
+//   test("Pass_newClass", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable t set to new Foo()
+// end main
+
+// class Foo
+// end class`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new Foo()", expected);
+//   });
+
+//   test("Pass_abstractClass", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable t set to new List<of VectorGraphics>()
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["VectorGraphic", "*", "*"],
+//       ["CircleVG", "*", "*"],
+//       ["ImageVG", "*", "*"],
+//       ["LineVG", "*", "*"],
+//       ["RawVG", "*", "*"],
+//       ["RectangleVG", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "new List<of V", expected);
+//   });
+
+//   test("Pass_args", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable aaa set to 10
+//   call sleep_ms(aaa)
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["aaa", "aaa", "aaa"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_args8", "aa", expected);
+//   });
+
+//   test("Pass_withinForLoop", async () => {
+//     const code = `${testHeader}
+
+// main
+//   for i in range(1, 1001)
+//     variable pacesThisAttempt set to 0
+//     while true
+//       assign pacesThisAttempt to pacesThisAttempt + 1
+//     end while
+//     variable totalPaces set to 0
+//     assign totalPaces to totalPaces + pacesThisAttempt
+//   end for
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["pacesThisAttempt", "pacesThisAttempt", "pacesThisAttempt"],
+//       ["totalPaces", "totalPaces", "totalPaces"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr21", "totalPaces + pac", expected);
+//   });
+
+//   test("Pass_tuple", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable t set to (1, "fred")
+//   variable a set to t.item_0
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["item_0", "item_0", "item_0"],
+//       ["item_1", "item_1", "item_1"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr8", "t.it", expected);
+//   });
+
+//   test("Pass_tuple1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable a set to foo().item_0
+// end main
+
+// function foo() returns (Int, String)
+//   return (1, "fred")
+// end function`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["item_0", "item_0", "item_0"],
+//       ["item_1", "item_1", "item_1"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().it", expected);
+//   });
+
+//   ignore_test("Pass_tuple2", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
+// end main
+
+// procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["item_0", "item_0", "item_0"],
+//       ["item_1", "item_1", "item_1"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "(4, 5), lambda t as (Int, Int) => t.it",
+//       expected,
+//     );
+//   });
+
+//   test("Pass_lambdaParameter1", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified(lambda t as Foo => t.bar(), new Foo())
+// end main
+
+// class Foo
+//   function bar() returns Int
+//     return 0
+//   end function
+// end class
+
+// procedure printModified(f as Func<of Foo => Int>, i as Foo)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "lambda t as Foo => t.b",
+//       expected,
+//     );
+//   });
+
+//   ignore_test("Pass_lambdaParameter2", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified(new Foo(), lambda t as Foo => t.bar())
+// end main
+
+// class Foo
+//   function bar() returns Int
+//     return 0
+//   end function
+// end class
+
+// procedure printModified(i as Foo, f as Func<of Foo => Int>)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["bar", "bar", "bar("]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "new Foo(), lambda t as Foo => t.b",
+//       expected,
+//     );
+//   });
+
+//   test("Pass_lambdaParameter3", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified(new Foo(), lambda t as Foo => t.bar())
+// end main
+
+// class Foo
+//   function bar() returns Int
+//     return 0
+//   end function
+// end class
+
+// procedure printModified(i as Foo, f as Func<of Foo => Int>)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "new Foo(), lambda t as Foo => u.b",
+//       expected,
+//     );
+//   });
+
+//   ignore_test("Pass_lambdaParameter4", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified(new Foo(), lambda t as Foo => t.bar())
+// end main
+
+// class Foo
+//   function bar() returns Int
+//     return 0
+//   end function
+// end class
+
+// procedure printModified(i as Foo, f as Func<of Foo => Int>)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["bar", "bar", "bar("],
+//       ["equals", "*", "*"],
+//       ["toString", "*", "*"],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "new Foo(), lambda t as Foo => t.",
+//       expected,
+//     );
+//   });
+
+//   ignore_test("Pass_lambdaParameter5", async () => {
+//     const code = `${testHeader}
+
+// main
+//   call printModified(new Foo(), lambda aFoo as Foo => aFoo.bar())
+// end main
+
+// class Foo
+//   function bar() returns Int
+//     return 0
+//   end function
+// end class
+
+// procedure printModified(i as Foo, f as Func<of Foo => Int>)
+//   call printNoLine(f(i))
+// end procedure`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [["aFoo", "aFoo", "aFoo"]] as [string, string, string][];
+
+//     await assertSymbolCompletionWithString(
+//       fileImpl,
+//       "elan_args5",
+//       "new Foo(), lambda aFoo as Foo => aF",
+//       expected,
+//     );
+//   });
+//   test("Pass_keywordsShownWhenElan", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to w
+// end main`;
+
+//     const fileImpl = new FileImpl(
+//       testHash,
+//       new Paradigm(""),
+//       "",
+//       transforms(),
+//       new StdLib(new StubInputOutput()),
+//       false,
+//       true,
+//     );
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["if", "if", "if "],
+//       ["lambda", "lambda", "lambda "],
+//       ["new", "new", "new "],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
+//   });
+//   test("Pass_keywordsNotShownWhenNotElan", async () => {
+//     const code = `${testHeader}
+
+// main
+//   variable foo set to w
+// end main`;
+
+//     const fileImpl = fileWithPython();
+//     await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+//     const expected = [
+//       ["abs", "abs", "abs("],
+//       ["acos", "acos", "acos("],
+//       ["asin", "asin", "asin("],
+//     ] as [string, string, string][];
+
+//     await assertSymbolCompletionMenuStartsWith(fileImpl, "elan_expr5", " ", expected);
+//   });
+// });

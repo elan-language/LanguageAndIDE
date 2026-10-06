@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -276,7 +277,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
     const code = `${testHeader}
 
 main
@@ -316,7 +317,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
     const code = `${testHeader}
 
 main

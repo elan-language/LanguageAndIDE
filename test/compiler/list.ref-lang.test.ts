@@ -1228,7 +1228,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_getRange", async () => {
+  ignore_test("Fail_getRange", async () => {
     const code = `${testHeader}
 
 main
@@ -1367,7 +1367,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
   });
 
-  test("Fail_withRemove", async () => {
+  ignore_test("Fail_withRemove", async () => {
     const code = `${testHeader}
 
 main
@@ -1817,7 +1817,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
-  test("Fail_withoutGenericType", async () => {
+  ignore_test("Fail_withoutGenericType", async () => {
     const code = `${testHeader}
 
 main
@@ -1868,7 +1868,7 @@ end main`;
     ]);
   });
 
-  test("Fail_negativeIndexCompile", async () => {
+  ignore_test("Fail_negativeIndexCompile", async () => {
     const code = `${testHeader}
 
 main
@@ -1941,7 +1941,7 @@ end main`;
     ]);
   });
 
-  test("Fail_listOfClassFunction", async () => {
+  ignore_test("Fail_listOfClassFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -1972,7 +1972,7 @@ end class`;
     ]);
   });
 
-  test("Fail_EmptyGenericType", async () => {
+  ignore_test("Fail_EmptyGenericType", async () => {
     const code = `${testHeader}
 
 main

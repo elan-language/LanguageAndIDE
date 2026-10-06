@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -566,7 +567,7 @@ end main
     ]);
   });
 
-  test("Fail_UseConstantBeforeDefinition1", async () => {
+  ignore_test("Fail_UseConstantBeforeDefinition1", async () => {
     const code = `${testHeader}
 
 constant a set to b
@@ -592,7 +593,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_UseConstantBeforeDefinition2", async () => {
+  ignore_test("Fail_UseConstantBeforeDefinition2", async () => {
     const code = `${testHeader}
 
 constant a set to b

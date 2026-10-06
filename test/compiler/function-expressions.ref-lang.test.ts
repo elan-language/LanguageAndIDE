@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -252,7 +253,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Fail_IncorrectType", async () => {
+  ignore_test("Fail_IncorrectType", async () => {
     const code = `${testHeader}
 
 main

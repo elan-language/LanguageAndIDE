@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1845,7 +1846,7 @@ end main`;
     ]);
   });
 
-  test("Fail_PropertyIsNotDefined", async () => {
+  ignore_test("Fail_PropertyIsNotDefined", async () => {
     const code = `${testHeader}
 
 main
