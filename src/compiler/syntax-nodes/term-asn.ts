@@ -27,6 +27,9 @@ export class TermAsn extends AbstractAstNode {
     super();
   }
 
+  // kludge todo fix
+  topLevel = false;
+
   asyncCount(astNode: AstNode | undefined): number {
     if (astNode instanceof TermAsn) {
       return this.asyncCount(astNode.lhs) + this.asyncCount(astNode.rhs);
@@ -42,7 +45,7 @@ export class TermAsn extends AbstractAstNode {
     let code = ast.compile();
     const asyncCount = this.asyncCount(this);
 
-    if (!(this.scope instanceof TermAsn)) {
+    if (this.topLevel) {
       for (let i = 0; i < asyncCount; i++) {
         code = `(await ${code}`;
       }

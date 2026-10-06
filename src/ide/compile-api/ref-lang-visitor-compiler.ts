@@ -75,6 +75,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     super();
   }
 
+  topLevelTerm = true;
+
   visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -142,23 +144,27 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();
+    const index = ctx.index();
+    let term: TermAsn;
+    const tl = this.topLevelTerm;
+    this.topLevelTerm = false;
 
     if (hasDot) {
       const lhs = this.visit(ctx.term()!)!;
       const rhs = this.visit(ctx.chainable()!)!;
-      return new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
-    }
-
-    const index = ctx.index();
-
-    if (index) {
+      term = new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
+    } else if (index) {
       const lhs = this.visit(ctx.term()!)!;
       const idx = this.visit(index)!;
 
-      return new TermAsn(lhs, undefined, idx, this.fieldId, this.scope);
+      term = new TermAsn(lhs, undefined, idx, this.fieldId, this.scope);
+    } else {
+      term = new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
     }
 
-    return new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
+    term.topLevel = tl;
+
+    return term;
   };
 
   visitBracketedExpression = (ctx: BracketedExpressionContext) =>
@@ -246,6 +252,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     );
 
   visitExpression = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+
     if (ctx.expression().length > 0) {
       const condition = this.visit(ctx.expression(0)!)!;
       const lhs = this.visit(ctx.expression(1)!)!;

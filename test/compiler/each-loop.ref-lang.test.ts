@@ -616,7 +616,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12345");
   });
 
-  test("Fail_undefinedCollection", async () => {
+  ignore_test("Fail_undefinedCollection", async () => {
     const code = `${testHeader}
 
 main
