@@ -103,7 +103,7 @@ export const identifierFieldSpec: FieldSpec = new FieldSpec(
   "_ident",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => (parser as RefLangParser).identifierDef(),
+  (parser: PythonParser | RefLangParser) => parser.identifierDef(),
   (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
   "",
 );
@@ -241,7 +241,7 @@ export const assertActualFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
-export const assignable: FieldSpec = new FieldSpec(
+export const assignableFieldSpec: FieldSpec = new FieldSpec(
   FieldType.assignable,
   "<i>variable</i>",
   "AssignableField",
@@ -250,6 +250,18 @@ export const assignable: FieldSpec = new FieldSpec(
   false,
   (parser: PythonParser | RefLangParser) => parser.assignable(),
   (source: CodeSource) => source.readUntil(/\s/), //TODO: needs confirmation
+  "",
+);
+
+export const constantValueFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.constantValue,
+  "<i>literal</i>",
+  "ConstantValueField",
+  "",
+  false,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.assignable(),
+  (source: CodeSource) => source.readToEndOfLine(),
   "",
 );
 

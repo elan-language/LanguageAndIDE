@@ -177,7 +177,11 @@ abstractProcedure:
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-assignable: identifierWithOptIndexes | propertyRef;
+
+assignable: identifierUse  
+            | THIS_INSTANCE DOT identifierUse
+            | assignable index
+            ;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
@@ -190,7 +194,12 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: litValue | identifierUse;
+constantValue: 
+    litBoolean
+    | litInt
+    | litFloat
+    | litString
+    ;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -219,10 +228,6 @@ enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
-
-identifierWithOptIndexes: identifierUse index*;
-
-propertyRef: THIS_INSTANCE DOT identifierWithOptIndexes;
 
 expression:
     newInstance

@@ -1,3 +1,4 @@
+import { getConstantType } from "../compile-api/parser-helpers";
 import { Property } from "./class-members/property";
 import { EnumValuesField } from "./fields/enum-values-field";
 import { InheritedTypeField } from "./fields/inherited-type-field";
@@ -56,7 +57,7 @@ export class LanguageCS extends LanguageCfamily {
       html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()});`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONST} </el-kw><el-type>${frame.value.getElanType()} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()};`;
+      html = `<el-kw>${this.CONST} </el-kw><el-type>${getConstantType(frame.value.text, this)} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()};`;
     } else if (frame instanceof InputStatement) {
       html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.prompt.renderAsHtml()});<br>
       <el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>();`;

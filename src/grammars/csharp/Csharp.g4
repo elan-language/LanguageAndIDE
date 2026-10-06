@@ -47,7 +47,7 @@ procedure:
         CLOSE_BRACE COMMENT NL
 ;
 
-constant: CONST identifier EQUAL constantValue COMMENT NL;
+constant: CONST identifierDef EQUAL constantValue COMMENT NL;
 
 // `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`
 enum: ENUM typeName OPEN_BRACE enumValuesList CLOSE_BRACKET NL;
@@ -105,7 +105,7 @@ whileLoop:
 
 //TODO: Currently use only ForEach, but should offer conventional FOR also FOREACH should be created by 'each' again
 forLoop:
-    FOREACH OPEN_BRACKET VAR identifier IN expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement*
+    FOREACH OPEN_BRACKET VAR identifierDef IN expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement*
         CLOSE_BRACE COMMENT NL
 ;
 
@@ -122,13 +122,13 @@ print:
     PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
 ;
 variableDefinition:
-    VAR identifier SINGLE_EQUALS expression SEMI_COLON NL
+    VAR identifierDef SINGLE_EQUALS expression SEMI_COLON NL
 ;
 assignment:
     assignable SINGLE_EQUALS expression SEMI_COLON COMMENT NL
 ;
 inputStatement:
-    identifier EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
+    identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
 ;
 procedureCall:
     term SEMI_COLON COMMENT NL
@@ -142,7 +142,7 @@ elseIfClause:
 ;
 elseClause: CLOSE_BRACE ELSE OPEN_BRACE NL;
 catchStatement:
-    CLOSE_BRACE CATCH OPEN_BRACKET typeName identifier CLOSE_BRACKET OPEN_BRACE NL
+    CLOSE_BRACE CATCH OPEN_BRACKET typeName identifierDef CLOSE_BRACKET OPEN_BRACE NL
 ;
 
 // Members
@@ -151,7 +151,7 @@ constructorMember:
         COMMENT NL
 ;
 
-property: PUBLIC type identifier GET_SET COMMENT NL;
+property: PUBLIC type identifierDef GET_SET COMMENT NL;
 
 functionMethod:
     PUBLIC type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
@@ -175,8 +175,13 @@ abstractProcedure:
 // END Frames
 
 // START Fields
-identifier: NAME_STARTING_LC;
-assignable: identifierWithOptIndexes | propertyRef;
+identifierDef: NAME_STARTING_LC;
+identifierUse: NAME_STARTING_LC;
+
+assignable: identifierUse  
+            | THIS_INSTANCE DOT identifierUse
+            | assignable index
+            ;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
@@ -189,7 +194,12 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: litValue | identifier;
+constantValue: 
+    litBoolean
+    | litInt
+    | litFloat
+    | litString
+    ;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -197,7 +207,7 @@ paramsList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric;
 
-enumValuesList: identifier (COMMA identifier)*;
+enumValuesList: identifierDef (COMMA identifierDef)*;
 
 assertActual: expression;
 // END Fields
@@ -213,15 +223,11 @@ litValue:
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-enumValue: typeName DOT identifier;
+enumValue: typeName DOT identifierUse;
 // litRegExp:;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
-
-identifierWithOptIndexes: identifier index*;
-
-propertyRef: THIS_INSTANCE DOT identifierWithOptIndexes;
 
 expression:
     newInstance
@@ -243,7 +249,7 @@ chainHead:
     | chainable
 ;
 
-chainable: ( identifier | methodCall) index*;
+chainable: ( identifierUse | methodCall) index*;
 
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: (MINUS | NOT) term;
@@ -273,7 +279,7 @@ binaryOperator:
 
 newInstance: NEW type OPEN_BRACKET argList? CLOSE_BRACKET;
 
-paramDef: type identifier;
+paramDef: type identifierDef;
 
 typeGeneric: typeName LT type (COMMA type)* GT;
 

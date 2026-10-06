@@ -786,4 +786,3 @@ export function assertOptions(selector : AbstractSelector, options : string[]) {
     assertEqual(availableOptions[i], options[i]);
   }
 }
-

@@ -58,8 +58,6 @@ import { LitStringContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
-import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
-import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
@@ -430,18 +428,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitIndex?: (ctx: IndexContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.propertyRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPropertyRef?: (ctx: PropertyRefContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.expression`.
    * @param ctx the parse tree

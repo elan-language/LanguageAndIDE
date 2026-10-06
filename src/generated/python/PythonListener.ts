@@ -58,8 +58,6 @@ import { LitStringContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
-import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
-import { PropertyRefContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
 import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
@@ -651,26 +649,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitIndex?: (ctx: IndexContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  enterPropertyRef?: (ctx: PropertyRefContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.propertyRef`.
-   * @param ctx the parse tree
-   */
-  exitPropertyRef?: (ctx: PropertyRefContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.expression`.
    * @param ctx the parse tree
