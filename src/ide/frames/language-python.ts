@@ -236,7 +236,7 @@ export class LanguagePython extends LanguageAbstract {
     return "";
   }
   renderFileTrailerAsHtml(f: FileImpl): string {
-    return f.containsMain() ? "\n\n<el-method>main</el-method>()" : "";
+    return f.containsMain() ? "\n\n<el-method>main</el-method><el-punc>()</el-punc>" : "";
   }
 
   // make instances of the two classes needed for export of expressions
