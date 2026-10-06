@@ -30,6 +30,7 @@ import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-defin
 import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
+import { TermAsn } from "../syntax-nodes/term-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassSubType, ClassType } from "./class-type";
 import { ListName } from "./elan-type-names";
@@ -291,7 +292,7 @@ export function scopePrefix(
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return isAstIdNode(qualifier) ? `${qualifier.id}.` : "this.";
+    return isAstIdNode(qualifier) ? `${qualifier.id}.` : qualifier ? "this." : "";
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {
@@ -328,6 +329,10 @@ function internalUpdateScopeAndQualifier(
 }
 
 export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
+  if (rootNode instanceof TermAsn) {
+    return [] as unknown as [AstNode, Scope];
+  }
+
   const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
   const value = qualifier.value;

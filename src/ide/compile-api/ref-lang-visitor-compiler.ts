@@ -49,6 +49,7 @@ import {
   ParamDefContext,
   ParamsListContext,
   TermContext,
+  ThisInstanceContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -60,6 +61,7 @@ import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
+import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -253,5 +255,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const argList = ctx.argList();
     const params = argList ? getArgs(this, argList) : [];
     return new NewAsn(type, params, this.fieldId, this.scope);
+  };
+
+  visitThisInstance = (_ctx: ThisInstanceContext) => {
+    return new ThisAsn(this.fieldId, this.scope);
   };
 }

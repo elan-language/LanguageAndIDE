@@ -1,4 +1,4 @@
-# 4770c86e85c20223fc2f59f0a548c5ec7bc0d6de5c162f9be1aac90b9f5109de Elan 2.0.0-beta5 valid
+# 9fd0efa0e6ffc907d67dc72f54637dc8c57b85dbbb63fc057303f7de11d21eed Elan 2.0.0-beta5 valid
 
 main
   variable game set to new Game(1000)
@@ -41,7 +41,7 @@ procedure playOneRound(game as Game)
 end procedure
 
 procedure display(game as Game)
-  variable html set to $"<style>{styleSheet}</style>{htmlForGame(game)}"
+  variable html set to "<style>{styleSheet}</style>{htmlForGame(game)}"
   call displayHtml(html)
   call sleep(1.5)
 end procedure
@@ -513,7 +513,7 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to this.getMessageHelper() + $"- hand total: {this.handTotal}"
+    variable msg set to this.getMessageHelper() + "- hand total: {this.handTotal}"
     if this.hasTurn then
       assign msg to msg + " - press 'd' to draw, 's' to stand"
     end if

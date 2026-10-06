@@ -65,12 +65,26 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "a %", true, "a");
     testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x");
     testAntlrParse(expression, "3* foo(5)", true, "3* foo(5)", "3*foo(5)", "");
+    testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "system.safeIndex(a.a, 1)");
+    testAntlrParse(
+      expression,
+      "new Foo()",
+      true,
+      "new Foo()",
+      "new Foo()",
+      "",
+      "",
+      "system.initialise(await new Foo()._initialise())",
+    );
     testAntlrParse(
       expression,
       "new List<of String>()",
       true,
       "new List<of String>()",
       "new List<of String>()",
+      "",
+      "",
+      "system.initialise(await new _stdlib.List()._initialise())",
     );
     testAntlrParse(
       expression,

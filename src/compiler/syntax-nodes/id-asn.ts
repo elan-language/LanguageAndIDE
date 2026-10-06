@@ -11,12 +11,7 @@ import {
   isTuple,
   scopePrefix,
 } from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
-  getQualifierId,
-  mustBeKnownSymbol,
-  mustBePropertyPrefixedOnMember,
   mustBePublicMember,
   mustNotBeGlobalFunctionIfRef,
   mustNotBeKeyword,
@@ -86,23 +81,23 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     const symbol = this.getSymbol();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    mustBeKnownSymbol(
-      symbol,
-      this.updatedScope,
-      this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
-      this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
-      this.compileErrors,
-      this.fieldId,
-      this.scope,
-    );
+    // mustBeKnownSymbol(
+    //   symbol,
+    //   this.updatedScope,
+    //   this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
+    //   this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
+    //   this.compileErrors,
+    //   this.fieldId,
+    //   this.scope,
+    // );
 
     if (!isMemberOnFieldsClass(symbol, this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
-      mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
-    }
+    // if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
+    //   mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
+    // }
 
     mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
 
