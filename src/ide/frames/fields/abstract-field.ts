@@ -248,6 +248,7 @@ export abstract class AbstractField implements Selectable, Field {
         if (this.getHolder().isSelected()) {
           return this.getHolder().processKey(e);
         }
+        break;
       }
       case "Backspace": {
         if (this.holder.isNew) {
