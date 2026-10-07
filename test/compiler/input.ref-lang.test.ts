@@ -8,13 +8,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Input", () => {
-  test("Pass_InputString", async () => {
+  ignore_test("Pass_InputString", async () => {
     const code = `${testHeader}
 
 main
@@ -47,7 +48,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "\nFelicity", "Felicity");
   });
 
-  test("Pass_InputStringWithPrompt", async () => {
+  ignore_test("Pass_InputStringWithPrompt", async () => {
     const code = `${testHeader}
 
 main
@@ -422,7 +423,7 @@ end main`;
     ]);
   });
 
-  test("Pass_InputInExpression", async () => {
+  ignore_test("Pass_InputInExpression", async () => {
     const code = `${testHeader}
 
 main

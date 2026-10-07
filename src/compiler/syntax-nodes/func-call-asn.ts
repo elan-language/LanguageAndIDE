@@ -61,7 +61,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
 
   isAsync: boolean = false;
 
-  private isExtensionMethod: boolean = false;
+  isExtensionMethod: boolean = false;
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;

@@ -41,6 +41,7 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
+  LitRegExpContext,
   LitStringContext,
   MethodCallContext,
   MethodNameContext,
@@ -65,6 +66,7 @@ import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
 import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
+import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -232,6 +234,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     new LiteralBooleanAsn(ctx.TRUE() !== null, this.fieldId);
 
   visitLitString = (ctx: LitStringContext) => new LiteralStringAsn(ctx.getText(), this.fieldId);
+
+  visitLitRegExp = (ctx: LitRegExpContext) =>
+    new LiteralRegExAsn(ctx.getText(), this.fieldId, this.scope);
 
   visitEnumValue = (ctx: EnumValueContext) =>
     new LiteralEnumAsn(

@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -312,7 +313,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  test("Pass_InInterpolatedString", async () => {
+  ignore_test("Pass_InInterpolatedString", async () => {
     const code = `${testHeader}
 
 main

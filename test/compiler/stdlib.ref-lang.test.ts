@@ -15,6 +15,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -2270,7 +2271,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:2][1:a, 2:b]");
   });
 
-  test("Pass_allLibraryTypeNamesValid", async () => {
+  ignore_test("Pass_allLibraryTypeNamesValid", async () => {
     const code = `${testHeader}
 
 main

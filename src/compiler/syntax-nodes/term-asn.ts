@@ -33,6 +33,7 @@ export class TermAsn extends AbstractAstNode {
   // kludge todo fix
   topLevel = false;
   dot = ".";
+  isExtension = false;
 
   asyncCount(astNode: AstNode | undefined): number {
     if (astNode instanceof TermAsn) {
@@ -68,6 +69,8 @@ export class TermAsn extends AbstractAstNode {
       }
 
       this.rhs.updateScopeAndChain(scope, this.lhs);
+      this.rhs.compile();
+      this.isExtension = this.rhs.isExtensionMethod;
     }
 
     if (this.rhs instanceof IdAsn) {
@@ -88,9 +91,9 @@ export class TermAsn extends AbstractAstNode {
 
     this.setup();
 
-    let code = this.rhs
-      ? `${this.wrap(this.lhs)}${this.dot}${this.rhs.compile()}`
-      : this.wrap(this.lhs);
+    const lhsCode = this.isExtension ? "" : `${this.wrap(this.lhs)}${this.dot}`;
+
+    let code = this.rhs ? `${lhsCode}${this.rhs.compile()}` : this.wrap(this.lhs);
 
     if (this.index) {
       mustBeIndexableType(

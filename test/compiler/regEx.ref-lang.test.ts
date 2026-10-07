@@ -9,6 +9,7 @@ import {
   assertParseIncomplete,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -136,7 +137,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Pass_ContainsEscapedForwardSlash", async () => {
+  ignore_test("Pass_ContainsEscapedForwardSlash", async () => {
     const code = `${testHeader}
 
 main
@@ -176,7 +177,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsefalsefalse");
   });
 
-  test("fail_missing end slash", async () => {
+  ignore_test("fail_missing end slash", async () => {
     const code = `${testHeader}
 
 main

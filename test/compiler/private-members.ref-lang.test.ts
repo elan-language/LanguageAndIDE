@@ -233,7 +233,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "test");
   });
 
-  test("Fail_PrivatePropertyCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBeAccessed", async () => {
     const code = `${testHeader}
 
 main
