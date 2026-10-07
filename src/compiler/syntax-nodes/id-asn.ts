@@ -67,8 +67,8 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     if (this.updatedScope instanceof TupleAsn) {
       const [ok, index] = this.updatedScope.parseId(this.id);
       if (ok) {
-        const tuple = this.precedingNode?.compile();
-        return `${tuple}[${index}]`;
+        //const tuple = this.precedingNode?.compile();
+        return `[${index}]`;
       }
     }
 

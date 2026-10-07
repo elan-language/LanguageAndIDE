@@ -152,6 +152,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     if (hasDot) {
       const lhs = this.visit(ctx.term()!)!;
       const rhs = this.visit(ctx.chainable()!)!;
+
       term = new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
     } else if (index) {
       const lhs = this.visit(ctx.term()!)!;

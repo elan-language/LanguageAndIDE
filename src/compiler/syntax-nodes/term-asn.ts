@@ -11,10 +11,13 @@ import {
   isFunction,
   isScope,
 } from "../symbols/symbol-helpers";
+import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { getIndexAndOfType, isAstIdNode } from "./ast-helpers";
 import { FuncCallAsn } from "./func-call-asn";
+import { TupleAsn } from "./globals/tuple-asn";
+import { IdAsn } from "./id-asn";
 
 export class TermAsn extends AbstractAstNode {
   constructor(
@@ -29,6 +32,7 @@ export class TermAsn extends AbstractAstNode {
 
   // kludge todo fix
   topLevel = false;
+  dot = ".";
 
   asyncCount(astNode: AstNode | undefined): number {
     if (astNode instanceof TermAsn) {
@@ -65,12 +69,28 @@ export class TermAsn extends AbstractAstNode {
 
       this.rhs.updateScopeAndChain(scope, this.lhs);
     }
+
+    if (this.rhs instanceof IdAsn) {
+      const lhsSt = this.lhs.symbolType();
+      let scope = this.scope;
+      if (lhsSt instanceof TupleType) {
+        //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
+        scope = new TupleAsn(lhsSt, this.scope);
+        this.dot = "";
+      }
+
+      this.rhs.updateScopeAndChain(scope, this.lhs);
+    }
   }
 
   compile(): string {
     this.compileErrors = [];
 
-    let code = this.rhs ? `${this.wrap(this.lhs)}.${this.rhs.compile()}` : this.wrap(this.lhs);
+    this.setup();
+
+    let code = this.rhs
+      ? `${this.wrap(this.lhs)}${this.dot}${this.rhs.compile()}`
+      : this.wrap(this.lhs);
 
     if (this.index) {
       mustBeIndexableType(
