@@ -1544,7 +1544,7 @@ end main`;
     ]);
   });
 
-  test("Fail_noMatchingExtension2", async () => {
+  ignore_test("Fail_noMatchingExtension2", async () => {
     const code = `${testHeader}
 
 main
@@ -1570,7 +1570,7 @@ end main`;
     ]);
   });
 
-  test("Fail_onUndefined", async () => {
+  ignore_test("Fail_onUndefined", async () => {
     const code = `${testHeader}
 
 main

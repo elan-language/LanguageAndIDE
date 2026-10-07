@@ -14,7 +14,9 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import {
   checkForDeprecation,
+  getQualifierId,
   mustBeCallable,
+  mustBeKnownSymbol,
   mustBePublicMember,
   mustBePureFunctionSymbol,
   mustbeValidQualifier,
@@ -78,15 +80,17 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    // mustBeKnownSymbol(
-    //   funcSymbol,
-    //   this.updatedScope,
-    //   getQualifierId(this.precedingNode),
-    //   this.precedingNode.symbolType(),
-    //   this.compileErrors,
-    //   this.fieldId,
-    //   this.scope,
-    // );
+    if (!this.tempAntlrFlag) {
+      mustBeKnownSymbol(
+        funcSymbol,
+        this.updatedScope,
+        getQualifierId(this.precedingNode),
+        this.precedingNode.symbolType(),
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
+    }
 
     if (isMemberOnFieldsClass(funcSymbol, this.scope)) {
       mustbeValidQualifier(this.precedingNode, this.scope, this.compileErrors, this.fieldId);

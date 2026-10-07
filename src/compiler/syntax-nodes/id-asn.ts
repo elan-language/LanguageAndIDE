@@ -12,10 +12,15 @@ import {
   scopePrefix,
 } from "../../compiler/symbols/symbol-helpers";
 import {
+  getQualifierId,
+  mustBeKnownSymbol,
+  mustBePropertyPrefixedOnMember,
   mustBePublicMember,
   mustNotBeGlobalFunctionIfRef,
   mustNotBeKeyword,
 } from "../compile-rules";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleAsn } from "./globals/tuple-asn";
 
@@ -27,6 +32,9 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   ) {
     super();
   }
+
+  // this is a temp hack until all fields migrated
+  tempAntlrFlag = false;
 
   private updatedScope: Scope = NullScope.Instance;
   private precedingNode?: AstNode = undefined;
@@ -67,8 +75,11 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     if (this.updatedScope instanceof TupleAsn) {
       const [ok, index] = this.updatedScope.parseId(this.id);
       if (ok) {
-        //const tuple = this.precedingNode?.compile();
-        return `[${index}]`;
+        let tuple = "";
+        if (!this.tempAntlrFlag) {
+          tuple = this.precedingNode?.compile() ?? "";
+        }
+        return `${tuple}[${index}]`;
       }
     }
 
@@ -81,23 +92,28 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
     const symbol = this.getSymbol();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-    // mustBeKnownSymbol(
-    //   symbol,
-    //   this.updatedScope,
-    //   this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
-    //   this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
-    //   this.compileErrors,
-    //   this.fieldId,
-    //   this.scope,
-    // );
+
+    if (!this.tempAntlrFlag) {
+      mustBeKnownSymbol(
+        symbol,
+        this.updatedScope,
+        this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
+        this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
+    }
 
     if (!isMemberOnFieldsClass(symbol, this.scope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    // if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
-    //   mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
-    // }
+    if (!this.tempAntlrFlag) {
+      if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
+        mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
+      }
+    }
 
     mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
 

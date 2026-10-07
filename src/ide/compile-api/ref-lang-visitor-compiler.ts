@@ -107,8 +107,11 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitIdentifierUse = (ctx: IdentifierUseContext) =>
-    new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+  visitIdentifierUse = (ctx: IdentifierUseContext) => {
+    const id = new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    id.tempAntlrFlag = true;
+    return id;
+  };
 
   visitMethodName = (ctx: MethodNameContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
@@ -146,15 +149,16 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const hasDot = !!ctx.DOT();
     const index = ctx.index();
     let term: TermAsn;
-    const tl = this.topLevelTerm;
-    this.topLevelTerm = false;
+    let tl = this.topLevelTerm;
 
     if (hasDot) {
+      this.topLevelTerm = false;
       const lhs = this.visit(ctx.term()!)!;
       const rhs = this.visit(ctx.chainable()!)!;
 
       term = new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
     } else if (index) {
+      tl = false;
       const lhs = this.visit(ctx.term()!)!;
       const idx = this.visit(index)!;
 
