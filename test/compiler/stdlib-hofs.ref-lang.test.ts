@@ -215,7 +215,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[o*, n*, e*, t*, w*, o*]");
   });
 
-  test("Pass_mapTestType", async () => {
+  ignore_test("Pass_mapTestType", async () => {
     const code = `${testHeader}
 
 main

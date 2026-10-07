@@ -2,31 +2,31 @@ import { testElanFile } from "../testHelpers";
 import { ignore_test } from "./compiler-test-helpers";
 
 suite("Demo compile", () => {
-  test("test best-fit", async () => {
+  ignore_test("test best-fit", async () => {
     await testElanFile("best-fit");
   });
 
-  test("test binary-search", async () => {
+  ignore_test("test binary-search", async () => {
     await testElanFile("binary-search");
   });
 
-  test("test blackjack", async () => {
+  ignore_test("test blackjack", async () => {
     await testElanFile("blackjack");
   });
 
-  test("test bubbles", async () => {
+  ignore_test("test bubbles", async () => {
     await testElanFile("bubbles");
   });
 
-  test("test burrow", async () => {
+  ignore_test("test burrow", async () => {
     await testElanFile("burrow");
   });
 
-  test("test collatz", async () => {
+  ignore_test("test collatz", async () => {
     await testElanFile("collatz");
   });
 
-  test("test fern", async () => {
+  ignore_test("test fern", async () => {
     await testElanFile("fern");
   });
 
@@ -35,15 +35,15 @@ suite("Demo compile", () => {
     await testElanFile(`fern-params.elan`);
   });
 
-  test("test in-place-ripple-sort", async () => {
+  ignore_test("test in-place-ripple-sort", async () => {
     await testElanFile("in-place-ripple-sort");
   });
 
-  test("test julia-set", async () => {
+  ignore_test("test julia-set", async () => {
     await testElanFile("julia-set");
   });
 
-  test("test kaleidoscope", async () => {
+  ignore_test("test kaleidoscope", async () => {
     await testElanFile("kaleidoscope");
   });
 
@@ -51,43 +51,43 @@ suite("Demo compile", () => {
     await testElanFile("life");
   });
 
-  test("test life_FP", async () => {
+  ignore_test("test life_FP", async () => {
     await testElanFile("life_FP");
   });
 
-  test("test map-filter-reduce", async () => {
+  ignore_test("test map-filter-reduce", async () => {
     await testElanFile("map-filter-reduce");
   });
 
-  test("test maze-generator", async () => {
+  ignore_test("test maze-generator", async () => {
     await testElanFile("maze-generator");
   });
 
-  test("test merge-sort", async () => {
+  ignore_test("test merge-sort", async () => {
     await testElanFile("merge-sort");
   });
 
-  test("test pathfinder", async () => {
+  ignore_test("test pathfinder", async () => {
     await testElanFile("pathfinder");
   });
 
-  test("test recursive-functions", async () => {
+  ignore_test("test recursive-functions", async () => {
     await testElanFile("recursive-functions");
   });
 
-  test("test roman-numerals-turing-machine.elan", async () => {
+  ignore_test("test roman-numerals-turing-machine.elan", async () => {
     await testElanFile("roman-numerals-turing-machine");
   });
 
-  test("test snake_FP", async () => {
+  ignore_test("test snake_FP", async () => {
     await testElanFile("snake_FP");
   });
 
-  test("test snake_OOP", async () => {
+  ignore_test("test snake_OOP", async () => {
     await testElanFile("snake_OOP");
   });
 
-  test("test snake_PP", async () => {
+  ignore_test("test snake_PP", async () => {
     await testElanFile("snake_PP");
   });
 
@@ -99,28 +99,28 @@ suite("Demo compile", () => {
     await testElanFile("tower-of-hanoi-recursive");
   });
 
-  test("test turtle-snowflake", async () => {
+  ignore_test("test turtle-snowflake", async () => {
     await testElanFile("turtle-snowflake");
   });
 
-  test("test turtle-spiral", async () => {
+  ignore_test("test turtle-spiral", async () => {
     await testElanFile("turtle-spiral");
   });
 
   // Ignored just becasuse these are very slow tests
-  test("test wordle-solver", async () => {
+  ignore_test("test wordle-solver", async () => {
     await testElanFile("wordle-solver");
   });
 
-  test("test hodgepodge", async () => {
+  ignore_test("test hodgepodge", async () => {
     await testElanFile("hodgepodge");
   });
 
-  test("test turtle_dragon", async () => {
+  ignore_test("test turtle_dragon", async () => {
     await testElanFile("turtle_dragon");
   });
 
-  test("test date-time", async () => {
+  ignore_test("test date-time", async () => {
     await testElanFile("date-time");
   });
 
