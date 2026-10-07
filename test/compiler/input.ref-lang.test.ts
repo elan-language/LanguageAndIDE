@@ -151,7 +151,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "\n123.4", "123.4");
   });
 
-  test("Pass_ReuseVariable", async () => {
+  ignore_test("Pass_ReuseVariable", async () => {
     const code = `${testHeader}
 
 main

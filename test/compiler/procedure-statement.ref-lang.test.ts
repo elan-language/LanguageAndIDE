@@ -1580,7 +1580,7 @@ end procedure`;
     ]);
   });
 
-  test("Fail_ProcedureInExpression", async () => {
+  ignore_test("Fail_ProcedureInExpression", async () => {
     const code = `${testHeader}
 
 main

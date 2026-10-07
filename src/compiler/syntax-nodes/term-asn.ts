@@ -14,7 +14,14 @@ import {
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { getIndexAndOfType, isAstIdNode } from "./ast-helpers";
+import {
+  containsGenericType,
+  generateType,
+  getIndexAndOfType,
+  isAstIdNode,
+  isEmptyNode,
+  matchGenericTypes,
+} from "./ast-helpers";
 import { FuncCallAsn } from "./func-call-asn";
 import { TupleAsn } from "./globals/tuple-asn";
 import { IdAsn } from "./id-asn";
@@ -127,7 +134,24 @@ export class TermAsn extends AbstractAstNode {
         if (isClassType(lhsSt)) {
           const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
           const ss = lhsSt.resolveSymbol(id, true, this.scope);
-          return isFunction(ss) ? (ss.symbolType() as FunctionType).returnType : ss.symbolType();
+
+          if (isFunction(ss)) {
+            const funcSymbolType = ss.symbolType() as FunctionType;
+            const returnType = funcSymbolType.returnType;
+
+            if (containsGenericType(returnType) && this.rhs instanceof FuncCallAsn) {
+              let callParameters = this.rhs.parameters;
+
+              if (this.isExtension && !isEmptyNode(this.rhs.precedingNode)) {
+                callParameters = [this.rhs.precedingNode].concat(callParameters);
+              }
+              const matches = matchGenericTypes(funcSymbolType, callParameters);
+              return generateType(returnType, matches);
+            }
+            return returnType;
+          }
+
+          return ss.symbolType();
         }
       }
 

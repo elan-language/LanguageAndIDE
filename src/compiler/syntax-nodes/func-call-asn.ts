@@ -47,7 +47,7 @@ export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAs
   // this is a temp hack until all fields migrated
   tempAntlrFlag = false;
 
-  private precedingNode: AstNode = EmptyAsn.Instance;
+  precedingNode: AstNode = EmptyAsn.Instance;
   private updatedScope: Scope = NullScope.Instance;
 
   updateScopeAndChain(scope: Scope, ast: AstNode) {

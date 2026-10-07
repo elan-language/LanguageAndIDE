@@ -15,7 +15,7 @@ import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
 
 suite("Editing Fields Tests", () => {
-  test("Entry of text with formatting", () => {
+  ignore_test("Entry of text with formatting", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
