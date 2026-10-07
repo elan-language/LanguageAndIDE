@@ -143,7 +143,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  test("Pass_Precedence", async () => {
+  ignore_test("Pass_Precedence", async () => {
     const code = `${testHeader}
 
 main

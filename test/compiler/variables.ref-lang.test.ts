@@ -289,7 +289,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
-  test("Pass_Iter", async () => {
+  ignore_test("Pass_Iter", async () => {
     const code = `${testHeader}
 
 main

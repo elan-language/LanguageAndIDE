@@ -93,7 +93,9 @@ export class TermAsn extends AbstractAstNode {
 
     const lhsCode = this.isExtension ? "" : `${this.wrap(this.lhs)}${this.dot}`;
 
-    let code = this.rhs ? `${lhsCode}${this.rhs.compile()}` : this.wrap(this.lhs);
+    let code = this.rhs
+      ? `${lhsCode}${this.isExtension ? this.wrap(this.rhs) : this.rhs.compile()}`
+      : this.wrap(this.lhs);
 
     if (this.index) {
       mustBeIndexableType(

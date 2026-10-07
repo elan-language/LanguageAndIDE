@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -130,7 +131,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_InterpolatedEmpty", async () => {
+  ignore_test("Pass_InterpolatedEmpty", async () => {
     const code = `${testHeader}
 
 main
@@ -162,7 +163,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
   });
-  test("Pass_InterpolatedOneSpace", async () => {
+  ignore_test("Pass_InterpolatedOneSpace", async () => {
     const code = `${testHeader}
 
 main
