@@ -1,81 +1,72 @@
 // C# with Elan 2.0.0-beta5
 
-// Use the w,a,s,d keys to change snake's direction
-
-const int width = 40;
-
-const int height = 30;
-
 static void main() {
-  var bg = new BlockGraphics();
   var head = 621;
-  var snake = new [] {head - 1, head};
-  var currentDir = "d";
-  var gameIsOn = true;
+  var snake = new [] {617, 618, 619, 620, head};
+  var direction = "d";
+  var gameOn = true;
   var apple = -1;
-  while (gameIsOn) {
+  while (gameOn) {
     while ((apple == -1) || snake.contains(apple)) {
-      apple = randint(0, width*height); // assignment
+      apple = randint(0, 1200); // assignment
     } // end while
-    updateDisplay(bg, snake, apple); // procedure call
-    var key = getKey();
-    if (!key.equals("") && "wasd".contains(key)) {
-      currentDir = key; // assignment
+    display(snake, apple); // procedure call
+    sleep_ms(150); // procedure call
+    var key = getKey().lowerCase();
+    if (isValid(key)) {
+      direction = key; // assignment
     } // end if
-    head = getAdjacentBlock(head, currentDir); // assignment
-    if ((head == -1) || snake.contains(head)) {
-      gameIsOn = false; // assignment
-    } else {
-      snake.append(head); // procedure call
+    head = getAdjacentBlock(head, direction); // assignment
+    if (head == -1) {
+      gameOn = false; // assignment
     } // end if
     if (head.equals(apple)) {
       apple = -1; // assignment
     } else {
       snake.removeAt(0); // procedure call
     } // end if
-    sleep_ms(150); // procedure call
+    snake.append(head); // procedure call
   } // end while
-  Console.WriteLine($"Game Over! Score: {snake.length() - 1}"); // print statement
 } // end main
 
-static void updateDisplay(BlockGraphics bg, List<int> snake, int apple) { // procedure
-  bg.colourAll(white); // procedure call
-  foreach (var bl in snake) {
-    bg.putBlockNo(bl, green); // procedure call
-  } // end foreach
-  bg.putBlockNo(apple, red); // procedure call
-  displayBlockGraphics(bg); // procedure call
-} // end procedure
+static bool isValid(string key) { // function
+  return (!key.equals("")) && ("wasd".contains(key));
+} // end function
 
-static int getAdjacentBlock(int bl, string dir) { // function
+[TestClass] class Test_isValid
+[TestMethod] static void test_isValid() {
+  Assert.AreEqual(true, isValid("w"));
+  Assert.AreEqual(false, isValid(""));
+  Assert.AreEqual(false, isValid("x"));
+}} // end test
+
+static int getAdjacentBlock(int bl, string direction) { // function
   var adj = -1;
-  var newCol = bl % width;
-  var newRow = divAsInt(bl, width);
-  if (dir.equals("w")) {
-    newRow = newRow - 1; // assignment
-  } else if (dir.equals("a")) {
-    newCol = newCol - 1; // assignment
-  } else if (dir.equals("s")) {
-    newRow = newRow + 1; // assignment
-  } else if (dir.equals("d")) {
-    newCol = newCol + 1; // assignment
-  } // end if
-  if ((newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height)) {
-    adj = newRow*width + newCol; // assignment
+  if (direction.equals("d") && ((bl % 40) < 39)) {
+    adj = bl + 1; // assignment
+  } else if (direction.equals("s") && (bl < 1160)) {
+    adj = bl + 40; // assignment
+  } else if (direction.equals("w") && (bl > 39)) {
+    adj = bl - 40; // assignment
+  } else if (direction.equals("a") && ((bl % 40) > 0)) {
+    adj = bl - 1; // assignment
   } // end if
   return adj;
 } // end function
 
 [TestClass] class Test_getAdjacentBlock
 [TestMethod] static void test_getAdjacentBlock() {
-  var bl = 617;
-  Assert.AreEqual(577, getAdjacentBlock(bl, "w"));
-  Assert.AreEqual(616, getAdjacentBlock(bl, "a"));
-  Assert.AreEqual(657, getAdjacentBlock(bl, "s"));
-  Assert.AreEqual(618, getAdjacentBlock(bl, "d"));
-  // boundary
-  Assert.AreEqual(-1, getAdjacentBlock(20, "w"));
-  Assert.AreEqual(-1, getAdjacentBlock(40, "a"));
-  Assert.AreEqual(-1, getAdjacentBlock(1180, "s"));
-  Assert.AreEqual(-1, getAdjacentBlock(79, "d"));
+  Assert.AreEqual(-1, getAdjacentBlock(119, "d"));
+  Assert.AreEqual(-1, getAdjacentBlock(600, "a"));
+  Assert.AreEqual(-1, getAdjacentBlock(7, "w"));
+  Assert.AreEqual(-1, getAdjacentBlock(1190, "s"));
 }} // end test
+
+static void display(List<int> snake, int apple) { // procedure
+  var bg = new BlockGraphics();
+  foreach (var segment in snake) {
+    bg.putBlockNo(segment, green); // procedure call
+  } // end foreach
+  bg.putBlockNo(apple, red); // procedure call
+  displayBlockGraphics(bg); // procedure call
+} // end procedure

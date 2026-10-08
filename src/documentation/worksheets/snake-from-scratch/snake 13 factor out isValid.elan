@@ -1,0 +1,45 @@
+# c347357c49c499ac26479adc50ce766d98abd367b9631f5f914461b0c0936ace Elan 2.0.0-beta4 valid
+
+main
+  variable head set to 621
+  variable snake set to [617, 618, 619, 620, head]
+  variable direction set to "d"
+  variable gameOn set to true
+  while gameOn
+    call display(snake)
+    call sleep_ms(150)
+    variable key set to getKey().lowerCase()
+    if isValid(key) then
+      assign direction to key
+    end if
+    assign head to getAdjacentBlock(head, direction)
+    call snake.removeAt(0)
+    call snake.append(head)
+  end while
+end main
+
+function isValid(key as String) returns Boolean
+  return not key.equals("")
+end function
+
+function getAdjacentBlock(bl as Int, direction as String) returns Int
+  variable adj set to -1
+  if direction.equals("d") then
+    assign adj to bl + 1
+  elif direction.equals("s") then
+    assign adj to bl + 40
+  elif direction.equals("w") then
+    assign adj to bl - 40
+  elif direction.equals("a") then
+    assign adj to bl - 1
+  end if
+  return adj
+end function
+
+procedure display(snake as List<of Int>)
+  variable bg set to new BlockGraphics()
+  for segment in snake
+    call bg.putBlockNo(segment, green)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
