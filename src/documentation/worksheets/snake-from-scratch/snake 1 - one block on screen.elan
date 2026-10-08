@@ -1,0 +1,7 @@
+# adb66a02c75f970517f8127b3cfc3c74d44b5456323b23cf84b9ae5b972cd3f5 Elan 2.0.0-beta4 valid
+
+main
+  variable bg set to new BlockGraphics()
+  call bg.putBlockNo(621, green)
+  call displayBlockGraphics(bg)
+end main

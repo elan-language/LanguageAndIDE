@@ -1,83 +1,74 @@
 # Python with Elan 2.0.0-beta5
 
-# Use the w,a,s,d keys to change snake's direction
-
-width = 40 # constant
-
-height = 30 # constant
-
 def main() -> None:
-  bg = BlockGraphics() # variable definition
   head = 621 # variable definition
-  snake = [head - 1, head] # variable definition
-  currentDir = "d" # variable definition
-  gameIsOn = True # variable definition
+  snake = [617, 618, 619, 620, head] # variable definition
+  direction = "d" # variable definition
+  gameOn = True # variable definition
   apple = -1 # variable definition
-  while gameIsOn:
+  while gameOn:
     while (apple == -1) or snake.contains(apple):
-      apple = randint(0, width*height) # assignment
+      apple = randint(0, 1200) # assignment
     # end while
-    updateDisplay(bg, snake, apple) # procedure call
-    key = getKey() # variable definition
-    if not key.equals("") and "wasd".contains(key):
-      currentDir = key # assignment
+    display(snake, apple) # procedure call
+    sleep_ms(150) # procedure call
+    key = getKey().lowerCase() # variable definition
+    if isValid(key):
+      direction = key # assignment
     # end if
-    head = getAdjacentBlock(head, currentDir) # assignment
-    if (head == -1) or snake.contains(head):
-      gameIsOn = False # assignment
-    else:
-      snake.append(head) # procedure call
+    head = getAdjacentBlock(head, direction) # assignment
+    if head == -1:
+      gameOn = False # assignment
     # end if
     if head.equals(apple):
       apple = -1 # assignment
     else:
       snake.removeAt(0) # procedure call
     # end if
-    sleep_ms(150) # procedure call
+    snake.append(head) # procedure call
   # end while
-  print(f"Game Over! Score: {snake.length() - 1}")
 # end main
 
-def updateDisplay(bg: BlockGraphics, snake: list[int], apple: int) -> None: # procedure
-  bg.colourAll(white) # procedure call
-  for bl in snake:
-    bg.putBlockNo(bl, green) # procedure call
-  # end for
-  bg.putBlockNo(apple, red) # procedure call
-  displayBlockGraphics(bg) # procedure call
-# end procedure
+def isValid(key: str) -> bool: # function
+  return (not key.equals("")) and ("wasd".contains(key))
+# end function
 
-def getAdjacentBlock(bl: int, dir: str) -> int: # function
+class Test_isValid(unittest.TestCase):
+ def test_isValid(self) -> None:
+  self.assertEqual(isValid("w"), True)
+  self.assertEqual(isValid(""), False)
+  self.assertEqual(isValid("x"), False)
+# end test
+
+def getAdjacentBlock(bl: int, direction: str) -> int: # function
   adj = -1 # variable definition
-  newCol = bl % width # variable definition
-  newRow = divAsInt(bl, width) # variable definition
-  if dir.equals("w"):
-    newRow = newRow - 1 # assignment
-  elif dir.equals("a"): # else if
-    newCol = newCol - 1 # assignment
-  elif dir.equals("s"): # else if
-    newRow = newRow + 1 # assignment
-  elif dir.equals("d"): # else if
-    newCol = newCol + 1 # assignment
-  # end if
-  if (newCol >= 0) and (newCol < width) and (newRow >= 0) and (newRow < height):
-    adj = newRow*width + newCol # assignment
+  if direction.equals("d") and ((bl % 40) < 39):
+    adj = bl + 1 # assignment
+  elif direction.equals("s") and (bl < 1160): # else if
+    adj = bl + 40 # assignment
+  elif direction.equals("w") and (bl > 39): # else if
+    adj = bl - 40 # assignment
+  elif direction.equals("a") and ((bl % 40) > 0): # else if
+    adj = bl - 1 # assignment
   # end if
   return adj
 # end function
 
 class Test_getAdjacentBlock(unittest.TestCase):
  def test_getAdjacentBlock(self) -> None:
-  bl = 617 # variable definition
-  self.assertEqual(getAdjacentBlock(bl, "w"), 577)
-  self.assertEqual(getAdjacentBlock(bl, "a"), 616)
-  self.assertEqual(getAdjacentBlock(bl, "s"), 657)
-  self.assertEqual(getAdjacentBlock(bl, "d"), 618)
-  # boundary
-  self.assertEqual(getAdjacentBlock(20, "w"), -1)
-  self.assertEqual(getAdjacentBlock(40, "a"), -1)
-  self.assertEqual(getAdjacentBlock(1180, "s"), -1)
-  self.assertEqual(getAdjacentBlock(79, "d"), -1)
+  self.assertEqual(getAdjacentBlock(119, "d"), -1)
+  self.assertEqual(getAdjacentBlock(600, "a"), -1)
+  self.assertEqual(getAdjacentBlock(7, "w"), -1)
+  self.assertEqual(getAdjacentBlock(1190, "s"), -1)
 # end test
+
+def display(snake: list[int], apple: int) -> None: # procedure
+  bg = BlockGraphics() # variable definition
+  for segment in snake:
+    bg.putBlockNo(segment, green) # procedure call
+  # end for
+  bg.putBlockNo(apple, red) # procedure call
+  displayBlockGraphics(bg) # procedure call
+# end procedure
 
 main()

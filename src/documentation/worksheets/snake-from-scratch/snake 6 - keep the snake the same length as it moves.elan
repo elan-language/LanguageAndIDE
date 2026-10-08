@@ -1,0 +1,18 @@
+# 19a1b69e30d3a8c8710687d9f225154588f99813657ce6b6f37fe5a7ae109730 Elan 2.0.0-beta4 valid
+
+main
+  variable bg set to new BlockGraphics()
+  variable head set to 621
+  variable snake set to [617, 618, 619, 620, head]
+  while true
+    assign head to head + 1
+    call snake.append(head)
+    call snake.removeAt(0)
+    call bg.colourAll(white)
+    for segment in snake
+      call bg.putBlockNo(segment, green)
+    end for
+    call displayBlockGraphics(bg)
+    call sleep_ms(150)
+  end while
+end main

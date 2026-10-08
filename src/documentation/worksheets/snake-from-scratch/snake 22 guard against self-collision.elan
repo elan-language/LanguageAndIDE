@@ -1,4 +1,4 @@
-# fc4935d30c3dc28b07f730a0c9a802569072d9b9ccf344d5958a6614f648ada4 Elan 2.0.0-beta5 valid
+# 7e971bed32e644c271d3a41e32068c6a4b11d2244ca4fc43543e68c4627dba1a Elan 2.0.0-beta4 valid
 
 main
   variable head set to 621
@@ -17,7 +17,7 @@ main
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    if head is -1 then
+    if (head is -1) or snake.contains(head) then
       assign gameOn to false
     end if
     if head.equals(apple) then

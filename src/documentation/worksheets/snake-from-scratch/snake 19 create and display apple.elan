@@ -1,15 +1,12 @@
-# fc4935d30c3dc28b07f730a0c9a802569072d9b9ccf344d5958a6614f648ada4 Elan 2.0.0-beta5 valid
+# 3bacc9f4f6e4c5305a5f9a7691b0ac69d8b69c8370ff4f40120c584eb883bd08 Elan 2.0.0-beta4 valid
 
 main
   variable head set to 621
   variable snake set to [617, 618, 619, 620, head]
   variable direction set to "d"
   variable gameOn set to true
-  variable apple set to -1
+  variable apple set to randint(0, 1200)
   while gameOn
-    while (apple is -1) or snake.contains(apple)
-      assign apple to randint(0, 1200)
-    end while
     call display(snake, apple)
     call sleep_ms(150)
     variable key set to getKey().lowerCase()
@@ -20,11 +17,7 @@ main
     if head is -1 then
       assign gameOn to false
     end if
-    if head.equals(apple) then
-      assign apple to -1
-    else
-      call snake.removeAt(0)
-    end if
+    call snake.removeAt(0)
     call snake.append(head)
   end while
 end main

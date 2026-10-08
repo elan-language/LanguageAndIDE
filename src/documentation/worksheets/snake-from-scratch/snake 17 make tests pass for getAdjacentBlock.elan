@@ -1,31 +1,19 @@
-# fc4935d30c3dc28b07f730a0c9a802569072d9b9ccf344d5958a6614f648ada4 Elan 2.0.0-beta5 valid
+# ff2fabe7e693945d61da20d97298ced88dae3b1b7592e4a0a7982b1a7dbd195c Elan 2.0.0-beta4 valid
 
 main
   variable head set to 621
   variable snake set to [617, 618, 619, 620, head]
   variable direction set to "d"
-  variable gameOn set to true
-  variable apple set to -1
-  while gameOn
-    while (apple is -1) or snake.contains(apple)
-      assign apple to randint(0, 1200)
-    end while
-    call display(snake, apple)
-    call sleep_ms(150)
-    variable key set to getKey().lowerCase()
+  while true
+    variable key set to getKey()
     if isValid(key) then
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    if head is -1 then
-      assign gameOn to false
-    end if
-    if head.equals(apple) then
-      assign apple to -1
-    else
-      call snake.removeAt(0)
-    end if
     call snake.append(head)
+    call snake.removeAt(0)
+    call display(snake)
+    call sleep_ms(150)
   end while
 end main
 
@@ -60,11 +48,10 @@ test test_getAdjacentBlock
   assert getAdjacentBlock(1190, "s") evaluates to -1
 end test
 
-procedure display(snake as List<of Int>, apple as Int)
+procedure display(snake as List<of Int>)
   variable bg set to new BlockGraphics()
   for segment in snake
     call bg.putBlockNo(segment, green)
   end for
-  call bg.putBlockNo(apple, red)
   call displayBlockGraphics(bg)
 end procedure

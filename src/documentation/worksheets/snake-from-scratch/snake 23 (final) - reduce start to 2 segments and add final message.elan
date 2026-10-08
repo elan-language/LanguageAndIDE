@@ -1,8 +1,8 @@
-# fc4935d30c3dc28b07f730a0c9a802569072d9b9ccf344d5958a6614f648ada4 Elan 2.0.0-beta5 valid
+# 7583f6611b66196e379a5eb76b9323cef13a76fd0f8af4e4591bba39e0943218 Elan 2.0.0-beta4 valid
 
 main
   variable head set to 621
-  variable snake set to [617, 618, 619, 620, head]
+  variable snake set to [620, head]
   variable direction set to "d"
   variable gameOn set to true
   variable apple set to -1
@@ -17,7 +17,7 @@ main
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    if head is -1 then
+    if (head is -1) or snake.contains(head) then
       assign gameOn to false
     end if
     if head.equals(apple) then
@@ -27,6 +27,7 @@ main
     end if
     call snake.append(head)
   end while
+  print($"Game Over! Score: {snake.length() - 2}")
 end main
 
 function isValid(key as String) returns Boolean

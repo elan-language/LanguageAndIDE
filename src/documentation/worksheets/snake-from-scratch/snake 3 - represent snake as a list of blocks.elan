@@ -1,0 +1,10 @@
+# 61be968c93901585955b21006886b21a7bb67c32be7cc9cfe00e8687b1861cd5 Elan 2.0.0-beta4 valid
+
+main
+  variable bg set to new BlockGraphics()
+  variable snake set to [617, 618, 619, 620, 621]
+  for segment in snake
+    call bg.putBlockNo(segment, green)
+    call displayBlockGraphics(bg)
+  end for
+end main
