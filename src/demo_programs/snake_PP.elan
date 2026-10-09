@@ -2,7 +2,7 @@
 
 main
   variable head set to 621
-  variable snake set to [617, 618, 619, 620, head]
+  variable snake set to [620, head]
   variable direction set to "d"
   variable gameOn set to true
   variable apple set to -1

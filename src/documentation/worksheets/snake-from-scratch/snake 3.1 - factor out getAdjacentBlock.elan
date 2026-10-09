@@ -1,21 +1,16 @@
-# d2cc670c990cbb35e032d071f6f0b0aa5e78992d4cb9c58bf992614eccde60a9 Elan 2.0.0-beta4 valid
+# 2d301a5856f2f8b34abd3ad498c2a9bf47444edd6a807f922fd960b9e64c2781 Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [617, 618, 619, 620, head]
+  variable snake set to [699, 659, 660, 620, head]
   while true
+    call display(snake)
+    call sleep_ms(150)
     assign head to getAdjacentBlock(head)
     call snake.append(head)
     call snake.removeAt(0)
-    call display(snake)
-    call sleep_ms(150)
   end while
 end main
-
-function getAdjacentBlock(bl as Int) returns Int
-  variable adj set to bl + 1
-  return adj
-end function
 
 procedure display(snake as List<of Int>)
   variable bg set to new BlockGraphics()
@@ -24,3 +19,8 @@ procedure display(snake as List<of Int>)
   end for
   call displayBlockGraphics(bg)
 end procedure
+
+function getAdjacentBlock(block as Int) returns Int
+  variable adj set to block + 1
+  return adj
+end function

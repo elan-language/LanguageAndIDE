@@ -1,4 +1,4 @@
-# adb66a02c75f970517f8127b3cfc3c74d44b5456323b23cf84b9ae5b972cd3f5 Elan 2.0.0-beta4 valid
+# c588a134d7c2665b0a88be5d011a6da36aabcf8e58621aba63030a944d9af1ba Python with Elan 2.0.0-beta5 valid
 
 main
   variable bg set to new BlockGraphics()

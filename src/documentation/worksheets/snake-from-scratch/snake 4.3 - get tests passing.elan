@@ -1,11 +1,10 @@
-# 53d423a5c25e7979341676608c5564260cec30397596427bf24564da4ed100e4 Elan 2.0.0-beta4 valid
+# 7ca5d40e5438201a77d574cebfde5ddc4939fb5787cc02a322ddc4eef5c3a0e2 Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [617, 618, 619, 620, head]
+  variable snake set to [699, 659, 660, 620, head]
   variable direction set to "d"
-  variable gameOn set to true
-  while gameOn
+  while true
     call display(snake)
     call sleep_ms(150)
     variable key set to getKey().lowerCase()
@@ -13,10 +12,18 @@ main
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    call snake.removeAt(0)
     call snake.append(head)
+    call snake.removeAt(0)
   end while
 end main
+
+procedure display(snake as List<of Int>)
+  variable bg set to new BlockGraphics()
+  for segment in snake
+    call bg.putBlockNo(segment, green)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
 
 function isValid(key as String) returns Boolean
   return (not key.equals("")) and ("wasd".contains(key))
@@ -28,31 +35,23 @@ test test_isValid
   assert isValid("x") evaluates to false
 end test
 
-function getAdjacentBlock(bl as Int, direction as String) returns Int
+function getAdjacentBlock(block as Int, direction as String) returns Int
   variable adj set to -1
   if direction.equals("d") then
-    assign adj to bl + 1
+    assign adj to block + 1
   elif direction.equals("s") then
-    assign adj to bl + 40
+    assign adj to block + 40
   elif direction.equals("w") then
-    assign adj to bl - 40
+    assign adj to block - 40
   elif direction.equals("a") then
-    assign adj to bl - 1
+    assign adj to block - 1
   end if
   return adj
 end function
 
 test test_getAdjacentBlock
-  assert getAdjacentBlock(119, "d") evaluates to -1
-  assert getAdjacentBlock(600, "a") evaluates to -1
-  assert getAdjacentBlock(7, "w") evaluates to -1
-  assert getAdjacentBlock(1190, "s") evaluates to -1
+  assert getAdjacentBlock(621, "w") evaluates to 581
+  assert getAdjacentBlock(621, "a") evaluates to 620
+  assert getAdjacentBlock(621, "s") evaluates to 661
+  assert getAdjacentBlock(621, "d") evaluates to 622
 end test
-
-procedure display(snake as List<of Int>)
-  variable bg set to new BlockGraphics()
-  for segment in snake
-    call bg.putBlockNo(segment, green)
-  end for
-  call displayBlockGraphics(bg)
-end procedure
