@@ -1,12 +1,11 @@
-# 46e9761586bbcf1c2a25f71073113938a79e0fcba772416d09b58305824a6fea Python with Elan 2.0.0-beta5 valid
+# 207575025cb6d279ce77fd69ae96511f7cd4536709163130665eab2e68ad3160 Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [620, head]
+  variable snake set to [699, 659, 660, 620, head]
   variable direction set to "d"
   variable apple set to -1
-  variable gameOn set to true
-  while gameOn
+  while true
     while (apple is -1) or snake.contains(apple)
       assign apple to randint(0, 1200)
     end while
@@ -17,9 +16,6 @@ main
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    if (head is -1) or snake.contains(head) then
-      assign gameOn to false
-    end if
     call snake.append(head)
     if head.equals(apple) then
       assign apple to -1
@@ -27,7 +23,6 @@ main
       call snake.removeAt(0)
     end if
   end while
-  print($"Game Over! Score: {snake.length() - 2}")
 end main
 
 procedure display(snake as List<of Int>, apple as Int)
@@ -45,13 +40,13 @@ end function
 
 function getAdjacentBlock(block as Int, direction as String) returns Int
   variable adj set to -1
-  if direction.equals("d") and ((block mod 40) < 39) then
+  if direction.equals("d") then
     assign adj to block + 1
-  elif direction.equals("s") and (block < 1160) then
+  elif direction.equals("s") then
     assign adj to block + 40
-  elif direction.equals("w") and (block > 39) then
+  elif direction.equals("w") then
     assign adj to block - 40
-  elif direction.equals("a") and ((block mod 40) > 0) then
+  elif direction.equals("a") then
     assign adj to block - 1
   end if
   return adj

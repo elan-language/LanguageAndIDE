@@ -1,0 +1,34 @@
+# c2eadfa371cc57594d946cb10b35135ac5425a1a96c7c523c9e25ac98fce9cce Python with Elan 2.0.0-beta5 valid
+
+main
+  variable head set to 621
+  variable snake set to [699, 659, 660, 620, head]
+  variable direction set to "d"
+  while true
+    call display(snake)
+    call sleep_ms(150)
+    assign head to getAdjacentBlock(head, direction)
+    call snake.append(head)
+    call snake.removeAt(0)
+  end while
+end main
+
+procedure display(snake as List<of Int>)
+  variable bg set to new BlockGraphics()
+  for segment in snake
+    call bg.putBlockNo(segment, green)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+function getAdjacentBlock(block as Int, direction as String) returns Int
+  variable adj set to block + 1
+  return adj
+end function
+
+test test_getAdjacentBlock
+  assert getAdjacentBlock(621, "w") evaluates to 581
+  assert getAdjacentBlock(621, "a") evaluates to 620
+  assert getAdjacentBlock(621, "s") evaluates to 661
+  assert getAdjacentBlock(621, "d") evaluates to 622
+end test

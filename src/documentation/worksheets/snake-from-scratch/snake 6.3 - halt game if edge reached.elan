@@ -1,8 +1,8 @@
-# 46e9761586bbcf1c2a25f71073113938a79e0fcba772416d09b58305824a6fea Python with Elan 2.0.0-beta5 valid
+# 5d6ad32e0e1ea6157bfcc98820ad09d5ca2147a3183a5a680a2cf2499c52050f Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [620, head]
+  variable snake set to [699, 659, 660, 620, head]
   variable direction set to "d"
   variable apple set to -1
   variable gameOn set to true
@@ -17,7 +17,7 @@ main
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
-    if (head is -1) or snake.contains(head) then
+    if head is -1 then
       assign gameOn to false
     end if
     call snake.append(head)
@@ -27,7 +27,6 @@ main
       call snake.removeAt(0)
     end if
   end while
-  print($"Game Over! Score: {snake.length() - 2}")
 end main
 
 procedure display(snake as List<of Int>, apple as Int)

@@ -1,0 +1,10 @@
+# c734decc7fbf4c23e81d914defc5a1809d6f8e5625f5de8f36a31d8c185e1a0a Python with Elan 2.0.0-beta5 valid
+
+main
+  variable bg set to new BlockGraphics()
+  variable snake set to [699, 659, 660, 620, 621]
+  for segment in snake
+    call bg.putBlockNo(segment, green)
+  end for
+  call displayBlockGraphics(bg)
+end main

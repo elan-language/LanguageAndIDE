@@ -1,14 +1,14 @@
-# b25aede3f56013f62d322ce5f2f54dbfe0e52577b40988cba96087ffc0c68a7f Elan 2.0.0-beta4 valid
+# 427e8465c949a36f6e5399e3be19265a3f8898874524d3700f7901fec23eeb24 Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [617, 618, 619, 620, head]
+  variable snake set to [699, 659, 660, 620, head]
   while true
+    call display(snake)
+    call sleep_ms(150)
     assign head to head + 1
     call snake.append(head)
     call snake.removeAt(0)
-    call display(snake)
-    call sleep_ms(150)
   end while
 end main
 

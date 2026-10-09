@@ -1,8 +1,8 @@
-# 46e9761586bbcf1c2a25f71073113938a79e0fcba772416d09b58305824a6fea Python with Elan 2.0.0-beta5 valid
+# c710c5a921443bccdf38c3c6480b0027c2525aab909d4a75dbaa64ba23207048 Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 621
-  variable snake set to [620, head]
+  variable snake set to [699, 659, 660, 620, head]
   variable direction set to "d"
   variable apple set to -1
   variable gameOn set to true
@@ -27,7 +27,6 @@ main
       call snake.removeAt(0)
     end if
   end while
-  print($"Game Over! Score: {snake.length() - 2}")
 end main
 
 procedure display(snake as List<of Int>, apple as Int)
