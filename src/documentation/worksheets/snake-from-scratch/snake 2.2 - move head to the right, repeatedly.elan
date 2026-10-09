@@ -2,8 +2,8 @@
 
 main
   variable bg set to new BlockGraphics()
-  variable head set to 621
-  variable snake set to [699, 659, 660, 620, head]
+  variable head set to 620
+  variable snake set to [698, 658, 659, 619, head]
   while true
     for segment in snake
       call bg.putBlockNo(segment, green)

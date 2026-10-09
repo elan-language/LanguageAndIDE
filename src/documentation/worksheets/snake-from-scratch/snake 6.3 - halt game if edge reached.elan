@@ -1,8 +1,8 @@
 # 5d6ad32e0e1ea6157bfcc98820ad09d5ca2147a3183a5a680a2cf2499c52050f Python with Elan 2.0.0-beta5 valid
 
 main
-  variable head set to 621
-  variable snake set to [699, 659, 660, 620, head]
+  variable head set to 620
+  variable snake set to [698, 658, 659, 619, head]
   variable direction set to "d"
   variable apple set to -1
   variable gameOn set to true

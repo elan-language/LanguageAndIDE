@@ -1,8 +1,8 @@
 // C# with Elan 2.0.0-beta5
 
 static void main() {
-  var head = 621;
-  var snake = new [] {620, head};
+  var head = 620;
+  var snake = new [] {619, head};
   var direction = "d";
   var apple = -1;
   var gameOn = true;

@@ -3,8 +3,8 @@
 public class Global {
 
 static void main() {
-  var head = 621;
-  var snake = list(620, head);
+  var head = 620;
+  var snake = list(619, head);
   var direction = "d";
   var apple = -1;
   var gameOn = true;
