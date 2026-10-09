@@ -1,8 +1,8 @@
 # 2d301a5856f2f8b34abd3ad498c2a9bf47444edd6a807f922fd960b9e64c2781 Python with Elan 2.0.0-beta5 valid
 
 main
-  variable head set to 621
-  variable snake set to [699, 659, 660, 620, head]
+  variable head set to 620
+  variable snake set to [698, 658, 659, 619, head]
   while true
     call display(snake)
     call sleep_ms(150)

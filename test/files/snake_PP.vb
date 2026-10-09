@@ -1,8 +1,8 @@
 ' VB.NET with Elan 2.0.0-beta5
 
 Sub main()
-  Dim head = 621 ' variable definition
-  Dim snake = {620, head} ' variable definition
+  Dim head = 620 ' variable definition
+  Dim snake = {619, head} ' variable definition
   Dim direction = "d" ' variable definition
   Dim apple = -1 ' variable definition
   Dim gameOn = True ' variable definition

@@ -1,7 +1,7 @@
-# c588a134d7c2665b0a88be5d011a6da36aabcf8e58621aba63030a944d9af1ba Python with Elan 2.0.0-beta5 valid
+# d4124851ec57e5c9ebba9f7c78a316d865be7f0abfccfc1ef1ca0a8109347a01 Python with Elan 2.0.0-beta4 valid
 
 main
   variable bg set to new BlockGraphics()
-  call bg.putBlockNo(621, green)
+  call bg.putBlockNo(620, green)
   call displayBlockGraphics(bg)
 end main

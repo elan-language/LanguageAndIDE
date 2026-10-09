@@ -1,8 +1,8 @@
 # Python with Elan 2.0.0-beta5
 
 def main() -> None:
-  head = 621 # variable definition
-  snake = [620, head] # variable definition
+  head = 620 # variable definition
+  snake = [619, head] # variable definition
   direction = "d" # variable definition
   apple = -1 # variable definition
   gameOn = True # variable definition
