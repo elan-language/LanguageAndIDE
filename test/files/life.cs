@@ -5,51 +5,63 @@ static void main() {
   fillRandom(grid); // procedure call
   while (true) {
     displayBlockGraphics(grid); // procedure call
-    nextGeneration(grid); // procedure call
+    var nextGen = new BlockGraphics();
+    fillNextGeneration(grid, nextGen); // procedure call
+    grid = nextGen; // assignment
     sleep_ms(50); // procedure call
   } // end while
 } // end main
 
 static void fillRandom(BlockGraphics grid) { // procedure
-  foreach (var col in range(0, 40)) {
-    foreach (var row in range(0, 30)) {
-      grid.put(col, row, blackOrWhite(random())); // procedure call
-    } // end foreach
-  } // end foreach
-} // end procedure
-
-static void nextGeneration(BlockGraphics grid) { // procedure
-  // First, make a copy of the existing grid
-  var copy = new BlockGraphics();
+  var colours = new [] {black, white};
   foreach (var cell in range(0, 1199)) {
-    copy.putBlockNo(cell, grid.getBlockNo(cell)); // procedure call
-  } // end foreach
-  // then calculate each new cell *from the copy*, and update the grid
-  foreach (var cell in range(0, 1199)) {
-    var colour = nextCellValue(copy, cell);
+    var colour = colours[randint(0, 2)];
     grid.putBlockNo(cell, colour); // procedure call
   } // end foreach
 } // end procedure
 
-static int blackOrWhite(double random) { // function
-  var result = black;
-  if (random > 0.5) {
-    result = white; // assignment
-  } // end if
-  return result;
-} // end function
+static void fillNextGeneration(BlockGraphics grid, BlockGraphics nextGen) { // procedure
+  foreach (var cell in range(0, 1199)) {
+    var colour = nextCellValue(grid, cell);
+    nextGen.putBlockNo(cell, colour); // procedure call
+  } // end foreach
+} // end procedure
 
 static int x(int cell) { // function
   return cell % 40;
 } // end function
 
+[TestClass] class Test_x
+[TestMethod] static void test_x() {
+  Assert.AreEqual(0, x(0));
+  Assert.AreEqual(39, x(39));
+  Assert.AreEqual(0, x(40));
+  Assert.AreEqual(39, x(1199));
+}} // end test
+
 static int y(int cell) { // function
   return divAsInt(cell, 40);
 } // end function
 
+[TestClass] class Test_y
+[TestMethod] static void test_y() {
+  Assert.AreEqual(0, y(0));
+  Assert.AreEqual(0, y(39));
+  Assert.AreEqual(1, y(40));
+  Assert.AreEqual(29, y(1199));
+}} // end test
+
 static int cellNo(int x, int y) { // function
   return y*40 + x;
 } // end function
+
+[TestClass] class Test_cellNo
+[TestMethod] static void test_cellNo() {
+  Assert.AreEqual(0, cellNo(0, 0));
+  Assert.AreEqual(39, cellNo(39, 0));
+  Assert.AreEqual(40, cellNo(0, 1));
+  Assert.AreEqual(1199, cellNo(39, 29));
+}} // end test
 
 static int north(int cell) { // function
   var x = x(cell);
@@ -181,6 +193,15 @@ static int liveNeighbours(BlockGraphics grid, int cell) { // function
   return neighbours.filter(int c => grid.getBlockNo(c) == black).length();
 } // end function
 
+[TestClass] class Test_liveNeighbours
+[TestMethod] static void test_liveNeighbours() {
+  var grid = createTestGrid();
+  Assert.AreEqual(1, liveNeighbours(grid, 0));
+  Assert.AreEqual(4, liveNeighbours(grid, 41));
+  Assert.AreEqual(3, liveNeighbours(grid, 1));
+  Assert.AreEqual(3, liveNeighbours(grid, 42));
+}} // end test
+
 static bool willLive(int cell, int liveNeighbours) { // function
   return ((cell == black) && (liveNeighbours > 1) && (liveNeighbours < 4)) || ((cell == white) && (liveNeighbours == 3));
 } // end function
@@ -216,11 +237,17 @@ static int nextCellValue(BlockGraphics grid, int cell) { // function
   return colour;
 } // end function
 
-[TestClass] class Test_blackOrWhite
-[TestMethod] static void test_blackOrWhite() {
-  Assert.AreEqual(black, blackOrWhite(0));
-  Assert.AreEqual(black, blackOrWhite(0.499));
-  Assert.AreEqual(black, blackOrWhite(0.5));
-  Assert.AreEqual(white, blackOrWhite(0.501));
-  Assert.AreEqual(white, blackOrWhite(1));
+[TestClass] class Test_nextCellValue
+[TestMethod] static void test_nextCellValue() {
+  var grid = createTestGrid();
+  Assert.AreEqual(white, nextCellValue(grid, 0));
+  Assert.AreEqual(white, nextCellValue(grid, 41));
+  Assert.AreEqual(black, nextCellValue(grid, 1));
+  Assert.AreEqual(black, nextCellValue(grid, 42));
 }} // end test
+
+static BlockGraphics createTestGrid() { // function
+  var grid = new BlockGraphics();
+  grid = grid.withPutBlockNo(0, black).withPutBlockNo(2, black).withPutBlockNo(41, black).withPutBlockNo(80, black).withPutBlockNo(82, black); // assignment
+  return grid;
+} // end function

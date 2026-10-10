@@ -5,51 +5,63 @@ def main() -> None:
   fillRandom(grid) # procedure call
   while True:
     displayBlockGraphics(grid) # procedure call
-    nextGeneration(grid) # procedure call
+    nextGen = BlockGraphics() # variable definition
+    fillNextGeneration(grid, nextGen) # procedure call
+    grid = nextGen # assignment
     sleep_ms(50) # procedure call
   # end while
 # end main
 
 def fillRandom(grid: BlockGraphics) -> None: # procedure
-  for col in range(0, 40):
-    for row in range(0, 30):
-      grid.put(col, row, blackOrWhite(random())) # procedure call
-    # end for
-  # end for
-# end procedure
-
-def nextGeneration(grid: BlockGraphics) -> None: # procedure
-  # First, make a copy of the existing grid
-  copy = BlockGraphics() # variable definition
+  colours = [black, white] # variable definition
   for cell in range(0, 1199):
-    copy.putBlockNo(cell, grid.getBlockNo(cell)) # procedure call
-  # end for
-  # then calculate each new cell *from the copy*, and update the grid
-  for cell in range(0, 1199):
-    colour = nextCellValue(copy, cell) # variable definition
+    colour = colours[randint(0, 2)] # variable definition
     grid.putBlockNo(cell, colour) # procedure call
   # end for
 # end procedure
 
-def blackOrWhite(random: float) -> int: # function
-  result = black # variable definition
-  if random > 0.5:
-    result = white # assignment
-  # end if
-  return result
-# end function
+def fillNextGeneration(grid: BlockGraphics, nextGen: BlockGraphics) -> None: # procedure
+  for cell in range(0, 1199):
+    colour = nextCellValue(grid, cell) # variable definition
+    nextGen.putBlockNo(cell, colour) # procedure call
+  # end for
+# end procedure
 
 def x(cell: int) -> int: # function
   return cell % 40
 # end function
 
+class Test_x(unittest.TestCase):
+ def test_x(self) -> None:
+  self.assertEqual(x(0), 0)
+  self.assertEqual(x(39), 39)
+  self.assertEqual(x(40), 0)
+  self.assertEqual(x(1199), 39)
+# end test
+
 def y(cell: int) -> int: # function
   return divAsInt(cell, 40)
 # end function
 
+class Test_y(unittest.TestCase):
+ def test_y(self) -> None:
+  self.assertEqual(y(0), 0)
+  self.assertEqual(y(39), 0)
+  self.assertEqual(y(40), 1)
+  self.assertEqual(y(1199), 29)
+# end test
+
 def cellNo(x: int, y: int) -> int: # function
   return y*40 + x
 # end function
+
+class Test_cellNo(unittest.TestCase):
+ def test_cellNo(self) -> None:
+  self.assertEqual(cellNo(0, 0), 0)
+  self.assertEqual(cellNo(39, 0), 39)
+  self.assertEqual(cellNo(0, 1), 40)
+  self.assertEqual(cellNo(39, 29), 1199)
+# end test
 
 def north(cell: int) -> int: # function
   x = x(cell) # variable definition
@@ -181,6 +193,15 @@ def liveNeighbours(grid: BlockGraphics, cell: int) -> int: # function
   return neighbours.filter(lambda c: int: grid.getBlockNo(c) == black).length()
 # end function
 
+class Test_liveNeighbours(unittest.TestCase):
+ def test_liveNeighbours(self) -> None:
+  grid = createTestGrid() # variable definition
+  self.assertEqual(liveNeighbours(grid, 0), 1)
+  self.assertEqual(liveNeighbours(grid, 41), 4)
+  self.assertEqual(liveNeighbours(grid, 1), 3)
+  self.assertEqual(liveNeighbours(grid, 42), 3)
+# end test
+
 def willLive(cell: int, liveNeighbours: int) -> bool: # function
   return ((cell == black) and (liveNeighbours > 1) and (liveNeighbours < 4)) or ((cell == white) and (liveNeighbours == 3))
 # end function
@@ -216,13 +237,19 @@ def nextCellValue(grid: BlockGraphics, cell: int) -> int: # function
   return colour
 # end function
 
-class Test_blackOrWhite(unittest.TestCase):
- def test_blackOrWhite(self) -> None:
-  self.assertEqual(blackOrWhite(0), black)
-  self.assertEqual(blackOrWhite(0.499), black)
-  self.assertEqual(blackOrWhite(0.5), black)
-  self.assertEqual(blackOrWhite(0.501), white)
-  self.assertEqual(blackOrWhite(1), white)
+class Test_nextCellValue(unittest.TestCase):
+ def test_nextCellValue(self) -> None:
+  grid = createTestGrid() # variable definition
+  self.assertEqual(nextCellValue(grid, 0), white)
+  self.assertEqual(nextCellValue(grid, 41), white)
+  self.assertEqual(nextCellValue(grid, 1), black)
+  self.assertEqual(nextCellValue(grid, 42), black)
 # end test
+
+def createTestGrid() -> BlockGraphics: # function
+  grid = BlockGraphics() # variable definition
+  grid = grid.withPutBlockNo(0, black).withPutBlockNo(2, black).withPutBlockNo(41, black).withPutBlockNo(80, black).withPutBlockNo(82, black) # assignment
+  return grid
+# end function
 
 main()
