@@ -1,4 +1,4 @@
-# a7dda29dd8ca435699eca427ee4ccecf55a69d222457c91b7ce6895b0855b533 Elan 2.0.0-beta5 valid
+# be661e1ae2c05ccb25e87410af6ffdf84736585bf03cd458c8b5c2c64d519bd8 Elan 2.0.0-beta5 valid
 
 main
   variable grid set to new BlockGraphics()
@@ -7,14 +7,15 @@ main
     call displayBlockGraphics(grid)
     variable nextGen set to new BlockGraphics()
     call fillNextGeneration(grid, nextGen)
-    call sleep_ms(50)
     assign grid to nextGen
+    call sleep_ms(50)
   end while
 end main
 
 procedure fillRandom(grid as BlockGraphics)
+  variable colours set to [black, white]
   for cell in range(0, 1199)
-    variable colour set to randint(0, 2)*white
+    variable colour set to colours[randint(0, 2)]
     call grid.putBlockNo(cell, colour)
   end for
 end procedure

@@ -7,14 +7,15 @@ static void main() {
     displayBlockGraphics(grid); // procedure call
     var nextGen = new BlockGraphics();
     fillNextGeneration(grid, nextGen); // procedure call
-    sleep_ms(50); // procedure call
     grid = nextGen; // assignment
+    sleep_ms(50); // procedure call
   } // end while
 } // end main
 
 static void fillRandom(BlockGraphics grid) { // procedure
+  var colours = new [] {black, white};
   foreach (var cell in range(0, 1199)) {
-    var colour = randint(0, 2)*white;
+    var colour = colours[randint(0, 2)];
     grid.putBlockNo(cell, colour); // procedure call
   } // end foreach
 } // end procedure

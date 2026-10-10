@@ -7,14 +7,15 @@ def main() -> None:
     displayBlockGraphics(grid) # procedure call
     nextGen = BlockGraphics() # variable definition
     fillNextGeneration(grid, nextGen) # procedure call
-    sleep_ms(50) # procedure call
     grid = nextGen # assignment
+    sleep_ms(50) # procedure call
   # end while
 # end main
 
 def fillRandom(grid: BlockGraphics) -> None: # procedure
+  colours = [black, white] # variable definition
   for cell in range(0, 1199):
-    colour = randint(0, 2)*white # variable definition
+    colour = colours[randint(0, 2)] # variable definition
     grid.putBlockNo(cell, colour) # procedure call
   # end for
 # end procedure

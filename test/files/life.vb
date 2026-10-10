@@ -7,14 +7,15 @@ Sub main()
     displayBlockGraphics(grid) ' procedure call
     Dim nextGen = New BlockGraphics() ' variable definition
     fillNextGeneration(grid, nextGen) ' procedure call
-    sleep_ms(50) ' procedure call
     grid = nextGen ' assignment
+    sleep_ms(50) ' procedure call
   End While
 End Sub
 
 Sub fillRandom(grid As BlockGraphics) ' procedure
+  Dim colours = {black, white} ' variable definition
   For Each cell In range(0, 1199)
-    Dim colour = randint(0, 2)*white ' variable definition
+    Dim colour = colours(randint(0, 2)) ' variable definition
     grid.putBlockNo(cell, colour) ' procedure call
   Next cell
 End Sub
