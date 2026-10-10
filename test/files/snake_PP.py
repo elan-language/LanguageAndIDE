@@ -7,9 +7,9 @@ def main() -> None:
   apple = -1 # variable definition
   gameOn = True # variable definition
   while gameOn:
-    while (apple == -1) or snake.contains(apple):
+    if apple == -1:
       apple = randint(0, 1200) # assignment
-    # end while
+    # end if
     display(snake, apple) # procedure call
     sleep_ms(150) # procedure call
     key = getKey().lowerCase() # variable definition
@@ -42,6 +42,13 @@ def display(snake: list[int], apple: int) -> None: # procedure
 def isValid(key: str) -> bool: # function
   return (not key.equals("")) and ("wasd".contains(key))
 # end function
+
+class Test_isValid(unittest.TestCase):
+ def test_isValid(self) -> None:
+  self.assertEqual(isValid("w"), True)
+  self.assertEqual(isValid(""), False)
+  self.assertEqual(isValid("x"), False)
+# end test
 
 def getAdjacentBlock(block: int, direction: str) -> int: # function
   adj = -1 # variable definition

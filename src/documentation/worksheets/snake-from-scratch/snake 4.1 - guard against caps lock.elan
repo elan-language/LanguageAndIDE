@@ -1,48 +1,29 @@
-# 0135c11a76344bb5c9f422dcce0eefb98719885abf76e9263031460cabedd18d Python with Elan 2.0.0-beta5 valid
+# ec08834a2f5fe2ba6c38af6210614a343612aef46e4e28c17488be561e49b76d Python with Elan 2.0.0-beta5 valid
 
 main
   variable head set to 620
   variable snake set to [698, 658, 659, 619, head]
   variable direction set to "d"
-  variable apple set to -1
   while true
-    if apple is -1 then
-      assign apple to randint(0, 1200)
-    end if
-    call display(snake, apple)
+    call display(snake)
     call sleep_ms(150)
     variable key set to getKey().lowerCase()
-    if isValid(key) then
+    if not key.equals("") then
       assign direction to key
     end if
     assign head to getAdjacentBlock(head, direction)
     call snake.append(head)
-    if head.equals(apple) then
-      assign apple to -1
-    else
-      call snake.removeAt(0)
-    end if
+    call snake.removeAt(0)
   end while
 end main
 
-procedure display(snake as List<of Int>, apple as Int)
+procedure display(snake as List<of Int>)
   variable bg set to new BlockGraphics()
   for segment in snake
     call bg.putBlockNo(segment, green)
   end for
-  call bg.putBlockNo(apple, red)
   call displayBlockGraphics(bg)
 end procedure
-
-function isValid(key as String) returns Boolean
-  return (not key.equals("")) and ("wasd".contains(key))
-end function
-
-test test_isValid
-  assert isValid("w") evaluates to true
-  assert isValid("") evaluates to false
-  assert isValid("x") evaluates to false
-end test
 
 function getAdjacentBlock(block as Int, direction as String) returns Int
   variable adj set to -1

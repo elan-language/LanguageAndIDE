@@ -9,9 +9,9 @@ static void main() {
   var apple = -1;
   var gameOn = true;
   while (gameOn) {
-    while ((apple == -1) || snake.contains(apple)) {
+    if (apple == -1) {
       apple = randint(0, 1200); // assignment
-    } // end while
+    } // end if
     display(snake, apple); // procedure call
     sleep_ms(150); // procedure call
     var key = getKey().lowerCase();
@@ -44,6 +44,13 @@ static void display(List<int> snake, int apple) { // procedure
 static boolean isValid(String key) { // function
   return (!key.equals("")) && ("wasd".contains(key));
 } // end function
+
+class Test_isValid {
+@Test static void test_isValid() {
+  assertEquals(true, isValid("w"));
+  assertEquals(false, isValid(""));
+  assertEquals(false, isValid("x"));
+}} // end test
 
 static int getAdjacentBlock(int block, String direction) { // function
   var adj = -1;
