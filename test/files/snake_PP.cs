@@ -7,9 +7,9 @@ static void main() {
   var apple = -1;
   var gameOn = true;
   while (gameOn) {
-    while ((apple == -1) || snake.contains(apple)) {
+    if (apple == -1) {
       apple = randint(0, 1200); // assignment
-    } // end while
+    } // end if
     display(snake, apple); // procedure call
     sleep_ms(150); // procedure call
     var key = getKey().lowerCase();
@@ -42,6 +42,13 @@ static void display(List<int> snake, int apple) { // procedure
 static bool isValid(string key) { // function
   return (!key.equals("")) && ("wasd".contains(key));
 } // end function
+
+[TestClass] class Test_isValid
+[TestMethod] static void test_isValid() {
+  Assert.AreEqual(true, isValid("w"));
+  Assert.AreEqual(false, isValid(""));
+  Assert.AreEqual(false, isValid("x"));
+}} // end test
 
 static int getAdjacentBlock(int block, string direction) { // function
   var adj = -1;

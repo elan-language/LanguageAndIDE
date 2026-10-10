@@ -7,9 +7,9 @@ Sub main()
   Dim apple = -1 ' variable definition
   Dim gameOn = True ' variable definition
   While gameOn
-    While (apple = -1) Or snake.contains(apple)
+    If apple = -1 Then
       apple = randint(0, 1200) ' assignment
-    End While
+    End If
     display(snake, apple) ' procedure call
     sleep_ms(150) ' procedure call
     Dim key = getKey().lowerCase() ' variable definition
@@ -42,6 +42,15 @@ End Sub
 Function isValid(key As String) As Boolean
   Return (Not key.equals("")) And ("wasd".contains(key))
 End Function
+
+<TestClass Class Test_isValid
+ <TestMethod> Sub test_isValid()
+  Assert.AreEqual(True, isValid("w"))
+  Assert.AreEqual(False, isValid(""))
+  Assert.AreEqual(False, isValid("x"))
+ End Sub
+End Class
+
 
 Function getAdjacentBlock(block As Integer, direction As String) As Integer
   Dim adj = -1 ' variable definition
