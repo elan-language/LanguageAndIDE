@@ -117,11 +117,17 @@ inputStatement:
     GHOSTED? INPUT identifierDef SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
 ;
 
-procedureCall:
-    //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+//TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall. Then delete following three rules
+procedureCall:   
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-procRef: term;
+procRef: 
+    methodName
+    | thisProcRef
+    | instanceProcRef
+;
+thisProcRef: THIS_INSTANCE DOT methodName;
+instanceProcRef: identifierWithOptIndexes DOT methodName;
 
 throwStatement:
     GHOSTED? THROW typeName litString NL

@@ -26,6 +26,8 @@ import { AssignmentContext } from "./RefLangParser.js";
 import { InputStatementContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
 import { ProcRefContext } from "./RefLangParser.js";
+import { ThisProcRefContext } from "./RefLangParser.js";
+import { InstanceProcRefContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
 import { ElseIfClauseContext } from "./RefLangParser.js";
@@ -238,6 +240,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitProcRef?: (ctx: ProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thisProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.instanceProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree

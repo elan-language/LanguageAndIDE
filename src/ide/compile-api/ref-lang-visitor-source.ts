@@ -13,6 +13,7 @@ import {
   IdentifierDefContext,
   IdentifierUseContext,
   IndexContext,
+  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -27,6 +28,7 @@ import {
   ParamsListContext,
   TermContext,
   TestNameContext,
+  ThisProcRefContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -177,4 +179,10 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
       return this.visitChildren(ctx)!;
     }
   };
+
+  visitThisProcRef = (ctx: ThisProcRefContext) =>
+    `${this.visit(ctx.THIS_INSTANCE())}.${this.visit(ctx.methodName())}`;
+
+  visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
+    `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
 }

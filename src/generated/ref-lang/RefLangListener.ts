@@ -26,6 +26,8 @@ import { AssignmentContext } from "./RefLangParser.js";
 import { InputStatementContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
 import { ProcRefContext } from "./RefLangParser.js";
+import { ThisProcRefContext } from "./RefLangParser.js";
+import { InstanceProcRefContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
 import { ElseIfClauseContext } from "./RefLangParser.js";
@@ -331,6 +333,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitProcRef?: (ctx: ProcRefContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.thisProcRef`.
+   * @param ctx the parse tree
+   */
+  enterThisProcRef?: (ctx: ThisProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.thisProcRef`.
+   * @param ctx the parse tree
+   */
+  exitThisProcRef?: (ctx: ThisProcRefContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.instanceProcRef`.
+   * @param ctx the parse tree
+   */
+  enterInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.instanceProcRef`.
+   * @param ctx the parse tree
+   */
+  exitInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree

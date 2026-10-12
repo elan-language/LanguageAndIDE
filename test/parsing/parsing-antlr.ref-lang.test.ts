@@ -1161,11 +1161,11 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(procRef, `foo`, true);
     testAntlrParse(procRef, `bar.foo`, true, `bar.foo`, `bar.foo`);
     testAntlrParse(procRef, `this.foo`, true, "", "");
-    testAntlrParse(procRef, `this.foo.bar`, true, "this.foo.bar");
+    testAntlrParse(procRef, `this.foo.bar`, true, "this.foo");
     testAntlrParse(procRef, `bar.foo`, true, "", "");
     testAntlrParse(procRef, `bar.`, false);
-    testAntlrParse(procRef, `bar.foo.yon`, true, `bar.foo.yon`);
-    testAntlrParse(procRef, `bar.foo[2]`, true, `bar.foo[2]`);
+    testAntlrParse(procRef, `bar.foo.yon`, true, `bar.foo`);
+    testAntlrParse(procRef, `bar.foo[2]`, true, `bar.foo`);
     testAntlrParse(procRef, `bar`, true, `bar`);
     testAntlrParse(procRef, `x[3].bar`, true, "", "");
   });
