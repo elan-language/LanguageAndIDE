@@ -1,5 +1,5 @@
 import { endKeyword, whileKeyword } from "../../../compiler/elan-keywords";
-import { ExpressionField } from "../fields/expression-field";
+import { AbstractField, expressionFieldSpec } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -7,10 +7,10 @@ import { FrameWithStatements } from "../frame-with-statements";
 
 export class WhileLoop extends FrameWithStatements {
   isStatement = false;
-  condition: ExpressionField;
+  condition: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.condition = new ExpressionField(this);
+    this.condition = new AbstractField(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
   initialKeywords(): string {
