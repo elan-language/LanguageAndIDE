@@ -35,6 +35,7 @@ import {
   IdentifierDefContext,
   IdentifierUseContext,
   IndexContext,
+  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -52,6 +53,7 @@ import {
   ParamsListContext,
   TermContext,
   ThisInstanceContext,
+  ThisProcRefContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -67,6 +69,8 @@ import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
+import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
+import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -297,5 +301,31 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const body = this.visit(ctx.expression())!;
 
     return new LambdaAsn(sig, body, this.fieldId);
+  };
+
+  visitThisProcRef = (ctx: ThisProcRefContext) => {
+    const thisNode = new ThisAsn(this.fieldId, this.scope);
+    const name = ctx.methodName().getText();
+    return new VarAsn(
+      name,
+      false,
+      thisNode as unknown as AstQualifierNode,
+      EmptyAsn.Instance,
+      this.fieldId,
+      this.scope,
+    );
+  };
+
+  visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
+    const node = this.visit(ctx.identifierWithOptIndexes());
+    const name = ctx.methodName().getText();
+    return new VarAsn(
+      name,
+      false,
+      node as unknown as AstQualifierNode,
+      EmptyAsn.Instance,
+      this.fieldId,
+      this.scope,
+    );
   };
 }
