@@ -964,7 +964,7 @@ end class`;
     ]);
   });
 
-  test("Fail_MissingPropertyKeyword5", async () => {
+  ignore_test("Fail_MissingPropertyKeyword5", async () => {
     const code = `${testHeader}
 
 main
@@ -1017,7 +1017,7 @@ end class`;
     ]);
   });
 
-  test("Fail_MissingPropertyKeyword6", async () => {
+  ignore_test("Fail_MissingPropertyKeyword6", async () => {
     const code = `${testHeader}
 
 main

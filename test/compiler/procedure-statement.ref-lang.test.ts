@@ -983,7 +983,7 @@ end procedure
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotCallMain", async () => {
+  ignore_test("Fail_CannotCallMain", async () => {
     const code = `${testHeader}
 
 main

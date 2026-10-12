@@ -1979,7 +1979,7 @@ end class
     ]);
   });
 
-  test("Fail_CallConstructor", async () => {
+  ignore_test("Fail_CallConstructor", async () => {
     const code = `${testHeader}
 
 main

@@ -230,7 +230,7 @@ expression:
 ;
 
 term:
-    thisInstance
+    thisInstance 
     | bracketedExpression
     | litValue
     | list
@@ -251,7 +251,7 @@ negateNumeric: MINUS term;
 negateLogical: NOT term;
 
 binaryExpression:
-    term binaryOperator expression
+    left=term binaryOperator right=expression
 ; // ? expression binaryOperator expression ?
 
 list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;

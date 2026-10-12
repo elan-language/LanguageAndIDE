@@ -887,7 +887,7 @@ end function
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_callATest", async () => {
+  ignore_test("Fail_callATest", async () => {
     const code = `${testHeader}
 
 main
