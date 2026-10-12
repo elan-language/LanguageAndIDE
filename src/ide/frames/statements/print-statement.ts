@@ -13,7 +13,6 @@ export class PrintStatement extends SingleLineFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.arg = new AbstractField(this, printExpressionFieldSpec);
-    //this.arg.readUntil = /\)\r?\n/;
   }
 
   initialKeywords(): string {

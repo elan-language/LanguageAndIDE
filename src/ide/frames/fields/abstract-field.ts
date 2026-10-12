@@ -180,7 +180,6 @@ export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
-//TODO Need to add 'endMarkers' as another property
 export const methodNameFieldSpec: FieldSpec = new FieldSpec(
   FieldType.methodName,
   "<i>name</i>",
@@ -225,24 +224,10 @@ export const expressionFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.expression(),
-  (source: CodeSource) => source.readToEndOfLine(), // TODO: Needs changing so that lambda can be set up differently in field constructor
+  (source: CodeSource) => source.readToEndOfLine(),
   "",
 );
 
-// merge with expressionFieldSpec once TODO above is done
-export const assertExpressionFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.expression,
-  "<i>value or expression</i>",
-  "ExpressionField",
-  "_expr",
-  true,
-  false,
-  (parser: PythonParser | RefLangParser) => parser.expression(),
-  (source: CodeSource) => source.readUntil(/\r|\n/),
-  "",
-);
-
-// merge with expressionFieldSpec once TODO above is done
 export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
   FieldType.expression,
   "<i>value or expression</i>",
@@ -256,14 +241,26 @@ export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
 );
 
 export const assertActualFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.assertActual,
+  FieldType.expression,
   "<i>actual (computed) value</i>",
   "AssertActualField",
   "", // not specified in Field ?
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertActual(),
-  (source: CodeSource) => source.readUntil(/\s/), // TODO Valid for most cases but not a robust rule. Currently field has source.readUntil(/\sevaluates\sto\s/); which is not language independent. May need to change grammar to limit it to  variable or method call still
+  (source: CodeSource) => source.readUntil(/\sevaluates\sto\s/), // TODO: specific to RefLang
+  "",
+);
+
+export const assertExpressionFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.expression,
+  "<i>value or expression</i>",
+  "ExpressionField",
+  "_expr",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.expression(),
+  (source: CodeSource) => source.readUntil(/\r|\n/),
   "",
 );
 
