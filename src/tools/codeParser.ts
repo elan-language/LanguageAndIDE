@@ -7,11 +7,11 @@ import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import {
   AbstractField,
+  expressionFieldSpec,
   paramsListFieldSpec,
   typeFieldSpec,
 } from "../ide/frames/fields/abstract-field";
 import { ArgListField } from "../ide/frames/fields/arg-list-field";
-import { ExpressionField } from "../ide/frames/fields/expression-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
@@ -238,10 +238,10 @@ function AbstractMemberParserAndRender(
 
 function ExpressionrParserAndRender(
   file: FileImpl,
-): [ExpressionField, { textAsHtml(): Promise<string> }] {
+): [AbstractField, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
   const ls = new VariableStatement(mf);
-  const expr = new ExpressionField(ls);
+  const expr = new AbstractField(ls, expressionFieldSpec);
 
   return [expr, { textAsHtml: async () => expr.textAsHtml() }];
 }
