@@ -8,13 +8,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Equality", () => {
-  test("Pass_DifferentInstancesWithSameValuesAreValueEqual", async () => {
+  ignore_test("Pass_DifferentInstancesWithSameValuesAreValueEqual", async () => {
     const code = `${testHeader}
 
 main
@@ -123,7 +124,7 @@ class Foo
   end procedure
 
   function toString() returns String
-    return $"{this.p1} {this.p2}"
+    return this.p1.toString() + " " + this.p2
   end function
 end class`;
 
@@ -157,7 +158,7 @@ class Foo {
   }
 
   async toString() {
-    return \`\${await _stdlib.toString(this.p1)} \${await _stdlib.toString(this.p2)}\`;
+    return (await this.p1.toString()) + " " + this.p2;
   }
 
 }

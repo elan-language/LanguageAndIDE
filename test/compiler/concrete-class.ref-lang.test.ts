@@ -868,7 +868,7 @@ class Foo
   end procedure
 
   function toString() returns String
-    return $"Foo:{this.p1}:{this.p2}:{this.p3}"
+    return "Foo:" + this.p1.toString() + ":" + this.p2 + ":" + this.p3
   end function
 
 end class`;
@@ -917,7 +917,7 @@ class Foo {
   }
 
   async toString() {
-    return \`Foo:\${await _stdlib.toString(this.p1)}:\${await _stdlib.toString(this.p2)}:\${await _stdlib.toString(this.p3)}\`;
+    return "Foo:" + (await this.p1.toString()) + ":" + this.p2 + ":" + this.p3;
   }
 
 }
