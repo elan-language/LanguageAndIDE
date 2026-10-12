@@ -1,6 +1,6 @@
 import { elifKeyword, elseKeyword, thenKeyword } from "../../../compiler/elan-keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
-import { ExpressionField } from "../fields/expression-field";
+import { AbstractField, expressionFieldSpec } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -10,10 +10,10 @@ import { SingleLineFrame } from "../single-line-frame";
 export class ElseIfClause extends SingleLineFrame implements Statement {
   isStatement: boolean = true;
   hasIf: boolean = true;
-  condition: ExpressionField;
+  condition: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.condition = new ExpressionField(this);
+    this.condition = new AbstractField(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
 
