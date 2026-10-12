@@ -229,7 +229,7 @@ export const expressionFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
-// merge with expressionFieldSpec once TODO aboce is done
+// merge with expressionFieldSpec once TODO above is done
 export const assertExpressionFieldSpec: FieldSpec = new FieldSpec(
   FieldType.expression,
   "<i>value or expression</i>",
@@ -239,6 +239,19 @@ export const assertExpressionFieldSpec: FieldSpec = new FieldSpec(
   false,
   (parser: PythonParser | RefLangParser) => parser.expression(),
   (source: CodeSource) => source.readUntil(/\r|\n/),
+  "",
+);
+
+// merge with expressionFieldSpec once TODO above is done
+export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.expression,
+  "<i>value or expression</i>",
+  "ExpressionField",
+  "_expr",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.expression(),
+  (source: CodeSource) => source.readUntil(/\)\r?\n/),
   "",
 );
 
