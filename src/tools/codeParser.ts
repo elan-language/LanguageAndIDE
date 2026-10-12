@@ -11,7 +11,6 @@ import {
   paramsListFieldSpec,
   typeFieldSpec,
 } from "../ide/frames/fields/abstract-field";
-import { ArgListField } from "../ide/frames/fields/arg-list-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
@@ -255,7 +254,7 @@ function ParameterParserAndRender(
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }
 
-function LambdaParserAndRender(file: FileImpl): [ArgListField, { textAsHtml(): Promise<string> }] {
+function LambdaParserAndRender(file: FileImpl): [AbstractField, { textAsHtml(): Promise<string> }] {
   const ss = new ProcedureCall(file);
   const args = ss.args;
 

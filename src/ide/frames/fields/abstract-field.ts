@@ -84,6 +84,30 @@ export const typeFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
+export const argListFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.argList,
+  "<i><i>arguments</i></i>",
+  "ArgListField",
+  "_args",
+  true,
+  true,
+  (parser: PythonParser | RefLangParser) => parser.argList(),
+  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
+  "",
+);
+
+export const inputArgListFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.argList,
+  "<i>prompt message</i>",
+  "ArgListField",
+  "_args",
+  true,
+  false,
+  (parser: PythonParser | RefLangParser) => parser.argList(),
+  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
+  "",
+);
+
 export const paramsListFieldSpec: FieldSpec = new FieldSpec(
   FieldType.paramsList,
   "<i>parameter definitions</i>",

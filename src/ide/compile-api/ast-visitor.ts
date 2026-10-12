@@ -80,7 +80,6 @@ import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
 import { AbstractField, FieldType } from "../frames/fields/abstract-field";
-import { ArgListField } from "../frames/fields/arg-list-field";
 import { InheritedTypeField } from "../frames/fields/inherited-type-field";
 import { FileImpl } from "../frames/file-impl";
 import { isSelector } from "../frames/frame-helpers";
@@ -627,6 +626,17 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.argList) {
+    const ctx = node.context;
+
+    if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
+      const argList = ctx.accept(visitor)!;
+      return argList;
+    }
+    return EmptyAsn.Instance;
+  }
+
   if (
     node instanceof AbstractField &&
     (node.fieldSpec?.fieldType === FieldType.identifier ||
@@ -936,13 +946,13 @@ export function transform(
     return new VarAsn(id, false, q, EmptyAsn.Instance, fieldId, scope);
   }
 
-  if (node instanceof ArgListField) {
-    const rn = node.getRootNode();
-    if (rn) {
-      return transform(rn, node.getHtmlId(), scope);
-    }
-    return EmptyAsn.Instance;
-  }
+  // if (node instanceof ArgListField) {
+  //   const rn = node.getRootNode();
+  //   if (rn) {
+  //     return transform(rn, node.getHtmlId(), scope);
+  //   }
+  //   return EmptyAsn.Instance;
+  // }
 
   if (node instanceof AbstractField) {
     const rn = node.getRootNode();
