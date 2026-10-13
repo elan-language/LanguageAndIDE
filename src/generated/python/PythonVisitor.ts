@@ -24,6 +24,9 @@ import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
 import { ProcRefContext } from "./PythonParser.js";
+import { ThisProcRefContext } from "./PythonParser.js";
+import { InstanceProcRefContext } from "./PythonParser.js";
+import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
@@ -47,8 +50,9 @@ import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
 import { ParamListContext } from "./PythonParser.js";
-import { TypeContext } from "./PythonParser.js";
 import { IdentifierListContext } from "./PythonParser.js";
+import { ExpressionListContext } from "./PythonParser.js";
+import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -59,15 +63,15 @@ import { EnumValueContext } from "./PythonParser.js";
 import { LitRegExpContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { ExpressionContext } from "./PythonParser.js";
-import { IfClauseContext } from "./PythonParser.js";
 import { TermContext } from "./PythonParser.js";
-import { ChainHeadContext } from "./PythonParser.js";
-import { ChainTailContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
 import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
 import { UnaryExpressionContext } from "./PythonParser.js";
+import { NegateNumericContext } from "./PythonParser.js";
+import { NegateLogicalContext } from "./PythonParser.js";
 import { BinaryExpressionContext } from "./PythonParser.js";
+import { ListContext } from "./PythonParser.js";
 import { TupleContext } from "./PythonParser.js";
 import { DictionaryContext } from "./PythonParser.js";
 import { KvpListContext } from "./PythonParser.js";
@@ -80,7 +84,6 @@ import { TypeGenericContext } from "./PythonParser.js";
 import { TypeFuncContext } from "./PythonParser.js";
 import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
-import { ListContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
 
 /**
@@ -224,6 +227,24 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitProcRef?: (ctx: ProcRefContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.thisProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.instanceProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.identifierWithOptIndexes`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.tryStatement`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -362,17 +383,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitParamList?: (ctx: ParamListContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.type`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitType?: (ctx: TypeContext) => Result;
-  /**
    * Visit a parse tree produced by `PythonParser.identifierList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitIdentifierList?: (ctx: IdentifierListContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.expressionList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.type`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitType?: (ctx: TypeContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree
@@ -434,29 +461,11 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitExpression?: (ctx: ExpressionContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.ifClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIfClause?: (ctx: IfClauseContext) => Result;
-  /**
    * Visit a parse tree produced by `PythonParser.term`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitTerm?: (ctx: TermContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.chainHead`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitChainHead?: (ctx: ChainHeadContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.chainTail`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitChainTail?: (ctx: ChainTailContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree
@@ -482,11 +491,29 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitUnaryExpression?: (ctx: UnaryExpressionContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.negateNumeric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateNumeric?: (ctx: NegateNumericContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.negateLogical`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateLogical?: (ctx: NegateLogicalContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.binaryExpression`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitBinaryExpression?: (ctx: BinaryExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.list`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitList?: (ctx: ListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.tuple`.
    * @param ctx the parse tree
@@ -559,12 +586,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLambda?: (ctx: LambdaContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.list`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitList?: (ctx: ListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.interpolatedString`.
    * @param ctx the parse tree
