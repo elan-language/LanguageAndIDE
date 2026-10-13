@@ -277,7 +277,7 @@ async function main() {
 async function foo(arr) {
   const elan_iterelan_for13 = [..._stdlib.range(0, 11)];
   for (const i of elan_iterelan_for13) {
-    arr.put(i, 1);
+    system.safeSet(arr, 1, [i]);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
 }
@@ -296,6 +296,7 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
