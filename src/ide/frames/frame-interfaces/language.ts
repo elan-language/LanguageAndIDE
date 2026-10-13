@@ -1,5 +1,5 @@
+import { AbstractField } from "../fields/abstract-field";
 import { EnumValuesField } from "../fields/enum-values-field";
-import { InheritedTypeField } from "../fields/inherited-type-field";
 import { FileImpl } from "../file-impl";
 import { Lambda } from "../parse-nodes/lambda";
 import { ListNode } from "../parse-nodes/list-node";
@@ -49,7 +49,7 @@ export interface Language {
   litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   typeTupleAsHtml(node: TypeTupleNode): string;
   enumValuesListAsHtml(field: EnumValuesField): string;
-  inheritsFromTextAsHtml(field: InheritedTypeField): string;
+  inheritsFromTextAsHtml(field: AbstractField): string;
   lambdaAsHtml(node: Lambda): string;
   listAsHtml(node: ListNode): string;
 

@@ -80,7 +80,6 @@ import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
 import { AbstractField, FieldType } from "../frames/fields/abstract-field";
-import { InheritedTypeField } from "../frames/fields/inherited-type-field";
 import { FileImpl } from "../frames/file-impl";
 import { isSelector } from "../frames/frame-helpers";
 import { Field } from "../frames/frame-interfaces/field";
@@ -589,18 +588,18 @@ export function transform(
     return paramsAsn;
   }
 
-  if (node instanceof InheritedTypeField) {
-    const rn = node.getRootNode();
-    if (rn && rn.status === ParseStatus.valid) {
-      const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
+  // if (node instanceof InheritedTypeField) {
+  //   const rn = node.getRootNode();
+  //   if (rn && rn.status === ParseStatus.valid) {
+  //     const inheritsAsn = new InheritsFromAsn(node.getHtmlId());
 
-      inheritsAsn.inheritance =
-        transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
+  //     inheritsAsn.inheritance =
+  //       transform(node.getRootNode(), node.getHtmlId(), scope) ?? EmptyAsn.Instance;
 
-      return inheritsAsn;
-    }
-    return EmptyAsn.Instance;
-  }
+  //     return inheritsAsn;
+  //   }
+  //   return EmptyAsn.Instance;
+  // }
 
   if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.type) {
     const ctx = node.context;

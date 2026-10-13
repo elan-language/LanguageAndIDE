@@ -1,7 +1,7 @@
 import { getConstantType } from "../compile-api/parser-helpers";
 import { Property } from "./class-members/property";
+import { AbstractField } from "./fields/abstract-field";
 import { EnumValuesField } from "./fields/enum-values-field";
-import { InheritedTypeField } from "./fields/inherited-type-field";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -87,7 +87,7 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: InheritedTypeField): string {
+  inheritsFromTextAsHtml(field: AbstractField): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? `: ${field.renderAsHtml()}` : ``;
   }
