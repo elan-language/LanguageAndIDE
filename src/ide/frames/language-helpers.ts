@@ -1,4 +1,4 @@
-import { EnumValuesField } from "./fields/enum-values-field";
+import { AbstractField } from "./fields/abstract-field";
 import { ParseStatus } from "./status-enums";
 
 export enum LineFormat {
@@ -7,7 +7,7 @@ export enum LineFormat {
 }
 
 export function languageHelper_enumValuesList(
-  field: EnumValuesField,
+  field: AbstractField,
   format: LineFormat,
   startingNumber: number,
   ending: string,
@@ -23,7 +23,7 @@ export function languageHelper_enumValuesList(
     result += ending;
   } else {
     // bad parse status or format is inline
-    result = field.default_renderAsHtml();
+    result = field.renderAsHtml();
   }
   return result;
 }

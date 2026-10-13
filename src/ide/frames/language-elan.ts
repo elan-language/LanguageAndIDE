@@ -51,7 +51,6 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { AbstractField } from "./fields/abstract-field";
-import { EnumValuesField } from "./fields/enum-values-field";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -401,7 +400,7 @@ export class LanguageElan extends LanguageAbstract {
     return this.default_listAsHtml(node);
   }
 
-  enumValuesListAsHtml(field: EnumValuesField): string {
+  enumValuesListAsHtml(field: AbstractField): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 

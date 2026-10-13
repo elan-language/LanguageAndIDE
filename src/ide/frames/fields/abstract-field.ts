@@ -231,7 +231,7 @@ export const procRefFieldSpec: FieldSpec = new FieldSpec(
 export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   FieldType.enumValues,
   "<i>values</i>",
-  "EnumValuesField",
+  "AbstractField",
   "_enumVals",
   false,
   false,

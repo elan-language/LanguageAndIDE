@@ -2,7 +2,6 @@ import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbo
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { AbstractField } from "./fields/abstract-field";
-import { EnumValuesField } from "./fields/enum-values-field";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -88,7 +87,7 @@ export abstract class LanguageAbstract implements Language {
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
-  abstract enumValuesListAsHtml(field: EnumValuesField): string;
+  abstract enumValuesListAsHtml(field: AbstractField): string;
   abstract inheritsFromTextAsHtml(field: AbstractField): string;
   abstract lambdaAsHtml(node: Lambda): string;
   abstract listAsHtml(node: ListNode): string;

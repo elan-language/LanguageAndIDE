@@ -6,7 +6,6 @@ import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { AbstractField } from "./fields/abstract-field";
-import { EnumValuesField } from "./fields/enum-values-field";
 import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -180,7 +179,7 @@ export class LanguagePython extends LanguageAbstract {
     return `${self}${comma}${field.renderAsHtml()}`;
   }
 
-  override enumValuesListAsHtml(field: EnumValuesField): string {
+  override enumValuesListAsHtml(field: AbstractField): string {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
 
