@@ -42,6 +42,7 @@ import {
   EnumValueContext,
   ExpressionContext,
   IdentifierDefContext,
+  IdentifierListContext,
   IdentifierUseContext,
   IdentifierWithOptIndexesContext,
   IndexContext,
@@ -74,6 +75,7 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -382,5 +384,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   visitConstantValue = (ctx: ConstantValueContext) => {
     return this.visitChildren(ctx)!;
+  };
+
+  visitIdentifierList = (ctx: IdentifierListContext) => {
+    const ids = ctx.identifierDef().map((id) => this.visit(id)!);
+    const enumValues = new EnumValuesAsn(this.fieldId, this.scope);
+
+    enumValues.values = new CsvAsn(ids, this.fieldId);
+
+    return enumValues;
   };
 }
