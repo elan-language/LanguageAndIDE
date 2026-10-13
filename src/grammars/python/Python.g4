@@ -220,7 +220,6 @@ litValue:
     | litFloat
     | litString
     | enumValue
-    | litRegExp
 ;
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;

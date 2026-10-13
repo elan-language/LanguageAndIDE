@@ -213,7 +213,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   visitThisProcRef = (ctx: ThisProcRefContext) =>
-    `${this.visit(ctx.THIS_INSTANCE())}.${this.visit(ctx.methodName())}`;
+    `${kw(this.visit(ctx.THIS_INSTANCE())!)}.${this.visit(ctx.methodName())}`;
 
   visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
     `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
