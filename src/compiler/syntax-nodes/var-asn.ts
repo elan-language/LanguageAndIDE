@@ -29,7 +29,7 @@ export class VarAsn extends AbstractAstNode implements AstIndexableNode {
     public readonly id: string,
     public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
-    public readonly indices: AstCollectionNode,
+    public indices: AstCollectionNode,
     public readonly fieldId: string,
     private scope: Scope,
   ) {

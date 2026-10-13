@@ -1,6 +1,5 @@
 import { assignKeyword, toKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, expressionFieldSpec } from "../fields/abstract-field";
-import { AssignableField } from "../fields/assignableField";
+import { AbstractField, assignableFieldSpec, expressionFieldSpec } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -9,11 +8,11 @@ import { SingleLineFrame } from "../single-line-frame";
 
 export class Assignment extends SingleLineFrame implements Statement {
   isStatement = true;
-  assignable: AssignableField;
+  assignable: AbstractField;
   expr: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.assignable = new AssignableField(this);
+    this.assignable = new AbstractField(this, assignableFieldSpec);
     this.assignable.setPlaceholder("<i>variableName</i>");
     this.expr = new AbstractField(this, expressionFieldSpec);
   }

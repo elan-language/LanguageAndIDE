@@ -3850,11 +3850,11 @@ export class RefLangParser extends antlr.Parser {
       this.enterOuterAlt(localContext, 1);
       {
         this.state = 814;
-        this.term(0);
+        localContext._left = this.term(0);
         this.state = 815;
         this.binaryOperator();
         this.state = 816;
-        this.expression();
+        localContext._right = this.expression();
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -8005,14 +8005,16 @@ export class NegateLogicalContext extends antlr.ParserRuleContext {
 }
 
 export class BinaryExpressionContext extends antlr.ParserRuleContext {
+  public _left?: TermContext;
+  public _right?: ExpressionContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
-  public term(): TermContext {
-    return this.getRuleContext(0, TermContext)!;
-  }
   public binaryOperator(): BinaryOperatorContext {
     return this.getRuleContext(0, BinaryOperatorContext)!;
+  }
+  public term(): TermContext {
+    return this.getRuleContext(0, TermContext)!;
   }
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;

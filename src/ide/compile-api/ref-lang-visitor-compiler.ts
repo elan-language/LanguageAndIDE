@@ -38,6 +38,7 @@ import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import {
+  AssignableContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
   DictionaryContext,
@@ -342,5 +343,43 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
+  };
+
+  visitAssignable = (ctx: AssignableContext) => {
+    if (ctx.THIS_INSTANCE()) {
+      const thisAsn = new ThisAsn(this.fieldId, this.scope);
+      const id = ctx.identifierUse()?.getText() ?? "";
+      return new VarAsn(
+        id,
+        true,
+        thisAsn as unknown as AstQualifierNode,
+        new CsvAsn([], this.fieldId),
+        this.fieldId,
+        this.scope,
+      );
+    } else if (ctx.index()) {
+      const assignable = this.visit(ctx.assignable()!) as VarAsn;
+      const index = this.visit(ctx.index()!)!;
+      const indexArr = [];
+
+      for (const idx of assignable.indices.items) {
+        indexArr.push(idx);
+      }
+
+      indexArr.push(index);
+
+      assignable.indices = new CsvAsn(indexArr, this.fieldId);
+
+      return assignable;
+    } else {
+      return new VarAsn(
+        ctx.getText(),
+        false,
+        EmptyAsn.Instance,
+        new CsvAsn([], this.fieldId),
+        this.fieldId,
+        this.scope,
+      );
+    }
   };
 }
