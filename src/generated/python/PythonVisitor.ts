@@ -82,7 +82,6 @@ import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
 import { ListContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
-import { PowerContext } from "./PythonParser.js";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -572,10 +571,4 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPower?: (ctx: PowerContext) => Result;
 }

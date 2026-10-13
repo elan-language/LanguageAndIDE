@@ -82,7 +82,6 @@ import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
 import { ListContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
-import { PowerContext } from "./PythonParser.js";
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -889,16 +888,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   */
-  enterPower?: (ctx: PowerContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   */
-  exitPower?: (ctx: PowerContext) => void;
 
   visitTerminal(node: TerminalNode): void {}
   visitErrorNode(node: ErrorNode): void {}

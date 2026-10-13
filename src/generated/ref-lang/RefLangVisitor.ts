@@ -86,7 +86,6 @@ import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
-import { PowerContext } from "./RefLangParser.js";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -600,10 +599,4 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.power`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPower?: (ctx: PowerContext) => Result;
 }

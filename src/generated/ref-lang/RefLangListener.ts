@@ -86,7 +86,6 @@ import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
-import { PowerContext } from "./RefLangParser.js";
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -933,16 +932,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.power`.
-   * @param ctx the parse tree
-   */
-  enterPower?: (ctx: PowerContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.power`.
-   * @param ctx the parse tree
-   */
-  exitPower?: (ctx: PowerContext) => void;
 
   visitTerminal(node: TerminalNode): void {}
   visitErrorNode(node: ErrorNode): void {}

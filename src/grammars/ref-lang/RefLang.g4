@@ -286,6 +286,7 @@ binaryOperator:
     | AND
     | OR
     | MOD
+    | POWER
 ;
 
 newInstance: NEW type OPEN_BRACKET argList? CLOSE_BRACKET;
@@ -301,7 +302,4 @@ typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 lambda: LAMBDA (paramsList | argList) ARROW expression;
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
-
-power: term POWER term;
-
 // END SubNodes

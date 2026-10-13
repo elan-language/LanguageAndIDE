@@ -89,7 +89,7 @@ EQUAL: 'is';
 NOT_EQUAL: 'isnt';
 MOD: 'mod';
 ARROW: '=>';
-POWER: '**';
+POWER: '^';
 
 BINARY_PREFIX: '0b';
 HEX_PREFIX: '0x';

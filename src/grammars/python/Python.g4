@@ -1,6 +1,3 @@
-
-
-
 grammar Python;
 import Python_Lexer;
 
@@ -286,6 +283,7 @@ binaryOperator:
     | AND
     | OR
     | MOD
+    | POWER
 ;
 
 newInstance: type OPEN_BRACKET argList? CLOSE_BRACKET;
@@ -312,7 +310,5 @@ list:
 ;
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
-
-power: term POWER term;
 
 // END SubNodes
