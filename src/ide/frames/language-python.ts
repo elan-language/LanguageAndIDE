@@ -7,7 +7,6 @@ import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { AbstractField } from "./fields/abstract-field";
 import { EnumValuesField } from "./fields/enum-values-field";
-import { InheritedTypeField } from "./fields/inherited-type-field";
 import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -185,7 +184,7 @@ export class LanguagePython extends LanguageAbstract {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
 
-  inheritsFromTextAsHtml(field: InheritedTypeField): string {
+  inheritsFromTextAsHtml(field: AbstractField): string {
     let result = "";
     const frame = field.getHolder() as ClassFrame;
     if (frame.doesInherit()) {

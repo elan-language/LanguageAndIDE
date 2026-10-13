@@ -199,7 +199,7 @@ export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
   "_text",
   true,
   true,
-  (parser: PythonParser | RefLangParser) => parser.comment(), // TODO: g4 does not yet provide for inheritance
+  (parser: PythonParser | RefLangParser) => parser.typeName(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

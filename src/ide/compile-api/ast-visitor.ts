@@ -712,6 +712,22 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.inheritsFrom) {
+    const ctx = node.context;
+
+    if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
+      const type = ctx.accept(visitor);
+
+      if (type) {
+        const inheritsFrom = new InheritsFromAsn(fieldId);
+        inheritsFrom.inheritance = new CsvAsn([type], fieldId);
+        return inheritsFrom;
+      }
+    }
+    return EmptyAsn.Instance;
+  }
+
   if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.enumValues) {
     const ctx = node.context;
 
