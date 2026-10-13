@@ -28,7 +28,7 @@ import {
   NegateNumericContext,
   NewInstanceContext,
   ParamDefContext,
-  ParamsListContext,
+  ParamListContext,
   TermContext,
   TestNameContext,
   ThisInstanceContext,
@@ -83,7 +83,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
-  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+  visitParamList = (ctx: ParamListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   visitIdentifierDef = (ctx: IdentifierDefContext) => id(ctx.NAME_STARTING_LC().getText());
 
@@ -159,7 +159,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   visitLambda = (ctx: LambdaContext) => {
     const lambda = this.visit(ctx.LAMBDA()) ?? "";
     const arrow = this.visit(ctx.ARROW());
-    const params = ctx.paramsList() ? this.visit(ctx.paramsList()!) : "";
+    const params = ctx.paramList() ? this.visit(ctx.paramList()!) : "";
     return `${kw(lambda)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 

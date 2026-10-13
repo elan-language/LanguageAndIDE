@@ -179,9 +179,9 @@ export class PythonParser extends antlr.Parser {
   public static readonly RULE_constantValue = 41;
   public static readonly RULE_argList = 42;
   public static readonly RULE_argument = 43;
-  public static readonly RULE_paramsList = 44;
+  public static readonly RULE_paramList = 44;
   public static readonly RULE_type = 45;
-  public static readonly RULE_identifiersList = 46;
+  public static readonly RULE_identifierList = 46;
   public static readonly RULE_assertActual = 47;
   public static readonly RULE_litValue = 48;
   public static readonly RULE_litBoolean = 49;
@@ -515,9 +515,9 @@ export class PythonParser extends antlr.Parser {
     "constantValue",
     "argList",
     "argument",
-    "paramsList",
+    "paramList",
     "type",
-    "identifiersList",
+    "identifierList",
     "assertActual",
     "litValue",
     "litBoolean",
@@ -805,7 +805,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 209;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -952,7 +952,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 249;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -1053,7 +1053,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 280;
         this.match(PythonParser.NL);
         this.state = 281;
-        this.identifiersList();
+        this.identifierList();
         this.state = 282;
         this.match(PythonParser.NL);
         this.state = 283;
@@ -2062,7 +2062,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 492;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2157,7 +2157,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 518;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2230,7 +2230,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 540;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2302,7 +2302,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 563;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2358,7 +2358,7 @@ export class PythonParser extends antlr.Parser {
         if (_la === 98) {
           {
             this.state = 580;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2736,9 +2736,9 @@ export class PythonParser extends antlr.Parser {
     }
     return localContext;
   }
-  public paramsList(): ParamsListContext {
-    let localContext = new ParamsListContext(this.context, this.state);
-    this.enterRule(localContext, 88, PythonParser.RULE_paramsList);
+  public paramList(): ParamListContext {
+    let localContext = new ParamListContext(this.context, this.state);
+    this.enterRule(localContext, 88, PythonParser.RULE_paramList);
     let _la: number;
     try {
       this.enterOuterAlt(localContext, 1);
@@ -2822,9 +2822,9 @@ export class PythonParser extends antlr.Parser {
     }
     return localContext;
   }
-  public identifiersList(): IdentifiersListContext {
-    let localContext = new IdentifiersListContext(this.context, this.state);
-    this.enterRule(localContext, 92, PythonParser.RULE_identifiersList);
+  public identifierList(): IdentifierListContext {
+    let localContext = new IdentifierListContext(this.context, this.state);
+    this.enterRule(localContext, 92, PythonParser.RULE_identifierList);
     let _la: number;
     try {
       this.enterOuterAlt(localContext, 1);
@@ -4617,8 +4617,8 @@ export class FunctionContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -4781,8 +4781,8 @@ export class ProcedureContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -4892,8 +4892,8 @@ export class EnumContext extends antlr.ParserRuleContext {
       return this.getToken(PythonParser.NL, i);
     }
   }
-  public identifiersList(): IdentifiersListContext {
-    return this.getRuleContext(0, IdentifiersListContext)!;
+  public identifierList(): IdentifierListContext {
+    return this.getRuleContext(0, IdentifierListContext)!;
   }
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
@@ -6052,8 +6052,8 @@ export class ConstructorMemberContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6172,8 +6172,8 @@ export class FunctionMethodContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6248,8 +6248,8 @@ export class ProcedureMethodContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6327,8 +6327,8 @@ export class AbstractFunctionContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public override get ruleIndex(): number {
     return PythonParser.RULE_abstractFunction;
@@ -6395,8 +6395,8 @@ export class AbstractProcedureContext extends antlr.ParserRuleContext {
   public COMMENT(): antlr.TerminalNode {
     return this.getToken(PythonParser.COMMENT, 0)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public override get ruleIndex(): number {
     return PythonParser.RULE_abstractProcedure;
@@ -6735,7 +6735,7 @@ export class ArgumentContext extends antlr.ParserRuleContext {
   }
 }
 
-export class ParamsListContext extends antlr.ParserRuleContext {
+export class ParamListContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -6758,21 +6758,21 @@ export class ParamsListContext extends antlr.ParserRuleContext {
     }
   }
   public override get ruleIndex(): number {
-    return PythonParser.RULE_paramsList;
+    return PythonParser.RULE_paramList;
   }
   public override enterRule(listener: PythonListener): void {
-    if (listener.enterParamsList) {
-      listener.enterParamsList(this);
+    if (listener.enterParamList) {
+      listener.enterParamList(this);
     }
   }
   public override exitRule(listener: PythonListener): void {
-    if (listener.exitParamsList) {
-      listener.exitParamsList(this);
+    if (listener.exitParamList) {
+      listener.exitParamList(this);
     }
   }
   public override accept<Result>(visitor: PythonVisitor<Result>): Result | null {
-    if (visitor.visitParamsList) {
-      return visitor.visitParamsList(this);
+    if (visitor.visitParamList) {
+      return visitor.visitParamList(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -6817,7 +6817,7 @@ export class TypeContext extends antlr.ParserRuleContext {
   }
 }
 
-export class IdentifiersListContext extends antlr.ParserRuleContext {
+export class IdentifierListContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -6840,21 +6840,21 @@ export class IdentifiersListContext extends antlr.ParserRuleContext {
     }
   }
   public override get ruleIndex(): number {
-    return PythonParser.RULE_identifiersList;
+    return PythonParser.RULE_identifierList;
   }
   public override enterRule(listener: PythonListener): void {
-    if (listener.enterIdentifiersList) {
-      listener.enterIdentifiersList(this);
+    if (listener.enterIdentifierList) {
+      listener.enterIdentifierList(this);
     }
   }
   public override exitRule(listener: PythonListener): void {
-    if (listener.exitIdentifiersList) {
-      listener.exitIdentifiersList(this);
+    if (listener.exitIdentifierList) {
+      listener.exitIdentifierList(this);
     }
   }
   public override accept<Result>(visitor: PythonVisitor<Result>): Result | null {
-    if (visitor.visitIdentifiersList) {
-      return visitor.visitIdentifiersList(this);
+    if (visitor.visitIdentifierList) {
+      return visitor.visitIdentifierList(this);
     } else {
       return visitor.visitChildren(this);
     }

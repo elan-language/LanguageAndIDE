@@ -147,7 +147,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ConcreteClass) {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.inheritsFromTextAsHtml(frame.inheritance)}:`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
+      html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
@@ -159,9 +159,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramsListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TryStatement) {
@@ -172,7 +172,7 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  paramsListAsHtml(frame: MemberFrame, field: AbstractField): string {
+  paramListAsHtml(frame: MemberFrame, field: AbstractField): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     // if no params, wrap the comma to make it only appear
     // when the line (or parts of it) are selected

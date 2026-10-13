@@ -615,7 +615,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.paramsList) {
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.paramList) {
     const ctx = node.context;
 
     if (ctx) {

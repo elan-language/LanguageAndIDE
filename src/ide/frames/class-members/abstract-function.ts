@@ -7,7 +7,7 @@ import {
 import {
   AbstractField,
   methodNameFieldSpec,
-  paramsListFieldSpec,
+  paramListFieldSpec,
   typeFieldSpec,
 } from "../fields/abstract-field";
 import { singleIndent } from "../frame-helpers";
@@ -28,7 +28,7 @@ export class AbstractFunction extends SingleLineFrame {
   constructor(parent: Parent) {
     super(parent);
     this.name = new AbstractField(this, methodNameFieldSpec);
-    this.params = new AbstractField(this, paramsListFieldSpec);
+    this.params = new AbstractField(this, paramListFieldSpec);
     this.returnType = new AbstractField(this, typeFieldSpec);
     this.canHaveBreakPoint = false;
   }

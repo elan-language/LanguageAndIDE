@@ -46,9 +46,9 @@ import { TypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
-import { ParamsListContext } from "./PythonParser.js";
+import { ParamListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
-import { IdentifiersListContext } from "./PythonParser.js";
+import { IdentifierListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -529,15 +529,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitArgument?: (ctx: ArgumentContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.paramsList`.
+   * Enter a parse tree produced by `PythonParser.paramList`.
    * @param ctx the parse tree
    */
-  enterParamsList?: (ctx: ParamsListContext) => void;
+  enterParamList?: (ctx: ParamListContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.paramsList`.
+   * Exit a parse tree produced by `PythonParser.paramList`.
    * @param ctx the parse tree
    */
-  exitParamsList?: (ctx: ParamsListContext) => void;
+  exitParamList?: (ctx: ParamListContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.type`.
    * @param ctx the parse tree
@@ -549,15 +549,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitType?: (ctx: TypeContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.identifiersList`.
+   * Enter a parse tree produced by `PythonParser.identifierList`.
    * @param ctx the parse tree
    */
-  enterIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  enterIdentifierList?: (ctx: IdentifierListContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.identifiersList`.
+   * Exit a parse tree produced by `PythonParser.identifierList`.
    * @param ctx the parse tree
    */
-  exitIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  exitIdentifierList?: (ctx: IdentifierListContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree

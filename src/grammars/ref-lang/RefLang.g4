@@ -23,7 +23,7 @@ global:
 main: GHOSTED? MAIN NL ordinaryStatement* END MAIN NL;
 
 function:
-    GHOSTED? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
+    GHOSTED? FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL (
         ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement END
         FUNCTION NL
@@ -38,14 +38,14 @@ test:
 ;
 
 procedure:
-    GHOSTED? PROCEDURE methodName OPEN_BRACKET paramsList? CLOSE_BRACKET NL ordinaryStatement* END
+    GHOSTED? PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END
         PROCEDURE NL
 ;
 
 constant:
     GHOSTED? CONSTANT identifierDef SET TO constantValue NL
 ;
-enum: GHOSTED? ENUM typeName identifiersList NL;
+enum: GHOSTED? ENUM typeName identifierList NL;
 
 concreteClass:
     GHOSTED? CLASS typeName (INHERITS typeName)? NL (
@@ -139,28 +139,28 @@ catchStatement: GHOSTED? CATCH identifierDef AS typeName NL;
 
 // Members
 constructorMember:
-    GHOSTED? CONSTRUCTOR OPEN_BRACKET paramsList? CLOSE_BRACKET NL ordinaryStatement* END
+    GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END
         CONSTRUCTOR NL
 ;
 
 property: GHOSTED? PRIVATE? PROPERTY identifierDef AS type NL;
 
 functionMethod:
-    GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
+    GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL (
         ordinaryStatement
     )* returnStatement END FUNCTION NL
 ;
 
 procedureMethod:
-    GHOSTED? PRIVATE? PROCEDURE methodName OPEN_BRACKET paramsList? CLOSE_BRACKET NL
+    GHOSTED? PRIVATE? PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL
         ordinaryStatement* END PROCEDURE NL
 ;
 
 abstractFunction:
-    GHOSTED? ABSTRACT FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL
+    GHOSTED? ABSTRACT FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL
 ;
 abstractProcedure:
-    GHOSTED? ABSTRACT PROCEDURE methodName OPEN_BRACKET paramsList? CLOSE_BRACKET NL
+    GHOSTED? ABSTRACT PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL
 ;
 // END Frames
 
@@ -192,8 +192,8 @@ constantValue:
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
-paramsList: paramDef (COMMA paramDef)*;
-identifiersList: identifierDef (COMMA identifierDef)+;
+paramList: paramDef (COMMA paramDef)*;
+identifierList: identifierDef (COMMA identifierDef)+;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
@@ -295,7 +295,7 @@ typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
 
 typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 
-lambda: LAMBDA (paramsList | argList) ARROW expression;
+lambda: LAMBDA (paramList | argList) ARROW expression;
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
 // END SubNodes

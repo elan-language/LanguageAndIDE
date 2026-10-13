@@ -7,7 +7,7 @@ import {
 import {
   AbstractField,
   methodNameFieldSpec,
-  paramsListFieldSpec,
+  paramListFieldSpec,
   typeFieldSpec,
 } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -28,7 +28,7 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
   constructor(parent: Parent) {
     super(parent);
     this.name = new AbstractField(this, methodNameFieldSpec);
-    this.params = new AbstractField(this, paramsListFieldSpec);
+    this.params = new AbstractField(this, paramListFieldSpec);
     this.returnType = new AbstractField(this, typeFieldSpec);
     this.getChildren().push(new ReturnStatement(this));
   }
