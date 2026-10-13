@@ -51,8 +51,8 @@ public class RefLangParser extends Parser {
 		RULE_functionMethod = 33, RULE_procedureMethod = 34, RULE_abstractFunction = 35, 
 		RULE_abstractProcedure = 36, RULE_identifierDef = 37, RULE_identifierUse = 38, 
 		RULE_assignable = 39, RULE_methodName = 40, RULE_testName = 41, RULE_typeName = 42, 
-		RULE_constantValue = 43, RULE_argList = 44, RULE_argument = 45, RULE_paramsList = 46, 
-		RULE_identifiersList = 47, RULE_type = 48, RULE_assertActual = 49, RULE_litValue = 50, 
+		RULE_constantValue = 43, RULE_argList = 44, RULE_argument = 45, RULE_paramList = 46, 
+		RULE_identifierList = 47, RULE_type = 48, RULE_assertActual = 49, RULE_litValue = 50, 
 		RULE_litBoolean = 51, RULE_litInt = 52, RULE_litFloat = 53, RULE_litString = 54, 
 		RULE_enumValue = 55, RULE_litRegExp = 56, RULE_index = 57, RULE_identifierWithOptIndexes = 58, 
 		RULE_expression = 59, RULE_term = 60, RULE_chainable = 61, RULE_thisInstance = 62, 
@@ -73,13 +73,13 @@ public class RefLangParser extends Parser {
 			"property", "functionMethod", "procedureMethod", "abstractFunction", 
 			"abstractProcedure", "identifierDef", "identifierUse", "assignable", 
 			"methodName", "testName", "typeName", "constantValue", "argList", "argument", 
-			"paramsList", "identifiersList", "type", "assertActual", "litValue", 
-			"litBoolean", "litInt", "litFloat", "litString", "enumValue", "litRegExp", 
-			"index", "identifierWithOptIndexes", "expression", "term", "chainable", 
-			"thisInstance", "bracketedExpression", "unaryExpression", "negateNumeric", 
-			"negateLogical", "binaryExpression", "list", "expressionList", "tuple", 
-			"dictionary", "kvpList", "kvp", "methodCall", "binaryOperator", "newInstance", 
-			"paramDef", "typeGeneric", "typeFunc", "typeTuple", "lambda", "interpolatedString"
+			"paramList", "identifierList", "type", "assertActual", "litValue", "litBoolean", 
+			"litInt", "litFloat", "litString", "enumValue", "litRegExp", "index", 
+			"identifierWithOptIndexes", "expression", "term", "chainable", "thisInstance", 
+			"bracketedExpression", "unaryExpression", "negateNumeric", "negateLogical", 
+			"binaryExpression", "list", "expressionList", "tuple", "dictionary", 
+			"kvpList", "kvp", "methodCall", "binaryOperator", "newInstance", "paramDef", 
+			"typeGeneric", "typeFunc", "typeTuple", "lambda", "interpolatedString"
 		};
 	}
 	public static final String[] ruleNames = makeRuleNames();
@@ -485,8 +485,8 @@ public class RefLangParser extends Parser {
 		}
 		public TerminalNode END() { return getToken(RefLangParser.END, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public List<OrdinaryStatementContext> ordinaryStatement() {
 			return getRuleContexts(OrdinaryStatementContext.class);
@@ -529,7 +529,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(215);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -706,8 +706,8 @@ public class RefLangParser extends Parser {
 		}
 		public TerminalNode END() { return getToken(RefLangParser.END, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public List<OrdinaryStatementContext> ordinaryStatement() {
 			return getRuleContexts(OrdinaryStatementContext.class);
@@ -750,7 +750,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(257);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -858,8 +858,8 @@ public class RefLangParser extends Parser {
 		public TypeNameContext typeName() {
 			return getRuleContext(TypeNameContext.class,0);
 		}
-		public IdentifiersListContext identifiersList() {
-			return getRuleContext(IdentifiersListContext.class,0);
+		public IdentifierListContext identifierList() {
+			return getRuleContext(IdentifierListContext.class,0);
 		}
 		public TerminalNode NL() { return getToken(RefLangParser.NL, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
@@ -891,7 +891,7 @@ public class RefLangParser extends Parser {
 			setState(286);
 			typeName();
 			setState(287);
-			identifiersList();
+			identifierList();
 			setState(288);
 			match(NL);
 			}
@@ -2597,8 +2597,8 @@ public class RefLangParser extends Parser {
 		}
 		public TerminalNode END() { return getToken(RefLangParser.END, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public List<OrdinaryStatementContext> ordinaryStatement() {
 			return getRuleContexts(OrdinaryStatementContext.class);
@@ -2639,7 +2639,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(549);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -2774,8 +2774,8 @@ public class RefLangParser extends Parser {
 		public TerminalNode END() { return getToken(RefLangParser.END, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
 		public TerminalNode PRIVATE() { return getToken(RefLangParser.PRIVATE, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public List<OrdinaryStatementContext> ordinaryStatement() {
 			return getRuleContexts(OrdinaryStatementContext.class);
@@ -2828,7 +2828,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(585);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -2893,8 +2893,8 @@ public class RefLangParser extends Parser {
 		public TerminalNode END() { return getToken(RefLangParser.END, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
 		public TerminalNode PRIVATE() { return getToken(RefLangParser.PRIVATE, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public List<OrdinaryStatementContext> ordinaryStatement() {
 			return getRuleContexts(OrdinaryStatementContext.class);
@@ -2947,7 +2947,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(612);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -3003,8 +3003,8 @@ public class RefLangParser extends Parser {
 		}
 		public TerminalNode NL() { return getToken(RefLangParser.NL, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public AbstractFunctionContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3043,7 +3043,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(634);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -3079,8 +3079,8 @@ public class RefLangParser extends Parser {
 		public TerminalNode CLOSE_BRACKET() { return getToken(RefLangParser.CLOSE_BRACKET, 0); }
 		public TerminalNode NL() { return getToken(RefLangParser.NL, 0); }
 		public TerminalNode GHOSTED() { return getToken(RefLangParser.GHOSTED, 0); }
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public AbstractProcedureContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
@@ -3119,7 +3119,7 @@ public class RefLangParser extends Parser {
 			if (_la==NAME_STARTING_LC) {
 				{
 				setState(649);
-				paramsList();
+				paramList();
 				}
 			}
 
@@ -3599,7 +3599,7 @@ public class RefLangParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class ParamsListContext extends ParserRuleContext {
+	public static class ParamListContext extends ParserRuleContext {
 		public List<ParamDefContext> paramDef() {
 			return getRuleContexts(ParamDefContext.class);
 		}
@@ -3610,15 +3610,15 @@ public class RefLangParser extends Parser {
 		public TerminalNode COMMA(int i) {
 			return getToken(RefLangParser.COMMA, i);
 		}
-		public ParamsListContext(ParserRuleContext parent, int invokingState) {
+		public ParamListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_paramsList; }
+		@Override public int getRuleIndex() { return RULE_paramList; }
 	}
 
-	public final ParamsListContext paramsList() throws RecognitionException {
-		ParamsListContext _localctx = new ParamsListContext(_ctx, getState());
-		enterRule(_localctx, 92, RULE_paramsList);
+	public final ParamListContext paramList() throws RecognitionException {
+		ParamListContext _localctx = new ParamListContext(_ctx, getState());
+		enterRule(_localctx, 92, RULE_paramList);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -3655,7 +3655,7 @@ public class RefLangParser extends Parser {
 	}
 
 	@SuppressWarnings("CheckReturnValue")
-	public static class IdentifiersListContext extends ParserRuleContext {
+	public static class IdentifierListContext extends ParserRuleContext {
 		public List<IdentifierDefContext> identifierDef() {
 			return getRuleContexts(IdentifierDefContext.class);
 		}
@@ -3666,15 +3666,15 @@ public class RefLangParser extends Parser {
 		public TerminalNode COMMA(int i) {
 			return getToken(RefLangParser.COMMA, i);
 		}
-		public IdentifiersListContext(ParserRuleContext parent, int invokingState) {
+		public IdentifierListContext(ParserRuleContext parent, int invokingState) {
 			super(parent, invokingState);
 		}
-		@Override public int getRuleIndex() { return RULE_identifiersList; }
+		@Override public int getRuleIndex() { return RULE_identifierList; }
 	}
 
-	public final IdentifiersListContext identifiersList() throws RecognitionException {
-		IdentifiersListContext _localctx = new IdentifiersListContext(_ctx, getState());
-		enterRule(_localctx, 94, RULE_identifiersList);
+	public final IdentifierListContext identifierList() throws RecognitionException {
+		IdentifierListContext _localctx = new IdentifierListContext(_ctx, getState());
+		enterRule(_localctx, 94, RULE_identifierList);
 		int _la;
 		try {
 			enterOuterAlt(_localctx, 1);
@@ -5445,8 +5445,8 @@ public class RefLangParser extends Parser {
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
-		public ParamsListContext paramsList() {
-			return getRuleContext(ParamsListContext.class,0);
+		public ParamListContext paramList() {
+			return getRuleContext(ParamListContext.class,0);
 		}
 		public ArgListContext argList() {
 			return getRuleContext(ArgListContext.class,0);
@@ -5471,7 +5471,7 @@ public class RefLangParser extends Parser {
 			case 1:
 				{
 				setState(908);
-				paramsList();
+				paramList();
 				}
 				break;
 			case 2:

@@ -46,9 +46,9 @@ import { TypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
-import { ParamsListContext } from "./PythonParser.js";
+import { ParamListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
-import { IdentifiersListContext } from "./PythonParser.js";
+import { IdentifierListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -356,11 +356,11 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitArgument?: (ctx: ArgumentContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.paramsList`.
+   * Visit a parse tree produced by `PythonParser.paramList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitParamsList?: (ctx: ParamsListContext) => Result;
+  visitParamList?: (ctx: ParamListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.type`.
    * @param ctx the parse tree
@@ -368,11 +368,11 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitType?: (ctx: TypeContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.identifiersList`.
+   * Visit a parse tree produced by `PythonParser.identifierList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitIdentifiersList?: (ctx: IdentifiersListContext) => Result;
+  visitIdentifierList?: (ctx: IdentifierListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree

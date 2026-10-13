@@ -182,8 +182,8 @@ export class RefLangParser extends antlr.Parser {
   public static readonly RULE_constantValue = 43;
   public static readonly RULE_argList = 44;
   public static readonly RULE_argument = 45;
-  public static readonly RULE_paramsList = 46;
-  public static readonly RULE_identifiersList = 47;
+  public static readonly RULE_paramList = 46;
+  public static readonly RULE_identifierList = 47;
   public static readonly RULE_type = 48;
   public static readonly RULE_assertActual = 49;
   public static readonly RULE_litValue = 50;
@@ -523,8 +523,8 @@ export class RefLangParser extends antlr.Parser {
     "constantValue",
     "argList",
     "argument",
-    "paramsList",
-    "identifiersList",
+    "paramList",
+    "identifierList",
     "type",
     "assertActual",
     "litValue",
@@ -832,7 +832,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 215;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -988,7 +988,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 257;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -1099,7 +1099,7 @@ export class RefLangParser extends antlr.Parser {
         this.state = 286;
         this.typeName();
         this.state = 287;
-        this.identifiersList();
+        this.identifierList();
         this.state = 288;
         this.match(RefLangParser.NL);
       }
@@ -2317,7 +2317,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 549;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2453,7 +2453,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 585;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2545,7 +2545,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 612;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2623,7 +2623,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 634;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -2679,7 +2679,7 @@ export class RefLangParser extends antlr.Parser {
         if (_la === 99) {
           {
             this.state = 649;
-            this.paramsList();
+            this.paramList();
           }
         }
 
@@ -3046,9 +3046,9 @@ export class RefLangParser extends antlr.Parser {
     }
     return localContext;
   }
-  public paramsList(): ParamsListContext {
-    let localContext = new ParamsListContext(this.context, this.state);
-    this.enterRule(localContext, 92, RefLangParser.RULE_paramsList);
+  public paramList(): ParamListContext {
+    let localContext = new ParamListContext(this.context, this.state);
+    this.enterRule(localContext, 92, RefLangParser.RULE_paramList);
     let _la: number;
     try {
       this.enterOuterAlt(localContext, 1);
@@ -3084,9 +3084,9 @@ export class RefLangParser extends antlr.Parser {
     }
     return localContext;
   }
-  public identifiersList(): IdentifiersListContext {
-    let localContext = new IdentifiersListContext(this.context, this.state);
-    this.enterRule(localContext, 94, RefLangParser.RULE_identifiersList);
+  public identifierList(): IdentifierListContext {
+    let localContext = new IdentifierListContext(this.context, this.state);
+    this.enterRule(localContext, 94, RefLangParser.RULE_identifierList);
     let _la: number;
     try {
       this.enterOuterAlt(localContext, 1);
@@ -4337,7 +4337,7 @@ export class RefLangParser extends antlr.Parser {
           case 1:
             {
               this.state = 908;
-              this.paramsList();
+              this.paramList();
             }
             break;
           case 2:
@@ -4967,8 +4967,8 @@ export class FunctionContext extends antlr.ParserRuleContext {
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -5122,8 +5122,8 @@ export class ProcedureContext extends antlr.ParserRuleContext {
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -5215,8 +5215,8 @@ export class EnumContext extends antlr.ParserRuleContext {
   public typeName(): TypeNameContext {
     return this.getRuleContext(0, TypeNameContext)!;
   }
-  public identifiersList(): IdentifiersListContext {
-    return this.getRuleContext(0, IdentifiersListContext)!;
+  public identifierList(): IdentifierListContext {
+    return this.getRuleContext(0, IdentifierListContext)!;
   }
   public NL(): antlr.TerminalNode {
     return this.getToken(RefLangParser.NL, 0)!;
@@ -6499,8 +6499,8 @@ export class ConstructorMemberContext extends antlr.ParserRuleContext {
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6631,8 +6631,8 @@ export class FunctionMethodContext extends antlr.ParserRuleContext {
   public PRIVATE(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.PRIVATE, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6707,8 +6707,8 @@ export class ProcedureMethodContext extends antlr.ParserRuleContext {
   public PRIVATE(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.PRIVATE, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public ordinaryStatement(): OrdinaryStatementContext[];
   public ordinaryStatement(i: number): OrdinaryStatementContext | null;
@@ -6774,8 +6774,8 @@ export class AbstractFunctionContext extends antlr.ParserRuleContext {
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public override get ruleIndex(): number {
     return RefLangParser.RULE_abstractFunction;
@@ -6824,8 +6824,8 @@ export class AbstractProcedureContext extends antlr.ParserRuleContext {
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public override get ruleIndex(): number {
     return RefLangParser.RULE_abstractProcedure;
@@ -7164,7 +7164,7 @@ export class ArgumentContext extends antlr.ParserRuleContext {
   }
 }
 
-export class ParamsListContext extends antlr.ParserRuleContext {
+export class ParamListContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -7187,28 +7187,28 @@ export class ParamsListContext extends antlr.ParserRuleContext {
     }
   }
   public override get ruleIndex(): number {
-    return RefLangParser.RULE_paramsList;
+    return RefLangParser.RULE_paramList;
   }
   public override enterRule(listener: RefLangListener): void {
-    if (listener.enterParamsList) {
-      listener.enterParamsList(this);
+    if (listener.enterParamList) {
+      listener.enterParamList(this);
     }
   }
   public override exitRule(listener: RefLangListener): void {
-    if (listener.exitParamsList) {
-      listener.exitParamsList(this);
+    if (listener.exitParamList) {
+      listener.exitParamList(this);
     }
   }
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitParamsList) {
-      return visitor.visitParamsList(this);
+    if (visitor.visitParamList) {
+      return visitor.visitParamList(this);
     } else {
       return visitor.visitChildren(this);
     }
   }
 }
 
-export class IdentifiersListContext extends antlr.ParserRuleContext {
+export class IdentifierListContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -7231,21 +7231,21 @@ export class IdentifiersListContext extends antlr.ParserRuleContext {
     }
   }
   public override get ruleIndex(): number {
-    return RefLangParser.RULE_identifiersList;
+    return RefLangParser.RULE_identifierList;
   }
   public override enterRule(listener: RefLangListener): void {
-    if (listener.enterIdentifiersList) {
-      listener.enterIdentifiersList(this);
+    if (listener.enterIdentifierList) {
+      listener.enterIdentifierList(this);
     }
   }
   public override exitRule(listener: RefLangListener): void {
-    if (listener.exitIdentifiersList) {
-      listener.exitIdentifiersList(this);
+    if (listener.exitIdentifierList) {
+      listener.exitIdentifierList(this);
     }
   }
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitIdentifiersList) {
-      return visitor.visitIdentifiersList(this);
+    if (visitor.visitIdentifierList) {
+      return visitor.visitIdentifierList(this);
     } else {
       return visitor.visitChildren(this);
     }
@@ -8575,8 +8575,8 @@ export class LambdaContext extends antlr.ParserRuleContext {
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;
   }
-  public paramsList(): ParamsListContext | null {
-    return this.getRuleContext(0, ParamsListContext);
+  public paramList(): ParamListContext | null {
+    return this.getRuleContext(0, ParamListContext);
   }
   public argList(): ArgListContext | null {
     return this.getRuleContext(0, ArgListContext);

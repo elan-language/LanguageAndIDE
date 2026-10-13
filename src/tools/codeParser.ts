@@ -8,7 +8,7 @@ import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import {
   AbstractField,
   expressionFieldSpec,
-  paramsListFieldSpec,
+  paramListFieldSpec,
   typeFieldSpec,
 } from "../ide/frames/fields/abstract-field";
 import { FileImpl } from "../ide/frames/file-impl";
@@ -249,7 +249,7 @@ function ParameterParserAndRender(
   file: FileImpl,
 ): [AbstractField, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
-  const pp = new AbstractField(gf, paramsListFieldSpec);
+  const pp = new AbstractField(gf, paramListFieldSpec);
 
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }

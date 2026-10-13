@@ -48,8 +48,8 @@ import { TypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
-import { ParamsListContext } from "./RefLangParser.js";
-import { IdentifiersListContext } from "./RefLangParser.js";
+import { ParamListContext } from "./RefLangParser.js";
+import { IdentifierListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
@@ -552,25 +552,25 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitArgument?: (ctx: ArgumentContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.paramsList`.
+   * Enter a parse tree produced by `RefLangParser.paramList`.
    * @param ctx the parse tree
    */
-  enterParamsList?: (ctx: ParamsListContext) => void;
+  enterParamList?: (ctx: ParamListContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.paramsList`.
+   * Exit a parse tree produced by `RefLangParser.paramList`.
    * @param ctx the parse tree
    */
-  exitParamsList?: (ctx: ParamsListContext) => void;
+  exitParamList?: (ctx: ParamListContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.identifiersList`.
+   * Enter a parse tree produced by `RefLangParser.identifierList`.
    * @param ctx the parse tree
    */
-  enterIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  enterIdentifierList?: (ctx: IdentifierListContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.identifiersList`.
+   * Exit a parse tree produced by `RefLangParser.identifierList`.
    * @param ctx the parse tree
    */
-  exitIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  exitIdentifierList?: (ctx: IdentifierListContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree

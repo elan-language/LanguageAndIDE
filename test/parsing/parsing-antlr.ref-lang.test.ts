@@ -800,18 +800,18 @@ suite("Parsing Antlr Rules RefLang", () => {
   });
 
   test("Param List", () => {
-    const paramsList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+    const paramList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
-      (p: Parser) => p.paramsList(),
+      (p: Parser) => p.paramList(),
     ];
-    testAntlrParse(paramsList, `a as String`, true);
-    testAntlrParse(paramsList, `a as String, bb as Int, foo as Bar`, true);
+    testAntlrParse(paramList, `a as String`, true);
+    testAntlrParse(paramList, `a as String, bb as Int, foo as Bar`, true);
 
-    testAntlrParse(paramsList, `a as String,`, false);
-    testAntlrParse(paramsList, `a as String, bb as`, false);
-    testAntlrParse(paramsList, `a`, false, "");
-    testAntlrParse(paramsList, `A as string`, false);
-    testAntlrParse(paramsList, ``, false);
+    testAntlrParse(paramList, `a as String,`, false);
+    testAntlrParse(paramList, `a as String, bb as`, false);
+    testAntlrParse(paramList, `a`, false, "");
+    testAntlrParse(paramList, `A as string`, false);
+    testAntlrParse(paramList, ``, false);
   });
 
   test("New Instance", () => {

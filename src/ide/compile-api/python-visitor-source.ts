@@ -13,7 +13,7 @@ import {
   MethodCallContext,
   MethodNameContext,
   ParamDefContext,
-  ParamsListContext,
+  ParamListContext,
   TestNameContext,
   TypeContext,
   TypeFuncContext,
@@ -54,7 +54,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
-  visitParamsList = (ctx: ParamsListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+  visitParamsList = (ctx: ParamListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   visitIdentifierDef = (ctx: IdentifierDefContext) => ctx.NAME_STARTING_LC().getText();
 

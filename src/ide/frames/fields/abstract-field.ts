@@ -48,7 +48,7 @@ export enum FieldType {
   inheritsFrom,
   methodName,
   procRef,
-  paramsList,
+  paramList,
   testName,
   type,
   typeName,
@@ -108,14 +108,14 @@ export const inputArgListFieldSpec: FieldSpec = new FieldSpec(
   "",
 );
 
-export const paramsListFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.paramsList,
+export const paramListFieldSpec: FieldSpec = new FieldSpec(
+  FieldType.paramList,
   "<i>parameter definitions</i>",
   "ParamListField",
   "_params",
   true,
   true,
-  (parser: PythonParser | RefLangParser) => parser.paramsList(),
+  (parser: PythonParser | RefLangParser) => parser.paramList(),
   (source: CodeSource) => source.readToNonMatchingCloseBracket(),
   "",
 );
@@ -235,7 +235,7 @@ export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   "_enumVals",
   false,
   false,
-  (parser: PythonParser | RefLangParser) => parser.identifiersList(),
+  (parser: PythonParser | RefLangParser) => parser.identifierList(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

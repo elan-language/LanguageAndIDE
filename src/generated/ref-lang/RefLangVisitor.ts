@@ -48,8 +48,8 @@ import { TypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
-import { ParamsListContext } from "./RefLangParser.js";
-import { IdentifiersListContext } from "./RefLangParser.js";
+import { ParamListContext } from "./RefLangParser.js";
+import { IdentifierListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
@@ -371,17 +371,17 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitArgument?: (ctx: ArgumentContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.paramsList`.
+   * Visit a parse tree produced by `RefLangParser.paramList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitParamsList?: (ctx: ParamsListContext) => Result;
+  visitParamList?: (ctx: ParamListContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.identifiersList`.
+   * Visit a parse tree produced by `RefLangParser.identifierList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitIdentifiersList?: (ctx: IdentifiersListContext) => Result;
+  visitIdentifierList?: (ctx: IdentifierListContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree

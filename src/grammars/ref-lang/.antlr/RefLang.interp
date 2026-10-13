@@ -301,8 +301,8 @@ typeName
 constantValue
 argList
 argument
-paramsList
-identifiersList
+paramList
+identifierList
 type
 assertActual
 litValue

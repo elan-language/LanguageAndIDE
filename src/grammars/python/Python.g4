@@ -23,7 +23,7 @@ main:
 ;
 
 function:
-    DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON FUNCTION_ANNOTATION NL (
+    DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON FUNCTION_ANNOTATION NL (
         ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
         COMMENT NL
@@ -38,7 +38,7 @@ test:
 ;
 
 procedure:
-    DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW NONE COLON PROCECDURE_ANNOTATION NL
+    DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON PROCECDURE_ANNOTATION NL
         ordinaryStatement* COMMENT NL
 ;
 
@@ -47,7 +47,7 @@ constant:
 ;
 
 enum:
-    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifiersList NL
+    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifierList NL
         COMMENT
 ;
 
@@ -144,29 +144,29 @@ catchStatement: EXCEPT typeName AS identifierDef NL;
 // Members
 constructorMember:
     // `DEF __init__(paramsList) -> None:`;
-    DEF INIT OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* COMMENT
+    DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* COMMENT
         NL
 ;
 
 property: identifierDef COLON type PROPERTY_ANNOTATION NL;
 
 functionMethod:
-    DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON
+    DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
         FUNCTION_METHOD_ANNOTATION NL (ordinaryStatement)* returnStatement COMMENT NL
 ;
 
 procedureMethod:
-    DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW NONE COLON
+    DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
         PROCEDURE_METHOD_ANNOTATION NL ordinaryStatement* COMMENT NL
 ;
 
 abstractFunction:
-    ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW type COLON NL
+    ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON NL
         PASS COMMENT NL
 ;
 
 abstractProcedure:
-    ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramsList? CLOSE_BRACKET ARROW NONE COLON NL
+    ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL
         PASS COMMENT NL
 ;
 // END Frames
@@ -200,11 +200,11 @@ constantValue:
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
-paramsList: paramDef (COMMA paramDef)*;
+paramList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-identifiersList: identifierDef (COMMA identifierDef)+;
+identifierList: identifierDef (COMMA identifierDef)+;
 
 assertActual: expression;
 // END Fields
