@@ -898,14 +898,14 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(tuple, `(a,b)`, true, "(a,b)");
     testAntlrParse(tuple, `(`, false);
     testAntlrParse(tuple, `(3`, false);
-    testAntlrParse(tuple, `(3)`, false);
+    testAntlrParse(tuple, `(3)`, true);
     testAntlrParse(tuple, `()`, false);
     testAntlrParse(tuple, `("foo", 3)`, true, '("foo", 3)');
     testAntlrParse(tuple, `(foo, 3, bar(a), x)`, true, "(foo, 3, bar(a), x)");
     testAntlrParse(tuple, `(foo, 3, bar(a), x`, false);
     testAntlrParse(tuple, `(`, false);
     testAntlrParse(tuple, `()`, false);
-    testAntlrParse(tuple, `(foo)`, false);
+    testAntlrParse(tuple, `(foo)`, true);
     testAntlrParse(tuple, `foo, bar`, false);
     testAntlrParse(
       tuple,

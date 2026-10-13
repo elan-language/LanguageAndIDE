@@ -258,11 +258,7 @@ list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
 
 expressionList: expression (COMMA expression)*;
 
-tuple: OPEN_BRACKET tupleElementList CLOSE_BRACKET;
-
-tupleElementList:
-    expression (COMMA expression)+
-; // min 2 elements
+tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 
 dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
 
