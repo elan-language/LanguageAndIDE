@@ -295,7 +295,7 @@ typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
 
 typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 
-lambda: LAMBDA (paramList | argList) ARROW expression;
+lambda: LAMBDA paramList ARROW expression; // TODO should change to identiferList
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
 // END SubNodes
