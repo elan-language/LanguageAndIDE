@@ -304,10 +304,10 @@ export const constantValueFieldSpec: FieldSpec = new FieldSpec(
   FieldType.constantValue,
   "<i>literal</i>",
   "ConstantValueField",
-  "",
+  "_text",
   false,
   false,
-  (parser: PythonParser | RefLangParser) => parser.assignable(),
+  (parser: PythonParser | RefLangParser) => parser.constantValue(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

@@ -3,7 +3,6 @@ import assert from "assert";
 import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
 import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
-import { ConstantValueField } from "../../src/ide/frames/fields/constant-value-field";
 import { InheritedTypeField } from "../../src/ide/frames/fields/inherited-type-field";
 import { TypeNameField } from "../../src/ide/frames/fields/type-name-field";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
@@ -68,7 +67,7 @@ suite("Editing Frames", () => {
     assert.equal(ident2.isSelected(), true);
     ident2.processKey(enter());
     assert.equal(ident2.isSelected(), false);
-    const text3 = file.getById("elan_text3") as ConstantValueField;
+    const text3 = file.getById("elan_text3") as AbstractField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
@@ -95,7 +94,7 @@ suite("Editing Frames", () => {
     const file = oneConstant();
     const c = file.getById("elan_const1") as ConstantGlobal;
     const ident2 = file.getById("elan_ident2") as AbstractField;
-    const text3 = file.getById("elan_text3") as ConstantValueField;
+    const text3 = file.getById("elan_text3") as AbstractField;
     c.select(true, false);
     assert.equal(c.isSelected(), true);
     c.processKey(tab());

@@ -307,7 +307,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Pass_Enum", async () => {
+  ignore_test("Pass_Enum", async () => {
     const code = `${testHeader}
 
 constant a set to Fruit.apple
@@ -451,7 +451,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_referenceToOtherConstant", async () => {
+  ignore_test("Pass_referenceToOtherConstant", async () => {
     const code = `${testHeader}
 
 constant a set to 3

@@ -682,6 +682,16 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
+  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.constantValue) {
+    const ctx = node.context;
+
+    if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
+      return ctx.accept(visitor)!;
+    }
+    return EmptyAsn.Instance;
+  }
+
   if (node instanceof BracketedExpression) {
     return new BracketedAsn(transform(node.expr, fieldId, scope)!, fieldId);
   }
