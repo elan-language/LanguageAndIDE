@@ -12,9 +12,9 @@ import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CommentFrame } from "../comment-frame";
+import { AbstractField, typeNameFieldSpec } from "../fields/abstract-field";
 import { InheritedTypeField } from "../fields/inherited-type-field";
 import { Regexes } from "../fields/regexes";
-import { TypeNameField } from "../fields/type-name-field";
 import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
@@ -58,14 +58,14 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   isConcrete: boolean = false;
   isRecord: boolean = false;
   isInterface: boolean = false;
-  public name: TypeNameField;
+  public name: AbstractField;
   public isNotInheritable = false;
   public inheritance: InheritedTypeField;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File) {
     super(parent);
-    this.name = new TypeNameField(this);
+    this.name = new AbstractField(this, typeNameFieldSpec);
     this.inheritance = new InheritedTypeField(this);
     this.getChildren().push(new MemberSelector(this));
     this.canHaveBreakPoint = false;
