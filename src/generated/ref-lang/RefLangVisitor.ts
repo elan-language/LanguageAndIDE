@@ -15,20 +15,21 @@ import { AbstractClassContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
 import { CommentTextContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
-import { IfStatementContext } from "./RefLangParser.js";
-import { WhileLoopContext } from "./RefLangParser.js";
-import { ForLoopContext } from "./RefLangParser.js";
-import { TryStatementContext } from "./RefLangParser.js";
-import { AssertContext } from "./RefLangParser.js";
 import { PrintContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
 import { InputStatementContext } from "./RefLangParser.js";
+import { IfStatementContext } from "./RefLangParser.js";
+import { WhileLoopContext } from "./RefLangParser.js";
+import { ForLoopContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
 import { ProcRefContext } from "./RefLangParser.js";
 import { ThisProcRefContext } from "./RefLangParser.js";
 import { InstanceProcRefContext } from "./RefLangParser.js";
+import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
+import { TryStatementContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
+import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
 import { ElseIfClauseContext } from "./RefLangParser.js";
 import { ElseClauseContext } from "./RefLangParser.js";
@@ -50,6 +51,7 @@ import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
 import { ParamListContext } from "./RefLangParser.js";
 import { IdentifierListContext } from "./RefLangParser.js";
+import { ExpressionListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
@@ -60,7 +62,6 @@ import { LitStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
-import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
@@ -71,7 +72,6 @@ import { NegateNumericContext } from "./RefLangParser.js";
 import { NegateLogicalContext } from "./RefLangParser.js";
 import { BinaryExpressionContext } from "./RefLangParser.js";
 import { ListContext } from "./RefLangParser.js";
-import { ExpressionListContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
 import { DictionaryContext } from "./RefLangParser.js";
 import { KvpListContext } from "./RefLangParser.js";
@@ -173,36 +173,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.ifStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIfStatement?: (ctx: IfStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.whileLoop`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitWhileLoop?: (ctx: WhileLoopContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.forLoop`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitForLoop?: (ctx: ForLoopContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.tryStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitTryStatement?: (ctx: TryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.assert`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitAssert?: (ctx: AssertContext) => Result;
-  /**
    * Visit a parse tree produced by `RefLangParser.print`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -226,6 +196,24 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitInputStatement?: (ctx: InputStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.ifStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfStatement?: (ctx: IfStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.whileLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitWhileLoop?: (ctx: WhileLoopContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.forLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitForLoop?: (ctx: ForLoopContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.procedureCall`.
    * @param ctx the parse tree
@@ -251,11 +239,29 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.identifierWithOptIndexes`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.tryStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryStatement?: (ctx: TryStatementContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitThrowStatement?: (ctx: ThrowStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assert`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssert?: (ctx: AssertContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.returnStatement`.
    * @param ctx the parse tree
@@ -383,6 +389,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIdentifierList?: (ctx: IdentifierListContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.expressionList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -443,12 +455,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIndex?: (ctx: IndexContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
-  /**
    * Visit a parse tree produced by `RefLangParser.expression`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -508,12 +514,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitList?: (ctx: ListContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.expressionList`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitExpressionList?: (ctx: ExpressionListContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.tuple`.
    * @param ctx the parse tree

@@ -1,10 +1,6 @@
-
-
-
 grammar RefLang;
 import RefLang_Lexer;
 
-// START Elan2_Frames
 file: comment? global* NL* EOF;
 
 // Globals
@@ -87,6 +83,15 @@ ordinaryStatement:
     | comment
 ;
 
+print: GHOSTED? PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
+variableDefinition:
+    GHOSTED? VARIABLE identifierDef SET TO expression NL
+;
+assignment: GHOSTED? ASSIGN assignable TO expression NL;
+inputStatement:
+    GHOSTED? INPUT identifierDef SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
+;
+
 ifStatement:
     GHOSTED? IF expression THEN NL (
         elseIfClause
@@ -103,35 +108,29 @@ forLoop:
     GHOSTED? FOR identifierDef IN expression NL ordinaryStatement* END FOR NL
 ;
 
-tryStatement:
-    GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
-;
-
-assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
-print: GHOSTED? PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
-variableDefinition:
-    GHOSTED? VARIABLE identifierDef SET TO expression NL
-;
-assignment: GHOSTED? ASSIGN assignable TO expression NL;
-inputStatement:
-    GHOSTED? INPUT identifierDef SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
-;
-
 //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall. Then delete following three rules
 procedureCall:   
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-procRef: 
-    methodName
-    | thisProcRef
-    | instanceProcRef
-;
-thisProcRef: THIS_INSTANCE DOT methodName;
-instanceProcRef: identifierWithOptIndexes DOT methodName;
 
+    procRef: 
+        methodName
+        | thisProcRef
+        | instanceProcRef
+    ;
+    thisProcRef: THIS_INSTANCE DOT methodName;
+    instanceProcRef: identifierWithOptIndexes DOT methodName;
+    identifierWithOptIndexes: identifierUse index*;
+
+tryStatement:
+    GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
+;
 throwStatement:
     GHOSTED? THROW typeName litString NL
-; // TODO: currently has typeNameUse 
+; 
+
+assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
+
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: GHOSTED? ELIF expression THEN NL;
 elseClause: GHOSTED? ELSE NL; // TODO
@@ -194,9 +193,9 @@ argList: argument (COMMA argument)*;
 argument: lambda | expression;
 paramList: paramDef (COMMA paramDef)*;
 identifierList: identifierDef (COMMA identifierDef)+;
+expressionList: expression (COMMA expression)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
-
 
 assertActual: expression;
 // END Fields
@@ -218,8 +217,6 @@ enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
-
-identifierWithOptIndexes: identifierUse index*;
 
 expression:
     newInstance
@@ -255,8 +252,6 @@ binaryExpression:
 ; // ? expression binaryOperator expression ?
 
 list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
-
-expressionList: expression (COMMA expression)*;
 
 tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 
