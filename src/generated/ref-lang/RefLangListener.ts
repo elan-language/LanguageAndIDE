@@ -49,8 +49,8 @@ import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
 import { ParamsListContext } from "./RefLangParser.js";
+import { IdentifiersListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
-import { EnumValuesListContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
@@ -86,7 +86,6 @@ import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
-import { PowerContext } from "./RefLangParser.js";
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -564,6 +563,16 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitParamsList?: (ctx: ParamsListContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.identifiersList`.
+   * @param ctx the parse tree
+   */
+  enterIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.identifiersList`.
+   * @param ctx the parse tree
+   */
+  exitIdentifiersList?: (ctx: IdentifiersListContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree
    */
@@ -573,16 +582,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitType?: (ctx: TypeContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.enumValuesList`.
-   * @param ctx the parse tree
-   */
-  enterEnumValuesList?: (ctx: EnumValuesListContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.enumValuesList`.
-   * @param ctx the parse tree
-   */
-  exitEnumValuesList?: (ctx: EnumValuesListContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.assertActual`.
    * @param ctx the parse tree
@@ -933,16 +932,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.power`.
-   * @param ctx the parse tree
-   */
-  enterPower?: (ctx: PowerContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.power`.
-   * @param ctx the parse tree
-   */
-  exitPower?: (ctx: PowerContext) => void;
 
   visitTerminal(node: TerminalNode): void {}
   visitErrorNode(node: ErrorNode): void {}

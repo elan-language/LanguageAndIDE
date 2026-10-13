@@ -1,6 +1,3 @@
-
-
-
 grammar Python;
 import Python_Lexer;
 
@@ -50,7 +47,7 @@ constant:
 ;
 
 enum:
-    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL enumValuesList NL
+    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifiersList NL
         COMMENT
 ;
 
@@ -207,7 +204,7 @@ paramsList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-enumValuesList: identifierDef (COMMA identifierDef)*;
+identifiersList: identifierDef (COMMA identifierDef)+;
 
 assertActual: expression;
 // END Fields
@@ -286,6 +283,7 @@ binaryOperator:
     | AND
     | OR
     | MOD
+    | POWER
 ;
 
 newInstance: type OPEN_BRACKET argList? CLOSE_BRACKET;
@@ -312,7 +310,5 @@ list:
 ;
 
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
-
-power: term POWER term;
 
 // END SubNodes

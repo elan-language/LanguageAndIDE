@@ -235,7 +235,7 @@ export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   "_enumVals",
   false,
   false,
-  (parser: PythonParser | RefLangParser) => parser.enumValuesList(),
+  (parser: PythonParser | RefLangParser) => parser.identifiersList(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

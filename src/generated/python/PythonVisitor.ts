@@ -48,7 +48,7 @@ import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
 import { ParamsListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
-import { EnumValuesListContext } from "./PythonParser.js";
+import { IdentifiersListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -82,7 +82,6 @@ import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
 import { ListContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
-import { PowerContext } from "./PythonParser.js";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -369,11 +368,11 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitType?: (ctx: TypeContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.enumValuesList`.
+   * Visit a parse tree produced by `PythonParser.identifiersList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitEnumValuesList?: (ctx: EnumValuesListContext) => Result;
+  visitIdentifiersList?: (ctx: IdentifiersListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree
@@ -572,10 +571,4 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPower?: (ctx: PowerContext) => Result;
 }

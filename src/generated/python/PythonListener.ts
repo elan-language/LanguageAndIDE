@@ -48,7 +48,7 @@ import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
 import { ParamsListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
-import { EnumValuesListContext } from "./PythonParser.js";
+import { IdentifiersListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -82,7 +82,6 @@ import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
 import { ListContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
-import { PowerContext } from "./PythonParser.js";
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -550,15 +549,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitType?: (ctx: TypeContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.enumValuesList`.
+   * Enter a parse tree produced by `PythonParser.identifiersList`.
    * @param ctx the parse tree
    */
-  enterEnumValuesList?: (ctx: EnumValuesListContext) => void;
+  enterIdentifiersList?: (ctx: IdentifiersListContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.enumValuesList`.
+   * Exit a parse tree produced by `PythonParser.identifiersList`.
    * @param ctx the parse tree
    */
-  exitEnumValuesList?: (ctx: EnumValuesListContext) => void;
+  exitIdentifiersList?: (ctx: IdentifiersListContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree
@@ -889,16 +888,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   */
-  enterPower?: (ctx: PowerContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.power`.
-   * @param ctx the parse tree
-   */
-  exitPower?: (ctx: PowerContext) => void;
 
   visitTerminal(node: TerminalNode): void {}
   visitErrorNode(node: ErrorNode): void {}
