@@ -48,7 +48,7 @@ import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
 import { ParamsListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
-import { EnumValuesListContext } from "./PythonParser.js";
+import { IdentifiersListContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
@@ -549,15 +549,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitType?: (ctx: TypeContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.enumValuesList`.
+   * Enter a parse tree produced by `PythonParser.identifiersList`.
    * @param ctx the parse tree
    */
-  enterEnumValuesList?: (ctx: EnumValuesListContext) => void;
+  enterIdentifiersList?: (ctx: IdentifiersListContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.enumValuesList`.
+   * Exit a parse tree produced by `PythonParser.identifiersList`.
    * @param ctx the parse tree
    */
-  exitEnumValuesList?: (ctx: EnumValuesListContext) => void;
+  exitIdentifiersList?: (ctx: IdentifiersListContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.assertActual`.
    * @param ctx the parse tree

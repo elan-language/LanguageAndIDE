@@ -45,7 +45,7 @@ procedure:
 constant:
     GHOSTED? CONSTANT identifierDef SET TO constantValue NL
 ;
-enum: GHOSTED? ENUM typeName enumValuesList NL;
+enum: GHOSTED? ENUM typeName identifiersList NL;
 
 concreteClass:
     GHOSTED? CLASS typeName (INHERITS typeName)? NL (
@@ -193,10 +193,10 @@ constantValue:
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
 paramsList: paramDef (COMMA paramDef)*;
+identifiersList: identifierDef (COMMA identifierDef)+;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-enumValuesList: identifierDef (COMMA identifierDef)*;
 
 assertActual: expression;
 // END Fields

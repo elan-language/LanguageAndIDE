@@ -47,7 +47,7 @@ constant:
 ;
 
 enum:
-    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL enumValuesList NL
+    CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifiersList NL
         COMMENT
 ;
 
@@ -204,7 +204,7 @@ paramsList: paramDef (COMMA paramDef)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
-enumValuesList: identifierDef (COMMA identifierDef)*;
+identifiersList: identifierDef (COMMA identifierDef)+;
 
 assertActual: expression;
 // END Fields

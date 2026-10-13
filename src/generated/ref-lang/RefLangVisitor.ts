@@ -49,8 +49,8 @@ import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
 import { ParamsListContext } from "./RefLangParser.js";
+import { IdentifiersListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
-import { EnumValuesListContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
@@ -378,17 +378,17 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitParamsList?: (ctx: ParamsListContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.identifiersList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifiersList?: (ctx: IdentifiersListContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitType?: (ctx: TypeContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.enumValuesList`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitEnumValuesList?: (ctx: EnumValuesListContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.assertActual`.
    * @param ctx the parse tree
