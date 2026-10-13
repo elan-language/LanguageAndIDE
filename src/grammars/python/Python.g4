@@ -264,7 +264,7 @@ binaryExpression:
 ;
 
 list:
-    OPEN_SQ_BRACKET expression (COMMA expression)* CLOSE_SQ_BRACKET
+    OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET
 ;
 tuple:
     OPEN_BRACKET expressionList CLOSE_BRACKET
