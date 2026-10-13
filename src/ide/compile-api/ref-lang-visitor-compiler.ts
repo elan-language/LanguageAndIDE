@@ -207,7 +207,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   visitTuple = (ctx: TupleContext) => {
     const items = ctx
-      .tupleElementList()
+      .expressionList()
       .expression()
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];

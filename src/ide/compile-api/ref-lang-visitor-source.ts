@@ -155,7 +155,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
 
   visitTuple = (ctx: TupleContext) =>
-    `(${getExpressions<string>(this, ctx.tupleElementList()).join(", ")})`;
+    `(${getExpressions<string>(this, ctx.expressionList()).join(", ")})`;
 
   visitDictionary = (ctx: DictionaryContext) =>
     `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;

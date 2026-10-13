@@ -73,7 +73,6 @@ import { BinaryExpressionContext } from "./RefLangParser.js";
 import { ListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
-import { TupleElementListContext } from "./RefLangParser.js";
 import { DictionaryContext } from "./RefLangParser.js";
 import { KvpListContext } from "./RefLangParser.js";
 import { KvpContext } from "./RefLangParser.js";
@@ -802,16 +801,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTuple?: (ctx: TupleContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.tupleElementList`.
-   * @param ctx the parse tree
-   */
-  enterTupleElementList?: (ctx: TupleElementListContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.tupleElementList`.
-   * @param ctx the parse tree
-   */
-  exitTupleElementList?: (ctx: TupleElementListContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.dictionary`.
    * @param ctx the parse tree

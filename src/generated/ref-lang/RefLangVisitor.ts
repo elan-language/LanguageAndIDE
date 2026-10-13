@@ -73,7 +73,6 @@ import { BinaryExpressionContext } from "./RefLangParser.js";
 import { ListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
 import { TupleContext } from "./RefLangParser.js";
-import { TupleElementListContext } from "./RefLangParser.js";
 import { DictionaryContext } from "./RefLangParser.js";
 import { KvpListContext } from "./RefLangParser.js";
 import { KvpContext } from "./RefLangParser.js";
@@ -521,12 +520,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTuple?: (ctx: TupleContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.tupleElementList`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitTupleElementList?: (ctx: TupleElementListContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.dictionary`.
    * @param ctx the parse tree
