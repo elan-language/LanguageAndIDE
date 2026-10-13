@@ -3,7 +3,6 @@ import assert from "assert";
 import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
 import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
-import { InheritedTypeField } from "../../src/ide/frames/fields/inherited-type-field";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
@@ -82,7 +81,7 @@ suite("Editing Frames", () => {
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("elan_text3") as InheritedTypeField;
+    const text3 = file.getById("elan_text3") as AbstractField;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);

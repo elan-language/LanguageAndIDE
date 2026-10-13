@@ -199,7 +199,7 @@ export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
   "_text",
   true,
   true,
-  (parser: PythonParser | RefLangParser) => parser.comment(), // TODO: g4 does not yet provide for inheritance
+  (parser: PythonParser | RefLangParser) => parser.typeName(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );
@@ -231,7 +231,7 @@ export const procRefFieldSpec: FieldSpec = new FieldSpec(
 export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   FieldType.enumValues,
   "<i>values</i>",
-  "EnumValuesField",
+  "AbstractField",
   "_enumVals",
   false,
   false,
