@@ -1,6 +1,9 @@
 import { throwKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, exceptionTypeFieldSpec } from "../fields/abstract-field";
-import { ExceptionMessageField } from "../fields/exception-message-field";
+import {
+  AbstractField,
+  exceptionMessageFieldSpec,
+  exceptionTypeFieldSpec,
+} from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -10,10 +13,10 @@ import { SingleLineFrame } from "../single-line-frame";
 export class ThrowStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   type: AbstractField;
-  text: ExceptionMessageField;
+  text: AbstractField;
   constructor(parent: Parent) {
     super(parent);
-    this.text = new ExceptionMessageField(this);
+    this.text = new AbstractField(this, exceptionMessageFieldSpec);
     this.type = new AbstractField(this, exceptionTypeFieldSpec);
   }
   initialKeywords(): string {
