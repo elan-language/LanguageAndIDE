@@ -143,7 +143,7 @@ constructorMember:
         CONSTRUCTOR NL
 ;
 
-property: PRIVATE? PROPERTY identifierDef AS type NL;
+property: GHOSTED? PRIVATE? PROPERTY identifierDef AS type NL;
 
 functionMethod:
     GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramsList? CLOSE_BRACKET RETURNS type NL (
