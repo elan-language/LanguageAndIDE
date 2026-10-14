@@ -1,7 +1,7 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -87,8 +87,8 @@ export abstract class LanguageAbstract implements Language {
   abstract newInstanceAsHtml(node: NewInstance): string;
   abstract litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
   abstract typeTupleAsHtml(node: TypeTupleNode): string;
-  abstract enumValuesListAsHtml(field: AbstractField): string;
-  abstract inheritsFromTextAsHtml(field: AbstractField): string;
+  abstract enumValuesListAsHtml(field: FieldImpl): string;
+  abstract inheritsFromTextAsHtml(field: FieldImpl): string;
   abstract lambdaAsHtml(node: Lambda): string;
   abstract listAsHtml(node: ListNode): string;
 

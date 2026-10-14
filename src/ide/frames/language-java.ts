@@ -1,6 +1,6 @@
 import { getConstantType } from "../compile-api/parser-helpers";
 import { Property } from "./class-members/property";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -87,7 +87,7 @@ export class LanguageJava extends LanguageCfamily {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: AbstractField): string {
+  inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
     const node = field.getRootNode()! as InheritanceNode;
     let result = "";
@@ -205,7 +205,7 @@ export class LanguageJava extends LanguageCfamily {
     return `<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>${definingString}</el-lit>", ${csv})`;
   }
 
-  override enumValuesListAsHtml(field: AbstractField): string {
+  override enumValuesListAsHtml(field: FieldImpl): string {
     return this.c_langs_enumValues(field);
   }
 

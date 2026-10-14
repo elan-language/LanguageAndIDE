@@ -5,7 +5,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -170,7 +170,7 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  paramListAsHtml(frame: MemberFrame, field: AbstractField): string {
+  paramListAsHtml(frame: MemberFrame, field: FieldImpl): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     // if no params, wrap the comma to make it only appear
     // when the line (or parts of it) are selected
@@ -179,11 +179,11 @@ export class LanguagePython extends LanguageAbstract {
     return `${self}${comma}${field.renderAsHtml()}`;
   }
 
-  override enumValuesListAsHtml(field: AbstractField): string {
+  override enumValuesListAsHtml(field: FieldImpl): string {
     return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
 
-  inheritsFromTextAsHtml(field: AbstractField): string {
+  inheritsFromTextAsHtml(field: FieldImpl): string {
     let result = "";
     const frame = field.getHolder() as ClassFrame;
     if (frame.doesInherit()) {

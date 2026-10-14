@@ -1,4 +1,4 @@
-import { AbstractField } from "../../ide/frames/fields/abstract-field";
+import { FieldImpl } from "../../ide/frames/fields/field-impl";
 import { ClassFrame } from "../../ide/frames/globals/class-frame";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
@@ -624,7 +624,7 @@ export function getClassType(className: string, rootNode: RootAstNode): ClassSub
 
 //Returns the name of the abstract class or interface defining the member, or "" if neither. Boolean value is true for an abstract class, false for an interface
 export function implementsAbstractMethodOnClassOrInterface(
-  nameField: AbstractField,
+  nameField: FieldImpl,
   classFrame: ClassFrame,
 ): [string, boolean] {
   const methodName = nameField.renderAsElanSource();

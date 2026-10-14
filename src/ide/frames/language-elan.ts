@@ -50,7 +50,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -198,7 +198,7 @@ export class LanguageElan extends LanguageAbstract {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: AbstractField): string {
+  inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.renderAsHtml()}` : ``;
   }
@@ -400,7 +400,7 @@ export class LanguageElan extends LanguageAbstract {
     return this.default_listAsHtml(node);
   }
 
-  enumValuesListAsHtml(field: AbstractField): string {
+  enumValuesListAsHtml(field: FieldImpl): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 

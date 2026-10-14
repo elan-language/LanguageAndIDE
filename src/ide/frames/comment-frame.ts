@@ -1,5 +1,5 @@
 import { commentMarker } from "../../compiler/elan-keywords";
-import { AbstractField, commentFieldSpec } from "./fields/abstract-field";
+import { FieldImpl, commentFieldSpec } from "./fields/field-impl";
 import { singleIndent } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Field } from "./frame-interfaces/field";
@@ -15,10 +15,10 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   private = false;
   protected canHaveBreakPoint = false;
 
-  public textIncludingMarkerSymboAndSpace: AbstractField;
+  public textIncludingMarkerSymboAndSpace: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.textIncludingMarkerSymboAndSpace = new AbstractField(this, commentFieldSpec);
+    this.textIncludingMarkerSymboAndSpace = new FieldImpl(this, commentFieldSpec);
   }
 
   initialKeywords(): string {

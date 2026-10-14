@@ -2,7 +2,7 @@ import assert from "assert";
 
 import { Constructor } from "../../src/ide/frames/class-members/constructor";
 import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
-import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
+import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
@@ -60,28 +60,28 @@ suite("Editing Frames", () => {
   test("Enter on a field goes to next field owned by same frame (except the last/field field).", () => {
     const file = oneConstant();
     assert.equal(file.getChildren().length, 2);
-    const ident2 = file.getById("elan_ident2") as AbstractField;
+    const ident2 = file.getById("elan_ident2") as FieldImpl;
     ident2.select();
     assert.equal(ident2.isSelected(), true);
     ident2.processKey(enter());
     assert.equal(ident2.isSelected(), false);
-    const text3 = file.getById("elan_text3") as AbstractField;
+    const text3 = file.getById("elan_text3") as FieldImpl;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
     assert.equal(file.getChildren().length, 2);
-    const select0 = file.getById("elan_select0") as AbstractField;
+    const select0 = file.getById("elan_select0") as FieldImpl;
     assert.equal(select0.isSelected(), true);
   });
   test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
     const file = classWithConstructor();
     assert.equal(file.getChildren().length, 2);
-    const className = file.getById("elan_type2") as AbstractField;
+    const className = file.getById("elan_type2") as FieldImpl;
     className.select();
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("elan_text3") as AbstractField;
+    const text3 = file.getById("elan_text3") as FieldImpl;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
@@ -91,8 +91,8 @@ suite("Editing Frames", () => {
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
     const file = oneConstant();
     const c = file.getById("elan_const1") as ConstantGlobal;
-    const ident2 = file.getById("elan_ident2") as AbstractField;
-    const text3 = file.getById("elan_text3") as AbstractField;
+    const ident2 = file.getById("elan_ident2") as FieldImpl;
+    const text3 = file.getById("elan_text3") as FieldImpl;
     c.select(true, false);
     assert.equal(c.isSelected(), true);
     c.processKey(tab());
@@ -270,7 +270,7 @@ suite("Editing Frames", () => {
     const file = T00_emptyFile();
     const sel0 = file.getById("elan_select0");
     sel0.processKey(key("t"));
-    const desc = file.getById("elan_ident3") as AbstractField;
+    const desc = file.getById("elan_ident3") as FieldImpl;
     desc.processKey(key("t"));
     desc.processKey(key("e"));
     desc.processKey(key("s"));

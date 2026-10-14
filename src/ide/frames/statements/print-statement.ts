@@ -1,5 +1,5 @@
 import { printKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, printExpressionFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, printExpressionFieldSpec } from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -9,10 +9,10 @@ import { SingleLineFrame } from "../single-line-frame";
 export class PrintStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
-  arg: AbstractField;
+  arg: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.arg = new AbstractField(this, printExpressionFieldSpec);
+    this.arg = new FieldImpl(this, printExpressionFieldSpec);
   }
 
   initialKeywords(): string {

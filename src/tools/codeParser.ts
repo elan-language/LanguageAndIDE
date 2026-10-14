@@ -6,11 +6,11 @@ import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import {
-  AbstractField,
+  FieldImpl,
   expressionFieldSpec,
   paramListFieldSpec,
   typeFieldSpec,
-} from "../ide/frames/fields/abstract-field";
+} from "../ide/frames/fields/field-impl";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";
@@ -181,8 +181,8 @@ function parseAsKeyword(code: string): TransformedCode | undefined {
   return undefined;
 }
 
-function TypeParserAndRender(file: FileImpl): [AbstractField, { textAsHtml(): Promise<string> }] {
-  const fr = new AbstractField(new GlobalFunction(file), typeFieldSpec);
+function TypeParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
+  const fr = new FieldImpl(new GlobalFunction(file), typeFieldSpec);
   return [fr, { textAsHtml: async () => fr.textAsHtml() }];
 }
 
@@ -237,24 +237,22 @@ function AbstractMemberParserAndRender(
 
 function ExpressionrParserAndRender(
   file: FileImpl,
-): [AbstractField, { textAsHtml(): Promise<string> }] {
+): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
   const ls = new VariableStatement(mf);
-  const expr = new AbstractField(ls, expressionFieldSpec);
+  const expr = new FieldImpl(ls, expressionFieldSpec);
 
   return [expr, { textAsHtml: async () => expr.textAsHtml() }];
 }
 
-function ParameterParserAndRender(
-  file: FileImpl,
-): [AbstractField, { textAsHtml(): Promise<string> }] {
+function ParameterParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
-  const pp = new AbstractField(gf, paramListFieldSpec);
+  const pp = new FieldImpl(gf, paramListFieldSpec);
 
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }
 
-function LambdaParserAndRender(file: FileImpl): [AbstractField, { textAsHtml(): Promise<string> }] {
+function LambdaParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const ss = new ProcedureCall(file);
   const args = ss.args;
 

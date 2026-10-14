@@ -5,7 +5,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -285,7 +285,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return `<el-kw>${this.NEW_INSTANCE_PREFIX} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
   }
 
-  c_langs_enumValues(field: AbstractField): string {
+  c_langs_enumValues(field: FieldImpl): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
   }
 }

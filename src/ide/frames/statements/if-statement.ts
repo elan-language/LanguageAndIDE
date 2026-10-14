@@ -1,6 +1,6 @@
 import { endKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
-import { AbstractField, expressionFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, expressionFieldSpec } from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -9,10 +9,10 @@ import { FrameWithStatements } from "../frame-with-statements";
 
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;
-  condition: AbstractField;
+  condition: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.condition = new AbstractField(this, expressionFieldSpec);
+    this.condition = new FieldImpl(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
 

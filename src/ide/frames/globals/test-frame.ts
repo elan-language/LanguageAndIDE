@@ -2,7 +2,7 @@ import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
 import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { AbstractField, testNameFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, testNameFieldSpec } from "../fields/field-impl";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
@@ -18,14 +18,14 @@ import { DisplayColour } from "../status-enums";
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
   isTest = true;
   isGlobal = true;
-  public testName: AbstractField;
+  public testName: FieldImpl;
   file: File;
   private _testStatus: TestStatus;
   protected canHaveBreakPoint = false;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.testName = new AbstractField(this, testNameFieldSpec);
+    this.testName = new FieldImpl(this, testNameFieldSpec);
     this._testStatus = TestStatus.default;
   }
 

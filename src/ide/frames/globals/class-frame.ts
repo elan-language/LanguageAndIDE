@@ -12,7 +12,7 @@ import { MemberSelector } from "../class-members/member-selector";
 import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CommentFrame } from "../comment-frame";
-import { AbstractField, inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-impl";
 import { Regexes } from "../fields/regexes";
 import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -57,15 +57,15 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   isConcrete: boolean = false;
   isRecord: boolean = false;
   isInterface: boolean = false;
-  public name: AbstractField;
+  public name: FieldImpl;
   public isNotInheritable = false;
-  public inheritance: AbstractField;
+  public inheritance: FieldImpl;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File) {
     super(parent);
-    this.name = new AbstractField(this, typeNameFieldSpec);
-    this.inheritance = new AbstractField(this, inheritsFromFieldSpec);
+    this.name = new FieldImpl(this, typeNameFieldSpec);
+    this.inheritance = new FieldImpl(this, inheritsFromFieldSpec);
     this.getChildren().push(new MemberSelector(this));
     this.canHaveBreakPoint = false;
   }

@@ -1,5 +1,5 @@
 import { returnKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, expressionFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, expressionFieldSpec } from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -9,11 +9,11 @@ import { SingleLineFrame } from "../single-line-frame";
 export class ReturnStatement extends SingleLineFrame implements Statement {
   isStatement = true;
   isReturnStatement = true;
-  expr: AbstractField;
+  expr: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
     this.ghostable = false;
-    this.expr = new AbstractField(this, expressionFieldSpec);
+    this.expr = new FieldImpl(this, expressionFieldSpec);
   }
   initialKeywords(): string {
     return returnKeyword;

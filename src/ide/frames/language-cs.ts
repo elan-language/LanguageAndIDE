@@ -1,6 +1,6 @@
 import { getConstantType } from "../compile-api/parser-helpers";
 import { Property } from "./class-members/property";
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -86,7 +86,7 @@ export class LanguageCS extends LanguageCfamily {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: AbstractField): string {
+  inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? `: ${field.renderAsHtml()}` : ``;
   }
@@ -185,7 +185,7 @@ export class LanguageCS extends LanguageCfamily {
     return this.default_typeTupleAsHtml(node);
   }
 
-  override enumValuesListAsHtml(field: AbstractField): string {
+  override enumValuesListAsHtml(field: FieldImpl): string {
     return this.c_langs_enumValues(field);
   }
 

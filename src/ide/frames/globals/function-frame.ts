@@ -5,11 +5,11 @@ import {
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
 import {
-  AbstractField,
+  FieldImpl,
   methodNameFieldSpec,
   paramListFieldSpec,
   typeFieldSpec,
-} from "../fields/abstract-field";
+} from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -19,17 +19,17 @@ import { Paradigm } from "../paradigm";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
-  public name: AbstractField;
-  public params: AbstractField;
-  public returnType: AbstractField;
+  public name: FieldImpl;
+  public params: FieldImpl;
+  public returnType: FieldImpl;
   isFunction = true;
   abstract file: File;
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new AbstractField(this, methodNameFieldSpec);
-    this.params = new AbstractField(this, paramListFieldSpec);
-    this.returnType = new AbstractField(this, typeFieldSpec);
+    this.name = new FieldImpl(this, methodNameFieldSpec);
+    this.params = new FieldImpl(this, paramListFieldSpec);
+    this.returnType = new FieldImpl(this, typeFieldSpec);
     this.getChildren().push(new ReturnStatement(this));
   }
   initialKeywords(): string {

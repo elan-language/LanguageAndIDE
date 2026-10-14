@@ -1,4 +1,4 @@
-import { AbstractField, expressionFieldSpec, identifierFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, expressionFieldSpec, identifierFieldSpec } from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -7,13 +7,13 @@ import { SingleLineFrame } from "../single-line-frame";
 
 export abstract class AbstractDefinitionStatement extends SingleLineFrame implements Statement {
   isStatement = true;
-  name: AbstractField;
-  expr: AbstractField;
+  name: FieldImpl;
+  expr: FieldImpl;
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new AbstractField(this, identifierFieldSpec);
-    this.expr = new AbstractField(this, expressionFieldSpec);
+    this.name = new FieldImpl(this, identifierFieldSpec);
+    this.expr = new FieldImpl(this, expressionFieldSpec);
   }
   abstract initialKeywords(): string;
 

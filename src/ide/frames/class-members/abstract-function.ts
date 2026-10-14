@@ -5,11 +5,11 @@ import {
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
 import {
-  AbstractField,
+  FieldImpl,
   methodNameFieldSpec,
   paramListFieldSpec,
   typeFieldSpec,
-} from "../fields/abstract-field";
+} from "../fields/field-impl";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -20,16 +20,16 @@ export class AbstractFunction extends SingleLineFrame {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
-  public name: AbstractField;
-  public params: AbstractField;
-  public returnType: AbstractField;
+  public name: FieldImpl;
+  public params: FieldImpl;
+  public returnType: FieldImpl;
   hrefForFrameHelp: string = "oopRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new AbstractField(this, methodNameFieldSpec);
-    this.params = new AbstractField(this, paramListFieldSpec);
-    this.returnType = new AbstractField(this, typeFieldSpec);
+    this.name = new FieldImpl(this, methodNameFieldSpec);
+    this.params = new FieldImpl(this, paramListFieldSpec);
+    this.returnType = new FieldImpl(this, typeFieldSpec);
     this.canHaveBreakPoint = false;
   }
 

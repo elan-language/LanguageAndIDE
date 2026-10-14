@@ -1,4 +1,4 @@
-import { AbstractField } from "./fields/abstract-field";
+import { FieldImpl } from "./fields/field-impl";
 import { ParseStatus } from "./status-enums";
 
 export enum LineFormat {
@@ -7,7 +7,7 @@ export enum LineFormat {
 }
 
 export function languageHelper_enumValuesList(
-  field: AbstractField,
+  field: FieldImpl,
   format: LineFormat,
   startingNumber: number,
   ending: string,

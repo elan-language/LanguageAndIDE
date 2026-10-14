@@ -1,11 +1,7 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import {
-  AbstractField,
-  assertActualFieldSpec,
-  assertExpressionFieldSpec,
-} from "../fields/abstract-field";
+import { FieldImpl, assertActualFieldSpec, assertExpressionFieldSpec } from "../fields/field-impl";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -16,13 +12,13 @@ import { CompileStatus, DisplayColour } from "../status-enums";
 
 export class AssertStatement extends SingleLineFrame implements Statement {
   isStatement = true;
-  actual: AbstractField;
-  expected: AbstractField;
+  actual: FieldImpl;
+  expected: FieldImpl;
   outcome?: AssertOutcome;
   constructor(parent: Parent) {
     super(parent);
-    this.actual = new AbstractField(this, assertActualFieldSpec);
-    this.expected = new AbstractField(this, assertExpressionFieldSpec);
+    this.actual = new FieldImpl(this, assertActualFieldSpec);
+    this.expected = new FieldImpl(this, assertExpressionFieldSpec);
     this.expected.setPlaceholder("<i>expected value</i>");
   }
 

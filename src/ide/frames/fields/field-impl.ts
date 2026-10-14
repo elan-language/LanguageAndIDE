@@ -313,7 +313,7 @@ export const constantValueFieldSpec: FieldSpec = new FieldSpec(
 );
 
 // rename when refactoring complete
-export class AbstractField implements Selectable, Field {
+export class FieldImpl implements Selectable, Field {
   public isField: boolean = true;
   text: string = "";
   private _placeholder: string = "";

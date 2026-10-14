@@ -20,7 +20,7 @@ import { getParserByLanguage, getVisitorCompilerByLanguage, getVisitorHtmlByLang
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { AbstractField } from "../src/ide/frames/fields/abstract-field";
+import { FieldImpl } from "../src/ide/frames/fields/field-impl";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
@@ -246,7 +246,7 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-async function assertStartsWith(f: FileImpl, fld: AbstractField, startsWith: [string, string, string][]) {
+async function assertStartsWith(f: FileImpl, fld: FieldImpl, startsWith: [string, string, string][]) {
   await f.renderAsHtml();
   const symbols = fld.allPossibleSymbolCompletions;
 
@@ -259,7 +259,7 @@ async function assertStartsWith(f: FileImpl, fld: AbstractField, startsWith: [st
   }
 }
 
-async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
+async function doAsserts(f: FileImpl, fld: FieldImpl, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.allPossibleSymbolCompletions;
 
@@ -298,7 +298,7 @@ export async function assertAutocompletes(
 ): Promise<void> {
   assertParses(f);
 
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   if (clear) {
     fld.text = "";
@@ -410,7 +410,7 @@ export async function assertSymbolCompletionWithString(
   expected: [string, string, string][] | number,
 ): Promise<void> {
   assertParses(f);
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   assert.notStrictEqual(fld, undefined, `${id} not found`);
 
@@ -433,7 +433,7 @@ export async function assertSymbolCompletionMenuStartsWith(
   expected: [string, string, string][],
 ): Promise<void> {
   assertParses(f);
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   assert.notStrictEqual(fld, undefined, `${id} not found`);
 

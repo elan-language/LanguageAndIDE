@@ -79,7 +79,7 @@ import { FunctionMethod } from "../frames/class-members/function-method";
 import { ProcedureMethod } from "../frames/class-members/procedure-method";
 import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
-import { AbstractField, FieldType } from "../frames/fields/abstract-field";
+import { FieldImpl, FieldType } from "../frames/fields/field-impl";
 import { FileImpl } from "../frames/file-impl";
 import { isSelector } from "../frames/frame-helpers";
 import { Field } from "../frames/frame-interfaces/field";
@@ -601,7 +601,7 @@ export function transform(
   //   return EmptyAsn.Instance;
   // }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.type) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.type) {
     const ctx = node.context;
 
     if (ctx) {
@@ -614,7 +614,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.paramList) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.paramList) {
     const ctx = node.context;
 
     if (ctx) {
@@ -625,7 +625,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.argList) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.argList) {
     const ctx = node.context;
 
     if (ctx) {
@@ -637,7 +637,7 @@ export function transform(
   }
 
   if (
-    node instanceof AbstractField &&
+    node instanceof FieldImpl &&
     (node.fieldSpec?.fieldType === FieldType.identifier ||
       node.fieldSpec?.fieldType === FieldType.methodName)
   ) {
@@ -651,7 +651,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.expression) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.expression) {
     const ctx = node.context;
 
     if (ctx) {
@@ -661,7 +661,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.procRef) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.procRef) {
     const ctx = node.context;
 
     if (ctx) {
@@ -671,7 +671,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.assignable) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.assignable) {
     const ctx = node.context;
 
     if (ctx) {
@@ -681,7 +681,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.constantValue) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.constantValue) {
     const ctx = node.context;
 
     if (ctx) {
@@ -691,7 +691,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.typeName) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.typeName) {
     const ctx = node.context;
 
     if (ctx) {
@@ -701,7 +701,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.exceptionMessage) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.exceptionMessage) {
     const ctx = node.context;
 
     if (ctx) {
@@ -711,7 +711,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.inheritsFrom) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.inheritsFrom) {
     const ctx = node.context;
 
     if (ctx) {
@@ -727,7 +727,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof AbstractField && node.fieldSpec?.fieldType === FieldType.enumValues) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.enumValues) {
     const ctx = node.context;
 
     if (ctx) {
@@ -1029,7 +1029,7 @@ export function transform(
   //   return EmptyAsn.Instance;
   // }
 
-  if (node instanceof AbstractField) {
+  if (node instanceof FieldImpl) {
     const rn = node.getRootNode();
     if (rn && rn.status === ParseStatus.valid) {
       return transform(rn, node.getHtmlId(), scope);

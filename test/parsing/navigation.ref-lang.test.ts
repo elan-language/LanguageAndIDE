@@ -1,5 +1,5 @@
 import assert from "assert";
-import { AbstractField } from "../../src/ide/frames/fields/abstract-field";
+import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import { isParent } from "../../src/ide/frames/frame-helpers";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { assertClasses, end, home, right, shift_tab, tab, up } from "../testHelpers";
@@ -43,11 +43,11 @@ suite("Navigation", () => {
   });
   test("Tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
-    const var4 = file.getById("elan_ident4") as AbstractField;
+    const var4 = file.getById("elan_ident4") as FieldImpl;
     assert.equal(var4.isSelected(), false);
     file.processKey(tab());
     assert.equal(var4.isSelected(), true);
-    const expr5 = file.getById("elan_expr5") as AbstractField;
+    const expr5 = file.getById("elan_expr5") as FieldImpl;
     assert.equal(expr5.isSelected(), false);
     var4.processKey(tab());
     assert.equal(var4.isSelected(), false);
@@ -67,11 +67,11 @@ suite("Navigation", () => {
     var3.select(true, false);
     var3.processKey(shift_tab());
     assert.equal(var3.isSelected(), false);
-    const expr5 = file.getById("elan_expr5") as AbstractField;
+    const expr5 = file.getById("elan_expr5") as FieldImpl;
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(shift_tab());
     assert.equal(expr5.isSelected(), false);
-    const var4 = file.getById("elan_ident4") as AbstractField;
+    const var4 = file.getById("elan_ident4") as FieldImpl;
     assert.equal(var4.isSelected(), true);
     var4.processKey(shift_tab());
     assert.equal(var4.isSelected(), false);

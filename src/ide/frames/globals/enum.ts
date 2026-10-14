@@ -1,5 +1,5 @@
 import { enumKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, enumValuesFieldSpec, typeNameFieldSpec } from "../fields/abstract-field";
+import { FieldImpl, enumValuesFieldSpec, typeNameFieldSpec } from "../fields/field-impl";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -8,15 +8,15 @@ import { SingleLineFrame } from "../single-line-frame";
 
 export class Enum extends SingleLineFrame implements GlobalFrame {
   isGlobal = true;
-  name: AbstractField;
-  values: AbstractField;
+  name: FieldImpl;
+  values: FieldImpl;
   file: File;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.name = new AbstractField(this, typeNameFieldSpec);
+    this.name = new FieldImpl(this, typeNameFieldSpec);
     this.name.setPlaceholder("<i>Name</i>");
-    this.values = new AbstractField(this, enumValuesFieldSpec);
+    this.values = new FieldImpl(this, enumValuesFieldSpec);
     this.canHaveBreakPoint = false;
   }
 
