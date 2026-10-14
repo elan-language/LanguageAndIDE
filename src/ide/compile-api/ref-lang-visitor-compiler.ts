@@ -8,6 +8,7 @@ import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
@@ -38,7 +39,6 @@ import {
   AssignableContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
-  ConstantValueContext,
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
@@ -76,7 +76,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -119,11 +118,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitIdentifierUse = (ctx: IdentifierUseContext) => {
-    const id = new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
-    id.tempAntlrFlag = true;
-    return id;
-  };
+  visitIdentifierUse = (ctx: IdentifierUseContext) =>
+    new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   visitMethodName = (ctx: MethodNameContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
@@ -153,10 +149,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const argList = args ? getArgs(this, args).filter((a) => a) : [];
     const name = ctx.methodName().getText();
 
-    const fc = new FuncCallAsn(name, argList, this.fieldId, this.scope);
-    // temp kludge fix TODO
-    fc.tempAntlrFlag = true;
-    return fc;
+    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
   };
 
   visitIndex = (ctx: IndexContext) =>
@@ -388,9 +381,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     }
   };
 
-  visitConstantValue = (ctx: ConstantValueContext) => {
-    return this.visitChildren(ctx)!;
-  };
+  // visitConstantValue = (ctx: ConstantValueContext) => {
+  //   return this.visitChildren(ctx)!;
+  // };
 
   visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);

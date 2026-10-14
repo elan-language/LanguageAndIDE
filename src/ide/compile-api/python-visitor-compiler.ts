@@ -119,7 +119,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   visitIdentifierUse = (ctx: IdentifierUseContext) => {
     const id = new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
-    id.tempAntlrFlag = true;
     return id;
   };
 
@@ -146,10 +145,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     const argList = args ? getArgs(this, args).filter((a) => a) : [];
     const name = ctx.methodName().getText();
 
-    const fc = new FuncCallAsn(name, argList, this.fieldId, this.scope);
-    // temp kludge fix TODO
-    fc.tempAntlrFlag = true;
-    return fc;
+    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
   };
 
   visitIndex = (ctx: IndexContext) =>

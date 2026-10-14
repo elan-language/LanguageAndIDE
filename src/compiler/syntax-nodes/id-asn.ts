@@ -34,7 +34,7 @@ export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   }
 
   // this is a temp hack until all fields migrated
-  tempAntlrFlag = false;
+  tempAntlrFlag = true;
 
   private updatedScope: Scope = NullScope.Instance;
   private precedingNode?: AstNode = undefined;
