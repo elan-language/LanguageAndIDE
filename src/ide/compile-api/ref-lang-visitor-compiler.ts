@@ -70,7 +70,6 @@ import {
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
-  TypeNameContext,
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
@@ -95,8 +94,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
-
-  visitTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
   visitTypeGeneric = (ctx: TypeGenericContext) =>
     new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
@@ -255,7 +252,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     );
 
   visitNegateLogical = (ctx: NegateLogicalContext) =>
-    new UnaryExprAsn("not", this.visit(ctx.term())!, this.fieldId, this.scope);
+    new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
 
   visitNegateNumeric = (ctx: NegateNumericContext) =>
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
@@ -380,10 +377,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       );
     }
   };
-
-  // visitConstantValue = (ctx: ConstantValueContext) => {
-  //   return this.visitChildren(ctx)!;
-  // };
 
   visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);

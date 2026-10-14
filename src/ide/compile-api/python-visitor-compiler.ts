@@ -1,13 +1,43 @@
 import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
+import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { EnumType } from "../../compiler/symbols/enum-type";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
+import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
+import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
+import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
+import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
+import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
+import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
+import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
+import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
+import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
+import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
+import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
+import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
+import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
+import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
+import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
+import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
+import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
+import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
+import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
+import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
+import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
+import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
+import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
+import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import {
   AssignableContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
-  ConstantValueContext,
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
@@ -39,43 +69,11 @@ import {
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
-  TypeNameContext,
   TypeTupleContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
-import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
-import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
-import { EnumType } from "../../compiler/symbols/enum-type";
-import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
-import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
-import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
-import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
-import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
-import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
-import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
-import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
-import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
-import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
-import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
-import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
-import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
-import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
-import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
-import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
-import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
-import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
-import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
-import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
-import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
-import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
-import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
-import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
-import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
-import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -94,8 +92,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
-
-  visitTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
   visitTypeGeneric = (ctx: TypeGenericContext) =>
     new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
@@ -251,7 +247,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     );
 
   visitNegateLogical = (ctx: NegateLogicalContext) =>
-    new UnaryExprAsn("not", this.visit(ctx.term())!, this.fieldId, this.scope);
+    new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
 
   visitNegateNumeric = (ctx: NegateNumericContext) =>
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
@@ -375,10 +371,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
         this.scope,
       );
     }
-  };
-
-  visitConstantValue = (ctx: ConstantValueContext) => {
-    return this.visitChildren(ctx)!;
   };
 
   visitIdentifierList = (ctx: IdentifierListContext) => {
