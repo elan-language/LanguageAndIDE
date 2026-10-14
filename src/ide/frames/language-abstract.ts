@@ -51,8 +51,6 @@ export abstract class LanguageAbstract implements Language {
   abstract renderSpecificHeaderAsHtml(f: FileImpl): string;
   abstract renderFileTrailerAsHtml(f: FileImpl): string;
 
-  abstract translateExpression(expr: string): string;
-
   getFields(frame: Frame): Field[] {
     let fields: Field[] = [];
     if (frame instanceof FunctionFrame) {

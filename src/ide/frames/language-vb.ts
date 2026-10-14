@@ -190,10 +190,6 @@ export class LanguageVB extends LanguageAbstract {
     return "";
   }
 
-  translateExpression(expr: string): string {
-    return expr;
-  }
-
   postProcessHtml(html: string): string {
     return html.replaceAll("[", "(").replaceAll("]", ")");
   }

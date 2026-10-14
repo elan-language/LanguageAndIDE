@@ -22,8 +22,6 @@ export interface Language {
   renderSpecificHeaderAsHtml(f: FileImpl): string;
   renderFileTrailerAsHtml(f: FileImpl): string;
 
-  translateExpression(expr: string): string;
-
   getFields(node: Frame): Field[];
 
   postProcessHtml(html: string): string;

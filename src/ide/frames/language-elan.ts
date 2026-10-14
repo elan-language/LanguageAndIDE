@@ -203,10 +203,6 @@ export class LanguageElan extends LanguageAbstract {
     return "";
   }
 
-  translateExpression(expr: string): string {
-    return expr;
-  }
-
   postProcessHtml(html: string): string {
     return html;
   }

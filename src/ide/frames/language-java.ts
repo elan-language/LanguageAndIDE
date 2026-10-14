@@ -79,10 +79,6 @@ export class LanguageJava extends LanguageCfamily {
     return "</div>\n} <el-comment>// end Global</el-comment>";
   }
 
-  translateExpression(expr: string): string {
-    return expr;
-  }
-
   public FINAL = "final";
   OVERRIDES = "";
   EXTENDS = "extends";

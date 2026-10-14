@@ -95,10 +95,6 @@ export class LanguageCS extends LanguageCfamily {
     return "";
   }
 
-  translateExpression(expr: string): string {
-    return expr;
-  }
-
   postProcessHtml(html: string): string {
     return html;
   }

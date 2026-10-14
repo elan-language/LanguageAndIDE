@@ -213,12 +213,6 @@ export class LanguagePython extends LanguageAbstract {
   // make instances of the two classes needed for export of expressions
   private languageExportHelpers = new LanguageExportHelpers(new LanguageExportPython());
 
-  // translate the library functions in an expression
-  // Note that this translation may be turned off by a master flag in LanguageExportHelpers
-  translateExpression(expr: string): string {
-    return this.languageExportHelpers.translateExpression(expr);
-  }
-
   postProcessHtml(html: string): string {
     return html;
   }
