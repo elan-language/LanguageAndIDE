@@ -10,23 +10,9 @@ import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
-import { CSV } from "./parse-nodes/csv";
-import { ExprNode } from "./parse-nodes/expr-node";
-import { KeywordNode } from "./parse-nodes/keyword-node";
-import { Lambda } from "./parse-nodes/lambda";
-import { ListNode } from "./parse-nodes/list-node";
-import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ARROW, CLOSE_SQ_BRACKET, OPEN_SQ_BRACKET } from "./symbols";
 
 export class LanguageCS extends LanguageCfamily {
   private constructor() {
@@ -113,80 +99,8 @@ export class LanguageCS extends LanguageCfamily {
     return expr;
   }
 
-  addNodesForParamDef(node: ParamDefNode): void {
-    this.c_langs_addNodesForParamDef(node);
-  }
-  paramDefAsHtml(node: ParamDefNode): string {
-    return this.c_langs_paramDefAsHtml(node);
-  }
-
-  addNodesForTypeGeneric(node: TypeGenericNode): void {
-    this.c_langs_addNodesForTypeGeneric(node);
-  }
-
-  addNodesForTypeTuple(node: TypeTupleNode): void {
-    this.addCommonElementsForTypeTuple(node);
-  }
-
-  typeGenericAsHtml(node: TypeGenericNode): string {
-    return this.c_langs_typeGenericAsHtml(node);
-  }
-
-  addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    this.addCommonElementsForNewInstance(node);
-  }
-
-  addNodesForLambda(node: Lambda): void {
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
-    node.addElement(node.params);
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.addElement(new PunctuationNode(node.file, ARROW));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.expr = new ExprNode(node.file);
-    node.addElement(node.expr);
-  }
-
-  addNodesForList(node: ListNode): void {
-    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(new PunctuationNode(node.file, OPEN_SQ_BRACKET));
-    node.addElement(new PunctuationNode(node.file, CLOSE_SQ_BRACKET));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    this.default_addNodesForList(node);
-  }
-
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
-    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
-  }
-
-  listAsHtml(node: ListNode): string {
-    return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> [] ${this.default_listAsHtml(node)}`;
-  }
-
-  lambdaAsHtml(node: Lambda): string {
-    return `${node.params!.renderAsHtml()} ${ARROW} ${node.expr!.renderAsHtml()}`;
-  }
-
-  newInstanceAsHtml(node: NewInstance): string {
-    return this.c_langs_newInstanceAsHtml(node);
-  }
-
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
-  }
-
   postProcessHtml(html: string): string {
     return html;
-  }
-
-  typeTupleAsHtml(node: TypeTupleNode): string {
-    return this.default_typeTupleAsHtml(node);
-  }
-
-  override enumValuesListAsHtml(field: FieldImpl): string {
-    return this.c_langs_enumValues(field);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

@@ -5,14 +5,12 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { AbstractClass } from "./globals/abstract-class";
-import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
@@ -23,24 +21,6 @@ import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
-import { CSV } from "./parse-nodes/csv";
-import { ExprNode } from "./parse-nodes/expr-node";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
-import { KeywordNode } from "./parse-nodes/keyword-node";
-import { Lambda } from "./parse-nodes/lambda";
-import { ListNode } from "./parse-nodes/list-node";
-import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNode } from "./parse-nodes/type-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
-import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -56,9 +36,6 @@ import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
-import { ParseStatus } from "./status-enums";
-import { TokenType } from "./symbol-completion-helpers";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageVB extends LanguageAbstract {
   private constructor() {
@@ -295,131 +272,6 @@ export class LanguageVB extends LanguageAbstract {
 
   EXPRESSION_KEYWORDS: string[] = [this.NEW, this.FUNCTION, this.ME, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [this.ME, this.FUNCTION, this.NOT, this.TRUE, this.FALSE];
-
-  addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new IdentifierNode(node.file);
-    node.addElement(node.name);
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(new PunctuationNode(node.file, this.AS));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.type = new TypeNode(
-      node.file,
-      new Set<TokenType>([
-        TokenType.type_concrete,
-        TokenType.type_abstract,
-        TokenType.type_notInheritable,
-      ]),
-    );
-    node.addElement(node.type);
-  }
-
-  paramDefAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${node.type?.renderAsHtml()}`;
-  }
-
-  addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    this.addCommonElementsForNewInstance(node);
-  }
-
-  addNodesForTypeGeneric(node: TypeGenericNode) {
-    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
-    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
-    node.genericTypes = new CSV(node.file, typeConstr, 1);
-
-    node.addElement(node.qualifiedName!);
-    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.addElement(new KeywordNode(node.file, this.OF));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(node.genericTypes);
-    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-  }
-
-  addNodesForLambda(node: Lambda): void {
-    node.addElement(new KeywordNode(node.file, this.FUNCTION));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
-    node.addElement(node.params);
-    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.expr = new ExprNode(node.file);
-    node.addElement(node.expr);
-  }
-
-  listAsHtml(node: ListNode): string {
-    return this.default_listAsHtml(node);
-  }
-
-  addNodesForList(node: ListNode): void {
-    this.default_addNodesForList(node);
-  }
-
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
-    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
-  }
-
-  lambdaAsHtml(node: Lambda): string {
-    return `<el-kw>${this.FUNCTION}</el-kw> (${node.params!.renderAsHtml()}) ${node.expr!.renderAsHtml()}`;
-  }
-
-  typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}(<el-kw>${this.OF}</el-kw> ${node.genericTypes?.renderAsHtml()})`;
-  }
-
-  newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
-  }
-
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
-  }
-
-  addNodesForTypeTuple(node: TypeTupleNode): void {
-    this.addCommonElementsForTypeTuple(node);
-  }
-
-  typeTupleAsHtml(node: TypeTupleNode): string {
-    return this.default_typeTupleAsHtml(node);
-  }
-
-  override enumValuesListAsHtml(field: FieldImpl): string {
-    return languageHelper_enumValuesList(
-      field,
-      LineFormat.multiline,
-      0,
-      `<br><el-kw>${this.END} ${this.ENUM}</el-kw>`,
-    );
-  }
-
-  inheritsFromTextAsHtml(field: FieldImpl): string {
-    const frame = field.getHolder() as ClassFrame;
-    const node = field.getRootNode()! as InheritanceNode;
-    let result = ``;
-    if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
-      const inheritsKw = `<el-kw>${this.INHERITS}</el-kw>`;
-      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw>`;
-      const abstractClasses = node.getAbstractClassNames();
-      if (abstractClasses.length > 0) {
-        const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
-        const csvTypes = typesAsHtml.join(", ");
-        result += `<br>&nbsp;&nbsp;${inheritsKw} ${csvTypes}`;
-      }
-      const interfaces = node.getInterfaceNames();
-      if (interfaces.length > 0) {
-        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
-        const csvTypes = typesAsHtml.join(", ");
-        const keyWord = frame.isInterface ? inheritsKw : implementsKw;
-        result += `<br>&nbsp;&nbsp;${keyWord} ${csvTypes}`;
-      }
-      if (abstractClasses.length === 0 && interfaces.length === 0) {
-        result = ` ${node.renderAsElanSource()}`;
-      }
-      result += `<br>`;
-    }
-    return result;
-  }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);

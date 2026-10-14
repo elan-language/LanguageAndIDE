@@ -1,6 +1,6 @@
 import { matchesElanKeyword } from "../compiler/elan-keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
-import { transform, transformMany } from "../ide/compile-api/ast-visitor";
+import { transform } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
 import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
@@ -66,7 +66,6 @@ export function getCounts() {
 function transforms(): Transforms {
   return {
     transform: transform,
-    transformMany: transformMany,
   };
 }
 

@@ -1,42 +1,16 @@
 import { getConstantType } from "../compile-api/parser-helpers";
 import { Property } from "./class-members/property";
-import { FieldImpl } from "./fields/field-impl";
 import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
-import { Alternatives } from "./parse-nodes/alternatives";
-import { CommaNode } from "./parse-nodes/comma-node";
-import { CSV } from "./parse-nodes/csv";
-import { ExprNode } from "./parse-nodes/expr-node";
-import { InheritanceNode } from "./parse-nodes/inheritanceNode";
-import { KeywordNode } from "./parse-nodes/keyword-node";
-import { Lambda } from "./parse-nodes/lambda";
-import { ListNode } from "./parse-nodes/list-node";
-import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
-import { LitStringInterpolatedInsert } from "./parse-nodes/lit-string-interpolated-insert";
-import { LitStringOrdinary } from "./parse-nodes/lit-string-ordinary";
-import { LitStringText } from "./parse-nodes/lit-string-text";
-import { Multiple } from "./parse-nodes/multiple";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { RegExMatchNode } from "./parse-nodes/regex-match-node";
-import { Sequence } from "./parse-nodes/sequence";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
-import { ParseStatus } from "./status-enums";
-import { CLOSE_BRACKET, OPEN_BRACKET } from "./symbols";
 
 export class LanguageJava extends LanguageCfamily {
   static Instance: Language = new LanguageJava();
@@ -87,30 +61,6 @@ export class LanguageJava extends LanguageCfamily {
     return html;
   }
 
-  inheritsFromTextAsHtml(field: FieldImpl): string {
-    const frame = field.getHolder() as ClassFrame;
-    const node = field.getRootNode()! as InheritanceNode;
-    let result = "";
-    if (frame.doesInherit() && field.readParseStatus() === ParseStatus.valid) {
-      const inheritsKw = `<el-kw>${this.EXTENDS}</el-kw> `;
-      const implementsKw = `<el-kw>${this.IMPLEMENTS}</el-kw> `;
-      const abstractClasses = node.getAbstractClassNames();
-      if (abstractClasses.length > 0) {
-        const typesAsHtml: string[] = abstractClasses.map((t) => `<el-type>${t}</el-type>`);
-        const csvTypes = typesAsHtml.join(", ");
-        result += ` ${inheritsKw}${csvTypes}`;
-      }
-      const interfaces = node.getInterfaceNames();
-      if (interfaces.length > 0) {
-        const typesAsHtml: string[] = interfaces.map((t) => `<el-type>${t}</el-type>`);
-        const csvTypes = typesAsHtml.join(", ");
-        const keyWord = frame.isInterface ? inheritsKw : implementsKw;
-        result += ` ${keyWord}${csvTypes}`;
-      }
-    }
-    return result;
-  }
-
   renderBottomAsHtml(frame: Frame): string {
     let html = this.common_renderBottomAsHtml(frame);
     if (frame instanceof TestFrame) {
@@ -144,124 +94,8 @@ export class LanguageJava extends LanguageCfamily {
 
   INTERPOLATED_STRING_PREFIX: string = "S"; // because of String.format
 
-  addNodesForParamDef(node: ParamDefNode): void {
-    this.c_langs_addNodesForParamDef(node);
-  }
-  paramDefAsHtml(node: ParamDefNode): string {
-    return this.c_langs_paramDefAsHtml(node);
-  }
-
-  addNodesForTypeGeneric(node: TypeGenericNode): void {
-    this.c_langs_addNodesForTypeGeneric(node);
-  }
-  typeGenericAsHtml(node: TypeGenericNode): string {
-    return this.c_langs_typeGenericAsHtml(node);
-  }
-
-  addNodesForLambda(node: Lambda): void {
-    node.addElement(new PunctuationNode(node.file, OPEN_BRACKET));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
-    node.addElement(node.params);
-    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.addElement(new PunctuationNode(node.file, this.ARROW));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.expr = new ExprNode(node.file);
-    node.addElement(node.expr);
-  }
-
-  addNodesForList(node: ListNode): void {
-    node.csv = new CSV(node.file, node.elementConstructor, 1);
-    node.addElement(new PunctuationNode(node.file, `list${OPEN_BRACKET}`));
-    node.addElement(node.csv);
-    node.addElement(new PunctuationNode(node.file, CLOSE_BRACKET));
-  }
-
-  listAsHtml(node: ListNode): string {
-    return `<el-method>list<el-method>(${node.csv?.renderAsHtml()})`;
-  }
-
-  lambdaAsHtml(node: Lambda): string {
-    return `(${node.params!.renderAsHtml()}) ${this.ARROW} ${node.expr!.renderAsHtml()}`;
-  }
-
   postProcessHtml(html: string): string {
     return html;
-  }
-
-  litStringInterpolatedAsHtml(node: LitStringInterpolated) {
-    let definingString = "";
-    let csv = "";
-    node.segments!.getElements().forEach((element) => {
-      const seg = (element as Alternatives).bestMatch;
-      if (seg instanceof LitStringInterpolatedInsert) {
-        definingString += "%";
-        csv += `${seg.expr!.renderAsHtml()}, `;
-      } else if (seg instanceof LitStringText) {
-        definingString += seg.renderAsHtml();
-      }
-    });
-    csv = csv.endsWith(", ") ? csv.substring(0, csv.length - 2) : csv;
-    return `<el-type>String</el-type>.<el-method>format</el-method>("<el-lit>${definingString}</el-lit>", ${csv})`;
-  }
-
-  override enumValuesListAsHtml(field: FieldImpl): string {
-    return this.c_langs_enumValues(field);
-  }
-
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
-    const f = node.file;
-    const java = new Sequence(f, []);
-    const numFields = text.split("%").length - 1; // if 0 occurrences then parseStatus.error
-    java.addElement(new RegExMatchNode(f, /String\.format\(/));
-    const str = new LitStringOrdinary(f);
-    java.addElement(str);
-    java.addElement(new CommaNode(f));
-    const csvExpr = new CSV(f, () => new ExprNode(f), numFields);
-    java.addElement(csvExpr);
-    java.addElement(new PunctuationNode(f, CLOSE_BRACKET));
-    java.parseText(text);
-
-    let toParse = text;
-    if (java.status === ParseStatus.valid) {
-      toParse = `$${str.matchedText}`;
-      const contents = this.justTheExpressions(csvExpr);
-      for (let i = 0; i < numFields; i++) {
-        toParse = toParse.replace("%", "{" + contents[i].renderAsElanSource() + "}");
-      }
-    }
-    this.default_parseInterpolatedString(node, "$", toParse);
-  }
-
-  private justTheExpressions(csv: CSV): ExprNode[] {
-    const contents: ExprNode[] = [];
-    const first = csv.getElements()[0] as ExprNode;
-    const secondOnwards = (csv.getElements()[1] as Multiple).getElements();
-    contents.push(first);
-    for (let i = 0; i < secondOnwards.length; i++) {
-      const commaPlus = secondOnwards[i] as Sequence;
-      const contentNode = commaPlus.getElements()[1] as ExprNode;
-      contents.push(contentNode);
-    }
-    return contents;
-  }
-
-  addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    this.addCommonElementsForNewInstance(node);
-  }
-
-  newInstanceAsHtml(node: NewInstance): string {
-    return this.c_langs_newInstanceAsHtml(node);
-  }
-
-  addNodesForTypeTuple(node: TypeTupleNode): void {
-    this.addCommonElementsForTypeTuple(node);
-  }
-
-  typeTupleAsHtml(node: TypeTupleNode): string {
-    return this.default_typeTupleAsHtml(node);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

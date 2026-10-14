@@ -4,7 +4,7 @@ import { AssertOutcome } from "../../src/compiler/assert-outcome";
 import { Severity } from "../../src/compiler/compile-error";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
-import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
+import { transform } from "../../src/ide/compile-api/ast-visitor";
 import { Transforms } from "../../src/ide/compile-api/transforms";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
@@ -246,7 +246,6 @@ export function testHash(s: string) {
 export function transforms() {
   return {
     transform: transform,
-    transformMany: transformMany,
   } as Transforms;
 }
 

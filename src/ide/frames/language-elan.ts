@@ -68,22 +68,6 @@ import { MainRoutine } from "./globals/main-routine";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { languageHelper_enumValuesList, LineFormat } from "./language-helpers";
-import { CSV } from "./parse-nodes/csv";
-import { ExprNode } from "./parse-nodes/expr-node";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { KeywordNode } from "./parse-nodes/keyword-node";
-import { Lambda } from "./parse-nodes/lambda";
-import { ListNode } from "./parse-nodes/list-node";
-import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNode } from "./parse-nodes/type-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
-import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -99,8 +83,6 @@ import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
-import { TokenType } from "./symbol-completion-helpers";
-import { ARROW, GT, LT } from "./symbols";
 
 export class LanguageElan extends LanguageAbstract {
   private constructor() {
@@ -318,94 +300,8 @@ export class LanguageElan extends LanguageAbstract {
     this.FALSE,
   ];
 
-  addNodesForNewInstance(node: NewInstance): void {
-    node.addElement(new KeywordNode(node.file, this.NEW_INSTANCE_PREFIX));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    this.addCommonElementsForNewInstance(node);
-  }
-
-  addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new IdentifierNode(node.file);
-    node.addElement(node.name);
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(new KeywordNode(node.file, asKeyword));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.type = new TypeNode(
-      node.file,
-      new Set<TokenType>([
-        TokenType.type_concrete,
-        TokenType.type_abstract,
-        TokenType.type_notInheritable,
-      ]),
-    );
-    node.addElement(node.type);
-  }
-
-  addNodesForTypeGeneric(node: TypeGenericNode): void {
-    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
-    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
-    node.genericTypes = new CSV(node.file, typeConstr, 1);
-
-    node.addElement(node.qualifiedName!);
-    node.addElement(new PunctuationNode(node.file, LT));
-    node.addElement(new KeywordNode(node.file, ofKeyword));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.addElement(node.genericTypes);
-    node.addElement(new PunctuationNode(node.file, GT));
-  }
-  paramDefAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()} <el-kw>as</el-kw> ${node.type?.renderAsHtml()}`;
-  }
-
-  typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}&lt;<el-kw>of</el-kw> ${node.genericTypes?.renderAsHtml()}&gt;`;
-  }
-
-  newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW_INSTANCE_PREFIX}</el-kw> ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`;
-  }
-
-  addNodesForTypeTuple(node: TypeTupleNode): void {
-    this.addCommonElementsForTypeTuple(node);
-  }
-  typeTupleAsHtml(node: TypeTupleNode): string {
-    return this.default_typeTupleAsHtml(node);
-  }
-
-  addNodesForLambda(node: Lambda): void {
-    node.addElement(new KeywordNode(node.file, lambdaKeyword));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
-    node.addElement(node.params);
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.addElement(new PunctuationNode(node.file, ARROW));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.expr = new ExprNode(node.file);
-    node.addElement(node.expr);
-  }
-
-  lambdaAsHtml(node: Lambda): string {
-    return `<el-kw>${lambdaKeyword}</el-kw> ${node.params!.renderAsHtml()} ${ARROW} ${node.expr!.renderAsHtml()}`;
-  }
-
-  addNodesForList(node: ListNode): void {
-    this.default_addNodesForList(node);
-  }
-
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
-    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
-  }
-
-  listAsHtml(node: ListNode): string {
-    return this.default_listAsHtml(node);
-  }
-
   enumValuesListAsHtml(field: FieldImpl): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }
-
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
   }
 
   functionFrameFields(frame: FunctionFrame): Field[] {

@@ -1,7 +1,7 @@
 import { readdirSync, readFileSync, statSync, writeFileSync } from "node:fs";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { elanVersion } from "../environment";
-import { transform, transformMany } from "../ide/compile-api/ast-visitor";
+import { transform } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { FileImpl } from "../ide/frames/file-impl";
@@ -15,7 +15,6 @@ const rootdir = `${__dirname}/../../..`;
 function transforms(): Transforms {
   return {
     transform: transform,
-    transformMany: transformMany,
   };
 }
 

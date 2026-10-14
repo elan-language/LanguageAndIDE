@@ -21,16 +21,6 @@ import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
-import { CSV } from "./parse-nodes/csv";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNode } from "./parse-nodes/type-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -46,8 +36,6 @@ import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
-import { TokenType } from "./symbol-completion-helpers";
-import { GT, LT } from "./symbols";
 
 export abstract class LanguageCfamily extends LanguageAbstract {
   protected constructor() {
@@ -126,9 +114,9 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)} {`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)} {`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {
@@ -247,43 +235,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];
   DISALLOWED_IDENTIFIERS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS, this.TRUE, this.FALSE];
-
-  c_langs_addNodesForParamDef(node: ParamDefNode): void {
-    node.type = new TypeNode(
-      node.file,
-      new Set<TokenType>([
-        TokenType.type_concrete,
-        TokenType.type_abstract,
-        TokenType.type_notInheritable,
-      ]),
-    );
-    node.addElement(node.type);
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.name = new IdentifierNode(node.file);
-    node.addElement(node.name);
-  }
-
-  c_langs_paramDefAsHtml(node: ParamDefNode): string {
-    return `${node.type?.renderAsHtml()} ${node.name?.renderAsHtml()}`;
-  }
-
-  c_langs_addNodesForTypeGeneric(node: TypeGenericNode): void {
-    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
-    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
-    node.genericTypes = new CSV(node.file, typeConstr, 1);
-    node.addElement(node.qualifiedName!);
-    node.addElement(new PunctuationNode(node.file, LT));
-    node.addElement(node.genericTypes);
-    node.addElement(new PunctuationNode(node.file, GT));
-  }
-
-  c_langs_typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}&lt;${node.genericTypes?.renderAsHtml()}&gt;`;
-  }
-
-  c_langs_newInstanceAsHtml(node: NewInstance): string {
-    return `<el-kw>${this.NEW_INSTANCE_PREFIX} ${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})</el-kw>`;
-  }
 
   c_langs_enumValues(field: FieldImpl): string {
     return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");

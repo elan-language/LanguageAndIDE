@@ -1,12 +1,4 @@
-import { FieldImpl } from "../fields/field-impl";
 import { FileImpl } from "../file-impl";
-import { Lambda } from "../parse-nodes/lambda";
-import { ListNode } from "../parse-nodes/list-node";
-import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
-import { NewInstance } from "../parse-nodes/new-instance";
-import { ParamDefNode } from "../parse-nodes/param-def-node";
-import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
 import { Field } from "./field";
 import { Frame } from "./frame";
 
@@ -33,24 +25,6 @@ export interface Language {
   translateExpression(expr: string): string;
 
   getFields(node: Frame): Field[];
-
-  addNodesForNewInstance(node: NewInstance): void;
-  addNodesForParamDef(node: ParamDefNode): void;
-  addNodesForTypeGeneric(node: TypeGenericNode): void;
-  addNodesForTypeTuple(node: TypeTupleNode): void;
-  addNodesForLambda(node: Lambda): void;
-  addNodesForList(node: ListNode): void;
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void;
-
-  paramDefAsHtml(node: ParamDefNode): string;
-  typeGenericAsHtml(node: TypeGenericNode): string;
-  newInstanceAsHtml(node: NewInstance): string;
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
-  typeTupleAsHtml(node: TypeTupleNode): string;
-  enumValuesListAsHtml(field: FieldImpl): string;
-  inheritsFromTextAsHtml(field: FieldImpl): string;
-  lambdaAsHtml(node: Lambda): string;
-  listAsHtml(node: ListNode): string;
 
   postProcessHtml(html: string): string;
 

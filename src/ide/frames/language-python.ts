@@ -26,23 +26,6 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LanguageExportHelpers } from "./language-export-helpers";
 import { LanguageExportPython } from "./language-export-python";
-import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
-import { CSV } from "./parse-nodes/csv";
-import { ExprNode } from "./parse-nodes/expr-node";
-import { IdentifierNode } from "./parse-nodes/identifier-node";
-import { KeywordNode } from "./parse-nodes/keyword-node";
-import { Lambda } from "./parse-nodes/lambda";
-import { ListNode } from "./parse-nodes/list-node";
-import { LitStringInterpolated } from "./parse-nodes/lit-string-interpolated";
-import { NewInstance } from "./parse-nodes/new-instance";
-import { ParamDefNode } from "./parse-nodes/param-def-node";
-import { Space } from "./parse-nodes/parse-node-helpers";
-import { PunctuationNode } from "./parse-nodes/punctuation-node";
-import { SpaceNode } from "./parse-nodes/space-node";
-import { TypeGenericNode } from "./parse-nodes/type-generic-node";
-import { TypeNode } from "./parse-nodes/type-node";
-import { TypeSimpleName } from "./parse-nodes/type-simple-name";
-import { TypeTupleNode } from "./parse-nodes/type-tuple-node";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -58,9 +41,6 @@ import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
-import { ParseStatus } from "./status-enums";
-import { TokenType } from "./symbol-completion-helpers";
-import { CLOSE_SQ_BRACKET, COLON, OPEN_SQ_BRACKET } from "./symbols";
 
 export class LanguagePython extends LanguageAbstract {
   static Instance: Language = new LanguagePython();
@@ -177,10 +157,6 @@ export class LanguagePython extends LanguageAbstract {
     // if there are params, the comma appears unconditionally
     const comma = field.text === "" ? `<el-place class="trailingcomma">, </el-place>` : ", ";
     return `${self}${comma}${field.renderAsHtml()}`;
-  }
-
-  override enumValuesListAsHtml(field: FieldImpl): string {
-    return languageHelper_enumValuesList(field, LineFormat.multiline, 1, "");
   }
 
   inheritsFromTextAsHtml(field: FieldImpl): string {
@@ -303,108 +279,6 @@ export class LanguagePython extends LanguageAbstract {
 
   EXPRESSION_KEYWORDS: string[] = [this.LAMBDA, this.SELF, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [this.SELF, this.TRUE, this.FALSE];
-
-  addNodesForParamDef(node: ParamDefNode): void {
-    node.name = new IdentifierNode(node.file);
-    node.addElement(node.name);
-    node.addElement(new PunctuationNode(node.file, COLON));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.type = new TypeNode(
-      node.file,
-      new Set<TokenType>([
-        TokenType.type_concrete,
-        TokenType.type_abstract,
-        TokenType.type_notInheritable,
-      ]),
-    );
-    node.addElement(node.type);
-  }
-
-  paramDefAsHtml(node: ParamDefNode): string {
-    return `${node.name?.renderAsHtml()}: ${node.type?.renderAsHtml()}`;
-  }
-
-  newInstanceAsHtml(node: NewInstance): string {
-    return node.status === ParseStatus.valid
-      ? `${node.type?.renderAsHtml()}(${node.args?.renderAsHtml()})`
-      : node.matchedText;
-  }
-
-  addNodesForTypeGeneric(node: TypeGenericNode) {
-    node.qualifiedName = new TypeSimpleName(node.file, node.tokenTypes);
-    const typeConstr = () => new TypeNode(node.file, node.concreteAndAbstract);
-    node.genericTypes = new CSV(node.file, typeConstr, 1);
-    node.addElement(node.qualifiedName!);
-    node.addElement(new PunctuationNode(node.file, this.OPEN_SQUARE_BRACKET));
-    node.addElement(node.genericTypes);
-    node.addElement(new PunctuationNode(node.file, this.CLOSE_SQUARE_BRACKET));
-  }
-  typeGenericAsHtml(node: TypeGenericNode): string {
-    return `${node.qualifiedName?.renderAsHtml()}[${node.genericTypes?.renderAsHtml()}]`;
-  }
-
-  addNodesForNewInstance(node: NewInstance): void {
-    this.addCommonElementsForNewInstance(node);
-  }
-
-  addNodesForLambda(node: Lambda): void {
-    node.addElement(new KeywordNode(node.file, this.LAMBDA));
-    node.addElement(new SpaceNode(node.file, Space.required));
-    node.params = new CSV(node.file, () => new ParamDefNode(node.file), 0);
-    node.addElement(node.params);
-    node.addElement(new PunctuationNode(node.file, COLON));
-    node.addElement(new SpaceNode(node.file, Space.added));
-    node.expr = new ExprNode(node.file);
-    node.addElement(node.expr);
-  }
-
-  addNodesForList(node: ListNode): void {
-    this.default_addNodesForList(node);
-  }
-
-  listAsHtml(node: ListNode): string {
-    return this.default_listAsHtml(node);
-  }
-
-  lambdaAsHtml(node: Lambda): string {
-    return `<el-kw>${this.LAMBDA}</el-kw> ${node.params!.renderAsHtml()}${COLON} ${node.expr!.renderAsHtml()}`;
-  }
-
-  listNodeAsHtml(node: ListNode): string {
-    return `[${node.csv?.renderAsHtml()}]`;
-  }
-
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string {
-    return this.default_litStringInterpolatedAsHtml(node);
-  }
-
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void {
-    return this.default_parseInterpolatedString(node, this.INTERPOLATED_STRING_PREFIX, text);
-  }
-
-  addNodesForTypeTuple(node: TypeTupleNode): void {
-    node.types = new CSV(
-      node.file,
-      () =>
-        new TypeNode(
-          node.file,
-          new Set<TokenType>([
-            TokenType.type_concrete,
-            TokenType.type_abstract,
-            TokenType.type_notInheritable,
-          ]),
-        ),
-      2,
-    );
-    node.addElement(new PunctuationNode(node.file, "tuple"));
-    node.addElement(new PunctuationNode(node.file, OPEN_SQ_BRACKET));
-    node.addElement(node.types);
-    node.addElement(new PunctuationNode(node.file, CLOSE_SQ_BRACKET));
-  }
-
-  override typeTupleAsHtml(node: TypeTupleNode): string {
-    return `<el-kw>tuple</el-kw>[${node.types?.renderAsHtml()}]`;
-  }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);
