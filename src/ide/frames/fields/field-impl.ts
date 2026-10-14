@@ -112,6 +112,20 @@ export class FieldImpl implements Selectable, Field {
     this.parseCompleteText(this.text);
   }
 
+  _parserErrorMessages: string[] = [];
+
+  addParseError(msg: string) {
+    this._parserErrorMessages.push(msg);
+  }
+
+  getParserErrors() {
+    return this._parserErrorMessages;
+  }
+
+  resetParserErrors() {
+    this._parserErrorMessages = [];
+  }
+
   parseFrom(source: CodeSource): void {
     this.holder.hasBeenAddedTo();
     const text = this.readToDelimiter!(source);
@@ -949,11 +963,12 @@ export class FieldImpl implements Selectable, Field {
   }
 
   parseByLanguage(text: string): [antlr.Parser, antlr.ParserRuleContext] {
-    const parser = getParserByLanguage(this.language(), text);
+    const parser = getParserByLanguage(this.language(), text, this);
     return [parser, this.getRuleContextByField(parser)];
   }
 
   parseCompleteText(text: string): void {
+    this.resetParserErrors();
     if (!text || text.length === 0) {
       this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
     } else {

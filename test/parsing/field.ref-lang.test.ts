@@ -22,8 +22,20 @@ suite("Field Tests", () => {
   test("Expression", () => {
     const field = new FieldImpl(new Assignment(fileImpl), expressionFieldSpec);
 
-    testFieldParse(field, "123", true); // litInt
+    testFieldParse(
+      field,
+      "123",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-lit>123</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "123",
+      "123",
+    ); // litInt
 
-    testFieldParse(field, "+", false);
+    testFieldParse(
+      field,
+      "+",
+      false,
+      "mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', '$', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING}",
+    );
   });
 });

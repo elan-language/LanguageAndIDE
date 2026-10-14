@@ -1,4 +1,18 @@
-import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
+import {
+  ANTLRErrorListener,
+  ATNConfigSet,
+  ATNSimulator,
+  BitSet,
+  CharStream,
+  CommonTokenStream,
+  DFA,
+  Parser,
+  ParseTreeVisitor,
+  RecognitionException,
+  Recognizer,
+  TerminalNode,
+  Token,
+} from "antlr4ng";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
@@ -25,6 +39,7 @@ import { PythonVisitorSource } from "./python-visitor-source";
 import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
+import { FieldImpl } from "../frames/fields/field-impl";
 
 export function getPythonParser(input: string) {
   const chars = CharStream.fromString(input);
@@ -36,22 +51,65 @@ export function getPythonParser(input: string) {
   return parser;
 }
 
-export function getRefLangParser(input: string) {
+class ErrorListener implements ANTLRErrorListener {
+  constructor(private readonly field: FieldImpl) {}
+
+  syntaxError<S extends Token, T extends ATNSimulator>(
+    _recognizer: Recognizer<T>,
+    _offendingSymbol: S | null,
+    _line: number,
+    _charPositionInLine: number,
+    msg: string,
+    _e: RecognitionException | null,
+  ): void {
+    this.field.addParseError(msg);
+  }
+  reportAmbiguity(
+    _recognizer: Parser,
+    _dfa: DFA,
+    _startIndex: number,
+    _stopIndex: number,
+    _exact: boolean,
+    _ambigAlts: BitSet | undefined,
+    _configs: ATNConfigSet,
+  ): void {}
+  reportAttemptingFullContext(
+    _recognizer: Parser,
+    _dfa: DFA,
+    _startIndex: number,
+    _stopIndex: number,
+    _conflictingAlts: BitSet | undefined,
+    _configs: ATNConfigSet,
+  ): void {}
+  reportContextSensitivity(
+    _recognizer: Parser,
+    _dfa: DFA,
+    _startIndex: number,
+    _stopIndex: number,
+    _prediction: number,
+    _configs: ATNConfigSet,
+  ): void {}
+}
+
+export function getRefLangParser(input: string, field?: FieldImpl) {
   const chars = CharStream.fromString(input);
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  // parser.removeParseListeners();
-  // parser.removeErrorListeners();
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
+  if (field) {
+    parser.addErrorListener(new ErrorListener(field));
+  }
   return parser;
 }
 
-export function getParserByLanguage(l: Language, input: string) {
+export function getParserByLanguage(l: Language, input: string, field?: FieldImpl) {
   switch (l.languageFullName) {
     case "Python":
       return getPythonParser(input);
     case "Reference Language":
-      return getRefLangParser(input);
+      return getRefLangParser(input, field);
     default:
       throw Error("Unsupported language " + l.languageFullName);
   }

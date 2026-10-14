@@ -617,25 +617,29 @@ export function testFieldParse(
   field: FieldImpl,
   text: string,
   parses: boolean,
-  elanSource = "",
   html = "",
+  elanSource = "",
   exprt = "",
 ) { 
   field.parseCompleteText(text);
 
-  assert.equal(parses, field.readParseStatus() === ParseStatus.valid, `Parsing: '${text}'`);
+  const errors = field.getParserErrors().join("\n");
 
-  if (elanSource !== "") {
-    assert.equal(field.renderAsElanSource(), elanSource);
-  }
+  const parsed  = field.readParseStatus() === ParseStatus.valid;
 
   if (html && html !== "") {
-    assert.equal(field.renderAsHtml(), html);
+    assert.equal(parsed ? field.renderAsHtml() : errors, html);
+  }
+
+   if (elanSource !== "") {
+    assert.equal(field.renderAsElanSource(), elanSource);
   }
 
   if (exprt && exprt !== "") {
     assert.equal(field.renderAsSource(), exprt);
   }
+
+  assert.equal(parses, parsed, `Parsing: '${text}'`);
 }
 
 export function fileWithPython(): FileImpl {
