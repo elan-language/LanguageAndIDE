@@ -5,51 +5,69 @@ Sub main()
   fillRandom(grid) ' procedure call
   While True
     displayBlockGraphics(grid) ' procedure call
-    nextGeneration(grid) ' procedure call
+    Dim nextGen = New BlockGraphics() ' variable definition
+    fillNextGeneration(grid, nextGen) ' procedure call
+    grid = nextGen ' assignment
     sleep_ms(50) ' procedure call
   End While
 End Sub
 
 Sub fillRandom(grid As BlockGraphics) ' procedure
-  For Each col In range(0, 40)
-    For Each row In range(0, 30)
-      grid.put(col, row, blackOrWhite(random())) ' procedure call
-    Next row
-  Next col
-End Sub
-
-Sub nextGeneration(grid As BlockGraphics) ' procedure
-  ' First, make a copy of the existing grid
-  Dim copy = New BlockGraphics() ' variable definition
+  Dim colours = {black, white} ' variable definition
   For Each cell In range(0, 1199)
-    copy.putBlockNo(cell, grid.getBlockNo(cell)) ' procedure call
-  Next cell
-  ' then calculate each new cell *from the copy*, and update the grid
-  For Each cell In range(0, 1199)
-    Dim colour = nextCellValue(copy, cell) ' variable definition
+    Dim colour = colours(randint(0, 2)) ' variable definition
     grid.putBlockNo(cell, colour) ' procedure call
   Next cell
 End Sub
 
-Function blackOrWhite(random As Double) As Integer
-  Dim result = black ' variable definition
-  If random > 0.5 Then
-    result = white ' assignment
-  End If
-  Return result
-End Function
+Sub fillNextGeneration(grid As BlockGraphics, nextGen As BlockGraphics) ' procedure
+  For Each cell In range(0, 1199)
+    Dim colour = nextCellValue(grid, cell) ' variable definition
+    nextGen.putBlockNo(cell, colour) ' procedure call
+  Next cell
+End Sub
 
 Function x(cell As Integer) As Integer
   Return cell Mod 40
 End Function
 
+<TestClass Class Test_x
+ <TestMethod> Sub test_x()
+  Assert.AreEqual(0, x(0))
+  Assert.AreEqual(39, x(39))
+  Assert.AreEqual(0, x(40))
+  Assert.AreEqual(39, x(1199))
+ End Sub
+End Class
+
+
 Function y(cell As Integer) As Integer
   Return divAsInt(cell, 40)
 End Function
 
+<TestClass Class Test_y
+ <TestMethod> Sub test_y()
+  Assert.AreEqual(0, y(0))
+  Assert.AreEqual(0, y(39))
+  Assert.AreEqual(1, y(40))
+  Assert.AreEqual(29, y(1199))
+ End Sub
+End Class
+
+
 Function cellNo(x As Integer, y As Integer) As Integer
   Return y*40 + x
 End Function
+
+<TestClass Class Test_cellNo
+ <TestMethod> Sub test_cellNo()
+  Assert.AreEqual(0, cellNo(0, 0))
+  Assert.AreEqual(39, cellNo(39, 0))
+  Assert.AreEqual(40, cellNo(0, 1))
+  Assert.AreEqual(1199, cellNo(39, 29))
+ End Sub
+End Class
+
 
 Function north(cell As Integer) As Integer
   Dim x = x(cell) ' variable definition
@@ -199,6 +217,17 @@ Function liveNeighbours(grid As BlockGraphics, cell As Integer) As Integer
   Return neighbours.filter(Function (c As Integer) grid.getBlockNo(c) = black).length()
 End Function
 
+<TestClass Class Test_liveNeighbours
+ <TestMethod> Sub test_liveNeighbours()
+  Dim grid = createTestGrid() ' variable definition
+  Assert.AreEqual(1, liveNeighbours(grid, 0))
+  Assert.AreEqual(4, liveNeighbours(grid, 41))
+  Assert.AreEqual(3, liveNeighbours(grid, 1))
+  Assert.AreEqual(3, liveNeighbours(grid, 42))
+ End Sub
+End Class
+
+
 Function willLive(cell As Integer, liveNeighbours As Integer) As Boolean
   Return ((cell = black) And (liveNeighbours > 1) And (liveNeighbours < 4)) Or ((cell = white) And (liveNeighbours = 3))
 End Function
@@ -236,13 +265,19 @@ Function nextCellValue(grid As BlockGraphics, cell As Integer) As Integer
   Return colour
 End Function
 
-<TestClass Class Test_blackOrWhite
- <TestMethod> Sub test_blackOrWhite()
-  Assert.AreEqual(black, blackOrWhite(0))
-  Assert.AreEqual(black, blackOrWhite(0.499))
-  Assert.AreEqual(black, blackOrWhite(0.5))
-  Assert.AreEqual(white, blackOrWhite(0.501))
-  Assert.AreEqual(white, blackOrWhite(1))
+<TestClass Class Test_nextCellValue
+ <TestMethod> Sub test_nextCellValue()
+  Dim grid = createTestGrid() ' variable definition
+  Assert.AreEqual(white, nextCellValue(grid, 0))
+  Assert.AreEqual(white, nextCellValue(grid, 41))
+  Assert.AreEqual(black, nextCellValue(grid, 1))
+  Assert.AreEqual(black, nextCellValue(grid, 42))
  End Sub
 End Class
 
+
+Function createTestGrid() As BlockGraphics
+  Dim grid = New BlockGraphics() ' variable definition
+  grid = grid.withPutBlockNo(0, black).withPutBlockNo(2, black).withPutBlockNo(41, black).withPutBlockNo(80, black).withPutBlockNo(82, black) ' assignment
+  Return grid
+End Function

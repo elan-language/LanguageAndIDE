@@ -1,55 +1,64 @@
-# c41085954a27d13f0e90e971c3a703966c945d0e924a6cba465ef2b6477a94c4 Elan 2.0.0-beta5 valid
+# be661e1ae2c05ccb25e87410af6ffdf84736585bf03cd458c8b5c2c64d519bd8 Elan 2.0.0-beta5 valid
 
 main
   variable grid set to new BlockGraphics()
   call fillRandom(grid)
   while true
     call displayBlockGraphics(grid)
-    call nextGeneration(grid)
+    variable nextGen set to new BlockGraphics()
+    call fillNextGeneration(grid, nextGen)
+    assign grid to nextGen
     call sleep_ms(50)
   end while
 end main
 
 procedure fillRandom(grid as BlockGraphics)
-  for col in range(0, 40)
-    for row in range(0, 30)
-      call grid.put(col, row, blackOrWhite(random()))
-    end for
-  end for
-end procedure
-
-procedure nextGeneration(grid as BlockGraphics)
-  # First, make a copy of the existing grid
-  variable copy set to new BlockGraphics()
+  variable colours set to [black, white]
   for cell in range(0, 1199)
-    call copy.putBlockNo(cell, grid.getBlockNo(cell))
-  end for
-  # then calculate each new cell *from the copy*, and update the grid
-  for cell in range(0, 1199)
-    variable colour set to nextCellValue(copy, cell)
+    variable colour set to colours[randint(0, 2)]
     call grid.putBlockNo(cell, colour)
   end for
 end procedure
 
-function blackOrWhite(random as Float) returns Int
-  variable result set to black
-  if random > 0.5 then
-    assign result to white
-  end if
-  return result
-end function
+procedure fillNextGeneration(grid as BlockGraphics, nextGen as BlockGraphics)
+  for cell in range(0, 1199)
+    variable colour set to nextCellValue(grid, cell)
+    call nextGen.putBlockNo(cell, colour)
+  end for
+end procedure
 
 function x(cell as Int) returns Int
   return cell mod 40
 end function
 
+test test_x
+  assert x(0) evaluates to 0
+  assert x(39) evaluates to 39
+  assert x(40) evaluates to 0
+  assert x(1199) evaluates to 39
+end test
+
 function y(cell as Int) returns Int
   return divAsInt(cell, 40)
 end function
 
+test test_y
+  assert y(0) evaluates to 0
+  assert y(39) evaluates to 0
+  assert y(40) evaluates to 1
+  assert y(1199) evaluates to 29
+end test
+
 function cellNo(x as Int, y as Int) returns Int
   return y*40 + x
 end function
+
+test test_cellNo
+  assert cellNo(0, 0) evaluates to 0
+  assert cellNo(39, 0) evaluates to 39
+  assert cellNo(0, 1) evaluates to 40
+  assert cellNo(39, 29) evaluates to 1199
+end test
 
 function north(cell as Int) returns Int
   variable x set to x(cell)
@@ -172,6 +181,14 @@ function liveNeighbours(grid as BlockGraphics, cell as Int) returns Int
   return neighbours.filter(lambda c as Int => grid.getBlockNo(c) is black).length()
 end function
 
+test test_liveNeighbours
+  variable grid set to createTestGrid()
+  assert liveNeighbours(grid, 0) evaluates to 1
+  assert liveNeighbours(grid, 41) evaluates to 4
+  assert liveNeighbours(grid, 1) evaluates to 3
+  assert liveNeighbours(grid, 42) evaluates to 3
+end test
+
 function willLive(cell as Int, liveNeighbours as Int) returns Boolean
   return ((cell is black) and (liveNeighbours > 1) and (liveNeighbours < 4)) or ((cell is white) and (liveNeighbours is 3))
 end function
@@ -206,10 +223,16 @@ function nextCellValue(grid as BlockGraphics, cell as Int) returns Int
   return colour
 end function
 
-test test_blackOrWhite
-  assert blackOrWhite(0) evaluates to black
-  assert blackOrWhite(0.499) evaluates to black
-  assert blackOrWhite(0.5) evaluates to black
-  assert blackOrWhite(0.501) evaluates to white
-  assert blackOrWhite(1) evaluates to white
+test test_nextCellValue
+  variable grid set to createTestGrid()
+  assert nextCellValue(grid, 0) evaluates to white
+  assert nextCellValue(grid, 41) evaluates to white
+  assert nextCellValue(grid, 1) evaluates to black
+  assert nextCellValue(grid, 42) evaluates to black
 end test
+
+function createTestGrid() returns BlockGraphics
+  variable grid set to new BlockGraphics()
+  assign grid to grid.withPutBlockNo(0, black).withPutBlockNo(2, black).withPutBlockNo(41, black).withPutBlockNo(80, black).withPutBlockNo(82, black)
+  return grid
+end function

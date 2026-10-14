@@ -2,83 +2,79 @@
 
 public class Global {
 
-// Use the w,a,s,d keys to change snake's direction
-
-static final int width = 40; // constant
-
-static final int height = 30; // constant
-
 static void main() {
-  var bg = new BlockGraphics();
-  var head = 621;
-  var snake = list(head - 1, head);
-  var currentDir = "d";
-  var gameIsOn = true;
+  var head = 620;
+  var snake = list(619, head);
+  var direction = "d";
   var apple = -1;
-  while (gameIsOn) {
-    while ((apple == -1) || snake.contains(apple)) {
-      apple = randint(0, width*height); // assignment
-    } // end while
-    updateDisplay(bg, snake, apple); // procedure call
-    var key = getKey();
-    if (!key.equals("") && "wasd".contains(key)) {
-      currentDir = key; // assignment
+  var gameOn = true;
+  while (gameOn) {
+    if (apple == -1) {
+      apple = randint(0, 1200); // assignment
     } // end if
-    head = getAdjacentBlock(head, currentDir); // assignment
+    display(snake, apple); // procedure call
+    sleep_ms(150); // procedure call
+    var key = getKey().lowerCase();
+    if (isValid(key)) {
+      direction = key; // assignment
+    } // end if
+    head = getAdjacentBlock(head, direction); // assignment
     if ((head == -1) || snake.contains(head)) {
-      gameIsOn = false; // assignment
-    } else {
-      snake.append(head); // procedure call
+      gameOn = false; // assignment
     } // end if
+    snake.append(head); // procedure call
     if (head.equals(apple)) {
       apple = -1; // assignment
     } else {
       snake.removeAt(0); // procedure call
     } // end if
-    sleep_ms(150); // procedure call
   } // end while
-  System.out.println(String.format("Game Over! Score: %", snake.length() - 1)); // print statement
+  System.out.println(String.format("Game Over! Score: %", snake.length() - 2)); // print statement
 } // end main
 
-static void updateDisplay(BlockGraphics bg, List<int> snake, int apple) { // procedure
-  bg.colourAll(white); // procedure call
-  foreach (var bl in snake) {
-    bg.putBlockNo(bl, green); // procedure call
+static void display(List<int> snake, int apple) { // procedure
+  var bg = new BlockGraphics();
+  foreach (var segment in snake) {
+    bg.putBlockNo(segment, green); // procedure call
   } // end foreach
   bg.putBlockNo(apple, red); // procedure call
   displayBlockGraphics(bg); // procedure call
 } // end procedure
 
-static int getAdjacentBlock(int bl, String dir) { // function
+static boolean isValid(String key) { // function
+  return (!key.equals("")) && ("wasd".contains(key));
+} // end function
+
+class Test_isValid {
+@Test static void test_isValid() {
+  assertEquals(true, isValid("w"));
+  assertEquals(false, isValid(""));
+  assertEquals(false, isValid("x"));
+}} // end test
+
+static int getAdjacentBlock(int block, String direction) { // function
   var adj = -1;
-  var newCol = bl % width;
-  var newRow = divAsInt(bl, width);
-  if (dir.equals("w")) {
-    newRow = newRow - 1; // assignment
-  } else if (dir.equals("a")) {
-    newCol = newCol - 1; // assignment
-  } else if (dir.equals("s")) {
-    newRow = newRow + 1; // assignment
-  } else if (dir.equals("d")) {
-    newCol = newCol + 1; // assignment
-  } // end if
-  if ((newCol >= 0) && (newCol < width) && (newRow >= 0) && (newRow < height)) {
-    adj = newRow*width + newCol; // assignment
+  if (direction.equals("d") && ((block % 40) < 39)) {
+    adj = block + 1; // assignment
+  } else if (direction.equals("s") && (block < 1160)) {
+    adj = block + 40; // assignment
+  } else if (direction.equals("w") && (block > 39)) {
+    adj = block - 40; // assignment
+  } else if (direction.equals("a") && ((block % 40) > 0)) {
+    adj = block - 1; // assignment
   } // end if
   return adj;
 } // end function
 
 class Test_getAdjacentBlock {
 @Test static void test_getAdjacentBlock() {
-  var bl = 617;
-  assertEquals(577, getAdjacentBlock(bl, "w"));
-  assertEquals(616, getAdjacentBlock(bl, "a"));
-  assertEquals(657, getAdjacentBlock(bl, "s"));
-  assertEquals(618, getAdjacentBlock(bl, "d"));
-  // boundary
-  assertEquals(-1, getAdjacentBlock(20, "w"));
-  assertEquals(-1, getAdjacentBlock(40, "a"));
-  assertEquals(-1, getAdjacentBlock(1180, "s"));
-  assertEquals(-1, getAdjacentBlock(79, "d"));
+  assertEquals(581, getAdjacentBlock(621, "w"));
+  assertEquals(620, getAdjacentBlock(621, "a"));
+  assertEquals(661, getAdjacentBlock(621, "s"));
+  assertEquals(622, getAdjacentBlock(621, "d"));
+  assertEquals(-1, getAdjacentBlock(119, "d"));
+  assertEquals(-1, getAdjacentBlock(600, "a"));
+  assertEquals(-1, getAdjacentBlock(7, "w"));
+  assertEquals(-1, getAdjacentBlock(1190, "s"));
 }} // end test
 } // end Global

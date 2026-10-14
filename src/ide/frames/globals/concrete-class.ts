@@ -21,8 +21,6 @@ export class ConcreteClass extends ClassFrame {
     this.toString = new FunctionMethod(this);
     this.toString.name.setFieldToKnownValidText("toString");
     this.toString.returnType.setFieldToKnownValidText(this.language().STRING_NAME);
-    const newCode = this.toString.getFirstChild();
-    this.toString.removeChild(newCode);
     (this.toString.getLastChild() as ReturnStatement).expr.setFieldToKnownValidText(`"undefined"`);
     // remove the isNew flag from the return statement frame to allow
     // Backspace to work on the "undefined" string immediately

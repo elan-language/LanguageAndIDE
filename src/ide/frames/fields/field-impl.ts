@@ -569,6 +569,7 @@ export class FieldImpl implements Selectable, Field {
         if (this.getHolder().isSelected()) {
           return this.getHolder().processKey(e);
         }
+        break;
       }
       case "Backspace": {
         if (this.holder.isNew) {
@@ -619,7 +620,10 @@ export class FieldImpl implements Selectable, Field {
       }
       case "v": {
         if (e.modKey.control) {
-          const toPaste = e.optionalData ?? "";
+          // Replace control characters in the range
+          // NUL (\x00) to US (\x1F) with spaces
+          // This includes newlines (\r and \n) and tabs
+          const toPaste = (e.optionalData ?? "").replace(/[\x00-\x1F]/g, " ");
           this.deleteExistingSelection();
           for (const c of toPaste) {
             this.processInput(c);
@@ -839,11 +843,14 @@ export class FieldImpl implements Selectable, Field {
     const propertyPrefix = `${thisInstance}.`;
     const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 
-    if (this.text === propertyPrefix && appendText.startsWith(propertyPrefix)) {
-      this.text = "";
+    if (this.text.endsWith(propertyPrefix) && appendText.startsWith(propertyPrefix)) {
+      // remove the trailing propertyPrefix
+      this.text = this.text.slice(0, -propertyPrefix.length);
     }
 
-    const optSpace = this.text && this.selectedSymbolCompletion?.isKeyword ? " " : "";
+    // add a space before keyword unless this.text is empty or ends with an open-bracket or space
+    const optSpace =
+      /[^[({ ]$/.test(this.text) && this.selectedSymbolCompletion?.isKeyword ? " " : "";
 
     this.text = `${this.text}${optSpace}${appendText}`;
     this.selectedSymbolCompletion = undefined;
