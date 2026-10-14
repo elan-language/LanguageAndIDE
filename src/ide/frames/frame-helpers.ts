@@ -353,7 +353,7 @@ export function togglePrivatePublic(member: PossiblyPrivateMember) {
 }
 
 export function selfTypeAsHtml(member: MemberFrame): string {
-  const typeNode = (member.getParent() as ClassFrame).name.getRootNode();
+  const typeNode = (member.getParent() as ClassFrame).name;
   return typeNode?.renderAsHtml() ?? "<el-type></el-type>";
 }
 

@@ -25,7 +25,6 @@ import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
 import { Language } from "../src/ide/frames/frame-interfaces/language";
-import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
 import { MainRoutine } from "../src/ide/frames/globals/main-routine";
 import { LanguageCS } from "../src/ide/frames/language-cs";
 import { LanguageElan } from "../src/ide/frames/language-elan";
@@ -557,34 +556,7 @@ export function ctrl_v() {
   return key("v", false, true);
 }
 
-export function testNodeParse(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
-  html = "",
-  exprt = "",
-) {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  if (matchedText !== "") {
-    assert.equal(node.matchedText, matchedText);
-  }
-  if (remainingText !== "") {
-    assert.equal(node.remainingText, remainingText);
-  }
-  if (elanSource !== "") {
-    assert.equal(node.renderAsElanSource(), elanSource);
-  }
-  if (html && html !== "") {
-    assert.equal(node.renderAsHtml(), html);
-  }
-  if (exprt && exprt !== "") {
-    assert.equal(node.renderAsExport(), exprt);
-  }
-}
+
 
 export type Parser = RefLangParser | PythonParser;
 
@@ -679,46 +651,6 @@ export function testExtractContextForExpression(text: string, context: string) {
   expr.parseCurrentText();
   assert.equal(expr.extractContextFromText(), context);
 
-}
-
-export function testActiveNodeAndDone(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  activeNodeType: string,
-  done = false,
-) {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  const active = node.getActiveNode();
-  const cls = active.constructor.name;
-  assert.equal(cls, activeNodeType);
-  assert.equal(node.isDone(), done);
-}
-
-export function testSymbolCompletionSpec(node: ParseNode, text: string, status: ParseStatus, activeNode: string,
-  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "") {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  const active = node.getActiveNode();
-  const cls = active.constructor.name;
-  const spec = node.symbolCompletion_getSpec();
-  assert.equal(cls, activeNode);
-  assert.equal(spec.toMatch, toMatch);
-  assert.equal(Array.from(spec.tokenTypes).join(","), tokenTypes.join(","));
-  assert.equal(Array.from(spec.keywords).map(kc => kc.keyword).join(","), keywords.join(","));
-  assert.equal(spec.context, constrainingId);
-}
-
-export function testCompletion(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  completion: string,
-) {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  assert.equal(node.getSyntaxCompletionAsHtml(), completion);
 }
 
 export const intType = IntType.Instance;

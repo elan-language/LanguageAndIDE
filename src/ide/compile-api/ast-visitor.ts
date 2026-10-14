@@ -48,7 +48,6 @@ import { FileImpl } from "../frames/file-impl";
 import { isSelector } from "../frames/frame-helpers";
 import { Field } from "../frames/frame-interfaces/field";
 import { Frame } from "../frames/frame-interfaces/frame";
-import { ParseNode } from "../frames/frame-interfaces/parse-node";
 import { AbstractClass } from "../frames/globals/abstract-class";
 import { ConcreteClass } from "../frames/globals/concrete-class";
 import { ConstantGlobal } from "../frames/globals/constant-global";
@@ -72,11 +71,10 @@ import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
-import { ParseStatus } from "../frames/status-enums";
 import { getVisitorCompilerByLanguage } from "./parser-helpers";
 
 export function transform(
-  node: ParseNode | FileImpl | Frame | Field | undefined,
+  node: FileImpl | Frame | Field | undefined,
   fieldId: string,
   scope: Scope,
 ): AstNode | undefined {
@@ -586,12 +584,7 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof FieldImpl) {
-    const rn = node.getRootNode();
-    if (rn && rn.status === ParseStatus.valid) {
-      return transform(rn, node.getHtmlId(), scope);
-    }
-
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.comment) {
     return EmptyAsn.Instance;
   }
 

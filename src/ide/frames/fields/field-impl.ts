@@ -14,7 +14,6 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
-  removeHtmlTagsAndEscChars,
 } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
@@ -22,7 +21,6 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Language } from "../frame-interfaces/language";
-import { ParseNode } from "../frame-interfaces/parse-node";
 import { Selectable } from "../frame-interfaces/selectable";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
@@ -328,7 +326,6 @@ export class FieldImpl implements Selectable, Field {
   protected _parseStatus: ParseStatus;
   cursorPos: number = 0; //Relative to LH end of text
   selectionEnd: number = 0; //Relative to LH end of text
-  protected rootNode?: ParseNode;
   protected completion: string = "";
   overtyper = new Overtyper();
   codeHasChanged: boolean = false;
@@ -372,10 +369,6 @@ export class FieldImpl implements Selectable, Field {
     return `${this.getIdPrefix()}${this.id}`;
   }
 
-  getRootNode(): ParseNode | undefined {
-    return this.rootNode;
-  }
-
   getFile(): File {
     return this.holder.getFile();
   }
@@ -386,10 +379,6 @@ export class FieldImpl implements Selectable, Field {
 
   getHtmlId(): string {
     return this.htmlId;
-  }
-
-  initialiseRoot(): ParseNode {
-    return undefined as unknown as ParseNode;
   }
 
   readToDelimiter?: (source: CodeSource) => string;
@@ -418,27 +407,7 @@ export class FieldImpl implements Selectable, Field {
   }
 
   parseCompleteText(text: string) {
-    if (this.useAntlr) {
-      this.parseCompleteTextUsingAntlr(text);
-    } else {
-      const root = this.initialiseRoot();
-      this.parseCompleteTextUsingNode(text, root);
-    }
-  }
-
-  parseCompleteTextUsingNode(text: string, root: ParseNode): void {
-    if (text.length === 0) {
-      this.setParseStatus(this.isOptional() ? ParseStatus.valid : ParseStatus.incomplete);
-    } else {
-      root.parseText(text.trimStart());
-      if (root.remainingText.trim().length > 0 || root.status === ParseStatus.invalid) {
-        this.setParseStatus(ParseStatus.invalid);
-        this.text = text.trimStart();
-      } else {
-        this.setParseStatus(root.status);
-        this.text = root.renderAsExport();
-      }
-    }
+    this.parseCompleteTextUsingAntlr(text);
   }
 
   getCompletion(): string {
@@ -988,9 +957,7 @@ export class FieldImpl implements Selectable, Field {
       const show = this.getFile().getShowCompletion();
       html = this.fieldAsInput() + (show ? this.symbolCompletion() : "");
     } else {
-      if (this.rootNode && this._parseStatus === ParseStatus.valid) {
-        html = this.rootNode.renderAsHtml();
-      } else if (this.context && this._parseStatus === ParseStatus.valid) {
+      if (this.context && this._parseStatus === ParseStatus.valid) {
         html = this.renderAsHtmlFromTree(this.context);
       } else {
         html = escapeHtmlChars(this.text);
@@ -1000,9 +967,7 @@ export class FieldImpl implements Selectable, Field {
   }
 
   public textAsExport(): string {
-    return this.rootNode && this._parseStatus === ParseStatus.valid
-      ? this.rootNode.renderAsExport()
-      : "";
+    return "";
   }
 
   protected fieldAsInput(): string {
@@ -1055,7 +1020,7 @@ export class FieldImpl implements Selectable, Field {
       const cls = this.isSelected()
         ? DisplayColour[DisplayColour.warning]
         : DisplayColour[DisplayColour.error];
-      const msg = this.rootNode?.message ?? "invalid";
+      const msg = "invalid";
       message = `<el-msg class="${cls}">${msg}${this.helpAsHtml()}</el-msg>`;
     } else {
       message = helper_compileMsgAsHtmlNew(this.getFile(), this);
@@ -1109,11 +1074,7 @@ export class FieldImpl implements Selectable, Field {
   }
 
   renderAsElanSource(): string {
-    return this.rootNode
-      ? this.rootNode.renderAsElanSource()
-      : this.context
-        ? this.renderFromTree(this.context)
-        : this.textAsSource();
+    return this.context ? this.renderFromTree(this.context) : this.textAsSource();
   }
 
   setFieldToKnownValidText(text: string) {
@@ -1214,16 +1175,6 @@ export class FieldImpl implements Selectable, Field {
   public getSymbolCompletionSpec(): SymbolCompletionSpec | undefined {
     KeywordCompletion.reset(); // to clear static map
 
-    const rn = this.rootNode ?? this.initialiseRoot();
-    if (rn) {
-      const spec = rn.symbolCompletion_getSpec();
-      if (spec.context === "") {
-        spec.context = this.extractContextFromText();
-      } else if (spec.context === "none") {
-        spec.context = "";
-      }
-      return spec;
-    }
     return undefined;
   }
 
@@ -1264,12 +1215,6 @@ export class FieldImpl implements Selectable, Field {
   }
 
   resetText() {
-    if (!!this.rootNode && this._parseStatus === ParseStatus.valid) {
-      const text = removeHtmlTagsAndEscChars(this.rootNode!.renderAsHtml());
-      if (text !== this.text) {
-        this.setFieldToKnownValidText(text);
-      }
-    }
     if (!!this.context && this._parseStatus === ParseStatus.valid) {
       const text = this.renderFromTree(this.context);
       if (text !== this.text) {

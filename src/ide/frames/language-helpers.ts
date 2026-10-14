@@ -1,31 +1,6 @@
-import { FieldImpl } from "./fields/field-impl";
-import { ParseStatus } from "./status-enums";
-
 export enum LineFormat {
   inline,
   multiline,
-}
-
-export function languageHelper_enumValuesList(
-  field: FieldImpl,
-  format: LineFormat,
-  startingNumber: number,
-  ending: string,
-): string {
-  let result = "";
-  if (field.readParseStatus() === ParseStatus.valid && format === LineFormat.multiline) {
-    const rawValues = field.getRootNode()!.matchedText.split(",");
-    for (let i = 0; i < rawValues.length; i++) {
-      const value = rawValues[i].trim();
-      const line = `<br>  <el-id>${value}</el-id> = <el-lit>${i + startingNumber}</el-lit>`;
-      result += line;
-    }
-    result += ending;
-  } else {
-    // bad parse status or format is inline
-    result = field.renderAsHtml();
-  }
-  return result;
 }
 
 // Functions in the standard library which should be prefixed with "math" or "Math"

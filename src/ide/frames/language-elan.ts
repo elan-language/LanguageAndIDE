@@ -67,7 +67,6 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { MainRoutine } from "./globals/main-routine";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { languageHelper_enumValuesList, LineFormat } from "./language-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -295,10 +294,6 @@ export class LanguageElan extends LanguageAbstract {
     this.TRUE,
     this.FALSE,
   ];
-
-  enumValuesListAsHtml(field: FieldImpl): string {
-    return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);

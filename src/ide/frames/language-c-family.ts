@@ -5,7 +5,6 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { FieldImpl } from "./fields/field-impl";
 import { selfTypeAsHtml } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -20,7 +19,6 @@ import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
-import { LineFormat, languageHelper_enumValuesList } from "./language-helpers";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchStatement } from "./statements/catch-statement";
@@ -235,8 +233,4 @@ export abstract class LanguageCfamily extends LanguageAbstract {
 
   EXPRESSION_KEYWORDS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS];
   DISALLOWED_IDENTIFIERS: string[] = [this.NEW_INSTANCE_PREFIX, this.THIS, this.TRUE, this.FALSE];
-
-  c_langs_enumValues(field: FieldImpl): string {
-    return languageHelper_enumValuesList(field, LineFormat.inline, 0, "");
-  }
 }
