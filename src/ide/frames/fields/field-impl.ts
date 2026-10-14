@@ -22,6 +22,7 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Language } from "../frame-interfaces/language";
 import { Selectable } from "../frame-interfaces/selectable";
+import { LanguageElan } from "../language-elan";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import {
@@ -670,7 +671,7 @@ export class FieldImpl implements Selectable, Field {
       html = this.fieldAsInput() + (show ? this.symbolCompletion() : "");
     } else {
       if (this.context && this._parseStatus === ParseStatus.valid) {
-        html = this.renderAsHtmlFromTree(this.context);
+        html = this.renderAsHtmlFromContext(this.context);
       } else {
         html = escapeHtmlChars(this.text);
       }
@@ -773,16 +774,24 @@ export class FieldImpl implements Selectable, Field {
     return "";
   }
 
-  renderFromTree(ctx: ParserRuleContext) {
-    return ctx.accept(getVisitorSourceByLanguage(this.language()))!;
+  renderAsSourceFromContext(ctx: ParserRuleContext, language: Language) {
+    return ctx.accept(getVisitorSourceByLanguage(language))!;
   }
 
-  renderAsHtmlFromTree(ctx: ParserRuleContext) {
+  renderAsHtmlFromContext(ctx: ParserRuleContext) {
     return ctx.accept(getVisitorHtmlByLanguage(this.language()))!;
   }
 
   renderAsElanSource(): string {
-    return this.context ? this.renderFromTree(this.context) : this.textAsSource();
+    return this.context
+      ? this.renderAsSourceFromContext(this.context, LanguageElan.Instance)
+      : this.textAsSource();
+  }
+
+  renderAsSource(): string {
+    return this.context
+      ? this.renderAsSourceFromContext(this.context, this.language())
+      : this.textAsSource();
   }
 
   setFieldToKnownValidText(text: string) {
@@ -924,7 +933,7 @@ export class FieldImpl implements Selectable, Field {
 
   resetText() {
     if (!!this.context && this._parseStatus === ParseStatus.valid) {
-      const text = this.renderFromTree(this.context);
+      const text = this.renderAsSourceFromContext(this.context, this.language());
       if (text !== this.text) {
         this.setFieldToKnownValidText(text);
       }

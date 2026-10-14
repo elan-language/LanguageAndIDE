@@ -32,7 +32,7 @@ export function getPythonParser(input: string) {
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
   // parser.removeParseListeners();
-  // parser.removeErrorListeners();
+  parser.removeErrorListeners();
   return parser;
 }
 

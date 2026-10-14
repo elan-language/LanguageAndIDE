@@ -34,7 +34,6 @@ import { LanguageVB } from "../src/ide/frames/language-vb";
 import { Paradigm } from "../src/ide/frames/paradigm";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
-import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { encodeCode } from "../src/ide/web/web-helpers";
@@ -611,6 +610,31 @@ export function testAntlrParse(
 
   if (objectCode && objectCode !== "") {
     assert.equal(getVisitorCompilerByLanguage(language, "", rootScope).visit(context)?.compile(), objectCode);
+  }
+}
+
+export function testFieldParse(
+  field: FieldImpl,
+  text: string,
+  parses: boolean,
+  elanSource = "",
+  html = "",
+  exprt = "",
+) { 
+  field.parseCompleteText(text);
+
+  assert.equal(parses, field.readParseStatus() === ParseStatus.valid, `Parsing: '${text}'`);
+
+  if (elanSource !== "") {
+    assert.equal(field.renderAsElanSource(), elanSource);
+  }
+
+  if (html && html !== "") {
+    assert.equal(field.renderAsHtml(), html);
+  }
+
+  if (exprt && exprt !== "") {
+    assert.equal(field.renderAsSource(), exprt);
   }
 }
 
