@@ -452,108 +452,10 @@ export function transform(
     const ctx = node.context;
 
     if (ctx) {
+      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
       const typeAsn = new TypeFieldAsn(node.getHtmlId());
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      const type = ctx.accept(visitor)!;
-      typeAsn.type = type;
+      typeAsn.type = ctx.accept(visitor)!;
       return typeAsn;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.paramList) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      const paramList = ctx.accept(visitor)!;
-      return paramList;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.argList) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      const argList = ctx.accept(visitor)!;
-      return argList;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (
-    node instanceof FieldImpl &&
-    (node.fieldSpec?.fieldType === FieldType.identifier ||
-      node.fieldSpec?.fieldType === FieldType.methodName)
-  ) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      const id = ctx.accept(visitor)!;
-      return id;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.expression) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.procRef) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.assignable) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.constantValue) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.typeName) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
-    }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.exceptionMessage) {
-    const ctx = node.context;
-
-    if (ctx) {
-      const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
-      return ctx.accept(visitor)!;
     }
     return EmptyAsn.Instance;
   }
@@ -574,17 +476,18 @@ export function transform(
     return EmptyAsn.Instance;
   }
 
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.enumValues) {
+  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.comment) {
+    return EmptyAsn.Instance;
+  }
+
+  // all other field types
+  if (node instanceof FieldImpl) {
     const ctx = node.context;
 
     if (ctx) {
       const visitor = getVisitorCompilerByLanguage(node.language(), node.getHtmlId(), scope);
       return ctx.accept(visitor)!;
     }
-    return EmptyAsn.Instance;
-  }
-
-  if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.comment) {
     return EmptyAsn.Instance;
   }
 
