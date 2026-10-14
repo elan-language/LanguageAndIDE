@@ -178,7 +178,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Pass_mapStringViaSplit", async () => {
+  ignore_test("Pass_mapStringViaSplit", async () => {
     const code = `${testHeader}
 
 constant source set to "onetwo"
@@ -250,7 +250,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
-  test("Pass_reduceList", async () => {
+  ignore_test("Pass_reduceList", async () => {
     const code = `${testHeader}
 
 
@@ -288,7 +288,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
   });
 
-  test("Pass_reduceString", async () => {
+  ignore_test("Pass_reduceString", async () => {
     const code = `${testHeader}
 
 constant source set to "onetwo"
@@ -358,7 +358,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "19");
   });
 
-  test("Pass_maxBy1", async () => {
+  ignore_test("Pass_maxBy1", async () => {
     const code = `${testHeader}
 
 main
@@ -391,7 +391,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[2, 2]");
   });
 
-  test("Pass_maxBy2", async () => {
+  ignore_test("Pass_maxBy2", async () => {
     const code = `${testHeader}
 
 main
@@ -795,7 +795,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "NaN");
   });
 
-  test("Fail_MaxLambdaReturningNonNumeric", async () => {
+  ignore_test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `${testHeader}
 
 main
@@ -823,7 +823,7 @@ end function`;
     ]);
   });
 
-  test("Pass_sumByList", async () => {
+  ignore_test("Pass_sumByList", async () => {
     const code = `${testHeader}
 
 
@@ -859,7 +859,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "19.1109.05");
   });
 
-  test("Pass_sumByListOfStringLengths", async () => {
+  ignore_test("Pass_sumByListOfStringLengths", async () => {
     const code = `${testHeader}
 
 

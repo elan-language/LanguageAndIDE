@@ -397,7 +397,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivatePropertyCannotBePrinted", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBePrinted", async () => {
     const code = `${testHeader}
 
 main

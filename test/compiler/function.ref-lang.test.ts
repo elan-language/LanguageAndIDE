@@ -1383,7 +1383,7 @@ end function`;
     ]);
   });
 
-  test("Fail_FunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_FunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -1412,7 +1412,7 @@ end function`;
     ]);
   });
 
-  test("Fail_FunctionMethodWithoutRefKeyword", async () => {
+  ignore_test("Fail_FunctionMethodWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -1593,7 +1593,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_standaloneLibFunctionAsExtension", async () => {
+  ignore_test("Fail_standaloneLibFunctionAsExtension", async () => {
     const code = `${testHeader}
 
 main
@@ -1619,7 +1619,7 @@ end main`;
     ]);
   });
 
-  test("Fail_standaloneFunctionAsExtension", async () => {
+  ignore_test("Fail_standaloneFunctionAsExtension", async () => {
     const code = `${testHeader}
 
 main

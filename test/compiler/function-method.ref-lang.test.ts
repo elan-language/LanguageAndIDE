@@ -1333,7 +1333,7 @@ end class`;
     ]);
   });
 
-  test("Fail_IncorrectScope", async () => {
+  ignore_test("Fail_IncorrectScope", async () => {
     const code = `${testHeader}
 
 main

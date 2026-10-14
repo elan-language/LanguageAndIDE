@@ -34,6 +34,7 @@ import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import {
+  ArgListContext,
   AssignableContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
@@ -132,6 +133,11 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const paramList = new ParamListAsn(this.fieldId, this.scope);
     paramList.parms = new CsvAsn(paramDefs, this.fieldId);
     return paramList;
+  };
+
+  visitArgList = (ctx: ArgListContext) => {
+    const argList = getArgs(this, ctx).filter((a) => a);
+    return new CsvAsn(argList, this.fieldId);
   };
 
   visitParamDef = (ctx: ParamDefContext) =>

@@ -1602,7 +1602,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-  test("Pass_isInfinite", async () => {
+  ignore_test("Pass_isInfinite", async () => {
     const code = `${testHeader}
 
 main

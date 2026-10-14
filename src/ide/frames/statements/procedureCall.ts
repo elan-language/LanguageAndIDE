@@ -1,6 +1,5 @@
 import { callKeyword } from "../../../compiler/elan-keywords";
-import { AbstractField, procRefFieldSpec } from "../fields/abstract-field";
-import { ArgListField } from "../fields/arg-list-field";
+import { AbstractField, argListFieldSpec, procRefFieldSpec } from "../fields/abstract-field";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -11,12 +10,12 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
   proc: AbstractField;
-  args: ArgListField;
+  args: AbstractField;
   constructor(parent: Parent) {
     super(parent);
     this.proc = new AbstractField(this, procRefFieldSpec);
     this.proc.setPlaceholder("<i>procedureName</i>");
-    this.args = new ArgListField(this);
+    this.args = new AbstractField(this, argListFieldSpec);
   }
 
   initialKeywords(): string {

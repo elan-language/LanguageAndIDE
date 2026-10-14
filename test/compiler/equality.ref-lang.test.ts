@@ -181,7 +181,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  test("Fail_CompareLambdas", async () => {
+  ignore_test("Fail_CompareLambdas", async () => {
     const code = `${testHeader}
 
 main

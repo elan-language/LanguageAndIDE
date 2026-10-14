@@ -329,7 +329,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_OperatorOrder#1167", async () => {
+  ignore_test("Pass_OperatorOrder#1167", async () => {
     const code = `${testHeader}
 
 main

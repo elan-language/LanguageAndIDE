@@ -306,7 +306,7 @@ return [main, _tests];}`;
 main
   variable limit set to 10
   for i in range(1, limit + 1)
-    call printNoLine($"{i}")
+    call printNoLine(i)
     assign limit to limit + 1
   end for
 end main`;
@@ -317,7 +317,7 @@ async function main() {
   let limit = 10;
   const elan_iterelan_for6 = [..._stdlib.range(1, limit + 1)];
   for (const i of elan_iterelan_for6) {
-    await _stdlib.printNoLine(\`\${await _stdlib.toString(i)}\`);
+    await _stdlib.printNoLine(i);
     limit = limit + 1;
   }
 }

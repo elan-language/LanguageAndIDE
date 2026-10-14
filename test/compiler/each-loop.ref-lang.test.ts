@@ -144,7 +144,7 @@ return [main, _tests];}`;
 main
    for x in "12"
      for y in "34"
-      call printNoLine($"{x}{y}")
+      call printNoLine(x + y)
     end for
   end for
 end main`;
@@ -156,7 +156,7 @@ async function main() {
   for (const x of elan_iterelan_for3) {
     const elan_iterelan_for7 = [..."34"];
     for (const y of elan_iterelan_for7) {
-      await _stdlib.printNoLine(\`\${await _stdlib.toString(x)}\${await _stdlib.toString(y)}\`);
+      await _stdlib.printNoLine(x + y);
     }
   }
 }

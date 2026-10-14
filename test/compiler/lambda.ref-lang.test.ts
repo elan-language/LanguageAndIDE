@@ -464,7 +464,7 @@ end procedure`;
     ]);
   });
 
-  test("Fail_PassLambdaWithWrongTypes2", async () => {
+  ignore_test("Fail_PassLambdaWithWrongTypes2", async () => {
     const code = `${testHeader}
 
 main

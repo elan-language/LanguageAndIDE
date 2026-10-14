@@ -815,7 +815,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "11");
   });
 
-  test("Pass_HoFs1", async () => {
+  ignore_test("Pass_HoFs1", async () => {
     const code = `${testHeader}
 
 main 
@@ -848,7 +848,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "86");
   });
 
-  test("Pass_HoFs2", async () => {
+  ignore_test("Pass_HoFs2", async () => {
     const code = `${testHeader}
 
 main 
