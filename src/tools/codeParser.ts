@@ -5,12 +5,12 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { AbstractSelector } from "../ide/frames/abstract-selector";
 import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
+import { FieldImpl } from "../ide/frames/fields/field-impl";
 import {
-  FieldImpl,
+  typeFieldSpec,
   expressionFieldSpec,
   paramListFieldSpec,
-  typeFieldSpec,
-} from "../ide/frames/fields/field-impl";
+} from "../ide/frames/fields/field-spec";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
 import { AbstractClass } from "../ide/frames/globals/abstract-class";

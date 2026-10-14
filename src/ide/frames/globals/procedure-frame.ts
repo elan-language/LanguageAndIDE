@@ -1,5 +1,6 @@
 import { procedureKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, methodNameFieldSpec, paramListFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";

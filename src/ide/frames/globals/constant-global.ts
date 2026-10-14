@@ -1,5 +1,6 @@
 import { constantKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, constantValueFieldSpec, identifierFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, constantValueFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";

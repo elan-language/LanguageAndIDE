@@ -1,5 +1,6 @@
 import { abstractProcedureKeywords } from "../../../compiler/elan-keywords";
-import { FieldImpl, methodNameFieldSpec, paramListFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

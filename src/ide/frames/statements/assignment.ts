@@ -1,5 +1,6 @@
 import { assignKeyword, toKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, assignableFieldSpec, expressionFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { assignableFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";

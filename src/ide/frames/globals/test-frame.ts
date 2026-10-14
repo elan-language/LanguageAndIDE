@@ -2,7 +2,8 @@ import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
 import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { FieldImpl, testNameFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { testNameFieldSpec } from "../fields/field-spec";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,

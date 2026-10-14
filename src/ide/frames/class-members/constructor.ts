@@ -1,5 +1,6 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, paramListFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";

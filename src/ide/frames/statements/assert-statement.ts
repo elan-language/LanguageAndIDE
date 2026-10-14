@@ -1,7 +1,8 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { FieldImpl, assertActualFieldSpec, assertExpressionFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { assertActualFieldSpec, assertExpressionFieldSpec } from "../fields/field-spec";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

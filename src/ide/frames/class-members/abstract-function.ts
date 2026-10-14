@@ -4,12 +4,8 @@ import {
   functionKeyword,
   returnsKeyword,
 } from "../../../compiler/elan-keywords";
-import {
-  FieldImpl,
-  methodNameFieldSpec,
-  paramListFieldSpec,
-  typeFieldSpec,
-} from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";

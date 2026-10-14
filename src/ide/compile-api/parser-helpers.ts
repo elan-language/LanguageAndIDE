@@ -31,8 +31,8 @@ export function getPythonParser(input: string) {
   const lexer = new PythonLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
-  parser.removeParseListeners();
-  parser.removeErrorListeners();
+  // parser.removeParseListeners();
+  // parser.removeErrorListeners();
   return parser;
 }
 

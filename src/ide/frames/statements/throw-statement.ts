@@ -1,5 +1,6 @@
 import { throwKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, exceptionMessageFieldSpec, exceptionTypeFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { exceptionMessageFieldSpec, exceptionTypeFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";

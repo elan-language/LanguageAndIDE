@@ -1,5 +1,6 @@
 import { commentMarker } from "../../compiler/elan-keywords";
-import { FieldImpl, commentFieldSpec } from "./fields/field-impl";
+import { FieldImpl } from "./fields/field-impl";
+import { commentFieldSpec } from "./fields/field-spec";
 import { singleIndent } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Field } from "./frame-interfaces/field";

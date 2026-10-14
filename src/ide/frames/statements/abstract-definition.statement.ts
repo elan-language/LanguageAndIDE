@@ -1,4 +1,5 @@
-import { FieldImpl, expressionFieldSpec, identifierFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";

@@ -1,7 +1,8 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
-import { FieldImpl, identifierFieldSpec, typeFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,

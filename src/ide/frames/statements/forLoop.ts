@@ -1,5 +1,6 @@
 import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
-import { FieldImpl, expressionFieldSpec, identifierFieldSpec } from "../fields/field-impl";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
