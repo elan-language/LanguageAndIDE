@@ -2,19 +2,34 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
+  AssignableContext,
   BinaryExpressionContext,
   BinaryOperatorContext,
+  BracketedExpressionContext,
   CommentTextContext,
+  DictionaryContext,
   EnumValueContext,
+  ExpressionContext,
   IdentifierDefContext,
   IdentifierUseContext,
+  IndexContext,
+  InstanceProcRefContext,
+  KvpContext,
+  LambdaContext,
+  ListContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
   MethodNameContext,
+  NegateLogicalContext,
+  NegateNumericContext,
+  NewInstanceContext,
   ParamDefContext,
   ParamListContext,
+  TermContext,
   TestNameContext,
+  ThisProcRefContext,
+  TupleContext,
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -25,8 +40,10 @@ import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import {
   getArgs,
+  getExpressions,
   getFilteredTypes,
   getFuncTypes,
+  getKVPs,
   getParamDefs,
   visitTypeHelper,
 } from "./parser-helpers";
@@ -48,7 +65,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return `Callable[[${inTypes}]${returnType}]`;
   };
 
-  override visitType = (context: TypeContext) => visitTypeHelper<string>(this, context);
+  visitType = (context: TypeContext) => visitTypeHelper<string>(this, context);
 
   visitTerminal(ctx: TerminalNode) {
     return getTokenTextByName(this.language, ctx.getText());
@@ -79,8 +96,12 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const argList = ctx.argList();
     const args = argList ? this.visit(argList) : "";
     const name = this.visit(ctx.methodName());
-
     return `${name}(${args})`;
+  };
+
+  visitIndex = (ctx: IndexContext) => {
+    const expr = this.visit(ctx.expression()) ?? "";
+    return `[${expr}]`;
   };
 
   visitEnumValue = (ctx: EnumValueContext) =>
@@ -93,4 +114,75 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
+
+  visitNegateNumeric = (ctx: NegateNumericContext) =>
+    `${this.visit(ctx.MINUS())}${this.visit(ctx.term())}`;
+
+  visitNegateLogical = (ctx: NegateLogicalContext) => {
+    let not = ctx.NOT().getText();
+    if (/^[A-Za-z]+$/.test(not)) {
+      not = `${not} `;
+    }
+    return `${not}${this.visit(ctx.term())}`;
+  };
+
+  visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+    `(${this.visit(ctx.expression())})`;
+
+  visitLambda = (ctx: LambdaContext) => {
+    const lambda = this.visit(ctx.LAMBDA()) ?? "";
+    const colon = this.visit(ctx.COLON());
+    const params = ctx.paramList() ? this.visit(ctx.paramList()!) : "";
+    return `${lambda} ${params} ${colon} ${this.visit(ctx.expression())}`;
+  };
+
+  visitExpression = (ctx: ExpressionContext) => {
+    //TODO Not yet handling 'elif' clauses
+    if (ctx.expression().length > 0) {
+      const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(1)!) : "";
+      const condition = ctx.expression(1) ? this.visit(ctx.expression(0)!) : "";
+      const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
+      return `${exprIfTrue} if ${condition} else ${exprIfFalse})`;
+    } else {
+      return this.visitChildren(ctx) ?? "";
+    }
+  };
+
+  visitNewInstance = (ctx: NewInstanceContext) =>
+    `${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
+
+  visitList = (ctx: ListContext) =>
+    `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
+
+  visitTuple = (ctx: TupleContext) =>
+    `(${getExpressions<string>(this, ctx.expressionList()).join(", ")})`;
+
+  visitDictionary = (ctx: DictionaryContext) =>
+    `{${getKVPs<string>(this, ctx.kvpList()).join(", ")}}`;
+
+  visitKvp = (ctx: KvpContext) =>
+    `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
+
+  visitTerm = (ctx: TermContext) =>
+    ctx.DOT()
+      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
+      : ctx.term()
+        ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
+        : (this.visitChildren(ctx) ?? "");
+
+  visitAssignable = (ctx: AssignableContext) => {
+    if (ctx.THIS_INSTANCE()) {
+      return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}}`;
+    } else if (ctx.index()) {
+      return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
+    } else {
+      return this.visitChildren(ctx)!;
+    }
+  };
+
+  visitThisProcRef = (ctx: ThisProcRefContext) =>
+    `${this.visit(ctx.THIS_INSTANCE())}.${this.visit(ctx.methodName())}`;
+
+  visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
+    `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
 }
