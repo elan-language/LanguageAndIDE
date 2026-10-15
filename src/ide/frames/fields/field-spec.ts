@@ -132,7 +132,7 @@ export const exceptionMessageFieldSpec: FieldSpec = new FieldSpec(
   "_msg",
   false,
   false,
-  (parser: PythonParser | RefLangParser) => parser.litString(),
+  (parser: PythonParser | RefLangParser) => parser.errorMessage(),
   (source: CodeSource) => source.readToEndOfLine(),
   "",
 );

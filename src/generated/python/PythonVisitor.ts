@@ -29,6 +29,7 @@ import { InstanceProcRefContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
+import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
 import { ElseIfClauseContext } from "./PythonParser.js";
@@ -256,6 +257,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitThrowStatement?: (ctx: ThrowStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.errorMessage`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitErrorMessage?: (ctx: ErrorMessageContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.assert`.
    * @param ctx the parse tree

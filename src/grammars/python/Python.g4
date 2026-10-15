@@ -135,8 +135,9 @@ tryStatement:
 ;
 
 throwStatement:
-    GHOSTED? RAISE typeName OPEN_BRACKET litString CLOSE_BRACKET NL
+    GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET NL
 ;
+errorMessage: litString | identifierUse ;
 
 assert:
     GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET NL

@@ -29,6 +29,7 @@ import { InstanceProcRefContext } from "./PythonParser.js";
 import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
+import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
 import { ElseIfClauseContext } from "./PythonParser.js";
@@ -361,6 +362,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitThrowStatement?: (ctx: ThrowStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.errorMessage`.
+   * @param ctx the parse tree
+   */
+  enterErrorMessage?: (ctx: ErrorMessageContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.errorMessage`.
+   * @param ctx the parse tree
+   */
+  exitErrorMessage?: (ctx: ErrorMessageContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.assert`.
    * @param ctx the parse tree

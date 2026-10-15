@@ -126,8 +126,10 @@ tryStatement:
     GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
 ;
 throwStatement:
-    GHOSTED? THROW typeName litString NL
+    GHOSTED? THROW typeName errorMessage NL
 ; 
+
+errorMessage: litString | identifierUse ;
 
 assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
 

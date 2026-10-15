@@ -29,6 +29,7 @@ import { InstanceProcRefContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
+import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
 import { ElseIfClauseContext } from "./RefLangParser.js";
@@ -256,6 +257,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitThrowStatement?: (ctx: ThrowStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.errorMessage`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitErrorMessage?: (ctx: ErrorMessageContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.assert`.
    * @param ctx the parse tree
