@@ -4,6 +4,7 @@ import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import {
   argListFieldSpec,
   commentFieldSpec,
+  enumValuesFieldSpec,
   exceptionMessageFieldSpec,
   exceptionTypeFieldSpec,
   expressionFieldSpec,
@@ -18,6 +19,7 @@ import {
 } from "../../src/ide/frames/fields/field-spec";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
+import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
@@ -26,7 +28,7 @@ import { CatchStatement } from "../../src/ide/frames/statements/catch-statement"
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHash, transforms } from "../compiler/compiler-test-helpers";
+import { testHash, transforms } from "../compiler/compiler-test-helpers";
 import { testFieldParse } from "../testHelpers";
 
 suite("Field Tests", () => {
@@ -288,7 +290,7 @@ suite("Field Tests", () => {
     );
     testFieldParse(field, "foo", false, "mismatched input 'foo' expecting COMMENT");
   });
-  ignore_test("InheritsFrom", () => {
+  test("InheritsFrom", () => {
     const fileImpl = new FileImpl(
       testHash,
       new Paradigm(""),
@@ -303,16 +305,11 @@ suite("Field Tests", () => {
       field,
       "Bar",
       true,
-      'NOT CORRECT - ONE FIELD WITHIN ANOTHER - NEED TO DO LIKE TEST NAME<el-field id="elan_text4" class="optional ok" tabindex="-1"><el-txt> <el-kw>inherits</el-kw> <el-field id="elan_text5" class="optional ok" tabindex="-1"><el-txt><el-type>inherits Bar</el-type></el-txt><el-place> <i>inheritance</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#InheritsFromField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-txt><el-place> <i>inheritance</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#InheritsFromField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "inherits Bar",
+      '<el-field id="elan_text4" class="optional ok" tabindex="-1"><el-txt><el-type>Bar</el-type></el-txt><el-place><i>inheritance</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#InheritsFromField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "Bar",
     );
-    testFieldParse(
-      field,
-      "#",
-      true,
-      '<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt>#</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-    );
-    testFieldParse(field, "foo", false, "mismatched input 'foo' expecting COMMENT");
+    testFieldParse(field, "inherits Bar", false, "");
+    testFieldParse(field, "Bar, Yon", false, "");
   });
   test("MethodName", () => {
     const fileImpl = new FileImpl(
@@ -363,5 +360,27 @@ suite("Field Tests", () => {
       '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>bg</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(field, "sleep()", false, "");
+  });
+  test("EnumValues", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Enum(fileImpl), enumValuesFieldSpec);
+    testFieldParse(
+      field,
+      "foo, bar",
+      true,
+      '<el-field id="elan_enumVals4" class="ok" tabindex="-1"><el-txt><el-id>foo</el-id>, <el-id>bar</el-id></el-txt><el-place><i>values</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AbstractField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+    );
+    testFieldParse(field, "foo", false, `mismatched input '<EOF>' expecting ','`);
+    testFieldParse(field, "Foo", false, "mismatched input 'Foo' expecting NAME_STARTING_LC");
+    testFieldParse(field, "foo bar", false, "mismatched input 'bar' expecting ','");
+    testFieldParse(field, "foo, ", false, "missing NAME_STARTING_LC at '<EOF>'");
   });
 });
