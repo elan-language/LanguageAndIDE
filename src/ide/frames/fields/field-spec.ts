@@ -55,8 +55,8 @@ export const typeFieldSpec: FieldSpec = new FieldSpec(
 
 export const argListFieldSpec: FieldSpec = new FieldSpec(
   FieldType.argList,
-  "<i><i>arguments</i></i>",
-  "ArgListField",
+  "<i>arguments</i>",
+  "ArgListField", //TODO this should eventually be a list of the argument names obtained from symbol compiler
   "_args",
   true,
   true,
