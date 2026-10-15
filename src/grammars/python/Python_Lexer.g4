@@ -92,7 +92,6 @@ POWER: '**';
 
 BINARY_PREFIX: '0b';
 HEX_PREFIX: '0x';
-INTERPOLATED_STRING_PREFIX: 'f';
 
 THIS_INSTANCE: 'self';
 //END common token names; custom definitions
@@ -129,10 +128,9 @@ LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
 LITERAL_FLOAT: LITERAL_INTEGER DOT [0-9]+ ExponentPart?;
-LITERAL_REGEXP:
-    '/' (~[/] | CommonCharacter)+ '/'
-; // ('g'|'m'|'i'|'s'|'x'|'u'|'U`'|'D'|'A'|'J'|'n'|'r')* TODO
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
+INTERPOLATED_STRING: 'f"' (~["\u0085] | CommonCharacter)* '"';
+LITERAL_REGEXP:  LITERAL_STRING; //In Python they are the same thing
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;

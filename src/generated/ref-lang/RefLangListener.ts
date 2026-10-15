@@ -59,6 +59,7 @@ import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
@@ -84,7 +85,6 @@ import { TypeGenericContext } from "./RefLangParser.js";
 import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
-import { InterpolatedStringContext } from "./RefLangParser.js";
 
 /**
  * This interface defines a complete listener for a parse tree produced by
@@ -662,6 +662,16 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitString?: (ctx: LitStringContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.interpolatedString`.
+   * @param ctx the parse tree
+   */
+  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.interpolatedString`.
+   * @param ctx the parse tree
+   */
+  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -911,16 +921,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitLambda?: (ctx: LambdaContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.interpolatedString`.
-   * @param ctx the parse tree
-   */
-  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.interpolatedString`.
-   * @param ctx the parse tree
-   */
-  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
 
   visitTerminal(node: TerminalNode): void {}
   visitErrorNode(node: ErrorNode): void {}

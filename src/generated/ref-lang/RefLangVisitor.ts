@@ -59,6 +59,7 @@ import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
@@ -84,7 +85,6 @@ import { TypeGenericContext } from "./RefLangParser.js";
 import { TypeFuncContext } from "./RefLangParser.js";
 import { TypeTupleContext } from "./RefLangParser.js";
 import { LambdaContext } from "./RefLangParser.js";
-import { InterpolatedStringContext } from "./RefLangParser.js";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -437,6 +437,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitString?: (ctx: LitStringContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -586,10 +592,4 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLambda?: (ctx: LambdaContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.interpolatedString`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
 }

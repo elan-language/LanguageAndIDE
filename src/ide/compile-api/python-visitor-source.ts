@@ -17,8 +17,10 @@ import {
   KvpContext,
   LambdaContext,
   ListContext,
+  LitBooleanContext,
   LitFloatContext,
   LitIntContext,
+  LitStringContext,
   MethodCallContext,
   MethodNameContext,
   NegateLogicalContext,
@@ -90,6 +92,14 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
+  visitLitBoolean = (ctx: LitBooleanContext) => this.visitChildren(ctx) ?? "";
+
+  visitLitString = (ctx: LitStringContext) =>
+    this.visitChildren(ctx) ? this.visitChildren(ctx)!.slice(1, -1) : "";
+
+  visitEnumValue = (ctx: EnumValueContext) =>
+    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
+
   visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 
   visitMethodCall = (ctx: MethodCallContext) => {
@@ -103,9 +113,6 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const expr = this.visit(ctx.expression()) ?? "";
     return `[${expr}]`;
   };
-
-  visitEnumValue = (ctx: EnumValueContext) =>
-    `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
   visitBinaryOperator = (ctx: BinaryOperatorContext) => {
     const txt = ctx.getText();

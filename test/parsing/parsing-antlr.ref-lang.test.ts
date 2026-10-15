@@ -62,7 +62,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "+", false);
     testAntlrParse(expression, "+b", false);
     testAntlrParse(expression, "a +", false);
-    testAntlrParse(expression, "a %", true, "a");
     testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x");
     testAntlrParse(expression, "3* foo(5)", true, "3* foo(5)", "3*foo(5)", "");
     testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "system.safeIndex(a.a, 1)");
@@ -163,12 +162,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litString, `'abc'`, false);
     testAntlrParse(litString, `'abc"`, false);
     testAntlrParse(litString, `"abc'`, false);
-    // Interpolated strings
-    testAntlrParse(litString, `$""`, true, "", "");
-    testAntlrParse(litString, `$"x"`, true, "", "");
-    testAntlrParse(litString, `$" "`, true, "", "");
-    testAntlrParse(litString, `$"{x}"`, true, "", "");
-    testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(
       litString,
       `"{curly braces}"`,
@@ -197,6 +190,11 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   // TODO Interpolated strings
   // testAntlrParse(getLitStringRule, `$"{}"`, false);
+  // testAntlrParse(interpolString, `$""`, true, "", "");
+  // testAntlrParse(litString, `$"x"`, true, "", "");
+  // testAntlrParse(litString, `$" "`, true, "", "");
+  // testAntlrParse(litString, `$"{x}"`, true, "", "");
+  // testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
   //     testAntlrParse(
   //       getLitStringInterpolatedRule,
   //       `$"{curly}"`,

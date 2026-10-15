@@ -200,6 +200,7 @@ constantValue:
     | litInt
     | litFloat
     | litString
+    | interpolatedString
     ;
 
 argList: argument (COMMA argument)*;
@@ -224,7 +225,7 @@ litValue:
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
+litString: LITERAL_STRING | INTERPOLATED_STRING ;
 enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
@@ -268,7 +269,7 @@ list:
 tuple:
     OPEN_BRACKET expressionList CLOSE_BRACKET
 ;
-dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
+dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
 
 kvpList: kvp (COMMA kvp)*;
 
@@ -312,5 +313,5 @@ typeTuple:
 
 lambda: LAMBDA paramList COLON expression; // TODO should change to identiferList
 
-interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
+interpolatedString: INTERPOLATED_STRING;
 // END SubNodes

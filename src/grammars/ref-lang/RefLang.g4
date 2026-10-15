@@ -206,13 +206,15 @@ litValue:
     | litInt
     | litFloat
     | litString
+    | interpolatedString
     | enumValue
     | litRegExp
 ;
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
+litString: LITERAL_STRING;
+interpolatedString: INTERPOLATED_STRING;
 enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP;
 
@@ -291,6 +293,4 @@ typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
 typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 
 lambda: LAMBDA paramList ARROW expression; // TODO should change to identiferList
-
-interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
 // END SubNodes

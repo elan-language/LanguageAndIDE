@@ -93,7 +93,6 @@ POWER: '^';
 
 BINARY_PREFIX: '0b';
 HEX_PREFIX: '0x';
-INTERPOLATED_STRING_PREFIX: '$';
 
 THIS_INSTANCE: 'this';
 //END common token names; custom definitions
@@ -149,6 +148,7 @@ LITERAL_REGEXP:
     )*
 ;
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
+INTERPOLATED_STRING: '$"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;

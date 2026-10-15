@@ -120,7 +120,9 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
   visitLitString = (ctx: LitStringContext) =>
-    this.visitChildren(ctx) ? `"${lit(this.visitChildren(ctx)!.slice(1, -1))}"` : "";
+    this.visitChildren(ctx)
+      ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"`
+      : "";
 
   visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
@@ -166,7 +168,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
       const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
       const condition = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
       const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
-      return `${condition} ${kw("if")} ${exprIfTrue} ${kw("else")} ${exprIfFalse}`;
+      return `${exprIfTrue} ${kw("if")} ${condition} ${kw("else")} ${exprIfFalse}`;
     } else {
       return this.visitChildren(ctx) ?? "";
     }
@@ -194,8 +196,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
         ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
         : (this.visitChildren(ctx) ?? "");
 
-  visitThisInstance = (ctx: ThisInstanceContext) =>
-    `${kw(this.visit(ctx.THIS_INSTANCE())!)}</el-kw>`;
+  visitThisInstance = (ctx: ThisInstanceContext) => `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
 
   visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {

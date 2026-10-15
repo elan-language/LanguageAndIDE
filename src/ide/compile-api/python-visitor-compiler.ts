@@ -24,7 +24,6 @@ import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
 import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
 import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
 import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
-import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
 import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
 import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
@@ -53,7 +52,6 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
-  LitRegExpContext,
   LitStringContext,
   MethodCallContext,
   MethodNameContext,
@@ -235,9 +233,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   visitLitString = (ctx: LitStringContext) => new LiteralStringAsn(ctx.getText(), this.fieldId);
 
-  visitLitRegExp = (ctx: LitRegExpContext) =>
-    new LiteralRegExAsn(ctx.getText(), this.fieldId, this.scope);
-
   visitEnumValue = (ctx: EnumValueContext) =>
     new LiteralEnumAsn(
       ctx.identifierUse().getText(),
@@ -265,10 +260,10 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     this.topLevelTerm = true;
 
     if (ctx.expression().length > 0) {
-      const condition = this.visit(ctx.expression(0)!)!;
-      const lhs = this.visit(ctx.expression(1)!)!;
-      const rhs = this.visit(ctx.expression(2)!)!;
-      return new IfExprAsn(condition, lhs, rhs, this.fieldId, this.scope);
+      const ifTrue = this.visit(ctx.expression(0)!)!;
+      const condition = this.visit(ctx.expression(1)!)!;
+      const ifFalse = this.visit(ctx.expression(2)!)!;
+      return new IfExprAsn(condition, ifTrue, ifFalse, this.fieldId, this.scope);
     } else {
       return this.visitChildren(ctx)!;
     }
