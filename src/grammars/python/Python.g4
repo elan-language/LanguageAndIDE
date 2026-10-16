@@ -140,7 +140,7 @@ throwStatement:
 errorMessage: litString | identifierUse ;
 
 assert:
-    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET NL
+    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected CLOSE_BRACKET NL
 ;
 
 returnStatement: RETURN expression NL; // not ghostable
@@ -213,6 +213,7 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
+assertExpected: litValue | list | dictionary | unaryExpression | tuple;
 // END Fields
 
 // START SubNodes

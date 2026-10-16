@@ -55,6 +55,7 @@ import { IdentifierListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
+import { AssertExpectedContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
@@ -413,6 +414,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssertActual?: (ctx: AssertActualContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assertExpected`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssertExpected?: (ctx: AssertExpectedContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.litValue`.
    * @param ctx the parse tree

@@ -55,6 +55,7 @@ import { IdentifierListContext } from "./PythonParser.js";
 import { ExpressionListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
+import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
@@ -622,6 +623,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssertActual?: (ctx: AssertActualContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  enterAssertExpected?: (ctx: AssertExpectedContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  exitAssertExpected?: (ctx: AssertExpectedContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.litValue`.
    * @param ctx the parse tree

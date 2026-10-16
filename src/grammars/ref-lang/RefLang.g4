@@ -131,7 +131,7 @@ throwStatement:
 
 errorMessage: litString | identifierUse ;
 
-assert: GHOSTED? ASSERT assertActual EVALUATES TO expression NL;
+assert: GHOSTED? ASSERT assertActual EVALUATES TO assertExpected NL;
 
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: GHOSTED? ELIF expression THEN NL;
@@ -200,6 +200,7 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
+assertExpected: litValue | list | dictionary | unaryExpression | tuple;
 // END Fields
 
 // START SubNodes

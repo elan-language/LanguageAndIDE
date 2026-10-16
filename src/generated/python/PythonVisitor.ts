@@ -55,6 +55,7 @@ import { IdentifierListContext } from "./PythonParser.js";
 import { ExpressionListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
+import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
 import { LitIntContext } from "./PythonParser.js";
@@ -413,6 +414,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssertActual?: (ctx: AssertActualContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.assertExpected`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssertExpected?: (ctx: AssertExpectedContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.litValue`.
    * @param ctx the parse tree

@@ -55,6 +55,7 @@ import { IdentifierListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
+import { AssertExpectedContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
 import { LitIntContext } from "./RefLangParser.js";
@@ -622,6 +623,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssertActual?: (ctx: AssertActualContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  enterAssertExpected?: (ctx: AssertExpectedContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  exitAssertExpected?: (ctx: AssertExpectedContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.litValue`.
    * @param ctx the parse tree

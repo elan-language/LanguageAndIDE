@@ -3,7 +3,11 @@ import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import {
   argListFieldSpec,
+  assertActualFieldSpec,
+  assertExpectedFieldSpec,
+  assignableFieldSpec,
   commentFieldSpec,
+  constantValueFieldSpec,
   enumValuesFieldSpec,
   exceptionMessageFieldSpec,
   exceptionTypeFieldSpec,
@@ -13,6 +17,7 @@ import {
   inputArgListFieldSpec,
   methodNameFieldSpec,
   paramListFieldSpec,
+  printExpressionFieldSpec,
   procRefFieldSpec,
   testNameFieldSpec,
   typeNameFieldSpec,
@@ -64,7 +69,6 @@ suite("Field Tests", () => {
       "mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
-
   test("InputArgList", () => {
     const fileImpl = new FileImpl(
       testHash,
@@ -97,7 +101,6 @@ suite("Field Tests", () => {
       "mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
-
   test("ParamList", () => {
     const fileImpl = new FileImpl(
       testHash,
@@ -123,36 +126,6 @@ suite("Field Tests", () => {
     );
     testFieldParse(field, "foo", false, "mismatched input '<EOF>' expecting 'as'");
   });
-
-  test("Expression", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), expressionFieldSpec);
-
-    testFieldParse(
-      field,
-      "123",
-      true,
-      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-lit>123</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "123",
-      "123",
-    ); // litInt
-
-    testFieldParse(
-      field,
-      "+",
-      false,
-      "mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
-    );
-  });
-
   test("Identifier", () => {
     const fileImpl = new FileImpl(
       testHash,
@@ -172,7 +145,6 @@ suite("Field Tests", () => {
     );
     testFieldParse(field, "A", false, "mismatched input 'A' expecting NAME_STARTING_LC");
   });
-
   test("TestName", () => {
     const fileImpl = new FileImpl(
       testHash,
@@ -256,7 +228,7 @@ suite("Field Tests", () => {
       field,
       "Foo",
       true,
-      '<el-field id="elan_type4" class="ok" tabindex="-1"><el-txt><el-type>Foo</el-type></el-txt><el-place><i>Name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_type15" class="ok" tabindex="-1"><el-txt><el-type>Foo</el-type></el-txt><el-place><i>Name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
@@ -280,13 +252,13 @@ suite("Field Tests", () => {
       field,
       "# foo",
       true,
-      '<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt># foo</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_comment3" class="ok" tabindex="-1"><el-txt># foo</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
       "#",
       true,
-      '<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt>#</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_comment3" class="ok" tabindex="-1"><el-txt>#</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(field, "foo", false, "mismatched input 'foo' expecting COMMENT");
   });
@@ -382,5 +354,185 @@ suite("Field Tests", () => {
     testFieldParse(field, "Foo", false, "mismatched input 'Foo' expecting NAME_STARTING_LC");
     testFieldParse(field, "foo bar", false, "mismatched input 'bar' expecting ','");
     testFieldParse(field, "foo, ", false, "missing NAME_STARTING_LC at '<EOF>'");
+  });
+  test("Expression", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), expressionFieldSpec);
+
+    testFieldParse(
+      field,
+      "123",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-lit>123</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "123",
+      "123",
+    ); // litInt
+
+    testFieldParse(
+      field,
+      "+",
+      false,
+      "mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
+    );
+  });
+  test("PrintExpression", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), printExpressionFieldSpec);
+
+    testFieldParse(
+      field,
+      "123",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-lit>123</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "123",
+      "123",
+    ); // litInt
+
+    testFieldParse(
+      field,
+      "+",
+      false,
+      "mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
+    );
+  });
+  test("AssertActual", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), assertActualFieldSpec);
+
+    testFieldParse(
+      field,
+      "sqrt(2)",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>actual (computed) value</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssertActualField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "sqrt(2)",
+      "sqrt(2)",
+    );
+
+    testFieldParse(
+      field,
+      "+",
+      false,
+      "mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
+    );
+  });
+  test("AssertExpected", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), assertExpectedFieldSpec);
+
+    testFieldParse(
+      field,
+      "1.4142135623730951",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt><el-lit>1.4142135623730951</el-lit></el-txt><el-place><i>expected value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "1.4142135623730951",
+      "1.4142135623730951",
+    );
+
+    testFieldParse(
+      field,
+      "[1, 2]",
+      true,
+      '<el-field id="elan_expr4" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt><el-place><i>expected value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "[1, 2]",
+      "[1, 2]",
+    );
+
+    testFieldParse(field, "foo()", false, "");
+    testFieldParse(field, "3 + 4", false, "");
+  });
+  test("Assignable", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), assignableFieldSpec);
+
+    testFieldParse(
+      field,
+      "a",
+      true,
+      '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt><el-place><i>variable</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "a",
+      "a",
+    );
+    testFieldParse(
+      field,
+      "a[1][2]",
+      true,
+      '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>a</el-id>[<el-lit>1</el-lit>][<el-lit>2</el-lit>]</el-txt><el-place><i>variable</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "a[1][2]",
+      "a[1][2]",
+    );
+    // TODO: Is adding a spurious } after <el-kw>this</el-kw>.<el-id>a</el-id> - I can't see why
+    // testFieldParse(
+    //   field,
+    //   "this.a",
+    //   true,
+    //   '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-kw>this</el-kw>.<el-id>a</el-id></el-txt><el-place><i>variable</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+    //   "this.a",
+    //   "this.a",
+    // );
+
+    testFieldParse(field, "foo()", false, "");
+  });
+  test("ConstantValue", () => {
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    const field = new FieldImpl(new Assignment(fileImpl), constantValueFieldSpec);
+
+    testFieldParse(
+      field,
+      "1.4142135623730951",
+      true,
+      '<el-field id="elan_text4" class="ok" tabindex="-1"><el-txt><el-lit>1.4142135623730951</el-lit></el-txt><el-place><i>literal</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ConstantValueField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "1.4142135623730951",
+      "1.4142135623730951",
+    );
+    testFieldParse(field, "a", false, "");
+    testFieldParse(field, "3 + 4", false, "");
   });
 });

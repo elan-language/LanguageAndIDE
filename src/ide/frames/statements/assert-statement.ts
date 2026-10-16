@@ -2,7 +2,7 @@ import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { FieldImpl } from "../fields/field-impl";
-import { assertActualFieldSpec, assertExpressionFieldSpec } from "../fields/field-spec";
+import { assertActualFieldSpec, assertExpectedFieldSpec } from "../fields/field-spec";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -19,7 +19,7 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.actual = new FieldImpl(this, assertActualFieldSpec);
-    this.expected = new FieldImpl(this, assertExpressionFieldSpec);
+    this.expected = new FieldImpl(this, assertExpectedFieldSpec);
     this.expected.setPlaceholder("<i>expected value</i>");
   }
 

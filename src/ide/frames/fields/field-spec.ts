@@ -237,22 +237,22 @@ export const assertActualFieldSpec: FieldSpec = new FieldSpec(
   FieldType.expression,
   "<i>actual (computed) value</i>",
   "AssertActualField",
-  "", // not specified in Field ?
+  "_expr",
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertActual(),
-  (source: CodeSource) => source.readUntil(/\sevaluates\sto\s/), // TODO: specific to RefLang
+  (source: CodeSource) => source.readUntil(/\sevaluates\sto\s/),
   "",
 );
 
-export const assertExpressionFieldSpec: FieldSpec = new FieldSpec(
+export const assertExpectedFieldSpec: FieldSpec = new FieldSpec(
   FieldType.expression,
-  "<i>value or expression</i>",
+  "<i>expected value or expression</i>",
   "ExpressionField",
   "_expr",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => parser.expression(),
+  (parser: PythonParser | RefLangParser) => parser.assertExpected(),
   (source: CodeSource) => source.readUntil(/\r|\n/),
   "",
 );
