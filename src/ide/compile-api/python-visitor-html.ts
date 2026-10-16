@@ -11,6 +11,7 @@ import {
   EnumValueContext,
   ExpressionContext,
   IdentifierDefContext,
+  IdentifierListContext,
   IdentifierUseContext,
   IndexContext,
   InstanceProcRefContext,
@@ -213,4 +214,9 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
 
   visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
     `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
+
+  visitIdentifierList = (ctx: IdentifierListContext) => {
+    const ids = ctx.identifierDef().map((id) => this.visit(id)!);
+    return ids.join(", ");
+  };
 }

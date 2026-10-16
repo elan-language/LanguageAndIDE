@@ -99,18 +99,18 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("ParamList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), paramListFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImpl()), paramListFieldSpec);
     testFieldParse(
       field,
       "a as Int, b as String",
       true,
-      '<el-field id="elan_params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_params8" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Int</el-type>, <el-id>b</el-id> <el-kw>as</el-kw> <el-type>String</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
       "a as Boolean",
       true,
-      '<el-field id="elan_params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_params8" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id> <el-kw>as</el-kw> <el-type>Boolean</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(field, "foo", false, "mismatched input '<EOF>' expecting 'as'");
   });

@@ -99,18 +99,18 @@ suite("Field Tests - Python", () => {
     );
   });
   ignore_test("ParamList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), paramListFieldSpec);
-    testFieldParse(
-      field,
-      "a: int, b: str",
-      true,
-      '<el-field id="python_params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-    );
+    const field = new FieldImpl(new GlobalFunction(fileImpl()), paramListFieldSpec);
     testFieldParse(
       field,
       "a: bool",
       true,
-      '<el-field id="python_params4" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>: <el-type>bool</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="python_params8" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>: <el-type>bool</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+    );
+    testFieldParse(
+      field,
+      "a: int, b: str",
+      true,
+      '<el-field id="python_params8" class="optional ok" tabindex="-1"><el-txt><el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type></el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(field, "foo", false, "");
   });
@@ -240,7 +240,7 @@ suite("Field Tests - Python", () => {
     );
     testFieldParse(field, "sleep()", false, "");
   });
-  ignore_test("EnumValues", () => {
+  test("EnumValues", () => {
     const field = new FieldImpl(new Enum(fileImpl()), enumValuesFieldSpec);
     testFieldParse(
       field,
