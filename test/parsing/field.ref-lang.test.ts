@@ -500,15 +500,14 @@ suite("Field Tests", () => {
       "a[1][2]",
       "a[1][2]",
     );
-    // TODO: Is adding a spurious } after <el-kw>this</el-kw>.<el-id>a</el-id> - I can't see why
-    // testFieldParse(
-    //   field,
-    //   "this.a",
-    //   true,
-    //   '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-kw>this</el-kw>.<el-id>a</el-id></el-txt><el-place><i>variable</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-    //   "this.a",
-    //   "this.a",
-    // );
+    testFieldParse(
+      field,
+      "this.a",
+      true,
+      '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-kw>this</el-kw>.<el-id>a</el-id></el-txt><el-place><i>variable</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssignableField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      "this.a",
+      "this.a",
+    );
 
     testFieldParse(field, "foo()", false, "");
   });

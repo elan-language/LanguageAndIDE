@@ -205,7 +205,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
-      return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}}`;
+      return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
     } else if (ctx.index()) {
       return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
     } else {
