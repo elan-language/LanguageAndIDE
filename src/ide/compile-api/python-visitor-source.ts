@@ -179,7 +179,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
-      return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}}`;
+      return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
     } else if (ctx.index()) {
       return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
     } else {

@@ -27,6 +27,7 @@ import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchStatement } from "../../src/ide/frames/statements/catch-statement";
@@ -36,18 +37,23 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { testHash, transforms } from "../compiler/compiler-test-helpers";
 import { testFieldParse } from "../testHelpers";
 
-suite("Field Tests", () => {
+function fileImpl() {
+  const file = new FileImpl(
+    testHash,
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
+  file.setLanguage(LanguageElan.Instance);
+  return file;
+}
+
+suite("Field Tests - RefLang", () => {
   test("ArgList", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), argListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), argListFieldSpec);
     testFieldParse(
       field,
       "123, a",
@@ -70,16 +76,7 @@ suite("Field Tests", () => {
     );
   });
   test("InputArgList", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), inputArgListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), inputArgListFieldSpec);
     testFieldParse(
       field,
       `"age?", a`,
@@ -102,16 +99,7 @@ suite("Field Tests", () => {
     );
   });
   test("ParamList", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), paramListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), paramListFieldSpec);
     testFieldParse(
       field,
       "a as Int, b as String",
@@ -127,16 +115,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo", false, "mismatched input '<EOF>' expecting 'as'");
   });
   test("Identifier", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), identifierFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), identifierFieldSpec);
     testFieldParse(
       field,
       "a",
@@ -146,16 +125,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "A", false, "mismatched input 'A' expecting NAME_STARTING_LC");
   });
   test("TestName", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new TestFrame(fileImpl), testNameFieldSpec);
+    const field = new FieldImpl(new TestFrame(fileImpl()), testNameFieldSpec);
     testFieldParse(
       field,
       "test_a",
@@ -165,16 +135,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "a", false, "mismatched input 'a' expecting NAME_STARTING_TEST_");
   });
   test("ExceptionType", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new CatchStatement(fileImpl), exceptionTypeFieldSpec);
+    const field = new FieldImpl(new CatchStatement(fileImpl()), exceptionTypeFieldSpec);
     testFieldParse(
       field,
       "ElanRuntimeError",
@@ -189,16 +150,7 @@ suite("Field Tests", () => {
     );
   });
   test("ExceptionMessage", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new ThrowStatement(fileImpl), exceptionMessageFieldSpec);
+    const field = new FieldImpl(new ThrowStatement(fileImpl()), exceptionMessageFieldSpec);
     testFieldParse(
       field,
       `"foo"`,
@@ -214,16 +166,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("TypeName", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new ConcreteClass(fileImpl), typeNameFieldSpec);
+    const field = new FieldImpl(new ConcreteClass(fileImpl()), typeNameFieldSpec);
     testFieldParse(
       field,
       "Foo",
@@ -238,16 +181,7 @@ suite("Field Tests", () => {
     );
   });
   test("Comment", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new CommentFrame(fileImpl), commentFieldSpec);
+    const field = new FieldImpl(new CommentFrame(fileImpl()), commentFieldSpec);
     testFieldParse(
       field,
       "# foo",
@@ -263,16 +197,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo", false, "mismatched input 'foo' expecting COMMENT");
   });
   test("InheritsFrom", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), inheritsFromFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), inheritsFromFieldSpec);
     testFieldParse(
       field,
       "Bar",
@@ -284,16 +209,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "Bar, Yon", false, "");
   });
   test("MethodName", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new GlobalFunction(fileImpl), methodNameFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImpl()), methodNameFieldSpec);
     testFieldParse(
       field,
       "fooBar",
@@ -309,16 +225,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ProcRef", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new ProcedureCall(fileImpl), procRefFieldSpec);
+    const field = new FieldImpl(new ProcedureCall(fileImpl()), procRefFieldSpec);
     testFieldParse(
       field,
       "sleep",
@@ -334,16 +241,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "sleep()", false, "");
   });
   test("EnumValues", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Enum(fileImpl), enumValuesFieldSpec);
+    const field = new FieldImpl(new Enum(fileImpl()), enumValuesFieldSpec);
     testFieldParse(
       field,
       "foo, bar",
@@ -356,16 +254,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo, ", false, "missing NAME_STARTING_LC at '<EOF>'");
   });
   test("Expression", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), expressionFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), expressionFieldSpec);
 
     testFieldParse(
       field,
@@ -384,17 +273,7 @@ suite("Field Tests", () => {
     );
   });
   test("PrintExpression", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), printExpressionFieldSpec);
-
+    const field = new FieldImpl(new Assignment(fileImpl()), printExpressionFieldSpec);
     testFieldParse(
       field,
       "123",
@@ -412,16 +291,7 @@ suite("Field Tests", () => {
     );
   });
   test("AssertActual", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), assertActualFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), assertActualFieldSpec);
 
     testFieldParse(
       field,
@@ -440,16 +310,7 @@ suite("Field Tests", () => {
     );
   });
   test("AssertExpected", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), assertExpectedFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), assertExpectedFieldSpec);
 
     testFieldParse(
       field,
@@ -473,16 +334,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "3 + 4", false, "");
   });
   test("Assignable", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), assignableFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), assignableFieldSpec);
 
     testFieldParse(
       field,
@@ -512,16 +364,7 @@ suite("Field Tests", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ConstantValue", () => {
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const field = new FieldImpl(new Assignment(fileImpl), constantValueFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImpl()), constantValueFieldSpec);
 
     testFieldParse(
       field,
