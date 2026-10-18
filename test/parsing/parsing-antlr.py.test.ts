@@ -776,20 +776,21 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(paramDef, `v str`, false);
   });
 
-  ignore_test("Param List", () => {
+  test("Param List", () => {
     const paramList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.paramList(),
     ];
-    testAntlrParse(paramList, `a: str`, true);
+    testAntlrParse(paramList, `a: str`, true, "", "", "<el-id>a</el-id>: <el-type>str</el-type>");
     //Failing this one
     testAntlrParse(
       paramList,
       `a: int, b: str`,
       true,
       `a: int, b: str`,
-      "",
+      "a as Int, b as String",
       `<el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type>`,
+      "a: int, b: str",
     );
     testAntlrParse(paramList, `a: str, bb: int, foo: Bar`, true, `a: str, bb: int, foo: Bar`);
     testAntlrParse(paramList, `a: str,`, false);

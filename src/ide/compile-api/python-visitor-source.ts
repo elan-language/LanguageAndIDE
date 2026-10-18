@@ -74,7 +74,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
-  visitParamsList = (ctx: ParamListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+  visitParamList = (ctx: ParamListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   visitIdentifierDef = (ctx: IdentifierDefContext) => ctx.NAME_STARTING_LC().getText();
 

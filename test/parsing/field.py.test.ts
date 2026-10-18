@@ -98,7 +98,7 @@ suite("Field Tests - Python", () => {
       //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_REGEXP, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
-  ignore_test("ParamList", () => {
+  test("ParamList", () => {
     const field = new FieldImpl(new GlobalFunction(fileImpl()), paramListFieldSpec);
     testFieldParse(
       field,
