@@ -64,44 +64,45 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     super();
   }
 
-  visitTypeTuple = (ctx: TypeTupleContext) =>
+  override visitTypeTuple = (ctx: TypeTupleContext) =>
     `${kw("tuple")}[${getFilteredTypes(this, ctx).join(", ")}]`;
 
-  visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
-  visitTypeGeneric = (ctx: TypeGenericContext) =>
+  override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}[${getFilteredTypes(this, ctx).join(", ")}]`;
 
-  visitTypeFunc = (ctx: TypeFuncContext) => {
+  override visitTypeFunc = (ctx: TypeFuncContext) => {
     const [inTypes, returnType] = getFuncTypes(this, ctx);
     return `${type("Callable")}[[${inTypes}], ${returnType}]`;
   };
 
-  visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
+  override visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
 
-  visitTerminal(ctx: TerminalNode) {
+  override visitTerminal(ctx: TerminalNode) {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
-  visitParamList = (ctx: ParamListContext) => `${getParamDefs<string>(this, ctx).join(", ")}`;
+  override visitParamList = (ctx: ParamListContext) =>
+    `${getParamDefs<string>(this, ctx).join(", ")}`;
 
-  visitIdentifierDef = (ctx: IdentifierDefContext) => id(ctx.NAME_STARTING_LC().getText());
+  override visitIdentifierDef = (ctx: IdentifierDefContext) => id(ctx.NAME_STARTING_LC().getText());
 
-  visitIdentifierUse = (ctx: IdentifierUseContext) => id(ctx.NAME_STARTING_LC().getText());
+  override visitIdentifierUse = (ctx: IdentifierUseContext) => id(ctx.NAME_STARTING_LC().getText());
 
-  visitMethodName = (ctx: MethodNameContext) => method(ctx.NAME_STARTING_LC().getText());
+  override visitMethodName = (ctx: MethodNameContext) => method(ctx.NAME_STARTING_LC().getText());
 
-  visitParamDef = (ctx: ParamDefContext) =>
+  override visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifierDef())}: ${this.visit(ctx.type())}`;
 
-  visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
+  override visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
 
-  visitCommentText = (ctx: CommentTextContext) =>
+  override visitCommentText = (ctx: CommentTextContext) =>
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
 
-  visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
+  override visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 
-  visitMethodCall = (ctx: MethodCallContext) => {
+  override visitMethodCall = (ctx: MethodCallContext) => {
     const argList = ctx.argList();
     const args = argList ? this.visit(argList) : "";
     const name = this.visit(ctx.methodName());
@@ -109,26 +110,27 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return `${name}(${args})`;
   };
 
-  visitIndex = (ctx: IndexContext) => {
+  override visitIndex = (ctx: IndexContext) => {
     const expr = this.visit(ctx.expression()) ?? "";
     return `[${expr}]`;
   };
 
-  visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  visitLitFloat = (ctx: LitFloatContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitFloat = (ctx: LitFloatContext) =>
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
+  override visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
-  visitLitString = (ctx: LitStringContext) =>
+  override visitLitString = (ctx: LitStringContext) =>
     this.visitChildren(ctx)
       ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"`
       : "";
 
-  visitEnumValue = (ctx: EnumValueContext) =>
+  override visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
-  visitBinaryOperator = (ctx: BinaryOperatorContext) => {
+  override visitBinaryOperator = (ctx: BinaryOperatorContext) => {
     const txt = ctx.getText();
     let html = txt;
     if (/^[A-Za-z]+$/.test(txt)) {
@@ -139,13 +141,13 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return html;
   };
 
-  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+  override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
 
-  visitNegateNumeric = (ctx: NegateNumericContext) =>
+  override visitNegateNumeric = (ctx: NegateNumericContext) =>
     `${this.visit(ctx.MINUS())}${this.visit(ctx.term())}`;
 
-  visitNegateLogical = (ctx: NegateLogicalContext) => {
+  override visitNegateLogical = (ctx: NegateLogicalContext) => {
     let not = ctx.NOT().getText();
     if (/^[A-Za-z]+$/.test(not)) {
       not = kw(`${not} `);
@@ -153,17 +155,17 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return `${not}${this.visit(ctx.term())}`;
   };
 
-  visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+  override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     `(${this.visit(ctx.expression())})`;
 
-  visitLambda = (ctx: LambdaContext) => {
+  override visitLambda = (ctx: LambdaContext) => {
     const lambda = this.visit(ctx.LAMBDA()) ?? "";
     const arrow = this.visit(ctx.COLON());
     const params = ctx.paramList() ? this.visit(ctx.paramList()!) : "";
     return `${kw(lambda)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 
-  visitExpression = (ctx: ExpressionContext) => {
+  override visitExpression = (ctx: ExpressionContext) => {
     //does not currently cover 'elif' clauses
     if (ctx.expression().length > 0) {
       const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
@@ -175,31 +177,32 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     }
   };
 
-  visitNewInstance = (ctx: NewInstanceContext) =>
+  override visitNewInstance = (ctx: NewInstanceContext) =>
     `${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
 
-  visitList = (ctx: ListContext) =>
+  override visitList = (ctx: ListContext) =>
     `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
 
-  visitTuple = (ctx: TupleContext) =>
+  override visitTuple = (ctx: TupleContext) =>
     `(${getExpressions<string>(this, ctx.expressionList()).join(", ")})`;
 
-  visitDictionary = (ctx: DictionaryContext) =>
+  override visitDictionary = (ctx: DictionaryContext) =>
     `{${getKVPs<string>(this, ctx.kvpList()).join(", ")}}`;
 
-  visitKvp = (ctx: KvpContext) =>
+  override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  visitTerm = (ctx: TermContext) =>
+  override visitTerm = (ctx: TermContext) =>
     ctx.DOT()
       ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
       : ctx.term()
         ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
         : (this.visitChildren(ctx) ?? "");
 
-  visitThisInstance = (ctx: ThisInstanceContext) => `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
+  override visitThisInstance = (ctx: ThisInstanceContext) =>
+    `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
 
-  visitAssignable = (ctx: AssignableContext) => {
+  override visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
       return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
     } else if (ctx.index()) {
@@ -209,13 +212,13 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     }
   };
 
-  visitThisProcRef = (ctx: ThisProcRefContext) =>
+  override visitThisProcRef = (ctx: ThisProcRefContext) =>
     `${kw(this.visit(ctx.THIS_INSTANCE())!)}.${this.visit(ctx.methodName())}`;
 
-  visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
+  override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
     `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
 
-  visitIdentifierList = (ctx: IdentifierListContext) => {
+  override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     return ids.join(", ");
   };

@@ -87,7 +87,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   topLevelTerm = true;
 
-  visitTypeTuple = (ctx: TypeTupleContext) =>
+  override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
       getTypes(this, ctx),
@@ -95,10 +95,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitTypeGeneric = (ctx: TypeGenericContext) =>
+  override visitTypeGeneric = (ctx: TypeGenericContext) =>
     new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
 
-  visitTypeFunc = (ctx: TypeFuncContext) =>
+  override visitTypeFunc = (ctx: TypeFuncContext) =>
     new TypeAsn(
       getTypeName(this.language, "Func", this.fieldId, this.scope),
       getTypes(this, ctx),
@@ -106,34 +106,34 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
+  override visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
 
-  visitTerminal(ctx: TerminalNode) {
+  override visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
 
-  visitIdentifierDef = (ctx: IdentifierDefContext) =>
+  override visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitIdentifierUse = (ctx: IdentifierUseContext) =>
+  override visitIdentifierUse = (ctx: IdentifierUseContext) =>
     new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitMethodName = (ctx: MethodNameContext) =>
+  override visitMethodName = (ctx: MethodNameContext) =>
     new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  visitParamList = (ctx: ParamListContext) => {
+  override visitParamList = (ctx: ParamListContext) => {
     const paramDefs = getParamDefs(this, ctx);
     const paramList = new ParamListAsn(this.fieldId, this.scope);
     paramList.parms = new CsvAsn(paramDefs, this.fieldId);
     return paramList;
   };
 
-  visitArgList = (ctx: ArgListContext) => {
+  override visitArgList = (ctx: ArgListContext) => {
     const argList = getArgs(this, ctx).filter((a) => a);
     return new CsvAsn(argList, this.fieldId);
   };
 
-  visitParamDef = (ctx: ParamDefContext) =>
+  override visitParamDef = (ctx: ParamDefContext) =>
     new ParamDefAsn(
       ctx.identifierDef().NAME_STARTING_LC().getText(),
       this.visit(ctx.type())!,
@@ -141,7 +141,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitMethodCall = (ctx: MethodCallContext) => {
+  override visitMethodCall = (ctx: MethodCallContext) => {
     const args = ctx.argList();
     const argList = args ? getArgs(this, args).filter((a) => a) : [];
     const name = ctx.methodName().getText();
@@ -149,10 +149,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new FuncCallAsn(name, argList, this.fieldId, this.scope);
   };
 
-  visitIndex = (ctx: IndexContext) =>
+  override visitIndex = (ctx: IndexContext) =>
     new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
 
-  visitTerm = (ctx: TermContext) => {
+  override visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();
     const index = ctx.index();
     let term: TermAsn;
@@ -179,10 +179,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return term;
   };
 
-  visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+  override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     new BracketedAsn(this.visit(ctx.expression())!, this.fieldId);
 
-  visitList = (ctx: ListContext) => {
+  override visitList = (ctx: ListContext) => {
     const items = ctx
       .expressionList()
       .expression()
@@ -191,10 +191,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralListAsn(items, this.fieldId, this.scope);
   };
 
-  visitKvp = (ctx: KvpContext) =>
+  override visitKvp = (ctx: KvpContext) =>
     new KvpAsn(this.visit(ctx.expression(0)!)!, this.visit(ctx.expression(1)!)!, this.fieldId);
 
-  visitDictionary = (ctx: DictionaryContext) => {
+  override visitDictionary = (ctx: DictionaryContext) => {
     const items = ctx
       .kvpList()
       .kvp()
@@ -203,7 +203,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralDictionaryAsn(items, this.fieldId, this.scope);
   };
 
-  visitTuple = (ctx: TupleContext) => {
+  override visitTuple = (ctx: TupleContext) => {
     const items = ctx
       .expressionList()
       .expression()
@@ -212,7 +212,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralTupleAsn(items, this.fieldId);
   };
 
-  visitLitInt = (ctx: LitIntContext) => {
+  override visitLitInt = (ctx: LitIntContext) => {
     const binary = ctx.LITERAL_BINARY();
     const hex = ctx.LITERAL_HEX();
     const int = ctx.LITERAL_INTEGER();
@@ -233,17 +233,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LiteralIntAsn(value, isBinary, isHex, this.fieldId);
   };
 
-  visitLitFloat = (ctx: LitFloatContext) => new LiteralFloatAsn(ctx.getText(), this.fieldId);
+  override visitLitFloat = (ctx: LitFloatContext) =>
+    new LiteralFloatAsn(ctx.getText(), this.fieldId);
 
-  visitLitBoolean = (ctx: LitBooleanContext) =>
+  override visitLitBoolean = (ctx: LitBooleanContext) =>
     new LiteralBooleanAsn(ctx.TRUE() !== null, this.fieldId);
 
-  visitLitString = (ctx: LitStringContext) => new LiteralStringAsn(ctx.getText(), this.fieldId);
+  override visitLitString = (ctx: LitStringContext) =>
+    new LiteralStringAsn(ctx.getText(), this.fieldId);
 
-  visitLitRegExp = (ctx: LitRegExpContext) =>
+  override visitLitRegExp = (ctx: LitRegExpContext) =>
     new LiteralRegExAsn(ctx.getText(), this.fieldId, this.scope);
 
-  visitEnumValue = (ctx: EnumValueContext) =>
+  override visitEnumValue = (ctx: EnumValueContext) =>
     new LiteralEnumAsn(
       ctx.identifierUse().getText(),
       new EnumType(ctx.typeName().getText()),
@@ -251,13 +253,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitNegateLogical = (ctx: NegateLogicalContext) =>
+  override visitNegateLogical = (ctx: NegateLogicalContext) =>
     new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  visitNegateNumeric = (ctx: NegateNumericContext) =>
+  override visitNegateNumeric = (ctx: NegateNumericContext) =>
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+  override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     new BinaryExprAsn(
       ctx.binaryOperator().getText(),
       this.visit(ctx.term())!,
@@ -266,7 +268,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  visitExpression = (ctx: ExpressionContext) => {
+  override visitExpression = (ctx: ExpressionContext) => {
     this.topLevelTerm = true;
 
     if (ctx.expression().length > 0) {
@@ -279,18 +281,18 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     }
   };
 
-  visitNewInstance = (ctx: NewInstanceContext) => {
+  override visitNewInstance = (ctx: NewInstanceContext) => {
     const type = this.visit(ctx.type()) as TypeAsn;
     const argList = ctx.argList();
     const params = argList ? getArgs(this, argList) : [];
     return new NewAsn(type, params, this.fieldId, this.scope);
   };
 
-  visitThisInstance = (_ctx: ThisInstanceContext) => {
+  override visitThisInstance = (_ctx: ThisInstanceContext) => {
     return new ThisAsn(this.fieldId, this.scope);
   };
 
-  visitLambda = (ctx: LambdaContext) => {
+  override visitLambda = (ctx: LambdaContext) => {
     const parameters =
       ctx
         .paramList()
@@ -304,7 +306,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new LambdaAsn(sig, body, this.fieldId);
   };
 
-  visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
+  override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
     const id = ctx.identifierUse().getText();
     const indices = new CsvAsn(
       ctx.index().map((idx) => this.visit(idx)!),
@@ -314,7 +316,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new VarAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
 
-  visitThisProcRef = (ctx: ThisProcRefContext) => {
+  override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisAsn(this.fieldId, this.scope);
     const name = ctx.methodName().getText();
     return new VarAsn(
@@ -327,7 +329,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     );
   };
 
-  visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
+  override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
     const name = ctx.methodName().getText();
     return new VarAsn(
@@ -340,7 +342,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     );
   };
 
-  visitAssignable = (ctx: AssignableContext) => {
+  override visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
       const thisAsn = new ThisAsn(this.fieldId, this.scope);
       const id = ctx.identifierUse()?.getText() ?? "";
@@ -378,7 +380,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     }
   };
 
-  visitIdentifierList = (ctx: IdentifierListContext) => {
+  override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     const enumValues = new EnumValuesAsn(this.fieldId, this.scope);
 
