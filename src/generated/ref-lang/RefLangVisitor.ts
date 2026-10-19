@@ -7,6 +7,7 @@ import { GlobalContext } from "./RefLangParser.js";
 import { MainContext } from "./RefLangParser.js";
 import { FunctionContext } from "./RefLangParser.js";
 import { TestContext } from "./RefLangParser.js";
+import { TestStatementContext } from "./RefLangParser.js";
 import { ProcedureContext } from "./RefLangParser.js";
 import { ConstantContext } from "./RefLangParser.js";
 import { EnumContext } from "./RefLangParser.js";
@@ -126,6 +127,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTest?: (ctx: TestContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.testStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTestStatement?: (ctx: TestStatementContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.procedure`.
    * @param ctx the parse tree

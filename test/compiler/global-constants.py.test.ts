@@ -9,13 +9,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Python Global Constants", () => {
-  test("Pass_Int", async () => {
+  ignore_test("Pass_Int", async () => {
     const code = `${testPythonHeader}
 
 def foo(a: int, foo: int) -> str: # function

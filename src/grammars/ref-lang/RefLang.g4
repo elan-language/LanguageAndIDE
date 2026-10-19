@@ -26,11 +26,13 @@ function:
 ;
 
 test:
-    GHOSTED? TEST testName NL (
+    GHOSTED? TEST testName NL testStatement* END TEST NL
+;
+
+testStatement: 
         assert
         | variableDefinition
         | comment
-    )* END TEST NL
 ;
 
 procedure:
