@@ -1,8 +1,8 @@
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { ElanCompilerError } from "../../compiler/elan-compiler-error";
-import { AbstractFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-function-asn";
-import { AbstractProcedureAsn } from "../../compiler/syntax-nodes/class-members/abstract-procedure-asn";
+import { AbstractMemberFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-member-function-asn";
+import { AbstractMemberProcedureAsn } from "../../compiler/syntax-nodes/class-members/abstract-member-procedure-asn";
 import { ConstructorAsn } from "../../compiler/syntax-nodes/class-members/constructor-asn";
 import { FunctionMethodAsn } from "../../compiler/syntax-nodes/class-members/function-method-asn";
 import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/procedure-method-asn";
@@ -298,7 +298,7 @@ export function transform(
   }
 
   if (node instanceof AbstractFunction) {
-    const functionAsn = new AbstractFunctionAsn(node.getHtmlId(), scope);
+    const functionAsn = new AbstractMemberFunctionAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
 
     functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
@@ -310,7 +310,7 @@ export function transform(
   }
 
   if (node instanceof AbstractProcedure) {
-    const procedureAsn = new AbstractProcedureAsn(node.getHtmlId(), scope);
+    const procedureAsn = new AbstractMemberProcedureAsn(node.getHtmlId(), scope);
     procedureAsn.breakpointStatus = node.breakpointStatus;
 
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;

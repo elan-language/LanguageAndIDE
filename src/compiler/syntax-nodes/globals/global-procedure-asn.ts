@@ -1,8 +1,8 @@
 import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
-import { ProcedureAsn } from "./procedure-asn";
+import { AbstractProcedureAsn } from "./abstract-procedure-asn";
 
-export class GlobalProcedureAsn extends ProcedureAsn {
+export class GlobalProcedureAsn extends AbstractProcedureAsn {
   isGlobal = true;
 
   constructor(fieldId: string, scope: Scope) {

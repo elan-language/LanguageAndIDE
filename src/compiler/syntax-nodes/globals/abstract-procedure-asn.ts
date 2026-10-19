@@ -1,16 +1,16 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { ProcedureType } from "../../../compiler/symbols/procedure-type";
-import { getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
-import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { ProcedureType } from "../../symbols/procedure-type";
+import { getGlobalScope, match } from "../../symbols/symbol-helpers";
+import { SymbolScope } from "../../symbols/symbol-scope";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 
-export abstract class ProcedureAsn extends CompoundAsn implements ElanSymbol, Scope {
+export abstract class AbstractProcedureAsn extends CompoundAsn implements ElanSymbol, Scope {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

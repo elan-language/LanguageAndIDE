@@ -1,17 +1,17 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { Class } from "../../../compiler/compiler-interfaces/class";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Member } from "../../../compiler/compiler-interfaces/member";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { ProcedureType } from "../../../compiler/symbols/procedure-type";
-import { getClassScope, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Class } from "../../compiler-interfaces/class";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Member } from "../../compiler-interfaces/member";
+import { Scope } from "../../compiler-interfaces/scope";
+import { ProcedureType } from "../../symbols/procedure-type";
+import { getClassScope, getGlobalScope } from "../../symbols/symbol-helpers";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 
-export class AbstractProcedureAsn extends BreakpointAsn implements Member, ElanSymbol {
+export class AbstractMemberProcedureAsn extends BreakpointAsn implements Member, ElanSymbol {
   isAbstract = true;
   isMember: boolean = true;
   private = false;
