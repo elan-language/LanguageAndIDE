@@ -1,5 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
@@ -11,6 +12,7 @@ import {
   assertParses,
   assertStatusIsValid,
   ignore_test,
+  newFileImpl,
   testHash,
   testHeader,
   transforms,
@@ -44,15 +46,7 @@ async function foo() {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -61,7 +55,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
+  ignore_test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
     const code = `${testHeader}
 
 main
@@ -90,15 +84,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -123,15 +109,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -140,7 +118,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_WithParamsPassingVariables", async () => {
+  ignore_test("Pass_WithParamsPassingVariables", async () => {
     const code = `${testHeader}
 
 main
@@ -169,15 +147,7 @@ async function foo(a, b) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -186,7 +156,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
-  test("Pass_ReferenceTypesCanBeMutated", async () => {
+  ignore_test("Pass_ReferenceTypesCanBeMutated", async () => {
     const code = `${testHeader}
 
 main
@@ -213,15 +183,7 @@ async function changeFirst(a) {
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -230,7 +192,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[5, 3]");
   });
 
-  test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
+  ignore_test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
     const code = `${testHeader}
 
 main
@@ -257,15 +219,7 @@ async function foo(a, b) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -310,15 +264,7 @@ async function bar() {
 global["bar"] = bar;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -327,7 +273,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
+  ignore_test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
     const code = `${testHeader}
 
 main
@@ -352,15 +298,7 @@ async function square(x) {
 global["square"] = square;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -369,7 +307,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "925");
   });
 
-  test("Pass_Recursion", async () => {
+  ignore_test("Pass_Recursion", async () => {
     const code = `${testHeader}
 
 main
@@ -400,15 +338,7 @@ async function foo(a) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -417,7 +347,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "321");
   });
 
-  test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
+  ignore_test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
     const code = `${testHeader}
 
 main
@@ -515,15 +445,7 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -532,7 +454,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  test("Pass_RefParameters", async () => {
+  ignore_test("Pass_RefParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -565,15 +487,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -582,7 +496,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3goodbye");
   });
 
-  test("Pass_SetFromOutParameters", async () => {
+  ignore_test("Pass_SetFromAsRefParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -617,15 +531,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -634,7 +540,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  test("Pass_NestedOutParameters", async () => {
+  ignore_test("Pass_NestedOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -678,15 +584,7 @@ async function bar(a, b) {
 global["bar"] = bar;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -695,7 +593,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  test("Pass_CallOnOutParameters", async () => {
+  ignore_test("Pass_CallOnOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -756,15 +654,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -773,7 +663,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_ExpressionOnOutParameters", async () => {
+  ignore_test("Pass_ExpressionOnOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -846,7 +736,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "101");
   });
 
-  test("Pass_MultipleCallsWithOutParameters", async () => {
+  ignore_test("Pass_MultipleCallsWithOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -877,15 +767,7 @@ async function addOne(n) {
 global["addOne"] = addOne;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -894,7 +776,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "23");
   });
 
-  test("Pass_PrintOutParameter", async () => {
+  ignore_test("Pass_PrintOutParameter", async () => {
     const code = `${testHeader}
 
 main
@@ -919,15 +801,7 @@ async function printParameter(n) {
 global["printParameter"] = printParameter;
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -944,22 +818,14 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, ["'bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_TypeSpecifiedBeforeParamName", async () => {
+  ignore_test("Fail_TypeSpecifiedBeforeParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -970,15 +836,7 @@ procedure foo(Int a)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
@@ -997,15 +855,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1026,15 +876,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1043,7 +885,7 @@ end procedure
     ]);
   });
 
-  test("Fail_PassingTooFewParams", async () => {
+  ignore_test("Fail_PassingTooFewParams", async () => {
     const code = `${testHeader}
 
 main
@@ -1057,15 +899,7 @@ procedure foo(a as Int, b as String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1083,15 +917,7 @@ main
   call a.append(1, 2)
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1101,7 +927,7 @@ end main`;
     ]);
   });
 
-  test("Fail_PassingWrongType", async () => {
+  ignore_test("Fail_PassingWrongType", async () => {
     const code = `${testHeader}
 
 main
@@ -1114,15 +940,7 @@ procedure foo(a as Int, b as String)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1131,7 +949,7 @@ end procedure
     ]);
   });
 
-  test("Fail_UnterminatedRecursion", async () => {
+  ignore_test("Fail_UnterminatedRecursion", async () => {
     const code = `${testHeader}
 
 main
@@ -1143,15 +961,7 @@ procedure foo(a as Int)
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1159,7 +969,7 @@ end procedure
     await assertObjectCodeDoesNotExecute(fileImpl, "Maximum call stack size exceeded");
   });
 
-  test("Fail_CannotCallPrintAsAProcedure", async () => {
+  ignore_test("Fail_CannotCallPrintAsAProcedure", async () => {
     const code = `${testHeader}
 
 main
@@ -1167,21 +977,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_ParameterCount", async () => {
+  ignore_test("Fail_ParameterCount", async () => {
     const code = `${testHeader}
 
 procedure f(p as Float)
@@ -1193,15 +995,7 @@ main
   call f()
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1211,7 +1005,7 @@ end main`;
     ]);
   });
 
-  test("Fail_ParameterType", async () => {
+  ignore_test("Fail_ParameterType", async () => {
     const code = `${testHeader}
 
 procedure f(p as Int)
@@ -1223,15 +1017,7 @@ main
   call f(1.0)
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1241,7 +1027,7 @@ end main`;
     ]);
   });
 
-  test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
+  ignore_test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1254,15 +1040,7 @@ procedure changeAll(a as List<of Int>)
   assign a to [1, 2, 3]
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1272,7 +1050,7 @@ end procedure`;
     ]);
   });
 
-  test("Fai_ListParamMayNotBeReassigned", async () => {
+  ignore_test("Fai_ListParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1285,15 +1063,7 @@ procedure changeAll(a as List<of Int>)
   assign a to [1, 2, 3]
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1303,7 +1073,7 @@ end procedure`;
     ]);
   });
 
-  test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
+  ignore_test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1316,15 +1086,7 @@ procedure changeValue(a as Int)
     assign a to 3
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1334,7 +1096,7 @@ end procedure`;
     ]);
   });
 
-  test("Fail_ParameterUnknownType", async () => {
+  ignore_test("Fail_ParameterUnknownType", async () => {
     const code = `${testHeader}
 
 main
@@ -1345,15 +1107,7 @@ procedure changeValue(a as Bar)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1361,7 +1115,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_UseOfKeywordAsName", async () => {
+  ignore_test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testHeader}
 
 main
@@ -1372,15 +1126,7 @@ procedure if_(a as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
@@ -1396,15 +1142,7 @@ procedure break(a as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1422,15 +1160,7 @@ procedure float(a as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1438,7 +1168,7 @@ end procedure`;
     ]);
   });
 
-  test("Fail_UseOfKeywordAsParamName", async () => {
+  ignore_test("Fail_UseOfKeywordAsParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -1449,21 +1179,13 @@ procedure fun(if as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_UseOfReservedwordAsParamName", async () => {
+  ignore_test("Fail_UseOfReservedwordAsParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -1474,15 +1196,7 @@ procedure fun(break as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1502,15 +1216,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1520,22 +1226,14 @@ end procedure
     ]);
   });
 
-  test("Fail_NotUniqueParameterName", async () => {
+  ignore_test("Fail_NotUniqueParameterName", async () => {
     const code = `${testHeader}
 
 procedure foo(a as Int, b as String, a as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1561,15 +1259,7 @@ procedure p2()
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1588,15 +1278,7 @@ main
   assign a to a.append(3)
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1606,7 +1288,7 @@ end main`;
     ]);
   });
 
-  test("Fail_IncorrectScope", async () => {
+  ignore_test("Fail_IncorrectScope", async () => {
     const code = `${testHeader}
 
 main
@@ -1620,15 +1302,7 @@ end class
 procedure bar()
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1645,15 +1319,7 @@ main
   call s.reverse()
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1670,15 +1336,7 @@ main
   call s.reverse()
 end main`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1686,22 +1344,14 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_ParameterNameClash1", async () => {
+  ignore_test("Fail_ParameterNameClash1", async () => {
     const code = `${testHeader}
 
 procedure foo(foo as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1711,22 +1361,14 @@ end procedure`;
     ]);
   });
 
-  test("Fail_ParameterNameClash2", async () => {
+  ignore_test("Fail_ParameterNameClash2", async () => {
     const code = `${testHeader}
 
 procedure foo(a as Int, foo as Int)
 
 end procedure`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

@@ -20,6 +20,8 @@ import { encodeCode } from "../../src/ide/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
+import { Paradigm } from "../../src/ide/frames/paradigm";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
@@ -287,4 +289,19 @@ export async function assertExportedCSIs(file: FileImpl, code : string) {
 
 export async function assertExportedVBis(file: FileImpl, code : string) {
   await assertExportedFileIs(file, LanguageVB.Instance, code);
+}
+
+export function newFileImpl(language: Language, useAntlr = false): FileImpl {
+      const file = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    file.setLanguage(language);
+    file.useAntlr = useAntlr;
+    return file;
 }
