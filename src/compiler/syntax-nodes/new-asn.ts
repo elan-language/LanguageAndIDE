@@ -14,7 +14,7 @@ import { constructorKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 
-export class NewAsn extends AbstractAstNode implements AstNode {
+export class NewInstanceAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly typeNode: TypeAsn,
     private readonly parameters: AstNode[],

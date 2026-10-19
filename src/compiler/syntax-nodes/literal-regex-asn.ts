@@ -13,7 +13,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 // as the user is typically still typing her regexp,
 // and we translate it into a compile error at compile time.
 
-export class LiteralRegExAsn extends AbstractAstNode implements AstNode {
+export class LitRegExAsn extends AbstractAstNode implements AstNode {
   constructor(
     rawValue: string,
     public readonly fieldId: string,

@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralTupleAsn extends AbstractAstNode implements AstNode {
+export class LitTupleAsn extends AbstractAstNode implements AstNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,

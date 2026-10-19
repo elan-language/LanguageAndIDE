@@ -8,7 +8,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { KvpAsn } from "./kvp-asn";
 
-export class LiteralDictionaryAsn extends AbstractAstNode implements AstNode {
+export class DictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly items: KvpAsn[],
     public readonly fieldId: string,

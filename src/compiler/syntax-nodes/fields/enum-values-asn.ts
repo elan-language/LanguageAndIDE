@@ -9,7 +9,7 @@ import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";
 
-export class EnumValuesAsn extends AbstractAstNode implements AstNode {
+export class IdentifierListAsn extends AbstractAstNode implements AstNode {
   constructor(
     readonly fieldId: string,
     private readonly scope: Scope,

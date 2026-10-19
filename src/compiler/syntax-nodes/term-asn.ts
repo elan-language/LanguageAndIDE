@@ -22,9 +22,9 @@ import {
   isEmptyNode,
   matchGenericTypes,
 } from "./ast-helpers";
-import { FuncCallAsn } from "./func-call-asn";
+import { MethodCallAsn } from "./func-call-asn";
 import { TupleAsn } from "./globals/tuple-asn";
-import { IdAsn } from "./id-asn";
+import { IdentifierUseAsn } from "./id-asn";
 
 export class TermAsn extends AbstractAstNode {
   constructor(
@@ -46,7 +46,7 @@ export class TermAsn extends AbstractAstNode {
     if (astNode instanceof TermAsn) {
       return this.asyncCount(astNode.lhs) + this.asyncCount(astNode.rhs);
     }
-    if (astNode instanceof FuncCallAsn) {
+    if (astNode instanceof MethodCallAsn) {
       astNode.compile();
       return astNode.isAsync ? 1 : 0;
     }
@@ -67,7 +67,7 @@ export class TermAsn extends AbstractAstNode {
 
   setup() {
     // todo kludges
-    if (this.rhs instanceof FuncCallAsn) {
+    if (this.rhs instanceof MethodCallAsn) {
       const lhsSt = this.lhs.symbolType();
       let scope = this.scope;
       if (isClassType(lhsSt)) {
@@ -80,7 +80,7 @@ export class TermAsn extends AbstractAstNode {
       this.isExtension = this.rhs.isExtensionMethod;
     }
 
-    if (this.rhs instanceof IdAsn) {
+    if (this.rhs instanceof IdentifierUseAsn) {
       const lhsSt = this.lhs.symbolType();
       let scope = this.scope;
       if (lhsSt instanceof TupleType) {
@@ -139,7 +139,7 @@ export class TermAsn extends AbstractAstNode {
             const funcSymbolType = ss.symbolType() as FunctionType;
             const returnType = funcSymbolType.returnType;
 
-            if (containsGenericType(returnType) && this.rhs instanceof FuncCallAsn) {
+            if (containsGenericType(returnType) && this.rhs instanceof MethodCallAsn) {
               let callParameters = this.rhs.parameters;
 
               if (this.isExtension && !isEmptyNode(this.rhs.precedingNode)) {

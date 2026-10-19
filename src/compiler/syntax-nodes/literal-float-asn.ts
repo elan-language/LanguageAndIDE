@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { FloatType } from "../../compiler/symbols/float-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralFloatAsn extends AbstractAstNode implements AstNode {
+export class LitFloatAsn extends AbstractAstNode implements AstNode {
   constructor(
     rawValue: string,
     public readonly fieldId: string,

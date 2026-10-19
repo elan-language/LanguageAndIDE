@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { IntType } from "../../compiler/symbols/int-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralIntAsn extends AbstractAstNode implements AstNode {
+export class LitIntAsn extends AbstractAstNode implements AstNode {
   constructor(
     rawValue: string,
     isBinary: boolean,

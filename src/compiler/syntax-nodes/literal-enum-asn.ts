@@ -7,7 +7,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { mustBeKnownSymbol } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralEnumAsn extends AbstractAstNode implements AstNode {
+export class EnumValueAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly value: string,
     private readonly type: EnumType,

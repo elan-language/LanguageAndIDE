@@ -2,7 +2,7 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralBooleanAsn extends AbstractAstNode implements AstNode {
+export class LitBooleanAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly value: boolean,
     public readonly fieldId: string,

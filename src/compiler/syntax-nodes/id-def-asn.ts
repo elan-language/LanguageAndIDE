@@ -4,7 +4,7 @@ import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { mustNotBeKeyword } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class IdDefAsn extends AbstractAstNode implements AstIdNode {
+export class IdentifierDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,

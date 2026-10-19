@@ -24,7 +24,7 @@ import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleAsn } from "./globals/tuple-asn";
 
-export class IdAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
+export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
     public readonly fieldId: string,

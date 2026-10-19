@@ -34,7 +34,7 @@ import {
 } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 
-export class FuncCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
+export class MethodCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
     public readonly id: string,
     public readonly parameters: Array<AstNode>,

@@ -5,7 +5,7 @@ import { mustBeInsideClass } from "../compile-rules";
 import { thisKeyword } from "../elan-keywords";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class ThisAsn extends AbstractAstNode implements AstNode {
+export class ThisInstanceAsn extends AbstractAstNode implements AstNode {
   constructor(
     public readonly fieldId: string,
     private readonly scope: Scope,

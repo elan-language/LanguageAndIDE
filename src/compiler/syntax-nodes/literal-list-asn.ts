@@ -8,7 +8,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { mustBeAssignableType } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralListAsn extends AbstractAstNode implements AstCollectionNode {
+export class ListAsn extends AbstractAstNode implements AstCollectionNode {
   constructor(
     public readonly items: AstNode[],
     public readonly fieldId: string,

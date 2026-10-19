@@ -4,33 +4,32 @@ import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifi
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
-import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
-import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
+import { BinaryExprAsn as BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
+import { BracketedAsn as BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { EnumValuesAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
+import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
-import { FuncCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
-import { IdAsn } from "../../compiler/syntax-nodes/id-asn";
-import { IdDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { MethodCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
+import { IdentifierUseAsn } from "../../compiler/syntax-nodes/id-asn";
+import { IdentifierDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
-import { LiteralBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
-import { LiteralDictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
-import { LiteralEnumAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
-import { LiteralFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
-import { LiteralIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
-import { LiteralListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
-import { LiteralRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
-import { LiteralStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
-import { LiteralTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
-import { NewAsn } from "../../compiler/syntax-nodes/new-asn";
+import { LitBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
+import { DictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
+import { EnumValueAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
+import { LitFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
+import { LitIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
+import { ListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
+import { LitRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
+import { LitStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
+import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
-import { ThisAsn } from "../../compiler/syntax-nodes/this-asn";
+import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
@@ -75,6 +74,7 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { LitTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -113,13 +113,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   }
 
   override visitIdentifierDef = (ctx: IdentifierDefContext) =>
-    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitIdentifierUse = (ctx: IdentifierUseContext) =>
-    new IdAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitMethodName = (ctx: MethodNameContext) =>
-    new IdDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitParamList = (ctx: ParamListContext) => {
     const paramDefs = getParamDefs(this, ctx);
@@ -146,7 +146,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const argList = args ? getArgs(this, args).filter((a) => a) : [];
     const name = ctx.methodName().getText();
 
-    return new FuncCallAsn(name, argList, this.fieldId, this.scope);
+    return new MethodCallAsn(name, argList, this.fieldId, this.scope);
   };
 
   override visitIndex = (ctx: IndexContext) =>
@@ -180,7 +180,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
-    new BracketedAsn(this.visit(ctx.expression())!, this.fieldId);
+    new BracketedExpressionAsn(this.visit(ctx.expression())!, this.fieldId);
 
   override visitList = (ctx: ListContext) => {
     const items = ctx
@@ -188,7 +188,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .expression()
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
-    return new LiteralListAsn(items, this.fieldId, this.scope);
+    return new ListAsn(items, this.fieldId, this.scope);
   };
 
   override visitKvp = (ctx: KvpContext) =>
@@ -200,7 +200,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .kvp()
       .map((e) => this.visit(e))
       .filter((e) => e) as KvpAsn[];
-    return new LiteralDictionaryAsn(items, this.fieldId, this.scope);
+    return new DictionaryAsn(items, this.fieldId, this.scope);
   };
 
   override visitTuple = (ctx: TupleContext) => {
@@ -209,7 +209,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .expression()
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
-    return new LiteralTupleAsn(items, this.fieldId);
+    return new LitTupleAsn(items, this.fieldId);
   };
 
   override visitLitInt = (ctx: LitIntContext) => {
@@ -230,23 +230,22 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       value = value.replace("0x", "");
     }
 
-    return new LiteralIntAsn(value, isBinary, isHex, this.fieldId);
+    return new LitIntAsn(value, isBinary, isHex, this.fieldId);
   };
 
-  override visitLitFloat = (ctx: LitFloatContext) =>
-    new LiteralFloatAsn(ctx.getText(), this.fieldId);
+  override visitLitFloat = (ctx: LitFloatContext) => new LitFloatAsn(ctx.getText(), this.fieldId);
 
   override visitLitBoolean = (ctx: LitBooleanContext) =>
-    new LiteralBooleanAsn(ctx.TRUE() !== null, this.fieldId);
+    new LitBooleanAsn(ctx.TRUE() !== null, this.fieldId);
 
   override visitLitString = (ctx: LitStringContext) =>
-    new LiteralStringAsn(ctx.getText(), this.fieldId);
+    new LitStringAsn(ctx.getText(), this.fieldId);
 
   override visitLitRegExp = (ctx: LitRegExpContext) =>
-    new LiteralRegExAsn(ctx.getText(), this.fieldId, this.scope);
+    new LitRegExAsn(ctx.getText(), this.fieldId, this.scope);
 
   override visitEnumValue = (ctx: EnumValueContext) =>
-    new LiteralEnumAsn(
+    new EnumValueAsn(
       ctx.identifierUse().getText(),
       new EnumType(ctx.typeName().getText()),
       this.fieldId,
@@ -260,7 +259,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
   override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
-    new BinaryExprAsn(
+    new BinaryExpressionAsn(
       ctx.binaryOperator().getText(),
       this.visit(ctx.term())!,
       this.visit(ctx.expression())!,
@@ -285,11 +284,11 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const type = this.visit(ctx.type()) as TypeAsn;
     const argList = ctx.argList();
     const params = argList ? getArgs(this, argList) : [];
-    return new NewAsn(type, params, this.fieldId, this.scope);
+    return new NewInstanceAsn(type, params, this.fieldId, this.scope);
   };
 
   override visitThisInstance = (_ctx: ThisInstanceContext) => {
-    return new ThisAsn(this.fieldId, this.scope);
+    return new ThisInstanceAsn(this.fieldId, this.scope);
   };
 
   override visitLambda = (ctx: LambdaContext) => {
@@ -317,7 +316,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
-    const thisNode = new ThisAsn(this.fieldId, this.scope);
+    const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
     const name = ctx.methodName().getText();
     return new VarAsn(
       name,
@@ -344,7 +343,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
-      const thisAsn = new ThisAsn(this.fieldId, this.scope);
+      const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
       const id = ctx.identifierUse()?.getText() ?? "";
       return new VarAsn(
         id,
@@ -381,11 +380,11 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
-    const ids = ctx.identifierDef().map((id) => this.visit(id)!);
-    const enumValues = new EnumValuesAsn(this.fieldId, this.scope);
+    const identifierDefs = ctx.identifierDef().map((id) => this.visit(id)!);
+    const identifierList = new IdentifierListAsn(this.fieldId, this.scope);
 
-    enumValues.values = new CsvAsn(ids, this.fieldId);
+    identifierList.values = new CsvAsn(identifierDefs, this.fieldId);
 
-    return enumValues;
+    return identifierList;
   };
 }

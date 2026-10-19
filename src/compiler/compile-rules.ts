@@ -94,11 +94,11 @@ import {
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
-import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
+import { MethodCallAsn } from "./syntax-nodes/func-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
-import { ThisAsn } from "./syntax-nodes/this-asn";
+import { ThisInstanceAsn } from "./syntax-nodes/this-asn";
 
 function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -1017,10 +1017,10 @@ export function mustConformToCopyOfThisBoilerPlate(
     const innerFunction = getInnerMostFunction(scope);
     if (
       isVariable &&
-      rhs instanceof FuncCallAsn &&
+      rhs instanceof MethodCallAsn &&
       rhs.id === "copy" &&
       rhs.parameters.length === 1 &&
-      rhs.parameters[0] instanceof ThisAsn &&
+      rhs.parameters[0] instanceof ThisInstanceAsn &&
       innerFunction &&
       isMember(innerFunction)
     ) {
@@ -1087,7 +1087,7 @@ export function mustNotBePropertyOnFunctionMethod(
     } else {
       let msg = `Cannot set property: ${getId(assignable)} directly.`;
       if (isAstQualifiedNode(assignable)) {
-        if (assignable.qualifier instanceof ThisAsn) {
+        if (assignable.qualifier instanceof ThisInstanceAsn) {
           return;
         }
         if (assignable.qualifier.symbolType() instanceof TupleType) {

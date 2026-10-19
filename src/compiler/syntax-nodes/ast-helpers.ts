@@ -37,7 +37,7 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BooleanTypeAsn } from "./boolean-type-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";
-import { EnumValuesAsn } from "./fields/enum-values-asn";
+import { IdentifierListAsn } from "./fields/enum-values-asn";
 import { FileAsn } from "./file-asn";
 import { FloatTypeAsn } from "./float-type-asn";
 import { ClassAsn } from "./globals/class-asn";
@@ -107,8 +107,8 @@ export function isFileScope(scope?: Scope): scope is FileAsn {
   return scope instanceof FileAsn;
 }
 
-export function isEnumValuesAsn(n: AstNode): n is EnumValuesAsn {
-  return n instanceof EnumValuesAsn;
+export function isEnumValuesAsn(n: AstNode): n is IdentifierListAsn {
+  return n instanceof IdentifierListAsn;
 }
 
 export function inFunctionScope(start: Scope): boolean {

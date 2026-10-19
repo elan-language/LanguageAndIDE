@@ -2,7 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { StringType } from "../../compiler/symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class LiteralStringAsn extends AbstractAstNode implements AstNode {
+export class LitStringAsn extends AbstractAstNode implements AstNode {
   constructor(
     private value: string,
     public readonly fieldId: string,
