@@ -4,9 +4,9 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { getClassScope, getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { ProcedureAsn } from "../globals/procedure-asn";
+import { AbstractProcedureAsn } from "../globals/abstract-procedure-asn";
 
-export class ProcedureMethodAsn extends ProcedureAsn {
+export class ProcedureMethodAsn extends AbstractProcedureAsn {
   isMember: boolean = true;
 
   isAbstract = false;
