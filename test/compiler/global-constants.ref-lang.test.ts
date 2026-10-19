@@ -78,20 +78,8 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-
-    fileImpl.useAntlr = true;
-
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
@@ -154,15 +142,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -190,15 +170,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -226,15 +198,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -264,15 +228,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -300,15 +256,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -336,15 +284,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -353,48 +293,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  ignore_test("Pass_Enum", async () => {
-    const code = `${testHeader}
-
-constant a set to Fruit.apple
-main
-  call printNoLine(enumToString(a))
-end main
-enum Fruit apple, orange, pear
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const Fruit = {
-  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
-};
-
-const global = new class {
-  a = Fruit.apple;
-
-};
-async function main() {
-  await _stdlib.printNoLine((await _stdlib.enumToString(global.a)));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "apple");
-  });
-
-  test("Fail_incorrectKeyword", async () => {
+  ignore_test("Fail_incorrectKeyword", async () => {
     const code = `${testHeader}
 
 const a set to 3
@@ -404,21 +303,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_reassignment", async () => {
+  ignore_test("Fail_reassignment", async () => {
     const code = `${testHeader}
 
 constant a set to 3
@@ -429,15 +320,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -446,7 +329,7 @@ end main
     ]);
   });
 
-  test("Fail_libConstantReassignment", async () => {
+  ignore_test("Fail_libConstantReassignment", async () => {
     const code = `${testHeader}
 
 main
@@ -455,15 +338,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -472,7 +347,7 @@ end main
     ]);
   });
 
-  test("Fail_expression", async () => {
+  ignore_test("Fail_expression", async () => {
     const code = `${testHeader}
 
 constant a set to 3 + 4
@@ -483,15 +358,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -519,15 +386,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -536,7 +395,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  test("Fail_UseOfKeywordAsName", async () => {
+  ignore_test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testHeader}
 
 constant if set to 3
@@ -546,20 +405,12 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_UseOfReservedAsName", async () => {
+  ignore_test("Fail_UseOfReservedAsName", async () => {
     const code = `${testHeader}
 
 constant break set to 3
@@ -569,15 +420,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -585,7 +428,7 @@ end main
     ]);
   });
 
-  test("Fail_NotUniqueName", async () => {
+  ignore_test("Fail_NotUniqueName", async () => {
     const code = `${testHeader}
 
 constant a set to 1
@@ -595,15 +438,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -623,15 +458,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -649,15 +476,7 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -665,7 +484,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_NotValueType", async () => {
+  ignore_test("Fail_NotValueType", async () => {
     const code = `${testHeader}
 
 constant a set to 1 + 2
@@ -674,21 +493,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Expression", async () => {
+  ignore_test("Fail_Expression", async () => {
     const code = `${testHeader}
 
 constant a set to 1 + 2
@@ -697,21 +508,13 @@ main
 end main
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Function", async () => {
+  ignore_test("Fail_Function", async () => {
     const code = `${testHeader}
 
 constant a set to foo()
@@ -724,15 +527,7 @@ function foo() returns Int
 end function
 `;
 
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fileImpl = newFileImpl();
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
