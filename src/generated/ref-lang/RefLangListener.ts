@@ -12,7 +12,9 @@ import { ProcedureContext } from "./RefLangParser.js";
 import { ConstantContext } from "./RefLangParser.js";
 import { EnumContext } from "./RefLangParser.js";
 import { ConcreteClassContext } from "./RefLangParser.js";
+import { ConcreteClassMemberContext } from "./RefLangParser.js";
 import { AbstractClassContext } from "./RefLangParser.js";
+import { AbstractClassMemberContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
 import { CommentTextContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
@@ -195,6 +197,16 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitConcreteClass?: (ctx: ConcreteClassContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.concreteClassMember`.
+   * @param ctx the parse tree
+   */
+  enterConcreteClassMember?: (ctx: ConcreteClassMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.concreteClassMember`.
+   * @param ctx the parse tree
+   */
+  exitConcreteClassMember?: (ctx: ConcreteClassMemberContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.abstractClass`.
    * @param ctx the parse tree
    */
@@ -204,6 +216,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAbstractClass?: (ctx: AbstractClassContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.abstractClassMember`.
+   * @param ctx the parse tree
+   */
+  enterAbstractClassMember?: (ctx: AbstractClassMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.abstractClassMember`.
+   * @param ctx the parse tree
+   */
+  exitAbstractClassMember?: (ctx: AbstractClassMemberContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.comment`.
    * @param ctx the parse tree

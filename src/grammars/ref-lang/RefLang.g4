@@ -46,25 +46,30 @@ constant:
 enum: GHOSTED? ENUM typeName identifierList NL;
 
 concreteClass:
-    GHOSTED? CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL (
-        constructorMember
-        | property
-        | functionMethod
-        | procedureMethod
-        | comment
-    )* END CLASS NL
+    GHOSTED? CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL concreteClassMember* END CLASS NL
 ;
 
+    concreteClassMember:
+            constructorMember
+            | property
+            | functionMethod
+            | procedureMethod
+            | comment
+    ;
+
 abstractClass:
-    GHOSTED? ABSTRACT CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL (
+    GHOSTED? ABSTRACT CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL abstractClassMember* END CLASS NL
+;
+
+    abstractClassMember:
         property
         | functionMethod
         | procedureMethod
         | abstractFunction
         | abstractProcedure
         | comment
-    )* END CLASS NL
-;
+    ;
+
 
 comment: commentText NL;
 

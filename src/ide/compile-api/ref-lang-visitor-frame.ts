@@ -1,17 +1,25 @@
 import {
+  AbstractClassContext,
+  AbstractFunctionContext,
+  AbstractProcedureContext,
   AssignmentContext,
   CommentContext,
+  ConcreteClassContext,
   ConstantContext,
+  ConstructorMemberContext,
   EnumContext,
   FileContext,
   ForLoopContext,
   FunctionContext,
+  FunctionMethodContext,
   IfStatementContext,
   InputStatementContext,
   MainContext,
   PrintContext,
   ProcedureCallContext,
   ProcedureContext,
+  ProcedureMethodContext,
+  PropertyContext,
   TestContext,
   ThrowStatementContext,
   TryStatementContext,
@@ -19,9 +27,14 @@ import {
   WhileLoopContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
+import { AbstractFunction } from "../frames/class-members/abstract-function";
+import { Constructor } from "../frames/class-members/constructor";
+import { FunctionMethod } from "../frames/class-members/function-method";
+import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
 import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { ConcreteClass } from "../frames/globals/concrete-class";
 import { ConstantGlobal } from "../frames/globals/constant-global";
 import { Enum } from "../frames/globals/enum";
 import { GlobalFunction } from "../frames/globals/global-function";
@@ -51,6 +64,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
       this.file.addChild(g);
     }
     return this.file!;
+  };
+
+  override visitComment? = (ctx: CommentContext) => {
+    const com = new CommentFrame(this.file);
+    com.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(ctx.commentText().getText());
+    return com;
   };
 
   // Globals
@@ -107,6 +126,39 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     return test;
   };
 
+  override visitEnum = (ctx: EnumContext) => {
+    const enum_ = new Enum(this.file);
+    enum_.name.setFieldToKnownValidText(ctx.typeName().getText());
+    enum_.values.setFieldToKnownValidText(ctx.identifierList().getText());
+    return enum_;
+  };
+
+  override visitConcreteClass = (ctx: ConcreteClassContext) => {
+    const cls = new ConcreteClass(this.file);
+    cls.name.setFieldToKnownValidText(ctx._classTypeName!.getText());
+    cls.inheritance.setFieldToKnownValidText(
+      ctx._inheritsTypeName ? ctx._inheritsTypeName!.getText() : "",
+    );
+    const members = ctx.concreteClassMember().map((s) => this.visit(s)) as Frame[];
+    for (const s of members) {
+      cls.getChildren().push(s);
+    }
+    return cls;
+  };
+
+  override visitAbstractClass = (ctx: AbstractClassContext) => {
+    const cls = new ConcreteClass(this.file);
+    cls.name.setFieldToKnownValidText(ctx._classTypeName!.getText());
+    cls.inheritance.setFieldToKnownValidText(
+      ctx._inheritsTypeName ? ctx._inheritsTypeName!.getText() : "",
+    );
+    const members = ctx.abstractClassMember().map((s) => this.visit(s)) as Frame[];
+    for (const s of members) {
+      cls.getChildren().push(s);
+    }
+    return cls;
+  };
+
   // Statements
   override visitPrint = (ctx: PrintContext) => {
     const expression = ctx.expression()?.getText() ?? "";
@@ -129,15 +181,6 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     assignment.assignable.setFieldToKnownValidText(ctx.assignable().getText());
     assignment.expr.setFieldToKnownValidText(ctx.expression().getText());
     return assignment;
-  };
-
-  override visitEnum = (ctx: EnumContext) => {
-    const name = ctx.typeName().getText();
-    const values = ctx.identifierList().getText();
-    const enum_ = new Enum(this.file);
-    enum_.name.setFieldToKnownValidText(name);
-    enum_.values.setFieldToKnownValidText(values);
-    return enum_;
   };
 
   override visitInputStatement = (ctx: InputStatementContext) => {
@@ -203,9 +246,60 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     return thrw;
   };
 
-  override visitComment? = (ctx: CommentContext) => {
-    const com = new CommentFrame(this.file);
-    com.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(ctx.commentText().getText());
-    return com;
+  // Members
+
+  override visitConstructorMember = (ctx: ConstructorMemberContext) => {
+    const ctor = new Constructor(this.file);
+    ctor.params.setFieldToKnownValidText(ctx.paramList() ? ctx.paramList()!.getText() : "");
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      ctor.getChildren().push(s);
+    }
+    return ctor;
+  };
+
+  override visitProperty = (ctx: PropertyContext) => {
+    const prop = new Property(this.file);
+    prop.name.setFieldToKnownValidText(ctx.identifierDef().getText());
+    prop.type.setFieldToKnownValidText(ctx.type().getText());
+    return prop;
+  };
+
+  override visitFunctionMethod = (ctx: FunctionMethodContext) => {
+    const func = new FunctionMethod(this.file);
+    func.name.setFieldToKnownValidText(ctx.methodName().getText());
+    func.params.setFieldToKnownValidText(ctx.paramList() ? ctx.paramList()!.getText() : "");
+    func.returnType.setFieldToKnownValidText(ctx.type().getText());
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      func.getChildren().push(s);
+    }
+    return func;
+  };
+
+  override visitProcedureMethod = (ctx: ProcedureMethodContext) => {
+    const proc = new FunctionMethod(this.file);
+    proc.name.setFieldToKnownValidText(ctx.methodName().getText());
+    proc.params.setFieldToKnownValidText(ctx.paramList() ? ctx.paramList()!.getText() : "");
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      proc.getChildren().push(s);
+    }
+    return proc;
+  };
+
+  override visitAbstractFunction = (ctx: AbstractFunctionContext) => {
+    const func = new AbstractFunction(this.file);
+    func.name.setFieldToKnownValidText(ctx.methodName().getText());
+    func.params.setFieldToKnownValidText(ctx.paramList() ? ctx.paramList()!.getText() : "");
+    func.returnType.setFieldToKnownValidText(ctx.type().getText());
+    return func;
+  };
+
+  override visitAbstractProcedure = (ctx: AbstractProcedureContext) => {
+    const func = new AbstractFunction(this.file);
+    func.name.setFieldToKnownValidText(ctx.methodName().getText());
+    func.params.setFieldToKnownValidText(ctx.paramList() ? ctx.paramList()!.getText() : "");
+    return func;
   };
 }
