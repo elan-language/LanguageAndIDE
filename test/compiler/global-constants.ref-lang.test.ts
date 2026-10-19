@@ -11,27 +11,13 @@ import {
   assertParses,
   assertStatusIsValid,
   ignore_test,
+  newFileImpl,
   testHash,
   testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Global Constants", () => {
-  function newFileImpl() {
-    const file = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    file.setLanguage(LanguageElan.Instance);
-    file.useAntlr = true;
-    return file;
-  }
-
   test("Pass_AntlrParsing", async () => {
     const code = `${testHeader}
 
@@ -51,7 +37,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -78,7 +64,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -142,7 +128,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -170,7 +156,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -198,7 +184,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -228,7 +214,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -256,7 +242,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -284,7 +270,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -303,7 +289,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -320,7 +306,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -338,7 +324,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -358,7 +344,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -386,7 +372,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -405,12 +391,12 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_UseOfReservedAsName", async () => {
+  test("Fail_UseOfReservedAsName", async () => {
     const code = `${testHeader}
 
 constant break set to 3
@@ -420,7 +406,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -428,7 +414,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_NotUniqueName", async () => {
+  test("Fail_NotUniqueName", async () => {
     const code = `${testHeader}
 
 constant a set to 1
@@ -438,7 +424,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -458,7 +444,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -476,7 +462,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -493,7 +479,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -508,13 +494,13 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_Function", async () => {
+  test("Fail_Function", async () => {
     const code = `${testHeader}
 
 constant a set to foo()
@@ -527,7 +513,7 @@ function foo() returns Int
 end function
 `;
 
-    const fileImpl = newFileImpl();
+    const fileImpl = newFileImpl(LanguageElan.Instance, true);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

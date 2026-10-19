@@ -662,6 +662,11 @@ export class FileImpl implements File {
 
     visitor.visitFile(fileContext);
 
+    this.removeAllSelectorsThatCanBe();
+    this.deselectAll();
+    this.getFirstChild().select(true, false);
+    this.updateAllParseStatus();
+
     // try {
     //   while (source.hasMoreCode()) {
     //     if (source.isMatchRegEx(Regexes.newLine)) {
