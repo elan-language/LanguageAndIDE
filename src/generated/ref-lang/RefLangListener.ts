@@ -7,6 +7,7 @@ import { GlobalContext } from "./RefLangParser.js";
 import { MainContext } from "./RefLangParser.js";
 import { FunctionContext } from "./RefLangParser.js";
 import { TestContext } from "./RefLangParser.js";
+import { TestStatementContext } from "./RefLangParser.js";
 import { ProcedureContext } from "./RefLangParser.js";
 import { ConstantContext } from "./RefLangParser.js";
 import { EnumContext } from "./RefLangParser.js";
@@ -143,6 +144,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTest?: (ctx: TestContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.testStatement`.
+   * @param ctx the parse tree
+   */
+  enterTestStatement?: (ctx: TestStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.testStatement`.
+   * @param ctx the parse tree
+   */
+  exitTestStatement?: (ctx: TestStatementContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.procedure`.
    * @param ctx the parse tree
