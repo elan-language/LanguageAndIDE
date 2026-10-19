@@ -1,7 +1,7 @@
 
 
 
-lexer grammar Csharp_Lexer;
+lexer grammar CSharp_Lexer;
 
 //START common token names; custom definitions
 COMMENT_MARKER: '//';
@@ -25,7 +25,6 @@ ARROW: '=>';
 
 BINARY_PREFIX: '0b';
 HEX_PREFIX: '0x';
-INTERPOLATED_STRING_PREFIX: '$';
 
 THIS_INSTANCE: 'this';
 //END common token names; custom definitions
@@ -117,6 +116,8 @@ LITERAL_FLOAT:
     LITERAL_INTEGER DOT LITERAL_INTEGER ExponentPart?
 ;
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
+INTERPOLATED_STRING_PREFIX: '$"' (~["\u0085] | CommonCharacter)* '"';
+LITERAL_REGEXP:  LITERAL_STRING; //In Python they are the same thing
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;

@@ -72,7 +72,6 @@ abstractClass:
 ;
 
 comment: commentText NL;
-
 commentText: COMMENT;
 
 // Statements
@@ -201,7 +200,6 @@ constantValue:
     | litInt
     | litFloat
     | litString
-    | interpolatedString
     ;
 
 argList: argument (COMMA argument)*;
@@ -222,6 +220,7 @@ litValue:
     | litInt
     | litFloat
     | litString
+    | interpolatedString
     | enumValue
 ;
 litBoolean: TRUE | FALSE;
@@ -229,7 +228,7 @@ litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING | INTERPOLATED_STRING ;
 enumValue: typeName DOT identifierUse;
-litRegExp: LITERAL_REGEXP;
+litRegExp: LITERAL_REGEXP; // TODO see #3565
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
@@ -272,10 +271,8 @@ tuple:
     OPEN_BRACKET expressionList CLOSE_BRACKET
 ;
 dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
-
-kvpList: kvp (COMMA kvp)*;
-
-kvp: expression COLON expression;
+    kvpList: kvp (COMMA kvp)*;
+    kvp: expression COLON expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 

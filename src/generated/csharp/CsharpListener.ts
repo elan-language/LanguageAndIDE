@@ -12,19 +12,25 @@ import { ConstantContext } from "./CsharpParser.js";
 import { EnumContext } from "./CsharpParser.js";
 import { ConcreteClassContext } from "./CsharpParser.js";
 import { AbstractClassContext } from "./CsharpParser.js";
-import { CommentLineContext } from "./CsharpParser.js";
+import { CommentContext } from "./CsharpParser.js";
+import { CommentTextContext } from "./CsharpParser.js";
 import { OrdinaryStatementContext } from "./CsharpParser.js";
-import { IfStatementContext } from "./CsharpParser.js";
-import { WhileLoopContext } from "./CsharpParser.js";
-import { ForLoopContext } from "./CsharpParser.js";
-import { TryStatementContext } from "./CsharpParser.js";
-import { AssertContext } from "./CsharpParser.js";
 import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
 import { InputStatementContext } from "./CsharpParser.js";
+import { IfStatementContext } from "./CsharpParser.js";
+import { WhileLoopContext } from "./CsharpParser.js";
+import { ForLoopContext } from "./CsharpParser.js";
 import { ProcedureCallContext } from "./CsharpParser.js";
+import { ProcRefContext } from "./CsharpParser.js";
+import { ThisProcRefContext } from "./CsharpParser.js";
+import { InstanceProcRefContext } from "./CsharpParser.js";
+import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
+import { TryStatementContext } from "./CsharpParser.js";
 import { ThrowStatementContext } from "./CsharpParser.js";
+import { ErrorMessageContext } from "./CsharpParser.js";
+import { AssertContext } from "./CsharpParser.js";
 import { ReturnStatementContext } from "./CsharpParser.js";
 import { ElseIfClauseContext } from "./CsharpParser.js";
 import { ElseClauseContext } from "./CsharpParser.js";
@@ -44,33 +50,42 @@ import { TypeNameContext } from "./CsharpParser.js";
 import { ConstantValueContext } from "./CsharpParser.js";
 import { ArgListContext } from "./CsharpParser.js";
 import { ArgumentContext } from "./CsharpParser.js";
-import { ParamsListContext } from "./CsharpParser.js";
+import { ParamListContext } from "./CsharpParser.js";
+import { IdentifierListContext } from "./CsharpParser.js";
+import { ExpressionListContext } from "./CsharpParser.js";
 import { TypeContext } from "./CsharpParser.js";
-import { EnumValuesListContext } from "./CsharpParser.js";
 import { AssertActualContext } from "./CsharpParser.js";
+import { AssertExpectedContext } from "./CsharpParser.js";
 import { LitValueContext } from "./CsharpParser.js";
 import { LitBooleanContext } from "./CsharpParser.js";
 import { LitIntContext } from "./CsharpParser.js";
 import { LitFloatContext } from "./CsharpParser.js";
-import { EnumValueContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
+import { EnumValueContext } from "./CsharpParser.js";
+import { LitRegExpContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
-import { ChainHeadContext } from "./CsharpParser.js";
 import { ChainableContext } from "./CsharpParser.js";
+import { ThisInstanceContext } from "./CsharpParser.js";
 import { BracketedExpressionContext } from "./CsharpParser.js";
 import { UnaryExpressionContext } from "./CsharpParser.js";
+import { NegateNumericContext } from "./CsharpParser.js";
+import { NegateLogicalContext } from "./CsharpParser.js";
 import { BinaryExpressionContext } from "./CsharpParser.js";
+import { ListContext } from "./CsharpParser.js";
 import { TupleContext } from "./CsharpParser.js";
+import { DictionaryContext } from "./CsharpParser.js";
+import { KvpListContext } from "./CsharpParser.js";
+import { KvpContext } from "./CsharpParser.js";
 import { MethodCallContext } from "./CsharpParser.js";
 import { BinaryOperatorContext } from "./CsharpParser.js";
 import { NewInstanceContext } from "./CsharpParser.js";
 import { ParamDefContext } from "./CsharpParser.js";
 import { TypeGenericContext } from "./CsharpParser.js";
+import { TypeFuncContext } from "./CsharpParser.js";
 import { TypeTupleContext } from "./CsharpParser.js";
 import { LambdaContext } from "./CsharpParser.js";
-import { ListContext } from "./CsharpParser.js";
 import { InterpolatedStringContext } from "./CsharpParser.js";
 import { PowerContext } from "./CsharpParser.js";
 
@@ -180,15 +195,25 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitAbstractClass?: (ctx: AbstractClassContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.commentLine`.
+   * Enter a parse tree produced by `CsharpParser.comment`.
    * @param ctx the parse tree
    */
-  enterCommentLine?: (ctx: CommentLineContext) => void;
+  enterComment?: (ctx: CommentContext) => void;
   /**
-   * Exit a parse tree produced by `CsharpParser.commentLine`.
+   * Exit a parse tree produced by `CsharpParser.comment`.
    * @param ctx the parse tree
    */
-  exitCommentLine?: (ctx: CommentLineContext) => void;
+  exitComment?: (ctx: CommentContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.commentText`.
+   * @param ctx the parse tree
+   */
+  enterCommentText?: (ctx: CommentTextContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.commentText`.
+   * @param ctx the parse tree
+   */
+  exitCommentText?: (ctx: CommentTextContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.ordinaryStatement`.
    * @param ctx the parse tree
@@ -199,56 +224,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.ifStatement`.
-   * @param ctx the parse tree
-   */
-  enterIfStatement?: (ctx: IfStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.ifStatement`.
-   * @param ctx the parse tree
-   */
-  exitIfStatement?: (ctx: IfStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.whileLoop`.
-   * @param ctx the parse tree
-   */
-  enterWhileLoop?: (ctx: WhileLoopContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.whileLoop`.
-   * @param ctx the parse tree
-   */
-  exitWhileLoop?: (ctx: WhileLoopContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.forLoop`.
-   * @param ctx the parse tree
-   */
-  enterForLoop?: (ctx: ForLoopContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.forLoop`.
-   * @param ctx the parse tree
-   */
-  exitForLoop?: (ctx: ForLoopContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.tryStatement`.
-   * @param ctx the parse tree
-   */
-  enterTryStatement?: (ctx: TryStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.tryStatement`.
-   * @param ctx the parse tree
-   */
-  exitTryStatement?: (ctx: TryStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.assert`.
-   * @param ctx the parse tree
-   */
-  enterAssert?: (ctx: AssertContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.assert`.
-   * @param ctx the parse tree
-   */
-  exitAssert?: (ctx: AssertContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.print`.
    * @param ctx the parse tree
@@ -290,6 +265,36 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitInputStatement?: (ctx: InputStatementContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.ifStatement`.
+   * @param ctx the parse tree
+   */
+  enterIfStatement?: (ctx: IfStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.ifStatement`.
+   * @param ctx the parse tree
+   */
+  exitIfStatement?: (ctx: IfStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.whileLoop`.
+   * @param ctx the parse tree
+   */
+  enterWhileLoop?: (ctx: WhileLoopContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.whileLoop`.
+   * @param ctx the parse tree
+   */
+  exitWhileLoop?: (ctx: WhileLoopContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.forLoop`.
+   * @param ctx the parse tree
+   */
+  enterForLoop?: (ctx: ForLoopContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.forLoop`.
+   * @param ctx the parse tree
+   */
+  exitForLoop?: (ctx: ForLoopContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.procedureCall`.
    * @param ctx the parse tree
    */
@@ -300,6 +305,56 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitProcedureCall?: (ctx: ProcedureCallContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.procRef`.
+   * @param ctx the parse tree
+   */
+  enterProcRef?: (ctx: ProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.procRef`.
+   * @param ctx the parse tree
+   */
+  exitProcRef?: (ctx: ProcRefContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.thisProcRef`.
+   * @param ctx the parse tree
+   */
+  enterThisProcRef?: (ctx: ThisProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.thisProcRef`.
+   * @param ctx the parse tree
+   */
+  exitThisProcRef?: (ctx: ThisProcRefContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.instanceProcRef`.
+   * @param ctx the parse tree
+   */
+  enterInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.instanceProcRef`.
+   * @param ctx the parse tree
+   */
+  exitInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.tryStatement`.
+   * @param ctx the parse tree
+   */
+  enterTryStatement?: (ctx: TryStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.tryStatement`.
+   * @param ctx the parse tree
+   */
+  exitTryStatement?: (ctx: TryStatementContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.throwStatement`.
    * @param ctx the parse tree
    */
@@ -309,6 +364,26 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitThrowStatement?: (ctx: ThrowStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.errorMessage`.
+   * @param ctx the parse tree
+   */
+  enterErrorMessage?: (ctx: ErrorMessageContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.errorMessage`.
+   * @param ctx the parse tree
+   */
+  exitErrorMessage?: (ctx: ErrorMessageContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.assert`.
+   * @param ctx the parse tree
+   */
+  enterAssert?: (ctx: AssertContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.assert`.
+   * @param ctx the parse tree
+   */
+  exitAssert?: (ctx: AssertContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.returnStatement`.
    * @param ctx the parse tree
@@ -500,15 +575,35 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitArgument?: (ctx: ArgumentContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.paramsList`.
+   * Enter a parse tree produced by `CsharpParser.paramList`.
    * @param ctx the parse tree
    */
-  enterParamsList?: (ctx: ParamsListContext) => void;
+  enterParamList?: (ctx: ParamListContext) => void;
   /**
-   * Exit a parse tree produced by `CsharpParser.paramsList`.
+   * Exit a parse tree produced by `CsharpParser.paramList`.
    * @param ctx the parse tree
    */
-  exitParamsList?: (ctx: ParamsListContext) => void;
+  exitParamList?: (ctx: ParamListContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.identifierList`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierList?: (ctx: IdentifierListContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.identifierList`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierList?: (ctx: IdentifierListContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.expressionList`.
+   * @param ctx the parse tree
+   */
+  enterExpressionList?: (ctx: ExpressionListContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.expressionList`.
+   * @param ctx the parse tree
+   */
+  exitExpressionList?: (ctx: ExpressionListContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.type`.
    * @param ctx the parse tree
@@ -520,16 +615,6 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitType?: (ctx: TypeContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.enumValuesList`.
-   * @param ctx the parse tree
-   */
-  enterEnumValuesList?: (ctx: EnumValuesListContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.enumValuesList`.
-   * @param ctx the parse tree
-   */
-  exitEnumValuesList?: (ctx: EnumValuesListContext) => void;
-  /**
    * Enter a parse tree produced by `CsharpParser.assertActual`.
    * @param ctx the parse tree
    */
@@ -539,6 +624,16 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssertActual?: (ctx: AssertActualContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  enterAssertExpected?: (ctx: AssertExpectedContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.assertExpected`.
+   * @param ctx the parse tree
+   */
+  exitAssertExpected?: (ctx: AssertExpectedContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.litValue`.
    * @param ctx the parse tree
@@ -580,6 +675,16 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitLitFloat?: (ctx: LitFloatContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.litString`.
+   * @param ctx the parse tree
+   */
+  enterLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.litString`.
+   * @param ctx the parse tree
+   */
+  exitLitString?: (ctx: LitStringContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.enumValue`.
    * @param ctx the parse tree
    */
@@ -590,15 +695,15 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.litString`.
+   * Enter a parse tree produced by `CsharpParser.litRegExp`.
    * @param ctx the parse tree
    */
-  enterLitString?: (ctx: LitStringContext) => void;
+  enterLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
-   * Exit a parse tree produced by `CsharpParser.litString`.
+   * Exit a parse tree produced by `CsharpParser.litRegExp`.
    * @param ctx the parse tree
    */
-  exitLitString?: (ctx: LitStringContext) => void;
+  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.index`.
    * @param ctx the parse tree
@@ -630,16 +735,6 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitTerm?: (ctx: TermContext) => void;
   /**
-   * Enter a parse tree produced by `CsharpParser.chainHead`.
-   * @param ctx the parse tree
-   */
-  enterChainHead?: (ctx: ChainHeadContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.chainHead`.
-   * @param ctx the parse tree
-   */
-  exitChainHead?: (ctx: ChainHeadContext) => void;
-  /**
    * Enter a parse tree produced by `CsharpParser.chainable`.
    * @param ctx the parse tree
    */
@@ -649,6 +744,16 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitChainable?: (ctx: ChainableContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  enterThisInstance?: (ctx: ThisInstanceContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.thisInstance`.
+   * @param ctx the parse tree
+   */
+  exitThisInstance?: (ctx: ThisInstanceContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.bracketedExpression`.
    * @param ctx the parse tree
@@ -670,6 +775,26 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitUnaryExpression?: (ctx: UnaryExpressionContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.negateNumeric`.
+   * @param ctx the parse tree
+   */
+  enterNegateNumeric?: (ctx: NegateNumericContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.negateNumeric`.
+   * @param ctx the parse tree
+   */
+  exitNegateNumeric?: (ctx: NegateNumericContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.negateLogical`.
+   * @param ctx the parse tree
+   */
+  enterNegateLogical?: (ctx: NegateLogicalContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.negateLogical`.
+   * @param ctx the parse tree
+   */
+  exitNegateLogical?: (ctx: NegateLogicalContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.binaryExpression`.
    * @param ctx the parse tree
    */
@@ -680,6 +805,16 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitBinaryExpression?: (ctx: BinaryExpressionContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.list`.
+   * @param ctx the parse tree
+   */
+  enterList?: (ctx: ListContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.list`.
+   * @param ctx the parse tree
+   */
+  exitList?: (ctx: ListContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.tuple`.
    * @param ctx the parse tree
    */
@@ -689,6 +824,36 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTuple?: (ctx: TupleContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  enterDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.dictionary`.
+   * @param ctx the parse tree
+   */
+  exitDictionary?: (ctx: DictionaryContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  enterKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.kvpList`.
+   * @param ctx the parse tree
+   */
+  exitKvpList?: (ctx: KvpListContext) => void;
+  /**
+   * Enter a parse tree produced by `CsharpParser.kvp`.
+   * @param ctx the parse tree
+   */
+  enterKvp?: (ctx: KvpContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.kvp`.
+   * @param ctx the parse tree
+   */
+  exitKvp?: (ctx: KvpContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.methodCall`.
    * @param ctx the parse tree
@@ -740,6 +905,16 @@ export class CsharpListener implements ParseTreeListener {
    */
   exitTypeGeneric?: (ctx: TypeGenericContext) => void;
   /**
+   * Enter a parse tree produced by `CsharpParser.typeFunc`.
+   * @param ctx the parse tree
+   */
+  enterTypeFunc?: (ctx: TypeFuncContext) => void;
+  /**
+   * Exit a parse tree produced by `CsharpParser.typeFunc`.
+   * @param ctx the parse tree
+   */
+  exitTypeFunc?: (ctx: TypeFuncContext) => void;
+  /**
    * Enter a parse tree produced by `CsharpParser.typeTuple`.
    * @param ctx the parse tree
    */
@@ -759,16 +934,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitLambda?: (ctx: LambdaContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.list`.
-   * @param ctx the parse tree
-   */
-  enterList?: (ctx: ListContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.list`.
-   * @param ctx the parse tree
-   */
-  exitList?: (ctx: ListContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.interpolatedString`.
    * @param ctx the parse tree
