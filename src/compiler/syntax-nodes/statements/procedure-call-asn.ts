@@ -1,13 +1,3 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { ProcedureType } from "../../../compiler/symbols/procedure-type";
-import {
-  getGlobalScope,
-  isMemberOnFieldsClass,
-  scopePrefix,
-  updateScopeAndQualifier,
-} from "../../../compiler/symbols/symbol-helpers";
 import {
   checkForDeprecation,
   getQualifierId,
@@ -19,6 +9,16 @@ import {
   mustCallMemberViaQualifier,
   mustNotCallNonExtensionViaQualifier,
 } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { ProcedureType } from "../../symbols/procedure-type";
+import {
+  getGlobalScope,
+  isMemberOnFieldsClass,
+  scopePrefix,
+  updateScopeAndQualifier,
+} from "../../symbols/symbol-helpers";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import {
   isAstCollectionNode,
@@ -31,7 +31,7 @@ import { EmptyAsn } from "../empty-asn";
 import { LambdaAsn } from "../lambda-asn";
 import { QualifierAsn } from "../qualifier-asn";
 
-export class CallAsn extends BreakpointAsn {
+export class ProcedureCallAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

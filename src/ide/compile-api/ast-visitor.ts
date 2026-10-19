@@ -22,18 +22,18 @@ import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
-import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
+import { AssignableAsn } from "../../compiler/syntax-nodes/statements/assignable-asn";
 import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";
 import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
 import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
 import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
 import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
+import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
-import { SetAsn } from "../../compiler/syntax-nodes/statements/set-asn";
 import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
 import { TryAsn } from "../../compiler/syntax-nodes/statements/try-asn";
-import { VariableAsn } from "../../compiler/syntax-nodes/statements/variable-asn";
+import { VariableDefinitionAsn } from "../../compiler/syntax-nodes/statements/variable-definition-asn";
 import { WhileAsn } from "../../compiler/syntax-nodes/statements/while-asn";
 import { AbstractFrame } from "../frames/abstract-frame";
 import { AbstractFunction } from "../frames/class-members/abstract-function";
@@ -108,6 +108,23 @@ export function transform(
     return mainAsn;
   }
 
+  if (node instanceof GlobalFunction) {
+    const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
+    functionAsn.breakpointStatus = node.breakpointStatus;
+
+    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.returnType =
+      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+
+    functionAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), functionAsn)) as AstNode[];
+
+    return functionAsn;
+  }
+
   if (node instanceof TestFrame) {
     const testAsn = new TestAsn(node.testName.text, node.getHtmlId(), scope);
     testAsn.breakpointStatus = node.breakpointStatus;
@@ -118,6 +135,42 @@ export function transform(
       .map((f) => transform(f, f.getHtmlId(), testAsn)) as AstNode[];
 
     return testAsn;
+  }
+
+  if (node instanceof GlobalProcedure) {
+    const procedureAsn = new GlobalProcedureAsn(node.getHtmlId(), scope);
+    procedureAsn.breakpointStatus = node.breakpointStatus;
+
+    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.params =
+      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+
+    procedureAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), procedureAsn)) as AstNode[];
+
+    return procedureAsn;
+  }
+
+  if (node instanceof ConstantGlobal) {
+    const constantAsn = new GlobalConstantAsn(node.getHtmlId(), scope);
+    constantAsn.breakpointStatus = node.breakpointStatus;
+
+    constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+    constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+
+    return constantAsn;
+  }
+
+  if (node instanceof Enum) {
+    const enumAsn = new EnumAsn(node.getHtmlId(), scope);
+    enumAsn.breakpointStatus = node.breakpointStatus;
+
+    enumAsn.name = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+    enumAsn.values = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+
+    return enumAsn;
   }
 
   if (node instanceof ConcreteClass) {
@@ -179,7 +232,7 @@ export function transform(
   }
 
   if (node instanceof VariableStatement) {
-    const varAsn = new VariableAsn(node.getHtmlId(), scope);
+    const varAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
     varAsn.breakpointStatus = node.breakpointStatus;
 
     varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
@@ -189,7 +242,7 @@ export function transform(
   }
 
   if (node instanceof Assignment) {
-    const setAsn = new SetAsn(node.getHtmlId(), scope);
+    const setAsn = new AssignableAsn(node.getHtmlId(), scope);
     setAsn.breakpointStatus = node.breakpointStatus;
 
     setAsn.assignable = transform(node.assignable, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
@@ -199,7 +252,7 @@ export function transform(
   }
 
   if (node instanceof InputStatement) {
-    const varAsn = new VariableAsn(node.getHtmlId(), scope);
+    const varAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
     varAsn.breakpointStatus = node.breakpointStatus;
 
     varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
@@ -218,7 +271,7 @@ export function transform(
   }
 
   if (node instanceof ProcedureCall) {
-    const callAsn = new CallAsn(node.getHtmlId(), scope);
+    const callAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
     callAsn.breakpointStatus = node.breakpointStatus;
 
     callAsn.proc = transform(node.proc, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
@@ -242,26 +295,6 @@ export function transform(
     return commentAsn;
   }
 
-  if (node instanceof Enum) {
-    const enumAsn = new EnumAsn(node.getHtmlId(), scope);
-    enumAsn.breakpointStatus = node.breakpointStatus;
-
-    enumAsn.name = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
-    enumAsn.values = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
-
-    return enumAsn;
-  }
-
-  if (node instanceof ConstantGlobal) {
-    const constantAsn = new GlobalConstantAsn(node.getHtmlId(), scope);
-    constantAsn.breakpointStatus = node.breakpointStatus;
-
-    constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
-    constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
-
-    return constantAsn;
-  }
-
   if (node instanceof AbstractFunction) {
     const functionAsn = new AbstractFunctionAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
@@ -281,39 +314,6 @@ export function transform(
     procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
     procedureAsn.params =
       transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-
-    return procedureAsn;
-  }
-
-  if (node instanceof GlobalFunction) {
-    const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
-    functionAsn.breakpointStatus = node.breakpointStatus;
-
-    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.returnType =
-      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-
-    functionAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), functionAsn)) as AstNode[];
-
-    return functionAsn;
-  }
-
-  if (node instanceof GlobalProcedure) {
-    const procedureAsn = new GlobalProcedureAsn(node.getHtmlId(), scope);
-    procedureAsn.breakpointStatus = node.breakpointStatus;
-
-    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-    procedureAsn.params =
-      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-
-    procedureAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), procedureAsn)) as AstNode[];
 
     return procedureAsn;
   }

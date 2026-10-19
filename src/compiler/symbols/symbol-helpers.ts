@@ -27,9 +27,9 @@ import { ClassAsn } from "../syntax-nodes/globals/class-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
-import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { EachAsn } from "../syntax-nodes/statements/each-asn";
+import { ProcedureCallAsn } from "../syntax-nodes/statements/procedure-call-asn";
 import { TermAsn } from "../syntax-nodes/term-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassSubType, ClassType } from "./class-type";
@@ -99,8 +99,8 @@ export function isEnum(s?: ElanSymbol): s is EnumAsn {
   return s instanceof EnumAsn;
 }
 
-export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
-  return s instanceof CallAsn;
+export function isCall(s?: ElanSymbol | Scope): s is ProcedureCallAsn {
+  return s instanceof ProcedureCallAsn;
 }
 
 export function isListType(s?: SymbolType): s is ClassType {

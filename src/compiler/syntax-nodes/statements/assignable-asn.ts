@@ -1,6 +1,3 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import {
   getId,
   mustBeCompatibleNode,
@@ -12,11 +9,14 @@ import {
   mustNotBePropertyOnFunctionMethod,
   mustNotSetIndexInFunctionMethod,
 } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { VarAsn } from "../var-asn";
 
-export class SetAsn extends BreakpointAsn {
+export class AssignableAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
