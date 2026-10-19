@@ -12,7 +12,7 @@ import { SymbolScope } from "../../symbols/symbol-scope";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class GlobalConstantAsn extends BreakpointAsn implements AstNode, GlobalConstant {
+export class ConstantAsn extends BreakpointAsn implements AstNode, GlobalConstant {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

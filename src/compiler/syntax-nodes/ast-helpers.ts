@@ -40,9 +40,9 @@ import { EmptyAsn } from "./empty-asn";
 import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
 import { FloatTypeAsn } from "./float-type-asn";
+import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
-import { FunctionAsn } from "./globals/function-asn";
-import { GlobalConstantAsn } from "./globals/global-constant-asn";
+import { ConstantAsn } from "./globals/constant-asn";
 import { IndexAsn } from "./index-asn";
 import { IntTypeAsn } from "./int-type-asn";
 import { ListTypeAsn } from "./list-type-asn";
@@ -99,8 +99,8 @@ export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return n instanceof EmptyAsn;
 }
 
-export function isFunctionScope(scope?: Scope): scope is FunctionAsn {
-  return scope instanceof FunctionAsn;
+export function isFunctionScope(scope?: Scope): scope is AbstractFunctionAsn {
+  return scope instanceof AbstractFunctionAsn;
 }
 
 export function isFileScope(scope?: Scope): scope is FileAsn {
@@ -436,7 +436,7 @@ export function compileNodes(nodes: AstNode[]): string {
 }
 
 export function isInsideFunction(scope: Scope): boolean {
-  if (scope instanceof FunctionAsn) {
+  if (scope instanceof AbstractFunctionAsn) {
     return true;
   }
   if (scope instanceof FileAsn) {
@@ -445,8 +445,8 @@ export function isInsideFunction(scope: Scope): boolean {
   return isInsideFunction(scope.getParentScope());
 }
 
-export function getInnerMostFunction(scope: Scope): FunctionAsn | undefined {
-  if (scope instanceof FunctionAsn) {
+export function getInnerMostFunction(scope: Scope): AbstractFunctionAsn | undefined {
+  if (scope instanceof AbstractFunctionAsn) {
     return scope;
   }
   if (scope instanceof FileAsn) {
@@ -456,7 +456,7 @@ export function getInnerMostFunction(scope: Scope): FunctionAsn | undefined {
 }
 
 export function isInsideFunctionOrConstructor(scope: Scope): boolean {
-  if (scope instanceof FunctionAsn) {
+  if (scope instanceof AbstractFunctionAsn) {
     return true;
   }
   if (scope instanceof ConstructorAsn) {
@@ -469,7 +469,7 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
 }
 
 export function isInsideConstant(scope: Scope): boolean {
-  if (scope instanceof GlobalConstantAsn) {
+  if (scope instanceof ConstantAsn) {
     return true;
   }
   if (scope instanceof FileAsn) {

@@ -14,9 +14,9 @@ import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn"
 import { FileAsn } from "../../compiler/syntax-nodes/file-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
+import { ConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
-import { GlobalConstantAsn } from "../../compiler/syntax-nodes/globals/global-constant-asn";
-import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-function-asn";
+import { FunctionAsn } from "../../compiler/syntax-nodes/globals/function-asn";
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
@@ -109,12 +109,14 @@ export function transform(
   }
 
   if (node instanceof GlobalFunction) {
-    const functionAsn = new GlobalFunctionAsn(node.getHtmlId(), scope);
+    const functionAsn = new FunctionAsn(node.getHtmlId(), scope);
     functionAsn.breakpointStatus = node.breakpointStatus;
 
-    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.returnType =
+    functionAsn.methodName =
+      transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.paramList =
+      transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.type =
       transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
 
     functionAsn.children = node
@@ -154,7 +156,7 @@ export function transform(
   }
 
   if (node instanceof ConstantGlobal) {
-    const constantAsn = new GlobalConstantAsn(node.getHtmlId(), scope);
+    const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
     constantAsn.breakpointStatus = node.breakpointStatus;
 
     constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
@@ -323,9 +325,11 @@ export function transform(
     functionAsn.breakpointStatus = node.breakpointStatus;
     functionAsn.private = node.isPrivate;
 
-    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.returnType =
+    functionAsn.methodName =
+      transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.paramList =
+      transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.type =
       transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
 
     functionAsn.children = node

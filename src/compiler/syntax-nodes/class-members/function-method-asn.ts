@@ -9,9 +9,9 @@ import {
   mustBeKnownSymbolType,
   mustBeUniqueNameInScope,
 } from "../../compile-rules";
-import { FunctionAsn } from "../globals/function-asn";
+import { AbstractFunctionAsn } from "../globals/abstract-function-asn";
 
-export class FunctionMethodAsn extends FunctionAsn {
+export class FunctionMethodAsn extends AbstractFunctionAsn {
   isMember: boolean = true;
 
   isAbstract = false;
@@ -35,14 +35,14 @@ export class FunctionMethodAsn extends FunctionAsn {
   public override compile(): string {
     this.compileErrors = [];
 
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
-    this.returnType.compile();
+    this.type.compile();
 
     const rt = this.symbolType().returnType;
 
-    mustBeKnownSymbolType(rt, getId(this.returnType), this.compileErrors, this.fieldId);
+    mustBeKnownSymbolType(rt, getId(this.type), this.compileErrors, this.fieldId);
 
     const returnStatement = this.getReturnAsn().expr;
     const rst = returnStatement.symbolType();
@@ -57,7 +57,7 @@ ${this.indent()}}\r
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.name), id, caseSensitive)) {
+    if (match(getId(this.methodName), id, caseSensitive)) {
       return this;
     }
 

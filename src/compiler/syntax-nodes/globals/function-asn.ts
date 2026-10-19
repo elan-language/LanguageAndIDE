@@ -1,67 +1,45 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { FunctionType } from "../../../compiler/symbols/function-type";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
-import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
-import { getId } from "../../compile-rules";
-import { match } from "../../symbols/symbol-helpers";
-import { CompoundAsn } from "../compound-asn";
-import { EmptyAsn } from "../empty-asn";
-import { ParamListAsn } from "../fields/param-list-asn";
-import { ReturnAsn } from "../statements/return-asn";
+import {
+  getId,
+  mustBeAssignableType,
+  mustBeKnownSymbolType,
+  mustBeUniqueNameInScope,
+} from "../../compile-rules";
+import { Scope } from "../../compiler-interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { AbstractFunctionAsn } from "./abstract-function-asn";
 
-export abstract class FunctionAsn extends CompoundAsn implements ElanSymbol {
+export class FunctionAsn extends AbstractFunctionAsn {
+  isGlobal = true;
+
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
 
-  name: AstNode = EmptyAsn.Instance;
-  params: AstNode = EmptyAsn.Instance;
-  returnType: AstNode = EmptyAsn.Instance;
-
-  symbolIsType: boolean = true;
-
-  get symbolId() {
-    return getId(this.name);
-  }
-
-  symbolType() {
-    const [pn, pt] =
-      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
-    const rt = this.returnType.symbolType();
-    return new FunctionType(false, pn, pt, rt, false, true, true);
-  }
-
-  get symbolScope() {
-    return SymbolScope.program;
-  }
-
-  protected getReturnAsn(): ReturnAsn {
-    return this.children.filter((s) => s instanceof ReturnAsn)[0];
-  }
-
-  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.name), id, caseSensitive)) {
-      return this;
-    }
-    const s =
-      this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, caseSensitive, this)
-        : new UnknownSymbol(id);
-
-    return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
+  indent(): string {
+    return "";
   }
 
   public compile(): string {
-    return `${this.name.compile()}(${this.params.compile()}) {\r
-${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r`;
-  }
+    this.compileErrors = [];
+    const name = this.methodName.compile();
+    mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
 
-  public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = super.symbolMatches(id, all, initialScope);
-    const localMatches =
-      this.params instanceof ParamListAsn ? this.params.symbolMatches(id, all, initialScope) : [];
-    return localMatches.concat(matches);
+    this.type.compile();
+
+    const rt = this.symbolType().returnType;
+
+    mustBeKnownSymbolType(rt, getId(this.type), this.compileErrors, this.fieldId);
+
+    const returnStatement = this.getReturnAsn().expr;
+    const rst = returnStatement.symbolType();
+
+    mustBeAssignableType(rt, rst, this.compileErrors, this.fieldId, this.scope);
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return `async function ${super.compile()}\r
+}
+global["${name}"] = ${name};
+`;
   }
 }
