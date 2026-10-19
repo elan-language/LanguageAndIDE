@@ -318,7 +318,7 @@ typeTuple:
 
 lambda: LAMBDA argList COLON expression;
 
-interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
+interpolatedString: INTERPOLATED_STRING;
 
 power: term POWER term;
 // END SubNodes
