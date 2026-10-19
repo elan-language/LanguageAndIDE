@@ -44,7 +44,7 @@ export class FunctionMethodAsn extends AbstractFunctionAsn {
 
     mustBeKnownSymbolType(rt, getId(this.type), this.compileErrors, this.fieldId);
 
-    const returnStatement = this.getReturnAsn().expr;
+    const returnStatement = this.getReturnAsn().expression;
     const rst = returnStatement.symbolType();
 
     mustBeAssignableType(rt, rst, this.compileErrors, returnStatement!.fieldId, this.scope);

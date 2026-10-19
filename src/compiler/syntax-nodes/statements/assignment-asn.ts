@@ -16,23 +16,23 @@ import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { VarAsn } from "../var-asn";
 
-export class AssignableAsn extends BreakpointAsn {
+export class AssignmentAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
 
   assignable: AstNode = EmptyAsn.Instance;
-  expr: AstNode = EmptyAsn.Instance;
+  expression: AstNode = EmptyAsn.Instance;
 
   symbolType() {
-    const st = this.expr.symbolType();
+    const st = this.expression.symbolType();
     return st;
   }
 
   compile(): string {
     this.compileErrors = [];
     const assignableAstNode = this.assignable;
-    const exprAstNode = this.expr;
+    const exprAstNode = this.expression;
 
     const id = getId(this.assignable);
 

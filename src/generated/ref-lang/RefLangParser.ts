@@ -1755,7 +1755,7 @@ export class RefLangParser extends antlr.Parser {
         this.state = 423;
         this.match(RefLangParser.IF);
         this.state = 424;
-        this.expression();
+        localContext._condition = this.expression();
         this.state = 425;
         this.match(RefLangParser.THEN);
         this.state = 426;
@@ -1837,7 +1837,7 @@ export class RefLangParser extends antlr.Parser {
         this.state = 442;
         this.match(RefLangParser.WHILE);
         this.state = 443;
-        this.expression();
+        localContext._condition = this.expression();
         this.state = 444;
         this.match(RefLangParser.NL);
         this.state = 448;
@@ -5972,6 +5972,7 @@ export class InputStatementContext extends antlr.ParserRuleContext {
 }
 
 export class IfStatementContext extends antlr.ParserRuleContext {
+  public _condition?: ExpressionContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -5983,9 +5984,6 @@ export class IfStatementContext extends antlr.ParserRuleContext {
     } else {
       return this.getToken(RefLangParser.IF, i);
     }
-  }
-  public expression(): ExpressionContext {
-    return this.getRuleContext(0, ExpressionContext)!;
   }
   public THEN(): antlr.TerminalNode {
     return this.getToken(RefLangParser.THEN, 0)!;
@@ -6001,6 +5999,9 @@ export class IfStatementContext extends antlr.ParserRuleContext {
   }
   public END(): antlr.TerminalNode {
     return this.getToken(RefLangParser.END, 0)!;
+  }
+  public expression(): ExpressionContext {
+    return this.getRuleContext(0, ExpressionContext)!;
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
@@ -6057,6 +6058,7 @@ export class IfStatementContext extends antlr.ParserRuleContext {
 }
 
 export class WhileLoopContext extends antlr.ParserRuleContext {
+  public _condition?: ExpressionContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -6069,9 +6071,6 @@ export class WhileLoopContext extends antlr.ParserRuleContext {
       return this.getToken(RefLangParser.WHILE, i);
     }
   }
-  public expression(): ExpressionContext {
-    return this.getRuleContext(0, ExpressionContext)!;
-  }
   public NL(): antlr.TerminalNode[];
   public NL(i: number): antlr.TerminalNode | null;
   public NL(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
@@ -6083,6 +6082,9 @@ export class WhileLoopContext extends antlr.ParserRuleContext {
   }
   public END(): antlr.TerminalNode {
     return this.getToken(RefLangParser.END, 0)!;
+  }
+  public expression(): ExpressionContext {
+    return this.getRuleContext(0, ExpressionContext)!;
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);

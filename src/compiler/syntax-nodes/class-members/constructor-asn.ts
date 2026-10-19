@@ -18,7 +18,7 @@ import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
 import { ClassAsn } from "../globals/class-asn";
-import { AssignableAsn } from "../statements/assignable-asn";
+import { AssignmentAsn } from "../statements/assignment-asn";
 import { PropertyAsn } from "./property-asn";
 
 export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
@@ -53,7 +53,7 @@ export class ConstructorAsn extends CompoundAsn implements ElanSymbol, Member {
     }
 
     const toInitProperties = properties.filter((p) => !isValueTypeExcludingString(p.symbolType()));
-    const sets = this.children.filter((c) => c instanceof AssignableAsn);
+    const sets = this.children.filter((c) => c instanceof AssignmentAsn);
 
     const toInitPropertyNames = toInitProperties
       .map((p) => (isAstIdNode(p.name) ? p.name.id : ""))

@@ -9,7 +9,7 @@ import { UnknownSymbol } from "../../symbols/unknown-symbol";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 import { ParamListAsn } from "../fields/param-list-asn";
-import { ReturnAsn } from "../statements/return-asn";
+import { ReturnStatementAsn } from "../statements/return-statement-asn";
 
 export abstract class AbstractFunctionAsn extends CompoundAsn implements ElanSymbol {
   constructor(fieldId: string, scope: Scope) {
@@ -37,8 +37,8 @@ export abstract class AbstractFunctionAsn extends CompoundAsn implements ElanSym
     return SymbolScope.program;
   }
 
-  protected getReturnAsn(): ReturnAsn {
-    return this.children.filter((s) => s instanceof ReturnAsn)[0];
+  protected getReturnAsn(): ReturnStatementAsn {
+    return this.children.filter((s) => s instanceof ReturnStatementAsn)[0];
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {

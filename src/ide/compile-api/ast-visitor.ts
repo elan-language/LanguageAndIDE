@@ -22,19 +22,19 @@ import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn"
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
-import { AssignableAsn } from "../../compiler/syntax-nodes/statements/assignable-asn";
+import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
 import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";
-import { CommentStatementAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
-import { EachAsn } from "../../compiler/syntax-nodes/statements/each-asn";
-import { ElseAsn } from "../../compiler/syntax-nodes/statements/else-asn";
-import { IfAsn } from "../../compiler/syntax-nodes/statements/if-asn";
+import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
+import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
+import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
+import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
 import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
 import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
-import { ReturnAsn } from "../../compiler/syntax-nodes/statements/return-asn";
-import { ThrowAsn } from "../../compiler/syntax-nodes/statements/throw-asn";
-import { TryAsn } from "../../compiler/syntax-nodes/statements/try-asn";
+import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
+import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
+import { TryStatementAsn } from "../../compiler/syntax-nodes/statements/try-statement-asn";
 import { VariableDefinitionAsn } from "../../compiler/syntax-nodes/statements/variable-definition-asn";
-import { WhileAsn } from "../../compiler/syntax-nodes/statements/while-asn";
+import { WhileLoopAsn } from "../../compiler/syntax-nodes/statements/while-loop-asn";
 import { AbstractFrame } from "../frames/abstract-frame";
 import { AbstractFunction } from "../frames/class-members/abstract-function";
 import { AbstractProcedure } from "../frames/class-members/abstract-procedure";
@@ -95,6 +95,8 @@ export function transform(
 
     return astRoot;
   }
+
+  // Globals
 
   if (node instanceof MainRoutine) {
     const mainAsn = new MainAsn(node.getHtmlId(), scope);
@@ -210,6 +212,161 @@ export function transform(
     return classAsn;
   }
 
+  // Statements
+
+  if (node instanceof PrintStatement) {
+    const printAsn = new PrintAsn(node.getHtmlId(), scope);
+    printAsn.breakpointStatus = node.breakpointStatus;
+    printAsn.expression = transform(node.arg, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
+    return printAsn;
+  }
+
+  if (node instanceof VariableStatement) {
+    const variableDefinitionAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
+    variableDefinitionAsn.breakpointStatus = node.breakpointStatus;
+
+    variableDefinitionAsn.identifierDef =
+      transform(node.name, node.getHtmlId(), variableDefinitionAsn) ?? EmptyAsn.Instance;
+    variableDefinitionAsn.expression =
+      transform(node.expr, node.getHtmlId(), variableDefinitionAsn) ?? EmptyAsn.Instance;
+
+    return variableDefinitionAsn;
+  }
+
+  if (node instanceof Assignment) {
+    const assignmentAsn = new AssignmentAsn(node.getHtmlId(), scope);
+    assignmentAsn.breakpointStatus = node.breakpointStatus;
+
+    assignmentAsn.assignable =
+      transform(node.assignable, node.getHtmlId(), assignmentAsn) ?? EmptyAsn.Instance;
+    assignmentAsn.expression =
+      transform(node.expr, node.getHtmlId(), assignmentAsn) ?? EmptyAsn.Instance;
+
+    return assignmentAsn;
+  }
+
+  if (node instanceof InputStatement) {
+    const variableDefinitionAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
+    variableDefinitionAsn.breakpointStatus = node.breakpointStatus;
+
+    variableDefinitionAsn.identifierDef =
+      transform(node.name, node.getHtmlId(), variableDefinitionAsn) ?? EmptyAsn.Instance;
+
+    const id = "input"; // Hard coded method name
+    const parameter = transform(node.prompt, fieldId, scope)!;
+    variableDefinitionAsn.expression = new MethodCallAsn(id, [parameter], fieldId, scope);
+    return variableDefinitionAsn;
+  }
+
+  if (node instanceof IfStatement) {
+    const ifStatementAsn = new IfStatementAsn(node.getHtmlId(), scope);
+    ifStatementAsn.breakpointStatus = node.breakpointStatus;
+    ifStatementAsn.condition =
+      transform(node.condition, node.getHtmlId(), ifStatementAsn) ?? EmptyAsn.Instance;
+
+    ifStatementAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), ifStatementAsn)) as AstNode[];
+
+    return ifStatementAsn;
+  }
+
+  if (node instanceof WhileLoop) {
+    const whileLoopAsn = new WhileLoopAsn(node.getHtmlId(), scope);
+    whileLoopAsn.breakpointStatus = node.breakpointStatus;
+    whileLoopAsn.condition =
+      transform(node.condition, node.getHtmlId(), whileLoopAsn) ?? EmptyAsn.Instance;
+
+    whileLoopAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), whileLoopAsn)) as AstNode[];
+
+    return whileLoopAsn;
+  }
+
+  if (node instanceof ForLoop) {
+    const forLoopAsn = new ForLoopAsn(node.getHtmlId(), scope);
+    forLoopAsn.breakpointStatus = node.breakpointStatus;
+    forLoopAsn.identifierDef =
+      transform(node.variable, node.getHtmlId(), forLoopAsn) ?? EmptyAsn.Instance;
+    forLoopAsn.expression = transform(node.iter, node.getHtmlId(), forLoopAsn) ?? EmptyAsn.Instance;
+
+    forLoopAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), forLoopAsn)) as AstNode[];
+
+    return forLoopAsn;
+  }
+
+  if (node instanceof ProcedureCall) {
+    const procedureCallAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
+    procedureCallAsn.breakpointStatus = node.breakpointStatus;
+
+    procedureCallAsn.procRef =
+      transform(node.proc, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
+    procedureCallAsn.argList =
+      transform(node.args, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
+
+    return procedureCallAsn;
+  }
+
+  if (node instanceof TryStatement) {
+    const tryAsn = new TryStatementAsn(node.getHtmlId(), scope);
+    tryAsn.breakpointStatus = node.breakpointStatus;
+
+    tryAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), tryAsn)) as AstNode[];
+
+    return tryAsn;
+  }
+
+  if (node instanceof ThrowStatement) {
+    const typeName = node.type.text;
+    const errorMessage = transform(node.text, node.getHtmlId(), scope)!;
+
+    const throwAsn = new ThrowStatementAsn(typeName, errorMessage, node.getHtmlId(), scope);
+    throwAsn.breakpointStatus = node.breakpointStatus;
+    return throwAsn;
+  }
+
+  if (node instanceof CommentFrame) {
+    const commentAsn = new CommentAsn(node.getHtmlId(), scope);
+    commentAsn.text =
+      transform(node.textIncludingMarkerSymboAndSpace, node.getHtmlId(), commentAsn) ??
+      EmptyAsn.Instance;
+    return commentAsn;
+  }
+
+  if (node instanceof ReturnStatement) {
+    const returnStatementAsn = new ReturnStatementAsn(node.getHtmlId(), scope);
+    returnStatementAsn.breakpointStatus = node.breakpointStatus;
+    returnStatementAsn.expression =
+      transform(node.expr, node.getHtmlId(), returnStatementAsn) ?? EmptyAsn.Instance;
+    return returnStatementAsn;
+  }
+
+  if (node instanceof ElseIfClause) {
+    const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
+    elseClauseAsn.breakpointStatus = node.breakpointStatus;
+    elseClauseAsn.condition =
+      transform(node.condition, node.getHtmlId(), elseClauseAsn) ?? EmptyAsn.Instance;
+    elseClauseAsn.hasIf = true;
+    return elseClauseAsn;
+  }
+
+  if (node instanceof ElseClause) {
+    const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
+    elseClauseAsn.breakpointStatus = node.breakpointStatus;
+    elseClauseAsn.condition = EmptyAsn.Instance;
+    elseClauseAsn.hasIf = false;
+    return elseClauseAsn;
+  }
+
   if (node instanceof Constructor) {
     const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
     constructorAsn.breakpointStatus = node.breakpointStatus;
@@ -234,70 +391,6 @@ export function transform(
     propertyAsn.private = node.isPrivate;
 
     return propertyAsn;
-  }
-
-  if (node instanceof VariableStatement) {
-    const varAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
-    varAsn.breakpointStatus = node.breakpointStatus;
-
-    varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
-    varAsn.expr = transform(node.expr, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
-
-    return varAsn;
-  }
-
-  if (node instanceof Assignment) {
-    const setAsn = new AssignableAsn(node.getHtmlId(), scope);
-    setAsn.breakpointStatus = node.breakpointStatus;
-
-    setAsn.assignable = transform(node.assignable, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
-    setAsn.expr = transform(node.expr, node.getHtmlId(), setAsn) ?? EmptyAsn.Instance;
-
-    return setAsn;
-  }
-
-  if (node instanceof InputStatement) {
-    const varAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
-    varAsn.breakpointStatus = node.breakpointStatus;
-
-    varAsn.name = transform(node.name, node.getHtmlId(), varAsn) ?? EmptyAsn.Instance;
-
-    const id = "input"; // Hard coded method name
-    const parameter = transform(node.prompt, fieldId, scope)!;
-    varAsn.expr = new MethodCallAsn(id, [parameter], fieldId, scope);
-    return varAsn;
-  }
-
-  if (node instanceof PrintStatement) {
-    const printAsn = new PrintAsn(node.getHtmlId(), scope);
-    printAsn.breakpointStatus = node.breakpointStatus;
-    printAsn.expr = transform(node.arg, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
-    return printAsn;
-  }
-
-  if (node instanceof ProcedureCall) {
-    const callAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
-    callAsn.breakpointStatus = node.breakpointStatus;
-
-    callAsn.proc = transform(node.proc, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
-    callAsn.args = transform(node.args, node.getHtmlId(), callAsn) ?? EmptyAsn.Instance;
-
-    return callAsn;
-  }
-
-  if (node instanceof ReturnStatement) {
-    const returnAsn = new ReturnAsn(node.getHtmlId(), scope);
-    returnAsn.breakpointStatus = node.breakpointStatus;
-    returnAsn.expr = transform(node.expr, node.getHtmlId(), returnAsn) ?? EmptyAsn.Instance;
-    return returnAsn;
-  }
-
-  if (node instanceof CommentFrame) {
-    const commentAsn = new CommentStatementAsn(node.getHtmlId(), scope);
-    commentAsn.text =
-      transform(node.textIncludingMarkerSymboAndSpace, node.getHtmlId(), commentAsn) ??
-      EmptyAsn.Instance;
-    return commentAsn;
   }
 
   if (node instanceof AbstractFunction) {
@@ -361,74 +454,6 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof ForLoop) {
-    const eachAsn = new EachAsn(node.getHtmlId(), scope);
-    eachAsn.breakpointStatus = node.breakpointStatus;
-    eachAsn.variable = transform(node.variable, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
-    eachAsn.iter = transform(node.iter, node.getHtmlId(), eachAsn) ?? EmptyAsn.Instance;
-
-    eachAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), eachAsn)) as AstNode[];
-
-    return eachAsn;
-  }
-
-  if (node instanceof WhileLoop) {
-    const whileAsn = new WhileAsn(node.getHtmlId(), scope);
-    whileAsn.breakpointStatus = node.breakpointStatus;
-    whileAsn.condition = transform(node.condition, node.getHtmlId(), whileAsn) ?? EmptyAsn.Instance;
-
-    whileAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), whileAsn)) as AstNode[];
-
-    return whileAsn;
-  }
-
-  if (node instanceof IfStatement) {
-    const ifAsn = new IfAsn(node.getHtmlId(), scope);
-    ifAsn.breakpointStatus = node.breakpointStatus;
-    ifAsn.condition = transform(node.condition, node.getHtmlId(), ifAsn) ?? EmptyAsn.Instance;
-
-    ifAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), ifAsn)) as AstNode[];
-
-    return ifAsn;
-  }
-
-  if (node instanceof ElseIfClause) {
-    const elseAsn = new ElseAsn(node.getHtmlId(), scope);
-    elseAsn.breakpointStatus = node.breakpointStatus;
-    elseAsn.condition = transform(node.condition, node.getHtmlId(), elseAsn) ?? EmptyAsn.Instance;
-    elseAsn.hasIf = true;
-    return elseAsn;
-  }
-
-  if (node instanceof ElseClause) {
-    const elseAsn = new ElseAsn(node.getHtmlId(), scope);
-    elseAsn.breakpointStatus = node.breakpointStatus;
-    elseAsn.condition = EmptyAsn.Instance;
-    elseAsn.hasIf = false;
-    return elseAsn;
-  }
-
-  if (node instanceof TryStatement) {
-    const tryAsn = new TryAsn(node.getHtmlId(), scope);
-    tryAsn.breakpointStatus = node.breakpointStatus;
-
-    tryAsn.children = node
-      .getChildren()
-      .filter((f) => !isSelector(f))
-      .map((f) => transform(f, f.getHtmlId(), tryAsn)) as AstNode[];
-
-    return tryAsn;
-  }
-
   if (node instanceof CatchStatement) {
     const type = node.exceptionType.text;
 
@@ -437,15 +462,6 @@ export function transform(
 
     catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
     return catchAsn;
-  }
-
-  if (node instanceof ThrowStatement) {
-    const type = node.type.text;
-    const msg = transform(node.text, node.getHtmlId(), scope)!;
-
-    const throwAsn = new ThrowAsn(type, msg, node.getHtmlId(), scope);
-    throwAsn.breakpointStatus = node.breakpointStatus;
-    return throwAsn;
   }
 
   if (node instanceof AssertStatement) {

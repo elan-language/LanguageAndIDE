@@ -10,13 +10,13 @@ export class PrintAsn extends BreakpointAsn {
     super(fieldId, scope);
   }
 
-  expr: AstNode = EmptyAsn.Instance;
+  expression: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];
 
-    const toPrint = `${this.expr.compile()}`;
-    mustNotBeEnum(this.expr.symbolType(), this.compileErrors, this.fieldId);
+    const toPrint = `${this.expression.compile()}`;
+    mustNotBeEnum(this.expression.symbolType(), this.compileErrors, this.fieldId);
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.indent()}${this.breakPoint(this.debugSymbols())}await _stdlib.print(${toPrint});`;
   }
