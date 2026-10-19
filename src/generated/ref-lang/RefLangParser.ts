@@ -1,6 +1,7 @@
 // Generated from src/grammars/ref-lang/RefLang.g4 by ANTLR 4.13.1
 
 import * as antlr from "antlr4ng";
+import { Token } from "antlr4ng";
 
 import { RefLangListener } from "./RefLangListener.js";
 import { RefLangVisitor } from "./RefLangVisitor.js";
@@ -1698,9 +1699,9 @@ export class RefLangParser extends antlr.Parser {
 
         this.state = 413;
         this.match(RefLangParser.IF);
-        this.state = 409;
+        this.state = 414;
         localContext._condition = this.expression();
-        this.state = 410;
+        this.state = 415;
         this.match(RefLangParser.THEN);
         this.state = 416;
         this.match(RefLangParser.NL);
@@ -1780,9 +1781,9 @@ export class RefLangParser extends antlr.Parser {
 
         this.state = 432;
         this.match(RefLangParser.WHILE);
-        this.state = 428;
+        this.state = 433;
         localContext._condition = this.expression();
-        this.state = 429;
+        this.state = 434;
         this.match(RefLangParser.NL);
         this.state = 438;
         this.errorHandler.sync(this);
