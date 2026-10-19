@@ -29,37 +29,28 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitMain = (ctx: MainContext) => {
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
-
     const main = new MainRoutine(this.file);
-
     for (const s of statements) {
       main.getChildren().push(s);
     }
-
     return main;
   };
 
   override visitPrint = (ctx: PrintContext) => {
     const expression = ctx.expression()?.getText() ?? "";
-
     const printStatement = new PrintStatement(this.file);
-
     if (expression) {
       printStatement.arg.setFieldToKnownValidText(expression);
     }
-
     return printStatement;
   };
 
   override visitProcedureCall = (ctx: ProcedureCallContext) => {
     const procRef = ctx.procRef().getText();
     const argList = ctx.argList().getText();
-
     const procedureCall = new ProcedureCall(this.file);
-
     procedureCall.proc.setFieldToKnownValidText(procRef);
     procedureCall.args.setFieldToKnownValidText(argList);
-
     return procedureCall;
   };
 
@@ -67,10 +58,8 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     const name = ctx.identifierDef().getText();
     const value = ctx.constantValue().getText();
     const gc = new ConstantGlobal(this.file!);
-
     gc.name.setFieldToKnownValidText(name);
     gc.value.setFieldToKnownValidText(value);
-
     return gc;
   };
 }
