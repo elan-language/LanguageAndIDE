@@ -148,7 +148,6 @@ VARIABLE_ANNOTATION: '# variable definition';
 ASSIGNMENT_ANNOTATION: '# assignment';
 INPUT_ANNOTATION: '# input statement';
 CALL_ANNOTATION: '# procedure call';
-LET_ANNOTATION: '# let';
 ELSE_IF_ANNOTATION: '# else if';
 PROPERTY_ANNOTATION: '# property';
 FUNCTION_METHOD_ANNOTATION: '# function method';

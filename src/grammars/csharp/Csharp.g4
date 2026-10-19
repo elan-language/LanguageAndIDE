@@ -17,7 +17,7 @@ global:
     | enum
     | concreteClass
     | abstractClass
-    | commentLine
+    | comment
 ;
 
 main:
@@ -26,7 +26,7 @@ main:
 ;
 
 function:
-    STATIC type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
+    STATIC type methodName OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
         ordinaryStatement
         ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
@@ -37,12 +37,12 @@ test:
     TEST_CLASS_ANNOT CLASS typeName NL TEST_METHOD_ANNOT STATIC VOID testName (
         assert
         | variableDefinition
-        | commentLine
+        | comment
     )* CLOSE_BRACE COMMENT NL
 ;
 
 procedure:
-    STATIC VOID methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL
+    STATIC VOID methodName OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE COMMENT NL
         ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
         CLOSE_BRACE COMMENT NL
 ;
@@ -50,7 +50,7 @@ procedure:
 constant: CONST identifierDef EQUAL constantValue COMMENT NL;
 
 // `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`
-enum: ENUM typeName OPEN_BRACE enumValuesList CLOSE_BRACKET NL;
+enum: ENUM typeName OPEN_BRACE identifierList CLOSE_BRACKET NL;
 
 concreteClass:
     CLASS typeName (COLON typeName)? OPEN_BRACE NL (
@@ -58,7 +58,7 @@ concreteClass:
         | property
         | functionMethod
         | procedureMethod
-        | commentLine
+        | comment
     )* CLOSE_BRACE COMMENT NL
 ;
 
@@ -69,11 +69,12 @@ abstractClass:
         | procedureMethod
         | abstractFunction
         | abstractProcedure
-        | commentLine
+        | comment
     )* CLOSE_BRACE COMMENT NL
 ;
 
-commentLine: COMMENT NL;
+comment: commentText NL;
+commentText: COMMENT;
 
 // Statements
 ordinaryStatement:
@@ -87,10 +88,23 @@ ordinaryStatement:
     | procedureCall
     | tryStatement
     | throwStatement
-    | commentLine
+    | comment
 ;
 
-ifStatement: // TODO - see #3444
+print:
+    PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
+;
+variableDefinition:
+    VAR identifierDef SINGLE_EQUALS expression SEMI_COLON NL
+;
+assignment:
+    assignable SINGLE_EQUALS expression SEMI_COLON COMMENT NL
+;
+inputStatement:
+    identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
+;
+
+ifStatement:
     IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL (
         elseIfClause
         | elseClause
@@ -109,32 +123,31 @@ forLoop:
         CLOSE_BRACE COMMENT NL
 ;
 
-tryStatement: //TODO - see #3444
+procedureCall:
+    //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
+    GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
+;
+    procRef: 
+        methodName
+        | thisProcRef
+        | instanceProcRef
+    ;
+    thisProcRef: THIS_INSTANCE DOT methodName;
+    instanceProcRef: identifierWithOptIndexes DOT methodName;
+    identifierWithOptIndexes: identifierUse index*;
+
+tryStatement:
     TRY OPEN_BRACE NL ordinaryStatement* catchStatement ordinaryStatement* CLOSE_BRACE COMMENT NL
 ;
+
+throwStatement:
+    THROW NEW typeName OPEN_BRACKET errorMessage CLOSE_BRACKET SEMI_COLON NL
+;
+errorMessage: litString | identifierUse ;
 
 //self.assertEqual(actual, expected)
 assert:
     ASSERT DOT ARE_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET SEMI_COLON NL
-;
-
-print:
-    PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
-;
-variableDefinition:
-    VAR identifierDef SINGLE_EQUALS expression SEMI_COLON NL
-;
-assignment:
-    assignable SINGLE_EQUALS expression SEMI_COLON COMMENT NL
-;
-inputStatement:
-    identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
-;
-procedureCall:
-    term SEMI_COLON COMMENT NL
-; // Compiler to check that term ends in a methodCall, and that the method is a procedure
-throwStatement:
-    THROW NEW typeName OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
 ;
 returnStatement: RETURN expression SEMI_COLON NL;
 elseIfClause:
@@ -147,29 +160,29 @@ catchStatement:
 
 // Members
 constructorMember:
-    PUBLIC OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement* CLOSE_BRACE
+    PUBLIC OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement* CLOSE_BRACE
         COMMENT NL
 ;
 
 property: PUBLIC type identifierDef GET_SET COMMENT NL;
 
 functionMethod:
-    PUBLIC type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
+    PUBLIC type methodName OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
         ordinaryStatement
     )* returnStatement CLOSE_BRACE COMMENT NL
 ;
 
 procedureMethod:
-    PUBLIC VOID methodName OPEN_BRACKET paramsList? CLOSE_BRACKET OPEN_BRACE COMMENT NL
+    PUBLIC VOID methodName OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE COMMENT NL
         ordinaryStatement* CLOSE_BRACE COMMENT NL
 ;
 
 abstractFunction:
-    ABSTRACT type methodName OPEN_BRACKET paramsList? CLOSE_BRACKET SEMI_COLON COMMENT NL
+    ABSTRACT type methodName OPEN_BRACKET paramList? CLOSE_BRACKET SEMI_COLON COMMENT NL
 ;
 
 abstractProcedure:
-    ABSTRACT VOID methodName OPEN_BRACKET paramsList? CLOSE_BRACKET SEMI_COLON COMMENT NL
+    ABSTRACT VOID methodName OPEN_BRACKET paramList? CLOSE_BRACKET SEMI_COLON COMMENT NL
 ;
 
 // END Frames
@@ -177,7 +190,6 @@ abstractProcedure:
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-
 assignable: identifierUse  
             | THIS_INSTANCE DOT identifierUse
             | assignable index
@@ -203,13 +215,14 @@ constantValue:
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
-paramsList: paramDef (COMMA paramDef)*;
+paramList: paramDef (COMMA paramDef)*;
+identifierList: identifierDef (COMMA identifierDef)+;
+expressionList: expression (COMMA expression)*;
 
-type: typeTuple | typeName | typeGeneric;
-
-enumValuesList: identifierDef (COMMA identifierDef)*;
+type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
+assertExpected: litValue | list | dictionary | unaryExpression | tuple;
 // END Fields
 
 // START SubNodes
@@ -218,14 +231,15 @@ litValue:
     | litInt
     | litFloat
     | litString
+    | interpolatedString
     | enumValue
-; // litRegExp
+;
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-enumValue: typeName DOT identifierUse;
-// litRegExp:;
 litString: INTERPOLATED_STRING_PREFIX? LITERAL_STRING;
+enumValue: typeName DOT identifierUse;
+litRegExp: LITERAL_REGEXP; // TODO see #3565
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
@@ -233,32 +247,43 @@ expression:
     newInstance
     | unaryExpression
     | term
-    | expression binaryOperator expression
+    | binaryExpression
     | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
     // specified inline anticipating Python's `expression IF expression ( ELIF expression )* ELSE expression
 ;
 
-term: chainHead (DOT chainable)*;
-
-chainHead:
-    THIS_INSTANCE
+term:
+    thisInstance 
     | bracketedExpression
-    | tuple
     | litValue
     | list
-    | chainable
+    | dictionary
+    | tuple
+    | identifierUse
+    | methodCall
+    | term index
+    | term DOT chainable
 ;
-
 chainable: ( identifierUse | methodCall) index*;
 
+thisInstance: THIS_INSTANCE;
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
-unaryExpression: (MINUS | NOT) term;
+unaryExpression: negateNumeric | negateLogical;
+negateNumeric: MINUS term;
+negateLogical: NOT term;
 binaryExpression:
-    term binaryOperator expression
-; // ? expression binaryOperator expression ?
+     left=term binaryOperator right=expression
+;
+
+
+list: OPEN_BRACE expression (COMMA expression)* CLOSE_BRACE;
 tuple:
     OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET
 ;
+dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
+    kvpList: kvp (COMMA kvp)* ;
+    kvp: OPEN_BRACE expression COLON expression CLOSE_BRACE;
+
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
 binaryOperator:
@@ -283,16 +308,17 @@ paramDef: type identifierDef;
 
 typeGeneric: typeName LT type (COMMA type)* GT;
 
+typeFunc:
+    FUNC_NAME LT type (COMMA type)* ARROW type GT
+;
+
 typeTuple:
     TUPLE OPEN_SQ_BRACKET type (COMMA type)+ CLOSE_SQ_BRACKET
 ;
 
 lambda: LAMBDA argList COLON expression;
 
-list: OPEN_BRACE expression (COMMA expression)* CLOSE_BRACE;
-
 interpolatedString: INTERPOLATED_STRING_PREFIX LITERAL_STRING;
 
 power: term POWER term;
-
 // END SubNodes

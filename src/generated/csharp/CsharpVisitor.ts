@@ -12,19 +12,25 @@ import { ConstantContext } from "./CsharpParser.js";
 import { EnumContext } from "./CsharpParser.js";
 import { ConcreteClassContext } from "./CsharpParser.js";
 import { AbstractClassContext } from "./CsharpParser.js";
-import { CommentLineContext } from "./CsharpParser.js";
+import { CommentContext } from "./CsharpParser.js";
+import { CommentTextContext } from "./CsharpParser.js";
 import { OrdinaryStatementContext } from "./CsharpParser.js";
-import { IfStatementContext } from "./CsharpParser.js";
-import { WhileLoopContext } from "./CsharpParser.js";
-import { ForLoopContext } from "./CsharpParser.js";
-import { TryStatementContext } from "./CsharpParser.js";
-import { AssertContext } from "./CsharpParser.js";
 import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
 import { InputStatementContext } from "./CsharpParser.js";
+import { IfStatementContext } from "./CsharpParser.js";
+import { WhileLoopContext } from "./CsharpParser.js";
+import { ForLoopContext } from "./CsharpParser.js";
 import { ProcedureCallContext } from "./CsharpParser.js";
+import { ProcRefContext } from "./CsharpParser.js";
+import { ThisProcRefContext } from "./CsharpParser.js";
+import { InstanceProcRefContext } from "./CsharpParser.js";
+import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
+import { TryStatementContext } from "./CsharpParser.js";
 import { ThrowStatementContext } from "./CsharpParser.js";
+import { ErrorMessageContext } from "./CsharpParser.js";
+import { AssertContext } from "./CsharpParser.js";
 import { ReturnStatementContext } from "./CsharpParser.js";
 import { ElseIfClauseContext } from "./CsharpParser.js";
 import { ElseClauseContext } from "./CsharpParser.js";
@@ -44,33 +50,42 @@ import { TypeNameContext } from "./CsharpParser.js";
 import { ConstantValueContext } from "./CsharpParser.js";
 import { ArgListContext } from "./CsharpParser.js";
 import { ArgumentContext } from "./CsharpParser.js";
-import { ParamsListContext } from "./CsharpParser.js";
+import { ParamListContext } from "./CsharpParser.js";
+import { IdentifierListContext } from "./CsharpParser.js";
+import { ExpressionListContext } from "./CsharpParser.js";
 import { TypeContext } from "./CsharpParser.js";
-import { EnumValuesListContext } from "./CsharpParser.js";
 import { AssertActualContext } from "./CsharpParser.js";
+import { AssertExpectedContext } from "./CsharpParser.js";
 import { LitValueContext } from "./CsharpParser.js";
 import { LitBooleanContext } from "./CsharpParser.js";
 import { LitIntContext } from "./CsharpParser.js";
 import { LitFloatContext } from "./CsharpParser.js";
-import { EnumValueContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
+import { EnumValueContext } from "./CsharpParser.js";
+import { LitRegExpContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
-import { ChainHeadContext } from "./CsharpParser.js";
 import { ChainableContext } from "./CsharpParser.js";
+import { ThisInstanceContext } from "./CsharpParser.js";
 import { BracketedExpressionContext } from "./CsharpParser.js";
 import { UnaryExpressionContext } from "./CsharpParser.js";
+import { NegateNumericContext } from "./CsharpParser.js";
+import { NegateLogicalContext } from "./CsharpParser.js";
 import { BinaryExpressionContext } from "./CsharpParser.js";
+import { ListContext } from "./CsharpParser.js";
 import { TupleContext } from "./CsharpParser.js";
+import { DictionaryContext } from "./CsharpParser.js";
+import { KvpListContext } from "./CsharpParser.js";
+import { KvpContext } from "./CsharpParser.js";
 import { MethodCallContext } from "./CsharpParser.js";
 import { BinaryOperatorContext } from "./CsharpParser.js";
 import { NewInstanceContext } from "./CsharpParser.js";
 import { ParamDefContext } from "./CsharpParser.js";
 import { TypeGenericContext } from "./CsharpParser.js";
+import { TypeFuncContext } from "./CsharpParser.js";
 import { TypeTupleContext } from "./CsharpParser.js";
 import { LambdaContext } from "./CsharpParser.js";
-import { ListContext } from "./CsharpParser.js";
 import { InterpolatedStringContext } from "./CsharpParser.js";
 import { PowerContext } from "./CsharpParser.js";
 
@@ -143,47 +158,23 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitAbstractClass?: (ctx: AbstractClassContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.commentLine`.
+   * Visit a parse tree produced by `CsharpParser.comment`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitCommentLine?: (ctx: CommentLineContext) => Result;
+  visitComment?: (ctx: CommentContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.commentText`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCommentText?: (ctx: CommentTextContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.ordinaryStatement`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.ifStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIfStatement?: (ctx: IfStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.whileLoop`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitWhileLoop?: (ctx: WhileLoopContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.forLoop`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitForLoop?: (ctx: ForLoopContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.tryStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitTryStatement?: (ctx: TryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.assert`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitAssert?: (ctx: AssertContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.print`.
    * @param ctx the parse tree
@@ -209,17 +200,77 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitInputStatement?: (ctx: InputStatementContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.ifStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfStatement?: (ctx: IfStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.whileLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitWhileLoop?: (ctx: WhileLoopContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.forLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitForLoop?: (ctx: ForLoopContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.procedureCall`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.procRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProcRef?: (ctx: ProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.thisProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.instanceProcRef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.tryStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryStatement?: (ctx: TryStatementContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.throwStatement`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitThrowStatement?: (ctx: ThrowStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.errorMessage`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitErrorMessage?: (ctx: ErrorMessageContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.assert`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssert?: (ctx: AssertContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.returnStatement`.
    * @param ctx the parse tree
@@ -335,11 +386,23 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitArgument?: (ctx: ArgumentContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.paramsList`.
+   * Visit a parse tree produced by `CsharpParser.paramList`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitParamsList?: (ctx: ParamsListContext) => Result;
+  visitParamList?: (ctx: ParamListContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.identifierList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierList?: (ctx: IdentifierListContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.expressionList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitExpressionList?: (ctx: ExpressionListContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.type`.
    * @param ctx the parse tree
@@ -347,17 +410,17 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitType?: (ctx: TypeContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.enumValuesList`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitEnumValuesList?: (ctx: EnumValuesListContext) => Result;
-  /**
    * Visit a parse tree produced by `CsharpParser.assertActual`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitAssertActual?: (ctx: AssertActualContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.assertExpected`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssertExpected?: (ctx: AssertExpectedContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.litValue`.
    * @param ctx the parse tree
@@ -383,17 +446,23 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitFloat?: (ctx: LitFloatContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.litString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitString?: (ctx: LitStringContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitEnumValue?: (ctx: EnumValueContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.litString`.
+   * Visit a parse tree produced by `CsharpParser.litRegExp`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitString?: (ctx: LitStringContext) => Result;
+  visitLitRegExp?: (ctx: LitRegExpContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.index`.
    * @param ctx the parse tree
@@ -413,17 +482,17 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitTerm?: (ctx: TermContext) => Result;
   /**
-   * Visit a parse tree produced by `CsharpParser.chainHead`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitChainHead?: (ctx: ChainHeadContext) => Result;
-  /**
    * Visit a parse tree produced by `CsharpParser.chainable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.bracketedExpression`.
    * @param ctx the parse tree
@@ -437,17 +506,53 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitUnaryExpression?: (ctx: UnaryExpressionContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.negateNumeric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateNumeric?: (ctx: NegateNumericContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.negateLogical`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateLogical?: (ctx: NegateLogicalContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.binaryExpression`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitBinaryExpression?: (ctx: BinaryExpressionContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.list`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitList?: (ctx: ListContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.tuple`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitTuple?: (ctx: TupleContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.dictionary`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionary?: (ctx: DictionaryContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.kvpList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvpList?: (ctx: KvpListContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.kvp`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvp?: (ctx: KvpContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.methodCall`.
    * @param ctx the parse tree
@@ -479,6 +584,12 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitTypeGeneric?: (ctx: TypeGenericContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.typeFunc`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeFunc?: (ctx: TypeFuncContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.typeTuple`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -490,12 +601,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLambda?: (ctx: LambdaContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.list`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitList?: (ctx: ListContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.interpolatedString`.
    * @param ctx the parse tree
