@@ -1,8 +1,8 @@
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolScope } from "../../symbols/symbol-scope";
 import { AbstractProcedureAsn } from "./abstract-procedure-asn";
 
-export class GlobalProcedureAsn extends AbstractProcedureAsn {
+export class ProcedureAsn extends AbstractProcedureAsn {
   isGlobal = true;
 
   constructor(fieldId: string, scope: Scope) {
@@ -15,7 +15,7 @@ export class GlobalProcedureAsn extends AbstractProcedureAsn {
 
   public compile(): string {
     this.compileErrors = [];
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     return `async function ${super.compile()}\r
 }
 global["${name}"] = ${name};

@@ -48,8 +48,8 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
   symbolIsType: boolean = true;
 
-  name: AstNode = EmptyAsn.Instance;
-  inheritance: AstNode = EmptyAsn.Instance;
+  classTypeName: AstNode = EmptyAsn.Instance;
+  inheritsTypeName: AstNode = EmptyAsn.Instance;
   children: AstNode[] = [];
 
   ofTypes: SymbolType[] = [];
@@ -65,8 +65,8 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   inheritedSymbols(circular: boolean) {
-    if (!circular && this.inheritance instanceof InheritsFromAsn) {
-      return this.inheritance.symbolTypes();
+    if (!circular && this.inheritsTypeName instanceof InheritsFromAsn) {
+      return this.inheritsTypeName.symbolTypes();
     }
     return [];
   }
@@ -97,7 +97,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   public getInheritanceItems() {
-    const superClasses = this.inheritance;
+    const superClasses = this.inheritsTypeName;
     if (superClasses instanceof InheritsFromAsn && isAstCollectionNode(superClasses.inheritance)) {
       return superClasses.inheritance.items;
     }
@@ -141,7 +141,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.classTypeName);
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
@@ -219,7 +219,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   getName() {
-    const name = getId(this.name);
+    const name = getId(this.classTypeName);
     mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
     return name;
   }

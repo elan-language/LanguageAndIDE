@@ -17,8 +17,8 @@ import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-c
 import { ConstantAsn } from "../../compiler/syntax-nodes/globals/constant-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
 import { FunctionAsn } from "../../compiler/syntax-nodes/globals/function-asn";
-import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
+import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
@@ -140,11 +140,12 @@ export function transform(
   }
 
   if (node instanceof GlobalProcedure) {
-    const procedureAsn = new GlobalProcedureAsn(node.getHtmlId(), scope);
+    const procedureAsn = new ProcedureAsn(node.getHtmlId(), scope);
     procedureAsn.breakpointStatus = node.breakpointStatus;
 
-    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-    procedureAsn.params =
+    procedureAsn.methodName =
+      transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.paramList =
       transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
 
     procedureAsn.children = node
@@ -159,8 +160,10 @@ export function transform(
     const constantAsn = new ConstantAsn(node.getHtmlId(), scope);
     constantAsn.breakpointStatus = node.breakpointStatus;
 
-    constantAsn.name = transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
-    constantAsn.value = transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+    constantAsn.identifierDef =
+      transform(node.name, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
+    constantAsn.constantValue =
+      transform(node.value, node.getHtmlId(), constantAsn) ?? EmptyAsn.Instance;
 
     return constantAsn;
   }
@@ -169,8 +172,8 @@ export function transform(
     const enumAsn = new EnumAsn(node.getHtmlId(), scope);
     enumAsn.breakpointStatus = node.breakpointStatus;
 
-    enumAsn.name = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
-    enumAsn.values = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+    enumAsn.typeName = transform(node.name, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
+    enumAsn.identifierList = transform(node.values, node.getHtmlId(), enumAsn) ?? EmptyAsn.Instance;
 
     return enumAsn;
   }
@@ -179,8 +182,8 @@ export function transform(
     const classAsn = new ConcreteClassAsn(node.getHtmlId(), scope);
     classAsn.breakpointStatus = node.breakpointStatus;
 
-    classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
-    classAsn.inheritance =
+    classAsn.classTypeName = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+    classAsn.inheritsTypeName =
       transform(node.inheritance, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
 
     classAsn.children = node
@@ -195,8 +198,8 @@ export function transform(
     const classAsn = new AbstractClassAsn(node.getHtmlId(), scope);
     classAsn.breakpointStatus = node.breakpointStatus;
 
-    classAsn.name = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
-    classAsn.inheritance =
+    classAsn.classTypeName = transform(node.name, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
+    classAsn.inheritsTypeName =
       transform(node.inheritance, node.getHtmlId(), classAsn) ?? EmptyAsn.Instance;
 
     classAsn.children = node
@@ -345,8 +348,9 @@ export function transform(
     procedureAsn.breakpointStatus = node.breakpointStatus;
     procedureAsn.private = node.isPrivate;
 
-    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-    procedureAsn.params =
+    procedureAsn.methodName =
+      transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.paramList =
       transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
 
     procedureAsn.children = node

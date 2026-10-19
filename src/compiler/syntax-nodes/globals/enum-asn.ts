@@ -17,32 +17,34 @@ export class EnumAsn extends BreakpointAsn implements ElanSymbol {
   symbolIsType: boolean = true;
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.typeName);
   }
 
   symbolType(): SymbolType {
     return new EnumType(this.symbolId);
   }
 
-  name: AstNode = EmptyAsn.Instance;
-  values: AstNode = EmptyAsn.Instance;
+  typeName: AstNode = EmptyAsn.Instance;
+  identifierList: AstNode = EmptyAsn.Instance;
 
   compile(): string {
     this.compileErrors = [];
 
-    const name = this.name.compile();
+    const name = this.typeName.compile();
     mustBeUniqueNameInScope(name, getGlobalScope(this.scope), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `const ${name} = {\r
-${this.singleIndent()}${this.values.compile()}\r
+${this.singleIndent()}${this.identifierList.compile()}\r
 };\r
 `;
   }
 
   enumValueSymbols() {
-    return isEnumValuesAsn(this.values) ? this.values.getSymbols(getId(this.name)) : [];
+    return isEnumValuesAsn(this.identifierList)
+      ? this.identifierList.getSymbols(getId(this.typeName))
+      : [];
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
