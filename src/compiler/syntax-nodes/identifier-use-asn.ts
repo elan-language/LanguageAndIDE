@@ -1,16 +1,3 @@
-import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ChainedAsn } from "../../compiler/compiler-interfaces/chained-asn";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { NullScope } from "../../compiler/symbols/null-scope";
-import {
-  getGlobalScope,
-  isClass,
-  isDefinitionScope,
-  isMemberOnFieldsClass,
-  isTuple,
-  scopePrefix,
-} from "../../compiler/symbols/symbol-helpers";
 import {
   getQualifierId,
   mustBeKnownSymbol,
@@ -19,6 +6,19 @@ import {
   mustNotBeGlobalFunctionIfRef,
   mustNotBeKeyword,
 } from "../compile-rules";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { Scope } from "../compiler-interfaces/scope";
+import { NullScope } from "../symbols/null-scope";
+import {
+  getGlobalScope,
+  isClass,
+  isDefinitionScope,
+  isMemberOnFieldsClass,
+  isTuple,
+  scopePrefix,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";

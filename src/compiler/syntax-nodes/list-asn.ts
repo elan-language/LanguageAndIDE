@@ -1,11 +1,11 @@
-import { AstCollectionNode } from "../../compiler/compiler-interfaces/ast-collection-node";
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ReifyableSymbolType } from "../../compiler/compiler-interfaces/reifyable-symbol-type";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { ListName } from "../../compiler/symbols/elan-type-names";
-import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
-import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { mustBeAssignableType } from "../compile-rules";
+import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
+import { Scope } from "../compiler-interfaces/scope";
+import { ListName } from "../symbols/elan-type-names";
+import { getGlobalScope } from "../symbols/symbol-helpers";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ListAsn extends AbstractAstNode implements AstCollectionNode {

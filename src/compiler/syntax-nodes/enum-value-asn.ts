@@ -1,10 +1,10 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { EnumType } from "../../compiler/symbols/enum-type";
-import { NullScope } from "../../compiler/symbols/null-scope";
-import { getGlobalScope, isScope } from "../../compiler/symbols/symbol-helpers";
-import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { mustBeKnownSymbol } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { EnumType } from "../symbols/enum-type";
+import { NullScope } from "../symbols/null-scope";
+import { getGlobalScope, isScope } from "../symbols/symbol-helpers";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class EnumValueAsn extends AbstractAstNode implements AstNode {

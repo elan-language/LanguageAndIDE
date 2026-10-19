@@ -22,9 +22,9 @@ import {
   isEmptyNode,
   matchGenericTypes,
 } from "./ast-helpers";
-import { MethodCallAsn } from "./func-call-asn";
 import { TupleAsn } from "./globals/tuple-asn";
-import { IdentifierUseAsn } from "./id-asn";
+import { IdentifierUseAsn } from "./identifier-use-asn";
+import { MethodCallAsn } from "./method-call-asn";
 
 export class TermAsn extends AbstractAstNode {
   constructor(

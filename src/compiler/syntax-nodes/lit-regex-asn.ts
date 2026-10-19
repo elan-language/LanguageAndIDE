@@ -1,8 +1,8 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { RegExpType } from "../../compiler/symbols/regexp-type";
-import { Scope } from "../compiler-interfaces/scope";
-import { getGlobalScope } from "../symbols/symbol-helpers";
 import { mustBeValidRegExp } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { RegExpType } from "../symbols/regexp-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 // "new RegExp(r)" throws a SyntaxError at run time

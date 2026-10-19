@@ -1,16 +1,16 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { ClassSubType, ClassType } from "../../compiler/symbols/class-type";
-import { ProcedureType } from "../../compiler/symbols/procedure-type";
-import { getGlobalScope, parameterNamesWithTypes } from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
 import {
   mustBeConcreteClass,
   mustBeKnownSymbolType,
   mustBeNewable,
   mustMatchParameters,
 } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
 import { constructorKeyword } from "../elan-keywords";
+import { ClassSubType, ClassType } from "../symbols/class-type";
+import { ProcedureType } from "../symbols/procedure-type";
+import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TypeAsn } from "./type-asn";
 

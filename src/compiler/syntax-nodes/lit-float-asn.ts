@@ -1,5 +1,5 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { FloatType } from "../../compiler/symbols/float-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { FloatType } from "../symbols/float-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LitFloatAsn extends AbstractAstNode implements AstNode {

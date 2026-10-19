@@ -1,5 +1,5 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { StringType } from "../../compiler/symbols/string-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LitStringAsn extends AbstractAstNode implements AstNode {

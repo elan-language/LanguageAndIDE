@@ -94,11 +94,11 @@ import {
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
-import { MethodCallAsn } from "./syntax-nodes/func-call-asn";
+import { MethodCallAsn } from "./syntax-nodes/method-call-asn";
 import { ElseAsn } from "./syntax-nodes/statements/else-asn";
 import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
-import { ThisInstanceAsn } from "./syntax-nodes/this-asn";
+import { ThisInstanceAsn } from "./syntax-nodes/this-instance-asn";
 
 function mustBeOfSymbolType(
   exprType: SymbolType,

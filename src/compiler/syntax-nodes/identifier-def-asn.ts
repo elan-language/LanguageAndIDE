@@ -1,7 +1,7 @@
-import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { mustNotBeKeyword } from "../compile-rules";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class IdentifierDefAsn extends AbstractAstNode implements AstIdNode {

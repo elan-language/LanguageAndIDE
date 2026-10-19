@@ -1,17 +1,3 @@
-import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ChainedAsn } from "../../compiler/compiler-interfaces/chained-asn";
-import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { FunctionType } from "../../compiler/symbols/function-type";
-import { NullScope } from "../../compiler/symbols/null-scope";
-import {
-  getGlobalScope,
-  isDefinitionScope,
-  isMemberOnFieldsClass,
-  scopePrefix,
-} from "../../compiler/symbols/symbol-helpers";
 import {
   checkForDeprecation,
   getQualifierId,
@@ -24,6 +10,20 @@ import {
   mustCallMemberViaQualifier,
   mustNotCallNonExtensionViaQualifier,
 } from "../compile-rules";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { ChainedAsn } from "../compiler-interfaces/chained-asn";
+import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { FunctionType } from "../symbols/function-type";
+import { NullScope } from "../symbols/null-scope";
+import {
+  getGlobalScope,
+  isDefinitionScope,
+  isMemberOnFieldsClass,
+  scopePrefix,
+} from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,

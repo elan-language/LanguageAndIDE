@@ -1,5 +1,5 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { IntType } from "../../compiler/symbols/int-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { IntType } from "../symbols/int-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LitIntAsn extends AbstractAstNode implements AstNode {

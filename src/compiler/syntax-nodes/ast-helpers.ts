@@ -37,7 +37,7 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BooleanTypeAsn } from "./boolean-type-asn";
 import { ConstructorAsn } from "./class-members/constructor-asn";
 import { EmptyAsn } from "./empty-asn";
-import { IdentifierListAsn } from "./fields/enum-values-asn";
+import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
 import { FloatTypeAsn } from "./float-type-asn";
 import { ClassAsn } from "./globals/class-asn";

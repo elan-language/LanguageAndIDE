@@ -7,29 +7,30 @@ import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-he
 import { BinaryExprAsn as BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn as BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
+import { DictionaryAsn } from "../../compiler/syntax-nodes/dictionary-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/enum-values-asn";
+import { EnumValueAsn } from "../../compiler/syntax-nodes/enum-value-asn";
+import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/identifier-list-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
-import { MethodCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
-import { IdentifierUseAsn } from "../../compiler/syntax-nodes/id-asn";
-import { IdentifierDefAsn } from "../../compiler/syntax-nodes/id-def-asn";
+import { IdentifierDefAsn } from "../../compiler/syntax-nodes/identifier-def-asn";
+import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
-import { LitBooleanAsn } from "../../compiler/syntax-nodes/literal-boolean-asn";
-import { DictionaryAsn } from "../../compiler/syntax-nodes/literal-dictionay-asn";
-import { EnumValueAsn } from "../../compiler/syntax-nodes/literal-enum-asn";
-import { LitFloatAsn } from "../../compiler/syntax-nodes/literal-float-asn";
-import { LitIntAsn } from "../../compiler/syntax-nodes/literal-int-asn";
-import { ListAsn } from "../../compiler/syntax-nodes/literal-list-asn";
-import { LitRegExAsn } from "../../compiler/syntax-nodes/literal-regex-asn";
-import { LitStringAsn } from "../../compiler/syntax-nodes/literal-string-asn";
-import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-asn";
+import { ListAsn } from "../../compiler/syntax-nodes/list-asn";
+import { LitBooleanAsn } from "../../compiler/syntax-nodes/lit-boolean-asn";
+import { LitFloatAsn } from "../../compiler/syntax-nodes/lit-float-asn";
+import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
+import { LitRegExAsn } from "../../compiler/syntax-nodes/lit-regex-asn";
+import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
+import { LitTupleAsn } from "../../compiler/syntax-nodes/lit-tuple-asn";
+import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
+import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
-import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-asn";
+import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
@@ -74,7 +75,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { LitTupleAsn } from "../../compiler/syntax-nodes/literal-tuple-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(

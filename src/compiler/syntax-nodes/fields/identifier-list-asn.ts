@@ -1,10 +1,10 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
-import { UnknownType } from "../../../compiler/symbols/unknown-type";
 import { getId, mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
 import { EnumValueType } from "../../symbols/enum-value-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
+import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
 import { isAstCollectionNode } from "../ast-helpers";
 import { EmptyAsn } from "../empty-asn";

@@ -12,7 +12,6 @@ import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { InheritsFromAsn } from "../../compiler/syntax-nodes/fields/inherits-from-asn";
 import { TypeFieldAsn } from "../../compiler/syntax-nodes/fields/type-field-asn";
 import { FileAsn } from "../../compiler/syntax-nodes/file-asn";
-import { MethodCallAsn } from "../../compiler/syntax-nodes/func-call-asn";
 import { AbstractClassAsn } from "../../compiler/syntax-nodes/globals/abstract-class-asn";
 import { ConcreteClassAsn } from "../../compiler/syntax-nodes/globals/concrete-class-asn";
 import { EnumAsn } from "../../compiler/syntax-nodes/globals/enum-asn";
@@ -21,6 +20,7 @@ import { GlobalFunctionAsn } from "../../compiler/syntax-nodes/globals/global-fu
 import { GlobalProcedureAsn } from "../../compiler/syntax-nodes/globals/global-procedure-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
+import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
 import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
 import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";

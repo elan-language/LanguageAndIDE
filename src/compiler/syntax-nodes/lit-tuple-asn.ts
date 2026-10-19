@@ -1,5 +1,5 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { TupleType } from "../../compiler/symbols/tuple-type";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { TupleType } from "../symbols/tuple-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class LitTupleAsn extends AbstractAstNode implements AstNode {
