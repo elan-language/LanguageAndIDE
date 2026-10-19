@@ -601,7 +601,7 @@ export function testAntlrParse(
   }
 
   if (html && html !== "") {
-    assert.equal(getVisitorHtmlByLanguage(language, undefined).visit(context), html);
+    assert.equal(getVisitorHtmlByLanguage(language).visit(context), html);
   }
 
   if (exprt && exprt !== "") {

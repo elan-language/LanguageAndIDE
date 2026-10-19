@@ -7,11 +7,9 @@ import {
   BinaryOperatorContext,
   BracketedExpressionContext,
   CommentTextContext,
-  ConstantContext,
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
-  FileContext,
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
@@ -62,44 +60,16 @@ import {
   type,
   visitTypeHelper,
 } from "./parser-helpers";
-import { ConstantGlobal } from "../frames/globals/constant-global";
-import { Frame } from "../frames/frame-interfaces/frame";
-import { File } from "../frames/frame-interfaces/file";
-import { CodeSourceFromString } from "../frames/code-source-from-string";
 
-export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
-  constructor(
-    private readonly language: Language,
-    private readonly file: File | undefined,
-  ) {
+export class RefLangVisitorHtml extends RefLangVisitor<string> {
+  constructor(private readonly language: Language) {
     super();
   }
-
-  override visitFile = (ctx: FileContext) => {
-    const globals = ctx.global().map((g) => this.visit(g)) as Frame[];
-
-    for (const g of globals) {
-      this.file!.addChild(g);
-    }
-    return this.file!;
-  };
-
-  override visitConstant = (ctx: ConstantContext) => {
-    const name = ctx.identifierDef().getText();
-    const value = ctx.constantValue().getText();
-    const gc = new ConstantGlobal(this.file!);
-
-    gc.name.parseFrom(new CodeSourceFromString(name));
-    gc.value.parseFrom(new CodeSourceFromString(value));
-
-    return gc;
-  };
 
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     `(${getFilteredTypes(this, ctx).join(", ")})`;
 
-  override visitTypeName = (ctx: TypeNameContext) =>
-    type((this.visitChildren(ctx) as string) ?? "");
+  override visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}&lt;${kw("of")} ${getFilteredTypes(this, ctx).join(", ")}&gt;`;
@@ -109,14 +79,14 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
     return `Func&lt;${kw("of")} ${inTypes} =&gt; ${returnType}&gt;`;
   };
 
-  override visitType = (ctx: TypeContext) => visitTypeHelper<string | File | Frame>(this, ctx);
+  override visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
 
   override visitTerminal(ctx: TerminalNode) {
     return getTokenTextByName(this.language, ctx.getText());
   }
 
   override visitParamList = (ctx: ParamListContext) =>
-    `${getParamDefs<string | File | Frame>(this, ctx).join(", ")}`;
+    `${getParamDefs<string>(this, ctx).join(", ")}`;
 
   override visitIdentifierDef = (ctx: IdentifierDefContext) => id(ctx.NAME_STARTING_LC().getText());
 
@@ -132,8 +102,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
   override visitCommentText = (ctx: CommentTextContext) =>
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));
 
-  override visitArgList = (ctx: ArgListContext) =>
-    `${getArgs<string | File | Frame>(this, ctx).join(", ")}`;
+  override visitArgList = (ctx: ArgListContext) => `${getArgs<string>(this, ctx).join(", ")}`;
 
   override visitMethodCall = (ctx: MethodCallContext) => {
     const argList = ctx.argList();
@@ -148,18 +117,16 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
     return `[${expr}]`;
   };
 
-  override visitLitInt = (ctx: LitIntContext) =>
-    lit(((this.visitChildren(ctx) as string) ?? "").toLowerCase());
+  override visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
   override visitLitFloat = (ctx: LitFloatContext) =>
-    lit(((this.visitChildren(ctx) as string) ?? "").toLowerCase());
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  override visitLitBoolean = (ctx: LitBooleanContext) =>
-    kw((this.visitChildren(ctx) as string) ?? "");
+  override visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
 
   override visitLitString = (ctx: LitStringContext) =>
     this.visitChildren(ctx)
-      ? `"${lit(escapeHtmlChars((this.visitChildren(ctx) as string).slice(1, -1)))}"`
+      ? `"${lit(escapeHtmlChars(this.visitChildren(ctx)!.slice(1, -1)))}"`
       : "";
 
   override visitEnumValue = (ctx: EnumValueContext) =>
@@ -197,7 +164,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
     const lambda = this.visit(ctx.LAMBDA()) ?? "";
     const arrow = this.visit(ctx.ARROW());
     const params = ctx.paramList() ? this.visit(ctx.paramList()!) : "";
-    return `${kw(lambda as string)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
+    return `${kw(lambda)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 
   override visitExpression = (ctx: ExpressionContext) => {
@@ -215,13 +182,13 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
     `${kw("new")} ${this.visit(ctx.type())}(${ctx.argList() ? this.visit(ctx.argList()!) : ""})`;
 
   override visitList = (ctx: ListContext) =>
-    `[${getExpressions<string | File | Frame>(this, ctx.expressionList()).join(", ")}]`;
+    `[${getExpressions<string>(this, ctx.expressionList()).join(", ")}]`;
 
   override visitTuple = (ctx: TupleContext) =>
-    `(${getExpressions<string | File | Frame>(this, ctx.expressionList()).join(", ")})`;
+    `(${getExpressions<string>(this, ctx.expressionList()).join(", ")})`;
 
   override visitDictionary = (ctx: DictionaryContext) =>
-    `[${getKVPs<string | File | Frame>(this, ctx.kvpList()).join(", ")}]`;
+    `[${getKVPs<string>(this, ctx.kvpList()).join(", ")}]`;
 
   override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
@@ -237,7 +204,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
     `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
 
   override visitLitRegExp = (ctx: LitRegExpContext) =>
-    this.visitChildren(ctx) ? regex(this.visitChildren(ctx) as string) : "";
+    this.visitChildren(ctx) ? regex(this.visitChildren(ctx)!) : "";
 
   override visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
@@ -250,7 +217,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string | File | Frame> {
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) =>
-    `${kw(this.visit(ctx.THIS_INSTANCE()) as string)}.${this.visit(ctx.methodName())}`;
+    `${kw(this.visit(ctx.THIS_INSTANCE())!)}.${this.visit(ctx.methodName())}`;
 
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
     `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;

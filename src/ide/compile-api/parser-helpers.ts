@@ -29,6 +29,7 @@ import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 import { ErrorListener } from "./error-listener";
 import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 
 export function getPythonParser(input: string) {
   const chars = CharStream.fromString(input);
@@ -75,12 +76,21 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
   }
 }
 
-export function getVisitorHtmlByLanguage(l: Language, file?: File) {
+export function getVisitorHtmlByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorHtml(l);
     case "Reference Language":
-      return new RefLangVisitorHtml(l, file);
+      return new RefLangVisitorHtml(l);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getVisitorFrameByLanguage(l: Language, file: File) {
+  switch (l.languageFullName) {
+    case "Reference Language":
+      return new RefLangVisitorFrame(file);
     default:
       throw Error("Unsupported language " + l.languageFullName);
   }

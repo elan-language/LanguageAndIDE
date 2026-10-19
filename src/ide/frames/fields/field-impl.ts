@@ -793,7 +793,7 @@ export class FieldImpl implements Selectable, Field {
   }
 
   renderAsHtmlFromContext(ctx: ParserRuleContext): string {
-    return ctx.accept(getVisitorHtmlByLanguage(this.language(), this.getFile())) as string;
+    return ctx.accept(getVisitorHtmlByLanguage(this.language()))!;
   }
 
   renderAsElanSource(): string {

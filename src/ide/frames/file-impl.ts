@@ -39,6 +39,8 @@ import { GlobalSelector } from "./globals/global-selector";
 import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Paradigm } from "./paradigm";
 
+import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
 import { CommentFrame } from "./comment-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCS } from "./language-cs";
@@ -73,9 +75,6 @@ import {
 } from "./parent-helpers";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
-import { getParserByLanguage, getVisitorHtmlByLanguage } from "../compile-api/parser-helpers";
-import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
-import { RefLangVisitorHtml } from "../compile-api/ref-lang-visitor-html";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -657,7 +656,7 @@ export class FileImpl implements File {
     this.resetParserErrors();
 
     const parser = getParserByLanguage(this.language(), source.getRemainingCode()) as RefLangParser;
-    const visitor = getVisitorHtmlByLanguage(this.language(), this) as RefLangVisitorHtml;
+    const visitor = getVisitorFrameByLanguage(this.language(), this);
 
     const fileContext = parser.file()!;
 
