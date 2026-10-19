@@ -21,15 +21,15 @@ export class ConstantAsn extends BreakpointAsn implements AstNode, GlobalConstan
 
   symbolIsType: boolean = false;
 
-  name: AstNode = EmptyAsn.Instance;
-  value: AstNode = EmptyAsn.Instance;
+  identifierDef: AstNode = EmptyAsn.Instance;
+  constantValue: AstNode = EmptyAsn.Instance;
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.identifierDef);
   }
 
   symbolType(): SymbolType {
-    return this.value.symbolType();
+    return this.constantValue.symbolType();
   }
 
   get symbolScope() {
@@ -38,11 +38,11 @@ export class ConstantAsn extends BreakpointAsn implements AstNode, GlobalConstan
 
   compile(): string {
     this.compileErrors = [];
-    const name = this.name.compile();
-    const value = this.value.compile();
+    const name = this.identifierDef.compile();
+    const value = this.constantValue.compile();
     mustBeUniqueNameInScope(name, getGlobalScope(this.scope), this.compileErrors, this.fieldId);
 
-    mustBeCompatibleDefinitionNode(this.value, true, this.compileErrors, this.fieldId);
+    mustBeCompatibleDefinitionNode(this.constantValue, true, this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

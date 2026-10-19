@@ -23,7 +23,7 @@ export class RecordAsn extends ClassAsn {
   deprecated: Deprecated | undefined = undefined;
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.classTypeName);
   }
 
   symbolType() {

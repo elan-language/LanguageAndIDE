@@ -15,51 +15,53 @@ export abstract class AbstractProcedureAsn extends CompoundAsn implements ElanSy
     super(fieldId, scope);
   }
 
-  name: AstNode = EmptyAsn.Instance;
-  params: AstNode = EmptyAsn.Instance;
+  methodName: AstNode = EmptyAsn.Instance;
+  paramList: AstNode = EmptyAsn.Instance;
 
   isProcedure = true;
 
   symbolIsType: boolean = false;
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.methodName);
   }
 
   abstract get symbolScope(): SymbolScope;
 
   symbolType() {
     const [pn, pt] =
-      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
+      this.paramList instanceof ParamListAsn ? this.paramList.symbolNamesAndTypes() : [[], []];
     return new ProcedureType(pn, pt, false, true);
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.name), id, caseSensitive)) {
+    if (match(getId(this.methodName), id, caseSensitive)) {
       return this;
     }
     const s =
-      this.params instanceof ParamListAsn
-        ? this.params.resolveSymbol(id, caseSensitive, this)
+      this.paramList instanceof ParamListAsn
+        ? this.paramList.resolveSymbol(id, caseSensitive, this)
         : new UnknownSymbol(id);
 
     return s instanceof UnknownSymbol ? super.resolveSymbol(id, caseSensitive, initialScope) : s;
   }
 
   public compile(): string {
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     mustBeUniqueNameInScope(name, getGlobalScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${name}(${this.params.compile()}) {\r
+    return `${name}(${this.paramList.compile()}) {\r
 ${this.breakPoint(this.debugSymbols())}${this.compileChildren()}\r`;
   }
 
   public override symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
     const matches = super.symbolMatches(id, all, initialScope);
     const localMatches =
-      this.params instanceof ParamListAsn ? this.params.symbolMatches(id, all, initialScope) : [];
+      this.paramList instanceof ParamListAsn
+        ? this.paramList.symbolMatches(id, all, initialScope)
+        : [];
     return localMatches.concat(matches);
   }
 }

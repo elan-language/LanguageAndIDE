@@ -30,7 +30,7 @@ export class ProcedureMethodAsn extends AbstractProcedureAsn {
   public override compile(): string {
     this.compileErrors = [];
 
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
@@ -41,7 +41,7 @@ ${this.indent()}}\r
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.name), id, caseSensitive)) {
+    if (match(getId(this.methodName), id, caseSensitive)) {
       return this;
     }
 
@@ -49,7 +49,7 @@ ${this.indent()}}\r
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.methodName);
   }
 
   symbolScope = SymbolScope.member;

@@ -1139,7 +1139,7 @@ export class RefLangParser extends antlr.Parser {
         this.state = 297;
         this.match(RefLangParser.CLASS);
         this.state = 298;
-        this.typeName();
+        localContext._classTypeName = this.typeName();
         this.state = 301;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
@@ -1148,7 +1148,7 @@ export class RefLangParser extends antlr.Parser {
             this.state = 299;
             this.match(RefLangParser.INHERITS);
             this.state = 300;
-            this.typeName();
+            localContext._inheritsTypeName = this.typeName();
           }
         }
 
@@ -1243,7 +1243,7 @@ export class RefLangParser extends antlr.Parser {
         this.state = 322;
         this.match(RefLangParser.CLASS);
         this.state = 323;
-        this.typeName();
+        localContext._classTypeName = this.typeName();
         this.state = 326;
         this.errorHandler.sync(this);
         _la = this.tokenStream.LA(1);
@@ -1252,7 +1252,7 @@ export class RefLangParser extends antlr.Parser {
             this.state = 324;
             this.match(RefLangParser.INHERITS);
             this.state = 325;
-            this.typeName();
+            localContext._inheritsTypeName = this.typeName();
           }
         }
 
@@ -5323,6 +5323,8 @@ export class EnumContext extends antlr.ParserRuleContext {
 }
 
 export class ConcreteClassContext extends antlr.ParserRuleContext {
+  public _classTypeName?: TypeNameContext;
+  public _inheritsTypeName?: TypeNameContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -5335,15 +5337,6 @@ export class ConcreteClassContext extends antlr.ParserRuleContext {
       return this.getToken(RefLangParser.CLASS, i);
     }
   }
-  public typeName(): TypeNameContext[];
-  public typeName(i: number): TypeNameContext | null;
-  public typeName(i?: number): TypeNameContext[] | TypeNameContext | null {
-    if (i === undefined) {
-      return this.getRuleContexts(TypeNameContext);
-    }
-
-    return this.getRuleContext(i, TypeNameContext);
-  }
   public NL(): antlr.TerminalNode[];
   public NL(i: number): antlr.TerminalNode | null;
   public NL(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
@@ -5355,6 +5348,15 @@ export class ConcreteClassContext extends antlr.ParserRuleContext {
   }
   public END(): antlr.TerminalNode {
     return this.getToken(RefLangParser.END, 0)!;
+  }
+  public typeName(): TypeNameContext[];
+  public typeName(i: number): TypeNameContext | null;
+  public typeName(i?: number): TypeNameContext[] | TypeNameContext | null {
+    if (i === undefined) {
+      return this.getRuleContexts(TypeNameContext);
+    }
+
+    return this.getRuleContext(i, TypeNameContext);
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
@@ -5432,6 +5434,8 @@ export class ConcreteClassContext extends antlr.ParserRuleContext {
 }
 
 export class AbstractClassContext extends antlr.ParserRuleContext {
+  public _classTypeName?: TypeNameContext;
+  public _inheritsTypeName?: TypeNameContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
@@ -5447,15 +5451,6 @@ export class AbstractClassContext extends antlr.ParserRuleContext {
       return this.getToken(RefLangParser.CLASS, i);
     }
   }
-  public typeName(): TypeNameContext[];
-  public typeName(i: number): TypeNameContext | null;
-  public typeName(i?: number): TypeNameContext[] | TypeNameContext | null {
-    if (i === undefined) {
-      return this.getRuleContexts(TypeNameContext);
-    }
-
-    return this.getRuleContext(i, TypeNameContext);
-  }
   public NL(): antlr.TerminalNode[];
   public NL(i: number): antlr.TerminalNode | null;
   public NL(i?: number): antlr.TerminalNode | null | antlr.TerminalNode[] {
@@ -5467,6 +5462,15 @@ export class AbstractClassContext extends antlr.ParserRuleContext {
   }
   public END(): antlr.TerminalNode {
     return this.getToken(RefLangParser.END, 0)!;
+  }
+  public typeName(): TypeNameContext[];
+  public typeName(i: number): TypeNameContext | null;
+  public typeName(i?: number): TypeNameContext[] | TypeNameContext | null {
+    if (i === undefined) {
+      return this.getRuleContexts(TypeNameContext);
+    }
+
+    return this.getRuleContext(i, TypeNameContext);
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(RefLangParser.GHOSTED, 0);
