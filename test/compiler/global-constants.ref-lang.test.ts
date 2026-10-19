@@ -83,6 +83,9 @@ return [main, _tests];}`;
       false,
       true,
     );
+
+    fileImpl.useAntlr = true;
+
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
