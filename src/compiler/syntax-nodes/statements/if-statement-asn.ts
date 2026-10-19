@@ -1,15 +1,15 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { BooleanType } from "../../../compiler/symbols/boolean-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType, mustNotHaveConditionalAfterUnconditionalElse } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
+import { BooleanType } from "../../symbols/boolean-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { compileNodes } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
-import { ElseAsn } from "./else-asn";
+import { ElseClauseAsn } from "./else-clause-asn";
 
-export class IfAsn extends CompoundAsn {
+export class IfStatementAsn extends CompoundAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -18,10 +18,10 @@ export class IfAsn extends CompoundAsn {
 
   reconfigureForCompile(): AstNode[] {
     const ifChildren: AstNode[] = [];
-    let currentElse: ElseAsn | undefined = undefined;
+    let currentElse: ElseClauseAsn | undefined = undefined;
 
     for (const c of this.children) {
-      if (c instanceof ElseAsn) {
+      if (c instanceof ElseClauseAsn) {
         currentElse = c;
         currentElse.setCompileScope(this);
         ifChildren.push(c);
@@ -48,7 +48,7 @@ export class IfAsn extends CompoundAsn {
       this.fieldId,
       this.scope,
     );
-    const elses = this.children.filter((c) => c instanceof ElseAsn);
+    const elses = this.children.filter((c) => c instanceof ElseClauseAsn);
     let toCompile = this.children;
 
     if (elses.length > 0) {

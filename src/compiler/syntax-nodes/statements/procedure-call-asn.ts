@@ -36,8 +36,8 @@ export class ProcedureCallAsn extends BreakpointAsn {
     super(fieldId, scope);
   }
 
-  proc: AstNode = EmptyAsn.Instance;
-  args: AstNode = EmptyAsn.Instance;
+  procRef: AstNode = EmptyAsn.Instance;
+  argList: AstNode = EmptyAsn.Instance;
 
   wrapParameters(callParameters: AstNode[]): [string[], string[]] {
     const wrappedInParameters: string[] = [];
@@ -55,7 +55,7 @@ export class ProcedureCallAsn extends BreakpointAsn {
   compile(): string {
     this.compileErrors = [];
 
-    const astNode = this.proc;
+    const astNode = this.procRef;
     const id = isAstIdNode(astNode) ? astNode.id : "";
 
     const [updatedQualifier, currentScope] = updateScopeAndQualifier(astNode, this);
@@ -88,7 +88,7 @@ export class ProcedureCallAsn extends BreakpointAsn {
     }
 
     const procSymbolType = procSymbol.symbolType();
-    const parameterList = this.args;
+    const parameterList = this.argList;
 
     if (isAstCollectionNode(parameterList)) {
       let callParameters = parameterList.items;
@@ -157,8 +157,8 @@ export class ProcedureCallAsn extends BreakpointAsn {
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (isAstCollectionNode(this.args)) {
-      const items = this.args.items;
+    if (isAstCollectionNode(this.argList)) {
+      const items = this.argList.items;
       const last = items.length > 0 ? items[items.length - 1] : new UnknownSymbol();
 
       if (last instanceof LambdaAsn) {
@@ -177,8 +177,8 @@ export class ProcedureCallAsn extends BreakpointAsn {
     const matches = super.symbolMatches(id, all, this);
     let localMatches: ElanSymbol[] = [];
 
-    if (isAstCollectionNode(this.args)) {
-      const items = this.args.items;
+    if (isAstCollectionNode(this.argList)) {
+      const items = this.argList.items;
       const last = items.length > 0 ? items[items.length - 1] : new UnknownSymbol();
 
       if (last instanceof LambdaAsn) {

@@ -139,7 +139,7 @@ export class SymbolWrapper {
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
-    if (isCall(this.scope) && this.scope.args instanceof EmptyAsn) {
+    if (isCall(this.scope) && this.scope.argList instanceof EmptyAsn) {
       return `${this.name}.`;
     }
 

@@ -93,7 +93,7 @@ inputStatement:
 ;
 
 ifStatement:
-    GHOSTED? IF expression THEN NL (
+    GHOSTED? IF condition=expression THEN NL (
         elseIfClause
         | elseClause
         | ordinaryStatement
@@ -101,7 +101,7 @@ ifStatement:
 ;
 
 whileLoop:
-    GHOSTED? WHILE expression NL ordinaryStatement* END WHILE NL
+    GHOSTED? WHILE condition=expression NL ordinaryStatement* END WHILE NL
 ;
 
 forLoop:

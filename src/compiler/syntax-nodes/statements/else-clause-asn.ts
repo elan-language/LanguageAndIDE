@@ -1,14 +1,14 @@
-import { AstNode } from "../../../compiler/compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { BooleanType } from "../../../compiler/symbols/boolean-type";
-import { getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustBeOfType } from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
+import { Scope } from "../../compiler-interfaces/scope";
+import { BooleanType } from "../../symbols/boolean-type";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class ElseAsn extends BreakpointAsn {
+export class ElseClauseAsn extends BreakpointAsn {
   hasIf: boolean = false;
 
   constructor(fieldId: string, scope: Scope) {

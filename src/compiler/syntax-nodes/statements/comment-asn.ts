@@ -3,7 +3,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CommentStatementAsn extends BreakpointAsn {
+export class CommentAsn extends BreakpointAsn {
   isMember = true;
   isAbstract = false;
   private = false;

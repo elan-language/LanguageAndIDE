@@ -28,7 +28,7 @@ import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
 import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
-import { EachAsn } from "../syntax-nodes/statements/each-asn";
+import { ForLoopAsn } from "../syntax-nodes/statements/for-loop-asn";
 import { ProcedureCallAsn } from "../syntax-nodes/statements/procedure-call-asn";
 import { TermAsn } from "../syntax-nodes/term-asn";
 import { BooleanType } from "./boolean-type";
@@ -166,7 +166,7 @@ export function isTuple(s: Scope): s is TupleAsn {
 }
 
 export function isDefinitionScope(s: Scope): boolean {
-  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn;
+  return s instanceof AbstractDefinitionAsn || s instanceof ForLoopAsn;
 }
 
 export function isValueType(type: SymbolType): boolean {

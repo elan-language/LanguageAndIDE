@@ -1,12 +1,12 @@
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
 import { compileNodes } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { CompoundAsn } from "../compound-asn";
 import { CatchAsn } from "./catch-asn";
 import { CatchCaseAsn } from "./catch-case-asn";
 
-export class TryAsn extends CompoundAsn {
+export class TryStatementAsn extends CompoundAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

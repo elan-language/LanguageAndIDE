@@ -1,11 +1,11 @@
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { mustBeException } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { BreakpointAsn } from "../breakpoint-asn";
 
-export class ThrowAsn extends BreakpointAsn {
+export class ThrowStatementAsn extends BreakpointAsn {
   constructor(
     private readonly type: string,
     private readonly msg: AstNode,

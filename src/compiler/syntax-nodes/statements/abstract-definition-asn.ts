@@ -27,8 +27,8 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
   symbolIsType: boolean = false;
 
-  name: AstNode = EmptyAsn.Instance;
-  expr: AstNode = EmptyAsn.Instance;
+  identifierDef: AstNode = EmptyAsn.Instance;
+  expression: AstNode = EmptyAsn.Instance;
 
   abstract getJsKeyword(): string;
 
@@ -42,15 +42,15 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
 
   compile(): string {
     this.compileErrors = [];
-    const id = getId(this.name);
+    const id = getId(this.identifierDef);
 
     mustNotBeKeyword(id, this.compileErrors, this.fieldId);
     const symbol = this.getScope().resolveSymbol(id, true, this);
     const caseInsensitiveSymbol = this.getScope().resolveSymbol(id, false, this);
     mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
 
-    const lhs = this.name;
-    const rhs = this.expr;
+    const lhs = this.identifierDef;
+    const rhs = this.expression;
 
     mustBeCompatibleDefinitionNode(rhs, this.isLocalConstant(), this.compileErrors, this.fieldId);
 
@@ -73,11 +73,11 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.identifierDef);
   }
 
   symbolType() {
-    const st = this.expr.symbolType();
+    const st = this.expression.symbolType();
     return st;
   }
 
