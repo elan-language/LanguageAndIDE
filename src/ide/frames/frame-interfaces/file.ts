@@ -41,6 +41,7 @@ export interface File extends Parent {
 
   addChildBefore(g: Frame, before: Frame): void;
   addChildAfter(g: Frame, after: Frame): void;
+  addChild(g: Frame): void;
 
   getMap(): Map<string, Selectable>;
   getNextId(): number;
@@ -130,4 +131,6 @@ export interface File extends Parent {
 
   showCompletion(show: boolean): void;
   getShowCompletion(): boolean;
+
+  addParseError(msg: string): void;
 }

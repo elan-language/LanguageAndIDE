@@ -1,18 +1,4 @@
-import {
-  ANTLRErrorListener,
-  ATNConfigSet,
-  ATNSimulator,
-  BitSet,
-  CharStream,
-  CommonTokenStream,
-  DFA,
-  Parser,
-  ParseTreeVisitor,
-  RecognitionException,
-  Recognizer,
-  TerminalNode,
-  Token,
-} from "antlr4ng";
+import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
@@ -32,6 +18,7 @@ import {
   RefLangParser,
   TypeContext as RefLangTypeContext,
 } from "../../generated/ref-lang/RefLangParser";
+import { FieldImpl } from "../frames/fields/field-impl";
 import { Language } from "../frames/frame-interfaces/language";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
 import { PythonVisitorHtml } from "./python-visitor-html";
@@ -39,7 +26,9 @@ import { PythonVisitorSource } from "./python-visitor-source";
 import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
-import { FieldImpl } from "../frames/fields/field-impl";
+import { ErrorListener } from "./error-listener";
+import { File } from "../frames/frame-interfaces/file";
+import { Frame } from "../frames/frame-interfaces/frame";
 
 export function getPythonParser(input: string) {
   const chars = CharStream.fromString(input);
@@ -51,47 +40,7 @@ export function getPythonParser(input: string) {
   return parser;
 }
 
-class ErrorListener implements ANTLRErrorListener {
-  constructor(private readonly field: FieldImpl) {}
-
-  syntaxError<S extends Token, T extends ATNSimulator>(
-    _recognizer: Recognizer<T>,
-    _offendingSymbol: S | null,
-    _line: number,
-    _charPositionInLine: number,
-    msg: string,
-    _e: RecognitionException | null,
-  ): void {
-    this.field.addParseError(msg);
-  }
-  reportAmbiguity(
-    _recognizer: Parser,
-    _dfa: DFA,
-    _startIndex: number,
-    _stopIndex: number,
-    _exact: boolean,
-    _ambigAlts: BitSet | undefined,
-    _configs: ATNConfigSet,
-  ): void {}
-  reportAttemptingFullContext(
-    _recognizer: Parser,
-    _dfa: DFA,
-    _startIndex: number,
-    _stopIndex: number,
-    _conflictingAlts: BitSet | undefined,
-    _configs: ATNConfigSet,
-  ): void {}
-  reportContextSensitivity(
-    _recognizer: Parser,
-    _dfa: DFA,
-    _startIndex: number,
-    _stopIndex: number,
-    _prediction: number,
-    _configs: ATNConfigSet,
-  ): void {}
-}
-
-export function getRefLangParser(input: string, field?: FieldImpl) {
+export function getRefLangParser(input: string, field?: FieldImpl | File) {
   const chars = CharStream.fromString(input);
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
@@ -104,7 +53,7 @@ export function getRefLangParser(input: string, field?: FieldImpl) {
   return parser;
 }
 
-export function getParserByLanguage(l: Language, input: string, field?: FieldImpl) {
+export function getParserByLanguage(l: Language, input: string, field?: FieldImpl | File) {
   switch (l.languageFullName) {
     case "Python":
       return getPythonParser(input);
@@ -126,12 +75,12 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
   }
 }
 
-export function getVisitorHtmlByLanguage(l: Language) {
+export function getVisitorHtmlByLanguage(l: Language, file?: File) {
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorHtml(l);
     case "Reference Language":
-      return new RefLangVisitorHtml(l);
+      return new RefLangVisitorHtml(l, file);
     default:
       throw Error("Unsupported language " + l.languageFullName);
   }
@@ -221,14 +170,14 @@ export function getKVPs<T>(
 }
 
 export function getFilteredTypes(
-  visitor: ParseTreeVisitor<string>,
+  visitor: ParseTreeVisitor<string | File | Frame>,
   context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
 ) {
-  return getTypes<string>(visitor, context).filter((s) => filterTokens(s));
+  return getTypes<string | File | Frame>(visitor, context).filter((s) => filterTokens(s as string));
 }
 
 export function getFuncTypes(
-  visitor: ParseTreeVisitor<string>,
+  visitor: ParseTreeVisitor<string | File | Frame>,
   context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
 ) {
   const types = getFilteredTypes(visitor, context);

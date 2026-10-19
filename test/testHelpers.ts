@@ -601,7 +601,7 @@ export function testAntlrParse(
   }
 
   if (html && html !== "") {
-    assert.equal(getVisitorHtmlByLanguage(language).visit(context), html);
+    assert.equal(getVisitorHtmlByLanguage(language, undefined).visit(context), html);
   }
 
   if (exprt && exprt !== "") {
@@ -623,7 +623,7 @@ export function testFieldParse(
 ) { 
   field.parseCompleteText(text);
 
-  const errors = field.getParserErrors().join("\n");
+  const errors = field.getParserErrors();
 
   const parsed  = field.readParseStatus() === ParseStatus.valid;
 

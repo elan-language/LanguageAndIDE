@@ -73,6 +73,9 @@ import {
 } from "./parent-helpers";
 import { StatementFactoryImpl } from "./statement-factory-impl";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
+import { getParserByLanguage, getVisitorHtmlByLanguage } from "../compile-api/parser-helpers";
+import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
+import { RefLangVisitorHtml } from "../compile-api/ref-lang-visitor-html";
 
 // for web editor bundle
 export { CodeSourceFromString };
@@ -140,6 +143,23 @@ export class FileImpl implements File {
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
+  }
+
+  // TODO remove when parsing migrated
+  useAntlr = false;
+
+  _parserErrorMessages: string[] = [];
+
+  addParseError(msg: string) {
+    this._parserErrorMessages.push(msg);
+  }
+
+  getParserErrors() {
+    return this._parserErrorMessages.join("\n");
+  }
+
+  resetParserErrors() {
+    this._parserErrorMessages = [];
   }
 
   showCompletion(show: boolean): void {
@@ -402,6 +422,12 @@ export class FileImpl implements File {
     parentHelper_insertOrGotoChildSelector(this, after, child);
   }
 
+  addChild(child: Frame): void {
+    const lastChild = this._children[this._children.length - 1];
+
+    parentHelper_addChildAfter(this, child, lastChild);
+  }
+
   defocusAll() {
     for (const f of this._map.values()) {
       if (f.isFocused()) {
@@ -627,7 +653,44 @@ export class FileImpl implements File {
     }
   }
 
+  antlrParseBodyFrom(source: CodeSource): void {
+    this.resetParserErrors();
+
+    const parser = getParserByLanguage(this.language(), source.getRemainingCode()) as RefLangParser;
+    const visitor = getVisitorHtmlByLanguage(this.language(), this) as RefLangVisitorHtml;
+
+    const fileContext = parser.file()!;
+
+    visitor.visitFile(fileContext);
+
+    // try {
+    //   while (source.hasMoreCode()) {
+    //     if (source.isMatchRegEx(Regexes.newLine)) {
+    //       source.removeNewLine();
+    //     } else {
+    //       this.getNextSelector(source.mode).parseFrom(source);
+    //     }
+    //   }
+    //   this.removeAllSelectorsThatCanBe();
+    //   this.deselectAll();
+    //   this.getFirstChild().select(true, false);
+    //   this.updateAllParseStatus();
+    // } catch (e) {
+    //   if (e instanceof ElanFileError) {
+    //     this.parseError = e.message;
+    //   } else {
+    //     this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
+    //   }
+    //   this._parseStatus = ParseStatus.invalid;
+    // }
+  }
+
   parseBodyFrom(source: CodeSource): void {
+    if (this.useAntlr) {
+      this.antlrParseBodyFrom(source);
+      return;
+    }
+
     try {
       while (source.hasMoreCode()) {
         if (source.isMatchRegEx(Regexes.newLine)) {

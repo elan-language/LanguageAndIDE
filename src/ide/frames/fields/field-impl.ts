@@ -119,7 +119,7 @@ export class FieldImpl implements Selectable, Field {
   }
 
   getParserErrors() {
-    return this._parserErrorMessages;
+    return this._parserErrorMessages.join("\n");
   }
 
   resetParserErrors() {
@@ -685,7 +685,7 @@ export class FieldImpl implements Selectable, Field {
       html = this.fieldAsInput() + (show ? this.symbolCompletion() : "");
     } else {
       if (this.context && this._parseStatus === ParseStatus.valid) {
-        html = this.renderAsHtmlFromContext(this.context);
+        html = this.renderAsHtmlFromContext(this.context) as string;
       } else {
         html = escapeHtmlChars(this.text);
       }
@@ -792,8 +792,8 @@ export class FieldImpl implements Selectable, Field {
     return ctx.accept(getVisitorSourceByLanguage(language))!;
   }
 
-  renderAsHtmlFromContext(ctx: ParserRuleContext) {
-    return ctx.accept(getVisitorHtmlByLanguage(this.language()))!;
+  renderAsHtmlFromContext(ctx: ParserRuleContext): string {
+    return ctx.accept(getVisitorHtmlByLanguage(this.language(), this.getFile())) as string;
   }
 
   renderAsElanSource(): string {

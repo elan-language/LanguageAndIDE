@@ -16,6 +16,45 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Global Constants", () => {
+  test("Pass_AntlrParsing", async () => {
+    const code = `${testHeader}
+
+constant a set to 123
+constant b set to "Hello"
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = 123;
+
+  b = "Hello";
+
+};
+async function main() {
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+
+    fileImpl.useAntlr = true;
+
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
   test("Pass_Int", async () => {
     const code = `${testHeader}
 
