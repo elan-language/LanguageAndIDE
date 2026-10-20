@@ -26,7 +26,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
 import { ThrowStatement } from "./statements/throw-statement";
@@ -55,8 +54,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof Assignment ||
       frame instanceof Property ||
       frame instanceof AbstractProcedure ||
-      frame instanceof AbstractFunction ||
-      frame instanceof PrintStatement
+      frame instanceof AbstractFunction
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -77,8 +75,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `} <el-kw>${this.ELSE} {`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} {${frame.values.renderAsHtml()}}`;
-      // } else if (frame instanceof GlobalComment) {
-      //   html = `<el-kw>${this.COMMENT_MARKER} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof Assignment) {

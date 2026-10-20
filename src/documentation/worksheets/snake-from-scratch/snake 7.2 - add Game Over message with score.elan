@@ -27,7 +27,7 @@ main
       call snake.removeAt(0)
     end if
   end while
-  print($"Game Over! Score: {snake.length() - 2}")
+  call print($"Game Over! Score: {snake.length() - 2}")
 end main
 
 procedure display(snake as List<of Int>, apple as Int)

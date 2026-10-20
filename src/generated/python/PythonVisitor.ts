@@ -15,7 +15,6 @@ import { AbstractClassContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
 import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
-import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
@@ -173,12 +172,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.print`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPrint?: (ctx: PrintContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.variableDefinition`.
    * @param ctx the parse tree

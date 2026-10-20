@@ -14,7 +14,6 @@ import {
   FunctionMethodContext,
   IfStatementContext,
   MainContext,
-  PrintContext,
   ProcedureCallContext,
   ProcedureContext,
   ProcedureMethodContext,
@@ -43,7 +42,6 @@ import { TestFrame } from "../frames/globals/test-frame";
 import { Assignment } from "../frames/statements/assignment";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
-import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryStatement } from "../frames/statements/try-statement";
@@ -158,15 +156,6 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   // Statements
-  override visitPrint = (ctx: PrintContext) => {
-    const expression = ctx.expression()?.getText() ?? "";
-    const printStatement = new PrintStatement(this.file);
-    if (expression) {
-      printStatement.arg.setFieldToKnownValidText(expression);
-    }
-    return printStatement;
-  };
-
   override visitVariableDefinition = (ctx: VariableDefinitionContext) => {
     const varDef = new VariableStatement(this.file);
     varDef.name.setFieldToKnownValidText(ctx.identifierDef().getText());

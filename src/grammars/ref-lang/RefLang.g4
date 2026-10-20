@@ -77,8 +77,7 @@ commentText: COMMENT;
 
 // Statements
 ordinaryStatement:
-    print
-    | variableDefinition
+    variableDefinition
     | assignment
     | ifStatement
     | whileLoop
@@ -89,7 +88,6 @@ ordinaryStatement:
     | comment
 ;
 
-print: GHOSTED? PRINT OPEN_BRACKET expression? CLOSE_BRACKET NL;
 variableDefinition:
     GHOSTED? VARIABLE identifierDef SET TO expression NL
 ;

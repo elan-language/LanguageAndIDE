@@ -8,7 +8,6 @@ import {
   elseKeyword,
   forKeyword,
   ifKeyword,
-  printKeyword,
   throwKeyword,
   tryKeyword,
   variableKeyword,
@@ -35,12 +34,6 @@ export class StatementSelector extends AbstractSelector {
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
       [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
-      [
-        printKeyword,
-        "p",
-        "<b>p</b>rint statement",
-        (parent: Parent) => this.factory.newPrint(parent),
-      ],
       [
         variableKeyword,
         "v",
@@ -93,7 +86,7 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix().includes(`_${ifKeyword}`);
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix().includes(`_${tryKeyword}`);
-    } else if (keyword === callKeyword || keyword === printKeyword) {
+    } else if (keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === assertKeyword) {
       result = this.isWithinATest();

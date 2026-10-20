@@ -45,7 +45,7 @@
 //   ignore_test("process file", async () => {
 //     const code = `main
 //   variable di set to createDictionary([("alpha", 1), ("beta", 2), ("gamma", 3)])
-//   print(di["beta"])
+//   call print(di["beta"])
 // end main
 
 // function createDictionary(kvps as List<of (String, Int)>) returns Dictionary<of String, Int>
@@ -92,7 +92,7 @@
 //   test("process main", async () => {
 //     const code = `main
 //   variable r set to 2.0
-//   print($"area = {(pi*r*r).round(2)}")
+//   call print($"area = {(pi*r*r).round(2)}")
 // end main`;
 
 //     const actual = await processInnerCode(code);

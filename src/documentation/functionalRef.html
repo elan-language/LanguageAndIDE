@@ -612,7 +612,7 @@ which distinguishes this from the procedural methods) which may be thought of as
 main
   variable rng set to new Random()
   for i in range(1, 10)
-    print(rollDice(rng))
+    call print(rollDice(rng))
   end for
 end main
 
@@ -629,7 +629,7 @@ the following will generate a more random looking sequence:
 main
   variable rng set to new Random()
   for i in range(1, 10)
-    print(rollDice(rng))
+    call print(rollDice(rng))
     assign rng to rng.nextGen()
   end for
 end main
@@ -645,7 +645,7 @@ main
   variable rng set to new Random()
   call rng.initialiseFromClock()
   for i in range(1, 10)
-    print(rollDice(rng))
+    call print(rollDice(rng))
     assign rng to rng.nextGen()
   end for
 end main
@@ -658,7 +658,7 @@ creating a <code>List</code> of random dice-throws entirely within a function:</
 main
   variable rng set to new Random()
   call rng.initialiseFromClock()
-  print(randomList(rng).item_0)
+  call print(randomList(rng).item_0)
 end main
 
 function randomList(rng as Random) returns (List&lt;of Int&gt;, Random)

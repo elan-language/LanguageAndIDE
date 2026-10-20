@@ -8,7 +8,6 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
@@ -152,7 +151,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(setTo.renderAsElanSource(), code);
   });
   test("parse Frames - print", () => {
-    const code = `  print(3 + 4)`;
+    const code = `  call print(3 + 4)`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
       hash,
@@ -164,10 +163,10 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     const m = new MainRoutine(fl);
-    const setTo = new PrintStatement(m);
-    setTo.parseFrom(source);
+    const pc = new ProcedureCall(m);
+    pc.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(pc.renderAsElanSource(), code);
   });
   test("parse Frames - call", () => {
     const code = `  call foo()`;
@@ -526,9 +525,9 @@ end main
 
 main
   try
-    print("")
+    call print("")
   catch e as ElanRuntimeError
-    print("")
+    call print("")
   end try
 end main
 `;

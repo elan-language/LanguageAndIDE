@@ -78,8 +78,7 @@ commentText: COMMENT;
 
 // Statements
 ordinaryStatement:
-    print
-    | variableDefinition
+    variableDefinition
     | assignment
     | ifStatement
     | whileLoop
@@ -88,10 +87,6 @@ ordinaryStatement:
     | tryStatement
     | throwStatement
     | comment
-;
-
-print:
-    PRINT OPEN_BRACKET expression? CLOSE_BRACKET SEMI_COLON NL
 ;
 variableDefinition:
     VAR identifierDef SINGLE_EQUALS expression SEMI_COLON NL

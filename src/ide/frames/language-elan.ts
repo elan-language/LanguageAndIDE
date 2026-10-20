@@ -24,7 +24,6 @@ import {
   newKeyword,
   ofKeyword,
   powKeyword,
-  printKeyword,
   privateKeyword,
   procedureKeyword,
   propertyKeyword,
@@ -73,7 +72,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
 import { ThrowStatement } from "./statements/throw-statement";
@@ -119,8 +117,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
-    } else if (frame instanceof PrintStatement) {
-      html = `<el-kw>${this.PRINT}</el-kw>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
@@ -226,7 +222,6 @@ export class LanguageElan extends LanguageAbstract {
   private MAIN = mainKeyword;
   private NEW = newKeyword;
   private OF = ofKeyword;
-  private PRINT = printKeyword;
   private PRIVATE = privateKeyword;
   private PROCEDURE = procedureKeyword;
   private PROPERTY = propertyKeyword;

@@ -8,13 +8,13 @@ main
       assign quit to true
     elif reply.upperCase().equals("T") then
       variable now set to divAsInt(clock(), 1000)
-      print(now)
-      print(getDate(now))
+      call print(now)
+      call print(getDate(now))
     else
       try
         variable td set to asInt(reply)
         if td >= 0 then
-          print(getDate(td))
+          call print(getDate(td))
         end if
       catch e as ElanRuntimeError
       end try
