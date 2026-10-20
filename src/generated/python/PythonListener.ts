@@ -15,7 +15,6 @@ import { AbstractClassContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
 import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
-import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
@@ -222,16 +221,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.print`.
-   * @param ctx the parse tree
-   */
-  enterPrint?: (ctx: PrintContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.print`.
-   * @param ctx the parse tree
-   */
-  exitPrint?: (ctx: PrintContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.variableDefinition`.
    * @param ctx the parse tree

@@ -27,7 +27,6 @@ import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
 import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
 import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
-import { PrintAsn } from "../../compiler/syntax-nodes/statements/print-asn";
 import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
 import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
@@ -63,7 +62,6 @@ import { ElseClause } from "../frames/statements/else-clause";
 import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
-import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { ThrowStatement } from "../frames/statements/throw-statement";
@@ -213,13 +211,6 @@ export function transform(
   }
 
   // Statements
-
-  if (node instanceof PrintStatement) {
-    const printAsn = new PrintAsn(node.getHtmlId(), scope);
-    printAsn.breakpointStatus = node.breakpointStatus;
-    printAsn.expression = transform(node.arg, node.getHtmlId(), printAsn) ?? EmptyAsn.Instance;
-    return printAsn;
-  }
 
   if (node instanceof VariableStatement) {
     const variableDefinitionAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);

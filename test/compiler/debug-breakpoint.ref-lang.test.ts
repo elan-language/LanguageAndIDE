@@ -420,7 +420,7 @@ main
     throw ElanRuntimeError "error"
   catch ElanRuntimeError
     variable b set to 1
-    print(b)
+    call print(b)
   end try
 end main`;
 

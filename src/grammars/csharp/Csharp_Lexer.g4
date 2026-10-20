@@ -63,7 +63,6 @@ IN: 'in';
 INPUT: 'input';
 LAMBDA: 'lambda';
 MAIN: 'main';
-PRINT: 'print';
 RETURN: 'return';
 TRY: 'try';
 WHILE: 'while';

@@ -15,7 +15,6 @@ import { AbstractClassContext } from "./CsharpParser.js";
 import { CommentContext } from "./CsharpParser.js";
 import { CommentTextContext } from "./CsharpParser.js";
 import { OrdinaryStatementContext } from "./CsharpParser.js";
-import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
 import { IfStatementContext } from "./CsharpParser.js";
@@ -174,12 +173,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.print`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPrint?: (ctx: PrintContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.variableDefinition`.
    * @param ctx the parse tree

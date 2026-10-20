@@ -620,7 +620,7 @@ return [main, _tests];}`;
 main
   variable a set to ["a":2, "b":2]
   assign a["a"] to 1
-  print(a["a"])
+  call print(a["a"])
 end main
 `;
 
@@ -660,7 +660,7 @@ end main
 procedure foo()
   variable a set to ["a":2,"b":2]
   assign a["a"] to 1
-  print(a["a"])
+  call print(a["a"])
 end procedure
 `;
 
@@ -705,7 +705,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
   assign a["a"]["c"] to 1
-  print(a["a"]["c"])
+  call print(a["a"]["c"])
 end procedure
 `;
 
@@ -750,7 +750,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":["e":""]],"b":["d":["f":""]]]
   assign a["a"]["c"]["e"] to "1"
-  print(a["a"]["c"]["e"])
+  call print(a["a"]["c"]["e"])
 end procedure
 `;
 
@@ -795,7 +795,7 @@ end main
 procedure foo()
   variable a set to ["a":["c":2],"b":["d":3]]
   assign a["a"]["c"] to ""
-  print(a["a"]["c"])
+  call print(a["a"]["c"])
 end procedure
 `;
 
@@ -820,7 +820,7 @@ end procedure
     const code = `${testHeader}
 
 main
-  print(foo())
+  call print(foo())
 end main
 
 function foo() returns Int
@@ -853,7 +853,7 @@ end function
 main
   variable a set to ["a":2,"b":2]
   assign a["a"] to "fred"
-  print(a["a"])
+  call print(a["a"])
 end main
 `;
 

@@ -5,7 +5,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -14,7 +13,6 @@ import {
   ignore_test,
   testHash,
   testHeader,
-  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
@@ -749,7 +747,7 @@ return [main, _tests];}`;
 main
   variable a set to [2,2]
   assign a[0] to 1
-  print(a[0])
+  call print(a[0])
 end main
 `;
 
@@ -789,7 +787,7 @@ end main
 procedure foo()
   variable a set to [2,2]
   assign a[0] to 1
-  print(a[0])
+  call print(a[0])
 end procedure
 `;
 
@@ -828,7 +826,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  print(foo())
+  call print(foo())
 end main
 
 function foo() returns Int
@@ -861,7 +859,7 @@ end function
 main
   variable a set to [2,2]
   assign a[0] to "fred"
-  print(a[0])
+  call print(a[0])
 end main
 `;
 

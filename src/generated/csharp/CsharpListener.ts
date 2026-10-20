@@ -15,7 +15,6 @@ import { AbstractClassContext } from "./CsharpParser.js";
 import { CommentContext } from "./CsharpParser.js";
 import { CommentTextContext } from "./CsharpParser.js";
 import { OrdinaryStatementContext } from "./CsharpParser.js";
-import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
 import { IfStatementContext } from "./CsharpParser.js";
@@ -223,16 +222,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.print`.
-   * @param ctx the parse tree
-   */
-  enterPrint?: (ctx: PrintContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.print`.
-   * @param ctx the parse tree
-   */
-  exitPrint?: (ctx: PrintContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.variableDefinition`.
    * @param ctx the parse tree

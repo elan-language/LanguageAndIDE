@@ -450,7 +450,7 @@ export class StdLib {
     return await this.system.toString(s);
   }
 
-  // NOT a user-visible method: it is invoked by the print *instruction* and by the printNoLine, printTab user-visible procedures.
+  @elanProcedure(["item"], ProcedureOptions.async)
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
   async print(@elanAnyExceptEnumType() s: any) {
     await this.system.elanInputOutput.print(`${await this.system.toString(s)}\n`);

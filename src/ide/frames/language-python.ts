@@ -33,7 +33,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
 import { ThrowStatement } from "./statements/throw-statement";
@@ -98,8 +97,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
-    } else if (frame instanceof PrintStatement) {
-      html = `<el-method>print</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
       html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {

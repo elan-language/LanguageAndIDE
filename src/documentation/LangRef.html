@@ -318,7 +318,7 @@ end main
 <codeblock>main
   variable li set to [3, 6, 1, 0, 99, 4, 67]
   call inPlaceRippleSort(li)
-  print(li)
+  call print(li)
 end main
 </codeblock>
 
@@ -452,7 +452,7 @@ This then allows use of the dot methods <el-method>put</el-method> and <el-metho
   variable arg set to "abc"
   variable argRef set to new AsRef&lt;of String&gt;(arg)
   call changeArg(argRef)
-  print(argRef.value())
+  call print(argRef.value())
 end main
 procedure changeArg(pointer as AsRef&lt;of String&gt;)
   variable r set to pointer.value()
@@ -835,8 +835,8 @@ constant warningMsg set to "Limit reached"
   hexadecimal before printing by using example function <a href="LibRef.html#hex"><el-method>hex</el-method></a>:</p>
 
 <codeblock>main
-  print($"{rainbow()[0]} (dec) is violet")
-  print($"{hex(suitColours()["hearts"])} (hex) is red")
+  call print($"{rainbow()[0]} (dec) is violet")
+  call print($"{hex(suitColours()["hearts"])} (hex) is red")
 end main
 function rainbow() returns List&lt;of Int&gt;
   return [0x9400D3, 0x4B0082, 0x0000CD, 0x008000, 0xFFFF00, 0xFFA500, 0xFF0000]
@@ -968,120 +968,6 @@ end procedure
 <h1>Statement instructions</h1>
 <p>Statement instructions (sometimes referred to as 'statements') are the instructions used with in the methods
 of a program: the main routine, functions, and procedures.</p>
-
-<div id="print">
-<div id="PrintInstruction"></div>
-<h2>Print</h2>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Examples of a print statement</h3>
-<div class="acc-body">
-
-  <p>From the <b>Date Time</b> demo, printing the time (as a number of seconds) and then the date by calling the function <el-method>getDate</el-method>
-    inline within the print instruction:</p>
-
-<codeblock>main
-  variable reply set to ""
-  while not reply.upperCase().equals("Q")
-    assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
-    if reply.equals("") then
-      variable now set to divAsInt(clock(), 1000)
-      print(now)
-      print(getDate(now))
-    else
-      try
-        variable td set to int(reply)
-        if td &gt;= 0 then
-          print(getDate(td))
-        end if
-      catch e as ElanRuntimeError
-      end try
-    end if
-  end while
-end main
-</codeblock>
-
-<p>From the <b>Ripple sort</b> demo, printing a <code>List</code>:</p>
-
-  <codeblock>main
-  variable li set to [7, 1, 0, 4, 8, 3, 6]
-  print(li)
-  call inPlaceRippleSort(li)
-  print(li)
-end main
-  </codeblock>
-
-<p>From the <b>Snake &ndash; procedural</b> demo, printing an interpolated string (last line of the main routine):</p>
-
-  <codeblock>main
-  variable bg set to new BlockGraphics()
-  variable head set to 621
-  variable snake set to [head - 1, head]
-  variable currentDir set to "d"
-  variable gameIsOn set to true
-  variable apple set to -1
-  while gameIsOn
-    while (apple is -1) or snake.contains(apple)
-      assign apple to randint(0, width*height)
-    end while
-    call updateDisplay(bg, snake, apple)
-    variable key set to getKey()
-    if not key.equals("") and "wasd".contains(key) then
-      assign currentDir to key
-    end if
-    assign head to getAdjacentBlock(head, currentDir)
-    if (head is -1) or snake.contains(head) then
-      assign gameIsOn to false
-    else
-      call snake.append(head)
-    end if
-    if head.equals(apple) then
-      assign apple to -1
-    else
-      call snake.removeAt(0)
-    end if
-    call sleep_ms(150)
-  end while
-  print($"Game Over! Score: {snake.length() - 1}")
-end main
-  </codeblock>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about a print statement</h3>
-<div class="acc-body">
-
-<ul>
-<li>The <b>print statement</b> writes a value to <b>display</b>.</li>
-<li>It automatically prints a new line after the value.</li>
-<li>The value can be any expression.</li>
-<li>You must provide a value; if you just want to print a blank line, just set the value to "".</li>
-<li>The recommended way to print multiple values is to use an interpolated string (see third example above)</li>
-</ul>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">More advanced techniques</h3>
-<div class="acc-body">
-<p>As an alternative to using the <b>print statement</b> you call one of these standard library procedures using
-<b>procedure call</b> instruction:</p>
-<ul>
-  <li><el-method>printNoLine</el-method></li>
-  <li><el-method>printWithTab</el-method></li>
-</ul>
-<p>which offer more flexible options. These library methods work when running any of the supported languages within Elan but,
-  unlike when using the normal the <b>print statement</b>, the library procedures do not correspond directly to
-  print methods in the native libraries for those languages.</p>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">See also</h3>
-<div class="acc-body">
-<p><a href="LibRef.html#InterpolatedString">Interpolated string</a></p>
-<p><a href="LibRef.html#printNoLine"><el-method>printNoLine</a></p>
-<p><a href="LibRef.html#printTab"><el-method>printTab</a></p>
-</div></div>
-</div>
 
 <div id="VariableDefinition">
 <div id="variable"></div>
@@ -1510,13 +1396,13 @@ is used to intercept (or 'catch') this exception and just ignore that input:</p>
     assign reply to input("RETURN for time now or Unix time (positive integer) or Q to quit")
     if reply.equals("") then
       variable now set to divAsInt(clock(), 1000)
-      print(now)
-      print(getDate(now))
+      call print(now)
+      call print(getDate(now))
     else
       try
         variable td set to int(reply)
         if td >= 0 then
-          print(getDate(td))
+          call print(getDate(td))
         end if
       catch e as ElanRuntimeError
       end try
@@ -1689,9 +1575,9 @@ then an empty <code>String</code> or <code>List</code> is returned.</p>
  <td>
 <codeblock>main
   variable a set to "Hello world!"
-  print(a[4])
-  print(a.subString(4, a.length()))
-  print(a.subString(0, 7))
+  call print(a[4])
+  call print(a.subString(4, a.length()))
+  call print(a.subString(0, 7))
 end main
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -1706,9 +1592,9 @@ end main
 <codeblock>main
   variable li set to new List&lt;of Int&gt;()
   assign li to [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11]
-  print(li[4])
-  print(li.subList(4, li.length()))
-  print(li.subList(0, 7))
+  call print(li[4])
+  call print(li.subList(4, li.length()))
+  call print(li.subList(0, 7))
 end main
 </codeblock>
  </td><td><br><br><br>&#x27f6;<br>&#x27f6;<br>&#x27f6;</td>
@@ -1856,10 +1742,10 @@ Two instances which are subclasses of the same abstract class compare equal only
 <h2>Function reference</h2>
 An expression may simply be a reference to a function, or it may include several function references within it. Examples:
 <codeblock>main
-  print(sin(radians(30)))
+  call print(sin(radians(30)))
   variable x set to pow(sin(radians(30)), 2) + pow(cos(radians(30)), 2)
   variable name set to input("Your name")
-  print(name.upperCase())
+  call print(name.upperCase())
 end main
 </codeblock>
 
@@ -1962,7 +1848,7 @@ end function
   call testPi(p, 4)
 end main
 procedure testPi(p as String, v as Float)
-  print(if_(pi > v, $"{p} > {v}", $"{p} < {v}"))
+  call print(if_(pi > v, $"{p} > {v}", $"{p} < {v}"))
 end procedure
 </codeblock>
  </td><td><br><br>&#x27f6;<br>&#x27f6;</td><td><br><br>&#x03c0 &gt; 3<br>&#x03c0 &lt; 4</td>

@@ -27,7 +27,7 @@ main
     call processoneline(line, result, skipping)
   end while
   call file.close()
-  print(result.value())
+  call print(result.value())
 end main
 
 procedure processoneline(line as String, result as AsRef<of String>, skippingRef as AsRef<of Boolean>)

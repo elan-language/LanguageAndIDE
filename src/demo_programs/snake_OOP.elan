@@ -14,7 +14,7 @@ main
     call displayBlockGraphics(blocks)
     call sleep_ms(150)
   end while
-  print($"Game Over! Score: {game.score()}")
+  call print($"Game Over! Score: {game.score()}")
 end main
 
 class Game

@@ -24,7 +24,6 @@ suite("Selector tests", () => {
     const file = emptyMainOnly();
     const selector = file.getById("elan_select2") as StatementSelector;
     assertOptions(selector, [
-      "print statement",
       "variable definition",
       "assignment",
       "if statement",
@@ -205,7 +204,6 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     assertOptions(s, [
-      "print statement",
       "variable definition",
       "assignment",
       "if statement",
@@ -230,7 +228,6 @@ suite("Selector tests", () => {
     const proc = new GlobalProcedure(fl);
     const s = new StatementSelector(proc);
     assertOptions(s, [
-      "print statement",
       "variable definition",
       "assignment",
       "if statement",
@@ -300,7 +297,6 @@ suite("Selector tests", () => {
     const ifThen = new IfStatement(m);
     const s = new StatementSelector(ifThen);
     assertOptions(s, [
-      "print statement",
       "variable definition",
       "assignment",
       "if statement",

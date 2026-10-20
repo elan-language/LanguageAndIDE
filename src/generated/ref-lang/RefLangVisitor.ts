@@ -18,7 +18,6 @@ import { AbstractClassMemberContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
 import { CommentTextContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
-import { PrintContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
@@ -203,12 +202,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.print`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitPrint?: (ctx: PrintContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.variableDefinition`.
    * @param ctx the parse tree
