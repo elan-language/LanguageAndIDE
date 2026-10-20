@@ -1,9 +1,9 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { IntType } from "../symbols/int-type";
+import { FloatType } from "../symbols/float-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class IntTypeAsn extends AbstractAstNode implements AstNode {
+export class FloatTypeNameAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly language: Language,
     public readonly fieldId: string,
@@ -14,7 +14,7 @@ export class IntTypeAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return IntType.Instance.languageSpecificName(this.language);
+    return FloatType.Instance.languageSpecificName(this.language);
   }
 
   compileToEmptyObjectCode(): string {
@@ -22,7 +22,7 @@ export class IntTypeAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return IntType.Instance;
+    return FloatType.Instance;
   }
 
   toString() {

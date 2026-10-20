@@ -1,10 +1,10 @@
-import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
-import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
+import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn as BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
+import { BoolTypeNameAsn } from "../../compiler/syntax-nodes/bool-type-name-asn";
 import { BracketedAsn as BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DictionaryAsn } from "../../compiler/syntax-nodes/dictionary-asn";
@@ -12,14 +12,17 @@ import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { EnumValueAsn } from "../../compiler/syntax-nodes/enum-value-asn";
 import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/identifier-list-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
+import { FloatTypeNameAsn } from "../../compiler/syntax-nodes/float-type-name-asn";
 import { IdentifierDefAsn } from "../../compiler/syntax-nodes/identifier-def-asn";
 import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn";
 import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
+import { IntTypeNameAsn } from "../../compiler/syntax-nodes/int-type-name-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
 import { ListAsn } from "../../compiler/syntax-nodes/list-asn";
+import { ListTypeNameAsn } from "../../compiler/syntax-nodes/list-type-name-asn";
 import { LitBooleanAsn } from "../../compiler/syntax-nodes/lit-boolean-asn";
 import { LitFloatAsn } from "../../compiler/syntax-nodes/lit-float-asn";
 import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
@@ -30,9 +33,11 @@ import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
+import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
+import { TypeNameAsn } from "../../compiler/syntax-nodes/type-name-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import {
   ArgListContext,
@@ -73,6 +78,7 @@ import {
   TypeContext,
   TypeFuncContext,
   TypeGenericContext,
+  TypeNameContext,
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
@@ -126,6 +132,20 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitTestName = (ctx: TestNameContext) =>
     new IdentifierDefAsn(ctx.NAME_STARTING_TEST_().getText(), this.fieldId, this.scope);
 
+  // typeName
+  override visitIntTypeName = (_ctx: TypeNameContext) =>
+    new IntTypeNameAsn(this.language, this.fieldId);
+  override visitFloatTypeName = (_ctx: TypeNameContext) =>
+    new FloatTypeNameAsn(this.language, this.fieldId);
+  override visitBoolTypeName = (_ctx: TypeNameContext) =>
+    new BoolTypeNameAsn(this.language, this.fieldId);
+  override visitStringTypeName = (_ctx: TypeNameContext) =>
+    new StringTypeNameAsn(this.language, this.fieldId);
+  override visitListTypeName = (_ctx: TypeNameContext) =>
+    new ListTypeNameAsn(this.language, this.fieldId, this.scope);
+  override visitUdtTypeName = (ctx: TypeNameContext) =>
+    new TypeNameAsn(ctx.getText(), this.fieldId, this.scope);
+
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -147,10 +167,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   // type: typeTuple | typeName | typeGeneric | typeFunc;
   override visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
-
-  override visitTerminal(ctx: TerminalNode) {
-    return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
-  }
 
   override visitParamList = (ctx: ParamListContext) => {
     const paramDefs = getParamDefs(this, ctx);

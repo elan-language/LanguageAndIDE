@@ -179,12 +179,12 @@ assignable: identifierUse  #simpleAssignable
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
 typeName:
-    INT_NAME
-    | FLOAT_NAME
-    | BOOL_NAME
-    | STRING_NAME
-    | LIST_NAME
-    | NAME_STARTING_UC
+    INT_NAME #intTypeName
+    | FLOAT_NAME #floatTypeName
+    | BOOL_NAME #boolTypeName
+    | STRING_NAME #stringTypeName
+    | LIST_NAME #listTypeName
+    | NAME_STARTING_UC #udtTypeName
 ;
 
 constantValue: 

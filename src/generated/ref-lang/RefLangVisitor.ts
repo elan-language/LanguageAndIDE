@@ -50,7 +50,12 @@ import { IndexedAssignableContext } from "./RefLangParser.js";
 import { ThisAssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
-import { TypeNameContext } from "./RefLangParser.js";
+import { IntTypeNameContext } from "./RefLangParser.js";
+import { FloatTypeNameContext } from "./RefLangParser.js";
+import { BoolTypeNameContext } from "./RefLangParser.js";
+import { StringTypeNameContext } from "./RefLangParser.js";
+import { ListTypeNameContext } from "./RefLangParser.js";
+import { UdtTypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
@@ -392,11 +397,47 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitTestName?: (ctx: TestNameContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.typeName`.
+   * Visit a parse tree produced by the `intTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitTypeName?: (ctx: TypeNameContext) => Result;
+  visitIntTypeName?: (ctx: IntTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `floatTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFloatTypeName?: (ctx: FloatTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `boolTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBoolTypeName?: (ctx: BoolTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `stringTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitStringTypeName?: (ctx: StringTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTypeName?: (ctx: ListTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `udtTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUdtTypeName?: (ctx: UdtTypeNameContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.constantValue`.
    * @param ctx the parse tree
