@@ -60,7 +60,6 @@ import { LitIntContext } from "./CsharpParser.js";
 import { LitFloatContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
 import { EnumValueContext } from "./CsharpParser.js";
-import { LitRegExpContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
@@ -672,16 +671,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.litRegExp`.
-   * @param ctx the parse tree
-   */
-  enterLitRegExp?: (ctx: LitRegExpContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.litRegExp`.
-   * @param ctx the parse tree
-   */
-  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.index`.
    * @param ctx the parse tree

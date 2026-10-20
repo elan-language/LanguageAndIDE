@@ -118,9 +118,6 @@ LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 INTERPOLATED_STRING_PREFIX:
     '$"' (~["\u0085] | CommonCharacter)* '"'
 ;
-LITERAL_REGEXP:
-    LITERAL_STRING
-; //In Python they are the same thing
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;

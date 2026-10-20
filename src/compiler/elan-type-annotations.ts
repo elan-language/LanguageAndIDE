@@ -44,7 +44,6 @@ import { FunctionType } from "./symbols/function-type";
 import { GenericParameterType } from "./symbols/generic-parameter-type";
 import { IntType } from "./symbols/int-type";
 import { ProcedureType } from "./symbols/procedure-type";
-import { RegExpType } from "./symbols/regexp-type";
 import { StdLibClass } from "./symbols/stdlib-class";
 import { StringType } from "./symbols/string-type";
 import { SymbolScope } from "./symbols/symbol-scope";
@@ -192,8 +191,6 @@ export class ElanValueTypeDescriptor implements TypeDescriptor {
         return IntType.Instance;
       case BooleanName:
         return BooleanType.Instance;
-      case RegExpName:
-        return RegExpType.Instance;
       case AnyExceptEnumName:
         return AnyExceptEnumType.Instance;
       case AnyEnumName:
@@ -405,8 +402,6 @@ export class TypescriptTypeDescriptor implements TypeDescriptor {
         return StringType.Instance;
       case "Boolean":
         return BooleanType.Instance;
-      case "RegExp":
-        return RegExpType.Instance;
       case "Function":
         throw new ElanCompilerError("Typescript 'Function' must be mapped into Elan types");
       case "Array":

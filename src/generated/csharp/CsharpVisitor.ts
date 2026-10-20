@@ -60,7 +60,6 @@ import { LitIntContext } from "./CsharpParser.js";
 import { LitFloatContext } from "./CsharpParser.js";
 import { LitStringContext } from "./CsharpParser.js";
 import { EnumValueContext } from "./CsharpParser.js";
-import { LitRegExpContext } from "./CsharpParser.js";
 import { IndexContext } from "./CsharpParser.js";
 import { ExpressionContext } from "./CsharpParser.js";
 import { TermContext } from "./CsharpParser.js";
@@ -443,12 +442,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitEnumValue?: (ctx: EnumValueContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.litRegExp`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitLitRegExp?: (ctx: LitRegExpContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.index`.
    * @param ctx the parse tree

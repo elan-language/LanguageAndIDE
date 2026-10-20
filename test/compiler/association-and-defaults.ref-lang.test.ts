@@ -213,7 +213,6 @@ main
   call printNoLine(g.ds)
   call printNoLine(g.ai)
   call printNoLine(g.t)
-  call printNoLine("aa".matchesRegExp(g.r))
 end main
 
 class Game
@@ -231,7 +230,6 @@ class Game
     property ds as Dictionary<of String, Int>
     property ai as List<of Int>
     property t as (Int, String, List<of Int>)
-    property r as RegExp
 
     function toString() returns String
         return "A game"
@@ -250,11 +248,10 @@ async function main() {
   await _stdlib.printNoLine(g.ds);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
-  await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -278,8 +275,6 @@ class Game {
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
-  r = system.emptyRegExp();
-
   async toString() {
     return "A game";
   }
@@ -301,7 +296,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -317,7 +312,6 @@ main
   call printNoLine(g.ds)
   call printNoLine(g.ai)
   call printNoLine(g.t)
-  call printNoLine(g.r)
 end main
 
 class Player
@@ -349,7 +343,6 @@ class Game
     property ds as Dictionary<of String, Int>
     property ai as List<of Int>
     property t as (Int, String, List<of Int>)
-    property r as RegExp
 
     function toString() returns String
         return "A game"
@@ -369,7 +362,6 @@ async function main() {
   await _stdlib.printNoLine(g.ds);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
-  await _stdlib.printNoLine(g.r);
 }
 
 class Player {
@@ -395,7 +387,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -422,8 +414,6 @@ class Game {
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
-  r = system.emptyRegExp();
-
   async toString() {
     return "A game";
   }
@@ -445,7 +435,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])");
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {

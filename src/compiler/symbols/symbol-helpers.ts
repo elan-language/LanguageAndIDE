@@ -42,7 +42,6 @@ import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
-import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
@@ -175,8 +174,7 @@ export function isValueType(type: SymbolType): boolean {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
-    type instanceof EnumType ||
-    type instanceof RegExpType
+    type instanceof EnumType
   );
 }
 
@@ -185,8 +183,7 @@ export function isValueTypeExcludingString(type: SymbolType): boolean {
     type instanceof IntType ||
     type instanceof FloatType ||
     type instanceof BooleanType ||
-    type instanceof EnumType ||
-    type instanceof RegExpType
+    type instanceof EnumType
   );
 }
 

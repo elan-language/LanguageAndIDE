@@ -1418,8 +1418,8 @@ return [main, _tests];}`;
 main
   variable s1 set to "cbababbc"
   variable s2 set to "cbabdabbc"
-  variable result1 set to s1.matchesRegExp(/[a-c]*/)
-  variable result2 set to s2.matchesRegExp(/^[a-c]*$/)
+  variable result1 set to s1.matchesRegExp("[a-c]*")
+  variable result2 set to s2.matchesRegExp("^[a-c]*$")
   call printNoLine(result1)
   call printNoLine(result2)
 end main`;
@@ -1429,8 +1429,8 @@ const global = new class {};
 async function main() {
   let s1 = "cbababbc";
   let s2 = "cbabdabbc";
-  let result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
-  let result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
+  let result1 = _stdlib.matchesRegExp(s1, "[a-c]*");
+  let result2 = _stdlib.matchesRegExp(s2, "^[a-c]*$");
   await _stdlib.printNoLine(result1);
   await _stdlib.printNoLine(result2);
 }
@@ -1451,38 +1451,6 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
-  });
-  test("Pass_asRegExp", async () => {
-    const code = `${testHeader}
-
-main
-  variable r set to "[a-c]*".asRegExp()
-  call printNoLine(r)
-end main`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let r = _stdlib.asRegExp("[a-c]*");
-  await _stdlib.printNoLine(r);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "A RegExp");
   });
   test("Pass_indexOf", async () => {
     const code = `${testHeader}

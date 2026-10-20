@@ -1124,33 +1124,6 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(thisInstance, `Th`, false);
   });
 
-  test("LitRegExp", () => {
-    const litRegExp: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.litRegExp(),
-    ];
-    testAntlrParse(
-      litRegExp,
-      `/abc+.*/`,
-      true,
-      `/abc+.*/`,
-      "/abc+.*/",
-      `<el-regex>/abc+.*/</el-regex>`,
-    );
-    testAntlrParse(
-      litRegExp,
-      `/abc+.*/gm`,
-      true,
-      `/abc+.*/gm`,
-      "/abc+.*/gm",
-      `<el-regex>/abc+.*/gm</el-regex>`,
-    );
-    testAntlrParse(litRegExp, `/abc+.*/ gm`, true, `/abc+.*/`);
-    testAntlrParse(litRegExp, `/abc+.*/v`, true, `/abc+.*/`);
-    testAntlrParse(litRegExp, `/abc+.*`, false);
-    testAntlrParse(litRegExp, `//`, false);
-  });
-
   test("InstanceProcRef", () => {
     const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,

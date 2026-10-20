@@ -161,11 +161,6 @@ export class StdLib {
     if (typeof v === "number") {
       return v.toString();
     }
-
-    if (v instanceof RegExp) {
-      return "A RegExp";
-    }
-
     if (Array.isArray(v)) {
       // tuple
       const items: string[] = [];
@@ -744,8 +739,8 @@ export class StdLib {
   }
 
   @elanFunction(["", "regExp"], FunctionOptions.pureExtension)
-  matchesRegExp(a: string, r: RegExp): boolean {
-    return r.test(a);
+  matchesRegExp(a: string, r: string): boolean {
+    return new RegExp(r).test(a);
   }
 
   @elanFunction(["", "index1", "index2"], FunctionOptions.pureExtension)
@@ -756,15 +751,6 @@ export class StdLib {
   ): string {
     return this.system.safeSlice(s, index1, index2);
   }
-
-  @elanFunction([], FunctionOptions.pureExtension)
-  asRegExp(pattern: string): RegExp {
-    return new RegExp(pattern, "");
-  }
-  /*   @elanFunction(["", "flags"], FunctionOptions.pureExtension)
-  asRegExpWithFlags(pattern: string, flags: string): RegExp {
-    return new RegExp(pattern, flags);
-  } */
 
   //File operations
   @elanFunction([], FunctionOptions.impureAsync, ElanClass(TextFileReader))

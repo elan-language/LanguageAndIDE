@@ -26,7 +26,6 @@ import { ListTypeNameAsn } from "../../compiler/syntax-nodes/list-type-name-asn"
 import { LitBooleanAsn } from "../../compiler/syntax-nodes/lit-boolean-asn";
 import { LitFloatAsn } from "../../compiler/syntax-nodes/lit-float-asn";
 import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
-import { LitRegExAsn } from "../../compiler/syntax-nodes/lit-regex-asn";
 import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
 import { LitTupleAsn } from "../../compiler/syntax-nodes/lit-tuple-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
@@ -61,7 +60,6 @@ import {
   LitFloatContext,
   LitHexContext,
   LitIntegerContext,
-  LitRegExpContext,
   LitStringContext,
   MethodCallContext,
   MethodNameContext,
@@ -287,9 +285,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .filter((e) => e) as AstNode[];
     return new LitTupleAsn(items, this.fieldId);
   };
-
-  override visitLitRegExp = (ctx: LitRegExpContext) =>
-    new LitRegExAsn(ctx.getText(), this.fieldId, this.scope);
 
   override visitNegateLogical = (ctx: NegateLogicalContext) =>
     new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);

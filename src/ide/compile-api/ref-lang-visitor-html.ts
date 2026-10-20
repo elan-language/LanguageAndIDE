@@ -21,7 +21,6 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
-  LitRegExpContext,
   LitStringContext,
   MethodCallContext,
   MethodNameContext,
@@ -57,7 +56,6 @@ import {
   kw,
   lit,
   method,
-  regex,
   type,
   visitTypeHelper,
 } from "./parser-helpers";
@@ -213,9 +211,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   override visitThisInstance = (ctx: ThisInstanceContext) =>
     `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
-
-  override visitLitRegExp = (ctx: LitRegExpContext) =>
-    this.visitChildren(ctx) ? regex(this.visitChildren(ctx)!) : "";
 
   override visitThisAssignable = (ctx: ThisAssignableContext) =>
     `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;

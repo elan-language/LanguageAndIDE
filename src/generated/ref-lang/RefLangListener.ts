@@ -73,7 +73,6 @@ import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
-import { LitRegExpContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { ExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
@@ -837,16 +836,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitEnumValue?: (ctx: EnumValueContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.litRegExp`.
-   * @param ctx the parse tree
-   */
-  enterLitRegExp?: (ctx: LitRegExpContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.litRegExp`.
-   * @param ctx the parse tree
-   */
-  exitLitRegExp?: (ctx: LitRegExpContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.index`.
    * @param ctx the parse tree

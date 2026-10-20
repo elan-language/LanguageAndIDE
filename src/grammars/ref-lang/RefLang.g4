@@ -210,7 +210,6 @@ litValue:
     | litString
     | interpolatedString
     | enumValue
-    | litRegExp
 ;
 litBoolean: TRUE | FALSE;
 litInt:
@@ -223,7 +222,6 @@ litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING;
 interpolatedString: INTERPOLATED_STRING;
 enumValue: typeName DOT identifierUse;
-litRegExp: LITERAL_REGEXP;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 

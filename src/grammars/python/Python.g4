@@ -230,7 +230,6 @@ litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING | INTERPOLATED_STRING;
 enumValue: typeName DOT identifierUse;
-litRegExp: LITERAL_REGEXP; // TODO see #3565
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
