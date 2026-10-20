@@ -72,6 +72,7 @@ import {
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 
 export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   constructor(
@@ -300,13 +301,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
     const indices = ctx.index().map((idx) => this.visit(idx)!);
 
-    return new AssignableAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
+    return new ProcRefAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
     const name = this.visit(ctx.methodName())!;
-    return new AssignableAsn(
+    return new ProcRefAsn(
       name,
       false,
       thisNode as unknown as AstQualifierNode,
@@ -319,7 +320,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
     const name = this.visit(ctx.methodName())!;
-    return new AssignableAsn(
+    return new ProcRefAsn(
       name,
       false,
       node as unknown as AstQualifierNode,
