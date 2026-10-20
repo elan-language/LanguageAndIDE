@@ -27,7 +27,6 @@ import { IndexAsn } from "./index-asn";
 export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
     public readonly idNode: AstNode,
-    public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
     public indices: AstNode[],
     public readonly fieldId: string,

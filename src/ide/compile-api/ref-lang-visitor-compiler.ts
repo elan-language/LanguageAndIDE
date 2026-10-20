@@ -99,7 +99,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitSimpleAssignable = (ctx: SimpleAssignableContext) =>
     new AssignableAsn(
       this.visit(ctx.identifierUse())!,
-      false,
       EmptyAsn.Instance,
       [],
       this.fieldId,
@@ -111,7 +110,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const id = this.visit(ctx.identifierUse())!;
     return new AssignableAsn(
       id,
-      true,
       thisAsn as unknown as AstQualifierNode,
       [],
       this.fieldId,
@@ -351,7 +349,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const id = this.visit(ctx.identifierUse())!;
     const indices = ctx.index().map((idx) => this.visit(idx)!);
 
-    return new ProcRefAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
+    return new ProcRefAsn(id, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
@@ -359,7 +357,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const name = this.visit(ctx.methodName())!;
     return new ProcRefAsn(
       name,
-      false,
       thisNode as unknown as AstQualifierNode,
       [],
       this.fieldId,
@@ -370,14 +367,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
     const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(
-      name,
-      false,
-      node as unknown as AstQualifierNode,
-      [],
-      this.fieldId,
-      this.scope,
-    );
+    return new ProcRefAsn(name, node as unknown as AstQualifierNode, [], this.fieldId, this.scope);
   };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
