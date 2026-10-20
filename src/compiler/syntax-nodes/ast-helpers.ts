@@ -34,21 +34,21 @@ import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ChainedAsn } from "../compiler-interfaces/chained-asn";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
-import { BooleanTypeAsn } from "./boolean-type-asn";
+import { BoolTypeNameAsn } from "./bool-type-name-asn";
 import { ConstructorMemberAsn } from "./class-members/constructor-member-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
-import { FloatTypeAsn } from "./float-type-asn";
+import { FloatTypeNameAsn } from "./float-type-name-asn";
 import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
 import { ConstantAsn } from "./globals/constant-asn";
 import { IndexAsn } from "./index-asn";
-import { IntTypeAsn } from "./int-type-asn";
-import { ListTypeAsn } from "./list-type-asn";
+import { IntTypeNameAsn } from "./int-type-name-asn";
+import { ListTypeNameAsn } from "./list-type-name-asn";
 import { OperationSymbol } from "./operation-symbol";
 import { QualifierAsn } from "./qualifier-asn";
-import { StringTypeAsn } from "./string-type-asn";
+import { StringTypeNameAsn } from "./string-type-name-asn";
 import { TypeNameAsn } from "./type-name-asn";
 
 // interface type guards
@@ -540,15 +540,15 @@ export function getSuperClasses(cf: ClassAsn) {
 export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
   switch (name) {
     case l.INT_NAME:
-      return new IntTypeAsn(l, fieldId);
+      return new IntTypeNameAsn(l, fieldId);
     case l.FLOAT_NAME:
-      return new FloatTypeAsn(l, fieldId);
+      return new FloatTypeNameAsn(l, fieldId);
     case l.STRING_NAME:
-      return new StringTypeAsn(l, fieldId);
+      return new StringTypeNameAsn(l, fieldId);
     case l.BOOL_NAME:
-      return new BooleanTypeAsn(l, fieldId);
+      return new BoolTypeNameAsn(l, fieldId);
     case l.LIST_NAME:
-      return new ListTypeAsn(l, fieldId, scope);
+      return new ListTypeNameAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
   }
@@ -563,15 +563,15 @@ export function getTypeNameById(
 ): AstNode {
   switch (tokenId) {
     case RefLangLexer.INT_NAME:
-      return new IntTypeAsn(l, fieldId);
+      return new IntTypeNameAsn(l, fieldId);
     case RefLangLexer.FLOAT_NAME:
-      return new FloatTypeAsn(l, fieldId);
+      return new FloatTypeNameAsn(l, fieldId);
     case RefLangLexer.STRING_NAME:
-      return new StringTypeAsn(l, fieldId);
+      return new StringTypeNameAsn(l, fieldId);
     case RefLangLexer.BOOL_NAME:
-      return new BooleanTypeAsn(l, fieldId);
+      return new BoolTypeNameAsn(l, fieldId);
     case RefLangLexer.LIST_NAME:
-      return new ListTypeAsn(l, fieldId, scope);
+      return new ListTypeNameAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
   }

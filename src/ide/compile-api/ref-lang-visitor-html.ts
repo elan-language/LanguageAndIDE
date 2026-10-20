@@ -70,7 +70,13 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     `(${getFilteredTypes(this, ctx).join(", ")})`;
 
-  override visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  // typeName
+  override visitIntTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitFloatTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitBoolTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitStringTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitListTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitUdtTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}&lt;${kw("of")} ${getFilteredTypes(this, ctx).join(", ")}&gt;`;

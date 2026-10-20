@@ -1,14 +1,12 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { Scope } from "../compiler-interfaces/scope";
-import { getGlobalScope } from "../symbols/symbol-helpers";
+import { BooleanType } from "../symbols/boolean-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class ListTypeAsn extends AbstractAstNode implements AstNode {
+export class BoolTypeNameAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly language: Language,
     public readonly fieldId: string,
-    private readonly scope: Scope,
   ) {
     super();
   }
@@ -16,12 +14,15 @@ export class ListTypeAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return this.symbolType().languageSpecificName(this.language);
+    return BooleanType.Instance.languageSpecificName(this.language);
+  }
+
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
   }
 
   symbolType() {
-    const scope = getGlobalScope(this.scope);
-    return scope.resolveSymbol("List", true, this.scope).symbolType();
+    return BooleanType.Instance;
   }
 
   toString() {

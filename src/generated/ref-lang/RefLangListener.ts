@@ -51,7 +51,12 @@ import { IndexedAssignableContext } from "./RefLangParser.js";
 import { ThisAssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
-import { TypeNameContext } from "./RefLangParser.js";
+import { IntTypeNameContext } from "./RefLangParser.js";
+import { FloatTypeNameContext } from "./RefLangParser.js";
+import { BoolTypeNameContext } from "./RefLangParser.js";
+import { StringTypeNameContext } from "./RefLangParser.js";
+import { ListTypeNameContext } from "./RefLangParser.js";
+import { UdtTypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
 import { ArgumentContext } from "./RefLangParser.js";
@@ -595,15 +600,77 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitTestName?: (ctx: TestNameContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.typeName`.
+   * Enter a parse tree produced by the `intTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
    * @param ctx the parse tree
    */
-  enterTypeName?: (ctx: TypeNameContext) => void;
+  enterIntTypeName?: (ctx: IntTypeNameContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.typeName`.
+   * Exit a parse tree produced by the `intTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
    * @param ctx the parse tree
    */
-  exitTypeName?: (ctx: TypeNameContext) => void;
+  exitIntTypeName?: (ctx: IntTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `floatTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterFloatTypeName?: (ctx: FloatTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `floatTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitFloatTypeName?: (ctx: FloatTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `boolTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterBoolTypeName?: (ctx: BoolTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `boolTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitBoolTypeName?: (ctx: BoolTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `stringTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterStringTypeName?: (ctx: StringTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `stringTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitStringTypeName?: (ctx: StringTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `listTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `listTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `udtTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterUdtTypeName?: (ctx: UdtTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `udtTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitUdtTypeName?: (ctx: UdtTypeNameContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.constantValue`.
    * @param ctx the parse tree

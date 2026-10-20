@@ -1,9 +1,9 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { BooleanType } from "../symbols/boolean-type";
+import { StringType } from "../symbols/string-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class BooleanTypeAsn extends AbstractAstNode implements AstNode {
+export class StringTypeNameAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly language: Language,
     public readonly fieldId: string,
@@ -14,7 +14,7 @@ export class BooleanTypeAsn extends AbstractAstNode implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    return BooleanType.Instance.languageSpecificName(this.language);
+    return StringType.Instance.languageSpecificName(this.language);
   }
 
   compileToEmptyObjectCode(): string {
@@ -22,7 +22,7 @@ export class BooleanTypeAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return BooleanType.Instance;
+    return StringType.Instance;
   }
 
   toString() {
