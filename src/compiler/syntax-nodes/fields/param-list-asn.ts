@@ -26,14 +26,14 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     throw new Error("Method not implemented.");
   }
 
-  parms: AstNode = EmptyAsn.Instance;
+  paramDef: AstNode = EmptyAsn.Instance;
 
   getParentScope(): Scope {
     return this.scope;
   }
 
   private getParamsAsSymbols(): ElanSymbol[] {
-    const ast = this.parms;
+    const ast = this.paramDef;
 
     if (isAstCollectionNode(ast)) {
       return ast.items
@@ -96,7 +96,7 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const parms = this.parms;
+    const parms = this.paramDef;
 
     const idNodes = this.getIdNodes(parms);
 

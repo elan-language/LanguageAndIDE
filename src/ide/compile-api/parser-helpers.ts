@@ -162,7 +162,12 @@ export function getArgs<T>(
   visitor: ParseTreeVisitor<T>,
   context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] },
 ) {
-  return context.argument()?.map((t) => visitor.visit(t)!) ?? [];
+  return (
+    (context
+      .argument()
+      ?.map((t) => visitor.visit(t))
+      .filter((a) => a) as T[]) ?? []
+  );
 }
 
 export function getExpressions<T>(

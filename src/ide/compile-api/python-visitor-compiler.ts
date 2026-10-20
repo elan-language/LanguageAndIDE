@@ -122,7 +122,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   override visitParamList = (ctx: ParamListContext) => {
     const paramDefs = getParamDefs(this, ctx);
     const paramList = new ParamListAsn(this.fieldId, this.scope);
-    paramList.parms = new CsvAsn(paramDefs, this.fieldId);
+    paramList.paramDef = new CsvAsn(paramDefs, this.fieldId);
     return paramList;
   };
 
@@ -136,7 +136,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitMethodCall = (ctx: MethodCallContext) => {
     const args = ctx.argList();
-    const argList = args ? getArgs(this, args).filter((a) => a) : [];
+    const argList = args ? getArgs(this, args) : [];
     const name = ctx.methodName().getText();
 
     return new MethodCallAsn(name, argList, this.fieldId, this.scope);
