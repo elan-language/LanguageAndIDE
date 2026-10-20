@@ -6,24 +6,30 @@ import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { TestType } from "../../symbols/test-type";
+import { isAstIdNode } from "../ast-helpers";
 import { CompoundAsn } from "../compound-asn";
 
 export class TestAsn extends CompoundAsn implements AstNode, ElanSymbol {
   constructor(
-    private readonly name: string,
+    private readonly name: AstNode,
     fieldId: string,
     scope: Scope,
   ) {
     super(fieldId, scope);
-    this.symbolId = name;
+  }
+
+  get id() {
+    return isAstIdNode(this.name) ? this.name.id : "";
   }
 
   symbolIsType: boolean = false;
 
-  symbolId: string;
+  get symbolId() {
+    return this.id;
+  }
 
   symbolType(): SymbolType {
-    return new TestType(this.name);
+    return new TestType(this.id);
   }
 
   get symbolScope() {
@@ -41,7 +47,7 @@ export class TestAsn extends CompoundAsn implements AstNode, ElanSymbol {
   compile(): string {
     this.compileErrors = [];
 
-    mustBeUniqueNameInScope(this.name, this.scope, this.compileErrors, this.fieldId);
+    mustBeUniqueNameInScope(this.id, this.scope, this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

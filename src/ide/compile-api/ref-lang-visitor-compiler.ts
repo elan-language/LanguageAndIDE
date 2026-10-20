@@ -65,6 +65,7 @@ import {
   ParamListContext,
   SimpleAssignableContext,
   TermContext,
+  TestNameContext,
   ThisAssignableContext,
   ThisInstanceContext,
   ThisProcRefContext,
@@ -104,26 +105,26 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  override visitThisAssignable = (ctx: ThisAssignableContext) => {
-    const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
-    const id = this.visit(ctx.identifierUse())!;
-    return new AssignableAsn(id, thisAsn, [], this.fieldId, this.scope);
-  };
+  override visitThisAssignable = (ctx: ThisAssignableContext) =>
+    new AssignableAsn(
+      this.visit(ctx.identifierUse())!,
+      new ThisInstanceAsn(this.fieldId, this.scope),
+      [],
+      this.fieldId,
+      this.scope,
+    );
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) => {
     const assignable = this.visit(ctx.assignable()) as AssignableAsn;
-    const indexArr = [];
-
-    for (const idx of assignable.indices) {
-      indexArr.push(idx);
-    }
-
-    indexArr.push(this.visit(ctx.index())!);
-
-    assignable.indices = indexArr;
-
+    assignable.indices.push(this.visit(ctx.index())!);
     return assignable;
   };
+
+  override visitMethodName = (ctx: MethodNameContext) =>
+    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  override visitTestName = (ctx: TestNameContext) =>
+    new IdentifierDefAsn(ctx.NAME_STARTING_TEST_().getText(), this.fieldId, this.scope);
 
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
@@ -150,9 +151,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
-
-  override visitMethodName = (ctx: MethodNameContext) =>
-    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitParamList = (ctx: ParamListContext) => {
     const paramDefs = getParamDefs(this, ctx);
