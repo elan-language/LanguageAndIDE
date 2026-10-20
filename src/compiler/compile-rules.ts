@@ -435,7 +435,7 @@ export function mustBePropertyAndPublic(
   location: string,
 ) {
   if (symbol instanceof PropertyAsn && symbol.private === true) {
-    compileErrors.push(new PrivateMemberCompileError(getId(symbol.name), location));
+    compileErrors.push(new PrivateMemberCompileError(getId(symbol.identifierDef), location));
   }
   if (symbol.symbolScope !== SymbolScope.member) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, "", location));

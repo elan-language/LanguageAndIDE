@@ -3,7 +3,7 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { ElanCompilerError } from "../../compiler/elan-compiler-error";
 import { AbstractMemberFunctionAsn } from "../../compiler/syntax-nodes/class-members/abstract-member-function-asn";
 import { AbstractMemberProcedureAsn } from "../../compiler/syntax-nodes/class-members/abstract-member-procedure-asn";
-import { ConstructorAsn } from "../../compiler/syntax-nodes/class-members/constructor-asn";
+import { ConstructorMemberAsn } from "../../compiler/syntax-nodes/class-members/constructor-member-asn";
 import { FunctionMethodAsn } from "../../compiler/syntax-nodes/class-members/function-method-asn";
 import { ProcedureMethodAsn } from "../../compiler/syntax-nodes/class-members/procedure-method-asn";
 import { PropertyAsn } from "../../compiler/syntax-nodes/class-members/property-asn";
@@ -21,9 +21,9 @@ import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
-import { AssertAsn } from "../../compiler/syntax-nodes/statements/assert-asn";
+import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
-import { CatchCaseAsn } from "../../compiler/syntax-nodes/statements/catch-case-asn";
+import { CatchStatementAsn } from "../../compiler/syntax-nodes/statements/catch-statement-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
 import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
@@ -342,6 +342,15 @@ export function transform(
     return commentAsn;
   }
 
+  if (node instanceof AssertStatement) {
+    const assertAsn = new AssertStatementAsn(node.getHtmlId(), scope);
+    assertAsn.breakpointStatus = node.breakpointStatus;
+    assertAsn.expected = transform(node.expected, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
+    assertAsn.actual = transform(node.actual, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
+
+    return assertAsn;
+  }
+
   if (node instanceof ReturnStatement) {
     const returnStatementAsn = new ReturnStatementAsn(node.getHtmlId(), scope);
     returnStatementAsn.breakpointStatus = node.breakpointStatus;
@@ -367,11 +376,22 @@ export function transform(
     return elseClauseAsn;
   }
 
+  if (node instanceof CatchStatement) {
+    const typeName = node.exceptionType.text;
+
+    const catchAsn = new CatchStatementAsn(typeName!, node.getHtmlId(), scope);
+    catchAsn.breakpointStatus = node.breakpointStatus;
+
+    catchAsn.identifierDef =
+      transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
+    return catchAsn;
+  }
+
   if (node instanceof Constructor) {
-    const constructorAsn = new ConstructorAsn(node.getHtmlId(), scope);
+    const constructorAsn = new ConstructorMemberAsn(node.getHtmlId(), scope);
     constructorAsn.breakpointStatus = node.breakpointStatus;
 
-    constructorAsn.params =
+    constructorAsn.paramList =
       transform(node.params, node.getHtmlId(), constructorAsn) ?? EmptyAsn.Instance;
 
     constructorAsn.children = node
@@ -386,34 +406,12 @@ export function transform(
     const propertyAsn = new PropertyAsn(node.getHtmlId(), scope);
     propertyAsn.breakpointStatus = node.breakpointStatus;
 
-    propertyAsn.name = transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
+    propertyAsn.identifierDef =
+      transform(node.name, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.type = transform(node.type, node.getHtmlId(), propertyAsn) ?? EmptyAsn.Instance;
     propertyAsn.private = node.isPrivate;
 
     return propertyAsn;
-  }
-
-  if (node instanceof AbstractFunction) {
-    const functionAsn = new AbstractMemberFunctionAsn(node.getHtmlId(), scope);
-    functionAsn.breakpointStatus = node.breakpointStatus;
-
-    functionAsn.name = transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.params = transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-    functionAsn.returnType =
-      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
-
-    return functionAsn;
-  }
-
-  if (node instanceof AbstractProcedure) {
-    const procedureAsn = new AbstractMemberProcedureAsn(node.getHtmlId(), scope);
-    procedureAsn.breakpointStatus = node.breakpointStatus;
-
-    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-    procedureAsn.params =
-      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
-
-    return procedureAsn;
   }
 
   if (node instanceof FunctionMethod) {
@@ -454,24 +452,32 @@ export function transform(
     return procedureAsn;
   }
 
-  if (node instanceof CatchStatement) {
-    const type = node.exceptionType.text;
+  if (node instanceof AbstractFunction) {
+    const functionAsn = new AbstractMemberFunctionAsn(node.getHtmlId(), scope);
+    functionAsn.breakpointStatus = node.breakpointStatus;
 
-    const catchAsn = new CatchCaseAsn(type!, node.getHtmlId(), scope);
-    catchAsn.breakpointStatus = node.breakpointStatus;
+    functionAsn.methodName =
+      transform(node.name, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.paramList =
+      transform(node.params, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
+    functionAsn.type =
+      transform(node.returnType, node.getHtmlId(), functionAsn) ?? EmptyAsn.Instance;
 
-    catchAsn.variable = transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
-    return catchAsn;
+    return functionAsn;
   }
 
-  if (node instanceof AssertStatement) {
-    const assertAsn = new AssertAsn(node.getHtmlId(), scope);
-    assertAsn.breakpointStatus = node.breakpointStatus;
-    assertAsn.expected = transform(node.expected, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
-    assertAsn.actual = transform(node.actual, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
+  if (node instanceof AbstractProcedure) {
+    const procedureAsn = new AbstractMemberProcedureAsn(node.getHtmlId(), scope);
+    procedureAsn.breakpointStatus = node.breakpointStatus;
 
-    return assertAsn;
+    procedureAsn.name = transform(node.name, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+    procedureAsn.paramList =
+      transform(node.params, node.getHtmlId(), procedureAsn) ?? EmptyAsn.Instance;
+
+    return procedureAsn;
   }
+
+  // End Frames
 
   if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.type) {
     const ctx = node.context;

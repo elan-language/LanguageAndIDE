@@ -35,7 +35,7 @@ import { ChainedAsn } from "../compiler-interfaces/chained-asn";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BooleanTypeAsn } from "./boolean-type-asn";
-import { ConstructorAsn } from "./class-members/constructor-asn";
+import { ConstructorMemberAsn } from "./class-members/constructor-member-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
@@ -91,8 +91,8 @@ export function isAstChainedNode(n?: AstNode): n is ChainedAsn {
 
 // type type-guards
 
-export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorAsn {
-  return n instanceof ConstructorAsn;
+export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorMemberAsn {
+  return n instanceof ConstructorMemberAsn;
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
@@ -459,7 +459,7 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
   if (scope instanceof AbstractFunctionAsn) {
     return true;
   }
-  if (scope instanceof ConstructorAsn) {
+  if (scope instanceof ConstructorMemberAsn) {
     return true;
   }
   if (scope instanceof FileAsn) {

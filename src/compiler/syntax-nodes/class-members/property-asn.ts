@@ -24,7 +24,7 @@ export class PropertyAsn extends BreakpointAsn implements Property, Member {
 
   symbolIsType: boolean = false;
 
-  name: AstNode = EmptyAsn.Instance;
+  identifierDef: AstNode = EmptyAsn.Instance;
   type: AstNode = EmptyAsn.Instance;
 
   getClass(): Class {
@@ -38,7 +38,7 @@ export class PropertyAsn extends BreakpointAsn implements Property, Member {
 
   compile(): string {
     this.compileErrors = [];
-    const pName = this.name.compile();
+    const pName = this.identifierDef.compile();
     const st = this.type.symbolType();
 
     mustBeUniqueNameInScope(pName, getClassScope(this), this.compileErrors, this.fieldId);
@@ -61,7 +61,7 @@ ${this.indent()}}\r\n`;
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.identifierDef);
   }
 
   symbolType() {
@@ -75,7 +75,7 @@ ${this.indent()}}\r\n`;
   public initCode() {
     const tst = this.symbolType();
     if (!this.isGlobalClass(tst)) {
-      return `["${getId(this.name)}", ${tst.initialValue}]`;
+      return `["${getId(this.identifierDef)}", ${tst.initialValue}]`;
     }
     return "";
   }

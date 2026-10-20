@@ -132,7 +132,7 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
       seenClasses.push(className);
 
       for (const s of childSymbols) {
-        typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType(), [
+        typeDict["Properties"][getId(s.identifierDef)] = this.getClassTypeMap(s.symbolType(), [
           ...seenClasses,
         ]);
       }

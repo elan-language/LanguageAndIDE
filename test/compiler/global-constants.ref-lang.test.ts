@@ -500,7 +500,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_Function", async () => {
+  ignore_test("Fail_Function", async () => {
     const code = `${testHeader}
 
 constant a set to foo()

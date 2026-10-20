@@ -8,7 +8,7 @@ import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CatchCaseAsn extends BreakpointAsn {
+export class CatchStatementAsn extends BreakpointAsn {
   constructor(
     private readonly type: string,
     fieldId: string,
@@ -17,7 +17,7 @@ export class CatchCaseAsn extends BreakpointAsn {
     super(fieldId, scope);
   }
 
-  variable: AstNode = EmptyAsn.Instance;
+  identifierDef: AstNode = EmptyAsn.Instance;
 
   getCurrentScope(): Scope {
     return this.compileScope ?? this;
@@ -33,7 +33,7 @@ export class CatchCaseAsn extends BreakpointAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}if (${this.variable.compile()} instanceof ${scope}${type.symbolId}) {
+    return `${this.indent()}if (${this.identifierDef.compile()} instanceof ${scope}${type.symbolId}) {
 ${compileNodes(this.compileChildren)}
 ${this.indent()}}`;
   }

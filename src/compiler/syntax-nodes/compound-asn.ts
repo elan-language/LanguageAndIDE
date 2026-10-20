@@ -6,7 +6,7 @@ import { handleDeconstruction, isSymbol, match, symbolMatches } from "../symbols
 import { SymbolScope } from "../symbols/symbol-scope";
 import { compileNodes, isAstNode } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
-import { AssertAsn } from "./statements/assert-asn";
+import { AssertStatementAsn } from "./statements/assert-statement-asn";
 
 export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
   constructor(fieldId: string, scope: Scope) {
@@ -65,7 +65,7 @@ export class CompoundAsn extends BreakpointAsn implements AstNode, Scope {
 
   getAsserts() {
     const children = this.children;
-    let asserts = this.children.filter((c) => c instanceof AssertAsn);
+    let asserts = this.children.filter((c) => c instanceof AssertStatementAsn);
 
     for (const f of children.filter((c) => c instanceof CompoundAsn)) {
       asserts = asserts.concat(f.getAsserts());

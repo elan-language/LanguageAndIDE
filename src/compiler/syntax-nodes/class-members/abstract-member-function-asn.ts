@@ -22,9 +22,9 @@ export class AbstractMemberFunctionAsn extends BreakpointAsn implements Member, 
 
   symbolIsType: boolean = false;
 
-  name: AstNode = EmptyAsn.Instance;
-  params: AstNode = EmptyAsn.Instance;
-  returnType: AstNode = EmptyAsn.Instance;
+  methodName: AstNode = EmptyAsn.Instance;
+  paramList: AstNode = EmptyAsn.Instance;
+  type: AstNode = EmptyAsn.Instance;
 
   getClass(): Class {
     return this.getParentScope() as Class;
@@ -37,16 +37,16 @@ export class AbstractMemberFunctionAsn extends BreakpointAsn implements Member, 
   public override compile(): string {
     this.compileErrors = [];
 
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
-    this.returnType.compile();
+    this.type.compile();
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     if (name !== "toString") {
-      return `${this.indent()}async ${name}(${this.params.compile()}) {\r
-${this.indent()}${this.indent()}return ${this.returnType.compile()};\r
+      return `${this.indent()}async ${name}(${this.paramList.compile()}) {\r
+${this.indent()}${this.indent()}return ${this.type.compile()};\r
 ${this.indent()}}\r
 `;
     }
@@ -54,13 +54,13 @@ ${this.indent()}}\r
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.methodName);
   }
 
   symbolType() {
     const [pn, pt] =
-      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
-    const rt = this.returnType.symbolType();
+      this.paramList instanceof ParamListAsn ? this.paramList.symbolNamesAndTypes() : [[], []];
+    const rt = this.type.symbolType();
     return new FunctionType(false, pn, pt, rt, false, true, true);
   }
 

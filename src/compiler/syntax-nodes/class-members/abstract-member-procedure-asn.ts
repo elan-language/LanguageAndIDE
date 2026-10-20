@@ -23,7 +23,7 @@ export class AbstractMemberProcedureAsn extends BreakpointAsn implements Member,
   symbolIsType: boolean = false;
 
   name: AstNode = EmptyAsn.Instance;
-  params: AstNode = EmptyAsn.Instance;
+  paramList: AstNode = EmptyAsn.Instance;
 
   getClass(): Class {
     return this.getParentScope() as Class;
@@ -41,7 +41,7 @@ export class AbstractMemberProcedureAsn extends BreakpointAsn implements Member,
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}${name}(${this.params.compile()}) {\r
+    return `${this.indent()}${name}(${this.paramList.compile()}) {\r
 ${this.indent()}}\r
 `;
   }
@@ -52,7 +52,7 @@ ${this.indent()}}\r
 
   symbolType() {
     const [pn, pt] =
-      this.params instanceof ParamListAsn ? this.params.symbolNamesAndTypes() : [[], []];
+      this.paramList instanceof ParamListAsn ? this.paramList.symbolNamesAndTypes() : [[], []];
     return new ProcedureType(pn, pt, false, true);
   }
 
