@@ -130,7 +130,9 @@ LITERAL_INTEGER: [0-9][0-9]*;
 LITERAL_FLOAT: [0-9][0-9]* DOT [0-9]+ ExponentPart?;
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
 INTERPOLATED_STRING: 'f"' (~["\u0085] | CommonCharacter)* '"';
-LITERAL_REGEXP:  LITERAL_STRING; //In Python they are the same thing
+LITERAL_REGEXP:
+    LITERAL_STRING
+; //In Python they are the same thing
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;

@@ -96,7 +96,9 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   override visitCommentText = (ctx: CommentTextContext) => ctx.getText();
 
-  override visitLitInt = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitInteger = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitBinary = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitHex = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
   override visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 

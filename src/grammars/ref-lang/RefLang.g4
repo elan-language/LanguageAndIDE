@@ -1,3 +1,6 @@
+
+
+
 grammar RefLang;
 import RefLang_Lexer;
 
@@ -25,15 +28,9 @@ function:
         FUNCTION NL
 ;
 
-test:
-    GHOSTED? TEST testName NL testStatement* END TEST NL
-;
+test: GHOSTED? TEST testName NL testStatement* END TEST NL;
 
-testStatement: 
-        assert
-        | variableDefinition
-        | comment
-;
+testStatement: assert | variableDefinition | comment;
 
 procedure:
     GHOSTED? PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END
@@ -46,30 +43,33 @@ constant:
 enum: GHOSTED? ENUM typeName identifierList NL;
 
 concreteClass:
-    GHOSTED? CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL concreteClassMember* END CLASS NL
+    GHOSTED? CLASS classTypeName = typeName (
+        INHERITS inheritsTypeName = typeName
+    )? NL concreteClassMember* END CLASS NL
 ;
 
-    concreteClassMember:
-            constructorMember
-            | property
-            | functionMethod
-            | procedureMethod
-            | comment
-    ;
+concreteClassMember:
+    constructorMember
+    | property
+    | functionMethod
+    | procedureMethod
+    | comment
+;
 
 abstractClass:
-    GHOSTED? ABSTRACT CLASS classTypeName=typeName (INHERITS inheritsTypeName=typeName)? NL abstractClassMember* END CLASS NL
+    GHOSTED? ABSTRACT CLASS classTypeName = typeName (
+        INHERITS inheritsTypeName = typeName
+    )? NL abstractClassMember* END CLASS NL
 ;
 
-    abstractClassMember:
-        property
-        | functionMethod
-        | procedureMethod
-        | abstractFunction
-        | abstractProcedure
-        | comment
-    ;
-
+abstractClassMember:
+    property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+    | comment
+;
 
 comment: commentText NL;
 
@@ -96,7 +96,7 @@ variableDefinition:
 assignment: GHOSTED? ASSIGN assignable TO expression NL;
 
 ifStatement:
-    GHOSTED? IF condition=expression THEN NL (
+    GHOSTED? IF condition = expression THEN NL (
         elseIfClause
         | elseClause
         | ordinaryStatement
@@ -104,7 +104,7 @@ ifStatement:
 ;
 
 whileLoop:
-    GHOSTED? WHILE condition=expression NL ordinaryStatement* END WHILE NL
+    GHOSTED? WHILE condition = expression NL ordinaryStatement* END WHILE NL
 ;
 
 forLoop:
@@ -112,29 +112,25 @@ forLoop:
 ;
 
 //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall. Then delete following three rules
-procedureCall:   
+procedureCall:
     GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
 
-    procRef: 
-        methodName
-        | thisProcRef
-        | instanceProcRef
-    ;
-    thisProcRef: THIS_INSTANCE DOT methodName;
-    instanceProcRef: identifierWithOptIndexes DOT methodName;
-    identifierWithOptIndexes: identifierUse index*;
+procRef: methodName | thisProcRef | instanceProcRef;
+thisProcRef: THIS_INSTANCE DOT methodName;
+instanceProcRef: identifierWithOptIndexes DOT methodName;
+identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
     GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
 ;
-throwStatement:
-    GHOSTED? THROW typeName errorMessage NL
-; 
+throwStatement: GHOSTED? THROW typeName errorMessage NL;
 
-errorMessage: litString | identifierUse ;
+errorMessage: litString | identifierUse;
 
-assert: GHOSTED? ASSERT assertActual EVALUATES TO assertExpected NL;
+assert:
+    GHOSTED? ASSERT assertActual EVALUATES TO assertExpected NL
+;
 
 returnStatement: RETURN expression NL; // not ghostable
 elseIfClause: GHOSTED? ELIF expression THEN NL;
@@ -143,8 +139,8 @@ catchStatement: GHOSTED? CATCH identifierDef AS typeName NL;
 
 // Members
 constructorMember:
-    GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END
-        CONSTRUCTOR NL
+    GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END CONSTRUCTOR
+        NL
 ;
 
 property: GHOSTED? PRIVATE? PROPERTY identifierDef AS type NL;
@@ -171,28 +167,24 @@ abstractProcedure:
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-assignable: identifierUse  #simpleAssignable
-            | THIS_INSTANCE DOT identifierUse #thisAssignable
-            | assignable index #indexedAssignable
-            ;
+assignable:
+    identifierUse                     # simpleAssignable
+    | THIS_INSTANCE DOT identifierUse # thisAssignable
+    | assignable index                # indexedAssignable
+;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
 typeName:
-    INT_NAME #intTypeName
-    | FLOAT_NAME #floatTypeName
-    | BOOL_NAME #boolTypeName
-    | STRING_NAME #stringTypeName
-    | LIST_NAME #listTypeName
-    | NAME_STARTING_UC #udtTypeName
+    INT_NAME           # intTypeName
+    | FLOAT_NAME       # floatTypeName
+    | BOOL_NAME        # boolTypeName
+    | STRING_NAME      # stringTypeName
+    | LIST_NAME        # listTypeName
+    | NAME_STARTING_UC # udtTypeName
 ;
 
-constantValue: 
-    litBoolean
-    | litInt
-    | litFloat
-    | litString
-    ;
+constantValue: litBoolean | litInt | litFloat | litString;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -203,7 +195,13 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
-assertExpected: litValue | list | dictionary | unaryExpression | tuple;
+assertExpected:
+    litValue
+    | list
+    | dictionary
+    | unaryExpression
+    | tuple
+;
 // END Fields
 
 // START SubNodes
@@ -217,7 +215,12 @@ litValue:
     | litRegExp
 ;
 litBoolean: TRUE | FALSE;
-litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
+litInt:
+    LITERAL_INTEGER  # litInteger
+    | LITERAL_BINARY # litBinary
+    | LITERAL_HEX    # litHex
+;
+
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING;
 interpolatedString: INTERPOLATED_STRING;
@@ -235,7 +238,7 @@ expression:
 ;
 
 term:
-    thisInstance 
+    thisInstance
     | bracketedExpression
     | litValue
     | list
@@ -256,7 +259,7 @@ negateNumeric: MINUS term;
 negateLogical: NOT term;
 
 binaryExpression:
-    left=term binaryOperator right=expression
+    left = term binaryOperator right = expression
 ; // ? expression binaryOperator expression ?
 
 list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
@@ -264,8 +267,8 @@ list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
 tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 
 dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
-    kvpList: kvp (COMMA kvp)*;
-    kvp: expression COLON expression;
+kvpList: kvp (COMMA kvp)*;
+kvp: expression COLON expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
@@ -296,5 +299,7 @@ typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
 
 typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
 
-lambda: LAMBDA paramList ARROW expression; // TODO should change to identiferList
+lambda:
+    LAMBDA paramList ARROW expression
+; // TODO should change to identiferList
 // END SubNodes

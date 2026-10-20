@@ -124,7 +124,11 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return `[${expr}]`;
   };
 
-  override visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitInteger = (ctx: LitIntContext) =>
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitBinary = (ctx: LitIntContext) =>
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitHex = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
   override visitLitFloat = (ctx: LitFloatContext) =>
     lit((this.visitChildren(ctx) ?? "").toLowerCase());

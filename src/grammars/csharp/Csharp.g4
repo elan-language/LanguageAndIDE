@@ -27,8 +27,7 @@ main:
 
 function:
     STATIC type methodName OPEN_BRACKET paramList? CLOSE_BRACKET OPEN_BRACE COMMENT NL (
-        ordinaryStatement
-        ordinaryStatement
+        ordinaryStatement ordinaryStatement
     )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
         CLOSE_BRACE COMMENT NL
 ;
@@ -115,22 +114,18 @@ whileLoop:
 
 //TODO: Currently use only ForEach, but should offer conventional FOR also FOREACH should be created by 'each' again
 forLoop:
-    FOREACH OPEN_BRACKET VAR identifierDef IN expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement*
-        CLOSE_BRACE COMMENT NL
+    FOREACH OPEN_BRACKET VAR identifierDef IN expression CLOSE_BRACKET OPEN_BRACE NL
+        ordinaryStatement* CLOSE_BRACE COMMENT NL
 ;
 
 procedureCall:
     //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-    procRef: 
-        methodName
-        | thisProcRef
-        | instanceProcRef
-    ;
-    thisProcRef: THIS_INSTANCE DOT methodName;
-    instanceProcRef: identifierWithOptIndexes DOT methodName;
-    identifierWithOptIndexes: identifierUse index*;
+procRef: methodName | thisProcRef | instanceProcRef;
+thisProcRef: THIS_INSTANCE DOT methodName;
+instanceProcRef: identifierWithOptIndexes DOT methodName;
+identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
     TRY OPEN_BRACE NL ordinaryStatement* catchStatement ordinaryStatement* CLOSE_BRACE COMMENT NL
@@ -139,7 +134,7 @@ tryStatement:
 throwStatement:
     THROW NEW typeName OPEN_BRACKET errorMessage CLOSE_BRACKET SEMI_COLON NL
 ;
-errorMessage: litString | identifierUse ;
+errorMessage: litString | identifierUse;
 
 //self.assertEqual(actual, expected)
 assert:
@@ -186,10 +181,11 @@ abstractProcedure:
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-assignable: identifierUse  
-            | THIS_INSTANCE DOT identifierUse
-            | assignable index
-            ;
+assignable:
+    identifierUse
+    | THIS_INSTANCE DOT identifierUse
+    | assignable index
+;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
@@ -202,12 +198,7 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: 
-    litBoolean
-    | litInt
-    | litFloat
-    | litString
-    ;
+constantValue: litBoolean | litInt | litFloat | litString;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -218,7 +209,13 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
-assertExpected: litValue | list | dictionary | unaryExpression | tuple;
+assertExpected:
+    litValue
+    | list
+    | dictionary
+    | unaryExpression
+    | tuple
+;
 // END Fields
 
 // START SubNodes
@@ -249,7 +246,7 @@ expression:
 ;
 
 term:
-    thisInstance 
+    thisInstance
     | bracketedExpression
     | litValue
     | list
@@ -267,18 +264,15 @@ bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
 unaryExpression: negateNumeric | negateLogical;
 negateNumeric: MINUS term;
 negateLogical: NOT term;
-binaryExpression:
-     left=term binaryOperator right=expression
-;
-
+binaryExpression: left = term binaryOperator right = expression;
 
 list: OPEN_BRACE expression (COMMA expression)* CLOSE_BRACE;
 tuple:
     OPEN_BRACKET expression COMMA expression (COMMA expression)* CLOSE_BRACKET
 ;
 dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
-    kvpList: kvp (COMMA kvp)* ;
-    kvp: OPEN_BRACE expression COLON expression CLOSE_BRACE;
+kvpList: kvp (COMMA kvp)*;
+kvp: OPEN_BRACE expression COLON expression CLOSE_BRACE;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
@@ -304,9 +298,7 @@ paramDef: type identifierDef;
 
 typeGeneric: typeName LT type (COMMA type)* GT;
 
-typeFunc:
-    FUNC_NAME LT type (COMMA type)* ARROW type GT
-;
+typeFunc: FUNC_NAME LT type (COMMA type)* ARROW type GT;
 
 typeTuple:
     TUPLE OPEN_SQ_BRACKET type (COMMA type)+ CLOSE_SQ_BRACKET

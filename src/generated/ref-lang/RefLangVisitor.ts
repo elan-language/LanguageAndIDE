@@ -67,7 +67,9 @@ import { AssertActualContext } from "./RefLangParser.js";
 import { AssertExpectedContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
-import { LitIntContext } from "./RefLangParser.js";
+import { LitIntegerContext } from "./RefLangParser.js";
+import { LitBinaryContext } from "./RefLangParser.js";
+import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
@@ -505,11 +507,26 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitBoolean?: (ctx: LitBooleanContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.litInt`.
+   * Visit a parse tree produced by the `litInteger`
+   * labeled alternative in `RefLangParser.litInt`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitInt?: (ctx: LitIntContext) => Result;
+  visitLitInteger?: (ctx: LitIntegerContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBinary`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBinary?: (ctx: LitBinaryContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litHex`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitHex?: (ctx: LitHexContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.litFloat`.
    * @param ctx the parse tree

@@ -56,9 +56,11 @@ import {
   KvpContext,
   LambdaContext,
   ListContext,
+  LitBinaryContext,
   LitBooleanContext,
   LitFloatContext,
-  LitIntContext,
+  LitHexContext,
+  LitIntegerContext,
   LitRegExpContext,
   LitStringContext,
   MethodCallContext,
@@ -75,7 +77,6 @@ import {
   ThisInstanceContext,
   ThisProcRefContext,
   TupleContext,
-  TypeContext,
   TypeFuncContext,
   TypeGenericContext,
   TypeNameContext,
@@ -83,7 +84,7 @@ import {
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
-import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
+import { getArgs, getParamDefs, getTypes } from "./parser-helpers";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -135,14 +136,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   // typeName
   override visitIntTypeName = (_ctx: TypeNameContext) =>
     new IntTypeNameAsn(this.language, this.fieldId);
+
   override visitFloatTypeName = (_ctx: TypeNameContext) =>
     new FloatTypeNameAsn(this.language, this.fieldId);
+
   override visitBoolTypeName = (_ctx: TypeNameContext) =>
     new BoolTypeNameAsn(this.language, this.fieldId);
+
   override visitStringTypeName = (_ctx: TypeNameContext) =>
     new StringTypeNameAsn(this.language, this.fieldId);
+
   override visitListTypeName = (_ctx: TypeNameContext) =>
     new ListTypeNameAsn(this.language, this.fieldId, this.scope);
+
   override visitUdtTypeName = (ctx: TypeNameContext) =>
     new TypeNameAsn(ctx.getText(), this.fieldId, this.scope);
 
@@ -151,26 +157,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitLitBoolean = (ctx: LitBooleanContext) =>
     new LitBooleanAsn(ctx.TRUE() !== null, this.fieldId);
 
-  override visitLitInt = (ctx: LitIntContext) => {
-    const binary = ctx.LITERAL_BINARY();
-    const hex = ctx.LITERAL_HEX();
-    const int = ctx.LITERAL_INTEGER();
+  override visitLitInteger = (ctx: LitIntegerContext) =>
+    new LitIntAsn(ctx.LITERAL_INTEGER().getText(), false, false, this.fieldId);
 
-    const isBinary = binary !== null;
-    const isHex = hex !== null;
+  override visitLitBinary = (ctx: LitBinaryContext) =>
+    new LitIntAsn(ctx.LITERAL_BINARY().getText().replace("0b", ""), true, false, this.fieldId);
 
-    let value = (hex ?? binary ?? int!).getText();
-
-    if (isBinary) {
-      value = value.replace("0b", "");
-    }
-
-    if (isHex) {
-      value = value.replace("0x", "");
-    }
-
-    return new LitIntAsn(value, isBinary, isHex, this.fieldId);
-  };
+  override visitLitHex = (ctx: LitHexContext) =>
+    new LitIntAsn(ctx.LITERAL_HEX().getText().replace("0x", ""), false, true, this.fieldId);
 
   override visitLitFloat = (ctx: LitFloatContext) => new LitFloatAsn(ctx.getText(), this.fieldId);
 
@@ -187,6 +181,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
   };
 
+  // type: typeTuple | typeName | typeGeneric | typeFunc;
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -206,12 +201,17 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  // type: typeTuple | typeName | typeGeneric | typeFunc;
-  override visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
+  override visitEnumValue = (ctx: EnumValueContext) =>
+    new EnumValueAsn(
+      this.visit(ctx.identifierUse())!,
+      new EnumType(ctx.typeName().getText()),
+      this.fieldId,
+      this.scope,
+    );
 
   override visitParamDef = (ctx: ParamDefContext) =>
     new ParamDefAsn(
-      ctx.identifierDef().NAME_STARTING_LC().getText(),
+      this.visit(ctx.identifierDef())!,
       this.visit(ctx.type())!,
       this.fieldId,
       this.scope,
@@ -290,14 +290,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitLitRegExp = (ctx: LitRegExpContext) =>
     new LitRegExAsn(ctx.getText(), this.fieldId, this.scope);
-
-  override visitEnumValue = (ctx: EnumValueContext) =>
-    new EnumValueAsn(
-      ctx.identifierUse().getText(),
-      new EnumType(ctx.typeName().getText()),
-      this.fieldId,
-      this.scope,
-    );
 
   override visitNegateLogical = (ctx: NegateLogicalContext) =>
     new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);

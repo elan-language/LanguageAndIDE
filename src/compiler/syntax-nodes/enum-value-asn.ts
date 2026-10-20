@@ -6,15 +6,20 @@ import { NullScope } from "../symbols/null-scope";
 import { getGlobalScope, isScope } from "../symbols/symbol-helpers";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode } from "./ast-helpers";
 
 export class EnumValueAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly value: string,
+    private readonly idNode: AstNode,
     private readonly type: EnumType,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
+  }
+
+  get value() {
+    return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
   compile(): string {

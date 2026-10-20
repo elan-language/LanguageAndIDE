@@ -1,3 +1,6 @@
+
+
+
 grammar Python;
 import Python_Lexer;
 
@@ -17,15 +20,14 @@ global:
 ;
 
 main:
-    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* COMMENT
-        NL
+    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement
+        * COMMENT NL
 ;
 
 function:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON FUNCTION_ANNOTATION NL (
-        ordinaryStatement
-    )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement
-        COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
+        FUNCTION_ANNOTATION NL (ordinaryStatement)* /* statements with side-effects prevented by editor and/or compiler */
+        returnStatement COMMENT NL
 ;
 
 test:
@@ -37,8 +39,8 @@ test:
 ;
 
 procedure:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON PROCECDURE_ANNOTATION NL
-        ordinaryStatement* COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
+        PROCECDURE_ANNOTATION NL ordinaryStatement* COMMENT NL
 ;
 
 constant:
@@ -46,12 +48,13 @@ constant:
 ;
 
 enum:
-    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifierList NL
-        COMMENT
+    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifierList
+        NL COMMENT
 ;
 
 concreteClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION NL (
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION
+        NL (
         constructorMember
         | property
         | functionMethod
@@ -61,7 +64,10 @@ concreteClass:
 ;
 
 abstractClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName | ABC CLOSE_BRACKET) ABSTRACT_CLASS_ANNOTATION NL (
+    GHOSTED? CLASS typeName (
+        OPEN_BRACKET typeName
+        | ABC CLOSE_BRACKET
+    ) ABSTRACT_CLASS_ANNOTATION NL (
         property
         | functionMethod
         | procedureMethod
@@ -116,14 +122,10 @@ procedureCall:
     //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
     GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
 ;
-    procRef: 
-        methodName
-        | thisProcRef
-        | instanceProcRef
-    ;
-    thisProcRef: THIS_INSTANCE DOT methodName;
-    instanceProcRef: identifierWithOptIndexes DOT methodName;
-    identifierWithOptIndexes: identifierUse index*;
+procRef: methodName | thisProcRef | instanceProcRef;
+thisProcRef: THIS_INSTANCE DOT methodName;
+instanceProcRef: identifierWithOptIndexes DOT methodName;
+identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
     GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
@@ -132,24 +134,29 @@ tryStatement:
 throwStatement:
     GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET NL
 ;
-errorMessage: litString | identifierUse ;
+errorMessage: litString | identifierUse;
 
 assert:
-    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected CLOSE_BRACKET NL
+    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected
+        CLOSE_BRACKET NL
 ;
 
 returnStatement: RETURN expression NL; // not ghostable
-elseIfClause: GHOSTED? ELIF expression COLON ELSE_IF_ANNOTATION NL;
+elseIfClause:
+    GHOSTED? ELIF expression COLON ELSE_IF_ANNOTATION NL
+;
 elseClause: GHOSTED? ELSE COLON NL;
 catchStatement: GHOSTED? EXCEPT typeName AS identifierDef NL;
 
 // Members
 constructorMember:
-    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* COMMENT
-        NL
+    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement*
+        COMMENT NL
 ;
 
-property: GHOSTED? identifierDef COLON type PROPERTY_ANNOTATION NL;
+property:
+    GHOSTED? identifierDef COLON type PROPERTY_ANNOTATION NL
+;
 
 functionMethod:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
@@ -162,23 +169,24 @@ procedureMethod:
 ;
 
 abstractFunction:
-    GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON NL
-        PASS COMMENT NL
+    GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type
+        COLON NL PASS COMMENT NL
 ;
 
 abstractProcedure:
-    GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL
-        PASS COMMENT NL
+    GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE
+        COLON NL PASS COMMENT NL
 ;
 // END Frames
 
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-assignable: identifierUse  
-            | THIS_INSTANCE DOT identifierUse
-            | assignable index
-            ;
+assignable:
+    identifierUse
+    | THIS_INSTANCE DOT identifierUse
+    | assignable index
+;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
@@ -191,12 +199,7 @@ typeName:
     | NAME_STARTING_UC
 ;
 
-constantValue: 
-    litBoolean
-    | litInt
-    | litFloat
-    | litString
-    ;
+constantValue: litBoolean | litInt | litFloat | litString;
 
 argList: argument (COMMA argument)*;
 argument: lambda | expression;
@@ -207,7 +210,13 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
-assertExpected: litValue | list | dictionary | unaryExpression | tuple;
+assertExpected:
+    litValue
+    | list
+    | dictionary
+    | unaryExpression
+    | tuple
+;
 // END Fields
 
 // START SubNodes
@@ -222,7 +231,7 @@ litValue:
 litBoolean: TRUE | FALSE;
 litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
 litFloat: LITERAL_FLOAT;
-litString: LITERAL_STRING | INTERPOLATED_STRING ;
+litString: LITERAL_STRING | INTERPOLATED_STRING;
 enumValue: typeName DOT identifierUse;
 litRegExp: LITERAL_REGEXP; // TODO see #3565
 
@@ -233,11 +242,11 @@ expression:
     | unaryExpression
     | term
     | binaryExpression
-    | expression IF expression ( ELIF expression)* ELSE expression
+    | expression IF expression (ELIF expression)* ELSE expression
 ;
 
 term:
-    thisInstance 
+    thisInstance
     | bracketedExpression
     | litValue
     | list
@@ -256,19 +265,13 @@ unaryExpression: negateNumeric | negateLogical;
 negateNumeric: MINUS term;
 negateLogical: NOT term;
 
-binaryExpression:
-    left=term binaryOperator right=expression
-;
+binaryExpression: left = term binaryOperator right = expression;
 
-list:
-    OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET
-;
-tuple:
-    OPEN_BRACKET expressionList CLOSE_BRACKET
-;
+list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
+tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
-    kvpList: kvp (COMMA kvp)*;
-    kvp: expression COLON expression;
+kvpList: kvp (COMMA kvp)*;
+kvp: expression COLON expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
@@ -306,7 +309,9 @@ typeTuple:
     TUPLE OPEN_SQ_BRACKET type (COMMA type)+ CLOSE_SQ_BRACKET
 ;
 
-lambda: LAMBDA paramList COLON expression; // TODO should change to identiferList
+lambda:
+    LAMBDA paramList COLON expression
+; // TODO should change to identiferList
 
 interpolatedString: INTERPOLATED_STRING;
 // END SubNodes

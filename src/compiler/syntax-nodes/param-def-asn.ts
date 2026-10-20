@@ -11,12 +11,16 @@ import { isAstIdNode } from "./ast-helpers";
 
 export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
   constructor(
-    public readonly id: string,
+    public readonly idNode: AstNode,
     private readonly type: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
   symbolIsType: boolean = false;

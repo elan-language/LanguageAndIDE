@@ -123,7 +123,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitParamDef = (ctx: ParamDefContext) =>
     new ParamDefAsn(
-      ctx.identifierDef().NAME_STARTING_LC().getText(),
+      this.visit(ctx.identifierDef())!,
       this.visit(ctx.type())!,
       this.fieldId,
       this.scope,
@@ -231,7 +231,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitEnumValue = (ctx: EnumValueContext) =>
     new EnumValueAsn(
-      ctx.identifierUse().getText(),
+      this.visit(ctx.identifierUse())!,
       new EnumType(ctx.typeName().getText()),
       this.fieldId,
       this.scope,

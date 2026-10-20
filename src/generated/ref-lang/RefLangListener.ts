@@ -67,7 +67,9 @@ import { AssertActualContext } from "./RefLangParser.js";
 import { AssertExpectedContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
 import { LitBooleanContext } from "./RefLangParser.js";
-import { LitIntContext } from "./RefLangParser.js";
+import { LitIntegerContext } from "./RefLangParser.js";
+import { LitBinaryContext } from "./RefLangParser.js";
+import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
@@ -771,15 +773,41 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitBoolean?: (ctx: LitBooleanContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.litInt`.
+   * Enter a parse tree produced by the `litInteger`
+   * labeled alternative in `RefLangParser.litInt`.
    * @param ctx the parse tree
    */
-  enterLitInt?: (ctx: LitIntContext) => void;
+  enterLitInteger?: (ctx: LitIntegerContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.litInt`.
+   * Exit a parse tree produced by the `litInteger`
+   * labeled alternative in `RefLangParser.litInt`.
    * @param ctx the parse tree
    */
-  exitLitInt?: (ctx: LitIntContext) => void;
+  exitLitInteger?: (ctx: LitIntegerContext) => void;
+  /**
+   * Enter a parse tree produced by the `litBinary`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   */
+  enterLitBinary?: (ctx: LitBinaryContext) => void;
+  /**
+   * Exit a parse tree produced by the `litBinary`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   */
+  exitLitBinary?: (ctx: LitBinaryContext) => void;
+  /**
+   * Enter a parse tree produced by the `litHex`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   */
+  enterLitHex?: (ctx: LitHexContext) => void;
+  /**
+   * Exit a parse tree produced by the `litHex`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   */
+  exitLitHex?: (ctx: LitHexContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.litFloat`.
    * @param ctx the parse tree
