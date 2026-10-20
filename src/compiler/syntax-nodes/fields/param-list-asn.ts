@@ -12,11 +12,11 @@ import {
   mustNotBeSameAsMethodName,
 } from "../../compile-rules";
 import { AbstractAstNode } from "../abstract-ast-node";
-import { isAstCollectionNode, isAstIdNode } from "../ast-helpers";
-import { EmptyAsn } from "../empty-asn";
+import { isAstIdNode } from "../ast-helpers";
 
 export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
   constructor(
+    private readonly paramDefs: AstNode[],
     readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -26,27 +26,19 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     throw new Error("Method not implemented.");
   }
 
-  paramDef: AstNode = EmptyAsn.Instance;
-
   getParentScope(): Scope {
     return this.scope;
   }
 
   private getParamsAsSymbols(): ElanSymbol[] {
-    const ast = this.paramDef;
-
-    if (isAstCollectionNode(ast)) {
-      return ast.items
-        .filter((n) => isAstIdNode(n))
-        .map((n) => ({
-          symbolId: n.id,
-          symbolType: () => n.symbolType(),
-          symbolScope: n.symbolScope,
-          symbolIsType: false,
-        }));
-    }
-
-    return [];
+    return this.paramDefs
+      .filter((n) => isAstIdNode(n))
+      .map((n) => ({
+        symbolId: n.id,
+        symbolType: () => n.symbolType(),
+        symbolScope: n.symbolScope,
+        symbolIsType: false,
+      }));
   }
 
   symbolMatches(id: string, all: boolean, _initialScope: Scope): ElanSymbol[] {
@@ -85,18 +77,14 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
     mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);
   }
 
-  private getIdNodes(parms: AstNode): AstIdNode[] {
-    if (isAstCollectionNode(parms)) {
-      return parms.items.filter((n) => isAstIdNode(n));
-    }
-
-    return [];
+  private getIdNodes(parms: AstNode[]): AstIdNode[] {
+    return parms.filter((n) => isAstIdNode(n));
   }
 
   compile(): string {
     this.compileErrors = [];
 
-    const parms = this.paramDef;
+    const parms = this.paramDefs;
 
     const idNodes = this.getIdNodes(parms);
 
@@ -112,6 +100,6 @@ export class ParamListAsn extends AbstractAstNode implements Scope, AstNode {
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     }
 
-    return parms.compile();
+    return parms.map((p) => p.compile()).join(", ");
   }
 }

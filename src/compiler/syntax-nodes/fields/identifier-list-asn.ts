@@ -6,25 +6,18 @@ import { getGlobalScope } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownType } from "../../symbols/unknown-type";
 import { AbstractAstNode } from "../abstract-ast-node";
-import { isAstCollectionNode } from "../ast-helpers";
-import { EmptyAsn } from "../empty-asn";
 
 export class IdentifierListAsn extends AbstractAstNode implements AstNode {
   constructor(
+    private readonly identifierDefs: AstNode[],
     readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
   }
 
-  values: AstNode = EmptyAsn.Instance;
-
   get names() {
-    if (isAstCollectionNode(this.values)) {
-      const items = this.values.items;
-      return items.map((i) => getId(i));
-    }
-    return [];
+    return this.identifierDefs.map((i) => getId(i));
   }
 
   getSymbols(typeName: string) {
@@ -38,34 +31,28 @@ export class IdentifierListAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-    const ast = this.values;
 
-    if (isAstCollectionNode(ast)) {
-      const items = ast.items;
-      if (items.length > 0) {
-        const ids = items.map((i) => i.compile());
+    if (this.identifierDefs.length > 0) {
+      const ids = this.identifierDefs.map((i) => i.compile());
 
-        for (const id of ids) {
-          mustNotBeKeyword(id, this.compileErrors, this.fieldId);
+      for (const id of ids) {
+        mustNotBeKeyword(id, this.compileErrors, this.fieldId);
 
-          if (ids.indexOf(id) !== ids.lastIndexOf(id)) {
-            mustBeUniqueValueInScope(id, this.compileErrors, this.fieldId);
-          }
+        if (ids.indexOf(id) !== ids.lastIndexOf(id)) {
+          mustBeUniqueValueInScope(id, this.compileErrors, this.fieldId);
         }
-
-        const def = `_default : "${ids[0]}", `;
-
-        const itStr = ids.map((n) => `${n} : "${n}"`).join(", ");
-
-        getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
-
-        return `${def}${itStr}`;
       }
 
-      return `_default : ""`;
+      const def = `_default : "${ids[0]}", `;
+
+      const itStr = ids.map((n) => `${n} : "${n}"`).join(", ");
+
+      getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+      return `${def}${itStr}`;
     }
 
-    return "";
+    return `_default : ""`;
   }
 
   symbolType() {
