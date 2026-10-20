@@ -1,6 +1,5 @@
 import { TerminalNode } from "antlr4ng";
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
@@ -30,6 +29,7 @@ import { LitTupleAsn } from "../../compiler/syntax-nodes/lit-tuple-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
+import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
@@ -77,7 +77,6 @@ import {
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
 import { Language } from "../frames/frame-interfaces/language";
 import { getArgs, getParamDefs, getTypes, visitTypeHelper } from "./parser-helpers";
-import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
@@ -108,13 +107,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitThisAssignable = (ctx: ThisAssignableContext) => {
     const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
     const id = this.visit(ctx.identifierUse())!;
-    return new AssignableAsn(
-      id,
-      thisAsn as unknown as AstQualifierNode,
-      [],
-      this.fieldId,
-      this.scope,
-    );
+    return new AssignableAsn(id, thisAsn, [], this.fieldId, this.scope);
   };
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) => {
@@ -355,19 +348,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
     const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(
-      name,
-      thisNode as unknown as AstQualifierNode,
-      [],
-      this.fieldId,
-      this.scope,
-    );
+    return new ProcRefAsn(name, thisNode, [], this.fieldId, this.scope);
   };
 
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
-    const node = this.visit(ctx.identifierWithOptIndexes());
+    const node = this.visit(ctx.identifierWithOptIndexes())!;
     const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(name, node as unknown as AstQualifierNode, [], this.fieldId, this.scope);
+    return new ProcRefAsn(name, node, [], this.fieldId, this.scope);
   };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {

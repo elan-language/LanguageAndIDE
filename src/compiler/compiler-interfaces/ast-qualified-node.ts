@@ -1,7 +1,7 @@
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { AstIdNode } from "./ast-id-node";
-import { AstQualifierNode } from "./ast-qualifier-node";
+import { AstNode } from "./ast-node";
 
 export interface AstQualifiedNode extends AstIdNode {
-  qualifier: AstQualifierNode | EmptyAsn;
+  qualifier: AstNode | EmptyAsn;
 }

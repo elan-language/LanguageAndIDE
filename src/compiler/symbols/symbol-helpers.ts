@@ -2,7 +2,6 @@ import { FieldImpl } from "../../ide/frames/fields/field-impl";
 import { ClassFrame } from "../../ide/frames/globals/class-frame";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
 import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol, ElanSymbolByLanguage } from "../compiler-interfaces/elan-symbol";
@@ -19,6 +18,7 @@ import {
   getSuperClasses,
   isAstIdNode,
   isAstQualifiedNode,
+  isAstQualifierNode,
   isEmptyNode,
   isRootNode,
 } from "../syntax-nodes/ast-helpers";
@@ -335,7 +335,7 @@ export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope):
 
   const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
-  const value = qualifier.value;
+  const value = isAstQualifierNode(qualifier) ? qualifier.value : qualifier;
 
   return internalUpdateScopeAndQualifier(qualifierScope, currentScope, value, qualifier);
 }
@@ -462,7 +462,7 @@ export function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
-export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScope: Scope) {
+export function updateScope(qualifier: AstNode, originalScope: Scope) {
   let currentScope = originalScope;
   const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {

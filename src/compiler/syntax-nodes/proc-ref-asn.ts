@@ -7,7 +7,6 @@ import {
 } from "../compile-rules";
 import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { NullScope } from "../symbols/null-scope";
@@ -27,7 +26,7 @@ import { IndexAsn } from "./index-asn";
 export class ProcRefAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
     public readonly idNode: AstNode,
-    public readonly qualifier: AstQualifierNode | EmptyAsn,
+    public readonly qualifier: AstNode,
     public indices: AstNode[],
     public readonly fieldId: string,
     private scope: Scope,
