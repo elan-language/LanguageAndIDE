@@ -3,6 +3,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
+import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn as BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn as BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-asn";
@@ -33,10 +34,8 @@ import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
-import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import {
   ArgListContext,
-  AssignableContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
   DictionaryContext,
@@ -47,6 +46,7 @@ import {
   IdentifierUseContext,
   IdentifierWithOptIndexesContext,
   IndexContext,
+  IndexedAssignableContext,
   InstanceProcRefContext,
   KvpContext,
   LambdaContext,
@@ -63,7 +63,9 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
+  SimpleAssignableContext,
   TermContext,
+  ThisAssignableContext,
   ThisInstanceContext,
   ThisProcRefContext,
   TupleContext,
@@ -87,6 +89,52 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   topLevelTerm = true;
 
+  override visitIdentifierDef = (ctx: IdentifierDefContext) =>
+    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  override visitIdentifierUse = (ctx: IdentifierUseContext) =>
+    new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+
+  override visitSimpleAssignable = (ctx: SimpleAssignableContext) => {
+    return new AssignableAsn(
+      ctx.getText(),
+      false,
+      EmptyAsn.Instance,
+      new CsvAsn([], this.fieldId),
+      this.fieldId,
+      this.scope,
+    );
+  };
+
+  override visitThisAssignable = (ctx: ThisAssignableContext) => {
+    const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
+    const id = ctx.identifierUse()?.getText() ?? "";
+    return new AssignableAsn(
+      id,
+      true,
+      thisAsn as unknown as AstQualifierNode,
+      new CsvAsn([], this.fieldId),
+      this.fieldId,
+      this.scope,
+    );
+  };
+
+  override visitIndexedAssignable = (ctx: IndexedAssignableContext) => {
+    const assignable = this.visit(ctx.assignable()!) as AssignableAsn;
+    const index = this.visit(ctx.index()!)!;
+    const indexArr = [];
+
+    for (const idx of assignable.indices.items) {
+      indexArr.push(idx);
+    }
+
+    indexArr.push(index);
+
+    assignable.indices = new CsvAsn(indexArr, this.fieldId);
+
+    return assignable;
+  };
+
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -106,17 +154,12 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
+  // type: typeTuple | typeName | typeGeneric | typeFunc;
   override visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
 
   override visitTerminal(ctx: TerminalNode) {
     return getTypeNameById(this.language, ctx.symbol.type, ctx.getText(), this.fieldId, this.scope);
   }
-
-  override visitIdentifierDef = (ctx: IdentifierDefContext) =>
-    new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
-
-  override visitIdentifierUse = (ctx: IdentifierUseContext) =>
-    new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitMethodName = (ctx: MethodNameContext) =>
     new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
@@ -312,13 +355,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.fieldId,
     );
 
-    return new VarAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
+    return new AssignableAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
     const name = ctx.methodName().getText();
-    return new VarAsn(
+    return new AssignableAsn(
       name,
       false,
       thisNode as unknown as AstQualifierNode,
@@ -331,7 +374,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
     const name = ctx.methodName().getText();
-    return new VarAsn(
+    return new AssignableAsn(
       name,
       false,
       node as unknown as AstQualifierNode,
@@ -339,44 +382,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
-  };
-
-  override visitAssignable = (ctx: AssignableContext) => {
-    if (ctx.THIS_INSTANCE()) {
-      const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
-      const id = ctx.identifierUse()?.getText() ?? "";
-      return new VarAsn(
-        id,
-        true,
-        thisAsn as unknown as AstQualifierNode,
-        new CsvAsn([], this.fieldId),
-        this.fieldId,
-        this.scope,
-      );
-    } else if (ctx.index()) {
-      const assignable = this.visit(ctx.assignable()!) as VarAsn;
-      const index = this.visit(ctx.index()!)!;
-      const indexArr = [];
-
-      for (const idx of assignable.indices.items) {
-        indexArr.push(idx);
-      }
-
-      indexArr.push(index);
-
-      assignable.indices = new CsvAsn(indexArr, this.fieldId);
-
-      return assignable;
-    } else {
-      return new VarAsn(
-        ctx.getText(),
-        false,
-        EmptyAsn.Instance,
-        new CsvAsn([], this.fieldId),
-        this.fieldId,
-        this.scope,
-      );
-    }
   };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {

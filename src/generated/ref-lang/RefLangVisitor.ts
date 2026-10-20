@@ -46,7 +46,9 @@ import { AbstractFunctionContext } from "./RefLangParser.js";
 import { AbstractProcedureContext } from "./RefLangParser.js";
 import { IdentifierDefContext } from "./RefLangParser.js";
 import { IdentifierUseContext } from "./RefLangParser.js";
-import { AssignableContext } from "./RefLangParser.js";
+import { SimpleAssignableContext } from "./RefLangParser.js";
+import { IndexedAssignableContext } from "./RefLangParser.js";
+import { ThisAssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
 import { TypeNameContext } from "./RefLangParser.js";
@@ -364,11 +366,26 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.assignable`.
+   * Visit a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitAssignable?: (ctx: AssignableContext) => Result;
+  visitSimpleAssignable?: (ctx: SimpleAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedAssignable?: (ctx: IndexedAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisAssignable?: (ctx: ThisAssignableContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.methodName`.
    * @param ctx the parse tree

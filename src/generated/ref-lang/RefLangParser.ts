@@ -2921,12 +2921,19 @@ export class RefLangParser extends antlr.Parser {
         switch (this.tokenStream.LA(1)) {
           case RefLangParser.NAME_STARTING_LC:
             {
+              localContext = new SimpleAssignableContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
+
               this.state = 690;
               this.identifierUse();
             }
             break;
           case RefLangParser.THIS_INSTANCE:
             {
+              localContext = new ThisAssignableContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 691;
               this.match(RefLangParser.THIS_INSTANCE);
               this.state = 692;
@@ -2950,7 +2957,9 @@ export class RefLangParser extends antlr.Parser {
             previousContext = localContext;
             {
               {
-                localContext = new AssignableContext(parentContext, parentState);
+                localContext = new IndexedAssignableContext(
+                  new AssignableContext(parentContext, parentState),
+                );
                 this.pushNewRecursionContext(
                   localContext,
                   _startState,
@@ -7167,37 +7176,95 @@ export class AssignableContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
-  public identifierUse(): IdentifierUseContext | null {
-    return this.getRuleContext(0, IdentifierUseContext);
-  }
-  public THIS_INSTANCE(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.THIS_INSTANCE, 0);
-  }
-  public DOT(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.DOT, 0);
-  }
-  public assignable(): AssignableContext | null {
-    return this.getRuleContext(0, AssignableContext);
-  }
-  public index(): IndexContext | null {
-    return this.getRuleContext(0, IndexContext);
-  }
   public override get ruleIndex(): number {
     return RefLangParser.RULE_assignable;
   }
+  public override copyFrom(ctx: AssignableContext): void {
+    super.copyFrom(ctx);
+  }
+}
+export class SimpleAssignableContext extends AssignableContext {
+  public constructor(ctx: AssignableContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public identifierUse(): IdentifierUseContext {
+    return this.getRuleContext(0, IdentifierUseContext)!;
+  }
   public override enterRule(listener: RefLangListener): void {
-    if (listener.enterAssignable) {
-      listener.enterAssignable(this);
+    if (listener.enterSimpleAssignable) {
+      listener.enterSimpleAssignable(this);
     }
   }
   public override exitRule(listener: RefLangListener): void {
-    if (listener.exitAssignable) {
-      listener.exitAssignable(this);
+    if (listener.exitSimpleAssignable) {
+      listener.exitSimpleAssignable(this);
     }
   }
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitAssignable) {
-      return visitor.visitAssignable(this);
+    if (visitor.visitSimpleAssignable) {
+      return visitor.visitSimpleAssignable(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class IndexedAssignableContext extends AssignableContext {
+  public constructor(ctx: AssignableContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public assignable(): AssignableContext {
+    return this.getRuleContext(0, AssignableContext)!;
+  }
+  public index(): IndexContext {
+    return this.getRuleContext(0, IndexContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterIndexedAssignable) {
+      listener.enterIndexedAssignable(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitIndexedAssignable) {
+      listener.exitIndexedAssignable(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitIndexedAssignable) {
+      return visitor.visitIndexedAssignable(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class ThisAssignableContext extends AssignableContext {
+  public constructor(ctx: AssignableContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public THIS_INSTANCE(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.THIS_INSTANCE, 0)!;
+  }
+  public DOT(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.DOT, 0)!;
+  }
+  public identifierUse(): IdentifierUseContext {
+    return this.getRuleContext(0, IdentifierUseContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterThisAssignable) {
+      listener.enterThisAssignable(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitThisAssignable) {
+      listener.exitThisAssignable(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitThisAssignable) {
+      return visitor.visitThisAssignable(this);
     } else {
       return visitor.visitChildren(this);
     }

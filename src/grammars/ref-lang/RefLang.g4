@@ -175,9 +175,9 @@ abstractProcedure:
 // START Fields
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
-assignable: identifierUse  
-            | THIS_INSTANCE DOT identifierUse
-            | assignable index
+assignable: identifierUse  #simpleAssignable
+            | THIS_INSTANCE DOT identifierUse #thisAssignable
+            | assignable index #indexedAssignable
             ;
 
 methodName: NAME_STARTING_LC;

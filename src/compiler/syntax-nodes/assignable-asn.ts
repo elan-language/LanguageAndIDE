@@ -1,15 +1,3 @@
-import { AstIndexableNode } from "../../compiler/compiler-interfaces/ast-indexable-node";
-import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { NullScope } from "../../compiler/symbols/null-scope";
-import {
-  getGlobalScope,
-  isMemberOnFieldsClass,
-  scopePrefix,
-  updateScope,
-} from "../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { UnknownType } from "../../compiler/symbols/unknown-type";
 import {
   mustBeAssignableType,
   mustBeIndexableType,
@@ -18,13 +6,25 @@ import {
   mustBePublicMember,
 } from "../compile-rules";
 import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
+import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
+import { Scope } from "../compiler-interfaces/scope";
+import { NullScope } from "../symbols/null-scope";
+import {
+  getGlobalScope,
+  isMemberOnFieldsClass,
+  scopePrefix,
+  updateScope,
+} from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
 
-export class VarAsn extends AbstractAstNode implements AstIndexableNode {
+export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
     public readonly id: string,
     public readonly isAssignable: boolean,

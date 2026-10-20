@@ -3,6 +3,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../../compiler/compiler-interfaces/ast-qualifier-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
+import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
@@ -32,7 +33,6 @@ import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
-import { VarAsn } from "../../compiler/syntax-nodes/var-asn";
 import {
   AssignableContext,
   BinaryExpressionContext,
@@ -302,13 +302,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.fieldId,
     );
 
-    return new VarAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
+    return new AssignableAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
     const name = ctx.methodName().getText();
-    return new VarAsn(
+    return new AssignableAsn(
       name,
       false,
       thisNode as unknown as AstQualifierNode,
@@ -321,7 +321,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
     const name = ctx.methodName().getText();
-    return new VarAsn(
+    return new AssignableAsn(
       name,
       false,
       node as unknown as AstQualifierNode,
@@ -335,7 +335,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     if (ctx.THIS_INSTANCE()) {
       const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
       const id = ctx.identifierUse()?.getText() ?? "";
-      return new VarAsn(
+      return new AssignableAsn(
         id,
         true,
         thisAsn as unknown as AstQualifierNode,
@@ -344,7 +344,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
         this.scope,
       );
     } else if (ctx.index()) {
-      const assignable = this.visit(ctx.assignable()!) as VarAsn;
+      const assignable = this.visit(ctx.assignable()!) as AssignableAsn;
       const index = this.visit(ctx.index()!)!;
       const indexArr = [];
 
@@ -358,7 +358,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
       return assignable;
     } else {
-      return new VarAsn(
+      return new AssignableAsn(
         ctx.getText(),
         false,
         EmptyAsn.Instance,

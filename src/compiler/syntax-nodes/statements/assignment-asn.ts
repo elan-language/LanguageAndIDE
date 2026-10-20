@@ -12,9 +12,9 @@ import {
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { AssignableAsn } from "../assignable-asn";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
-import { VarAsn } from "../var-asn";
 
 export class AssignmentAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
@@ -53,7 +53,7 @@ export class AssignmentAsn extends BreakpointAsn {
     const symbol = this.getParentScope().resolveSymbol(id, true, this);
     mustNotBeLet(symbol, this.compileErrors, this.fieldId);
 
-    if (this.assignable instanceof VarAsn) {
+    if (this.assignable instanceof AssignableAsn) {
       if (this.assignable.isSimpleSubscript()) {
         mustNotSetIndexInFunctionMethod(this.scope, this.compileErrors, this.fieldId);
 

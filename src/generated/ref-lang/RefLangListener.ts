@@ -46,7 +46,9 @@ import { AbstractFunctionContext } from "./RefLangParser.js";
 import { AbstractProcedureContext } from "./RefLangParser.js";
 import { IdentifierDefContext } from "./RefLangParser.js";
 import { IdentifierUseContext } from "./RefLangParser.js";
-import { AssignableContext } from "./RefLangParser.js";
+import { SimpleAssignableContext } from "./RefLangParser.js";
+import { IndexedAssignableContext } from "./RefLangParser.js";
+import { ThisAssignableContext } from "./RefLangParser.js";
 import { MethodNameContext } from "./RefLangParser.js";
 import { TestNameContext } from "./RefLangParser.js";
 import { TypeNameContext } from "./RefLangParser.js";
@@ -537,15 +539,41 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitIdentifierUse?: (ctx: IdentifierUseContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.assignable`.
+   * Enter a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
    * @param ctx the parse tree
    */
-  enterAssignable?: (ctx: AssignableContext) => void;
+  enterSimpleAssignable?: (ctx: SimpleAssignableContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.assignable`.
+   * Exit a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
    * @param ctx the parse tree
    */
-  exitAssignable?: (ctx: AssignableContext) => void;
+  exitSimpleAssignable?: (ctx: SimpleAssignableContext) => void;
+  /**
+   * Enter a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   */
+  enterIndexedAssignable?: (ctx: IndexedAssignableContext) => void;
+  /**
+   * Exit a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   */
+  exitIndexedAssignable?: (ctx: IndexedAssignableContext) => void;
+  /**
+   * Enter a parse tree produced by the `thisAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   */
+  enterThisAssignable?: (ctx: ThisAssignableContext) => void;
+  /**
+   * Exit a parse tree produced by the `thisAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   */
+  exitThisAssignable?: (ctx: ThisAssignableContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.methodName`.
    * @param ctx the parse tree

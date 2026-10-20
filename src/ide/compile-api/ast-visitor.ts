@@ -479,6 +479,8 @@ export function transform(
 
   // End Frames
 
+  // Fields
+
   if (node instanceof FieldImpl && node.fieldSpec?.fieldType === FieldType.type) {
     const ctx = node.context;
 
