@@ -135,7 +135,7 @@ enum Dir left, right
 # rename this method and define new transition rules to solve a different problem
 procedure addRulesForRomanNumeralsInto(tm as TuringMachine)
   # name: Denary to Roman "Numerals", initial state = "init", accept state = "halt"
-  # Example tape input:  2024 (between 1 and 3999)
+  # Example tape variable:  2024 (between 1 and 3999)
   call tm.append(new Rule("init", "0", "init", "0", Dir.right))
   call tm.append(new Rule("init", "1", "init", "1", Dir.right))
   call tm.append(new Rule("init", "2", "init", "2", Dir.right))
@@ -349,7 +349,7 @@ procedure addRulesForRomanNumeralsInto(tm as TuringMachine)
   call tm.append(new Rule("return", "]", "return", "]", Dir.left))
   call tm.append(new Rule("return", "[", "readNextDigit", " ", Dir.right))
   call tm.append(new Rule("return", " ", "readNextDigit", " ", Dir.right))
-  # gotoEnd -  only after deleting input.
+  # gotoEnd -  only after deleting variable.
   call tm.append(new Rule("gotoEnd", "|", "gotoEnd", "|", Dir.right))
   call tm.append(new Rule("gotoEnd", "I", "gotoEnd", "I", Dir.right))
   call tm.append(new Rule("gotoEnd", "V", "gotoEnd", "V", Dir.right))

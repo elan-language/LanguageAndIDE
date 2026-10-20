@@ -1187,57 +1187,6 @@ end procedure</codeblock>
 </div></div>
 </div>
 
-<div id="InputInstruction">
-<div id="input"></div>
-<h2>Input statement</h2>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">Examples of an input statement</h3>
-<div class="acc-body">
-
-<p>From the <b>Binary Search</b> demo, showing an <b>input statement</b> with a clear user-prompt:</p>
-
-<codeblock>input wanted set to inputString("What type of fruit do you want ('x' to exit)? ")</codeblock>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">What you need to know about an input statement</h3>
-<div class="acc-body">
-
-<ul>
-  <li>The <b>input statement</b> is the simplest way to read a string value typed in by the user (followed by <b>Enter</b>.</li>
-  <li>You must specify a user prompt string, though this may be an empty string &ndash; <code>""</code>.</li>
-  <li>When working in Elan, the user's entry will <i>always</i> be on the line below the displayed prompt.</li>
-  <li>The entered value is put into a <i>new</i> variable &ndash; equivalent to if it was a <b>variable definition</b>.</li>
-  <li>If you want to assign the input to an <i>existing</i> variable you can do this by adding an <b>assignment</b>
-   on the next line.</li>
-  <li>Also <i>in a separate instruction</i>, you can parse the string into a numeric type by applying the <code>asInt()</code>
-    or <code>asFloat()</code> functions to the input variable, but note that <i>these functions will throw an exception if the input string does not parse to the required numeric type</i>.</li>
-  <li>See below for more advanced options for handling specific forms of user input.</li>
-</ul>
-</div></div>
-
-<div class="accordion">
-<h3 class="no-TOC acc-title">More advanced techniques</h3>
-<div class="acc-body">
-
-<h4 class="no-TOC">System methods for keyboard input</h4>
-<p>As an alternative to using the <b>input statement</b> you may also use a range of system methods from the standard Elan library,
-which offer several advantages, including:</p>
-
-<ul>
-  <li>Enforcing that a user input matches the requirement for an integer, or floating point number, and then doing the conversion invisibly: </li>
-  <li>Enforcing that either form of numeric input is within specified numeric bounds.</li>
-  <li>Enforcing that a string input is within specified bounds for the number of characters.</li>
-  <li>Enforcing that a string input matches one of a list of valid string responses.</li>
-</ul>
-
-<p>In all these cases, if the user input does not match the specified rules, the user will be advised, and asked to input a value response.</p>
-
-<p>See <p><a href="LibRef.html#KeyboardInput">Keyboard input</a> for the full list of relevant system methods.</p>
-</div></div>
-</div>
-
 <div id="if">
 <div id="then"></div>
 <div id="else"></div>

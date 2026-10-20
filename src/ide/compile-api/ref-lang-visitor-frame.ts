@@ -13,7 +13,6 @@ import {
   FunctionContext,
   FunctionMethodContext,
   IfStatementContext,
-  InputStatementContext,
   MainContext,
   PrintContext,
   ProcedureCallContext,
@@ -44,7 +43,6 @@ import { TestFrame } from "../frames/globals/test-frame";
 import { Assignment } from "../frames/statements/assignment";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
-import { InputStatement } from "../frames/statements/input-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ThrowStatement } from "../frames/statements/throw-statement";
@@ -181,13 +179,6 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     assignment.assignable.setFieldToKnownValidText(ctx.assignable().getText());
     assignment.expr.setFieldToKnownValidText(ctx.expression().getText());
     return assignment;
-  };
-
-  override visitInputStatement = (ctx: InputStatementContext) => {
-    const inp = new InputStatement(this.file);
-    inp.name.setFieldToKnownValidText(ctx.identifierDef().getText());
-    inp.prompt.setFieldToKnownValidText(ctx.expression().getText());
-    return inp;
   };
 
   override visitIfStatement = (ctx: IfStatementContext) => {

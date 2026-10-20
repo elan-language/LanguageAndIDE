@@ -28,7 +28,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -59,8 +58,7 @@ export class LanguageVB extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof ProcedureCall ||
       frame instanceof Assignment ||
-      frame instanceof PrintStatement ||
-      frame instanceof InputStatement
+      frame instanceof PrintStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -87,9 +85,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM}</el-kw> ${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
-    } else if (frame instanceof InputStatement) {
-      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.prompt.renderAsHtml()})<br>
-      <el-kw>${this.DIM}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>()`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {

@@ -15,7 +15,7 @@ import { StatementSelector } from "../../src/ide/frames/statements/statement-sel
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
-import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
+import { transforms } from "../compiler/compiler-test-helpers";
 import { assertOptions, key, selectOption } from "../testHelpers";
 import { emptyMainOnly } from "./model-generating-functions";
 
@@ -27,7 +27,6 @@ suite("Selector tests", () => {
       "print statement",
       "variable definition",
       "assignment",
-      "input statement",
       "if statement",
       "while loop",
       "for loop",
@@ -209,7 +208,6 @@ suite("Selector tests", () => {
       "print statement",
       "variable definition",
       "assignment",
-      "input statement",
       "if statement",
       "while loop",
       "for loop",
@@ -235,7 +233,6 @@ suite("Selector tests", () => {
       "print statement",
       "variable definition",
       "assignment",
-      "input statement",
       "if statement",
       "while loop",
       "for loop",
@@ -306,7 +303,6 @@ suite("Selector tests", () => {
       "print statement",
       "variable definition",
       "assignment",
-      "input statement",
       "if statement",
       "else if clause",
       "else clause",

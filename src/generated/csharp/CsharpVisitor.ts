@@ -18,7 +18,6 @@ import { OrdinaryStatementContext } from "./CsharpParser.js";
 import { PrintContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
-import { InputStatementContext } from "./CsharpParser.js";
 import { IfStatementContext } from "./CsharpParser.js";
 import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
@@ -193,12 +192,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssignment?: (ctx: AssignmentContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.inputStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInputStatement?: (ctx: InputStatementContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.ifStatement`.
    * @param ctx the parse tree

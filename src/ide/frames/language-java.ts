@@ -9,7 +9,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { AssertStatement } from "./statements/assert-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 
 export class LanguageJava extends LanguageCfamily {
@@ -39,8 +38,6 @@ export class LanguageJava extends LanguageCfamily {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.STATIC} ${this.FINAL} </el-kw><el-type>${getConstantType(frame.value.text, this)} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()};`;
-    } else if (frame instanceof InputStatement) {
-      html = `<el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>(${frame.prompt.renderAsHtml()});`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-type>System</el-type>.<el-type>out</el-type>.<el-method>println</el-method>(${frame.arg.renderAsHtml()});`;
     } else if (frame instanceof Property) {

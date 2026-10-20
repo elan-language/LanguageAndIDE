@@ -18,7 +18,6 @@ import { OrdinaryStatementContext } from "./PythonParser.js";
 import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
-import { InputStatementContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
@@ -192,12 +191,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitAssignment?: (ctx: AssignmentContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.inputStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInputStatement?: (ctx: InputStatementContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.ifStatement`.
    * @param ctx the parse tree

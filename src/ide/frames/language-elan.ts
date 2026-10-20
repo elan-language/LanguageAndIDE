@@ -19,7 +19,6 @@ import {
   ifKeyword,
   inheritsKeyword,
   inKeyword,
-  inputKeyword,
   lambdaKeyword,
   mainKeyword,
   newKeyword,
@@ -74,7 +73,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -121,8 +119,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
-    } else if (frame instanceof InputStatement) {
-      html = `<el-kw>${this.INPUT} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw><el-method>inputString</el-method>(${frame.prompt.renderAsHtml()})`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-kw>${this.PRINT}</el-kw>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
@@ -226,7 +222,6 @@ export class LanguageElan extends LanguageAbstract {
   private IF = ifKeyword;
   private IN = inKeyword;
   private INHERITS = inheritsKeyword;
-  private INPUT = inputKeyword;
   private lambdaKeyword = lambdaKeyword;
   private MAIN = mainKeyword;
   private NEW = newKeyword;

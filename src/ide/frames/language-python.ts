@@ -33,7 +33,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -70,8 +69,7 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof FunctionMethod ||
       frame instanceof ProcedureMethod ||
       frame instanceof AbstractFunction ||
-      frame instanceof AbstractProcedure ||
-      frame instanceof InputStatement
+      frame instanceof AbstractProcedure
     ) {
       annotation = frame.frameSpecificAnnotation();
     }
@@ -100,8 +98,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
-    } else if (frame instanceof InputStatement) {
-      html = `${frame.name.renderAsHtml()} = <el-method>input</el-method>(${frame.prompt.renderAsHtml()})`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-method>print</el-method>(${frame.arg.renderAsHtml()})`;
     } else if (frame instanceof Property) {
