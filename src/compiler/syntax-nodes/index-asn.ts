@@ -7,7 +7,6 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { getId, mustNotBeNegativeIndex } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
-import { CsvAsn } from "./csv-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
@@ -49,7 +48,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
     return compileSimpleSubscript(
       id,
       indexedType,
-      new CsvAsn([this], this.fieldId),
+      [this],
       "",
       indexed,
       subscript,

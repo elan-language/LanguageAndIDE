@@ -407,7 +407,7 @@ export function wrapSimpleSubscript(code: string): string {
 export function compileSimpleSubscript(
   id: string,
   rootType: SymbolType,
-  indices: AstCollectionNode,
+  indices: AstNode[],
   prefix: string,
   code: string,
   postfix: string,
@@ -415,9 +415,9 @@ export function compileSimpleSubscript(
   fieldId: string,
   scope: Scope,
 ) {
-  const index = indices.items[indices.items.length - 1] as IndexAsn;
+  const index = indices[indices.length - 1] as IndexAsn;
 
-  const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
+  const [indexType] = getIndexAndOfType(rootType, indices.length - 1);
   mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
   mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);

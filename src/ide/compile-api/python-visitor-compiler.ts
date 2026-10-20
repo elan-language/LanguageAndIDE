@@ -297,10 +297,8 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
     const id = ctx.identifierUse().getText();
-    const indices = new CsvAsn(
-      ctx.index().map((idx) => this.visit(idx)!),
-      this.fieldId,
-    );
+
+    const indices = ctx.index().map((idx) => this.visit(idx)!);
 
     return new AssignableAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
   };
@@ -312,7 +310,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       name,
       false,
       thisNode as unknown as AstQualifierNode,
-      EmptyAsn.Instance,
+      [],
       this.fieldId,
       this.scope,
     );
@@ -325,7 +323,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       name,
       false,
       node as unknown as AstQualifierNode,
-      EmptyAsn.Instance,
+      [],
       this.fieldId,
       this.scope,
     );
@@ -339,22 +337,21 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
         id,
         true,
         thisAsn as unknown as AstQualifierNode,
-        new CsvAsn([], this.fieldId),
+        [],
         this.fieldId,
         this.scope,
       );
     } else if (ctx.index()) {
       const assignable = this.visit(ctx.assignable()!) as AssignableAsn;
-      const index = this.visit(ctx.index()!)!;
       const indexArr = [];
 
-      for (const idx of assignable.indices.items) {
+      for (const idx of assignable.indices) {
         indexArr.push(idx);
       }
 
-      indexArr.push(index);
+      indexArr.push(this.visit(ctx.index()!)!);
 
-      assignable.indices = new CsvAsn(indexArr, this.fieldId);
+      assignable.indices = indexArr;
 
       return assignable;
     } else {
@@ -362,7 +359,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
         ctx.getText(),
         false,
         EmptyAsn.Instance,
-        new CsvAsn([], this.fieldId),
+        [],
         this.fieldId,
         this.scope,
       );

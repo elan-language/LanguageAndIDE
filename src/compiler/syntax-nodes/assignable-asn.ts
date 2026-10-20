@@ -5,8 +5,8 @@ import {
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
 } from "../compile-rules";
-import { AstCollectionNode } from "../compiler-interfaces/ast-collection-node";
 import { AstIndexableNode } from "../compiler-interfaces/ast-indexable-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
@@ -29,7 +29,7 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
     public readonly id: string,
     public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
-    public indices: AstCollectionNode,
+    public indices: AstNode[],
     public readonly fieldId: string,
     private scope: Scope,
   ) {
@@ -44,9 +44,7 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
 
   isSimpleSubscript() {
     const index =
-      this.indices.items.length > 0
-        ? this.indices.items[this.indices.items.length - 1]
-        : EmptyAsn.Instance;
+      this.indices.length > 0 ? this.indices[this.indices.length - 1] : EmptyAsn.Instance;
     return index instanceof IndexAsn;
   }
 
@@ -70,8 +68,8 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
   }
 
   compileAssignSubscript(symbol: ElanSymbol, prefix: string, postfix: string) {
-    const index = this.indices.items[this.indices.items.length - 1] as IndexAsn;
-    const [indexType] = getIndexAndOfType(this.rootSymbolType(), this.indices.items.length - 1);
+    const index = this.indices[this.indices.length - 1] as IndexAsn;
+    const [indexType] = getIndexAndOfType(this.rootSymbolType(), this.indices.length - 1);
     mustBeIndexableType(
       symbol.symbolId,
       this.rootSymbolType(),
@@ -121,7 +119,8 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
       this.scope,
       this.fieldId,
     );
-    const postfix = !isEmptyNode(this.indices) ? `${this.indices.compile()}` : "";
+
+    const postfix = `${this.indices.map((i) => i.compile()).join(", ")}`;
 
     // handles indexing within call statement
 
@@ -144,7 +143,7 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
     const rootType = this.rootSymbolType();
 
     return this.isSimpleSubscript()
-      ? getIndexAndOfType(rootType, this.indices.items.length - 1)[1]
+      ? getIndexAndOfType(rootType, this.indices.length - 1)[1]
       : rootType;
   }
 
