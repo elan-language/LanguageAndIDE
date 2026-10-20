@@ -146,6 +146,47 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitUdtTypeName = (ctx: TypeNameContext) =>
     new TypeNameAsn(ctx.getText(), this.fieldId, this.scope);
 
+  // constantValue
+
+  override visitLitBoolean = (ctx: LitBooleanContext) =>
+    new LitBooleanAsn(ctx.TRUE() !== null, this.fieldId);
+
+  override visitLitInt = (ctx: LitIntContext) => {
+    const binary = ctx.LITERAL_BINARY();
+    const hex = ctx.LITERAL_HEX();
+    const int = ctx.LITERAL_INTEGER();
+
+    const isBinary = binary !== null;
+    const isHex = hex !== null;
+
+    let value = (hex ?? binary ?? int!).getText();
+
+    if (isBinary) {
+      value = value.replace("0b", "");
+    }
+
+    if (isHex) {
+      value = value.replace("0x", "");
+    }
+
+    return new LitIntAsn(value, isBinary, isHex, this.fieldId);
+  };
+
+  override visitLitFloat = (ctx: LitFloatContext) => new LitFloatAsn(ctx.getText(), this.fieldId);
+
+  override visitLitString = (ctx: LitStringContext) =>
+    new LitStringAsn(ctx.getText(), this.fieldId);
+
+  override visitArgList = (ctx: ArgListContext) => new CsvAsn(getArgs(this, ctx), this.fieldId);
+
+  override visitParamList = (ctx: ParamListContext) =>
+    new ParamListAsn(getParamDefs(this, ctx), this.fieldId, this.scope);
+
+  override visitIdentifierList = (ctx: IdentifierListContext) => {
+    const identifierDefs = ctx.identifierDef().map((id) => this.visit(id)!);
+    return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
+  };
+
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -168,18 +209,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   // type: typeTuple | typeName | typeGeneric | typeFunc;
   override visitType = (ctx: TypeContext) => visitTypeHelper<AstNode>(this, ctx);
 
-  override visitParamList = (ctx: ParamListContext) => {
-    const paramDefs = getParamDefs(this, ctx);
-    const paramList = new ParamListAsn(this.fieldId, this.scope);
-    paramList.parms = new CsvAsn(paramDefs, this.fieldId);
-    return paramList;
-  };
-
-  override visitArgList = (ctx: ArgListContext) => {
-    const argList = getArgs(this, ctx).filter((a) => a);
-    return new CsvAsn(argList, this.fieldId);
-  };
-
   override visitParamDef = (ctx: ParamDefContext) =>
     new ParamDefAsn(
       ctx.identifierDef().NAME_STARTING_LC().getText(),
@@ -190,7 +219,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitMethodCall = (ctx: MethodCallContext) => {
     const args = ctx.argList();
-    const argList = args ? getArgs(this, args).filter((a) => a) : [];
+    const argList = args ? getArgs(this, args) : [];
     const name = ctx.methodName().getText();
 
     return new MethodCallAsn(name, argList, this.fieldId, this.scope);
@@ -258,35 +287,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .filter((e) => e) as AstNode[];
     return new LitTupleAsn(items, this.fieldId);
   };
-
-  override visitLitInt = (ctx: LitIntContext) => {
-    const binary = ctx.LITERAL_BINARY();
-    const hex = ctx.LITERAL_HEX();
-    const int = ctx.LITERAL_INTEGER();
-
-    const isBinary = binary !== null;
-    const isHex = hex !== null;
-
-    let value = (hex ?? binary ?? int!).getText();
-
-    if (isBinary) {
-      value = value.replace("0b", "");
-    }
-
-    if (isHex) {
-      value = value.replace("0x", "");
-    }
-
-    return new LitIntAsn(value, isBinary, isHex, this.fieldId);
-  };
-
-  override visitLitFloat = (ctx: LitFloatContext) => new LitFloatAsn(ctx.getText(), this.fieldId);
-
-  override visitLitBoolean = (ctx: LitBooleanContext) =>
-    new LitBooleanAsn(ctx.TRUE() !== null, this.fieldId);
-
-  override visitLitString = (ctx: LitStringContext) =>
-    new LitStringAsn(ctx.getText(), this.fieldId);
 
   override visitLitRegExp = (ctx: LitRegExpContext) =>
     new LitRegExAsn(ctx.getText(), this.fieldId, this.scope);
@@ -369,14 +369,5 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const node = this.visit(ctx.identifierWithOptIndexes())!;
     const name = this.visit(ctx.methodName())!;
     return new ProcRefAsn(name, node, [], this.fieldId, this.scope);
-  };
-
-  override visitIdentifierList = (ctx: IdentifierListContext) => {
-    const identifierDefs = ctx.identifierDef().map((id) => this.visit(id)!);
-    const identifierList = new IdentifierListAsn(this.fieldId, this.scope);
-
-    identifierList.values = new CsvAsn(identifierDefs, this.fieldId);
-
-    return identifierList;
   };
 }

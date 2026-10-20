@@ -6,7 +6,6 @@ import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
 import { getTypeName, getTypeNameById } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExprAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
 import { BracketedAsn } from "../../compiler/syntax-nodes/bracketed-asn";
-import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DictionaryAsn } from "../../compiler/syntax-nodes/dictionary-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { EnumValueAsn } from "../../compiler/syntax-nodes/enum-value-asn";
@@ -119,12 +118,8 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   override visitMethodName = (ctx: MethodNameContext) =>
     new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  override visitParamList = (ctx: ParamListContext) => {
-    const paramDefs = getParamDefs(this, ctx);
-    const paramList = new ParamListAsn(this.fieldId, this.scope);
-    paramList.parms = new CsvAsn(paramDefs, this.fieldId);
-    return paramList;
-  };
+  override visitParamList = (ctx: ParamListContext) =>
+    new ParamListAsn(getParamDefs(this, ctx), this.fieldId, this.scope);
 
   override visitParamDef = (ctx: ParamDefContext) =>
     new ParamDefAsn(
@@ -136,7 +131,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitMethodCall = (ctx: MethodCallContext) => {
     const args = ctx.argList();
-    const argList = args ? getArgs(this, args).filter((a) => a) : [];
+    const argList = args ? getArgs(this, args) : [];
     const name = ctx.methodName().getText();
 
     return new MethodCallAsn(name, argList, this.fieldId, this.scope);
@@ -345,11 +340,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
-    const ids = ctx.identifierDef().map((id) => this.visit(id)!);
-    const enumValues = new IdentifierListAsn(this.fieldId, this.scope);
-
-    enumValues.values = new CsvAsn(ids, this.fieldId);
-
-    return enumValues;
+    const identifierDefs = ctx.identifierDef().map((id) => this.visit(id)!);
+    return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
   };
 }
