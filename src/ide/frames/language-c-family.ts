@@ -26,7 +26,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
@@ -57,8 +56,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       frame instanceof Property ||
       frame instanceof AbstractProcedure ||
       frame instanceof AbstractFunction ||
-      frame instanceof PrintStatement ||
-      frame instanceof InputStatement
+      frame instanceof PrintStatement
     ) {
       annotation = frame.frameSpecificAnnotation();
     }

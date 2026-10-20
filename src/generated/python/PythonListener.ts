@@ -18,7 +18,6 @@ import { OrdinaryStatementContext } from "./PythonParser.js";
 import { PrintContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
-import { InputStatementContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
@@ -253,16 +252,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAssignment?: (ctx: AssignmentContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.inputStatement`.
-   * @param ctx the parse tree
-   */
-  enterInputStatement?: (ctx: InputStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.inputStatement`.
-   * @param ctx the parse tree
-   */
-  exitInputStatement?: (ctx: InputStatementContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.ifStatement`.
    * @param ctx the parse tree

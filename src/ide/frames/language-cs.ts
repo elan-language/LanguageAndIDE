@@ -11,7 +11,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { AssertStatement } from "./statements/assert-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 
 export class LanguageCS extends LanguageCfamily {
@@ -43,9 +42,6 @@ export class LanguageCS extends LanguageCfamily {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw><el-type>${getConstantType(frame.value.text, this)} </el-type>${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()};`;
-    } else if (frame instanceof InputStatement) {
-      html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.prompt.renderAsHtml()});<br>
-      <el-kw>${this.VAR}</el-kw> ${frame.name.renderAsHtml()}<el-kw> = <el-type>Console</el-type>.<el-method>ReadLine</el-method>();`;
     } else if (frame instanceof PrintStatement) {
       html = `<el-type>Console</el-type>.<el-method>WriteLine</el-method>(${frame.arg.renderAsHtml()});`;
     } else if (frame instanceof Property) {

@@ -8,7 +8,6 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { InputStatement } from "../../src/ide/frames/statements/input-statement";
 import { PrintStatement } from "../../src/ide/frames/statements/print-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
@@ -148,24 +147,6 @@ suite("Parsing Frame Tests", async () => {
     );
     const m = new MainRoutine(fl);
     const setTo = new ThrowStatement(m);
-    setTo.parseFrom(source);
-    assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
-  });
-  test("parse Frames - input", () => {
-    const code = `  input a set to inputString("Your name:")`;
-    const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    const m = new MainRoutine(fl);
-    const setTo = new InputStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);

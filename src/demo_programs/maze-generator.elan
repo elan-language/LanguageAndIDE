@@ -16,7 +16,7 @@ main
     end if
   end for
   call displayBlockGraphics(blocks)
-  input name set to inputString("File name to save: ")
+  variable name set to inputString("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if

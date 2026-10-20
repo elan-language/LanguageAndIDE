@@ -8,7 +8,6 @@ import {
   elseKeyword,
   forKeyword,
   ifKeyword,
-  inputKeyword,
   printKeyword,
   throwKeyword,
   tryKeyword,
@@ -49,12 +48,6 @@ export class StatementSelector extends AbstractSelector {
         (parent: Parent) => this.factory.newVar(parent),
       ],
       [assignKeyword, "a", "<b>a</b>ssignment", (parent: Parent) => this.factory.newSet(parent)],
-      [
-        inputKeyword,
-        "n",
-        "i<b>n</b>put statement",
-        (parent: Parent) => this.factory.newInput(parent),
-      ],
       [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent)],
       [elifKeyword, "s", "el<b>s</b>e if clause", (parent: Parent) => this.factory.newElif(parent)],
       [elseKeyword, "e", "<b>e</b>lse clause", (parent: Parent) => this.factory.newElse(parent)],
@@ -100,7 +93,7 @@ export class StatementSelector extends AbstractSelector {
       result = parent.getIdPrefix().includes(`_${ifKeyword}`);
     } else if (keyword === catchKeyword) {
       result = parent.getIdPrefix().includes(`_${tryKeyword}`);
-    } else if (keyword === callKeyword || keyword === printKeyword || keyword === inputKeyword) {
+    } else if (keyword === callKeyword || keyword === printKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === assertKeyword) {
       result = this.isWithinATest();

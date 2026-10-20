@@ -81,7 +81,6 @@ ordinaryStatement:
     print
     | variableDefinition
     | assignment
-    | inputStatement
     | ifStatement
     | whileLoop
     | forLoop
@@ -99,9 +98,6 @@ variableDefinition:
 ;
 assignment:
     assignable SINGLE_EQUALS expression SEMI_COLON COMMENT NL
-;
-inputStatement:
-    identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET SEMI_COLON NL
 ;
 
 ifStatement:

@@ -9,7 +9,6 @@ import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
-import { InputStatement } from "./statements/input-statement";
 import { PrintStatement } from "./statements/print-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ThrowStatement } from "./statements/throw-statement";
@@ -42,9 +41,6 @@ export class StatementFactoryImpl implements StatementFactory {
   }
   public newIf(parent: Parent): Frame {
     return new IfStatement(parent);
-  }
-  public newInput(parent: Parent): Frame {
-    return new InputStatement(parent);
   }
   public newPrint(parent: Parent): Frame {
     return new PrintStatement(parent);

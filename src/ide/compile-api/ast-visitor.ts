@@ -20,7 +20,6 @@ import { FunctionAsn } from "../../compiler/syntax-nodes/globals/function-asn";
 import { MainAsn } from "../../compiler/syntax-nodes/globals/main-asn";
 import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn";
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
-import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
 import { CatchStatementAsn } from "../../compiler/syntax-nodes/statements/catch-statement-asn";
@@ -64,7 +63,6 @@ import { ElseClause } from "../frames/statements/else-clause";
 import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
-import { InputStatement } from "../frames/statements/input-statement";
 import { PrintStatement } from "../frames/statements/print-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
@@ -245,19 +243,6 @@ export function transform(
       transform(node.expr, node.getHtmlId(), assignmentAsn) ?? EmptyAsn.Instance;
 
     return assignmentAsn;
-  }
-
-  if (node instanceof InputStatement) {
-    const variableDefinitionAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
-    variableDefinitionAsn.breakpointStatus = node.breakpointStatus;
-
-    variableDefinitionAsn.identifierDef =
-      transform(node.name, node.getHtmlId(), variableDefinitionAsn) ?? EmptyAsn.Instance;
-
-    const id = "input"; // Hard coded method name
-    const parameter = transform(node.prompt, fieldId, scope)!;
-    variableDefinitionAsn.expression = new MethodCallAsn(id, [parameter], fieldId, scope);
-    return variableDefinitionAsn;
   }
 
   if (node instanceof IfStatement) {

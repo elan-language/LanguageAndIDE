@@ -79,7 +79,6 @@ ordinaryStatement:
     print
     | variableDefinition
     | assignment
-    | inputStatement
     | ifStatement
     | whileLoop
     | forLoop
@@ -95,9 +94,6 @@ variableDefinition:
 ;
 assignment:
     GHOSTED? assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
-;
-inputStatement:
-    GHOSTED? identifierDef EQUAL INPUT OPEN_BRACKET expression CLOSE_BRACKET INPUT_ANNOTATION NL
 ;
 
 ifStatement:

@@ -80,7 +80,6 @@ ordinaryStatement:
     print
     | variableDefinition
     | assignment
-    | inputStatement
     | ifStatement
     | whileLoop
     | forLoop
@@ -95,9 +94,6 @@ variableDefinition:
     GHOSTED? VARIABLE identifierDef SET TO expression NL
 ;
 assignment: GHOSTED? ASSIGN assignable TO expression NL;
-inputStatement:
-    GHOSTED? INPUT identifierDef SET TO methodName OPEN_BRACKET expression CLOSE_BRACKET NL
-;
 
 ifStatement:
     GHOSTED? IF condition=expression THEN NL (
