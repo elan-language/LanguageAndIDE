@@ -296,7 +296,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   };
 
   override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
-    const id = ctx.identifierUse().getText();
+    const id = this.visit(ctx.identifierUse())!;
 
     const indices = ctx.index().map((idx) => this.visit(idx)!);
 
@@ -305,7 +305,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
-    const name = ctx.methodName().getText();
+    const name = this.visit(ctx.methodName())!;
     return new AssignableAsn(
       name,
       false,
@@ -318,7 +318,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
-    const name = ctx.methodName().getText();
+    const name = this.visit(ctx.methodName())!;
     return new AssignableAsn(
       name,
       false,
@@ -332,7 +332,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   override visitAssignable = (ctx: AssignableContext) => {
     if (ctx.THIS_INSTANCE()) {
       const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
-      const id = ctx.identifierUse()?.getText() ?? "";
+      const id = this.visit(ctx.identifierUse()!)!;
       return new AssignableAsn(
         id,
         true,
@@ -356,7 +356,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       return assignable;
     } else {
       return new AssignableAsn(
-        ctx.getText(),
+        this.visit(ctx.identifierUse()!)!,
         false,
         EmptyAsn.Instance,
         [],

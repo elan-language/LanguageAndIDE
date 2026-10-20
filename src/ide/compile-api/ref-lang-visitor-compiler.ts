@@ -95,13 +95,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitIdentifierUse = (ctx: IdentifierUseContext) =>
     new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
-  override visitSimpleAssignable = (ctx: SimpleAssignableContext) => {
-    return new AssignableAsn(ctx.getText(), false, EmptyAsn.Instance, [], this.fieldId, this.scope);
-  };
+  override visitSimpleAssignable = (ctx: SimpleAssignableContext) =>
+    new AssignableAsn(
+      this.visit(ctx.identifierUse())!,
+      false,
+      EmptyAsn.Instance,
+      [],
+      this.fieldId,
+      this.scope,
+    );
 
   override visitThisAssignable = (ctx: ThisAssignableContext) => {
     const thisAsn = new ThisInstanceAsn(this.fieldId, this.scope);
-    const id = ctx.identifierUse().getText();
+    const id = this.visit(ctx.identifierUse())!;
     return new AssignableAsn(
       id,
       true,
@@ -341,7 +347,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
-    const id = ctx.identifierUse().getText();
+    const id = this.visit(ctx.identifierUse())!;
     const indices = ctx.index().map((idx) => this.visit(idx)!);
 
     return new AssignableAsn(id, false, EmptyAsn.Instance, indices, this.fieldId, this.scope);
@@ -349,7 +355,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitThisProcRef = (ctx: ThisProcRefContext) => {
     const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
-    const name = ctx.methodName().getText();
+    const name = this.visit(ctx.methodName())!;
     return new AssignableAsn(
       name,
       false,
@@ -362,7 +368,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
     const node = this.visit(ctx.identifierWithOptIndexes());
-    const name = ctx.methodName().getText();
+    const name = this.visit(ctx.methodName())!;
     return new AssignableAsn(
       name,
       false,

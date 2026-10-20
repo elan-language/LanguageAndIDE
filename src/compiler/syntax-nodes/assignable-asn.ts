@@ -20,13 +20,13 @@ import {
 import { SymbolScope } from "../symbols/symbol-scope";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { compileSimpleSubscript, getIndexAndOfType, isEmptyNode } from "./ast-helpers";
+import { compileSimpleSubscript, getIndexAndOfType, isAstIdNode, isEmptyNode } from "./ast-helpers";
 import { EmptyAsn } from "./empty-asn";
 import { IndexAsn } from "./index-asn";
 
 export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
   constructor(
-    public readonly id: string,
+    public readonly idNode: AstNode,
     public readonly isAssignable: boolean,
     public readonly qualifier: AstQualifierNode | EmptyAsn,
     public indices: AstNode[],
@@ -34,6 +34,10 @@ export class AssignableAsn extends AbstractAstNode implements AstIndexableNode {
     private scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
   private rhs?: string;
