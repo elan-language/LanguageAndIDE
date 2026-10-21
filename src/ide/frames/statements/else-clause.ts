@@ -4,6 +4,10 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 
 export class ElseClause extends ClauseOfIf {
+  override canInsertAfter(): boolean {
+    return false;
+  }
+
   initialKeywords(): string {
     return elseKeyword;
   }

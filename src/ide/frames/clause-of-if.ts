@@ -10,6 +10,10 @@ export abstract class ClauseOfIf extends FrameWithStatements implements Statemen
   isClauseOfIf: boolean = true;
   isStatement: boolean = true;
 
+  override isMovable(): boolean {
+    return false;
+  }
+
   protected setClasses() {
     super.setClasses();
     this.pushClass(true, "outdent");

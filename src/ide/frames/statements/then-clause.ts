@@ -7,9 +7,6 @@ export class ThenClause extends ClauseOfIf {
   override isDeletable() {
     return false;
   }
-  override isMovable(): boolean {
-    return false;
-  }
 
   override select(withFocus: boolean, _multiSelect: boolean): void {
     // The invisible 'then-clause' is never selected itself
