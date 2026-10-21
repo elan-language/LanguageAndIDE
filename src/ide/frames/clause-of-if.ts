@@ -42,4 +42,11 @@ export abstract class ClauseOfIf extends FrameWithStatements implements Statemen
   }
 
   outerHtmlTag: string = "el-statement";
+
+  override canInsertAfter(): boolean {
+    return false;
+  }
+  override canInsertBefore(): boolean {
+    return false;
+  }
 }
