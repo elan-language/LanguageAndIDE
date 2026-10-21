@@ -67,4 +67,8 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
   hasElseClause(): boolean {
     return this.getChildren().filter((s) => s instanceof ElseClause).length > 0;
   }
+
+  override selectNextFrame(): void {
+    this.getFirstChild().selectNextFrame(); // i.e. the first statement (or selector) within the then-clause
+  }
 }
