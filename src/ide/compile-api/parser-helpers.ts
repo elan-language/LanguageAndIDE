@@ -160,11 +160,11 @@ export function getParamDefs<T>(
 
 export function getArgs<T>(
   visitor: ParseTreeVisitor<T>,
-  context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] },
+  context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] } | null,
 ) {
   return (
     (context
-      .argument()
+      ?.argument()
       ?.map((t) => visitor.visit(t))
       .filter((a) => a) as T[]) ?? []
   );

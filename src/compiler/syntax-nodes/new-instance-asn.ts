@@ -12,11 +12,10 @@ import { ProcedureType } from "../symbols/procedure-type";
 import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { TypeAsn } from "./type-asn";
 
 export class NewInstanceAsn extends AbstractAstNode implements AstNode {
   constructor(
-    private readonly typeNode: TypeAsn,
+    private readonly typeNode: AstNode,
     private readonly parameters: AstNode[],
     public readonly fieldId: string,
     private readonly scope: Scope,

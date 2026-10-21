@@ -217,8 +217,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     );
 
   override visitMethodCall = (ctx: MethodCallContext) => {
-    const args = ctx.argList();
-    const argList = args ? getArgs(this, args) : [];
+    const argList = getArgs(this, ctx.argList());
     const name = ctx.methodName().getText();
 
     return new MethodCallAsn(name, argList, this.fieldId, this.scope);
@@ -226,6 +225,50 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitIndex = (ctx: IndexContext) =>
     new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
+
+  // expression
+
+  override visitNewInstanceExpression = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitUnaryExpressionLabel = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitTermExpression = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitBinaryExpressionLabel = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx._condition!)!;
+    const trueExpression = this.visit(ctx._true_!)!;
+    const falseExpression = this.visit(ctx._false_!)!;
+    return new IfExprAsn(condition, trueExpression, falseExpression, this.fieldId, this.scope);
+  };
+
+  override visitNewInstance = (ctx: NewInstanceContext) =>
+    new NewInstanceAsn(
+      this.visit(ctx.type())!,
+      getArgs(this, ctx.argList()),
+      this.fieldId,
+      this.scope,
+    );
+
+  // unary expression
+  override visitNegateLogical = (ctx: NegateLogicalContext) =>
+    new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
+
+  override visitNegateNumeric = (ctx: NegateNumericContext) =>
+    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
   override visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();
@@ -253,6 +296,15 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
     return term;
   };
+
+  override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
+    new BinaryExpressionAsn(
+      ctx.binaryOperator().getText(),
+      this.visit(ctx.term())!,
+      this.visit(ctx.expression())!,
+      this.fieldId,
+      this.scope,
+    );
 
   override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     new BracketedExpressionAsn(this.visit(ctx.expression())!, this.fieldId);
@@ -285,55 +337,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
     return new LitTupleAsn(items, this.fieldId);
-  };
-
-  override visitNegateLogical = (ctx: NegateLogicalContext) =>
-    new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
-
-  override visitNegateNumeric = (ctx: NegateNumericContext) =>
-    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
-
-  override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
-    new BinaryExpressionAsn(
-      ctx.binaryOperator().getText(),
-      this.visit(ctx.term())!,
-      this.visit(ctx.expression())!,
-      this.fieldId,
-      this.scope,
-    );
-
-  override visitNewInstanceExpression = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
-    return this.visitChildren(ctx)!;
-  };
-
-  override visitUnaryExpressionLabel = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
-    return this.visitChildren(ctx)!;
-  };
-
-  override visitTermExpression = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
-    return this.visitChildren(ctx)!;
-  };
-
-  override visitBinaryExpressionLabel = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
-    return this.visitChildren(ctx)!;
-  };
-
-  override visitIfExpression = (ctx: IfExpressionContext) => {
-    const condition = this.visit(ctx._condition!)!;
-    const trueExpression = this.visit(ctx._true_!)!;
-    const falseExpression = this.visit(ctx._false_!)!;
-    return new IfExprAsn(condition, trueExpression, falseExpression, this.fieldId, this.scope);
-  };
-
-  override visitNewInstance = (ctx: NewInstanceContext) => {
-    const type = this.visit(ctx.type()) as TypeAsn;
-    const argList = ctx.argList();
-    const params = argList ? getArgs(this, argList) : [];
-    return new NewInstanceAsn(type, params, this.fieldId, this.scope);
   };
 
   override visitThisInstance = (_ctx: ThisInstanceContext) => {
