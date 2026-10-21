@@ -49,6 +49,7 @@ import {
   IdentifierListContext,
   IdentifierUseContext,
   IdentifierWithOptIndexesContext,
+  IfExpressionContext,
   IndexContext,
   IndexedAssignableContext,
   InstanceProcRefContext,
@@ -301,17 +302,31 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  override visitExpression = (ctx: ExpressionContext) => {
+  override visitNewInstanceExpression = (ctx: ExpressionContext) => {
     this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
 
-    if (ctx.expression().length > 0) {
-      const condition = this.visit(ctx.expression(0)!)!;
-      const lhs = this.visit(ctx.expression(1)!)!;
-      const rhs = this.visit(ctx.expression(2)!)!;
-      return new IfExprAsn(condition, lhs, rhs, this.fieldId, this.scope);
-    } else {
-      return this.visitChildren(ctx)!;
-    }
+  override visitUnaryExpressionLabel = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitTermExpression = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitBinaryExpressionLabel = (ctx: ExpressionContext) => {
+    this.topLevelTerm = true;
+    return this.visitChildren(ctx)!;
+  };
+
+  override visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx._condition!)!;
+    const trueExpression = this.visit(ctx._true_!)!;
+    const falseExpression = this.visit(ctx._false_!)!;
+    return new IfExprAsn(condition, trueExpression, falseExpression, this.fieldId, this.scope);
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) => {

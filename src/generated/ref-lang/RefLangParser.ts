@@ -3629,6 +3629,7 @@ export class RefLangParser extends antlr.Parser {
       this.errorHandler.sync(this);
       switch (this.interpreter.adaptivePredict(this.tokenStream, 77, this.context)) {
         case 1:
+          localContext = new NewInstanceExpressionContext(localContext);
           this.enterOuterAlt(localContext, 1);
           {
             this.state = 768;
@@ -3636,6 +3637,7 @@ export class RefLangParser extends antlr.Parser {
           }
           break;
         case 2:
+          localContext = new UnaryExpressionLabelContext(localContext);
           this.enterOuterAlt(localContext, 2);
           {
             this.state = 769;
@@ -3643,6 +3645,7 @@ export class RefLangParser extends antlr.Parser {
           }
           break;
         case 3:
+          localContext = new TermExpressionContext(localContext);
           this.enterOuterAlt(localContext, 3);
           {
             this.state = 770;
@@ -3650,6 +3653,7 @@ export class RefLangParser extends antlr.Parser {
           }
           break;
         case 4:
+          localContext = new BinaryExpressionLabelContext(localContext);
           this.enterOuterAlt(localContext, 4);
           {
             this.state = 771;
@@ -3657,6 +3661,7 @@ export class RefLangParser extends antlr.Parser {
           }
           break;
         case 5:
+          localContext = new IfExpressionContext(localContext);
           this.enterOuterAlt(localContext, 5);
           {
             this.state = 772;
@@ -3664,15 +3669,15 @@ export class RefLangParser extends antlr.Parser {
             this.state = 773;
             this.match(RefLangParser.OPEN_BRACKET);
             this.state = 774;
-            this.expression();
+            (localContext as IfExpressionContext)._condition = this.expression();
             this.state = 775;
             this.match(RefLangParser.COMMA);
             this.state = 776;
-            this.expression();
+            (localContext as IfExpressionContext)._true_ = this.expression();
             this.state = 777;
             this.match(RefLangParser.COMMA);
             this.state = 778;
-            this.expression();
+            (localContext as IfExpressionContext)._false_ = this.expression();
             this.state = 779;
             this.match(RefLangParser.CLOSE_BRACKET);
           }
@@ -7968,32 +7973,104 @@ export class ExpressionContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
-  public newInstance(): NewInstanceContext | null {
-    return this.getRuleContext(0, NewInstanceContext);
+  public override get ruleIndex(): number {
+    return RefLangParser.RULE_expression;
   }
-  public unaryExpression(): UnaryExpressionContext | null {
-    return this.getRuleContext(0, UnaryExpressionContext);
+  public override copyFrom(ctx: ExpressionContext): void {
+    super.copyFrom(ctx);
   }
-  public term(): TermContext | null {
-    return this.getRuleContext(0, TermContext);
+}
+export class UnaryExpressionLabelContext extends ExpressionContext {
+  public constructor(ctx: ExpressionContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
   }
-  public binaryExpression(): BinaryExpressionContext | null {
-    return this.getRuleContext(0, BinaryExpressionContext);
+  public unaryExpression(): UnaryExpressionContext {
+    return this.getRuleContext(0, UnaryExpressionContext)!;
   }
-  public IF_(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.IF_, 0);
-  }
-  public OPEN_BRACKET(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.OPEN_BRACKET, 0);
-  }
-  public expression(): ExpressionContext[];
-  public expression(i: number): ExpressionContext | null;
-  public expression(i?: number): ExpressionContext[] | ExpressionContext | null {
-    if (i === undefined) {
-      return this.getRuleContexts(ExpressionContext);
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterUnaryExpressionLabel) {
+      listener.enterUnaryExpressionLabel(this);
     }
-
-    return this.getRuleContext(i, ExpressionContext);
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitUnaryExpressionLabel) {
+      listener.exitUnaryExpressionLabel(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitUnaryExpressionLabel) {
+      return visitor.visitUnaryExpressionLabel(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class BinaryExpressionLabelContext extends ExpressionContext {
+  public constructor(ctx: ExpressionContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public binaryExpression(): BinaryExpressionContext {
+    return this.getRuleContext(0, BinaryExpressionContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterBinaryExpressionLabel) {
+      listener.enterBinaryExpressionLabel(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitBinaryExpressionLabel) {
+      listener.exitBinaryExpressionLabel(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitBinaryExpressionLabel) {
+      return visitor.visitBinaryExpressionLabel(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class NewInstanceExpressionContext extends ExpressionContext {
+  public constructor(ctx: ExpressionContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public newInstance(): NewInstanceContext {
+    return this.getRuleContext(0, NewInstanceContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterNewInstanceExpression) {
+      listener.enterNewInstanceExpression(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitNewInstanceExpression) {
+      listener.exitNewInstanceExpression(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitNewInstanceExpression) {
+      return visitor.visitNewInstanceExpression(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class IfExpressionContext extends ExpressionContext {
+  public _condition?: ExpressionContext;
+  public _true_?: ExpressionContext;
+  public _false_?: ExpressionContext;
+  public constructor(ctx: ExpressionContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public IF_(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.IF_, 0)!;
+  }
+  public OPEN_BRACKET(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.OPEN_BRACKET, 0)!;
   }
   public COMMA(): antlr.TerminalNode[];
   public COMMA(i: number): antlr.TerminalNode | null;
@@ -8004,25 +8081,57 @@ export class ExpressionContext extends antlr.ParserRuleContext {
       return this.getToken(RefLangParser.COMMA, i);
     }
   }
-  public CLOSE_BRACKET(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.CLOSE_BRACKET, 0);
+  public CLOSE_BRACKET(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.CLOSE_BRACKET, 0)!;
   }
-  public override get ruleIndex(): number {
-    return RefLangParser.RULE_expression;
+  public expression(): ExpressionContext[];
+  public expression(i: number): ExpressionContext | null;
+  public expression(i?: number): ExpressionContext[] | ExpressionContext | null {
+    if (i === undefined) {
+      return this.getRuleContexts(ExpressionContext);
+    }
+
+    return this.getRuleContext(i, ExpressionContext);
   }
   public override enterRule(listener: RefLangListener): void {
-    if (listener.enterExpression) {
-      listener.enterExpression(this);
+    if (listener.enterIfExpression) {
+      listener.enterIfExpression(this);
     }
   }
   public override exitRule(listener: RefLangListener): void {
-    if (listener.exitExpression) {
-      listener.exitExpression(this);
+    if (listener.exitIfExpression) {
+      listener.exitIfExpression(this);
     }
   }
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitExpression) {
-      return visitor.visitExpression(this);
+    if (visitor.visitIfExpression) {
+      return visitor.visitIfExpression(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class TermExpressionContext extends ExpressionContext {
+  public constructor(ctx: ExpressionContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public term(): TermContext {
+    return this.getRuleContext(0, TermContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterTermExpression) {
+      listener.enterTermExpression(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitTermExpression) {
+      listener.exitTermExpression(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitTermExpression) {
+      return visitor.visitTermExpression(this);
     } else {
       return visitor.visitChildren(this);
     }

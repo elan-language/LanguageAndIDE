@@ -74,7 +74,11 @@ import { LitStringContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
-import { ExpressionContext } from "./RefLangParser.js";
+import { NewInstanceExpressionContext } from "./RefLangParser.js";
+import { UnaryExpressionLabelContext } from "./RefLangParser.js";
+import { TermExpressionContext } from "./RefLangParser.js";
+import { BinaryExpressionLabelContext } from "./RefLangParser.js";
+import { IfExpressionContext } from "./RefLangParser.js";
 import { TermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
@@ -550,11 +554,40 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIndex?: (ctx: IndexContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.expression`.
+   * Visit a parse tree produced by the `newInstanceExpression`
+   * labeled alternative in `RefLangParser.expression`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitExpression?: (ctx: ExpressionContext) => Result;
+  visitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `unaryExpressionLabel`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => Result;
+  /**
+   * Visit a parse tree produced by the `termExpression`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTermExpression?: (ctx: TermExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `binaryExpressionLabel`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBinaryExpressionLabel?: (ctx: BinaryExpressionLabelContext) => Result;
+  /**
+   * Visit a parse tree produced by the `ifExpression`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfExpression?: (ctx: IfExpressionContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.term`.
    * @param ctx the parse tree

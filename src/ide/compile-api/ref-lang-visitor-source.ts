@@ -8,10 +8,10 @@ import {
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
-  ExpressionContext,
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
+  IfExpressionContext,
   IndexContext,
   IndexedAssignableContext,
   InstanceProcRefContext,
@@ -149,15 +149,11 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
     return `${lambda} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 
-  override visitExpression = (ctx: ExpressionContext) => {
-    if (ctx.expression().length > 0) {
-      const condition = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
-      const exprIfTrue = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
-      const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
-      return `if_(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
-    } else {
-      return this.visitChildren(ctx) ?? "";
-    }
+  override visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx._condition!);
+    const exprIfTrue = this.visit(ctx._true_!);
+    const exprIfFalse = this.visit(ctx._false_!);
+    return `if_(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) =>

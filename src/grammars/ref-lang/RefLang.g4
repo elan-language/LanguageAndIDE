@@ -226,11 +226,11 @@ enumValue: typeName DOT identifierUse;
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
 expression:
-    newInstance
-    | unaryExpression
-    | term
-    | binaryExpression
-    | IF_ OPEN_BRACKET expression COMMA expression COMMA expression CLOSE_BRACKET
+    newInstance #newInstanceExpression
+    | unaryExpression #unaryExpressionLabel
+    | term #termExpression
+    | binaryExpression #binaryExpressionLabel
+    | IF_ OPEN_BRACKET condition=expression COMMA true=expression COMMA false=expression CLOSE_BRACKET # ifExpression
 ;
 
 term:
