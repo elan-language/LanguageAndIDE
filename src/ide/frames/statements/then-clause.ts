@@ -10,6 +10,10 @@ export class ThenClause extends ClauseOfIf {
     return false;
   }
 
+  override getFrNo(): string {
+    return "";
+  }
+
   initialKeywords(): string {
     return "";
   }
