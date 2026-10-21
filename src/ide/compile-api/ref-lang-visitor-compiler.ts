@@ -15,7 +15,7 @@ import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn"
 import { FloatTypeNameAsn } from "../../compiler/syntax-nodes/float-type-name-asn";
 import { IdentifierDefAsn } from "../../compiler/syntax-nodes/identifier-def-asn";
 import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn";
-import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
+import { IfExpressionAsn } from "../../compiler/syntax-nodes/if-expression-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { IntTypeNameAsn } from "../../compiler/syntax-nodes/int-type-name-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
@@ -27,7 +27,6 @@ import { LitBooleanAsn } from "../../compiler/syntax-nodes/lit-boolean-asn";
 import { LitFloatAsn } from "../../compiler/syntax-nodes/lit-float-asn";
 import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
 import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
-import { LitTupleAsn } from "../../compiler/syntax-nodes/lit-tuple-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
@@ -35,6 +34,7 @@ import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
+import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { TypeNameAsn } from "../../compiler/syntax-nodes/type-name-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
@@ -218,13 +218,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  override visitMethodCall = (ctx: MethodCallContext) => {
-    const argList = getArgs(this, ctx.argList());
-    const name = ctx.methodName().getText();
-
-    return new MethodCallAsn(name, argList, this.fieldId, this.scope);
-  };
-
   override visitIndex = (ctx: IndexContext) =>
     new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
 
@@ -254,7 +247,13 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     const condition = this.visit(ctx._condition!)!;
     const trueExpression = this.visit(ctx._true_!)!;
     const falseExpression = this.visit(ctx._false_!)!;
-    return new IfExprAsn(condition, trueExpression, falseExpression, this.fieldId, this.scope);
+    return new IfExpressionAsn(
+      condition,
+      trueExpression,
+      falseExpression,
+      this.fieldId,
+      this.scope,
+    );
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) =>
@@ -317,6 +316,12 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return term;
   };
 
+  override visitThisInstance = (_ctx: ThisInstanceContext) =>
+    new ThisInstanceAsn(this.fieldId, this.scope);
+
+  override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
+    new BracketedExpressionAsn(this.visit(ctx.expression())!, this.fieldId);
+
   override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     new BinaryExpressionAsn(
       ctx.binaryOperator().getText(),
@@ -325,9 +330,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
-
-  override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
-    new BracketedExpressionAsn(this.visit(ctx.expression())!, this.fieldId);
 
   override visitList = (ctx: ListContext) => {
     const items = ctx
@@ -338,8 +340,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new ListAsn(items, this.fieldId, this.scope);
   };
 
-  override visitKvp = (ctx: KvpContext) =>
-    new KvpAsn(this.visit(ctx.expression(0)!)!, this.visit(ctx.expression(1)!)!, this.fieldId);
+  override visitTuple = (ctx: TupleContext) => {
+    const items = ctx
+      .expressionList()
+      .expression()
+      .map((e) => this.visit(e))
+      .filter((e) => e) as AstNode[];
+    return new TupleAsn(items, this.fieldId);
+  };
 
   override visitDictionary = (ctx: DictionaryContext) => {
     const items = ctx
@@ -350,49 +358,54 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new DictionaryAsn(items, this.fieldId, this.scope);
   };
 
-  override visitTuple = (ctx: TupleContext) => {
-    const items = ctx
-      .expressionList()
-      .expression()
-      .map((e) => this.visit(e))
-      .filter((e) => e) as AstNode[];
-    return new LitTupleAsn(items, this.fieldId);
-  };
+  override visitKvp = (ctx: KvpContext) =>
+    new KvpAsn(this.visit(ctx._key!)!, this.visit(ctx._value!)!, this.fieldId);
 
-  override visitThisInstance = (_ctx: ThisInstanceContext) => {
-    return new ThisInstanceAsn(this.fieldId, this.scope);
-  };
+  override visitMethodCall = (ctx: MethodCallContext) =>
+    new MethodCallAsn(
+      this.visit(ctx.methodName())!,
+      getArgs(this, ctx.argList()),
+      this.fieldId,
+      this.scope,
+    );
+
+  override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) =>
+    new ProcRefAsn(
+      this.visit(ctx.identifierUse())!,
+      EmptyAsn.Instance,
+      ctx.index().map((idx) => this.visit(idx)!),
+      this.fieldId,
+      this.scope,
+    );
+
+  override visitThisProcRef = (ctx: ThisProcRefContext) =>
+    new ProcRefAsn(
+      this.visit(ctx.methodName())!,
+      new ThisInstanceAsn(this.fieldId, this.scope),
+      [],
+      this.fieldId,
+      this.scope,
+    );
+
+  override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
+    new ProcRefAsn(
+      this.visit(ctx.methodName())!,
+      this.visit(ctx.identifierWithOptIndexes())!,
+      [],
+      this.fieldId,
+      this.scope,
+    );
 
   override visitLambda = (ctx: LambdaContext) => {
-    const parameters =
-      ctx
-        .paramList()
-        ?.paramDef()
-        .map((p) => this.visit(p)) ?? [];
+    const parameters = (ctx
+      .paramList()
+      ?.paramDef()
+      .map((p) => this.visit(p)) ?? []) as ParamDefAsn[];
 
-    const sig = new LambdaSigAsn(parameters as ParamDefAsn[], this.fieldId, this.scope);
-
-    const body = this.visit(ctx.expression())!;
-
-    return new LambdaAsn(sig, body, this.fieldId);
-  };
-
-  override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
-    const id = this.visit(ctx.identifierUse())!;
-    const indices = ctx.index().map((idx) => this.visit(idx)!);
-
-    return new ProcRefAsn(id, EmptyAsn.Instance, indices, this.fieldId, this.scope);
-  };
-
-  override visitThisProcRef = (ctx: ThisProcRefContext) => {
-    const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
-    const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(name, thisNode, [], this.fieldId, this.scope);
-  };
-
-  override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
-    const node = this.visit(ctx.identifierWithOptIndexes())!;
-    const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(name, node, [], this.fieldId, this.scope);
+    return new LambdaAsn(
+      new LambdaSigAsn(parameters, this.fieldId, this.scope),
+      this.visit(ctx.expression())!,
+      this.fieldId,
+    );
   };
 }

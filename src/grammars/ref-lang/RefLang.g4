@@ -265,7 +265,7 @@ tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 
 dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
 kvpList: kvp (COMMA kvp)*;
-kvp: expression COLON expression;
+kvp: key = expression COLON value = expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 

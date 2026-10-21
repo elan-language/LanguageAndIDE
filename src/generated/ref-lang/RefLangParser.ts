@@ -4169,11 +4169,11 @@ export class RefLangParser extends antlr.Parser {
       this.enterOuterAlt(localContext, 1);
       {
         this.state = 848;
-        this.expression();
+        localContext._key = this.expression();
         this.state = 849;
         this.match(RefLangParser.COLON);
         this.state = 850;
-        this.expression();
+        localContext._value = this.expression();
       }
     } catch (re) {
       if (re instanceof antlr.RecognitionException) {
@@ -8827,8 +8827,13 @@ export class KvpListContext extends antlr.ParserRuleContext {
 }
 
 export class KvpContext extends antlr.ParserRuleContext {
+  public _key?: ExpressionContext;
+  public _value?: ExpressionContext;
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
+  }
+  public COLON(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.COLON, 0)!;
   }
   public expression(): ExpressionContext[];
   public expression(i: number): ExpressionContext | null;
@@ -8838,9 +8843,6 @@ export class KvpContext extends antlr.ParserRuleContext {
     }
 
     return this.getRuleContext(i, ExpressionContext);
-  }
-  public COLON(): antlr.TerminalNode {
-    return this.getToken(RefLangParser.COLON, 0)!;
   }
   public override get ruleIndex(): number {
     return RefLangParser.RULE_kvp;

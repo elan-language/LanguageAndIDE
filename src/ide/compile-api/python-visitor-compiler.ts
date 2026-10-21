@@ -13,7 +13,7 @@ import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/identifier
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { IdentifierDefAsn } from "../../compiler/syntax-nodes/identifier-def-asn";
 import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn";
-import { IfExprAsn } from "../../compiler/syntax-nodes/if-expr-asn";
+import { IfExpressionAsn } from "../../compiler/syntax-nodes/if-expression-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
@@ -23,13 +23,13 @@ import { LitBooleanAsn } from "../../compiler/syntax-nodes/lit-boolean-asn";
 import { LitFloatAsn } from "../../compiler/syntax-nodes/lit-float-asn";
 import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
 import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
-import { LitTupleAsn } from "../../compiler/syntax-nodes/lit-tuple-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
+import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
 import {
@@ -129,13 +129,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.scope,
     );
 
-  override visitMethodCall = (ctx: MethodCallContext) => {
-    const args = ctx.argList();
-    const argList = args ? getArgs(this, args) : [];
-    const name = ctx.methodName().getText();
-
-    return new MethodCallAsn(name, argList, this.fieldId, this.scope);
-  };
+  override visitMethodCall = (ctx: MethodCallContext) =>
+    new MethodCallAsn(
+      this.visit(ctx.methodName())!,
+      getArgs(this, ctx.argList()),
+      this.fieldId,
+      this.scope,
+    );
 
   override visitIndex = (ctx: IndexContext) =>
     new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
@@ -197,7 +197,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       .expression()
       .map((e) => this.visit(e))
       .filter((e) => e) as AstNode[];
-    return new LitTupleAsn(items, this.fieldId);
+    return new TupleAsn(items, this.fieldId);
   };
 
   override visitLitInt = (ctx: LitIntContext) => {
@@ -259,7 +259,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       const ifTrue = this.visit(ctx.expression(0)!)!;
       const condition = this.visit(ctx.expression(1)!)!;
       const ifFalse = this.visit(ctx.expression(2)!)!;
-      return new IfExprAsn(condition, ifTrue, ifFalse, this.fieldId, this.scope);
+      return new IfExpressionAsn(condition, ifTrue, ifFalse, this.fieldId, this.scope);
     } else {
       return this.visitChildren(ctx)!;
     }

@@ -1,11 +1,11 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { ClassType } from "../../compiler/symbols/class-type";
-import { getGlobalScope, mostPreciseSymbol } from "../../compiler/symbols/symbol-helpers";
 import { mustBeBooleanCondition, mustBeCompatibleType } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { ClassType } from "../symbols/class-type";
+import { getGlobalScope, mostPreciseSymbol } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class IfExprAsn extends AbstractAstNode implements AstNode {
+export class IfExpressionAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly condition: AstNode,
     private readonly expr1: AstNode,

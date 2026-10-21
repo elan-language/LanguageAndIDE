@@ -28,6 +28,7 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
   generateType,
+  isAstIdNode,
   isEmptyNode,
   matchGenericTypes,
   matchParametersAndTypes,
@@ -36,12 +37,16 @@ import { EmptyAsn } from "./empty-asn";
 
 export class MethodCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
   constructor(
-    public readonly id: string,
+    public readonly idNode: AstNode,
     public readonly parameters: Array<AstNode>,
     public readonly fieldId: string,
     public scope: Scope,
   ) {
     super();
+  }
+
+  get id() {
+    return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
   // this is a temp hack until all fields migrated
