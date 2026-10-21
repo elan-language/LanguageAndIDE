@@ -100,12 +100,20 @@ assignment:
 ;
 
 ifStatement:
-    GHOSTED? IF expression COLON NL (
-        elseIfClause
-        | elseClause
-        | ordinaryStatement
-    )* COMMENT NL
+    GHOSTED? IF condition = expression THEN NL
+        thenClause
+        elseIfClause*
+        elseClause?
+    COMMENT NL
 ;
+    thenClause: 
+        ordinaryStatement*;
+
+    elseIfClause: GHOSTED? ELIF expression THEN NL
+        ordinaryStatement*;
+
+    elseClause: GHOSTED? ELSE NL
+        ordinaryStatement*;
 
 whileLoop:
     GHOSTED? WHILE expression COLON NL ordinaryStatement* COMMENT NL
@@ -139,10 +147,6 @@ assert:
 ;
 
 returnStatement: RETURN expression NL; // not ghostable
-elseIfClause:
-    GHOSTED? ELIF expression COLON ELSE_IF_ANNOTATION NL
-;
-elseClause: GHOSTED? ELSE COLON NL;
 catchStatement: GHOSTED? EXCEPT typeName AS identifierDef NL;
 
 // Members

@@ -95,12 +95,23 @@ assignment:
 ;
 
 ifStatement:
-    IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL (
-        elseIfClause
-        | elseClause
-        | ordinaryStatement
-    )* CLOSE_BRACE COMMENT NL
+    GHOSTED? IF condition = expression THEN OPEN_BRACE NL
+        thenClause
+        elseIfClause*
+        elseClause?
+    COMMENT NL
 ;
+    thenClause: 
+        ordinaryStatement* 
+        CLOSE_BRACE NL;
+
+    elseIfClause: GHOSTED? ELIF expression THEN OPEN_BRACE NL 
+        ordinaryStatement* 
+        CLOSE_BRACE NL;
+
+    elseClause: GHOSTED? ELSE OPEN_BRACE NL 
+        ordinaryStatement* 
+        CLOSE_BRACE NL;
 
 whileLoop:
     WHILE OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement* CLOSE_BRACE COMMENT
@@ -136,10 +147,7 @@ assert:
     ASSERT DOT ARE_EQUAL OPEN_BRACKET assertActual COMMA expression CLOSE_BRACKET SEMI_COLON NL
 ;
 returnStatement: RETURN expression SEMI_COLON NL;
-elseIfClause:
-    CLOSE_BRACE ELSE IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL
-;
-elseClause: CLOSE_BRACE ELSE OPEN_BRACE NL;
+
 catchStatement:
     CLOSE_BRACE CATCH OPEN_BRACKET typeName identifierDef CLOSE_BRACKET OPEN_BRACE NL
 ;

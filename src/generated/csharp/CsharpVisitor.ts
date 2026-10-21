@@ -18,6 +18,9 @@ import { OrdinaryStatementContext } from "./CsharpParser.js";
 import { VariableDefinitionContext } from "./CsharpParser.js";
 import { AssignmentContext } from "./CsharpParser.js";
 import { IfStatementContext } from "./CsharpParser.js";
+import { ThenClauseContext } from "./CsharpParser.js";
+import { ElseIfClauseContext } from "./CsharpParser.js";
+import { ElseClauseContext } from "./CsharpParser.js";
 import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
 import { ProcedureCallContext } from "./CsharpParser.js";
@@ -30,8 +33,6 @@ import { ThrowStatementContext } from "./CsharpParser.js";
 import { ErrorMessageContext } from "./CsharpParser.js";
 import { AssertContext } from "./CsharpParser.js";
 import { ReturnStatementContext } from "./CsharpParser.js";
-import { ElseIfClauseContext } from "./CsharpParser.js";
-import { ElseClauseContext } from "./CsharpParser.js";
 import { CatchStatementContext } from "./CsharpParser.js";
 import { ConstructorMemberContext } from "./CsharpParser.js";
 import { PropertyContext } from "./CsharpParser.js";
@@ -191,6 +192,24 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIfStatement?: (ctx: IfStatementContext) => Result;
   /**
+   * Visit a parse tree produced by `CsharpParser.thenClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThenClause?: (ctx: ThenClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.elseIfClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `CsharpParser.elseClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseClause?: (ctx: ElseClauseContext) => Result;
+  /**
    * Visit a parse tree produced by `CsharpParser.whileLoop`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -262,18 +281,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.elseIfClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.elseClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseClause?: (ctx: ElseClauseContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.catchStatement`.
    * @param ctx the parse tree
