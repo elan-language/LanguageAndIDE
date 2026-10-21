@@ -1,17 +1,9 @@
-import { elseKeyword } from "../../../compiler/elan-keywords";
+import { elseKeyword, endKeyword, ifKeyword } from "../../../compiler/elan-keywords";
+import { ClauseOfIf } from "../clause-of-if";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
-import { Statement } from "../frame-interfaces/statement";
-import { SingleLineFrame } from "../single-line-frame";
 
-export class ElseClause extends SingleLineFrame implements Statement {
-  isStatement: boolean = true;
-
-  protected setClasses() {
-    super.setClasses();
-    this.pushClass(true, "outdent");
-  }
-
+export class ElseClause extends ClauseOfIf {
   initialKeywords(): string {
     return elseKeyword;
   }
@@ -33,10 +25,23 @@ export class ElseClause extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}`;
+    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}\r
+${this.renderChildrenAsElanSource()}`;
   }
 
-  parseFrom(source: CodeSource): void {
+  parseTop(source: CodeSource): void {
     source.remove("else");
   }
+
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    let result = false;
+    const endIf = `${endKeyword} ${ifKeyword}`;
+    if (source.isMatch(endIf)) {
+      result = true;
+    }
+    return result;
+  }
+
+  outerHtmlTag: string = "el-statement";
 }

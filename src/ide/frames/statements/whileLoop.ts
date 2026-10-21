@@ -7,7 +7,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class WhileLoop extends FrameWithStatements {
-  isStatement = false;
+  isStatement = true;
   condition: FieldImpl;
   constructor(parent: Parent) {
     super(parent);

@@ -74,6 +74,7 @@ import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
+import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
@@ -111,10 +112,6 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ElseIfClause) {
-      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
-    } else if (frame instanceof ElseClause) {
-      html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof Property) {
@@ -147,14 +144,18 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
+    } else if (frame instanceof ElseIfClause) {
+      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
+    } else if (frame instanceof ElseClause) {
+      html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
+    } else if (frame instanceof FunctionMethod) {
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
       html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
       html = `<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
-    } else if (frame instanceof FunctionMethod) {
-      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof ProcedureMethod) {
       html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
@@ -163,6 +164,8 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
+    } else if (frame instanceof ThenClause) {
+      html = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
@@ -181,7 +184,11 @@ export class LanguageElan extends LanguageAbstract {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
+    let result = "";
+    if (!("isClause" in frame)) {
+      result = `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
+    }
+    return result;
   }
 
   renderFileImportsAsHtml(): string {

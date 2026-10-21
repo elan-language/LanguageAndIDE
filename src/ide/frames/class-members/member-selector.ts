@@ -40,57 +40,77 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return [
-      [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
+      [
+        constructorKeyword,
+        "c",
+        "constructor",
+        (_parent: Parent) => this.class.createConstructor(),
+        true,
+      ],
+      [
+        propertyKeyword,
+        "p",
+        "<b>p</b>roperty",
+        (_parent: Parent) => this.class.createProperty(),
+        true,
+      ],
       [
         procedureKeyword,
         "c",
         "pro<b>c</b>edure method",
         (_parent: Parent) => this.class.createProcedure(),
+        true,
       ],
       [
         functionKeyword,
         "f",
         "<b>f</b>unction method",
         (_parent: Parent) => this.class.createFunction(),
+        true,
       ],
       [
         abstractProcedureKeywords,
         "",
         "abstract procedure",
         (_parent: Parent) => this.class.createAbstractProcedure(),
+        true,
       ],
       [
         abstractFunctionKeywords,
         "",
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
+        true,
       ],
       [
         privatePropertyKeywords,
         "",
         "private property",
         (_parent: Parent) => this.class.createProperty(true),
+        true,
       ],
       [
         privateProcedureKeywords,
         "",
         "private procedure",
         (_parent: Parent) => this.class.createProcedure(true),
+        true,
       ],
       [
         privateFunctionKeywords,
         "",
         "private function",
         (_parent: Parent) => this.class.createFunction(true),
+        true,
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.class.createComment(),
+        true,
       ],
     ];
   }

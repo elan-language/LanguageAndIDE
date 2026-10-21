@@ -8,6 +8,7 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameWithStatements } from "./frame-with-statements";
 import { Overtyper } from "./overtyper";
 import { Paradigm } from "./paradigm";
 import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
@@ -42,19 +43,19 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame][];
+  abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][];
   abstract paradigmAllows(keyword: string): boolean;
   abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
 
   optionsFilteredByContext(
     userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame][] {
+  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
   optionsFilteredByParadigm(
     userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame][] {
+  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return this.optionsFilteredByContext(userEntry).filter((o) => this.paradigmAllows(o[0]));
   }
 
@@ -95,7 +96,9 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  optionsMatchingUserInput(match: string): [string, string, string, (parent: Parent) => Frame][] {
+  optionsMatchingUserInput(
+    match: string,
+  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return this.optionsFilteredByParadigm(true).filter((o) => o[1] === match);
   }
 
@@ -113,11 +116,21 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   addFrame(keyword: string, pendingChars: string): Frame {
-    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][3];
+    const option = this.defaultOptions().filter((o) => o[0] === keyword)[0];
+    const func = option[3];
+    const addAtPeerLevel = option[4];
     const parent = this.getParent();
     const newFrame: Frame = func(parent);
-    parent.addChildBefore(newFrame, this);
-    newFrame.selectFirstField();
+    if (addAtPeerLevel) {
+      parent.addChildBefore(newFrame, this);
+    } else {
+      parent.getParent().addChildAfter(newFrame, parent as unknown as Frame);
+    }
+    if (newFrame.getFields().length > 0) {
+      newFrame.selectFirstField();
+    } else if (newFrame instanceof FrameWithStatements) {
+      newFrame.selectFirstChild(false);
+    }
     const fields = newFrame.getFields();
     if (fields.length > 0) {
       fields[0].overtyper.consumeChars(pendingChars, 500);

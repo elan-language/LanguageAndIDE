@@ -29,7 +29,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCatch(parent: Parent): Frame {
     return new CatchStatement(parent);
   }
-  public newElif(parent: Parent): Frame {
+  public newElseIf(parent: Parent): Frame {
     return new ElseIfClause(parent);
   }
   public newElse(parent: Parent): Frame {

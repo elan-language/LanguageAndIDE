@@ -64,6 +64,7 @@ import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
+import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
@@ -335,6 +336,14 @@ export function transform(
     returnStatementAsn.expression =
       transform(node.expr, node.getHtmlId(), returnStatementAsn) ?? EmptyAsn.Instance;
     return returnStatementAsn;
+  }
+
+  if (node instanceof ThenClause) {
+    const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
+    elseClauseAsn.breakpointStatus = node.breakpointStatus;
+    elseClauseAsn.condition = EmptyAsn.Instance;
+    elseClauseAsn.hasIf = false;
+    return elseClauseAsn;
   }
 
   if (node instanceof ElseIfClause) {
