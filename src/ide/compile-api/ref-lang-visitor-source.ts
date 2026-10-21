@@ -5,6 +5,7 @@ import {
   BinaryExpressionContext,
   BinaryOperatorContext,
   BracketedExpressionContext,
+  ChainableTermContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
@@ -14,6 +15,7 @@ import {
   IfExpressionContext,
   IndexContext,
   IndexedAssignableContext,
+  IndexedTermContext,
   InstanceProcRefContext,
   KvpContext,
   LambdaContext,
@@ -27,7 +29,6 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
-  TermContext,
   TestNameContext,
   ThisAssignableContext,
   ThisProcRefContext,
@@ -171,12 +172,11 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  override visitTerm = (ctx: TermContext) =>
-    ctx.DOT()
-      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
-      : ctx.term()
-        ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
-        : (this.visitChildren(ctx) ?? "");
+  override visitIndexedTerm = (ctx: IndexedTermContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.index())}`;
+
+  override visitChainableTerm = (ctx: ChainableTermContext) =>
+    `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
 
   override visitThisAssignable = (ctx: ThisAssignableContext) =>
     `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;

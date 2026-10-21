@@ -235,16 +235,16 @@ expression:
 ;
 
 term:
-    thisInstance
-    | bracketedExpression
-    | litValue
-    | list
-    | dictionary
-    | tuple
-    | identifierUse
-    | methodCall
-    | term index
-    | term DOT chainable
+    thisInstance #  thisInstanceTerm
+    | bracketedExpression #  bracketedExpressionTerm
+    | litValue #  litValueTerm
+    | list #  listTerm
+    | dictionary #  dictionaryTerm
+    | tuple #  tupleTerm
+    | identifierUse #  identifierUseTerm
+    | methodCall  #  methodCallTerm
+    | term index #  indexedTerm
+    | term DOT chainable #  chainableTerm
 ;
 
 chainable: identifierUse | methodCall;

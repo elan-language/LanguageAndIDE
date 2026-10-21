@@ -79,7 +79,16 @@ import { UnaryExpressionLabelContext } from "./RefLangParser.js";
 import { TermExpressionContext } from "./RefLangParser.js";
 import { BinaryExpressionLabelContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
-import { TermContext } from "./RefLangParser.js";
+import { IdentifierUseTermContext } from "./RefLangParser.js";
+import { MethodCallTermContext } from "./RefLangParser.js";
+import { IndexedTermContext } from "./RefLangParser.js";
+import { LitValueTermContext } from "./RefLangParser.js";
+import { DictionaryTermContext } from "./RefLangParser.js";
+import { BracketedExpressionTermContext } from "./RefLangParser.js";
+import { ChainableTermContext } from "./RefLangParser.js";
+import { TupleTermContext } from "./RefLangParser.js";
+import { ThisInstanceTermContext } from "./RefLangParser.js";
+import { ListTermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
@@ -911,15 +920,125 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitIfExpression?: (ctx: IfExpressionContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.term`.
+   * Enter a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `RefLangParser.term`.
    * @param ctx the parse tree
    */
-  enterTerm?: (ctx: TermContext) => void;
+  enterIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.term`.
+   * Exit a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `RefLangParser.term`.
    * @param ctx the parse tree
    */
-  exitTerm?: (ctx: TermContext) => void;
+  exitIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterMethodCallTerm?: (ctx: MethodCallTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitMethodCallTerm?: (ctx: MethodCallTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `indexedTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterIndexedTerm?: (ctx: IndexedTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `indexedTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitIndexedTerm?: (ctx: IndexedTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `litValueTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterLitValueTerm?: (ctx: LitValueTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `litValueTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitLitValueTerm?: (ctx: LitValueTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `chainableTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterChainableTerm?: (ctx: ChainableTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `chainableTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitChainableTerm?: (ctx: ChainableTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `tupleTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterTupleTerm?: (ctx: TupleTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `tupleTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitTupleTerm?: (ctx: TupleTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterThisInstanceTerm?: (ctx: ThisInstanceTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitThisInstanceTerm?: (ctx: ThisInstanceTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `listTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterListTerm?: (ctx: ListTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `listTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitListTerm?: (ctx: ListTermContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree

@@ -42,6 +42,7 @@ import {
   ArgListContext,
   BinaryExpressionContext,
   BracketedExpressionContext,
+  ChainableTermContext,
   DictionaryContext,
   EnumValueContext,
   ExpressionContext,
@@ -52,6 +53,7 @@ import {
   IfExpressionContext,
   IndexContext,
   IndexedAssignableContext,
+  IndexedTermContext,
   InstanceProcRefContext,
   KvpContext,
   LambdaContext,
@@ -270,30 +272,48 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitNegateNumeric = (ctx: NegateNumericContext) =>
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  override visitTerm = (ctx: TermContext) => {
-    const hasDot = !!ctx.DOT();
-    const index = ctx.index();
-    let term: TermAsn;
-    let tl = this.topLevelTerm;
-
-    if (hasDot) {
-      this.topLevelTerm = false;
-      const lhs = this.visit(ctx.term()!)!;
-      const rhs = this.visit(ctx.chainable()!)!;
-
-      term = new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
-    } else if (index) {
-      tl = false;
-      const lhs = this.visit(ctx.term()!)!;
-      const idx = this.visit(index)!;
-
-      term = new TermAsn(lhs, undefined, idx, this.fieldId, this.scope);
-    } else {
-      term = new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
-    }
-
+  visitTerm(ctx: TermContext) {
+    const tl = this.topLevelTerm;
+    const term = new TermAsn(
+      this.visitChildren(ctx)!,
+      undefined,
+      undefined,
+      this.fieldId,
+      this.scope,
+    );
     term.topLevel = tl;
+    return term;
+  }
 
+  override visitThisInstanceTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitBracketedExpressionTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitLitValueTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitListTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitDictionaryTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitTupleTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitIdentifierUseTerm = (ctx: TermContext) => this.visitTerm(ctx);
+  override visitMethodCallTerm = (ctx: TermContext) => this.visitTerm(ctx);
+
+  override visitIndexedTerm = (ctx: IndexedTermContext) =>
+    new TermAsn(
+      this.visit(ctx.term())!,
+      undefined,
+      this.visit(ctx.index())!,
+      this.fieldId,
+      this.scope,
+    );
+
+  override visitChainableTerm = (ctx: ChainableTermContext) => {
+    const tl = this.topLevelTerm;
+    this.topLevelTerm = false;
+    const term = new TermAsn(
+      this.visit(ctx.term())!,
+      this.visit(ctx.chainable())!,
+      undefined,
+      this.fieldId,
+      this.scope,
+    );
+    term.topLevel = tl;
     return term;
   };
 

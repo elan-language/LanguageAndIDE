@@ -3718,48 +3718,73 @@ export class RefLangParser extends antlr.Parser {
         switch (this.interpreter.adaptivePredict(this.tokenStream, 78, this.context)) {
           case 1:
             {
+              localContext = new ThisInstanceTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
+
               this.state = 784;
               this.thisInstance();
             }
             break;
           case 2:
             {
+              localContext = new BracketedExpressionTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 785;
               this.bracketedExpression();
             }
             break;
           case 3:
             {
+              localContext = new LitValueTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 786;
               this.litValue();
             }
             break;
           case 4:
             {
+              localContext = new ListTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 787;
               this.list();
             }
             break;
           case 5:
             {
+              localContext = new DictionaryTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 788;
               this.dictionary();
             }
             break;
           case 6:
             {
+              localContext = new TupleTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 789;
               this.tuple();
             }
             break;
           case 7:
             {
+              localContext = new IdentifierUseTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 790;
               this.identifierUse();
             }
             break;
           case 8:
             {
+              localContext = new MethodCallTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
               this.state = 791;
               this.methodCall();
             }
@@ -3781,7 +3806,9 @@ export class RefLangParser extends antlr.Parser {
               switch (this.interpreter.adaptivePredict(this.tokenStream, 79, this.context)) {
                 case 1:
                   {
-                    localContext = new TermContext(parentContext, parentState);
+                    localContext = new IndexedTermContext(
+                      new TermContext(parentContext, parentState),
+                    );
                     this.pushNewRecursionContext(
                       localContext,
                       _startState,
@@ -3797,7 +3824,9 @@ export class RefLangParser extends antlr.Parser {
                   break;
                 case 2:
                   {
-                    localContext = new TermContext(parentContext, parentState);
+                    localContext = new ChainableTermContext(
+                      new TermContext(parentContext, parentState),
+                    );
                     this.pushNewRecursionContext(
                       localContext,
                       _startState,
@@ -8142,58 +8171,277 @@ export class TermContext extends antlr.ParserRuleContext {
   public constructor(parent: antlr.ParserRuleContext | null, invokingState: number) {
     super(parent, invokingState);
   }
-  public thisInstance(): ThisInstanceContext | null {
-    return this.getRuleContext(0, ThisInstanceContext);
-  }
-  public bracketedExpression(): BracketedExpressionContext | null {
-    return this.getRuleContext(0, BracketedExpressionContext);
-  }
-  public litValue(): LitValueContext | null {
-    return this.getRuleContext(0, LitValueContext);
-  }
-  public list(): ListContext | null {
-    return this.getRuleContext(0, ListContext);
-  }
-  public dictionary(): DictionaryContext | null {
-    return this.getRuleContext(0, DictionaryContext);
-  }
-  public tuple(): TupleContext | null {
-    return this.getRuleContext(0, TupleContext);
-  }
-  public identifierUse(): IdentifierUseContext | null {
-    return this.getRuleContext(0, IdentifierUseContext);
-  }
-  public methodCall(): MethodCallContext | null {
-    return this.getRuleContext(0, MethodCallContext);
-  }
-  public term(): TermContext | null {
-    return this.getRuleContext(0, TermContext);
-  }
-  public index(): IndexContext | null {
-    return this.getRuleContext(0, IndexContext);
-  }
-  public DOT(): antlr.TerminalNode | null {
-    return this.getToken(RefLangParser.DOT, 0);
-  }
-  public chainable(): ChainableContext | null {
-    return this.getRuleContext(0, ChainableContext);
-  }
   public override get ruleIndex(): number {
     return RefLangParser.RULE_term;
   }
+  public override copyFrom(ctx: TermContext): void {
+    super.copyFrom(ctx);
+  }
+}
+export class IdentifierUseTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public identifierUse(): IdentifierUseContext {
+    return this.getRuleContext(0, IdentifierUseContext)!;
+  }
   public override enterRule(listener: RefLangListener): void {
-    if (listener.enterTerm) {
-      listener.enterTerm(this);
+    if (listener.enterIdentifierUseTerm) {
+      listener.enterIdentifierUseTerm(this);
     }
   }
   public override exitRule(listener: RefLangListener): void {
-    if (listener.exitTerm) {
-      listener.exitTerm(this);
+    if (listener.exitIdentifierUseTerm) {
+      listener.exitIdentifierUseTerm(this);
     }
   }
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitTerm) {
-      return visitor.visitTerm(this);
+    if (visitor.visitIdentifierUseTerm) {
+      return visitor.visitIdentifierUseTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class MethodCallTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public methodCall(): MethodCallContext {
+    return this.getRuleContext(0, MethodCallContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterMethodCallTerm) {
+      listener.enterMethodCallTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitMethodCallTerm) {
+      listener.exitMethodCallTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitMethodCallTerm) {
+      return visitor.visitMethodCallTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class IndexedTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public term(): TermContext {
+    return this.getRuleContext(0, TermContext)!;
+  }
+  public index(): IndexContext {
+    return this.getRuleContext(0, IndexContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterIndexedTerm) {
+      listener.enterIndexedTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitIndexedTerm) {
+      listener.exitIndexedTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitIndexedTerm) {
+      return visitor.visitIndexedTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class LitValueTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public litValue(): LitValueContext {
+    return this.getRuleContext(0, LitValueContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterLitValueTerm) {
+      listener.enterLitValueTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitLitValueTerm) {
+      listener.exitLitValueTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitLitValueTerm) {
+      return visitor.visitLitValueTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class DictionaryTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public dictionary(): DictionaryContext {
+    return this.getRuleContext(0, DictionaryContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterDictionaryTerm) {
+      listener.enterDictionaryTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitDictionaryTerm) {
+      listener.exitDictionaryTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitDictionaryTerm) {
+      return visitor.visitDictionaryTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class BracketedExpressionTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public bracketedExpression(): BracketedExpressionContext {
+    return this.getRuleContext(0, BracketedExpressionContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterBracketedExpressionTerm) {
+      listener.enterBracketedExpressionTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitBracketedExpressionTerm) {
+      listener.exitBracketedExpressionTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitBracketedExpressionTerm) {
+      return visitor.visitBracketedExpressionTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class ChainableTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public term(): TermContext {
+    return this.getRuleContext(0, TermContext)!;
+  }
+  public DOT(): antlr.TerminalNode {
+    return this.getToken(RefLangParser.DOT, 0)!;
+  }
+  public chainable(): ChainableContext {
+    return this.getRuleContext(0, ChainableContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterChainableTerm) {
+      listener.enterChainableTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitChainableTerm) {
+      listener.exitChainableTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitChainableTerm) {
+      return visitor.visitChainableTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class TupleTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public tuple(): TupleContext {
+    return this.getRuleContext(0, TupleContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterTupleTerm) {
+      listener.enterTupleTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitTupleTerm) {
+      listener.exitTupleTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitTupleTerm) {
+      return visitor.visitTupleTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class ThisInstanceTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public thisInstance(): ThisInstanceContext {
+    return this.getRuleContext(0, ThisInstanceContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterThisInstanceTerm) {
+      listener.enterThisInstanceTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitThisInstanceTerm) {
+      listener.exitThisInstanceTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitThisInstanceTerm) {
+      return visitor.visitThisInstanceTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class ListTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public list(): ListContext {
+    return this.getRuleContext(0, ListContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterListTerm) {
+      listener.enterListTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitListTerm) {
+      listener.exitListTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitListTerm) {
+      return visitor.visitListTerm(this);
     } else {
       return visitor.visitChildren(this);
     }

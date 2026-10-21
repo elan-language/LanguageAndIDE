@@ -79,7 +79,16 @@ import { UnaryExpressionLabelContext } from "./RefLangParser.js";
 import { TermExpressionContext } from "./RefLangParser.js";
 import { BinaryExpressionLabelContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
-import { TermContext } from "./RefLangParser.js";
+import { IdentifierUseTermContext } from "./RefLangParser.js";
+import { MethodCallTermContext } from "./RefLangParser.js";
+import { IndexedTermContext } from "./RefLangParser.js";
+import { LitValueTermContext } from "./RefLangParser.js";
+import { DictionaryTermContext } from "./RefLangParser.js";
+import { BracketedExpressionTermContext } from "./RefLangParser.js";
+import { ChainableTermContext } from "./RefLangParser.js";
+import { TupleTermContext } from "./RefLangParser.js";
+import { ThisInstanceTermContext } from "./RefLangParser.js";
+import { ListTermContext } from "./RefLangParser.js";
 import { ChainableContext } from "./RefLangParser.js";
 import { ThisInstanceContext } from "./RefLangParser.js";
 import { BracketedExpressionContext } from "./RefLangParser.js";
@@ -589,11 +598,75 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIfExpression?: (ctx: IfExpressionContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.term`.
+   * Visit a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `RefLangParser.term`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitTerm?: (ctx: TermContext) => Result;
+  visitIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMethodCallTerm?: (ctx: MethodCallTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedTerm?: (ctx: IndexedTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litValueTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitValueTerm?: (ctx: LitValueTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionaryTerm?: (ctx: DictionaryTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `chainableTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitChainableTerm?: (ctx: ChainableTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `tupleTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTupleTerm?: (ctx: TupleTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstanceTerm?: (ctx: ThisInstanceTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTerm?: (ctx: ListTermContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.chainable`.
    * @param ctx the parse tree
