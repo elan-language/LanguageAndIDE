@@ -36,7 +36,7 @@ export class ThenClause extends ClauseOfIf {
   }
 
   parseTop(_source: CodeSource): void {
-    throw new Error("Method not implemented.");
+    // does nothing
   }
   parseBottom(source: CodeSource): boolean {
     source.removeIndent();

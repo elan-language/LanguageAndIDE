@@ -46,12 +46,13 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("if ");
+    source.remove(`${ifKeyword}`);
     const condition = source.readUntil(/\sthen/);
     this.condition.parseFrom(new CodeSourceFromString(condition));
-    source.remove(" then");
+    source.remove(` ${thenKeyword}`);
     source.removeNewLine();
-    this.getChildren()[0].parseFrom(source);
+    const thenClause = this.getChildren()[0];
+    thenClause.parseFrom(source);
   }
 
   parseBottom(source: CodeSource): boolean {
