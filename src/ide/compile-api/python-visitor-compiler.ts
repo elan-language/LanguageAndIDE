@@ -111,7 +111,12 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitIdentifierUse = (ctx: IdentifierUseContext) => {
-    const id = new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    const id = new IdentifierUseAsn(
+      ctx.NAME_STARTING_LC().getText(),
+      EmptyAsn.Instance,
+      this.fieldId,
+      this.scope,
+    );
     return id;
   };
 
@@ -133,12 +138,18 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     new MethodCallAsn(
       this.visit(ctx.methodName())!,
       getArgs(this, ctx.argList()),
+      EmptyAsn.Instance,
       this.fieldId,
       this.scope,
     );
 
   override visitIndex = (ctx: IndexContext) =>
-    new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
+    new IndexAsn(
+      this.visit(ctx.expression()) ?? EmptyAsn.Instance,
+      EmptyAsn.Instance,
+      this.fieldId,
+      this.scope,
+    );
 
   override visitTerm = (ctx: TermContext) => {
     const hasDot = !!ctx.DOT();

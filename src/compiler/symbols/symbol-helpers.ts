@@ -289,7 +289,7 @@ export function scopePrefix(
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return isAstIdNode(qualifier) ? `${qualifier.id}.` : qualifier ? "this." : "";
+    return qualifier instanceof EmptyAsn ? "this." : `${qualifier?.compile()}.`;
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {

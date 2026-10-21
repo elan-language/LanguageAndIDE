@@ -1,5 +1,4 @@
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { ChainedAsn } from "../../compiler/compiler-interfaces/chained-asn";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
@@ -9,20 +8,21 @@ import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
-export class IndexAsn extends AbstractAstNode implements AstNode, ChainedAsn {
+export class IndexAsn extends AbstractAstNode implements AstNode {
   constructor(
     public readonly index: AstNode,
+    public readonly precedingNode: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
     super();
   }
 
-  private precedingNode?: AstNode = undefined;
+  // private precedingNode?: AstNode = undefined;
 
-  updateScopeAndChain(_scope: Scope, ast: AstNode) {
-    this.precedingNode = ast;
-  }
+  // updateScopeAndChain(_scope: Scope, ast: AstNode) {
+  //   this.precedingNode = ast;
+  // }
 
   get showPreviousNode() {
     return false;

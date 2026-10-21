@@ -11,7 +11,6 @@ import {
   isFunction,
   isScope,
 } from "../symbols/symbol-helpers";
-import { TupleType } from "../symbols/tuple-type";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
@@ -22,8 +21,6 @@ import {
   isEmptyNode,
   matchGenericTypes,
 } from "./ast-helpers";
-import { TupleAsn } from "./globals/tuple-asn";
-import { IdentifierUseAsn } from "./identifier-use-asn";
 import { MethodCallAsn } from "./method-call-asn";
 
 export class TermAsn extends AbstractAstNode {
@@ -67,30 +64,27 @@ export class TermAsn extends AbstractAstNode {
 
   setup() {
     // todo kludges
-    if (this.rhs instanceof MethodCallAsn) {
-      const lhsSt = this.lhs.symbolType();
-      let scope = this.scope;
-      if (isClassType(lhsSt)) {
-        //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
-        scope = lhsSt;
-      }
-
-      this.rhs.updateScopeAndChain(scope, this.lhs);
-      this.rhs.compile();
-      this.isExtension = this.rhs.isExtensionMethod;
-    }
-
-    if (this.rhs instanceof IdentifierUseAsn) {
-      const lhsSt = this.lhs.symbolType();
-      let scope = this.scope;
-      if (lhsSt instanceof TupleType) {
-        //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
-        scope = new TupleAsn(lhsSt, this.scope);
-        this.dot = "";
-      }
-
-      this.rhs.updateScopeAndChain(scope, this.lhs);
-    }
+    // if (this.rhs instanceof MethodCallAsn) {
+    //   const lhsSt = this.lhs.symbolType();
+    //   let scope = this.scope;
+    //   if (isClassType(lhsSt)) {
+    //     //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
+    //     scope = lhsSt;
+    //   }
+    //   this.rhs.updateScopeAndChain(scope, this.lhs);
+    //   this.rhs.compile();
+    //   this.isExtension = this.rhs.isExtensionMethod;
+    // }
+    // if (this.rhs instanceof IdentifierUseAsn) {
+    //   const lhsSt = this.lhs.symbolType();
+    //   let scope = this.scope;
+    //   if (lhsSt instanceof TupleType) {
+    //     //const id = isAstIdNode(this.rhs) ? this.rhs.id : "";
+    //     scope = new TupleAsn(lhsSt, this.scope);
+    //     this.dot = "";
+    //   }
+    //   this.rhs.updateScopeAndChain(scope, this.lhs);
+    // }
   }
 
   compile(): string {

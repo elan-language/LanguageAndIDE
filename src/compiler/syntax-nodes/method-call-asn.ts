@@ -12,14 +12,13 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ChainedAsn } from "../compiler-interfaces/chained-asn";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
-import { NullScope } from "../symbols/null-scope";
 import {
   getGlobalScope,
+  isClassType,
   isDefinitionScope,
   isMemberOnFieldsClass,
   scopePrefix,
@@ -33,12 +32,12 @@ import {
   matchGenericTypes,
   matchParametersAndTypes,
 } from "./ast-helpers";
-import { EmptyAsn } from "./empty-asn";
 
-export class MethodCallAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
+export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly idNode: AstNode,
     public readonly parameters: Array<AstNode>,
+    public readonly precedingNode: AstNode,
     public readonly fieldId: string,
     public scope: Scope,
   ) {
@@ -52,13 +51,13 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
   // this is a temp hack until all fields migrated
   tempAntlrFlag = true;
 
-  precedingNode: AstNode = EmptyAsn.Instance;
-  private updatedScope: Scope = NullScope.Instance;
+  // precedingNode: AstNode = EmptyAsn.Instance;
+  // private updatedScope: Scope = NullScope.Instance;
 
-  updateScopeAndChain(scope: Scope, ast: AstNode) {
-    this.updatedScope = scope;
-    this.precedingNode = ast;
-  }
+  // updateScopeAndChain(scope: Scope, ast: AstNode) {
+  //   this.updatedScope = scope;
+  //   this.precedingNode = ast;
+  // }
 
   get showPreviousNode() {
     return !this.isExtensionMethod;
@@ -68,8 +67,17 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
 
   isExtensionMethod: boolean = false;
 
+  getCurrentScope() {
+    const lhsSt = this.precedingNode.symbolType();
+    if (isClassType(lhsSt)) {
+      return lhsSt;
+    }
+
+    return this.scope;
+  }
+
   getSymbolAndType(): [ElanSymbol, SymbolType] {
-    let currentScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
+    let currentScope = this.getCurrentScope();
 
     if (isDefinitionScope(currentScope)) {
       currentScope = currentScope.getParentScope();
@@ -88,7 +96,7 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
     if (!this.tempAntlrFlag) {
       mustBeKnownSymbol(
         funcSymbol,
-        this.updatedScope,
+        this.getCurrentScope(),
         getQualifierId(this.precedingNode),
         this.precedingNode.symbolType(),
         this.compileErrors,
@@ -118,7 +126,7 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
           funcSymbolType,
           funcSymbol.symbolId,
           this.precedingNode,
-          this.updatedScope,
+          this.getCurrentScope(),
           this.compileErrors,
           this.fieldId,
           this.scope,
@@ -127,7 +135,7 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
         mustCallMemberViaQualifier(
           funcSymbol.symbolId,
           funcSymbolType,
-          this.updatedScope,
+          this.getCurrentScope(),
           this.compileErrors,
           this.fieldId,
         );
@@ -161,24 +169,17 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode, Chained
       );
     }
 
-    const showPreviousNode = !isEmptyNode(this.precedingNode) && this.showPreviousNode;
-
-    let asyncStart = "";
-    let asyncEnd = this.isAsync ? ")" : "";
-
-    if (!this.tempAntlrFlag) {
-      const showAwait =
-        this.isAsync &&
-        (!showPreviousNode ||
-          (this.updatedScope === NullScope.Instance && isEmptyNode(this.precedingNode)));
-      asyncStart = showAwait ? "(await " : "";
-      asyncEnd = showAwait ? ")" : "";
-    }
+    const asyncStart = this.isAsync ? "(await " : "";
+    const asyncEnd = this.isAsync ? ")" : "";
 
     const parms = parameters.map((p) => p.compile()).join(", ");
-    const prefix = showPreviousNode
-      ? ""
-      : scopePrefix(funcSymbol, undefined, this.compileErrors, this.scope, this.fieldId);
+    const prefix = scopePrefix(
+      funcSymbol,
+      this.precedingNode,
+      this.compileErrors,
+      this.scope,
+      this.fieldId,
+    );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

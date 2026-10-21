@@ -32,7 +32,6 @@ import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
-import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
@@ -72,7 +71,6 @@ import {
   ParamDefContext,
   ParamListContext,
   SimpleAssignableContext,
-  TermContext,
   TestNameContext,
   ThisAssignableContext,
   ThisInstanceContext,
@@ -96,13 +94,18 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     super();
   }
 
-  topLevelTerm = true;
+  precedingNode: AstNode = EmptyAsn.Instance;
 
   override visitIdentifierDef = (ctx: IdentifierDefContext) =>
     new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitIdentifierUse = (ctx: IdentifierUseContext) =>
-    new IdentifierUseAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
+    new IdentifierUseAsn(
+      ctx.NAME_STARTING_LC().getText(),
+      this.precedingNode,
+      this.fieldId,
+      this.scope,
+    );
 
   override visitSimpleAssignable = (ctx: SimpleAssignableContext) =>
     new AssignableAsn(
@@ -218,28 +221,36 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
 
-  override visitIndex = (ctx: IndexContext) =>
-    new IndexAsn(this.visit(ctx.expression()) ?? EmptyAsn.Instance, this.fieldId, this.scope);
+  override visitIndex = (ctx: IndexContext) => {
+    const pn = this.precedingNode; // so not reset by expression
+
+    return new IndexAsn(
+      this.visit(ctx.expression()) ?? EmptyAsn.Instance,
+      pn,
+      this.fieldId,
+      this.scope,
+    );
+  };
 
   // expression
 
   override visitNewInstanceExpression = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
+    this.precedingNode = EmptyAsn.Instance;
     return this.visitChildren(ctx)!;
   };
 
   override visitUnaryExpressionLabel = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
+    this.precedingNode = EmptyAsn.Instance;
     return this.visitChildren(ctx)!;
   };
 
   override visitTermExpression = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
+    this.precedingNode = EmptyAsn.Instance;
     return this.visitChildren(ctx)!;
   };
 
   override visitBinaryExpressionLabel = (ctx: ExpressionContext) => {
-    this.topLevelTerm = true;
+    this.precedingNode = EmptyAsn.Instance;
     return this.visitChildren(ctx)!;
   };
 
@@ -271,49 +282,14 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitNegateNumeric = (ctx: NegateNumericContext) =>
     new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
 
-  visitTerm(ctx: TermContext) {
-    const tl = this.topLevelTerm;
-    const term = new TermAsn(
-      this.visitChildren(ctx)!,
-      undefined,
-      undefined,
-      this.fieldId,
-      this.scope,
-    );
-    term.topLevel = tl;
-    return term;
-  }
-
-  override visitThisInstanceTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitBracketedExpressionTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitLitValueTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitListTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitDictionaryTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitTupleTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitIdentifierUseTerm = (ctx: TermContext) => this.visitTerm(ctx);
-  override visitMethodCallTerm = (ctx: TermContext) => this.visitTerm(ctx);
-
-  override visitIndexedTerm = (ctx: IndexedTermContext) =>
-    new TermAsn(
-      this.visit(ctx.term())!,
-      undefined,
-      this.visit(ctx.index())!,
-      this.fieldId,
-      this.scope,
-    );
+  override visitIndexedTerm = (ctx: IndexedTermContext) => {
+    this.precedingNode = this.visit(ctx.term())!;
+    return this.visit(ctx.index()!)!;
+  };
 
   override visitChainableTerm = (ctx: ChainableTermContext) => {
-    const tl = this.topLevelTerm;
-    this.topLevelTerm = false;
-    const term = new TermAsn(
-      this.visit(ctx.term())!,
-      this.visit(ctx.chainable())!,
-      undefined,
-      this.fieldId,
-      this.scope,
-    );
-    term.topLevel = tl;
-    return term;
+    this.precedingNode = this.visit(ctx.term())!;
+    return this.visit(ctx.chainable()!)!;
   };
 
   override visitThisInstance = (_ctx: ThisInstanceContext) =>
@@ -361,13 +337,16 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitKvp = (ctx: KvpContext) =>
     new KvpAsn(this.visit(ctx._key!)!, this.visit(ctx._value!)!, this.fieldId);
 
-  override visitMethodCall = (ctx: MethodCallContext) =>
-    new MethodCallAsn(
+  override visitMethodCall = (ctx: MethodCallContext) => {
+    const pn = this.precedingNode;
+    return new MethodCallAsn(
       this.visit(ctx.methodName())!,
       getArgs(this, ctx.argList()),
+      pn,
       this.fieldId,
       this.scope,
     );
+  };
 
   override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) =>
     new ProcRefAsn(

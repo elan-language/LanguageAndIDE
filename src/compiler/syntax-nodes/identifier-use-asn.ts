@@ -8,8 +8,8 @@ import {
 } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { ChainedAsn } from "../compiler-interfaces/chained-asn";
 import { Scope } from "../compiler-interfaces/scope";
+import { ClassType } from "../symbols/class-type";
 import { NullScope } from "../symbols/null-scope";
 import {
   getGlobalScope,
@@ -20,38 +20,43 @@ import {
   scopePrefix,
 } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { TupleAsn } from "./globals/tuple-asn";
 
-export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode, ChainedAsn {
+export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
   constructor(
     public readonly id: string,
+    public readonly precedingNode: AstNode,
     public readonly fieldId: string,
     private scope: Scope,
   ) {
     super();
   }
 
-  // this is a temp hack until all fields migrated
-  tempAntlrFlag = true;
-
-  private updatedScope: Scope = NullScope.Instance;
-  private precedingNode?: AstNode = undefined;
-
-  updateScopeAndChain(s: Scope, ast: AstNode) {
-    this.updatedScope = s;
-    this.precedingNode = ast;
-  }
-
   get showPreviousNode() {
-    return !isTuple(this.updatedScope);
+    return !isTuple(this.scope);
   }
 
   isAsync: boolean = false;
 
+  getCurrentScope() {
+    const lhsSt = this.precedingNode.symbolType();
+
+    if (lhsSt instanceof TupleType) {
+      return new TupleAsn(lhsSt, this.scope);
+    }
+
+    if (lhsSt instanceof ClassType) {
+      return lhsSt.scope;
+    }
+
+    return this.scope;
+  }
+
   getSymbol() {
-    let searchScope = this.updatedScope === NullScope.Instance ? this.scope : this.updatedScope;
+    let searchScope = this.getCurrentScope();
     if (isClass(searchScope)) {
       return searchScope.resolveOwnSymbol(this.id, true);
     }
@@ -72,13 +77,11 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode, Chai
   }
 
   getBody() {
-    if (this.updatedScope instanceof TupleAsn) {
-      const [ok, index] = this.updatedScope.parseId(this.id);
+    const searchScope = this.getCurrentScope();
+    if (searchScope instanceof TupleAsn) {
+      const [ok, index] = searchScope.parseId(this.id);
       if (ok) {
-        let tuple = "";
-        if (!this.tempAntlrFlag) {
-          tuple = this.precedingNode?.compile() ?? "";
-        }
+        const tuple = this.precedingNode?.compile() ?? "";
         return `${tuple}[${index}]`;
       }
     }
@@ -90,37 +93,37 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode, Chai
     this.compileErrors = [];
 
     const symbol = this.getSymbol();
+    const searchScope = this.getCurrentScope();
 
     mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
 
-    if (!this.tempAntlrFlag) {
-      mustBeKnownSymbol(
-        symbol,
-        this.updatedScope,
-        this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
-        this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-    }
+    mustBeKnownSymbol(
+      symbol,
+      searchScope,
+      this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
+      this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
 
-    if (!isMemberOnFieldsClass(symbol, this.scope)) {
+    if (!isMemberOnFieldsClass(symbol, searchScope)) {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    if (!this.tempAntlrFlag) {
-      if (symbol.symbolScope === SymbolScope.member && this.updatedScope === NullScope.Instance) {
-        mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
-      }
+    if (symbol.symbolScope === SymbolScope.member && searchScope === NullScope.Instance) {
+      mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
     }
 
     mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
 
-    const prefix =
-      this.updatedScope !== NullScope.Instance
-        ? ""
-        : scopePrefix(symbol, undefined, this.compileErrors, this.scope, this.fieldId);
+    const prefix = scopePrefix(
+      symbol,
+      this.precedingNode,
+      this.compileErrors,
+      searchScope,
+      this.fieldId,
+    );
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
@@ -130,8 +133,7 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode, Chai
   }
 
   symbolType() {
-    const st = this.getSymbol().symbolType();
-    return st;
+    return this.getSymbol().symbolType();
   }
 
   toString() {
