@@ -1,4 +1,4 @@
-import { catchKeyword } from "../../../compiler/elan-keywords";
+import { asKeyword, catchKeyword } from "../../../compiler/elan-keywords";
 import { ClauseOfTry } from "../clause-of-try";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionTypeFieldSpec, identifierFieldSpec } from "../fields/field-spec";
@@ -49,10 +49,14 @@ export class CatchClause extends ClauseOfTry {
   }
 
   renderAsElanSource(): string {
-    return this.renderChildrenAsElanSource();
+    return `${this.indent()}${this.sourceAnnotations()}${catchKeyword} ${this.variable.renderAsElanSource()} ${asKeyword} ${this.exceptionType.renderAsElanSource()}\r
+${this.renderChildrenAsElanSource()}`;
   }
 
-  parseTop(_source: CodeSource): void {
-    // does nothing
+  parseTop(source: CodeSource): void {
+    source.remove(`${catchKeyword} `);
+    this.variable.parseFrom(source);
+    source.remove(` ${asKeyword} `);
+    this.exceptionType.parseFrom(source);
   }
 }
