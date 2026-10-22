@@ -128,8 +128,11 @@ instanceProcRef: identifierWithOptIndexes DOT methodName;
 identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
-    GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
+    GHOSTED? TRY NL tryClause catchClause* END TRY NL
 ;
+    tryClause: ordinaryStatement+;
+    catchClause: ordinaryStatement+;
+
 throwStatement: GHOSTED? THROW typeName errorMessage NL;
 
 errorMessage: litString | identifierUse;

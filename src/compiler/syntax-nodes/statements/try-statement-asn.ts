@@ -1,10 +1,7 @@
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { compileNodes } from "../ast-helpers";
-import { BreakpointAsn } from "../breakpoint-asn";
 import { CompoundAsn } from "../compound-asn";
-import { CatchAsn } from "./catch-asn";
-import { CatchStatementAsn } from "./catch-statement-asn";
 
 export class TryStatementAsn extends CompoundAsn {
   constructor(fieldId: string, scope: Scope) {
@@ -13,29 +10,28 @@ export class TryStatementAsn extends CompoundAsn {
 
   reconfigureForCompile(): AstNode[] {
     const tryChildren: AstNode[] = [];
-    let currentCatch: CatchAsn | undefined = undefined;
-    let currentCaseCatch: CatchStatementAsn | undefined = undefined;
+    // let currentCatch: CatchAsn | undefined = undefined;
+    // let currentCaseCatch: CatchStatementAsn | undefined = undefined;
 
-    for (const c of this.children) {
-      if (c instanceof CatchStatementAsn) {
-        if (!currentCatch) {
-          currentCatch = new CatchAsn(this.fieldId, this);
-          currentCatch.variable = c.identifierDef;
-          tryChildren.push(currentCatch);
-        }
-        currentCaseCatch = c;
-        currentCaseCatch.setCompileScope(currentCatch);
-        currentCatch.addChild(c);
-      } else if (currentCaseCatch) {
-        if (c instanceof BreakpointAsn) {
-          c.setCompileScope(currentCaseCatch);
-          currentCaseCatch.addChild(c);
-        }
-      } else {
-        tryChildren.push(c);
-      }
-    }
-
+    // for (const c of this.children) {
+    //   if (c instanceof CatchStatementAsn) {
+    //     if (!currentCatch) {
+    //       currentCatch = new CatchAsn(this.fieldId, this);
+    //       currentCatch.variable = c.identifierDef;
+    //       tryChildren.push(currentCatch);
+    //     }
+    //     currentCaseCatch = c;
+    //     currentCaseCatch.setCompileScope(currentCatch);
+    //     currentCatch.addChild(c);
+    //   } else if (currentCaseCatch) {
+    //     if (c instanceof BreakpointAsn) {
+    //       c.setCompileScope(currentCaseCatch);
+    //       currentCaseCatch.addChild(c);
+    //     }
+    //   } else {
+    //     tryChildren.push(c);
+    //   }
+    //}
     return tryChildren;
   }
 

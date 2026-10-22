@@ -11,7 +11,7 @@ export interface StatementFactory {
   newIf(parent: Parent): Frame;
   newSet(parent: Parent): Frame;
   newThrow(parent: Parent): Frame;
-  newTryCatch(parent: Parent): Frame;
+  newTry(parent: Parent): Frame;
   newVar(parent: Parent): Frame;
   newWhile(parent: Parent): Frame;
   newComment(parent: Parent): Frame;

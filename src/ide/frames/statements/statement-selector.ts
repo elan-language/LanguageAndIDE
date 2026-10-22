@@ -55,6 +55,13 @@ export class StatementSelector extends AbstractSelector {
         (parent: Parent) => this.factory.newSet(parent),
         true,
       ],
+      [
+        catchKeyword,
+        "h",
+        "catc<b>h</b>",
+        (parent: Parent) => this.factory.newCatch(parent.getParent()),
+        false,
+      ],
       [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent), true],
       [
         elifKeyword,
@@ -89,7 +96,7 @@ export class StatementSelector extends AbstractSelector {
         tryKeyword,
         "y",
         "tr<b>y</b> statement",
-        (parent: Parent) => this.factory.newTryCatch(parent),
+        (parent: Parent) => this.factory.newTry(parent),
         true,
       ],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
@@ -129,7 +136,9 @@ export class StatementSelector extends AbstractSelector {
         !(elseExists && parent.getLastChild() === this) &&
         parent.getParent().getLastChild() === (parent as unknown as Frame);
     } else if (keyword === catchKeyword) {
-      result = parent.getIdPrefix().includes(`_${tryKeyword}`);
+      result =
+        parent.getIdPrefix().includes(`_${tryKeyword}`) ||
+        parent.getIdPrefix().includes(`_${catchKeyword}`);
     } else if (keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === assertKeyword) {

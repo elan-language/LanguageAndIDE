@@ -32,6 +32,8 @@ import { ThisProcRefContext } from "./RefLangParser.js";
 import { InstanceProcRefContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
+import { TryClauseContext } from "./RefLangParser.js";
+import { CatchClauseContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
@@ -403,6 +405,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTryStatement?: (ctx: TryStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  enterTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  exitTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  enterCatchClause?: (ctx: CatchClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  exitCatchClause?: (ctx: CatchClauseContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree

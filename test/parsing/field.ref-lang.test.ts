@@ -30,7 +30,7 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { CatchStatement } from "../../src/ide/frames/statements/catch-statement";
+import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
@@ -135,7 +135,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "a", false, "mismatched input 'a' expecting NAME_STARTING_TEST_");
   });
   test("ExceptionType", () => {
-    const field = new FieldImpl(new CatchStatement(fileImpl()), exceptionTypeFieldSpec);
+    const field = new FieldImpl(new CatchClause(fileImpl()), exceptionTypeFieldSpec);
     testFieldParse(
       field,
       "ElanRuntimeError",

@@ -67,7 +67,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CatchStatement } from "./statements/catch-statement";
+import { CatchClause } from "./statements/catch-clause";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -76,6 +76,7 @@ import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
 import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
+import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
@@ -105,8 +106,6 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.ASSERT} </el-kw>${frame.actual.renderAsHtml()}<el-kw> ${this.EVALUATES} ${this.TO} </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof ProcedureCall) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
-    } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.CATCH} </el-kw>${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
       html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
     } else if (frame instanceof ConstantGlobal) {
@@ -144,6 +143,8 @@ export class LanguageElan extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
+    } else if (frame instanceof CatchClause) {
+      html = `<el-kw>${this.CATCH} </el-kw>${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof ElseIfClause) {
       html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof ElseClause) {
@@ -165,6 +166,8 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof ThenClause) {
+      html = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;

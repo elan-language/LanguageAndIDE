@@ -23,7 +23,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CatchStatement } from "./statements/catch-statement";
+import { CatchClause } from "./statements/catch-clause";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -69,9 +69,6 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
-    } else if (frame instanceof CatchStatement) {
-      //Catch e As DivideByZeroException
-      html = `<el-kw>${this.CATCH}</el-kw> ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.textIncludingMarkerSymboAndSpace.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
@@ -109,6 +106,8 @@ export class LanguageVB extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.SUB} ${this.NEW_INSTANCE_PREFIX}</el-kw>(${frame.params.renderAsHtml()})`;
+    } else if (frame instanceof CatchClause) {
+      html = `<el-kw>${this.CATCH}</el-kw> ${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} ${this.EACH} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {

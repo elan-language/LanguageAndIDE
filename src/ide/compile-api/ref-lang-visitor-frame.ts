@@ -219,9 +219,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitTryStatement = (ctx: TryStatementContext) => {
     const trySt = new TryStatement(this.file);
-    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
-    for (const s of statements) {
-      trySt.getChildren().push(s);
+    const children = trySt.getChildren();
+    const tryClause = this.visit(ctx.tryClause()) as Frame;
+    children.push(tryClause);
+    const catchClauses = ctx.catchClause().map((s) => this.visit(s)) as Frame[];
+    for (const s of catchClauses) {
+      children.push(s);
     }
     return trySt;
   };
