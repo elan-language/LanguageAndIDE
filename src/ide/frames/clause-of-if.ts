@@ -10,10 +10,6 @@ export abstract class ClauseOfIf extends FrameWithStatements implements Statemen
   isClauseOfIf: boolean = true;
   isStatement: boolean = true;
 
-  override isMovable(): boolean {
-    return false;
-  }
-
   protected setClasses() {
     super.setClasses();
     this.pushClass(true, "outdent");
@@ -42,11 +38,4 @@ export abstract class ClauseOfIf extends FrameWithStatements implements Statemen
   }
 
   outerHtmlTag: string = "el-statement";
-
-  override canInsertAfter(): boolean {
-    return false;
-  }
-  override canInsertBefore(): boolean {
-    return false;
-  }
 }

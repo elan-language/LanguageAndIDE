@@ -2,10 +2,24 @@ import { elseKeyword } from "../../../compiler/elan-keywords";
 import { ClauseOfIf } from "../clause-of-if";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
+import { Frame } from "../frame-interfaces/frame";
+import { FrameWithStatements } from "../frame-with-statements";
 
 export class ElseClause extends ClauseOfIf {
+  override isMovable(): boolean {
+    return false;
+  }
   override canInsertAfter(): boolean {
     return false;
+  }
+  insertPeerSelector(before: boolean): void {
+    //Not strictly a peer selector - inserts either a child of itself or child of predecessor
+    if (before) {
+      const parent = this.getParent();
+      const previousChild = parent.getChildBefore(this) as unknown as FrameWithStatements;
+      const lastStatementInPrevious = previousChild.getLastChild() as unknown as Frame;
+      previousChild.insertOrGotoChildSelector(true, lastStatementInPrevious);
+    }
   }
 
   initialKeywords(): string {

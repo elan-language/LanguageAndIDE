@@ -8,6 +8,14 @@ export class ThenClause extends ClauseOfIf {
     return false;
   }
 
+  override isMovable(): boolean {
+    return false;
+  }
+
+  override canInsertBefore(): boolean {
+    return false;
+  }
+
   override select(withFocus: boolean, _multiSelect: boolean): void {
     // The invisible 'then-clause' is never selected itself
     const parent = this.getParent() as unknown as Frame;
