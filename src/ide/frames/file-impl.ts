@@ -88,7 +88,7 @@ export const cannotLoadEmptyFile = `${fileErrorPrefix} no code found to load.`;
 export const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
 export const cannotLoadUnparseableFile = `${fileErrorPrefix} cannot parse code`;
 
-export class FileImpl implements File, Parent {
+export class FileImpl implements File {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
@@ -267,12 +267,6 @@ export class FileImpl implements File, Parent {
     return withHeader
       ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${languageSpecificHeader}${globals}${trailer}`
       : `${languageSpecificHeader}${globals}${trailer}`;
-  }
-
-  async renderAsSource(): Promise<string> {
-    const content = this.renderHashableContentAsElanSource(this.language().languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsElanSource(): Promise<string> {

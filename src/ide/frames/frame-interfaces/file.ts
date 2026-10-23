@@ -9,7 +9,6 @@ import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
-import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
 import { Selectable } from "./selectable";
 
@@ -20,106 +19,80 @@ export enum ParseMode {
 }
 
 export interface File {
-  isFile: boolean;
+  // called from INSIDE the frame hierarchy - TODO do these need to be here or can they be on the proposed ProgramFrame?
+  isFile: boolean; // TODO this should go
+  getNextId(): number;
+  //getFrameFactory(): FrameFactory;
+  //indent(): string;
+  setFieldBeingEdited(value: boolean): void;
+  getFrNo(): string;
+  updateBreakpoints(event: BreakpointEvent): void;
+  addCopiedSource(source: string): void;
+  deleteAllGhosted(): void;
+  setLanguageToElan(): void;
+  getShowCompletion(): boolean; // TODO see also showCompletion method below - are these different?
+
+  //Called from INSIDE and OUTSIDE
+  getFirstChild(): Frame; // TODO rename to getFirstGlobal ?
+  //addChildBefore(g: Frame, before: Frame): void;
+  //addChildAfter(g: Frame, after: Frame): void
+  getMap(): Map<string, Selectable>;
+  getParadigm(): Paradigm;
+  containsMain(): boolean;
+  removeAllSelectorsThatCanBe(): void;
+  setLanguage(l: Language): boolean; // TODO: review - used only for live language switching?
+  language(): Language;
+
+  // called from OUTSIDE the frame hierarchy
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
-
-  renderAsSource(): Promise<string>;
   renderAsElanSource(): Promise<string>;
   renderAsExport(): Promise<string>;
-
-  compile(): string;
-
+  //compile(): string;
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
-
   compileAsTestWorker(base: string): string;
-
   fileName: string;
   readonly defaultFileName: string;
-  doingExport: boolean;
-
-  getFirstChild(): Frame;
-  addChildBefore(g: Frame, before: Frame): void;
-  addChildAfter(g: Frame, after: Frame): void;
-  addChild(g: Frame): void;
-
-  getMap(): Map<string, Selectable>;
-  getNextId(): number;
-  getFrameFactory(): FrameFactory;
-  getParadigm(): Paradigm;
+  //doingExport: boolean;
+  addChild(g: Frame): void; // TODO rename to addGlobal ?
   setParadigm(p: Paradigm): void;
-
-  indent(): string;
   expandCollapseAll(): void;
+  getAst(invalidate: boolean): RootAstNode | undefined; //TODO - this is a smell!
 
   readParseStatus(): ParseStatus;
   getParseStatusLabel(): string;
   getParseStatusColour(): string;
   updateAllParseStatus(): void;
-
   readCompileStatus(): CompileStatus;
   getCompileStatusLabel(): string;
   getCompileStatusColour(): string;
   updateAllCompileStatus(): void;
   resetAllCompileStatusAndErrors(): void;
-
   readTestStatus(): TestStatus;
   getTestStatusLabel(): string;
   getTestStatusColour(): string;
+  setTestStatus(s: TestStatus): void;
   updateAllTestStatus(): void;
   resetAllTestStatus(): void;
-
   readRunStatus(): RunStatus;
   getRunStatusLabel(): string;
   getRunStatusColour(): string;
-
-  parseFrom(source: CodeSource): Promise<void>;
-
-  containsMain(): boolean;
-
-  parseError?: string;
-
-  deselectAll(): void;
-  processKey(e: editorEvent): boolean;
-
   setRunStatus(s: RunStatus): void;
-
-  setTestStatus(s: TestStatus): void;
-
-  libraryScope: Scope;
-
   refreshParseAndCompileStatuses(compileIfParsed: boolean): void;
-
   refreshTestStatuses(outcomes: [string, AssertOutcome[]][]): void;
-
-  setFieldBeingEdited(value: boolean): void;
-  getFieldBeingEdited(): boolean;
   getTestError(): Error | undefined;
 
-  getFrNo(): string;
-  removeAllSelectorsThatCanBe(): void;
+  parseFrom(source: CodeSource): Promise<void>;
+  parseError?: string;
+  deselectAll(): void;
+  processKey(e: editorEvent): boolean;
+  libraryScope: Scope;
+  getFieldBeingEdited(): boolean;
   currentHash: string;
   hasTests: boolean;
-
-  updateBreakpoints(event: BreakpointEvent): void;
-
   getVersion(): Semver;
   getVersionString(lang: string): string;
-
-  getAst(invalidate: boolean): RootAstNode | undefined;
-
-  addCopiedSource(source: string): void;
-
   getCopiedSource(): string[];
-
-  deleteAllGhosted(): void;
-
-  setLanguage(l: Language): boolean;
-  language(): Language;
-  setLanguageToElan(): void;
-
   showCompletion(show: boolean): void;
-  getShowCompletion(): boolean;
-
   addParseError(msg: string): void;
 }
