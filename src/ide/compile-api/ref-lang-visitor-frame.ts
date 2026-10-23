@@ -30,6 +30,7 @@ import { Constructor } from "../frames/class-members/constructor";
 import { FunctionMethod } from "../frames/class-members/function-method";
 import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
+import { FileImpl } from "../frames/file-impl";
 import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { ConcreteClass } from "../frames/globals/concrete-class";
@@ -49,8 +50,10 @@ import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
 
 export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
-  constructor(private readonly file: File) {
+  private file: FileImpl; // TODO temp solution
+  constructor(file: File) {
     super();
+    this.file = file as FileImpl;
   }
 
   override visitFile = (ctx: FileContext) => {

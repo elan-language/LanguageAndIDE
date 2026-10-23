@@ -81,7 +81,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
 
   getFile(): File {
-    return this.getParent() as File;
+    return this.getParent().getFile();
   }
 
   initialKeywords(): string {

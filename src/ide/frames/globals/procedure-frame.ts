@@ -14,7 +14,7 @@ export abstract class ProcedureFrame extends FrameWithStatements {
 
   constructor(parent: Parent) {
     super(parent);
-    this.file = parent as File;
+    this.file = parent.getFile();
     this.name = new FieldImpl(this, methodNameFieldSpec);
     this.params = new FieldImpl(this, paramListFieldSpec);
   }

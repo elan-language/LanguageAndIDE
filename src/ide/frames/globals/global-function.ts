@@ -9,7 +9,7 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   file: File;
   constructor(parent: Parent) {
     super(parent);
-    this.file = parent as File;
+    this.file = parent.getFile();
   }
 
   indent(): string {

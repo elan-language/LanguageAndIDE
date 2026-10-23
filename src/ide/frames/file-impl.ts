@@ -88,7 +88,7 @@ export const cannotLoadEmptyFile = `${fileErrorPrefix} no code found to load.`;
 export const cannotLoadFile = `${fileErrorPrefix} it has been created or modified outside Elan IDE`;
 export const cannotLoadUnparseableFile = `${fileErrorPrefix} cannot parse code`;
 
-export class FileImpl implements File {
+export class FileImpl implements File, Parent {
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;

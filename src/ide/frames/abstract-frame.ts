@@ -41,7 +41,7 @@ export abstract class AbstractFrame implements Frame {
   protected showContextMenu = false;
   protected paused = false;
 
-  private _parent: File | Parent;
+  private _parent: Parent;
   private _selected: boolean = false;
   private _focused: boolean = false;
   private _collapsed: boolean = false;

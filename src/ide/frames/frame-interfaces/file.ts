@@ -11,7 +11,6 @@ import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
 import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
-import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 
 export enum ParseMode {
@@ -20,7 +19,7 @@ export enum ParseMode {
   import,
 }
 
-export interface File extends Parent {
+export interface File {
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
@@ -39,6 +38,7 @@ export interface File extends Parent {
   readonly defaultFileName: string;
   doingExport: boolean;
 
+  getFirstChild(): Frame;
   addChildBefore(g: Frame, before: Frame): void;
   addChildAfter(g: Frame, after: Frame): void;
   addChild(g: Frame): void;
@@ -72,17 +72,6 @@ export interface File extends Parent {
   readRunStatus(): RunStatus;
   getRunStatusLabel(): string;
   getRunStatusColour(): string;
-
-  //Internal use only
-  createMain(): Frame;
-  createFunction(): Frame;
-  createProcedure(): Frame;
-  createEnum(): Frame;
-  createConcreteClass(): Frame;
-  createAbstractClass(): Frame;
-  createComment(): Frame;
-  createConstant(): Frame;
-  createTest(): Frame;
 
   parseFrom(source: CodeSource): Promise<void>;
 
