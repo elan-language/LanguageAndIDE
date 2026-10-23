@@ -8,7 +8,7 @@ export interface StatementFactory {
   newElseIf(parent: Parent): Frame;
   newElse(parent: Parent): Frame;
   newFor(parent: Parent): Frame;
-  newIf(parent: Parent): Frame;
+  newIfStatement(parent: Parent): Frame;
   newSet(parent: Parent): Frame;
   newThrow(parent: Parent): Frame;
   newTry(parent: Parent): Frame;

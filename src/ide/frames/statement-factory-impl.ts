@@ -38,7 +38,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newFor(parent: Parent): Frame {
     return new ForLoop(parent);
   }
-  public newIf(parent: Parent): Frame {
+  public newIfStatement(parent: Parent): Frame {
     return new IfStatement(parent);
   }
   public newSet(parent: Parent): Frame {
