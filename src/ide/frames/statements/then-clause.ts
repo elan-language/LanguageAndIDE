@@ -1,9 +1,10 @@
-import { ClauseOfIf } from "../clause-of-if";
+import { endKeyword, ifKeyword } from "../../../compiler/elan-keywords";
+import { Clause } from "../clause";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 
-export class ThenClause extends ClauseOfIf {
+export class ThenClause extends Clause {
   override isDeletable() {
     return false;
   }
@@ -52,5 +53,10 @@ export class ThenClause extends ClauseOfIf {
 
   parseTop(_source: CodeSource): void {
     // does nothing
+  }
+
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(`${endKeyword} ${ifKeyword}`);
   }
 }

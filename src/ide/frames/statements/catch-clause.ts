@@ -1,5 +1,5 @@
 import { asKeyword, catchKeyword, endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
-import { ClauseOfTry } from "../clause-of-try";
+import { Clause } from "../clause";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionTypeFieldSpec, identifierFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -8,7 +8,7 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class CatchClause extends ClauseOfTry {
+export class CatchClause extends Clause {
   variable: FieldImpl;
   exceptionType: FieldImpl;
 

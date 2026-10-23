@@ -14,11 +14,11 @@ import {
   whileKeyword,
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
-import { ClauseOfIf } from "../clause-of-if";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
+import { IfStatement } from "./if-statement";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
@@ -62,7 +62,13 @@ export class StatementSelector extends AbstractSelector {
         (parent: Parent) => this.factory.newCatch(parent.getParent()),
         false,
       ],
-      [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent), true],
+      [
+        ifKeyword,
+        "i",
+        "<b>i</b>f statement",
+        (parent: Parent) => this.factory.newIfStatement(parent),
+        true,
+      ],
       [
         elifKeyword,
         "s",
@@ -128,13 +134,11 @@ export class StatementSelector extends AbstractSelector {
     if (keyword === elifKeyword) {
       result = this.isWithinThenOrElseIfClause() && parent.getLastChild() === this;
     } else if (keyword === elseKeyword) {
-      const elseExists =
-        "elseClauseAlreadyExists" in parent &&
-        (parent as unknown as ClauseOfIf).elseClauseAlreadyExists();
       result =
         this.isWithinThenOrElseIfClause() &&
-        !(elseExists && parent.getLastChild() === this) &&
-        parent.getParent().getLastChild() === (parent as unknown as Frame);
+        parent.getLastChild() === this &&
+        parent.getParent().getLastChild() === (parent as unknown as Frame) &&
+        !(parent.getParent() as unknown as IfStatement).hasElseClause();
     } else if (keyword === catchKeyword) {
       result =
         parent.getIdPrefix().includes(`_${tryKeyword}`) ||

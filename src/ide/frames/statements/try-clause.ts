@@ -1,10 +1,10 @@
 import { catchKeyword, tryKeyword } from "../../../compiler/elan-keywords";
-import { ClauseOfTry } from "../clause-of-try";
+import { Clause } from "../clause";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 
-export class TryClause extends ClauseOfTry {
+export class TryClause extends Clause {
   override isDeletable() {
     return false;
   }

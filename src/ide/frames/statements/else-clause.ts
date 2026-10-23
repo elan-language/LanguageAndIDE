@@ -1,11 +1,11 @@
-import { elseKeyword } from "../../../compiler/elan-keywords";
-import { ClauseOfIf } from "../clause-of-if";
+import { elseKeyword, endKeyword, ifKeyword } from "../../../compiler/elan-keywords";
+import { Clause } from "../clause";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class ElseClause extends ClauseOfIf {
+export class ElseClause extends Clause {
   override isMovable(): boolean {
     return false;
   }
@@ -39,6 +39,11 @@ ${this.renderChildrenAsElanSource()}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("else");
+    source.remove(elseKeyword);
+  }
+
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(`${endKeyword} ${ifKeyword}`);
   }
 }

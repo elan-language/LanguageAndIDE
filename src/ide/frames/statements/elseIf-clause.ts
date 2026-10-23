@@ -1,5 +1,5 @@
-import { elifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
-import { ClauseOfIf } from "../clause-of-if";
+import { elifKeyword, endKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
+import { Clause } from "../clause";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
@@ -9,7 +9,7 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
-export class ElseIfClause extends ClauseOfIf {
+export class ElseIfClause extends Clause {
   condition: FieldImpl;
 
   constructor(parent: Parent) {
@@ -53,5 +53,9 @@ ${this.renderChildrenAsElanSource()}`;
     const condition = source.readUntil(/\sthen/);
     this.condition.parseFrom(new CodeSourceFromString(condition));
     source.remove(` ${thenKeyword}`);
+  }
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(`${endKeyword} ${ifKeyword}`);
   }
 }

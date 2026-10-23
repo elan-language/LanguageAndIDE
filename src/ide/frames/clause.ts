@@ -1,11 +1,10 @@
-import { Clause } from "./frame-interfaces/clause";
 import { Statement } from "./frame-interfaces/statement";
 import { FrameWithStatements } from "./frame-with-statements";
 
-export abstract class ClauseOfTry extends FrameWithStatements implements Statement, Clause {
+export abstract class Clause extends FrameWithStatements implements Statement {
   isClause = true;
-  isClauseOfTry: boolean = true;
   isStatement: boolean = true;
+  outerHtmlTag: string = "el-statement";
 
   protected setClasses() {
     super.setClasses();
@@ -19,6 +18,4 @@ export abstract class ClauseOfTry extends FrameWithStatements implements Stateme
   frameSpecificAnnotation(): string {
     return "";
   }
-
-  outerHtmlTag: string = "el-statement";
 }
