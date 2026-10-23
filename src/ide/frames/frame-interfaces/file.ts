@@ -45,7 +45,7 @@ export interface File extends Parent {
 
   getMap(): Map<string, Selectable>;
   getNextId(): number;
-  getFactory(): StatementFactory;
+  getFrameFactory(): StatementFactory;
   getParadigm(): Paradigm;
   setParadigm(p: Paradigm): void;
 
