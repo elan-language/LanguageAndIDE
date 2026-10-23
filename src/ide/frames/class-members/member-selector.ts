@@ -15,6 +15,7 @@ import {
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { ClassFrame } from "../globals/class-frame";
@@ -24,9 +25,11 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   isAbstract = false;
   isPrivate = false;
   private class: ClassFrame;
+  private frameFactory: FrameFactory;
   constructor(parent: Parent) {
     super(parent);
     this.class = parent as ClassFrame;
+    this.frameFactory = parent.getFrameFactory();
   }
   isOnAbstractClass(): boolean {
     throw new Error("Should not be called");
@@ -42,55 +45,65 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
+      [
+        constructorKeyword,
+        "c",
+        "constructor",
+        (parent: Parent) => this.frameFactory.createConstructor(parent),
+      ],
+      [
+        propertyKeyword,
+        "p",
+        "<b>p</b>roperty",
+        (parent: Parent) => this.frameFactory.createProperty(parent, false),
+      ],
       [
         procedureKeyword,
         "c",
         "pro<b>c</b>edure method",
-        (_parent: Parent) => this.class.createProcedure(),
+        (parent: Parent) => this.frameFactory.createProcedure(parent),
       ],
       [
         functionKeyword,
         "f",
         "<b>f</b>unction method",
-        (_parent: Parent) => this.class.createFunction(),
+        (parent: Parent) => this.frameFactory.createFunction(parent),
       ],
       [
         abstractProcedureKeywords,
         "",
         "abstract procedure",
-        (_parent: Parent) => this.class.createAbstractProcedure(),
+        (parent: Parent) => this.frameFactory.createAbstractProcedure(parent),
       ],
       [
         abstractFunctionKeywords,
         "",
         "abstract function",
-        (_parent: Parent) => this.class.createAbstractFunction(),
+        (parent: Parent) => this.frameFactory.createAbstractFunction(parent),
       ],
       [
         privatePropertyKeywords,
         "",
         "private property",
-        (_parent: Parent) => this.class.createProperty(true),
+        (parent: Parent) => this.frameFactory.createProperty(parent, true),
       ],
       [
         privateProcedureKeywords,
         "",
         "private procedure",
-        (_parent: Parent) => this.class.createProcedure(true),
+        (parent: Parent) => this.frameFactory.createProcedureMethod(parent, true),
       ],
       [
         privateFunctionKeywords,
         "",
         "private function",
-        (_parent: Parent) => this.class.createFunction(true),
+        (parent: Parent) => this.frameFactory.createFunctionMethod(parent, true),
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.class.createComment(),
+        (parent: Parent) => this.frameFactory.createComment(parent),
       ],
     ];
   }

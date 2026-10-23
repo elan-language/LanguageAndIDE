@@ -6,8 +6,8 @@ import { isSelector, removeHtmlTagsAndEscChars } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
@@ -59,8 +59,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     this.pushClass(true, "multiline");
   }
 
-  getFactory(): StatementFactory {
-    return this.getParent().getFactory();
+  getFrameFactory(): FrameFactory {
+    return this.getParent().getFrameFactory();
   }
 
   updateParseStatus(): void {

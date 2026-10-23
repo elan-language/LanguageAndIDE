@@ -15,16 +15,16 @@ import {
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
-  private factory: StatementFactory;
+  private frameFactory: FrameFactory;
   constructor(parent: FrameWithStatements) {
     super(parent);
-    this.factory = parent.getFactory();
+    this.frameFactory = parent.getFrameFactory();
   }
 
   override helpId(): string {
@@ -33,43 +33,73 @@ export class StatementSelector extends AbstractSelector {
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
+      [
+        assertKeyword,
+        "a",
+        "<b>a</b>ssert",
+        (parent: Parent) => this.frameFactory.createAssert(parent),
+      ],
       [
         variableKeyword,
         "v",
         "<b>v</b>ariable definition",
-        (parent: Parent) => this.factory.newVar(parent),
+        (parent: Parent) => this.frameFactory.createVar(parent),
       ],
-      [assignKeyword, "a", "<b>a</b>ssignment", (parent: Parent) => this.factory.newSet(parent)],
-      [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent)],
-      [elifKeyword, "s", "el<b>s</b>e if clause", (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, "e", "<b>e</b>lse clause", (parent: Parent) => this.factory.newElse(parent)],
-      [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
-      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [
+        assignKeyword,
+        "a",
+        "<b>a</b>ssignment",
+        (parent: Parent) => this.frameFactory.createSet(parent),
+      ],
+      [
+        ifKeyword,
+        "i",
+        "<b>i</b>f statement",
+        (parent: Parent) => this.frameFactory.createIf(parent),
+      ],
+      [
+        elifKeyword,
+        "s",
+        "el<b>s</b>e if clause",
+        (parent: Parent) => this.frameFactory.createElseIf(parent),
+      ],
+      [
+        elseKeyword,
+        "e",
+        "<b>e</b>lse clause",
+        (parent: Parent) => this.frameFactory.createElse(parent),
+      ],
+      [
+        whileKeyword,
+        "w",
+        "<b>w</b>hile loop",
+        (parent: Parent) => this.frameFactory.createWhile(parent),
+      ],
+      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.frameFactory.createFor(parent)],
       [
         callKeyword,
         "c",
         "procedure <b>c</b>all",
-        (parent: Parent) => this.factory.newCall(parent, ""),
+        (parent: Parent) => this.frameFactory.createCall(parent, ""),
       ],
       [
         tryKeyword,
         "y",
         "tr<b>y</b> statement",
-        (parent: Parent) => this.factory.newTryCatch(parent),
+        (parent: Parent) => this.frameFactory.createTryCatch(parent),
       ],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [
         throwKeyword,
         "t",
         "<b>t</b>hrow statement",
-        (parent: Parent) => this.factory.newThrow(parent),
+        (parent: Parent) => this.frameFactory.createThrow(parent),
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (parent: Parent) => this.factory.newComment(parent),
+        (parent: Parent) => this.frameFactory.createComment(parent),
       ],
     ];
   }
