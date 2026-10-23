@@ -3,15 +3,16 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class MainRoutine extends FrameWithStatements implements GlobalFrame {
   isMain = true;
   isGlobal = true;
   file: File;
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
-    this.file = parent;
+    this.file = parent.getFile();
   }
 
   initialKeywords(): string {

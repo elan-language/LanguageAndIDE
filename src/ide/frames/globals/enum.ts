@@ -5,6 +5,7 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Enum extends SingleLineFrame implements GlobalFrame {
@@ -12,9 +13,9 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
   name: FieldImpl;
   values: FieldImpl;
   file: File;
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
-    this.file = parent;
+    this.file = parent.getFile();
     this.name = new FieldImpl(this, typeNameFieldSpec);
     this.name.setPlaceholder("<i>Name</i>");
     this.values = new FieldImpl(this, enumValuesFieldSpec);

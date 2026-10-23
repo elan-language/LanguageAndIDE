@@ -4,7 +4,7 @@ import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
-import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
 import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
 import { ReturnStatement } from "../statements/return-statement";
 import { ClassFrame } from "./class-frame";
@@ -13,7 +13,7 @@ export class ConcreteClass extends ClassFrame {
   private constr: Constructor;
   private toString: FunctionMethod;
 
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
     this.isConcrete = true;
     this.constr = new Constructor(this);

@@ -5,12 +5,12 @@ import {
   endKeyword,
 } from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
-import { File } from "../frame-interfaces/file";
+import { Parent } from "../frame-interfaces/parent";
 import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
     this.isAbstract = true;
   }

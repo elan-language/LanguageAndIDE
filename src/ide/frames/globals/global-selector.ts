@@ -10,19 +10,20 @@ import {
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { isGlobal } from "../frame-helpers";
-import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { ParseStatus } from "../status-enums";
+import { File } from "../frame-interfaces/file";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   isGlobal = true;
-  file: File;
-  constructor(parent: File) {
+  private frameFactory: FrameFactory;
+  private file: File; // TODO get rid of this
+  constructor(parent: Parent) {
     super(parent);
-    this.file = parent;
-    this.setParseStatus(ParseStatus.default);
+    this.file = parent.getFile();
+    this.frameFactory = parent.getFrameFactory();
   }
 
   override helpId(): string {
@@ -31,29 +32,49 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
     return [
-      [mainKeyword, "m", "<b>m</b>ain routine", (_parent: Parent) => this.file.createMain()],
-      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
-      [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
-      [procedureKeyword, "p", "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],
-      [constantKeyword, "k", "<b>k</b> constant", (_parent: Parent) => this.file.createConstant()],
-      [enumKeyword, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum()],
+      [
+        mainKeyword,
+        "m",
+        "<b>m</b>ain routine",
+        (parent: Parent) => this.frameFactory.createMain(parent),
+      ],
+      [
+        functionKeyword,
+        "f",
+        "<b>f</b>unction",
+        (parent: Parent) => this.frameFactory.createFunction(parent),
+      ],
+      [testKeyword, "t", "<b>t</b>est", (parent: Parent) => this.frameFactory.createTest(parent)],
+      [
+        procedureKeyword,
+        "p",
+        "<b>p</b>rocedure",
+        (parent: Parent) => this.frameFactory.createProcedure(parent),
+      ],
+      [
+        constantKeyword,
+        "k",
+        "<b>k</b> constant",
+        (parent: Parent) => this.frameFactory.createConstant(parent),
+      ],
+      [enumKeyword, "e", "<b>e</b>num", (parent: Parent) => this.frameFactory.createEnum(parent)],
       [
         classKeyword,
         "c",
         "<b>c</b>oncrete class",
-        (_parent: Parent) => this.file.createConcreteClass(),
+        (parent: Parent) => this.frameFactory.createConcreteClass(parent),
       ],
       [
         abstractKeyword,
         "a",
         "<b>a</b>bstract class",
-        (_parent: Parent) => this.file.createAbstractClass(),
+        (parent: Parent) => this.frameFactory.createAbstractClass(parent),
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.file.createComment(),
+        (parent: Parent) => this.frameFactory.createComment(parent),
       ],
     ];
   }

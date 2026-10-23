@@ -12,6 +12,7 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
 import { DisplayColour } from "../status-enums";
@@ -23,9 +24,9 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   file: File;
   private _testStatus: TestStatus;
   protected canHaveBreakPoint = false;
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
-    this.file = parent;
+    this.file = parent.getFile();
     this.testName = new FieldImpl(this, testNameFieldSpec);
     this._testStatus = TestStatus.default;
   }

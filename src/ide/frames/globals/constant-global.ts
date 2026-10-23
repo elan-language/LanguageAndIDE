@@ -6,6 +6,7 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { Parent } from "../frame-interfaces/parent";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Collapsible {
@@ -15,9 +16,9 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
   value: FieldImpl;
   file: File;
   isConstant = true;
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
-    this.file = parent;
+    this.file = parent.getFile();
     this.name = new FieldImpl(this, identifierFieldSpec);
     this.value = new FieldImpl(this, constantValueFieldSpec);
     this.value.setPlaceholder("<i>literal value or data structure</i>");

@@ -9,10 +9,10 @@ import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
+import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
-import { StatementFactory } from "./statement-factory";
 
 export enum ParseMode {
   loadNew,
@@ -45,7 +45,7 @@ export interface File extends Parent {
 
   getMap(): Map<string, Selectable>;
   getNextId(): number;
-  getFrameFactory(): StatementFactory;
+  getFrameFactory(): FrameFactory;
   getParadigm(): Paradigm;
   setParadigm(p: Paradigm): void;
 

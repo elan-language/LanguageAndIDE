@@ -4,16 +4,11 @@ import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { AbstractFunction } from "../class-members/abstract-function";
-import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { Constructor } from "../class-members/constructor";
-import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
-import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
-import { typeNameFieldSpec, inheritsFromFieldSpec } from "../fields/field-spec";
+import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { Regexes } from "../fields/regexes";
 import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -21,8 +16,8 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
@@ -63,7 +58,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   public inheritance: FieldImpl;
   private _children: Array<Frame> = new Array<Frame>();
 
-  constructor(parent: File) {
+  constructor(parent: Parent) {
     super(parent);
     this.name = new FieldImpl(this, typeNameFieldSpec);
     this.inheritance = new FieldImpl(this, inheritsFromFieldSpec);
@@ -116,8 +111,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return newStatus;
   }
 
-  getFactory(): StatementFactory {
-    return this.getParent().getFactory();
+  getFrameFactory(): FrameFactory {
+    return this.getParent().getFrameFactory();
   }
 
   getChildren(): Frame[] {
@@ -213,29 +208,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   protected seenTwice(name: string, seenNames: string[]) {
     return seenNames.filter((s) => s === name).length > 1;
-  }
-
-  createConstructor(): Frame {
-    return new Constructor(this);
-  }
-
-  createFunction(priv: boolean = false): Frame {
-    return new FunctionMethod(this, priv);
-  }
-  createProperty(priv: boolean = false): Frame {
-    return new Property(this, priv);
-  }
-  createProcedure(priv: boolean = false): Frame {
-    return new ProcedureMethod(this, priv);
-  }
-  createAbstractFunction(): Frame {
-    return new AbstractFunction(this);
-  }
-  createAbstractProcedure(): Frame {
-    return new AbstractProcedure(this);
-  }
-  createComment(): Frame {
-    return new CommentFrame(this);
   }
 
   public getConstructor(): Constructor {

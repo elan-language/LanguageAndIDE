@@ -28,7 +28,7 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   private frameFactory: FrameFactory;
   constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
+    this.class = parent as unknown as ClassFrame;
     this.frameFactory = parent.getFrameFactory();
   }
   isOnAbstractClass(): boolean {
@@ -61,13 +61,13 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
         procedureKeyword,
         "c",
         "pro<b>c</b>edure method",
-        (parent: Parent) => this.frameFactory.createProcedure(parent),
+        (parent: Parent) => this.frameFactory.createProcedureMethod(parent, false),
       ],
       [
         functionKeyword,
         "f",
         "<b>f</b>unction method",
-        (parent: Parent) => this.frameFactory.createFunction(parent),
+        (parent: Parent) => this.frameFactory.createFunctionMethod(parent, false),
       ],
       [
         abstractProcedureKeywords,
