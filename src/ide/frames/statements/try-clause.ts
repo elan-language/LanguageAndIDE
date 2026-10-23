@@ -1,4 +1,4 @@
-import { tryKeyword } from "../../../compiler/elan-keywords";
+import { catchKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { ClauseOfTry } from "../clause-of-try";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
@@ -52,6 +52,11 @@ export class TryClause extends ClauseOfTry {
   }
 
   parseTop(_source: CodeSource): void {
-    // does nothing
+    // no top, so does nothing
+  }
+
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(catchKeyword);
   }
 }

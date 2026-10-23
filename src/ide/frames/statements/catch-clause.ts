@@ -1,4 +1,4 @@
-import { asKeyword, catchKeyword } from "../../../compiler/elan-keywords";
+import { asKeyword, catchKeyword, endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { ClauseOfTry } from "../clause-of-try";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionTypeFieldSpec, identifierFieldSpec } from "../fields/field-spec";
@@ -17,6 +17,11 @@ export class CatchClause extends ClauseOfTry {
     this.variable = new FieldImpl(this, identifierFieldSpec);
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new FieldImpl(this, exceptionTypeFieldSpec);
+  }
+
+  isDeletable(): boolean {
+    const allClauses = this.getParent().getChildren();
+    return allClauses.filter((c) => c instanceof CatchClause).length > 1; // always leave at least one catch clause
   }
 
   insertPeerSelector(before: boolean): void {
@@ -58,5 +63,10 @@ ${this.renderChildrenAsElanSource()}`;
     this.variable.parseFrom(source);
     source.remove(` ${asKeyword} `);
     this.exceptionType.parseFrom(source);
+  }
+
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(`${endKeyword} ${tryKeyword}`);
   }
 }

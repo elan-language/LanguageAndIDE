@@ -3,6 +3,7 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
+import { CatchClause } from "./catch-clause";
 import { TryClause } from "./try-clause";
 
 export class TryStatement extends FrameWithStatements {
@@ -10,6 +11,7 @@ export class TryStatement extends FrameWithStatements {
     super(parent);
     const selector = this.getFirstChild();
     this.addChildBefore(new TryClause(this), selector);
+    this.addChildBefore(new CatchClause(this), selector);
     this.removeChild(selector);
   }
 
@@ -45,6 +47,8 @@ ${this.indent()}${endKeyword} ${tryKeyword}`;
     source.removeNewLine();
     const tryClause = this.getChildren()[0];
     tryClause.parseFrom(source);
+    const firstCatch = this.getChildren()[1];
+    firstCatch.parseFrom(source);
   }
 
   parseBottom(source: CodeSource): boolean {

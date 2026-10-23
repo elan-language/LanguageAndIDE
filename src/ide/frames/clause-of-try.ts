@@ -1,6 +1,4 @@
-import { endKeyword, tryKeyword } from "../../compiler/elan-keywords";
 import { Clause } from "./frame-interfaces/clause";
-import { CodeSource } from "./frame-interfaces/code-source";
 import { Statement } from "./frame-interfaces/statement";
 import { FrameWithStatements } from "./frame-with-statements";
 
@@ -20,16 +18,6 @@ export abstract class ClauseOfTry extends FrameWithStatements implements Stateme
 
   frameSpecificAnnotation(): string {
     return "";
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    let result = false;
-    const endIf = `${endKeyword} ${tryKeyword}`;
-    if (source.isMatch(endIf)) {
-      result = true;
-    }
-    return result;
   }
 
   outerHtmlTag: string = "el-statement";
