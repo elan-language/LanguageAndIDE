@@ -3,7 +3,7 @@ import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status"
 import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AbstractSelector } from "../abstract-selector";
-import { CompoundFrame } from "../compound-statement";
+import { CompoundFrame } from "../compound-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { testNameFieldSpec } from "../fields/field-spec";
 import {

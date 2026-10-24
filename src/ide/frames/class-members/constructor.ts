@@ -1,6 +1,6 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
-import { CompoundFrame } from "../compound-statement";
+import { CompoundFrame } from "../compound-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -23,7 +23,7 @@ export class Constructor extends CompoundFrame implements MemberFrame {
   newChildSelector(): AbstractSelector {
     return new StatementSelector(this);
   }
-    
+
   isPrivate: boolean = false;
 
   override helpDocument(): string {

@@ -13,7 +13,7 @@ export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   newChildSelector(): AbstractSelector {
     return new StatementSelector(this);
   }
-  
+
   indent(): string {
     return "";
   }

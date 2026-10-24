@@ -1,5 +1,5 @@
 import { procedureKeyword } from "../../../compiler/elan-keywords";
-import { CompoundFrame } from "../compound-statement";
+import { CompoundFrame } from "../compound-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";

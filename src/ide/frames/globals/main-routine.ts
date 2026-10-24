@@ -1,6 +1,6 @@
 import { mainKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
-import { CompoundFrame } from "../compound-statement";
+import { CompoundFrame } from "../compound-frame";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -20,7 +20,7 @@ export class MainRoutine extends CompoundFrame implements GlobalFrame {
   newChildSelector(): AbstractSelector {
     return new StatementSelector(this);
   }
-  
+
   initialKeywords(): string {
     return mainKeyword;
   }

@@ -15,16 +15,13 @@ import {
 } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
-import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
-  private frameFactory: FrameFactory;
   constructor(parent: FrameWithStatements) {
     super(parent);
-    this.frameFactory = parent.getFrameFactory();
   }
 
   override helpId(): string {

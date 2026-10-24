@@ -1,6 +1,6 @@
 import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
-import { CompoundFrame } from "../compound-statement";
+import { CompoundFrame } from "../compound-frame";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";

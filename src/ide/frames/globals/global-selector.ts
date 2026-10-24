@@ -11,19 +11,16 @@ import {
 import { AbstractSelector } from "../abstract-selector";
 import { isGlobal } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
-import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { File } from "../frame-interfaces/file";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   isGlobal = true;
-  private frameFactory: FrameFactory;
   private file: File; // TODO get rid of this
   constructor(parent: Parent) {
     super(parent);
     this.file = parent.getFile();
-    this.frameFactory = parent.getFrameFactory();
   }
 
   override helpId(): string {

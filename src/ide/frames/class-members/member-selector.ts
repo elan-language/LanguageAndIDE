@@ -15,7 +15,6 @@ import {
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
-import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { ClassFrame } from "../globals/class-frame";
@@ -25,11 +24,10 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   isAbstract = false;
   isPrivate = false;
   private class: ClassFrame;
-  private frameFactory: FrameFactory;
+
   constructor(parent: Parent) {
     super(parent);
     this.class = parent as unknown as ClassFrame;
-    this.frameFactory = parent.getFrameFactory();
   }
   isOnAbstractClass(): boolean {
     throw new Error("Should not be called");

@@ -7,6 +7,7 @@ import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
 import { Overtyper } from "./overtyper";
 import { Paradigm } from "./paradigm";
@@ -19,10 +20,12 @@ export abstract class AbstractSelector extends AbstractFrame {
   text: string = "";
   overtyper = new Overtyper();
   sourcePasting = false;
+  frameFactory: FrameFactory;
 
   constructor(parent: Parent) {
     super(parent);
     this.setParseStatus(ParseStatus.valid); //Can never be invalid.
+    this.frameFactory = parent.getFrameFactory();
   }
 
   getParadigm(): Paradigm {
