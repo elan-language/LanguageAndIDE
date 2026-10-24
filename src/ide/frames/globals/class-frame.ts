@@ -10,7 +10,7 @@ import { CompoundFrame } from "../compound-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { Regexes } from "../fields/regexes";
-import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
+import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -19,12 +19,7 @@ import { Frame } from "../frame-interfaces/frame";
 import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
 import { Paradigm } from "../paradigm";
-import {
-  parentHelper_renderChildrenAsExport,
-  parentHelper_renderChildrenAsHtml,
-  parentHelper_resetFieldTextOnChildren,
-  parentHelper_updateBreakpoints,
-} from "../parent-helpers";
+import { parentHelper_updateBreakpoints } from "../parent-helpers";
 
 export abstract class ClassFrame extends CompoundFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;
@@ -164,24 +159,4 @@ export abstract class ClassFrame extends CompoundFrame implements Frame, Parent,
   }
 
   outerHtmlTag: string = "el-member";
-
-  public renderAsHtml(): string {
-    return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
-${parentHelper_renderChildrenAsHtml(this)}
-${this.language().renderBottomAsHtml(this)}
-</el-class>`;
-  }
-
-  public renderAsExport(): string {
-    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
-${parentHelper_renderChildrenAsExport(this)}
-${bottomAsExport}`;
-  }
-  resetFieldText(): void {
-    super.resetFieldText();
-    parentHelper_resetFieldTextOnChildren(this);
-  }
 }
