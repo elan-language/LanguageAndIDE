@@ -20,10 +20,7 @@ export enum ParseMode {
 
 export interface File {
   // called from INSIDE the frame hierarchy - TODO do these need to be here or can they be on the proposed ProgramFrame?
-  isFile: boolean; // TODO this should go
   getNextId(): number;
-  //getFrameFactory(): FrameFactory;
-  //indent(): string;
   setFieldBeingEdited(value: boolean): void;
   getFrNo(): string;
   updateBreakpoints(event: BreakpointEvent): void;
@@ -34,8 +31,6 @@ export interface File {
 
   //Called from INSIDE and OUTSIDE
   getFirstChild(): Frame; // TODO rename to getFirstGlobal ?
-  //addChildBefore(g: Frame, before: Frame): void;
-  //addChildAfter(g: Frame, after: Frame): void
   getMap(): Map<string, Selectable>;
   getParadigm(): Paradigm;
   containsMain(): boolean;
@@ -48,12 +43,10 @@ export interface File {
   renderAsHtml(): Promise<string>;
   renderAsElanSource(): Promise<string>;
   renderAsExport(): Promise<string>;
-  //compile(): string;
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
   compileAsTestWorker(base: string): string;
   fileName: string;
   readonly defaultFileName: string;
-  //doingExport: boolean;
   addChild(g: Frame): void; // TODO rename to addGlobal ?
   setParadigm(p: Paradigm): void;
   expandCollapseAll(): void;
