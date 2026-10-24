@@ -2,11 +2,11 @@ import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
-import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Constructor } from "../class-members/constructor";
 import { MemberSelector } from "../class-members/member-selector";
 import { Property } from "../class-members/property";
+import { CompoundFrame } from "../compound-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { Regexes } from "../fields/regexes";
@@ -45,7 +45,7 @@ import {
 } from "../parent-helpers";
 import { CompileStatus } from "../status-enums";
 
-export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
+export abstract class ClassFrame extends CompoundFrame implements Frame, Parent, Collapsible {
   isCollapsible: boolean = true;
   isParent: boolean = true;
   isClass: boolean = true;
@@ -56,13 +56,11 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   public name: FieldImpl;
   public isNotInheritable = false;
   public inheritance: FieldImpl;
-  private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: Parent) {
     super(parent);
     this.name = new FieldImpl(this, typeNameFieldSpec);
     this.inheritance = new FieldImpl(this, inheritsFromFieldSpec);
-    this.getChildren().push(new MemberSelector(this));
     this.canHaveBreakPoint = false;
   }
 
@@ -113,10 +111,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   getFrameFactory(): FrameFactory {
     return this.getParent().getFrameFactory();
-  }
-
-  getChildren(): Frame[] {
-    return this._children;
   }
 
   getFirstChild(): Frame {
@@ -172,10 +166,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   minimumNumberOfChildrenExceeded(): boolean {
     return this.getChildren().length > 1;
-  }
-
-  selectNextFrame(): void {
-    this._children[0]?.select(true, false);
   }
 
   doesInherit(): boolean {
@@ -264,15 +254,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   }
   unghostSelectedChildren(): void {
     setGhostOnSelectedChildren(this, false);
-  }
-  override deleteAllGhosted(): void {
-    if (this.isGhosted()) {
-      this.delete();
-    } else {
-      for (const child of this._children) {
-        child.deleteAllGhosted();
-      }
-    }
   }
 
   outerHtmlTag: string = "el-member";

@@ -76,16 +76,16 @@ suite("Editing Frames", () => {
   test("#1057 enter on inheritance clause field should put focus *inside* the class, not the next global", () => {
     const file = classWithConstructor();
     assert.equal(file.getChildren().length, 2);
-    const className = file.getById("elan_type2") as FieldImpl;
+    const className = file.getById("elan_type3") as FieldImpl;
     className.select();
     assert.equal(className.isSelected(), true);
     className.processKey(enter());
     assert.equal(className.isSelected(), false);
-    const text3 = file.getById("elan_text3") as FieldImpl;
+    const text3 = file.getById("elan_text4") as FieldImpl;
     assert.equal(text3.isSelected(), true);
     text3.processKey(enter());
     assert.equal(text3.isSelected(), false);
-    const selector = file.getById("elan_select4") as MemberSelector;
+    const selector = file.getById("elan_select6") as MemberSelector;
     assert.equal(selector.isSelected(), false);
   });
   test("Tab/Shift-Tab on a field goes to next/prev", () => {
