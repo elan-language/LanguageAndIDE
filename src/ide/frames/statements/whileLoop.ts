@@ -1,14 +1,14 @@
 import { endKeyword, whileKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
+import { CompoundFrame } from "../compound-statement";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "./statement-selector";
 
-export class WhileLoop extends FrameWithStatements {
+export class WhileLoop extends CompoundFrame {
   isStatement = false;
   condition: FieldImpl;
   constructor(parent: Parent) {

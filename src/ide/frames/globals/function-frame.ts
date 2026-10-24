@@ -1,20 +1,20 @@
 import {
-  endKeyword,
-  functionKeyword,
-  returnKeyword,
-  returnsKeyword,
+    endKeyword,
+    functionKeyword,
+    returnKeyword,
+    returnsKeyword,
 } from "../../../compiler/elan-keywords";
+import { CompoundFrame } from "../compound-statement";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { Paradigm } from "../paradigm";
 import { ReturnStatement } from "../statements/return-statement";
 
-export abstract class FunctionFrame extends FrameWithStatements implements Parent {
+export abstract class FunctionFrame extends CompoundFrame implements Parent {
   public name: FieldImpl;
   public params: FieldImpl;
   public returnType: FieldImpl;

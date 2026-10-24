@@ -1,14 +1,14 @@
 import { mainKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
+import { CompoundFrame } from "../compound-statement";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "../statements/statement-selector";
 
-export class MainRoutine extends FrameWithStatements implements GlobalFrame {
+export class MainRoutine extends CompoundFrame implements GlobalFrame {
   isMain = true;
   isGlobal = true;
   file: File;

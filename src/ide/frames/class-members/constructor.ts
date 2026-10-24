@@ -1,15 +1,15 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
+import { CompoundFrame } from "../compound-statement";
 import { FieldImpl } from "../fields/field-impl";
 import { paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "../statements/statement-selector";
 
-export class Constructor extends FrameWithStatements implements MemberFrame {
+export class Constructor extends CompoundFrame implements MemberFrame {
   isConstructor = true;
   isMember = true;
   isAbstract = false;

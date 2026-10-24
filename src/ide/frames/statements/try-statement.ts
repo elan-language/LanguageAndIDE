@@ -1,13 +1,13 @@
 import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
+import { CompoundFrame } from "../compound-statement";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { CatchStatement } from "./catch-statement";
 import { StatementSelector } from "./statement-selector";
 
-export class TryStatement extends FrameWithStatements {
+export class TryStatement extends CompoundFrame {
   catch: CatchStatement;
   constructor(parent: Parent) {
     super(parent);

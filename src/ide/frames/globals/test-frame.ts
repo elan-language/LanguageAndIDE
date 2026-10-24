@@ -3,6 +3,7 @@ import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status"
 import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { AbstractSelector } from "../abstract-selector";
+import { CompoundFrame } from "../compound-statement";
 import { FieldImpl } from "../fields/field-impl";
 import { testNameFieldSpec } from "../fields/field-spec";
 import {
@@ -14,12 +15,11 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
 import { StatementSelector } from "../statements/statement-selector";
 import { DisplayColour } from "../status-enums";
 
-export class TestFrame extends FrameWithStatements implements GlobalFrame {
+export class TestFrame extends CompoundFrame implements GlobalFrame {
   isTest = true;
   isGlobal = true;
   public testName: FieldImpl;

@@ -1,16 +1,16 @@
 import { endKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { CodeSourceFromString } from "../code-source-from-string";
+import { CompoundFrame } from "../compound-statement";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
-import { FrameWithStatements } from "../frame-with-statements";
 import { StatementSelector } from "./statement-selector";
 
-export class IfStatement extends FrameWithStatements implements Statement {
+export class IfStatement extends CompoundFrame implements Statement {
   isStatement = true;
   condition: FieldImpl;
   constructor(parent: Parent) {

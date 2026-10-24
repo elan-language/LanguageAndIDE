@@ -38,7 +38,6 @@ import {
 import { CompileStatus } from "./status-enums";
 
 export abstract class CompoundFrame extends AbstractFrame implements Parent, Collapsible {
-  isFrameWithStatements = true;
   isCollapsible: boolean = true;
   isParent: boolean = true;
   private _children: Array<Frame> = new Array<Frame>();
