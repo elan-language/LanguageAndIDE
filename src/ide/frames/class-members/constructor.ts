@@ -1,4 +1,5 @@
 import { constructorKeyword } from "../../../compiler/elan-keywords";
+import { AbstractSelector } from "../abstract-selector";
 import { FieldImpl } from "../fields/field-impl";
 import { paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -6,6 +7,7 @@ import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
+import { StatementSelector } from "../statements/statement-selector";
 
 export class Constructor extends FrameWithStatements implements MemberFrame {
   isConstructor = true;
@@ -17,6 +19,11 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     super(parent);
     this.params = new FieldImpl(this, paramListFieldSpec);
   }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
+  }
+    
   isPrivate: boolean = false;
 
   override helpDocument(): string {

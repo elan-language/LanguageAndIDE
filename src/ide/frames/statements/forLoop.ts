@@ -1,4 +1,5 @@
 import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
+import { AbstractSelector } from "../abstract-selector";
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -6,6 +7,7 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
+import { StatementSelector } from "./statement-selector";
 
 export class ForLoop extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -18,6 +20,11 @@ export class ForLoop extends FrameWithStatements implements Statement {
     this.iter = new FieldImpl(this, expressionFieldSpec);
     this.iter.setPlaceholder("<i>source</i>");
   }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
+  }
+
   initialKeywords(): string {
     return forKeyword;
   }

@@ -2,6 +2,7 @@ import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
 import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
+import { AbstractSelector } from "../abstract-selector";
 import { FieldImpl } from "../fields/field-impl";
 import { testNameFieldSpec } from "../fields/field-spec";
 import {
@@ -15,6 +16,7 @@ import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
+import { StatementSelector } from "../statements/statement-selector";
 import { DisplayColour } from "../status-enums";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
@@ -29,6 +31,10 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     this.file = parent.getFile();
     this.testName = new FieldImpl(this, testNameFieldSpec);
     this._testStatus = TestStatus.default;
+  }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
   }
 
   override readDisplayStatus(): DisplayColour {
@@ -53,6 +59,12 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
     this._testStatus = worstOf(this._testStatus, worst);
+  }
+
+  getAsserts() {
+    return this.getChildren().filter(
+      (c) => c instanceof AssertStatement && !c.isGhosted(),
+    ) as AssertStatement[];
   }
 
   resetTestStatus(): void {

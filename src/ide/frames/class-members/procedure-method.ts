@@ -1,4 +1,5 @@
 import { privateKeyword } from "../../../compiler/elan-keywords";
+import { AbstractSelector } from "../abstract-selector";
 import {
   addPrivateToggleToContextMenu,
   modifierAsElanSource,
@@ -11,6 +12,7 @@ import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { AbstractClass } from "../globals/abstract-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
+import { StatementSelector } from "../statements/statement-selector";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
   isMember: boolean = true;
@@ -19,6 +21,10 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   constructor(parent: Parent, priv = false) {
     super(parent);
     this.isPrivate = priv;
+  }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
   }
 
   isOnAbstractClass(): boolean {

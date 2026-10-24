@@ -3,6 +3,8 @@ import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FunctionFrame } from "./function-frame";
 import { File } from "../frame-interfaces/file";
+import { AbstractSelector } from "../abstract-selector";
+import { StatementSelector } from "../statements/statement-selector";
 
 export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   isGlobal = true;
@@ -10,6 +12,10 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   constructor(parent: Parent) {
     super(parent);
     this.file = parent.getFile();
+  }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
   }
 
   indent(): string {

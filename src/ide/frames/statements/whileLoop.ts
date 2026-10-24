@@ -1,10 +1,12 @@
 import { endKeyword, whileKeyword } from "../../../compiler/elan-keywords";
+import { AbstractSelector } from "../abstract-selector";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameWithStatements } from "../frame-with-statements";
+import { StatementSelector } from "./statement-selector";
 
 export class WhileLoop extends FrameWithStatements {
   isStatement = false;
@@ -14,6 +16,11 @@ export class WhileLoop extends FrameWithStatements {
     this.condition = new FieldImpl(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
+  }
+  
   initialKeywords(): string {
     return whileKeyword;
   }

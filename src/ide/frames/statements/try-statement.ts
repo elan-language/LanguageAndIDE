@@ -1,4 +1,5 @@
 import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
+import { AbstractSelector } from "../abstract-selector";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -17,6 +18,10 @@ export class TryStatement extends FrameWithStatements {
     this.catch = new CatchStatement(this);
     this.getChildren().push(this.catch);
     this.getChildren().push(new StatementSelector(this));
+  }
+
+  newChildSelector(): AbstractSelector {
+    return new StatementSelector(this);
   }
 
   initialKeywords(): string {
