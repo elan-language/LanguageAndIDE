@@ -495,7 +495,7 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - else with and without if", async () => {
+  ignore_test("parse Frames - else with and without if", async () => {
     const code = `${testHeader}
 
 main

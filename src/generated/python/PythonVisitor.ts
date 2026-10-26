@@ -18,6 +18,9 @@ import { OrdinaryStatementContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
+import { ThenClauseContext } from "./PythonParser.js";
+import { ElseIfClauseContext } from "./PythonParser.js";
+import { ElseClauseContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
@@ -30,8 +33,6 @@ import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
-import { ElseIfClauseContext } from "./PythonParser.js";
-import { ElseClauseContext } from "./PythonParser.js";
 import { CatchStatementContext } from "./PythonParser.js";
 import { ConstructorMemberContext } from "./PythonParser.js";
 import { PropertyContext } from "./PythonParser.js";
@@ -190,6 +191,24 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIfStatement?: (ctx: IfStatementContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.thenClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThenClause?: (ctx: ThenClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.elseIfClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.elseClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseClause?: (ctx: ElseClauseContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.whileLoop`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -261,18 +280,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.elseIfClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.elseClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseClause?: (ctx: ElseClauseContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.catchStatement`.
    * @param ctx the parse tree

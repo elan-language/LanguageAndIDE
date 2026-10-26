@@ -22,14 +22,17 @@ import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn"
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
-import { CatchStatementAsn } from "../../compiler/syntax-nodes/statements/catch-statement-asn";
+import { CatchClauseAsn } from "../../compiler/syntax-nodes/statements/catch-clause-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
+import { ElseIfClauseAsn } from "../../compiler/syntax-nodes/statements/else-if-clause-asn";
 import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
 import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
 import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
+import { ThenClauseAsn } from "../../compiler/syntax-nodes/statements/then-clause-asn";
 import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
+import { TryClauseAsn } from "../../compiler/syntax-nodes/statements/try-clause-asn";
 import { TryStatementAsn } from "../../compiler/syntax-nodes/statements/try-statement-asn";
 import { VariableDefinitionAsn } from "../../compiler/syntax-nodes/statements/variable-definition-asn";
 import { WhileLoopAsn } from "../../compiler/syntax-nodes/statements/while-loop-asn";
@@ -57,14 +60,16 @@ import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
 import { AssertStatement } from "../frames/statements/assert-statement";
 import { Assignment } from "../frames/statements/assignment";
-import { CatchStatement } from "../frames/statements/catch-statement";
+import { CatchClause } from "../frames/statements/catch-clause";
 import { ElseClause } from "../frames/statements/else-clause";
 import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
+import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
+import { TryClause } from "../frames/statements/try-clause";
 import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
@@ -337,32 +342,59 @@ export function transform(
     return returnStatementAsn;
   }
 
+  if (node instanceof TryClause) {
+    const tryClauseAsn = new TryClauseAsn(node.getHtmlId(), scope);
+    tryClauseAsn.breakpointStatus = node.breakpointStatus;
+    tryClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), tryClauseAsn)) as AstNode[];
+    return tryClauseAsn;
+  }
+
+  if (node instanceof CatchClause) {
+    const variable = transform(node.variable, fieldId, scope)!;
+    const typeName = transform(node.exceptionType, fieldId, scope)!;
+
+    const catchClauseAsn = new CatchClauseAsn(variable, typeName, node.getHtmlId(), scope);
+    catchClauseAsn.breakpointStatus = node.breakpointStatus;
+
+    catchClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), catchClauseAsn)) as AstNode[];
+    return catchClauseAsn;
+  }
+
+  if (node instanceof ThenClause) {
+    const thenClauseAsn = new ThenClauseAsn(node.getHtmlId(), scope);
+    thenClauseAsn.breakpointStatus = node.breakpointStatus;
+    thenClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), thenClauseAsn)) as AstNode[];
+    return thenClauseAsn;
+  }
+
   if (node instanceof ElseIfClause) {
-    const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
-    elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition =
-      transform(node.condition, node.getHtmlId(), elseClauseAsn) ?? EmptyAsn.Instance;
-    elseClauseAsn.hasIf = true;
-    return elseClauseAsn;
+    const elseIfClauseAsn = new ElseIfClauseAsn(node.getHtmlId(), scope);
+    elseIfClauseAsn.breakpointStatus = node.breakpointStatus;
+    elseIfClauseAsn.condition = transform(node.condition, node.getHtmlId(), elseIfClauseAsn)!;
+    elseIfClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), elseIfClauseAsn)) as AstNode[];
+    return elseIfClauseAsn;
   }
 
   if (node instanceof ElseClause) {
     const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
     elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition = EmptyAsn.Instance;
-    elseClauseAsn.hasIf = false;
+    elseClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), elseClauseAsn)) as AstNode[];
     return elseClauseAsn;
-  }
-
-  if (node instanceof CatchStatement) {
-    const typeName = node.exceptionType.text;
-
-    const catchAsn = new CatchStatementAsn(typeName!, node.getHtmlId(), scope);
-    catchAsn.breakpointStatus = node.breakpointStatus;
-
-    catchAsn.identifierDef =
-      transform(node.variable, node.getHtmlId(), catchAsn) ?? EmptyAsn.Instance;
-    return catchAsn;
   }
 
   if (node instanceof Constructor) {

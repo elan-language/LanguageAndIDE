@@ -29,31 +29,52 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return "GlobalInstructions";
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return [
-      [mainKeyword, "m", "<b>m</b>ain routine", (_parent: Parent) => this.file.createMain()],
-      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
-      [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
-      [procedureKeyword, "p", "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],
-      [constantKeyword, "k", "<b>k</b> constant", (_parent: Parent) => this.file.createConstant()],
-      [enumKeyword, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum()],
+      [mainKeyword, "m", "<b>m</b>ain routine", (_parent: Parent) => this.file.createMain(), true],
+      [
+        functionKeyword,
+        "f",
+        "<b>f</b>unction",
+        (_parent: Parent) => this.file.createFunction(),
+        true,
+      ],
+      [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest(), true],
+      [
+        procedureKeyword,
+        "p",
+        "<b>p</b>rocedure",
+        (_parent: Parent) => this.file.createProcedure(),
+        true,
+      ],
+      [
+        constantKeyword,
+        "k",
+        "<b>k</b> constant",
+        (_parent: Parent) => this.file.createConstant(),
+        true,
+      ],
+      [enumKeyword, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum(), true],
       [
         classKeyword,
         "c",
         "<b>c</b>oncrete class",
         (_parent: Parent) => this.file.createConcreteClass(),
+        true,
       ],
       [
         abstractKeyword,
         "a",
         "<b>a</b>bstract class",
         (_parent: Parent) => this.file.createAbstractClass(),
+        true,
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.file.createComment(),
+        true,
       ],
     ];
   }

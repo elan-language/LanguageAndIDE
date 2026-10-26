@@ -7,6 +7,8 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameWithStatements } from "../frame-with-statements";
+import { ElseClause } from "./else-clause";
+import { ThenClause } from "./then-clause";
 
 export class IfStatement extends FrameWithStatements implements Statement {
   isStatement = true;
@@ -15,6 +17,9 @@ export class IfStatement extends FrameWithStatements implements Statement {
     super(parent);
     this.condition = new FieldImpl(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
+    const selector = this.getFirstChild();
+    this.addChildBefore(new ThenClause(this), selector);
+    this.removeChild(selector);
   }
 
   initialKeywords(): string {
@@ -41,11 +46,13 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
   }
 
   parseTop(source: CodeSource): void {
-    source.remove("if ");
+    source.remove(`${ifKeyword}`);
     const condition = source.readUntil(/\sthen/);
     this.condition.parseFrom(new CodeSourceFromString(condition));
-    source.remove(" then");
+    source.remove(` ${thenKeyword}`);
     source.removeNewLine();
+    const thenClause = this.getChildren()[0];
+    thenClause.parseFrom(source);
   }
 
   parseBottom(source: CodeSource): boolean {
@@ -55,5 +62,13 @@ ${this.indent()}${endKeyword} ${ifKeyword}`;
 
   override insertSelectorAfterLastField(): void {
     this.getFirstChild().select(true, false);
+  }
+
+  hasElseClause(): boolean {
+    return this.getChildren().filter((s) => s instanceof ElseClause).length > 0;
+  }
+
+  override selectNextFrame(): void {
+    this.getFirstChild().selectNextFrame(); // i.e. the first statement (or selector) within the then-clause
   }
 }

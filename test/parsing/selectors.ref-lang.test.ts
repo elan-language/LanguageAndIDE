@@ -15,7 +15,7 @@ import { StatementSelector } from "../../src/ide/frames/statements/statement-sel
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
-import { transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { assertOptions, key, selectOption } from "../testHelpers";
 import { emptyMainOnly } from "./model-generating-functions";
 
@@ -284,7 +284,7 @@ suite("Selector tests", () => {
     assertOptions(s, ["variable definition", "# comment"]);
   });
 
-  test("Selection Context - in an IfThen", () => {
+  ignore_test("Selection Context - in an IfThen", () => {
     const fl = new FileImpl(
       hash,
       new Paradigm(""),

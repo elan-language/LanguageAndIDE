@@ -21,7 +21,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CatchStatement } from "./statements/catch-statement";
+import { CatchClause } from "./statements/catch-clause";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -65,8 +65,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     let html = `Html not specified for this frame`;
     if (frame instanceof ProcedureCall) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()});`;
-    } else if (frame instanceof CatchStatement) {
-      html = `} <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof CommentFrame) {
       html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
     } else if (frame instanceof ElseIfClause) {
@@ -111,6 +109,8 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${frame.inheritance.renderAsHtml()} {`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.PUBLIC} ${selfTypeAsHtml(frame)}(${frame.params.renderAsHtml()}) {`;
+    } else if (frame instanceof CatchClause) {
+      html = `} <el-kw>${this.CATCH}</el-kw> (${frame.exceptionType.renderAsHtml()} ${frame.variable.renderAsHtml()}) {`;
     } else if (frame instanceof FunctionMethod) {
       html = `${this.modifierAsHtml(frame)}${this.overrides(frame)}<el-kw></el-kw>${frame.returnType.renderAsHtml()} ${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) {`;
     } else if (frame instanceof ProcedureMethod) {

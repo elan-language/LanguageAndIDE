@@ -18,6 +18,7 @@ import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameWithStatements } from "../frame-with-statements";
+import { IfStatement } from "./if-statement";
 
 export class StatementSelector extends AbstractSelector {
   isStatement = true;
@@ -31,32 +32,78 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
     return [
-      [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
+      [
+        assertKeyword,
+        "a",
+        "<b>a</b>ssert",
+        (parent: Parent) => this.factory.newAssert(parent),
+        true,
+      ],
       [
         variableKeyword,
         "v",
         "<b>v</b>ariable definition",
         (parent: Parent) => this.factory.newVar(parent),
+        true,
       ],
-      [assignKeyword, "a", "<b>a</b>ssignment", (parent: Parent) => this.factory.newSet(parent)],
-      [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent)],
-      [elifKeyword, "s", "el<b>s</b>e if clause", (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, "e", "<b>e</b>lse clause", (parent: Parent) => this.factory.newElse(parent)],
-      [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
-      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
+      [
+        assignKeyword,
+        "a",
+        "<b>a</b>ssignment",
+        (parent: Parent) => this.factory.newSet(parent),
+        true,
+      ],
+      [
+        catchKeyword,
+        "h",
+        "catc<b>h</b>",
+        (parent: Parent) => this.factory.newCatch(parent.getParent()),
+        false,
+      ],
+      [
+        ifKeyword,
+        "i",
+        "<b>i</b>f statement",
+        (parent: Parent) => this.factory.newIfStatement(parent),
+        true,
+      ],
+      [
+        elifKeyword,
+        "s",
+        "el<b>s</b>e if clause",
+        (parent: Parent) => this.factory.newElseIf(parent.getParent()),
+        false,
+      ],
+      [
+        elseKeyword,
+        "e",
+        "<b>e</b>lse clause",
+        (parent: Parent) => this.factory.newElse(parent.getParent()),
+        false,
+      ],
+      [
+        whileKeyword,
+        "w",
+        "<b>w</b>hile loop",
+        (parent: Parent) => this.factory.newWhile(parent),
+        true,
+      ],
+      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent), true],
       [
         callKeyword,
         "c",
         "procedure <b>c</b>all",
         (parent: Parent) => this.factory.newCall(parent, ""),
+        true,
       ],
       [
         tryKeyword,
         "y",
         "tr<b>y</b> statement",
-        (parent: Parent) => this.factory.newTryCatch(parent),
+        (parent: Parent) => this.factory.newTry(parent),
+        true,
       ],
       // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [
@@ -64,12 +111,14 @@ export class StatementSelector extends AbstractSelector {
         "t",
         "<b>t</b>hrow statement",
         (parent: Parent) => this.factory.newThrow(parent),
+        true,
       ],
       [
         this.getCommentMarker(),
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (parent: Parent) => this.factory.newComment(parent),
+        true,
       ],
     ];
   }
@@ -82,10 +131,18 @@ export class StatementSelector extends AbstractSelector {
     const parent = this.getParent();
     let result = true;
     // First apply universal instruction-specific rules
-    if (keyword === elseKeyword || keyword === elifKeyword) {
-      result = parent.getIdPrefix().includes(`_${ifKeyword}`);
+    if (keyword === elifKeyword) {
+      result = this.isWithinThenOrElseIfClause() && parent.getLastChild() === this;
+    } else if (keyword === elseKeyword) {
+      result =
+        this.isWithinThenOrElseIfClause() &&
+        parent.getLastChild() === this &&
+        parent.getParent().getLastChild() === (parent as unknown as Frame) &&
+        !(parent.getParent() as unknown as IfStatement).hasElseClause();
     } else if (keyword === catchKeyword) {
-      result = parent.getIdPrefix().includes(`_${tryKeyword}`);
+      result =
+        parent.getIdPrefix().includes(`_${tryKeyword}`) ||
+        parent.getIdPrefix().includes(`_${catchKeyword}`);
     } else if (keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === assertKeyword) {
@@ -106,6 +163,11 @@ export class StatementSelector extends AbstractSelector {
       }
     }
     return result;
+  }
+
+  private isWithinThenOrElseIfClause() {
+    const prefix = this.getParent().getIdPrefix();
+    return prefix.endsWith("_then") || prefix.endsWith("_elseIf");
   }
 
   private isWithinAFunction(): boolean {

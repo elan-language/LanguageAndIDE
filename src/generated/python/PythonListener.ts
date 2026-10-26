@@ -18,6 +18,9 @@ import { OrdinaryStatementContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
 import { IfStatementContext } from "./PythonParser.js";
+import { ThenClauseContext } from "./PythonParser.js";
+import { ElseIfClauseContext } from "./PythonParser.js";
+import { ElseClauseContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
@@ -30,8 +33,6 @@ import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
-import { ElseIfClauseContext } from "./PythonParser.js";
-import { ElseClauseContext } from "./PythonParser.js";
 import { CatchStatementContext } from "./PythonParser.js";
 import { ConstructorMemberContext } from "./PythonParser.js";
 import { PropertyContext } from "./PythonParser.js";
@@ -251,6 +252,36 @@ export class PythonListener implements ParseTreeListener {
    */
   exitIfStatement?: (ctx: IfStatementContext) => void;
   /**
+   * Enter a parse tree produced by `PythonParser.thenClause`.
+   * @param ctx the parse tree
+   */
+  enterThenClause?: (ctx: ThenClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.thenClause`.
+   * @param ctx the parse tree
+   */
+  exitThenClause?: (ctx: ThenClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.elseIfClause`.
+   * @param ctx the parse tree
+   */
+  enterElseIfClause?: (ctx: ElseIfClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.elseIfClause`.
+   * @param ctx the parse tree
+   */
+  exitElseIfClause?: (ctx: ElseIfClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.elseClause`.
+   * @param ctx the parse tree
+   */
+  enterElseClause?: (ctx: ElseClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.elseClause`.
+   * @param ctx the parse tree
+   */
+  exitElseClause?: (ctx: ElseClauseContext) => void;
+  /**
    * Enter a parse tree produced by `PythonParser.whileLoop`.
    * @param ctx the parse tree
    */
@@ -370,26 +401,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.elseIfClause`.
-   * @param ctx the parse tree
-   */
-  enterElseIfClause?: (ctx: ElseIfClauseContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.elseIfClause`.
-   * @param ctx the parse tree
-   */
-  exitElseIfClause?: (ctx: ElseIfClauseContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.elseClause`.
-   * @param ctx the parse tree
-   */
-  enterElseClause?: (ctx: ElseClauseContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.elseClause`.
-   * @param ctx the parse tree
-   */
-  exitElseClause?: (ctx: ElseClauseContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.catchStatement`.
    * @param ctx the parse tree

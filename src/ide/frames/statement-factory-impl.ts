@@ -4,7 +4,7 @@ import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CatchStatement } from "./statements/catch-statement";
+import { CatchClause } from "./statements/catch-clause";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -27,9 +27,9 @@ export class StatementFactoryImpl implements StatementFactory {
     return call;
   }
   public newCatch(parent: Parent): Frame {
-    return new CatchStatement(parent);
+    return new CatchClause(parent);
   }
-  public newElif(parent: Parent): Frame {
+  public newElseIf(parent: Parent): Frame {
     return new ElseIfClause(parent);
   }
   public newElse(parent: Parent): Frame {
@@ -38,7 +38,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newFor(parent: Parent): Frame {
     return new ForLoop(parent);
   }
-  public newIf(parent: Parent): Frame {
+  public newIfStatement(parent: Parent): Frame {
     return new IfStatement(parent);
   }
   public newSet(parent: Parent): Frame {
@@ -47,7 +47,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newThrow(parent: Parent): Frame {
     return new ThrowStatement(parent);
   }
-  public newTryCatch(parent: Parent): Frame {
+  public newTry(parent: Parent): Frame {
     return new TryStatement(parent);
   }
   public newVar(parent: Parent): Frame {

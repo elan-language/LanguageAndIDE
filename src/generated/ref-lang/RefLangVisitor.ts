@@ -21,6 +21,9 @@ import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
+import { ThenClauseContext } from "./RefLangParser.js";
+import { ElseIfClauseContext } from "./RefLangParser.js";
+import { ElseClauseContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
@@ -29,12 +32,12 @@ import { ThisProcRefContext } from "./RefLangParser.js";
 import { InstanceProcRefContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
+import { TryClauseContext } from "./RefLangParser.js";
+import { CatchClauseContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
-import { ElseIfClauseContext } from "./RefLangParser.js";
-import { ElseClauseContext } from "./RefLangParser.js";
 import { CatchStatementContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
@@ -233,6 +236,24 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIfStatement?: (ctx: IfStatementContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.thenClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThenClause?: (ctx: ThenClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.elseIfClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.elseClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseClause?: (ctx: ElseClauseContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.whileLoop`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -281,6 +302,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitTryStatement?: (ctx: TryStatementContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryClause?: (ctx: TryClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCatchClause?: (ctx: CatchClauseContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -304,18 +337,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.elseIfClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.elseClause`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitElseClause?: (ctx: ElseClauseContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.catchStatement`.
    * @param ctx the parse tree

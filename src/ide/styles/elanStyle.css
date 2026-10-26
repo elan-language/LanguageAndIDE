@@ -184,7 +184,7 @@ el-proc:has(+ el-kw), el-func:has(+ el-kw), el-prop:has(+ el-kw)
 .selected > el-txt, 
 .selected > el-place, 
 .selected > el-compl,
-.selected > .outdent el-top, .selected > .outdent el-top *,
+.selected > .outdent > el-top, .selected > .outdent > el-top *,
 el-const.selected, el-const.selected *
 {
     background-color: var(--selection);

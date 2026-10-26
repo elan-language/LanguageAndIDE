@@ -1,30 +1,38 @@
-import { elifKeyword, elseKeyword, thenKeyword } from "../../../compiler/elan-keywords";
+import { elifKeyword, endKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
+import { Clause } from "../clause";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
+import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
-import { Statement } from "../frame-interfaces/statement";
-import { SingleLineFrame } from "../single-line-frame";
+import { FrameWithStatements } from "../frame-with-statements";
 
-export class ElseIfClause extends SingleLineFrame implements Statement {
-  isStatement: boolean = true;
-  hasIf: boolean = true;
+export class ElseIfClause extends Clause {
   condition: FieldImpl;
+
   constructor(parent: Parent) {
     super(parent);
     this.condition = new FieldImpl(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
 
-  protected setClasses() {
-    super.setClasses();
-    this.pushClass(true, "outdent");
+  insertPeerSelector(before: boolean): void {
+    //Not strictly a peer selector - inserts either a child of itself or child of predecessor
+    const parent = this.getParent();
+    if (before) {
+      const previousChild = parent.getChildBefore(this) as unknown as FrameWithStatements;
+      const lastStatementInPrevious = previousChild.getLastChild() as unknown as Frame;
+      previousChild.insertOrGotoChildSelector(true, lastStatementInPrevious);
+    } else {
+      const lastChildOfThis = this.getLastChild();
+      this.insertOrGotoChildSelector(true, lastChildOfThis);
+    }
   }
 
   initialKeywords(): string {
-    return elseKeyword;
+    return elifKeyword;
   }
 
   getFields(): Field[] {
@@ -32,25 +40,22 @@ export class ElseIfClause extends SingleLineFrame implements Statement {
   }
 
   getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_else`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "else if";
-  }
-
-  indent() {
-    return this.getParent()!.indent(); //overrides the additional indent added for most child statements
+    return `${this.language().languageHtmlClass}_elseIf`;
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}`;
+    return `${this.indent()}${this.sourceAnnotations()}${elifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
+${this.renderChildrenAsElanSource()}`;
   }
 
-  parseFrom(source: CodeSource): void {
+  parseTop(source: CodeSource): void {
     source.remove(`${elifKeyword} `);
     const condition = source.readUntil(/\sthen/);
     this.condition.parseFrom(new CodeSourceFromString(condition));
     source.remove(` ${thenKeyword}`);
+  }
+  parseBottom(source: CodeSource): boolean {
+    source.removeIndent();
+    return source.isMatch(`${endKeyword} ${ifKeyword}`);
   }
 }

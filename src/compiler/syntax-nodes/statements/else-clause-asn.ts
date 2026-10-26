@@ -1,34 +1,10 @@
-import { mustBeOfType } from "../../compile-rules";
-import { AstNode } from "../../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
-import { BooleanType } from "../../symbols/boolean-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
-import { BreakpointAsn } from "../breakpoint-asn";
-import { EmptyAsn } from "../empty-asn";
+import { CompoundAsn } from "../compound-asn";
 
-export class ElseClauseAsn extends BreakpointAsn {
-  hasIf: boolean = false;
-
+export class ElseClauseAsn extends CompoundAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
-  }
-
-  condition: AstNode = EmptyAsn.Instance;
-
-  private compileIfClause(): string {
-    if (this.hasIf) {
-      mustBeOfType(
-        this.condition,
-        BooleanType.Instance,
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-      return `if (${this.condition.compile()}) {`;
-    }
-    return `{`;
   }
 
   getCurrentScope(): Scope {
@@ -42,39 +18,11 @@ export class ElseClauseAsn extends BreakpointAsn {
   compile(): string {
     this.compileErrors = [];
 
-    const code = `${this.indent()}} else ${this.compileIfClause()}
-${compileNodes(this.compileChildren)}`;
+    const code = `${this.indent()}} else {
+${this.compileChildren()}`;
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return code;
-  }
-
-  compileChildren: AstNode[] = [];
-
-  setCompileScope(s: Scope) {
-    this.compileScope = s;
-    this.compileChildren = [];
-  }
-
-  addChild(f: AstNode) {
-    this.compileChildren.push(f);
-  }
-
-  getOuterScope() {
-    // need to get scope of IfStatement
-    return this.getCurrentScope().getParentScope();
-  }
-
-  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    return (
-      getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
-      this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
-    );
-  }
-
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-    return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
   }
 }

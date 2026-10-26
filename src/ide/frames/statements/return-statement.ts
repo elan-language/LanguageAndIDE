@@ -25,6 +25,9 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
   override isMovable(): boolean {
     return false;
   }
+  override canInsertAfter(): boolean {
+    return false;
+  }
 
   getFields(): Field[] {
     return [this.expr];
@@ -46,9 +49,5 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     source.removeIndent();
     source.remove("return ");
     this.expr.parseFrom(source);
-  }
-
-  canInsertAfter(): boolean {
-    return false;
   }
 }

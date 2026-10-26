@@ -21,6 +21,9 @@ import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
 import { IfStatementContext } from "./RefLangParser.js";
+import { ThenClauseContext } from "./RefLangParser.js";
+import { ElseIfClauseContext } from "./RefLangParser.js";
+import { ElseClauseContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
@@ -29,12 +32,12 @@ import { ThisProcRefContext } from "./RefLangParser.js";
 import { InstanceProcRefContext } from "./RefLangParser.js";
 import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
+import { TryClauseContext } from "./RefLangParser.js";
+import { CatchClauseContext } from "./RefLangParser.js";
 import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
-import { ElseIfClauseContext } from "./RefLangParser.js";
-import { ElseClauseContext } from "./RefLangParser.js";
 import { CatchStatementContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
@@ -306,6 +309,36 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitIfStatement?: (ctx: IfStatementContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.thenClause`.
+   * @param ctx the parse tree
+   */
+  enterThenClause?: (ctx: ThenClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.thenClause`.
+   * @param ctx the parse tree
+   */
+  exitThenClause?: (ctx: ThenClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.elseIfClause`.
+   * @param ctx the parse tree
+   */
+  enterElseIfClause?: (ctx: ElseIfClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.elseIfClause`.
+   * @param ctx the parse tree
+   */
+  exitElseIfClause?: (ctx: ElseIfClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.elseClause`.
+   * @param ctx the parse tree
+   */
+  enterElseClause?: (ctx: ElseClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.elseClause`.
+   * @param ctx the parse tree
+   */
+  exitElseClause?: (ctx: ElseClauseContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.whileLoop`.
    * @param ctx the parse tree
    */
@@ -386,6 +419,26 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitTryStatement?: (ctx: TryStatementContext) => void;
   /**
+   * Enter a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  enterTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  exitTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  enterCatchClause?: (ctx: CatchClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  exitCatchClause?: (ctx: CatchClauseContext) => void;
+  /**
    * Enter a parse tree produced by `RefLangParser.throwStatement`.
    * @param ctx the parse tree
    */
@@ -425,26 +478,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.elseIfClause`.
-   * @param ctx the parse tree
-   */
-  enterElseIfClause?: (ctx: ElseIfClauseContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.elseIfClause`.
-   * @param ctx the parse tree
-   */
-  exitElseIfClause?: (ctx: ElseIfClauseContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.elseClause`.
-   * @param ctx the parse tree
-   */
-  enterElseClause?: (ctx: ElseClauseContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.elseClause`.
-   * @param ctx the parse tree
-   */
-  exitElseClause?: (ctx: ElseClauseContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.catchStatement`.
    * @param ctx the parse tree

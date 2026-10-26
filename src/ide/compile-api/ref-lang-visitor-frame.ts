@@ -173,9 +173,16 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   override visitIfStatement = (ctx: IfStatementContext) => {
     const if_ = new IfStatement(this.file);
     if_.condition.setFieldToKnownValidText(ctx.expression().getText());
-    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
-    for (const s of statements) {
-      if_.getChildren().push(s);
+    const children = if_.getChildren();
+    const thenClause = this.visit(ctx.thenClause()) as Frame;
+    children.push(thenClause);
+    const elseClauses = ctx.elseIfClause().map((s) => this.visit(s)) as Frame[];
+    for (const s of elseClauses) {
+      children.push(s);
+    }
+    const elseClause = ctx.elseClause();
+    if (elseClause) {
+      children.push(this.visit(elseClause!) as Frame);
     }
     return if_;
   };
@@ -212,9 +219,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitTryStatement = (ctx: TryStatementContext) => {
     const trySt = new TryStatement(this.file);
-    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
-    for (const s of statements) {
-      trySt.getChildren().push(s);
+    const children = trySt.getChildren();
+    const tryClause = this.visit(ctx.tryClause()) as Frame;
+    children.push(tryClause);
+    const catchClauses = ctx.catchClause().map((s) => this.visit(s)) as Frame[];
+    for (const s of catchClauses) {
+      children.push(s);
     }
     return trySt;
   };

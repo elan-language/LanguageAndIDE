@@ -104,7 +104,6 @@ export function T03_mainWithAllStatements(): FileImpl {
   const ss_if3 = if3.getFirstSelectorAsDirectChild();
   if3.condition.setFieldToKnownValidText("y > 4");
   const el2 = new ElseIfClause(if3);
-  el2.hasIf = true;
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);
   if3.addChildBefore(new ElseClause(if3), ss_if3);

@@ -28,7 +28,7 @@ import { LanguageExportHelpers } from "./language-export-helpers";
 import { LanguageExportPython } from "./language-export-python";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
-import { CatchStatement } from "./statements/catch-statement";
+import { CatchClause } from "./statements/catch-clause";
 import { ElseClause } from "./statements/else-clause";
 import { ElseIfClause } from "./statements/elseIf-clause";
 import { ForLoop } from "./statements/forLoop";
@@ -61,7 +61,7 @@ export class LanguagePython extends LanguageAbstract {
       frame instanceof ProcedureFrame ||
       frame instanceof ProcedureCall ||
       frame instanceof Assignment ||
-      frame instanceof CatchStatement ||
+      frame instanceof CatchClause ||
       frame instanceof ConcreteClass ||
       frame instanceof AbstractClass ||
       frame instanceof Property ||
@@ -85,8 +85,6 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
       html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
-    } else if (frame instanceof CatchStatement) {
-      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.variable.renderAsHtml()}:`;
     } else if (frame instanceof CommentFrame) {
       html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
     } else if (frame instanceof ConstantGlobal) {
@@ -119,6 +117,8 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.CLASS} </el-kw><el-type>${frame.name.renderAsHtml()}</el-type>${this.inheritsFromTextAsHtml(frame.inheritance)}:`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
+    } else if (frame instanceof CatchClause) {
+      html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.variable.renderAsHtml()}:`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
