@@ -25,9 +25,9 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   isPrivate = false;
   private class: ClassFrame;
 
-  constructor(parent: Parent) {
+  constructor(parent: ClassFrame) {
     super(parent);
-    this.class = parent as unknown as ClassFrame;
+    this.class = parent;
   }
   isOnAbstractClass(): boolean {
     throw new Error("Should not be called");
@@ -37,8 +37,8 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return "MemberInstructions";
   }
 
-  getClass() {
-    return this.getParent() as unknown as ClassFrame;
+  getClass(): ClassFrame {
+    return this.class;
   }
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {

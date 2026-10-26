@@ -102,8 +102,6 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
 
 export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: string[]) {
   file.compile();
-
-  const hasErrors = file.getById(id) as Frame | Field;
   const errors = file.ast?.getCompileErrorsFor(id) || [];
 
   for (let i = 0; i < msgs.length; i++) {
