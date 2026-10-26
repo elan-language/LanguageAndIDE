@@ -267,7 +267,7 @@ export async function assertExportedFileIs(file: FileImpl, language : Language, 
 
   try {
     assert.ok(file.setLanguage(language), "Failed to set language");
-    actual = await file.renderAsExport();   
+    actual = await file.renderAsExportPromise();   
 
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");

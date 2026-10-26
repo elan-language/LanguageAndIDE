@@ -262,7 +262,7 @@ function FileWithHeaderParserAndRender(
   file: FileImpl,
 ): [FileImpl, { textAsHtml(): Promise<string> }] {
   file.getChildren().push(file.newChildSelector());
-  return [file, { textAsHtml: async () => await file.renderAsHtml(false) }];
+  return [file, { textAsHtml: async () => await file.renderAsHtmlPromise(false) }];
 }
 
 export function FileParserAndRender(file: FileImpl): [
@@ -275,7 +275,7 @@ export function FileParserAndRender(file: FileImpl): [
 
   return [
     { parseFrom: (source: CodeSource) => file.parseBodyFrom(source) },
-    { textAsHtml: async () => await file.renderAsHtml(false) },
+    { textAsHtml: async () => await file.renderAsHtmlPromise(false) },
   ];
 }
 

@@ -148,7 +148,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   async renderAsHtml() {
-    return await this.file!.renderAsHtml();
+    return await this.file!.renderAsHtmlPromise();
   }
 
   async renderAsHtmlAll() {
@@ -157,12 +157,12 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     const classNames = containers.map((c) => c.className).slice(1);
 
     const languages = classNames.map((ln) => getLanguageByClass(ln));
-    const html = [await this.file!.renderAsHtml()];
+    const html = [await this.file!.renderAsHtmlPromise()];
 
     for (const l of languages) {
       this.file?.setLanguage(l);
       this.file?.showCompletion(false);
-      html.push(await this.file!.renderAsHtml());
+      html.push(await this.file!.renderAsHtmlPromise());
     }
 
     this.file!.setLanguage(existingLanguage);
@@ -192,11 +192,11 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   renderAsSource() {
-    return this.file!.renderAsElanSource();
+    return this.file!.renderAsElanSourcePromise();
   }
 
   renderAsExport() {
-    return this.file!.renderAsExport();
+    return this.file!.renderAsExportPromise();
   }
 
   parseFrom(source: CodeSource) {

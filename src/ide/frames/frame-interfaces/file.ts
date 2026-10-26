@@ -40,9 +40,9 @@ export interface File {
 
   // called from OUTSIDE the frame hierarchy
   getById(id: string): Selectable;
-  renderAsHtml(): Promise<string>;
-  renderAsElanSource(): Promise<string>;
-  renderAsExport(): Promise<string>;
+  renderAsHtmlPromise(): Promise<string>;
+  renderAsElanSourcePromise(): Promise<string>;
+  renderAsExportPromise(): Promise<string>;
   compileAsWorker(base: string, debugMode: boolean, standalone: boolean): string;
   compileAsTestWorker(base: string): string;
   fileName: string;

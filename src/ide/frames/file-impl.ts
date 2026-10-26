@@ -258,7 +258,7 @@ export class FileImpl implements File, Parent {
 
   private frNo = 1;
 
-  public async renderAsHtml(withHeader: boolean = true): Promise<string> {
+  public async renderAsHtmlPromise(withHeader: boolean = true): Promise<string> {
     this._frNo = 1;
     const globals = parentHelper_renderChildrenAsHtml(this);
     const languageSpecificHeader = this.language().renderSpecificHeaderAsHtml(this);
@@ -269,7 +269,7 @@ export class FileImpl implements File, Parent {
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
-  async renderAsElanSource(): Promise<string> {
+  async renderAsElanSourcePromise(): Promise<string> {
     const languageElan = LanguageElan.Instance;
     const langToRestore = this.language();
     const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
@@ -277,7 +277,7 @@ export class FileImpl implements File, Parent {
     return `${languageElan.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
-  async renderAsExport(): Promise<string> {
+  async renderAsExportPromise(): Promise<string> {
     const oldde = this.doingExport;
     this.doingExport = true;
     const globals = parentHelper_renderChildrenAsExport(this);

@@ -60,7 +60,7 @@ export async function assertParsesAndCompilesAndTests(f: FileImpl) {
 
 export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
  
-  const renderedSource = await fl.renderAsElanSource();
+  const renderedSource = await fl.renderAsElanSourcePromise();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = source.replaceAll("\r", "");
   let msg = "";
@@ -87,7 +87,7 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
   let msg = "";
   
   try {  
-    const renderedHtml = await fl.renderAsHtml();
+    const renderedHtml = await fl.renderAsHtmlPromise();
     actualHtml = wrap(renderedHtml).replaceAll("\r", "");
     const htm = loadFileAsHtml(htmlFile);
     const expectedHtml = htm.replaceAll("\r", "");
@@ -116,7 +116,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
   try {
     fl.setLanguage(language);
     
-    actual = (await fl.renderAsExport()).replaceAll("\r", "");;
+    actual = (await fl.renderAsExportPromise()).replaceAll("\r", "");;
     const expected = loadFileAsSource(file).replaceAll("\r", "");
     assert.strictEqual(actual, expected);
   }
@@ -149,7 +149,7 @@ export async function testElanFile(fn: string) {
   const [fl, source, sourceFile, testPath] = await getFile(fn);
   await assertParsesAndCompilesAndTests(fl);
 
-  let msgs = [];
+  const msgs = [];
   msgs.push(await assertGeneratesSameElanSource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
   msgs.push(await assertExportsAll(fl, testPath));
@@ -245,7 +245,7 @@ function getEvent(char: string) {
 }
 
 async function assertStartsWith(f: FileImpl, fld: FieldImpl, startsWith: [string, string, string][]) {
-  await f.renderAsHtml();
+  await f.renderAsHtmlPromise();
   const symbols = fld.allPossibleSymbolCompletions;
 
   
@@ -258,7 +258,7 @@ async function assertStartsWith(f: FileImpl, fld: FieldImpl, startsWith: [string
 }
 
 async function doAsserts(f: FileImpl, fld: FieldImpl, expected: [string, string, string][] | number) {
-  await f.renderAsHtml();
+  await f.renderAsHtmlPromise();
   const symbols = fld.allPossibleSymbolCompletions;
 
   if (typeof expected === "number") {
@@ -448,7 +448,7 @@ export async function assertSymbolCompletionMenuStartsWith(
 }
 
 export async function readAsDOM(f: File) {
-  const renderedHtml = await f.renderAsHtml();
+  const renderedHtml = await f.renderAsHtmlPromise();
   return new jsdom.JSDOM(renderedHtml);
 }
 

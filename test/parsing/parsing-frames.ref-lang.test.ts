@@ -237,7 +237,7 @@ suite("Parsing Frame Tests", async () => {
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -257,7 +257,7 @@ constant pi set to 3.142
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -279,7 +279,7 @@ constant e set to 2.718
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -301,7 +301,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -328,7 +328,7 @@ end main
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -354,7 +354,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -388,7 +388,7 @@ enum Fruit apple, orange, pear
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -427,7 +427,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -456,7 +456,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -491,7 +491,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -516,7 +516,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -542,7 +542,7 @@ end main
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -645,7 +645,7 @@ end class
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 });

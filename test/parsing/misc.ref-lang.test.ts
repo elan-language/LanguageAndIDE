@@ -53,7 +53,7 @@ suite("Misc Tests", () => {
       true,
     );
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsElanSourcePromise();
     const code = `${testHeader}
 
 `;

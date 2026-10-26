@@ -34,7 +34,7 @@ export function FileParserAndExport(file: FileImpl): [
 
   return [
     { parseFrom: (source: CodeSource) => file.parseBodyFrom(source) },
-    { textAsHtml: async () => await file.renderAsExport() },
+    { textAsHtml: async () => await file.renderAsExportPromise() },
   ];
 }
 
