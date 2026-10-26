@@ -3801,17 +3801,17 @@ export class RefLangParser extends antlr.Parser {
             this.match(RefLangParser.IF_);
             this.state = 801;
             this.match(RefLangParser.OPEN_BRACKET);
-            this.state = 774;
+            this.state = 802;
             (localContext as IfExpressionContext)._condition = this.expression();
-            this.state = 775;
+            this.state = 803;
             this.match(RefLangParser.COMMA);
-            this.state = 776;
+            this.state = 804;
             (localContext as IfExpressionContext)._true_ = this.expression();
-            this.state = 777;
+            this.state = 805;
             this.match(RefLangParser.COMMA);
-            this.state = 778;
+            this.state = 806;
             (localContext as IfExpressionContext)._false_ = this.expression();
-            this.state = 779;
+            this.state = 807;
             this.match(RefLangParser.CLOSE_BRACKET);
           }
           break;
@@ -3855,7 +3855,7 @@ export class RefLangParser extends antlr.Parser {
               this.context = localContext;
               previousContext = localContext;
 
-              this.state = 784;
+              this.state = 812;
               this.thisInstance();
             }
             break;
@@ -3864,7 +3864,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new BracketedExpressionTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 785;
+              this.state = 813;
               this.bracketedExpression();
             }
             break;
@@ -3873,7 +3873,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new LitValueTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 786;
+              this.state = 814;
               this.litValue();
             }
             break;
@@ -3882,7 +3882,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new ListTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 787;
+              this.state = 815;
               this.list();
             }
             break;
@@ -3891,7 +3891,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new DictionaryTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 788;
+              this.state = 816;
               this.dictionary();
             }
             break;
@@ -3900,7 +3900,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new TupleTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 789;
+              this.state = 817;
               this.tuple();
             }
             break;
@@ -3909,7 +3909,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new IdentifierUseTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 790;
+              this.state = 818;
               this.identifierUse();
             }
             break;
@@ -3918,7 +3918,7 @@ export class RefLangParser extends antlr.Parser {
               localContext = new MethodCallTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 791;
+              this.state = 819;
               this.methodCall();
             }
             break;
@@ -4301,11 +4301,11 @@ export class RefLangParser extends antlr.Parser {
     try {
       this.enterOuterAlt(localContext, 1);
       {
-        this.state = 848;
+        this.state = 876;
         localContext._key = this.expression();
-        this.state = 849;
+        this.state = 877;
         this.match(RefLangParser.COLON);
-        this.state = 850;
+        this.state = 878;
         localContext._value = this.expression();
       }
     } catch (re) {
