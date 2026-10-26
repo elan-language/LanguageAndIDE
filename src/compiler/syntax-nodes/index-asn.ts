@@ -6,6 +6,7 @@ import { UnknownType } from "../../compiler/symbols/unknown-type";
 import { getId, mustNotBeNegativeIndex } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { compileSimpleSubscript, getIndexAndOfType } from "./ast-helpers";
+import { EmptyAsn } from "./empty-asn";
 import { UnaryExprAsn } from "./unary-expr-asn";
 
 export class IndexAsn extends AbstractAstNode implements AstNode {
@@ -62,7 +63,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
     this.compileErrors = [];
     const subscript = this.compileSubscript();
 
-    if (!this.precedingNode) {
+    if (this.precedingNode === EmptyAsn.Instance) {
       return subscript;
     }
 
@@ -82,7 +83,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    if (!this.precedingNode) {
+    if (this.precedingNode === EmptyAsn.Instance) {
       return UnknownType.Instance;
     }
     const indexedType = this.precedingNode.symbolType();
@@ -91,7 +92,7 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    const pn = this.precedingNode ? `${this.precedingNode}` : "";
+    const pn = this.precedingNode === EmptyAsn.Instance ? "" : `${this.precedingNode}`;
     return `${pn}[${this.index}]`;
   }
 }

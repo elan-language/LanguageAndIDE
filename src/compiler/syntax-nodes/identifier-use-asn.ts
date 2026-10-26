@@ -76,17 +76,16 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
     return this.getSymbol().symbolScope;
   }
 
-  getBody() {
+  getCode(prefix: string) {
     const searchScope = this.getCurrentScope();
     if (searchScope instanceof TupleAsn) {
       const [ok, index] = searchScope.parseId(this.id);
       if (ok) {
-        const tuple = this.precedingNode?.compile() ?? "";
-        return `${tuple}[${index}]`;
+        return `${prefix.slice(0, -1)}[${index}]`;
       }
     }
 
-    return this.id;
+    return `${prefix}${this.id}`;
   }
 
   compile(): string {
@@ -127,9 +126,15 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    const body = this.getBody();
+    const tupleScope = this.getCurrentScope();
+    if (tupleScope instanceof TupleAsn) {
+      const [ok, index] = tupleScope.parseId(this.id);
+      if (ok) {
+        return `${prefix.slice(0, -1)}[${index}]`;
+      }
+    }
 
-    return `${prefix}${body}`;
+    return `${prefix}${this.id}`;
   }
 
   symbolType() {

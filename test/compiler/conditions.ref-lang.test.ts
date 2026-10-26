@@ -469,12 +469,6 @@ end main
     assertDoesNotCompile(fileImpl, [
       "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
       "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
       "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
       "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",

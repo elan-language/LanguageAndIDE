@@ -89,7 +89,7 @@ import { getArgs, getParamDefs, getTypes } from "./parser-helpers";
 export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   constructor(
     private readonly language: Language,
-    private readonly scope: Scope,
+    private scope: Scope,
     private readonly fieldId: string,
   ) {
     super();
@@ -382,10 +382,15 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       ?.paramDef()
       .map((p) => this.visit(p)) ?? []) as ParamDefAsn[];
 
-    return new LambdaAsn(
-      new LambdaSigAsn(parameters, this.fieldId, this.scope),
-      this.visit(ctx.expression())!,
-      this.fieldId,
-    );
+    const currentScope = this.scope;
+
+    const signature = new LambdaSigAsn(parameters, this.fieldId, currentScope);
+
+    this.scope = signature;
+
+    const lambda = new LambdaAsn(signature, this.visit(ctx.expression())!, this.fieldId);
+
+    this.scope = currentScope;
+    return lambda;
   };
 }

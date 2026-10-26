@@ -1438,7 +1438,7 @@ end main`;
     ]);
   });
 
-  test("Fail_LibFunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_LibFunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main

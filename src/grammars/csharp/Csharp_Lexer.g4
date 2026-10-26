@@ -1,7 +1,7 @@
 
 
 
-lexer grammar CSharp_Lexer;
+lexer grammar Csharp_Lexer;
 
 //START common token names; custom definitions
 COMMENT_MARKER: '//';

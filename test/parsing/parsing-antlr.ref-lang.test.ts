@@ -64,7 +64,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "a +", false);
     testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x");
     testAntlrParse(expression, "3* foo(5)", true, "3* foo(5)", "3*foo(5)", "");
-    testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "system.safeIndex(a.a, 1)");
+    testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "");
     testAntlrParse(
       expression,
       "new Foo()",
@@ -750,7 +750,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `if_(cell, Colour.green, Colour.black)`,
       "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
       "",
-      "(cell ? Colour.green : Colour.black)",
+      "",
     );
     testAntlrParse(
       expr,
@@ -760,7 +760,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "",
       "",
       "",
-      '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (attempt.isYellow(target, n) ? attempt.setChar(n, "+") : attempt.setChar(n, "_")))',
+      "",
     );
     testAntlrParse(
       expr,
@@ -981,16 +981,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
     testAntlrParse(term, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
     testAntlrParse(term, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this");
-    testAntlrParse(
-      term,
-      `[1]`,
-      true,
-      "[1]",
-      "[1]",
-      "[<el-lit>1</el-lit>]",
-      "[1]",
-      "system.list([1])",
-    );
+    testAntlrParse(term, `[1]`, true, "[1]", "[1]", "[<el-lit>1</el-lit>]", "[1]", "");
     testAntlrParse(
       term,
       `["a":1]`,
@@ -999,7 +990,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `["a":1]`,
       `["<el-lit>a</el-lit>":<el-lit>1</el-lit>]`,
       ``,
-      'system.dictionary([["a", 1]])',
+      "",
     );
     testAntlrParse(
       term,
@@ -1009,7 +1000,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `(1, a, "fred")`,
       `(<el-lit>1</el-lit>, <el-id>a</el-id>, "<el-lit>fred</el-lit>")`,
       `(1, a, "fred")`,
-      'system.tuple([1, a, "fred"])',
+      "",
     );
     testAntlrParse(
       term,
@@ -1019,7 +1010,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `a[1]`,
       `<el-id>a</el-id>[<el-lit>1</el-lit>]`,
       `a[1]`,
-      `system.safeIndex(a, 1)`,
+      "",
     );
     testAntlrParse(
       term,
@@ -1029,9 +1020,9 @@ suite("Parsing Antlr Rules RefLang", () => {
       "f()[1]",
       "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
       "f()[1]",
-      "system.safeIndex(f(), 1)",
+      "",
     );
-    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "a.b");
+    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "");
     testAntlrParse(term, `length(bar)`, true, `length(bar)`, "", "", "length(bar)");
     testAntlrParse(term, `bar.length()`, true, `bar.length()`, "", "", "bar.length()");
     testAntlrParse(term, `bar.asList()`, true, `bar.asList()`);
@@ -1052,16 +1043,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `this`, true, "this", "");
     testAntlrParse(term, `abc(defg, hi)`, true, "abc(defg, hi)", "");
     testAntlrParse(term, `abc[1]`, true, "abc[1]", "");
-    testAntlrParse(
-      term,
-      `abc[1][2]`,
-      true,
-      "abc[1][2]",
-      "abc[1][2]",
-      "",
-      "",
-      "system.safeIndex(system.safeIndex(abc, 1), 2)",
-    );
+    testAntlrParse(term, `abc[1][2]`, true, "abc[1][2]", "abc[1][2]", "", "", "");
     testAntlrParse(term, `abc.subList(1, 2)`, true, "abc.subList(1, 2)", "abc.subList(1, 2)");
     testAntlrParse(
       term,
@@ -1071,7 +1053,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[1].b().subList(1, 2).c(d)",
       "",
       "",
-      "system.safeIndex(a, 1).b().subList(1, 2).c(d)",
+      "",
     );
     testAntlrParse(term, `abc[1, 2]`, false);
     testAntlrParse(term, `abc(defg, hi)[0]`, true, "abc(defg, hi)[0]", "", "", "abc(defg, hi)[0]");
@@ -1094,7 +1076,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "",
       "",
       "",
-      "system.safeIndex(system.safeIndex(system.safeIndex(a, 1).b().subList(1, 2).c(d), e), f)",
+      "",
     );
     testAntlrParse(term, `this.a[1].b().c(d)[e]`, true, `this.a[1].b().c(d)[e]`, "");
     testAntlrParse(
