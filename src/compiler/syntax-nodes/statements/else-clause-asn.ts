@@ -25,9 +25,4 @@ ${this.compileChildren()}`;
 
     return code;
   }
-
-  getOuterScope() {
-    // need to get scope of IfStatement
-    return this.getCurrentScope().getParentScope();
-  }
 }

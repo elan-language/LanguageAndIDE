@@ -15,11 +15,6 @@ export class ThenClauseAsn extends CompoundAsn {
     return this.singleIndent(); //overrides the additional indent added for most child statements
   }
 
-  getOuterScope() {
-    // need to get scope of IfStatement
-    return this.getCurrentScope().getParentScope();
-  }
-
   compile(): string {
     this.compileErrors = [];
 
