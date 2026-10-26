@@ -178,7 +178,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine("Foo");
+      await _stdlib.printNoLine("Foo");
     }
     else {
       throw e;
@@ -233,7 +233,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.CustomError) {
-    await _stdlib.printNoLine(e);
+      await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -299,7 +299,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(e);
+      await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -366,8 +366,8 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let s = (await _stdlib.toString(e));
-    await _stdlib.printNoLine(s);
+      let s = (await _stdlib.toString(e));
+      await _stdlib.printNoLine(s);
     }
     else {
       throw e;
@@ -423,8 +423,8 @@ async function main() {
     throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let a = "fail";
-    await _stdlib.printNoLine(a);
+      let a = "fail";
+      await _stdlib.printNoLine(a);
     }
     else {
       throw e;
@@ -479,7 +479,7 @@ async function main() {
     throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(a);
+      await _stdlib.printNoLine(a);
     }
     else {
       throw e;

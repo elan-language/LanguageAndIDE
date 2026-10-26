@@ -17,8 +17,12 @@ export class CatchClauseAsn extends CompoundAsn {
     super(fieldId, scope);
   }
 
-  indent() {
-    return this.singleIndent(); //overrides the additional indent added for most child statements
+  indentN(count?: number | undefined): string {
+    if (count && count > 1) {
+      return this.singleIndent() + this.indentN(--count);
+    }
+
+    return this.singleIndent();
   }
 
   compile(): string {
@@ -29,13 +33,13 @@ export class CatchClauseAsn extends CompoundAsn {
 
     mustBeException(type, this.compileErrors, this.fieldId);
 
-    const code = `${this.indent()}} catch (${this.idNode.compile()}) {
-${this.indent()}${this.indent()}if (e instanceof ${scope}${type.symbolId}) {
+    const code = `${this.indentN()}} catch (${this.idNode.compile()}) {
+${this.indentN(2)}if (e instanceof ${scope}${type.symbolId}) {
 ${this.compileChildren()}
-${this.indent()}${this.indent()}}
-${this.indent()}${this.indent()}else {
-${this.indent()}${this.indent()}${this.indent()}throw e;
-${this.indent()}${this.indent()}}`;
+${this.indentN(2)}}
+${this.indentN(2)}else {
+${this.indentN(3)}throw e;
+${this.indentN(2)}}`;
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
