@@ -7,8 +7,6 @@ import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
 export class ElseIfClauseAsn extends CompoundAsn {
-  hasIf: boolean = false;
-
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }
@@ -45,32 +43,8 @@ ${this.compileChildren()}`;
     return code;
   }
 
-  //compileChildren: AstNode[] = [];
-
-  // setCompileScope(s: Scope) {
-  //   this.compileScope = s;
-  //   this.compileChildren = [];
-  // }
-
-  // addChild(f: AstNode) {
-  //   this.compileChildren.push(f);
-  // }
-
   getOuterScope() {
     // need to get scope of IfStatement
     return this.getCurrentScope().getParentScope();
   }
-
-  // resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
-  //   return (
-  //     //getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
-  //     this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
-  //   );
-  // }
-
-  // symbolMatches(_id: string, _all: boolean, _initialScope: Scope): ElanSymbol[] {
-  //   // const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-  //   // return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
-  //   return [];
-  // }
 }
