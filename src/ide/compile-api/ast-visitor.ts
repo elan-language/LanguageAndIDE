@@ -30,9 +30,9 @@ import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn"
 import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
 import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
-import { ThenClauseAsn } from "../../compiler/syntax-nodes/statements/then-clause";
+import { ThenClauseAsn } from "../../compiler/syntax-nodes/statements/then-clause-asn";
 import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
-import { TryClauseAsn } from "../../compiler/syntax-nodes/statements/try-clause";
+import { TryClauseAsn } from "../../compiler/syntax-nodes/statements/try-clause-asn";
 import { TryStatementAsn } from "../../compiler/syntax-nodes/statements/try-statement-asn";
 import { VariableDefinitionAsn } from "../../compiler/syntax-nodes/statements/variable-definition-asn";
 import { WhileLoopAsn } from "../../compiler/syntax-nodes/statements/while-loop-asn";
@@ -343,19 +343,23 @@ export function transform(
   }
 
   if (node instanceof TryClause) {
-    const elseClauseAsn = new TryClauseAsn(node.getHtmlId(), scope);
-    elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition = EmptyAsn.Instance;
-    elseClauseAsn.hasIf = false;
-    return elseClauseAsn;
+    const tryClauseAsn = new TryClauseAsn(node.getHtmlId(), scope);
+    tryClauseAsn.breakpointStatus = node.breakpointStatus;
+    tryClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), tryClauseAsn)) as AstNode[];
+    return tryClauseAsn;
   }
 
   if (node instanceof CatchClause) {
-    const elseClauseAsn = new CatchClauseAsn(node.getHtmlId(), scope);
-    elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition = EmptyAsn.Instance;
-    elseClauseAsn.hasIf = false;
-    return elseClauseAsn;
+    const catchClauseAsn = new CatchClauseAsn(node.getHtmlId(), scope);
+    catchClauseAsn.breakpointStatus = node.breakpointStatus;
+    catchClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), catchClauseAsn)) as AstNode[];
+    return catchClauseAsn;
   }
 
   if (node instanceof ThenClause) {
