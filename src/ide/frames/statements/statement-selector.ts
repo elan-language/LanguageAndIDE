@@ -141,8 +141,9 @@ export class StatementSelector extends AbstractSelector {
         !(parent.getParent() as unknown as IfStatement).hasElseClause();
     } else if (keyword === catchKeyword) {
       result =
-        parent.getIdPrefix().includes(`_${tryKeyword}`) ||
-        parent.getIdPrefix().includes(`_${catchKeyword}`);
+        !userEntry && // Temporary limitation pending full implementation
+        (parent.getIdPrefix().includes(`_${tryKeyword}`) ||
+          parent.getIdPrefix().includes(`_${catchKeyword}`));
     } else if (keyword === callKeyword) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
     } else if (keyword === assertKeyword) {
