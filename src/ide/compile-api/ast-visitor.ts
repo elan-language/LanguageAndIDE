@@ -353,8 +353,12 @@ export function transform(
   }
 
   if (node instanceof CatchClause) {
-    const catchClauseAsn = new CatchClauseAsn(node.getHtmlId(), scope);
+    const variable = transform(node.variable, fieldId, scope)!;
+    const typeName = transform(node.exceptionType, fieldId, scope)!;
+
+    const catchClauseAsn = new CatchClauseAsn(variable, typeName, node.getHtmlId(), scope);
     catchClauseAsn.breakpointStatus = node.breakpointStatus;
+
     catchClauseAsn.children = node
       .getChildren()
       .filter((f) => !isSelector(f))

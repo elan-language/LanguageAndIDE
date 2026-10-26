@@ -140,7 +140,7 @@ suite("Field Tests - RefLang", () => {
       field,
       "ElanRuntimeError",
       true,
-      '<el-field id="elan_type4" class="ok" tabindex="-1"><el-txt><el-type>ElanRuntimeError</el-type></el-txt><el-place><i>type e.g. ElanRuntimeError or CustomError</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_type5" class="ok" tabindex="-1"><el-txt><el-type>ElanRuntimeError</el-type></el-txt><el-place><i>type e.g. ElanRuntimeError or CustomError</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#TypeField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
