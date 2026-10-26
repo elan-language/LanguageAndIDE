@@ -359,27 +359,33 @@ export function transform(
   }
 
   if (node instanceof ThenClause) {
-    const elseClauseAsn = new ThenClauseAsn(node.getHtmlId(), scope);
-    elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition = EmptyAsn.Instance;
-    elseClauseAsn.hasIf = false;
-    return elseClauseAsn;
+    const thenClauseAsn = new ThenClauseAsn(node.getHtmlId(), scope);
+    thenClauseAsn.breakpointStatus = node.breakpointStatus;
+    thenClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), thenClauseAsn)) as AstNode[];
+    return thenClauseAsn;
   }
 
   if (node instanceof ElseIfClause) {
-    const elseClauseAsn = new ElseIfClauseAsn(node.getHtmlId(), scope);
-    elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition =
-      transform(node.condition, node.getHtmlId(), elseClauseAsn) ?? EmptyAsn.Instance;
-    elseClauseAsn.hasIf = true;
-    return elseClauseAsn;
+    const elseIfClauseAsn = new ElseIfClauseAsn(node.getHtmlId(), scope);
+    elseIfClauseAsn.breakpointStatus = node.breakpointStatus;
+    elseIfClauseAsn.condition = transform(node.condition, node.getHtmlId(), elseIfClauseAsn)!;
+    elseIfClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), elseIfClauseAsn)) as AstNode[];
+    return elseIfClauseAsn;
   }
 
   if (node instanceof ElseClause) {
     const elseClauseAsn = new ElseClauseAsn(node.getHtmlId(), scope);
     elseClauseAsn.breakpointStatus = node.breakpointStatus;
-    elseClauseAsn.condition = EmptyAsn.Instance;
-    elseClauseAsn.hasIf = false;
+    elseClauseAsn.children = node
+      .getChildren()
+      .filter((f) => !isSelector(f))
+      .map((f) => transform(f, f.getHtmlId(), elseClauseAsn)) as AstNode[];
     return elseClauseAsn;
   }
 

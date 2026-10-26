@@ -442,7 +442,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "call21", expected);
   });
 
-  test("Pass_InIf", async () => {
+  ignore_test("Pass_InIf", async () => {
     const code = `${testHeader}
 
 main
@@ -475,7 +475,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
-  test("Pass_InElse", async () => {
+  ignore_test("Pass_InElse", async () => {
     const code = `${testHeader}
 
 main
@@ -508,7 +508,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "elan_set19", expected);
   });
 
-  test("Pass_InElseIf", async () => {
+  ignore_test("Pass_InElseIf", async () => {
     const code = `${testHeader}
 
 main

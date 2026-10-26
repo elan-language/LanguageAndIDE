@@ -1,14 +1,12 @@
 import { mustBeOfType } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
-import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { BooleanType } from "../../symbols/boolean-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { childSymbolMatches, compileNodes, getChildSymbol } from "../ast-helpers";
-import { BreakpointAsn } from "../breakpoint-asn";
+import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class ElseIfClauseAsn extends BreakpointAsn {
+export class ElseIfClauseAsn extends CompoundAsn {
   hasIf: boolean = false;
 
   constructor(fieldId: string, scope: Scope) {
@@ -18,17 +16,14 @@ export class ElseIfClauseAsn extends BreakpointAsn {
   condition: AstNode = EmptyAsn.Instance;
 
   private compileIfClause(): string {
-    if (this.hasIf) {
-      mustBeOfType(
-        this.condition,
-        BooleanType.Instance,
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-      return `if (${this.condition.compile()}) {`;
-    }
-    return `{`;
+    mustBeOfType(
+      this.condition,
+      BooleanType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+    return `if (${this.condition.compile()}) {`;
   }
 
   getCurrentScope(): Scope {
@@ -43,38 +38,39 @@ export class ElseIfClauseAsn extends BreakpointAsn {
     this.compileErrors = [];
 
     const code = `${this.indent()}} else ${this.compileIfClause()}
-${compileNodes(this.compileChildren)}`;
+${this.compileChildren()}`;
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return code;
   }
 
-  compileChildren: AstNode[] = [];
+  //compileChildren: AstNode[] = [];
 
-  setCompileScope(s: Scope) {
-    this.compileScope = s;
-    this.compileChildren = [];
-  }
+  // setCompileScope(s: Scope) {
+  //   this.compileScope = s;
+  //   this.compileChildren = [];
+  // }
 
-  addChild(f: AstNode) {
-    this.compileChildren.push(f);
-  }
+  // addChild(f: AstNode) {
+  //   this.compileChildren.push(f);
+  // }
 
   getOuterScope() {
     // need to get scope of IfStatement
     return this.getCurrentScope().getParentScope();
   }
 
-  resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    return (
-      getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
-      this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
-    );
-  }
+  // resolveSymbol(id: string, caseSensitive: boolean, _initialScope: Scope): ElanSymbol {
+  //   return (
+  //     //getChildSymbol(this.compileChildren, id, caseSensitive, initialScope) ??
+  //     this.getOuterScope().resolveSymbol(id, caseSensitive, this.getCurrentScope())
+  //   );
+  // }
 
-  symbolMatches(id: string, all: boolean, initialScope: Scope): ElanSymbol[] {
-    const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
-    return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
-  }
+  // symbolMatches(_id: string, _all: boolean, _initialScope: Scope): ElanSymbol[] {
+  //   // const matches = this.getOuterScope().symbolMatches(id, all, this.getCurrentScope());
+  //   // return childSymbolMatches(this.compileChildren, id, all, matches, initialScope);
+  //   return [];
+  // }
 }

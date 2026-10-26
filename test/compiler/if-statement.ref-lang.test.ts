@@ -679,8 +679,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const elan_iterelan_for17 = [..._stdlib.range(0, 6)];
-    for (const i of elan_iterelan_for17) {
+    const elan_iterelan_for20 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterelan_for20) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);
@@ -753,10 +753,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_ElseIfAfterElse", async () => {
@@ -784,10 +781,7 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_IfConditionNotBool", async () => {
