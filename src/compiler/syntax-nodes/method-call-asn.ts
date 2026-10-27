@@ -48,9 +48,6 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
-  // this is a temp hack until all fields migrated
-  tempAntlrFlag = true;
-
   get showPreviousNode() {
     return !this.isExtensionMethod;
   }
@@ -62,7 +59,7 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   getCurrentScope() {
     const lhsSt = this.precedingNode.symbolType();
     if (isClassType(lhsSt)) {
-      return lhsSt;
+      return lhsSt.scope;
     }
 
     return this.scope;
@@ -85,17 +82,15 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     let parameters = [...this.parameters];
     const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
 
-    if (!this.tempAntlrFlag) {
-      mustBeKnownSymbol(
-        funcSymbol,
-        this.getCurrentScope(),
-        getQualifierId(this.precedingNode),
-        this.precedingNode.symbolType(),
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-    }
+    mustBeKnownSymbol(
+      funcSymbol,
+      this.getCurrentScope(),
+      getQualifierId(this.precedingNode),
+      this.precedingNode.symbolType(),
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
 
     if (isMemberOnFieldsClass(funcSymbol, this.scope)) {
       mustbeValidQualifier(this.precedingNode, this.scope, this.compileErrors, this.fieldId);
@@ -106,32 +101,30 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     if (funcSymbolType instanceof FunctionType) {
       mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
 
-      if (!this.tempAntlrFlag) {
-        mustCallExtensionViaQualifier(
-          funcSymbolType,
-          this.precedingNode,
-          this.compileErrors,
-          this.fieldId,
-        );
+      mustCallExtensionViaQualifier(
+        funcSymbolType,
+        this.precedingNode,
+        this.compileErrors,
+        this.fieldId,
+      );
 
-        mustNotCallNonExtensionViaQualifier(
-          funcSymbolType,
-          funcSymbol.symbolId,
-          this.precedingNode,
-          this.getCurrentScope(),
-          this.compileErrors,
-          this.fieldId,
-          this.scope,
-        );
+      mustNotCallNonExtensionViaQualifier(
+        funcSymbolType,
+        funcSymbol.symbolId,
+        this.precedingNode,
+        this.getCurrentScope(),
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
 
-        mustCallMemberViaQualifier(
-          funcSymbol.symbolId,
-          funcSymbolType,
-          this.getCurrentScope(),
-          this.compileErrors,
-          this.fieldId,
-        );
-      }
+      mustCallMemberViaQualifier(
+        funcSymbol.symbolId,
+        funcSymbolType,
+        this.getCurrentScope(),
+        this.compileErrors,
+        this.fieldId,
+      );
 
       if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
         this.isExtensionMethod = true;
