@@ -30,7 +30,6 @@ import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
-import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BoolTypeNameAsn } from "./bool-type-name-asn";
@@ -46,7 +45,6 @@ import { IndexAsn } from "./index-asn";
 import { IntTypeNameAsn } from "./int-type-name-asn";
 import { ListTypeNameAsn } from "./list-type-name-asn";
 import { OperationSymbol } from "./operation-symbol";
-import { QualifierAsn } from "./qualifier-asn";
 import { StringTypeNameAsn } from "./string-type-name-asn";
 import { TypeNameAsn } from "./type-name-asn";
 
@@ -58,10 +56,6 @@ export function isAstNode(n: AstNode | Scope): n is AstNode {
 
 export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
-}
-
-export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
-  return n instanceof QualifierAsn;
 }
 
 export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {

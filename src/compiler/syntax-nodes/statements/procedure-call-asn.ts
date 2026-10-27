@@ -29,7 +29,6 @@ import {
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 import { LambdaAsn } from "../lambda-asn";
-import { QualifierAsn } from "../qualifier-asn";
 
 export class ProcedureCallAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
@@ -115,8 +114,8 @@ export class ProcedureCallAsn extends BreakpointAsn {
           this.fieldId,
         );
 
-        if (procSymbolType.isExtension && qualifier instanceof QualifierAsn) {
-          callParameters = [qualifier.value as AstNode].concat(callParameters);
+        if (procSymbolType.isExtension && qualifier !== EmptyAsn.Instance) {
+          callParameters = [qualifier as AstNode].concat(callParameters);
           qualifier = EmptyAsn.Instance;
         }
 

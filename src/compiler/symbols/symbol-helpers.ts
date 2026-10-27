@@ -18,7 +18,6 @@ import {
   getSuperClasses,
   isAstIdNode,
   isAstQualifiedNode,
-  isAstQualifierNode,
   isEmptyNode,
   isRootNode,
 } from "../syntax-nodes/ast-helpers";
@@ -327,7 +326,7 @@ function internalUpdateScopeAndQualifier(
 export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
   const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
-  const value = isAstQualifierNode(qualifier) ? qualifier.value : qualifier;
+  const value = qualifier;
 
   return internalUpdateScopeAndQualifier(qualifierScope, currentScope, value, qualifier);
 }

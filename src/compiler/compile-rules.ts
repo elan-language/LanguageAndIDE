@@ -86,7 +86,6 @@ import {
   isAstIdNode,
   isAstIndexableNode,
   isAstQualifiedNode,
-  isAstQualifierNode,
   isEmptyNode,
   isInsideFunction,
   isInsideFunctionOrConstructor,
@@ -1053,9 +1052,6 @@ export function getId(astNode: AstNode) {
 }
 
 export function getQualifierId(astNode: AstNode) {
-  if (isAstQualifierNode(astNode)) {
-    return getId(astNode.value);
-  }
   return getId(astNode);
 }
 
