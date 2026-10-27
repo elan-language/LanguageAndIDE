@@ -1,0 +1,17 @@
+# 3034c0600a8e294efec849c8124cde5316249ff5998974e97942c28247f7ab4b Elan 2.0.0-beta4 valid
+
+# Tetris 4  - erase the snake after half a second
+main
+  variable position set to 620
+  variable shape set to [0, 1, 39, 40]
+  variable bg set to new BlockGraphics()
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, green)
+  end for
+  call displayBlockGraphics(bg)
+  call sleep(0.5)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, white)
+  end for
+  call displayBlockGraphics(bg)
+end main

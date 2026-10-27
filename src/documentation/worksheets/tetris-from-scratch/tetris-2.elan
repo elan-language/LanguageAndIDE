@@ -1,0 +1,11 @@
+# c7a54a7162fe8b4f0cdd414db516f4353a97a834875e4a91d0b01e9cd2a59f3e Elan 2.0.0-beta4 valid
+
+# Tetris 2 - draw shape in the centre of the display
+main
+  variable shape set to [620, 621, 659, 660]
+  variable bg set to new BlockGraphics()
+  for blockNo in shape
+    call bg.putBlockNo(blockNo, green)
+  end for
+  call displayBlockGraphics(bg)
+end main

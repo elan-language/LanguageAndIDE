@@ -1,0 +1,8 @@
+# 95bd3b5f3e77b26c1413cede5337cf56f8fcc3cf4c70b4cbf80876e93f8c0399 Elan 2.0.0-beta4 valid
+
+# Tetris 1 - draw one block in the centre of the display
+main
+  variable bg set to new BlockGraphics()
+  call bg.putBlockNo(620, green)
+  call displayBlockGraphics(bg)
+end main
