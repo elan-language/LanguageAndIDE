@@ -84,7 +84,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
-      html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
+      html = `${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
       html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
     } else if (frame instanceof ConstantGlobal) {

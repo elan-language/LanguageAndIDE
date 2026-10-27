@@ -288,10 +288,11 @@ export function transform(
     const procedureCallAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
     procedureCallAsn.breakpointStatus = node.breakpointStatus;
 
-    procedureCallAsn.procRef =
-      transform(node.proc, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
-    procedureCallAsn.argList =
-      transform(node.args, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
+    throw new Error("Not implemented"); // old code:
+    // procedureCallAsn.procRef =
+    //   transform(node.proc, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
+    // procedureCallAsn.argList =
+    //   transform(node.args, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
 
     return procedureCallAsn;
   }

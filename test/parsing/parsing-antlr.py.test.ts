@@ -1105,7 +1105,7 @@ suite("Parsing Antlr Rules Python", () => {
   test("InstanceProcRef", () => {
     const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
-      (p: Parser) => p.procRef(),
+      (p: Parser) => p.term(),
     ];
     testAntlrParse(procRef, `foo`, true);
     testAntlrParse(procRef, `bar.foo`, true, `bar.foo`, `bar.foo`);

@@ -117,15 +117,9 @@ forLoop:
     GHOSTED? FOR identifierDef IN expression NL ordinaryStatement* END FOR NL
 ;
 
-//TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall. Then delete following three rules
 procedureCall:
-    GHOSTED? CALL procRef OPEN_BRACKET argList CLOSE_BRACKET NL
+    GHOSTED? CALL term NL
 ;
-
-procRef: methodName | thisProcRef | instanceProcRef;
-thisProcRef: THIS_INSTANCE DOT methodName;
-instanceProcRef: identifierWithOptIndexes DOT methodName;
-identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
     GHOSTED? TRY NL tryClause catchClause* END TRY NL

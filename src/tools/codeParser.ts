@@ -21,7 +21,6 @@ import { MainRoutine } from "../ide/frames/globals/main-routine";
 import { LanguageElan } from "../ide/frames/language-elan";
 import { LanguagePython } from "../ide/frames/language-python";
 import { Paradigm } from "../ide/frames/paradigm";
-import { ProcedureCall } from "../ide/frames/statements/procedureCall";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
 import { ParseStatus } from "../ide/frames/status-enums";
@@ -251,11 +250,13 @@ function ParameterParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): P
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }
 
-function LambdaParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
-  const ss = new ProcedureCall(file);
-  const args = ss.args;
+function LambdaParserAndRender(_file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
+  throw new Error("Not implemented");
+  // Old code:
+  // const ss = new ProcedureCall(file);
+  // const args = ss.args;
 
-  return [args, { textAsHtml: async () => args.textAsHtml() }];
+  // return [args, { textAsHtml: async () => args.textAsHtml() }];
 }
 
 function FileWithHeaderParserAndRender(

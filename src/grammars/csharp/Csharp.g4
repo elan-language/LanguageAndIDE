@@ -95,7 +95,7 @@ assignment:
 ;
 
 ifStatement:
-    GHOSTED? IF condition = expression THEN OPEN_BRACE NL
+    GHOSTED? IF OPEN_BRACKET condition = expression CLOSE_BRACKET OPEN_BRACE NL
         thenClause
         elseIfClause*
         elseClause?
@@ -105,7 +105,7 @@ ifStatement:
         ordinaryStatement* 
         CLOSE_BRACE NL;
 
-    elseIfClause: GHOSTED? ELIF expression THEN OPEN_BRACE NL 
+    elseIfClause: GHOSTED? ELSE IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL 
         ordinaryStatement* 
         CLOSE_BRACE NL;
 
@@ -125,13 +125,8 @@ forLoop:
 ;
 
 procedureCall:
-    //TODO - to be reduced to one field i.e. CALL procCall NL, with procCall being procRef: (term DOT)? methodCall
-    GHOSTED? procRef OPEN_BRACKET argList CLOSE_BRACKET NL
+    GHOSTED? term NL
 ;
-procRef: methodName | thisProcRef | instanceProcRef;
-thisProcRef: THIS_INSTANCE DOT methodName;
-instanceProcRef: identifierWithOptIndexes DOT methodName;
-identifierWithOptIndexes: identifierUse index*;
 
 tryStatement:
     TRY OPEN_BRACE NL ordinaryStatement* catchStatement ordinaryStatement* CLOSE_BRACE COMMENT NL

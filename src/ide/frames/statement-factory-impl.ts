@@ -22,7 +22,7 @@ export class StatementFactoryImpl implements StatementFactory {
   public newCall(parent: Parent, procName = ""): Frame {
     const call = new ProcedureCall(parent);
     if (procName !== "") {
-      call.proc.setFieldToKnownValidText(procName);
+      call.procRef.setFieldToKnownValidText(procName);
     }
     return call;
   }

@@ -27,10 +27,6 @@ import { ElseClauseContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
-import { ProcRefContext } from "./RefLangParser.js";
-import { ThisProcRefContext } from "./RefLangParser.js";
-import { InstanceProcRefContext } from "./RefLangParser.js";
-import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
 import { TryClauseContext } from "./RefLangParser.js";
 import { CatchClauseContext } from "./RefLangParser.js";
@@ -271,30 +267,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.procRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitProcRef?: (ctx: ProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.thisProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.instanceProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.tryStatement`.
    * @param ctx the parse tree

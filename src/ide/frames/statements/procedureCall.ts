@@ -1,6 +1,6 @@
 import { callKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
-import { procRefFieldSpec, argListFieldSpec } from "../fields/field-spec";
+import { procRefFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -10,13 +10,12 @@ import { SingleLineFrame } from "../single-line-frame";
 export class ProcedureCall extends SingleLineFrame implements Statement {
   isStatement = true;
   isCall = true;
-  proc: FieldImpl;
-  args: FieldImpl;
+  procRef: FieldImpl;
+
   constructor(parent: Parent) {
     super(parent);
-    this.proc = new FieldImpl(this, procRefFieldSpec);
-    this.proc.setPlaceholder("<i>procedureName</i>");
-    this.args = new FieldImpl(this, argListFieldSpec);
+    this.procRef = new FieldImpl(this, procRefFieldSpec);
+    this.procRef.setPlaceholder("<i>procedureName</i>");
   }
 
   initialKeywords(): string {
@@ -26,14 +25,11 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove("call ");
-    this.proc.parseFrom(source);
-    source.remove("(");
-    this.args.parseFrom(source);
-    source.remove(")");
+    this.procRef.parseFrom(source);
     source.removeNewLine();
   }
   getFields(): Field[] {
-    return [this.proc, this.args];
+    return [this.procRef];
   }
 
   getIdPrefix(): string {
@@ -41,10 +37,10 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
   }
 
   frameSpecificAnnotation(): string {
-    return this.proc.text === "print" ? "" : "procedure call";
+    return this.procRef.text.startsWith("print") ? "" : "procedure call";
   }
 
   override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsElanSource()}(${this.args.renderAsElanSource()})`;
+    return `${this.indent()}${this.sourceAnnotations()}call ${this.procRef.renderAsElanSource()}`;
   }
 }

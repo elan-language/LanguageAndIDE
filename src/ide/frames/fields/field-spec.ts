@@ -187,13 +187,13 @@ export const methodNameFieldSpec: FieldSpec = new FieldSpec(
 
 export const procRefFieldSpec: FieldSpec = new FieldSpec(
   FieldType.procRef,
-  "<i>procedureName</i>",
+  "<i>procedureCall</i>",
   "ProcRefField",
   "_ident",
   true,
   false,
-  (parser: PythonParser | RefLangParser) => parser.procRef(),
-  (source: CodeSource) => source.readUntil(/\(/),
+  (parser: PythonParser | RefLangParser) => parser.term(),
+  (source: CodeSource) => source.readToEndOfLine(),
   "",
 );
 

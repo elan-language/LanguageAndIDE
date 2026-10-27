@@ -209,11 +209,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitProcedureCall = (ctx: ProcedureCallContext) => {
-    const procRef = ctx.procRef().getText();
-    const argList = ctx.argList().getText();
+    const procRef = ctx.term().getText();
     const procedureCall = new ProcedureCall(this.file);
-    procedureCall.proc.setFieldToKnownValidText(procRef);
-    procedureCall.args.setFieldToKnownValidText(argList);
+    procedureCall.procRef.setFieldToKnownValidText(procRef);
     return procedureCall;
   };
 

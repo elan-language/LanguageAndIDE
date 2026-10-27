@@ -24,10 +24,6 @@ import { ElseClauseContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
-import { ProcRefContext } from "./PythonParser.js";
-import { ThisProcRefContext } from "./PythonParser.js";
-import { InstanceProcRefContext } from "./PythonParser.js";
-import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
@@ -311,46 +307,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitProcedureCall?: (ctx: ProcedureCallContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.procRef`.
-   * @param ctx the parse tree
-   */
-  enterProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.procRef`.
-   * @param ctx the parse tree
-   */
-  exitProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  enterThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  exitThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  enterInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  exitInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.tryStatement`.
    * @param ctx the parse tree

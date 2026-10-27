@@ -24,10 +24,6 @@ import { ElseClauseContext } from "./CsharpParser.js";
 import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
 import { ProcedureCallContext } from "./CsharpParser.js";
-import { ProcRefContext } from "./CsharpParser.js";
-import { ThisProcRefContext } from "./CsharpParser.js";
-import { InstanceProcRefContext } from "./CsharpParser.js";
-import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
 import { TryStatementContext } from "./CsharpParser.js";
 import { ThrowStatementContext } from "./CsharpParser.js";
 import { ErrorMessageContext } from "./CsharpParser.js";
@@ -227,30 +223,6 @@ export class CsharpVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.procRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitProcRef?: (ctx: ProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.thisProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.instanceProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
   /**
    * Visit a parse tree produced by `CsharpParser.tryStatement`.
    * @param ctx the parse tree

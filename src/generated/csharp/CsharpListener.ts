@@ -24,10 +24,6 @@ import { ElseClauseContext } from "./CsharpParser.js";
 import { WhileLoopContext } from "./CsharpParser.js";
 import { ForLoopContext } from "./CsharpParser.js";
 import { ProcedureCallContext } from "./CsharpParser.js";
-import { ProcRefContext } from "./CsharpParser.js";
-import { ThisProcRefContext } from "./CsharpParser.js";
-import { InstanceProcRefContext } from "./CsharpParser.js";
-import { IdentifierWithOptIndexesContext } from "./CsharpParser.js";
 import { TryStatementContext } from "./CsharpParser.js";
 import { ThrowStatementContext } from "./CsharpParser.js";
 import { ErrorMessageContext } from "./CsharpParser.js";
@@ -312,46 +308,6 @@ export class CsharpListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitProcedureCall?: (ctx: ProcedureCallContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.procRef`.
-   * @param ctx the parse tree
-   */
-  enterProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.procRef`.
-   * @param ctx the parse tree
-   */
-  exitProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  enterThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  exitThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  enterInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  exitInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Exit a parse tree produced by `CsharpParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
   /**
    * Enter a parse tree produced by `CsharpParser.tryStatement`.
    * @param ctx the parse tree

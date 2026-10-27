@@ -27,10 +27,6 @@ import { ElseClauseContext } from "./RefLangParser.js";
 import { WhileLoopContext } from "./RefLangParser.js";
 import { ForLoopContext } from "./RefLangParser.js";
 import { ProcedureCallContext } from "./RefLangParser.js";
-import { ProcRefContext } from "./RefLangParser.js";
-import { ThisProcRefContext } from "./RefLangParser.js";
-import { InstanceProcRefContext } from "./RefLangParser.js";
-import { IdentifierWithOptIndexesContext } from "./RefLangParser.js";
 import { TryStatementContext } from "./RefLangParser.js";
 import { TryClauseContext } from "./RefLangParser.js";
 import { CatchClauseContext } from "./RefLangParser.js";
@@ -368,46 +364,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitProcedureCall?: (ctx: ProcedureCallContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.procRef`.
-   * @param ctx the parse tree
-   */
-  enterProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.procRef`.
-   * @param ctx the parse tree
-   */
-  exitProcRef?: (ctx: ProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  enterThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.thisProcRef`.
-   * @param ctx the parse tree
-   */
-  exitThisProcRef?: (ctx: ThisProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  enterInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.instanceProcRef`.
-   * @param ctx the parse tree
-   */
-  exitInstanceProcRef?: (ctx: InstanceProcRefContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  enterIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   */
-  exitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.tryStatement`.
    * @param ctx the parse tree

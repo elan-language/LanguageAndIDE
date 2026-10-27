@@ -41,8 +41,7 @@ export function T01_helloWorld() {
   comment.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
   const pr = new ProcedureCall(m);
-  pr.proc.setFieldToKnownValidText('printNoLine')
-  pr.args.setFieldToKnownValidText(`"Hello World!"`);
+  pr.procRef.setFieldToKnownValidText('printNoLine("Hello World!")');
   m.addChildBefore(pr, ss);
   f.updateAllParseStatus();
   return f;
@@ -79,8 +78,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   const t = new ThrowStatement(m);
   m.addChildBefore(t, ssm);
   const ca = new ProcedureCall(m);
-  ca.proc.setFieldToKnownValidText("signIn");
-  ca.args.setFieldToKnownValidText(`rwp, password`);
+  ca.procRef.setFieldToKnownValidText("signIn(rwp, password)");
   m.addChildBefore(ca, ssm);
   const w = new WhileLoop(m);
   w.condition.setFieldToKnownValidText("newGame");

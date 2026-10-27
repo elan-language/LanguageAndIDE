@@ -68,7 +68,7 @@ export class LanguageVB extends LanguageAbstract {
     if (frame instanceof AssertStatement) {
       html = `<el-type>Assert</el-type>.<el-method>AreEqual</el-method>(${frame.expected.renderAsHtml()}, ${frame.actual.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
-      html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()})`;
+      html = `${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
       html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.textIncludingMarkerSymboAndSpace.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {

@@ -26,7 +26,6 @@ import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
-import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
@@ -41,9 +40,7 @@ import {
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
-  IdentifierWithOptIndexesContext,
   IndexContext,
-  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -59,7 +56,6 @@ import {
   ParamDefContext,
   ParamListContext,
   ThisInstanceContext,
-  ThisProcRefContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -270,26 +266,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     const body = this.visit(ctx.expression())!;
 
     return new LambdaAsn(sig, body, this.fieldId);
-  };
-
-  override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) => {
-    const id = this.visit(ctx.identifierUse())!;
-
-    const indices = ctx.index().map((idx) => this.visit(idx)!);
-
-    return new ProcRefAsn(id, EmptyAsn.Instance, indices, this.fieldId, this.scope);
-  };
-
-  override visitThisProcRef = (ctx: ThisProcRefContext) => {
-    const thisNode = new ThisInstanceAsn(this.fieldId, this.scope);
-    const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(name, thisNode, [], this.fieldId, this.scope);
-  };
-
-  override visitInstanceProcRef = (ctx: InstanceProcRefContext) => {
-    const node = this.visit(ctx.identifierWithOptIndexes())!;
-    const name = this.visit(ctx.methodName())!;
-    return new ProcRefAsn(name, node, [], this.fieldId, this.scope);
   };
 
   override visitAssignable = (ctx: AssignableContext) => {

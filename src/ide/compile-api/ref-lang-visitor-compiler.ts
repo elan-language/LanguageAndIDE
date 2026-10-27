@@ -30,7 +30,6 @@ import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
-import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
@@ -49,12 +48,10 @@ import {
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
-  IdentifierWithOptIndexesContext,
   IfExpressionContext,
   IndexContext,
   IndexedAssignableContext,
   IndexedTermContext,
-  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -75,7 +72,6 @@ import {
   TestNameContext,
   ThisAssignableContext,
   ThisInstanceContext,
-  ThisProcRefContext,
   TupleContext,
   TypeFuncContext,
   TypeGenericContext,
@@ -348,33 +344,6 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.scope,
     );
   };
-
-  override visitIdentifierWithOptIndexes = (ctx: IdentifierWithOptIndexesContext) =>
-    new ProcRefAsn(
-      this.visit(ctx.identifierUse())!,
-      EmptyAsn.Instance,
-      ctx.index().map((idx) => this.visit(idx)!),
-      this.fieldId,
-      this.scope,
-    );
-
-  override visitThisProcRef = (ctx: ThisProcRefContext) =>
-    new ProcRefAsn(
-      this.visit(ctx.methodName())!,
-      new ThisInstanceAsn(this.fieldId, this.scope),
-      [],
-      this.fieldId,
-      this.scope,
-    );
-
-  override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
-    new ProcRefAsn(
-      this.visit(ctx.methodName())!,
-      this.visit(ctx.identifierWithOptIndexes())!,
-      [],
-      this.fieldId,
-      this.scope,
-    );
 
   override visitLambda = (ctx: LambdaContext) => {
     const parameters = (ctx

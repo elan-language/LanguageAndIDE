@@ -16,7 +16,6 @@ import {
   IndexContext,
   IndexedAssignableContext,
   IndexedTermContext,
-  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -31,7 +30,6 @@ import {
   ParamListContext,
   TestNameContext,
   ThisAssignableContext,
-  ThisProcRefContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -183,12 +181,6 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
     `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
-
-  override visitThisProcRef = (ctx: ThisProcRefContext) =>
-    `${this.visit(ctx.THIS_INSTANCE())}.${this.visit(ctx.methodName())}`;
-
-  override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
-    `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);

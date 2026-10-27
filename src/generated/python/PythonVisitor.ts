@@ -24,10 +24,6 @@ import { ElseClauseContext } from "./PythonParser.js";
 import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
-import { ProcRefContext } from "./PythonParser.js";
-import { ThisProcRefContext } from "./PythonParser.js";
-import { InstanceProcRefContext } from "./PythonParser.js";
-import { IdentifierWithOptIndexesContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
@@ -226,30 +222,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.procRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitProcRef?: (ctx: ProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.thisProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitThisProcRef?: (ctx: ThisProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.instanceProcRef`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInstanceProcRef?: (ctx: InstanceProcRefContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.identifierWithOptIndexes`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitIdentifierWithOptIndexes?: (ctx: IdentifierWithOptIndexesContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.tryStatement`.
    * @param ctx the parse tree

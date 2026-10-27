@@ -14,7 +14,6 @@ import {
   IdentifierListContext,
   IdentifierUseContext,
   IndexContext,
-  InstanceProcRefContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -31,7 +30,6 @@ import {
   ParamListContext,
   TermContext,
   TestNameContext,
-  ThisProcRefContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -189,12 +187,6 @@ export class PythonVisitorSource extends PythonVisitor<string> {
       return this.visitChildren(ctx)!;
     }
   };
-
-  override visitThisProcRef = (ctx: ThisProcRefContext) =>
-    `${this.visit(ctx.THIS_INSTANCE())}.${this.visit(ctx.methodName())}`;
-
-  override visitInstanceProcRef = (ctx: InstanceProcRefContext) =>
-    `${this.visit(ctx.identifierWithOptIndexes())}.${this.visit(ctx.methodName())}`;
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);

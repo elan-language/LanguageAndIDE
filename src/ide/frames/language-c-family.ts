@@ -64,7 +64,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   common_renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof ProcedureCall) {
-      html = `${frame.proc.renderAsHtml()}(${frame.args.renderAsHtml()});`;
+      html = `${frame.procRef.renderAsHtml()};`;
     } else if (frame instanceof CommentFrame) {
       html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
     } else if (frame instanceof ElseIfClause) {
