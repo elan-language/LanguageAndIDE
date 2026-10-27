@@ -1,0 +1,31 @@
+# d559d9143baa461a602cf96542dd674b74c566d90b03cf7d11ba78436267f945 Elan 2.0.0-beta4 valid
+
+# Tetris 7  - define noSquareAtBottomEdge with tests
+main
+  variable position set to 620
+  variable shape set to [0, 1, 39, 40]
+  variable bg set to new BlockGraphics()
+  while noSquareAtBottomEdge(shape)
+    call drawShape(shape, position, green, bg)
+    call sleep(0.5)
+    call drawShape(shape, position, white, bg)
+    assign position to position + 40
+  end while
+end main
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+function noSquareAtBottomEdge(shape as List<of Int>) returns Boolean
+  return false
+end function
+
+test test_noSquareAtBottomEdge
+  assert [0, 0, 0, 0] evaluates to false
+  assert [1, 1159, 3, 4] evaluates to true
+  assert [1, 2, 3, 1199] evaluates to true
+end test

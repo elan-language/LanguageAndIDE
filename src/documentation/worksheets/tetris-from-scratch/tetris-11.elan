@@ -1,0 +1,54 @@
+# 3d9491d4161e1713b81b9aebbced06fab391d4d6ac3a3122d557e492bc4baf7a Elan 2.0.0-beta4 valid
+
+# Tetris 11 - start a new shape when previous one stops
+main
+  variable bg set to new BlockGraphics()
+  variable gameOver set to false
+  while not gameOver
+    variable position set to 20
+    variable shape set to getShape(randint(0, 3))
+    variable moving set to true
+    while moving
+      call drawShape(shape, position, green, bg)
+      if squareAtBottomEdge(shape, position) then
+        assign moving to false
+      else
+        call sleep(0.2)
+        call drawShape(shape, position, white, bg)
+        assign position to position + 40
+      end if
+    end while
+  end while
+end main
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+function squareAtBottomEdge(shape as List<of Int>, position as Int) returns Boolean
+  variable result set to false
+  for blockNo in shape
+    if (blockNo + position) > 1159 then
+      assign result to true
+    end if
+  end for
+  return result
+end function
+
+test test_squareAtBottomEdge
+  assert squareAtBottomEdge([0, 1, 39, 40], 620) evaluates to false
+  assert squareAtBottomEdge([0, 1, 39, 40], 1159) evaluates to true
+  assert squareAtBottomEdge([0, 1, 39, 40], 1160) evaluates to true
+end test
+
+function getShape(shapeNo as Int) returns List<of Int>
+  variable shapes set to [[0, 1, 39, 40], [0, 1, 40, 41], [0, 1, 2, 3], [0, 40, 80, 120]]
+  return shapes[shapeNo]
+end function
+
+test test_getShape
+  assert getShape(0) evaluates to [0, 1, 39, 40]
+end test

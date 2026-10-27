@@ -1,0 +1,22 @@
+# 35a9212938567cfc920accbba41d6ac4a1e2f2f8cdf7d92a488836f3d8a58e94 Elan 2.0.0-beta4 valid
+
+# Tetris 6  - move the shape downward
+main
+  variable position set to 620
+  variable shape set to [0, 1, 39, 40]
+  variable bg set to new BlockGraphics()
+  variable moving set to true
+  while moving
+    call drawShape(shape, position, green, bg)
+    call sleep(0.5)
+    call drawShape(shape, position, white, bg)
+    assign position to position + 40
+  end while
+end main
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure

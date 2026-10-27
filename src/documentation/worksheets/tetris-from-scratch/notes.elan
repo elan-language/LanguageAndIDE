@@ -1,0 +1,11 @@
+# 53963247787a89d8823fe664480fbda4e8a0c5d43d55c83ef4bc38701baaedd1 Elan 2.0.0-beta4 valid
+
+# Paint background black (= 0, easier to test)
+# 
+# Rotate with a transform function that handles just one block
+# - get x, y - each in range - 3 to + 3 relative to origin
+# - Then perform a standard transformation on x & y e.g. y` = -x, x' = -y
+# - Normalise the result back to standard form 
+# - Then transform x, y back into blockNo: bn = y*40 + x
+# - Need to think about rotations going beyond edges (and wrapping) but
+# shouldn't be an issue as there should still be one ON the edge

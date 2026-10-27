@@ -1,0 +1,12 @@
+# f29f00309eb617fa9d86cd790d8c0e3b448054e60fa3765ff8648ad74853b63d Elan 2.0.0-beta4 valid
+
+# Tetris 3 - define shape in relative coordinates
+main
+  variable position set to 620
+  variable shape set to [0, 1, 39, 40]
+  variable bg set to new BlockGraphics()
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, green)
+  end for
+  call displayBlockGraphics(bg)
+end main

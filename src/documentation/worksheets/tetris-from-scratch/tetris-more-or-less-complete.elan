@@ -1,0 +1,184 @@
+# 4b21189e3bc4d036ef16f48e7210923eede5aa8696f2808169a29d2b13ef688a Elan 2.0.0-beta4 valid
+
+constant border set to 0x004472C4
+
+constant leftEdge set to 10
+
+constant rightEdge set to 25
+
+main
+  variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable gameOver set to false
+  variable score set to 0
+  while not gameOver
+    call processNewShape(bg)
+    assign score to score + 1
+    call removeCompletedRows(bg)
+    assign gameOver to checkForGameOver(bg)
+  end while
+  print("Game Over! Score: ")
+  print(score)
+end main
+
+procedure processNewShape(bg as BlockGraphics)
+  variable shapes set to [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 40, 41]]
+  variable colours set to [red, yellow, blue, green]
+  variable shapeNo set to randint(0, 2)
+  variable shape set to shapes[shapeNo]
+  variable shapeColour set to colours[shapeNo]
+  variable position set to 20
+  call drawShape(shape, position, shapeColour, bg)
+  variable moving set to true
+  while moving
+    call clearKeyBuffer()
+    call sleep(0.2)
+    call eraseShape(shape, position, bg)
+    variable key set to getKey()
+    assign shape to rotateShapeFromKey(shape, position, key, bg)
+    variable newPosition set to newPositionFromKey(shape, position, key, bg)
+    if allSquaresValid(shape, newPosition, bg) then
+      assign position to newPosition
+    else
+      assign moving to false
+    end if
+    call drawShape(shape, position, shapeColour, bg)
+    if key.equals("PageDown") then
+      call rapidDrop(shape, position, shapeColour, bg)
+      assign moving to false
+    end if
+  end while
+end procedure
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to border
+      if (col >= leftEdge) and (col <= rightEdge) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+procedure eraseShape(shape as List<of Int>, position as Int, bg as BlockGraphics)
+  call drawShape(shape, position, black, bg)
+end procedure
+
+procedure rapidDrop(shape as List<of Int>, startPosition as Int, colour as Int, bg as BlockGraphics)
+  variable moving set to true
+  variable position set to startPosition
+  while moving
+    call eraseShape(shape, position, bg)
+    variable newPosition set to position + 40
+    if allSquaresValid(shape, newPosition, bg) then
+      assign position to newPosition
+    else
+      assign moving to false
+    end if
+    call drawShape(shape, position, colour, bg)
+  end while
+end procedure
+
+procedure removeCompletedRows(bg as BlockGraphics)
+  variable row set to 29
+  while row >= 0
+    if isCompletedRow(row, bg) then
+      call removeRowAndCollapseDown(row, bg)
+    else
+      assign row to row - 1
+    end if
+  end while
+end procedure
+
+procedure removeRowAndCollapseDown(emptyRow as Int, bg as BlockGraphics)
+  for row in rangeInSteps(emptyRow, 0, -1)
+    for col in range(leftEdge, rightEdge + 1)
+      call bg.put(col, row, bg.get(col, row - 1))
+    end for
+  end for
+end procedure
+
+function isCompletedRow(row as Int, bg as BlockGraphics) returns Boolean
+  variable result set to true
+  for col in range(11, 29)
+    if bg.get(col, row) is black then
+      assign result to false
+    end if
+  end for
+  return result
+end function
+
+function allSquaresValid(shape as List<of Int>, position as Int, bg as BlockGraphics) returns Boolean
+  variable result set to true
+  for relative in shape
+    variable blockNo set to position + relative
+    assign result to result and withinVerticalBounds(blockNo) and emptyBlockBelow(blockNo, bg)
+  end for
+  return result
+end function
+
+function withinVerticalBounds(blockNo as Int) returns Boolean
+  return (blockNo >= 0) and (blockNo < 1200)
+end function
+
+function emptyBlockBelow(blockNo as Int, bg as BlockGraphics) returns Boolean
+  return bg.getBlockNo(blockNo) is black
+end function
+
+function newPositionFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns Int
+  variable result set to position
+  variable newPos set to 0
+  if key.equals("ArrowRight") then
+    assign newPos to position + 1
+  elif key.equals("ArrowLeft") then
+    assign newPos to position - 1
+  end if
+  if allSquaresValid(shape, newPos, bg) then
+    assign result to newPos
+  end if
+  return result + 40
+end function
+
+function rotateShapeFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns List<of Int>
+  variable result set to shape
+  variable newShape set to shape
+  if key.equals("ArrowUp") then
+    assign newShape to quarterTurn(shape)
+  elif key.equals("ArrowDown") then
+    assign newShape to quarterTurn(shape)
+  end if
+  if allSquaresValid(newShape, position, bg) then
+    assign result to newShape
+  end if
+  return result
+end function
+
+function quarterTurn(shape as List<of Int>) returns List<of Int>
+  # var transformed set t[-2:80, -1:40, 0:0, 1:-40, 2:-80, ...]
+  variable transformed set to new Dictionary<of Int, Int>()
+  variable result set to new List<of Int>()
+  for blockNo in shape
+    assign result to result.withAppend(transformed[blockNo])
+  end for
+  return result
+end function
+
+function checkForGameOver(bg as BlockGraphics) returns Boolean
+  variable gameOver set to false
+  for x in range(leftEdge, rightEdge + 1)
+    if bg.get(x, 0) isnt black then
+      assign gameOver to true
+    end if
+  end for
+  return gameOver
+end function
