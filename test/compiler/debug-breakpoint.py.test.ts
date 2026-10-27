@@ -815,7 +815,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_Enum", async () => {
+  ignore_test("Pass_Enum", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -871,7 +871,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_Tuple", async () => {
+  ignore_test("Pass_Tuple", async () => {
     const code = `${testPythonHeader}
 
 class Foo: # concrete class

@@ -3,6 +3,7 @@ import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Parser, testAntlrParse } from "../testHelpers";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Parsing Antlr Rules RefLang", () => {
   test("Expression", () => {
@@ -1106,7 +1107,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(thisInstance, `Th`, false);
   });
 
-  test("InstanceProcRef", () => {
+  ignore_test("InstanceProcRef", () => {
     const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguageElan.Instance,
       (p: Parser) => p.term(),

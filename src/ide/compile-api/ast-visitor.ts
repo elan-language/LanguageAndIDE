@@ -22,13 +22,13 @@ import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn"
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
+import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
 import { CatchClauseAsn } from "../../compiler/syntax-nodes/statements/catch-clause-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
 import { ElseIfClauseAsn } from "../../compiler/syntax-nodes/statements/else-if-clause-asn";
 import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
 import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
-import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
 import { ThenClauseAsn } from "../../compiler/syntax-nodes/statements/then-clause-asn";
 import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
@@ -285,14 +285,11 @@ export function transform(
   }
 
   if (node instanceof ProcedureCall) {
-    const procedureCallAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
+    const procedureCallAsn = new CallAsn(node.getHtmlId(), scope);
     procedureCallAsn.breakpointStatus = node.breakpointStatus;
 
-    throw new Error("Not implemented"); // old code:
-    // procedureCallAsn.procRef =
-    //   transform(node.proc, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
-    // procedureCallAsn.argList =
-    //   transform(node.args, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
+    procedureCallAsn.term =
+      transform(node.procRef, node.getHtmlId(), procedureCallAsn) ?? EmptyAsn.Instance;
 
     return procedureCallAsn;
   }

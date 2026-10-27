@@ -679,8 +679,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const elan_iterelan_for20 = [..._stdlib.range(0, 6)];
-    for (const i of elan_iterelan_for20) {
+    const elan_iterelan_for19 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterelan_for19) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);

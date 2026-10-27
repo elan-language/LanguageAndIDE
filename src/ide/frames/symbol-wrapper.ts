@@ -2,7 +2,6 @@ import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import {
   isAbstractTypeName,
-  isCall,
   isConcreteTypeName,
   isFunction,
   isGenericClass,
@@ -10,6 +9,7 @@ import {
   isMemberOnFieldsClass,
   isNotInheritableClass,
   isProcedure,
+  isProcedureCall,
   isProperty,
   isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
@@ -139,7 +139,7 @@ export class SymbolWrapper {
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
-    if (isCall(this.scope) && this.scope.argList instanceof EmptyAsn) {
+    if (isProcedureCall(this.scope) && this.scope.argList instanceof EmptyAsn) {
       return `${this.name}.`;
     }
 

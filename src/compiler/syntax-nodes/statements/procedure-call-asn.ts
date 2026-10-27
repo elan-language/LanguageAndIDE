@@ -61,10 +61,10 @@ export class ProcedureCallAsn extends BreakpointAsn {
 
     let qualifier = updatedQualifier;
 
-    const procSymbol = currentScope.resolveSymbol(id, true, this);
+    const methodSymbol = currentScope.resolveSymbol(id, true, this);
 
     mustBeKnownSymbol(
-      procSymbol,
+      methodSymbol,
       currentScope,
       getQualifierId(qualifier),
       qualifier.symbolType(),
@@ -73,32 +73,37 @@ export class ProcedureCallAsn extends BreakpointAsn {
       this.scope,
     );
     mustBeProcedure(
-      procSymbol.symbolId,
-      procSymbol.symbolType(),
-      procSymbol.symbolScope,
+      methodSymbol.symbolId,
+      methodSymbol.symbolType(),
+      methodSymbol.symbolScope,
       this.compileErrors,
       this.fieldId,
     );
 
-    if (isMemberOnFieldsClass(procSymbol, this)) {
+    if (isMemberOnFieldsClass(methodSymbol, this)) {
       mustbeValidQualifier(qualifier, this.scope, this.compileErrors, this.fieldId);
     } else {
-      mustBePublicMember(procSymbol, this.compileErrors, this.fieldId);
+      mustBePublicMember(methodSymbol, this.compileErrors, this.fieldId);
     }
 
-    const procSymbolType = procSymbol.symbolType();
+    const methodSymbolType = methodSymbol.symbolType();
     const parameterList = this.argList;
 
     if (isAstCollectionNode(parameterList)) {
       let callParameters = parameterList.items;
       let isAsync: boolean = false;
 
-      if (procSymbolType instanceof ProcedureType) {
-        mustCallExtensionViaQualifier(procSymbolType, qualifier, this.compileErrors, this.fieldId);
+      if (methodSymbolType instanceof ProcedureType) {
+        mustCallExtensionViaQualifier(
+          methodSymbolType,
+          qualifier,
+          this.compileErrors,
+          this.fieldId,
+        );
 
         mustNotCallNonExtensionViaQualifier(
-          procSymbolType,
-          procSymbol.symbolId,
+          methodSymbolType,
+          methodSymbol.symbolId,
           qualifier,
           currentScope,
           this.compileErrors,
@@ -108,20 +113,20 @@ export class ProcedureCallAsn extends BreakpointAsn {
 
         mustCallMemberViaQualifier(
           id,
-          procSymbolType,
+          methodSymbolType,
           currentScope,
           this.compileErrors,
           this.fieldId,
         );
 
-        if (procSymbolType.isExtension && qualifier !== EmptyAsn.Instance) {
+        if (methodSymbolType.isExtension && qualifier !== EmptyAsn.Instance) {
           callParameters = [qualifier as AstNode].concat(callParameters);
           qualifier = EmptyAsn.Instance;
         }
 
         matchParametersAndTypes(
           id,
-          procSymbolType,
+          methodSymbolType,
           callParameters,
           this.compileErrors,
           this.fieldId,
@@ -129,8 +134,8 @@ export class ProcedureCallAsn extends BreakpointAsn {
         );
 
         // do after parameters checked
-        checkForDeprecation(procSymbolType, this, this.compileErrors, this.fieldId);
-        isAsync = procSymbolType.isAsync;
+        checkForDeprecation(methodSymbolType, this, this.compileErrors, this.fieldId);
+        isAsync = methodSymbolType.isAsync;
       }
 
       const [wrappedInParameters, passedParameters] = this.wrapParameters(callParameters);
@@ -138,7 +143,7 @@ export class ProcedureCallAsn extends BreakpointAsn {
       const parms = passedParameters.join(", ");
       const prefix = !isEmptyNode(qualifier)
         ? `${qualifier.compile()}`
-        : scopePrefix(procSymbol, undefined, this.compileErrors, this, this.fieldId);
+        : scopePrefix(methodSymbol, undefined, this.compileErrors, this, this.fieldId);
       const async = isAsync ? "await " : "";
       let wrappedInParms = "";
 

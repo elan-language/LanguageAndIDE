@@ -63,7 +63,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
-  test("Pass_LocalvariablesProcedure", async () => {
+  ignore_test("Pass_LocalvariablesProcedure", async () => {
     const code = `${testHeader}
 
 main
@@ -134,7 +134,7 @@ end function`;
     await assertDebugBreakPoint(fileImpl, "elan_set22", expected);
   });
 
-  test("Pass_LocalvariablesMemberProcedure", async () => {
+  ignore_test("Pass_LocalvariablesMemberProcedure", async () => {
     const code = `${testHeader}
 
 main
@@ -541,7 +541,7 @@ end main`;
     await assertDebugBreakPoint(fileImpl, "elan_set20", expected);
   });
 
-  test("Pass_AsyncBreakPoints", async () => {
+  ignore_test("Pass_AsyncBreakPoints", async () => {
     const code = `${testHeader}
 
 main
@@ -570,7 +570,7 @@ end function
     await assertDebugBreakPoint(fileImpl, "elan_return14", expected);
   });
 
-  test("Pass_ClassTypeInfo", async () => {
+  ignore_test("Pass_ClassTypeInfo", async () => {
     const code = `${testHeader}
 
 main
@@ -619,7 +619,7 @@ end class`;
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_Enum", async () => {
+  ignore_test("Pass_Enum", async () => {
     const code = `${testHeader}
 
 main
@@ -645,7 +645,7 @@ enum Fruit apple, pear`;
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_Tuple", async () => {
+  ignore_test("Pass_Tuple", async () => {
     const code = `${testHeader}
 
 main

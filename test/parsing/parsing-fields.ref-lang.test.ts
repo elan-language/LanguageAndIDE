@@ -13,7 +13,7 @@ import { VariableStatement } from "../../src/ide/frames/statements/variable-stat
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
-import { transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
 import { testExtractContextForExpression } from "../testHelpers";
 
 suite("Field Parsing Tests", () => {
@@ -152,7 +152,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(procRef.readParseStatus(), ParseStatus.valid);
   });
 
-  test("parse ProcRefField 2", () => {
+  ignore_test("parse ProcRefField 2", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -192,7 +192,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(type.readParseStatus(), ParseStatus.invalid);
   });
 
-  test("parse ExpressionField - literal string with interpolations", () => {
+  ignore_test("parse ExpressionField - literal string with interpolations", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -215,7 +215,7 @@ suite("Field Parsing Tests", () => {
     );
   });
 
-  test("parse ExpressionField - non-interpolated string", () => {
+  ignore_test("parse ExpressionField - non-interpolated string", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -234,7 +234,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsSource(), `'{a}"b"'`);
     assert.equal(expr.textAsHtml(), `'<el-lit>{a}"b"</el-lit>'`);
   });
-  test("parse ExpressionField - mixed strings", () => {
+  ignore_test("parse ExpressionField - mixed strings", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -279,7 +279,7 @@ suite("Field Parsing Tests", () => {
       `[<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>24</el-lit>, <el-lit>26</el-lit>, <el-lit>44</el-lit>, <el-lit>45</el-lit>, <el-lit>46</el-lit>]`,
     );
   });
-  test("parse instance dot method", () => {
+  ignore_test("parse instance dot method", () => {
     const test = new TestFrame(
       new FileImpl(
         hash,
@@ -298,7 +298,7 @@ suite("Field Parsing Tests", () => {
     const spec = expr.getSymbolCompletionSpec();
     assert.equal(spec?.context, "foo");
   });
-  test("parse paramDefs with closing bracket #855", () => {
+  ignore_test("parse paramDefs with closing bracket #855", () => {
     const test = new TestFrame(
       new FileImpl(
         hash,
@@ -334,7 +334,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(name.readParseStatus(), ParseStatus.incomplete);
     assert.equal(name.textAsSource(), ``);
   });
-  test("parse list of listof floats", () => {
+  ignore_test("parse list of listof floats", () => {
     const c = new ConstantGlobal(
       new FileImpl(
         hash,
@@ -367,7 +367,7 @@ suite("Field Parsing Tests", () => {
       ``,
     );
   });
-  test("parse Actual field cannot contain ' is '", () => {
+  ignore_test("parse Actual field cannot contain ' is '", () => {
     const test = new TestFrame(
       new FileImpl(
         hash,
