@@ -35,10 +35,6 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
     super();
   }
 
-  get showPreviousNode() {
-    return !isTuple(this.scope);
-  }
-
   isAsync: boolean = false;
 
   getCurrentScope() {

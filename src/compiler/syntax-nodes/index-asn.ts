@@ -19,10 +19,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  get showPreviousNode() {
-    return false;
-  }
-
   isAsync: boolean = false;
 
   compileSubscript() {

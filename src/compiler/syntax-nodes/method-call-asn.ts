@@ -48,10 +48,6 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     return isAstIdNode(this.idNode) ? this.idNode.id : "";
   }
 
-  get showPreviousNode() {
-    return !this.isExtensionMethod;
-  }
-
   isAsync: boolean = false;
 
   isExtensionMethod: boolean = false;
