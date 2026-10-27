@@ -1,8 +1,12 @@
-# 95bd3b5f3e77b26c1413cede5337cf56f8fcc3cf4c70b4cbf80876e93f8c0399 Elan 2.0.0-beta4 valid
+# 390a4c9d66330167e28e22cfa6b57301bbf15e02f6d4d399495139bc8bc07dcf Elan 2.0.0-beta4 valid
 
-# Tetris 1 - draw one block in the centre of the display
+#  Tetris 1: Paint display black
 main
   variable bg set to new BlockGraphics()
-  call bg.putBlockNo(620, green)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      call bg.put(col, row, black)
+    end for
+  end for
   call displayBlockGraphics(bg)
 end main

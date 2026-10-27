@@ -1,22 +1,31 @@
-# 35a9212938567cfc920accbba41d6ac4a1e2f2f8cdf7d92a488836f3d8a58e94 Elan 2.0.0-beta4 valid
+# f9146c466e3e1b46d24c3cc202c7ec2d367aaeec0c9fe10ba8851ffcce0d8e0e Elan 2.0.0-beta4 valid
 
-# Tetris 6  - move the shape downward
+#  Tetris 6: Erase the shape after a short pause
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
-  variable moving set to true
-  while moving
-    call drawShape(shape, position, green, bg)
-    call sleep(0.5)
-    call drawShape(shape, position, white, bg)
-    assign position to position + 40
-  end while
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, green)
+  end for
+  call displayBlockGraphics(bg)
+  call sleep(0.2)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, black)
+  end for
+  call displayBlockGraphics(bg)
 end main
 
-procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
-  for blockNo in shape
-    call bg.putBlockNo(blockNo + position, colour)
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
   end for
   call displayBlockGraphics(bg)
 end procedure

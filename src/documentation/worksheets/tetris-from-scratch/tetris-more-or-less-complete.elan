@@ -1,4 +1,4 @@
-# 4b21189e3bc4d036ef16f48e7210923eede5aa8696f2808169a29d2b13ef688a Elan 2.0.0-beta4 valid
+# 1f3e2135ea173489404bc02344cf1776580a151d1b879d3013b036c696352703 Elan 2.0.0-beta4 valid
 
 constant border set to 0x004472C4
 
@@ -122,17 +122,13 @@ function allSquaresValid(shape as List<of Int>, position as Int, bg as BlockGrap
   variable result set to true
   for relative in shape
     variable blockNo set to position + relative
-    assign result to result and withinVerticalBounds(blockNo) and emptyBlockBelow(blockNo, bg)
+    assign result to result and emptyAndWithinBounds(blockNo, bg)
   end for
   return result
 end function
 
-function withinVerticalBounds(blockNo as Int) returns Boolean
-  return (blockNo >= 0) and (blockNo < 1200)
-end function
-
-function emptyBlockBelow(blockNo as Int, bg as BlockGraphics) returns Boolean
-  return bg.getBlockNo(blockNo) is black
+function emptyAndWithinBounds(blockNo as Int, bg as BlockGraphics) returns Boolean
+  return (blockNo < 1200) and (bg.getBlockNo(blockNo) is black)
 end function
 
 function newPositionFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns Int

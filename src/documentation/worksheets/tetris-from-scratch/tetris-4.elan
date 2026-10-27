@@ -1,17 +1,25 @@
-# 3034c0600a8e294efec849c8124cde5316249ff5998974e97942c28247f7ab4b Elan 2.0.0-beta4 valid
+# 30ee417c3403b0432c9404d892d2659fc27ebf6f6f9a40d09dac2f3a68aa0fe4 Elan 2.0.0-beta4 valid
 
-# Tetris 4  - erase the snake after half a second
+#  Tetris 4: Define a shape as a list of blockNumbers and draw it
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable shape set to [620, 621, 659, 660]
   for blockNo in shape
-    call bg.putBlockNo(blockNo + position, green)
-  end for
-  call displayBlockGraphics(bg)
-  call sleep(0.5)
-  for blockNo in shape
-    call bg.putBlockNo(blockNo + position, white)
+    call bg.putBlockNo(blockNo, green)
   end for
   call displayBlockGraphics(bg)
 end main
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure
