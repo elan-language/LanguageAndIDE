@@ -19,12 +19,6 @@ export class IndexAsn extends AbstractAstNode implements AstNode {
     super();
   }
 
-  // private precedingNode?: AstNode = undefined;
-
-  // updateScopeAndChain(_scope: Scope, ast: AstNode) {
-  //   this.precedingNode = ast;
-  // }
-
   get showPreviousNode() {
     return false;
   }

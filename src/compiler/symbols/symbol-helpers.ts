@@ -30,7 +30,6 @@ import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-defin
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { ForLoopAsn } from "../syntax-nodes/statements/for-loop-asn";
 import { ProcedureCallAsn } from "../syntax-nodes/statements/procedure-call-asn";
-import { TermAsn } from "../syntax-nodes/term-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassSubType, ClassType } from "./class-type";
 import { ListName } from "./elan-type-names";
@@ -326,10 +325,6 @@ function internalUpdateScopeAndQualifier(
 }
 
 export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
-  if (rootNode instanceof TermAsn) {
-    return [] as unknown as [AstNode, Scope];
-  }
-
   const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
   const qualifierScope = qualifier.symbolType();
   const value = isAstQualifierNode(qualifier) ? qualifier.value : qualifier;

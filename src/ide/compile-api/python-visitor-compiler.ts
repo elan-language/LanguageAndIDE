@@ -27,7 +27,6 @@ import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { ProcRefAsn } from "../../compiler/syntax-nodes/proc-ref-asn";
-import { TermAsn } from "../../compiler/syntax-nodes/term-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
@@ -59,7 +58,6 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
-  TermContext,
   ThisInstanceContext,
   ThisProcRefContext,
   TupleContext,
@@ -150,33 +148,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
-
-  override visitTerm = (ctx: TermContext) => {
-    const hasDot = !!ctx.DOT();
-    const index = ctx.index();
-    let term: TermAsn;
-    let tl = this.topLevelTerm;
-
-    if (hasDot) {
-      this.topLevelTerm = false;
-      const lhs = this.visit(ctx.term()!)!;
-      const rhs = this.visit(ctx.chainable()!)!;
-
-      term = new TermAsn(lhs, rhs, undefined, this.fieldId, this.scope);
-    } else if (index) {
-      tl = false;
-      const lhs = this.visit(ctx.term()!)!;
-      const idx = this.visit(index)!;
-
-      term = new TermAsn(lhs, undefined, idx, this.fieldId, this.scope);
-    } else {
-      term = new TermAsn(this.visitChildren(ctx)!, undefined, undefined, this.fieldId, this.scope);
-    }
-
-    term.topLevel = tl;
-
-    return term;
-  };
 
   override visitBracketedExpression = (ctx: BracketedExpressionContext) =>
     new BracketedAsn(this.visit(ctx.expression())!, this.fieldId);

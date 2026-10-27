@@ -51,14 +51,6 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   // this is a temp hack until all fields migrated
   tempAntlrFlag = true;
 
-  // precedingNode: AstNode = EmptyAsn.Instance;
-  // private updatedScope: Scope = NullScope.Instance;
-
-  // updateScopeAndChain(scope: Scope, ast: AstNode) {
-  //   this.updatedScope = scope;
-  //   this.precedingNode = ast;
-  // }
-
   get showPreviousNode() {
     return !this.isExtensionMethod;
   }
