@@ -92,7 +92,6 @@ import {
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
-import { IdentifierUseAsn } from "./syntax-nodes/identifier-use-asn";
 import { MethodCallAsn } from "./syntax-nodes/method-call-asn";
 import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
 import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
@@ -542,7 +541,7 @@ function qualifierIsFixedIdOrEmpty(qualifier: AstNode) {
     return true;
   }
 
-  return qualifier instanceof IdentifierUseAsn;
+  return qualifier instanceof ThisInstanceAsn;
 }
 
 export function mustNotCallNonExtensionViaQualifier(

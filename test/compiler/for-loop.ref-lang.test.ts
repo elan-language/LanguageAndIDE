@@ -275,8 +275,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const elan_iterelan_for13 = [..._stdlib.range(0, 11)];
-  for (const i of elan_iterelan_for13) {
+  const elan_iterelan_for12 = [..._stdlib.range(0, 11)];
+  for (const i of elan_iterelan_for12) {
     system.safeSet(arr, 1, [i]);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));

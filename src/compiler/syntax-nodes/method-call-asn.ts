@@ -16,8 +16,10 @@ import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { FunctionType } from "../symbols/function-type";
+import { ProcedureType } from "../symbols/procedure-type";
 import {
   getGlobalScope,
+  isCall,
   isClassType,
   isDefinitionScope,
   isMemberOnFieldsClass,
@@ -72,14 +74,66 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     return [funcSymbol, funcSymbolType];
   }
 
+  commonCompile(
+    methodSymbol: ElanSymbol,
+    methodSymbolType: FunctionType | ProcedureType,
+    parameters: AstNode[],
+  ) {
+    mustCallExtensionViaQualifier(
+      methodSymbolType,
+      this.precedingNode,
+      this.compileErrors,
+      this.fieldId,
+    );
+
+    mustNotCallNonExtensionViaQualifier(
+      methodSymbolType,
+      methodSymbol.symbolId,
+      this.precedingNode,
+      this.getCurrentScope(),
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+
+    mustCallMemberViaQualifier(
+      methodSymbol.symbolId,
+      methodSymbolType,
+      this.getCurrentScope(),
+      this.compileErrors,
+      this.fieldId,
+    );
+
+    if (methodSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
+      this.isExtensionMethod = true;
+      parameters = [this.precedingNode].concat(parameters);
+    }
+
+    matchParametersAndTypes(
+      methodSymbol.symbolId,
+      methodSymbolType,
+      parameters,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+
+    // do after parameters checked
+    checkForDeprecation(methodSymbolType, this.scope, this.compileErrors, this.fieldId);
+
+    this.isAsync = methodSymbolType.isAsync;
+
+    return parameters;
+  }
+
   compile(): string {
     this.compileErrors = [];
 
     let parameters = [...this.parameters];
-    const [funcSymbol, funcSymbolType] = this.getSymbolAndType();
+    const [methodSymbol, methodSymbolType] = this.getSymbolAndType();
 
     mustBeKnownSymbol(
-      funcSymbol,
+      methodSymbol,
       this.getCurrentScope(),
       getQualifierId(this.precedingNode),
       this.precedingNode.symbolType(),
@@ -88,74 +142,47 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
       this.scope,
     );
 
-    if (isMemberOnFieldsClass(funcSymbol, this.scope)) {
+    if (isMemberOnFieldsClass(methodSymbol, this.scope)) {
       mustbeValidQualifier(this.precedingNode, this.scope, this.compileErrors, this.fieldId);
     } else {
-      mustBePublicMember(funcSymbol, this.compileErrors, this.fieldId);
+      mustBePublicMember(methodSymbol, this.compileErrors, this.fieldId);
     }
 
-    if (funcSymbolType instanceof FunctionType) {
-      mustBePureFunctionSymbol(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
+    let asyncStart = "";
+    let asyncEnd = "";
 
-      mustCallExtensionViaQualifier(
-        funcSymbolType,
-        this.precedingNode,
-        this.compileErrors,
-        this.fieldId,
-      );
+    if (methodSymbolType instanceof FunctionType) {
+      mustBePureFunctionSymbol(methodSymbolType, this.scope, this.compileErrors, this.fieldId);
+      parameters = this.commonCompile(methodSymbol, methodSymbolType, parameters);
+      asyncStart = this.isAsync ? "(await " : "";
+      asyncEnd = this.isAsync ? ")" : "";
+    } else if (methodSymbolType instanceof ProcedureType) {
+      parameters = this.commonCompile(methodSymbol, methodSymbolType, parameters);
+      asyncStart = this.isAsync ? "await " : "";
+      asyncEnd = "";
 
-      mustNotCallNonExtensionViaQualifier(
-        funcSymbolType,
-        funcSymbol.symbolId,
-        this.precedingNode,
-        this.getCurrentScope(),
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-
-      mustCallMemberViaQualifier(
-        funcSymbol.symbolId,
-        funcSymbolType,
-        this.getCurrentScope(),
-        this.compileErrors,
-        this.fieldId,
-      );
-
-      if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
-        this.isExtensionMethod = true;
-        parameters = [this.precedingNode].concat(parameters);
+      if (!isCall(this.scope)) {
+        mustBeCallable(
+          methodSymbol.symbolId,
+          methodSymbolType,
+          methodSymbol.symbolScope,
+          this.compileErrors,
+          this.fieldId,
+        );
       }
-
-      matchParametersAndTypes(
-        funcSymbol.symbolId,
-        funcSymbolType,
-        parameters,
-        this.compileErrors,
-        this.fieldId,
-        this.scope,
-      );
-
-      // do after parameters checked
-      checkForDeprecation(funcSymbolType, this.scope, this.compileErrors, this.fieldId);
-
-      this.isAsync = funcSymbolType.isAsync;
     } else {
       mustBeCallable(
-        funcSymbol.symbolId,
-        funcSymbolType,
-        funcSymbol.symbolScope,
+        methodSymbol.symbolId,
+        methodSymbolType,
+        methodSymbol.symbolScope,
         this.compileErrors,
         this.fieldId,
       );
     }
-
-    const asyncStart = this.isAsync ? "(await " : "";
-    const asyncEnd = this.isAsync ? ")" : "";
 
     const parms = parameters.map((p) => p.compile()).join(", ");
     const prefix = scopePrefix(
-      funcSymbol,
+      methodSymbol,
       this.precedingNode,
       this.compileErrors,
       this.scope,
@@ -168,24 +195,24 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   }
 
   symbolType() {
-    const [, funcSymbolType] = this.getSymbolAndType();
+    const [, methodSymbolType] = this.getSymbolAndType();
 
-    if (funcSymbolType instanceof FunctionType) {
-      const returnType = funcSymbolType.returnType;
+    if (methodSymbolType instanceof FunctionType) {
+      const returnType = methodSymbolType.returnType;
 
       if (containsGenericType(returnType)) {
         let callParameters = this.parameters;
 
-        if (funcSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
+        if (methodSymbolType.isExtension && !isEmptyNode(this.precedingNode)) {
           callParameters = [this.precedingNode].concat(callParameters);
         }
-        const matches = matchGenericTypes(funcSymbolType, callParameters);
+        const matches = matchGenericTypes(methodSymbolType, callParameters);
         return generateType(returnType, matches);
       }
       return returnType;
     }
 
-    return funcSymbolType;
+    return methodSymbolType;
   }
 
   toString() {

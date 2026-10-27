@@ -336,6 +336,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitMethodCall = (ctx: MethodCallContext) => {
     const pn = this.precedingNode;
+
     return new MethodCallAsn(
       this.visit(ctx.methodName())!,
       getArgs(this, ctx.argList()),

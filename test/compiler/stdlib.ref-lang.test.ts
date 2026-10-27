@@ -805,8 +805,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const elan_iterelan_for15 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_iterelan_for15) {
+  const elan_iterelan_for14 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterelan_for14) {
     val = rnd.asInt(0, 1);
     rnd = rnd.nextGen();
     system.safeSet(results, system.safeIndex(results, val) + 1, [val]);

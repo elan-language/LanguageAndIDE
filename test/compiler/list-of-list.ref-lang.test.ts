@@ -972,7 +972,7 @@ end main
 
 main
   variable a set to [[1,2],[3,4]]
-  call a["b"].put(0, 5)
+  call a["b"].removeFirst()
 end main
 `;
 
