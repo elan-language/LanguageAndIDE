@@ -1,14 +1,13 @@
 import { ParserRuleContext } from "antlr4ng";
 import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { LanguagePython } from "../../src/ide/frames/language-python";
 import { Parser, testAntlrParse } from "../testHelpers";
-import { ignore_test } from "../compiler/compiler-test-helpers";
 
-suite("Parsing Antlr Rules RefLang", () => {
+suite("Parsing Rules Python", () => {
   test("Expression", () => {
     const expression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.expression(),
     ];
     testAntlrParse(expression, "bar1_foo", true); // identifier
@@ -40,18 +39,18 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(
       // using lambda as argument
       expression,
-      `foo(lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))`,
+      `foo(lambda bestSoFar: str, newWord: str : betterOf(bestSoFar, newWord, possAnswers))`,
       true,
-      `foo(lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers))`,
+      `foo(lambda bestSoFar: str, newWord: str : betterOf(bestSoFar, newWord, possAnswers))`,
     );
-    testAntlrParse(
-      // if expression
-      expression,
-      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-      true,
-      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-    );
-    testAntlrParse(expression, `this`, true, `this`, `this`, "<el-kw>this</el-kw>", `this`);
+    // testAntlrParse(
+    //   // if expression
+    //   expression,
+    //   `target if attempt.isAlreadyMarkedGreen(n) else  target.setChar(target.indexOf(attempt[n]) if attempt.isYellow(target, n),, ".") else target`,
+    //   true,
+    //   `target if attempt.isAlreadyMarkedGreen(n) else  target.setChar(target.indexOf(attempt[n]) if attempt.isYellow(target, n),, ".") else target`,
+    // );
+    testAntlrParse(expression, `self`, true, `self`, `self`, "<el-kw>self</el-kw>", `self`);
     testAntlrParse(
       expression,
       "a + b- c",
@@ -63,28 +62,19 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(expression, "+", false);
     testAntlrParse(expression, "+b", false);
     testAntlrParse(expression, "a +", false);
+    testAntlrParse(expression, "a % b", true, "a % b");
     testAntlrParse(expression, "3 * 4 + x", true, "3 * 4 + x", "3*4 + x");
     testAntlrParse(expression, "3* foo(5)", true, "3* foo(5)", "3*foo(5)", "");
-    testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "");
+    //testAntlrParse(expression, "a.a[1]", true, "a.a[1]", "", "", "", "system.safeIndex(a.a, 1)");
     testAntlrParse(
       expression,
-      "new Foo()",
+      "Foo()",
       true,
-      "new Foo()",
-      "new Foo()",
+      "Foo()",
       "",
       "",
+      "Foo()",
       "system.initialise(await new Foo()._initialise())",
-    );
-    testAntlrParse(
-      expression,
-      "new List<of String>()",
-      true,
-      "new List<of String>()",
-      "new List<of String>()",
-      "",
-      "",
-      "system.initialise(await new _stdlib.List()._initialise())",
     );
     testAntlrParse(
       expression,
@@ -94,29 +84,20 @@ suite("Parsing Antlr Rules RefLang", () => {
       "points.foo(0.0)",
       "<el-id>points</el-id>.<el-method>foo</el-method>(<el-lit>0.0</el-lit>)",
     );
-    testAntlrParse(expression, "this", true, "this", "this", "<el-kw>this</el-kw>");
+    testAntlrParse(expression, "self", true, "self", "self", "<el-kw>self</el-kw>");
     testAntlrParse(
       expression,
-      "thisWidget",
+      "selfWidget",
       true,
-      "thisWidget",
-      "thisWidget",
-      "<el-id>thisWidget</el-id>",
-    );
-    // empty data structures
-    testAntlrParse(
-      expression,
-      "new List<of Int>()",
-      true,
-      "new List<of Int>()",
-      "",
-      "<el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>Int</el-type>&gt;()",
+      "selfWidget",
+      "selfWidget",
+      "<el-id>selfWidget</el-id>",
     );
   });
 
   test("Identifier", () => {
     const identifier: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => (p as RefLangParser).identifierUse(),
     ];
     testAntlrParse(identifier, ``, false);
@@ -146,7 +127,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Lit String", () => {
     const litString: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.litString(),
     ];
     testAntlrParse(litString, "", false);
@@ -156,13 +137,19 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(litString, `" "`, true, `" "`, "", `"<el-lit> </el-lit>"`, "");
     testAntlrParse(litString, `" `, false);
     testAntlrParse(litString, `$"{a} `, false);
-    testAntlrParse(litString, `""`, true, `""`, "", "", `""`);
+    testAntlrParse(litString, `""`, true, `""`, "", `"<el-lit></el-lit>"`, "", `""`);
     testAntlrParse(litString, `"abc`, false);
     testAntlrParse(litString, `"`, false);
     testAntlrParse(litString, `abc`, false);
     testAntlrParse(litString, `'abc'`, false);
     testAntlrParse(litString, `'abc"`, false);
     testAntlrParse(litString, `"abc'`, false);
+    // Interpolated strings
+    testAntlrParse(litString, `$""`, true, "", "");
+    testAntlrParse(litString, `$"x"`, true, "", "");
+    testAntlrParse(litString, `$" "`, true, "", "");
+    testAntlrParse(litString, `$"{x}"`, true, "", "");
+    testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(
       litString,
       `"{curly braces}"`,
@@ -191,11 +178,6 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   // TODO Interpolated strings
   // testAntlrParse(getLitStringRule, `$"{}"`, false);
-  // testAntlrParse(interpolString, `$""`, true, "", "");
-  // testAntlrParse(litString, `$"x"`, true, "", "");
-  // testAntlrParse(litString, `$" "`, true, "", "");
-  // testAntlrParse(litString, `$"{x}"`, true, "", "");
-  // testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
   //     testAntlrParse(
   //       getLitStringInterpolatedRule,
   //       `$"{curly}"`,
@@ -249,7 +231,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Lit Int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.litInt(),
     ];
     testAntlrParse(litInt, "", false);
@@ -312,7 +294,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Lit Float", () => {
     const litFloat: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.litFloat(),
     ];
     testAntlrParse(litFloat, "", false);
@@ -342,26 +324,26 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Lit Boolean", () => {
     const litBoolean: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.litBoolean(),
     ];
-    testAntlrParse(litBoolean, `true`, true, `true`, `true`, "<el-kw>true</el-kw>", `true`, "true");
+    testAntlrParse(litBoolean, `True`, true, `True`, ``, "<el-kw>True</el-kw>", `True`, "true");
     testAntlrParse(
       litBoolean,
-      `false`,
+      `False`,
       true,
-      `false`,
-      `false`,
-      "<el-kw>false</el-kw>",
-      `false`,
+      `False`,
+      `False`,
+      "<el-kw>False</el-kw>",
+      `False`,
       "false",
     );
-    testAntlrParse(litBoolean, `True`, false);
+    testAntlrParse(litBoolean, `true`, false);
   });
 
   test("Enum Value", () => {
     const enumValue: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.enumValue(),
     ];
     testAntlrParse(
@@ -380,7 +362,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Method Call", () => {
     const methodCall: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.methodCall(),
     ];
     testAntlrParse(methodCall, ``, false);
@@ -400,9 +382,9 @@ suite("Parsing Antlr Rules RefLang", () => {
       `bar(x, 1, "hello")`,
       true,
       `bar(x, 1, "hello")`,
-      `bar(x, 1, "hello")`,
+      ``,
       `<el-method>bar</el-method>(<el-id>x</el-id>, <el-lit>1</el-lit>, "<el-lit>hello</el-lit>")`,
-      `bar(x, 1, "hello")`,
+      ``,
       `bar(x, 1, "hello")`,
     );
     testAntlrParse(methodCall, `yon`, false);
@@ -425,7 +407,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Unary Expression", () => {
     const unaryExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.unaryExpression(),
     ];
     testAntlrParse(unaryExpression, "", false);
@@ -456,37 +438,37 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("BinaryOperator", () => {
     const binaryOperator: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.binaryOperator(),
     ];
-    testAntlrParse(binaryOperator, "is", true, "is", " is ", "<el-kw> is </el-kw>");
-    testAntlrParse(binaryOperator, "isnt", true, "isnt", " isnt ", "<el-kw> isnt </el-kw>");
-    testAntlrParse(binaryOperator, ">", true, ">", " > ", " > ");
-    testAntlrParse(binaryOperator, "<", true, "<", " < ", " < ");
-    testAntlrParse(binaryOperator, ">=", true, ">=", " >= ", " >= ");
-    testAntlrParse(binaryOperator, "<=", true, "<=", " <= ", " <= ");
-    testAntlrParse(binaryOperator, "*", true, "*", "*", "*");
-    testAntlrParse(binaryOperator, "/", true, "/", "/", "/");
-    testAntlrParse(binaryOperator, "+", true, "+", " + ", " + ");
-    testAntlrParse(binaryOperator, "-", true, "-", " - ", " - ");
-    testAntlrParse(binaryOperator, "and", true, "and", " and ", "<el-kw> and </el-kw>");
-    testAntlrParse(binaryOperator, "or", true, "or", " or ", "<el-kw> or </el-kw>");
-    testAntlrParse(binaryOperator, "mod", true, "mod", " mod ", "<el-kw> mod </el-kw>");
+    testAntlrParse(binaryOperator, "==", true, "==", "", " == ");
+    testAntlrParse(binaryOperator, "!=", true, "!=", "", " != ");
+    testAntlrParse(binaryOperator, ">", true, ">", "", " > ");
+    testAntlrParse(binaryOperator, "<", true, "<", "", " < ");
+    testAntlrParse(binaryOperator, ">=", true, ">=", "", " >= ");
+    testAntlrParse(binaryOperator, "<=", true, "<=", "", " <= ");
+    testAntlrParse(binaryOperator, "*", true, "*", "", "*");
+    testAntlrParse(binaryOperator, "/", true, "/", "", "/");
+    testAntlrParse(binaryOperator, "+", true, "+", "", " + ");
+    testAntlrParse(binaryOperator, "-", true, "-", "", " - ");
+    testAntlrParse(binaryOperator, "and", true, "and", "", "<el-kw> and </el-kw>");
+    testAntlrParse(binaryOperator, "or", true, "or", "", "<el-kw> or </el-kw>");
+    testAntlrParse(binaryOperator, "%", true, "%", "", " % ");
   });
 
   test("BinaryExpression", () => {
     const binaryExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.binaryExpression(),
     ];
     testAntlrParse(
       binaryExpression,
-      `true and false`,
+      `True and False`,
       true,
-      `true and false`,
-      `true and false`,
-      "<el-kw>true</el-kw><el-kw> and </el-kw><el-kw>false</el-kw>",
-      `true and false`,
+      `True and False`,
+      ``,
+      "<el-kw>True</el-kw><el-kw> and </el-kw><el-kw>False</el-kw>",
+      `True and False`,
       `true && false`,
     );
     testAntlrParse(
@@ -542,13 +524,13 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(binaryExpression, `3>=4`, true, "3>=4", "3 >= 4");
     testAntlrParse(
       binaryExpression,
-      `3 is 4`,
+      `3 == 4`,
       true,
-      "3 is 4",
-      "3 is 4",
-      "<el-lit>3</el-lit><el-kw> is </el-kw><el-lit>4</el-lit>",
-      "3 is 4",
-      "3 === 4",
+      "3 == 4",
+      "",
+      "<el-lit>3</el-lit> == <el-lit>4</el-lit>",
+      "3 == 4",
+      //"3 === 4",
     );
     testAntlrParse(
       binaryExpression,
@@ -564,7 +546,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Index", () => {
     const index: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.index(),
     ];
     testAntlrParse(index, ``, false);
@@ -576,7 +558,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Chainable", () => {
     const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.chainable(),
     ];
     testAntlrParse(chainable, ``, false);
@@ -603,16 +585,7 @@ suite("Parsing Antlr Rules RefLang", () => {
     //   "system.safeIndex(a, b)",
     // );
     testAntlrParse(chainable, `a`, true, "a", "a", "<el-id>a</el-id>", "a", "a");
-    testAntlrParse(
-      chainable,
-      `f()`,
-      true,
-      "f()",
-      "f()",
-      "<el-method>f</el-method>()",
-      "f()",
-      "f()",
-    );
+    testAntlrParse(chainable, `f()`, true, "f()", "", "<el-method>f</el-method>()", "f()", "f()");
     // testAntlrParse(
     //   chainable,
     //   `f()[1]`,
@@ -637,7 +610,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("BracketedExpression", () => {
     const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.bracketedExpression(),
     ];
     testAntlrParse(
@@ -678,173 +651,177 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Type", () => {
     const type_: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.type_(),
     ];
     testAntlrParse(type_, `Foo`, true, "Foo", "Foo", "<el-type>Foo</el-type>");
     testAntlrParse(
       type_,
-      `Foo<of Bar>`,
+      `Foo[Bar]`,
       true,
-      "Foo<of Bar>",
-      "Foo<of Bar>",
-      "<el-type>Foo</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>&gt;",
+      "Foo[Bar]",
+      "",
+      "<el-type>Foo</el-type>[<el-type>Bar</el-type>]",
     );
     testAntlrParse(
       type_,
-      `Dictionary<of Bar, Yon>`,
+      `Dictionary[Bar, Yon]`,
       true,
-      "Dictionary<of Bar, Yon>",
-      "Dictionary<of Bar, Yon>",
-      "<el-type>Dictionary</el-type>&lt;<el-kw>of</el-kw> <el-type>Bar</el-type>, <el-type>Yon</el-type>&gt;",
+      "Dictionary[Bar, Yon]",
+      "",
+      "<el-type>Dictionary</el-type>[<el-type>Bar</el-type>, <el-type>Yon</el-type>]",
     );
     testAntlrParse(type_, `foo`, false);
-    testAntlrParse(type_, `Foo<`, false);
-    testAntlrParse(type_, `Foo<>`, false);
-    testAntlrParse(type_, `Foo<of`, false);
-    testAntlrParse(type_, `Foo<of Bar`, false);
-    testAntlrParse(type_, `Foo<ofBar>`, false);
-    testAntlrParse(type_, `(Foo, Bar)`, true, "(Foo, Bar)", "", "");
-    testAntlrParse(type_, `(Foo)`, false);
-    testAntlrParse(type_, `(Foo, Bar, Yon`, false);
-    testAntlrParse(type_, `(Foo, (Bar, Yon, Qux))`, true, "(Foo, (Bar, Yon, Qux))", "", "");
-    testAntlrParse(type_, `(Foo, Bar< of Yon>)`, true, "(Foo, Bar< of Yon>)", "", "");
-    testAntlrParse(type_, `Func<of Foo, Bar => Yon>`, true, "Func<of Foo, Bar => Yon>", "", ""); //Single
+    testAntlrParse(type_, `Foo[`, false);
+    testAntlrParse(type_, `Foo[]`, false);
+    testAntlrParse(type_, `Foo[Bar`, false);
+    testAntlrParse(type_, `tuple[Foo, Bar]`, true, "tuple[Foo, Bar]", "", "");
+    testAntlrParse(type_, `(Foo, Bar)`, false);
+    testAntlrParse(type_, `[Foo, Bar]`, false);
+    testAntlrParse(type_, `tuple[Foo, Bar`, false);
+    testAntlrParse(
+      type_,
+      `tuple[Foo, tuple[Bar, Yon, Qux]]`,
+      true,
+      "tuple[Foo, tuple[Bar, Yon, Qux]]",
+    );
+    testAntlrParse(type_, `tuple[Foo, Bar[Yon]]`, true, "tuple[Foo, Bar[Yon]]");
+    testAntlrParse(type_, `Callable[[int, int], int]`, true, "Callable[[int, int], int]", "", "");
   });
 
-  test("lambda", () => {
-    const lambda: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.lambda(),
-    ];
-    testAntlrParse(lambda, `lambda x as Int => x * x`, true, "lambda x as Int => x * x", "", "");
-    testAntlrParse(lambda, `lambda x`, false);
-    //testAntlrParse(lambda, `lambda x => x * x`, true); // parameter types are optional!
-    testAntlrParse(
-      lambda,
-      `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
-      true,
-      "",
-      "",
-      "",
-    );
-    testAntlrParse(
-      lambda,
-      `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
-      true,
-      "",
-      "",
-      "<el-kw>lambda</el-kw> <el-id>a</el-id> <el-kw>as</el-kw> (<el-type>String</el-type>, <el-type>String</el-type>), <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> => (<el-method>setAttemptIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>), <el-method>setTargetIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>))",
-    );
-  });
+  // test("lambda", () => {
+  //   const lambda: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+  //     LanguagePython.Instance,
+  //     (p: Parser) => p.lambda(),
+  //   ];
+  //   testAntlrParse(lambda, `lambda x: int: x * x`, true, "lambda x as Int => x * x", "", "");
+  //   testAntlrParse(lambda, `lambda x`, false);
+  //   //testAntlrParse(lambda, `lambda x => x * x`, true); // parameter types are optional!
+  //   testAntlrParse(
+  //     lambda,
+  //     `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
+  //     true,
+  //     "",
+  //     "",
+  //     "",
+  //   );
+  //   testAntlrParse(
+  //     lambda,
+  //     `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+  //     true,
+  //     "",
+  //     "",
+  //     "<el-kw>lambda</el-kw> <el-id>a</el-id> <el-kw>as</el-kw> (<el-type>String</el-type>, <el-type>String</el-type>), <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> => (<el-method>setAttemptIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>), <el-method>setTargetIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>))",
+  //   );
+  // });
 
   test("IfExpr", () => {
     const expr: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => (p as RefLangParser).expression(),
     ];
     testAntlrParse(
       expr,
-      `if_(cell, Colour.green, Colour.black)`,
+      `Colour.green if cell else Colour.black`,
       true,
-      `if_(cell, Colour.green, Colour.black)`,
-      `if_(cell, Colour.green, Colour.black)`,
-      "<el-method>if_</el-method>(<el-id>cell</el-id>, <el-type>Colour</el-type>.<el-id>green</el-id>, <el-type>Colour</el-type>.<el-id>black</el-id>)",
+      `Colour.green if cell else Colour.black`,
+      ``,
+      "<el-type>Colour</el-type>.<el-id>green</el-id> <el-kw>if</el-kw> <el-id>cell</el-id> <el-kw>else</el-kw> <el-type>Colour</el-type>.<el-id>black</el-id>",
       "",
-      "",
+      "(cell ? Colour.green : Colour.black)",
     );
-    testAntlrParse(
-      expr,
-      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-      true,
-      `if_(attempt[n] is "*", attempt, if_(attempt.isYellow(target, n), attempt.setChar(n, "+"), attempt.setChar(n, "_")))`,
-      "",
-      "",
-      "",
-      "",
-    );
-    testAntlrParse(
-      expr,
-      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-      true,
-      `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
-    );
-    testAntlrParse(
-      expr,
-      `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
-      true,
-      `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
-    );
-    testAntlrParse(expr, `if_(cell, Colour.amber)`, false);
-    testAntlrParse(expr, `if(cell, Colour.amber, Colour.green)`, false);
+    // testAntlrParse(
+    //   expr,
+    //   `attempt if (attempt[n] is "*") else (attempt.setChar(n, "+") if attempt.isYellow(target, n) else attempt.setChar(n, "_")))`,
+    //   true,
+    //   `attempt if (attempt[n] is "*") else (attempt.setChar(n, "+") if attempt.isYellow(target, n) else attempt.setChar(n, "_")))`,
+    //   "",
+    //   "",
+    //   "",
+    //   '(system.objectEquals(system.safeIndex(attempt, n), "*") ? attempt : (attempt.isYellow(target, n) ? attempt.setChar(n, "+") : attempt.setChar(n, "_")))',
+    // );
+    // testAntlrParse(
+    //   expr,
+    //   `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+    //   true,
+    //   `if_(attempt.isAlreadyMarkedGreen(n), target, if_(attempt.isYellow(target, n), target.setChar(target.indexOf(attempt[n]), "."), target))`,
+    // );
+    // testAntlrParse(
+    //   expr,
+    //   `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
+    //   true,
+    //   `if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))`,
+    // );
+    // testAntlrParse(expr, `if_(cell, Colour.amber)`, false);
+    // testAntlrParse(expr, `if(cell, Colour.amber, Colour.green)`, false);
   });
 
   test("ParamDefNode", () => {
     const paramDef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.paramDef(),
     ];
     testAntlrParse(
       paramDef,
-      `x as String`,
+      `x: str`,
       true,
-      "x as String",
-      "x as String",
-      "<el-id>x</el-id> <el-kw>as</el-kw> <el-type>String</el-type>",
+      `x: str`,
+      "",
+      "<el-id>x</el-id>: <el-type>str</el-type>",
     );
     testAntlrParse(paramDef, `z`, false);
-    testAntlrParse(paramDef, `w as`, false);
+    testAntlrParse(paramDef, `w:`, false);
     testAntlrParse(paramDef, `A`, false);
-    testAntlrParse(paramDef, `v String`, false);
+    testAntlrParse(paramDef, `v str`, false);
   });
 
   test("Param List", () => {
     const paramList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.paramList(),
     ];
-    testAntlrParse(paramList, `a as String`, true);
-    testAntlrParse(paramList, `a as String, bb as Int, foo as Bar`, true);
-
-    testAntlrParse(paramList, `a as String,`, false);
-    testAntlrParse(paramList, `a as String, bb as`, false);
+    testAntlrParse(paramList, `a: str`, true, "", "", "<el-id>a</el-id>: <el-type>str</el-type>");
+    //Failing this one
+    testAntlrParse(
+      paramList,
+      `a: int, b: str`,
+      true,
+      `a: int, b: str`,
+      "a as Int, b as String",
+      `<el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type>`,
+      "a: int, b: str",
+    );
+    testAntlrParse(paramList, `a: str, bb: int, foo: Bar`, true, `a: str, bb: int, foo: Bar`);
+    testAntlrParse(paramList, `a: str,`, false);
+    testAntlrParse(paramList, `a : str, bb: `, false);
     testAntlrParse(paramList, `a`, false, "");
-    testAntlrParse(paramList, `A as string`, false);
+    testAntlrParse(paramList, `A: str`, false);
     testAntlrParse(paramList, ``, false);
   });
 
   test("New Instance", () => {
     const newInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.newInstance(),
     ];
     testAntlrParse(newInstance, ``, false);
     testAntlrParse(
       newInstance,
-      `new Foo(1)`,
+      `Foo(1)`,
       true,
-      "new Foo(1)",
-      "new Foo(1)",
-      "<el-kw>new</el-kw> <el-type>Foo</el-type>(<el-lit>1</el-lit>)",
+      "Foo(1)",
+      "",
+      "<el-type>Foo</el-type>(<el-lit>1</el-lit>)",
       "",
       "system.initialise(await new Foo()._initialise(1))",
     );
-    testAntlrParse(newInstance, `newFoo()`, false);
-    testAntlrParse(
-      newInstance,
-      "new List<of String>()",
-      true,
-      "new List<of String>()",
-      "new List<of String>()",
-      "",
-      "",
-      "system.initialise(await new _stdlib.List()._initialise())",
-    );
+    testAntlrParse(newInstance, `foo()`, false, `foo()`);
+    testAntlrParse(newInstance, `new Foo()`, false);
   });
 
   test("List", () => {
     const list: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.list(),
     ];
     testAntlrParse(
@@ -878,7 +855,7 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Tuple", () => {
     const tuple: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.tuple(),
     ];
     testAntlrParse(
@@ -917,34 +894,34 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Dictionary", () => {
     const dict: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.dictionary(),
     ];
     testAntlrParse(
       dict,
-      `["a":1,"b":3]`,
+      `{"a":1,"b":3}`,
       true,
-      `["a":1,"b":3]`,
-      `["a":1, "b":3]`,
-      `["<el-lit>a</el-lit>":<el-lit>1</el-lit>, "<el-lit>b</el-lit>":<el-lit>3</el-lit>]`,
+      `{"a":1,"b":3}`,
+      ``,
+      `{"<el-lit>a</el-lit>":<el-lit>1</el-lit>, "<el-lit>b</el-lit>":<el-lit>3</el-lit>}`,
     );
     testAntlrParse(
       dict,
-      `["c":true]`,
+      `{"c":True}`,
       true,
-      `["c":true]`,
-      `["c":true]`,
-      `["<el-lit>c</el-lit>":<el-kw>true</el-kw>]`,
+      `{"c":True}`,
+      ``,
+      `{"<el-lit>c</el-lit>":<el-kw>True</el-kw>}`,
     );
-    testAntlrParse(dict, `[`, false);
-    testAntlrParse(dict, `[]`, false);
-    testAntlrParse(dict, `["a":1`, false);
-    testAntlrParse(dict, `["a":1 ,"b"]`, false);
+    testAntlrParse(dict, `{`, false);
+    testAntlrParse(dict, `{}`, false);
+    testAntlrParse(dict, `{"a":1`, false);
+    testAntlrParse(dict, `{"a":1 ,"b"}`, false);
   });
 
   test("Chainable", () => {
     const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.chainable(),
     ];
     testAntlrParse(chainable, `b`, true, "b", "b", "<el-id>b</el-id>", "b");
@@ -974,34 +951,43 @@ suite("Parsing Antlr Rules RefLang", () => {
 
   test("Term", () => {
     const term: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.term(),
     ];
     testAntlrParse(term, ``, false);
     testAntlrParse(term, ` `, false);
     testAntlrParse(term, `1`, true, "1", "1", "<el-lit>1</el-lit>", "1", "1");
     testAntlrParse(term, `(1)`, true, "(1)", "(1)", "(<el-lit>1</el-lit>)", "(1)", "(1)");
-    testAntlrParse(term, `this`, true, "this", "this", "<el-kw>this</el-kw>", "this", "this");
-    testAntlrParse(term, `[1]`, true, "[1]", "[1]", "[<el-lit>1</el-lit>]", "[1]", "");
+    testAntlrParse(term, `self`, true, "self", "", "<el-kw>self</el-kw>", "", "this");
     testAntlrParse(
       term,
-      `["a":1]`,
+      `[1]`,
       true,
-      `["a":1]`,
-      `["a":1]`,
-      `["<el-lit>a</el-lit>":<el-lit>1</el-lit>]`,
+      "[1]",
+      "[1]",
+      "[<el-lit>1</el-lit>]",
+      "[1]",
+      "system.list([1])",
+    );
+    testAntlrParse(
+      term,
+      `{"a":1}`,
+      true,
+      `{"a":1}`,
       ``,
-      "",
+      `{"<el-lit>a</el-lit>":<el-lit>1</el-lit>}`,
+      ``,
+      'system.dictionary([["a", 1]])',
     );
     testAntlrParse(
       term,
       `(1, a, "fred")`,
       true,
       `(1, a, "fred")`,
-      `(1, a, "fred")`,
+      ``,
       `(<el-lit>1</el-lit>, <el-id>a</el-id>, "<el-lit>fred</el-lit>")`,
-      `(1, a, "fred")`,
-      "",
+      ``,
+      'system.tuple([1, a, "fred"])',
     );
     testAntlrParse(
       term,
@@ -1011,7 +997,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       `a[1]`,
       `<el-id>a</el-id>[<el-lit>1</el-lit>]`,
       `a[1]`,
-      "",
+      `system.safeIndex(a, 1)`,
     );
     testAntlrParse(
       term,
@@ -1021,9 +1007,9 @@ suite("Parsing Antlr Rules RefLang", () => {
       "f()[1]",
       "<el-method>f</el-method>()[<el-lit>1</el-lit>]",
       "f()[1]",
-      "",
+      "system.safeIndex(f(), 1)",
     );
-    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "");
+    testAntlrParse(term, `a.b`, true, `a.b`, `a.b`, `<el-id>a</el-id>.<el-id>b</el-id>`, "", "a.b");
     testAntlrParse(term, `length(bar)`, true, `length(bar)`, "", "", "length(bar)");
     testAntlrParse(term, `bar.length()`, true, `bar.length()`, "", "", "bar.length()");
     testAntlrParse(term, `bar.asList()`, true, `bar.asList()`);
@@ -1044,7 +1030,16 @@ suite("Parsing Antlr Rules RefLang", () => {
     testAntlrParse(term, `this`, true, "this", "");
     testAntlrParse(term, `abc(defg, hi)`, true, "abc(defg, hi)", "");
     testAntlrParse(term, `abc[1]`, true, "abc[1]", "");
-    testAntlrParse(term, `abc[1][2]`, true, "abc[1][2]", "abc[1][2]", "", "", "");
+    testAntlrParse(
+      term,
+      `abc[1][2]`,
+      true,
+      "abc[1][2]",
+      "abc[1][2]",
+      "",
+      "",
+      "system.safeIndex(system.safeIndex(abc, 1), 2)",
+    );
     testAntlrParse(term, `abc.subList(1, 2)`, true, "abc.subList(1, 2)", "abc.subList(1, 2)");
     testAntlrParse(
       term,
@@ -1054,7 +1049,7 @@ suite("Parsing Antlr Rules RefLang", () => {
       "a[1].b().subList(1, 2).c(d)",
       "",
       "",
-      "",
+      "system.safeIndex(a, 1).b().subList(1, 2).c(d)",
     );
     testAntlrParse(term, `abc[1, 2]`, false);
     testAntlrParse(term, `abc(defg, hi)[0]`, true, "abc(defg, hi)[0]", "", "", "abc(defg, hi)[0]");
@@ -1077,16 +1072,16 @@ suite("Parsing Antlr Rules RefLang", () => {
       "",
       "",
       "",
-      "",
+      //"system.safeIndex(system.safeIndex(system.safeIndex(a, 1).b().subList(1, 2).c(d), e), f)", //TODO not compiling correctly - giving system.safeIndex(a, 1).b().subList(1, 2).f
     );
     testAntlrParse(term, `this.a[1].b().c(d)[e]`, true, `this.a[1].b().c(d)[e]`, "");
     testAntlrParse(
       term,
-      `this.a.b()`,
+      `self.a.b()`,
       true,
-      `this.a.b()`,
-      "this.a.b()",
-      "<el-kw>this</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
+      `self.a.b()`,
+      "",
+      "<el-kw>self</el-kw>.<el-id>a</el-id>.<el-method>b</el-method>()",
     );
     testAntlrParse(
       term,
@@ -1098,29 +1093,12 @@ suite("Parsing Antlr Rules RefLang", () => {
   });
   test("ThisInstance", () => {
     const thisInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
+      LanguagePython.Instance,
       (p: Parser) => p.thisInstance(),
     ];
-    testAntlrParse(thisInstance, `this`, true, `this`, `this`, "<el-kw>this</el-kw>", `this`);
-    testAntlrParse(thisInstance, `This`, false);
-    testAntlrParse(thisInstance, `th`, false);
-    testAntlrParse(thisInstance, `Th`, false);
-  });
-
-  ignore_test("InstanceProcRef", () => {
-    const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageElan.Instance,
-      (p: Parser) => p.term(),
-    ];
-    testAntlrParse(procRef, `foo`, true);
-    testAntlrParse(procRef, `bar.foo`, true, `bar.foo`, `bar.foo`);
-    testAntlrParse(procRef, `this.foo`, true, "", "");
-    testAntlrParse(procRef, `this.foo.bar`, true, "this.foo");
-    testAntlrParse(procRef, `bar.foo`, true, "", "");
-    testAntlrParse(procRef, `bar.`, false);
-    testAntlrParse(procRef, `bar.foo.yon`, true, `bar.foo`);
-    testAntlrParse(procRef, `bar.foo[2]`, true, `bar.foo`);
-    testAntlrParse(procRef, `bar`, true, `bar`);
-    testAntlrParse(procRef, `x[3].bar`, true, "", "");
+    testAntlrParse(thisInstance, `self`, true, `self`, ``, "<el-kw>self</el-kw>");
+    testAntlrParse(thisInstance, `Self`, false);
+    testAntlrParse(thisInstance, `se`, false);
+    testAntlrParse(thisInstance, `this`, false);
   });
 });

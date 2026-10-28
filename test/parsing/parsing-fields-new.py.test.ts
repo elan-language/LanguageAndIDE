@@ -1,4 +1,3 @@
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import {
@@ -22,38 +21,23 @@ import {
   testNameFieldSpec,
   typeNameFieldSpec,
 } from "../../src/ide/frames/fields/field-spec";
-import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { testHash, transforms } from "../compiler/compiler-test-helpers";
-import { testFieldParse } from "../testHelpers";
+import { fileImplFor, testFieldParse } from "../testHelpers";
 
-function fileImpl() {
-  const file = new FileImpl(
-    testHash,
-    new Paradigm(""),
-    "",
-    transforms(),
-    new StdLib(new StubInputOutput()),
-    false,
-    true,
-  );
-  file.setLanguage(LanguagePython.Instance);
-  return file;
-}
+const python: Language = LanguagePython.Instance;
 
-suite("Field Tests - Python", () => {
+suite("Parsing Fields (New) Python", () => {
   test("ArgList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), argListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), argListFieldSpec);
     testFieldParse(
       field,
       "123, a",
@@ -76,7 +60,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("InputArgList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), inputArgListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), inputArgListFieldSpec);
     testFieldParse(
       field,
       `"age?", a`,
@@ -99,7 +83,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("ParamList", () => {
-    const field = new FieldImpl(new GlobalFunction(fileImpl()), paramListFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImplFor(python)), paramListFieldSpec);
     testFieldParse(
       field,
       "a: bool",
@@ -115,7 +99,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo", false, "");
   });
   test("Identifier", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), identifierFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), identifierFieldSpec);
     testFieldParse(
       field,
       "a",
@@ -125,7 +109,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "A", false, "");
   });
   test("TestName", () => {
-    const field = new FieldImpl(new TestFrame(fileImpl()), testNameFieldSpec);
+    const field = new FieldImpl(new TestFrame(fileImplFor(python)), testNameFieldSpec);
     testFieldParse(
       field,
       "test_a",
@@ -135,7 +119,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "a", false, "");
   });
   test("ExceptionType", () => {
-    const field = new FieldImpl(new CatchClause(fileImpl()), exceptionTypeFieldSpec);
+    const field = new FieldImpl(new CatchClause(fileImplFor(python)), exceptionTypeFieldSpec);
     testFieldParse(
       field,
       "ElanRuntimeError",
@@ -150,7 +134,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("ExceptionMessage", () => {
-    const field = new FieldImpl(new ThrowStatement(fileImpl()), exceptionMessageFieldSpec);
+    const field = new FieldImpl(new ThrowStatement(fileImplFor(python)), exceptionMessageFieldSpec);
     testFieldParse(
       field,
       `"foo"`,
@@ -166,7 +150,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("TypeName", () => {
-    const field = new FieldImpl(new ConcreteClass(fileImpl()), typeNameFieldSpec);
+    const field = new FieldImpl(new ConcreteClass(fileImplFor(python)), typeNameFieldSpec);
     testFieldParse(
       field,
       "Foo",
@@ -181,7 +165,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("Comment", () => {
-    const field = new FieldImpl(new CommentFrame(fileImpl()), commentFieldSpec);
+    const field = new FieldImpl(new CommentFrame(fileImplFor(python)), commentFieldSpec);
     testFieldParse(
       field,
       "# foo",
@@ -197,7 +181,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo", false, "");
   });
   test("InheritsFrom", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), inheritsFromFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), inheritsFromFieldSpec);
     testFieldParse(
       field,
       "Bar",
@@ -209,7 +193,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "Bar, Yon", false, "");
   });
   test("MethodName", () => {
-    const field = new FieldImpl(new GlobalFunction(fileImpl()), methodNameFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImplFor(python)), methodNameFieldSpec);
     testFieldParse(
       field,
       "fooBar",
@@ -225,7 +209,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ProcRef", () => {
-    const field = new FieldImpl(new ProcedureCall(fileImpl()), procRefFieldSpec);
+    const field = new FieldImpl(new ProcedureCall(fileImplFor(python)), procRefFieldSpec);
     testFieldParse(
       field,
       "sleep",
@@ -241,7 +225,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "sleep()", false, "");
   });
   test("EnumValues", () => {
-    const field = new FieldImpl(new Enum(fileImpl()), enumValuesFieldSpec);
+    const field = new FieldImpl(new Enum(fileImplFor(python)), enumValuesFieldSpec);
     testFieldParse(
       field,
       "foo, bar",
@@ -254,7 +238,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo, ", false, "");
   });
   test("Expression", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), expressionFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), expressionFieldSpec);
 
     testFieldParse(
       field,
@@ -273,7 +257,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("PrintExpression", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), printExpressionFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), printExpressionFieldSpec);
 
     testFieldParse(
       field,
@@ -292,7 +276,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("AssertActual", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assertActualFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), assertActualFieldSpec);
 
     testFieldParse(
       field,
@@ -311,7 +295,7 @@ suite("Field Tests - Python", () => {
     );
   });
   test("AssertExpected", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assertExpectedFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), assertExpectedFieldSpec);
 
     testFieldParse(
       field,
@@ -335,7 +319,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "3 + 4", false, "");
   });
   test("Assignable", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assignableFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), assignableFieldSpec);
 
     testFieldParse(
       field,
@@ -365,7 +349,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ConstantValue", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), constantValueFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(python)), constantValueFieldSpec);
 
     testFieldParse(
       field,

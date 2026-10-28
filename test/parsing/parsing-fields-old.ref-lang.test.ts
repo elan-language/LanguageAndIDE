@@ -1,33 +1,23 @@
 import assert from "assert";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CommentFrame } from "../../src/ide/frames/comment-frame";
-import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { hash } from "../../src/ide/util";
-import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
-import { testExtractContextForExpression } from "../testHelpers";
+import { ignore_test } from "../compiler/compiler-test-helpers";
+import { fileImplFor, testExtractContextForExpression } from "../testHelpers";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 
-suite("Field Parsing Tests", () => {
+const refLang: Language = LanguageElan.Instance;
+
+suite("Parsing Fields (Old) RefLang", () => {
   test("parse CommentField", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const comment = new CommentFrame(main);
     const text = comment.text;
     assert.equal(text.textAsSource(), "# ");
@@ -48,16 +38,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   test("parse CommentFieldWithSpaces", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const comment = new CommentFrame(main);
     const text = comment.text;
     assert.equal(text.textAsSource(), "# ");
@@ -71,16 +52,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   test("parse varDefField", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const variable = new VariableStatement(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
@@ -101,16 +73,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse VarDefField 2", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const v = new VariableStatement(main);
     const id = v.name;
     assert.equal(id.textAsSource(), "");
@@ -130,16 +93,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(id.readParseStatus(), ParseStatus.invalid);
   });
   test("parse  procRefField", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const call = new ProcedureCall(main);
     const procRef = call.procRef;
     procRef.setFieldToKnownValidText("foo(3,4,5)");
@@ -157,16 +111,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ProcRefField 2", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const call = new ProcedureCall(main);
     const procRef = call.procRef;
     procRef.setFieldToKnownValidText("foo[2].bar().qux.yon(3, 4)");
@@ -175,16 +120,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse TypeField invalid", () => {
-    const func = new GlobalFunction(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const func = new GlobalFunction(fileImplFor(refLang));
     const type = func.returnType;
     type.setFieldToKnownValidText("Foo<of bar");
     type.parseCurrentText();
@@ -197,16 +133,7 @@ suite("Field Parsing Tests", () => {
   });
 
   ignore_test("parse ExpressionField - literal string with interpolations", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const v = new VariableStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`$"{op} times {op2} equals {op1*op2}"`);
@@ -220,16 +147,7 @@ suite("Field Parsing Tests", () => {
   });
 
   ignore_test("parse ExpressionField - non-interpolated string", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const v = new VariableStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`'{a}"b"'`);
@@ -239,16 +157,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(expr.textAsHtml(), `'<el-lit>{a}"b"</el-lit>'`);
   });
   ignore_test("parse ExpressionField - mixed strings", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const v = new VariableStatement(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`''+""+'ab{c}"d"'+"ab{c}'d'"`);
@@ -262,16 +171,7 @@ suite("Field Parsing Tests", () => {
   });
 
   test("parse ValueRefField", () => {
-    const test = new TestFrame(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const test = new TestFrame(fileImplFor(refLang));
     const a = new AssertStatement(test);
     const expected = a.expected;
     expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
@@ -284,16 +184,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   ignore_test("parse instance dot method", () => {
-    const test = new TestFrame(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const test = new TestFrame(fileImplFor(refLang));
     const a = new VariableStatement(test);
     const expr = a.expr;
     expr.setFieldToKnownValidText(`foo.`);
@@ -303,16 +194,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(spec?.context, "foo");
   });
   ignore_test("parse paramDefs with closing bracket #855", () => {
-    const test = new TestFrame(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const test = new TestFrame(fileImplFor(refLang));
     const fn = new GlobalFunction(test);
     const params = fn.params;
     params.setFieldToKnownValidText(`a as Int)`);
@@ -321,16 +203,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(params.textAsSource(), `a as Int`);
   });
   test("#950 space at start of var-def-field is ignored", () => {
-    const main = new MainRoutine(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const main = new MainRoutine(fileImplFor(refLang));
     const v = new VariableStatement(main);
     const name = v.name;
     name.setFieldToKnownValidText(" ");
@@ -339,16 +212,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(name.textAsSource(), ``);
   });
   ignore_test("parse list of listof floats", () => {
-    const c = new ConstantGlobal(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const c = new ConstantGlobal(fileImplFor(refLang));
     const v = c.value;
     v.setFieldToKnownValidText(
       `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
@@ -372,16 +236,7 @@ suite("Field Parsing Tests", () => {
     );
   });
   ignore_test("parse Actual field cannot contain ' is '", () => {
-    const test = new TestFrame(
-      new FileImpl(
-        hash,
-        new Paradigm(""),
-        "",
-        transforms(),
-        new StdLib(new StubInputOutput()),
-        false,
-      ),
-    );
+    const test = new TestFrame(fileImplFor(refLang));
     const assertStatement = new AssertStatement(test);
     const actual = assertStatement.actual!;
     actual.setFieldToKnownValidText("a is b");
