@@ -1,0 +1,35 @@
+1. Getting started
+  1.1 Paint the screen black
+  1.2 Reduce the play area
+  1.3 Refactor: extract constants
+
+2. Draw a tetragram
+  2.1 Draw a specific shape within the playspace
+  2.2 Define the shape with relative coordinates and a position
+  2.3 Refactor extract draw background; extract draw shape with shape, position & colour params (+ bg)
+
+3. Move the shape down
+  3.1 Erase the shape after a short pause
+  3.2 Refactor: add erase shape function
+  3.3 Move the shape downwards
+  3.4 Stop moving when it touches another square
+  3.5 Start anothershape when the last one stops
+
+4. Enrich the shapes
+  4.1 Create all 7 tetragrams and select one at random each time
+  4.2 Give each shape its own colour
+
+5. Keyboard control
+  5.1 Move left and right
+  5.2 Rotate
+  5.3 Rapid drop
+
+6. Finishing off
+  6.1 Accelerate movement slightly with each new shape
+  6.2 Remove completed rows
+  6.3 Test for game over and display message with completed score
+
+7. Optional further work
+  7.1 Preview window
+  7.2 Permit rotations at the edge, by bouncing off
+  7.3 Save a shape

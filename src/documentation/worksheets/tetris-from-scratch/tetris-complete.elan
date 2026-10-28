@@ -1,4 +1,4 @@
-# 8afbdd3b280df4a274005872aed32b95f2b1f14515cc507659301cdaca1fc6dc Elan 2.0.0-beta4 valid
+# 8381311099f4ab19282aa282a4eec66ddb423e9003f604fd0bf4ac774af47cc1 Elan 2.0.0-beta4 valid
 
 constant border set to 0x004472C4
 
@@ -6,14 +6,14 @@ constant leftEdge set to 15
 
 constant rightEdge set to 24
 
-constant topBorder set to 9
+constant topEdge set to 10
 
 main
   variable bg set to new BlockGraphics()
   call drawBackground(bg)
   variable gameOver set to false
   variable score set to 0
-  variable delay set to 0.2
+  variable delay set to 0.3
   while not gameOver
     call processNewShape(bg, delay)
     call removeCompletedRows(bg)
@@ -26,9 +26,9 @@ main
 end main
 
 procedure processNewShape(bg as BlockGraphics, delay as Float)
-  variable shapes set to [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 40, 41]]
-  variable colours set to [red, yellow, blue, green]
-  variable shapeNo set to randint(0, 2)
+  variable shapes set to [[-1, 0, 1, 2], [0, 1, 40, 41], [-1, 0, 1, 40], [-1, 0, 1, 39], [-1, 0, 1, 41], [0, 1, 39, 40], [-1, 0, 40, 41]]
+  variable colours set to [red, yellow, blue, green, brown, grey, white]
+  variable shapeNo set to randint(0, 6)
   variable shape set to shapes[shapeNo]
   variable shapeColour set to colours[shapeNo]
   variable position set to 420
@@ -47,7 +47,7 @@ procedure processNewShape(bg as BlockGraphics, delay as Float)
       assign moving to false
     end if
     call drawShape(shape, position, shapeColour, bg)
-    if key.equals("PageDown") then
+    if key.equals("ArrowDown") then
       call rapidDrop(shape, position, shapeColour, bg)
       assign moving to false
     end if
@@ -58,7 +58,7 @@ procedure drawBackground(bg as BlockGraphics)
   for row in range(0, 30)
     for col in range(0, 40)
       variable colour set to border
-      if (row > topBorder) and (col >= leftEdge) and (col <= rightEdge) then
+      if (row >= topEdge) and (col >= leftEdge) and (col <= rightEdge) then
         assign colour to black
       end if
       call bg.put(col, row, colour)
@@ -95,7 +95,7 @@ end procedure
 
 procedure removeCompletedRows(bg as BlockGraphics)
   variable row set to 29
-  while row >= 0
+  while row >= topEdge
     if isComplete(row, bg) then
       call removeRow(row, bg)
     else
@@ -105,7 +105,7 @@ procedure removeCompletedRows(bg as BlockGraphics)
 end procedure
 
 procedure removeRow(emptyRow as Int, bg as BlockGraphics)
-  for row in rangeInSteps(emptyRow, 0, -1)
+  for row in rangeInSteps(emptyRow, topEdge, -1)
     for col in range(leftEdge, rightEdge + 1)
       call bg.put(col, row, bg.get(col, row - 1))
     end for
@@ -137,7 +137,7 @@ end function
 
 function newPositionFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns Int
   variable result set to position
-  variable newPos set to 0
+  variable newPos set to position
   if key.equals("ArrowRight") then
     assign newPos to position + 1
   elif key.equals("ArrowLeft") then
@@ -154,8 +154,6 @@ function rotateShapeFromKey(shape as List<of Int>, position as Int, key as Strin
   variable newShape set to shape
   if key.equals("ArrowUp") then
     assign newShape to quarterTurn(shape)
-  elif key.equals("ArrowDown") then
-    assign newShape to quarterTurn(shape)
   end if
   if allSquaresValid(newShape, position, bg) then
     assign result to newShape
@@ -164,19 +162,24 @@ function rotateShapeFromKey(shape as List<of Int>, position as Int, key as Strin
 end function
 
 function quarterTurn(shape as List<of Int>) returns List<of Int>
-  # var transformed set t[-2:80, -1:40, 0:0, 1:-40, 2:-80, ...]
-  variable transformed set to new Dictionary<of Int, Int>()
   variable result set to new List<of Int>()
   for blockNo in shape
-    assign result to result.withAppend(transformed[blockNo])
+    assign result to result.withAppend(mapRotationAntiClockwise(blockNo))
   end for
   return result
+end function
+
+function mapRotationAntiClockwise(blockNo as Int) returns Int
+  variable fromBlock set to [-82, -81, -80, -79, -78, -42, -41, -40, -39, -38, -2, -1, 0, 1, 2, 38, 39, 40, 41, 42, 78, 79, 80, 81, 82]
+  variable index set to fromBlock.indexOf(blockNo)
+  variable toBlock set to [78, 38, -2, -42, -82, 79, 39, -1, -41, -81, 80, 40, 0, -40, -80, 81, 41, 1, -39, -79, 82, 42, 2, -38, -78]
+  return toBlock[index]
 end function
 
 function checkForGameOver(bg as BlockGraphics) returns Boolean
   variable gameOver set to false
   for x in range(leftEdge, rightEdge + 1)
-    if bg.get(x, 0) isnt black then
+    if bg.get(x, topEdge) isnt black then
       assign gameOver to true
     end if
   end for
