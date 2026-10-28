@@ -15,6 +15,7 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
     super(parent);
     this.text = new FieldImpl(this, exceptionMessageFieldSpec);
     this.type = new FieldImpl(this, exceptionTypeFieldSpec);
+    this.type.setFieldToKnownValidText("ElanRuntimeError");
   }
   initialKeywords(): string {
     return throwKeyword;
@@ -30,6 +31,12 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
   getFields(): Field[] {
     return [this.type, this.text];
   }
+
+  override selectFirstField(): boolean {
+    this.text.select();
+    return true;
+  }
+
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_throw`;
   }

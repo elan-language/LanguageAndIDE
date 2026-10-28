@@ -38,7 +38,7 @@ export function T01_helloWorld() {
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const comment = new CommentFrame(m);
-  comment.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(`My first program`);
+  comment.text.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
   const pr = new ProcedureCall(m);
   pr.procRef.setFieldToKnownValidText('printNoLine("Hello World!")');
@@ -51,13 +51,13 @@ export function T02_comments() {
   const f = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
   const gc = new CommentFrame(f);
-  gc.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText("Comment 1");
+  gc.text.setFieldToKnownValidText("# Comment 1");
   f.addChildBefore(gc, gs);
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
   const sc2 = new CommentFrame(m);
-  sc2.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText("Comment 2");
+  sc2.text.setFieldToKnownValidText("# Comment 2");
   m.addChildBefore(sc2, ss);
   f.updateAllParseStatus();
   return f;

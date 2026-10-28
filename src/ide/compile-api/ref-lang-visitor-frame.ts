@@ -64,7 +64,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitComment? = (ctx: CommentContext) => {
     const com = new CommentFrame(this.file);
-    com.textIncludingMarkerSymboAndSpace.setFieldToKnownValidText(ctx.commentText().getText());
+    com.text.setFieldToKnownValidText(ctx.commentText().getText());
     return com;
   };
 

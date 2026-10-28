@@ -29,12 +29,16 @@ suite("Field Parsing Tests", () => {
       ),
     );
     const comment = new CommentFrame(main);
-    const text = comment.textIncludingMarkerSymboAndSpace;
-    assert.equal(text.textAsSource(), "");
-    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
+    const text = comment.text;
+    assert.equal(text.textAsSource(), "# ");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("#");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
+    text.setFieldToKnownValidText("");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
     text.setFieldToKnownValidText("# Hello");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);
@@ -55,9 +59,9 @@ suite("Field Parsing Tests", () => {
       ),
     );
     const comment = new CommentFrame(main);
-    const text = comment.textIncludingMarkerSymboAndSpace;
-    assert.equal(text.textAsSource(), "");
-    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
+    const text = comment.text;
+    assert.equal(text.textAsSource(), "# ");
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
     text.setFieldToKnownValidText("#   Hello   World ");
     text.parseCurrentText();
     assert.equal(text.readParseStatus(), ParseStatus.valid);

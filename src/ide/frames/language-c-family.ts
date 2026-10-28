@@ -66,7 +66,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     if (frame instanceof ProcedureCall) {
       html = `${frame.procRef.renderAsHtml()};`;
     } else if (frame instanceof CommentFrame) {
-      html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
+      html = frame.text.renderAsHtml();
     } else if (frame instanceof ElseIfClause) {
       html = `} <el-kw>${this.ELSE} ${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
     } else if (frame instanceof ElseClause) {
