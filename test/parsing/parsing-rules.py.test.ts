@@ -3,6 +3,7 @@ import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
 import { Parser, testAntlrParse } from "../testHelpers";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Parsing Rules Python", () => {
   test("Expression", () => {
