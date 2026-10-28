@@ -1,10 +1,12 @@
-# eda26814434dc6643b539066b7683fa9b2963c4b03d080ad64962986fdeb46a4 Elan 2.0.0-beta4 valid
+# 8afbdd3b280df4a274005872aed32b95f2b1f14515cc507659301cdaca1fc6dc Elan 2.0.0-beta4 valid
 
 constant border set to 0x004472C4
 
-constant leftEdge set to 10
+constant leftEdge set to 15
 
-constant rightEdge set to 25
+constant rightEdge set to 24
+
+constant topBorder set to 9
 
 main
   variable bg set to new BlockGraphics()
@@ -29,7 +31,7 @@ procedure processNewShape(bg as BlockGraphics, delay as Float)
   variable shapeNo set to randint(0, 2)
   variable shape set to shapes[shapeNo]
   variable shapeColour set to colours[shapeNo]
-  variable position set to 20
+  variable position set to 420
   call drawShape(shape, position, shapeColour, bg)
   variable moving set to true
   while moving
@@ -56,7 +58,7 @@ procedure drawBackground(bg as BlockGraphics)
   for row in range(0, 30)
     for col in range(0, 40)
       variable colour set to border
-      if (col >= leftEdge) and (col <= rightEdge) then
+      if (row > topBorder) and (col >= leftEdge) and (col <= rightEdge) then
         assign colour to black
       end if
       call bg.put(col, row, colour)
@@ -94,15 +96,15 @@ end procedure
 procedure removeCompletedRows(bg as BlockGraphics)
   variable row set to 29
   while row >= 0
-    if isCompletedRow(row, bg) then
-      call removeRowAndCollapseDown(row, bg)
+    if isComplete(row, bg) then
+      call removeRow(row, bg)
     else
       assign row to row - 1
     end if
   end while
 end procedure
 
-procedure removeRowAndCollapseDown(emptyRow as Int, bg as BlockGraphics)
+procedure removeRow(emptyRow as Int, bg as BlockGraphics)
   for row in rangeInSteps(emptyRow, 0, -1)
     for col in range(leftEdge, rightEdge + 1)
       call bg.put(col, row, bg.get(col, row - 1))
@@ -110,7 +112,7 @@ procedure removeRowAndCollapseDown(emptyRow as Int, bg as BlockGraphics)
   end for
 end procedure
 
-function isCompletedRow(row as Int, bg as BlockGraphics) returns Boolean
+function isComplete(row as Int, bg as BlockGraphics) returns Boolean
   variable result set to true
   for col in range(11, 29)
     if bg.get(col, row) is black then
