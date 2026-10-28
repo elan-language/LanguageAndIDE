@@ -2,17 +2,15 @@ import assert from "assert";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FileImpl } from "../../src/ide/frames/file-impl";
-import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
 import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
-import { fileWithCS, fileWithPython, fileWithVB, key, tab } from "../testHelpers";
+import { fileWithCS, fileWithPython, key, tab } from "../testHelpers";
 
 suite("Editing Fields Tests", () => {
   ignore_test("Entry of text with formatting", () => {
@@ -68,12 +66,6 @@ suite("Editing Fields Tests", () => {
     t.processKey(key("F"));
     t.processKey(key("["));
   });
-  ignore_test("Entry of text with formatting VB", () => {
-    const f = new GlobalFunction(fileWithVB());
-    const t = f.returnType;
-    t.processKey(key("F"));
-    t.processKey(key("("));
-  });
   ignore_test("Entry of text with formatting C#", () => {
     const f = new GlobalFunction(fileWithCS());
     const t = f.returnType;
@@ -125,7 +117,6 @@ suite("Editing Fields Tests", () => {
     assert.equal(t.cursorPos, 0);
   });
 
-  //Temp ignored pending #2378
   test("Entry of expression using 'is' - #464", () => {
     const main = new MainRoutine(
       new FileImpl(
@@ -182,7 +173,7 @@ suite("Editing Fields Tests", () => {
     );
   });
 
-  ignore_test("Ensure - leading spaces in a comment OK", () => {
+  test("Ensure - leading spaces in a comment OK", () => {
     const comment = new CommentFrame(
       new FileImpl(
         hash,
@@ -200,60 +191,15 @@ suite("Editing Fields Tests", () => {
     field.processKey(key(" "));
     field.processKey(key(" "));
     field.processKey(key("b"));
-    assert.equal(field.text, " f  b");
+    assert.equal(field.text, "#  f  b");
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="elan_comment2" class="selected focused optional ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="5" data-cursorend="5" size="4" style="width: 5ch" value=" f  b" tabindex="-1"></el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      '<el-field id="elan_comment2" class="selected focused ok" tabindex="-1"><el-txt><input spellcheck="false" data-cursorstart="7" data-cursorend="7" size="6" style="width: 7ch" value="#  f  b" tabindex="-1"></el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     field.processKey(tab());
     assert.equal(
       field.renderAsHtml(),
-      `<el-field id="elan_comment2" class="optional ok" tabindex="-1"><el-txt>&nbsp;f &nbsp;b</el-txt><el-place><i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+      '<el-field id="elan_comment2" class="ok" tabindex="-1"><el-txt># &nbsp;f &nbsp;b</el-txt><el-place># <i>comment</i></el-place><el-compl></el-compl><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
-  });
-
-  ignore_test("End of field marker automatically skips to next field #496", () => {
-    const file = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-    );
-    const main = new MainRoutine(file);
-    const c = new ProcedureCall(main);
-    const procRef = c.procRef;
-    procRef.select(true, false);
-    assert.equal(procRef.isSelected(), true);
-    procRef.processKey(key("f"));
-    procRef.processKey(key("o"));
-    procRef.processKey(key("o"));
-    assert.equal(procRef.text, "foo");
-    procRef.processKey(key("("));
-    assert.equal(procRef.text, "foo");
-    assert.equal(procRef.isSelected(), false);
-    const con = new ConstantGlobal(file);
-    const name = con.name;
-    name.processKey(key("a"));
-    name.processKey(key(" "));
-    assert.equal(name.text, "a");
-    const lit = con.value;
-    assert.equal(lit.isSelected(), true);
-    const fun = new GlobalFunction(file);
-    const fn = fun.name;
-    fn.processKey(key("b"));
-    fn.processKey(key("("));
-    assert.equal(fn.text, "b");
-    const fparams = fun.params;
-    assert.equal(fparams.isSelected(), true);
-    fparams.processKey(key(")"));
-    assert.equal(fparams.isSelected(), false);
-    //Control case:
-    const fun2 = new GlobalFunction(file);
-    const fn2 = fun2.name;
-    fn2.processKey(key("c"));
-    fn2.processKey(key(")"));
-    assert.equal(fn2.text, "c)");
   });
 });
