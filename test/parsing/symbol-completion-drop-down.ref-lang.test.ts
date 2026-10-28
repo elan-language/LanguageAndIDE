@@ -3,7 +3,7 @@
 // import { FileImpl } from "../../src/ide/frames/file-impl";
 // import { Paradigm } from "../../src/ide/frames/paradigm";
 // import { StubInputOutput } from "../../src/ide/stub-input-output";
-// import { ignore_test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
+// import { test, testHash, testHeader, transforms } from "../compiler/compiler-test-helpers";
 // import {
 //   assertAutocompletes,
 //   assertSymbolCompletionMenuStartsWith,
@@ -853,7 +853,7 @@
 //     await assertAutocompletes(fileImpl, "elan_ident33", "o", 1, expected);
 //   });
 
-//   ignore_test("Pass_properties3", async () => {
+//   test("Pass_properties3", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -899,7 +899,7 @@
 //     await assertAutocompletes(fileImpl, "elan_ident24", "t", 0, expected, true);
 //   });
 
-//   ignore_test("Pass_properties4", async () => {
+//   test("Pass_properties4", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1200,7 +1200,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_text33", "gr.", expected);
 //   });
 
-//   ignore_test("Pass_typeName1", async () => {
+//   test("Pass_typeName1", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1231,7 +1231,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as S", expected);
 //   });
 
-//   ignore_test("Pass_typeName2", async () => {
+//   test("Pass_typeName2", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1261,7 +1261,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as I", expected);
 //   });
 
-//   ignore_test("Pass_typeName5", async () => {
+//   test("Pass_typeName5", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1288,7 +1288,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as Int, b as B", expected);
 //   });
 
-//   ignore_test("Pass_typeName6", async () => {
+//   test("Pass_typeName6", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1318,7 +1318,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as HashSet<of I", expected);
 //   });
 
-//   ignore_test("Pass_typeName7", async () => {
+//   test("Pass_typeName7", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1351,7 +1351,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_params6", "a as VG", expected);
 //   });
 
-//   ignore_test("Pass_returnType1", async () => {
+//   test("Pass_returnType1", async () => {
 //     const code = `${testHeader}
 
 // function foo(a as String) returns String
@@ -1378,7 +1378,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_type5", "S", expected);
 //   });
 
-//   ignore_test("Pass_returnType2", async () => {
+//   test("Pass_returnType2", async () => {
 //     const code = `${testHeader}
 
 // function foo(a as String) returns String
@@ -1667,7 +1667,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_args8", "0, new C", expected);
 //   });
 
-//   ignore_test("Pass_newConcreteType #897", async () => {
+//   test("Pass_newConcreteType #897", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -1885,7 +1885,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "range(1,5).ma", expected);
 //   });
 
-//   ignore_test("Pass_callProperty", async () => {
+//   test("Pass_callProperty", async () => {
 //     const code = `${testHeader}
 
 // class Foo
@@ -1980,7 +1980,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_expr35", "pp", expected);
 //   });
 
-//   ignore_test("Pass_inheritPropertyKeyword2", async () => {
+//   test("Pass_inheritPropertyKeyword2", async () => {
 //     const code = `${testHeader}
 
 // abstract class Yon
@@ -2019,7 +2019,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_expr25", "this", expected);
 //   });
 
-//   ignore_test("Pass_inheritPropertyKeyword3", async () => {
+//   test("Pass_inheritPropertyKeyword3", async () => {
 //     const code = `${testHeader}
 
 // abstract class Yon
@@ -2440,7 +2440,7 @@
 //     await assertSymbolCompletionWithString(fileImpl, "elan_expr5", "foo().it", expected);
 //   });
 
-//   ignore_test("Pass_tuple2", async () => {
+//   test("Pass_tuple2", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -2513,7 +2513,7 @@
 //     );
 //   });
 
-//   ignore_test("Pass_lambdaParameter2", async () => {
+//   test("Pass_lambdaParameter2", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -2589,7 +2589,7 @@
 //     );
 //   });
 
-//   ignore_test("Pass_lambdaParameter4", async () => {
+//   test("Pass_lambdaParameter4", async () => {
 //     const code = `${testHeader}
 
 // main
@@ -2631,7 +2631,7 @@
 //     );
 //   });
 
-//   ignore_test("Pass_lambdaParameter5", async () => {
+//   test("Pass_lambdaParameter5", async () => {
 //     const code = `${testHeader}
 
 // main

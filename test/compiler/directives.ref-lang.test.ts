@@ -22,7 +22,6 @@ import {
   assertCompiles,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -152,7 +151,7 @@ end main`;
     assertCompiles(fileImpl);
   });
 
-  ignore_test("Pass_Bug2576_3", async () => {
+  test("Pass_Bug2576_3", async () => {
     const code = `${testHeader}
 
 main

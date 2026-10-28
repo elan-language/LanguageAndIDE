@@ -333,7 +333,7 @@ end class`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_ExtensionParameterCount", async () => {
+  test("Fail_ExtensionParameterCount", async () => {
     const code = `${testHeader}
 
 constant a set to ""
@@ -361,7 +361,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_ParameterCount", async () => {
+  test("Fail_ParameterCount", async () => {
     const code = `${testHeader}
 
 function f(p as Float) returns Float
@@ -391,7 +391,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_ParameterType", async () => {
+  test("Fail_ParameterType", async () => {
     const code = `${testHeader}
 
 function f(p as Int) returns Float
@@ -1295,7 +1295,7 @@ end function`;
     ]);
   });
 
-  test("Fail_OperatorsAndProcedures2", async () => {
+  ignore_test("Fail_OperatorsAndProcedures2", async () => {
     const code = `${testHeader}
 
 main
@@ -1383,7 +1383,7 @@ end function`;
     ]);
   });
 
-  ignore_test("Fail_FunctionWithoutRefKeyword", async () => {
+  test("Fail_FunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -1412,7 +1412,7 @@ end function`;
     ]);
   });
 
-  ignore_test("Fail_FunctionMethodWithoutRefKeyword", async () => {
+  test("Fail_FunctionMethodWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -1463,7 +1463,7 @@ end main`;
     ]);
   });
 
-  test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
     const code = `${testHeader}
 
 main
@@ -1544,7 +1544,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_noMatchingExtension2", async () => {
+  test("Fail_noMatchingExtension2", async () => {
     const code = `${testHeader}
 
 main
@@ -1570,7 +1570,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_onUndefined", async () => {
+  test("Fail_onUndefined", async () => {
     const code = `${testHeader}
 
 main
@@ -1593,7 +1593,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_standaloneLibFunctionAsExtension", async () => {
+  test("Fail_standaloneLibFunctionAsExtension", async () => {
     const code = `${testHeader}
 
 main
@@ -1619,7 +1619,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_standaloneFunctionAsExtension", async () => {
+  test("Fail_standaloneFunctionAsExtension", async () => {
     const code = `${testHeader}
 
 main

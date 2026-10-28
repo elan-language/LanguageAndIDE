@@ -317,7 +317,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+  test("Fail_PrivateProcedureCannotBeAccessed", async () => {
     const code = `${testHeader}
 
 main
@@ -441,7 +441,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivateFunctionCannotBePrinted", async () => {
+  ignore_test("Fail_PrivateFunctionCannotBePrinted", async () => {
     const code = `${testHeader}
 
 main

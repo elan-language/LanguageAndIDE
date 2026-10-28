@@ -18,7 +18,7 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Enum", () => {
-  ignore_test("Pass_PrintValues", async () => {
+  test("Pass_PrintValues", async () => {
     const code = `${testHeader}
 
 main

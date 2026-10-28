@@ -672,7 +672,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_TryVariableOutOfScopeInCatch", async () => {
+  test("Fail_TryVariableOutOfScopeInCatch", async () => {
     const code = `${testHeader}
 
 main

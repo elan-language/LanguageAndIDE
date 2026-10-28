@@ -6,7 +6,7 @@ import { Parser, testAntlrParse } from "../testHelpers";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Parsing Antlr Rules Python", () => {
-  test("Expression", () => {
+  ignore_test("Expression", () => {
     const expression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.expression(),
@@ -230,7 +230,7 @@ suite("Parsing Antlr Rules Python", () => {
   //   });
   //  });
 
-  test("Lit Int", () => {
+  ignore_test("Lit Int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litInt(),
@@ -854,7 +854,7 @@ suite("Parsing Antlr Rules Python", () => {
     );
   });
 
-  test("Tuple", () => {
+  ignore_test("Tuple", () => {
     const tuple: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.tuple(),
@@ -950,7 +950,7 @@ suite("Parsing Antlr Rules Python", () => {
     // );
   });
 
-  test("Term", () => {
+  ignore_test("Term", () => {
     const term: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.term(),

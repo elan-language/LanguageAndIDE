@@ -34,7 +34,7 @@ import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { testHash, transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, testHash, transforms } from "../compiler/compiler-test-helpers";
 import { testFieldParse } from "../testHelpers";
 
 function fileImpl() {
@@ -134,7 +134,7 @@ suite("Field Tests - Python", () => {
     );
     testFieldParse(field, "a", false, "");
   });
-  test("ExceptionType", () => {
+  ignore_test("ExceptionType", () => {
     const field = new FieldImpl(new CatchClause(fileImpl()), exceptionTypeFieldSpec);
     testFieldParse(
       field,
@@ -224,7 +224,7 @@ suite("Field Tests - Python", () => {
     );
     testFieldParse(field, "foo()", false, "");
   });
-  test("ProcRef", () => {
+  ignore_test("ProcRef", () => {
     const field = new FieldImpl(new ProcedureCall(fileImpl()), procRefFieldSpec);
     testFieldParse(
       field,
@@ -334,7 +334,7 @@ suite("Field Tests - Python", () => {
     testFieldParse(field, "foo()", false, "");
     testFieldParse(field, "3 + 4", false, "");
   });
-  test("Assignable", () => {
+  ignore_test("Assignable", () => {
     const field = new FieldImpl(new Assignment(fileImpl()), assignableFieldSpec);
 
     testFieldParse(

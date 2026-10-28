@@ -34,7 +34,7 @@ import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHash, transforms } from "../compiler/compiler-test-helpers";
+import { testHash, transforms } from "../compiler/compiler-test-helpers";
 import { testFieldParse } from "../testHelpers";
 
 function fileImpl() {
