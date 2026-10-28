@@ -1,18 +1,26 @@
-# 042ab454c8126dcc43f2c1078194c96cbe72c0c9ecbe7417ab48f582782be937 Elan 2.0.0-beta4 valid
+# 530ae607b0f936f5121268ef61df8c339c46e02262aa9757ceecbe7edd44eef1 Elan 2.0.0-beta4 valid
 
-# Tetris 5  - factor out drawShape procedure
+#  Tetris 5: Redefine shape using relative positions and add a position variable
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
-  call drawShape(shape, position, green, bg)
-  call sleep(0.5)
-  call drawShape(shape, position, white, bg)
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, green)
+  end for
+  call displayBlockGraphics(bg)
 end main
 
-procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
-  for blockNo in shape
-    call bg.putBlockNo(blockNo + position, colour)
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
   end for
   call displayBlockGraphics(bg)
 end procedure

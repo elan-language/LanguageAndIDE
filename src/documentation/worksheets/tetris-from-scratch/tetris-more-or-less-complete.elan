@@ -1,38 +1,42 @@
-# 4b21189e3bc4d036ef16f48e7210923eede5aa8696f2808169a29d2b13ef688a Elan 2.0.0-beta4 valid
+# 8afbdd3b280df4a274005872aed32b95f2b1f14515cc507659301cdaca1fc6dc Elan 2.0.0-beta4 valid
 
 constant border set to 0x004472C4
 
-constant leftEdge set to 10
+constant leftEdge set to 15
 
-constant rightEdge set to 25
+constant rightEdge set to 24
+
+constant topBorder set to 9
 
 main
   variable bg set to new BlockGraphics()
   call drawBackground(bg)
   variable gameOver set to false
   variable score set to 0
+  variable delay set to 0.2
   while not gameOver
-    call processNewShape(bg)
-    assign score to score + 1
+    call processNewShape(bg, delay)
     call removeCompletedRows(bg)
+    assign score to score + 1
     assign gameOver to checkForGameOver(bg)
+    assign delay to delay - 0.01
   end while
   print("Game Over! Score: ")
   print(score)
 end main
 
-procedure processNewShape(bg as BlockGraphics)
+procedure processNewShape(bg as BlockGraphics, delay as Float)
   variable shapes set to [[0, 1, 2, 3], [0, 1, 2, 3], [0, 1, 40, 41]]
   variable colours set to [red, yellow, blue, green]
   variable shapeNo set to randint(0, 2)
   variable shape set to shapes[shapeNo]
   variable shapeColour set to colours[shapeNo]
-  variable position set to 20
+  variable position set to 420
   call drawShape(shape, position, shapeColour, bg)
   variable moving set to true
   while moving
     call clearKeyBuffer()
-    call sleep(0.2)
+    call sleep(delay)
     call eraseShape(shape, position, bg)
     variable key set to getKey()
     assign shape to rotateShapeFromKey(shape, position, key, bg)
@@ -54,7 +58,7 @@ procedure drawBackground(bg as BlockGraphics)
   for row in range(0, 30)
     for col in range(0, 40)
       variable colour set to border
-      if (col >= leftEdge) and (col <= rightEdge) then
+      if (row > topBorder) and (col >= leftEdge) and (col <= rightEdge) then
         assign colour to black
       end if
       call bg.put(col, row, colour)
@@ -92,15 +96,15 @@ end procedure
 procedure removeCompletedRows(bg as BlockGraphics)
   variable row set to 29
   while row >= 0
-    if isCompletedRow(row, bg) then
-      call removeRowAndCollapseDown(row, bg)
+    if isComplete(row, bg) then
+      call removeRow(row, bg)
     else
       assign row to row - 1
     end if
   end while
 end procedure
 
-procedure removeRowAndCollapseDown(emptyRow as Int, bg as BlockGraphics)
+procedure removeRow(emptyRow as Int, bg as BlockGraphics)
   for row in rangeInSteps(emptyRow, 0, -1)
     for col in range(leftEdge, rightEdge + 1)
       call bg.put(col, row, bg.get(col, row - 1))
@@ -108,7 +112,7 @@ procedure removeRowAndCollapseDown(emptyRow as Int, bg as BlockGraphics)
   end for
 end procedure
 
-function isCompletedRow(row as Int, bg as BlockGraphics) returns Boolean
+function isComplete(row as Int, bg as BlockGraphics) returns Boolean
   variable result set to true
   for col in range(11, 29)
     if bg.get(col, row) is black then
@@ -122,17 +126,13 @@ function allSquaresValid(shape as List<of Int>, position as Int, bg as BlockGrap
   variable result set to true
   for relative in shape
     variable blockNo set to position + relative
-    assign result to result and withinVerticalBounds(blockNo) and emptyBlockBelow(blockNo, bg)
+    assign result to result and withinBoundsAndEmpty(blockNo, bg)
   end for
   return result
 end function
 
-function withinVerticalBounds(blockNo as Int) returns Boolean
-  return (blockNo >= 0) and (blockNo < 1200)
-end function
-
-function emptyBlockBelow(blockNo as Int, bg as BlockGraphics) returns Boolean
-  return bg.getBlockNo(blockNo) is black
+function withinBoundsAndEmpty(blockNo as Int, bg as BlockGraphics) returns Boolean
+  return (blockNo < 1200) and (bg.getBlockNo(blockNo) is black)
 end function
 
 function newPositionFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns Int

@@ -1,15 +1,17 @@
-# feeece5d93a584626c5638b11d5c2fd3efcf6a689829968341efe994614f0fe5 Elan 2.0.0-beta4 valid
+# 103c9e4f3501af7d010876c6e48ec73316894cedae7fb45f6353c8884e3871fd Elan 2.0.0-beta4 valid
 
-# Tetris 7  - implement noSquareAtBottomEdge
+#  Tetris 8: Write emptyAndWithinBounds function
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  call drawBackground(bg)
   variable moving set to true
   while moving
     call drawShape(shape, position, green, bg)
     call sleep(0.5)
-    call drawShape(shape, position, white, bg)
+    call eraseShape(shape, position, bg)
     assign position to position + 40
   end while
 end main
@@ -21,18 +23,30 @@ procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as
   call displayBlockGraphics(bg)
 end procedure
 
-function squareAtBottomEdge(shape as List<of Int>, position as Int) returns Boolean
-  variable result set to false
-  for blockNo in shape
-    if (blockNo + position) > 1159 then
-      assign result to true
-    end if
+procedure eraseShape(shape as List<of Int>, position as Int, bg as BlockGraphics)
+  call drawShape(shape, position, black, bg)
+end procedure
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
   end for
-  return result
+  call displayBlockGraphics(bg)
+end procedure
+
+function emptyAndWithinBounds(blockNo as Int, bg as BlockGraphics) returns Boolean
+  return (blockNo < 1200) and (bg.getBlockNo(blockNo) is black)
 end function
 
-test test_squareAtBottomEdge
-  assert squareAtBottomEdge([0, 1, 39, 40], 620) evaluates to false
-  assert squareAtBottomEdge([0, 1, 39, 40], 1159) evaluates to true
-  assert squareAtBottomEdge([0, 1, 39, 40], 1160) evaluates to true
+test test_emptyAndWithinBounds
+  variable bg set to (new BlockGraphics()).withPutBlockNo(971, green).withPutBlockNo(735, black)
+  assert emptyAndWithinBounds(735, bg) evaluates to true
+  assert emptyAndWithinBounds(971, bg) evaluates to false
+  assert emptyAndWithinBounds(1218, bg) evaluates to false
 end test

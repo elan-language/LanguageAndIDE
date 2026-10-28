@@ -224,21 +224,21 @@ suite("Field Tests - RefLang", () => {
     );
     testFieldParse(field, "foo()", false, "");
   });
-  ignore_test("ProcRef", () => {
+  test("ProcRef", () => {
     const field = new FieldImpl(new ProcedureCall(fileImpl()), procRefFieldSpec);
     testFieldParse(
       field,
-      "sleep",
+      "sleep()",
       true,
-      '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-method>sleep</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_ident3" class="ok" tabindex="-1"><el-txt><el-method>sleep</el-method>()</el-txt><el-place><i>procedureCall</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
-      "bg.put",
+      "bg.put()",
       true,
-      '<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>bg</el-id>.<el-method>put</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="elan_ident3" class="ok" tabindex="-1"><el-txt><el-id>bg</el-id>.<el-method>put</el-method>()</el-txt><el-place><i>procedureCall</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
-    testFieldParse(field, "sleep()", false, "");
+    testFieldParse(field, "sleep()", true, "");
   });
   test("EnumValues", () => {
     const field = new FieldImpl(new Enum(fileImpl()), enumValuesFieldSpec);

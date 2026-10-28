@@ -1102,20 +1102,4 @@ suite("Parsing Antlr Rules Python", () => {
     testAntlrParse(thisInstance, `se`, false);
     testAntlrParse(thisInstance, `this`, false);
   });
-  test("InstanceProcRef", () => {
-    const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguagePython.Instance,
-      (p: Parser) => p.term(),
-    ];
-    testAntlrParse(procRef, `foo`, true);
-    testAntlrParse(procRef, `bar.foo`, true, `bar.foo`, `bar.foo`);
-    testAntlrParse(procRef, `this.foo`, true, "", "");
-    testAntlrParse(procRef, `this.foo.bar`, true, "this.foo");
-    testAntlrParse(procRef, `bar.foo`, true, "", "");
-    testAntlrParse(procRef, `bar.`, false);
-    testAntlrParse(procRef, `bar.foo.yon`, true, `bar.foo`);
-    testAntlrParse(procRef, `bar.foo[2]`, true, `bar.foo`);
-    testAntlrParse(procRef, `bar`, true, `bar`);
-    testAntlrParse(procRef, `x[3].bar`, true, "", "");
-  });
 });

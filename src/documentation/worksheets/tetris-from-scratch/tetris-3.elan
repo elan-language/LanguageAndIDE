@@ -1,12 +1,20 @@
-# f29f00309eb617fa9d86cd790d8c0e3b448054e60fa3765ff8648ad74853b63d Elan 2.0.0-beta4 valid
+# f6cb8741a5e346190c5eee3149cb99ba234ebb9cea71d1ac92aa008c5f319333 Elan 2.0.0-beta4 valid
 
-# Tetris 3 - define shape in relative coordinates
+#  Tetris 3: Refactor - factor out the drawBackground procedure
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
-  for blockNo in shape
-    call bg.putBlockNo(blockNo + position, green)
+  call drawBackground(bg)
+end main
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
   end for
   call displayBlockGraphics(bg)
-end main
+end procedure

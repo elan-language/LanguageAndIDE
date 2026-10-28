@@ -1,11 +1,16 @@
-# c7a54a7162fe8b4f0cdd414db516f4353a97a834875e4a91d0b01e9cd2a59f3e Elan 2.0.0-beta4 valid
+# cd7f2a75dfa6e4b67c06039705d7ad82fdbe62f27d2a91eb928fed035bb3941d Elan 2.0.0-beta4 valid
 
-# Tetris 2 - draw shape in the centre of the display
+#  Tetris 2: Narrow the playing space with borders
 main
-  variable shape set to [620, 621, 659, 660]
   variable bg set to new BlockGraphics()
-  for blockNo in shape
-    call bg.putBlockNo(blockNo, green)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
   end for
   call displayBlockGraphics(bg)
 end main

@@ -1,16 +1,15 @@
-# d559d9143baa461a602cf96542dd674b74c566d90b03cf7d11ba78436267f945 Elan 2.0.0-beta4 valid
+# 7a7795a71f7b3fd74d8ba43ab0f48e9a337d32cf07520d452d6e6eae5cd9942f Elan 2.0.0-beta4 valid
 
-# Tetris 7  - define noSquareAtBottomEdge with tests
+#  Tetris 7: Refactor -  into drawShape, then also eraseShape
 main
-  variable position set to 620
-  variable shape set to [0, 1, 39, 40]
   variable bg set to new BlockGraphics()
-  while noSquareAtBottomEdge(shape)
-    call drawShape(shape, position, green, bg)
-    call sleep(0.5)
-    call drawShape(shape, position, white, bg)
-    assign position to position + 40
-  end while
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  call drawBackground(bg)
+  call drawShape(shape, position, green, bg)
+  call sleep(0.2)
+  call eraseShape(shape, position, bg)
 end main
 
 procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
@@ -20,12 +19,19 @@ procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as
   call displayBlockGraphics(bg)
 end procedure
 
-function noSquareAtBottomEdge(shape as List<of Int>) returns Boolean
-  return false
-end function
+procedure eraseShape(shape as List<of Int>, position as Int, bg as BlockGraphics)
+  call drawShape(shape, position, black, bg)
+end procedure
 
-test test_noSquareAtBottomEdge
-  assert [0, 0, 0, 0] evaluates to false
-  assert [1, 1159, 3, 4] evaluates to true
-  assert [1, 2, 3, 1199] evaluates to true
-end test
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure

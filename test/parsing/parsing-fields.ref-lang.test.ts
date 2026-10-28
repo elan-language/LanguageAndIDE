@@ -152,7 +152,7 @@ suite("Field Parsing Tests", () => {
     assert.equal(procRef.readParseStatus(), ParseStatus.valid);
   });
 
-  ignore_test("parse ProcRefField 2", () => {
+  test("parse ProcRefField 2", () => {
     const main = new MainRoutine(
       new FileImpl(
         hash,
@@ -165,7 +165,7 @@ suite("Field Parsing Tests", () => {
     );
     const call = new ProcedureCall(main);
     const procRef = call.procRef;
-    procRef.setFieldToKnownValidText("");
+    procRef.setFieldToKnownValidText("foo[2].bar().qux.yon(3, 4)");
     procRef.parseCurrentText();
     assert.equal(procRef.readParseStatus(), ParseStatus.valid);
   });
