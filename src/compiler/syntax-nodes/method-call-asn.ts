@@ -82,15 +82,6 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
     return currentScope;
   }
 
-  // getCurrentScope() {
-  //   const lhsSt = this.precedingNode.symbolType();
-  //   if (isClassType(lhsSt)) {
-  //     return lhsSt.scope;
-  //   }
-
-  //   return this.scope;
-  // }
-
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.getCurrentScope();
 

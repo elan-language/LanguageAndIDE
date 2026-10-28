@@ -152,19 +152,6 @@ export function mustBeBooleanCondition(
   }
 }
 
-// export function mustNotHaveConditionalAfterUnconditionalElse(
-//   elses: ElseClauseAsn[],
-//   compileErrors: CompileError[],
-//   location: string,
-// ) {
-//   const unconditionals = elses.filter((s) => !s.hasIf).length;
-//   if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
-//     compileErrors.push(
-//       new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`, location),
-//     );
-//   }
-// }
-
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
   scope: Scope,
