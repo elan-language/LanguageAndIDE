@@ -22,13 +22,13 @@ import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn"
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
-import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { CatchClauseAsn } from "../../compiler/syntax-nodes/statements/catch-clause-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
 import { ElseIfClauseAsn } from "../../compiler/syntax-nodes/statements/else-if-clause-asn";
 import { ForLoopAsn } from "../../compiler/syntax-nodes/statements/for-loop-asn";
 import { IfStatementAsn } from "../../compiler/syntax-nodes/statements/if-statement-asn";
+import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { ReturnStatementAsn } from "../../compiler/syntax-nodes/statements/return-statement-asn";
 import { ThenClauseAsn } from "../../compiler/syntax-nodes/statements/then-clause-asn";
 import { ThrowStatementAsn } from "../../compiler/syntax-nodes/statements/throw-statement-asn";
@@ -317,9 +317,7 @@ export function transform(
 
   if (node instanceof CommentFrame) {
     const commentAsn = new CommentAsn(node.getHtmlId(), scope);
-    commentAsn.text =
-      transform(node.textIncludingMarkerSymboAndSpace, node.getHtmlId(), commentAsn) ??
-      EmptyAsn.Instance;
+    commentAsn.text = transform(node.text, node.getHtmlId(), commentAsn) ?? EmptyAsn.Instance;
     return commentAsn;
   }
 

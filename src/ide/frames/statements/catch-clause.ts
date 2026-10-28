@@ -17,6 +17,7 @@ export class CatchClause extends Clause {
     this.variable = new FieldImpl(this, identifierFieldSpec);
     this.variable.setFieldToKnownValidText("e");
     this.exceptionType = new FieldImpl(this, exceptionTypeFieldSpec);
+    this.exceptionType.setFieldToKnownValidText("ElanRuntimeError");
   }
 
   isDeletable(): boolean {

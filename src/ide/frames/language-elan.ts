@@ -107,7 +107,7 @@ export class LanguageElan extends LanguageAbstract {
     } else if (frame instanceof ProcedureCall) {
       html = `<el-kw>${this.CALL} </el-kw>${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
-      html = frame.textIncludingMarkerSymboAndSpace.renderAsHtml();
+      html = frame.text.renderAsHtml();
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;

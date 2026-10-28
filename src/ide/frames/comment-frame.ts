@@ -16,10 +16,13 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   private = false;
   protected canHaveBreakPoint = false;
 
-  public textIncludingMarkerSymboAndSpace: FieldImpl;
+  public text: FieldImpl;
+
   constructor(parent: Parent) {
     super(parent);
-    this.textIncludingMarkerSymboAndSpace = new FieldImpl(this, commentFieldSpec);
+    this.text = new FieldImpl(this, commentFieldSpec);
+    const commentMarker = this.getParent().language().COMMENT_MARKER + " ";
+    this.text.setFieldToKnownValidText(commentMarker);
   }
 
   initialKeywords(): string {
@@ -28,12 +31,12 @@ export class CommentFrame extends SingleLineFrame implements Statement {
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();
-    this.textIncludingMarkerSymboAndSpace.parseFrom(source);
+    this.text.parseFrom(source);
     source.removeNewLine();
   }
 
   getFields(): Field[] {
-    return [this.textIncludingMarkerSymboAndSpace];
+    return [this.text];
   }
 
   getIdPrefix(): string {
@@ -60,7 +63,7 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   }
 
   renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.textIncludingMarkerSymboAndSpace.renderAsElanSource()}`;
+    return `${this.indent()}${this.sourceAnnotations()}${this.text.renderAsElanSource()}`;
   }
 
   override deleteIfPermissible(): void {

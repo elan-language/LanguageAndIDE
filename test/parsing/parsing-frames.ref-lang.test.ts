@@ -13,7 +13,7 @@ import { StatementSelector } from "../../src/ide/frames/statements/statement-sel
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 function hash() {
   return Promise.resolve("FFFF");
@@ -132,7 +132,7 @@ suite("Parsing Frame Tests", async () => {
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsElanSource(), code);
   });
-  ignore_test("parse Frames - throw with variable", () => {
+  test("parse Frames - throw with variable", () => {
     const code = `  throw ElanRuntimeError message1`;
     const source = new CodeSourceFromString(code + "\n");
     const fl = new FileImpl(
@@ -495,13 +495,16 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("parse Frames - else with and without if", async () => {
+  test("parse Frames - else with and without if", async () => {
     const code = `${testHeader}
 
 main
   if true then
+
   elif true then
+
   else
+
   end if
 end main
 `;

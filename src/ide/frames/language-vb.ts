@@ -70,7 +70,7 @@ export class LanguageVB extends LanguageAbstract {
     } else if (frame instanceof ProcedureCall) {
       html = `${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
-      html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.textIncludingMarkerSymboAndSpace.renderAsHtml()}`;
+      html = `<el-kw>${this.SINGLE_QUOTE} </el-kw>${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
       html = `<el-kw>${this.CONST} </el-kw>${frame.name.renderAsHtml()}<el-kw></el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;

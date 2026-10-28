@@ -165,10 +165,8 @@ suite("Editing Fields Tests", () => {
         false,
       ),
     );
-    const field = comment.textIncludingMarkerSymboAndSpace;
+    const field = comment.text;
     field.select();
-    field.processKey(key("#"));
-    field.processKey(key(" "));
     field.processKey(key("<"));
     field.processKey(key("p"));
     field.processKey(key(">"));
@@ -195,7 +193,7 @@ suite("Editing Fields Tests", () => {
         false,
       ),
     );
-    const field = comment.textIncludingMarkerSymboAndSpace;
+    const field = comment.text;
     field.select();
     field.processKey(key(" "));
     field.processKey(key("f"));
