@@ -767,7 +767,7 @@ class Foo {
   }
 
   async toString() {
-    return (await this.p1.toString());
+    return (await _stdlib.toString(this.p1));
   }
 
 }

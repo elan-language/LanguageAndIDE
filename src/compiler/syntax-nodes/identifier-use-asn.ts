@@ -23,7 +23,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { TupleAsn } from "./globals/tuple-asn";
+import { TupleInstanceAsn } from "./globals/tuple-asn";
 
 export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -41,7 +41,7 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
     const lhsSt = this.precedingNode.symbolType();
 
     if (lhsSt instanceof TupleType) {
-      return new TupleAsn(lhsSt, this.scope);
+      return new TupleInstanceAsn(lhsSt, this.scope);
     }
 
     if (lhsSt instanceof ClassType) {
@@ -74,7 +74,7 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
 
   getCode(prefix: string) {
     const searchScope = this.getCurrentScope();
-    if (searchScope instanceof TupleAsn) {
+    if (searchScope instanceof TupleInstanceAsn) {
       const [ok, index] = searchScope.parseId(this.id);
       if (ok) {
         return `${prefix.slice(0, -1)}[${index}]`;
@@ -123,7 +123,7 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     const tupleScope = this.getCurrentScope();
-    if (tupleScope instanceof TupleAsn) {
+    if (tupleScope instanceof TupleInstanceAsn) {
       const [ok, index] = tupleScope.parseId(this.id);
       if (ok) {
         return `${prefix.slice(0, -1)}[${index}]`;

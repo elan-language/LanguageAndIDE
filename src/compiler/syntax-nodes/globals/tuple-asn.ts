@@ -7,7 +7,7 @@ import { TupleType } from "../../../compiler/symbols/tuple-type";
 import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
 import { Property } from "../../compiler-interfaces/property";
 
-export class TupleAsn implements Scope {
+export class TupleInstanceAsn implements Scope {
   constructor(
     private readonly type: TupleType,
     private readonly scope: Scope,

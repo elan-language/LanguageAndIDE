@@ -158,7 +158,7 @@ class Foo {
   }
 
   async toString() {
-    return (await this.p1.toString()) + " " + this.p2;
+    return (await _stdlib.toString(this.p1)) + " " + this.p2;
   }
 
 }

@@ -15,16 +15,20 @@ import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { ClassType } from "../symbols/class-type";
 import { FunctionType } from "../symbols/function-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import {
   getGlobalScope,
   isCall,
-  isClassType,
+  isClass,
   isDefinitionScope,
   isMemberOnFieldsClass,
+  isScope,
   scopePrefix,
 } from "../symbols/symbol-helpers";
+import { TupleType } from "../symbols/tuple-type";
+import { TupleInstanceAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
@@ -55,13 +59,37 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   isExtensionMethod: boolean = false;
 
   getCurrentScope() {
-    const lhsSt = this.precedingNode.symbolType();
-    if (isClassType(lhsSt)) {
-      return lhsSt.scope;
-    }
+    const qualifierScope = this.precedingNode.symbolType();
+    let currentScope = this.scope;
 
-    return this.scope;
+    if (qualifierScope instanceof ClassType) {
+      const classSymbol = currentScope.resolveSymbol(qualifierScope.className, true, currentScope);
+      // replace scope with class scope
+      currentScope = isScope(classSymbol) ? classSymbol : currentScope;
+
+      if (isClass(currentScope)) {
+        if (isClass(qualifierScope.scope)) {
+          currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
+        }
+      }
+    } else if (qualifierScope instanceof TupleType) {
+      currentScope = new TupleInstanceAsn(qualifierScope, currentScope);
+    } else if (!isEmptyNode(this.precedingNode)) {
+      currentScope = getGlobalScope(currentScope).libraryScope;
+    } else {
+      currentScope = currentScope.getParentScope();
+    }
+    return currentScope;
   }
+
+  // getCurrentScope() {
+  //   const lhsSt = this.precedingNode.symbolType();
+  //   if (isClassType(lhsSt)) {
+  //     return lhsSt.scope;
+  //   }
+
+  //   return this.scope;
+  // }
 
   getSymbolAndType(): [ElanSymbol, SymbolType] {
     let currentScope = this.getCurrentScope();
