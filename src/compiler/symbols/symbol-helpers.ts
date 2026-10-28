@@ -14,13 +14,7 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "../elan-compiler-error";
-import {
-  getSuperClasses,
-  isAstIdNode,
-  isAstQualifiedNode,
-  isEmptyNode,
-  isRootNode,
-} from "../syntax-nodes/ast-helpers";
+import { getSuperClasses, isAstIdNode, isRootNode } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { ClassAsn } from "../syntax-nodes/globals/class-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
@@ -296,53 +290,6 @@ export function scopePrefix(
   return "";
 }
 
-function internalUpdateScopeAndQualifier(
-  qualifierScope: SymbolType,
-  currentScope: Scope,
-  _value: AstNode,
-  qualifier: AstNode,
-): [AstNode, Scope] {
-  if (qualifierScope instanceof ClassType) {
-    const classSymbol = currentScope.resolveSymbol(qualifierScope.className, true, currentScope);
-    // replace scope with class scope
-    currentScope = isScope(classSymbol) ? classSymbol : currentScope;
-
-    if (isClass(currentScope)) {
-      if (isClass(qualifierScope.scope)) {
-        currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
-      }
-    }
-  } else if (qualifierScope instanceof TupleType) {
-    currentScope = new TupleScopeAsn(qualifierScope, currentScope);
-  } else if (!isEmptyNode(qualifier)) {
-    currentScope = getGlobalScope(currentScope).libraryScope;
-  } else {
-    currentScope = currentScope.getParentScope();
-  }
-  return [qualifier, currentScope];
-}
-
-export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
-  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
-  const qualifierScope = qualifier.symbolType();
-  const value = qualifier;
-
-  return internalUpdateScopeAndQualifier(qualifierScope, currentScope, value, qualifier);
-}
-
-export function updateScopeInChain(qualifier: AstNode, currentScope: Scope): Scope {
-  const qualifierScope = qualifier?.symbolType();
-
-  const [, newScope] = internalUpdateScopeAndQualifier(
-    qualifierScope,
-    currentScope,
-    qualifier,
-    qualifier,
-  );
-
-  return newScope;
-}
-
 export function getGlobalScope(start: Scope): RootAstNode {
   if (start instanceof NullScope) {
     throw new ElanCompilerError("Global scope not found");
@@ -541,27 +488,8 @@ export function parameterNamesWithTypes(st: SymbolType, scope: Scope, actualType
   return [];
 }
 
-export function parameterNames(st: SymbolType) {
-  if (st instanceof ProcedureType || st instanceof FunctionType) {
-    const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
-    const descriptions = parameterNames.map((n) => `${n}`);
-    return descriptions;
-  }
-  return [];
-}
-
 export function allScopedSymbols(scope: Scope, initialScope: Scope) {
   return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
-}
-
-export function getIdsFromString(sid: string) {
-  if (sid.includes(",")) {
-    return sid.split(",").map((s) => s.trim());
-  }
-  if (sid.includes(":")) {
-    return sid.split(":").map((s) => s.trim());
-  }
-  return [sid];
 }
 
 export function handleDeconstruction(ss: ElanSymbol[]) {

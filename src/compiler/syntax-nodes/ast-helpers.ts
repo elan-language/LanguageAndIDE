@@ -14,15 +14,11 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
-  getIdsFromString,
-  handleDeconstruction,
   isClass,
   isClassType,
   isGenericSymbolType,
   isReifyableSymbolType,
-  isSymbol,
   parameterNamesWithTypes,
-  symbolMatches,
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
@@ -40,7 +36,6 @@ import { FileAsn } from "./file-asn";
 import { FloatTypeNameAsn } from "./float-type-name-asn";
 import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
-import { ConstantAsn } from "./globals/constant-asn";
 import { IndexAsn } from "./index-asn";
 import { IntTypeNameAsn } from "./int-type-name-asn";
 import { ListTypeNameAsn } from "./list-type-name-asn";
@@ -457,69 +452,12 @@ export function isInsideFunctionOrConstructor(scope: Scope): boolean {
   return isInsideFunctionOrConstructor(scope.getParentScope());
 }
 
-export function isInsideConstant(scope: Scope): boolean {
-  if (scope instanceof ConstantAsn) {
-    return true;
-  }
-  if (scope instanceof FileAsn) {
-    return false;
-  }
-  return isInsideConstant(scope.getParentScope());
-}
-
 export function getChildRange(compileChildren: AstNode[], initialScope: Scope) {
   const fst = compileChildren[0];
   const fi = compileChildren.indexOf(fst);
   const li = isAstNode(initialScope) ? compileChildren.indexOf(initialScope) : -1;
 
   return fi < li ? compileChildren.slice(fi, li + 1) : compileChildren.slice(li, fi + 1);
-}
-
-export function childSymbolMatches(
-  compileChildren: AstNode[],
-  id: string,
-  all: boolean,
-  matches: ElanSymbol[],
-  initialScope: Scope,
-): ElanSymbol[] {
-  let localMatches: ElanSymbol[] = [];
-
-  if (compileChildren.length > 0) {
-    let range = getChildRange(compileChildren, initialScope);
-
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-      localMatches = localMatches.concat(symbolMatches(id, all, symbols));
-    }
-  }
-  return localMatches.concat(matches);
-}
-
-export function getChildSymbol(
-  compileChildren: AstNode[],
-  id: string,
-  _caseSensitive: boolean,
-  initialScope: Scope,
-) {
-  if (compileChildren.length > 0) {
-    let range = getChildRange(compileChildren, initialScope);
-
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && id) {
-          const sids = getIdsFromString(f.symbolId);
-          if (sids.includes(id)) {
-            return f;
-          }
-        }
-      }
-    }
-  }
-
-  return undefined;
 }
 
 export function getSuperClasses(cf: ClassAsn) {
