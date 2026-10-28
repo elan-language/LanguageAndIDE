@@ -8,7 +8,7 @@ import { isAstIdNode } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
-export class CallAsn extends BreakpointAsn {
+export class ProcedureCallAsn extends BreakpointAsn {
   constructor(fieldId: string, scope: Scope) {
     super(fieldId, scope);
   }

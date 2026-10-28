@@ -22,7 +22,7 @@ import { ProcedureAsn } from "../../compiler/syntax-nodes/globals/procedure-asn"
 import { TestAsn } from "../../compiler/syntax-nodes/globals/test-asn";
 import { AssertStatementAsn } from "../../compiler/syntax-nodes/statements/assert-statement-asn";
 import { AssignmentAsn } from "../../compiler/syntax-nodes/statements/assignment-asn";
-import { CallAsn } from "../../compiler/syntax-nodes/statements/call-asn";
+import { ProcedureCallAsn } from "../../compiler/syntax-nodes/statements/procedure-call-asn";
 import { CatchClauseAsn } from "../../compiler/syntax-nodes/statements/catch-clause-asn";
 import { CommentAsn } from "../../compiler/syntax-nodes/statements/comment-asn";
 import { ElseClauseAsn } from "../../compiler/syntax-nodes/statements/else-clause-asn";
@@ -285,7 +285,7 @@ export function transform(
   }
 
   if (node instanceof ProcedureCall) {
-    const procedureCallAsn = new CallAsn(node.getHtmlId(), scope);
+    const procedureCallAsn = new ProcedureCallAsn(node.getHtmlId(), scope);
     procedureCallAsn.breakpointStatus = node.breakpointStatus;
 
     procedureCallAsn.term =

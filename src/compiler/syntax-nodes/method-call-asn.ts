@@ -28,7 +28,6 @@ import {
   scopePrefix,
 } from "../symbols/symbol-helpers";
 import { TupleType } from "../symbols/tuple-type";
-import { TupleInstanceAsn } from "../syntax-nodes/globals/tuple-asn";
 import { AbstractAstNode } from "./abstract-ast-node";
 import {
   containsGenericType,
@@ -38,6 +37,7 @@ import {
   matchGenericTypes,
   matchParametersAndTypes,
 } from "./ast-helpers";
+import { TupleScopeAsn } from "./globals/tuple-scope-asn";
 
 export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
   constructor(
@@ -73,7 +73,7 @@ export class MethodCallAsn extends AbstractAstNode implements AstIdNode {
         }
       }
     } else if (qualifierScope instanceof TupleType) {
-      currentScope = new TupleInstanceAsn(qualifierScope, currentScope);
+      currentScope = new TupleScopeAsn(qualifierScope, currentScope);
     } else if (!isEmptyNode(this.precedingNode)) {
       currentScope = getGlobalScope(currentScope).libraryScope;
     } else {

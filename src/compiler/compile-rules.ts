@@ -93,8 +93,6 @@ import {
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { MethodCallAsn } from "./syntax-nodes/method-call-asn";
-import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
-import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
 import { ThisInstanceAsn } from "./syntax-nodes/this-instance-asn";
 
 function mustBeOfSymbolType(
@@ -1228,12 +1226,6 @@ export function mustBeUniqueValueInScope(
   location: string,
 ) {
   compileErrors.push(new NotUniqueNameCompileError(name, "", location));
-}
-
-export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LocalConstantAsn || symbol instanceof LetStatementAsn) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
-  }
 }
 
 function mapToPurpose(symbol: ElanSymbol) {

@@ -35,7 +35,7 @@
     "lint": "eslint src",
     "build-tests": "mocha --timeout 10000 out/test/**/*.slowtest.js",
     "test": "npm run pretest && mocha --timeout 10000 out/test/**/*.ref-lang.test.js",
-    "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.test.js",
+    "test-coverage": "npm run pretest && nyc --reporter=lcov mocha out/test/**/*.ref-lang.test.js",
     "format-src": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"src/**/*.ts\"",
     "format-test": "prettier --ignore-path .gitignore --print-width 100 --log-level silent --end-of-line auto --write \"test/**/*.test.ts\"",
     "update-elan": "npm run compile-src && npm run compile-test && npm run update-elan-files-script"

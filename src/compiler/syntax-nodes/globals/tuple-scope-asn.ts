@@ -1,13 +1,13 @@
-import { ElanSymbol } from "../../../compiler/compiler-interfaces/elan-symbol";
-import { Scope } from "../../../compiler/compiler-interfaces/scope";
-import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { symbolMatches } from "../../../compiler/symbols/symbol-helpers";
-import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
-import { TupleType } from "../../../compiler/symbols/tuple-type";
-import { UnknownSymbol } from "../../../compiler/symbols/unknown-symbol";
+import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Property } from "../../compiler-interfaces/property";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
+import { symbolMatches } from "../../symbols/symbol-helpers";
+import { SymbolScope } from "../../symbols/symbol-scope";
+import { TupleType } from "../../symbols/tuple-type";
+import { UnknownSymbol } from "../../symbols/unknown-symbol";
 
-export class TupleInstanceAsn implements Scope {
+export class TupleScopeAsn implements Scope {
   constructor(
     private readonly type: TupleType,
     private readonly scope: Scope,

@@ -24,7 +24,7 @@ import {
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { ClassAsn } from "../syntax-nodes/globals/class-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
-import { TupleInstanceAsn } from "../syntax-nodes/globals/tuple-asn";
+import { TupleScopeAsn } from "../syntax-nodes/globals/tuple-scope-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
 import { ForLoopAsn } from "../syntax-nodes/statements/for-loop-asn";
@@ -157,8 +157,8 @@ export function isKnownType(s: SymbolType): boolean {
   return !(s instanceof UnknownType);
 }
 
-export function isTuple(s: Scope): s is TupleInstanceAsn {
-  return s instanceof TupleInstanceAsn;
+export function isTuple(s: Scope): s is TupleScopeAsn {
+  return s instanceof TupleScopeAsn;
 }
 
 export function isDefinitionScope(s: Scope): boolean {
@@ -313,7 +313,7 @@ function internalUpdateScopeAndQualifier(
       }
     }
   } else if (qualifierScope instanceof TupleType) {
-    currentScope = new TupleInstanceAsn(qualifierScope, currentScope);
+    currentScope = new TupleScopeAsn(qualifierScope, currentScope);
   } else if (!isEmptyNode(qualifier)) {
     currentScope = getGlobalScope(currentScope).libraryScope;
   } else {
@@ -427,7 +427,7 @@ export function matchingSymbolsWithQualifier(
   }
 
   if (qualSt instanceof TupleType) {
-    qualifiedSymbols = new TupleInstanceAsn(qualSt, scope).symbolMatches(
+    qualifiedSymbols = new TupleScopeAsn(qualSt, scope).symbolMatches(
       propId,
       !propId,
       NullScope.Instance,
@@ -460,7 +460,7 @@ export function updateScope(qualifier: AstNode, originalScope: Scope) {
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
   } else if (classScope instanceof TupleType) {
-    currentScope = new TupleInstanceAsn(classScope, currentScope);
+    currentScope = new TupleScopeAsn(classScope, currentScope);
   } else {
     currentScope = originalScope.getParentScope();
   }

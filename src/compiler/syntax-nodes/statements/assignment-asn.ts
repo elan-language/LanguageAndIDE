@@ -1,10 +1,8 @@
 import {
-  getId,
   mustBeCompatibleNode,
   mustNotBeConstant,
   mustNotBeCopyOfThis,
   mustNotBeCounter,
-  mustNotBeLet,
   mustNotBeParameter,
   mustNotBePropertyOnFunctionMethod,
   mustNotSetIndexInFunctionMethod,
@@ -34,8 +32,6 @@ export class AssignmentAsn extends BreakpointAsn {
     const assignableAstNode = this.assignable;
     const exprAstNode = this.expression;
 
-    const id = getId(this.assignable);
-
     mustNotBePropertyOnFunctionMethod(assignableAstNode, this, this.compileErrors, this.fieldId);
 
     mustBeCompatibleNode(
@@ -49,9 +45,6 @@ export class AssignmentAsn extends BreakpointAsn {
     mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
     mustNotBeCopyOfThis(assignableAstNode, this.compileErrors, this.fieldId);
-
-    const symbol = this.getParentScope().resolveSymbol(id, true, this);
-    mustNotBeLet(symbol, this.compileErrors, this.fieldId);
 
     if (this.assignable instanceof AssignableAsn) {
       if (this.assignable.isSimpleSubscript()) {
