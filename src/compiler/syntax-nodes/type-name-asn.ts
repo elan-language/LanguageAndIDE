@@ -1,6 +1,7 @@
-import { mustBeKnownSymbolType } from "../compile-rules";
+import { checkForDeprecation, mustBeKnownSymbolType } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { Scope } from "../compiler-interfaces/scope";
+import { ClassType } from "../symbols/class-type";
 import { getGlobalScope } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 
@@ -18,6 +19,11 @@ export class TypeNameAsn extends AbstractAstNode implements AstIdNode {
     const st = this.symbolType();
 
     mustBeKnownSymbolType(st, this.id, this.compileErrors, this.fieldId);
+
+    if (st instanceof ClassType) {
+      // check after generic parameters
+      checkForDeprecation(st, this.scope, this.compileErrors, this.fieldId);
+    }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 

@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -78,12 +77,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_PrintWithNoExpression", async () => {
+  test("Pass_PrintWithNoExpression", async () => {
     const code = `${testHeader}
 
 main
-  call printNoLine()
-  call PrintNoLine()
+  call printNoLine("")
+  call printNoLine("")
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {

@@ -42,7 +42,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

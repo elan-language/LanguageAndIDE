@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1846,7 +1845,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_PropertyIsNotDefined", async () => {
+  test("Fail_PropertyIsNotDefined", async () => {
     const code = `${testHeader}
 
 main
@@ -1979,7 +1978,7 @@ end class
     ]);
   });
 
-  ignore_test("Fail_CallConstructor", async () => {
+  test("Fail_CallConstructor", async () => {
     const code = `${testHeader}
 
 main
@@ -2006,10 +2005,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'constructor' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UpdatePropertyInFunction", async () => {

@@ -48,7 +48,8 @@ class Bar inherits Foo
   end procedure
 
   property prop as Int
-end class`;
+end class
+`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -141,7 +142,8 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-end class`;
+end class
+`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
@@ -225,7 +227,8 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-end class`;
+end class
+`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};

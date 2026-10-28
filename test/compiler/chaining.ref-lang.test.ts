@@ -8,7 +8,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -815,7 +814,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "11");
   });
 
-  ignore_test("Pass_HoFs1", async () => {
+  test("Pass_HoFs1", async () => {
     const code = `${testHeader}
 
 main 
@@ -848,7 +847,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "86");
   });
 
-  ignore_test("Pass_HoFs2", async () => {
+  test("Pass_HoFs2", async () => {
     const code = `${testHeader}
 
 main 
@@ -910,7 +909,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_TypeError1", async () => {
+  test("Fail_TypeError1", async () => {
     const code = `${testHeader}
 
 main 

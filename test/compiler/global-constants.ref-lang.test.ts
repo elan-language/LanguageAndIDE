@@ -37,7 +37,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -64,7 +64,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
@@ -128,7 +128,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -156,7 +156,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -184,7 +184,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -214,7 +214,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -242,7 +242,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -270,7 +270,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -289,7 +289,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -306,7 +306,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -324,7 +324,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -344,7 +344,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -372,7 +372,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -391,7 +391,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
@@ -406,7 +406,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -424,7 +424,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -444,7 +444,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -462,7 +462,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -479,7 +479,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -494,7 +494,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -513,7 +513,7 @@ function foo() returns Int
 end function
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);

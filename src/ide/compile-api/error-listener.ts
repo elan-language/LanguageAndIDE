@@ -24,6 +24,7 @@ export class ErrorListener implements ANTLRErrorListener {
     _e: RecognitionException | null,
   ): void {
     this.field.addParseError(msg);
+    this.field.getFile().addParseError(msg);
   }
   reportAmbiguity(
     _recognizer: Parser,

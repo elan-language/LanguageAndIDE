@@ -21,7 +21,6 @@ import {
   assertDoesNotCompile,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -404,7 +403,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_NewClassDeprecation", async () => {
+  test("Fail_NewClassDeprecation", async () => {
     const code = `${testHeader}
 
 main
@@ -431,7 +430,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_OfClassDeprecation", async () => {
+  test("Fail_OfClassDeprecation", async () => {
     const code = `${testHeader}
 
 main

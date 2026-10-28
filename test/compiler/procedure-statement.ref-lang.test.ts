@@ -46,7 +46,7 @@ async function foo() {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -84,7 +84,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -109,7 +109,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -147,7 +147,7 @@ async function foo(a, b) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -183,7 +183,7 @@ async function changeFirst(a) {
 global["changeFirst"] = changeFirst;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -219,7 +219,7 @@ async function foo(a, b) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -264,7 +264,7 @@ async function bar() {
 global["bar"] = bar;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -298,7 +298,7 @@ async function square(x) {
 global["square"] = square;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -338,7 +338,7 @@ async function foo(a) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -445,7 +445,7 @@ class Bar {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -487,7 +487,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -531,7 +531,7 @@ async function foo(x, y) {
 global["foo"] = foo;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -584,7 +584,7 @@ async function bar(a, b) {
 global["bar"] = bar;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -654,7 +654,7 @@ class Foo {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -767,7 +767,7 @@ async function addOne(n) {
 global["addOne"] = addOne;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -801,7 +801,7 @@ async function printParameter(n) {
 global["printParameter"] = printParameter;
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -818,7 +818,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -836,7 +836,7 @@ procedure foo(Int a)
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
@@ -855,7 +855,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -876,7 +876,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -899,7 +899,7 @@ procedure foo(a as Int, b as String)
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -917,7 +917,7 @@ main
   call a.append(1, 2)
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -940,7 +940,7 @@ procedure foo(a as Int, b as String)
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -961,7 +961,7 @@ procedure foo(a as Int)
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -977,7 +977,7 @@ main
 end main
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -995,7 +995,7 @@ main
   call f()
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1017,7 +1017,7 @@ main
   call f(1.0)
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1040,7 +1040,7 @@ procedure changeAll(a as List<of Int>)
   assign a to [1, 2, 3]
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1063,7 +1063,7 @@ procedure changeAll(a as List<of Int>)
   assign a to [1, 2, 3]
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1086,7 +1086,7 @@ procedure changeValue(a as Int)
     assign a to 3
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1107,7 +1107,7 @@ procedure changeValue(a as Bar)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1126,7 +1126,7 @@ procedure if_(a as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertDoesNotParse(fileImpl);
   });
@@ -1142,7 +1142,7 @@ procedure break(a as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1160,7 +1160,7 @@ procedure float(a as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1179,7 +1179,7 @@ procedure fun(if as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertDoesNotParse(fileImpl);
@@ -1196,7 +1196,7 @@ procedure fun(break as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
@@ -1216,7 +1216,7 @@ procedure foo()
 end procedure
 `;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1233,7 +1233,7 @@ procedure foo(a as Int, b as String, a as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1259,7 +1259,7 @@ procedure p2()
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1278,7 +1278,7 @@ main
   assign a to a.append(3)
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1302,7 +1302,7 @@ end class
 procedure bar()
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1319,7 +1319,7 @@ main
   call s.reverse()
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1336,7 +1336,7 @@ main
   call s.reverse()
 end main`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1351,7 +1351,7 @@ procedure foo(foo as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -1368,7 +1368,7 @@ procedure foo(a as Int, foo as Int)
 
 end procedure`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance, true);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
