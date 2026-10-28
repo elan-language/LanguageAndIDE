@@ -14,5 +14,6 @@ export enum OperationSymbol {
   Divide,
   NotEquals,
   Or,
+  Power,
   Unknown,
 }

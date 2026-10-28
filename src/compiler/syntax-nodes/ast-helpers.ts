@@ -342,6 +342,7 @@ const opMap = new Map<OperationSymbol, string>([
   [OperationSymbol.Divide, "/"],
   [OperationSymbol.NotEquals, "isnt"],
   [OperationSymbol.Or, "or"],
+  [OperationSymbol.Power, "^"],
 ]);
 
 export function mapOperation(op: string): OperationSymbol {

@@ -10,7 +10,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -1037,7 +1036,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_DifferentAbstractClassIntoFunction", async () => {
+  test("Fail_DifferentAbstractClassIntoFunction", async () => {
     const code = `${testHeader}
 
 main

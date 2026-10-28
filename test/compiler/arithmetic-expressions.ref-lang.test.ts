@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -98,7 +97,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
-  ignore_test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
+  test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `${testHeader}
 
 main
@@ -135,7 +134,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
 
-  ignore_test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
+  test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `${testHeader}
 
 main
@@ -172,7 +171,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  ignore_test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
+  test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
     const code = `${testHeader}
 
 main
@@ -329,7 +328,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Pass_OperatorOrder#1167", async () => {
+  test("Pass_OperatorOrder#1167", async () => {
     const code = `${testHeader}
 
 main

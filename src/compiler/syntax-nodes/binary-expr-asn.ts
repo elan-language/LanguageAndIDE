@@ -50,6 +50,7 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
       case OperationSymbol.Minus:
       case OperationSymbol.Multiply:
       case OperationSymbol.Divide:
+      case OperationSymbol.Power:
         return true;
     }
     return false;
@@ -114,6 +115,8 @@ export class BinaryExprAsn extends AbstractAstNode implements AstNode {
         return "%";
       case OperationSymbol.Divide:
         return "/";
+      case OperationSymbol.Power:
+        return "**";
     }
     return " ";
   }
