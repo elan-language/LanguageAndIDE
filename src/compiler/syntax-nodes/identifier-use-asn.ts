@@ -10,7 +10,6 @@ import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { ClassType } from "../symbols/class-type";
-import { NullScope } from "../symbols/null-scope";
 import {
   getGlobalScope,
   isClass,
@@ -23,6 +22,7 @@ import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
+import { EmptyAsn } from "./empty-asn";
 import { TupleScopeAsn } from "./globals/tuple-scope-asn";
 
 export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
@@ -106,7 +106,7 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
       mustBePublicMember(symbol, this.compileErrors, this.fieldId);
     }
 
-    if (symbol.symbolScope === SymbolScope.member && searchScope === NullScope.Instance) {
+    if (symbol.symbolScope === SymbolScope.member && this.precedingNode instanceof EmptyAsn) {
       mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
     }
 
