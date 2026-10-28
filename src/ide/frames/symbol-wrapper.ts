@@ -9,11 +9,9 @@ import {
   isMemberOnFieldsClass,
   isNotInheritableClass,
   isProcedure,
-  isProcedureCall,
   isProperty,
   isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
-import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { File } from "./frame-interfaces/file";
 import { KeywordCompletion } from "./symbol-completion-helpers";
 
@@ -137,10 +135,6 @@ export class SymbolWrapper {
     if (isMemberOnFieldsClass(symbol, this.scope)) {
       const thisInstance = this.file.language().THIS_INSTANCE;
       return `${thisInstance}.${symbol.symbolId}`;
-    }
-
-    if (isProcedureCall(this.scope) && this.scope.argList instanceof EmptyAsn) {
-      return `${this.name}.`;
     }
 
     return this.name;
