@@ -30,6 +30,5 @@
   6.3 Test for game over and display message with completed score
 
 7. Optional further work
-  7.1 Preview window
-  7.2 Permit rotations at the edge, by bouncing off
-  7.3 Save a shape
+  7.1 Extending the game: preview window; permit rotations at the edge, by bouncing off edges; option to save a shape for later
+  7.2 Alternative paradigms: OOP, FP

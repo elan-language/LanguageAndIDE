@@ -1,6 +1,6 @@
-# 8381311099f4ab19282aa282a4eec66ddb423e9003f604fd0bf4ac774af47cc1 Elan 2.0.0-beta4 valid
+# eae761e6790fa2768723c2e961a9dd5322b11a4bccbbcd0de3e7ba78d7c819d6 Elan 2.0.0-beta4 valid
 
-constant border set to 0x004472C4
+constant borderColour set to 0x004472C4
 
 constant leftEdge set to 15
 
@@ -57,7 +57,7 @@ end procedure
 procedure drawBackground(bg as BlockGraphics)
   for row in range(0, 30)
     for col in range(0, 40)
-      variable colour set to border
+      variable colour set to borderColour
       if (row >= topEdge) and (col >= leftEdge) and (col <= rightEdge) then
         assign colour to black
       end if
@@ -126,13 +126,9 @@ function allSquaresValid(shape as List<of Int>, position as Int, bg as BlockGrap
   variable result set to true
   for relative in shape
     variable blockNo set to position + relative
-    assign result to result and withinBoundsAndEmpty(blockNo, bg)
+    assign result to result and (bg.getBlockNo(blockNo) is black)
   end for
   return result
-end function
-
-function withinBoundsAndEmpty(blockNo as Int, bg as BlockGraphics) returns Boolean
-  return (blockNo < 1200) and (bg.getBlockNo(blockNo) is black)
 end function
 
 function newPositionFromKey(shape as List<of Int>, position as Int, key as String, bg as BlockGraphics) returns Int
@@ -164,12 +160,12 @@ end function
 function quarterTurn(shape as List<of Int>) returns List<of Int>
   variable result set to new List<of Int>()
   for blockNo in shape
-    assign result to result.withAppend(mapRotationAntiClockwise(blockNo))
+    assign result to result.withAppend(getNewBlockNo(blockNo))
   end for
   return result
 end function
 
-function mapRotationAntiClockwise(blockNo as Int) returns Int
+function getNewBlockNo(blockNo as Int) returns Int
   variable fromBlock set to [-82, -81, -80, -79, -78, -42, -41, -40, -39, -38, -2, -1, 0, 1, 2, 38, 39, 40, 41, 42, 78, 79, 80, 81, 82]
   variable index set to fromBlock.indexOf(blockNo)
   variable toBlock set to [78, 38, -2, -42, -82, 79, 39, -1, -41, -81, 80, 40, 0, -40, -80, 81, 41, 1, -39, -79, 82, 42, 2, -38, -78]
