@@ -1,37 +1,40 @@
 import assert from "assert";
 
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../../src/ide/frames/file-impl";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
+import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Paradigm } from "../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../src/ide/stub-input-output";
 
-function hash() {
-  return Promise.resolve("FFFF");
+export function fileImplForRefLang(): FileImpl {
+  const file = new FileImpl(
+    () => Promise.resolve("FFFF"),
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
+  file.setLanguage(LanguageElan.Instance);
+  return file;
 }
 
-suite("Parsing Frame Tests", async () => {
+suite("Parsing Frames RefLang", async () => {
   test("parse Frames - set statement", () => {
     const code = "  assign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
@@ -42,15 +45,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement 2", () => {
     const code = "  assign tot to tot";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
@@ -60,15 +55,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - set statement 3", () => {
     const code = "  assign result to 3 + 4";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
@@ -79,15 +66,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - assert statement 3", () => {
     const code = "  assert foo evaluates to 7";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const t = new TestFrame(fl);
     const ass = new AssertStatement(t);
     ass.parseFrom(source);
@@ -98,15 +77,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - variable", () => {
     const code = "  variable fooBar set to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const v = new VariableStatement(m);
     v.parseFrom(source);
@@ -117,15 +88,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - throw", () => {
     const code = `  throw ElanRuntimeError "Failure"`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
@@ -135,15 +98,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - throw with variable", () => {
     const code = `  throw ElanRuntimeError message1`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
@@ -153,15 +108,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - print", () => {
     const code = `  call print(3 + 4)`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const pc = new ProcedureCall(m);
     pc.parseFrom(source);
@@ -171,15 +118,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - call", () => {
     const code = `  call foo()`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
@@ -189,15 +128,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - call with args", () => {
     const code = `  call foo(3, a, "hello")`;
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
@@ -207,15 +138,7 @@ suite("Parsing Frame Tests", async () => {
   test("parse Frames - StatementSelector", () => {
     const code = "assign fooBar to 3.141";
     const source = new CodeSourceFromString(code + "\n");
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
     const ss = new StatementSelector(m);
     ss.parseFrom(source);
@@ -227,15 +150,7 @@ suite("Parsing Frame Tests", async () => {
 
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -247,15 +162,7 @@ suite("Parsing Frame Tests", async () => {
 constant pi set to 3.142
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -269,15 +176,7 @@ constant pi set to 3.142
 constant e set to 2.718
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -291,15 +190,7 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -315,15 +206,7 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     if (fl.parseError) {
       throw new Error(fl.parseError);
@@ -344,15 +227,7 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -378,15 +253,7 @@ end function
 enum Fruit apple, orange, pear
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -417,15 +284,7 @@ class Player inherits Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -446,15 +305,7 @@ abstract class Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -481,15 +332,7 @@ class Player inherits Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -509,15 +352,7 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -535,15 +370,7 @@ main
 end main
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
@@ -558,15 +385,7 @@ abstract class Card
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -582,15 +401,7 @@ abstract class Card
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     assert.equal(source.getRemainingCode(), "");
   });
@@ -609,15 +420,7 @@ abstract class Card
  end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
@@ -638,15 +441,7 @@ class Foo
 end class
 `;
     const source = new CodeSourceFromString(code);
-    const fl = new FileImpl(
-      hash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
+    const fl = fileImplForRefLang();
     await fl.parseFrom(source);
     const elan = await fl.renderAsElanSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));

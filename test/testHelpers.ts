@@ -38,7 +38,7 @@ import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { encodeCode } from "../src/ide/web/web-helpers";
 import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
-import { assertParses, transforms } from "./compiler/compiler-test-helpers";
+import { assertParses, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
@@ -745,4 +745,18 @@ export function assertOptions(selector : AbstractSelector, options : string[]) {
   for(let i = 0; i < availableOptions.length; i++){
     assertEqual(availableOptions[i], options[i]);
   }
+}
+
+export function fileImplFor(language: Language) {
+  const file = new FileImpl(
+    testHash,
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
+  file.setLanguage(language);
+  return file;
 }

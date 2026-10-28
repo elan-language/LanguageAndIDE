@@ -1,4 +1,3 @@
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import {
@@ -22,38 +21,23 @@ import {
   testNameFieldSpec,
   typeNameFieldSpec,
 } from "../../src/ide/frames/fields/field-spec";
-import { FileImpl } from "../../src/ide/frames/file-impl";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
-import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { testHash, transforms } from "../compiler/compiler-test-helpers";
-import { testFieldParse } from "../testHelpers";
+import { fileImplFor, testFieldParse } from "../testHelpers";
 
-function fileImpl() {
-  const file = new FileImpl(
-    testHash,
-    new Paradigm(""),
-    "",
-    transforms(),
-    new StdLib(new StubInputOutput()),
-    false,
-    true,
-  );
-  file.setLanguage(LanguageElan.Instance);
-  return file;
-}
+const refLang: Language = LanguageElan.Instance;
 
-suite("Field Tests - RefLang", () => {
+suite("Parsing Field Fields (New) RefLang", () => {
   test("ArgList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), argListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), argListFieldSpec);
     testFieldParse(
       field,
       "123, a",
@@ -76,7 +60,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("InputArgList", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), inputArgListFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), inputArgListFieldSpec);
     testFieldParse(
       field,
       `"age?", a`,
@@ -99,7 +83,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("ParamList", () => {
-    const field = new FieldImpl(new GlobalFunction(fileImpl()), paramListFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImplFor(refLang)), paramListFieldSpec);
     testFieldParse(
       field,
       "a as Int, b as String",
@@ -115,7 +99,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo", false, "mismatched input '<EOF>' expecting 'as'");
   });
   test("Identifier", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), identifierFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), identifierFieldSpec);
     testFieldParse(
       field,
       "a",
@@ -125,7 +109,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "A", false, "mismatched input 'A' expecting NAME_STARTING_LC");
   });
   test("TestName", () => {
-    const field = new FieldImpl(new TestFrame(fileImpl()), testNameFieldSpec);
+    const field = new FieldImpl(new TestFrame(fileImplFor(refLang)), testNameFieldSpec);
     testFieldParse(
       field,
       "test_a",
@@ -135,7 +119,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "a", false, "mismatched input 'a' expecting NAME_STARTING_TEST_");
   });
   test("ExceptionType", () => {
-    const field = new FieldImpl(new CatchClause(fileImpl()), exceptionTypeFieldSpec);
+    const field = new FieldImpl(new CatchClause(fileImplFor(refLang)), exceptionTypeFieldSpec);
     testFieldParse(
       field,
       "ElanRuntimeError",
@@ -150,7 +134,10 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("ExceptionMessage", () => {
-    const field = new FieldImpl(new ThrowStatement(fileImpl()), exceptionMessageFieldSpec);
+    const field = new FieldImpl(
+      new ThrowStatement(fileImplFor(refLang)),
+      exceptionMessageFieldSpec,
+    );
     testFieldParse(
       field,
       `"foo"`,
@@ -166,7 +153,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("TypeName", () => {
-    const field = new FieldImpl(new ConcreteClass(fileImpl()), typeNameFieldSpec);
+    const field = new FieldImpl(new ConcreteClass(fileImplFor(refLang)), typeNameFieldSpec);
     testFieldParse(
       field,
       "Foo",
@@ -181,7 +168,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("Comment", () => {
-    const field = new FieldImpl(new CommentFrame(fileImpl()), commentFieldSpec);
+    const field = new FieldImpl(new CommentFrame(fileImplFor(refLang)), commentFieldSpec);
     testFieldParse(
       field,
       "# foo",
@@ -197,7 +184,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo", false, "mismatched input 'foo' expecting COMMENT");
   });
   test("InheritsFrom", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), inheritsFromFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), inheritsFromFieldSpec);
     testFieldParse(
       field,
       "Bar",
@@ -209,7 +196,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "Bar, Yon", false, "");
   });
   test("MethodName", () => {
-    const field = new FieldImpl(new GlobalFunction(fileImpl()), methodNameFieldSpec);
+    const field = new FieldImpl(new GlobalFunction(fileImplFor(refLang)), methodNameFieldSpec);
     testFieldParse(
       field,
       "fooBar",
@@ -225,7 +212,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ProcRef", () => {
-    const field = new FieldImpl(new ProcedureCall(fileImpl()), procRefFieldSpec);
+    const field = new FieldImpl(new ProcedureCall(fileImplFor(refLang)), procRefFieldSpec);
     testFieldParse(
       field,
       "sleep()",
@@ -241,7 +228,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "sleep()", true, "");
   });
   test("EnumValues", () => {
-    const field = new FieldImpl(new Enum(fileImpl()), enumValuesFieldSpec);
+    const field = new FieldImpl(new Enum(fileImplFor(refLang)), enumValuesFieldSpec);
     testFieldParse(
       field,
       "foo, bar",
@@ -254,7 +241,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo, ", false, "missing NAME_STARTING_LC at '<EOF>'");
   });
   test("Expression", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), expressionFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), expressionFieldSpec);
 
     testFieldParse(
       field,
@@ -273,7 +260,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("PrintExpression", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), printExpressionFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), printExpressionFieldSpec);
     testFieldParse(
       field,
       "123",
@@ -291,7 +278,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("AssertActual", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assertActualFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), assertActualFieldSpec);
 
     testFieldParse(
       field,
@@ -310,7 +297,7 @@ suite("Field Tests - RefLang", () => {
     );
   });
   test("AssertExpected", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assertExpectedFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), assertExpectedFieldSpec);
 
     testFieldParse(
       field,
@@ -334,7 +321,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "3 + 4", false, "");
   });
   test("Assignable", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), assignableFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), assignableFieldSpec);
 
     testFieldParse(
       field,
@@ -364,7 +351,7 @@ suite("Field Tests - RefLang", () => {
     testFieldParse(field, "foo()", false, "");
   });
   test("ConstantValue", () => {
-    const field = new FieldImpl(new Assignment(fileImpl()), constantValueFieldSpec);
+    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), constantValueFieldSpec);
 
     testFieldParse(
       field,
