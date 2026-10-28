@@ -1226,7 +1226,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_getRange", async () => {
+  test("Fail_getRange", async () => {
     const code = `${testHeader}
 
 main
@@ -1365,7 +1365,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[one, TWO, two, three][ONE, one, TWO, two, three]");
   });
 
-  ignore_test("Fail_withRemove", async () => {
+  test("Fail_withRemove", async () => {
     const code = `${testHeader}
 
 main
@@ -1866,7 +1866,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_negativeIndexCompile", async () => {
+  test("Fail_negativeIndexCompile", async () => {
     const code = `${testHeader}
 
 main
@@ -1939,7 +1939,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_listOfClassFunction", async () => {
+  test("Fail_listOfClassFunction", async () => {
     const code = `${testHeader}
 
 main

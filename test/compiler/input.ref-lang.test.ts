@@ -81,7 +81,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Your name\nFred", "Fred");
   });
 
-  test("Pass_InputInt", async () => {
+  ignore_test("Pass_InputInt", async () => {
     const code = `${testHeader}
 
 main

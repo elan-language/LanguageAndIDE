@@ -55,7 +55,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  ignore_test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
+  test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
     const code = `${testHeader}
 
 main
@@ -118,7 +118,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Pass_WithParamsPassingVariables", async () => {
+  test("Pass_WithParamsPassingVariables", async () => {
     const code = `${testHeader}
 
 main
@@ -156,7 +156,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2hello");
   });
 
-  ignore_test("Pass_ReferenceTypesCanBeMutated", async () => {
+  test("Pass_ReferenceTypesCanBeMutated", async () => {
     const code = `${testHeader}
 
 main
@@ -192,7 +192,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[5, 3]");
   });
 
-  ignore_test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
+  test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
     const code = `${testHeader}
 
 main
@@ -273,7 +273,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "123");
   });
 
-  ignore_test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
+  test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
     const code = `${testHeader}
 
 main
@@ -307,7 +307,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "925");
   });
 
-  ignore_test("Pass_Recursion", async () => {
+  test("Pass_Recursion", async () => {
     const code = `${testHeader}
 
 main
@@ -454,7 +454,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "7");
   });
 
-  ignore_test("Pass_RefParameters", async () => {
+  test("Pass_RefParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -496,7 +496,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3goodbye");
   });
 
-  ignore_test("Pass_SetFromAsRefParameters", async () => {
+  test("Pass_SetFromAsRefParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -540,7 +540,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  ignore_test("Pass_NestedOutParameters", async () => {
+  test("Pass_NestedOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -593,7 +593,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "32");
   });
 
-  ignore_test("Pass_CallOnOutParameters", async () => {
+  test("Pass_CallOnOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -663,7 +663,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Pass_ExpressionOnOutParameters", async () => {
+  test("Pass_ExpressionOnOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -736,7 +736,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "101");
   });
 
-  ignore_test("Pass_MultipleCallsWithOutParameters", async () => {
+  test("Pass_MultipleCallsWithOutParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -776,7 +776,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "23");
   });
 
-  ignore_test("Pass_PrintOutParameter", async () => {
+  test("Pass_PrintOutParameter", async () => {
     const code = `${testHeader}
 
 main
@@ -825,7 +825,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_TypeSpecifiedBeforeParamName", async () => {
+  test("Fail_TypeSpecifiedBeforeParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -885,7 +885,7 @@ end procedure
     ]);
   });
 
-  ignore_test("Fail_PassingTooFewParams", async () => {
+  test("Fail_PassingTooFewParams", async () => {
     const code = `${testHeader}
 
 main
@@ -927,7 +927,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_PassingWrongType", async () => {
+  test("Fail_PassingWrongType", async () => {
     const code = `${testHeader}
 
 main
@@ -949,7 +949,7 @@ end procedure
     ]);
   });
 
-  ignore_test("Fail_UnterminatedRecursion", async () => {
+  test("Fail_UnterminatedRecursion", async () => {
     const code = `${testHeader}
 
 main
@@ -969,7 +969,7 @@ end procedure
     await assertObjectCodeDoesNotExecute(fileImpl, "Maximum call stack size exceeded");
   });
 
-  ignore_test("Fail_CannotCallPrintAsAProcedure", async () => {
+  test("Fail_CannotCallPrintAsAProcedure", async () => {
     const code = `${testHeader}
 
 main
@@ -983,7 +983,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_ParameterCount", async () => {
+  test("Fail_ParameterCount", async () => {
     const code = `${testHeader}
 
 procedure f(p as Float)
@@ -1005,7 +1005,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_ParameterType", async () => {
+  test("Fail_ParameterType", async () => {
     const code = `${testHeader}
 
 procedure f(p as Int)
@@ -1027,7 +1027,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
+  test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1050,7 +1050,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fai_ListParamMayNotBeReassigned", async () => {
+  test("Fai_ListParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1073,7 +1073,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
+  test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
     const code = `${testHeader}
 
 main
@@ -1096,7 +1096,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_ParameterUnknownType", async () => {
+  test("Fail_ParameterUnknownType", async () => {
     const code = `${testHeader}
 
 main
@@ -1115,7 +1115,7 @@ end procedure`;
     assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_UseOfKeywordAsName", async () => {
+  test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testHeader}
 
 main
@@ -1168,7 +1168,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_UseOfKeywordAsParamName", async () => {
+  test("Fail_UseOfKeywordAsParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -1185,7 +1185,7 @@ end procedure`;
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_UseOfReservedwordAsParamName", async () => {
+  test("Fail_UseOfReservedwordAsParamName", async () => {
     const code = `${testHeader}
 
 main
@@ -1226,7 +1226,7 @@ end procedure
     ]);
   });
 
-  ignore_test("Fail_NotUniqueParameterName", async () => {
+  test("Fail_NotUniqueParameterName", async () => {
     const code = `${testHeader}
 
 procedure foo(a as Int, b as String, a as Int)
@@ -1270,7 +1270,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_ProcedureInExpression", async () => {
+  test("Fail_ProcedureInExpression", async () => {
     const code = `${testHeader}
 
 main
@@ -1288,7 +1288,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_IncorrectScope", async () => {
+  test("Fail_IncorrectScope", async () => {
     const code = `${testHeader}
 
 main
@@ -1344,7 +1344,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_ParameterNameClash1", async () => {
+  test("Fail_ParameterNameClash1", async () => {
     const code = `${testHeader}
 
 procedure foo(foo as Int)
@@ -1361,7 +1361,7 @@ end procedure`;
     ]);
   });
 
-  ignore_test("Fail_ParameterNameClash2", async () => {
+  test("Fail_ParameterNameClash2", async () => {
     const code = `${testHeader}
 
 procedure foo(a as Int, foo as Int)

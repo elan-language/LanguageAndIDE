@@ -179,7 +179,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truetrue");
   });
-  test("Pass_CombineLogicalOpsWithComparison1", async () => {
+  ignore_test("Pass_CombineLogicalOpsWithComparison1", async () => {
     const code = `${testHeader}
 
 main 

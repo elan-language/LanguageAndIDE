@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -289,7 +288,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "apple");
   });
 
-  ignore_test("Pass_Iter", async () => {
+  test("Pass_Iter", async () => {
     const code = `${testHeader}
 
 main
@@ -615,7 +614,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_RecursiveDefinition", async () => {
+  test("Fail_RecursiveDefinition", async () => {
     const code = `${testHeader}
 
 main
@@ -662,7 +661,7 @@ end main`;
     ]);
   });
 
-  ignore_test("Fail_referenceToExtensionFunction1", async () => {
+  test("Fail_referenceToExtensionFunction1", async () => {
     const code = `${testHeader}
 
 main

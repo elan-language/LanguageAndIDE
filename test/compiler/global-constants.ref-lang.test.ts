@@ -72,7 +72,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test("Pass_Int_Hex", async () => {
+  test("Pass_Int_Hex", async () => {
     const code = `${testHeader}
 
 constant a set to 0xFF
@@ -279,7 +279,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  ignore_test("Fail_incorrectKeyword", async () => {
+  test("Fail_incorrectKeyword", async () => {
     const code = `${testHeader}
 
 const a set to 3
@@ -295,7 +295,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_reassignment", async () => {
+  test("Fail_reassignment", async () => {
     const code = `${testHeader}
 
 constant a set to 3
@@ -315,7 +315,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_libConstantReassignment", async () => {
+  test("Fail_libConstantReassignment", async () => {
     const code = `${testHeader}
 
 main
@@ -333,7 +333,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_expression", async () => {
+  test("Fail_expression", async () => {
     const code = `${testHeader}
 
 constant a set to 3 + 4
@@ -381,7 +381,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "3");
   });
 
-  ignore_test("Fail_UseOfKeywordAsName", async () => {
+  test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testHeader}
 
 constant if set to 3
@@ -470,7 +470,7 @@ end main
     assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_NotValueType", async () => {
+  test("Fail_NotValueType", async () => {
     const code = `${testHeader}
 
 constant a set to 1 + 2
@@ -485,7 +485,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_Expression", async () => {
+  test("Fail_Expression", async () => {
     const code = `${testHeader}
 
 constant a set to 1 + 2
@@ -500,7 +500,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_Function", async () => {
+  test("Fail_Function", async () => {
     const code = `${testHeader}
 
 constant a set to foo()

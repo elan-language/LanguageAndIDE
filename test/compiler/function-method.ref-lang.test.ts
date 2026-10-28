@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -871,7 +870,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "bar");
   });
 
-  ignore_test("Fail_FunctionCannotBeCalledDirectly", async () => {
+  test("Fail_FunctionCannotBeCalledDirectly", async () => {
     const code = `${testHeader}
 
 main
@@ -914,7 +913,7 @@ end class`;
     assertDoesNotCompile(fileImpl, ["'times' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_FunctionisNotDefined", async () => {
+  test("Fail_FunctionisNotDefined", async () => {
     const code = `${testHeader}
 
 main
@@ -1333,7 +1332,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_IncorrectScope", async () => {
+  test("Fail_IncorrectScope", async () => {
     const code = `${testHeader}
 
 main

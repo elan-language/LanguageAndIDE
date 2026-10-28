@@ -178,7 +178,7 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Pass_mapStringViaSplit", async () => {
+  test("Pass_mapStringViaSplit", async () => {
     const code = `${testHeader}
 
 constant source set to "onetwo"
@@ -215,7 +215,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[o*, n*, e*, t*, w*, o*]");
   });
 
-  ignore_test("Pass_mapTestType", async () => {
+  test("Pass_mapTestType", async () => {
     const code = `${testHeader}
 
 main
@@ -250,7 +250,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[3, 4, 6, 8, 12, 14, 18, 20, 24, 28, 32, 38]");
   });
 
-  ignore_test("Pass_reduceList", async () => {
+  test("Pass_reduceList", async () => {
     const code = `${testHeader}
 
 
@@ -288,7 +288,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "195295Concat:23571113171923273137");
   });
 
-  ignore_test("Pass_reduceString", async () => {
+  test("Pass_reduceString", async () => {
     const code = `${testHeader}
 
 constant source set to "onetwo"
@@ -358,7 +358,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "19");
   });
 
-  ignore_test("Pass_maxBy1", async () => {
+  test("Pass_maxBy1", async () => {
     const code = `${testHeader}
 
 main
@@ -391,7 +391,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[2, 2]");
   });
 
-  ignore_test("Pass_maxBy2", async () => {
+  test("Pass_maxBy2", async () => {
     const code = `${testHeader}
 
 main
@@ -795,7 +795,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "NaN");
   });
 
-  ignore_test("Fail_MaxLambdaReturningNonNumeric", async () => {
+  test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `${testHeader}
 
 main
@@ -823,7 +823,7 @@ end function`;
     ]);
   });
 
-  ignore_test("Pass_sumByList", async () => {
+  test("Pass_sumByList", async () => {
     const code = `${testHeader}
 
 
@@ -859,7 +859,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "19.1109.05");
   });
 
-  ignore_test("Pass_sumByListOfStringLengths", async () => {
+  test("Pass_sumByListOfStringLengths", async () => {
     const code = `${testHeader}
 
 

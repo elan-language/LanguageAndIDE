@@ -6,7 +6,7 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { processInnerCode } from "../../src/tools/codeParser";
-import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -60,7 +60,7 @@ suite("Misc Tests", () => {
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("code parser", async () => {
+  test("code parser", async () => {
     const code = `
 main
   variable li set to [3, 6, 1, 0, 99, 4, 67]

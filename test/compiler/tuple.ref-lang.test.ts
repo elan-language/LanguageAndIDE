@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -151,7 +150,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Pass_IndexGenericFunctionReturnsTuple", async () => {
+  test("Pass_IndexGenericFunctionReturnsTuple", async () => {
     const code = `${testHeader}
 
 main
@@ -453,7 +452,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_itemOutOfRange", async () => {
+  test("Fail_itemOutOfRange", async () => {
     const code = `${testHeader}
 
 main

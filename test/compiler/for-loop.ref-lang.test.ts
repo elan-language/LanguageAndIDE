@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -424,7 +423,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_scopeOfCounter", async () => {
+  test("Fail_scopeOfCounter", async () => {
     const code = `${testHeader}
 
 main
@@ -550,7 +549,7 @@ end main
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_duplicateId1", async () => {
+  test("Fail_duplicateId1", async () => {
     const code = `${testHeader}
 
 main
@@ -576,7 +575,7 @@ end main`;
     assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_duplicateId2", async () => {
+  test("Fail_duplicateId2", async () => {
     const code = `${testHeader}
 
 main
