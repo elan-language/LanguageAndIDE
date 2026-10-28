@@ -1311,6 +1311,53 @@ end procedure`;
     ]);
   });
 
+  test("Fail_CallNonProcedure", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f()
+end main
+
+class Foo
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageElan.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'f' as a method.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_CallNonProcedure1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.p1()
+end main
+
+class Foo
+  property p1 as Int
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageElan.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke property 'p1' as a method.ErrorMessages.html#compile_error",
+    ]);
+  });
+
   test("Fail_noMatchingExtension2", async () => {
     const code = `${testHeader}
 
