@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -794,7 +793,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_MissingPropertyKeyword1", async () => {
+  test("Fail_MissingPropertyKeyword1", async () => {
     const code = `${testHeader}
 
 main
@@ -831,7 +830,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_MissingPropertyKeyword2", async () => {
+  test("Fail_MissingPropertyKeyword2", async () => {
     const code = `${testHeader}
 
 main
@@ -954,7 +953,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_MissingPropertyKeyword5", async () => {
+  test("Fail_MissingPropertyKeyword5", async () => {
     const code = `${testHeader}
 
 main
@@ -1007,7 +1006,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_MissingPropertyKeyword6", async () => {
+  test("Fail_MissingPropertyKeyword6", async () => {
     const code = `${testHeader}
 
 main
@@ -1151,7 +1150,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_notInScope", async () => {
+  test("Fail_notInScope", async () => {
     const code = `${testHeader}
 
 function foo() returns Int
@@ -1188,7 +1187,7 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_spuriousProperty3", async () => {
+  test("Fail_spuriousProperty3", async () => {
     const code = `${testHeader}
 
 constant aa set to 1
