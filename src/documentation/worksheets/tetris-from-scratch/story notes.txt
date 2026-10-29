@@ -30,5 +30,12 @@
   6.3 Test for game over and display message with completed score
 
 7. Optional further work
-  7.1 Extending the game: preview window; permit rotations at the edge, by bouncing off edges; option to save a shape for later
-  7.2 Alternative paradigms: OOP, FP
+  7.1 Extending the game:
+      - Make self-standing page: outer loop to start play. Instructions on RHS
+      - Select difficulty (initial speed and rate of acceleration)
+      - preview window
+      - permit rotations at the edge (& bottom), by bouncing off edges
+      - option to save a shape for later
+  7.2 Alternative paradigms: 
+      - OOP(hints)
+      - FP (hints)
