@@ -1,4 +1,4 @@
-# eae761e6790fa2768723c2e961a9dd5322b11a4bccbbcd0de3e7ba78d7c819d6 Elan 2.0.0-beta4 valid
+# 2d0094f2c9e87509c3f9a7e08c1e6ffa93a47de23164a7759fe04db55d207f31 Elan 2.0.0-beta4 valid
 
 constant borderColour set to 0x004472C4
 
@@ -13,7 +13,7 @@ main
   call drawBackground(bg)
   variable gameOver set to false
   variable score set to 0
-  variable delay set to 0.3
+  variable delay set to 0.5
   while not gameOver
     call processNewShape(bg, delay)
     call removeCompletedRows(bg)
