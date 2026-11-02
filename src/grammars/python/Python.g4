@@ -20,14 +20,16 @@ global:
 ;
 
 main:
-    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement
-        * COMMENT NL
+    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL 
+      ordinaryStatement*
+    END_MAIN NL
 ;
 
 function:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
-        FUNCTION_ANNOTATION NL (ordinaryStatement)* /* statements with side-effects prevented by editor and/or compiler */
-        returnStatement COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
+      ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
+      returnStatement 
+    END_FUNCTION NL
 ;
 
 test:
@@ -35,28 +37,29 @@ test:
         assert
         | variableDefinition
         | comment
-    )* COMMENT NL
+    )* END_TEST NL
 ;
 
 procedure:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
-        PROCECDURE_ANNOTATION NL ordinaryStatement* COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+      ordinaryStatement* 
+    END_PROCEDURE NL
 ;
 
 constant:
-    GHOSTED? identifierDef EQUAL constantValue CONSTANT_ANNOTATION NL
+    GHOSTED? identifierDef EQUAL constantValue commentText? NL
 ;
 
 enum:
-    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifierList
-        NL COMMENT
+    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL identifierList
+        END_ENUM NL
 ;
 
 concreteClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION NL
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON commentText? NL
         constructorMember
         concreteClassMember*
-    COMMENT NL
+    END_CLASS NL
 ;
 
 concreteClassMember: 
@@ -66,12 +69,9 @@ concreteClassMember:
         | comment;
 
 abstractClass:
-    GHOSTED? CLASS typeName (
-        OPEN_BRACKET typeName
-        | ABC CLOSE_BRACKET
-    ) ABSTRACT_CLASS_ANNOTATION NL 
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName | ABC CLOSE_BRACKET) COLON commentText? NL 
       abstractClassMember*
-    COMMENT NL
+    END_CLASS NL
 ;
 
 abstractClassMember:
@@ -98,85 +98,97 @@ ordinaryStatement:
     | comment
 ;
 variableDefinition:
-    GHOSTED? identifierDef EQUAL expression VARIABLE_ANNOTATION NL
+    GHOSTED? identifierDef EQUAL expression commentText? NL
 ;
 assignment:
-    GHOSTED? assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
+    GHOSTED? assignable EQUAL expression commentText? NL
 ;
 
 ifStatement:
-    GHOSTED? IF condition = expression THEN NL
+    GHOSTED? IF condition = expression THEN commentText? NL
         thenClause
         elseIfClause*
         elseClause?
-    COMMENT NL
+    END_IF NL
 ;
     thenClause: 
         ordinaryStatement*;
 
-    elseIfClause: GHOSTED? ELIF expression THEN NL
+    elseIfClause: GHOSTED? ELIF expression THEN commentText? NL
         ordinaryStatement*;
 
-    elseClause: GHOSTED? ELSE NL
+    elseClause: GHOSTED? ELSE commentText? NL
         ordinaryStatement*;
 
 whileLoop:
-    GHOSTED? WHILE expression COLON NL ordinaryStatement* COMMENT NL
+    GHOSTED? WHILE expression COLON  commentText? NL
+      ordinaryStatement*
+    END_WHILE NL
 ;
 
 forLoop:
-    GHOSTED? FOR identifierDef IN expression COLON NL ordinaryStatement* COMMENT NL
+    GHOSTED? FOR identifierDef IN expression COLON  commentText? NL 
+      ordinaryStatement*
+    END_FOR NL
 ;
 
 procedureCall:
-    GHOSTED? term NL
+    GHOSTED? term  commentText? NL
 ;
 
 tryStatement:
-    GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
+    GHOSTED? TRY COLON  commentText? NL 
+      tryClause 
+      catchClause+ 
+    END_TRY NL
 ;
+    tryClause: ordinaryStatement*;
+    catchClause: GHOSTED? EXCEPT typeName AS identifierDef COLON commentText? NL ordinaryStatement*;
 
 throwStatement:
-    GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET NL
+    GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET commentText? NL
 ;
 errorMessage: litString | identifierUse;
 
 assert:
-    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected
-        CLOSE_BRACKET NL
+    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected CLOSE_BRACKET commentText? NL
 ;
 
-returnStatement: RETURN expression NL; // not ghostable
-catchStatement: GHOSTED? EXCEPT typeName AS identifierDef NL;
+returnStatement: RETURN expression commentText? NL; // not ghostable
+catchStatement: GHOSTED? EXCEPT typeName AS identifierDef commentText? NL;
 
 // Members
 constructorMember:
-    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement*
-        COMMENT NL
+    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL 
+      ordinaryStatement*
+    END_CONSTRUCTOR NL
 ;
 
 property:
-    GHOSTED? identifierDef COLON type PROPERTY_ANNOTATION NL
+    GHOSTED? identifierDef COLON type commentText? NL
 ;
 
 functionMethod:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
-        FUNCTION_METHOD_ANNOTATION NL (ordinaryStatement)* returnStatement COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
+      (ordinaryStatement)* 
+      returnStatement 
+    END_FUNCTION_METHOD NL
 ;
 
 procedureMethod:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
-        PROCEDURE_METHOD_ANNOTATION NL ordinaryStatement* COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+      ordinaryStatement*
+    END_PROCEDURE_METHOD NL
 ;
 
 abstractFunction:
     GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type
-        COLON NL PASS COMMENT NL
+        COLON NL PASS commentText? NL
 ;
 
 abstractProcedure:
     GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE
-        COLON NL PASS COMMENT NL
+        COLON NL PASS commentText? NL
 ;
 // END Frames
 
