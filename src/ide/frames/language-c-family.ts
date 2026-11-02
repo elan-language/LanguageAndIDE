@@ -17,7 +17,6 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainRoutine } from "./globals/main-routine";
 import { ProcedureFrame } from "./globals/procedure-frame";
-import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -131,36 +130,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
     }
     return html;
-  }
-
-  common_renderBottomAsHtml(frame: Frame): string {
-    let html = "<el-punc>}</el-punc><el-comment> // end ";
-    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
-      html += this.CLASS;
-    } else if (frame instanceof Constructor) {
-      html += "constructor";
-    } else if (frame instanceof FunctionMethod) {
-      html += "function method";
-    } else if (frame instanceof ProcedureMethod) {
-      html += "procedure method";
-    } else if (frame instanceof ForLoop) {
-      html += this.FOREACH;
-    } else if (frame instanceof GlobalFunction) {
-      html += "function";
-    } else if (frame instanceof GlobalProcedure) {
-      html += "procedure";
-    } else if (frame instanceof IfStatement) {
-      html += "if";
-    } else if (frame instanceof MainRoutine) {
-      html += "main";
-    } else if (frame instanceof TryStatement) {
-      html += this.TRY;
-    } else if (frame instanceof WhileLoop) {
-      html += this.WHILE;
-    } else if (frame instanceof TestFrame) {
-      html += "test";
-    }
-    return html + "</el-comment>";
   }
 
   common_functionFrameFields(frame: FunctionFrame): Field[] {

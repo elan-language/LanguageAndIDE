@@ -70,12 +70,8 @@ export class LanguageCS extends LanguageCfamily {
     return frame.doesInherit() ? `: ${field.renderAsHtml()}` : ``;
   }
 
-  renderBottomAsHtml(frame: Frame): string {
-    let html = this.common_renderBottomAsHtml(frame);
-    if (frame instanceof TestFrame) {
-      html = `<el-punc>}</el-punc>${html}`;
-    }
-    return html;
+  renderBottomAsHtml(_frame: Frame): string {
+    return `<el-punc>}</el-punc>`;
   }
 
   renderFileImportsAsHtml(): string {
