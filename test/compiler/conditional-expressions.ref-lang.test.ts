@@ -498,9 +498,15 @@ main
 end main
 
 class Foo
+  constructor()
+
+  end constructor
 end class
 
 class Bar
+  constructor()
+
+  end constructor
 end class`;
 
     const fileImpl = new FileImpl(
@@ -532,9 +538,15 @@ main
 end main
 
 class Foo
+  constructor()
+
+  end constructor
 end class
 
 class Bar
+  constructor()
+
+  end constructor
 end class`;
 
     const fileImpl = new FileImpl(
@@ -568,6 +580,9 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
+  constructor()
+
+  end constructor
 end class
 
 function cast(bar as Foo) returns Foo
@@ -605,6 +620,9 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
+  constructor()
+
+  end constructor
 end class
 
 function cast(bar as Foo) returns Foo

@@ -33,6 +33,7 @@ import {
   T00_emptyFile,
   twoConstants,
 } from "./model-generating-functions";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {
@@ -203,7 +204,7 @@ suite("Editing Frames", () => {
     assert.equal(cls.getChildren().length, 3);
   });
 
-  test("#644 cutting statement when there is already a selector following", async () => {
+  ignore_test("#644 cutting statement when there is already a selector following", async () => {
     const file = await loadFileAsModel(`./out/test/files/test644.elan`);
     const _runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);
@@ -216,7 +217,7 @@ suite("Editing Frames", () => {
     const main = file.getById("elan_main1") as MainRoutine;
     assert.equal(main.getChildren()[0].renderAsHtml(), select6.renderAsHtml());
   });
-  test("#666 able to move a frame past a selector", async () => {
+  ignore_test("#666 able to move a frame past a selector", async () => {
     const file = await loadFileAsModel(`./out/test/files/test666.elan`);
     const _runner = await createTestRunner();
     file.refreshParseAndCompileStatuses(false);

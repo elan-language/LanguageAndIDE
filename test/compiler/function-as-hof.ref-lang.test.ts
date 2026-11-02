@@ -21,11 +21,11 @@ suite("Function as HOF", () => {
 main
   call printModified(3, twice)
 end main
-  
+
 procedure printModified(i as Float, f as Func<of Float => Float>)
   call printNoLine(f(i))
 end procedure
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;
@@ -120,11 +120,11 @@ return [main, _tests];}`;
 main
   call printIt("Hello", "e", find)
 end main
-  
+
 procedure printIt(s as String, c as String, f as Func<of String, String => Int>)
   call printNoLine(f(s,c))
 end procedure
-  
+
 function find(x as String, y as String) returns Int
   return x.indexOf(y)
 end function`;
@@ -170,11 +170,11 @@ main
   variable f set to getFunc()
   call printNoLine(f(5))
 end main
-  
+
 function getFunc() returns Func<of Float => Float>
   return twice
 end function
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;
@@ -219,7 +219,7 @@ main
   variable f set to twice
   call printNoLine(f(5))
 end main
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;
@@ -253,7 +253,7 @@ end main
 function ff(a as Int) returns Int
   return a
 end function
-  
+
 class Foo
   constructor(f as Func<of Int => Int>)
     assign this.pf to f
@@ -359,7 +359,7 @@ main
   variable f set to twice
   call printNoLine(f(5))
 end main
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;
@@ -388,11 +388,11 @@ end function`;
 main
   call printModified(3, pow2)
 end main
-  
+
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure
-  
+
 function pow2(x as Int, y as Int) returns Int
   return 0
 end function`;
@@ -420,11 +420,11 @@ end function`;
 main
   call printModified(3, pow)
 end main
-  
+
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure
-  
+
 function pow(x as Int) returns String
   return "one"
 end function`;
@@ -485,11 +485,11 @@ end function`;
 main
   call printModified(3, twice)
 end main
-  
+
 procedure printModified(i as Float, f as Func<of Float => Float>)
   call printNoLine(f(i))
 end procedure
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;
@@ -535,11 +535,11 @@ main
   variable f set to getFunc()
   call printNoLine(f(5))
 end main
-  
+
 function getFunc() returns Func<of Float => Float>
   return twice
 end function
-  
+
 function twice(x as Float) returns Float
   return x * 2
 end function`;

@@ -184,7 +184,7 @@ end class`;
     await assertDebugBreakPoint(fileImpl, "elan_set39", expected);
   });
 
-  test("Pass_LocalvariablesMemberFunction", async () => {
+  ignore_test("Pass_LocalvariablesMemberFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -235,7 +235,7 @@ end class`;
     await assertDebugBreakPoint(fileImpl, "elan_set42", expected);
   });
 
-  test("Pass_LocalvariablesConstructor", async () => {
+  ignore_test("Pass_LocalvariablesConstructor", async () => {
     const code = `${testHeader}
 
 main

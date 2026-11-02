@@ -226,7 +226,6 @@ return [main, _tests];}`;
   test("Pass_EachOfVariable", async () => {
     const code = `${testHeader}
 
-
 main
   variable ints set to [1, 2, 3]
    for i1 in ints
@@ -334,16 +333,18 @@ main
 end main
 
 class Bar
-  private property l as List<of Int>
   constructor(li as List<of Int>)
     assign this.l to li
   end constructor
+
+  private property l as List<of Int>
+
   function toString() returns String
     return ""
   end function
 
   procedure display()
-     for item in li
+    for item in li
       call printNoLine(item)
     end for
   end procedure

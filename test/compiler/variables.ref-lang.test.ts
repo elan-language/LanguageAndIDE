@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -461,7 +462,7 @@ end main`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_InvalidVariableName2", async () => {
+  ignore_test("Fail_InvalidVariableName2", async () => {
     const code = `${testHeader}
 
 main

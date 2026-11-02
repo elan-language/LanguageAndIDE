@@ -26,7 +26,7 @@ main
   call printNoLine(enumToString(Fruit.orange))
   call printNoLine(enumToString(Fruit.pear))
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -59,7 +59,7 @@ main
   assign x to Fruit.pear
   call printNoLine(enumToString(x))
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -98,7 +98,7 @@ return [main, _tests];}`;
 main
   variable fruit set to Fruit.apple
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -137,7 +137,7 @@ main
   variable y set to x
   call printNoLine(enumToString(y))
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -177,7 +177,7 @@ main
   call printNoLine(isFavourite(Fruit.apple))
   call printNoLine(isFavourite(Fruit.pear))
 end main
-   
+
 enum Fruit apple, orange, pear
 
 function isFavourite(f as Fruit) returns Boolean
@@ -225,7 +225,7 @@ return [main, _tests];}`;
 main
   call printNoLine(firstFruit() is Fruit.apple)
 end main
-   
+
 enum Fruit apple, orange, pear
 
 function firstFruit() returns Fruit
@@ -274,7 +274,7 @@ main
   call printNoLine(x is Fruit.apple)
   call printNoLine(x is Fruit.pear)
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -353,7 +353,7 @@ main
   variable a set to "Eat more " + Fruit.apple
   call printNoLine(a)
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
@@ -648,7 +648,7 @@ main
   call printNoLine(Fruit.orange)
   call printNoLine(Fruit.pear)
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(
@@ -674,7 +674,7 @@ enum Fruit apple, orange, pear`;
 main
   call printNoLine(enumToString("Fruit.apple"))
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const fileImpl = new FileImpl(

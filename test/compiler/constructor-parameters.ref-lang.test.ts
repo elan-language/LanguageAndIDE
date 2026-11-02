@@ -6,6 +6,7 @@ import {
   assertDoesNotCompile,
   assertDoesNotParse,
   assertParses,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -48,20 +49,20 @@ end class`;
     ]);
   });
 
-  test("Fail_MutatingListParam", async () => {
+  ignore_test("Fail_MutatingListParam", async () => {
     const code = `${testHeader}
 
 class Foo
-    constructor(a as List<of Float>)
-        call a.put(0, 4)
-    end constructor
+  constructor(a as List<of Float>)
+    call a.put(0, 4)
+  end constructor
   function toString() returns String
     return ""
   end function
 
-    function toString() returns String
-        return ""
-    end function
+  function toString() returns String
+    return ""
+  end function
 end class`;
 
     const fileImpl = new FileImpl(

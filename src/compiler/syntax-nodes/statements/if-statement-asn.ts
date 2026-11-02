@@ -26,7 +26,7 @@ export class IfStatementAsn extends CompoundAsn {
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
-    return `${this.indent()}${this.breakPoint(this.debugSymbols())}if (${this.condition.compile()}) {\r
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}if (${this.condition.compile()}) {
 ${this.compileChildren()}\r
 ${this.indent()}}`;
   }

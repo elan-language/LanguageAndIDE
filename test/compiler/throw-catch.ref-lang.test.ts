@@ -120,7 +120,7 @@ return [main, _tests];}`;
 main
   call foo()
 end main
- 
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure`;

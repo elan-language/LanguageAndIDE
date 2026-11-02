@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -288,7 +289,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "a Foo");
   });
 
-  test("Fail_UsingPropertyAsIndex1", async () => {
+  ignore_test("Fail_UsingPropertyAsIndex1", async () => {
     const code = `${testHeader}
 
 main

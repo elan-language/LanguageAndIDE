@@ -135,7 +135,7 @@ class Foo
   function toString() returns String
     return ""
   end function
-  
+
   property a as List<of Int>
 end class`;
 
@@ -198,7 +198,7 @@ class Foo
   function toString() returns String
     return ""
   end function
-  
+
   property b as Bar
 end class
 
@@ -209,7 +209,7 @@ class Bar
   function toString() returns String
     return ""
   end function
-  
+
   property y as Yon
 end class
 
@@ -220,7 +220,7 @@ class Yon
   function toString() returns String
     return ""
   end function
-  
+
   property z as Int
 end class`;
 
@@ -328,7 +328,7 @@ class Foo
   function toString() returns String
     return ""
   end function
-  
+
   property b as Bar
 end class
 
@@ -428,7 +428,7 @@ class Foo
   function toString() returns String
     return ""
   end function
-  
+
   property b as Bar
 end class
 

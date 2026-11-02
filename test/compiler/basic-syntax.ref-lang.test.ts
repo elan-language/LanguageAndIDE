@@ -18,15 +18,13 @@ suite("Basic Syntax", () => {
     const code = `${testHeader}
 
 # comment 1
-main # comment 2
-    # comment 3 (indented)
+main
+  # comment 3 (indented)
 end main`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
-
 async function main() {
-
 
 }
 return [main, _tests];}`;

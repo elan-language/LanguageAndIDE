@@ -77,7 +77,6 @@ return [main, _tests];}`;
 
 constant a set to 0xFF
 main
-  
   call printNoLine(a)
 end main
 `;
@@ -420,7 +419,7 @@ end main
 constant a set to 1
 constant a set to 2
 main
-  
+
 end main
 `;
 

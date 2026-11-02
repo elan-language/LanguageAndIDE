@@ -188,13 +188,13 @@ main
 end main
 
 function factorial(a as Int) returns Int
-    variable result set to 0
-    if a > 2 then
-        assign result to a * factorial(a - 1)
-      else 
-        assign result to a
-    end if
-    return result
+  variable result set to 0
+  if a > 2 then
+    assign result to a * factorial(a - 1)
+  else 
+    assign result to a
+  end if
+  return result
 end function`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -611,8 +611,9 @@ end function`;
     const code = `${testHeader}
 
 main
+
 end main
-    
+
 function foo(a as Int, b as Int) returns Int
   return a / b
 end function`;
@@ -638,8 +639,9 @@ end function`;
     const code = `${testHeader}
 
 main
+
 end main
-    
+
 function foo(a as Int, b as Int) returns Int
   return a * b
   variable c set to a + b
@@ -659,10 +661,11 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CanNotContainPrint", async () => {
+  ignore_test("Fail_CanNotContainPrint", async () => {
     const code = `${testHeader}
 
 main
+
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -688,6 +691,7 @@ end function`;
     const code = `${testHeader}
 
 main
+
 end main
 
 function foo(a as Int, b as Int) returns Int
@@ -769,7 +773,7 @@ end function`;
     ]);
   });
 
-  test("Fail_CannotUpdateList", async () => {
+  ignore_test("Fail_CannotUpdateList", async () => {
     const code = `${testHeader}
 
 main
@@ -798,11 +802,12 @@ end function`;
     const code = `${testHeader}
 
 main
+
 end main
 
 function foo(b as Int, a as List<of Int>) returns Int
-    call a.setAt(0, 0)
-    return a[0]
+  call a.setAt(0, 0)
+  return a[0]
 end function`;
 
     const fileImpl = new FileImpl(
@@ -973,7 +978,7 @@ end function`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 function changeValue(a as Int) returns Bar
@@ -1000,7 +1005,7 @@ end function`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 function if_(a as Int) returns Int

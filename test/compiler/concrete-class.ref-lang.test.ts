@@ -660,14 +660,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_NoConstructor", async () => {
+  test("Fail_NoConstructor", async () => {
     const code = `${testHeader}
 
 class Foo
 
   property p1 as Int
   property p2 as String
-  
+
   function toString() returns String
       return ""
   end function
@@ -685,7 +685,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Pass_ConstructorWithFunction", async () => {
@@ -1402,7 +1402,7 @@ end function
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1435,7 +1435,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1478,7 +1478,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1514,7 +1514,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1553,7 +1553,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1590,7 +1590,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1626,7 +1626,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1663,7 +1663,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1849,7 +1849,7 @@ end main`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1889,10 +1889,13 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 class Foo inherits Foo
+  constructor()
+  end constructor
+
   property prop as Int
 end class`;
 
@@ -1917,18 +1920,24 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 class Yon inherits Foo
+  constructor()
+  end constructor
   property prop as Int
 end class
 
 class Bar inherits Yon
+  constructor()
+  end constructor
   property prop as Int
 end class
 
 class Foo inherits Bar
+  constructor()
+  end constructor
   property prop as Int
 end class`;
 
@@ -1953,7 +1962,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 abstract class Bar inherits Bar
@@ -2134,6 +2143,10 @@ class Bar
   end constructor
 
   property prop_1 as String
+
+  function toString() returns String
+    return ""
+  end function
 
 end class`;
 

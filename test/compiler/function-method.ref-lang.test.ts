@@ -923,16 +923,16 @@ main
 end main
 
 class Foo
-    constructor()
-      
-    end constructor
+  constructor()
+
+  end constructor
   function toString() returns String
     return ""
   end function
 
-    function such() returns Int
-        return 0
-    end function
+  function such() returns Int
+    return 0
+  end function
 
 end class`;
 
@@ -994,27 +994,27 @@ end class`;
     const code = `${testHeader}
 
 class Foo
-    constructor()
-        assign this.p1 to 5
-    end constructor
+  constructor()
+    assign this.p1 to 5
+  end constructor
   function toString() returns String
     return ""
   end function
 
-    property p1 as Float
+  property p1 as Float
 
-    function times(value as Float) returns Float
-        call setP1(p1 * value)
-        return p1
-    end function
+  function times(value as Float) returns Float
+    call setP1(p1 * value)
+    return p1
+  end function
 
-    procedure setP1(value as Float) 
-        assign this.p1 to value
-    end procedure
+  procedure setP1(value as Float) 
+    assign this.p1 to value
+  end procedure
 
-    function toString() returns String
-         return ""
-    end function
+  function toString() returns String
+    return ""
+  end function
 
 end class`;
 
@@ -1036,7 +1036,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1071,7 +1071,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1106,7 +1106,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1138,7 +1138,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1173,7 +1173,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -1291,7 +1291,7 @@ main
   variable f set to new Foo()
   call printNoLine(f.foo())
 end main
-    
+
 class Foo
   constructor()
   end constructor

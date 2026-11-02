@@ -7,6 +7,8 @@ import {
   ConcreteClassContext,
   ConstantContext,
   ConstructorMemberContext,
+  ElseClauseContext,
+  ElseIfClauseContext,
   EnumContext,
   FileContext,
   ForLoopContext,
@@ -20,6 +22,7 @@ import {
   PropertyContext,
   ReturnStatementContext,
   TestContext,
+  ThenClauseContext,
   ThrowStatementContext,
   TryStatementContext,
   VariableDefinitionContext,
@@ -44,10 +47,13 @@ import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
 import { Assignment } from "../frames/statements/assignment";
+import { ElseClause } from "../frames/statements/else-clause";
+import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
 import { IfStatement } from "../frames/statements/if-statement";
 import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
+import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
@@ -140,11 +146,11 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   override visitTest = (ctx: TestContext) => {
     const test = new TestFrame(this.file);
     test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
-    // TODO
-    // const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
-    // for (const s of statements) {
-    //   test.getChildren().push(s);
-    // }
+
+    const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      test.getChildren().push(s);
+    }
     test.updateParseStatus();
     return test;
   };
@@ -166,6 +172,13 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
     );
+
+    const ctor = ctx.constructorMember() ? this.visit(ctx.constructorMember()) : undefined;
+
+    if (ctor) {
+      cls.getChildren().push(ctor as Frame);
+    }
+
     const members = ctx.concreteClassMember().map((s) => this.visit(s)) as Frame[];
     for (const s of members) {
       cls.getChildren().push(s);
@@ -211,8 +224,8 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     const children = if_.getChildren();
     const thenClause = this.visit(ctx.thenClause()) as Frame;
     children.push(thenClause);
-    const elseClauses = ctx.elseIfClause().map((s) => this.visit(s)) as Frame[];
-    for (const s of elseClauses) {
+    const elseIfClauses = ctx.elseIfClause().map((s) => this.visit(s)) as Frame[];
+    for (const s of elseIfClauses) {
       children.push(s);
     }
     const elseClause = ctx.elseClause();
@@ -359,5 +372,38 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     rt.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     rt.updateParseStatus();
     return rt;
+  };
+
+  override visitThenClause = (ctx: ThenClauseContext) => {
+    const thenClause = new ThenClause(this.file);
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      thenClause.getChildren().push(s);
+    }
+    thenClause.updateParseStatus();
+    return thenClause;
+  };
+
+  override visitElseIfClause = (ctx: ElseIfClauseContext) => {
+    const elseIfClause = new ElseIfClause(this.file);
+
+    elseIfClause.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
+
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      elseIfClause.getChildren().push(s);
+    }
+    elseIfClause.updateParseStatus();
+    return elseIfClause;
+  };
+
+  override visitElseClause = (ctx: ElseClauseContext) => {
+    const elseClause = new ElseClause(this.file);
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      elseClause.getChildren().push(s);
+    }
+    elseClause.updateParseStatus();
+    return elseClause;
   };
 }

@@ -1503,6 +1503,9 @@ main
 end main
 
 class Foo
+  constructor()
+
+  end constructor
 end class`;
 
     const fileImpl = new FileImpl(
