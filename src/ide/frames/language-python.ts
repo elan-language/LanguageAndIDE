@@ -21,7 +21,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainRoutine } from "./globals/main-routine";
-import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { LanguageExportHelpers } from "./language-export-helpers";
@@ -50,30 +49,6 @@ export class LanguagePython extends LanguageAbstract {
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";
-
-  annotation(frame: Frame): string {
-    let annotation = "";
-    if (
-      frame instanceof VariableStatement ||
-      frame instanceof ConstantGlobal ||
-      frame instanceof FunctionFrame ||
-      frame instanceof ElseIfClause ||
-      frame instanceof ProcedureFrame ||
-      frame instanceof ProcedureCall ||
-      frame instanceof Assignment ||
-      frame instanceof CatchClause ||
-      frame instanceof ConcreteClass ||
-      frame instanceof AbstractClass ||
-      frame instanceof Property ||
-      frame instanceof FunctionMethod ||
-      frame instanceof ProcedureMethod ||
-      frame instanceof AbstractFunction ||
-      frame instanceof AbstractProcedure
-    ) {
-      annotation = frame.frameSpecificAnnotation();
-    }
-    return annotation;
-  }
 
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;

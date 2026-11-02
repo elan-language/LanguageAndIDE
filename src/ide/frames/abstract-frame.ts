@@ -881,21 +881,9 @@ export abstract class AbstractFrame implements Frame {
     }
   }
 
-  annotationAsHtml() {
-    const source = this.annotationAsSource();
-    return source.length > 0 ? `<el-comment>${source}</el-comment>` : ``;
-  }
-
-  annotationAsSource() {
-    const annotation = this.language().annotation(this).trim();
-    return annotation.length > 0 ? ` ${this.language().COMMENT_MARKER} ${annotation}` : ``;
-  }
-
   language(): Language {
     return this._parent.language();
   }
-
-  abstract frameSpecificAnnotation(): string;
 
   resetFieldText(): void {
     for (const field of this.getFields()) {

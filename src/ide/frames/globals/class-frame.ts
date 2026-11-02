@@ -307,7 +307,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
@@ -316,7 +316,7 @@ ${this.language().renderBottomAsHtml(this)}
   public renderAsExport(): string {
     const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
     const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
+    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
 ${bottomAsExport}`;
   }

@@ -6,14 +6,9 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { ClassFrame } from "./globals/class-frame";
-import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
-import { ProcedureFrame } from "./globals/procedure-frame";
 import { TestFrame } from "./globals/test-frame";
 import { AssertStatement } from "./statements/assert-statement";
-import { Assignment } from "./statements/assignment";
-import { ProcedureCall } from "./statements/procedureCall";
-import { VariableStatement } from "./statements/variable-statement";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -25,21 +20,6 @@ export abstract class LanguageAbstract implements Language {
   languageFullName: string = "Python";
   defaultFileExtension: string = "py";
   defaultMimeType: string = "text/x-python";
-
-  annotation(frame: Frame): string {
-    let annotation = "";
-    if (
-      frame instanceof VariableStatement ||
-      frame instanceof ConstantGlobal ||
-      frame instanceof FunctionFrame ||
-      frame instanceof ProcedureFrame ||
-      frame instanceof ProcedureCall ||
-      frame instanceof Assignment
-    ) {
-      annotation = frame.frameSpecificAnnotation();
-    }
-    return annotation;
-  }
 
   abstract renderSingleLineAsHtml(frame: Frame): string;
 

@@ -264,7 +264,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   renderAsHtml(): string {
     return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 ${this.language().renderBottomAsHtml(this)}
 </${this.outerHtmlTag}>`;
@@ -274,7 +274,7 @@ ${this.language().renderBottomAsHtml(this)}
     const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
     const bottom = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
     const bottomAsExport = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}
+    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}
 ${this.renderChildrenAsExport()}${bottomAsExport}`;
   }
 

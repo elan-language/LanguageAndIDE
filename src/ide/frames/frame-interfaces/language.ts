@@ -8,8 +8,6 @@ export interface Language {
   defaultFileExtension: string;
   defaultMimeType: string;
 
-  annotation(frame: Frame): string;
-
   commentRegex(): RegExp;
 
   renderSingleLineAsHtml(frame: Frame): string;
