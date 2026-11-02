@@ -136,20 +136,20 @@ TEXT: CommonCharacter+;
 GHOSTED: '[ghosted]';
 
 //comments & annotations
-FUNCTION_ANNOTATION: '# function';
-PROCECDURE_ANNOTATION: '# procedure';
-CONSTANT_ANNOTATION: '# constant';
-ENUM_ANNOTATION: '# enum';
-CONCRETE_CLASS_ANNOTATION: '# concrete class';
-ABSTRACT_CLASS_ANNOTATION: '# abstract class';
-VARIABLE_ANNOTATION: '# variable definition';
-ASSIGNMENT_ANNOTATION: '# assignment';
-INPUT_ANNOTATION: '# input statement';
-CALL_ANNOTATION: '# procedure call';
-ELSE_IF_ANNOTATION: '# else if';
-PROPERTY_ANNOTATION: '# property';
-FUNCTION_METHOD_ANNOTATION: '# function method';
-PROCEDURE_METHOD_ANNOTATION: '# procedure method';
+END_MAIN: '# end main';
+END_FUNCTION: '# end function';
+END_TEST: '# end test';
+END_PROCEDURE: '# end procedure';
+END_ENUM: '# end enum';
+END_CLASS: '# end class';
+END_IF: '# end if';
+END_WHILE: '# end while';
+END_FOR: '# end for';
+END_TRY: '# end try';
+END_CONSTRUCTOR: '# end constructor';
+END_FUNCTION_METHOD: '# end function method';
+END_PROCEDURE_METHOD: '# end procedure method';
+
 COMMENT: '#' ~('\r' | '\n')*;
 
 fragment InputCharacter: ~[\r\n\u0085];
