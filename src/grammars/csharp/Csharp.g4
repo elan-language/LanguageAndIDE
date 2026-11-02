@@ -2,7 +2,7 @@
 
 
 grammar Csharp;
-import CSharp_Lexer;
+import Csharp_Lexer;
 
 // START Elan2_Frames
 file: COMMENT? global* NL* EOF;
