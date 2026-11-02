@@ -53,29 +53,34 @@ enum:
 ;
 
 concreteClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION
-        NL (
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION NL
         constructorMember
-        | property
+        concreteClassMember*
+    COMMENT NL
+;
+
+concreteClassMember: 
+          property
         | functionMethod
         | procedureMethod
-        | comment
-    )* COMMENT NL
-;
+        | comment;
 
 abstractClass:
     GHOSTED? CLASS typeName (
         OPEN_BRACKET typeName
         | ABC CLOSE_BRACKET
-    ) ABSTRACT_CLASS_ANNOTATION NL (
-        property
+    ) ABSTRACT_CLASS_ANNOTATION NL 
+      abstractClassMember*
+    COMMENT NL
+;
+
+abstractClassMember:
+          property
         | functionMethod
         | procedureMethod
         | abstractFunction
         | abstractProcedure
-        | comment
-    )* COMMENT NL
-;
+        | comment;
 
 comment: commentText NL;
 commentText: COMMENT;

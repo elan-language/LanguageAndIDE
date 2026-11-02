@@ -45,12 +45,14 @@ enum: GHOSTED? ENUM typeName identifierList NL;
 concreteClass:
     GHOSTED? CLASS classTypeName = typeName (
         INHERITS inheritsTypeName = typeName
-    )? NL concreteClassMember* END CLASS NL
+    )? NL  
+      constructorMember 
+      concreteClassMember* 
+    END CLASS NL
 ;
 
 concreteClassMember:
-    constructorMember
-    | property
+      property
     | functionMethod
     | procedureMethod
     | comment
