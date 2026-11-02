@@ -25,9 +25,10 @@ main:
 ;
 
 function:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
-        FUNCTION_ANNOTATION NL (ordinaryStatement)* /* statements with side-effects prevented by editor and/or compiler */
-        returnStatement COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
+      ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
+      returnStatement 
+    COMMENT NL
 ;
 
 test:
@@ -39,21 +40,22 @@ test:
 ;
 
 procedure:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
-        PROCECDURE_ANNOTATION NL ordinaryStatement* COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+      ordinaryStatement* 
+    COMMENT NL
 ;
 
 constant:
-    GHOSTED? identifierDef EQUAL constantValue CONSTANT_ANNOTATION NL
+    GHOSTED? identifierDef EQUAL constantValue  commentText? NL
 ;
 
 enum:
-    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON ENUM_ANNOTATION NL identifierList
+    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL identifierList
         NL COMMENT
 ;
 
 concreteClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON CONCRETE_CLASS_ANNOTATION NL
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON commentText? NL
         constructorMember
         concreteClassMember*
     COMMENT NL
@@ -66,10 +68,7 @@ concreteClassMember:
         | comment;
 
 abstractClass:
-    GHOSTED? CLASS typeName (
-        OPEN_BRACKET typeName
-        | ABC CLOSE_BRACKET
-    ) ABSTRACT_CLASS_ANNOTATION NL 
+    GHOSTED? CLASS typeName (OPEN_BRACKET typeName | ABC CLOSE_BRACKET) COLON commentText? NL 
       abstractClassMember*
     COMMENT NL
 ;
@@ -98,10 +97,10 @@ ordinaryStatement:
     | comment
 ;
 variableDefinition:
-    GHOSTED? identifierDef EQUAL expression VARIABLE_ANNOTATION NL
+    GHOSTED? identifierDef EQUAL expression commentText? NL
 ;
 assignment:
-    GHOSTED? assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
+    GHOSTED? assignable EQUAL expression commentText? NL
 ;
 
 ifStatement:
@@ -158,17 +157,20 @@ constructorMember:
 ;
 
 property:
-    GHOSTED? identifierDef COLON type PROPERTY_ANNOTATION NL
+    GHOSTED? identifierDef COLON type commentText? NL
 ;
 
 functionMethod:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
-        FUNCTION_METHOD_ANNOTATION NL (ordinaryStatement)* returnStatement COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
+      (ordinaryStatement)* 
+      returnStatement 
+    COMMENT NL
 ;
 
 procedureMethod:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
-        PROCEDURE_METHOD_ANNOTATION NL ordinaryStatement* COMMENT NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+      ordinaryStatement*
+    COMMENT NL
 ;
 
 abstractFunction:
