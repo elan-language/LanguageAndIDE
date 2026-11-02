@@ -133,8 +133,10 @@ procedureCall:
 ;
 
 tryStatement:
-    GHOSTED? TRY NL ordinaryStatement* catchStatement ordinaryStatement* END TRY NL
+    GHOSTED? TRY COLON NL tryClause catchClause+ END TRY NL
 ;
+    tryClause: ordinaryStatement*;
+    catchClause: GHOSTED? EXCEPT typeName AS identifierDef COLON NL ordinaryStatement*;
 
 throwStatement:
     GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET NL

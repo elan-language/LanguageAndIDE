@@ -27,6 +27,8 @@ import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
+import { TryClauseContext } from "./PythonParser.js";
+import { CatchClauseContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
@@ -339,6 +341,26 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTryStatement?: (ctx: TryStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  enterTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.tryClause`.
+   * @param ctx the parse tree
+   */
+  exitTryClause?: (ctx: TryClauseContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  enterCatchClause?: (ctx: CatchClauseContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.catchClause`.
+   * @param ctx the parse tree
+   */
+  exitCatchClause?: (ctx: CatchClauseContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.throwStatement`.
    * @param ctx the parse tree

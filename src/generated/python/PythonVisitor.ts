@@ -27,6 +27,8 @@ import { WhileLoopContext } from "./PythonParser.js";
 import { ForLoopContext } from "./PythonParser.js";
 import { ProcedureCallContext } from "./PythonParser.js";
 import { TryStatementContext } from "./PythonParser.js";
+import { TryClauseContext } from "./PythonParser.js";
+import { CatchClauseContext } from "./PythonParser.js";
 import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
@@ -242,6 +244,18 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTryStatement?: (ctx: TryStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.tryClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryClause?: (ctx: TryClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.catchClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCatchClause?: (ctx: CatchClauseContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.throwStatement`.
    * @param ctx the parse tree
