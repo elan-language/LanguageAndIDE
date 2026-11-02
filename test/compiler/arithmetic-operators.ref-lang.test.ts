@@ -507,15 +507,14 @@ main
 end main
 
 class Foo
-    constructor()
-    end constructor
+  constructor()
+  end constructor
+
   function toString() returns String
     return ""
   end function
-   
-end class
 
-`;
+end class`;
 
     const fileImpl = new FileImpl(
       testHash,

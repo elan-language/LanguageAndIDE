@@ -910,7 +910,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 abstract class Foo inherits Foo
@@ -938,7 +938,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 abstract class Yon inherits Foo
@@ -974,7 +974,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 abstract class Foo
@@ -1006,7 +1006,7 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 class Foo

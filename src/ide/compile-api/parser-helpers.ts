@@ -42,6 +42,8 @@ export function getPythonParser(input: string) {
 }
 
 export function getRefLangParser(input: string, field?: FieldImpl | File) {
+  input = input + "\n";
+
   const chars = CharStream.fromString(input);
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);

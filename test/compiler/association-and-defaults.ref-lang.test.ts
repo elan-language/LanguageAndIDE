@@ -762,7 +762,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -797,7 +797,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -872,7 +872,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -915,7 +915,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
