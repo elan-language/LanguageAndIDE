@@ -124,10 +124,10 @@ procedureCall:
 ;
 
 tryStatement:
-    GHOSTED? TRY NL tryClause catchClause* END TRY NL
+    GHOSTED? TRY NL tryClause catchClause+ END TRY NL
 ;
-    tryClause: ordinaryStatement+;
-    catchClause: ordinaryStatement+;
+    tryClause: ordinaryStatement*;
+    catchClause: GHOSTED? CATCH identifierDef AS typeName NL ordinaryStatement*;
 
 throwStatement: GHOSTED? THROW typeName errorMessage NL;
 
