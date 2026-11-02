@@ -11,7 +11,9 @@ import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
 import { EnumContext } from "./PythonParser.js";
 import { ConcreteClassContext } from "./PythonParser.js";
+import { ConcreteClassMemberContext } from "./PythonParser.js";
 import { AbstractClassContext } from "./PythonParser.js";
+import { AbstractClassMemberContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
 import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
@@ -178,6 +180,16 @@ export class PythonListener implements ParseTreeListener {
    */
   exitConcreteClass?: (ctx: ConcreteClassContext) => void;
   /**
+   * Enter a parse tree produced by `PythonParser.concreteClassMember`.
+   * @param ctx the parse tree
+   */
+  enterConcreteClassMember?: (ctx: ConcreteClassMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.concreteClassMember`.
+   * @param ctx the parse tree
+   */
+  exitConcreteClassMember?: (ctx: ConcreteClassMemberContext) => void;
+  /**
    * Enter a parse tree produced by `PythonParser.abstractClass`.
    * @param ctx the parse tree
    */
@@ -187,6 +199,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitAbstractClass?: (ctx: AbstractClassContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.abstractClassMember`.
+   * @param ctx the parse tree
+   */
+  enterAbstractClassMember?: (ctx: AbstractClassMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.abstractClassMember`.
+   * @param ctx the parse tree
+   */
+  exitAbstractClassMember?: (ctx: AbstractClassMemberContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.comment`.
    * @param ctx the parse tree

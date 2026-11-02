@@ -11,7 +11,9 @@ import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
 import { EnumContext } from "./PythonParser.js";
 import { ConcreteClassContext } from "./PythonParser.js";
+import { ConcreteClassMemberContext } from "./PythonParser.js";
 import { AbstractClassContext } from "./PythonParser.js";
+import { AbstractClassMemberContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
 import { CommentTextContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
@@ -145,11 +147,23 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitConcreteClass?: (ctx: ConcreteClassContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.concreteClassMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConcreteClassMember?: (ctx: ConcreteClassMemberContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.abstractClass`.
    * @param ctx the parse tree
    * @return the visitor result
    */
   visitAbstractClass?: (ctx: AbstractClassContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.abstractClassMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAbstractClassMember?: (ctx: AbstractClassMemberContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.comment`.
    * @param ctx the parse tree

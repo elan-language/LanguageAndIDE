@@ -67,7 +67,5 @@ export interface Frame extends Selectable {
   copy(encode: boolean): boolean;
   deleteAllGhosted(): void;
 
-  frameSpecificAnnotation(): string;
-
   resetFieldText(): void;
 }

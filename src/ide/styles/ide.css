@@ -789,3 +789,6 @@ body.functional div.demo-file.functional { display: revert; }
   width: 150px;
 }
 
+ .multiline > el-comment { /* hides all inline annotations and auto-added 'end ...` comments in Html view*/
+  display: none;
+}
