@@ -30,14 +30,20 @@ import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 import { ErrorListener } from "./error-listener";
+import { PythonVisitorFrame } from "./python-visitor-frame";
 
-export function getPythonParser(input: string) {
+export function getPythonParser(input: string, field?: FieldImpl | File) {
+  input = input + "\n";
+
   const chars = CharStream.fromString(input);
   const lexer = new PythonLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
   // parser.removeParseListeners();
-  parser.removeErrorListeners();
+  // parser.removeErrorListeners();
+  if (field) {
+    parser.addErrorListener(new ErrorListener(field));
+  }
   return parser;
 }
 
@@ -91,6 +97,8 @@ export function getVisitorHtmlByLanguage(l: Language) {
 
 export function getVisitorFrameByLanguage(l: Language, file: File) {
   switch (l.languageFullName) {
+    case "Python":
+      return new PythonVisitorFrame(file);
     case "Reference Language":
       return new RefLangVisitorFrame(file);
     default:

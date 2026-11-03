@@ -4,7 +4,7 @@
 grammar Python;
 import Python_Lexer;
 
-file: comment? global* NL* EOF;
+file: comment? global* mainCall? NL* EOF;
 
 // Globals
 global:
@@ -20,8 +20,11 @@ global:
 ;
 
 main:
-    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement
-        * END_MAIN NL
+    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* END_MAIN NL
+;
+
+mainCall:
+    MAIN OPEN_BRACKET CLOSE_BRACKET
 ;
 
 function:

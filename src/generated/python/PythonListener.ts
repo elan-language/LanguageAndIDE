@@ -5,6 +5,7 @@ import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "a
 import { FileContext } from "./PythonParser.js";
 import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
+import { MainCallContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
 import { TestStatementContext } from "./PythonParser.js";
@@ -144,6 +145,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitMain?: (ctx: MainContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.mainCall`.
+   * @param ctx the parse tree
+   */
+  enterMainCall?: (ctx: MainCallContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.mainCall`.
+   * @param ctx the parse tree
+   */
+  exitMainCall?: (ctx: MainCallContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.function`.
    * @param ctx the parse tree

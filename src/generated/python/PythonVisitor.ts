@@ -5,6 +5,7 @@ import { AbstractParseTreeVisitor } from "antlr4ng";
 import { FileContext } from "./PythonParser.js";
 import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
+import { MainCallContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
 import { TestStatementContext } from "./PythonParser.js";
@@ -135,6 +136,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitMain?: (ctx: MainContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.mainCall`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMainCall?: (ctx: MainCallContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.function`.
    * @param ctx the parse tree

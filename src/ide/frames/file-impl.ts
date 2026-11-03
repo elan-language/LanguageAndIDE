@@ -38,9 +38,11 @@ import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { MainRoutine } from "./globals/main-routine";
 import { defaultUsername, Paradigm } from "./paradigm";
-
-import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
+import { FileContext as PythonFileContext } from "../../generated/python/PythonParser";
+import { FileContext as RefLangFileContext } from "../../generated/ref-lang/RefLangParser";
 import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../compile-api/ref-lang-visitor-frame";
 import { CommentFrame } from "./comment-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCSharp } from "./language-c-sharp";
@@ -650,19 +652,27 @@ export class FileImpl implements File {
     }
   }
 
+  visitFile(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonFileContext | RefLangFileContext,
+  ) {
+    if (this.language() === LanguagePython.Instance) {
+      (visitor as PythonVisitorFrame).visitFile(context as PythonFileContext);
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      (visitor as RefLangVisitorFrame).visitFile(context as RefLangFileContext);
+    }
+  }
+
   parseBodyFrom(source: CodeSource): void {
     this.resetParserErrors();
 
-    const parser = getParserByLanguage(
-      this.language(),
-      source.getRemainingCode(),
-      this,
-    ) as RefLangParser;
+    const parser = getParserByLanguage(this.language(), source.getRemainingCode(), this);
     const visitor = getVisitorFrameByLanguage(this.language(), this);
 
     const fileContext = parser.file()!;
 
-    visitor.visitFile(fileContext);
+    this.visitFile(visitor, fileContext);
 
     this.removeAllSelectorsThatCanBe();
     this.deselectAll();
