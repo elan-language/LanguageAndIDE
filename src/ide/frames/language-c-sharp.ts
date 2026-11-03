@@ -13,12 +13,12 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { AssertStatement } from "./statements/assert-statement";
 
-export class LanguageCS extends LanguageCfamily {
+export class LanguageCSharp extends LanguageCfamily {
   private constructor() {
     super();
   }
 
-  static Instance: Language = new LanguageCS();
+  static Instance: Language = new LanguageCSharp();
 
   languageHtmlClass = "cs";
   languageFullName: string = "C#";

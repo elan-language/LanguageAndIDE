@@ -82,12 +82,12 @@ import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
 
-export class LanguageElan extends LanguageAbstract {
+export class LanguageRefLang extends LanguageAbstract {
   private constructor() {
     super();
   }
 
-  static Instance: Language = new LanguageElan();
+  static Instance: Language = new LanguageRefLang();
 
   commentRegex(): RegExp {
     return /# [^\r\n]*/;

@@ -5,7 +5,6 @@ import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
   assertDoesNotParse,
-  assertExportedVBis,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
@@ -14,7 +13,6 @@ import {
   ignore_test,
   testHash,
   testPythonHeader,
-  testVBHeader,
   transforms,
 } from "./compiler-test-helpers";
 
