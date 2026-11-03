@@ -13,7 +13,7 @@ import { StatementSelector } from "../../src/ide/frames/statements/statement-sel
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { transforms, testHeader, ignore_test } from "../compiler/compiler-test-helpers";
+import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(
@@ -195,6 +195,21 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
+  ignore_test("parse Frames - global comment only", async () => {
+    const code = `${testHeader}
+
+# my comment
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    if (fl.parseError) {
+      throw new Error(fl.parseError);
+    }
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
   ignore_test("parse Frames - hello world", async () => {
     const code = `${testHeader}
 
@@ -258,7 +273,7 @@ enum Fruit apple, orange, pear
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("parse Frames - class", async () => {
+  test("parse Frames - class", async () => {
     const code = `${testHeader}
 
 class Player inherits Foo
@@ -310,7 +325,7 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("parse Frames - with method", async () => {
+  test("parse Frames - with method", async () => {
     const code = `${testHeader}
 
 class Player inherits Foo
@@ -375,7 +390,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("abstract class can contain concrete property", async () => {
+  test("abstract class can contain concrete property", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -386,10 +401,11 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    assert.equal(source.getRemainingCode(), "");
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("abstract class can contain concrete method", async () => {
+  test("abstract class can contain concrete method", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -402,10 +418,11 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    assert.equal(source.getRemainingCode(), "");
+    const elan = await fl.renderAsElanSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  ignore_test("#367 abstract class cannot contain constructor", async () => {
+  test("#367 abstract class cannot contain constructor", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -421,9 +438,9 @@ abstract class Card
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
+    assert.equal(fl.parseError!, "invalid");
   });
-  ignore_test("#942 private members", async () => {
+  test("#942 private members", async () => {
     const code = `${testHeader}
 
 class Foo
