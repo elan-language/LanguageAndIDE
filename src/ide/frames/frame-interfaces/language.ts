@@ -69,6 +69,7 @@ export interface Language {
   customiseValidWithinCurrentContext(
     keyword: string,
     userEntry: boolean,
+    parent: Parent,
     standardResult: boolean,
   ): boolean;
 }

@@ -135,6 +135,7 @@ export abstract class LanguageAbstract implements Language {
   abstract customiseValidWithinCurrentContext(
     keyword: string,
     userEntry: boolean,
+    parent: Parent,
     standardResult: boolean,
   ): boolean;
 }

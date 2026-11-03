@@ -188,6 +188,7 @@ export class LanguageCSharp extends LanguageCfamily {
   customiseValidWithinCurrentContext(
     _keyword: string,
     _userEntry: boolean,
+    _parent: Parent,
     standardResult: boolean,
   ): boolean {
     return standardResult;

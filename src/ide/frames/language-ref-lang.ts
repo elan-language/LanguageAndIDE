@@ -429,6 +429,7 @@ export class LanguageRefLang extends LanguageAbstract {
   customiseValidWithinCurrentContext(
     _keyword: string,
     _userEntry: boolean,
+    _parent: Parent,
     standardResult: boolean,
   ): boolean {
     return standardResult;

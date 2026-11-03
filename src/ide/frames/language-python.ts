@@ -1,3 +1,4 @@
+import { catchKeyword, elifKeyword, throwKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -305,13 +306,37 @@ export class LanguagePython extends LanguageAbstract {
   ]);
 
   customiseStatementOptions(
-    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
-  ): void {}
+    options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {
+    const throwFrame: [string, string, string, (parent: Parent) => Frame, boolean] = options.filter(
+      (o) => o[0] === throwKeyword,
+    )[0];
+    throwFrame[0] = this.RAISE;
+    throwFrame[1] = "r";
+    throwFrame[2] = "<b>r</b>aise";
+    const catchFrame: [string, string, string, (parent: Parent) => Frame, boolean] = options.filter(
+      (o) => o[0] === catchKeyword,
+    )[0];
+    catchFrame[0] = this.EXCEPT;
+    catchFrame[1] = "x";
+    catchFrame[2] = "e<b>x</b>cept";
+    const elseIfFrame: [string, string, string, (parent: Parent) => Frame, boolean] =
+      options.filter((o) => o[0] === elifKeyword)[0];
+    elseIfFrame[0] = this.ELIF;
+    elseIfFrame[1] = "l";
+    elseIfFrame[2] = "e<b>l</b>if";
+  }
+
   customiseValidWithinCurrentContext(
-    _keyword: string,
+    keyword: string,
     _userEntry: boolean,
+    parent: Parent,
     standardResult: boolean,
   ): boolean {
-    return standardResult;
+    let result = standardResult;
+    if (keyword === this.EXCEPT) {
+      result = parent.getIdPrefix().includes(`_${catchKeyword}`);
+    }
+    return result;
   }
 }
