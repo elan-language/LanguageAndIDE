@@ -254,10 +254,10 @@ export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}
 
 export const testHeader = `# FFFF ${testHeaderVersion} valid`;
 
-export const testPythonHeader = `# Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testJavaHeader = `// Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testCSHeader = `// C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testVBHeader = `' VB.NET with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testPythonHeader = `# FFFF Python with ${testHeaderVersion} valid`;
+export const testJavaHeader = `// FFFF Java with ${testHeaderVersion} valid`;
+export const testCSHeader = `// FFFF C# with ${testHeaderVersion} valid`;
+export const testVBHeader = `' FFFF VB.NET with ${testHeaderVersion} valid`;
 
 export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
   let actual;

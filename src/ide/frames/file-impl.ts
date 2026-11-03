@@ -763,9 +763,8 @@ export class FileImpl implements File {
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      this._language = LanguageRefLang.Instance;
-      this.parseBodyFrom(source);
       this.setLanguageFromHeader(language);
+      this.parseBodyFrom(source);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
