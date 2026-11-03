@@ -36,7 +36,9 @@ import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
+import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
+import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
@@ -112,6 +114,10 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
+    } else if (frame instanceof ThenClause) {
+      html = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
+      html = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw>:`;
     } else if (frame instanceof WhileLoop) {
