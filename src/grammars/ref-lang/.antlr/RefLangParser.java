@@ -4475,8 +4475,8 @@ public class RefLangParser extends Parser {
 	@SuppressWarnings("CheckReturnValue")
 	public static class IfExpressionContext extends ExpressionContext {
 		public ExpressionContext condition;
-		public ExpressionContext true_;
-		public ExpressionContext false_;
+		public ExpressionContext trueExpr;
+		public ExpressionContext falseExpr;
 		public TerminalNode IF_() { return getToken(RefLangParser.IF_, 0); }
 		public TerminalNode OPEN_BRACKET() { return getToken(RefLangParser.OPEN_BRACKET, 0); }
 		public List<TerminalNode> COMMA() { return getTokens(RefLangParser.COMMA); }
@@ -4552,11 +4552,11 @@ public class RefLangParser extends Parser {
 				setState(781);
 				match(COMMA);
 				setState(782);
-				((IfExpressionContext)_localctx).true_ = expression();
+				((IfExpressionContext)_localctx).trueExpr = expression();
 				setState(783);
 				match(COMMA);
 				setState(784);
-				((IfExpressionContext)_localctx).false_ = expression();
+				((IfExpressionContext)_localctx).falseExpr = expression();
 				setState(785);
 				match(CLOSE_BRACKET);
 				}
