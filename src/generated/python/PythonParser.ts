@@ -130,8 +130,8 @@ export class PythonParser extends antlr.Parser {
   public static readonly END_CONSTRUCTOR = 117;
   public static readonly END_FUNCTION_METHOD = 118;
   public static readonly END_PROCEDURE_METHOD = 119;
-  public static readonly VAR_DEF = 120;
-  public static readonly VAR_ASSIGN = 121;
+  public static readonly ASSIGNMENT_ANNOTATION = 120;
+  public static readonly VARIABLE_DEFINITION_ANNOTATION = 121;
   public static readonly COMMENT = 122;
   public static readonly RULE_file = 0;
   public static readonly RULE_global = 1;
@@ -340,8 +340,8 @@ export class PythonParser extends antlr.Parser {
     "'# end constructor'",
     "'# end function method'",
     "'# end procedure method'",
-    "'# variable definition'",
     "'# assignment'",
+    "'# variable definition'",
   ];
 
   public static readonly symbolicNames = [
@@ -465,8 +465,8 @@ export class PythonParser extends antlr.Parser {
     "END_CONSTRUCTOR",
     "END_FUNCTION_METHOD",
     "END_PROCEDURE_METHOD",
-    "VAR_DEF",
-    "VAR_ASSIGN",
+    "ASSIGNMENT_ANNOTATION",
+    "VARIABLE_DEFINITION_ANNOTATION",
     "COMMENT",
   ];
   public static readonly ruleNames = [
@@ -1663,7 +1663,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 416;
         this.expression(0);
         this.state = 417;
-        this.match(PythonParser.VAR_DEF);
+        this.match(PythonParser.VARIABLE_DEFINITION_ANNOTATION);
         this.state = 418;
         this.match(PythonParser.NL);
       }
@@ -1703,7 +1703,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 425;
         this.expression(0);
         this.state = 426;
-        this.match(PythonParser.VAR_ASSIGN);
+        this.match(PythonParser.ASSIGNMENT_ANNOTATION);
         this.state = 427;
         this.match(PythonParser.NL);
       }
@@ -5056,10 +5056,10 @@ export class PythonParser extends antlr.Parser {
     0, 0, 409, 401, 1, 0, 0, 0, 409, 402, 1, 0, 0, 0, 409, 403, 1, 0, 0, 0, 409, 404, 1, 0, 0, 0,
     409, 405, 1, 0, 0, 0, 409, 406, 1, 0, 0, 0, 409, 407, 1, 0, 0, 0, 409, 408, 1, 0, 0, 0, 410, 33,
     1, 0, 0, 0, 411, 413, 5, 106, 0, 0, 412, 411, 1, 0, 0, 0, 412, 413, 1, 0, 0, 0, 413, 414, 1, 0,
-    0, 0, 414, 415, 3, 80, 40, 0, 415, 416, 5, 66, 0, 0, 416, 417, 3, 124, 62, 0, 417, 418, 5, 120,
+    0, 0, 414, 415, 3, 80, 40, 0, 415, 416, 5, 66, 0, 0, 416, 417, 3, 124, 62, 0, 417, 418, 5, 121,
     0, 0, 418, 419, 5, 94, 0, 0, 419, 35, 1, 0, 0, 0, 420, 422, 5, 106, 0, 0, 421, 420, 1, 0, 0, 0,
     421, 422, 1, 0, 0, 0, 422, 423, 1, 0, 0, 0, 423, 424, 3, 84, 42, 0, 424, 425, 5, 66, 0, 0, 425,
-    426, 3, 124, 62, 0, 426, 427, 5, 121, 0, 0, 427, 428, 5, 94, 0, 0, 428, 37, 1, 0, 0, 0, 429,
+    426, 3, 124, 62, 0, 426, 427, 5, 120, 0, 0, 427, 428, 5, 94, 0, 0, 428, 37, 1, 0, 0, 0, 429,
     431, 5, 106, 0, 0, 430, 429, 1, 0, 0, 0, 430, 431, 1, 0, 0, 0, 431, 432, 1, 0, 0, 0, 432, 433,
     5, 6, 0, 0, 433, 434, 3, 124, 62, 0, 434, 436, 5, 39, 0, 0, 435, 437, 3, 30, 15, 0, 436, 435, 1,
     0, 0, 0, 436, 437, 1, 0, 0, 0, 437, 438, 1, 0, 0, 0, 438, 439, 5, 94, 0, 0, 439, 443, 3, 40, 20,
@@ -6222,8 +6222,8 @@ export class VariableDefinitionContext extends antlr.ParserRuleContext {
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;
   }
-  public VAR_DEF(): antlr.TerminalNode {
-    return this.getToken(PythonParser.VAR_DEF, 0)!;
+  public VARIABLE_DEFINITION_ANNOTATION(): antlr.TerminalNode {
+    return this.getToken(PythonParser.VARIABLE_DEFINITION_ANNOTATION, 0)!;
   }
   public NL(): antlr.TerminalNode {
     return this.getToken(PythonParser.NL, 0)!;
@@ -6266,8 +6266,8 @@ export class AssignmentContext extends antlr.ParserRuleContext {
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;
   }
-  public VAR_ASSIGN(): antlr.TerminalNode {
-    return this.getToken(PythonParser.VAR_ASSIGN, 0)!;
+  public ASSIGNMENT_ANNOTATION(): antlr.TerminalNode {
+    return this.getToken(PythonParser.ASSIGNMENT_ANNOTATION, 0)!;
   }
   public NL(): antlr.TerminalNode {
     return this.getToken(PythonParser.NL, 0)!;

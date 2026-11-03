@@ -149,6 +149,8 @@ END_TRY: '# end try';
 END_CONSTRUCTOR: '# end constructor';
 END_FUNCTION_METHOD: '# end function method';
 END_PROCEDURE_METHOD: '# end procedure method';
+ASSIGNMENT_ANNOTATION: '# assignment';
+VARIABLE_DEFINITION_ANNOTATION: '# varible definition';
 
 VAR_DEF: '# variable definition';
 VAR_ASSIGN: '# assignment';

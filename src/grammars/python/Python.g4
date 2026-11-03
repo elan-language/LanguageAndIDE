@@ -99,11 +99,11 @@ ordinaryStatement:
     | comment
 ;
 variableDefinition:
-    GHOSTED? identifierDef EQUAL expression VAR_DEF NL
-;
+    GHOSTED? identifierDef EQUAL expression VARIABLE_DEFINITION_ANNOTATION NL
+; // annotation eventually to be replaced by commentText? like other statements
 assignment:
-    GHOSTED? assignable EQUAL expression VAR_ASSIGN NL
-;
+    GHOSTED? assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
+; // annotation eventually to be replaced by commentText? like other statements
 
 ifStatement:
     GHOSTED? IF condition = expression THEN commentText? NL thenClause elseIfClause* elseClause?
