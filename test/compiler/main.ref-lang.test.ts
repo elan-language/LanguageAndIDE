@@ -1,5 +1,5 @@
 import { CodeSourceFromString } from "../../src/ide/frames/file-impl";
-import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 import {
   assertDoesNotCompile,
   assertObjectCodeExecutes,
@@ -25,7 +25,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
@@ -45,7 +45,7 @@ main
   variable a set to 3
 end main`;
 
-    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    const fileImpl = newFileImpl(LanguageElan.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

@@ -7,9 +7,9 @@ import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { FieldImpl } from "../ide/frames/fields/field-impl";
 import {
+  typeFieldSpec,
   expressionFieldSpec,
   paramListFieldSpec,
-  typeFieldSpec,
 } from "../ide/frames/fields/field-spec";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
@@ -18,8 +18,8 @@ import { ConcreteClass } from "../ide/frames/globals/concrete-class";
 import { GlobalFunction } from "../ide/frames/globals/global-function";
 import { GlobalSelector } from "../ide/frames/globals/global-selector";
 import { MainRoutine } from "../ide/frames/globals/main-routine";
+import { LanguageElan } from "../ide/frames/language-elan";
 import { LanguagePython } from "../ide/frames/language-python";
-import { LanguageRefLang } from "../ide/frames/language-ref-lang";
 import { Paradigm } from "../ide/frames/paradigm";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
 import { VariableStatement } from "../ide/frames/statements/variable-statement";
@@ -86,7 +86,7 @@ function newFileImpl(): FileImpl {
     fileImpl.removeChild(c);
   }
 
-  fileImpl.setLanguage(LanguageRefLang.Instance);
+  fileImpl.setLanguage(LanguageElan.Instance);
   fileImpl.updateAllParseStatus();
   fileImpl.parseError = undefined;
 
@@ -94,7 +94,7 @@ function newFileImpl(): FileImpl {
 }
 
 const languages = [
-  LanguageRefLang.Instance,
+  LanguageElan.Instance,
   LanguagePython.Instance,
   // LanguageCS.Instance,
   // LanguageVB.Instance,

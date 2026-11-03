@@ -1,19 +1,19 @@
 import assert from "assert";
 import { CommentFrame } from "../../src/ide/frames/comment-frame";
-import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 import { fileImplFor, testExtractContextForExpression } from "../testHelpers";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { Language } from "../../src/ide/frames/frame-interfaces/language";
 
-const refLang: Language = LanguageRefLang.Instance;
+const refLang: Language = LanguageElan.Instance;
 
 suite("Parsing Fields (Old) RefLang", () => {
   test("parse CommentField", () => {

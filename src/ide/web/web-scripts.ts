@@ -8,9 +8,11 @@ import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "..
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Language } from "../frames/frame-interfaces/language";
-import { LanguageCSharp } from "../frames/language-c-sharp";
+import { LanguageCS } from "../frames/language-cs";
+import { LanguageElan } from "../frames/language-elan";
+import { LanguageJava } from "../frames/language-java";
 import { LanguagePython } from "../frames/language-python";
-import { LanguageRefLang } from "../frames/language-ref-lang";
+import { LanguageVB } from "../frames/language-vb";
 import { Paradigm } from "../frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
@@ -70,7 +72,9 @@ const language2Menu = document.getElementById("language2-menu") as HTMLDivElemen
 const language3Menu = document.getElementById("language3-menu") as HTMLDivElement;
 
 const pythonButton = document.querySelectorAll(".python-language") as NodeListOf<HTMLDivElement>;
+const vbButton = document.querySelectorAll(".vb-language") as NodeListOf<HTMLDivElement>;
 const csButton = document.querySelectorAll(".cs-language") as NodeListOf<HTMLDivElement>;
+const javaButton = document.querySelectorAll(".java-language") as NodeListOf<HTMLDivElement>;
 const elanButton = document.querySelectorAll(".elan-language") as NodeListOf<HTMLDivElement>;
 
 const paradigmMenu = document.getElementById("paradigm-menu") as HTMLDivElement;
@@ -758,7 +762,7 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   setDisplayLanguage(l: Language) {
-    if (l instanceof LanguageRefLang) {
+    if (l instanceof LanguageElan) {
       exportButton.setAttribute("hidden", "");
     } else {
       exportButton.removeAttribute("hidden");
@@ -891,17 +895,31 @@ pythonButton.forEach((b) =>
   }),
 );
 
+vbButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageVB.Instance, pane);
+  }),
+);
+
 csButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageCSharp.Instance, pane);
+    await setLanguage(LanguageCS.Instance, pane);
+  }),
+);
+
+javaButton.forEach((b) =>
+  b.addEventListener("click", async (_event: Event) => {
+    const pane = parseInt(b.id.slice(-1));
+    await setLanguage(LanguageJava.Instance, pane);
   }),
 );
 
 elanButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageRefLang.Instance, pane);
+    await setLanguage(LanguageElan.Instance, pane);
   }),
 );
 

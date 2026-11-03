@@ -26,9 +26,11 @@ import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
 import { Language } from "../src/ide/frames/frame-interfaces/language";
 import { MainRoutine } from "../src/ide/frames/globals/main-routine";
-import { LanguageCSharp } from "../src/ide/frames/language-c-sharp";
+import { LanguageCS } from "../src/ide/frames/language-cs";
+import { LanguageElan } from "../src/ide/frames/language-elan";
+import { LanguageJava } from "../src/ide/frames/language-java";
 import { LanguagePython } from "../src/ide/frames/language-python";
-import { LanguageRefLang } from "../src/ide/frames/language-ref-lang";
+import { LanguageVB } from "../src/ide/frames/language-vb";
 import { Paradigm } from "../src/ide/frames/paradigm";
 import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
@@ -147,13 +149,13 @@ export async function testElanFile(fn: string) {
   const [fl, source, sourceFile, testPath] = await getFile(fn);
   await assertParsesAndCompilesAndTests(fl);
 
-  const msgs = [];
+  let msgs = [];
   msgs.push(await assertGeneratesSameElanSource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
   msgs.push(await assertExportsAll(fl, testPath));
 
   if (msgs.some(m => m)) {
-    throw new Error(msgs.join(", "));
+    throw new Error(msgs.join(", "))
   }
 }
 
@@ -595,7 +597,7 @@ export function testAntlrParse(
   }
 
   if (elanSource !== "") {
-    assert.equal(getVisitorSourceByLanguage(LanguageRefLang.Instance).visit(context), elanSource);
+    assert.equal(getVisitorSourceByLanguage(LanguageElan.Instance).visit(context), elanSource);
   }
 
   if (html && html !== "") {
@@ -644,9 +646,16 @@ export function fileWithPython(): FileImpl {
   return fileWithLanguage(LanguagePython.Instance);
 }
 
+export function fileWithVB(): FileImpl {
+  return fileWithLanguage(LanguageVB.Instance);
+}
 
 export function fileWithCS(): FileImpl {
-  return fileWithLanguage(LanguageCSharp.Instance);
+  return fileWithLanguage(LanguageCS.Instance);
+}
+
+export function fileWithJava(): FileImpl {
+  return fileWithLanguage(LanguageJava.Instance);
 }
 
 function fileWithLanguage(language: Language): FileImpl {

@@ -1,14 +1,14 @@
 import { ParserRuleContext } from "antlr4ng";
 import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
-import { ignore_test } from "../compiler/compiler-test-helpers";
+import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { Parser, testAntlrParse } from "../testHelpers";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Parsing Rules RefLang", () => {
   test("Expression", () => {
     const expression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.expression(),
     ];
     testAntlrParse(expression, "bar1_foo", true); // identifier
@@ -116,7 +116,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Identifier", () => {
     const identifier: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => (p as RefLangParser).identifierUse(),
     ];
     testAntlrParse(identifier, ``, false);
@@ -146,7 +146,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Lit String", () => {
     const litString: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.litString(),
     ];
     testAntlrParse(litString, "", false);
@@ -249,7 +249,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Lit Int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.litInt(),
     ];
     testAntlrParse(litInt, "", false);
@@ -312,7 +312,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Lit Float", () => {
     const litFloat: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.litFloat(),
     ];
     testAntlrParse(litFloat, "", false);
@@ -342,7 +342,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Lit Boolean", () => {
     const litBoolean: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.litBoolean(),
     ];
     testAntlrParse(litBoolean, `true`, true, `true`, `true`, "<el-kw>true</el-kw>", `true`, "true");
@@ -361,7 +361,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Enum Value", () => {
     const enumValue: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.enumValue(),
     ];
     testAntlrParse(
@@ -380,7 +380,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Method Call", () => {
     const methodCall: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.methodCall(),
     ];
     testAntlrParse(methodCall, ``, false);
@@ -425,7 +425,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Unary Expression", () => {
     const unaryExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.unaryExpression(),
     ];
     testAntlrParse(unaryExpression, "", false);
@@ -456,7 +456,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("BinaryOperator", () => {
     const binaryOperator: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.binaryOperator(),
     ];
     testAntlrParse(binaryOperator, "is", true, "is", " is ", "<el-kw> is </el-kw>");
@@ -476,7 +476,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("BinaryExpression", () => {
     const binaryExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.binaryExpression(),
     ];
     testAntlrParse(
@@ -564,7 +564,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Index", () => {
     const index: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.index(),
     ];
     testAntlrParse(index, ``, false);
@@ -576,7 +576,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Chainable", () => {
     const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.chainable(),
     ];
     testAntlrParse(chainable, ``, false);
@@ -637,7 +637,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("BracketedExpression", () => {
     const bracketedExpression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.bracketedExpression(),
     ];
     testAntlrParse(
@@ -678,7 +678,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Type", () => {
     const type_: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.type_(),
     ];
     testAntlrParse(type_, `Foo`, true, "Foo", "Foo", "<el-type>Foo</el-type>");
@@ -714,7 +714,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("lambda", () => {
     const lambda: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.lambda(),
     ];
     testAntlrParse(lambda, `lambda x as Int => x * x`, true, "lambda x as Int => x * x", "", "");
@@ -740,7 +740,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("IfExpr", () => {
     const expr: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => (p as RefLangParser).expression(),
     ];
     testAntlrParse(
@@ -781,7 +781,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("ParamDefNode", () => {
     const paramDef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.paramDef(),
     ];
     testAntlrParse(
@@ -800,7 +800,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Param List", () => {
     const paramList: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.paramList(),
     ];
     testAntlrParse(paramList, `a as String`, true);
@@ -815,7 +815,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("New Instance", () => {
     const newInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.newInstance(),
     ];
     testAntlrParse(newInstance, ``, false);
@@ -844,7 +844,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("List", () => {
     const list: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.list(),
     ];
     testAntlrParse(
@@ -878,7 +878,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Tuple", () => {
     const tuple: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.tuple(),
     ];
     testAntlrParse(
@@ -917,7 +917,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Dictionary", () => {
     const dict: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.dictionary(),
     ];
     testAntlrParse(
@@ -944,7 +944,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Chainable", () => {
     const chainable: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.chainable(),
     ];
     testAntlrParse(chainable, `b`, true, "b", "b", "<el-id>b</el-id>", "b");
@@ -974,7 +974,7 @@ suite("Parsing Rules RefLang", () => {
 
   test("Term", () => {
     const term: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.term(),
     ];
     testAntlrParse(term, ``, false);
@@ -1098,7 +1098,7 @@ suite("Parsing Rules RefLang", () => {
   });
   test("ThisInstance", () => {
     const thisInstance: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.thisInstance(),
     ];
     testAntlrParse(thisInstance, `this`, true, `this`, `this`, "<el-kw>this</el-kw>", `this`);
@@ -1109,7 +1109,7 @@ suite("Parsing Rules RefLang", () => {
 
   ignore_test("InstanceProcRef", () => {
     const procRef: [Language, rule: (parser: Parser) => ParserRuleContext] = [
-      LanguageRefLang.Instance,
+      LanguageElan.Instance,
       (p: Parser) => p.term(),
     ];
     testAntlrParse(procRef, `foo`, true);
