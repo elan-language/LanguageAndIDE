@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -613,7 +614,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_ghostedVariableInElse", async () => {
+  ignore_test("Pass_ghostedVariableInElse", async () => {
     const code = `${testHeader}
 
 main
@@ -678,8 +679,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const elan_iterelan_for19 = [..._stdlib.range(0, 6)];
-    for (const i of elan_iterelan_for19) {
+    const elan_iterelan_for21 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterelan_for21) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);

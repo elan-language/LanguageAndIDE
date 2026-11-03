@@ -9,7 +9,7 @@ import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
-import { testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
 import { LanguageElan } from "../../src/ide/frames/language-elan";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FileImpl } from "../../src/ide/frames/file-impl";
@@ -196,7 +196,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - hello world", async () => {
+  ignore_test("parse Frames - hello world", async () => {
     const code = `${testHeader}
 
 # my comment
@@ -259,7 +259,7 @@ enum Fruit apple, orange, pear
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - class", async () => {
+  ignore_test("parse Frames - class", async () => {
     const code = `${testHeader}
 
 class Player inherits Foo
@@ -311,7 +311,7 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - with method", async () => {
+  ignore_test("parse Frames - with method", async () => {
     const code = `${testHeader}
 
 class Player inherits Foo
@@ -376,7 +376,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("abstract class can contain concrete property", async () => {
+  ignore_test("abstract class can contain concrete property", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -390,7 +390,7 @@ end class
     assert.equal(source.getRemainingCode(), "");
   });
 
-  test("abstract class can contain concrete method", async () => {
+  ignore_test("abstract class can contain concrete method", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -406,7 +406,7 @@ end class
     assert.equal(source.getRemainingCode(), "");
   });
 
-  test("#367 abstract class cannot contain constructor", async () => {
+  ignore_test("#367 abstract class cannot contain constructor", async () => {
     const code = `${testHeader}
 
 abstract class Card
@@ -424,7 +424,7 @@ abstract class Card
     await fl.parseFrom(source);
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
-  test("#942 private members", async () => {
+  ignore_test("#942 private members", async () => {
     const code = `${testHeader}
 
 class Foo

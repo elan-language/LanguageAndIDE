@@ -892,7 +892,7 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  
+
   property p1 as Int
 
   procedure testPrivate(a as Int)
@@ -990,7 +990,7 @@ class Bar inherits Foo
   function toString() returns String
     return ""
   end function
-  
+
   property p1 as Int
 
   procedure testPrivate(a as Int)
@@ -2183,14 +2183,14 @@ main
 end main
 
 class Bar inherits Foo
-    constructor()  
-    end constructor
+  constructor()  
+  end constructor
   function toString() returns String
     return ""
   end function
-    
-    property p1 as Float
-    
+
+  property p1 as Float
+
 end class`;
 
     const fileImpl = new FileImpl(
@@ -2212,7 +2212,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2245,7 +2245,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2275,7 +2275,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2305,7 +2305,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2335,7 +2335,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2365,7 +2365,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2395,7 +2395,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2438,7 +2438,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2482,7 +2482,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2527,7 +2527,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2572,7 +2572,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Yon
@@ -2612,7 +2612,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Yon
@@ -2643,7 +2643,7 @@ end class
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2686,7 +2686,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2730,7 +2730,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2775,7 +2775,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Foo
@@ -2820,7 +2820,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Yon
@@ -2860,7 +2860,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 abstract class Yon
@@ -2963,10 +2963,10 @@ abstract class Bar
 end class
 
 class Yon inherits Foo, Bar
-    constructor()
-        assign this.p1 to 3
-        assign this.p2 to "apple"
-    end constructor
+  constructor()
+    assign this.p1 to 3
+    assign this.p2 to "apple"
+  end constructor
   function toString() returns String
     return ""
   end function
@@ -3041,25 +3041,25 @@ abstract class Foo
 end class
 
 class Bar inherits Foo
-    constructor()
-        assign this.p1 to 3
-        assign this.p2 to 4
-    end constructor
+  constructor()
+    assign this.p1 to 3
+    assign this.p2 to 4
+  end constructor
 
-    property p1 as Float
-    property p2 as Float
+  property p1 as Float
+  property p2 as Float
 
-    procedure setP1(p1 as Float)
-        assign this.p1 to p1
-    end procedure
+  procedure setP1(p1 as Float)
+    assign this.p1 to p1
+  end procedure
 
-    function product() returns Float
-        return this.p1 * this.p2
-    end function
+  function product() returns Float
+    return this.p1 * this.p2
+  end function
 
-    function toString() returns String 
-        return ""
-    end function
+  function toString() returns String 
+    return ""
+  end function
 end class`;
 
     const fileImpl = new FileImpl(
@@ -3122,11 +3122,16 @@ main
 end main
 
 class Foo inherits Bar
-  
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
 end class
 
 abstract class Bar
-  
+
 end class`;
 
     const fileImpl = new FileImpl(
@@ -3151,15 +3156,15 @@ end class`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 abstract class Foo inherits Bar
-  
+
 end class
 
 abstract class Bar
-  
+
 end class`;
 
     const fileImpl = new FileImpl(

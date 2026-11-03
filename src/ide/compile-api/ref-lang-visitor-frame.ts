@@ -41,6 +41,7 @@ import { Property } from "../frames/class-members/property";
 import { CommentFrame } from "../frames/comment-frame";
 import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
+import { Parent } from "../frames/frame-interfaces/parent";
 import { AbstractClass } from "../frames/globals/abstract-class";
 import { ConcreteClass } from "../frames/globals/concrete-class";
 import { ConstantGlobal } from "../frames/globals/constant-global";
@@ -70,7 +71,10 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   constructor(private readonly file: File) {
     super();
     this.sourceVisitor = new RefLangVisitorSource(file.language());
+    this.parent = file;
   }
+
+  private parent: Parent;
 
   private sourceVisitor;
 
@@ -85,7 +89,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitComment? = (ctx: CommentContext) => {
-    const com = new CommentFrame(this.file);
+    const com = new CommentFrame(this.parent);
     const text = this.sourceVisitor.visit(ctx.commentText())!;
     com.text.setFieldToKnownValidText(text);
     com.updateParseStatus();
@@ -107,7 +111,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   override visitConstant = (ctx: ConstantContext) => {
     const name = this.sourceVisitor.visit(ctx.identifierDef()!)!;
     const value = this.sourceVisitor.visit(ctx.constantValue()!)!;
-    const gc = new ConstantGlobal(this.file!);
+    const gc = new ConstantGlobal(this.file);
     gc.name.setFieldToKnownValidText(name);
     gc.value.setFieldToKnownValidText(value);
     gc.updateParseStatus();
@@ -120,6 +124,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
+    this.parent = proc;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       proc.getChildren().push(s);
@@ -138,6 +143,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
     func.getChildren().pop();
 
+    this.parent = func;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       func.getChildren().push(s);
@@ -153,6 +159,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     const test = new TestFrame(this.file);
     test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
 
+    this.parent = test;
     const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       test.getChildren().push(s);
@@ -178,6 +185,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
     );
+    this.parent = cls;
 
     const ctor = ctx.constructorMember() ? this.visit(ctx.constructorMember()) : undefined;
 
@@ -199,6 +207,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
     );
+
+    this.parent = cls;
+
     const members = ctx.abstractClassMember().map((s) => this.visit(s)) as Frame[];
     for (const s of members) {
       cls.getChildren().push(s);
@@ -209,7 +220,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   // Statements
   override visitVariableDefinition = (ctx: VariableDefinitionContext) => {
-    const varDef = new VariableStatement(this.file);
+    const varDef = new VariableStatement(this.parent);
     varDef.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     varDef.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     varDef.updateParseStatus();
@@ -217,7 +228,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitAssert = (ctx: AssertContext) => {
-    const assert = new AssertStatement(this.file);
+    const assert = new AssertStatement(this.parent);
     assert.actual.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertActual()!)!);
     assert.expected.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertExpected()!)!);
     assert.updateParseStatus();
@@ -225,7 +236,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitAssignment = (ctx: AssignmentContext) => {
-    const assignment = new Assignment(this.file);
+    const assignment = new Assignment(this.parent);
     assignment.assignable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assignable()!)!);
     assignment.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     assignment.updateParseStatus();
@@ -233,9 +244,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitIfStatement = (ctx: IfStatementContext) => {
-    const if_ = new IfStatement(this.file);
+    const if_ = new IfStatement(this.parent);
     if_.getChildren().length = 0;
     if_.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
+
+    this.parent = if_;
+
     const children = if_.getChildren();
     const thenClause = this.visit(ctx.thenClause()) as Frame;
     children.push(thenClause);
@@ -252,8 +266,11 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitWhileLoop = (ctx: WhileLoopContext) => {
-    const whileLoop = new WhileLoop(this.file);
+    const whileLoop = new WhileLoop(this.parent);
     whileLoop.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
+
+    this.parent = whileLoop;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       whileLoop.getChildren().push(s);
@@ -263,9 +280,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitForLoop = (ctx: ForLoopContext) => {
-    const forLoop = new ForLoop(this.file);
+    const forLoop = new ForLoop(this.parent);
     forLoop.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     forLoop.iter.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
+
+    this.parent = forLoop;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       forLoop.getChildren().push(s);
@@ -275,16 +295,19 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitProcedureCall = (ctx: ProcedureCallContext) => {
-    const procedureCall = new ProcedureCall(this.file);
+    const procedureCall = new ProcedureCall(this.parent);
     procedureCall.procRef.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.term())!);
     procedureCall.updateParseStatus();
     return procedureCall;
   };
 
   override visitTryStatement = (ctx: TryStatementContext) => {
-    const trySt = new TryStatement(this.file);
+    const trySt = new TryStatement(this.parent);
     const children = trySt.getChildren();
     children.length = 0;
+
+    this.parent = trySt;
+
     const tryClause = this.visit(ctx.tryClause()) as Frame;
     children.push(tryClause);
     const catchClauses = ctx.catchClause().map((s) => this.visit(s)) as Frame[];
@@ -296,7 +319,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitThrowStatement = (ctx: ThrowStatementContext) => {
-    const thrw = new ThrowStatement(this.file);
+    const thrw = new ThrowStatement(this.parent);
     thrw.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
     thrw.text.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.errorMessage()!)!);
     thrw.updateParseStatus();
@@ -306,10 +329,13 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   // Members
 
   override visitConstructorMember = (ctx: ConstructorMemberContext) => {
-    const ctor = new Constructor(this.file);
+    const ctor = new Constructor(this.parent);
     ctor.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
+
+    this.parent = ctor;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       ctor.getChildren().push(s);
@@ -319,7 +345,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitProperty = (ctx: PropertyContext) => {
-    const prop = new Property(this.file);
+    const prop = new Property(this.parent);
     prop.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     prop.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.type()!)!);
     prop.updateParseStatus();
@@ -327,14 +353,16 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitFunctionMethod = (ctx: FunctionMethodContext) => {
-    const func = new FunctionMethod(this.file);
+    const func = new FunctionMethod(this.parent);
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
     func.returnType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.type()!)!);
 
-    func.getChildren().pop();
+    this.parent = func;
+
+    func.getChildren().length = 0;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
@@ -349,11 +377,14 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitProcedureMethod = (ctx: ProcedureMethodContext) => {
-    const proc = new ProcedureMethod(this.file);
+    const proc = new ProcedureMethod(this.parent);
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
+
+    this.parent = proc;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       proc.getChildren().push(s);
@@ -363,7 +394,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitAbstractFunction = (ctx: AbstractFunctionContext) => {
-    const func = new AbstractFunction(this.file);
+    const func = new AbstractFunction(this.parent);
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -374,7 +405,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitAbstractProcedure = (ctx: AbstractProcedureContext) => {
-    const func = new AbstractProcedure(this.file);
+    const func = new AbstractProcedure(this.parent);
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -384,14 +415,16 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitReturnStatement = (ctx: ReturnStatementContext) => {
-    const rt = new ReturnStatement(this.file);
+    const rt = new ReturnStatement(this.parent);
     rt.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     rt.updateParseStatus();
     return rt;
   };
 
   override visitThenClause = (ctx: ThenClauseContext) => {
-    const thenClause = new ThenClause(this.file);
+    const thenClause = new ThenClause(this.parent);
+
+    this.parent = thenClause;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       thenClause.getChildren().push(s);
@@ -401,9 +434,11 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitElseIfClause = (ctx: ElseIfClauseContext) => {
-    const elseIfClause = new ElseIfClause(this.file);
+    const elseIfClause = new ElseIfClause(this.parent);
 
     elseIfClause.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
+
+    this.parent = elseIfClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
@@ -414,7 +449,10 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitElseClause = (ctx: ElseClauseContext) => {
-    const elseClause = new ElseClause(this.file);
+    const elseClause = new ElseClause(this.parent);
+
+    this.parent = elseClause;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       elseClause.getChildren().push(s);
@@ -424,7 +462,10 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitTryClause = (ctx: TryClauseContext) => {
-    const tryClause = new TryClause(this.file);
+    const tryClause = new TryClause(this.parent);
+
+    this.parent = tryClause;
+
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       tryClause.getChildren().push(s);
@@ -434,10 +475,12 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitCatchClause = (ctx: CatchClauseContext) => {
-    const catchClause = new CatchClause(this.file);
+    const catchClause = new CatchClause(this.parent);
 
     catchClause.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     catchClause.exceptionType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
+
+    this.parent = catchClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {

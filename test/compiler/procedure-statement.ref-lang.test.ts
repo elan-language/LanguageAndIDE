@@ -1100,7 +1100,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 procedure changeValue(a as Bar)
@@ -1119,7 +1119,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 procedure if_(a as Int)
@@ -1135,7 +1135,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 procedure break(a as Int)
@@ -1153,7 +1153,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 procedure float(a as Int)
@@ -1172,7 +1172,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 procedure fun(if as Int)
@@ -1189,7 +1189,7 @@ end procedure`;
     const code = `${testHeader}
 
 main
-  
+
 end main
 
 procedure fun(break as Int)
@@ -1297,6 +1297,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
 end class
 
 procedure bar()
@@ -1320,6 +1326,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
 end class
 
 procedure bar()
@@ -1343,6 +1355,13 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
   property p1 as Int
 end class
 

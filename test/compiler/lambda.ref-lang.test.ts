@@ -22,7 +22,7 @@ suite("Lambda", () => {
 main
   call printModified(4, lambda x as Int => x * 3)
 end main
-  
+
 procedure printModified(i as Int, f as Func<of Int => Int>)
   call printNoLine(f(i))
 end procedure`;
@@ -67,7 +67,7 @@ function first(t as (Int, Int)) returns Int
     variable a set to t.item_0
     return a
 end function
-  
+
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
   call printNoLine(f(i))
 end procedure`;
@@ -113,7 +113,7 @@ return [main, _tests];}`;
 main
   call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
 end main
-  
+
 procedure printModified(i as (Int, Int), f as Func<of (Int, Int) => Int>)
   call printNoLine(f(i))
 end procedure`;

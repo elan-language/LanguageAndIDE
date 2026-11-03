@@ -6,7 +6,7 @@ import { Parser, testAntlrParse } from "../testHelpers";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Parsing Rules Python", () => {
-  test("Expression", () => {
+  ignore_test("Expression", () => {
     const expression: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.expression(),

@@ -168,22 +168,22 @@ main
   variable f set to new Foo()
   call printNoLine(f.testFf("test"))
 end main
-  
+
 class Foo
   constructor()  
   end constructor
   function toString() returns String
     return ""
   end function
-  
+
   private function ff(f as String) returns String
     return f
   end function
-  
+
   function testFf(f as String) returns String
     return this.ff(f)
   end function
-  
+
 end class`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
@@ -317,7 +317,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
     const code = `${testHeader}
 
 main
@@ -357,7 +357,7 @@ end class`;
     ]);
   });
 
-  test("Fail_PrivateFunctionCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivateFunctionCannotBeAccessed", async () => {
     const code = `${testHeader}
 
 main

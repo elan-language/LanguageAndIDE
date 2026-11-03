@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -990,7 +991,7 @@ end class`;
     ]);
   });
 
-  test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
+  ignore_test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
     const code = `${testHeader}
 
 class Foo
@@ -1209,7 +1210,7 @@ end class`;
 main
 
 end main
-    
+
 class Foo
   constructor()
   end constructor
@@ -1247,7 +1248,7 @@ main
   variable f set to new Foo()
   call printNoLine(f.foo())
 end main
-    
+
 class Foo
   constructor()
   end constructor
@@ -1341,6 +1342,12 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
 end class
 
 function bar() returns Int

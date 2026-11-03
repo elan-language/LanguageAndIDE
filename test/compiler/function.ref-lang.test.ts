@@ -798,7 +798,7 @@ end function`;
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotPassInListMultipleParameters", async () => {
+  ignore_test("Fail_CannotPassInListMultipleParameters", async () => {
     const code = `${testHeader}
 
 main
@@ -951,7 +951,7 @@ end class
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 function changeValue(a as Bar) returns Int

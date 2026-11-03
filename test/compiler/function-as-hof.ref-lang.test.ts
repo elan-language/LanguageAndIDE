@@ -573,7 +573,7 @@ end main
 function ff(a as Int) returns Int
   return a
 end function
-  
+
 class Foo
   constructor(f as Func<of Int => Int>)
     assign this.pf to f

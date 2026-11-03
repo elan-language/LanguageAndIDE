@@ -142,7 +142,6 @@ return [main, _tests];}`;
   test("Pass_mapList", async () => {
     const code = `${testHeader}
 
-
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
   call printNoLine(source.map(lambda x as Int => x + 1))
@@ -252,7 +251,6 @@ return [main, _tests];}`;
 
   test("Pass_reduceList", async () => {
     const code = `${testHeader}
-
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -826,7 +824,6 @@ end function`;
   test("Pass_sumByList", async () => {
     const code = `${testHeader}
 
-
 main
   variable source set to [2.3, 3.4, 5.6, 7.8]
   call printNoLine(source.sumBy(lambda x as Float => x).round(2))
@@ -861,7 +858,6 @@ return [main, _tests];}`;
 
   test("Pass_sumByListOfStringLengths", async () => {
     const code = `${testHeader}
-
 
 main
   variable source set to ["a","bb","ccc"]

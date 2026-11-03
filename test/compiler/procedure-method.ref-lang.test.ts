@@ -368,7 +368,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -435,7 +435,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -470,7 +470,7 @@ end class`;
     const code = `${testHeader}
 
 main
- 
+
 end main
 
 class Foo
@@ -507,16 +507,16 @@ end class`;
 main
 
 end main
-    
+
 class Foo
   constructor()
   end constructor
   function toString() returns String
     return ""
   end function
-  
+
   procedure foo(a as Int, b as String, a as Int)
-   
+
   end procedure
 end class`;
 
@@ -544,14 +544,14 @@ end class`;
 main
 
 end main
-    
+
 class Foo
   constructor()
   end constructor
   function toString() returns String
     return ""
   end function
-  
+
   procedure foo()
     assign p1 to 4
   end procedure

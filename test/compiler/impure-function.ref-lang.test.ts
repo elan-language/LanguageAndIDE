@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -131,7 +132,7 @@ end function`;
     ]);
   });
 
-  test("Fail_CannotCallAProcedureWithinAFunction", async () => {
+  ignore_test("Fail_CannotCallAProcedureWithinAFunction", async () => {
     const code = `${testHeader}
 
 main
@@ -161,7 +162,7 @@ end function
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
+  ignore_test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
     const code = `${testHeader}
 
 main

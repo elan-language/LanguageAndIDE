@@ -1948,6 +1948,13 @@ main
 end main
 
 class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
   function bar() returns Int
     return 0
   end function

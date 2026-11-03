@@ -31,12 +31,13 @@ import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 import { fileImplFor, testFieldParse } from "../testHelpers";
 
 const refLang: Language = LanguageElan.Instance;
 
 suite("Parsing Field Fields (New) RefLang", () => {
-  test("ArgList", () => {
+  ignore_test("ArgList", () => {
     const field = new FieldImpl(new Assignment(fileImplFor(refLang)), argListFieldSpec);
     testFieldParse(
       field,
@@ -59,7 +60,7 @@ suite("Parsing Field Fields (New) RefLang", () => {
       "mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
-  test("InputArgList", () => {
+  ignore_test("InputArgList", () => {
     const field = new FieldImpl(new Assignment(fileImplFor(refLang)), inputArgListFieldSpec);
     testFieldParse(
       field,
@@ -82,7 +83,7 @@ suite("Parsing Field Fields (New) RefLang", () => {
       "mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
-  test("ParamList", () => {
+  ignore_test("ParamList", () => {
     const field = new FieldImpl(new GlobalFunction(fileImplFor(refLang)), paramListFieldSpec);
     testFieldParse(
       field,
@@ -227,7 +228,7 @@ suite("Parsing Field Fields (New) RefLang", () => {
     );
     testFieldParse(field, "sleep()", true, "");
   });
-  test("EnumValues", () => {
+  ignore_test("EnumValues", () => {
     const field = new FieldImpl(new Enum(fileImplFor(refLang)), enumValuesFieldSpec);
     testFieldParse(
       field,

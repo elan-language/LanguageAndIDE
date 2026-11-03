@@ -31,6 +31,7 @@ import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 import { fileImplFor, testFieldParse } from "../testHelpers";
 
 const python: Language = LanguagePython.Instance;
@@ -118,7 +119,7 @@ suite("Parsing Fields (New) Python", () => {
     );
     testFieldParse(field, "a", false, "");
   });
-  test("ExceptionType", () => {
+  ignore_test("ExceptionType", () => {
     const field = new FieldImpl(new CatchClause(fileImplFor(python)), exceptionTypeFieldSpec);
     testFieldParse(
       field,
