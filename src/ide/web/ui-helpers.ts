@@ -9,11 +9,9 @@ import { ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
-import { LanguageCS } from "../frames/language-cs";
-import { LanguageElan } from "../frames/language-elan";
-import { LanguageJava } from "../frames/language-java";
+import { LanguageCSharp } from "../frames/language-c-sharp";
 import { LanguagePython } from "../frames/language-python";
-import { LanguageVB } from "../frames/language-vb";
+import { LanguageRefLang } from "../frames/language-ref-lang";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { FileManager } from "./file-manager";
 import { TestRunner } from "./test-runner";
@@ -617,13 +615,7 @@ export function useChromeFileAPI() {
 }
 
 export function getAllLanguages() {
-  return [
-    LanguageElan.Instance,
-    LanguagePython.Instance,
-    LanguageCS.Instance,
-    LanguageVB.Instance,
-    LanguageJava.Instance,
-  ];
+  return [LanguageRefLang.Instance, LanguagePython.Instance, LanguageCSharp.Instance];
 }
 
 export function getLanguageByClass(cl: string): Language {

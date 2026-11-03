@@ -5,6 +5,7 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { Parent } from "./frame-interfaces/parent";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
@@ -12,12 +13,12 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageCfamily } from "./language-c-family";
 import { AssertStatement } from "./statements/assert-statement";
 
-export class LanguageCS extends LanguageCfamily {
+export class LanguageCSharp extends LanguageCfamily {
   private constructor() {
     super();
   }
 
-  static Instance: Language = new LanguageCS();
+  static Instance: Language = new LanguageCSharp();
 
   languageHtmlClass = "cs";
   languageFullName: string = "C#";
@@ -180,4 +181,16 @@ export class LanguageCS extends LanguageCfamily {
     `volatile`,
     `while`,
   ]);
+
+  customiseStatementOptions(
+    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {}
+  customiseValidWithinCurrentContext(
+    _keyword: string,
+    _userEntry: boolean,
+    _parent: Parent,
+    standardResult: boolean,
+  ): boolean {
+    return standardResult;
+  }
 }

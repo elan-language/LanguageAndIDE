@@ -43,11 +43,9 @@ import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
 import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
 import { CommentFrame } from "./comment-frame";
 import { TestFrame } from "./globals/test-frame";
-import { LanguageCS } from "./language-cs";
-import { LanguageElan } from "./language-elan";
-import { LanguageJava } from "./language-java";
+import { LanguageCSharp } from "./language-c-sharp";
 import { LanguagePython } from "./language-python";
-import { LanguageVB } from "./language-vb";
+import { LanguageRefLang } from "./language-ref-lang";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -111,7 +109,7 @@ export class FileImpl implements File {
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
-  private _language: Language = LanguageElan.Instance;
+  private _language: Language = LanguageRefLang.Instance;
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -276,7 +274,7 @@ export class FileImpl implements File {
   }
 
   async renderAsElanSource(): Promise<string> {
-    const languageElan = LanguageElan.Instance;
+    const languageElan = LanguageRefLang.Instance;
     const langToRestore = this.language();
     const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
     this.currentHash = await this.getHash(content);
@@ -727,10 +725,10 @@ export class FileImpl implements File {
   // }
 
   setLanguageFromHeader(l: string) {
-    let lang: Language = LanguageElan.Instance;
+    let lang: Language = LanguageRefLang.Instance;
     switch (l) {
       case "Elan": {
-        lang = LanguageElan.Instance;
+        lang = LanguageRefLang.Instance;
         break;
       }
       case "Python": {
@@ -738,15 +736,7 @@ export class FileImpl implements File {
         break;
       }
       case "C#": {
-        lang = LanguageCS.Instance;
-        break;
-      }
-      case "VB.NET": {
-        lang = LanguageVB.Instance;
-        break;
-      }
-      case "Java": {
-        lang = LanguageJava.Instance;
+        lang = LanguageCSharp.Instance;
         break;
       }
     }
@@ -768,12 +758,12 @@ export class FileImpl implements File {
 
       const language = await this.validateHeader(source.getRemainingCode());
 
-      if (source.isMatch(LanguageElan.Instance.COMMENT_MARKER)) {
-        source.removeRegEx(LanguageElan.Instance.commentRegex(), false);
+      if (source.isMatch(LanguageRefLang.Instance.COMMENT_MARKER)) {
+        source.removeRegEx(LanguageRefLang.Instance.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      this._language = LanguageElan.Instance;
+      this._language = LanguageRefLang.Instance;
       this.parseBodyFrom(source);
       this.setLanguageFromHeader(language);
     } catch (e) {
@@ -855,7 +845,7 @@ export class FileImpl implements File {
   }
 
   validateHeaderComment(tokens: string[]) {
-    if (tokens[0] !== LanguageElan.Instance.COMMENT_MARKER) {
+    if (tokens[0] !== LanguageRefLang.Instance.COMMENT_MARKER) {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
   }
@@ -1014,7 +1004,7 @@ export class FileImpl implements File {
   // A short function needed by AbstractSelector because importing
   // LanguageElan.Instance there causes a dependency loop.
   setLanguageToElan() {
-    this.setLanguage(LanguageElan.Instance);
+    this.setLanguage(LanguageRefLang.Instance);
   }
 
   private resetFieldText(): void {

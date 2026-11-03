@@ -26,7 +26,7 @@ import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { Enum } from "../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
@@ -34,7 +34,7 @@ import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement"
 import { ignore_test } from "../compiler/compiler-test-helpers";
 import { fileImplFor, testFieldParse } from "../testHelpers";
 
-const refLang: Language = LanguageElan.Instance;
+const refLang: Language = LanguageRefLang.Instance;
 
 suite("Parsing Field Fields (New) RefLang", () => {
   ignore_test("ArgList", () => {

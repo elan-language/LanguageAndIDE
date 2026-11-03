@@ -33,7 +33,7 @@ export class StatementSelector extends AbstractSelector {
   }
 
   defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
-    return [
+    const options: [string, string, string, (parent: Parent) => Frame, boolean][] = [
       [
         assertKeyword,
         "a",
@@ -71,8 +71,8 @@ export class StatementSelector extends AbstractSelector {
       ],
       [
         elifKeyword,
-        "s",
-        "el<b>s</b>e if clause",
+        "l",
+        "e<b>l</b>se if clause",
         (parent: Parent) => this.factory.newElseIf(parent.getParent()),
         false,
       ],
@@ -121,6 +121,8 @@ export class StatementSelector extends AbstractSelector {
         true,
       ],
     ];
+    this.language().customiseStatementOptions(options);
+    return options;
   }
 
   paradigmAllows(_keyword: string): boolean {
@@ -162,6 +164,7 @@ export class StatementSelector extends AbstractSelector {
           keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
       }
     }
+    result = this.language().customiseValidWithinCurrentContext(keyword, userEntry, parent, result);
     return result;
   }
 

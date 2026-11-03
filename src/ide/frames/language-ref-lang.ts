@@ -54,6 +54,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
+import { Parent } from "./frame-interfaces/parent";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -81,12 +82,12 @@ import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
 
-export class LanguageElan extends LanguageAbstract {
+export class LanguageRefLang extends LanguageAbstract {
   private constructor() {
     super();
   }
 
-  static Instance: Language = new LanguageElan();
+  static Instance: Language = new LanguageRefLang();
 
   commentRegex(): RegExp {
     return /# [^\r\n]*/;
@@ -422,4 +423,15 @@ export class LanguageElan extends LanguageAbstract {
     `when`,
     `yield`,
   ]);
+  customiseStatementOptions(
+    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {}
+  customiseValidWithinCurrentContext(
+    _keyword: string,
+    _userEntry: boolean,
+    _parent: Parent,
+    standardResult: boolean,
+  ): boolean {
+    return standardResult;
+  }
 }
