@@ -7,6 +7,7 @@ import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
+import { TestStatementContext } from "./PythonParser.js";
 import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
 import { EnumContext } from "./PythonParser.js";
@@ -42,10 +43,17 @@ import { AbstractFunctionContext } from "./PythonParser.js";
 import { AbstractProcedureContext } from "./PythonParser.js";
 import { IdentifierDefContext } from "./PythonParser.js";
 import { IdentifierUseContext } from "./PythonParser.js";
-import { AssignableContext } from "./PythonParser.js";
+import { SimpleAssignableContext } from "./PythonParser.js";
+import { IndexedAssignableContext } from "./PythonParser.js";
+import { ThisAssignableContext } from "./PythonParser.js";
 import { MethodNameContext } from "./PythonParser.js";
 import { TestNameContext } from "./PythonParser.js";
-import { TypeNameContext } from "./PythonParser.js";
+import { IntTypeNameContext } from "./PythonParser.js";
+import { FloatTypeNameContext } from "./PythonParser.js";
+import { BoolTypeNameContext } from "./PythonParser.js";
+import { StringTypeNameContext } from "./PythonParser.js";
+import { ListTypeNameContext } from "./PythonParser.js";
+import { UdtTypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
@@ -57,13 +65,28 @@ import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
-import { LitIntContext } from "./PythonParser.js";
+import { LitIntegerContext } from "./PythonParser.js";
+import { LitBinaryContext } from "./PythonParser.js";
+import { LitHexContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
-import { ExpressionContext } from "./PythonParser.js";
-import { TermContext } from "./PythonParser.js";
+import { UnaryExpressionLabelContext } from "./PythonParser.js";
+import { BinaryExpressionLabelContext } from "./PythonParser.js";
+import { NewInstanceExpressionContext } from "./PythonParser.js";
+import { IfExpressionContext } from "./PythonParser.js";
+import { TermExpressionContext } from "./PythonParser.js";
+import { IdentifierUseTermContext } from "./PythonParser.js";
+import { MethodCallTermContext } from "./PythonParser.js";
+import { IndexedTermContext } from "./PythonParser.js";
+import { LitValueTermContext } from "./PythonParser.js";
+import { DictionaryTermContext } from "./PythonParser.js";
+import { BracketedExpressionTermContext } from "./PythonParser.js";
+import { ChainableTermContext } from "./PythonParser.js";
+import { TupleTermContext } from "./PythonParser.js";
+import { ThisInstanceTermContext } from "./PythonParser.js";
+import { ListTermContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
 import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
@@ -124,6 +147,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTest?: (ctx: TestContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.testStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTestStatement?: (ctx: TestStatementContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.procedure`.
    * @param ctx the parse tree
@@ -335,11 +364,26 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.assignable`.
+   * Visit a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `PythonParser.assignable`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitAssignable?: (ctx: AssignableContext) => Result;
+  visitSimpleAssignable?: (ctx: SimpleAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedAssignable?: (ctx: IndexedAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisAssignable?: (ctx: ThisAssignableContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.methodName`.
    * @param ctx the parse tree
@@ -353,11 +397,47 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitTestName?: (ctx: TestNameContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.typeName`.
+   * Visit a parse tree produced by the `intTypeName`
+   * labeled alternative in `PythonParser.typeName`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitTypeName?: (ctx: TypeNameContext) => Result;
+  visitIntTypeName?: (ctx: IntTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `floatTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFloatTypeName?: (ctx: FloatTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `boolTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBoolTypeName?: (ctx: BoolTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `stringTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitStringTypeName?: (ctx: StringTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTypeName?: (ctx: ListTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `udtTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUdtTypeName?: (ctx: UdtTypeNameContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.constantValue`.
    * @param ctx the parse tree
@@ -425,11 +505,26 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitBoolean?: (ctx: LitBooleanContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.litInt`.
+   * Visit a parse tree produced by the `litInteger`
+   * labeled alternative in `PythonParser.litInt`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitInt?: (ctx: LitIntContext) => Result;
+  visitLitInteger?: (ctx: LitIntegerContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBinary`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBinary?: (ctx: LitBinaryContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litHex`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitHex?: (ctx: LitHexContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.litFloat`.
    * @param ctx the parse tree
@@ -455,17 +550,110 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitIndex?: (ctx: IndexContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.expression`.
+   * Visit a parse tree produced by the `unaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitExpression?: (ctx: ExpressionContext) => Result;
+  visitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.term`.
+   * Visit a parse tree produced by the `binaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitTerm?: (ctx: TermContext) => Result;
+  visitBinaryExpressionLabel?: (ctx: BinaryExpressionLabelContext) => Result;
+  /**
+   * Visit a parse tree produced by the `newInstanceExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `ifExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfExpression?: (ctx: IfExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `termExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTermExpression?: (ctx: TermExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMethodCallTerm?: (ctx: MethodCallTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedTerm?: (ctx: IndexedTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litValueTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitValueTerm?: (ctx: LitValueTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionaryTerm?: (ctx: DictionaryTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `chainableTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitChainableTerm?: (ctx: ChainableTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `tupleTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTupleTerm?: (ctx: TupleTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstanceTerm?: (ctx: ThisInstanceTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTerm?: (ctx: ListTermContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree

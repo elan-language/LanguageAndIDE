@@ -20,30 +20,26 @@ global:
 ;
 
 main:
-    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL 
-      ordinaryStatement*
-    END_MAIN NL
+    GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement
+        * END_MAIN NL
 ;
 
 function:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
-      ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
-      returnStatement 
-    END_FUNCTION NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL
+        ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
+        returnStatement END_FUNCTION NL
 ;
 
 test:
-    GHOSTED? CLASS testName OPEN_BRACKET TESTCASE CLOSE_BRACKET COMMENT NL (
-        assert
-        | variableDefinition
-        | comment
-    )* END_TEST NL
+    GHOSTED? CLASS testName OPEN_BRACKET TESTCASE CLOSE_BRACKET COMMENT NL testStatement* END_TEST
+        NL
 ;
+
+testStatement: assert | variableDefinition | comment;
 
 procedure:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
-      ordinaryStatement* 
-    END_PROCEDURE NL
+        ordinaryStatement* END_PROCEDURE NL
 ;
 
 constant:
@@ -56,31 +52,33 @@ enum:
 ;
 
 concreteClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName CLOSE_BRACKET)? COLON commentText? NL
-        constructorMember
-        concreteClassMember*
-    END_CLASS NL
+    GHOSTED? CLASS classTypeName = typeName (
+        OPEN_BRACKET inheritsTypeName = typeName CLOSE_BRACKET
+    )? COLON commentText? NL constructorMember concreteClassMember* END_CLASS NL
 ;
 
-concreteClassMember: 
-          property
-        | functionMethod
-        | procedureMethod
-        | comment;
+concreteClassMember:
+    property
+    | functionMethod
+    | procedureMethod
+    | comment
+;
 
 abstractClass:
-    GHOSTED? CLASS typeName (OPEN_BRACKET typeName | ABC CLOSE_BRACKET) COLON commentText? NL 
-      abstractClassMember*
-    END_CLASS NL
+    GHOSTED? CLASS classTypeName = typeName (
+        OPEN_BRACKET inheritsTypeName = typeName
+        | ABC CLOSE_BRACKET
+    ) COLON commentText? NL abstractClassMember* END_CLASS NL
 ;
 
 abstractClassMember:
-          property
-        | functionMethod
-        | procedureMethod
-        | abstractFunction
-        | abstractProcedure
-        | comment;
+    property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+    | comment
+;
 
 comment: commentText NL;
 commentText: COMMENT;
@@ -105,45 +103,34 @@ assignment:
 ;
 
 ifStatement:
-    GHOSTED? IF condition = expression THEN commentText? NL
-        thenClause
-        elseIfClause*
-        elseClause?
-    END_IF NL
+    GHOSTED? IF condition = expression THEN commentText? NL thenClause elseIfClause* elseClause?
+        END_IF NL
 ;
-    thenClause: 
-        ordinaryStatement*;
+thenClause: ordinaryStatement*;
 
-    elseIfClause: GHOSTED? ELIF expression THEN commentText? NL
-        ordinaryStatement*;
+elseIfClause:
+    GHOSTED? ELIF expression THEN commentText? NL ordinaryStatement*
+;
 
-    elseClause: GHOSTED? ELSE commentText? NL
-        ordinaryStatement*;
+elseClause: GHOSTED? ELSE commentText? NL ordinaryStatement*;
 
 whileLoop:
-    GHOSTED? WHILE expression COLON  commentText? NL
-      ordinaryStatement*
-    END_WHILE NL
+    GHOSTED? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE NL
 ;
 
 forLoop:
-    GHOSTED? FOR identifierDef IN expression COLON  commentText? NL 
-      ordinaryStatement*
-    END_FOR NL
+    GHOSTED? FOR identifierDef IN expression COLON commentText? NL ordinaryStatement* END_FOR NL
 ;
 
-procedureCall:
-    GHOSTED? term  commentText? NL
-;
+procedureCall: GHOSTED? term commentText? NL;
 
 tryStatement:
-    GHOSTED? TRY COLON  commentText? NL 
-      tryClause 
-      catchClause+ 
-    END_TRY NL
+    GHOSTED? TRY COLON commentText? NL tryClause catchClause+ END_TRY NL
 ;
-    tryClause: ordinaryStatement*;
-    catchClause: GHOSTED? EXCEPT typeName AS identifierDef COLON commentText? NL ordinaryStatement*;
+tryClause: ordinaryStatement*;
+catchClause:
+    GHOSTED? EXCEPT typeName AS identifierDef COLON commentText? NL ordinaryStatement*
+;
 
 throwStatement:
     GHOSTED? RAISE typeName OPEN_BRACKET errorMessage CLOSE_BRACKET commentText? NL
@@ -151,34 +138,34 @@ throwStatement:
 errorMessage: litString | identifierUse;
 
 assert:
-    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected CLOSE_BRACKET commentText? NL
+    GHOSTED? THIS_INSTANCE DOT ASSERT_EQUAL OPEN_BRACKET assertActual COMMA assertExpected
+        CLOSE_BRACKET commentText? NL
 ;
 
-returnStatement: RETURN expression commentText? NL; // not ghostable
-catchStatement: GHOSTED? EXCEPT typeName AS identifierDef commentText? NL;
+returnStatement:
+    RETURN expression commentText? NL
+; // not ghostable
+catchStatement:
+    GHOSTED? EXCEPT typeName AS identifierDef commentText? NL
+;
 
 // Members
 constructorMember:
-    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL 
-      ordinaryStatement*
-    END_CONSTRUCTOR NL
+    GHOSTED? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+        ordinaryStatement* END_CONSTRUCTOR NL
 ;
 
-property:
-    GHOSTED? identifierDef COLON type commentText? NL
-;
+property: GHOSTED? identifierDef COLON type commentText? NL;
 
 functionMethod:
-    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL 
-      (ordinaryStatement)* 
-      returnStatement 
-    END_FUNCTION_METHOD NL
+    GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL (
+        ordinaryStatement
+    )* returnStatement END_FUNCTION_METHOD NL
 ;
 
 procedureMethod:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
-      ordinaryStatement*
-    END_PROCEDURE_METHOD NL
+        ordinaryStatement* END_PROCEDURE_METHOD NL
 ;
 
 abstractFunction:
@@ -196,20 +183,20 @@ abstractProcedure:
 identifierDef: NAME_STARTING_LC;
 identifierUse: NAME_STARTING_LC;
 assignable:
-    identifierUse
-    | THIS_INSTANCE DOT identifierUse
-    | assignable index
+    identifierUse                     # simpleAssignable
+    | THIS_INSTANCE DOT identifierUse # thisAssignable
+    | assignable index                # indexedAssignable
 ;
 
 methodName: NAME_STARTING_LC;
 testName: NAME_STARTING_TEST_;
 typeName:
-    INT_NAME
-    | FLOAT_NAME
-    | BOOL_NAME
-    | STRING_NAME
-    | LIST_NAME
-    | NAME_STARTING_UC
+    INT_NAME           # intTypeName
+    | FLOAT_NAME       # floatTypeName
+    | BOOL_NAME        # boolTypeName
+    | STRING_NAME      # stringTypeName
+    | LIST_NAME        # listTypeName
+    | NAME_STARTING_UC # udtTypeName
 ;
 
 constantValue: litBoolean | litInt | litFloat | litString;
@@ -242,7 +229,11 @@ litValue:
     | enumValue
 ;
 litBoolean: TRUE | FALSE;
-litInt: LITERAL_INTEGER | LITERAL_BINARY | LITERAL_HEX;
+litInt:
+    LITERAL_INTEGER  # litInteger
+    | LITERAL_BINARY # litBinary
+    | LITERAL_HEX    # litHex
+;
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING | INTERPOLATED_STRING;
 enumValue: typeName DOT identifierUse;
@@ -250,26 +241,29 @@ enumValue: typeName DOT identifierUse;
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
 expression:
-    newInstance
-    | unaryExpression
-    | term
-    | binaryExpression
-    | expression IF expression (ELIF expression)* ELSE expression
+    newInstance        # newInstanceExpression
+    | unaryExpression  # unaryExpressionLabel
+    | term             # termExpression
+    | binaryExpression # binaryExpressionLabel
+    | trueExpr = expression IF condition = expression (
+        ELIF elifCondition = expression
+    )* ELSE falseExpr = expression # ifExpression
 ;
 
 term:
-    thisInstance
-    | bracketedExpression
-    | litValue
-    | list
-    | dictionary
-    | tuple
-    | identifierUse
-    | methodCall
-    | term index
-    | term DOT chainable
+    thisInstance          # thisInstanceTerm
+    | bracketedExpression # bracketedExpressionTerm
+    | litValue            # litValueTerm
+    | list                # listTerm
+    | dictionary          # dictionaryTerm
+    | tuple               # tupleTerm
+    | identifierUse       # identifierUseTerm
+    | methodCall          # methodCallTerm
+    | term index          # indexedTerm
+    | term DOT chainable  # chainableTerm
 ;
-chainable: ( identifierUse | methodCall) index*;
+
+chainable: identifierUse | methodCall;
 
 thisInstance: THIS_INSTANCE;
 bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
@@ -283,7 +277,7 @@ list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
 tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
 dictionary: OPEN_BRACE kvpList CLOSE_BRACE;
 kvpList: kvp (COMMA kvp)*;
-kvp: expression COLON expression;
+kvp: key = expression COLON value = expression;
 
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 

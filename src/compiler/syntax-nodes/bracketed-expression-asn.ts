@@ -1,7 +1,7 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
 import { AbstractAstNode } from "./abstract-ast-node";
 
-export class BracketedAsn extends AbstractAstNode implements AstNode {
+export class BracketedExpressionAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly body: AstNode,
     public readonly fieldId: string,

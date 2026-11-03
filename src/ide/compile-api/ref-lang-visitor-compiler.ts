@@ -3,9 +3,9 @@ import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
 import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
-import { BinaryExprAsn as BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expr-asn";
+import { BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expression-asn";
 import { BoolTypeNameAsn } from "../../compiler/syntax-nodes/bool-type-name-asn";
-import { BracketedAsn as BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-asn";
+import { BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-expression-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
 import { DictionaryAsn } from "../../compiler/syntax-nodes/dictionary-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
@@ -253,8 +253,8 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitIfExpression = (ctx: IfExpressionContext) => {
     const condition = this.visit(ctx._condition!)!;
-    const trueExpression = this.visit(ctx._true_!)!;
-    const falseExpression = this.visit(ctx._false_!)!;
+    const trueExpression = this.visit(ctx._trueExpr!)!;
+    const falseExpression = this.visit(ctx._falseExpr!)!;
     return new IfExpressionAsn(
       condition,
       trueExpression,

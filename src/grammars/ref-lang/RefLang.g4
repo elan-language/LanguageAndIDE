@@ -45,14 +45,11 @@ enum: GHOSTED? ENUM typeName identifierList NL;
 concreteClass:
     GHOSTED? CLASS classTypeName = typeName (
         INHERITS inheritsTypeName = typeName
-    )? NL  
-      constructorMember 
-      concreteClassMember* 
-    END CLASS NL
+    )? NL constructorMember concreteClassMember* END CLASS NL
 ;
 
 concreteClassMember:
-      property
+    property
     | functionMethod
     | procedureMethod
     | comment
@@ -96,20 +93,15 @@ variableDefinition:
 assignment: GHOSTED? ASSIGN assignable TO expression NL;
 
 ifStatement:
-    GHOSTED? IF condition = expression THEN NL
-        thenClause
-        elseIfClause*
-        elseClause?
-    END IF NL
+    GHOSTED? IF condition = expression THEN NL thenClause elseIfClause* elseClause? END IF NL
 ;
-    thenClause: 
-        ordinaryStatement*;
+thenClause: ordinaryStatement*;
 
-    elseIfClause: GHOSTED? ELIF expression THEN NL
-        ordinaryStatement*;
+elseIfClause:
+    GHOSTED? ELIF expression THEN NL ordinaryStatement*
+;
 
-    elseClause: GHOSTED? ELSE NL
-        ordinaryStatement*;
+elseClause: GHOSTED? ELSE NL ordinaryStatement*;
 
 whileLoop:
     GHOSTED? WHILE condition = expression NL ordinaryStatement* END WHILE NL
@@ -119,15 +111,13 @@ forLoop:
     GHOSTED? FOR identifierDef IN expression NL ordinaryStatement* END FOR NL
 ;
 
-procedureCall:
-    GHOSTED? CALL term NL
-;
+procedureCall: GHOSTED? CALL term NL;
 
-tryStatement:
-    GHOSTED? TRY NL tryClause catchClause+ END TRY NL
+tryStatement: GHOSTED? TRY NL tryClause catchClause+ END TRY NL;
+tryClause: ordinaryStatement*;
+catchClause:
+    GHOSTED? CATCH identifierDef AS typeName NL ordinaryStatement*
 ;
-    tryClause: ordinaryStatement*;
-    catchClause: GHOSTED? CATCH identifierDef AS typeName NL ordinaryStatement*;
 
 throwStatement: GHOSTED? THROW typeName errorMessage NL;
 
@@ -236,21 +226,21 @@ expression:
     | unaryExpression  # unaryExpressionLabel
     | term             # termExpression
     | binaryExpression # binaryExpressionLabel
-    | IF_ OPEN_BRACKET condition = expression COMMA true = expression COMMA false = expression
-        CLOSE_BRACKET # ifExpression
+    | IF_ OPEN_BRACKET condition = expression COMMA trueExpr = expression COMMA falseExpr =
+        expression CLOSE_BRACKET # ifExpression
 ;
 
 term:
-    thisInstance #  thisInstanceTerm
-    | bracketedExpression #  bracketedExpressionTerm
-    | litValue #  litValueTerm
-    | list #  listTerm
-    | dictionary #  dictionaryTerm
-    | tuple #  tupleTerm
-    | identifierUse #  identifierUseTerm
-    | methodCall  #  methodCallTerm
-    | term index #  indexedTerm
-    | term DOT chainable #  chainableTerm
+    thisInstance          # thisInstanceTerm
+    | bracketedExpression # bracketedExpressionTerm
+    | litValue            # litValueTerm
+    | list                # listTerm
+    | dictionary          # dictionaryTerm
+    | tuple               # tupleTerm
+    | identifierUse       # identifierUseTerm
+    | methodCall          # methodCallTerm
+    | term index          # indexedTerm
+    | term DOT chainable  # chainableTerm
 ;
 
 chainable: identifierUse | methodCall;

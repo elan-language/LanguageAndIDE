@@ -95,23 +95,19 @@ assignment:
 ;
 
 ifStatement:
-    GHOSTED? IF OPEN_BRACKET condition = expression CLOSE_BRACKET OPEN_BRACE NL
-        thenClause
-        elseIfClause*
-        elseClause?
-    COMMENT NL
+    GHOSTED? IF OPEN_BRACKET condition = expression CLOSE_BRACKET OPEN_BRACE NL thenClause
+        elseIfClause* elseClause? COMMENT NL
 ;
-    thenClause: 
-        ordinaryStatement* 
-        CLOSE_BRACE NL;
+thenClause: ordinaryStatement* CLOSE_BRACE NL;
 
-    elseIfClause: GHOSTED? ELSE IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL 
-        ordinaryStatement* 
-        CLOSE_BRACE NL;
+elseIfClause:
+    GHOSTED? ELSE IF OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement*
+        CLOSE_BRACE NL
+;
 
-    elseClause: GHOSTED? ELSE OPEN_BRACE NL 
-        ordinaryStatement* 
-        CLOSE_BRACE NL;
+elseClause:
+    GHOSTED? ELSE OPEN_BRACE NL ordinaryStatement* CLOSE_BRACE NL
+;
 
 whileLoop:
     WHILE OPEN_BRACKET expression CLOSE_BRACKET OPEN_BRACE NL ordinaryStatement* CLOSE_BRACE COMMENT
@@ -124,9 +120,7 @@ forLoop:
         ordinaryStatement* CLOSE_BRACE COMMENT NL
 ;
 
-procedureCall:
-    GHOSTED? term NL
-;
+procedureCall: GHOSTED? term NL;
 
 tryStatement:
     TRY OPEN_BRACE NL ordinaryStatement* catchStatement ordinaryStatement* CLOSE_BRACE COMMENT NL

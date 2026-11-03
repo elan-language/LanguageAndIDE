@@ -2,18 +2,20 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
-  AssignableContext,
   BinaryExpressionContext,
   BinaryOperatorContext,
   BracketedExpressionContext,
+  ChainableTermContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
-  ExpressionContext,
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
+  IfExpressionContext,
   IndexContext,
+  IndexedAssignableContext,
+  IndexedTermContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -28,8 +30,8 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
-  TermContext,
   TestNameContext,
+  ThisAssignableContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -57,7 +59,12 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     `tuple[${getFilteredTypes(this, ctx).join(", ")}]`;
 
-  override visitTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitIntTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitFloatTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitBoolTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitStringTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitListTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitUdtTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}[${getFilteredTypes(this, ctx).join(", ")}]`;
@@ -89,7 +96,9 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   override visitCommentText = (ctx: CommentTextContext) => ctx.getText();
 
-  override visitLitInt = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitInteger = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitBinary = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
+  override visitLitHex = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
   override visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
@@ -144,16 +153,23 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     return `${lambda} ${params} ${colon} ${this.visit(ctx.expression())}`;
   };
 
-  override visitExpression = (ctx: ExpressionContext) => {
-    //TODO Not yet handling 'elif' clauses
-    if (ctx.expression().length > 0) {
-      const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(1)!) : "";
-      const condition = ctx.expression(1) ? this.visit(ctx.expression(0)!) : "";
-      const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
-      return `${exprIfTrue} if ${condition} else ${exprIfFalse})`;
-    } else {
-      return this.visitChildren(ctx) ?? "";
-    }
+  // override visitExpression = (ctx: ExpressionContext) => {
+  //   //TODO Not yet handling 'elif' clauses
+  //   if (ctx.expression().length > 0) {
+  //     const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(1)!) : "";
+  //     const condition = ctx.expression(1) ? this.visit(ctx.expression(0)!) : "";
+  //     const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
+  //     return `${exprIfTrue} if ${condition} else ${exprIfFalse})`;
+  //   } else {
+  //     return this.visitChildren(ctx) ?? "";
+  //   }
+  // };
+
+  override visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx._condition!);
+    const exprIfTrue = this.visit(ctx._trueExpr!);
+    const exprIfFalse = this.visit(ctx._falseExpr!);
+    return `${exprIfTrue} if ${condition} else ${exprIfFalse})`;
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) =>
@@ -171,25 +187,37 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  override visitTerm = (ctx: TermContext) =>
-    ctx.DOT()
-      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
-      : ctx.term()
-        ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
-        : (this.visitChildren(ctx) ?? "");
+  // override visitTerm = (ctx: TermContext) =>
+  //   ctx.DOT()
+  //     ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
+  //     : ctx.term()
+  //       ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
+  //       : (this.visitChildren(ctx) ?? "");
 
-  override visitAssignable = (ctx: AssignableContext) => {
-    if (ctx.THIS_INSTANCE()) {
-      return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
-    } else if (ctx.index()) {
-      return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
-    } else {
-      return this.visitChildren(ctx)!;
-    }
-  };
+  // override visitAssignable = (ctx: AssignableContext) => {
+  //   if (ctx.THIS_INSTANCE()) {
+  //     return `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+  //   } else if (ctx.index()) {
+  //     return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
+  //   } else {
+  //     return this.visitChildren(ctx)!;
+  //   }
+  // };
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     return ids.join(", ");
   };
+
+  override visitIndexedTerm = (ctx: IndexedTermContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.index())}`;
+
+  override visitChainableTerm = (ctx: ChainableTermContext) =>
+    `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
+
+  override visitThisAssignable = (ctx: ThisAssignableContext) =>
+    `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+
+  override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
+    `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
 }

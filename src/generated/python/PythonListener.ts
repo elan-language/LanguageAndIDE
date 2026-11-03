@@ -7,6 +7,7 @@ import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
+import { TestStatementContext } from "./PythonParser.js";
 import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
 import { EnumContext } from "./PythonParser.js";
@@ -42,10 +43,17 @@ import { AbstractFunctionContext } from "./PythonParser.js";
 import { AbstractProcedureContext } from "./PythonParser.js";
 import { IdentifierDefContext } from "./PythonParser.js";
 import { IdentifierUseContext } from "./PythonParser.js";
-import { AssignableContext } from "./PythonParser.js";
+import { SimpleAssignableContext } from "./PythonParser.js";
+import { IndexedAssignableContext } from "./PythonParser.js";
+import { ThisAssignableContext } from "./PythonParser.js";
 import { MethodNameContext } from "./PythonParser.js";
 import { TestNameContext } from "./PythonParser.js";
-import { TypeNameContext } from "./PythonParser.js";
+import { IntTypeNameContext } from "./PythonParser.js";
+import { FloatTypeNameContext } from "./PythonParser.js";
+import { BoolTypeNameContext } from "./PythonParser.js";
+import { StringTypeNameContext } from "./PythonParser.js";
+import { ListTypeNameContext } from "./PythonParser.js";
+import { UdtTypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
 import { ArgumentContext } from "./PythonParser.js";
@@ -57,13 +65,28 @@ import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
 import { LitBooleanContext } from "./PythonParser.js";
-import { LitIntContext } from "./PythonParser.js";
+import { LitIntegerContext } from "./PythonParser.js";
+import { LitBinaryContext } from "./PythonParser.js";
+import { LitHexContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
-import { ExpressionContext } from "./PythonParser.js";
-import { TermContext } from "./PythonParser.js";
+import { UnaryExpressionLabelContext } from "./PythonParser.js";
+import { BinaryExpressionLabelContext } from "./PythonParser.js";
+import { NewInstanceExpressionContext } from "./PythonParser.js";
+import { IfExpressionContext } from "./PythonParser.js";
+import { TermExpressionContext } from "./PythonParser.js";
+import { IdentifierUseTermContext } from "./PythonParser.js";
+import { MethodCallTermContext } from "./PythonParser.js";
+import { IndexedTermContext } from "./PythonParser.js";
+import { LitValueTermContext } from "./PythonParser.js";
+import { DictionaryTermContext } from "./PythonParser.js";
+import { BracketedExpressionTermContext } from "./PythonParser.js";
+import { ChainableTermContext } from "./PythonParser.js";
+import { TupleTermContext } from "./PythonParser.js";
+import { ThisInstanceTermContext } from "./PythonParser.js";
+import { ListTermContext } from "./PythonParser.js";
 import { ChainableContext } from "./PythonParser.js";
 import { ThisInstanceContext } from "./PythonParser.js";
 import { BracketedExpressionContext } from "./PythonParser.js";
@@ -141,6 +164,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTest?: (ctx: TestContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.testStatement`.
+   * @param ctx the parse tree
+   */
+  enterTestStatement?: (ctx: TestStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.testStatement`.
+   * @param ctx the parse tree
+   */
+  exitTestStatement?: (ctx: TestStatementContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.procedure`.
    * @param ctx the parse tree
@@ -492,15 +525,41 @@ export class PythonListener implements ParseTreeListener {
    */
   exitIdentifierUse?: (ctx: IdentifierUseContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.assignable`.
+   * Enter a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `PythonParser.assignable`.
    * @param ctx the parse tree
    */
-  enterAssignable?: (ctx: AssignableContext) => void;
+  enterSimpleAssignable?: (ctx: SimpleAssignableContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.assignable`.
+   * Exit a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `PythonParser.assignable`.
    * @param ctx the parse tree
    */
-  exitAssignable?: (ctx: AssignableContext) => void;
+  exitSimpleAssignable?: (ctx: SimpleAssignableContext) => void;
+  /**
+   * Enter a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   */
+  enterIndexedAssignable?: (ctx: IndexedAssignableContext) => void;
+  /**
+   * Exit a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   */
+  exitIndexedAssignable?: (ctx: IndexedAssignableContext) => void;
+  /**
+   * Enter a parse tree produced by the `thisAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   */
+  enterThisAssignable?: (ctx: ThisAssignableContext) => void;
+  /**
+   * Exit a parse tree produced by the `thisAssignable`
+   * labeled alternative in `PythonParser.assignable`.
+   * @param ctx the parse tree
+   */
+  exitThisAssignable?: (ctx: ThisAssignableContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.methodName`.
    * @param ctx the parse tree
@@ -522,15 +581,77 @@ export class PythonListener implements ParseTreeListener {
    */
   exitTestName?: (ctx: TestNameContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.typeName`.
+   * Enter a parse tree produced by the `intTypeName`
+   * labeled alternative in `PythonParser.typeName`.
    * @param ctx the parse tree
    */
-  enterTypeName?: (ctx: TypeNameContext) => void;
+  enterIntTypeName?: (ctx: IntTypeNameContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.typeName`.
+   * Exit a parse tree produced by the `intTypeName`
+   * labeled alternative in `PythonParser.typeName`.
    * @param ctx the parse tree
    */
-  exitTypeName?: (ctx: TypeNameContext) => void;
+  exitIntTypeName?: (ctx: IntTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `floatTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterFloatTypeName?: (ctx: FloatTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `floatTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitFloatTypeName?: (ctx: FloatTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `boolTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterBoolTypeName?: (ctx: BoolTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `boolTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitBoolTypeName?: (ctx: BoolTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `stringTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterStringTypeName?: (ctx: StringTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `stringTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitStringTypeName?: (ctx: StringTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `listTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `listTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `udtTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterUdtTypeName?: (ctx: UdtTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `udtTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitUdtTypeName?: (ctx: UdtTypeNameContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.constantValue`.
    * @param ctx the parse tree
@@ -642,15 +763,41 @@ export class PythonListener implements ParseTreeListener {
    */
   exitLitBoolean?: (ctx: LitBooleanContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.litInt`.
+   * Enter a parse tree produced by the `litInteger`
+   * labeled alternative in `PythonParser.litInt`.
    * @param ctx the parse tree
    */
-  enterLitInt?: (ctx: LitIntContext) => void;
+  enterLitInteger?: (ctx: LitIntegerContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.litInt`.
+   * Exit a parse tree produced by the `litInteger`
+   * labeled alternative in `PythonParser.litInt`.
    * @param ctx the parse tree
    */
-  exitLitInt?: (ctx: LitIntContext) => void;
+  exitLitInteger?: (ctx: LitIntegerContext) => void;
+  /**
+   * Enter a parse tree produced by the `litBinary`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   */
+  enterLitBinary?: (ctx: LitBinaryContext) => void;
+  /**
+   * Exit a parse tree produced by the `litBinary`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   */
+  exitLitBinary?: (ctx: LitBinaryContext) => void;
+  /**
+   * Enter a parse tree produced by the `litHex`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   */
+  enterLitHex?: (ctx: LitHexContext) => void;
+  /**
+   * Exit a parse tree produced by the `litHex`
+   * labeled alternative in `PythonParser.litInt`.
+   * @param ctx the parse tree
+   */
+  exitLitHex?: (ctx: LitHexContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.litFloat`.
    * @param ctx the parse tree
@@ -692,25 +839,185 @@ export class PythonListener implements ParseTreeListener {
    */
   exitIndex?: (ctx: IndexContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.expression`.
+   * Enter a parse tree produced by the `unaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    */
-  enterExpression?: (ctx: ExpressionContext) => void;
+  enterUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.expression`.
+   * Exit a parse tree produced by the `unaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    */
-  exitExpression?: (ctx: ExpressionContext) => void;
+  exitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.term`.
+   * Enter a parse tree produced by the `binaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    */
-  enterTerm?: (ctx: TermContext) => void;
+  enterBinaryExpressionLabel?: (ctx: BinaryExpressionLabelContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.term`.
+   * Exit a parse tree produced by the `binaryExpressionLabel`
+   * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
    */
-  exitTerm?: (ctx: TermContext) => void;
+  exitBinaryExpressionLabel?: (ctx: BinaryExpressionLabelContext) => void;
+  /**
+   * Enter a parse tree produced by the `newInstanceExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  enterNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by the `newInstanceExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  exitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by the `ifExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  enterIfExpression?: (ctx: IfExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by the `ifExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  exitIfExpression?: (ctx: IfExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by the `termExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  enterTermExpression?: (ctx: TermExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by the `termExpression`
+   * labeled alternative in `PythonParser.expression`.
+   * @param ctx the parse tree
+   */
+  exitTermExpression?: (ctx: TermExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterMethodCallTerm?: (ctx: MethodCallTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitMethodCallTerm?: (ctx: MethodCallTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `indexedTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterIndexedTerm?: (ctx: IndexedTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `indexedTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitIndexedTerm?: (ctx: IndexedTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `litValueTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterLitValueTerm?: (ctx: LitValueTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `litValueTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitLitValueTerm?: (ctx: LitValueTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `chainableTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterChainableTerm?: (ctx: ChainableTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `chainableTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitChainableTerm?: (ctx: ChainableTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `tupleTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterTupleTerm?: (ctx: TupleTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `tupleTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitTupleTerm?: (ctx: TupleTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterThisInstanceTerm?: (ctx: ThisInstanceTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitThisInstanceTerm?: (ctx: ThisInstanceTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `listTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterListTerm?: (ctx: ListTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `listTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitListTerm?: (ctx: ListTermContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.chainable`.
    * @param ctx the parse tree

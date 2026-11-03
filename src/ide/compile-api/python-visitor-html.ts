@@ -2,18 +2,20 @@ import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import {
   ArgListContext,
-  AssignableContext,
   BinaryExpressionContext,
   BinaryOperatorContext,
   BracketedExpressionContext,
+  ChainableTermContext,
   CommentTextContext,
   DictionaryContext,
   EnumValueContext,
-  ExpressionContext,
   IdentifierDefContext,
   IdentifierListContext,
   IdentifierUseContext,
+  IfExpressionContext,
   IndexContext,
+  IndexedAssignableContext,
+  IndexedTermContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -28,8 +30,8 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
-  TermContext,
   TestNameContext,
+  ThisAssignableContext,
   ThisInstanceContext,
   TupleContext,
   TypeContext,
@@ -65,7 +67,12 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     `${kw("tuple")}[${getFilteredTypes(this, ctx).join(", ")}]`;
 
-  override visitTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitIntTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitFloatTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitBoolTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitStringTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitListTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitUdtTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}[${getFilteredTypes(this, ctx).join(", ")}]`;
@@ -113,7 +120,11 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return `[${expr}]`;
   };
 
-  override visitLitInt = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitInteger = (ctx: LitIntContext) =>
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitBinary = (ctx: LitIntContext) =>
+    lit((this.visitChildren(ctx) ?? "").toLowerCase());
+  override visitLitHex = (ctx: LitIntContext) => lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
   override visitLitFloat = (ctx: LitFloatContext) =>
     lit((this.visitChildren(ctx) ?? "").toLowerCase());
@@ -163,16 +174,11 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return `${kw(lambda)} ${params} ${arrow} ${this.visit(ctx.expression())}`;
   };
 
-  override visitExpression = (ctx: ExpressionContext) => {
-    //does not currently cover 'elif' clauses
-    if (ctx.expression().length > 0) {
-      const exprIfTrue = ctx.expression(0) ? this.visit(ctx.expression(0)!) : "";
-      const condition = ctx.expression(1) ? this.visit(ctx.expression(1)!) : "";
-      const exprIfFalse = ctx.expression(2) ? this.visit(ctx.expression(2)!) : "";
-      return `${exprIfTrue} ${kw("if")} ${condition} ${kw("else")} ${exprIfFalse}`;
-    } else {
-      return this.visitChildren(ctx) ?? "";
-    }
+  override visitIfExpression = (ctx: IfExpressionContext) => {
+    const condition = this.visit(ctx._condition!);
+    const exprIfTrue = this.visit(ctx._trueExpr!);
+    const exprIfFalse = this.visit(ctx._falseExpr!);
+    return `${exprIfTrue} ${kw("if")} ${condition} ${kw("else")} ${exprIfFalse}`;
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) =>
@@ -190,25 +196,45 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  override visitTerm = (ctx: TermContext) =>
-    ctx.DOT()
-      ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
-      : ctx.term()
-        ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
-        : (this.visitChildren(ctx) ?? "");
+  // override visitTerm = (ctx: TermContext) =>
+  //   ctx.DOT()
+  //     ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
+  //     : ctx.term()
+  //       ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
+  //       : (this.visitChildren(ctx) ?? "");
+
+  // override visitThisInstance = (ctx: ThisInstanceContext) =>
+  //   `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
+
+  // override visitAssignable = (ctx: AssignableContext) => {
+  //   if (ctx.THIS_INSTANCE()) {
+  //     return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+  //   } else if (ctx.index()) {
+  //     return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
+  //   } else {
+  //     return this.visitChildren(ctx)!;
+  //   }
+  // };
+
+  // override visitIdentifierList = (ctx: IdentifierListContext) => {
+  //   const ids = ctx.identifierDef().map((id) => this.visit(id)!);
+  //   return ids.join(", ");
+  // };
+
+  override visitIndexedTerm = (ctx: IndexedTermContext) =>
+    `${this.visit(ctx.term())}${this.visit(ctx.index())}`;
+
+  override visitChainableTerm = (ctx: ChainableTermContext) =>
+    `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
 
   override visitThisInstance = (ctx: ThisInstanceContext) =>
-    `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
+    `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
 
-  override visitAssignable = (ctx: AssignableContext) => {
-    if (ctx.THIS_INSTANCE()) {
-      return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
-    } else if (ctx.index()) {
-      return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
-    } else {
-      return this.visitChildren(ctx)!;
-    }
-  };
+  override visitThisAssignable = (ctx: ThisAssignableContext) =>
+    `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+
+  override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
+    `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);

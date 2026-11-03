@@ -177,8 +177,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
 
   override visitIfExpression = (ctx: IfExpressionContext) => {
     const condition = this.visit(ctx._condition!);
-    const exprIfTrue = this.visit(ctx._true_!);
-    const exprIfFalse = this.visit(ctx._false_!);
+    const exprIfTrue = this.visit(ctx._trueExpr!);
+    const exprIfFalse = this.visit(ctx._falseExpr!);
     return `${method("if_")}(${condition}, ${exprIfTrue}, ${exprIfFalse})`;
   };
 

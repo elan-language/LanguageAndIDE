@@ -1,15 +1,3 @@
-import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
-import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { SymbolType } from "../../compiler/compiler-interfaces/symbol-type";
-import { BooleanType } from "../../compiler/symbols/boolean-type";
-import { FloatType } from "../../compiler/symbols/float-type";
-import { IntType } from "../../compiler/symbols/int-type";
-import { StringType } from "../../compiler/symbols/string-type";
-import {
-  getGlobalScope,
-  isValueTypeExcludingString,
-  mostPreciseSymbol,
-} from "../../compiler/symbols/symbol-helpers";
 import {
   adviseAgainstDiv,
   mustBeBooleanTypes,
@@ -20,11 +8,23 @@ import {
   mustBeValueType,
   mustNotBeIntegerTypesToDivide,
 } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { BooleanType } from "../symbols/boolean-type";
+import { FloatType } from "../symbols/float-type";
+import { IntType } from "../symbols/int-type";
+import { StringType } from "../symbols/string-type";
+import {
+  getGlobalScope,
+  isValueTypeExcludingString,
+  mostPreciseSymbol,
+} from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { mapOperation } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
-export class BinaryExprAsn extends AbstractAstNode implements AstNode {
+export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly op: string,
     private readonly lhs: AstNode,
