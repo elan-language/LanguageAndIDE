@@ -3667,11 +3667,11 @@ export class RefLangParser extends antlr.Parser {
             this.state = 781;
             this.match(RefLangParser.COMMA);
             this.state = 782;
-            (localContext as IfExpressionContext)._true_ = this.expression();
+            (localContext as IfExpressionContext)._trueExpr = this.expression();
             this.state = 783;
             this.match(RefLangParser.COMMA);
             this.state = 784;
-            (localContext as IfExpressionContext)._false_ = this.expression();
+            (localContext as IfExpressionContext)._falseExpr = this.expression();
             this.state = 785;
             this.match(RefLangParser.CLOSE_BRACKET);
           }
@@ -8068,8 +8068,8 @@ export class NewInstanceExpressionContext extends ExpressionContext {
 }
 export class IfExpressionContext extends ExpressionContext {
   public _condition?: ExpressionContext;
-  public _true_?: ExpressionContext;
-  public _false_?: ExpressionContext;
+  public _trueExpr?: ExpressionContext;
+  public _falseExpr?: ExpressionContext;
   public constructor(ctx: ExpressionContext) {
     super(ctx.parent, ctx.invokingState);
     super.copyFrom(ctx);

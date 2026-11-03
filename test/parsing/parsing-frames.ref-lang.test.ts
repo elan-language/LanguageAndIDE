@@ -15,8 +15,6 @@ import { VariableStatement } from "../../src/ide/frames/statements/variable-stat
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { transforms, testHeader, ignore_test } from "../compiler/compiler-test-helpers";
 
-
-
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(
     () => Promise.resolve("FFFF"),
