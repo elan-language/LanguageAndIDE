@@ -2,7 +2,7 @@
 
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
-import { LanguageElan } from "../frames/language-elan";
+import { LanguageRefLang } from "../frames/language-ref-lang";
 import { ParseStatus } from "../frames/status-enums";
 import { TestRunner } from "./test-runner";
 import { cursorWait, ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
@@ -122,7 +122,7 @@ export class FileManager {
     const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
     const nameWithoutExt = name.slice(0, name.lastIndexOf("."));
-    const language = cvm.isExporting() ? cvm.getLanguage() : LanguageElan.Instance;
+    const language = cvm.isExporting() ? cvm.getLanguage() : LanguageRefLang.Instance;
     const ext = html ? "html" : language.defaultFileExtension;
     const mime = html ? "text/html" : language.defaultMimeType;
 
@@ -302,7 +302,7 @@ export class FileManager {
 
   async doGenericDownload(cvm: ICodeEditorViewModel, vm: IIDEViewModel, fm: FileManager) {
     const isSaving = !cvm.isExporting();
-    const language = isSaving ? LanguageElan.Instance : cvm.getLanguage();
+    const language = isSaving ? LanguageRefLang.Instance : cvm.getLanguage();
     cvm.updateFileName(`.${language.defaultFileExtension}`);
     const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
     const blob = new Blob([code], { type: "plain/text" });
@@ -334,7 +334,7 @@ export class FileManager {
       const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
       const rawCode = await codeFile.text();
       if (mode === ParseMode.loadNew) {
-        cvm.recreateFile(vm, false, LanguageElan.Instance);
+        cvm.recreateFile(vm, false, LanguageRefLang.Instance);
         this.reset();
       }
       await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);

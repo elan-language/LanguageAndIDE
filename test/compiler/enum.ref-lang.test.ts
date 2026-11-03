@@ -1,6 +1,6 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
+import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
@@ -42,7 +42,7 @@ async function main() {
 }
 return [main, _tests];}`;
 
-    const fileImpl = newFileImpl(LanguageElan.Instance);
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);

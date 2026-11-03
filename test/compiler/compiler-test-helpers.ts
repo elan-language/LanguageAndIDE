@@ -10,18 +10,15 @@ import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { LanguageCS } from "../../src/ide/frames/language-cs";
-import { LanguageJava } from "../../src/ide/frames/language-java";
+import { LanguageCSharp } from "../../src/ide/frames/language-c-sharp";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { LanguageVB } from "../../src/ide/frames/language-vb";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { encodeCode } from "../../src/ide/web/web-helpers";
 import { runTests } from "../runner";
 import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { LanguageElan } from "../../src/ide/frames/language-elan";
 
 export function assertParses(file: FileImpl) {
   assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError + " Antlr: " + file.getParserErrors());
@@ -74,7 +71,7 @@ export function assertObjectCodeIsWithAdvisories(file: FileImpl, objectCode: str
     
     const m = msgs[i];
     const e = errors[i];
-    const id = e.locationId; // to help test migration
+    const _id = e.locationId; // to help test migration
     const em = e.message + (e.link ?? "");
     assert.strictEqual(em, m);
   }
@@ -94,7 +91,7 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
     const e = errors[i];
-    const id = e.locationId; // to help test migration
+    const _id = e.locationId; // to help test migration
     const em = e.message + (e.link ?? "");
     assert.strictEqual(em, m);
   }
@@ -103,7 +100,7 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
 export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: string[]) {
   file.compile();
 
-  const hasErrors = file.getById(id) as Frame | Field;
+  const _hasErrors = file.getById(id) as Frame | Field;
   const errors = file.ast?.getCompileErrorsFor(id) || [];
 
   for (let i = 0; i < msgs.length; i++) {
@@ -239,9 +236,9 @@ export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg?: strin
   }
 }
 
-export function ignore_test(name: string, test: (done: Done) => void) {}
+export function ignore_test(_name: string, _test: (done: Done) => void) {}
 
-export function testHash(s: string) {
+export function testHash(_s: string) {
   return Promise.resolve("");
 }
 
@@ -279,17 +276,10 @@ export async function assertExportedPythonIs(file: FileImpl, code : string) {
   await assertExportedFileIs(file, LanguagePython.Instance, code);
 }
 
-export async function assertExportedJavaIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageJava.Instance, code);
-}
-
 export async function assertExportedCSIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageCS.Instance, code);
+  await assertExportedFileIs(file, LanguageCSharp.Instance, code);
 }
 
-export async function assertExportedVBis(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageVB.Instance, code);
-}
 
 export function newFileImpl(language: Language): FileImpl {
       const file = new FileImpl(
