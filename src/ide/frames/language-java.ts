@@ -4,6 +4,7 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { Parent } from "./frame-interfaces/parent";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -146,4 +147,15 @@ export class LanguageJava extends LanguageCfamily {
     `super`,
     `while`,
   ]);
+
+  customiseStatementOptions(
+    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {}
+  customiseValidWithinCurrentContext(
+    _keyword: string,
+    _userEntry: boolean,
+    standardResult: boolean,
+  ): boolean {
+    return standardResult;
+  }
 }

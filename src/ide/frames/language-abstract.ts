@@ -5,6 +5,7 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { Parent } from "./frame-interfaces/parent";
 import { ClassFrame } from "./globals/class-frame";
 import { FunctionFrame } from "./globals/function-frame";
 import { TestFrame } from "./globals/test-frame";
@@ -127,4 +128,13 @@ export abstract class LanguageAbstract implements Language {
 
   abstract TUPLE_START: string;
   abstract TUPLE_END: string;
+
+  abstract customiseStatementOptions(
+    options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void;
+  abstract customiseValidWithinCurrentContext(
+    keyword: string,
+    userEntry: boolean,
+    standardResult: boolean,
+  ): boolean;
 }

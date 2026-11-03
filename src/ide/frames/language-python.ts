@@ -12,6 +12,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
+import { Parent } from "./frame-interfaces/parent";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -302,4 +303,15 @@ export class LanguagePython extends LanguageAbstract {
     `memoryview`,
     `nonetype`,
   ]);
+
+  customiseStatementOptions(
+    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {}
+  customiseValidWithinCurrentContext(
+    _keyword: string,
+    _userEntry: boolean,
+    standardResult: boolean,
+  ): boolean {
+    return standardResult;
+  }
 }

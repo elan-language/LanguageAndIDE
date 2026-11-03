@@ -792,3 +792,7 @@ body.functional div.demo-file.functional { display: revert; }
  .multiline > el-comment { /* hides all inline annotations and auto-added 'end ...` comments in Html view*/
   display: none;
 }
+
+el-header, .code > el-method, .code > el-punc { /* matches  the header, and the call to main in Python */
+  display: none;
+}

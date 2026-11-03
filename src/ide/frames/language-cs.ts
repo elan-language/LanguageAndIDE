@@ -5,6 +5,7 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
+import { Parent } from "./frame-interfaces/parent";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
@@ -180,4 +181,15 @@ export class LanguageCS extends LanguageCfamily {
     `volatile`,
     `while`,
   ]);
+
+  customiseStatementOptions(
+    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {}
+  customiseValidWithinCurrentContext(
+    _keyword: string,
+    _userEntry: boolean,
+    standardResult: boolean,
+  ): boolean {
+    return standardResult;
+  }
 }
