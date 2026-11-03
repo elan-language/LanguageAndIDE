@@ -27,7 +27,9 @@ import { ForLoop } from "./statements/forLoop";
 import { IfStatement } from "./statements/if-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ReturnStatement } from "./statements/return-statement";
+import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
+import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
 import { VariableStatement } from "./statements/variable-statement";
 import { WhileLoop } from "./statements/whileLoop";
@@ -124,6 +126,10 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.IF} </el-kw>(${frame.condition.renderAsHtml()}) {`;
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.STATIC} ${this.VOID}</el-kw> <el-method>main</el-method>() {`;
+    } else if (frame instanceof ThenClause) {
+      html = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
+      html = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY}</el-kw> {`;
     } else if (frame instanceof WhileLoop) {
