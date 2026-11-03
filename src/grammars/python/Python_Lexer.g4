@@ -150,6 +150,9 @@ END_CONSTRUCTOR: '# end constructor';
 END_FUNCTION_METHOD: '# end function method';
 END_PROCEDURE_METHOD: '# end procedure method';
 
+VAR_DEF: '# variable definition';
+VAR_ASSIGN: '# assignment';
+
 COMMENT: '#' ~('\r' | '\n')*;
 
 fragment InputCharacter: ~[\r\n\u0085];

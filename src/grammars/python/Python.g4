@@ -99,10 +99,10 @@ ordinaryStatement:
     | comment
 ;
 variableDefinition:
-    GHOSTED? identifierDef EQUAL expression commentText? NL
+    GHOSTED? identifierDef EQUAL expression VAR_DEF NL
 ;
 assignment:
-    GHOSTED? assignable EQUAL expression commentText? NL
+    GHOSTED? assignable EQUAL expression VAR_ASSIGN NL
 ;
 
 ifStatement:
