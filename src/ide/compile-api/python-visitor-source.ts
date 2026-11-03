@@ -105,7 +105,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   override visitLitBoolean = (ctx: LitBooleanContext) => this.visitChildren(ctx) ?? "";
 
   override visitLitString = (ctx: LitStringContext) =>
-    this.visitChildren(ctx) ? this.visitChildren(ctx)!.slice(1, -1) : "";
+    this.visitChildren(ctx) ? this.visitChildren(ctx)! : "";
 
   override visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
