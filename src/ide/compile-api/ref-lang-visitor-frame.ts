@@ -2,7 +2,9 @@ import {
   AbstractClassContext,
   AbstractFunctionContext,
   AbstractProcedureContext,
+  AssertContext,
   AssignmentContext,
+  CatchClauseContext,
   CommentContext,
   ConcreteClassContext,
   ConstantContext,
@@ -24,6 +26,7 @@ import {
   TestContext,
   ThenClauseContext,
   ThrowStatementContext,
+  TryClauseContext,
   TryStatementContext,
   VariableDefinitionContext,
   WhileLoopContext,
@@ -46,7 +49,9 @@ import { GlobalFunction } from "../frames/globals/global-function";
 import { GlobalProcedure } from "../frames/globals/global-procedure";
 import { MainRoutine } from "../frames/globals/main-routine";
 import { TestFrame } from "../frames/globals/test-frame";
+import { AssertStatement } from "../frames/statements/assert-statement";
 import { Assignment } from "../frames/statements/assignment";
+import { CatchClause } from "../frames/statements/catch-clause";
 import { ElseClause } from "../frames/statements/else-clause";
 import { ElseIfClause } from "../frames/statements/elseIf-clause";
 import { ForLoop } from "../frames/statements/forLoop";
@@ -55,6 +60,7 @@ import { ProcedureCall } from "../frames/statements/procedureCall";
 import { ReturnStatement } from "../frames/statements/return-statement";
 import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
+import { TryClause } from "../frames/statements/try-clause";
 import { TryStatement } from "../frames/statements/try-statement";
 import { VariableStatement } from "../frames/statements/variable-statement";
 import { WhileLoop } from "../frames/statements/whileLoop";
@@ -210,6 +216,14 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     return varDef;
   };
 
+  override visitAssert = (ctx: AssertContext) => {
+    const assert = new AssertStatement(this.file);
+    assert.actual.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertActual()!)!);
+    assert.expected.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertExpected()!)!);
+    assert.updateParseStatus();
+    return assert;
+  };
+
   override visitAssignment = (ctx: AssignmentContext) => {
     const assignment = new Assignment(this.file);
     assignment.assignable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assignable()!)!);
@@ -220,6 +234,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitIfStatement = (ctx: IfStatementContext) => {
     const if_ = new IfStatement(this.file);
+    if_.getChildren().length = 0;
     if_.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     const children = if_.getChildren();
     const thenClause = this.visit(ctx.thenClause()) as Frame;
@@ -269,6 +284,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   override visitTryStatement = (ctx: TryStatementContext) => {
     const trySt = new TryStatement(this.file);
     const children = trySt.getChildren();
+    children.length = 0;
     const tryClause = this.visit(ctx.tryClause()) as Frame;
     children.push(tryClause);
     const catchClauses = ctx.catchClause().map((s) => this.visit(s)) as Frame[];
@@ -405,5 +421,29 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     }
     elseClause.updateParseStatus();
     return elseClause;
+  };
+
+  override visitTryClause = (ctx: TryClauseContext) => {
+    const tryClause = new TryClause(this.file);
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      tryClause.getChildren().push(s);
+    }
+    tryClause.updateParseStatus();
+    return tryClause;
+  };
+
+  override visitCatchClause = (ctx: CatchClauseContext) => {
+    const catchClause = new CatchClause(this.file);
+
+    catchClause.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
+    catchClause.exceptionType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
+
+    const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
+    for (const s of statements) {
+      catchClause.getChildren().push(s);
+    }
+    catchClause.updateParseStatus();
+    return catchClause;
   };
 }

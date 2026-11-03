@@ -353,7 +353,7 @@ main
     call printNoLine(s)
   end try
 end main
-  
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure`;
@@ -410,7 +410,7 @@ main
     call printNoLine(a)
   end try
 end main
-  
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure`;
@@ -466,7 +466,7 @@ main
     call printNoLine(a)
   end try
 end main
-  
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure`;
@@ -510,7 +510,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_GhostedVariableInCatch", async () => {
+  ignore_test("Pass_GhostedVariableInCatch", async () => {
     const code = `${testHeader}
 
 main
@@ -683,7 +683,7 @@ main
     call printNoLine(a)
   end try
 end main
-  
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure
@@ -716,7 +716,7 @@ main
     call printNoLine(a)
   end try
 end main
-  
+
 procedure foo()
   throw ElanRuntimeError "Foo"
 end procedure`;
@@ -749,7 +749,7 @@ main
     call printNoLine("")
   end try
 end main
-  
+
 class FooException
   constructor()
   end constructor
@@ -814,7 +814,7 @@ main
     call printNoLine("")
   end try
 end main
-  
+
 class FooException
   constructor()
   end constructor

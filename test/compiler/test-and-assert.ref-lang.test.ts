@@ -22,6 +22,7 @@ suite("Test and Assert", () => {
     const code = `${testHeader}
 
 main
+
 end main
 
 function square(x as Float) returns Float
@@ -46,10 +47,10 @@ async function square(x) {
 }
 global["square"] = square;
 
-_tests.push(["elan_test10", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "elan_assert13", _stdlib, false));
+_tests.push(["elan_test12", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "elan_assert15", _stdlib, false));
   let actual = (await global.square(4));
-  _outcomes.push(await system.assert([async () => actual, "Float"], [16, "Int"], "elan_assert19", _stdlib, false));
+  _outcomes.push(await system.assert([async () => actual, "Float"], [16, "Int"], "elan_assert21", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -69,10 +70,10 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       [
-        "elan_test10",
+        "elan_test12",
         [
-          new AssertOutcome(TestStatus.pass, "9", "9", "elan_assert13"),
-          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert19"),
+          new AssertOutcome(TestStatus.pass, "9", "9", "elan_assert15"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert21"),
         ],
       ],
     ]);
@@ -378,9 +379,9 @@ async function square(x) {
 }
 global["square"] = square;
 
-_tests.push(["elan_test10", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [10, "Int"], "elan_assert13", _stdlib, false));
-  _outcomes.push(await system.assert([async () => (await global.square(4)), "Float"], [16, "Int"], "elan_assert16", _stdlib, false));
+_tests.push(["elan_test12", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [10, "Int"], "elan_assert15", _stdlib, false));
+  _outcomes.push(await system.assert([async () => (await global.square(4)), "Float"], [16, "Int"], "elan_assert18", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -400,10 +401,10 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       [
-        "elan_test10",
+        "elan_test12",
         [
-          new AssertOutcome(TestStatus.fail, "Float expected: Int", "10", "elan_assert13"),
-          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert16"),
+          new AssertOutcome(TestStatus.fail, "Float expected: Int", "10", "elan_assert15"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert18"),
         ],
       ],
     ]);
@@ -628,9 +629,9 @@ class Foo {
 
 }
 
-_tests.push(["elan_test49", async (_outcomes) => {
+_tests.push(["elan_test59", async (_outcomes) => {
   let a = system.initialise(await new Foo()._initialise(3));
-  _outcomes.push(await system.assert([async () => a.bar, "Int"], [3, "Int"], "elan_assert55", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a.bar, "Int"], [3, "Int"], "elan_assert65", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -658,7 +659,7 @@ return [main, _tests];}`;
         [new AssertOutcome(TestStatus.pass, "Hello World", "Hello World", "elan_assert15")],
       ],
       ["elan_test21", [new AssertOutcome(TestStatus.pass, "Hello", "Hello", "elan_assert24")]],
-      ["elan_test49", [new AssertOutcome(TestStatus.pass, "3", "3", "elan_assert55")]],
+      ["elan_test59", [new AssertOutcome(TestStatus.pass, "3", "3", "elan_assert65")]],
     ]);
   });
 
@@ -814,8 +815,8 @@ async function square(x) {
 }
 global["square"] = square;
 
-_tests.push(["elan_test10", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "elan_assert13", _stdlib, false));
+_tests.push(["elan_test12", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "elan_assert15", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -823,7 +824,7 @@ return [main, _tests];}`;
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
-      ["elan_test10", [new AssertOutcome(TestStatus.pass, "9", "9", "elan_assert13")]],
+      ["elan_test12", [new AssertOutcome(TestStatus.pass, "9", "9", "elan_assert15")]],
     ]);
   });
 
