@@ -22,7 +22,6 @@ import {
   LitBooleanContext,
   LitFloatContext,
   LitIntContext,
-  LitStringContext,
   MethodCallContext,
   MethodNameContext,
   NegateLogicalContext,
