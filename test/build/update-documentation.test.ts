@@ -281,7 +281,7 @@
 
 //     const actual = await processCode(code, codeTag, codeEndTag);
 
-//     const expected = `<code><span class="elan"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
+//     const expected = `<code><span class="refLang"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
 // <span class="python"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
 // <span class="cs"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
 // <span class="vb"><el-id>mark</el-id>[<el-id>something</el-id>] + "<el-lit>2</el-lit>" + <el-id>mark</el-id>[<el-id>something</el-id>]</span>
@@ -302,7 +302,7 @@
 
 //     const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
 
-//     assert.strictEqual(actual.startsWith(`<codeblock><div class="elan"><el-test`), true);
+//     assert.strictEqual(actual.startsWith(`<codeblock><div class="refLang"><el-test`), true);
 //   });
 
 //   ignore_test("process multiple code", async () => {
@@ -311,12 +311,12 @@
 
 //     const actual = await processCode(code, codeTag, codeEndTag);
 
-//     const expected = `<code><span class="elan"><el-kw>new</el-kw></span>
+//     const expected = `<code><span class="refLang"><el-kw>new</el-kw></span>
 // <span class="python"><el-kw>new</el-kw></span>
 // <span class="cs"><el-kw>new</el-kw></span>
 // <span class="vb"><el-kw>new</el-kw></span>
 // <span class="java"><el-kw>new</el-kw></span></code>
-// <code><span class="elan"><el-type>Int</el-type></span>
+// <code><span class="refLang"><el-type>Int</el-type></span>
 // <span class="python"><el-type>int</el-type></span>
 // <span class="cs"><el-type>int</el-type></span>
 // <span class="vb"><el-type>Integer</el-type></span>
@@ -331,12 +331,12 @@
 
 //     const actual = await processCode(code, codeBlockTag, codeBlockEndTag);
 
-//     const expected = `<codeblock><div class="elan"><el-kw>new</el-kw></div>
+//     const expected = `<codeblock><div class="refLang"><el-kw>new</el-kw></div>
 // <div class="python"><el-kw>new</el-kw></div>
 // <div class="cs"><el-kw>new</el-kw></div>
 // <div class="vb"><el-kw>new</el-kw></div>
 // <div class="java"><el-kw>new</el-kw></div></codeblock>
-// <codeblock><div class="elan"><el-type>Int</el-type></div>
+// <codeblock><div class="refLang"><el-type>Int</el-type></div>
 // <div class="python"><el-type>int</el-type></div>
 // <div class="cs"><el-type>int</el-type></div>
 // <div class="vb"><el-type>Integer</el-type></div>

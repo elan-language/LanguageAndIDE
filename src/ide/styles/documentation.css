@@ -216,11 +216,11 @@ el-field el-text {
   font: consolas, monospace; /* Not sure why this is needed, but displays as sans face without */
 }
 
-body .elan, body .python, body .vb, body .cs, body .java {
+body .refLang, body .python, body .vb, body .cs, body .java {
   display: none;
 }
 
-body.elan .elan, 
+body.refLang .refLang, 
 body.python .python, 
 body.vb .vb, 
 body.cs .cs, 
@@ -228,7 +228,7 @@ body.java .java {
   display: block;
 }
 
-body.elan span.elan, 
+body.refLang span.refLang, 
 body.python span.python, 
 body.vb span.vb, 
 body.cs span.cs, 
@@ -236,7 +236,7 @@ body.java span.java {
   display:inline;
 }
 
-body.elan li.elan, 
+body.refLang li.refLang, 
 body.python li.python, 
 body.vb li.vb, 
 body.cs li.cs, 
