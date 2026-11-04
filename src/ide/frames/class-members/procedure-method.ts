@@ -85,8 +85,8 @@ ${this.indent()}end procedure\r
     return super.processKey(e);
   }
 
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

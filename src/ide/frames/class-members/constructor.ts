@@ -74,8 +74,8 @@ ${this.indent()}end constructor\r
     return this.parseStandardEnding(source, "end constructor");
   }
 
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

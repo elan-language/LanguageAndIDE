@@ -243,7 +243,7 @@ async function assertExportedFileIs(file, language, code) {
     let actual;
     try {
         assert_1.default.ok(file.setLanguage(language), "Failed to set language");
-        actual = await file.renderAsExport();
+        actual = await file.renderAsSource();
     }
     catch (e) {
         assert_1.default.fail(e.message ?? "");

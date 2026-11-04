@@ -114,7 +114,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
   try {
     fl.setLanguage(language);
     
-    actual = (await fl.renderAsExport()).replaceAll("\r", "");;
+    actual = (await fl.renderAsSource()).replaceAll("\r", "");;
     const expected = loadFileAsSource(file).replaceAll("\r", "");
     assert.strictEqual(actual, expected);
   }

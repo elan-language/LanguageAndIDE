@@ -7,7 +7,7 @@ export abstract class SingleLineFrame extends AbstractFrame {
     return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>${this.contextMenu()}<el-top>${this.bpAsHtml()}${this.language().renderSingleLineAsHtml(this)}</el-top>${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</${this.outerHtmlTag}>`;
   }
 
-  renderAsExport(): string {
+  renderAsSource(): string {
     return this.language().renderSingleLineAsSource(this);
   }
 }

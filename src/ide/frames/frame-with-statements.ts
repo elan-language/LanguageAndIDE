@@ -270,7 +270,7 @@ ${this.language().renderBottomAsHtml(this)}
 </${this.outerHtmlTag}>`;
   }
 
-  renderAsExport(): string {
+  renderAsSource(): string {
     const topAsSource = this.language().renderTopAsSource(this);
     const bottom = this.language().renderBottomAsSource(this);
     const bottomAsSource = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;

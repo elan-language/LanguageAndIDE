@@ -528,7 +528,7 @@ export abstract class AbstractFrame implements Frame {
 
   abstract renderAsHtml(): string;
 
-  abstract renderAsExport(): string;
+  abstract renderAsSource(): string;
 
   indent(): string {
     if (this.hasParent()) {
@@ -683,7 +683,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   export = () => {
-    const source = this.renderAsExport();
+    const source = this.renderAsSource();
     this.getFile().addCopiedSource(source);
     return false;
   };

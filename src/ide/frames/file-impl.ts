@@ -6,10 +6,16 @@ import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
 import { TestStatus } from "../../compiler/test-status";
 import { elanVersion, isElanProduction } from "../../environment";
+import { FileContext as PythonFileContext } from "../../generated/python/PythonParser";
+import { FileContext as RefLangFileContext } from "../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../compile-api/ref-lang-visitor-frame";
 import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
+import { CommentFrame } from "./comment-frame";
 import { Regexes } from "./fields/regexes";
 import {
   expandCollapseAll,
@@ -36,17 +42,11 @@ import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { MainRoutine } from "./globals/main-routine";
-import { defaultUsername, Paradigm } from "./paradigm";
-import { FileContext as PythonFileContext } from "../../generated/python/PythonParser";
-import { FileContext as RefLangFileContext } from "../../generated/ref-lang/RefLangParser";
-import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
-import { PythonVisitorFrame } from "../compile-api/python-visitor-frame";
-import { RefLangVisitorFrame } from "../compile-api/ref-lang-visitor-frame";
-import { CommentFrame } from "./comment-frame";
 import { TestFrame } from "./globals/test-frame";
 import { LanguageCSharp } from "./language-c-sharp";
 import { LanguagePython } from "./language-python";
 import { LanguageRefLang } from "./language-ref-lang";
+import { defaultUsername, Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,

@@ -63,8 +63,8 @@ export class AbstractProcedure extends SingleLineFrame {
     source.remove(")");
   }
 
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

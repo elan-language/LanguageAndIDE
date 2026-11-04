@@ -159,7 +159,7 @@ export class FileManager {
 
   async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
     const isSaving = !cvm.isExporting();
-    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
+    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsSource();
     await this.chromeSave(cvm, code, isSaving);
     if (isSaving) {
       this.resetHash(cvm);
@@ -304,7 +304,7 @@ export class FileManager {
     const isSaving = !cvm.isExporting();
     const language = isSaving ? LanguageRefLang.Instance : cvm.getLanguage();
     cvm.updateFileName(`.${language.defaultFileExtension}`);
-    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
+    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsSource();
     const blob = new Blob([code], { type: "plain/text" });
     const aElement = document.createElement("a");
     aElement.setAttribute("download", cvm.fileName!);

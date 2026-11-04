@@ -181,7 +181,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.indent()}`;
   }
 
-  renderAsExport(): string {
+  renderAsSource(): string {
     return `${this.indent()}`;
   }
 

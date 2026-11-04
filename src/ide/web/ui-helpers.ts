@@ -148,7 +148,7 @@ export interface ICodeEditorViewModel {
 
   renderAsSource(): Promise<string>;
 
-  renderAsExport(): Promise<string>;
+  renderAsSource(): Promise<string>;
 
   parseFrom(source: CodeSource): Promise<void>;
 

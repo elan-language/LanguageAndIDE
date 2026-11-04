@@ -13,7 +13,7 @@ import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
 import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
-import { typeNameFieldSpec, inheritsFromFieldSpec } from "../fields/field-spec";
+import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { Regexes } from "../fields/regexes";
 import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -313,7 +313,7 @@ ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
   }
 
-  public renderAsExport(): string {
+  public renderAsSource(): string {
     const topAsSource = this.language().renderTopAsSource(this);
     const bottomAsSource = this.language().renderBottomAsSource(this);
     return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n
