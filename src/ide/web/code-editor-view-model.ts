@@ -195,10 +195,6 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     return this.file!.renderAsSource();
   }
 
-  renderAsExport() {
-    return this.file!.renderAsSource();
-  }
-
   parseFrom(source: CodeSource) {
     return this.file!.parseFrom(source);
   }

@@ -113,11 +113,11 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       source = `${this.RETURN} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
-      source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()} # assignment`;
+      source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
       source = `${this.RAISE} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
     } else if (frame instanceof VariableStatement) {
-      source = `${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()} # variable definition`;
+      source = `${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     }
     return source;
   }
@@ -279,8 +279,8 @@ export class LanguagePython extends LanguageAbstract {
   renderSpecificHeaderAsSource(_f: FileImpl): string {
     return "";
   }
-  renderFileTrailerAsHtml(f: FileImpl): string {
-    return f.containsMain() ? "<\n\n><el-method>main</el-method><el-punc>()</el-punc>" : "";
+  renderFileTrailerAsHtml(_f: FileImpl): string {
+    return "";
   }
   renderFileTrailerAsSource(f: FileImpl): string {
     return f.containsMain() ? "\n\nmain()" : "";
