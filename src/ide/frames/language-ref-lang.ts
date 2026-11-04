@@ -135,29 +135,29 @@ export class LanguageRefLang extends LanguageAbstract {
   renderSingleLineAsSource(frame: Frame): string {
     let source = `Source not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      source = `${this.ASSERT} ${frame.actual.renderAsSource()} ${this.EVALUATES} ${this.TO} ${frame.expected.renderAsSource()}`;
+      source = `${frame.indent()}${this.ASSERT} ${frame.actual.renderAsSource()} ${this.EVALUATES} ${this.TO} ${frame.expected.renderAsSource()}`;
     } else if (frame instanceof ProcedureCall) {
-      source = `${this.CALL} ${frame.procRef.renderAsSource()}`;
+      source = `${frame.indent()}${this.CALL} ${frame.procRef.renderAsSource()}`;
     } else if (frame instanceof CommentFrame) {
-      source = frame.text.renderAsSource();
+      source = `${frame.indent()}${frame.text.renderAsSource()}`;
     } else if (frame instanceof ConstantGlobal) {
       source = `${this.CONSTANT} ${frame.name.renderAsSource()} set to ${frame.value.renderAsSource()}`;
     } else if (frame instanceof Enum) {
       source = `${this.ENUM} ${frame.name.renderAsSource()} ${frame.values.renderAsSource()}`;
     } else if (frame instanceof Property) {
-      source = `${this.modifierAsSource(frame)}${this.PROPERTY} ${frame.name.renderAsSource()} ${this.AS} ${frame.type.renderAsSource()}`;
+      source = `${frame.indent()}${this.modifierAsSource(frame)}${this.PROPERTY} ${frame.name.renderAsSource()} ${this.AS} ${frame.type.renderAsSource()}`;
     } else if (frame instanceof ReturnStatement) {
-      source = `${this.RETURN} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.RETURN} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
-      source = `${this.ASSIGN} ${frame.assignable.renderAsSource()} ${this.TO} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ASSIGN} ${frame.assignable.renderAsSource()} ${this.TO} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
-      source = `${this.THROW} ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
+      source = `${frame.indent()}${this.THROW} ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
     } else if (frame instanceof VariableStatement) {
-      source = `${this.VARIABLE} ${frame.name.renderAsSource()} ${this.SET} ${this.TO} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.VARIABLE} ${frame.name.renderAsSource()} ${this.SET} ${this.TO} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof AbstractFunction) {
-      source = `${this.ABSTRACT} ${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+      source = `${frame.indent()}${this.ABSTRACT} ${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
     } else if (frame instanceof AbstractProcedure) {
-      source = `${this.ABSTRACT} ${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+      source = `${frame.indent()}${this.ABSTRACT} ${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
     }
     return source;
   }
@@ -165,9 +165,9 @@ export class LanguageRefLang extends LanguageAbstract {
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
+      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()} ${this.inheritsFromTextAsHtml(frame.inheritance)}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
       html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof CatchClause) {
@@ -207,9 +207,9 @@ export class LanguageRefLang extends LanguageAbstract {
   renderTopAsSource(frame: Frame): string {
     let source = `Source not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      source = `${this.ABSTRACT} ${this.CLASS} ${frame.name.renderAsSource()} ${this.inheritsFromTextAsSource(frame.inheritance)}`;
+      source = `${this.ABSTRACT} ${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      source = `${this.CLASS} ${frame.name.renderAsSource()} ${this.inheritsFromTextAsSource(frame.inheritance)}`;
+      source = `${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
       source = `${this.CONSTRUCTOR}(${frame.params.renderAsSource()})`;
     } else if (frame instanceof CatchClause) {
@@ -239,7 +239,7 @@ export class LanguageRefLang extends LanguageAbstract {
     } else if (frame instanceof TryClause) {
       source = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
-      source = `${this.TRY} `;
+      source = `${this.TRY}`;
     } else if (frame instanceof WhileLoop) {
       source = `${this.WHILE} ${frame.condition.renderAsSource()}`;
     }
@@ -253,7 +253,7 @@ export class LanguageRefLang extends LanguageAbstract {
 
   inheritsFromTextAsSource(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit() ? ` ${this.INHERITS} ${field.renderAsHtml()}` : ``;
+    return frame.doesInherit() ? ` ${this.INHERITS} ${field.renderAsSource()}` : ``;
   }
 
   renderBottomAsHtml(frame: Frame): string {
@@ -266,7 +266,9 @@ export class LanguageRefLang extends LanguageAbstract {
 
   renderBottomAsSource(frame: Frame): string {
     let result = "";
-    if (!("isClause" in frame)) {
+    if (frame instanceof AbstractClass) {
+      result = `${this.END} ${this.CLASS}`;
+    } else if (!("isClause" in frame)) {
       result = `${this.END} ${frame.initialKeywords()}`;
     }
     return result;

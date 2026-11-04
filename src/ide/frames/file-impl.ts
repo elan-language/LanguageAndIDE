@@ -269,17 +269,13 @@ export class FileImpl implements File {
   }
 
   async renderAsSource(): Promise<string> {
-    const content = this.renderHashableContentAsElanSource(this.language().languageFullName);
+    const content = this.renderHashableContentAsSource(this.language().languageFullName);
     this.currentHash = await this.getHash(content);
     return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   async renderAsElanSource(): Promise<string> {
-    const languageElan = LanguageRefLang.Instance;
-    const langToRestore = this.language();
-    const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${languageElan.COMMENT_MARKER} ${this.currentHash} ${content}`;
+    return this.renderAsExport();
   }
 
   async renderAsExport(): Promise<string> {
@@ -292,8 +288,12 @@ export class FileImpl implements File {
     const languageSpecificHeader = this.language().renderSpecificHeaderAsSource(this);
     const trailer = this.language().renderFileTrailerAsSource(this);
     const lang = this.language().languageFullName;
-    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${languageSpecificHeader}${globals}${trailer}
-`;
+    let content = `${this.getVersionString(lang)} ${this.getParseStatusLabel()}\r\n\r\n${imports}${languageSpecificHeader}${globals}${trailer}`;
+    this.currentHash = await this.getHash(content);
+    if (!content.endsWith("\r\n")) {
+      content += "\r\n";
+    }
+    return `${this.language().COMMENT_MARKER} ${this.currentHash} ${content}`;
   }
 
   public indent(): string {
@@ -374,6 +374,11 @@ export class FileImpl implements File {
 
   renderHashableContentAsElanSource(lang: string): string {
     const globals = parentHelper_renderChildrenAsElanSource(this);
+    return this.renderHashableContent(globals, lang);
+  }
+
+  renderHashableContentAsSource(lang: string): string {
+    const globals = parentHelper_renderChildrenAsSource(this);
     return this.renderHashableContent(globals, lang);
   }
 

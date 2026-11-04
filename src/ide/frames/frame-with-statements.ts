@@ -274,8 +274,7 @@ ${this.language().renderBottomAsHtml(this)}
     const topAsSource = this.language().renderTopAsSource(this);
     const bottom = this.language().renderBottomAsSource(this);
     const bottomAsSource = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
-    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}
-${this.renderChildrenAsExport()}${bottomAsSource}`;
+    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${this.renderChildrenAsExport()}${bottomAsSource}`;
   }
 
   resetFieldText(): void {

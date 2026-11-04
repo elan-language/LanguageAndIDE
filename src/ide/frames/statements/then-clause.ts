@@ -59,4 +59,8 @@ export class ThenClause extends Clause {
     source.removeIndent();
     return source.isMatch(`${endKeyword} ${ifKeyword}`);
   }
+
+  renderAsSource(): string {
+    return `${this.renderChildrenAsExport()}`; // as no visible top or bottom
+  }
 }

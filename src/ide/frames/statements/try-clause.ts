@@ -59,4 +59,8 @@ export class TryClause extends Clause {
     source.removeIndent();
     return source.isMatch(catchKeyword);
   }
+
+  renderAsSource(): string {
+    return `${this.renderChildrenAsExport()}`; // as no visible top or bottom
+  }
 }

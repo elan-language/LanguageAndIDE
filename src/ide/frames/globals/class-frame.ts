@@ -316,10 +316,9 @@ ${this.language().renderBottomAsHtml(this)}
   public renderAsSource(): string {
     const topAsSource = this.language().renderTopAsSource(this);
     const bottomAsSource = this.language().renderBottomAsSource(this);
-    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n
-${parentHelper_renderChildrenAsSource(this)}
-${bottomAsSource}`;
+    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${parentHelper_renderChildrenAsSource(this)}\r\n${bottomAsSource}`;
   }
+
   resetFieldText(): void {
     super.resetFieldText();
     parentHelper_resetFieldTextOnChildren(this);
