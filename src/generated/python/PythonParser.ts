@@ -1140,7 +1140,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 305;
         this.identifierDef();
         this.state = 306;
-        this.match(PythonParser.EQUAL);
+        this.match(PythonParser.SINGLE_EQUALS);
         this.state = 307;
         this.constantValue();
         this.state = 309;
@@ -1659,7 +1659,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 414;
         this.identifierDef();
         this.state = 415;
-        this.match(PythonParser.EQUAL);
+        this.match(PythonParser.SINGLE_EQUALS);
         this.state = 416;
         this.expression(0);
         this.state = 417;
@@ -1699,7 +1699,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 423;
         this.assignable(0);
         this.state = 424;
-        this.match(PythonParser.EQUAL);
+        this.match(PythonParser.SINGLE_EQUALS);
         this.state = 425;
         this.expression(0);
         this.state = 426;
@@ -5023,7 +5023,7 @@ export class PythonParser extends antlr.Parser {
     5, 94, 0, 0, 293, 295, 3, 32, 16, 0, 294, 293, 1, 0, 0, 0, 295, 298, 1, 0, 0, 0, 296, 294, 1, 0,
     0, 0, 296, 297, 1, 0, 0, 0, 297, 299, 1, 0, 0, 0, 298, 296, 1, 0, 0, 0, 299, 300, 5, 110, 0, 0,
     300, 301, 5, 94, 0, 0, 301, 15, 1, 0, 0, 0, 302, 304, 5, 106, 0, 0, 303, 302, 1, 0, 0, 0, 303,
-    304, 1, 0, 0, 0, 304, 305, 1, 0, 0, 0, 305, 306, 3, 80, 40, 0, 306, 307, 5, 66, 0, 0, 307, 309,
+    304, 1, 0, 0, 0, 304, 305, 1, 0, 0, 0, 305, 306, 3, 80, 40, 0, 306, 307, 5, 74, 0, 0, 307, 309,
     3, 92, 46, 0, 308, 310, 3, 30, 15, 0, 309, 308, 1, 0, 0, 0, 309, 310, 1, 0, 0, 0, 310, 311, 1,
     0, 0, 0, 311, 312, 5, 94, 0, 0, 312, 17, 1, 0, 0, 0, 313, 315, 5, 106, 0, 0, 314, 313, 1, 0, 0,
     0, 314, 315, 1, 0, 0, 0, 315, 316, 1, 0, 0, 0, 316, 317, 5, 1, 0, 0, 317, 318, 3, 90, 45, 0,
@@ -5056,9 +5056,9 @@ export class PythonParser extends antlr.Parser {
     0, 0, 409, 401, 1, 0, 0, 0, 409, 402, 1, 0, 0, 0, 409, 403, 1, 0, 0, 0, 409, 404, 1, 0, 0, 0,
     409, 405, 1, 0, 0, 0, 409, 406, 1, 0, 0, 0, 409, 407, 1, 0, 0, 0, 409, 408, 1, 0, 0, 0, 410, 33,
     1, 0, 0, 0, 411, 413, 5, 106, 0, 0, 412, 411, 1, 0, 0, 0, 412, 413, 1, 0, 0, 0, 413, 414, 1, 0,
-    0, 0, 414, 415, 3, 80, 40, 0, 415, 416, 5, 66, 0, 0, 416, 417, 3, 124, 62, 0, 417, 418, 5, 121,
+    0, 0, 414, 415, 3, 80, 40, 0, 415, 416, 5, 74, 0, 0, 416, 417, 3, 124, 62, 0, 417, 418, 5, 121,
     0, 0, 418, 419, 5, 94, 0, 0, 419, 35, 1, 0, 0, 0, 420, 422, 5, 106, 0, 0, 421, 420, 1, 0, 0, 0,
-    421, 422, 1, 0, 0, 0, 422, 423, 1, 0, 0, 0, 423, 424, 3, 84, 42, 0, 424, 425, 5, 66, 0, 0, 425,
+    421, 422, 1, 0, 0, 0, 422, 423, 1, 0, 0, 0, 423, 424, 3, 84, 42, 0, 424, 425, 5, 74, 0, 0, 425,
     426, 3, 124, 62, 0, 426, 427, 5, 120, 0, 0, 427, 428, 5, 94, 0, 0, 428, 37, 1, 0, 0, 0, 429,
     431, 5, 106, 0, 0, 430, 429, 1, 0, 0, 0, 430, 431, 1, 0, 0, 0, 431, 432, 1, 0, 0, 0, 432, 433,
     5, 6, 0, 0, 433, 434, 3, 124, 62, 0, 434, 436, 5, 39, 0, 0, 435, 437, 3, 30, 15, 0, 436, 435, 1,
@@ -5749,8 +5749,8 @@ export class ConstantContext extends antlr.ParserRuleContext {
   public identifierDef(): IdentifierDefContext {
     return this.getRuleContext(0, IdentifierDefContext)!;
   }
-  public EQUAL(): antlr.TerminalNode {
-    return this.getToken(PythonParser.EQUAL, 0)!;
+  public SINGLE_EQUALS(): antlr.TerminalNode {
+    return this.getToken(PythonParser.SINGLE_EQUALS, 0)!;
   }
   public constantValue(): ConstantValueContext {
     return this.getRuleContext(0, ConstantValueContext)!;
@@ -6216,8 +6216,8 @@ export class VariableDefinitionContext extends antlr.ParserRuleContext {
   public identifierDef(): IdentifierDefContext {
     return this.getRuleContext(0, IdentifierDefContext)!;
   }
-  public EQUAL(): antlr.TerminalNode {
-    return this.getToken(PythonParser.EQUAL, 0)!;
+  public SINGLE_EQUALS(): antlr.TerminalNode {
+    return this.getToken(PythonParser.SINGLE_EQUALS, 0)!;
   }
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;
@@ -6260,8 +6260,8 @@ export class AssignmentContext extends antlr.ParserRuleContext {
   public assignable(): AssignableContext {
     return this.getRuleContext(0, AssignableContext)!;
   }
-  public EQUAL(): antlr.TerminalNode {
-    return this.getToken(PythonParser.EQUAL, 0)!;
+  public SINGLE_EQUALS(): antlr.TerminalNode {
+    return this.getToken(PythonParser.SINGLE_EQUALS, 0)!;
   }
   public expression(): ExpressionContext {
     return this.getRuleContext(0, ExpressionContext)!;

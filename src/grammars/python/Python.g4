@@ -46,7 +46,7 @@ procedure:
 ;
 
 constant:
-    GHOSTED? identifierDef EQUAL constantValue commentText? NL
+    GHOSTED? identifierDef SINGLE_EQUALS constantValue commentText? NL
 ;
 
 enum:
@@ -99,10 +99,10 @@ ordinaryStatement:
     | comment
 ;
 variableDefinition:
-    GHOSTED? identifierDef EQUAL expression VARIABLE_DEFINITION_ANNOTATION NL
+    GHOSTED? identifierDef SINGLE_EQUALS expression VARIABLE_DEFINITION_ANNOTATION NL
 ; // annotation eventually to be replaced by commentText? like other statements
 assignment:
-    GHOSTED? assignable EQUAL expression ASSIGNMENT_ANNOTATION NL
+    GHOSTED? assignable SINGLE_EQUALS expression ASSIGNMENT_ANNOTATION NL
 ; // annotation eventually to be replaced by commentText? like other statements
 
 ifStatement:

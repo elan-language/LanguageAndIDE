@@ -65,7 +65,7 @@ export function getRefLangParser(input: string, field?: FieldImpl | File) {
 export function getParserByLanguage(l: Language, input: string, field?: FieldImpl | File) {
   switch (l.languageFullName) {
     case "Python":
-      return getPythonParser(input);
+      return getPythonParser(input, field);
     case "Reference Language":
       return getRefLangParser(input, field);
     default:
