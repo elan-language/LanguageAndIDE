@@ -23,9 +23,7 @@ main:
     GHOSTED? DEF MAIN OPEN_BRACKET CLOSE_BRACKET ARROW NONE COLON NL ordinaryStatement* END_MAIN NL
 ;
 
-mainCall:
-    MAIN OPEN_BRACKET CLOSE_BRACKET
-;
+mainCall: MAIN OPEN_BRACKET CLOSE_BRACKET;
 
 function:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL
@@ -69,8 +67,7 @@ concreteClassMember:
 
 abstractClass:
     GHOSTED? CLASS classTypeName = typeName (
-        OPEN_BRACKET (inheritsTypeName = typeName
-        | ABC) CLOSE_BRACKET
+        OPEN_BRACKET (inheritsTypeName = typeName | ABC) CLOSE_BRACKET
     ) COLON commentText? NL abstractClassMember* END_CLASS NL
 ;
 
@@ -173,7 +170,7 @@ procedureMethod:
 
 abstractFunction:
     GHOSTED? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type
-        COLON NL PASS commentText? NL
+       COLON NL PASS commentText? NL
 ;
 
 abstractProcedure:
@@ -303,7 +300,7 @@ binaryOperator:
 
 newInstance: type OPEN_BRACKET argList? CLOSE_BRACKET;
 
-paramDef: identifierDef COLON type;
+paramDef: (identifierDef | THIS_INSTANCE) COLON type;
 
 typeGeneric:
     typeName OPEN_SQ_BRACKET type (COMMA type)* CLOSE_SQ_BRACKET

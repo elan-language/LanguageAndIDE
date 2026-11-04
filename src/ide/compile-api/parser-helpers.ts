@@ -1,5 +1,6 @@
 import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
   ArgumentContext as PythonArgumentContext,
@@ -22,15 +23,15 @@ import { FieldImpl } from "../frames/fields/field-impl";
 import { File } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
+import { ErrorListener } from "./error-listener";
 import { PythonVisitorCompiler } from "./python-visitor-compiler";
+import { PythonVisitorFrame } from "./python-visitor-frame";
 import { PythonVisitorHtml } from "./python-visitor-html";
 import { PythonVisitorSource } from "./python-visitor-source";
 import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
-import { ErrorListener } from "./error-listener";
-import { PythonVisitorFrame } from "./python-visitor-frame";
 
 export function getPythonParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
@@ -165,7 +166,12 @@ export function getParamDefs<T>(
   visitor: ParseTreeVisitor<T>,
   context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
 ) {
-  return context.paramDef()?.map((t) => visitor.visit(t)!) ?? [];
+  return (
+    context
+      .paramDef()
+      ?.map((t) => visitor.visit(t))
+      .filter((t) => t instanceof ParamDefAsn) ?? []
+  );
 }
 
 export function getArgs<T>(

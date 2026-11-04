@@ -227,4 +227,4 @@ COMMENT=122
 '# end procedure method'=118
 '# assignment'=119
 '# variable definition'=120
-'# @abstractmethod'=121
+'@abstractmethod'=121

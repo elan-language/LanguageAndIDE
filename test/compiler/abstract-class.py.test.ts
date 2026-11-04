@@ -127,18 +127,6 @@ return [main, _tests];}`;
   test("Pass_AbstractClassWithConcreteMembers", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def proc() -> None
-    pass # abstract procedure
-
-# end class
-
 def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.prop) # procedure call
@@ -235,25 +223,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-  x.proc() # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.prop = 3 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
   x.proc() # procedure call
 # end main
 
@@ -341,32 +310,6 @@ return [main, _tests];}`;
 
   test("Pass_AbstractClassWithConcreteMembers2", async () => {
     const code = `${testPythonHeader}
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.prop = 3 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  def func(self: Foo) -> int: # function method
-    return self.prop
-  # end function method
-
-  def proc(self: Foo) -> None: # procedure method
-    printNoLine(self.func()) # procedure call
-  # end procedure method
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -466,34 +409,6 @@ return [main, _tests];}`;
   test("Pass_AbstractClassInheritsAbstractClass", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  def func(self: Foo) -> int: # function method
-    return self.prop
-  # end function method
-
-  def proc(self: Foo) -> None: # procedure method
-    printNoLine(self.func()) # procedure call
-  # end procedure method
-
-  prop: int # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-  def proc(self: Foo) -> None: # procedure method
-    printNoLine(self.func()) # procedure call
-  # end procedure method
-
-  prop: int # property
-
-# end class
-
 def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.prop) # procedure call
@@ -512,7 +427,7 @@ class Foo(ABC): # abstract class
 class Foo1(Foo): # abstract class
 
   @abstractmethod
-  def proc() -> None
+  def proc() -> None:
     pass # abstract procedure
 
 # end class
@@ -618,34 +533,6 @@ return [main, _tests];}`;
 
   test("Pass_DifferentAbstractClassIntoFunction1", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-  def proc(self: Foo) -> None: # procedure method
-    printNoLine(self.func()) # procedure call
-  # end procedure method
-
-  prop: int # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo2(Foo1): # abstract class
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -776,32 +663,6 @@ return [main, _tests];}`;
 
   test("Pass_DifferentAbstractClassIntoFunction2", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-  printNoLine(func2(x)) # procedure call
-# end main
-
-def func2(f: Foo2) -> int: # function
-  return f.ff2()
-# end function
-
-class Foo2(Foo1): # abstract class
-
-  @abstractmethod
-  def ff2() -> int:
-    pass # abstract function
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -935,52 +796,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-  printNoLine(func2(x)) # procedure call
-# end main
-
-class Foo2(Foo1): # abstract class
-
-  @abstractmethod
-  def ff2() -> int:
-    pass # abstract function
-
-# end class
-
-def func1(f: Foo1) -> int: # function
-  return f.ff1()
-# end function
-
-class Foo1(ABC): # abstract class
-
-  @abstractmethod
-  def ff1() -> int:
-    pass # abstract function
-
-# end class
-
-class Bar(Foo2): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff1(self: Bar) -> int: # function method
-    return 1
-  # end function method
-
-  def ff2(self: Bar) -> int: # function method
-    return 2
-  # end function method
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
   printNoLine(x.foo) # procedure call
   printNoLine(x.foo.hasValue()) # procedure call
 # end main
@@ -1089,34 +904,6 @@ return [main, _tests];}`;
   test("Fail_DoesntImplementFunc", async () => {
     const code = `${testPythonHeader}
 
-class Foo2(Foo1): # abstract class
-
-  @abstractmethod
-  def ff2() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo1(ABC): # abstract class
-
-  @abstractmethod
-  def ff1() -> int:
-    pass # abstract function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.foo) # procedure call
-  printNoLine(x.foo.hasValue()) # procedure call
-# end main
-
-class Foo2(ABC): # abstract class
-
-  f2: Foo # property
-
-# end class
-
 def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.prop) # procedure call
@@ -1130,7 +917,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   @abstractmethod
-  def proc() -> None
+  def proc() -> None:
     pass # abstract procedure
 
 # end class
@@ -1176,32 +963,6 @@ main()
   test("Fail_DoesntImplementProc", async () => {
     const code = `${testPythonHeader}
 
-class Foo1(ABC): # abstract class
-
-  @abstractmethod
-  def ff1() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo2(ABC): # abstract class
-
-  f2: Foo # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def proc() -> None
-    pass # abstract procedure
-
-# end class
-
 def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.prop) # procedure call
@@ -1215,7 +976,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   @abstractmethod
-  def proc() -> None
+  def proc() -> None:
     pass # abstract procedure
 
 # end class
@@ -1261,36 +1022,6 @@ main()
   test("Fail_InheritSelf", async () => {
     const code = `${testPythonHeader}
 
-class Foo2(ABC): # abstract class
-
-  f2: Foo # property
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.prop = 3 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def func(self: Bar) -> int: # function method
-    return 1
-  # end function method
-
-  prop: int # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -1323,16 +1054,6 @@ main()
 
   test("Fail_InheritSelfIndirect", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-# end main
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1383,22 +1104,6 @@ def main() -> None:
 
 # end main
 
-class Yon(Foo): # abstract class
-
-  prop1: int # property
-
-# end class
-
-class Foo(Bar): # abstract class
-
-  prop3: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Foo(ABC): # abstract class
 
   prop: int # property
@@ -1433,22 +1138,6 @@ main()
 
   test("Fail_InheritConcreteClass", async () => {
     const code = `${testPythonHeader}
-
-class Yon(Foo): # abstract class
-
-  prop1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
-class Bar(Foo): # abstract class
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
 
@@ -1496,20 +1185,6 @@ main()
 
   test("Fail_DifferentAbstractClassIntoFunction", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
-
-def main() -> None:
-
-# end main
-
-class Bar(Foo): # abstract class
-
-  prop2: int # property
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -1581,43 +1256,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-# end main
-
-class Foo1(ABC): # abstract class
-
-  @abstractmethod
-  def ff1() -> int:
-    pass # abstract function
-
-# end class
-
-class Bar(Foo2): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff1(self: Bar) -> int: # function method
-    return 1
-  # end function method
-
-  def ff2(self: Bar) -> int: # function method
-    return 2
-  # end function method
-
-# end class
-
-def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.prop) # procedure call
   printNoLine(x.func()) # procedure call
@@ -1635,7 +1273,7 @@ class Foo(ABC): # abstract class
 class Foo1(ABC): # abstract class
 
   @abstractmethod
-  def proc() -> None
+  def proc() -> None:
     pass # abstract procedure
 
 # end class

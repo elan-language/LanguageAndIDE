@@ -150,8 +150,7 @@ END_FUNCTION_METHOD: '# end function method';
 END_PROCEDURE_METHOD: '# end procedure method';
 ASSIGNMENT_ANNOTATION: '# assignment';
 VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
-ABSTRACT_METHOD: '# @abstractmethod';
-
+ABSTRACT_METHOD: '@abstractmethod';
 
 COMMENT: '#' ~('\r' | '\n')*;
 

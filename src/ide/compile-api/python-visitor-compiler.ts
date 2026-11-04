@@ -209,13 +209,18 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.scope,
     );
 
-  override visitParamDef = (ctx: ParamDefContext) =>
-    new ParamDefAsn(
-      this.visit(ctx.identifierDef())!,
-      this.visit(ctx.type())!,
-      this.fieldId,
-      this.scope,
-    );
+  override visitParamDef = (ctx: ParamDefContext) => {
+    const idDef = ctx.identifierDef();
+    if (idDef) {
+      return new ParamDefAsn(
+        this.visit(ctx.identifierDef() ?? ctx.THIS_INSTANCE()!)!,
+        this.visit(ctx.type())!,
+        this.fieldId,
+        this.scope,
+      );
+    }
+    return EmptyAsn.Instance;
+  };
 
   override visitIndex = (ctx: IndexContext) => {
     const pn = this.precedingNode; // so not reset by expression

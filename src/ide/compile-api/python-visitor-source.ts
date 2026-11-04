@@ -89,7 +89,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   override visitMethodName = (ctx: MethodNameContext) => ctx.NAME_STARTING_LC().getText();
 
   override visitParamDef = (ctx: ParamDefContext) =>
-    `${this.visit(ctx.identifierDef())}: ${this.visit(ctx.type())}`;
+    `${this.visit(ctx.identifierDef() ?? ctx.THIS_INSTANCE()!)}: ${this.visit(ctx.type())}`;
 
   override visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
