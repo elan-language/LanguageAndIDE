@@ -50,6 +50,20 @@ export class LanguageCSharp extends LanguageCfamily {
     return html;
   }
 
+  renderSingleLineAsSource(frame: Frame): string {
+    let source = "";
+    if (frame instanceof AssertStatement) {
+      source = `Assert.AreEqual(${frame.expected.renderAsSource()}, ${frame.actual.renderAsSource()});`;
+    } else if (frame instanceof ConstantGlobal) {
+      source = `${this.CONST} ${getConstantType(frame.value.text, this)} ${frame.name.renderAsSource()} = ${frame.value.renderAsSource()};`;
+    } else if (frame instanceof Property) {
+      source = `${this.modifierAsSource(frame)}${frame.type.renderAsSource()} ${frame.name.renderAsSource()} {${this.GET}; ${this.PRIVATE} ${this.SET};}`;
+    } else {
+      source = this.common_renderSingleLineAsSource(frame);
+    }
+    return source;
+  }
+
   OVERRIDES = "override";
   IMPLEMENTS = "";
   INTERPOLATED_STRING_PREFIX: string = "$";
@@ -66,13 +80,32 @@ export class LanguageCSharp extends LanguageCfamily {
     return html;
   }
 
+  renderTopAsSource(frame: Frame): string {
+    let source = "";
+    if (frame instanceof TestFrame) {
+      source = `[TestClass] class ${this.testClassNameAsSource(frame)}\n[TestMethod] ${this.STATIC} ${this.VOID} ${frame.testName.renderAsSource()}() {`;
+    } else {
+      source = this.common_renderTopAsSource(frame);
+    }
+    return source;
+  }
+
   inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? `: ${field.renderAsHtml()}` : ``;
   }
 
+  inheritsFromTextAsSource(field: FieldImpl): string {
+    const frame = field.getHolder() as ClassFrame;
+    return frame.doesInherit() ? `: ${field.renderAsSource()}` : ``;
+  }
+
   renderBottomAsHtml(_frame: Frame): string {
     return `<el-punc>}</el-punc>`;
+  }
+
+  renderBottomAsSource(_frame: Frame): string {
+    return "}";
   }
 
   renderFileImportsAsHtml(): string {

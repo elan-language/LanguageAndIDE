@@ -132,8 +132,34 @@ export class LanguageRefLang extends LanguageAbstract {
     return html;
   }
 
-  renderSingleLineAsExport(_frame: Frame): string {
-    return ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  renderSingleLineAsSource(frame: Frame): string {
+    let source = `Source not specified for this frame`;
+    if (frame instanceof AssertStatement) {
+      source = `${this.ASSERT} ${frame.actual.renderAsSource()} ${this.EVALUATES} ${this.TO} ${frame.expected.renderAsSource()}`;
+    } else if (frame instanceof ProcedureCall) {
+      source = `${this.CALL} ${frame.procRef.renderAsSource()}`;
+    } else if (frame instanceof CommentFrame) {
+      source = frame.text.renderAsSource();
+    } else if (frame instanceof ConstantGlobal) {
+      source = `${this.CONSTANT} ${frame.name.renderAsSource()} set to ${frame.value.renderAsSource()}`;
+    } else if (frame instanceof Enum) {
+      source = `${this.ENUM} ${frame.name.renderAsSource()} ${frame.values.renderAsSource()}`;
+    } else if (frame instanceof Property) {
+      source = `${this.modifierAsSource(frame)}${this.PROPERTY} ${frame.name.renderAsSource()} ${this.AS} ${frame.type.renderAsSource()}`;
+    } else if (frame instanceof ReturnStatement) {
+      source = `${this.RETURN} ${frame.expr.renderAsSource()}`;
+    } else if (frame instanceof Assignment) {
+      source = `${this.ASSIGN} ${frame.assignable.renderAsSource()} ${this.TO} ${frame.expr.renderAsSource()}`;
+    } else if (frame instanceof ThrowStatement) {
+      source = `${this.THROW} ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
+    } else if (frame instanceof VariableStatement) {
+      source = `${this.VARIABLE} ${frame.name.renderAsSource()} ${this.SET} ${this.TO} ${frame.expr.renderAsSource()}`;
+    } else if (frame instanceof AbstractFunction) {
+      source = `${this.ABSTRACT} ${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+    } else if (frame instanceof AbstractProcedure) {
+      source = `${this.ABSTRACT} ${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+    }
+    return source;
   }
 
   renderTopAsHtml(frame: Frame): string {
@@ -178,19 +204,70 @@ export class LanguageRefLang extends LanguageAbstract {
     return html;
   }
 
+  renderTopAsSource(frame: Frame): string {
+    let source = `Source not specified for this frame`;
+    if (frame instanceof AbstractClass) {
+      source = `${this.ABSTRACT} ${this.CLASS} ${frame.name.renderAsSource()} ${this.inheritsFromTextAsSource(frame.inheritance)}`;
+    } else if (frame instanceof ConcreteClass) {
+      source = `${this.CLASS} ${frame.name.renderAsSource()} ${this.inheritsFromTextAsSource(frame.inheritance)}`;
+    } else if (frame instanceof Constructor) {
+      source = `${this.CONSTRUCTOR}(${frame.params.renderAsSource()})`;
+    } else if (frame instanceof CatchClause) {
+      source = `${this.CATCH} ${frame.variable.renderAsSource()} ${this.AS} ${frame.exceptionType.renderAsSource()}`;
+    } else if (frame instanceof ElseIfClause) {
+      source = `${this.ELIF} ${frame.condition.renderAsSource()} ${this.THEN}`;
+    } else if (frame instanceof ElseClause) {
+      source = `${this.ELSE}`;
+    } else if (frame instanceof ForLoop) {
+      source = `${this.FOR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}`;
+    } else if (frame instanceof FunctionMethod) {
+      source = `${this.modifierAsSource(frame)}${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+    } else if (frame instanceof GlobalFunction) {
+      source = `${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+    } else if (frame instanceof GlobalProcedure) {
+      source = `${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+    } else if (frame instanceof ProcedureMethod) {
+      source = `${this.modifierAsSource(frame)}${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+    } else if (frame instanceof IfStatement) {
+      source = `${this.IF} ${frame.condition.renderAsSource()} ${this.THEN}`;
+    } else if (frame instanceof MainRoutine) {
+      source = `${this.MAIN}`;
+    } else if (frame instanceof TestFrame) {
+      source = `${this.TEST} ${frame.testName.renderAsSource()}`;
+    } else if (frame instanceof ThenClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryStatement) {
+      source = `${this.TRY} `;
+    } else if (frame instanceof WhileLoop) {
+      source = `${this.WHILE} ${frame.condition.renderAsSource()}`;
+    }
+    return source;
+  }
+
   inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
     return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.renderAsHtml()}` : ``;
   }
 
-  renderTopAsExport(_frame: Frame): string {
-    return ""; // At least for the time being, there is no reason to export a file being presented as Elan
+  inheritsFromTextAsSource(field: FieldImpl): string {
+    const frame = field.getHolder() as ClassFrame;
+    return frame.doesInherit() ? ` ${this.INHERITS} ${field.renderAsHtml()}` : ``;
   }
 
   renderBottomAsHtml(frame: Frame): string {
     let result = "";
     if (!("isClause" in frame)) {
       result = `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
+    }
+    return result;
+  }
+
+  renderBottomAsSource(frame: Frame): string {
+    let result = "";
+    if (!("isClause" in frame)) {
+      result = `${this.END} ${frame.initialKeywords()}`;
     }
     return result;
   }
@@ -306,6 +383,9 @@ export class LanguageRefLang extends LanguageAbstract {
 
   private modifierAsHtml(member: MemberFrame): string {
     return member.isPrivate ? `<el-kw>${this.PRIVATE} </el-kw>` : "";
+  }
+  private modifierAsSource(member: MemberFrame): string {
+    return member.isPrivate ? `${this.PRIVATE} ` : "";
   }
 
   // Elan keywords followed by JavaScript keywords

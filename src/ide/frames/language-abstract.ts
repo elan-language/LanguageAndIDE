@@ -82,6 +82,10 @@ export abstract class LanguageAbstract implements Language {
   protected testClassNameAsHtml(frame: TestFrame) {
     return `<el-type>Test_${frame.testName.text.substring(5)}</el-type>`;
   }
+  protected testClassNameAsSource(frame: TestFrame) {
+    return `Test_${frame.testName.text.substring(5)}`;
+  }
+
   protected testMethodNameAsHtml(frame: TestFrame) {
     return `<el-method>${frame.testName.renderAsHtml()}</el-method>`;
   }

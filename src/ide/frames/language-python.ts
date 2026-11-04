@@ -88,6 +88,40 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
+  renderSingleLineAsSource(frame: Frame): string {
+    let source = `Source not specified for ${typeof frame}`;
+    if (frame instanceof AbstractFunction) {
+      source = `@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:\n${frame.indent()}  pass`;
+    } else if (frame instanceof AbstractProcedure) {
+      source = `@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}\n${frame.indent()}  pass`;
+    } else if (frame instanceof AssertStatement) {
+      source = `self.assertEqual(${frame.actual.renderAsSource()}, ${frame.expected.renderAsSource()})`;
+    } else if (frame instanceof ProcedureCall) {
+      source = `${frame.procRef.renderAsSource()}`;
+    } else if (frame instanceof CommentFrame) {
+      source = frame.text.renderAsSource();
+    } else if (frame instanceof ConstantGlobal) {
+      source = `${frame.name.renderAsSource()} = ${frame.value.renderAsSource()}`;
+    } else if (frame instanceof ElseIfClause) {
+      source = `${this.ELIF} ${frame.condition.renderAsSource()}:`;
+    } else if (frame instanceof ElseClause) {
+      source = `${this.ELSE}:`;
+    } else if (frame instanceof Enum) {
+      source = `${this.CLASS} ${frame.name.renderAsSource()}(Enum):${frame.values.renderAsSource()}`;
+    } else if (frame instanceof Property) {
+      source = `${frame.name.renderAsSource()}: ${frame.type.renderAsSource()}`;
+    } else if (frame instanceof ReturnStatement) {
+      source = `${this.RETURN} ${frame.expr.renderAsSource()}`;
+    } else if (frame instanceof Assignment) {
+      source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()} # assignment`;
+    } else if (frame instanceof ThrowStatement) {
+      source = `${this.RAISE} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
+    } else if (frame instanceof VariableStatement) {
+      source = `${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()} # variable definition`;
+    }
+    return source;
+  }
+
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
@@ -113,7 +147,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ThenClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
@@ -126,6 +160,44 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
+  renderTopAsSource(frame: Frame): string {
+    let source = `Source not specified for ${typeof frame}`;
+    if (frame instanceof AbstractClass) {
+      source = `${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
+    } else if (frame instanceof ConcreteClass) {
+      source = `${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
+    } else if (frame instanceof Constructor) {
+      source = `${this.DEF} __init__(${this.memberParamListAsSource(frame, frame.params)}) -> None:`;
+    } else if (frame instanceof CatchClause) {
+      source = `${this.EXCEPT} ${frame.exceptionType.renderAsSource()} ${this.AS} ${frame.variable.renderAsSource()}:`;
+    } else if (frame instanceof ForLoop) {
+      source = `${this.FOR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}:`;
+    } else if (frame instanceof GlobalFunction) {
+      source = `${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:`;
+    } else if (frame instanceof GlobalProcedure) {
+      source = `${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}:`;
+    } else if (frame instanceof IfStatement) {
+      source = `${this.IF} ${frame.condition.renderAsSource()}:`;
+    } else if (frame instanceof MainRoutine) {
+      source = `${this.DEF} main() -> ${this.NONE}:`;
+    } else if (frame instanceof FunctionMethod) {
+      source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${frame.returnType.renderAsSource()}:`;
+    } else if (frame instanceof ProcedureMethod) {
+      source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${this.NONE}:`;
+    } else if (frame instanceof TestFrame) {
+      source = `class ${this.testClassNameAsSource(frame)}(unittest.TestCase): ${this.DEF} ${frame.testName.renderAsSource()}(${this.SELF}) -> ${this.NONE}:`;
+    } else if (frame instanceof ThenClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryStatement) {
+      source = `${this.TRY}:`;
+    } else if (frame instanceof WhileLoop) {
+      source = `${this.WHILE} ${frame.condition.renderAsSource()}:`;
+    }
+    return source;
+  }
+
   paramListAsHtml(frame: MemberFrame, field: FieldImpl): string {
     const self: string = `<el-kw>${this.SELF}</el-kw>: ${selfTypeAsHtml(frame)}`;
     // if no params, wrap the comma to make it only appear
@@ -133,6 +205,15 @@ export class LanguagePython extends LanguageAbstract {
     // if there are params, the comma appears unconditionally
     const comma = field.text === "" ? `<el-place class="trailingcomma">, </el-place>` : ", ";
     return `${self}${comma}${field.renderAsHtml()}`;
+  }
+
+  memberParamListAsSource(frame: MemberFrame, field: FieldImpl): string {
+    const self: string = `${this.SELF}: ${selfTypeAsHtml(frame)}`;
+    // if no params, wrap the comma to make it only appear
+    // when the line (or parts of it) are selected
+    // if there are params, the comma appears unconditionally
+    const comma = field.text === "" ? `, ` : ", ";
+    return `${self}${comma}${field.renderAsSource()}`;
   }
 
   inheritsFromTextAsHtml(field: FieldImpl): string {
@@ -146,34 +227,47 @@ export class LanguagePython extends LanguageAbstract {
     return result;
   }
 
-  renderBottomAsHtml(frame: Frame): string {
-    let html = "<el-comment># end ";
-    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
-      html += this.CLASS;
-    } else if (frame instanceof Constructor) {
-      html += "constructor";
-    } else if (frame instanceof FunctionMethod) {
-      html += "function method";
-    } else if (frame instanceof ProcedureMethod) {
-      html += "procedure method";
-    } else if (frame instanceof ForLoop) {
-      html += this.FOR;
-    } else if (frame instanceof GlobalFunction) {
-      html += "function";
-    } else if (frame instanceof GlobalProcedure) {
-      html += "procedure";
-    } else if (frame instanceof IfStatement) {
-      html += "if";
-    } else if (frame instanceof MainRoutine) {
-      html += "main";
-    } else if (frame instanceof TryStatement) {
-      html += this.TRY;
-    } else if (frame instanceof WhileLoop) {
-      html += this.WHILE;
-    } else if (frame instanceof TestFrame) {
-      html += "test";
+  inheritsFromTextAsSource(field: FieldImpl): string {
+    let result = "";
+    const frame = field.getHolder() as ClassFrame;
+    if (frame.doesInherit()) {
+      result = `(${field.renderAsSource()})`;
     }
-    return html + "</el-comment>";
+    return result;
+  }
+
+  renderBottomAsHtml(frame: Frame): string {
+    return `<el-comment>${this.renderBottomAsSource(frame)}</el-comment>`;
+  }
+
+  renderBottomAsSource(frame: Frame): string {
+    let source = "# end";
+    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
+      source += this.CLASS;
+    } else if (frame instanceof Constructor) {
+      source += "constructor";
+    } else if (frame instanceof FunctionMethod) {
+      source += "function method";
+    } else if (frame instanceof ProcedureMethod) {
+      source += "procedure method";
+    } else if (frame instanceof ForLoop) {
+      source += this.FOR;
+    } else if (frame instanceof GlobalFunction) {
+      source += "function";
+    } else if (frame instanceof GlobalProcedure) {
+      source += "procedure";
+    } else if (frame instanceof IfStatement) {
+      source += "if";
+    } else if (frame instanceof MainRoutine) {
+      source += "main";
+    } else if (frame instanceof TryStatement) {
+      source += this.TRY;
+    } else if (frame instanceof WhileLoop) {
+      source += this.WHILE;
+    } else if (frame instanceof TestFrame) {
+      source += "test";
+    }
+    return source;
   }
 
   renderFileImportsAsHtml(): string {
@@ -183,7 +277,10 @@ export class LanguagePython extends LanguageAbstract {
     return "";
   }
   renderFileTrailerAsHtml(f: FileImpl): string {
-    return f.containsMain() ? "\n\n<el-method>main</el-method><el-punc>()</el-punc>" : "";
+    return f.containsMain() ? "<\n\n><el-method>main</el-method><el-punc>()</el-punc>" : "";
+  }
+  renderFileTrailerAsSource(f: FileImpl): string {
+    return f.containsMain() ? "\n\nmain()" : "";
   }
 
   // make instances of the two classes needed for export of expressions

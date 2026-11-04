@@ -5,7 +5,7 @@ import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
-import { selfTypeAsHtml } from "./frame-helpers";
+import { selfTypeAsHtml, selfTypeAsSource } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { MemberFrame } from "./frame-interfaces/member-frame";
@@ -90,7 +90,39 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     return html;
   }
 
+  common_renderSingleLineAsSource(frame: Frame): string {
+    let source = `Source not specified for this frame`;
+    if (frame instanceof ProcedureCall) {
+      source = `${frame.procRef.renderAsSource()};`;
+    } else if (frame instanceof CommentFrame) {
+      source = frame.text.renderAsSource();
+    } else if (frame instanceof ElseIfClause) {
+      source = `} ${this.ELSE} ${this.IF} (${frame.condition.renderAsSource()}) {`;
+    } else if (frame instanceof ElseClause) {
+      source = `} ${this.ELSE} {`;
+    } else if (frame instanceof Enum) {
+      source = `${this.ENUM} ${frame.name.renderAsSource()} {${frame.values.renderAsSource()}}`;
+    } else if (frame instanceof ReturnStatement) {
+      source = `${this.RETURN} ${frame.expr.renderAsSource()};`;
+    } else if (frame instanceof Assignment) {
+      source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()};`;
+    } else if (frame instanceof ThrowStatement) {
+      source = `${this.THROW} ${this.NEW_INSTANCE_PREFIX} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()});`;
+    } else if (frame instanceof VariableStatement) {
+      source = `${this.VAR} ${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()};`;
+    } else if (frame instanceof AbstractFunction) {
+      source = `${this.ABSTRACT} ${frame.returnType.renderAsSource()} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()});`;
+    } else if (frame instanceof AbstractProcedure) {
+      source = `${this.ABSTRACT} ${this.VOID} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()});`;
+    }
+    return source;
+  }
+
   protected modifierAsHtml(member: MemberFrame): string {
+    const modifier = this.modifierAsSource(member);
+    return modifier === "" ? "" : `<el-kw>${modifier} </el-kw>`;
+  }
+  protected modifierAsSource(member: MemberFrame): string {
     let modifier = "";
     if (member.isPrivate && member.isOnAbstractClass()) {
       modifier = this.PROTECTED;
@@ -99,7 +131,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
     } else {
       modifier = this.PUBLIC;
     }
-    return modifier === "" ? "" : `<el-kw>${modifier} </el-kw>`;
+    return modifier === "" ? "" : `${modifier} `;
   }
 
   common_renderTopAsHtml(frame: Frame): string {
@@ -136,6 +168,42 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `<el-kw>${this.WHILE} (</el-kw>${frame.condition.renderAsHtml()}) {`;
     }
     return html;
+  }
+
+  common_renderTopAsSource(frame: Frame): string {
+    let source = `Source not specified for this frame`;
+    if (frame instanceof AbstractClass) {
+      source = `${this.ABSTRACT} ${this.CLASS} ${frame.name.renderAsSource()}${frame.inheritance.renderAsSource()} {`;
+    } else if (frame instanceof ConcreteClass) {
+      source = `${this.CLASS} ${frame.name.renderAsSource()}${frame.inheritance.renderAsSource()} {`;
+    } else if (frame instanceof Constructor) {
+      source = `${this.PUBLIC} ${selfTypeAsSource(frame)}(${frame.params.renderAsSource()}) {`;
+    } else if (frame instanceof CatchClause) {
+      source = `} ${this.CATCH} (${frame.exceptionType.renderAsSource()} ${frame.variable.renderAsSource()}) {`;
+    } else if (frame instanceof FunctionMethod) {
+      source = `${this.modifierAsSource(frame)}${this.overrides(frame)}${frame.returnType.renderAsSource()} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) {`;
+    } else if (frame instanceof ProcedureMethod) {
+      source = `${this.modifierAsSource(frame)}${this.overrides(frame)}${this.VOID} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) {`;
+    } else if (frame instanceof ForLoop) {
+      source = `${this.FOREACH} (${this.VAR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}) {`;
+    } else if (frame instanceof GlobalFunction) {
+      source = `${this.STATIC} ${frame.returnType.renderAsSource()} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) {`;
+    } else if (frame instanceof GlobalProcedure) {
+      source = `${this.STATIC} ${this.VOID} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) {`;
+    } else if (frame instanceof IfStatement) {
+      source = `${this.IF} (${frame.condition.renderAsSource()}) {`;
+    } else if (frame instanceof MainRoutine) {
+      source = `${this.STATIC} ${this.VOID} main() {`;
+    } else if (frame instanceof ThenClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryClause) {
+      source = ``; // no top to ThenClause
+    } else if (frame instanceof TryStatement) {
+      source = `${this.TRY} {`;
+    } else if (frame instanceof WhileLoop) {
+      source = `${this.WHILE} (${frame.condition.renderAsSource()}) {`;
+    }
+    return source;
   }
 
   common_functionFrameFields(frame: FunctionFrame): Field[] {
