@@ -276,6 +276,9 @@ export class LanguagePython extends LanguageAbstract {
   renderSpecificHeaderAsHtml(_f: FileImpl): string {
     return "";
   }
+  renderSpecificHeaderAsSource(_f: FileImpl): string {
+    return "";
+  }
   renderFileTrailerAsHtml(f: FileImpl): string {
     return f.containsMain() ? "<\n\n><el-method>main</el-method><el-punc>()</el-punc>" : "";
   }

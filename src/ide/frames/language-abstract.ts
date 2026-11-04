@@ -32,8 +32,12 @@ export abstract class LanguageAbstract implements Language {
   abstract renderBottomAsSource(frame: Frame): string;
 
   abstract renderFileImportsAsHtml(): string;
+
   abstract renderSpecificHeaderAsHtml(f: FileImpl): string;
+  abstract renderSpecificHeaderAsSource(f: FileImpl): string;
+
   abstract renderFileTrailerAsHtml(f: FileImpl): string;
+  abstract renderFileTrailerAsSource(f: FileImpl): string;
 
   getFields(frame: Frame): Field[] {
     let fields: Field[] = [];

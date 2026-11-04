@@ -18,7 +18,6 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
-  removeHtmlTagsAndEscChars,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -290,10 +289,8 @@ export class FileImpl implements File {
     this.doingExport = oldde;
     // No need to remove HTML as this has none as it is for export only
     const imports = this.language().renderFileImportsAsHtml();
-    const languageSpecificHeader = removeHtmlTagsAndEscChars(
-      this.language().renderSpecificHeaderAsHtml(this),
-    );
-    const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml(this));
+    const languageSpecificHeader = this.language().renderSpecificHeaderAsSource(this);
+    const trailer = this.language().renderFileTrailerAsSource(this);
     const lang = this.language().languageFullName;
     return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${languageSpecificHeader}${globals}${trailer}
 `;

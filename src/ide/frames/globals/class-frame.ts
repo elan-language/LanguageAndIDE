@@ -15,7 +15,7 @@ import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { typeNameFieldSpec, inheritsFromFieldSpec } from "../fields/field-spec";
 import { Regexes } from "../fields/regexes";
-import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
+import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
@@ -314,11 +314,11 @@ ${this.language().renderBottomAsHtml(this)}
   }
 
   public renderAsExport(): string {
-    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}\r\n
+    const topAsSource = this.language().renderTopAsSource(this);
+    const bottomAsSource = this.language().renderBottomAsSource(this);
+    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n
 ${parentHelper_renderChildrenAsExport(this)}
-${bottomAsExport}`;
+${bottomAsSource}`;
   }
   resetFieldText(): void {
     super.resetFieldText();

@@ -114,7 +114,14 @@ export class LanguageCSharp extends LanguageCfamily {
   renderSpecificHeaderAsHtml(_f: FileImpl): string {
     return "";
   }
+  renderSpecificHeaderAsSource(_f: FileImpl): string {
+    return "";
+  }
+
   renderFileTrailerAsHtml(_f: FileImpl): string {
+    return "";
+  }
+  renderFileTrailerAsSource(_f: FileImpl): string {
     return "";
   }
 

@@ -21,8 +21,12 @@ export interface Language {
   renderBottomAsSource(frame: Frame): string;
 
   renderFileImportsAsHtml(): string;
+
   renderSpecificHeaderAsHtml(f: FileImpl): string;
+  renderSpecificHeaderAsSource(f: FileImpl): string;
+
   renderFileTrailerAsHtml(f: FileImpl): string;
+  renderFileTrailerAsSource(f: FileImpl): string;
 
   getFields(node: Frame): Field[];
 

@@ -1,5 +1,4 @@
 import { AbstractFrame } from "./abstract-frame";
-import { removeHtmlTagsAndEscChars } from "./frame-helpers";
 
 export abstract class SingleLineFrame extends AbstractFrame {
   outerHtmlTag: string = "el-statement"; // Overridden by non-statement single line frames
@@ -9,6 +8,6 @@ export abstract class SingleLineFrame extends AbstractFrame {
   }
 
   renderAsExport(): string {
-    return `${this.indent()}${removeHtmlTagsAndEscChars(this.renderAsHtml())}`;
+    return this.language().renderSingleLineAsSource(this);
   }
 }
