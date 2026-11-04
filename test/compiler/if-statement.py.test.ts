@@ -19,15 +19,6 @@ suite("Python If Statement", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(if_(True, 1, 2)) # procedure call
-  printNoLine(if_(False, 3, 4)) # procedure call
-  printNoLine(if_(True, if_(True, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(True, if_(False, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(False, if_(True, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(False, if_(True, "A", "B"), if_(False, "C", "D"))) # procedure call
-# end main
-
-def main() -> None:
   a = True # variable definition
   if a:
     printNoLine("yes") # procedure call
@@ -72,15 +63,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = True # variable definition
-  if a:
-    printNoLine("yes") # procedure call
-  else:
-    printNoLine("no") # procedure call
-  # end if
-# end main
-
-def main() -> None:
   a = False # variable definition
   if a:
     printNoLine("yes") # procedure call
@@ -123,15 +105,6 @@ return [main, _tests];}`;
 
   test("Pass_3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = False # variable definition
-  if a:
-    printNoLine("yes") # procedure call
-  else:
-    printNoLine("no") # procedure call
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition
@@ -182,17 +155,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
-
-def main() -> None:
   a = 3 # variable definition
   if a == 1:
     printNoLine("one") # procedure call
@@ -241,17 +203,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
-
-def main() -> None:
   a = True # variable definition
   if a:
     printNoLine("yes") # procedure call
@@ -290,13 +241,6 @@ return [main, _tests];}`;
 
   test("Pass_6", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = True # variable definition
-  if a:
-    printNoLine("yes") # procedure call
-  # end if
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -358,19 +302,6 @@ def main() -> None:
     printNoLine("two") # procedure call
   elif a == 3: # else if
     printNoLine("three") # procedure call
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  elif a == 3: # else if
-    printNoLine("three") # procedure call
   # end if
 # end main
 
@@ -414,17 +345,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  elif a == 3: # else if
-    printNoLine("three") # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
     a = 2 # assignment
   # end if
 # end main
@@ -461,13 +381,6 @@ return [main, _tests];}`;
 
   test("Pass_localVariableInIf", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    a = 2 # assignment
-  # end if
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -516,15 +429,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    b = a # variable definition
-    b = 2 # assignment
-    printNoLine(b) # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
     printNoLine("") # procedure call
   else:
     a = 3 # assignment
@@ -565,15 +469,6 @@ return [main, _tests];}`;
 
   test("Pass_localVariableInElse", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("") # procedure call
-  else:
-    a = 3 # assignment
-  # end if
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -626,17 +521,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
-  else:
-    b = a # variable definition
-    b = 2 # assignment
-    printNoLine(b) # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
     b = 1 # variable definition
     printNoLine(b) # procedure call
   else:
@@ -685,17 +569,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    b = 1 # variable definition
-    printNoLine(b) # procedure call
-  else:
-    b = a # variable definition
-    printNoLine(b) # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
     printNoLine("") # procedure call
   elif a == 2: # else if
     a = 3 # assignment
@@ -736,15 +609,6 @@ return [main, _tests];}`;
 
   test("Pass_localVariableInElseIf", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("") # procedure call
-  elif a == 2: # else if
-    a = 3 # assignment
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition
@@ -798,17 +662,6 @@ def main() -> None:
   a = 2 # variable definition
   if a == 1:
     printNoLine("") # procedure call
-  elif a == 2: # else if
-    b = a # variable definition
-    b = 2 # assignment
-    printNoLine(b) # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("") # procedure call
   else:
     b = 2 # variable definition
   # end if
@@ -848,15 +701,6 @@ return [main, _tests];}`;
 
   test("Pass_NestedlocalVariableInElse", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("") # procedure call
-  else:
-    b = 2 # variable definition
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition
@@ -912,19 +756,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("") # procedure call
-  elif a == 2: # else if
-    b = a # variable definition
-    for i in range(0, 6):
-      b = b + i # assignment
-    # end for
-    printNoLine(b) # procedure call
-  # end if
-# end main
-
-def main() -> None:
   a = True # variable definition
   if a:
 
@@ -950,13 +781,6 @@ main()
 
   test("Fail_TwoElses", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = True # variable definition
-  if a:
-
-  # end if
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -998,17 +822,6 @@ def main() -> None:
     printNoLine("one") # procedure call
   else:
     printNoLine("not one") # procedure call
-  else:
-    printNoLine("two") # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  else:
-    printNoLine("not one") # procedure call
   elif a == 2: # else if
     printNoLine("two") # procedure call
   # end if
@@ -1036,17 +849,6 @@ main()
 
   test("Fail_IfConditionNotBool", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  else:
-    printNoLine("not one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  # end if
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -1079,15 +881,6 @@ main()
 
   test("Fail_ElseConditionNotBool", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  if a:
-    printNoLine("yes") # procedure call
-  else:
-    printNoLine("no") # procedure call
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition
@@ -1126,17 +919,6 @@ main()
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
-  elif a: # else if
-    printNoLine("two") # procedure call
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
     a = 3 # variable definition
   elif a == 2: # else if
     printNoLine("two") # procedure call
@@ -1167,17 +949,6 @@ main()
 
   test("Fail_RedefineVariable in elif", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    a = 3 # variable definition
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition
@@ -1218,17 +989,6 @@ def main() -> None:
   if a == 1:
     printNoLine("one") # procedure call
   elif a == 2: # else if
-    a = 3 # variable definition
-  else:
-    printNoLine("neither") # procedure call
-  # end if
-# end main
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
     printNoLine("two") # procedure call
   else:
     a = 3 # variable definition
@@ -1257,17 +1017,6 @@ main()
 
   test("Fail_useOutOfScopeVariable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    printNoLine("one") # procedure call
-  elif a == 2: # else if
-    printNoLine("two") # procedure call
-  else:
-    a = 3 # variable definition
-  # end if
-# end main
 
 def main() -> None:
   a = 2 # variable definition

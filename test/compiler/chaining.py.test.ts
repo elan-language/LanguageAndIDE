@@ -161,20 +161,6 @@ return [main, _tests];}`;
   test("Pass_PropertyChain2", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.a = [1] # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  a: list[int] # property
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   b = 0 # variable definition
@@ -318,27 +304,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = Foo() # variable definition
-  b = 0 # variable definition
-  b = f.b.y.z # assignment
-  printNoLine(b) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.y = Yon() # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  y: Yon # property
-
-# end class
-
-def main() -> None:
   f = [Foo()] # variable definition
   b = 0 # variable definition
   b = f[0].b.ff() # assignment
@@ -447,34 +412,6 @@ return [main, _tests];}`;
 
   test("Pass_PropertyChain4", async () => {
     const code = `${testPythonHeader}
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.y = Yon() # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  y: Yon # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.b = Bar() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  b: Bar # property
-
-# end class
 
 def main() -> None:
   f = [Foo()] # variable definition
@@ -586,34 +523,6 @@ return [main, _tests];}`;
   test("Pass_StringRange", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.b = Bar() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  b: Bar # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.b = Bar() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  b: Bar # property
-
-# end class
-
 def main() -> None:
   s = "" # variable definition
   s = "Hello World!".lowerCase().subString(0, 1).upperCase() # assignment
@@ -651,20 +560,6 @@ return [main, _tests];}`;
 
   test("Pass_StringRange1", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.b = Bar() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  b: Bar # property
-
-# end class
 
 def main() -> None:
   aStringVar = "abcdexefg" # variable definition
@@ -704,13 +599,6 @@ return [main, _tests];}`;
   });
   test("Pass_New", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  aStringVar = "abcdexefg" # variable definition
-  s = "" # variable definition
-  s = aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString() # assignment
-  printNoLine(s) # procedure call
-# end main
 
 def main() -> None:
   a = "" # variable definition
@@ -778,12 +666,6 @@ return [main, _tests];}`;
   });
   test("Pass_CreateList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "" # variable definition
-  a = (Bar()).strArr[0].upperCase()[0] # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   aFoo = Foo() # variable definition
@@ -858,13 +740,6 @@ return [main, _tests];}`;
 
   test("Pass_CreateList1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  aFoo = Foo() # variable definition
-  b = 0 # variable definition
-  b = aFoo.createLst(10).subList(1, 5).length() + 3 # assignment
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   aBar = Bar() # variable definition
@@ -977,29 +852,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  aBar = Bar() # variable definition
-  b = 0 # variable definition
-  b = 5 + aBar.foo.create2DList()[2][1] - 2 # assignment
-  printNoLine(b) # procedure call
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def create2DList(self: Foo) -> list[list[int]]: # function method
-    return [[8, 8, 8, 8], [8, 8, 8, 8], [8, 8, 8, 8]]
-  # end function method
-
-# end class
-
-def main() -> None:
   a = [1, 2, 3, 4, 5, 6] # variable definition
   printNoLine(a.filter(lambda x: int: x > 2).map(lambda x: int: x*x).reduce(0, lambda s: int, x: int: s + x)) # procedure call
 # end main
@@ -1034,22 +886,6 @@ return [main, _tests];}`;
 
   test("Pass_HoFs2", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def create2DList(self: Foo) -> list[list[int]]: # function method
-    return [[8, 8, 8, 8], [8, 8, 8, 8], [8, 8, 8, 8]]
-  # end function method
-
-# end class
 
 def main() -> None:
   a = [1, 2, 3, 4, 5, 6] # variable definition
@@ -1090,12 +926,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [1, 2, 3, 4, 5, 6] # variable definition
-  c = a.subList(0, 5).map(lambda x: int: x*x) # variable definition
-  printNoLine(c.subList(2, c.length()).reduce(0, lambda s: int, x: int: s + x)) # procedure call
-# end main
-
-def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   b = "" # variable definition
   b = a[1][1] # assignment
@@ -1118,19 +948,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_TypeError1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [[1, 2], [3, 4]] # variable definition
-  b = "" # variable definition
-  b = a[1][1] # assignment
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = Foo() # variable definition

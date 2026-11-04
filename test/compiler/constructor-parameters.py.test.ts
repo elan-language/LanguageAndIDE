@@ -16,7 +16,7 @@ suite("Python Constructor Parameters", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(5 + 3 > 4 + 2) # procedure call
+
 # end main
 
 class Foo: # concrete class
@@ -58,20 +58,6 @@ main()
 
 class Foo: # concrete class
 
-  def __init__(self: Foo, p_1: int) -> None:
-    p_1 = self.p1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
-
-class Foo: # concrete class
-
   def __init__(self: Foo, a: list[float]) -> None:
 
   # end constructor
@@ -99,18 +85,6 @@ class Foo: # concrete class
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, a: list[float]) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
 
 class Foo: # concrete class
 
@@ -146,20 +120,6 @@ class Foo: # concrete class
 
   test("Fail_OutParameter", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    p1 = 4 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
 
 class Foo: # concrete class
 

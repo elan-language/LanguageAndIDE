@@ -19,11 +19,6 @@ suite("Python Vector Graphics", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ((((3)))) # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   svg = VectorGraphic() # variable definition
 # end main
 
@@ -50,10 +45,6 @@ main()
 
   test("Pass_useCreateVectorGraphics", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  svg = VectorGraphic() # variable definition
-# end main
 
 def main() -> None:
   vg = createVectorGraphics() # variable definition
@@ -100,13 +91,6 @@ return [main, _tests];}`;
 
   test("Pass_AppendUsingFunction", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  vg = createVectorGraphics() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
-  vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
-# end main
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
@@ -157,13 +141,6 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
-  vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
-# end main
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
   vg.append(circ) # procedure call
   printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
 # end main
@@ -206,13 +183,6 @@ return [main, _tests];}`;
 
   test("Pass_SetPropertyOnVG", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
@@ -311,36 +281,6 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = CircleVG() # variable definition
-  vg.append(circ) # procedure call
-  circ.setRadius(20) # procedure call
-  circ.setCentreX(30) # procedure call
-  circ.setCentreY(40) # procedure call
-  circ.setFillColour(blue) # procedure call
-  circ.setStrokeColour(yellow) # procedure call
-  circ.setStrokeWidth(2) # procedure call
-  line = LineVG() # variable definition
-  vg.append(line) # procedure call
-  line.setX1(10) # procedure call
-  line.setY1(15) # procedure call
-  line.setX2(20) # procedure call
-  line.setY2(30) # procedure call
-  line.setStrokeColour(blue) # procedure call
-  line.setStrokeWidth(3) # procedure call
-  rect = RectangleVG() # variable definition
-  vg.append(rect) # procedure call
-  rect.setX(10) # procedure call
-  rect.setY(15) # procedure call
-  rect.setWidth(20) # procedure call
-  rect.setHeight(30) # procedure call
-  rect.setFillColour(green) # procedure call
-  rect.setStrokeColour(blue) # procedure call
-  rect.setStrokeWidth(3) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  circ = CircleVG() # variable definition
   circ = circ.withRadius(20) # assignment
   circ = circ.withCentreX(30) # assignment
   circ = circ.withCentreY(40) # assignment
@@ -433,36 +373,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  circ = CircleVG() # variable definition
-  circ = circ.withRadius(20) # assignment
-  circ = circ.withCentreX(30) # assignment
-  circ = circ.withCentreY(40) # assignment
-  circ = circ.withFillColour(blue) # assignment
-  circ = circ.withStrokeColour(yellow) # assignment
-  circ = circ.withStrokeWidth(2) # assignment
-  vg = vg.withAppend(circ) # assignment
-  line = LineVG() # variable definition
-  line = line.withX1(10) # assignment
-  line = line.withY1(15) # assignment
-  line = line.withX2(20) # assignment
-  line = line.withY2(30) # assignment
-  line = line.withStrokeColour(blue) # assignment
-  line = line.withStrokeWidth(3) # assignment
-  vg = vg.withAppend(line) # assignment
-  rect = RectangleVG() # variable definition
-  rect = rect.withX(10) # assignment
-  rect = rect.withY(15) # assignment
-  rect = rect.withWidth(20) # assignment
-  rect = rect.withHeight(30) # assignment
-  rect = rect.withFillColour(green) # assignment
-  rect = rect.withStrokeColour(blue) # assignment
-  rect = rect.withStrokeWidth(3) # assignment
-  vg = vg.withAppend(rect) # assignment
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
-
-def main() -> None:
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withFillColour(black).withStrokeWidth(1) # variable definition
   printNoLine(circ.centreX) # procedure call
 # end main
@@ -497,11 +407,6 @@ return [main, _tests];}`;
 
   test("Pass_TransparentFill", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withFillColour(black).withStrokeWidth(1) # variable definition
-  printNoLine(circ.centreX) # procedure call
-# end main
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
@@ -551,13 +456,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(transparent).withStrokeWidth(1) # variable definition
-  vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
-# end main
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withStrokeColour(transparent).withStrokeWidth(1) # variable definition
   vg.append(circ) # procedure call
   printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
@@ -601,13 +499,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withStrokeColour(transparent).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(white + 1).withStrokeWidth(1) # variable definition
   vg.append(circ) # procedure call
   printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
@@ -647,13 +538,6 @@ return [main, _tests];}`;
   });
   test("Pass_Image", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(white + 1).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
 
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
@@ -702,14 +586,6 @@ return [main, _tests];}`;
 
   test("Pass_propertyAccess", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  vg = list[VectorGraphic]() # variable definition
-  i = ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") # variable definition
-  i = i.withX(50).withY(50).withWidth(50).withHeight(50) # assignment
-  vg.append(i) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
-# end main
 
 def main() -> None:
   c = CircleVG() # variable definition

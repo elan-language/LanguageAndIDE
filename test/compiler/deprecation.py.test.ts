@@ -125,15 +125,6 @@ suite("Python Deprecation", () => {
   test("Pass_notYetDeprecatedMajor", async () => {
     const code = `${testPythonHeader}
 
-def foo(f: Foo) -> int: # function
-  return 1
-# end function
-
-def main() -> None:
-  a = Foo(foo) # variable definition
-  b = a.df() # variable definition
-# end main
-
 def main() -> None:
   x = notYetDeprecated1() # variable definition
 # end main
@@ -161,11 +152,6 @@ main()
 
   test("Pass_notYetDeprecatedMinor", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = Foo(foo) # variable definition
-  b = a.df() # variable definition
-# end main
 
 def main() -> None:
   x = notYetDeprecated2() # variable definition
@@ -196,10 +182,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = notYetDeprecated2() # variable definition
-# end main
-
-def main() -> None:
   hiddenDeprecatedProcedure() # procedure call
 # end main
 
@@ -226,10 +208,6 @@ main()
 
   test("Pass_ParametersChangedWithoutCompileErrors1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  hiddenDeprecatedProcedure() # procedure call
-# end main
 
 def main() -> None:
   x = deprecatedFunctionWithParameters1() # variable definition
@@ -260,10 +238,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = deprecatedFunctionWithParameters1() # variable definition
-# end main
-
-def main() -> None:
   x = deprecatedFunctionWithParameters2("fred") # variable definition
 # end main
 
@@ -290,10 +264,6 @@ main()
 
   test("Pass_ParametersChangedWithoutCompileErrors3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = deprecatedFunctionWithParameters2("fred") # variable definition
-# end main
 
 def main() -> None:
   deprecatedProcedureWithParameters1() # procedure call
@@ -324,10 +294,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters1() # procedure call
-# end main
-
-def main() -> None:
   deprecatedProcedureWithParameters2("fred") # procedure call
 # end main
 
@@ -356,10 +322,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters2("fred") # procedure call
-# end main
-
-def main() -> None:
   x = DeprecatedClass1() # variable definition
 # end main
 
@@ -386,10 +348,6 @@ main()
 
   test("Pass_FunctionAdvisoryDeprecation", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = DeprecatedClass1() # variable definition
-# end main
 
 def main() -> None:
   x = deprecatedAdvisoryFunction() # variable definition
@@ -422,10 +380,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = deprecatedAdvisoryFunction() # variable definition
-# end main
-
-def main() -> None:
   x = deprecatedFunction() # variable definition
 # end main
 
@@ -454,10 +408,6 @@ main()
 
   test("Fail_ProcedureDeprecation", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = deprecatedFunction() # variable definition
-# end main
 
 def main() -> None:
   deprecatedProcedure() # procedure call
@@ -490,10 +440,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedure() # procedure call
-# end main
-
-def main() -> None:
   a = DeprecatedClass() # variable definition
 # end main
 
@@ -524,10 +470,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = DeprecatedClass() # variable definition
-# end main
-
-def main() -> None:
   a = list[DeprecatedClass]() # variable definition
 # end main
 
@@ -556,10 +498,6 @@ main()
 
   test("Fail_ParametersChangedWithCompileErrors1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[DeprecatedClass]() # variable definition
-# end main
 
 def main() -> None:
   x = deprecatedFunctionWithParameters1("fred") # variable definition
@@ -593,10 +531,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = deprecatedFunctionWithParameters1("fred") # variable definition
-# end main
-
-def main() -> None:
   x = deprecatedFunctionWithParameters2() # variable definition
 # end main
 
@@ -626,10 +560,6 @@ main()
 
   test("Fail_ParametersChangedWithCompileErrors3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = deprecatedFunctionWithParameters2() # variable definition
-# end main
 
 def main() -> None:
   deprecatedProcedureWithParameters1("fred") # procedure call
@@ -663,10 +593,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters1("fred") # procedure call
-# end main
-
-def main() -> None:
   deprecatedProcedureWithParameters2() # procedure call
 # end main
 
@@ -696,10 +622,6 @@ main()
 
   test("Fail_ParametersChangedWithCompileErrorsOnClass", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  deprecatedProcedureWithParameters2() # procedure call
-# end main
 
 def main() -> None:
   x = DeprecatedClass1[int]() # variable definition

@@ -18,28 +18,6 @@ suite("Python Char Mapped Display", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Foo() # variable definition
-  b = a.ff().fd() # variable definition
-  printNoLine(b) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Bar) -> int: # function method
-    return 0
-  # end function method
-
-# end class
-
-def main() -> None:
   g = createBlockGraphics(white) # variable definition
   displayBlocks(g) # procedure call
 # end main
@@ -74,22 +52,6 @@ return [main, _tests];}`;
 
   test("Pass_withPut", async () => {
     const code = `${testPythonHeader}
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Bar) -> int: # function method
-    return 0
-  # end function method
-
-# end class
 
 def main() -> None:
   g = createBlockGraphics(white) # variable definition
@@ -131,12 +93,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   g = createBlockGraphics(white) # variable definition
-  g[1][0] = 4 # assignment
-  displayBlocks(g) # procedure call
-# end main
-
-def main() -> None:
-  g = createBlockGraphics(white) # variable definition
   displayBlocks(g) # procedure call
   clearBlocks() # procedure call
 # end main
@@ -172,12 +128,6 @@ return [main, _tests];}`;
 
   test("Pass_getKey", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  g = createBlockGraphics(white) # variable definition
-  displayBlocks(g) # procedure call
-  clearBlocks() # procedure call
-# end main
 
 def main() -> None:
   gr = createBlockGraphics(white) # variable definition
@@ -218,12 +168,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
-  a = getKey() # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = 0 # variable definition
   a = getNumericKey() # assignment
   printNoLine(a) # procedure call
@@ -262,12 +206,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 0 # variable definition
-  a = getNumericKey() # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = waitForKey() # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -302,11 +240,6 @@ return [main, _tests];}`;
 
   test("Pass_getKeyWithModifier", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = waitForKey() # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   gr = createBlockGraphics(white) # variable definition
@@ -348,12 +281,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   gr = createBlockGraphics(white) # variable definition
-  a = getKeyWithModifier() # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
   clearKeyBuffer() # procedure call
 # end main
 
@@ -389,11 +316,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
-  clearKeyBuffer() # procedure call
-# end main
-
-def main() -> None:
   a = createBlockGraphics(white) # variable definition
 # end main
 
@@ -426,10 +348,6 @@ return [main, _tests];}`;
 
   test("Pass_defaultGraphics", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = createBlockGraphics(white) # variable definition
-# end main
 
 def main() -> None:
   foo = Foo() # variable definition

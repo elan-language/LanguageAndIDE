@@ -1691,10 +1691,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[Dictionary[int, int], int]() # variable definition
-# end main
-
-def main() -> None:
   a = Dictionary[list[int], int]() # variable definition
 # end main
 
@@ -1725,10 +1721,6 @@ def main() -> None:
   a = Dictionary[list[int], int]() # variable definition
 # end main
 
-def main() -> None:
-  a = Dictionary[list[int], int]() # variable definition
-# end main
-
 main()
 `;
 
@@ -1751,10 +1743,6 @@ main()
 
   test("Fail_DictionaryOfMutableClassKey", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = Dictionary[list[int], int]() # variable definition
-# end main
 
 def main() -> None:
   a = Dictionary[Foo, int]() # variable definition

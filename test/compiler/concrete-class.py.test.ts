@@ -19,11 +19,6 @@ suite("Python Concrete Class", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  t = 1 # variable definition
-  a = new List<of t>() # variable definition
-# end main
-
-def main() -> None:
   x = Foo() # variable definition
   printNoLine(x.p1) # procedure call
   printNoLine(x.p2) # procedure call
@@ -100,13 +95,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Foo() # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
-  printNoLine(x.toString()) # procedure call
-# end main
-
-def main() -> None:
   x = Foo(7, "Apple") # variable definition
   printNoLine(x.p1) # procedure call
   printNoLine(x.p2) # procedure call
@@ -179,12 +167,6 @@ return [main, _tests];}`;
 
   test("Pass_ConstructorAsScope", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo(7, "Apple") # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
-# end main
 
 def main() -> None:
   x = Foo() # variable definition
@@ -299,30 +281,6 @@ return [main, _tests];}`;
 
   test("Pass_ReferenceProperty", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo() # variable definition
-  y = x.b # variable definition
-  y.printP1() # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def printP1(self: Bar) -> None: # procedure method
-    printNoLine(self.p1) # procedure call
-  # end procedure method
-
-# end class
 
 def main() -> None:
   foo = Foo() # variable definition
@@ -458,38 +416,6 @@ return [main, _tests];}`;
   test("Pass_IndexProperty", async () => {
     const code = `${testPythonHeader}
 
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def printP1(self: Bar) -> None: # procedure method
-    printNoLine(self.p1) # procedure call
-  # end procedure method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.bar = Bar() # assignment
-  # end constructor
-
-  bar: Bar # property
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
 def main() -> None:
   foo = Foo() # variable definition
   b = foo.strArr[0] # variable definition
@@ -557,34 +483,6 @@ return [main, _tests];}`;
 
   test("Pass_MutableClassAsProcedureParameter", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.bar = Bar() # assignment
-  # end constructor
-
-  bar: Bar # property
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.strArr = ["apple", "orange", "pair"] # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  strArr: list[str] # property
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -660,34 +558,6 @@ return [main, _tests];}`;
 
   test("Pass_MutableClassAsFunctionParameter", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.strArr = ["apple", "orange", "pair"] # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  strArr: list[str] # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -771,38 +641,6 @@ return [main, _tests];}`;
 
   test("Pass_InheritedPropertyInitialised", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def updateP1(self: Foo) -> None: # procedure method
-    self.p1 = 0 # assignment
-  # end procedure method
-
-# end class
 
 class Foo(ABC): # abstract class
 
@@ -934,18 +772,6 @@ class Foo: # concrete class
   test("Pass_ConstructorWithFunction", async () => {
     const code = `${testPythonHeader}
 
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.prop_1 = "" # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return self.prop_1
-  # end function method
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.p1) # procedure call
@@ -1022,11 +848,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.p1) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
   f = f.with_P1(1) # assignment
   printNoLine(f.p1) # procedure call
 # end main
@@ -1100,12 +921,6 @@ return [main, _tests];}`;
 
   test("Pass_WithPattern", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  f = f.with_P1(1) # assignment
-  printNoLine(f.p1) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1230,18 +1045,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.setup(100, "initial") # procedure call
-  f1 = f.withP1(101) # variable definition
-  f2 = f1.withP2("updated") # variable definition
-  f3 = f2.withP1(102).withP2("updated2") # variable definition
-  printNoLine(f) # procedure call
-  printNoLine(f1) # procedure call
-  printNoLine(f2) # procedure call
-  printNoLine(f3) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
   f.append() # procedure call
 # end main
 
@@ -1317,11 +1120,6 @@ return [main, _tests];}`;
 
   test("Fail_InitialisePropertyInLine", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  f.append() # procedure call
-# end main
 
 class Foo: # concrete class
 
@@ -1433,18 +1231,6 @@ main()
   test("Fail_InstantiateWithoutRequiredArgs", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
 def main() -> None:
   x = Foo() # variable definition
 # end main
@@ -1485,10 +1271,6 @@ main()
 
   test("Fail_InstantiateWithWrongArgType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo() # variable definition
-# end main
 
 def main() -> None:
   x = Foo(7.1) # variable definition
@@ -1532,10 +1314,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Foo(7.1) # variable definition
-# end main
-
-def main() -> None:
   x = Foo(7) # variable definition
 # end main
 
@@ -1577,10 +1355,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Foo(7) # variable definition
-# end main
-
-def main() -> None:
   x = Foo() # variable definition
 # end main
 
@@ -1608,10 +1382,6 @@ def main() -> None:
   x = Foo() # variable definition
 # end main
 
-def main() -> None:
-  x = Foo() # variable definition
-# end main
-
 main()
 `;
 
@@ -1632,10 +1402,6 @@ main()
 
   test("Fail_IncompatibleClassAsProcedureParameter", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo() # variable definition
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1697,25 +1463,6 @@ main()
 
   test("Fail_IncompatibleClassAsFunctionParameter", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  proc(f) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1850,24 +1597,6 @@ main()
   test("Fail_DuplicateNames", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 def main() -> None:
 
 # end main
@@ -1931,24 +1660,6 @@ def main() -> None:
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
     self.p1 = "" # assignment
   # end constructor
 
@@ -1985,36 +1696,6 @@ main()
 
   test("Fail_DuplicateFunctionNames", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = "" # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: str # property
-
-  p1: int # property
-
-# end class
 
 def main() -> None:
 
@@ -2064,42 +1745,6 @@ main()
   test("Fail_DuplicateProcedureNames", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = "" # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: str # property
-
-  p1: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -2148,46 +1793,6 @@ main()
   test("Fail_DuplicateMemberNames1", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -2234,44 +1839,6 @@ main()
   test("Fail_DuplicateMemberNames2", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-  ff: int # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -2317,42 +1884,6 @@ main()
 
   test("Fail_DuplicateMemberNames3", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-  ff: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  ff: int # property
-
-# end class
 
 def main() -> None:
 
@@ -2402,44 +1933,6 @@ main()
   test("Fail_ConstructorWithCall", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  ff: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-# end class
-
 def main() -> None:
   x = Foo() # variable definition
   printNoLine(x.b) # procedure call
@@ -2476,38 +1969,6 @@ main()
 
   test("Fail_UnnecessaryGenericParm1", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def ff(self: Foo) -> int: # function method
-    return 0
-  # end function method
-
-  def ff(self: Foo) -> None: # procedure method
-
-  # end procedure method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
 
 def main() -> None:
   x = Foo[str]() # variable definition
@@ -2549,30 +2010,6 @@ main()
   test("Fail_UnnecessaryGenericParm2", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
 def main() -> None:
   x = Random[str]() # variable definition
 # end main
@@ -2600,18 +2037,6 @@ main()
 
   test("Fail_CannotNewUnknownType", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
 
 def main() -> None:
   x = FooBar() # variable definition
@@ -2644,10 +2069,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = FooBar() # variable definition
-# end main
-
-def main() -> None:
   x = int() # variable definition
 # end main
 
@@ -2674,10 +2095,6 @@ main()
 
   test("Fail_PropertyIsNotDefined", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = int() # variable definition
-# end main
 
 def main() -> None:
 
@@ -2728,10 +2145,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Foo(Foo): # concrete class
 
   def __init__(self: Foo) -> None:
@@ -2768,10 +2181,6 @@ main()
 
   test("Fail_InheritSelfIndirect", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -2842,23 +2251,6 @@ main()
   test("Fail_CannotInheritFromYourself", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-
-# end main
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  prop: int # property
-
-  def toString(self: Bar) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
 
 def main() -> None:
 
@@ -2892,26 +2284,6 @@ main()
 
   test("Fail_CallConstructor", async () => {
     const code = `${testPythonHeader}
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  prop: int # property
-
-  def toString(self: Bar) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
-class Bar(Bar): # abstract class
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -2952,24 +2324,6 @@ main()
 
   test("Fail_UpdatePropertyInFunction", async () => {
     const code = `${testPythonHeader}
-
-class Bar(Bar): # abstract class
-
-  prop: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -3018,37 +2372,6 @@ main()
   test("Fail_UpdatePropertyInFunction1", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def withP1(self: Foo, p: int) -> Foo: # function method
-    self.p1 = p # assignment
-    return self
-  # end function method
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   f = f.withP1(1) # assignment
@@ -3096,44 +2419,6 @@ main()
 
   test("Fail_InvalidUpdateProperty2", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def withP1(self: Foo, p: int) -> Foo: # function method
-    self.p1 = p # assignment
-    return self
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def withP1(self: Foo, p: int) -> Foo: # function method
-    self.p1 = p # assignment
-    return self
-  # end function method
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -3190,25 +2475,6 @@ class Foo: # concrete class
 
   p1: int # property
 
-  def withP1(self: Foo, p: int) -> Foo: # function method
-    self.p1 = p # assignment
-    return self
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
   def withP1(self: Foo, p: int) -> None: # procedure method
 
   # end procedure method
@@ -3249,24 +2515,6 @@ class Bar: # concrete class
 
   test("Fail_InheritedPropertyMustBeInitialised", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  def withP1(self: Foo, p: int) -> None: # procedure method
-
-  # end procedure method
-
-# end class
 
 class Foo(ABC): # abstract class
 

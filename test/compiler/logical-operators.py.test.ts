@@ -19,13 +19,6 @@ suite("Python Logical Operators", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [1, 2, 3, 4] # variable definition
-  b = -1 # variable definition
-  a[b] = 3 # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = False and False # variable definition
   b = False and True # variable definition
   c = True and False # variable definition
@@ -72,17 +65,6 @@ return [main, _tests];}`;
 
   test("Pass_or", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = False and False # variable definition
-  b = False and True # variable definition
-  c = True and False # variable definition
-  d = True and True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
-# end main
 
 def main() -> None:
   a = False or False # variable definition
@@ -133,17 +115,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = False or False # variable definition
-  b = False or True # variable definition
-  c = True or False # variable definition
-  d = True or True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
-# end main
-
-def main() -> None:
   a = not False # variable definition
   b = not True # variable definition
   printNoLine(a) # procedure call
@@ -184,13 +155,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = not False # variable definition
-  b = not True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
   a = not False and True # variable definition
   b = not (False and True) # variable definition
   printNoLine(a) # procedure call
@@ -228,13 +192,6 @@ return [main, _tests];}`;
   });
   test("Pass_CombineLogicalOpsWithComparison1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = not False and True # variable definition
-  b = not (False and True) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = (4 > 3) and (6 > 5) # variable definition
@@ -280,15 +237,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = (4 > 3) and (6 > 5) # variable definition
-  b = (3 > 4) or (6 == 6) # variable definition
-  c = not (4 > 3) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-# end main
-
-def main() -> None:
   a = (True and False) == (True or False) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -325,11 +273,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = (True and False) == (True or False) # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = False and 1 # variable definition
   b = 1 and True # variable definition
   c = 1 and 1 # variable definition
@@ -355,14 +298,14 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -370,15 +313,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = False and 1 # variable definition
-  b = 1 and True # variable definition
-  c = 1 and 1 # variable definition
-  d = True or 0 # variable definition
-  e = 0 or True # variable definition
-  f = 0 or 0 # variable definition
-# end main
-
-def main() -> None:
   a = 4 > 3 and 6 > 5 # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -400,8 +334,8 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -409,11 +343,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 4 > 3 and 6 > 5 # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = not 4 > 3 # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -435,18 +364,13 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = not 4 > 3 # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = True and False == True or False # variable definition
@@ -485,11 +409,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = True and False == True or False # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = true not false # variable definition
 # end main
 
@@ -512,10 +431,6 @@ main()
 
   test("Fail_xor", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = true not false # variable definition
-# end main
 
 def main() -> None:
   a = false xor false # variable definition
@@ -542,10 +457,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = false xor false # variable definition
-# end main
-
-def main() -> None:
   a = not 1 # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -567,7 +478,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -575,11 +486,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = not 1 # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = "fred" # variable definition
   b = not a # variable definition
   printNoLine(b) # procedure call
@@ -602,18 +508,12 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_minusOnNonNumber1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "fred" # variable definition
-  b = not a # variable definition
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = -True # variable definition
@@ -636,17 +536,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_minusOnNonNumber2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = -True # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = "fred" # variable definition
@@ -671,7 +566,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

@@ -18,29 +18,6 @@ suite("Python Conditions", () => {
   test("Pass_lessThan", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-
-# end class
-
-def main() -> None:
-  score = Bar() # variable definition
-  score = if_(False, cast(Bar()), Bar()) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
 def main() -> None:
   printNoLine(3 < 4) # procedure call
   printNoLine(3 < 2) # procedure call
@@ -78,18 +55,6 @@ return [main, _tests];}`;
 
   test("Pass_greaterThan", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  score = Bar() # variable definition
-  score = if_(False, cast(Bar()), Bar()) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-def main() -> None:
-  printNoLine(3 < 4) # procedure call
-  printNoLine(3 < 2) # procedure call
-  printNoLine(3 < 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 > 4) # procedure call
@@ -130,12 +95,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 < 4) # procedure call
-  printNoLine(3 < 2) # procedure call
-  printNoLine(3 < 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 <= 4) # procedure call
   printNoLine(3 <= 2) # procedure call
   printNoLine(3 <= 3) # procedure call
@@ -172,12 +131,6 @@ return [main, _tests];}`;
 
   test("Pass_greaterThanOrEqual", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3 <= 4) # procedure call
-  printNoLine(3 <= 2) # procedure call
-  printNoLine(3 <= 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 >= 4) # procedure call
@@ -218,12 +171,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 >= 4) # procedure call
-  printNoLine(3 >= 2) # procedure call
-  printNoLine(3 >= 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 != 4) # procedure call
   printNoLine(3 != 2) # procedure call
   printNoLine(3 != 3) # procedure call
@@ -262,12 +209,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 != 4) # procedure call
-  printNoLine(3 != 2) # procedure call
-  printNoLine(3 != 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 == 4) # procedure call
   printNoLine(3 == 2) # procedure call
   printNoLine(3 == 3) # procedure call
@@ -304,12 +245,6 @@ return [main, _tests];}`;
 
   test("Pass_canCompareCoercibleTypes", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3 == 4) # procedure call
-  printNoLine(3 == 2) # procedure call
-  printNoLine(3 == 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 < 3.1) # procedure call
@@ -364,19 +299,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 < 3.1) # procedure call
-  printNoLine(3 <= 3.1) # procedure call
-  printNoLine(3 > 3.1) # procedure call
-  printNoLine(3 >= 3.1) # procedure call
-  printNoLine(3 == 3.0) # procedure call
-  printNoLine(3 != 3.0) # procedure call
-  printNoLine(3.1 < 3) # procedure call
-  printNoLine(3.1 <= 3) # procedure call
-  printNoLine(3.1 > 3) # procedure call
-  printNoLine(3.1 >= 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine((5 + 3) > (4 + 2)) # procedure call
   printNoLine((5 + 3) == (4 + 4)) # procedure call
   printNoLine((5 + 3) > (4 + 6)) # procedure call
@@ -415,12 +337,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine((5 + 3) > (4 + 2)) # procedure call
-  printNoLine((5 + 3) == (4 + 4)) # procedure call
-  printNoLine((5 + 3) > (4 + 6)) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 not is 3) # procedure call
 # end main
 
@@ -443,10 +359,6 @@ main()
 
   test("Fail_not", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3 not is 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 not 3) # procedure call
@@ -473,10 +385,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 not 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 != 3) # procedure call
 # end main
 
@@ -499,10 +407,6 @@ main()
 
   test("Fail_EqualToOrLessThan", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3 != 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 =< 3) # procedure call
@@ -529,10 +433,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 =< 3) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 > or = 3) # procedure call
 # end main
 
@@ -555,10 +455,6 @@ main()
 
   test("Fail_SingleEquals", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3 > or = 3) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 = 4) # procedure call
@@ -585,10 +481,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 = 4) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3.equals("3")) # procedure call
   printNoLine(not 3.equals("3")) # procedure call
   printNoLine(3 < "3") # procedure call
@@ -613,26 +505,17 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Argument types. Expected: parameter1 (Int), Provided: String.ErrorMessages.html#compile_error",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Argument types. Expected: parameter1 (int), Provided: str.ErrorMessages.html#compile_error",
+      "Argument types. Expected: parameter1 (int), Provided: str.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_greaterOrLessThan", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(3.equals("3")) # procedure call
-  printNoLine(not 3.equals("3")) # procedure call
-  printNoLine(3 < "3") # procedure call
-  printNoLine(3 <= "3") # procedure call
-  printNoLine(3 > "3") # procedure call
-  printNoLine(3 >= "3") # procedure call
-# end main
 
 def main() -> None:
   printNoLine(3 <> 3  ) # procedure call
@@ -659,10 +542,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 <> 3  ) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(3 == 3  ) # procedure call
 # end main
 
@@ -687,10 +566,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 == 3  ) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(5 + 3 > 4 + 2) # procedure call
 # end main
 
@@ -709,7 +584,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

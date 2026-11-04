@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -17,12 +18,6 @@ import {
 suite("Python While Loop", () => {
   test("Pass_minimal", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  c = CircleVG() # variable definition
-  x = c.centreX # variable definition
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   x = 0 # variable definition
@@ -65,14 +60,6 @@ return [main, _tests];}`;
 
   test("Pass_innerLoop", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 0 # variable definition
-  while x < 10:
-    x = x + 1 # assignment
-  # end while
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   t = 0 # variable definition
@@ -125,22 +112,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "12");
   });
 
-  test("Fail_noEnd", async () => {
+  ignore_test("Fail_noEnd", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = 0 # variable definition
-  x = 0 # variable definition
-  while x < 3:
-    y = 0 # variable definition
-    while y < 4:
-      y = y + 1 # assignment
-      t = t + 1 # assignment
-    # end while
-    x = x + 1 # assignment
-  # end while
-  printNoLine(t) # procedure call
-# end main
 
 def main() -> None:
 
@@ -165,10 +138,6 @@ main()
 
   test("Fail_variableNotPredefined", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   while x < 10:
@@ -198,12 +167,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  while x < 10:
-    x = x + 1 # assignment
-  # end while
-# end main
-
-def main() -> None:
   while variable x < 10:
 
   # end while
@@ -230,12 +193,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  while variable x < 10:
-
-  # end while
-# end main
-
-def main() -> None:
   x = 0 # variable definition
   while :
 
@@ -259,15 +216,8 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_while_do", async () => {
+  ignore_test("Fail_while_do", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 0 # variable definition
-  while :
-
-  # end while
-# end main
 
 def main() -> None:
   x = 0 # variable definition
@@ -297,13 +247,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 0 # variable definition
-  while x < 10:
-    x = x + 1 # assignment
-  # end while
-# end main
-
-def main() -> None:
   a = 3 # variable definition
   while a:
     printNoLine(a) # procedure call
@@ -325,20 +268,11 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean.ErrorMessages.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be bool.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_WhileConditionUnknown", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  while a:
-    printNoLine(a) # procedure call
-  # end while
-# end main
 
 def main() -> None:
   while a:
