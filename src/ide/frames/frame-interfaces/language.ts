@@ -12,10 +12,13 @@ export interface Language {
   commentRegex(): RegExp;
 
   renderSingleLineAsHtml(frame: Frame): string;
+  renderSingleLineAsSource(frame: Frame): string;
 
   renderTopAsHtml(frame: Frame): string;
+  renderTopAsSource(frame: Frame): string;
 
   renderBottomAsHtml(frame: Frame): string;
+  renderBottomAsSource(frame: Frame): string;
 
   renderFileImportsAsHtml(): string;
   renderSpecificHeaderAsHtml(f: FileImpl): string;

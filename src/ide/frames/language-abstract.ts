@@ -23,10 +23,13 @@ export abstract class LanguageAbstract implements Language {
   defaultMimeType: string = "text/x-python";
 
   abstract renderSingleLineAsHtml(frame: Frame): string;
+  abstract renderSingleLineAsSource(frame: Frame): string;
 
   abstract renderTopAsHtml(frame: Frame): string;
+  abstract renderTopAsSource(frame: Frame): string;
 
   abstract renderBottomAsHtml(frame: Frame): string;
+  abstract renderBottomAsSource(frame: Frame): string;
 
   abstract renderFileImportsAsHtml(): string;
   abstract renderSpecificHeaderAsHtml(f: FileImpl): string;
