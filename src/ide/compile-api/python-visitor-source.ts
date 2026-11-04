@@ -165,7 +165,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
     const condition = this.visit(ctx._condition!);
     const exprIfTrue = this.visit(ctx._trueExpr!);
     const exprIfFalse = this.visit(ctx._falseExpr!);
-    return `${exprIfTrue} if ${condition} else ${exprIfFalse})`;
+    return `${exprIfTrue} if ${condition} else ${exprIfFalse}`;
   };
 
   override visitNewInstance = (ctx: NewInstanceContext) =>

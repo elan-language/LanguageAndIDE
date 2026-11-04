@@ -19,11 +19,6 @@ suite("Python Associations and Defaults", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 1 # variable definition
-  x = pow(0.5, 2) # assignment
-# end main
-
-def main() -> None:
   g = Game() # variable definition
   printNoLine(g.p2) # procedure call
   printNoLine(g.p1) # procedure call
@@ -148,27 +143,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  g = Game() # variable definition
-  printNoLine(g.p2) # procedure call
-  printNoLine(g.p1) # procedure call
-  printNoLine(g.previousScores) # procedure call
-# end main
-
-class Player: # concrete class
-
-  def __init__(self: Player, name: str) -> None:
-    self.name = name # assignment
-  # end constructor
-
-  name: str # property
-
-  def toString(self: Player) -> str: # function method
-    return self.name
-  # end function method
-
-# end class
-
-def main() -> None:
   g = Foo() # variable definition
   printNoLine(g.p1) # procedure call
   printNoLine(g.p2) # procedure call
@@ -241,37 +215,6 @@ return [main, _tests];}`;
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
     const code = `${testPythonHeader}
-
-class Player: # concrete class
-
-  def __init__(self: Player, name: str) -> None:
-    self.name = name # assignment
-  # end constructor
-
-  name: str # property
-
-  def toString(self: Player) -> str: # function method
-    return self.name
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = 1 # assignment
-    self.p1 = self.p2 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
 
 def main() -> None:
   g = Game() # variable definition
@@ -386,54 +329,6 @@ return [main, _tests];}`;
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = 1 # assignment
-    self.p1 = self.p2 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
-
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.s = "" # assignment
-    self.ds = Dictionary[str, int]() # assignment
-    self.ai = list[int]() # assignment
-    self.t = (0, "", list[int]()) # assignment
-  # end constructor
-
-  i: int # property
-
-  f: float # property
-
-  b: bool # property
-
-  s: str # property
-
-  ds: Dictionary[str, int] # property
-
-  ai: list[int] # property
-
-  t: tuple[int, str, list[int]] # property
-
-  r: RegExp # property
-
-  def toString(self: Game) -> str: # function method
-    return "A game"
-  # end function method
-
-# end class
 
 def main() -> None:
   p = Player() # variable definition
@@ -593,51 +488,6 @@ return [main, _tests];}`;
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
     const code = `${testPythonHeader}
 
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.s = "" # assignment
-    self.ds = Dictionary[str, int]() # assignment
-    self.ai = list[int]() # assignment
-    self.t = (0, "", list[int]()) # assignment
-  # end constructor
-
-  i: int # property
-
-  f: float # property
-
-  b: bool # property
-
-  s: str # property
-
-  ds: Dictionary[str, int] # property
-
-  ai: list[int] # property
-
-  t: tuple[int, str, list[int]] # property
-
-  r: RegExp # property
-
-  def toString(self: Game) -> str: # function method
-    return "A game"
-  # end function method
-
-# end class
-
-class Player: # concrete class
-
-  def __init__(self: Player) -> None:
-    self.g = Game() # assignment
-  # end constructor
-
-  def toString(self: Player) -> str: # function method
-    return ""
-  # end function method
-
-  g: Game # property
-
-# end class
-
 def main() -> None:
   g = Game() # variable definition
   printNoLine(g.p1) # procedure call
@@ -754,37 +604,6 @@ return [main, _tests];}`;
   test("Pass_PropertyOfListType", async () => {
     const code = `${testPythonHeader}
 
-class Player: # concrete class
-
-  def __init__(self: Player) -> None:
-    self.g = Game() # assignment
-  # end constructor
-
-  def toString(self: Player) -> str: # function method
-    return ""
-  # end function method
-
-  g: Game # property
-
-# end class
-
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.p1 = Player("Player1") # assignment
-    self.previousGame = Maybe[Game]() # assignment
-  # end constructor
-
-  p1: Player # property
-
-  previousGame: Maybe[Game] # property
-
-  def toString(self: Game) -> str: # function method
-    return "A game"
-  # end function method
-
-# end class
-
 def main() -> None:
   g = Game() # variable definition
   g.something() # procedure call
@@ -862,43 +681,6 @@ return [main, _tests];}`;
 
   test("Pass_CallProcedureOnProperty", async () => {
     const code = `${testPythonHeader}
-
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.p1 = Player("Player1") # assignment
-    self.previousGame = Maybe[Game]() # assignment
-  # end constructor
-
-  p1: Player # property
-
-  previousGame: Maybe[Game] # property
-
-  def toString(self: Game) -> str: # function method
-    return "A game"
-  # end function method
-
-# end class
-
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.p1 = [1, 2, 3] # assignment
-  # end constructor
-
-  def toString(self: Game) -> str: # function method
-    return ""
-  # end function method
-
-  p1: list[int] # property
-
-  def something(self: Game) -> None: # procedure method
-    a = 1 # variable definition
-    a = self.p1[0] # assignment
-    printNoLine(a) # procedure call
-  # end procedure method
-
-# end class
 
 def main() -> None:
   bar = Bar() # variable definition
@@ -1015,42 +797,6 @@ return [main, _tests];}`;
 
   test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testPythonHeader}
-
-class Game: # concrete class
-
-  def __init__(self: Game) -> None:
-    self.p1 = [1, 2, 3] # assignment
-  # end constructor
-
-  def toString(self: Game) -> str: # function method
-    return ""
-  # end function method
-
-  p1: list[int] # property
-
-  def something(self: Game) -> None: # procedure method
-    a = 1 # variable definition
-    a = self.p1[0] # assignment
-    printNoLine(a) # procedure call
-  # end procedure method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure method
-
-# end class
 
 def main() -> None:
 

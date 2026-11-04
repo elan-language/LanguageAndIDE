@@ -2,6 +2,7 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { BooleanType } from "../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import {
   mustBeBooleanType,
@@ -19,6 +20,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
     public readonly operand: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
+    private readonly language: Language,
   ) {
     super();
   }
@@ -26,7 +28,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   compileErrors: CompileError[] = [];
 
   isNegativeOperation() {
-    return mapOperation(this.op) === OperationSymbol.Minus;
+    return mapOperation(this.op, this.language) === OperationSymbol.Minus;
   }
 
   private opToJs(opSymbol: OperationSymbol) {
@@ -47,7 +49,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
       mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
     }
 
-    const opSymbol = mapOperation(this.op);
+    const opSymbol = mapOperation(this.op, this.language);
 
     if (opSymbol === OperationSymbol.Unknown) {
       mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
@@ -71,7 +73,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    const opSymbol = mapOperation(this.op);
+    const opSymbol = mapOperation(this.op, this.language);
 
     switch (opSymbol) {
       case OperationSymbol.Not:

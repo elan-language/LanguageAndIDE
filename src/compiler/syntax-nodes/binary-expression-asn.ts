@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import {
   adviseAgainstDiv,
   mustBeBooleanTypes,
@@ -31,6 +32,7 @@ export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
     private readonly rhs: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
+    private readonly language: Language,
   ) {
     super();
   }
@@ -134,7 +136,7 @@ export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    const opSymbol = mapOperation(this.op);
+    const opSymbol = mapOperation(this.op, this.language);
 
     if (opSymbol === OperationSymbol.Unknown) {
       mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
@@ -192,7 +194,7 @@ export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    const opSymbol = mapOperation(this.op);
+    const opSymbol = mapOperation(this.op, this.language);
     switch (opSymbol) {
       case OperationSymbol.Add:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());
