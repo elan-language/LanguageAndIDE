@@ -28,8 +28,8 @@ import {
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsElanSource,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_selectFirstChild,
   parentHelper_updateBreakpoints,
@@ -157,7 +157,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return parentHelper_renderChildrenAsElanSource(this);
   }
   protected renderChildrenAsExport(): string {
-    return parentHelper_renderChildrenAsExport(this);
+    return parentHelper_renderChildrenAsSource(this);
   }
 
   selectFirstField(): boolean {

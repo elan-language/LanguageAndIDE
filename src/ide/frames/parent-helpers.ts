@@ -115,7 +115,7 @@ export function parentHelper_renderChildrenAsElanSource(parent: Parent): string 
   return result;
 }
 
-export function parentHelper_renderChildrenAsExport(parent: Parent): string {
+export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   let result = "";
   if (parent.getChildren().length > 0) {
     const ss: Array<string> = [];

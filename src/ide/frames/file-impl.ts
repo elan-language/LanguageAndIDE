@@ -65,8 +65,8 @@ import {
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
   parentHelper_renderChildrenAsElanSource,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
@@ -285,7 +285,7 @@ export class FileImpl implements File {
   async renderAsExport(): Promise<string> {
     const oldde = this.doingExport;
     this.doingExport = true;
-    const globals = parentHelper_renderChildrenAsExport(this);
+    const globals = parentHelper_renderChildrenAsSource(this);
     this.doingExport = oldde;
     // No need to remove HTML as this has none as it is for export only
     const imports = this.language().renderFileImportsAsHtml();

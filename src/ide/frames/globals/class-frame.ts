@@ -42,8 +42,8 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
@@ -317,7 +317,7 @@ ${this.language().renderBottomAsHtml(this)}
     const topAsSource = this.language().renderTopAsSource(this);
     const bottomAsSource = this.language().renderBottomAsSource(this);
     return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n
-${parentHelper_renderChildrenAsExport(this)}
+${parentHelper_renderChildrenAsSource(this)}
 ${bottomAsSource}`;
   }
   resetFieldText(): void {
