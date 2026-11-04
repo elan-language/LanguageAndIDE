@@ -18,12 +18,6 @@ suite("Python Conditional Expressions", () => {
   test("Pass_InFunction", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  prop_1: str # property
-
-# end class
-
 def main() -> None:
   printNoLine(grade(90)) # procedure call
   printNoLine(grade(70)) # procedure call
@@ -32,7 +26,7 @@ def main() -> None:
 # end main
 
 def grade(score: float) -> str: # function
-  return if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail")))
+  return "Distinction" if score > 80 else "Merit" if score > 60 else "Pass" if score > 40 else "Fail" 
 # end function
 
 main()
@@ -48,7 +42,7 @@ async function main() {
 }
 
 async function grade(score) {
-  return (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
+  return (score > 40 ? (score > 60 ? (score > 80 ? "Distinction" : "Merit") : "Pass") : "Fail");
 }
 global["grade"] = grade;
 return [main, _tests];}`;
@@ -74,15 +68,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(grade(90)) # procedure call
-  printNoLine(grade(70)) # procedure call
-  printNoLine(grade(50)) # procedure call
-  printNoLine(grade(30)) # procedure call
-# end main
-
-def main() -> None:
   score = 70 # variable definition
-  grade = if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail"))) # variable definition
+  grade = "Distinction" if score > 80 else "Merit" if score > 60 else "Pass" if score > 40 else "Fail"  # variable definition
   printNoLine(grade) # procedure call
 # end main
 
@@ -93,7 +80,7 @@ main()
 const global = new class {};
 async function main() {
   let score = 70;
-  let grade = (score > 80 ? "Distinction" : (score > 60 ? "Merit" : (score > 40 ? "Pass" : "Fail")));
+  let grade = (score > 40 ? (score > 60 ? (score > 80 ? "Distinction" : "Merit") : "Pass") : "Fail");
   await _stdlib.printNoLine(grade);
 }
 return [main, _tests];}`;
@@ -120,13 +107,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   score = 70 # variable definition
-  grade = if_(score > 80, "Distinction", if_(score > 60, "Merit", if_(score > 40, "Pass", "Fail"))) # variable definition
-  printNoLine(grade) # procedure call
-# end main
-
-def main() -> None:
-  score = 70 # variable definition
-  score = score + if_(score == 70, 1, 2) # assignment
+  score = score + 1 if score == 70 else 2 # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -163,14 +144,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  score = 70 # variable definition
-  score = score + if_(score == 70, 1, 2) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-def main() -> None:
   score = 70.1 # variable definition
-  score = if_(True, 60.1, 60) # assignment
+  score = 60.1 if True else 60 # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -208,13 +183,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   score = 70.1 # variable definition
-  score = if_(True, 60.1, 60) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-def main() -> None:
-  score = 70.1 # variable definition
-  score = if_(False, 60, 60.1) # assignment
+  score = 60 if False else 60.1 # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -251,14 +220,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  score = 70.1 # variable definition
-  score = if_(False, 60, 60.1) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-def main() -> None:
   score = cast(Bar()) # variable definition
-  score = if_(False, Bar(), cast(Bar())) # assignment
+  score = Bar() if False else cast(Bar()) # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -341,25 +304,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   score = cast(Bar()) # variable definition
-  score = if_(False, Bar(), cast(Bar())) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "a Bar"
-  # end function method
-
-# end class
-
-def main() -> None:
-  score = cast(Bar()) # variable definition
-  score = if_(False, cast(Bar()), Bar()) # assignment
+  score = cast(Bar()) if False else Bar() # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -440,27 +385,6 @@ return [main, _tests];}`;
   test("Fail_EndIf", async () => {
     const code = `${testPythonHeader}
 
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "a Bar"
-  # end function method
-
-# end class
-
-class Foo(ABC): # abstract class
-
-
-# end class
-
-def cast(bar: Foo) -> Foo: # function
-  return bar
-# end function
-
 def main() -> None:
   printNoLine(grade(90)) # procedure call
   printNoLine(grade(70)) # procedure call
@@ -492,20 +416,8 @@ main()
   test("Fail_NotBooleanCondition", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-
-# end class
-
 def main() -> None:
-  printNoLine(grade(90)) # procedure call
-  printNoLine(grade(70)) # procedure call
-  printNoLine(grade(50)) # procedure call
-  printNoLine(grade(30)) # procedure call
-# end main
-
-def main() -> None:
-  a = if_(2, 5, 7) # variable definition
+  a = 2 if 5 else 7 # variable definition
   printNoLine(a) # procedure call
 # end main
 
@@ -526,7 +438,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Condition of 'if' expression does not evaluate to a Boolean.ErrorMessages.html#compile_error",
+      "Condition of 'if' expression does not evaluate to a bool.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -534,14 +446,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(grade(90)) # procedure call
-  printNoLine(grade(70)) # procedure call
-  printNoLine(grade(50)) # procedure call
-  printNoLine(grade(30)) # procedure call
-# end main
-
-def main() -> None:
-  a = if_(True, "five", 7) # variable definition
+  a = "five" if True else 7 # variable definition
   printNoLine(a) # procedure call
 # end main
 
@@ -562,7 +467,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot determine common type between Int and String.ErrorMessages.html#TernaryCompileError",
+      "Cannot determine common type between int and str.ErrorMessages.html#TernaryCompileError",
     ]);
   });
 
@@ -570,13 +475,8 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = if_(True, "five", 7) # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = 10 # variable definition
-  a = if_(True, 0.5, 10) # assignment
+  a = 0.5 if True else 10 # assignment
   printNoLine(a) # procedure call
 # end main
 
@@ -597,7 +497,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -606,13 +506,7 @@ main()
 
 def main() -> None:
   a = 10 # variable definition
-  a = if_(True, 0.5, 10) # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = 10 # variable definition
-  a = if_(True, 10, 0.5) # assignment
+  a = 10 if True else 0.5 # assignment
   printNoLine(a) # procedure call
 # end main
 
@@ -633,7 +527,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -641,14 +535,8 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 10 # variable definition
-  a = if_(True, 10, 0.5) # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   score = Bar() # variable definition
-  score = if_(False, Foo(), Bar()) # assignment
+  score = Foo() if False else Bar() # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -703,25 +591,7 @@ main()
 
 def main() -> None:
   score = Bar() # variable definition
-  score = if_(False, Foo(), Bar()) # assignment
-  printNoLine(score) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
-def main() -> None:
-  score = Bar() # variable definition
-  score = if_(False, Bar(), Foo()) # assignment
+  score = Bar() if False else Foo() # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -773,33 +643,9 @@ main()
   test("Fail_CannotAssignToBaseClass1", async () => {
     const code = `${testPythonHeader}
 
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
 def main() -> None:
   score = Bar() # variable definition
-  score = if_(False, Bar(), cast(Bar())) # assignment
+  score =  Bar() if False else cast(Bar()) # assignment
   printNoLine(score) # procedure call
 # end main
 
@@ -848,30 +694,9 @@ main()
   test("Fail_CannotAssignToBaseClass2", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function method
-
-# end class
-
-class Foo(ABC): # abstract class
-
-
-# end class
-
-def cast(bar: Foo) -> Foo: # function
-  return bar
-# end function
-
 def main() -> None:
   score = Bar() # variable definition
-  score = if_(False, cast(Bar()), Bar()) # assignment
+  score = cast(Bar()) if False else Bar() # assignment
   printNoLine(score) # procedure call
 # end main
 

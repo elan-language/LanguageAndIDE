@@ -19,13 +19,6 @@ suite("Python Each Loop", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = list[list[int]]() # variable definition
-  y = list[list[str]]() # variable definition
-  x.initialiseExt(2, 2, 2) # procedure call
-  y.initialiseExt(2, 2, "") # procedure call
-# end main
-
-def main() -> None:
   a = [7, 8, 9] # variable definition
   n = 0 # variable definition
   for x in a:
@@ -42,8 +35,8 @@ const global = new class {};
 async function main() {
   let a = system.list([7, 8, 9]);
   let n = 0;
-  const elan_iterelan_for9 = [...a];
-  for (const x of elan_iterelan_for9) {
+  const elan_iterpython_for9 = [...a];
+  for (const x of elan_iterpython_for9) {
     n = n + x;
   }
   await _stdlib.printNoLine(n);
@@ -79,15 +72,6 @@ def main() -> None:
   printNoLine(n) # procedure call
 # end main
 
-def main() -> None:
-  a = [7, 8, 9] # variable definition
-  n = 0 # variable definition
-  for x in a:
-    n = n + x # assignment
-  # end for
-  printNoLine(n) # procedure call
-# end main
-
 main()
 `;
 
@@ -96,8 +80,8 @@ const global = new class {};
 async function main() {
   let a = system.list([7, 8, 9]);
   let n = 0;
-  const elan_iterelan_for9 = [...a];
-  for (const x of elan_iterelan_for9) {
+  const elan_iterpython_for9 = [...a];
+  for (const x of elan_iterpython_for9) {
     n = n + x;
   }
   await _stdlib.printNoLine(n);
@@ -125,15 +109,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [7, 8, 9] # variable definition
-  n = 0 # variable definition
-  for x in a:
-    n = n + x # assignment
-  # end for
-  printNoLine(n) # procedure call
-# end main
-
-def main() -> None:
   a = "hello" # variable definition
   for x in a:
     printNoLine(x) # procedure call
@@ -147,8 +122,8 @@ main()
 const global = new class {};
 async function main() {
   let a = "hello";
-  const elan_iterelan_for6 = [...a];
-  for (const x of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [...a];
+  for (const x of elan_iterpython_for6) {
     await _stdlib.printNoLine(x);
   }
 }
@@ -175,13 +150,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "hello" # variable definition
-  for x in a:
-    printNoLine(x) # procedure call
-  # end for
-# end main
-
-def main() -> None:
   for x in "12":
     for y in "34":
       printNoLine(f"{x}{y}") # procedure call
@@ -195,10 +163,10 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const elan_iterelan_for3 = [..."12"];
-  for (const x of elan_iterelan_for3) {
-    const elan_iterelan_for7 = [..."34"];
-    for (const y of elan_iterelan_for7) {
+  const elan_iterpython_for3 = [..."12"];
+  for (const x of elan_iterpython_for3) {
+    const elan_iterpython_for7 = [..."34"];
+    for (const y of elan_iterpython_for7) {
       await _stdlib.printNoLine(\`\${await _stdlib.toString(x)}\${await _stdlib.toString(y)}\`);
     }
   }
@@ -226,14 +194,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  for x in "12":
-    for y in "34":
-      printNoLine(f"{x}{y}") # procedure call
-    # end for
-  # end for
-# end main
-
-def main() -> None:
   for x in fruit():
     printNoLine(x) # procedure call
   # end for
@@ -249,8 +209,8 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  const elan_iterelan_for3 = [...(await global.fruit())];
-  for (const x of elan_iterelan_for3) {
+  const elan_iterpython_for3 = [...(await global.fruit())];
+  for (const x of elan_iterpython_for3) {
     await _stdlib.printNoLine(x);
   }
 }
@@ -282,12 +242,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  for x in fruit():
-    printNoLine(x) # procedure call
-  # end for
-# end main
-
-def main() -> None:
   ints = [1, 2, 3] # variable definition
   for i1 in ints:
 
@@ -301,8 +255,8 @@ main()
 const global = new class {};
 async function main() {
   let ints = system.list([1, 2, 3]);
-  const elan_iterelan_for6 = [...ints];
-  for (const i1 of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [...ints];
+  for (const i1 of elan_iterpython_for6) {
 
   }
 }
@@ -329,13 +283,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  ints = [1, 2, 3] # variable definition
-  for i1 in ints:
-
-  # end for
-# end main
-
-def main() -> None:
   a = [1, 2, 3] # variable definition
   for item in a:
     a.append(item) # procedure call
@@ -350,8 +297,8 @@ main()
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3]);
-  const elan_iterelan_for6 = [...a];
-  for (const item of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [...a];
+  for (const item of elan_iterpython_for6) {
     a.append(item);
     await _stdlib.printNoLine(item);
   }
@@ -377,14 +324,6 @@ return [main, _tests];}`;
 
   test("Fail_UndefinedIterable1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [1, 2, 3] # variable definition
-  for item in a:
-    a.append(item) # procedure call
-    printNoLine(item) # procedure call
-  # end for
-# end main
 
 def main() -> None:
   for i1 in ints:
@@ -413,12 +352,6 @@ main()
 
   test("Fail_UndefinedIterable2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  for i1 in ints:
-
-  # end for
-# end main
 
 def main() -> None:
   bar = Bar([1, 2]) # variable definition
@@ -468,11 +401,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  bar = Bar([1, 2]) # variable definition
-  bar.display() # procedure call
-# end main
-
-def main() -> None:
   a = [7, 8, 9] # variable definition
   x = "hello" # variable definition
   for x in a:
@@ -506,15 +434,6 @@ main()
 
 def main() -> None:
   a = [7, 8, 9] # variable definition
-  x = "hello" # variable definition
-  for x in a:
-    printNoLine(x) # procedure call
-  # end for
-  printNoLine(x) # procedure call
-# end main
-
-def main() -> None:
-  a = [7, 8, 9] # variable definition
   for x in a:
     printNoLine(x) # procedure call
   # end for
@@ -541,14 +460,6 @@ main()
 
   test("Fail_variableIsScoped3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [7, 8, 9] # variable definition
-  for x in a:
-    printNoLine(x) # procedure call
-  # end for
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   a = [7, 8, 9] # variable definition
@@ -583,15 +494,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [7, 8, 9] # variable definition
-  xx = "hello" # variable definition
-  for xX in a:
-    printNoLine(x) # procedure call
-  # end for
-  printNoLine(x) # procedure call
-# end main
-
-def main() -> None:
   ids = [7, 8, 9] # variable definition
   for id in id:
     printNoLine(id) # procedure call
@@ -621,14 +523,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  ids = [7, 8, 9] # variable definition
-  for id in id:
-    printNoLine(id) # procedure call
-  # end for
-  printNoLine(ids) # procedure call
-# end main
-
-def main() -> None:
   a = [7, 8, 9] # variable definition
   for x in a:
     printNoLine(x) # procedure call
@@ -654,13 +548,6 @@ main()
 
   test("Fail_applyToANonIterable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [7, 8, 9] # variable definition
-  for x in a:
-    printNoLine(x) # procedure call
-  # end for
-# end main
 
 def main() -> None:
   y = 10 # variable definition
@@ -693,13 +580,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  y = 10 # variable definition
-  for x in y:
-    printNoLine(x) # procedure call
-  # end for
-# end main
-
-def main() -> None:
   s = "hello" # variable definition
   for ch in s:
     printNoLine(ch) # procedure call
@@ -714,8 +594,8 @@ main()
 const global = new class {};
 async function main() {
   let s = "hello";
-  const elan_iterelan_for6 = [...s];
-  for (const ch of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [...s];
+  for (const ch of elan_iterpython_for6) {
     await _stdlib.printNoLine(ch);
     s = "fred";
   }
@@ -743,14 +623,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  s = "hello" # variable definition
-  for ch in s:
-    printNoLine(ch) # procedure call
-    s = "fred" # assignment
-  # end for
-# end main
-
-def main() -> None:
   a = [1, 2, 3, 4, 5] # variable definition
   for x in a:
     a = a.withAppend(x) # assignment
@@ -765,8 +637,8 @@ main()
 const global = new class {};
 async function main() {
   let a = system.list([1, 2, 3, 4, 5]);
-  const elan_iterelan_for6 = [...a];
-  for (const x of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [...a];
+  for (const x of elan_iterpython_for6) {
     a = a.withAppend(x);
     await _stdlib.printNoLine(x);
   }
@@ -792,14 +664,6 @@ return [main, _tests];}`;
 
   test("Fail_undefinedCollection", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [1, 2, 3, 4, 5] # variable definition
-  for x in a:
-    a = a.withAppend(x) # assignment
-    printNoLine(x) # procedure call
-  # end for
-# end main
 
 def main() -> None:
   for x in a:

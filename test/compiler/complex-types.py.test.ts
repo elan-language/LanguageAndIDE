@@ -17,12 +17,6 @@ suite("Python Complex Types", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo = Foo() # variable definition
-  a = foo.p # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = list[Foo]() # variable definition
 # end main
 
@@ -49,10 +43,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = list[Foo]() # variable definition
-# end main
-
-def main() -> None:
   a = list[list[Foo]]() # variable definition
 # end main
 
@@ -77,10 +67,6 @@ main()
 
   test("Fail_NotType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[list[Foo]]() # variable definition
-# end main
 
 def main() -> None:
   t = 1 # variable definition

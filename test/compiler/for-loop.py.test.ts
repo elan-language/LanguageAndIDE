@@ -18,38 +18,6 @@ suite("Python For Loop", () => {
   test("Pass_minimal", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo, p: int) -> None:
-    self.p = p # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  p: int # property
-
-  def setP(self: Foo, value: int) -> None: # procedure method
-    self.p = value # assignment
-  # end procedure method
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p: int) -> None:
-    self.p = p # assignment
-  # end constructor
-
-  p: int # property
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
 def main() -> None:
   tot = 0 # variable definition
   for i in range(1, 11):
@@ -65,8 +33,8 @@ main()
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_iterelan_for6 = [..._stdlib.range(1, 11)];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.range(1, 11)];
+  for (const i of elan_iterpython_for6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -92,20 +60,6 @@ return [main, _tests];}`;
 
   test("Pass_cannotReuseVariable", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p: int) -> None:
-    self.p = p # assignment
-  # end constructor
-
-  p: int # property
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-# end class
 
 def main() -> None:
   tot = 0 # variable definition
@@ -141,15 +95,6 @@ main()
 
 def main() -> None:
   tot = 0 # variable definition
-  i = 0 # variable definition
-  for i in range(1, 11):
-    tot = tot + i # assignment
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
-  tot = 0 # variable definition
   for i in rangeInSteps(1, 11, 2):
     tot = tot + i # assignment
   # end for
@@ -163,8 +108,8 @@ main()
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_iterelan_for6 = [..._stdlib.rangeInSteps(1, 11, 2)];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.rangeInSteps(1, 11, 2)];
+  for (const i of elan_iterpython_for6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -193,14 +138,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   tot = 0 # variable definition
-  for i in rangeInSteps(1, 11, 2):
-    tot = tot + i # assignment
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
-  tot = 0 # variable definition
   for i in rangeInSteps(10, 3, -1):
     tot = tot + i # assignment
   # end for
@@ -214,8 +151,8 @@ main()
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_iterelan_for6 = [..._stdlib.rangeInSteps(10, 3, (-1))];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.rangeInSteps(10, 3, (-1))];
+  for (const i of elan_iterpython_for6) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -244,14 +181,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   tot = 0 # variable definition
-  for i in rangeInSteps(10, 3, -1):
-    tot = tot + i # assignment
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
-  tot = 0 # variable definition
   for i in range(1, 4):
     for j in range(1, 5):
       tot = tot + 1 # assignment
@@ -267,10 +196,10 @@ main()
 const global = new class {};
 async function main() {
   let tot = 0;
-  const elan_iterelan_for6 = [..._stdlib.range(1, 4)];
-  for (const i of elan_iterelan_for6) {
-    const elan_iterelan_for10 = [..._stdlib.range(1, 5)];
-    for (const j of elan_iterelan_for10) {
+  const elan_iterpython_for6 = [..._stdlib.range(1, 4)];
+  for (const i of elan_iterpython_for6) {
+    const elan_iterpython_for10 = [..._stdlib.range(1, 5)];
+    for (const j of elan_iterpython_for10) {
       tot = tot + 1;
     }
   }
@@ -298,16 +227,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 4):
-    for j in range(1, 5):
-      tot = tot + 1 # assignment
-    # end for
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
   lower = 1 # variable definition
   upper = 10 # variable definition
   tot = 0 # variable definition
@@ -326,8 +245,8 @@ async function main() {
   let lower = 1;
   let upper = 10;
   let tot = 0;
-  const elan_iterelan_for12 = [..._stdlib.rangeInSteps(lower, upper + 1, 2)];
-  for (const i of elan_iterelan_for12) {
+  const elan_iterpython_for12 = [..._stdlib.rangeInSteps(lower, upper + 1, 2)];
+  for (const i of elan_iterpython_for12) {
     tot = tot + i;
   }
   await _stdlib.printNoLine(tot);
@@ -354,16 +273,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  lower = 1 # variable definition
-  upper = 10 # variable definition
-  tot = 0 # variable definition
-  for i in rangeInSteps(lower, upper + 1, 2):
-    tot = tot + i # assignment
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
   a = createPopulatedList(11, 0) # variable definition
   foo(a) # procedure call
 # end main
@@ -386,8 +295,8 @@ async function main() {
 }
 
 async function foo(arr) {
-  const elan_iterelan_for13 = [..._stdlib.range(0, 11)];
-  for (const i of elan_iterelan_for13) {
+  const elan_iterpython_for13 = [..._stdlib.range(0, 11)];
+  for (const i of elan_iterpython_for13) {
     arr.put(i, 1);
   }
   await _stdlib.printNoLine(system.safeIndex(arr, 0));
@@ -414,11 +323,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(11, 0) # variable definition
-  foo(a) # procedure call
-# end main
-
-def main() -> None:
   limit = 10 # variable definition
   for i in range(1, limit + 1):
     printNoLine(f"{i}") # procedure call
@@ -433,8 +337,8 @@ main()
 const global = new class {};
 async function main() {
   let limit = 10;
-  const elan_iterelan_for6 = [..._stdlib.range(1, limit + 1)];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.range(1, limit + 1)];
+  for (const i of elan_iterpython_for6) {
     await _stdlib.printNoLine(\`\${await _stdlib.toString(i)}\`);
     limit = limit + 1;
   }
@@ -460,14 +364,6 @@ return [main, _tests];}`;
 
   test("Fail_reuseVariableDifferentType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  limit = 10 # variable definition
-  for i in range(1, limit + 1):
-    printNoLine(f"{i}") # procedure call
-    limit = limit + 1 # assignment
-  # end for
-# end main
 
 def main() -> None:
   tot = 0 # variable definition
@@ -503,15 +399,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  tot = 0 # variable definition
-  i = "" # variable definition
-  for i in range(1, 11):
-    tot = tot + i # assignment
-  # end for
-  printNoLine(tot) # procedure call
-# end main
-
-def main() -> None:
   tot = 0.0 # variable definition
   for i in range(1.5, 11.1).0:
 
@@ -537,13 +424,6 @@ main()
 
   test("Fail_modifyingCounter", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tot = 0.0 # variable definition
-  for i in range(1.5, 11.1).0:
-
-  # end for
-# end main
 
 def main() -> None:
   tot = 0 # variable definition
@@ -578,13 +458,6 @@ main()
 def main() -> None:
   tot = 0 # variable definition
   for i in range(1, 11):
-    i = 10 # assignment
-  # end for
-# end main
-
-def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 11):
     tot = 10 # assignment
   # end for
   printNoLine(i) # procedure call
@@ -610,14 +483,6 @@ main()
 
   test("Fail_missingEnd", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 11):
-    tot = 10 # assignment
-  # end for
-  printNoLine(i) # procedure call
-# end main
 
 def main() -> None:
   tot = 0 # variable definition
@@ -650,15 +515,6 @@ main()
 
 def main() -> None:
   tot = 0 # variable definition
-  for i in range(1, 4):
-    for j in range(1, 5)  assign tot to tot + 1:
-
-    # end for
-  # end for
-# end main
-
-def main() -> None:
-  tot = 0 # variable definition
   for  in :
 
   # end for
@@ -683,13 +539,6 @@ main()
 
   test("Fail_break", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tot = 0 # variable definition
-  for  in :
-
-  # end for
-# end main
 
 def main() -> None:
   tot = 0 # variable definition
@@ -725,13 +574,6 @@ def main() -> None:
   # end for
 # end main
 
-def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 11)  assign tot to tot + i:
-
-  # end for
-# end main
-
 main()
 `;
 
@@ -751,13 +593,6 @@ main()
 
   test("Fail_duplicateId1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tot = 0 # variable definition
-  for i in range(1, 11)  assign tot to tot + i:
-
-  # end for
-# end main
 
 def main() -> None:
   ids = 10 # variable definition
@@ -787,14 +622,6 @@ main()
 
   test("Fail_duplicateId2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  ids = 10 # variable definition
-  for id in range(id, 12):
-    printNoLine(id) # procedure call
-  # end for
-  printNoLine(ids) # procedure call
-# end main
 
 def main() -> None:
   ids = 10 # variable definition

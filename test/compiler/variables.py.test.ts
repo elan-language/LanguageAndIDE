@@ -19,11 +19,6 @@ suite("Python Variables", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  id = 1 # variable definition
-  id = 1 # variable definition
-# end main
-
-def main() -> None:
   a = 3 # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -58,11 +53,6 @@ return [main, _tests];}`;
 
   test("Pass_IntVariable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -103,12 +93,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-  b = a # variable definition
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
   a = 3 + 4 # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -143,11 +127,6 @@ return [main, _tests];}`;
 
   test("Pass_Reassign", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 + 4 # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -188,12 +167,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-  a = 4 # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = 3.1 # variable definition
   a = 4 # assignment
   printNoLine(a) # procedure call
@@ -230,12 +203,6 @@ return [main, _tests];}`;
 
   test("Pass_OperatorCoverage", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3.1 # variable definition
-  a = 4 # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 3 - 4 # variable definition
@@ -305,27 +272,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 - 4 # variable definition
-  b = 3 < 4 # variable definition
-  c = 3 <= 4 # variable definition
-  d = 3 > 4 # variable definition
-  e = 3 >= 4 # variable definition
-  f = 3 == 4 # variable definition
-  g = 3 != 4 # variable definition
-  h = not False # variable definition
-  k = 4.0/3 # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
-  printNoLine(e) # procedure call
-  printNoLine(f) # procedure call
-  printNoLine(g) # procedure call
-  printNoLine(h) # procedure call
-  printNoLine(k) # procedure call
-# end main
-
-def main() -> None:
   a = Fruit.apple # variable definition
   printNoLine(enumToString(a)) # procedure call
 # end main
@@ -369,11 +315,6 @@ return [main, _tests];}`;
 
   test("Pass_Iter", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = Fruit.apple # variable definition
-  printNoLine(enumToString(a)) # procedure call
-# end main
 
 def main() -> None:
   a = [1, 2] # variable definition
@@ -511,7 +452,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -696,26 +637,15 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Boolean, Provided: Float.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: String, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: bool, Provided: float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: bool.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: List<of float>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_TypeCheck2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = True # variable definition
-  b = 1 # variable definition
-  c = "" # variable definition
-  d = f() # variable definition
-  a = 1.0 # assignment
-  b = False # assignment
-  c = [1.0, 2] # assignment
-  d = 1.0 # assignment
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -741,21 +671,13 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: List<of Float>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: List<of Float>, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of str>, Provided: List<of float>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of float>, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_RecursiveDefinition", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  b = [1.0, 2] # variable definition
-  a = [1.0, 2] # assignment
-  b = a # assignment
-  c = b # assignment
-# end main
 
 def main() -> None:
   x = x + 1 # variable definition
@@ -781,10 +703,6 @@ main()
 
   test("Fail_referenceToExtensionFunction", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = x + 1 # variable definition
-# end main
 
 def main() -> None:
   x = createFileForWriting # variable definition
@@ -815,11 +733,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = createFileForWriting # variable definition
-  y = x("") # variable definition
-# end main
-
-def main() -> None:
   i = 1 # variable definition
   x = asList # variable definition
   y = i.x() # variable definition
@@ -842,18 +755,12 @@ main()
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "'asList' is not defined.ErrorMessages.html#compile_error",
-      "'x' is not defined for type 'Int'.ErrorMessages.html#compile_error",
+      "'x' is not defined for type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_invalidCopyOfThisVariable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  i = 1 # variable definition
-  x = asList # variable definition
-  y = i.x() # variable definition
-# end main
 
 def main() -> None:
   copyOfThis = 1 # variable definition
@@ -883,10 +790,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  copyOfThis = 1 # variable definition
-# end main
-
-def main() -> None:
   name = 1 # variable definition
   nAME = 2 # variable definition
 # end main
@@ -913,11 +816,6 @@ main()
 
   test("Pass_Redefine", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  name = 1 # variable definition
-  nAME = 2 # variable definition
-# end main
 
 def main() -> None:
   a = foo().item_0 # variable definition
@@ -963,11 +861,6 @@ return [main, _tests];}`;
 
   test("Pass_fourOpenBrackets", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = foo().item_0 # variable definition
-  length = foo().item_1 # variable definition
-# end main
 
 def main() -> None:
   a = ((((3)))) # variable definition

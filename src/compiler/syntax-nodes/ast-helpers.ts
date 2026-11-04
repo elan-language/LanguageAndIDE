@@ -352,14 +352,14 @@ const opMapPython = new Map<OperationSymbol, string>([
   [OperationSymbol.Not, "not"],
   [OperationSymbol.Multiply, "*"],
   [OperationSymbol.And, "and"],
-  [OperationSymbol.Equals, "is"],
+  [OperationSymbol.Equals, "=="],
   [OperationSymbol.LT, "<"],
   [OperationSymbol.GT, ">"],
   [OperationSymbol.GTE, ">="],
   [OperationSymbol.LTE, "<="],
   [OperationSymbol.Div, "div"],
   [OperationSymbol.Divide, "/"],
-  [OperationSymbol.NotEquals, "isnt"],
+  [OperationSymbol.NotEquals, "!="],
   [OperationSymbol.Or, "or"],
   [OperationSymbol.Power, "^"],
   [OperationSymbol.Mod, "%"],
@@ -369,9 +369,9 @@ export function mapOperation(op: string, l: Language): OperationSymbol {
   op = op.trim();
 
   const opMap =
-    l.languageFullName == "Python"
+    l.languageFullName === "Python"
       ? opMapPython
-      : l.languageFullName == "Reference Language"
+      : l.languageFullName === "Reference Language"
         ? opMapReflang
         : new Map<OperationSymbol, string>();
 

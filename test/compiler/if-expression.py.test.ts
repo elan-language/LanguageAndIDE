@@ -16,15 +16,13 @@ suite("Python if Expression", () => {
   test("Pass_1", async () => {
     const code = `${testPythonHeader}
 
-a = foo() # constant
-
 def main() -> None:
-  printNoLine(if_(True, 1, 2)) # procedure call
-  printNoLine(if_(False, 3, 4)) # procedure call
-  printNoLine(if_(True, if_(True, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(True, if_(False, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(False, if_(True, "A", "B"), if_(True, "C", "D"))) # procedure call
-  printNoLine(if_(False, if_(True, "A", "B"), if_(False, "C", "D"))) # procedure call
+  printNoLine(1 if True else 2) # procedure call
+  printNoLine(3 if False else 4) # procedure call
+  printNoLine("A" if True else "B" if True else "C" if True else "D") # procedure call
+  printNoLine(("A" if False else "B") if True else ("C" if True else "D")) # procedure call
+  printNoLine(("A" if True else "B") if False else ("C" if True else "D")) # procedure call
+  printNoLine(("A" if True else "B") if False else ("C" if False else "D")) # procedure call
 # end main
 
 main()
@@ -35,10 +33,10 @@ const global = new class {};
 async function main() {
   await _stdlib.printNoLine((true ? 1 : 2));
   await _stdlib.printNoLine((false ? 3 : 4));
-  await _stdlib.printNoLine((true ? (true ? "A" : "B") : (true ? "C" : "D")));
-  await _stdlib.printNoLine((true ? (false ? "A" : "B") : (true ? "C" : "D")));
-  await _stdlib.printNoLine((false ? (true ? "A" : "B") : (true ? "C" : "D")));
-  await _stdlib.printNoLine((false ? (true ? "A" : "B") : (false ? "C" : "D")));
+  await _stdlib.printNoLine((true ? (true ? (true ? "A" : "B") : "C") : "D"));
+  await _stdlib.printNoLine((true ? ((false ? "A" : "B")) : ((true ? "C" : "D"))));
+  await _stdlib.printNoLine((false ? ((true ? "A" : "B")) : ((true ? "C" : "D"))));
+  await _stdlib.printNoLine((false ? ((true ? "A" : "B")) : ((false ? "C" : "D"))));
 }
 return [main, _tests];}`;
 

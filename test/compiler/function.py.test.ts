@@ -19,22 +19,6 @@ suite("Python Function", () => {
   test("Pass_SimpleCase", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function method
-
-  def foo(self: Foo, a: int, foo: int) -> str: # function method
-    return ""
-  # end function method
-
-# end class
-
 def main() -> None:
   printNoLine(foo(3, 4)) # procedure call
 # end main
@@ -77,10 +61,6 @@ return [main, _tests];}`;
 
   test("Pass_IndexResult", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(foo(3, 4)) # procedure call
-# end main
 
 def main() -> None:
   a = foo(1, 2)[0] # variable definition
@@ -128,11 +108,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = foo(1, 2)[0] # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = foo(1, 2).subList(0, 1) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -178,11 +153,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = foo(1, 2).subList(0, 1) # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(foo(3, 4)) # procedure call
 # end main
 
@@ -224,10 +194,6 @@ return [main, _tests];}`;
 
   test("Pass_Recursive", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(foo(3, 4)) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(factorial(5)) # procedure call
@@ -283,10 +249,6 @@ return [main, _tests];}`;
 
   test("Pass_GlobalFunctionOnClass", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(factorial(5)) # procedure call
-# end main
 
 def main() -> None:
   b = Bar() # variable definition
@@ -360,23 +322,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = Bar() # variable definition
-  printNoLine(foo(b)) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "bar"
-  # end function method
-
-# end class
-
-def main() -> None:
   b = new library.List<of Int>() # variable definition
 # end main
 
@@ -399,18 +344,6 @@ main()
 
   test("Fail_ExtensionParameterCount", async () => {
     const code = `${testPythonHeader}
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return "bar"
-  # end function method
-
-# end class
 
 a = "" # constant
 
@@ -442,8 +375,6 @@ main()
 
   test("Fail_ParameterCount", async () => {
     const code = `${testPythonHeader}
-
-a = "" # constant
 
 def f(p: float) -> float: # function
   return 0
@@ -478,10 +409,6 @@ main()
   test("Fail_ParameterType", async () => {
     const code = `${testPythonHeader}
 
-def f(p: float) -> float: # function
-  return 0
-# end function
-
 def f(p: int) -> float: # function
   return 0.0
 # end function
@@ -515,10 +442,6 @@ main()
   test("Fail_ReturnType", async () => {
     const code = `${testPythonHeader}
 
-def f(p: int) -> float: # function
-  return 0.0
-# end function
-
 def f(p: bool) -> int: # function
   return p
 # end function
@@ -550,10 +473,6 @@ main()
   test("Fail_noReturnType", async () => {
     const code = `${testPythonHeader}
 
-def f(p: bool) -> int: # function
-  return p
-# end function
-
 def f(p: int) -> : # function
   return 
 # end function
@@ -575,10 +494,6 @@ def f(p: int) -> : # function
 
   test("Fail_noAs", async () => {
     const code = `${testPythonHeader}
-
-def f(p: int) -> : # function
-  return 
-# end function
 
 def f(p Int) -> : # function
   return 
@@ -605,10 +520,6 @@ def f(p Int) -> : # function
 def f(p Int) -> : # function
   return 
 # end function
-
-def f(p Int) -> : # function
-  return 
-# end function
 `;
 
     const fileImpl = new FileImpl(
@@ -627,10 +538,6 @@ def f(p Int) -> : # function
 
   test("Fail_ReturnTypeIncompatible", async () => {
     const code = `${testPythonHeader}
-
-def f(p Int) -> : # function
-  return 
-# end function
 
 def main() -> None:
   a = "" # variable definition
@@ -666,11 +573,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "" # variable definition
-  a = foo(3, 4) # assignment
-# end main
-
-def main() -> None:
 
 # end main
 
@@ -698,10 +600,6 @@ main()
 
   test("Fail_embeddedReturns", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -738,10 +636,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def foo(a: int, b: int) -> int: # function
   return a/b
 # end function
@@ -768,10 +662,6 @@ main()
 
   test("Fail_statementAfterReturn", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -805,10 +695,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def foo(a: int, b: int) -> int: # function
   return 
 # end function
@@ -837,10 +723,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def foo(a: int, b: int) -> int: # function
   return 
 # end function
@@ -864,10 +746,6 @@ main()
 
   test("Fail_CannotModifyParam", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   result = foo(3, 4) # variable definition
@@ -907,11 +785,6 @@ def main() -> None:
   printNoLine(result) # procedure call
 # end main
 
-def main() -> None:
-  result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
-# end main
-
 def foo(a: int, b: int) -> int: # function
   a = a + 1 # assignment
   return a*b
@@ -939,11 +812,6 @@ main()
 
   test("Fail_CannotUpdateList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
-# end main
 
 def main() -> None:
 
@@ -977,10 +845,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def foo(b: int, a: list[int]) -> int: # function
   return 
 # end function
@@ -1004,10 +868,6 @@ main()
 
   test("Fail_TooManyParams", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   result = foo(3, 4, 5) # variable definition
@@ -1042,11 +902,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  result = foo(3, 4, 5) # variable definition
-  printNoLine(result) # procedure call
-# end main
-
-def main() -> None:
   result = foo(3) # variable definition
   printNoLine(result) # procedure call
 # end main
@@ -1077,11 +932,6 @@ main()
 
   test("Fail_WrongParamType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  result = foo(3) # variable definition
-  printNoLine(result) # procedure call
-# end main
 
 def main() -> None:
   result = foo(3, "b") # variable definition
@@ -1116,11 +966,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  result = foo(3, "b") # variable definition
-  printNoLine(result) # procedure call
-# end main
-
-def main() -> None:
 
 # end main
 
@@ -1147,10 +992,6 @@ main()
 
   test("Fail_ParameterUnknownType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1186,10 +1027,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def changeValue(a: int) -> Bar: # function
   return 0
 # end function
@@ -1220,10 +1057,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def if_() -> : # function
   return 
 # end function
@@ -1246,10 +1079,6 @@ main()
 
   test("Fail_UseOfReservedwordAsName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1284,10 +1113,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 def fun(if as Int) -> : # function
   return 
 # end function
@@ -1311,10 +1136,6 @@ main()
 
   test("Fail_UseOfReservedWordAsParamName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1344,10 +1165,6 @@ main()
 
   test("Fail_NotUniqueName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def foo() -> int: # function
   return 0
@@ -1381,10 +1198,6 @@ main()
   test("Fail_NotUniqueParameterName", async () => {
     const code = `${testPythonHeader}
 
-def foo() -> int: # function
-  return 0
-# end function
-
 def foo(a: int, b: str, a: int) -> int: # function
   return 0
 # end function
@@ -1411,10 +1224,6 @@ def foo(a: int, b: str, a: int) -> int: # function
   test("Fail_OutOnParameter", async () => {
     const code = `${testPythonHeader}
 
-def foo(a: int, b: str, a: int) -> int: # function
-  return 0
-# end function
-
 def foo(out a as Int) -> : # function
   return 
 # end function
@@ -1436,10 +1245,6 @@ def foo(out a as Int) -> : # function
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword2", async () => {
     const code = `${testPythonHeader}
-
-def foo(out a as Int) -> : # function
-  return 
-# end function
 
 def main() -> None:
   b = p1 + p2 # variable definition
@@ -1477,14 +1282,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = p1 + p2 # variable definition
-# end main
-
-def p2() -> int: # function
-  return 0
-# end function
-
-def main() -> None:
   c = -p1 # variable definition
 # end main
 
@@ -1514,14 +1311,6 @@ main()
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword4", async () => {
     const code = `${testPythonHeader}
-
-def p2() -> int: # function
-  return 0
-# end function
-
-def p1() -> int: # function
-  return 0
-# end function
 
 def main() -> None:
   d = p1 # variable definition
@@ -1559,14 +1348,6 @@ main()
   ignore_test("Fail_OperatorsAndProcedures1", async () => {
     const code = `${testPythonHeader}
 
-def p1() -> int: # function
-  return 0
-# end function
-
-def p1() -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   a = p1.equals(p2) # variable definition
 # end main
@@ -1601,14 +1382,6 @@ main()
 
   test("Fail_OperatorsAndProcedures2", async () => {
     const code = `${testPythonHeader}
-
-def p1() -> int: # function
-  return 0
-# end function
-
-def p1() -> int: # function
-  return 0
-# end function
 
 def main() -> None:
   b = p1 + p2 # variable definition
@@ -1645,14 +1418,6 @@ main()
   test("Fail_OperatorsAndProcedures3", async () => {
     const code = `${testPythonHeader}
 
-def p1() -> int: # function
-  return 0
-# end function
-
-def p1() -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   c = -p1 # variable definition
 # end main
@@ -1683,14 +1448,6 @@ main()
 
   test("Fail_AssignFunction", async () => {
     const code = `${testPythonHeader}
-
-def p1() -> int: # function
-  return 0
-# end function
-
-def p1() -> int: # function
-  return 0
-# end function
 
 def main() -> None:
   foo = a # variable definition
@@ -1724,14 +1481,6 @@ main()
   test("Fail_FunctionWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def p1() -> int: # function
-  return 0
-# end function
-
-def a() -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   printNoLine(a.b) # procedure call
 # end main
@@ -1764,14 +1513,6 @@ main()
   test("Fail_FunctionMethodWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def a() -> int: # function
-  return 0
-# end function
-
-def a() -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   g = "xxx" # variable definition
   g2 = g.length # variable definition
@@ -1800,10 +1541,6 @@ main()
 
   test("Fail_LibFunctionWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
-
-def a() -> int: # function
-  return 0
-# end function
 
 def main() -> None:
   printNoLine(abs.b) # procedure call
@@ -1834,10 +1571,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(abs.b) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(abs) # procedure call
 # end main
 
@@ -1864,10 +1597,6 @@ main()
 
   test("Fail_NoIndexing", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(abs) # procedure call
-# end main
 
 def main() -> None:
   a = p1() # variable definition
@@ -1903,10 +1632,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = p1() # variable definition
-# end main
-
-def main() -> None:
   s = "hello" # variable definition
   s1 = s.asBinary() # variable definition
 # end main
@@ -1934,11 +1659,6 @@ main()
 
   test("Fail_noMatchingExtension2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  s = "hello" # variable definition
-  s1 = s.asBinary() # variable definition
-# end main
 
 def main() -> None:
   s = "hello" # variable definition
@@ -1970,11 +1690,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  s = "hello" # variable definition
-  s1 = s.reverse() # variable definition
-# end main
-
-def main() -> None:
   a = s.reverse() # variable definition
 # end main
 
@@ -2000,9 +1715,6 @@ main()
   test("Fail_standaloneLibFunctionAsExtension", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  a = s.reverse() # variable definition
-# end main
 
 def main() -> None:
   x = 3 # variable definition
@@ -2033,10 +1745,6 @@ main()
   test("Fail_standaloneFunctionAsExtension", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  x = 3 # variable definition
-  printNoLine(x.bitShiftL(x, 2)) # procedure call
-# end main
 
 def main() -> None:
   x = 3 # variable definition
@@ -2071,10 +1779,6 @@ main()
   test("Fail_LibraryClassParameter2", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  x = 3 # variable definition
-  printNoLine(x.foo(x)) # procedure call
-# end main
 
 def main() -> None:
   b = list() # variable definition
@@ -2103,11 +1807,6 @@ main()
   test("Fail_ParameterNameClash1", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  b = list() # variable definition
-  printNoLine(foo(b)) # procedure call
-# end main
-
 def foo(foo: int) -> str: # function
   return ""
 # end function
@@ -2135,10 +1834,6 @@ main()
 
   test("Fail_ParameterNameClash2", async () => {
     const code = `${testPythonHeader}
-
-def foo(foo: int) -> str: # function
-  return ""
-# end function
 
 def foo(a: int, foo: int) -> str: # function
   return ""

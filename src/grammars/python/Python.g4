@@ -103,16 +103,16 @@ assignment:
 ; // annotation eventually to be replaced by commentText? like other statements
 
 ifStatement:
-    GHOSTED? IF condition = expression THEN commentText? NL thenClause elseIfClause* elseClause?
+    GHOSTED? IF condition = expression COLON commentText? NL thenClause elseIfClause* elseClause?
         END_IF NL
 ;
 thenClause: ordinaryStatement*;
 
 elseIfClause:
-    GHOSTED? ELIF expression THEN commentText? NL ordinaryStatement*
+    GHOSTED? ELIF expression COLON commentText? NL ordinaryStatement*
 ;
 
-elseClause: GHOSTED? ELSE commentText? NL ordinaryStatement*;
+elseClause: GHOSTED? ELSE COLON commentText? NL ordinaryStatement*;
 
 whileLoop:
     GHOSTED? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE NL
@@ -206,6 +206,9 @@ argument: lambda | expression;
 paramList: paramDef (COMMA paramDef)*;
 identifierList: identifierDef (COMMA identifierDef)+;
 expressionList: expression (COMMA expression)*;
+
+enumDefValue: identifierDef SINGLE_EQUALS litInt;
+enumList: enumDefValue (NL enumDefValue)*;
 
 type: typeTuple | typeName | typeGeneric | typeFunc;
 

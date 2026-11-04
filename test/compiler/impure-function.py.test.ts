@@ -19,17 +19,6 @@ suite("Python Impure Function", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 2 # variable definition
-  if a == 1:
-    b = 2 # variable definition
-  elif a == 2: # else if
-    printNoLine(b) # procedure call
-  else:
-    c = 2 # variable definition
-  # end if
-# end main
-
-def main() -> None:
   k = getKey() # variable definition
   r = randint(1, 6) # variable definition
   r = randint(1, 6)*10 # assignment
@@ -92,17 +81,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  k = getKey() # variable definition
-  r = randint(1, 6) # variable definition
-  r = randint(1, 6)*10 # assignment
-  bar(randint(1, 6)) # procedure call
-# end main
-
-def bar(x: int) -> None: # procedure
-
-# end procedure
-
-def main() -> None:
   k = foo() # variable definition
 # end main
 
@@ -132,14 +110,6 @@ main()
 
   test("Fail_CannotCallAFunctionLikeAProcedure", async () => {
     const code = `${testPythonHeader}
-
-def bar(x: int) -> None: # procedure
-
-# end procedure
-
-def foo() -> None: # procedure
-
-# end procedure
 
 def main() -> None:
   square(3) # procedure call
@@ -173,14 +143,6 @@ main()
   test("Fail_CannotCallAProcedureWithinAFunction", async () => {
     const code = `${testPythonHeader}
 
-def foo() -> None: # procedure
-
-# end procedure
-
-def square(x: int) -> int: # function
-  return x*x
-# end function
-
 def main() -> None:
   k = foo() # variable definition
 # end main
@@ -211,14 +173,6 @@ main()
 
   test("Fail_CannotUseAnImpureMethodWithinAFunction", async () => {
     const code = `${testPythonHeader}
-
-def square(x: int) -> int: # function
-  return x*x
-# end function
-
-def foo(x: int) -> None: # procedure
-
-# end procedure
 
 def main() -> None:
 

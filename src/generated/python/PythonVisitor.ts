@@ -61,6 +61,8 @@ import { ArgumentContext } from "./PythonParser.js";
 import { ParamListContext } from "./PythonParser.js";
 import { IdentifierListContext } from "./PythonParser.js";
 import { ExpressionListContext } from "./PythonParser.js";
+import { EnumDefValueContext } from "./PythonParser.js";
+import { EnumListContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
@@ -481,6 +483,18 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.enumDefValue`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitEnumDefValue?: (ctx: EnumDefValueContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.enumList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitEnumList?: (ctx: EnumListContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.type`.
    * @param ctx the parse tree
