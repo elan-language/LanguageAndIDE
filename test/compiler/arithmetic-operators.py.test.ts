@@ -321,7 +321,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(if_((25 % 20) < 19, 1, 2)) # procedure call
+  printNoLine(1 if (25 % 20) < 19 else 2) # procedure call
 # end main
 
 main()
@@ -475,7 +475,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-
+  a = 3 4 # variable definition
 # end main
 
 main()
@@ -500,6 +500,7 @@ main()
 
 def main() -> None:
   a = 3 # variable definition
+  a += 1 # assignment
 # end main
 
 main()
@@ -524,6 +525,7 @@ main()
 
 def main() -> None:
   a = 3 # variable definition
+  a++ # assignment
 # end main
 
 main()
@@ -545,7 +547,6 @@ main()
 
   test("Fail_AddWrongTypes", async () => {
     const code = `${testPythonHeader}
-
 
 def main() -> None:
   a = 3 + True # variable definition
@@ -581,9 +582,9 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Foo.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: Foo.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -611,7 +612,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -639,7 +640,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -664,9 +665,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_DoubleMinus2", async () => {
@@ -691,9 +690,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_DoubleNot1", async () => {
@@ -717,9 +714,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_DoubleNot2", async () => {
@@ -744,9 +739,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_PowerType1", async () => {
@@ -774,7 +767,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -803,7 +796,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

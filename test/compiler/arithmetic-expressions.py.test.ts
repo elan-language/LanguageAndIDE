@@ -20,45 +20,6 @@ suite("Python Arithmetic Expressions", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-# end main
-
-class Bar(Foo2): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff1(self: Bar) -> int: # function method
-    return 1
-  # end function method
-
-  def ff2(self: Bar) -> int: # function method
-    return 2
-  # end function method
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def func() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo2(ABC): # abstract class
-
-  prop: int # property
-
-# end class
-
-def main() -> None:
   x = 2 + 3*5 + 1 # variable definition
   y = (2 + 3)*5 + 1 # variable definition
   z = (2 + 3)*(5 + 1) # variable definition
@@ -101,32 +62,6 @@ return [main, _tests];}`;
 
   test("Pass_RedundantBracketsIgnored", async () => {
     const code = `${testPythonHeader}
-
-class Bar(Foo2): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function method
-
-  def ff1(self: Bar) -> int: # function method
-    return 1
-  # end function method
-
-  def ff2(self: Bar) -> int: # function method
-    return 2
-  # end function method
-
-# end class
-
-class Foo2(ABC): # abstract class
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
   x = 2 + (3*5) + 1 # variable definition
@@ -172,12 +107,6 @@ return [main, _tests];}`;
   ignore_test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `${testPythonHeader}
 
-class Foo2(ABC): # abstract class
-
-  prop: int # property
-
-# end class
-
 def main() -> None:
   x = 2 + 3 ^ 2 # variable definition
 # end main
@@ -214,10 +143,6 @@ return [main, _tests];}`;
 
   ignore_test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 2 + 3 ^ 2 # variable definition
-# end main
 
 def main() -> None:
   x = 16.0 / 2 ^ 3 # variable definition
@@ -260,10 +185,6 @@ def main() -> None:
   x = 16.0 / 2 ^ 3 # variable definition
 # end main
 
-def main() -> None:
-  x = 16.0 / 2 ^ 3 # variable definition
-# end main
-
 main()
 `;
 
@@ -296,10 +217,6 @@ return [main, _tests];}`;
 
   test("Pass_MinusAsAUnaryOperator", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 16.0 / 2 ^ 3 # variable definition
-# end main
 
 def main() -> None:
   x = 0.0 # variable definition
@@ -346,15 +263,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 0.0 # variable definition
-  y = 0 # variable definition
-  x = -4.7 # assignment
-  y = 5*-3 # assignment
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
-# end main
-
-def main() -> None:
   x = 11 % 3 # variable definition
   y = (5 + 6) % 3 # variable definition
   printNoLine(x) # procedure call
@@ -395,13 +303,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 11 % 3 # variable definition
-  y = (5 + 6) % 3 # variable definition
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
-# end main
-
-def main() -> None:
   a = 3 * + 4 # variable definition
 # end main
 
@@ -426,10 +327,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 * + 4 # variable definition
-# end main
-
-def main() -> None:
   a = 3 - * 4 # variable definition
 # end main
 
@@ -452,10 +349,6 @@ main()
 
   test("Pass_OperatorOrder#1167", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 - * 4 # variable definition
-# end main
 
 def main() -> None:
   printNoLine(2*12/3.0 + 190) # procedure call
@@ -493,11 +386,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2*12/3.0 + 190) # procedure call
-  printNoLine(24/6/2.0) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(sqrt(-1)) # procedure call
 # end main
 
@@ -531,10 +419,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(sqrt(-1)) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(1.0/0) # procedure call
 # end main
 
@@ -566,10 +450,6 @@ return [main, _tests];}`;
   });
   test("Pass_HexAndBinaryLiterals", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(1.0/0) # procedure call
-# end main
 
 def main() -> None:
   h = 0xfffe # variable definition

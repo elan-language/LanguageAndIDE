@@ -274,10 +274,16 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   // unary expression
   override visitNegateLogical = (ctx: NegateLogicalContext) =>
-    new UnaryExprAsn(this.language.NOT, this.visit(ctx.term())!, this.fieldId, this.scope);
+    new UnaryExprAsn(
+      this.language.NOT,
+      this.visit(ctx.term())!,
+      this.fieldId,
+      this.scope,
+      this.language,
+    );
 
   override visitNegateNumeric = (ctx: NegateNumericContext) =>
-    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope);
+    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope, this.language);
 
   override visitIndexedTerm = (ctx: IndexedTermContext) => {
     this.precedingNode = this.visit(ctx.term())!;
@@ -302,6 +308,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       this.visit(ctx.expression())!,
       this.fieldId,
       this.scope,
+      this.language,
     );
 
   override visitList = (ctx: ListContext) => {

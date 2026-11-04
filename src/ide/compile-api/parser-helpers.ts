@@ -1,6 +1,7 @@
 import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
+import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
   ArgumentContext as PythonArgumentContext,
@@ -165,13 +166,11 @@ export function getTypes<T>(
 export function getParamDefs<T>(
   visitor: ParseTreeVisitor<T>,
   context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
-) {
-  return (
-    context
-      .paramDef()
-      ?.map((t) => visitor.visit(t))
-      .filter((t) => t instanceof ParamDefAsn) ?? []
-  );
+): AstNode[] {
+  return (context
+    .paramDef()
+    ?.map((t) => visitor.visit(t))
+    .filter((t) => !(t instanceof EmptyAsn)) ?? []) as AstNode[];
 }
 
 export function getArgs<T>(
