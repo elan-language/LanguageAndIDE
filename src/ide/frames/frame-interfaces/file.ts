@@ -27,7 +27,6 @@ export interface File extends Parent {
 
   renderAsSource(): Promise<string>;
   renderAsElanSource(): Promise<string>;
-  renderAsExport(): Promise<string>;
 
   compile(): string;
 

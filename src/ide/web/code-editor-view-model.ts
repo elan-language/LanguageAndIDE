@@ -192,7 +192,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   renderAsSource() {
-    return this.file!.renderAsElanSource();
+    return this.file!.renderAsSource();
   }
 
   renderAsExport() {

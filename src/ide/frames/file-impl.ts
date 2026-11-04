@@ -268,19 +268,12 @@ export class FileImpl implements File {
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
-  async renderAsExport(): Promise<string> {
-    return this.renderAsSource();
-  }
-
   async renderAsElanSource(): Promise<string> {
     return this.renderAsSource();
   }
 
   async renderAsSource(): Promise<string> {
-    const oldde = this.doingExport;
-    this.doingExport = true;
     const globals = parentHelper_renderChildrenAsSource(this);
-    this.doingExport = oldde;
     // No need to remove HTML as this has none as it is for export only
     const imports = this.language().renderFileImportsAsHtml();
     const languageSpecificHeader = this.language().renderSpecificHeaderAsSource(this);
