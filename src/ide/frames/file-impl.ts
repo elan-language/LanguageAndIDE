@@ -268,17 +268,15 @@ export class FileImpl implements File {
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
-  async renderAsSource(): Promise<string> {
-    const content = this.renderHashableContentAsSource(this.language().languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
+  async renderAsExport(): Promise<string> {
+    return this.renderAsSource();
   }
 
   async renderAsElanSource(): Promise<string> {
-    return this.renderAsExport();
+    return this.renderAsSource();
   }
 
-  async renderAsExport(): Promise<string> {
+  async renderAsSource(): Promise<string> {
     const oldde = this.doingExport;
     this.doingExport = true;
     const globals = parentHelper_renderChildrenAsSource(this);
