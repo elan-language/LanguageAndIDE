@@ -32,7 +32,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   @abstractmethod
-  def proc() -> None
+  def proc() -> None:
     pass # abstract procedure
 
 # end class

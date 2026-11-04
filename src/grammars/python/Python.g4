@@ -69,8 +69,8 @@ concreteClassMember:
 
 abstractClass:
     GHOSTED? CLASS classTypeName = typeName (
-        OPEN_BRACKET inheritsTypeName = typeName
-        | ABC CLOSE_BRACKET
+        OPEN_BRACKET (inheritsTypeName = typeName
+        | ABC) CLOSE_BRACKET
     ) COLON commentText? NL abstractClassMember* END_CLASS NL
 ;
 
