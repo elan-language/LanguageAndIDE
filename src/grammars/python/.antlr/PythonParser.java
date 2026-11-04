@@ -103,7 +103,7 @@ public class PythonParser extends Parser {
 			"'# end function'", "'# end test'", "'# end procedure'", "'# end enum'", 
 			"'# end class'", "'# end if'", "'# end while'", "'# end for'", "'# end try'", 
 			"'# end constructor'", "'# end function method'", "'# end procedure method'", 
-			"'# assignment'", "'# varible definition'"
+			"'# assignment'", "'# variable definition'"
 		};
 	}
 	private static final String[] _LITERAL_NAMES = makeLiteralNames();
@@ -919,7 +919,7 @@ public class PythonParser extends Parser {
 		public IdentifierDefContext identifierDef() {
 			return getRuleContext(IdentifierDefContext.class,0);
 		}
-		public TerminalNode EQUAL() { return getToken(PythonParser.EQUAL, 0); }
+		public TerminalNode SINGLE_EQUALS() { return getToken(PythonParser.SINGLE_EQUALS, 0); }
 		public ConstantValueContext constantValue() {
 			return getRuleContext(ConstantValueContext.class,0);
 		}
@@ -954,7 +954,7 @@ public class PythonParser extends Parser {
 			setState(305);
 			identifierDef();
 			setState(306);
-			match(EQUAL);
+			match(SINGLE_EQUALS);
 			setState(307);
 			constantValue();
 			setState(309);
@@ -1658,7 +1658,7 @@ public class PythonParser extends Parser {
 		public IdentifierDefContext identifierDef() {
 			return getRuleContext(IdentifierDefContext.class,0);
 		}
-		public TerminalNode EQUAL() { return getToken(PythonParser.EQUAL, 0); }
+		public TerminalNode SINGLE_EQUALS() { return getToken(PythonParser.SINGLE_EQUALS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1691,7 +1691,7 @@ public class PythonParser extends Parser {
 			setState(414);
 			identifierDef();
 			setState(415);
-			match(EQUAL);
+			match(SINGLE_EQUALS);
 			setState(416);
 			expression(0);
 			setState(417);
@@ -1716,7 +1716,7 @@ public class PythonParser extends Parser {
 		public AssignableContext assignable() {
 			return getRuleContext(AssignableContext.class,0);
 		}
-		public TerminalNode EQUAL() { return getToken(PythonParser.EQUAL, 0); }
+		public TerminalNode SINGLE_EQUALS() { return getToken(PythonParser.SINGLE_EQUALS, 0); }
 		public ExpressionContext expression() {
 			return getRuleContext(ExpressionContext.class,0);
 		}
@@ -1749,7 +1749,7 @@ public class PythonParser extends Parser {
 			setState(423);
 			assignable(0);
 			setState(424);
-			match(EQUAL);
+			match(SINGLE_EQUALS);
 			setState(425);
 			expression(0);
 			setState(426);
@@ -6509,7 +6509,7 @@ public class PythonParser extends Parser {
 		"\u0005^\u0000\u0000\u012d\u000f\u0001\u0000\u0000\u0000\u012e\u0130\u0005"+
 		"j\u0000\u0000\u012f\u012e\u0001\u0000\u0000\u0000\u012f\u0130\u0001\u0000"+
 		"\u0000\u0000\u0130\u0131\u0001\u0000\u0000\u0000\u0131\u0132\u0003P(\u0000"+
-		"\u0132\u0133\u0005B\u0000\u0000\u0133\u0135\u0003\\.\u0000\u0134\u0136"+
+		"\u0132\u0133\u0005J\u0000\u0000\u0133\u0135\u0003\\.\u0000\u0134\u0136"+
 		"\u0003\u001e\u000f\u0000\u0135\u0134\u0001\u0000\u0000\u0000\u0135\u0136"+
 		"\u0001\u0000\u0000\u0000\u0136\u0137\u0001\u0000\u0000\u0000\u0137\u0138"+
 		"\u0005^\u0000\u0000\u0138\u0011\u0001\u0000\u0000\u0000\u0139\u013b\u0005"+
@@ -6572,12 +6572,12 @@ public class PythonParser extends Parser {
 		"\u0199\u0197\u0001\u0000\u0000\u0000\u0199\u0198\u0001\u0000\u0000\u0000"+
 		"\u019a!\u0001\u0000\u0000\u0000\u019b\u019d\u0005j\u0000\u0000\u019c\u019b"+
 		"\u0001\u0000\u0000\u0000\u019c\u019d\u0001\u0000\u0000\u0000\u019d\u019e"+
-		"\u0001\u0000\u0000\u0000\u019e\u019f\u0003P(\u0000\u019f\u01a0\u0005B"+
+		"\u0001\u0000\u0000\u0000\u019e\u019f\u0003P(\u0000\u019f\u01a0\u0005J"+
 		"\u0000\u0000\u01a0\u01a1\u0003|>\u0000\u01a1\u01a2\u0005y\u0000\u0000"+
 		"\u01a2\u01a3\u0005^\u0000\u0000\u01a3#\u0001\u0000\u0000\u0000\u01a4\u01a6"+
 		"\u0005j\u0000\u0000\u01a5\u01a4\u0001\u0000\u0000\u0000\u01a5\u01a6\u0001"+
 		"\u0000\u0000\u0000\u01a6\u01a7\u0001\u0000\u0000\u0000\u01a7\u01a8\u0003"+
-		"T*\u0000\u01a8\u01a9\u0005B\u0000\u0000\u01a9\u01aa\u0003|>\u0000\u01aa"+
+		"T*\u0000\u01a8\u01a9\u0005J\u0000\u0000\u01a9\u01aa\u0003|>\u0000\u01aa"+
 		"\u01ab\u0005x\u0000\u0000\u01ab\u01ac\u0005^\u0000\u0000\u01ac%\u0001"+
 		"\u0000\u0000\u0000\u01ad\u01af\u0005j\u0000\u0000\u01ae\u01ad\u0001\u0000"+
 		"\u0000\u0000\u01ae\u01af\u0001\u0000\u0000\u0000\u01af\u01b0\u0001\u0000"+

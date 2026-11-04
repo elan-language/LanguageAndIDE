@@ -56,7 +56,6 @@ VARIABLE: 'variable';
 // END RefLang-specific tokens
 
 // START Python-specific tokens
-ABSTRACT_METHOD: '@abstractmethod';
 ASSERT_EQUAL: 'assertEqual';
 AS: 'as';
 DEF: 'def';
@@ -151,6 +150,7 @@ END_FUNCTION_METHOD: '# end function method';
 END_PROCEDURE_METHOD: '# end procedure method';
 ASSIGNMENT_ANNOTATION: '# assignment';
 VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
+ABSTRACT_METHOD: '# @abstractmethod';
 
 
 COMMENT: '#' ~('\r' | '\n')*;
