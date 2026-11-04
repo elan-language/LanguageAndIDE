@@ -71,7 +71,7 @@ const language3Menu = document.getElementById("language3-menu") as HTMLDivElemen
 
 const pythonButton = document.querySelectorAll(".python-language") as NodeListOf<HTMLDivElement>;
 const csButton = document.querySelectorAll(".cs-language") as NodeListOf<HTMLDivElement>;
-const elanButton = document.querySelectorAll(".elan-language") as NodeListOf<HTMLDivElement>;
+const elanButton = document.querySelectorAll(".ref-language") as NodeListOf<HTMLDivElement>;
 
 const paradigmMenu = document.getElementById("paradigm-menu") as HTMLDivElement;
 const proceduralButton = document.getElementById("paradigm-procedural") as HTMLDivElement;
