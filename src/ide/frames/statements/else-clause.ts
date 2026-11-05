@@ -33,10 +33,6 @@ export class ElseClause extends Clause {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_else`;
   }
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}\r
-${this.renderChildrenAsElanSource()}`;
-  }
 
   parseTop(source: CodeSource): void {
     source.remove(elseKeyword);

@@ -40,21 +40,21 @@ suite("Selector tests", () => {
     const file = emptyMainOnly();
     const selector = file.getById("elan_select2") as StatementSelector;
     selectOption(selector, "variable definition");
-    const v = file.getById("elan_var3").renderAsElanSource();
+    const v = file.getById("elan_var3").renderAsSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Select - variable by key", () => {
     const file = emptyMainOnly();
     file.getById("elan_select2").processKey(key("v"));
-    const v = file.getById("elan_var3").renderAsElanSource();
+    const v = file.getById("elan_var3").renderAsSource();
     assert.equal(v, "  variable  set to ");
   });
 
   test("Statement Select - case insensitive", () => {
     const file = emptyMainOnly();
     file.getById("elan_select2").processKey(key("V"));
-    const v = file.getById("elan_var3").renderAsElanSource();
+    const v = file.getById("elan_var3").renderAsSource();
     assert.equal(v, "  variable  set to ");
   });
 

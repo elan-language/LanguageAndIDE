@@ -38,7 +38,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
 
   test("parse Frames - set statement 2", () => {
@@ -49,7 +49,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - set statement 3", () => {
     const code = "  assign result to 3 + 4";
@@ -59,7 +59,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new Assignment(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
 
   test("parse Frames - assert statement 3", () => {
@@ -70,7 +70,7 @@ suite("Parsing Frames RefLang", async () => {
     const ass = new AssertStatement(t);
     ass.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(ass.renderAsElanSource(), code);
+    assert.equal(ass.renderAsSource(), code);
   });
 
   test("parse Frames - variable", () => {
@@ -81,7 +81,7 @@ suite("Parsing Frames RefLang", async () => {
     const v = new VariableStatement(m);
     v.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(v.renderAsElanSource(), code);
+    assert.equal(v.renderAsSource(), code);
   });
 
   test("parse Frames - throw", () => {
@@ -92,7 +92,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - throw with variable", () => {
     const code = `  throw ElanRuntimeError message1`;
@@ -102,7 +102,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new ThrowStatement(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - print", () => {
     const code = `  call print(3 + 4)`;
@@ -112,7 +112,7 @@ suite("Parsing Frames RefLang", async () => {
     const pc = new ProcedureCall(m);
     pc.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(pc.renderAsElanSource(), code);
+    assert.equal(pc.renderAsSource(), code);
   });
   test("parse Frames - call", () => {
     const code = `  call foo()`;
@@ -122,7 +122,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - call with args", () => {
     const code = `  call foo(3, a, "hello")`;
@@ -132,7 +132,7 @@ suite("Parsing Frames RefLang", async () => {
     const setTo = new ProcedureCall(m);
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
-    assert.equal(setTo.renderAsElanSource(), code);
+    assert.equal(setTo.renderAsSource(), code);
   });
   test("parse Frames - StatementSelector", () => {
     const code = "assign fooBar to 3.141";
@@ -151,7 +151,7 @@ suite("Parsing Frames RefLang", async () => {
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -163,7 +163,7 @@ constant pi set to 3.142
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -177,7 +177,7 @@ constant e set to 2.718
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -191,7 +191,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -206,7 +206,7 @@ end main
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -225,7 +225,7 @@ end main
     if (fl.parseError) {
       throw new Error(fl.parseError);
     }
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -243,7 +243,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -269,7 +269,7 @@ enum Fruit apple, orange, pear
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -300,7 +300,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -321,7 +321,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -348,7 +348,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -368,7 +368,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -386,7 +386,7 @@ end main
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -401,7 +401,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -418,7 +418,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
@@ -459,7 +459,7 @@ end class
     const source = new CodeSourceFromString(code);
     const fl = fileImplForRefLang();
     await fl.parseFrom(source);
-    const elan = await fl.renderAsElanSource();
+    const elan = await fl.renderAsSource();
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 });

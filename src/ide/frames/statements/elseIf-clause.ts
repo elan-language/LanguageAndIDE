@@ -43,11 +43,6 @@ export class ElseIfClause extends Clause {
     return `${this.language().languageHtmlClass}_elseIf`;
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
-${this.renderChildrenAsElanSource()}`;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove(`${elifKeyword} `);
     const condition = source.readUntil(/\sthen/);

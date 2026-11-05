@@ -228,9 +228,9 @@ suite("Editing Frames", () => {
     var3.select();
     var3.processKey(ctrl_down());
     const main = file.getById("elan_main1") as MainRoutine;
-    assert.equal(main.getChildren()[0].renderAsElanSource(), select6.renderAsElanSource());
+    assert.equal(main.getChildren()[0].renderAsSource(), select6.renderAsSource());
     var3.processKey(ctrl_up());
-    assert.equal(main.getChildren()[0].renderAsElanSource(), var3.renderAsElanSource());
+    assert.equal(main.getChildren()[0].renderAsSource(), var3.renderAsSource());
   });
   test("#653 able to delete a frame that has not been added to", async () => {
     const file = T00_emptyFile();
@@ -279,6 +279,6 @@ suite("Editing Frames", () => {
     desc.processKey(key("_"));
     desc.processKey(key("x"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);
-    assert.equal(desc.renderAsElanSource(), "test_x");
+    assert.equal(desc.renderAsSource(), "test_x");
   });
 });

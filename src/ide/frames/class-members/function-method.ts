@@ -1,15 +1,5 @@
-import {
-  endKeyword,
-  functionKeyword,
-  privateKeyword,
-  returnsKeyword,
-} from "../../../compiler/elan-keywords";
-import {
-  addPrivateToggleToContextMenu,
-  modifierAsElanSource,
-  singleIndent,
-  togglePrivatePublic,
-} from "../frame-helpers";
+import { privateKeyword } from "../../../compiler/elan-keywords";
+import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { File } from "../frame-interfaces/file";
@@ -59,13 +49,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   frameSpecificAnnotation(): string {
     const priv = this.isPrivate ? "private " : "";
     return `${priv}function method`;
-  }
-
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${functionKeyword}\r
-`;
   }
 
   parseTop(source: CodeSource): void {

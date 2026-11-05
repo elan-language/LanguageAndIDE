@@ -64,7 +64,6 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
@@ -268,10 +267,6 @@ export class FileImpl implements File {
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
-  async renderAsElanSource(): Promise<string> {
-    return this.renderAsSource();
-  }
-
   async renderAsSource(): Promise<string> {
     const globals = parentHelper_renderChildrenAsSource(this);
     // No need to remove HTML as this has none as it is for export only
@@ -292,7 +287,7 @@ export class FileImpl implements File {
   }
 
   private async getHash(body?: string): Promise<string> {
-    body = (body || this.renderHashableContentAsElanSource(this.language().languageFullName))
+    body = (body || this.renderHashableContentAsSource(this.language().languageFullName))
       .trim()
       .replaceAll("\r", "");
     return await this.hash(body);
@@ -361,11 +356,6 @@ export class FileImpl implements File {
     ast?.setCompileOptions(CompileMode.testWorker, base);
 
     return ast?.compile() ?? "";
-  }
-
-  renderHashableContentAsElanSource(lang: string): string {
-    const globals = parentHelper_renderChildrenAsElanSource(this);
-    return this.renderHashableContent(globals, lang);
   }
 
   renderHashableContentAsSource(lang: string): string {

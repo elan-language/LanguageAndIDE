@@ -538,8 +538,6 @@ export abstract class AbstractFrame implements Frame {
     }
   }
 
-  abstract renderAsElanSource(): string;
-
   isSelected(): boolean {
     return this._selected;
   }
@@ -677,7 +675,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   copy = (encode: boolean) => {
-    const source = this.renderAsElanSource();
+    const source = this.renderAsSource();
     this.getFile().addCopiedSource(encode ? escapeHtmlChars(source) : source);
     return false;
   };

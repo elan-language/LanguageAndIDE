@@ -59,11 +59,6 @@ export class AbstractFunction extends SingleLineFrame {
 
   override outerHtmlTag: string = "el-func";
 
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
-`;
-  }
-
   parseFrom(source: CodeSource): void {
     source.remove(`${abstractKeyword} ${functionKeyword} `);
     this.name.parseFrom(source);

@@ -31,12 +31,6 @@ export class WhileLoop extends FrameWithStatements {
 
   outerHtmlTag: string = "el-statement";
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}while ${this.condition.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}end while`;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove(`${whileKeyword} `);
     this.condition.parseFrom(source);

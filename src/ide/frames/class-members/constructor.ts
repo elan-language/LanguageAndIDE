@@ -57,13 +57,6 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
 
   override outerHtmlTag: string = "el-constructor";
 
-  public renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}end constructor\r
-`;
-  }
-
   parseTop(source: CodeSource): void {
     source.removeIndent();
     source.remove("constructor(");

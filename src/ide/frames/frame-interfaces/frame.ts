@@ -15,7 +15,6 @@ export interface Frame extends Selectable {
   getMap(): Map<string, Selectable>;
 
   renderAsHtml(): string;
-  renderAsElanSource(): string;
   renderAsSource(): string;
 
   indent(): string;

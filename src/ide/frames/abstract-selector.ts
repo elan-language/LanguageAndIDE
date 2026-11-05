@@ -177,10 +177,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top>${this.compileMsgAsHtml()}</${this.outerHtmlTag}>`;
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}`;
-  }
-
   renderAsSource(): string {
     return `${this.indent()}`;
   }

@@ -80,12 +80,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     return "";
   }
 
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testName.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-end test\r
-`;
-  }
   parseTop(source: CodeSource): void {
     source.remove("test ");
     this.testName.parseFrom(source);

@@ -5,7 +5,6 @@ import { MemberSelector } from "../class-members/member-selector";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
 import { ReturnStatement } from "../statements/return-statement";
 import { ClassFrame } from "./class-frame";
 
@@ -51,12 +50,6 @@ export class ConcreteClass extends ClassFrame {
 
   frameSpecificAnnotation(): string {
     return "concrete class";
-  }
-
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}${classKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
-${parentHelper_renderChildrenAsElanSource(this)}\r
-${endKeyword} ${classKeyword}\r\n`;
   }
 
   topKeywords(): string {

@@ -1,4 +1,4 @@
-import { endKeyword, ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
+import { ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
 import { CodeSourceFromString } from "../code-source-from-string";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
@@ -38,12 +38,6 @@ export class IfStatement extends FrameWithStatements implements Statement {
   }
 
   outerHtmlTag: string = "el-statement";
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${ifKeyword} ${this.condition.renderAsElanSource()} ${thenKeyword}\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${ifKeyword}`;
-  }
 
   parseTop(source: CodeSource): void {
     source.remove(`${ifKeyword}`);

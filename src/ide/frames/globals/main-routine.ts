@@ -40,13 +40,6 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
     return "";
   }
 
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}main\r
-${this.renderChildrenAsElanSource()}\r
-end main\r
-`;
-  }
-
   parseTop(source: CodeSource) {
     source.remove("main");
   }

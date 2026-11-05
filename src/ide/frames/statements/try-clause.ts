@@ -47,10 +47,6 @@ export class TryClause extends Clause {
     return "";
   }
 
-  renderAsElanSource(): string {
-    return this.renderChildrenAsElanSource();
-  }
-
   parseTop(_source: CodeSource): void {
     // no top, so does nothing
   }
@@ -61,6 +57,6 @@ export class TryClause extends Clause {
   }
 
   renderAsSource(): string {
-    return `${this.renderChildrenAsExport()}`; // as no visible top or bottom
+    return `${this.renderChildrenAsSource()}`; // as no visible top or bottom
   }
 }

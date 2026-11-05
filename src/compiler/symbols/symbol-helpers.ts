@@ -545,8 +545,8 @@ export function implementsAbstractMethodOnClassOrInterface(
   nameField: FieldImpl,
   classFrame: ClassFrame,
 ): [string, boolean] {
-  const methodName = nameField.renderAsElanSource();
-  const className = classFrame.name.renderAsElanSource();
+  const methodName = nameField.renderAsSource();
+  const className = classFrame.name.renderAsSource();
   const rootNode = classFrame.getFile().getAst(false)!;
   const cls = rootNode.resolveSymbol(className, false, rootNode);
 

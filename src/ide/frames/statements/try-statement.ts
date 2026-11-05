@@ -36,11 +36,6 @@ export class TryStatement extends FrameWithStatements {
 
   outerHtmlTag: string = "el-statement";
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}try\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${tryKeyword}`;
-  }
   parseTop(source: CodeSource): void {
     source.removeIndent();
     source.remove(tryKeyword);

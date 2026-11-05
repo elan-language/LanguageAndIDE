@@ -11,11 +11,4 @@ export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
-
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsElanSource()}\r
-end procedure\r
-`;
-  }
 }

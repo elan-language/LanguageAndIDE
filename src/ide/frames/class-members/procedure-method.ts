@@ -1,10 +1,5 @@
 import { privateKeyword } from "../../../compiler/elan-keywords";
-import {
-  addPrivateToggleToContextMenu,
-  modifierAsElanSource,
-  singleIndent,
-  togglePrivatePublic,
-} from "../frame-helpers";
+import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
@@ -40,13 +35,6 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   frameSpecificAnnotation(): string {
     const priv = this.isPrivate ? "private " : "";
     return `${priv}procedure method`;
-  }
-
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}end procedure\r
-`;
   }
 
   parseTop(source: CodeSource): void {

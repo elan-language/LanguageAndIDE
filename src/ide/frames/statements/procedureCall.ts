@@ -39,8 +39,4 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
   frameSpecificAnnotation(): string {
     return this.procRef.text.startsWith("print") ? "" : "procedure call";
   }
-
-  override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}call ${this.procRef.renderAsElanSource()}`;
-  }
 }

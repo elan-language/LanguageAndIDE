@@ -37,12 +37,6 @@ export class ForLoop extends FrameWithStatements implements Statement {
 
   outerHtmlTag: string = "el-statement";
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${forKeyword} ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${forKeyword}`;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove(`${forKeyword} `);
     this.variable.parseFrom(source);

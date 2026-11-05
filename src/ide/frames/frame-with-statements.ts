@@ -27,7 +27,6 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsElanSource,
   parentHelper_renderChildrenAsHtml,
   parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
@@ -153,13 +152,9 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   protected renderChildrenAsHtml(): string {
     return parentHelper_renderChildrenAsHtml(this);
   }
-  protected renderChildrenAsElanSource(): string {
-    return parentHelper_renderChildrenAsElanSource(this);
-  }
-  protected renderChildrenAsExport(): string {
+  protected renderChildrenAsSource(): string {
     return parentHelper_renderChildrenAsSource(this);
   }
-
   selectFirstField(): boolean {
     let result = super.selectFirstField();
     if (!result) {
@@ -274,7 +269,7 @@ ${this.language().renderBottomAsHtml(this)}
     const topAsSource = this.language().renderTopAsSource(this);
     const bottom = this.language().renderBottomAsSource(this);
     const bottomAsSource = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
-    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${this.renderChildrenAsExport()}${bottomAsSource}`;
+    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${this.renderChildrenAsSource()}${bottomAsSource}`;
   }
 
   resetFieldText(): void {

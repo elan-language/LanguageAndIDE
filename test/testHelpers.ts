@@ -58,7 +58,7 @@ export async function assertParsesAndCompilesAndTests(f: FileImpl) {
 
 export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
  
-  const renderedSource = await fl.renderAsElanSource();
+  const renderedSource = await fl.renderAsSource();
   const actualSource = renderedSource.replaceAll("\r", "");
   const expectedSource = source.replaceAll("\r", "");
   let msg = "";

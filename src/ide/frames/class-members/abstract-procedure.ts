@@ -50,11 +50,6 @@ export class AbstractProcedure extends SingleLineFrame {
 
   override outerHtmlTag: string = "el-proc";
 
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-`;
-  }
-
   parseFrom(source: CodeSource): void {
     source.remove("abstract procedure ");
     this.name.parseFrom(source);

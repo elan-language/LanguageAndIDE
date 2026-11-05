@@ -54,11 +54,6 @@ export class CatchClause extends Clause {
     return "";
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${catchKeyword} ${this.variable.renderAsElanSource()} ${asKeyword} ${this.exceptionType.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}`;
-  }
-
   parseTop(source: CodeSource): void {
     source.remove(`${catchKeyword} `);
     this.variable.parseFrom(source);
