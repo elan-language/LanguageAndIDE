@@ -113,7 +113,3 @@ const elanKeywords: string[] = [
   whileKeyword,
   withKeyword,
 ];
-
-export const ghostedAnnotation = "ghosted";
-
-export const sourceAnnotations = [ghostedAnnotation];

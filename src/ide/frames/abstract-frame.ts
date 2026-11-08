@@ -1,6 +1,5 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import {
   addDeleteToContextMenu,
   escapeHtmlChars,
@@ -49,6 +48,7 @@ export abstract class AbstractFrame implements Frame {
   private _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
+  protected ghostedAnnotation = "ghosted";
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -513,7 +513,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this._focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.isGhosted(), ghostedAnnotation);
+    this.pushClass(this.isGhosted(), this.ghostedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -793,7 +793,7 @@ export abstract class AbstractFrame implements Frame {
   };
 
   sourceAnnotations(): string {
-    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
+    return this.isGhosted() ? `[${this.ghostedAnnotation}] ` : "";
   }
 
   getContextMenuItems() {

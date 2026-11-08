@@ -1,4 +1,3 @@
-import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { Regexes } from "./fields/regexes";
@@ -91,7 +90,7 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === ghostedAnnotation) {
+    if (compilerDirective === this.ghostedAnnotation) {
       frame.setGhosted(true);
     }
   }
