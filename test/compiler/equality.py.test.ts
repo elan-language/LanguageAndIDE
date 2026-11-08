@@ -49,11 +49,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: float) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -133,11 +133,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: float) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -164,11 +164,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -244,11 +244,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: float) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -265,11 +265,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -286,7 +286,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Callable[[int]int] # property
 
@@ -330,11 +330,11 @@ class Foo: # concrete class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
     self.p1 = v # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return f"{self.p1} {self.p2}"
-  # end function method
+  # end function
 
 # end class
 
@@ -346,7 +346,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Callable[[int]int] # property
 
@@ -374,13 +374,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p: int # property
 
   def setP(self: Foo, value: int) -> None: # procedure method
     self.p = value # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -452,7 +452,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Callable[[int]int] # property
 
@@ -466,13 +466,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p: int # property
 
   def setP(self: Foo, value: int) -> None: # procedure method
     self.p = value # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -498,7 +498,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 

@@ -257,21 +257,12 @@ export class LanguageRefLang extends LanguageAbstract {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    let result = "";
-    if (!("isClause" in frame)) {
-      result = `<el-kw>${this.END} ${frame.initialKeywords()}</el-kw>`;
-    }
-    return result;
+    const source = this.renderBottomAsSource(frame);
+    return source === "" ? "" : `<el-kw>${source}</el-kw>`;
   }
 
   renderBottomAsSource(frame: Frame): string {
-    let result = "";
-    if (frame instanceof AbstractClass) {
-      result = `${this.END} ${this.CLASS}`;
-    } else if (!("isClause" in frame)) {
-      result = `${this.END} ${frame.initialKeywords()}`;
-    }
-    return result;
+    return this.commonRenderBottom(frame);
   }
 
   renderFileImportsAsHtml(): string {

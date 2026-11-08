@@ -363,7 +363,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p: list[int] # property
 

@@ -45,15 +45,15 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def func(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def proc(self: Bar) -> None: # procedure method
     printNoLine(2) # procedure call
-  # end procedure method
+  # end procedure
 
   prop: int # property
 
@@ -138,11 +138,11 @@ class Foo(ABC): # abstract class
 
   def func(self: Foo) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def proc(self: Foo) -> None: # procedure method
     printNoLine(2) # procedure call
-  # end procedure method
+  # end procedure
 
   prop: int # property
 
@@ -156,7 +156,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -230,11 +230,11 @@ class Foo(ABC): # abstract class
 
   def func(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   def proc(self: Foo) -> None: # procedure method
     printNoLine(self.func()) # procedure call
-  # end procedure method
+  # end procedure
 
   prop: int # property
 
@@ -248,7 +248,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -324,7 +324,7 @@ class Foo(ABC): # abstract class
 
   def proc(self: Foo) -> None: # procedure method
     printNoLine(self.func()) # procedure call
-  # end procedure method
+  # end procedure
 
   prop: int # property
 
@@ -338,11 +338,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def func(self: Bar) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
 # end class
 
@@ -446,15 +446,15 @@ class Bar(Foo2): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def func(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def proc(self: Bar) -> None: # procedure method
     printNoLine(2) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -572,15 +572,15 @@ class Bar(Foo2): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff1(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def ff2(self: Bar) -> int: # function method
     return 2
-  # end function method
+  # end function
 
 # end class
 
@@ -702,15 +702,15 @@ class Bar(Foo2): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff1(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def ff2(self: Bar) -> int: # function method
     return 2
-  # end function method
+  # end function
 
 # end class
 
@@ -820,7 +820,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   foo: Maybe[Foo] # property
 
@@ -930,11 +930,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def proc(self: Bar) -> None: # procedure method
     printNoLine(2) # procedure call
-  # end procedure method
+  # end procedure
 
   prop: int # property
 
@@ -989,11 +989,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def func(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -1151,7 +1151,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   prop1: int # property
 
@@ -1219,15 +1219,15 @@ class Bar(Foo2): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff1(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def ff2(self: Bar) -> int: # function method
     return 2
-  # end function method
+  # end function
 
 # end class
 
@@ -1292,15 +1292,15 @@ class Bar(Foo, Foo1, Foo2): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def func(self: Bar) -> int: # function method
     return 1
-  # end function method
+  # end function
 
   def proc(self: Bar) -> None: # procedure method
     printNoLine(2) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 

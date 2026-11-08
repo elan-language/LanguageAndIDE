@@ -267,7 +267,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return "bar"
-  # end function method
+  # end function
 
 # end class
 

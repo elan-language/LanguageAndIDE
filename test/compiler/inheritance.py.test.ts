@@ -61,15 +61,15 @@ class Bar(Foo): # concrete class
 
   def setP1(self: Bar, p1: float) -> None: # procedure method
     self.p1 = p1 # assignment
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> float: # function method
     return self.p1*self.p2
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -192,7 +192,7 @@ class Yon(Bar): # concrete class
 
   def toString(self: Yon) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -302,7 +302,7 @@ class Yon(Bar): # concrete class
 
   def toString(self: Yon) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -329,7 +329,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -433,7 +433,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return "a Bar"
-  # end function method
+  # end function
 
 # end class
 
@@ -535,7 +535,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -628,11 +628,11 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff(self: Foo) -> int: # private function method
     return self.p1
-  # end function method
+  # end function
 
 # end class
 
@@ -644,13 +644,13 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.ff()) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -733,11 +733,11 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff(self: Foo) -> int: # private function method
     return self.p1
-  # end function method
+  # end function
 
 # end class
 
@@ -752,11 +752,11 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff(self: Foo) -> int: # private function method
     return self.p1
-  # end function method
+  # end function
 
 # end class
 
@@ -766,11 +766,11 @@ class Yon(Foo): # abstract class
 
   def setP2(self: Yon, a: int) -> None: # private procedure method
     self.p2 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff2(self: Yon) -> int: # private function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -782,7 +782,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
@@ -791,7 +791,7 @@ class Bar(Yon): # concrete class
     self.setP2(a + 1) # procedure call
     printNoLine(self.ff2()) # procedure call
     printNoLine(self.p2) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -892,11 +892,11 @@ class Yon(Foo): # abstract class
 
   def setP2(self: Yon, a: int) -> None: # private procedure method
     self.p2 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff2(self: Yon) -> int: # private function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -911,11 +911,11 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff(self: Foo) -> int: # private function method
     return self.p1
-  # end function method
+  # end function
 
 # end class
 
@@ -925,11 +925,11 @@ class Yon(Foo): # abstract class
 
   def setP2(self: Yon, a: int) -> None: # private procedure method
     self.p2 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff2(self: Yon) -> int: # private function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -941,7 +941,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
@@ -950,7 +950,7 @@ class Bar(Yon): # concrete class
     self.setP2(a + 1) # procedure call
     printNoLine(self.ff2()) # procedure call
     printNoLine(self.p2) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1052,11 +1052,11 @@ class Yon(Foo): # abstract class
 
   def setP2(self: Yon, a: int) -> None: # private procedure method
     self.p2 = a # assignment
-  # end procedure method
+  # end procedure
 
   def ff2(self: Yon) -> int: # private function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -1079,13 +1079,13 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     printNoLine(self.p1) # procedure call
     self.p1 = a # assignment
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1164,13 +1164,13 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     printNoLine(self.p1) # procedure call
     self.p1 = a # assignment
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1187,7 +1187,7 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.setP(a) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1199,18 +1199,18 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
   def setP(self: Bar, a: int) -> None: # procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1299,18 +1299,18 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
   def setP(self: Bar, a: int) -> None: # procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1327,7 +1327,7 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     printNoLine(self.ff(a)) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1339,18 +1339,18 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
   def ff(self: Bar, a: int) -> int: # function method
     return a
-  # end function method
+  # end function
 
 # end class
 
@@ -1440,18 +1440,18 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
   def ff(self: Bar, a: int) -> int: # function method
     return a
-  # end function method
+  # end function
 
 # end class
 
@@ -1470,7 +1470,7 @@ class Foo(Yon): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1482,12 +1482,12 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
     printNoLine(self.p1) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1569,7 +1569,7 @@ class Foo(Yon): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.p1 = a # assignment
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1582,7 +1582,7 @@ class Yon(ABC): # abstract class
 
   def setP(self: Yon, a: int) -> None: # private procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1590,7 +1590,7 @@ class Foo(Yon): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.setP(a) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1602,11 +1602,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> None: # procedure method
     self.setP1(a) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1689,7 +1689,7 @@ class Foo(Yon): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
     self.setP(a) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1702,7 +1702,7 @@ class Yon(ABC): # abstract class
 
   def ff(self: Yon) -> int: # private function method
     return 6
-  # end function method
+  # end function
 
 # end class
 
@@ -1710,7 +1710,7 @@ class Foo(Yon): # abstract class
 
   def fff(self: Foo) -> int: # private function method
     return self.ff()
-  # end function method
+  # end function
 
 # end class
 
@@ -1722,11 +1722,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def testPrivate(self: Bar, a: int) -> int: # function method
     return self.fff()
-  # end function method
+  # end function
 
 # end class
 
@@ -1809,7 +1809,7 @@ class Foo(Yon): # abstract class
 
   def fff(self: Foo) -> int: # private function method
     return self.ff()
-  # end function method
+  # end function
 
 # end class
 
@@ -1830,7 +1830,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -1844,7 +1844,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1925,7 +1925,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -1948,7 +1948,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -1962,7 +1962,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2043,7 +2043,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -2066,7 +2066,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -2080,7 +2080,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2161,7 +2161,7 @@ class Foo(Yon): # abstract class
 
   def ff(self: Foo) -> int: # function method
     return self.prop
-  # end function method
+  # end function
 
   prop: int # property
 
@@ -2179,7 +2179,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2259,11 +2259,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2307,11 +2307,11 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2327,7 +2327,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -2343,7 +2343,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2386,7 +2386,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2414,15 +2414,15 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def setP1(self: Bar, v: str) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2466,15 +2466,15 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def setP1(self: Bar, v: str) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2507,15 +2507,15 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def setP1(self: Bar, p1: float) -> None: # procedure method
     self.p1 = p1 # assignment
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> float: # function method
     return self.p1*self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -2559,15 +2559,15 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def setP1(self: Bar, p1: float) -> None: # procedure method
     self.p1 = p1 # assignment
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> float: # function method
     return self.p1*self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -2671,7 +2671,7 @@ class Foo(ABC): # abstract class
 
   def product(self: Foo) -> int: # function method
     return 
-  # end function method
+  # end function
 
 # end class
 
@@ -2705,7 +2705,7 @@ class Foo(ABC): # abstract class
 
   def product(self: Foo) -> int: # function method
     return 
-  # end function method
+  # end function
 
 # end class
 
@@ -2717,7 +2717,7 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -2745,7 +2745,7 @@ class Foo(ABC): # abstract class
 
   def product(self: Foo) -> int: # function method
     return 
-  # end function method
+  # end function
 
 # end class
 
@@ -2753,7 +2753,7 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -2796,7 +2796,7 @@ class Foo(ABC): # abstract class
 
   def setP1(self: Foo, v: int) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -2828,7 +2828,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2902,7 +2902,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2954,7 +2954,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -2978,7 +2978,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -3030,7 +3030,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -3053,7 +3053,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -3104,7 +3104,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -3121,7 +3121,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
@@ -3535,7 +3535,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3591,7 +3591,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3605,7 +3605,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> None: # private procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -3623,7 +3623,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3677,7 +3677,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # private function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -3695,7 +3695,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3747,7 +3747,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # private function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -3765,7 +3765,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3827,7 +3827,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -3873,7 +3873,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -3947,7 +3947,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -3995,7 +3995,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -4009,7 +4009,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -4027,7 +4027,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -4081,7 +4081,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -4099,7 +4099,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -4151,7 +4151,7 @@ class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -4169,7 +4169,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p3: int # property
 
@@ -4231,7 +4231,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -4277,7 +4277,7 @@ class Bar(Yon): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -4335,7 +4335,7 @@ class Bar(VectorGraphic): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p2: int # property
 
@@ -4377,7 +4377,7 @@ class Bar(BaseVg): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p2: int # property
 
@@ -4413,7 +4413,7 @@ class Bar(BaseVg): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p2: int # property
 
@@ -4444,7 +4444,7 @@ class Yon(Foo, Bar): # concrete class
 
   def toString(self: Yon) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -4576,15 +4576,15 @@ class Bar(Foo): # concrete class
 
   def setP1(self: Bar, p1: float) -> None: # procedure method
     self.p1 = p1 # assignment
-  # end procedure method
+  # end procedure
 
   def product(self: Bar) -> float: # function method
     return self.p1*self.p2
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -4694,7 +4694,7 @@ class Foo(Bar): # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -4741,7 +4741,7 @@ class Foo(Bar): # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 

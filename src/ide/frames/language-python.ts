@@ -237,37 +237,12 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   renderBottomAsHtml(frame: Frame): string {
-    return `<el-comment>${this.renderBottomAsSource(frame)}</el-comment>`;
+    const source = this.renderBottomAsSource(frame);
+    return source === "" ? "" : `<el-comment>${source}</el-comment>`;
   }
 
   renderBottomAsSource(frame: Frame): string {
-    let source = "# end";
-    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
-      source += this.CLASS;
-    } else if (frame instanceof Constructor) {
-      source += "constructor";
-    } else if (frame instanceof FunctionMethod) {
-      source += "function method";
-    } else if (frame instanceof ProcedureMethod) {
-      source += "procedure method";
-    } else if (frame instanceof ForLoop) {
-      source += this.FOR;
-    } else if (frame instanceof GlobalFunction) {
-      source += "function";
-    } else if (frame instanceof GlobalProcedure) {
-      source += "procedure";
-    } else if (frame instanceof IfStatement) {
-      source += "if";
-    } else if (frame instanceof MainRoutine) {
-      source += "main";
-    } else if (frame instanceof TryStatement) {
-      source += this.TRY;
-    } else if (frame instanceof WhileLoop) {
-      source += this.WHILE;
-    } else if (frame instanceof TestFrame) {
-      source += "test";
-    }
-    return source;
+    return `# ${this.commonRenderBottom(frame)}`;
   }
 
   renderFileImportsAsHtml(): string {

@@ -321,7 +321,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   pf: Callable[[int]int] # property
 
@@ -731,7 +731,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   pf: Callable[[int]int] # property
 

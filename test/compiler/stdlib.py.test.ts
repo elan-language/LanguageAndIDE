@@ -1422,7 +1422,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1495,7 +1495,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1549,7 +1549,7 @@ class Bar(Foo): # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1700,7 +1700,7 @@ class Point: # concrete class
 
   def toString(self: Point) -> str: # function method
     return "a Point"
-  # end function method
+  # end function
 
 # end class
 
@@ -2154,7 +2154,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "foo"
-  # end function method
+  # end function
 
 # end class
 
@@ -2584,7 +2584,7 @@ class List: # concrete class
 
   def toString(self: list) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -2616,7 +2616,7 @@ class List: # concrete class
 
   def toString(self: list) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 

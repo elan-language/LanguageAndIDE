@@ -38,11 +38,11 @@ class Foo: # concrete class
 
   def times(self: Foo, value: float) -> float: # function method
     return self.p1*value
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -119,11 +119,11 @@ class Foo: # concrete class
 
   def times(self: Foo, value: float) -> float: # function method
     return self.p1*value
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -204,11 +204,11 @@ class Foo: # concrete class
 
   def times(self: Foo, value: float) -> list[float]: # function method
     return [self.p1*value]
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -286,7 +286,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Foo # property
 
@@ -294,7 +294,7 @@ class Bar: # concrete class
     x = list[float]() # variable definition
     x = self.p1.times(2) # assignment
     return x
-  # end function method
+  # end function
 
 # end class
 
@@ -306,13 +306,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> list[float]: # function method
     return [self.p1*value]
-  # end function method
+  # end function
 
 # end class
 
@@ -410,13 +410,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> list[float]: # function method
     return [self.p1*value]
-  # end function method
+  # end function
 
 # end class
 
@@ -434,7 +434,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Foo # property
 
@@ -442,7 +442,7 @@ class Bar: # concrete class
     x = list[Qux]() # variable definition
     x = self.p1.times(2) # assignment
     return x
-  # end function method
+  # end function
 
 # end class
 
@@ -454,13 +454,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> list[Qux]: # function method
     return [Qux()]
-  # end function method
+  # end function
 
 # end class
 
@@ -472,7 +472,7 @@ class Qux: # concrete class
 
   def toString(self: Qux) -> str: # function method
     return "a Qux"
-  # end function method
+  # end function
 
 # end class
 
@@ -578,13 +578,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> list[float]: # function method
     return [self.p1*value]
-  # end function method
+  # end function
 
 # end class
 
@@ -596,7 +596,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Foo # property
 
@@ -604,7 +604,7 @@ class Bar: # concrete class
     x = list[Qux]() # variable definition
     x = self.p1.times(2) # assignment
     return x
-  # end function method
+  # end function
 
 # end class
 
@@ -616,7 +616,7 @@ class Qux: # concrete class
 
   def toString(self: Qux) -> str: # function method
     return "a Qux"
-  # end function method
+  # end function
 
 # end class
 
@@ -635,11 +635,11 @@ class Foo: # concrete class
 
   def length(self: Foo) -> float: # function method
     return self.p1.length() + 2
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -653,11 +653,11 @@ class Bar: # concrete class
 
   def length(self: Bar) -> float: # function method
     return self.p1
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -746,7 +746,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Foo # property
 
@@ -754,7 +754,7 @@ class Bar: # concrete class
     x = list[Qux]() # variable definition
     x = self.p1.times(2) # assignment
     return x
-  # end function method
+  # end function
 
 # end class
 
@@ -773,11 +773,11 @@ class Bar: # concrete class
 
   def length(self: Bar) -> float: # function method
     return self.p1
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -797,15 +797,15 @@ class Foo: # concrete class
 
   def times(self: Foo, b: Bar) -> float: # function method
     return self.p1PlusOne()*b.p1PlusOne()
-  # end function method
+  # end function
 
   def p1PlusOne(self: Foo) -> float: # function method
     return self.p1 + 1
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -819,11 +819,11 @@ class Bar: # concrete class
 
   def p1PlusOne(self: Bar) -> float: # function method
     return self.p1 + 1
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -924,11 +924,11 @@ class Bar: # concrete class
 
   def p1PlusOne(self: Bar) -> float: # function method
     return self.p1 + 1
-  # end function method
+  # end function
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -947,11 +947,11 @@ class Foo: # concrete class
 
   def prt(self: Foo) -> None: # procedure method
     printNoLine(self.toString()) # procedure call
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return self.p1.toString()
-  # end function method
+  # end function
 
 # end class
 
@@ -1030,19 +1030,19 @@ class Foo: # concrete class
 
   def foo(self: Foo) -> Foo: # function method
     return self
-  # end function method
+  # end function
 
   def bar(self: Foo) -> str: # function method
     return "bar"
-  # end function method
+  # end function
 
   def yon(self: Foo) -> str: # function method
     return self.foo().bar()
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1116,19 +1116,19 @@ class Foo: # concrete class
 
   def foo(self: Foo) -> Foo: # function method
     return self
-  # end function method
+  # end function
 
   def bar(self: Foo) -> str: # function method
     return "bar"
-  # end function method
+  # end function
 
   def yon(self: Foo) -> str: # function method
     return self.foo().bar()
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1145,13 +1145,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     return p1*value
-  # end function method
+  # end function
 
 # end class
 
@@ -1184,19 +1184,19 @@ class Foo: # concrete class
 
   def foo(self: Foo) -> Foo: # function method
     return self
-  # end function method
+  # end function
 
   def bar(self: Foo) -> str: # function method
     return "bar"
-  # end function method
+  # end function
 
   def yon(self: Foo) -> str: # function method
     return self.foo().bar()
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1208,13 +1208,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     return p1*value
-  # end function method
+  # end function
 
 # end class
 
@@ -1232,11 +1232,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def such(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1271,13 +1271,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     return p1*value
-  # end function method
+  # end function
 
 # end class
 
@@ -1289,11 +1289,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def such(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1305,14 +1305,14 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     self.p1 = self.p1*value # assignment
     return self.p1
-  # end function method
+  # end function
 
 # end class
 `;
@@ -1345,11 +1345,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def such(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1361,13 +1361,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     return 
-  # end function method
+  # end function
 
 # end class
 `;
@@ -1397,13 +1397,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
     return 
-  # end function method
+  # end function
 
 # end class
 
@@ -1419,11 +1419,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def changeValue(self: Foo, a: Bar) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1465,11 +1465,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def changeValue(self: Foo, a: int) -> Bar: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1511,11 +1511,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def if_(self: Foo) -> : # function method
     return 
-  # end function method
+  # end function
 
 # end class
 
@@ -1554,11 +1554,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def break(self: Foo, a: int) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1600,11 +1600,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def int(self: Foo, a: int) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1645,11 +1645,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo, a: int, b: str, a: int) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 
@@ -1694,14 +1694,14 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo) -> int: # function method
     if self.p2:
       self.p1 = 1 # assignment
     # end if
     return self.p1
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -1751,7 +1751,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo) -> int: # function method
     if self.p2:
@@ -1762,7 +1762,7 @@ class Foo: # concrete class
       # end if
     # end if
     return self.p1
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -1812,7 +1812,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -1860,11 +1860,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo, foo: int) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -1904,11 +1904,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo, a: int, foo: int) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 `;

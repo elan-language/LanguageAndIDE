@@ -71,7 +71,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -137,7 +137,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: Maybe[Foo] # property
 
@@ -225,7 +225,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "Custom toString"
-  # end function method
+  # end function
 
 # end class
 
@@ -314,7 +314,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 
@@ -393,7 +393,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return self.p2
-  # end function method
+  # end function
 
 # end class
 

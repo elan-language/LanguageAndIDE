@@ -1,4 +1,5 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
+import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
 import { FileImpl } from "./file-impl";
@@ -6,10 +7,19 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
+import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
+import { ConcreteClass } from "./globals/concrete-class";
 import { FunctionFrame } from "./globals/function-frame";
+import { GlobalFunction } from "./globals/global-function";
+import { GlobalProcedure } from "./globals/global-procedure";
+import { MainRoutine } from "./globals/main-routine";
 import { TestFrame } from "./globals/test-frame";
 import { AssertStatement } from "./statements/assert-statement";
+import { ForLoop } from "./statements/forLoop";
+import { IfStatement } from "./statements/if-statement";
+import { TryStatement } from "./statements/try-statement";
+import { WhileLoop } from "./statements/whileLoop";
 
 export abstract class LanguageAbstract implements Language {
   protected constructor() {}
@@ -149,4 +159,34 @@ export abstract class LanguageAbstract implements Language {
     parent: Parent,
     standardResult: boolean,
   ): boolean;
+
+  protected commonRenderBottom(frame: Frame): string {
+    let source = "";
+    if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
+      source += "end class";
+    } else if (frame instanceof Constructor) {
+      source += "end constructor";
+    } else if (frame instanceof FunctionMethod) {
+      source += "end function";
+    } else if (frame instanceof ProcedureMethod) {
+      source += "end procedure";
+    } else if (frame instanceof ForLoop) {
+      source += "end for";
+    } else if (frame instanceof GlobalFunction) {
+      source += "end function";
+    } else if (frame instanceof GlobalProcedure) {
+      source += "end procedure";
+    } else if (frame instanceof IfStatement) {
+      source += "end if";
+    } else if (frame instanceof MainRoutine) {
+      source += "end main";
+    } else if (frame instanceof TryStatement) {
+      source += "end try";
+    } else if (frame instanceof WhileLoop) {
+      source += "end while";
+    } else if (frame instanceof TestFrame) {
+      source += "end test";
+    }
+    return source;
+  }
 }

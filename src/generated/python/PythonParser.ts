@@ -2780,7 +2780,7 @@ export class PythonParser extends antlr.Parser {
         this.state = 697;
         this.returnStatement();
         this.state = 698;
-        this.match(PythonParser.END_FUNCTION_METHOD);
+        this.match(PythonParser.END_FUNCTION);
         this.state = 699;
         this.match(PythonParser.NL);
       }
@@ -2868,7 +2868,7 @@ export class PythonParser extends antlr.Parser {
           _la = this.tokenStream.LA(1);
         }
         this.state = 724;
-        this.match(PythonParser.END_PROCEDURE_METHOD);
+        this.match(PythonParser.END_PROCEDURE);
         this.state = 725;
         this.match(PythonParser.NL);
       }
@@ -5229,14 +5229,14 @@ export class PythonParser extends antlr.Parser {
     82, 0, 0, 687, 689, 3, 30, 15, 0, 688, 687, 1, 0, 0, 0, 688, 689, 1, 0, 0, 0, 689, 690, 1, 0, 0,
     0, 690, 694, 5, 93, 0, 0, 691, 693, 3, 32, 16, 0, 692, 691, 1, 0, 0, 0, 693, 696, 1, 0, 0, 0,
     694, 692, 1, 0, 0, 0, 694, 695, 1, 0, 0, 0, 695, 697, 1, 0, 0, 0, 696, 694, 1, 0, 0, 0, 697,
-    698, 3, 64, 32, 0, 698, 699, 5, 117, 0, 0, 699, 700, 5, 93, 0, 0, 700, 73, 1, 0, 0, 0, 701, 703,
+    698, 3, 64, 32, 0, 698, 699, 5, 107, 0, 0, 699, 700, 5, 93, 0, 0, 700, 73, 1, 0, 0, 0, 701, 703,
     5, 105, 0, 0, 702, 701, 1, 0, 0, 0, 702, 703, 1, 0, 0, 0, 703, 704, 1, 0, 0, 0, 704, 705, 5, 45,
     0, 0, 705, 706, 3, 86, 43, 0, 706, 708, 5, 78, 0, 0, 707, 709, 3, 98, 49, 0, 708, 707, 1, 0, 0,
     0, 708, 709, 1, 0, 0, 0, 709, 710, 1, 0, 0, 0, 710, 711, 5, 79, 0, 0, 711, 712, 5, 68, 0, 0,
     712, 713, 5, 48, 0, 0, 713, 715, 5, 82, 0, 0, 714, 716, 3, 30, 15, 0, 715, 714, 1, 0, 0, 0, 715,
     716, 1, 0, 0, 0, 716, 717, 1, 0, 0, 0, 717, 721, 5, 93, 0, 0, 718, 720, 3, 32, 16, 0, 719, 718,
     1, 0, 0, 0, 720, 723, 1, 0, 0, 0, 721, 719, 1, 0, 0, 0, 721, 722, 1, 0, 0, 0, 722, 724, 1, 0, 0,
-    0, 723, 721, 1, 0, 0, 0, 724, 725, 5, 118, 0, 0, 725, 726, 5, 93, 0, 0, 726, 75, 1, 0, 0, 0,
+    0, 723, 721, 1, 0, 0, 0, 724, 725, 5, 109, 0, 0, 725, 726, 5, 93, 0, 0, 726, 75, 1, 0, 0, 0,
     727, 729, 5, 105, 0, 0, 728, 727, 1, 0, 0, 0, 728, 729, 1, 0, 0, 0, 729, 730, 1, 0, 0, 0, 730,
     731, 5, 121, 0, 0, 731, 732, 5, 93, 0, 0, 732, 733, 5, 45, 0, 0, 733, 734, 3, 86, 43, 0, 734,
     736, 5, 78, 0, 0, 735, 737, 3, 98, 49, 0, 736, 735, 1, 0, 0, 0, 736, 737, 1, 0, 0, 0, 737, 738,
@@ -7329,8 +7329,8 @@ export class FunctionMethodContext extends antlr.ParserRuleContext {
   public returnStatement(): ReturnStatementContext {
     return this.getRuleContext(0, ReturnStatementContext)!;
   }
-  public END_FUNCTION_METHOD(): antlr.TerminalNode {
-    return this.getToken(PythonParser.END_FUNCTION_METHOD, 0)!;
+  public END_FUNCTION(): antlr.TerminalNode {
+    return this.getToken(PythonParser.END_FUNCTION, 0)!;
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(PythonParser.GHOSTED, 0);
@@ -7408,8 +7408,8 @@ export class ProcedureMethodContext extends antlr.ParserRuleContext {
       return this.getToken(PythonParser.NL, i);
     }
   }
-  public END_PROCEDURE_METHOD(): antlr.TerminalNode {
-    return this.getToken(PythonParser.END_PROCEDURE_METHOD, 0)!;
+  public END_PROCEDURE(): antlr.TerminalNode {
+    return this.getToken(PythonParser.END_PROCEDURE, 0)!;
   }
   public GHOSTED(): antlr.TerminalNode | null {
     return this.getToken(PythonParser.GHOSTED, 0);

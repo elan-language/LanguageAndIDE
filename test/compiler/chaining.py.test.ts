@@ -107,7 +107,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   a: list[int] # property
 
@@ -176,7 +176,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   b: Bar # property
 
@@ -190,7 +190,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   y: Yon # property
 
@@ -204,7 +204,7 @@ class Yon: # concrete class
 
   def toString(self: Yon) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   z: int # property
 
@@ -318,7 +318,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   b: Bar # property
 
@@ -332,11 +332,11 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff(self: Bar) -> int: # function method
     return 4
-  # end function method
+  # end function
 
 # end class
 
@@ -428,7 +428,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   b: Bar # property
 
@@ -442,11 +442,11 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff(self: Bar) -> int: # function method
     return 4
-  # end function method
+  # end function
 
 # end class
 
@@ -614,7 +614,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   strArr: list[str] # property
 
@@ -682,11 +682,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def createLst(self: Foo, n: int) -> list[int]: # function method
     return createPopulatedList(n, 7)
-  # end function method
+  # end function
 
 # end class
 
@@ -756,7 +756,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   foo: Foo # property
 
@@ -770,11 +770,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def create2DList(self: Foo) -> list[list[int]]: # function method
     return [[8, 8, 8, 8], [8, 8, 8, 8], [8, 8, 8, 8]]
-  # end function method
+  # end function
 
 # end class
 
@@ -969,11 +969,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff(self: Foo) -> Bar: # function method
     return Bar()
-  # end function method
+  # end function
 
 # end class
 
@@ -985,11 +985,11 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def ff(self: Bar) -> int: # function method
     return 0
-  # end function method
+  # end function
 
 # end class
 

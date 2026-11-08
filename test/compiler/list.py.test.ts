@@ -2487,11 +2487,11 @@ class Foo: # concrete class
 
   def bar(self: Foo) -> int: # function method
     return 0
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 

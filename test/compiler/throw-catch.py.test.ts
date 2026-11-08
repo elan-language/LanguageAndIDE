@@ -28,7 +28,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: float # property
 
@@ -354,7 +354,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   p1: int # property
 
@@ -941,7 +941,7 @@ class FooException: # concrete class
 
   def toString(self: FooException) -> str: # function method
     return "Foo"
-  # end function method
+  # end function
 
 # end class
 
@@ -1031,7 +1031,7 @@ class FooException: # concrete class
 
   def toString(self: FooException) -> str: # function method
     return "Foo"
-  # end function method
+  # end function
 
 # end class
 

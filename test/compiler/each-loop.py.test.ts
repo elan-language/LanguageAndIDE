@@ -368,13 +368,13 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def display(self: Bar) -> None: # procedure method
     for item in li:
       printNoLine(item) # procedure call
     # end for
-  # end procedure method
+  # end procedure
 
 # end class
 

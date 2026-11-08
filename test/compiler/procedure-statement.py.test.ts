@@ -28,11 +28,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def foo(self: Foo, a: int, foo: int) -> None: # procedure method
 
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -542,11 +542,11 @@ class Foo: # concrete class
   def length(self: Foo) -> None: # procedure method
     p1 = self.p1 # variable definition
     p1.length(2) # procedure call
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -560,11 +560,11 @@ class Bar: # concrete class
 
   def length(self: Bar, plus: float) -> None: # procedure method
     printNoLine(self.p1 + plus) # procedure call
-  # end procedure method
+  # end procedure
 
   def toString(self: Bar) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -665,11 +665,11 @@ class Foo: # concrete class
   def length(self: Foo) -> None: # procedure method
     p1 = self.p1 # variable definition
     p1.length(2) # procedure call
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -737,11 +737,11 @@ class Foo: # concrete class
   def length(self: Foo) -> None: # procedure method
     p1 = self.p1 # variable definition
     p1.length(2) # procedure call
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -910,11 +910,11 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   def bar(self: Foo, z: AsRef[int]) -> None: # procedure method
     z.put(1) # procedure call
-  # end procedure method
+  # end procedure
 
 # end class
 
@@ -1003,7 +1003,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   ff: int # property
 
@@ -2045,7 +2045,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 

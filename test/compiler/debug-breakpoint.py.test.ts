@@ -19,7 +19,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -196,11 +196,11 @@ class Foo: # concrete class
     b = [1, 2] # variable definition
     c = "fred" # variable definition
     a = 2 # assignment
-  # end procedure method
+  # end procedure
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -256,11 +256,11 @@ class Foo: # concrete class
     c = "fred" # variable definition
     a = 2 # assignment
     return a
-  # end function method
+  # end function
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
 # end class
 
@@ -312,7 +312,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   f: int # property
 
@@ -766,7 +766,7 @@ class Bar: # concrete class
 
   def toString(self: Bar) -> str: # function method
     return "undefined"
-  # end function method
+  # end function
 
 # end class
 
@@ -780,7 +780,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   a: int # property
 
@@ -833,7 +833,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   a: int # property
 
@@ -884,7 +884,7 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   a: int # property
 
@@ -947,13 +947,13 @@ class Foo: # concrete class
 
   def toString(self: Foo) -> str: # function method
     return ""
-  # end function method
+  # end function
 
   ff: Callable[[Foo]int] # property
 
   def df(self: Foo) -> int: # function method
     return ff(self)
-  # end function method
+  # end function
 
 # end class
 

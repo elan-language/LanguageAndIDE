@@ -160,12 +160,12 @@ property: GHOSTED? identifierDef COLON type commentText? NL;
 functionMethod:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL (
         ordinaryStatement
-    )* returnStatement END_FUNCTION_METHOD NL
+    )* returnStatement END_FUNCTION NL
 ;
 
 procedureMethod:
     GHOSTED? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
-        ordinaryStatement* END_PROCEDURE_METHOD NL
+        ordinaryStatement* END_PROCEDURE NL
 ;
 
 abstractFunction:
