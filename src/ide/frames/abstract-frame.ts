@@ -390,7 +390,7 @@ export abstract class AbstractFrame implements Frame {
 
   cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
-    const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+    const nonSelectors = selected.filter((s) => !("isSelector" in s));
     if (nonSelectors.length === 0) {
       this.pasteError = "Cut Failed: No code to cut";
       return true;
