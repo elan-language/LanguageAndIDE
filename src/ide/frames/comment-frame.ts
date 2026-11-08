@@ -62,10 +62,6 @@ export class CommentFrame extends SingleLineFrame implements Statement {
     return this.isGlobalComment() ? "" : this.getParent().indent() + singleIndent();
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${this.text.renderAsElanSource()}`;
-  }
-
   override deleteIfPermissible(): void {
     this.insertNewSelectorIfNecessary();
     this.delete();

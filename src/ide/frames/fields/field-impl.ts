@@ -22,7 +22,6 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Language } from "../frame-interfaces/language";
 import { Selectable } from "../frame-interfaces/selectable";
-import { LanguageRefLang } from "../language-ref-lang";
 import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import {
@@ -794,12 +793,6 @@ export class FieldImpl implements Selectable, Field {
 
   renderAsHtmlFromContext(ctx: ParserRuleContext): string {
     return ctx.accept(getVisitorHtmlByLanguage(this.language()))!;
-  }
-
-  renderAsElanSource(): string {
-    return this.context
-      ? this.renderAsSourceFromContext(this.context, LanguageRefLang.Instance)
-      : this.textAsSource();
   }
 
   renderAsSource(): string {

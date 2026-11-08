@@ -51,10 +51,6 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     return "assert";
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${assertKeyword} ${this.actual.renderAsElanSource()} ${evaluatesKeyword} ${toKeyword} ${this.expected.renderAsElanSource()}`;
-  }
-
   setOutcome(outcome: AssertOutcome) {
     this.outcome = outcome;
   }

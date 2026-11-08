@@ -56,7 +56,7 @@ export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   }
 }
 
-export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
+export async function assertGeneratesSamesource(fl : FileImpl, source: string, sourceFile: string) {
  
   const renderedSource = await fl.renderAsSource();
   const actualSource = renderedSource.replaceAll("\r", "");
@@ -148,7 +148,7 @@ export async function testElanFile(fn: string) {
   await assertParsesAndCompilesAndTests(fl);
 
   const msgs = [];
-  msgs.push(await assertGeneratesSameElanSource(fl, source, sourceFile));
+  msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
   msgs.push(await assertExportsAll(fl, testPath));
 
@@ -576,7 +576,7 @@ export function testAntlrParse(
   text: string,
   parses: boolean,
   matchedText = "",
-  elanSource = "",
+  source = "",
   html = "",
   exprt = "",
   objectCode = ""
@@ -594,8 +594,8 @@ export function testAntlrParse(
     assert.equal(parsedText, matchedText.replaceAll(" ", ""));
   }
 
-  if (elanSource !== "") {
-    assert.equal(getVisitorSourceByLanguage(LanguageRefLang.Instance).visit(context), elanSource);
+  if (source !== "") {
+    assert.equal(getVisitorSourceByLanguage(LanguageRefLang.Instance).visit(context), source);
   }
 
   if (html && html !== "") {
@@ -616,7 +616,7 @@ export function testFieldParse(
   text: string,
   parses: boolean,
   html = "",
-  elanSource = "",
+  source = "",
   exprt = "",
 ) { 
   field.parseCompleteText(text);
@@ -629,8 +629,8 @@ export function testFieldParse(
     assert.equal(parsed ? field.renderAsHtml() : errors, html);
   }
 
-   if (elanSource !== "") {
-    assert.equal(field.renderAsElanSource(), elanSource);
+   if (source !== "") {
+    assert.equal(field.renderAsSource(), source);
   }
 
   if (exprt && exprt !== "") {

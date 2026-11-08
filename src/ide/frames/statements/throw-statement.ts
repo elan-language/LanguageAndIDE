@@ -44,8 +44,4 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
   frameSpecificAnnotation(): string {
     return "throw statement";
   }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${throwKeyword} ${this.type.renderAsElanSource()} ${this.text.renderAsElanSource()}`;
-  }
 }

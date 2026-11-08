@@ -60,8 +60,4 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
   indent(): string {
     return "";
   }
-  renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}constant ${this.name.renderAsElanSource()} set to ${this.value.renderAsElanSource()}\r
-`;
-  }
 }

@@ -1,6 +1,6 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
-import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
+import { classKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
@@ -197,10 +197,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   public inheritanceAsHtml(): string {
     return this.inheritance.renderAsHtml();
-  }
-
-  public inheritanceAsElanSource(): string {
-    return this.doesInherit() ? ` ${inheritsKeyword} ${this.inheritance.renderAsElanSource()}` : ``;
   }
 
   indent(): string {

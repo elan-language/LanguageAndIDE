@@ -3,11 +3,7 @@ import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/el
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, typeFieldSpec } from "../fields/field-spec";
-import {
-  addPrivateToggleToContextMenu,
-  modifierAsElanSource,
-  togglePrivatePublic,
-} from "../frame-helpers";
+import { addPrivateToggleToContextMenu, togglePrivatePublic } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
@@ -57,10 +53,6 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   }
 
   override outerHtmlTag: string = "el-prop";
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${modifierAsElanSource(this)}${propertyKeyword} ${this.name.renderAsElanSource()} ${asKeyword} ${this.type.renderAsElanSource()}\r\n`;
-  }
 
   isGlobalClass(st: SymbolType) {
     // todo rework when tests working

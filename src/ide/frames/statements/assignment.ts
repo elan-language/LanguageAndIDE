@@ -40,8 +40,4 @@ export class Assignment extends SingleLineFrame implements Statement {
   frameSpecificAnnotation(): string {
     return "assignment";
   }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${assignKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
-  }
 }

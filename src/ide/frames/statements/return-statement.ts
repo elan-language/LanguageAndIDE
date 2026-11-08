@@ -41,10 +41,6 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     return "return";
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}return ${this.expr.renderAsElanSource()}`;
-  }
-
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove("return ");

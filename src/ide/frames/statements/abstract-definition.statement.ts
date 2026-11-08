@@ -22,8 +22,6 @@ export abstract class AbstractDefinitionStatement extends SingleLineFrame implem
 
   abstract getIdPrefix(): string;
 
-  abstract renderAsElanSource(): string;
-
   getFields(): Field[] {
     return [this.name, this.expr];
   }

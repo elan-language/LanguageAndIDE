@@ -34,8 +34,4 @@ export class VariableStatement extends AbstractDefinitionStatement implements St
   frameSpecificAnnotation(): string {
     return "variable definition";
   }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${variableKeyword} ${this.name.renderAsElanSource()} ${setKeyword} ${toKeyword} ${this.expr.renderAsElanSource()}`;
-  }
 }

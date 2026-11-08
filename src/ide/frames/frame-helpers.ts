@@ -1,5 +1,4 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
-import { privateKeyword } from "../../compiler/elan-keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
@@ -360,8 +359,4 @@ export function selfTypeAsHtml(member: MemberFrame): string {
 export function selfTypeAsSource(member: MemberFrame): string {
   const typeNode = (member.getParent() as ClassFrame).name;
   return typeNode?.renderAsSource() ?? "";
-}
-
-export function modifierAsElanSource(member: MemberFrame): string {
-  return member.isPrivate ? `${privateKeyword} ` : "";
 }

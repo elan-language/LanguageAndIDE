@@ -45,10 +45,6 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
-  renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}enum ${this.name.renderAsElanSource()} ${this.values.renderAsElanSource()}\r
-`;
-  }
 
   parseFrom(source: CodeSource): void {
     source.remove("enum ");
