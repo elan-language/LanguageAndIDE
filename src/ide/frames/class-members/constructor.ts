@@ -45,6 +45,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return constructorKeyword;
   }
 
+  helpId(): string {
+    return "constructor";
+  }
+
   getFields(): Field[] {
     return [this.params];
   }

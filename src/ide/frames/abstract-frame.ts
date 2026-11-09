@@ -66,9 +66,9 @@ export abstract class AbstractFrame implements Frame {
   helpDocument(): string {
     return "LangRef.html";
   }
-  helpId(): string {
-    return this.initialKeywords().replace(/\s/g, "");
-  }
+
+  abstract helpId(): string;
+
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;

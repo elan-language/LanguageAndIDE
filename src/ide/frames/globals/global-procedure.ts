@@ -13,4 +13,8 @@ export class GlobalProcedure extends ProcedureFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
+
+  helpId(): string {
+    return "procedure";
+  }
 }

@@ -22,6 +22,9 @@ export class Assignment extends SingleLineFrame implements Statement {
   initialKeywords(): string {
     return assignKeyword;
   }
+  helpId(): string {
+    return "assignment";
+  }
 
   parseFrom(source: CodeSource): void {
     source.removeIndent();

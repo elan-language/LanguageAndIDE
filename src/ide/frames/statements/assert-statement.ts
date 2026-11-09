@@ -29,6 +29,10 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     return assertKeyword;
   }
 
+  helpId(): string {
+    return "assert";
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${assertKeyword} `);

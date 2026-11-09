@@ -24,6 +24,10 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
     return callKeyword;
   }
 
+  helpId(): string {
+    return "call";
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove("call ");

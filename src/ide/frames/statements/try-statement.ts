@@ -20,6 +20,11 @@ export class TryStatement extends FrameWithStatements {
   initialKeywords(): string {
     return tryKeyword;
   }
+
+  helpId(): string {
+    return "try"; // 'then' clause has no visible manifestation
+  }
+
   minimumNumberOfChildrenExceeded(): boolean {
     return this.getChildren().length > 2;
   }

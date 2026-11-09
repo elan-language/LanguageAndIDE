@@ -29,6 +29,10 @@ export class ElseClause extends Clause {
     return elseKeyword;
   }
 
+  helpId(): string {
+    return "else";
+  }
+
   getFields(): Field[] {
     return [];
   }

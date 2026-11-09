@@ -44,6 +44,10 @@ export class CatchClause extends Clause {
     return catchKeyword;
   }
 
+  helpId(): string {
+    return "catch";
+  }
+
   getFields(): Field[] {
     return [this.variable, this.exceptionType];
   }

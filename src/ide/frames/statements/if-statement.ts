@@ -28,6 +28,10 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return ifKeyword;
   }
 
+  helpId(): string {
+    return "if";
+  }
+
   getFields(): Field[] {
     return [this.condition];
   }

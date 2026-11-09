@@ -25,6 +25,10 @@ export class ForLoop extends FrameWithStatements implements Statement {
     return forKeyword;
   }
 
+  helpId(): string {
+    return "enum";
+  }
+
   getFields(): Field[] {
     return [this.variable, this.iter];
   }

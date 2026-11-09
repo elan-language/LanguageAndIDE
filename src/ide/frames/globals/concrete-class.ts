@@ -34,6 +34,10 @@ export class ConcreteClass extends ClassFrame {
     return classKeyword;
   }
 
+  helpId(): string {
+    return "class";
+  }
+
   override helpDocument(): string {
     return "oopRef.html";
   }

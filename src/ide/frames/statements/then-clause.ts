@@ -38,6 +38,10 @@ export class ThenClause extends Clause {
     return "";
   }
 
+  helpId(): string {
+    return ""; // 'then' clause has no visible manifestation
+  }
+
   getFields(): Field[] {
     return [];
   }

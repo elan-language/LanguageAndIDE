@@ -28,6 +28,11 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
   initialKeywords(): string {
     return constantKeyword;
   }
+
+  helpId(): string {
+    return "constant";
+  }
+
   parseFrom(source: CodeSource): void {
     source.remove("constant ");
     this.name.parseFrom(source);

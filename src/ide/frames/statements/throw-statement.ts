@@ -22,6 +22,11 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
   initialKeywords(): string {
     return throwKeyword;
   }
+
+  helpId(): string {
+    return "throw"; // 'then' clause has no visible manifestation
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove(`${throwKeyword} `);

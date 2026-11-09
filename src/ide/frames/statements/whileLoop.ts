@@ -19,6 +19,11 @@ export class WhileLoop extends FrameWithStatements {
   initialKeywords(): string {
     return whileKeyword;
   }
+
+  helpId(): string {
+    return "while"; // 'then' clause has no visible manifestation
+  }
+
   getFields(): Field[] {
     return [this.condition];
   }

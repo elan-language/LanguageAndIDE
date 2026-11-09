@@ -38,6 +38,10 @@ export class TryClause extends Clause {
     return "";
   }
 
+  helpId(): string {
+    return ""; // try *clause* has no visible manifestation
+  }
+
   getFields(): Field[] {
     return [];
   }

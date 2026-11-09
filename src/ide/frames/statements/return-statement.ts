@@ -21,6 +21,11 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
   initialKeywords(): string {
     return returnKeyword;
   }
+
+  helpId(): string {
+    return "return";
+  }
+
   override isDeletable() {
     return false;
   }

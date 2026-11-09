@@ -31,6 +31,10 @@ export class CommentFrame extends SingleLineFrame implements Statement {
     return commentMarker;
   }
 
+  helpId(): string {
+    return "Comment"; // U/c for historial reasons
+  }
+
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     this.text.parseFrom(source);

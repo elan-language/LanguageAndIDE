@@ -37,6 +37,10 @@ export class ElseIfClause extends Clause {
     return elifKeyword;
   }
 
+  helpId(): string {
+    return "elif";
+  }
+
   getFields(): Field[] {
     return [this.condition];
   }

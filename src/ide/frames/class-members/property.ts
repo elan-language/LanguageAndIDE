@@ -41,6 +41,10 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     return propertyKeyword;
   }
 
+  helpId(): string {
+    return "property";
+  }
+
   getFields(): Field[] {
     return [this.name, this.type];
   }

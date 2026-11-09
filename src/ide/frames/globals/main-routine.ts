@@ -20,6 +20,10 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
     return mainKeyword;
   }
 
+  helpId(): string {
+    return "main";
+  }
+
   getFields(): Field[] {
     return []; //no direct fields
   }

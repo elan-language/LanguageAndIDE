@@ -28,6 +28,10 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     this.pushClass(true, "multiline");
   }
 
+  helpId(): string {
+    return "enum";
+  }
+
   initialKeywords(): string {
     return enumKeyword;
   }

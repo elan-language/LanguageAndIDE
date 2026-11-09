@@ -16,4 +16,8 @@ export class GlobalFunction extends FunctionFrame implements GlobalFrame {
   indent(): string {
     return "";
   }
+
+  helpId(): string {
+    return "function";
+  }
 }
