@@ -1,9 +1,9 @@
 import assert from "assert";
 import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
 import { isParent } from "../../src/ide/frames/frame-helpers";
-import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { assertClasses, end, home, right, shift_tab, tab, up } from "../testHelpers";
 import { T03_mainWithAllStatements, T04_allGlobalsExceptClass } from "./model-generating-functions";
+import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 
 suite("Navigation", () => {
   test("Selectable Select", async () => {
@@ -54,7 +54,7 @@ suite("Navigation", () => {
     assert.equal(expr5.isSelected(), true);
     expr5.processKey(tab());
     assert.equal(expr5.isSelected(), false);
-    const var3 = file.getById("elan_var3") as VariableStatement;
+    const var3 = file.getById("elan_var3") as VariableDefinition;
     assert.equal(var3.isSelected(), true);
     var3.processKey(tab());
     assert.equal(var3.isSelected(), false);
@@ -63,7 +63,7 @@ suite("Navigation", () => {
   test("Shift-tabbing through fields and back to the frame", () => {
     const file = T03_mainWithAllStatements();
 
-    const var3 = file.getById("elan_var3") as VariableStatement;
+    const var3 = file.getById("elan_var3") as VariableDefinition;
     var3.select(true, false);
     var3.processKey(shift_tab());
     assert.equal(var3.isSelected(), false);

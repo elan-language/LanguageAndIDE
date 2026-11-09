@@ -5,9 +5,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class Constructor extends FrameWithStatements implements MemberFrame {
+  frameType: FrameType = FrameType.constructor;
   isConstructor = true;
   isMember = true;
   isAbstract = false;
@@ -41,6 +43,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
 
   initialKeywords(): string {
     return constructorKeyword;
+  }
+
+  helpId(): string {
+    return "constructor";
   }
 
   getFields(): Field[] {

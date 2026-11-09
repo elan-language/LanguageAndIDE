@@ -3,8 +3,11 @@ import { Clause } from "../clause";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameType } from "../frame-type";
 
 export class TryClause extends Clause {
+  frameType: FrameType = FrameType.tryClause;
+
   override isDeletable() {
     return false;
   }
@@ -33,6 +36,10 @@ export class TryClause extends Clause {
 
   initialKeywords(): string {
     return "";
+  }
+
+  helpId(): string {
+    return ""; // try *clause* has no visible manifestation
   }
 
   getFields(): Field[] {

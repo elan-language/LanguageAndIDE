@@ -3,9 +3,12 @@ import { Clause } from "../clause";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class ElseClause extends Clause {
+  frameType: FrameType = FrameType.elseClause;
+
   override isMovable(): boolean {
     return false;
   }
@@ -24,6 +27,10 @@ export class ElseClause extends Clause {
 
   initialKeywords(): string {
     return elseKeyword;
+  }
+
+  helpId(): string {
+    return "else";
   }
 
   getFields(): Field[] {

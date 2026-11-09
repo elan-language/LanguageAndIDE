@@ -2,9 +2,11 @@ import { setKeyword, toKeyword, variableKeyword } from "../../../compiler/elan-k
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { AbstractDefinitionStatement } from "./abstract-definition.statement";
 
-export class VariableStatement extends AbstractDefinitionStatement implements Statement {
+export class VariableDefinition extends AbstractDefinitionStatement implements Statement {
+  frameType: FrameType = FrameType.variableDefinition;
   isVariableStatement = true;
   constructor(parent: Parent) {
     super(parent);

@@ -20,6 +20,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
+import { FrameType } from "./frame-type";
 import {
   parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
@@ -27,8 +28,9 @@ import {
 import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 
 export abstract class AbstractFrame implements Frame {
+  abstract frameType: FrameType;
   isFrame = true;
-  isNew = true;
+  isNewlyCreated = true;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   pasteError: string = "";
   pasteErrCounter: number = 0;
@@ -64,9 +66,9 @@ export abstract class AbstractFrame implements Frame {
   helpDocument(): string {
     return "LangRef.html";
   }
-  helpId(): string {
-    return this.initialKeywords().replace(/\s/g, "");
-  }
+
+  abstract helpId(): string;
+
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
@@ -81,7 +83,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   hasBeenAddedTo(): void {
-    this.isNew = false;
+    this.isNewlyCreated = false;
   }
 
   isMovable(): boolean {
@@ -297,7 +299,7 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Backspace": {
-        if (e.modKey.control || this.isNew) {
+        if (e.modKey.control || this.isNewlyCreated) {
           this.deleteSelected();
           codeHasChanged = true;
         }
@@ -390,7 +392,7 @@ export abstract class AbstractFrame implements Frame {
 
   cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
-    const nonSelectors = selected.filter((s) => !("isSelector" in s));
+    const nonSelectors = selected.filter((s) => !(s.frameType = FrameType.selector));
     if (nonSelectors.length === 0) {
       this.pasteError = "Cut Failed: No code to cut";
       return true;

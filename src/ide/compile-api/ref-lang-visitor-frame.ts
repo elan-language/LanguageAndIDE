@@ -63,7 +63,7 @@ import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryClause } from "../frames/statements/try-clause";
 import { TryStatement } from "../frames/statements/try-statement";
-import { VariableStatement } from "../frames/statements/variable-statement";
+import { VariableDefinition } from "../frames/statements/variable-definition";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 
@@ -229,7 +229,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   // Statements
   override visitVariableDefinition = (ctx: VariableDefinitionContext) => {
-    const varDef = new VariableStatement(this.parent);
+    const varDef = new VariableDefinition(this.parent);
     varDef.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     varDef.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     varDef.updateParseStatus();

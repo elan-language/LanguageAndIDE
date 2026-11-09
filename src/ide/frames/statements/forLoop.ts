@@ -6,9 +6,11 @@ import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class ForLoop extends FrameWithStatements implements Statement {
+  frameType: FrameType = FrameType.forLoop;
   isStatement = true;
   variable: FieldImpl;
   iter: FieldImpl;
@@ -21,6 +23,10 @@ export class ForLoop extends FrameWithStatements implements Statement {
   }
   initialKeywords(): string {
     return forKeyword;
+  }
+
+  helpId(): string {
+    return "enum";
   }
 
   getFields(): Field[] {

@@ -1,9 +1,12 @@
 import { abstractClassKeywords, classKeyword, endKeyword } from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
+import { FrameType } from "../frame-type";
 import { ClassFrame } from "./class-frame";
 
 export class AbstractClass extends ClassFrame {
+  frameType: FrameType = FrameType.abstractClass;
+
   constructor(parent: File) {
     super(parent);
     this.isAbstract = true;

@@ -5,9 +5,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ProcedureCall extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.procedureCall;
   isStatement = true;
   isCall = true;
   procRef: FieldImpl;
@@ -20,6 +22,10 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
 
   initialKeywords(): string {
     return callKeyword;
+  }
+
+  helpId(): string {
+    return "call";
   }
 
   parseFrom(source: CodeSource): void {

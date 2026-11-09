@@ -40,7 +40,7 @@ import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
 import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
-import { VariableStatement } from "./statements/variable-statement";
+import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
 export class LanguagePython extends LanguageAbstract {
@@ -82,7 +82,7 @@ export class LanguagePython extends LanguageAbstract {
       html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}<el-comment> # assignment</el-comment>`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.RAISE}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}<el-comment> # variable definition</el-comment>`;
     }
     return html;
@@ -116,7 +116,7 @@ export class LanguagePython extends LanguageAbstract {
       source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
       source = `${this.RAISE} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       source = `${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     }
     return source;

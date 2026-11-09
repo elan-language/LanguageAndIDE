@@ -12,11 +12,13 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
 import { DisplayColour } from "../status-enums";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
+  frameType: FrameType = FrameType.test;
   isTest = true;
   isGlobal = true;
   public testName: FieldImpl;
@@ -63,6 +65,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   initialKeywords(): string {
     return testKeyword;
   }
+
+  helpId(): string {
+    return "test";
+  }
+
   getFields(): Field[] {
     return [this.testName];
   }

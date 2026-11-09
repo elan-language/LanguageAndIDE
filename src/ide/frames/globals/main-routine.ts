@@ -3,9 +3,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class MainRoutine extends FrameWithStatements implements GlobalFrame {
+  frameType: FrameType = FrameType.mainRoutine;
   isMain = true;
   isGlobal = true;
   file: File;
@@ -16,6 +18,10 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
 
   initialKeywords(): string {
     return mainKeyword;
+  }
+
+  helpId(): string {
+    return "main";
   }
 
   getFields(): Field[] {

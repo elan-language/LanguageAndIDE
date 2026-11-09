@@ -267,7 +267,7 @@ export class FieldImpl implements Selectable, Field {
         break;
       }
       case "Backspace": {
-        if (this.holder.isNew) {
+        if (this.holder.isNewlyCreated) {
           this.holder.deleteIfPermissible();
           this.codeHasChanged = true;
         } else if (this.hasSelection()) {

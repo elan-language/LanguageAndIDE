@@ -9,10 +9,12 @@ import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
+import { FrameType } from "../frame-type";
 import { AbstractClass } from "../globals/abstract-class";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Property extends SingleLineFrame implements PossiblyPrivateMember {
+  frameType: FrameType = FrameType.property;
   isMember = true;
   isProperty = true;
   isAbstract = false;
@@ -37,6 +39,10 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
 
   initialKeywords(): string {
     return propertyKeyword;
+  }
+
+  helpId(): string {
+    return "property";
   }
 
   getFields(): Field[] {

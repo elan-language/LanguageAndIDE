@@ -5,10 +5,12 @@ import { MemberSelector } from "../class-members/member-selector";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
+import { FrameType } from "../frame-type";
 import { ReturnStatement } from "../statements/return-statement";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {
+  frameType: FrameType = FrameType.concreteClass;
   private constr: Constructor;
   private toString: FunctionMethod;
 
@@ -30,6 +32,10 @@ export class ConcreteClass extends ClassFrame {
 
   initialKeywords(): string {
     return classKeyword;
+  }
+
+  helpId(): string {
+    return "class";
   }
 
   override helpDocument(): string {

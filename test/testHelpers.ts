@@ -30,7 +30,7 @@ import { LanguageCSharp } from "../src/ide/frames/language-c-sharp";
 import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageRefLang } from "../src/ide/frames/language-ref-lang";
 import { Paradigm } from "../src/ide/frames/paradigm";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
+import { VariableDefinition } from "../src/ide/frames/statements/variable-definition";
 import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
@@ -664,7 +664,7 @@ function fileWithLanguage(language: Language): FileImpl {
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainRoutine(new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
-  const v = new VariableStatement(main);
+  const v = new VariableDefinition(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
   expr.parseCurrentText();

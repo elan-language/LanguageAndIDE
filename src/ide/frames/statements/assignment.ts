@@ -5,9 +5,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Assignment extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.assertStatement;
   isStatement = true;
   assignable: FieldImpl;
   expr: FieldImpl;
@@ -19,6 +21,9 @@ export class Assignment extends SingleLineFrame implements Statement {
   }
   initialKeywords(): string {
     return assignKeyword;
+  }
+  helpId(): string {
+    return "assignment";
   }
 
   parseFrom(source: CodeSource): void {

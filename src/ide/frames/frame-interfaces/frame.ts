@@ -1,4 +1,5 @@
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
+import { FrameType } from "../frame-type";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { Field } from "./field";
 import { File } from "./file";
@@ -6,8 +7,8 @@ import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 
 export interface Frame extends Selectable {
-  isFrame: boolean;
-  isNew: boolean; //A frame is 'New' until any field has been edited or any child added
+  frameType: FrameType;
+  isNewlyCreated: boolean; //A frame is 'New' until any field has been edited or any child added
   hasBeenAddedTo(): void;
 
   getFile(): File;
