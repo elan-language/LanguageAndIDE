@@ -3,6 +3,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameType } from "./frame-type";
 import { CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
@@ -35,7 +36,7 @@ export function parentHelper_removeChild(parent: Parent, child: Frame): void {
 
 export function parentHelper_removeAllSelectedChildren(parent: Parent): Frame[] {
   const selected = parentHelper_getAllSelectedChildren(parent);
-  const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+  const nonSelectors = selected.filter((s) => !(s.frameType === FrameType.selector));
   for (const child of nonSelectors) {
     parentHelper_removeChild(parent, child);
   }
