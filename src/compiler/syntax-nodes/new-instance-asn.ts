@@ -6,11 +6,11 @@ import {
 } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { Scope } from "../compiler-interfaces/scope";
-import { constructorKeyword } from "../elan-keywords";
 import { ClassSubType, ClassType } from "../symbols/class-type";
 import { ProcedureType } from "../symbols/procedure-type";
 import { getGlobalScope, parameterNamesWithTypes } from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
+import { ctorWellKnownId } from "../well-known-ids";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class NewInstanceAsn extends AbstractAstNode implements AstNode {
@@ -41,9 +41,7 @@ export class NewInstanceAsn extends AbstractAstNode implements AstNode {
       if (type.subType === ClassSubType.concrete) {
         libScope = type.scope.symbolScope === SymbolScope.stdlib;
 
-        const constructorType = type
-          .resolveSymbol(`__${constructorKeyword}`, true, this.scope)
-          .symbolType();
+        const constructorType = type.resolveSymbol(ctorWellKnownId, true, this.scope).symbolType();
 
         const parameterTypes =
           constructorType instanceof ProcedureType ? constructorType.parameterTypes : [];

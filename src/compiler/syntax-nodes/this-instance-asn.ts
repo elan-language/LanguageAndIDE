@@ -1,8 +1,8 @@
 import { mustBeInsideClass } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { Scope } from "../compiler-interfaces/scope";
-import { thisKeyword } from "../elan-keywords";
 import { getGlobalScope, isInsideClass } from "../symbols/symbol-helpers";
+import { thisWellKnownId } from "../well-known-ids";
 import { AbstractAstNode } from "./abstract-ast-node";
 
 export class ThisInstanceAsn extends AbstractAstNode implements AstNode {
@@ -26,7 +26,7 @@ export class ThisInstanceAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    return this.scope.resolveSymbol(thisKeyword, true, this.scope)?.symbolType();
+    return this.scope.resolveSymbol(thisWellKnownId, true, this.scope)?.symbolType();
   }
 
   toString() {

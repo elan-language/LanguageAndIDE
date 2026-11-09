@@ -26,7 +26,7 @@ import {
 } from "../../compile-rules";
 import { Deprecated } from "../../compiler-interfaces/elan-type-interfaces";
 import { BreakpointEvent } from "../../debugging/breakpoint-event";
-import { thisKeyword } from "../../elan-keywords";
+import { thisWellKnownId } from "../../well-known-ids";
 import { getSuperClasses, isAstCollectionNode } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { PropertyAsn } from "../class-members/property-asn";
@@ -176,7 +176,7 @@ export abstract class ClassAsn extends BreakpointAsn implements Class {
   }
 
   resolveOwnSymbol(id: string, caseSensitive: boolean): ElanSymbol {
-    if (id === thisKeyword) {
+    if (id === thisWellKnownId) {
       return this;
     }
 

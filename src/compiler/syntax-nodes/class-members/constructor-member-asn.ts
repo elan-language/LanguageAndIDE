@@ -4,7 +4,6 @@ import { Class } from "../../compiler-interfaces/class";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Member } from "../../compiler-interfaces/member";
 import { Scope } from "../../compiler-interfaces/scope";
-import { constructorKeyword } from "../../elan-keywords";
 import { ProcedureType } from "../../symbols/procedure-type";
 import {
   getAllAbstractClasses,
@@ -13,6 +12,7 @@ import {
 } from "../../symbols/symbol-helpers";
 import { SymbolScope } from "../../symbols/symbol-scope";
 import { UnknownSymbol } from "../../symbols/unknown-symbol";
+import { ctorWellKnownId } from "../../well-known-ids";
 import { isAstIdNode } from "../ast-helpers";
 import { CompoundAsn } from "../compound-asn";
 import { EmptyAsn } from "../empty-asn";
@@ -95,7 +95,7 @@ ${this.indent()}}\r
   }
 
   get symbolId() {
-    return `__${constructorKeyword}`;
+    return ctorWellKnownId;
   }
 
   symbolType() {

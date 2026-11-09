@@ -20,7 +20,6 @@ import { Scope } from "./compiler-interfaces/scope";
 import { SymbolType } from "./compiler-interfaces/symbol-type";
 import { getTypeOptions, noTypeOptions, TypeOptions } from "./compiler-interfaces/type-options";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { constructorKeyword } from "./elan-keywords";
 import { AnyEnumType } from "./symbols/any-enum-type";
 import { AnyExceptEnumType } from "./symbols/any-except-enum-type";
 import { AnyInclEnumType } from "./symbols/any-incl-enum-type";
@@ -49,6 +48,7 @@ import { StringType } from "./symbols/string-type";
 import { SymbolScope } from "./symbols/symbol-scope";
 import { TupleType } from "./symbols/tuple-type";
 import { UnknownType } from "./symbols/unknown-type";
+import { ctorWellKnownId } from "./well-known-ids";
 
 export const nameToTypeMap = new Map<
   string,
@@ -288,11 +288,7 @@ export class ElanClassTypeDescriptor implements TypeDescriptor {
         ElanDescriptor | undefined;
 
       if (name === "constructor") {
-        children.push([
-          `__${constructorKeyword}`,
-          classMetadata.mapType(scope),
-          MemberType.procedure,
-        ]);
+        children.push([ctorWellKnownId, classMetadata.mapType(scope), MemberType.procedure]);
       }
 
       if (isFunctionDescriptor(metadata)) {
