@@ -79,7 +79,7 @@ import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
 import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
-import { VariableStatement } from "./statements/variable-statement";
+import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
 export class LanguageRefLang extends LanguageAbstract {
@@ -122,7 +122,7 @@ export class LanguageRefLang extends LanguageAbstract {
       html = `<el-kw>${this.ASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
@@ -152,7 +152,7 @@ export class LanguageRefLang extends LanguageAbstract {
       source = `${frame.indent()}${this.ASSIGN} ${frame.assignable.renderAsSource()} ${this.TO} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
       source = `${frame.indent()}${this.THROW} ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       source = `${frame.indent()}${this.VARIABLE} ${frame.name.renderAsSource()} ${this.SET} ${this.TO} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof AbstractFunction) {
       source = `${frame.indent()}${this.ABSTRACT} ${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;

@@ -7,6 +7,7 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameType } from "./frame-type";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Overtyper } from "./overtyper";
 import { Paradigm } from "./paradigm";
@@ -14,6 +15,7 @@ import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame {
+  frameType: FrameType = FrameType.selector;
   isSelector = true;
   isStatement = true;
   text: string = "";
@@ -201,7 +203,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "Backspace": {
         // Apologies for the wild casting.  Perhaps it can be done another way.
         const par = this.getParent() as unknown as AbstractFrame;
-        if (this.deleteParentOnBackspace && par.isNew) {
+        if (this.deleteParentOnBackspace && par.isNewlyCreated) {
           // it is the first selector in a new TryStatement, delete the whole TryStatement
           par.deleteIfPermissible();
         }

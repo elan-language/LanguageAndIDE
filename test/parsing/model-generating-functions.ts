@@ -20,7 +20,7 @@ import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { TryStatement } from "../../src/ide/frames/statements/try-statement";
-import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -69,7 +69,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ssm = m.getFirstSelectorAsDirectChild();
-  const v = new VariableStatement(m);
+  const v = new VariableDefinition(m);
   m.addChildBefore(v, ssm);
   const s = new Assignment(m);
   s.assignable.setFieldToKnownValidText("a");

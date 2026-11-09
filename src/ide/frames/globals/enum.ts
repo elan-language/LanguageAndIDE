@@ -5,9 +5,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Enum extends SingleLineFrame implements GlobalFrame {
+  frameType: FrameType = FrameType.enum;
   isGlobal = true;
   name: FieldImpl;
   values: FieldImpl;

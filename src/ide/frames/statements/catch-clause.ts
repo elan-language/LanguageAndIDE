@@ -6,9 +6,11 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class CatchClause extends Clause {
+  frameType: FrameType = FrameType.catchClause;
   variable: FieldImpl;
   exceptionType: FieldImpl;
 

@@ -8,10 +8,10 @@ import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
-import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { ignore_test } from "../compiler/compiler-test-helpers";
 import { fileImplFor, testExtractContextForExpression } from "../testHelpers";
+import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 
 const refLang: Language = LanguageRefLang.Instance;
 
@@ -53,7 +53,7 @@ suite("Parsing Fields (Old) RefLang", () => {
   });
   test("parse varDefField", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const variable = new VariableStatement(main);
+    const variable = new VariableDefinition(main);
     const id = variable.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.readParseStatus(), ParseStatus.incomplete);
@@ -74,7 +74,7 @@ suite("Parsing Fields (Old) RefLang", () => {
 
   test("parse VarDefField 2", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const v = new VariableStatement(main);
+    const v = new VariableDefinition(main);
     const id = v.name;
     assert.equal(id.textAsSource(), "");
     assert.equal(id.readParseStatus(), ParseStatus.incomplete);
@@ -134,7 +134,7 @@ suite("Parsing Fields (Old) RefLang", () => {
 
   ignore_test("parse ExpressionField - literal string with interpolations", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const v = new VariableStatement(main);
+    const v = new VariableDefinition(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`$"{op} times {op2} equals {op1*op2}"`);
     expr.parseCurrentText();
@@ -148,7 +148,7 @@ suite("Parsing Fields (Old) RefLang", () => {
 
   ignore_test("parse ExpressionField - non-interpolated string", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const v = new VariableStatement(main);
+    const v = new VariableDefinition(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`'{a}"b"'`);
     expr.parseCurrentText();
@@ -158,7 +158,7 @@ suite("Parsing Fields (Old) RefLang", () => {
   });
   ignore_test("parse ExpressionField - mixed strings", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const v = new VariableStatement(main);
+    const v = new VariableDefinition(main);
     const expr = v.expr;
     expr.setFieldToKnownValidText(`''+""+'ab{c}"d"'+"ab{c}'d'"`);
     expr.parseCurrentText();
@@ -185,7 +185,7 @@ suite("Parsing Fields (Old) RefLang", () => {
   });
   ignore_test("parse instance dot method", () => {
     const test = new TestFrame(fileImplFor(refLang));
-    const a = new VariableStatement(test);
+    const a = new VariableDefinition(test);
     const expr = a.expr;
     expr.setFieldToKnownValidText(`foo.`);
     expr.parseCurrentText();
@@ -204,7 +204,7 @@ suite("Parsing Fields (Old) RefLang", () => {
   });
   test("#950 space at start of var-def-field is ignored", () => {
     const main = new MainRoutine(fileImplFor(refLang));
-    const v = new VariableStatement(main);
+    const v = new VariableDefinition(main);
     const name = v.name;
     name.setFieldToKnownValidText(" ");
     name.parseCurrentText();

@@ -71,7 +71,7 @@ import { ThenClause } from "../frames/statements/then-clause";
 import { ThrowStatement } from "../frames/statements/throw-statement";
 import { TryClause } from "../frames/statements/try-clause";
 import { TryStatement } from "../frames/statements/try-statement";
-import { VariableStatement } from "../frames/statements/variable-statement";
+import { VariableDefinition } from "../frames/statements/variable-definition";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { getVisitorCompilerByLanguage } from "./parser-helpers";
 
@@ -217,7 +217,7 @@ export function transform(
 
   // Statements
 
-  if (node instanceof VariableStatement) {
+  if (node instanceof VariableDefinition) {
     const variableDefinitionAsn = new VariableDefinitionAsn(node.getHtmlId(), scope);
     variableDefinitionAsn.breakpointStatus = node.breakpointStatus;
 

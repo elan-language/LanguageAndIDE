@@ -31,7 +31,7 @@ import { ThenClause } from "./statements/then-clause";
 import { ThrowStatement } from "./statements/throw-statement";
 import { TryClause } from "./statements/try-clause";
 import { TryStatement } from "./statements/try-statement";
-import { VariableStatement } from "./statements/variable-statement";
+import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
 export abstract class LanguageCfamily extends LanguageAbstract {
@@ -80,7 +80,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       html = `${frame.assignable.renderAsHtml()}<el-kw> = </el-kw>${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>${this.THROW} ${this.NEW_INSTANCE_PREFIX}</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()});`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       html = `<el-kw>${this.VAR} </el-kw>${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()};`;
     } else if (frame instanceof AbstractFunction) {
       html = `<el-kw>${this.ABSTRACT} </el-kw>${frame.returnType.renderAsHtml()} <el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()});`;
@@ -108,7 +108,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
       source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()};`;
     } else if (frame instanceof ThrowStatement) {
       source = `${this.THROW} ${this.NEW_INSTANCE_PREFIX} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()});`;
-    } else if (frame instanceof VariableStatement) {
+    } else if (frame instanceof VariableDefinition) {
       source = `${this.VAR} ${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()};`;
     } else if (frame instanceof AbstractFunction) {
       source = `${this.ABSTRACT} ${frame.returnType.renderAsSource()} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()});`;

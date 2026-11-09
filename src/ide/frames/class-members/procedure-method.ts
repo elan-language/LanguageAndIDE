@@ -4,10 +4,12 @@ import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
+import { FrameType } from "../frame-type";
 import { AbstractClass } from "../globals/abstract-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
+  frameType: FrameType = FrameType.procedureMethod;
   isMember: boolean = true;
   isPrivate: boolean;
   isAbstract = false;

@@ -5,9 +5,11 @@ import { singleIndent } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class AbstractProcedure extends SingleLineFrame {
+  frameType: FrameType = FrameType.abstractProcedure;
   isAbstract = true;
   isMember: boolean = true;
   private = false;

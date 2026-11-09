@@ -6,9 +6,11 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Collapsible {
+  frameType: FrameType = FrameType.constant;
   isCollapsible: boolean = true;
   isGlobal = true;
   name: FieldImpl;

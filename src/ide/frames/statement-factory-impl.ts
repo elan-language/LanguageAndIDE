@@ -12,7 +12,7 @@ import { IfStatement } from "./statements/if-statement";
 import { ProcedureCall } from "./statements/procedureCall";
 import { ThrowStatement } from "./statements/throw-statement";
 import { TryStatement } from "./statements/try-statement";
-import { VariableStatement } from "./statements/variable-statement";
+import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
 export class StatementFactoryImpl implements StatementFactory {
@@ -51,7 +51,7 @@ export class StatementFactoryImpl implements StatementFactory {
     return new TryStatement(parent);
   }
   public newVar(parent: Parent): Frame {
-    return new VariableStatement(parent);
+    return new VariableDefinition(parent);
   }
   public newWhile(parent: Parent): Frame {
     return new WhileLoop(parent);

@@ -11,7 +11,7 @@ import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
-import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
 
@@ -78,7 +78,7 @@ suite("Parsing Frames RefLang", async () => {
     const source = new CodeSourceFromString(code + "\n");
     const fl = fileImplForRefLang();
     const m = new MainRoutine(fl);
-    const v = new VariableStatement(m);
+    const v = new VariableDefinition(m);
     v.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(v.renderAsSource(), code);

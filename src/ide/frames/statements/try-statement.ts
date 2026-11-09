@@ -2,11 +2,13 @@ import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 import { CatchClause } from "./catch-clause";
 import { TryClause } from "./try-clause";
 
 export class TryStatement extends FrameWithStatements {
+  frameType: FrameType = FrameType.tryStatement;
   constructor(parent: Parent) {
     super(parent);
     const selector = this.getFirstChild();

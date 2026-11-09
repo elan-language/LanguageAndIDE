@@ -1,0 +1,37 @@
+export enum FrameType {
+  // globals
+  abstractClass,
+  concreteClass,
+  constant,
+  enum,
+  globalFunction,
+  globalProcedure,
+  mainRoutine,
+  test,
+  // statements
+  assertStatement,
+  assignment,
+  catchClause,
+  elseClause,
+  elseIfClause,
+  forLoop,
+  ifStatement,
+  procedureCall,
+  returnStatement,
+  thenClause,
+  throwStatement,
+  tryStatement,
+  tryClause,
+  variableDefinition,
+  whileLoop,
+  // members
+  abstractFunction,
+  abstractProcedure,
+  constructor,
+  functionMethod,
+  procedureMethod,
+  property,
+  // common
+  commentFrame,
+  selector,
+}

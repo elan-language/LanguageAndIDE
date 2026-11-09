@@ -22,7 +22,7 @@ import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageRefLang } from "../ide/frames/language-ref-lang";
 import { Paradigm } from "../ide/frames/paradigm";
 import { StatementSelector } from "../ide/frames/statements/statement-selector";
-import { VariableStatement } from "../ide/frames/statements/variable-statement";
+import { VariableDefinition } from "../ide/frames/statements/variable-definition";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
@@ -237,7 +237,7 @@ function ExpressionrParserAndRender(
   file: FileImpl,
 ): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
-  const ls = new VariableStatement(mf);
+  const ls = new VariableDefinition(mf);
   const expr = new FieldImpl(ls, expressionFieldSpec);
 
   return [expr, { textAsHtml: async () => expr.textAsHtml() }];

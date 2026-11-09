@@ -6,8 +6,7 @@ import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 
 export interface Frame extends Selectable {
-  isFrame: boolean;
-  isNew: boolean; //A frame is 'New' until any field has been edited or any child added
+  isNewlyCreated: boolean; //A frame is 'New' until any field has been edited or any child added
   hasBeenAddedTo(): void;
 
   getFile(): File;
