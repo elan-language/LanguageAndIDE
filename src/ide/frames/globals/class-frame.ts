@@ -290,7 +290,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     setGhostOnSelectedChildren(this, false);
   }
   override deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.delete();
     } else {
       for (const child of this._children) {
@@ -312,7 +312,7 @@ ${this.language().renderBottomAsHtml(this)}
   public renderAsSource(): string {
     const topAsSource = this.language().renderTopAsSource(this);
     const bottomAsSource = this.language().renderBottomAsSource(this);
-    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${parentHelper_renderChildrenAsSource(this)}\r\n${bottomAsSource}`;
+    return `${this.indent()}${topAsSource}\r\n${parentHelper_renderChildrenAsSource(this)}\r\n${bottomAsSource}`;
   }
 
   resetFieldText(): void {

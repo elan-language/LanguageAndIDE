@@ -35,7 +35,6 @@ import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
-import { CatchStatementContext } from "./PythonParser.js";
 import { ConstructorMemberContext } from "./PythonParser.js";
 import { PropertyContext } from "./PythonParser.js";
 import { FunctionMethodContext } from "./PythonParser.js";
@@ -318,12 +317,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.catchStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitCatchStatement?: (ctx: CatchStatementContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.constructorMember`.
    * @param ctx the parse tree

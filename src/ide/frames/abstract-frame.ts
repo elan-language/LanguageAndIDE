@@ -515,7 +515,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this._focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.isGhosted(), this.ghostedAnnotation);
+    this.pushClass(this.isGhostedExplicitly(), this.ghostedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -781,12 +781,12 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  isGhosted() {
+  isGhostedExplicitly() {
     return this._ghosted;
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
-    return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
+    return this.isGhostedExplicitly() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
   deleteAllGhostedInFile = () => {
@@ -794,13 +794,9 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  sourceAnnotations(): string {
-    return this.isGhosted() ? `[${this.ghostedAnnotation}] ` : "";
-  }
-
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       map.set("unghost", ["unghost", this.unGhost]);
     }
     if (this.canInsertAfter()) {
@@ -812,7 +808,7 @@ export abstract class AbstractFrame implements Frame {
     if (this.isDeletable()) {
       addDeleteToContextMenu(this, map);
     }
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       map.set("deleteGhosted", ["delete ALL ghosted code", this.deleteAllGhostedInFile]);
     }
     if (this.isMovable()) {
@@ -829,10 +825,10 @@ export abstract class AbstractFrame implements Frame {
     if (!(this.language().languageHtmlClass === "elan")) {
       map.set("copyExport", ["copy for export", this.exportSelected]);
     }
-    if (!this.isGhosted() && this.isGhostable()) {
+    if (!this.isGhostedExplicitly() && this.isGhostable()) {
       map.set("ghost", ["ghost", this.ghost]);
     }
-    if (this.canHaveBreakPoint && !this.isGhosted()) {
+    if (this.canHaveBreakPoint && !this.isGhostedExplicitly()) {
       if (this.hasBreakpoint()) {
         map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
         map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
@@ -875,7 +871,7 @@ export abstract class AbstractFrame implements Frame {
   }
 
   deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.insertNewSelectorIfNecessary();
       this.delete();
     }

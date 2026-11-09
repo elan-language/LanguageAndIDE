@@ -57,21 +57,17 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> ${frame.returnType.renderAsHtml()}:<br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-comment>@abstractmethod</el-comment><br>${frame.indent()}<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
+      html = `<el-comment>@abstractmethod</el-comment><br><el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()}) -> <el-kw>${this.NONE}</el-kw><br>${frame.indent()}&nbsp;&nbsp;<el-kw>pass</el-kw>`;
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
-      html = `${frame.procRef.renderAsHtml()}`;
+      html = `${frame.indent()}${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
-      html = frame.text.renderAsHtml();
+      html = `${frame.indent()}${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
-    } else if (frame instanceof ElseIfClause) {
-      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}:`;
-    } else if (frame instanceof ElseClause) {
-      html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof Property) {
@@ -91,35 +87,35 @@ export class LanguagePython extends LanguageAbstract {
   renderSingleLineAsSource(frame: Frame): string {
     let source = `Source not specified for ${typeof frame}`;
     if (frame instanceof AbstractFunction) {
-      source = `@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:\n${frame.indent()}  pass`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:\n${frame.indent()}  pass`;
     } else if (frame instanceof AbstractProcedure) {
-      source = `@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}\n${frame.indent()}  pass`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}@abstractmethod\n${frame.indent()}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}\n${frame.indent()}  pass`;
     } else if (frame instanceof AssertStatement) {
-      source = `self.assertEqual(${frame.actual.renderAsSource()}, ${frame.expected.renderAsSource()})`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}self.assertEqual(${frame.actual.renderAsSource()}, ${frame.expected.renderAsSource()})`;
     } else if (frame instanceof ProcedureCall) {
-      source = `${frame.procRef.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.procRef.renderAsSource()}`;
     } else if (frame instanceof CommentFrame) {
-      source = frame.text.renderAsSource();
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.text.renderAsSource()}`;
     } else if (frame instanceof ConstantGlobal) {
-      source = `${frame.name.renderAsSource()} = ${frame.value.renderAsSource()}`;
-    } else if (frame instanceof ElseIfClause) {
-      source = `${this.ELIF} ${frame.condition.renderAsSource()}:`;
-    } else if (frame instanceof ElseClause) {
-      source = `${this.ELSE}:`;
+      source = `${this.ghostSingle(frame)}${frame.name.renderAsSource()} = ${frame.value.renderAsSource()}`;
     } else if (frame instanceof Enum) {
-      source = `${this.CLASS} ${frame.name.renderAsSource()}(Enum):${frame.values.renderAsSource()}`;
+      source = `${this.ghostSingle(frame)}${this.CLASS} ${frame.name.renderAsSource()}(Enum):${frame.values.renderAsSource()}`;
     } else if (frame instanceof Property) {
-      source = `${frame.name.renderAsSource()}: ${frame.type.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()}: ${frame.type.renderAsSource()}`;
     } else if (frame instanceof ReturnStatement) {
-      source = `${this.RETURN} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${this.RETURN} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
-      source = `${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
-      source = `${this.RAISE} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${this.RAISE} ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
     } else if (frame instanceof VariableDefinition) {
-      source = `${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     }
     return source;
+  }
+
+  ghostSingle(frame: Frame) {
+    return frame.isGhostedExplicitly() ? `${this.COMMENT_MARKER} ${this.GHOSTED} ` : ``;
   }
 
   renderTopAsHtml(frame: Frame): string {
@@ -163,39 +159,49 @@ export class LanguagePython extends LanguageAbstract {
   renderTopAsSource(frame: Frame): string {
     let source = `Source not specified for ${typeof frame}`;
     if (frame instanceof AbstractClass) {
-      source = `${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
+      source = `${this.ghostTop(frame)}${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
     } else if (frame instanceof ConcreteClass) {
-      source = `${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
+      source = `${this.ghostTop(frame)}${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}:`;
     } else if (frame instanceof Constructor) {
-      source = `${this.DEF} __init__(${this.memberParamListAsSource(frame, frame.params)}) -> None:`;
+      source = `${this.ghostTop(frame)}${this.DEF} __init__(${this.memberParamListAsSource(frame, frame.params)}) -> None:`;
     } else if (frame instanceof CatchClause) {
-      source = `${this.EXCEPT} ${frame.exceptionType.renderAsSource()} ${this.AS} ${frame.variable.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}${this.EXCEPT} ${frame.exceptionType.renderAsSource()} ${this.AS} ${frame.variable.renderAsSource()}:`;
+    } else if (frame instanceof ElseIfClause) {
+      source = `${this.ghostTop(frame)}${this.ELIF} ${frame.condition.renderAsSource()}:`;
+    } else if (frame instanceof ElseClause) {
+      source = `${this.ghostTop(frame)}${this.ELSE}:`;
     } else if (frame instanceof ForLoop) {
-      source = `${this.FOR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}${this.FOR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}:`;
     } else if (frame instanceof GlobalFunction) {
-      source = `${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:`;
     } else if (frame instanceof GlobalProcedure) {
-      source = `${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}:`;
+      source = `${this.ghostTop(frame)}${this.DEF} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${this.NONE}:`;
     } else if (frame instanceof IfStatement) {
-      source = `${this.IF} ${frame.condition.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}${this.IF} ${frame.condition.renderAsSource()}:`;
     } else if (frame instanceof MainRoutine) {
-      source = `${this.DEF} main() -> ${this.NONE}:`;
+      source = `${this.ghostTop(frame)}${this.DEF} main() -> ${this.NONE}:`;
     } else if (frame instanceof FunctionMethod) {
       source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${frame.returnType.renderAsSource()}:`;
     } else if (frame instanceof ProcedureMethod) {
-      source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${this.NONE}:`;
+      source = `${this.ghostTop(frame)}${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${this.NONE}:`;
     } else if (frame instanceof TestFrame) {
-      source = `class ${this.testClassNameAsSource(frame)}(unittest.TestCase): ${this.DEF} ${frame.testName.renderAsSource()}(${this.SELF}) -> ${this.NONE}:`;
+      source = `${this.ghostTop(frame)}class ${this.testClassNameAsSource(frame)}(unittest.TestCase): ${this.DEF} ${frame.testName.renderAsSource()}(${this.SELF}) -> ${this.NONE}:`;
     } else if (frame instanceof ThenClause) {
       source = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
       source = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
-      source = `${this.TRY}:`;
+      source = `${this.ghostTop(frame)}${this.TRY}:`;
     } else if (frame instanceof WhileLoop) {
-      source = `${this.WHILE} ${frame.condition.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}${this.ghostTop(frame)}${this.WHILE} ${frame.condition.renderAsSource()}:`;
     }
     return source;
+  }
+
+  ghostTop(frame: Frame) {
+    return frame.isGhostedExplicitly()
+      ? `${this.MULTILINE_COMMENT_DELIMITER} ${this.GHOSTED} `
+      : ``;
   }
 
   paramListAsHtml(frame: MemberFrame, field: FieldImpl): string {
@@ -242,7 +248,15 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   renderBottomAsSource(frame: Frame): string {
-    return `# ${this.commonRenderBottom(frame)}`;
+    let common = this.commonRenderBottom(frame);
+    if (common.length > 0) {
+      common = `${this.COMMENT_MARKER} ${common}`;
+    }
+    return `${common} ${this.ghostBottom(frame)}`;
+  }
+
+  ghostBottom(frame: Frame) {
+    return frame.isGhostedExplicitly() ? ` ${this.MULTILINE_COMMENT_DELIMITER}` : ``;
   }
 
   renderFileImportsAsHtml(): string {
@@ -295,7 +309,9 @@ export class LanguagePython extends LanguageAbstract {
   OR: string = "or";
   NOT: string = "not";
 
+  GHOSTED = "[ghosted]";
   COMMENT_MARKER = "#";
+  MULTILINE_COMMENT_DELIMITER = "'''";
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "f";

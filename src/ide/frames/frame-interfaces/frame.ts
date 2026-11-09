@@ -61,6 +61,7 @@ export interface Frame extends Selectable {
 
   isGhostable(): boolean;
   setGhosted(flag: boolean): void;
+  isGhostedExplicitly(): boolean;
   isGhostedOrWithinAGhostedFrame(): boolean;
 
   export(): boolean;

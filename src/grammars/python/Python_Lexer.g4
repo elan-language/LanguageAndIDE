@@ -132,7 +132,9 @@ INTERPOLATED_STRING: 'f"' (~["\u0085] | CommonCharacter)* '"';
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;
 
-GHOSTED: '[ghosted]';
+GHOSTED_LINE: '#[ghosted] ';
+GHOSTED_BLOCK_START: '\'\'\'[ghosted] ';
+GHOSTED_BLOCK_END: '\'\'\'';
 
 //comments & annotations
 END_MAIN: '# end main';
@@ -152,7 +154,7 @@ ASSIGNMENT_ANNOTATION: '# assignment';
 VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
 ABSTRACT_METHOD: '@abstractmethod';
 
-COMMENT: '#' ~('\r' | '\n')*;
+COMMENT: '#' (' '|'\t')* | '#'~('['|'\r'|'\n')~('\r' | '\n')*;
 
 fragment InputCharacter: ~[\r\n\u0085];
 

@@ -223,7 +223,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   getAsserts() {
     const children = this.getChildren();
     let asserts = children.filter(
-      (c) => c instanceof AssertStatement && !c.isGhosted(),
+      (c) => c instanceof AssertStatement && !c.isGhostedExplicitly(),
     ) as AssertStatement[];
 
     for (const f of children.filter((c) => c instanceof FrameWithStatements)) {
@@ -246,7 +246,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   override deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.delete();
     } else {
       const children = this._children.slice();
@@ -269,7 +269,7 @@ ${this.language().renderBottomAsHtml(this)}
     const topAsSource = this.language().renderTopAsSource(this);
     const bottom = this.language().renderBottomAsSource(this);
     const bottomAsSource = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
-    return `${this.indent()}${this.sourceAnnotations()}${topAsSource}\r\n${this.renderChildrenAsSource()}${bottomAsSource}`;
+    return `${this.indent()}${topAsSource}\r\n${this.renderChildrenAsSource()}${bottomAsSource}`;
   }
 
   resetFieldText(): void {
