@@ -47,7 +47,7 @@ constant:
 ;
 
 enum:
-    GHOSTED_BLOCK_START? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL identifierList
+    GHOSTED_BLOCK_START? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL enumList NL
         END_ENUM GHOSTED_BLOCK_END? NL
 ;
 

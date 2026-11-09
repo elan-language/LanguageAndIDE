@@ -171,7 +171,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
   override visitEnum = (ctx: EnumContext) => {
     const enum_ = new Enum(this.file);
     enum_.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
-    enum_.values.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierList()!)!);
+    enum_.values.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.enumList()!)!);
     enum_.updateParseStatus();
     return enum_;
   };
