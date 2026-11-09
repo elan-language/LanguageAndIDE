@@ -70,7 +70,7 @@ abstractClassMember:
     | comment
 ;
 
-comment: commentText NL;
+comment: GHOSTED? commentText NL;
 
 commentText: COMMENT;
 

@@ -90,6 +90,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitComment? = (ctx: CommentContext) => {
     const com = new CommentFrame(this.parent);
+    if (ctx.GHOSTED()) {
+      com.setGhosted(true);
+    }
     const text = this.sourceVisitor.visit(ctx.commentText())!;
     com.text.setFieldToKnownValidText(text);
     com.updateParseStatus();
@@ -100,10 +103,16 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitMain = (ctx: MainContext) => {
     const main = new MainRoutine(this.file);
+    if (ctx.GHOSTED()) {
+      main.setGhosted(true);
+    }
+    const previousParent = this.parent;
+    this.parent = main;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       main.getChildren().push(s);
     }
+    this.parent = previousParent;
     main.updateParseStatus();
     return main;
   };
@@ -112,6 +121,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     const name = this.sourceVisitor.visit(ctx.identifierDef()!)!;
     const value = this.sourceVisitor.visit(ctx.constantValue()!)!;
     const gc = new ConstantGlobal(this.file);
+    if (ctx.GHOSTED()) {
+      gc.setGhosted(true);
+    }
     gc.name.setFieldToKnownValidText(name);
     gc.value.setFieldToKnownValidText(value);
     gc.updateParseStatus();
@@ -120,6 +132,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitProcedure = (ctx: ProcedureContext) => {
     const proc = new GlobalProcedure(this.file);
+    if (ctx.GHOSTED()) {
+      proc.setGhosted(true);
+    }
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -137,6 +152,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitFunction = (ctx: FunctionContext) => {
     const func = new GlobalFunction(this.file);
+    if (ctx.GHOSTED()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -161,8 +179,10 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitTest = (ctx: TestContext) => {
     const test = new TestFrame(this.file);
+    if (ctx.GHOSTED()) {
+      test.setGhosted(true);
+    }
     test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
-
     const previousParent = this.parent;
     this.parent = test;
     const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
@@ -176,6 +196,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitEnum = (ctx: EnumContext) => {
     const enum_ = new Enum(this.file);
+    if (ctx.GHOSTED()) {
+      enum_.setGhosted(true);
+    }
     enum_.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
     enum_.values.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierList()!)!);
     enum_.updateParseStatus();
@@ -184,7 +207,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitConcreteClass = (ctx: ConcreteClassContext) => {
     const cls = new ConcreteClass(this.file);
-
+    if (ctx.GHOSTED()) {
+      cls.setGhosted(true);
+    }
     cls.getChildren().length = 0;
 
     cls.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx._classTypeName!)!);
@@ -211,6 +236,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitAbstractClass = (ctx: AbstractClassContext) => {
     const cls = new AbstractClass(this.file);
+    if (ctx.GHOSTED()) {
+      cls.setGhosted(true);
+    }
     cls.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx._classTypeName!)!);
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
@@ -230,6 +258,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   // Statements
   override visitVariableDefinition = (ctx: VariableDefinitionContext) => {
     const varDef = new VariableDefinition(this.parent);
+    if (ctx.GHOSTED()) {
+      varDef.setGhosted(true);
+    }
     varDef.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     varDef.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     varDef.updateParseStatus();
@@ -238,6 +269,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitAssert = (ctx: AssertContext) => {
     const assert = new AssertStatement(this.parent);
+    if (ctx.GHOSTED()) {
+      assert.setGhosted(true);
+    }
     assert.actual.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertActual()!)!);
     assert.expected.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertExpected()!)!);
     assert.updateParseStatus();
@@ -246,6 +280,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitAssignment = (ctx: AssignmentContext) => {
     const assignment = new Assignment(this.parent);
+    if (ctx.GHOSTED()) {
+      assignment.setGhosted(true);
+    }
     assignment.assignable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assignable()!)!);
     assignment.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     assignment.updateParseStatus();
@@ -254,6 +291,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitIfStatement = (ctx: IfStatementContext) => {
     const if_ = new IfStatement(this.parent);
+    if (ctx.GHOSTED()) {
+      if_.setGhosted(true);
+    }
     if_.getChildren().length = 0;
     if_.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
 
@@ -278,6 +318,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitWhileLoop = (ctx: WhileLoopContext) => {
     const whileLoop = new WhileLoop(this.parent);
+    if (ctx.GHOSTED()) {
+      whileLoop.setGhosted(true);
+    }
     whileLoop.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     const previousParent = this.parent;
     this.parent = whileLoop;
@@ -293,6 +336,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitForLoop = (ctx: ForLoopContext) => {
     const forLoop = new ForLoop(this.parent);
+    if (ctx.GHOSTED()) {
+      forLoop.setGhosted(true);
+    }
     forLoop.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     forLoop.iter.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     const previousParent = this.parent;
@@ -309,6 +355,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitProcedureCall = (ctx: ProcedureCallContext) => {
     const procedureCall = new ProcedureCall(this.parent);
+    if (ctx.GHOSTED()) {
+      procedureCall.setGhosted(true);
+    }
     procedureCall.procRef.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.term())!);
     procedureCall.updateParseStatus();
     return procedureCall;
@@ -316,6 +365,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitTryStatement = (ctx: TryStatementContext) => {
     const trySt = new TryStatement(this.parent);
+    if (ctx.GHOSTED()) {
+      trySt.setGhosted(true);
+    }
     const children = trySt.getChildren();
     children.length = 0;
 
@@ -335,6 +387,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitThrowStatement = (ctx: ThrowStatementContext) => {
     const thrw = new ThrowStatement(this.parent);
+    if (ctx.GHOSTED()) {
+      thrw.setGhosted(true);
+    }
     thrw.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
     thrw.text.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.errorMessage()!)!);
     thrw.updateParseStatus();
@@ -345,6 +400,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitConstructorMember = (ctx: ConstructorMemberContext) => {
     const ctor = new Constructor(this.parent);
+    if (ctx.GHOSTED()) {
+      ctor.setGhosted(true);
+    }
     ctor.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
@@ -363,6 +421,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitProperty = (ctx: PropertyContext) => {
     const prop = new Property(this.parent);
+    if (ctx.GHOSTED()) {
+      prop.setGhosted(true);
+    }
     if (ctx.PRIVATE()) {
       prop.makePrivate();
     }
@@ -374,6 +435,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitFunctionMethod = (ctx: FunctionMethodContext) => {
     const func = new FunctionMethod(this.parent);
+    if (ctx.GHOSTED()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -400,6 +464,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitProcedureMethod = (ctx: ProcedureMethodContext) => {
     const proc = new ProcedureMethod(this.parent);
+    if (ctx.GHOSTED()) {
+      proc.setGhosted(true);
+    }
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -419,6 +486,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitAbstractFunction = (ctx: AbstractFunctionContext) => {
     const func = new AbstractFunction(this.parent);
+    if (ctx.GHOSTED()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -429,17 +499,21 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
   };
 
   override visitAbstractProcedure = (ctx: AbstractProcedureContext) => {
-    const func = new AbstractProcedure(this.parent);
-    func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
-    func.params.setFieldToKnownValidText(
+    const proc = new AbstractProcedure(this.parent);
+    if (ctx.GHOSTED()) {
+      proc.setGhosted(true);
+    }
+    proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
+    proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
-    func.updateParseStatus();
-    return func;
+    proc.updateParseStatus();
+    return proc;
   };
 
   override visitReturnStatement = (ctx: ReturnStatementContext) => {
     const rt = new ReturnStatement(this.parent);
+    // return cannot be ghosted
     rt.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     rt.updateParseStatus();
     return rt;
@@ -447,7 +521,6 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitThenClause = (ctx: ThenClauseContext) => {
     const thenClause = new ThenClause(this.parent);
-
     const previousParent = this.parent;
     this.parent = thenClause;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -461,7 +534,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitElseIfClause = (ctx: ElseIfClauseContext) => {
     const elseIfClause = new ElseIfClause(this.parent);
-
+    if (ctx.GHOSTED()) {
+      elseIfClause.setGhosted(true);
+    }
     elseIfClause.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
 
     const previousParent = this.parent;
@@ -478,7 +553,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitElseClause = (ctx: ElseClauseContext) => {
     const elseClause = new ElseClause(this.parent);
-
+    if (ctx.GHOSTED()) {
+      elseClause.setGhosted(true);
+    }
     const previousParent = this.parent;
     this.parent = elseClause;
 
@@ -508,7 +585,9 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
 
   override visitCatchClause = (ctx: CatchClauseContext) => {
     const catchClause = new CatchClause(this.parent);
-
+    if (ctx.GHOSTED()) {
+      catchClause.setGhosted(true);
+    }
     catchClause.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     catchClause.exceptionType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
 

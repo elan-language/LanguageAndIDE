@@ -90,6 +90,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitComment? = (ctx: CommentContext) => {
     const com = new CommentFrame(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      com.setGhosted(true);
+    }
     const text = this.sourceVisitor.visit(ctx.commentText())!;
     com.text.setFieldToKnownValidText(text);
     com.updateParseStatus();
@@ -100,10 +103,16 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitMain = (ctx: MainContext) => {
     const main = new MainRoutine(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      main.setGhosted(true);
+    }
+    const previousParent = this.parent;
+    this.parent = main;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       main.getChildren().push(s);
     }
+    this.parent = previousParent;
     main.updateParseStatus();
     return main;
   };
@@ -112,6 +121,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
     const name = this.sourceVisitor.visit(ctx.identifierDef()!)!;
     const value = this.sourceVisitor.visit(ctx.constantValue()!)!;
     const gc = new ConstantGlobal(this.file);
+    if (ctx.GHOSTED_LINE()) {
+      gc.setGhosted(true);
+    }
     gc.name.setFieldToKnownValidText(name);
     gc.value.setFieldToKnownValidText(value);
     gc.updateParseStatus();
@@ -120,6 +132,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitProcedure = (ctx: ProcedureContext) => {
     const proc = new GlobalProcedure(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      proc.setGhosted(true);
+    }
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -135,6 +150,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitFunction = (ctx: FunctionContext) => {
     const func = new GlobalFunction(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -157,8 +175,10 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitTest = (ctx: TestContext) => {
     const test = new TestFrame(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      test.setGhosted(true);
+    }
     test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
-
     this.parent = test;
     const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
@@ -170,6 +190,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitEnum = (ctx: EnumContext) => {
     const enum_ = new Enum(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      enum_.setGhosted(true);
+    }
     enum_.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
     enum_.values.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.enumList()!)!);
     enum_.updateParseStatus();
@@ -178,7 +201,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitConcreteClass = (ctx: ConcreteClassContext) => {
     const cls = new ConcreteClass(this.file);
-
+    if (ctx.GHOSTED_BLOCK_START()) {
+      cls.setGhosted(true);
+    }
     cls.getChildren().length = 0;
 
     cls.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx._classTypeName!)!);
@@ -203,11 +228,14 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitAbstractClass = (ctx: AbstractClassContext) => {
     const cls = new AbstractClass(this.file);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      cls.setGhosted(true);
+    }
     cls.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx._classTypeName!)!);
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
     );
-
+    const previousParent = this.parent;
     this.parent = cls;
 
     const members = ctx.abstractClassMember().map((s) => this.visit(s)) as Frame[];
@@ -215,12 +243,16 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       cls.getChildren().push(s);
     }
     cls.updateParseStatus();
+    this.parent = previousParent;
     return cls;
   };
 
   // Statements
   override visitVariableDefinition = (ctx: VariableDefinitionContext) => {
     const varDef = new VariableDefinition(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      varDef.setGhosted(true);
+    }
     varDef.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     varDef.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     varDef.updateParseStatus();
@@ -229,6 +261,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitAssert = (ctx: AssertContext) => {
     const assert = new AssertStatement(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      assert.setGhosted(true);
+    }
     assert.actual.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertActual()!)!);
     assert.expected.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assertExpected()!)!);
     assert.updateParseStatus();
@@ -237,6 +272,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitAssignment = (ctx: AssignmentContext) => {
     const assignment = new Assignment(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      assignment.setGhosted(true);
+    }
     assignment.assignable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.assignable()!)!);
     assignment.expr.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
     assignment.updateParseStatus();
@@ -245,9 +283,13 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitIfStatement = (ctx: IfStatementContext) => {
     const if_ = new IfStatement(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      if_.setGhosted(true);
+    }
     if_.getChildren().length = 0;
     if_.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
 
+    const previousParent = this.parent;
     this.parent = if_;
 
     const children = if_.getChildren();
@@ -262,13 +304,17 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       children.push(this.visit(elseClause!) as Frame);
     }
     if_.updateParseStatus();
+    this.parent = previousParent;
     return if_;
   };
 
   override visitWhileLoop = (ctx: WhileLoopContext) => {
     const whileLoop = new WhileLoop(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      whileLoop.setGhosted(true);
+    }
     whileLoop.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
-
+    const previousParent = this.parent;
     this.parent = whileLoop;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -276,14 +322,18 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       whileLoop.getChildren().push(s);
     }
     whileLoop.updateParseStatus();
+    this.parent = previousParent;
     return whileLoop;
   };
 
   override visitForLoop = (ctx: ForLoopContext) => {
     const forLoop = new ForLoop(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      forLoop.setGhosted(true);
+    }
     forLoop.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     forLoop.iter.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
-
+    const previousParent = this.parent;
     this.parent = forLoop;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -291,11 +341,15 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       forLoop.getChildren().push(s);
     }
     forLoop.updateParseStatus();
+    this.parent = previousParent;
     return forLoop;
   };
 
   override visitProcedureCall = (ctx: ProcedureCallContext) => {
     const procedureCall = new ProcedureCall(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      procedureCall.setGhosted(true);
+    }
     procedureCall.procRef.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.term())!);
     procedureCall.updateParseStatus();
     return procedureCall;
@@ -303,9 +357,13 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitTryStatement = (ctx: TryStatementContext) => {
     const trySt = new TryStatement(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      trySt.setGhosted(true);
+    }
     const children = trySt.getChildren();
     children.length = 0;
 
+    const previousParent = this.parent;
     this.parent = trySt;
 
     const tryClause = this.visit(ctx.tryClause()) as Frame;
@@ -315,11 +373,15 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       children.push(s);
     }
     trySt.updateParseStatus();
+    this.parent = previousParent;
     return trySt;
   };
 
   override visitThrowStatement = (ctx: ThrowStatementContext) => {
     const thrw = new ThrowStatement(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      thrw.setGhosted(true);
+    }
     thrw.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
     thrw.text.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.errorMessage()!)!);
     thrw.updateParseStatus();
@@ -330,10 +392,13 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitConstructorMember = (ctx: ConstructorMemberContext) => {
     const ctor = new Constructor(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      ctor.setGhosted(true);
+    }
     ctor.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
-
+    const previousParent = this.parent;
     this.parent = ctor;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -341,11 +406,15 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       ctor.getChildren().push(s);
     }
     ctor.updateParseStatus();
+    this.parent = previousParent;
     return ctor;
   };
 
   override visitProperty = (ctx: PropertyContext) => {
     const prop = new Property(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      prop.setGhosted(true);
+    }
     prop.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     prop.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.type()!)!);
     prop.updateParseStatus();
@@ -354,12 +423,15 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitFunctionMethod = (ctx: FunctionMethodContext) => {
     const func = new FunctionMethod(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
     func.returnType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.type()!)!);
-
+    const previousParent = this.parent;
     this.parent = func;
 
     func.getChildren().length = 0;
@@ -373,16 +445,20 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
     func.getChildren().push(returnStatement);
 
     func.updateParseStatus();
+    this.parent = previousParent;
     return func;
   };
 
   override visitProcedureMethod = (ctx: ProcedureMethodContext) => {
     const proc = new ProcedureMethod(this.parent);
+    if (ctx.GHOSTED_BLOCK_START()) {
+      proc.setGhosted(true);
+    }
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
-
+    const previousParent = this.parent;
     this.parent = proc;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -390,11 +466,15 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       proc.getChildren().push(s);
     }
     proc.updateParseStatus();
+    this.parent = previousParent;
     return proc;
   };
 
   override visitAbstractFunction = (ctx: AbstractFunctionContext) => {
     const func = new AbstractFunction(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      func.setGhosted(true);
+    }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
@@ -405,13 +485,16 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
   };
 
   override visitAbstractProcedure = (ctx: AbstractProcedureContext) => {
-    const func = new AbstractProcedure(this.parent);
-    func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
-    func.params.setFieldToKnownValidText(
+    const proc = new AbstractProcedure(this.parent);
+    if (ctx.GHOSTED_LINE()) {
+      proc.setGhosted(true);
+    }
+    proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
+    proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
-    func.updateParseStatus();
-    return func;
+    proc.updateParseStatus();
+    return proc;
   };
 
   override visitReturnStatement = (ctx: ReturnStatementContext) => {
@@ -423,21 +506,24 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitThenClause = (ctx: ThenClauseContext) => {
     const thenClause = new ThenClause(this.parent);
-
+    const previousParent = this.parent;
     this.parent = thenClause;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       thenClause.getChildren().push(s);
     }
     thenClause.updateParseStatus();
+    this.parent = previousParent;
     return thenClause;
   };
 
   override visitElseIfClause = (ctx: ElseIfClauseContext) => {
     const elseIfClause = new ElseIfClause(this.parent);
-
+    if (ctx.GHOSTED_BLOCK_START()) {
+      elseIfClause.setGhosted(true);
+    }
     elseIfClause.condition.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.expression()!)!);
-
+    const previousParent = this.parent;
     this.parent = elseIfClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -445,12 +531,16 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       elseIfClause.getChildren().push(s);
     }
     elseIfClause.updateParseStatus();
+    this.parent = previousParent;
     return elseIfClause;
   };
 
   override visitElseClause = (ctx: ElseClauseContext) => {
     const elseClause = new ElseClause(this.parent);
-
+    if (ctx.GHOSTED_BLOCK_START()) {
+      elseClause.setGhosted(true);
+    }
+    const previousParent = this.parent;
     this.parent = elseClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -458,12 +548,13 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       elseClause.getChildren().push(s);
     }
     elseClause.updateParseStatus();
+    this.parent = previousParent;
     return elseClause;
   };
 
   override visitTryClause = (ctx: TryClauseContext) => {
     const tryClause = new TryClause(this.parent);
-
+    const previousParent = this.parent;
     this.parent = tryClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -471,15 +562,18 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       tryClause.getChildren().push(s);
     }
     tryClause.updateParseStatus();
+    this.parent = previousParent;
     return tryClause;
   };
 
   override visitCatchClause = (ctx: CatchClauseContext) => {
     const catchClause = new CatchClause(this.parent);
-
+    if (ctx.GHOSTED_BLOCK_START()) {
+      catchClause.setGhosted(true);
+    }
     catchClause.variable.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     catchClause.exceptionType.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.typeName()!)!);
-
+    const previousParent = this.parent;
     this.parent = catchClause;
 
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
@@ -487,6 +581,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
       catchClause.getChildren().push(s);
     }
     catchClause.updateParseStatus();
+    this.parent = previousParent;
     return catchClause;
   };
 }
