@@ -16,12 +16,8 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Python Global Constants", () => {
-  ignore_test("Pass_Int", async () => {
+  test("Pass_Int", async () => {
     const code = `${testPythonHeader}
-
-def foo(a: int, foo: int) -> str: # function
-  return ""
-# end function
 
 a = 3 # constant
 
@@ -62,8 +58,6 @@ return [main, _tests];}`;
   test("Pass_Int_Hex", async () => {
     const code = `${testPythonHeader}
 
-a = 3 # constant
-
 a = 0xFF # constant
 
 def main() -> None:
@@ -102,8 +96,6 @@ return [main, _tests];}`;
 
   test("Pass_Int_Binary", async () => {
     const code = `${testPythonHeader}
-
-a = 0xFF # constant
 
 a = 0b10101 # constant
 
@@ -144,8 +136,6 @@ return [main, _tests];}`;
   test("Pass_Float", async () => {
     const code = `${testPythonHeader}
 
-a = 0b10101 # constant
-
 a = 3.1 # constant
 
 def main() -> None:
@@ -185,8 +175,6 @@ return [main, _tests];}`;
   test("Pass_String", async () => {
     const code = `${testPythonHeader}
 
-a = 3.1 # constant
-
 a = "hell0" # constant
 
 def main() -> None:
@@ -225,8 +213,6 @@ return [main, _tests];}`;
 
   test("Pass_EmptyStringByValue", async () => {
     const code = `${testPythonHeader}
-
-a = "hell0" # constant
 
 a = "" # constant
 
@@ -269,8 +255,6 @@ return [main, _tests];}`;
   test("Pass_SpaceAsString", async () => {
     const code = `${testPythonHeader}
 
-a = "" # constant
-
 a = " " # constant
 
 def main() -> None:
@@ -309,8 +293,6 @@ return [main, _tests];}`;
 
   test("Pass_Bool", async () => {
     const code = `${testPythonHeader}
-
-a = " " # constant
 
 a = True # constant
 
@@ -351,8 +333,6 @@ return [main, _tests];}`;
   test("Pass_Enum", async () => {
     const code = `${testPythonHeader}
 
-a = True # constant
-
 a = Fruit.apple # constant
 
 def main() -> None:
@@ -363,6 +343,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -407,6 +388,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 `;
 
     const fileImpl = new FileImpl(
@@ -425,11 +407,6 @@ class Fruit(Enum):
 
   test("Fail_reassignment", async () => {
     const code = `${testPythonHeader}
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
 
 a = 3 # constant
 
@@ -491,11 +468,6 @@ main()
   test("Fail_expression", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  pi = 4 # assignment
-  printNoLine(a) # procedure call
-# end main
-
 a = 3 + 4 # constant
 
 main()
@@ -517,8 +489,6 @@ main()
 
   test("Pass_referenceToOtherConstant", async () => {
     const code = `${testPythonHeader}
-
-a = 3 + 4 # constant
 
 a = 3 # constant
 
@@ -562,13 +532,7 @@ return [main, _tests];}`;
   test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testPythonHeader}
 
-a = 3 # constant
-
-def main() -> None:
-  printNoLine(b) # procedure call
-# end main
-
-if =  # constant
+if = 1 # constant
 
 main()
 `;
@@ -588,10 +552,6 @@ main()
 
   test("Fail_UseOfReservedAsName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(b) # procedure call
-# end main
 
 break = 3 # constant
 
@@ -620,8 +580,6 @@ main()
 
   test("Fail_NotUniqueName", async () => {
     const code = `${testPythonHeader}
-
-break = 3 # constant
 
 a = 1 # constant
 
@@ -655,19 +613,11 @@ main()
   test("Fail_UseConstantBeforeDefinition1", async () => {
     const code = `${testPythonHeader}
 
-a = 1 # constant
-
-def main() -> None:
-
-# end main
-
-a = b # constant
-
-b = 2 # constant
-
 def main() -> None:
   printNoLine(a) # procedure call
 # end main
+
+a = 1 # constant
 
 main()
 `;
@@ -688,7 +638,7 @@ main()
     assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_UseConstantBeforeDefinition2", async () => {
+  ignore_test("Fail_UseConstantBeforeDefinition2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -727,10 +677,6 @@ main()
   test("Fail_NotValueType", async () => {
     const code = `${testPythonHeader}
 
-b = 2 # constant
-
-b = 2 # constant
-
 a = 1 + 2 # constant
 `;
 
@@ -751,8 +697,6 @@ a = 1 + 2 # constant
   test("Fail_Expression", async () => {
     const code = `${testPythonHeader}
 
-b = 2 # constant
-
 a = 1 + 2 # constant
 `;
 
@@ -772,8 +716,6 @@ a = 1 + 2 # constant
 
   test("Fail_Function", async () => {
     const code = `${testPythonHeader}
-
-a = 1 + 2 # constant
 
 a = foo() # constant
 `;

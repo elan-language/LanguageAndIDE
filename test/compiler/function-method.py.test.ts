@@ -19,11 +19,6 @@ suite("Python Function Method", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [1, 2] # variable definition
-  max(a) # procedure call
-# end main
-
-def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.times(2)) # procedure call
 # end main
@@ -96,11 +91,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionMethodReturnType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f.times(2)) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -182,13 +172,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  x = 1.1 # variable definition
-  x = f.times(x) # assignment
-  printNoLine(x) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
   x = list[float]() # variable definition
   x = f.times(2) # assignment
   printNoLine(x) # procedure call
@@ -264,13 +247,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  x = list[float]() # variable definition
-  x = f.times(2) # assignment
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   b = Bar() # variable definition
@@ -395,30 +371,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  b = Bar() # variable definition
-  x = b.getTimes() # variable definition
-  printNoLine(x) # procedure call
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def times(self: Foo, value: float) -> list[float]: # function method
-    return [self.p1*value]
-  # end function
-
-# end class
 
 def main() -> None:
   b = Bar() # variable definition
@@ -570,56 +522,6 @@ return [main, _tests];}`;
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def times(self: Foo, value: float) -> list[float]: # function method
-    return [self.p1*value]
-  # end function
-
-# end class
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = Foo() # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: Foo # property
-
-  def getTimes(self: Bar) -> list[Qux]: # function method
-    x = list[Qux]() # variable definition
-    x = self.p1.times(2) # assignment
-    return x
-  # end function
-
-# end class
-
-class Qux: # concrete class
-
-  def __init__(self: Qux) -> None:
-
-  # end constructor
-
-  def toString(self: Qux) -> str: # function method
-    return "a Qux"
-  # end function
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.length()) # procedure call
@@ -737,49 +639,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionMethod", async () => {
     const code = `${testPythonHeader}
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = Foo() # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: Foo # property
-
-  def getTimes(self: Bar) -> list[Qux]: # function method
-    x = list[Qux]() # variable definition
-    x = self.p1.times(2) # assignment
-    return x
-  # end function
-
-# end class
-
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f.length()) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def length(self: Bar) -> float: # function method
-    return self.p1
-  # end function
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -905,35 +764,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.length()) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
-  b = Bar() # variable definition
-  printNoLine(f.times(b)) # procedure call
-# end main
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def p1PlusOne(self: Bar) -> float: # function method
-    return self.p1 + 1
-  # end function
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
-  f = Foo() # variable definition
   f.prt() # procedure call
 # end main
 
@@ -1005,17 +835,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionOnDifferentInstance1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  b = Bar() # variable definition
-  printNoLine(f.times(b)) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
-  f.prt() # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1105,35 +924,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.prt() # procedure call
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def foo(self: Foo) -> Foo: # function method
-    return self
-  # end function
-
-  def bar(self: Foo) -> str: # function method
-    return "bar"
-  # end function
-
-  def yon(self: Foo) -> str: # function method
-    return self.foo().bar()
-  # end function
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
-  f = Foo() # variable definition
   printNoLine(times(f, 2)) # procedure call
 # end main
 
@@ -1175,48 +965,6 @@ main()
 
   test("Fail_FunctionisNotDefined", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def foo(self: Foo) -> Foo: # function method
-    return self
-  # end function
-
-  def bar(self: Foo) -> str: # function method
-    return "bar"
-  # end function
-
-  def yon(self: Foo) -> str: # function method
-    return self.foo().bar()
-  # end function
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def times(self: Foo, value: float) -> float: # function method
-    return p1*value
-  # end function
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1276,40 +1024,6 @@ class Foo: # concrete class
   p1: float # property
 
   def times(self: Foo, value: float) -> float: # function method
-    return p1*value
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def such(self: Foo) -> int: # function method
-    return 0
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def times(self: Foo, value: float) -> float: # function method
     self.p1 = self.p1*value # assignment
     return self.p1
   # end function
@@ -1336,22 +1050,6 @@ class Foo: # concrete class
 
   test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def such(self: Foo) -> int: # function method
-    return 0
-  # end function
-
-# end class
 
 class Foo: # concrete class
 
@@ -1388,24 +1086,6 @@ class Foo: # concrete class
 
   test("Fail_ParameterUnknownType", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def times(self: Foo, value: float) -> float: # function method
-    return 
-  # end function
-
-# end class
 
 def main() -> None:
 
@@ -1453,10 +1133,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
@@ -1499,10 +1175,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
@@ -1537,10 +1209,6 @@ main()
 
   test("Fail_UseOfReservedWordAsName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1588,10 +1256,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
@@ -1628,10 +1292,6 @@ main()
 
   test("Fail_NotUniqueParameterName", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1676,10 +1336,6 @@ main()
 
   test("Fail_NestedUpdateProperty", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -1738,11 +1394,6 @@ def main() -> None:
   printNoLine(f.foo()) # procedure call
 # end main
 
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f.foo()) # procedure call
-# end main
-
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
@@ -1793,11 +1444,6 @@ main()
 
   test("Fail_IncorrectScope", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f.foo()) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition

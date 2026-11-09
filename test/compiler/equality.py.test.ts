@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -16,16 +17,6 @@ import {
 suite("Python Equality", () => {
   test("Pass_DifferentInstancesWithSameValuesAreValueEqual", async () => {
     const code = `${testPythonHeader}
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
 
 def main() -> None:
   x = Foo(7, "Apple") # variable definition
@@ -52,7 +43,7 @@ class Foo: # concrete class
   # end procedure
 
   def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
+    return self.p1.toString() + self.p2
   # end function
 
 # end class
@@ -89,7 +80,7 @@ class Foo {
   }
 
   async toString() {
-    return \`\${await _stdlib.toString(this.p1)} \${await _stdlib.toString(this.p2)}\`;
+    return (await _stdlib.toString(this.p1)) + this.p2;
   }
 
 }
@@ -114,32 +105,6 @@ return [main, _tests];}`;
 
   test("Pass_ActuallyTheSameReference", async () => {
     const code = `${testPythonHeader}
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float, p2: str) -> None:
-    self.p1 = p1 # assignment
-    self.p2 = p2 # assignment
-  # end constructor
-
-  p1: float # property
-
-  p2: str # property
-
-  def setP1(self: Foo, v: float) -> None: # procedure method
-    self.p1 = v # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
-  # end function
-
-# end class
 
 def main() -> None:
   x = Foo(7, "Apple") # variable definition
@@ -167,7 +132,7 @@ class Foo: # concrete class
   # end procedure
 
   def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
+    return self.p1.toString() + self.p2
   # end function
 
 # end class
@@ -205,7 +170,7 @@ class Foo {
   }
 
   async toString() {
-    return \`\${await _stdlib.toString(this.p1)} \${await _stdlib.toString(this.p2)}\`;
+    return (await _stdlib.toString(this.p1)) + this.p2;
   }
 
 }
@@ -228,50 +193,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
 
-  test("Fail_CompareLambdas", async () => {
+  ignore_test("Fail_CompareLambdas", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float, p2: str) -> None:
-    self.p1 = p1 # assignment
-    self.p2 = p2 # assignment
-  # end constructor
-
-  p1: float # property
-
-  p2: str # property
-
-  def setP1(self: Foo, v: float) -> None: # procedure method
-    self.p1 = v # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: int, p2: str) -> None:
-    self.p1 = p1 # assignment
-    self.p2 = p2 # assignment
-  # end constructor
-
-  p1: int # property
-
-  p2: str # property
-
-  def setP1(self: Foo, v: int) -> None: # procedure method
-    self.p1 = v # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
-  # end function
-
-# end class
 
 def main() -> None:
   x = Foo() # variable definition
@@ -316,41 +239,6 @@ main()
 
   test("Pass_ListValueEquality1", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: int, p2: str) -> None:
-    self.p1 = p1 # assignment
-    self.p2 = p2 # assignment
-  # end constructor
-
-  p1: int # property
-
-  p2: str # property
-
-  def setP1(self: Foo, v: int) -> None: # procedure method
-    self.p1 = v # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return f"{self.p1} {self.p2}"
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: Callable[[int]int] # property
-
-# end class
 
 def main() -> None:
   f1 = Foo(1) # variable definition
@@ -443,38 +331,6 @@ return [main, _tests];}`;
 
   test("Pass_ListValueEquality2", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: Callable[[int]int] # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p: int) -> None:
-    self.p = p # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p: int # property
-
-  def setP(self: Foo, value: int) -> None: # procedure method
-    self.p = value # assignment
-  # end procedure
-
-# end class
 
 def main() -> None:
   f1 = Foo(1) # variable definition

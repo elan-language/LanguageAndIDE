@@ -18,15 +18,6 @@ suite("Python Inheritance", () => {
   test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
     const code = `${testPythonHeader}
 
-def foo(x: int) -> None: # procedure
-
-# end procedure
-
-def square(z: int) -> int: # function
-  x = randint(1, 6) # variable definition
-  return x*x
-# end function
-
 def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.p1) # procedure call
@@ -41,7 +32,7 @@ class Foo(ABC): # abstract class
   p1: float # property
 
   @abstractmethod
-  def setP1(v: float) -> None
+  def setP1(v: float) -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -145,25 +136,6 @@ return [main, _tests];}`;
 
   test("Pass_PassAsAbstractClassIntoFunction", async () => {
     const code = `${testPythonHeader}
-
-def square(z: int) -> int: # function
-  x = randint(1, 6) # variable definition
-  return x*x
-# end function
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  @abstractmethod
-  def setP1(v: float) -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def product() -> float:
-    pass # abstract function
-
-# end class
 
 def main() -> None:
   x = Yon() # variable definition
@@ -273,43 +245,6 @@ return [main, _tests];}`;
   test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  @abstractmethod
-  def setP1(v: float) -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def product() -> float:
-    pass # abstract function
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-# end class
-
-class Yon(Bar): # concrete class
-
-  def __init__(self: Yon) -> None:
-    self.p1 = 3 # assignment
-    self.p2 = "apple" # assignment
-  # end constructor
-
-  def toString(self: Yon) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def f(foo: Foo) -> float: # function
-  return foo.p1
-# end function
-
 def main() -> None:
   f = Bar() # variable definition
   proc(f) # procedure call
@@ -392,26 +327,6 @@ return [main, _tests];}`;
 
   test("Pass_Invariance", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-# end class
-
-def f(foo: Foo) -> float: # function
-  return foo.p1
-# end function
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def proc(foo: Foo) -> None: # procedure
-  printNoLine(foo.p1) # procedure call
-# end procedure
 
 def main() -> None:
   b = Bar() # variable definition
@@ -498,24 +413,6 @@ return [main, _tests];}`;
   test("Pass_AbstractMutableClassAsFunctionParameter", async () => {
     const code = `${testPythonHeader}
 
-def f(foo: Foo) -> float: # function
-  return foo.p1
-# end function
-
-def proc(foo: Foo) -> None: # procedure
-  printNoLine(foo.p1) # procedure call
-# end procedure
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def fun(l: list[Bar]) -> Bar: # function
-  return l[0]
-# end function
-
 def main() -> None:
   f = Bar() # variable definition
   printNoLine(fun(f)) # procedure call
@@ -598,24 +495,6 @@ return [main, _tests];}`;
 
   test("Pass_DefineAbstractWithPrivateMembers", async () => {
     const code = `${testPythonHeader}
-
-def proc(foo: Foo) -> None: # procedure
-  printNoLine(foo.p1) # procedure call
-# end procedure
-
-def fun(l: list[Bar]) -> Bar: # function
-  return l[0]
-# end function
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def fun(foo: Foo) -> int: # function
-  return foo.p1
-# end function
 
 def main() -> None:
   x = Bar() # variable definition
@@ -718,28 +597,6 @@ return [main, _tests];}`;
 
   test("Pass_DefineAbstractWithPrivateMembersMultipleInheritance", async () => {
     const code = `${testPythonHeader}
-
-def fun(l: list[Bar]) -> Bar: # function
-  return l[0]
-# end function
-
-def fun(foo: Foo) -> int: # function
-  return foo.p1
-# end function
-
-class Foo(ABC): # abstract class
-
-  p1: int # private property
-
-  def setP1(self: Foo, a: int) -> None: # private procedure method
-    self.p1 = a # assignment
-  # end procedure
-
-  def ff(self: Foo) -> int: # private function method
-    return self.p1
-  # end function
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -876,29 +733,6 @@ return [main, _tests];}`;
 
   test("Pass_DefineAbstractWithPrivateMembersIndirectInheritance", async () => {
     const code = `${testPythonHeader}
-
-def fun(foo: Foo) -> int: # function
-  return foo.p1
-# end function
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Yon(Foo): # abstract class
-
-  p2: int # private property
-
-  def setP2(self: Yon, a: int) -> None: # private procedure method
-    self.p2 = a # assignment
-  # end procedure
-
-  def ff2(self: Yon) -> int: # private function method
-    return self.p2
-  # end function
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -1041,30 +875,6 @@ def main() -> None:
   x.testPrivate(3) # procedure call
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Yon(Foo): # abstract class
-
-  p2: int # private property
-
-  def setP2(self: Yon, a: int) -> None: # private procedure method
-    self.p2 = a # assignment
-  # end procedure
-
-  def ff2(self: Yon) -> int: # private function method
-    return self.p2
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
 class Foo(ABC): # abstract class
 
   p1: int # private property
@@ -1151,38 +961,10 @@ def main() -> None:
   x.testPrivate(3) # procedure call
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  def testPrivate(self: Bar, a: int) -> None: # procedure method
-    printNoLine(self.p1) # procedure call
-    self.p1 = a # assignment
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
 class Foo(ABC): # abstract class
 
   @abstractmethod
-  def setP(a: int) -> None
+  def setP(a: int) -> None:
     pass # abstract procedure
 
   def setP1(self: Foo, a: int) -> None: # private procedure method
@@ -1280,39 +1062,6 @@ return [main, _tests];}`;
 
   test("Pass_AccessAbstractFunctionFromPrivate", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def testPrivate(self: Bar, a: int) -> None: # procedure method
-    self.setP1(a) # procedure call
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def setP(self: Bar, a: int) -> None: # procedure method
-    self.p1 = a # assignment
-  # end procedure
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -1427,39 +1176,6 @@ def main() -> None:
   x.testPrivate(3) # procedure call
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def testPrivate(self: Bar, a: int) -> None: # procedure method
-    self.setP1(a) # procedure call
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def ff(self: Bar, a: int) -> int: # function method
-    return a
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
 class Yon(ABC): # abstract class
 
   p1: int # private property
@@ -1554,24 +1270,6 @@ return [main, _tests];}`;
 
   test("Pass_AccessInheritedProcedureFromPrivate", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def setP1(self: Foo, a: int) -> None: # private procedure method
-    self.p1 = a # assignment
-  # end procedure
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -1677,24 +1375,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def setP1(self: Foo, a: int) -> None: # private procedure method
-    self.setP(a) # procedure call
-  # end procedure
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
   printNoLine(x.testPrivate(3)) # procedure call
 # end main
 
@@ -1797,24 +1477,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.testPrivate(3)) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def fff(self: Foo) -> int: # private function method
-    return self.ff()
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
   printNoLine(x.ff()) # procedure call
 # end main
 
@@ -1910,26 +1572,6 @@ return [main, _tests];}`;
 
   test("Pass_InheritImplementation1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.testPrivate(3)) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def ff(self: Foo) -> int: # function method
-    return self.prop
-  # end function
-
-  prop: int # property
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -2034,26 +1676,6 @@ def main() -> None:
   printNoLine(x.ff()) # procedure call
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def ff(self: Foo) -> int: # function method
-    return self.prop
-  # end function
-
-  prop: int # property
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
 class Yon(ABC): # abstract class
 
   @abstractmethod
@@ -2148,26 +1770,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
-class Foo(Yon): # abstract class
-
-  def ff(self: Foo) -> int: # function method
-    return self.prop
-  # end function
-
-  prop: int # property
-
-# end class
-
-def main() -> None:
 
 # end main
 
@@ -2216,23 +1818,6 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
-# end main
-
-def main() -> None:
-
-# end main
-
-class Bar(Foo): # abstract class
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
 # end main
 
 class Foo(ABC): # abstract class
@@ -2242,7 +1827,7 @@ class Foo(ABC): # abstract class
   p2: float # property
 
   @abstractmethod
-  def setP1(v: float) -> None
+  def setP1(v: float) -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -2290,30 +1875,6 @@ main()
 
   test("Fail_CannotInheritFromConcreteClass", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 3 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -2374,30 +1935,10 @@ def main() -> None:
   x = Bar() # variable definition
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
 class Foo(ABC): # abstract class
 
   @abstractmethod
-  def setP1(v: int) -> None
+  def setP1(v: int) -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -2454,34 +1995,6 @@ def main() -> None:
   x = Bar() # variable definition
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 3 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  def setP1(self: Bar, v: str) -> None: # procedure method
-
-  # end procedure
-
-  def product(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
 class Foo(ABC): # abstract class
 
   p1: float # property
@@ -2489,7 +2002,7 @@ class Foo(ABC): # abstract class
   p2: float # property
 
   @abstractmethod
-  def setP1(v: float) -> None
+  def setP1(v: float) -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -2546,35 +2059,6 @@ def main() -> None:
   x = Bar() # variable definition
 # end main
 
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 3 # assignment
-    self.p2 = 4 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  def setP1(self: Bar, p1: float) -> None: # procedure method
-    self.p1 = p1 # assignment
-  # end procedure
-
-  def product(self: Bar) -> float: # function method
-    return self.p1*self.p2
-  # end function
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
 class Foo(ABC): # abstract class
 
 
@@ -2599,14 +2083,6 @@ main()
 
   test("Pass_ConcretePropertyInAbstractClass", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
 
 def main() -> None:
 
@@ -2659,16 +2135,6 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  p1: int # property
-
-# end class
-
-def main() -> None:
-  x = Bar() # variable definition
-# end main
-
-class Foo(ABC): # abstract class
-
   def product(self: Foo) -> int: # function method
     return 
   # end function
@@ -2694,20 +2160,6 @@ main()
 
   test("Fail_MissingAbstractProcedure", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  def product(self: Foo) -> int: # function method
-    return 
-  # end function
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -2740,22 +2192,6 @@ main()
 
   test("Fail_CannotInstantiateAbstractClass", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  def product(self: Foo) -> int: # function method
-    return 
-  # end function
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  def setP1(self: Foo, v: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
 
 def main() -> None:
   a = Bar() # variable definition
@@ -2791,22 +2227,6 @@ main()
 
   test("Fail_SuperClassAsFunctionParameter", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  def setP1(self: Foo, v: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Bar(ABC): # abstract class
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
 
 def main() -> None:
   b = Bar() # variable definition
@@ -2864,24 +2284,6 @@ main()
   test("Fail_Invariance1", async () => {
     const code = `${testPythonHeader}
 
-class Bar(ABC): # abstract class
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def upcast(bar: Bar) -> Foo: # function
-  return foo
-# end function
-
 def main() -> None:
   b = Bar() # variable definition
   lst = [b] # variable definition
@@ -2933,30 +2335,6 @@ main()
 
   test("Fail_Invariance2", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-  b = Bar() # variable definition
-  lst = [b] # variable definition
-  printNoLine(fun(lst)) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
 
 def main() -> None:
   b = Bar() # variable definition
@@ -3011,30 +2389,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = Bar() # variable definition
-  lst = [b] # variable definition
-  printNoLine(fun(lst)) # procedure call
-# end main
-
-def main() -> None:
-  b = Bar() # variable definition
-  lst = [b] # variable definition
-  fun(lst) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
   lst = Dictionary[str, Bar]() # variable definition
   printNoLine(fun(lst)) # procedure call
 # end main
@@ -3086,29 +2440,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = Bar() # variable definition
-  lst = [b] # variable definition
-  fun(lst) # procedure call
-# end main
-
-def main() -> None:
-  lst = Dictionary[str, Bar]() # variable definition
-  printNoLine(fun(lst)) # procedure call
-# end main
-
-class Bar(Foo): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
   x = Bar() # variable definition
   printNoLine(x.p1) # procedure call
 # end main
@@ -3147,16 +2478,6 @@ main()
 
   test("Fail_DuplicateNames", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  lst = Dictionary[str, Bar]() # variable definition
-  printNoLine(fun(lst)) # procedure call
-# end main
-
-def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.p1) # procedure call
-# end main
 
 def main() -> None:
 
@@ -3199,17 +2520,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Bar() # variable definition
-  printNoLine(x.p1) # procedure call
-# end main
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
 
 # end main
 
@@ -3244,20 +2554,6 @@ main()
 
   test("Fail_DuplicateFunctionNames", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-  p1: str # property
-
-# end class
 
 def main() -> None:
 
@@ -3299,26 +2595,6 @@ main()
   test("Fail_DuplicateProcedureNames", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-  p1: str # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -3358,30 +2634,6 @@ main()
 
   test("Fail_DuplicateMemberNames1", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-# end class
 
 def main() -> None:
 
@@ -3423,30 +2675,6 @@ main()
   test("Fail_DuplicateMemberNames3", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -3486,30 +2714,6 @@ main()
 
   test("Fail_DuplicatePrivateMembers1", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-# end class
 
 def main() -> None:
 
@@ -3564,38 +2768,6 @@ main()
 
   test("Fail_DuplicatePrivateMembers2", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  @abstractmethod
-  def ff() -> int:
-    pass # abstract function
-
-  @abstractmethod
-  def ff() -> None
-    pass # abstract procedure
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: int # private property
-
-# end class
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p3: int # property
-
-# end class
 
 def main() -> None:
 
@@ -3652,22 +2824,6 @@ main()
 
   test("Fail_DuplicatePrivateMembers3", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: int # private property
-
-# end class
-
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # private property
-
-# end class
 
 def main() -> None:
 
@@ -3729,20 +2885,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # private property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # private function method
@@ -3799,20 +2941,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # private property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Yon(ABC): # abstract class
 
   p1: str # private property
@@ -3861,28 +2989,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 0 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Yon(ABC): # abstract class
 
   p1: str # private property
@@ -3914,14 +3020,6 @@ main()
 
   test("Fail_DuplicateMembers1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -3983,30 +3081,6 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  p1: int # property
-
-# end class
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p3: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
-class Foo(ABC): # abstract class
-
   def p1(self: Foo) -> None: # procedure method
 
   # end procedure
@@ -4056,22 +3130,6 @@ main()
 
   test("Fail_DuplicateMembers3", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # property
-
-# end class
 
 def main() -> None:
 
@@ -4133,20 +3191,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # private property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Foo(ABC): # abstract class
 
   def p1(self: Foo) -> int: # function method
@@ -4203,20 +3247,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Yon(Foo): # abstract class
-
-  p1: str # private property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Yon(ABC): # abstract class
 
   p1: str # private property
@@ -4265,28 +3295,6 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Bar(Yon): # concrete class
-
-  def __init__(self: Bar) -> None:
-    self.p1 = 0 # assignment
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-# end class
-
-def main() -> None:
-
-# end main
-
 class Yon(ABC): # abstract class
 
   p1: str # property
@@ -4318,10 +3326,6 @@ main()
 
   test("Fail_StdLibSuperClass", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -4405,20 +3409,6 @@ main()
   test("Fail_OnlyOneAbstract Class", async () => {
     const code = `${testPythonHeader}
 
-class Bar(BaseVg): # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p2: int # property
-
-# end class
-
 def main() -> None:
   x = Yon() # variable definition
 # end main
@@ -4473,16 +3463,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Yon() # variable definition
-# end main
-
-class Bar(ABC): # abstract class
-
-  p2: str # property
-
-# end class
-
-def main() -> None:
 
 # end main
 
@@ -4499,7 +3479,7 @@ class Yon(Foo): # abstract class
   p1: float # property
 
   @abstractmethod
-  def setP1(v: float) -> None
+  def setP1(v: float) -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -4531,20 +3511,6 @@ main()
 
   test("Fail_SuperclassesCannotDefineSameMember1", async () => {
     const code = `${testPythonHeader}
-
-class Bar(ABC): # abstract class
-
-  p2: str # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  p2: float # property
-
-# end class
 
 def main() -> None:
   x = Bar() # variable definition
@@ -4612,22 +3578,6 @@ main()
   test("Fail_PrivateMemberDuplicateId", async () => {
     const code = `${testPythonHeader}
 
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  p2: float # property
-
-# end class
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  p2: float # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -4667,20 +3617,6 @@ main()
 
   test("Fail_SuperClassUsedBeforeDeclared", async () => {
     const code = `${testPythonHeader}
-
-class Foo(ABC): # abstract class
-
-  p1: float # property
-
-  p2: float # property
-
-# end class
-
-class Yon(ABC): # abstract class
-
-  p1: int # property
-
-# end class
 
 def main() -> None:
   x = Foo() # variable definition
@@ -4726,24 +3662,6 @@ main()
 
   test("Fail_SuperClassUsedBeforeDeclared1", async () => {
     const code = `${testPythonHeader}
-
-class Yon(ABC): # abstract class
-
-  p1: int # property
-
-# end class
-
-class Foo(Bar): # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function
-
-# end class
 
 def main() -> None:
 

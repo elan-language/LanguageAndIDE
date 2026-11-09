@@ -21,11 +21,6 @@ suite("Python List", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [[1, 2], [3, 4]] # variable definition
-  a[0]["b"] = 5 # assignment
-# end main
-
-def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -60,11 +55,6 @@ return [main, _tests];}`;
 
   test("Pass_appendList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -108,13 +98,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
-  b = [9, 10, 11] # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
   b = 9 # variable definition
   a.appendList(b) # procedure call
   printNoLine(a) # procedure call
@@ -142,13 +125,6 @@ main()
 
   test("Pass_prependList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = 9 # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -191,13 +167,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = [9, 10, 11] # variable definition
-  a.prependList(b) # procedure call
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = [[4], [5]] # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -234,11 +203,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [[4], [5]] # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = list[str]() # variable definition
   printNoLine(a.length()) # procedure call
 # end main
@@ -273,11 +237,6 @@ return [main, _tests];}`;
 
   test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[str]() # variable definition
-  printNoLine(a.length()) # procedure call
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -318,12 +277,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  printNoLine(a[0].length()) # procedure call
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = createPopulatedList(3, Fruit.apple) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -332,6 +285,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -367,11 +321,6 @@ return [main, _tests];}`;
 
   test("Pass_SetAndReadIndex", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = createPopulatedList(3, Fruit.apple) # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = [1, 2, 3] # variable definition
@@ -410,12 +359,6 @@ return [main, _tests];}`;
 
   test("Pass_Range", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [1, 2, 3] # variable definition
-  a[0] = a[1] # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -462,15 +405,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = list[int]() # variable definition
-  b = a.subList(2, 5) # assignment
-  printNoLine(b) # procedure call
-  printNoLine(a.subList(1, 3)) # procedure call
-  printNoLine(a.subList(0, 2)) # procedure call
-# end main
-
-def main() -> None:
   a = createPopulatedList(3, list[int]()) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -496,11 +430,6 @@ main()
 
   test("Pass_SetAndReadElements", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = createPopulatedList(3, list[int]()) # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -545,14 +474,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  a[0] = "foo" # assignment
-  a[2] = "yon" # assignment
-  printNoLine(a[0]) # procedure call
-  printNoLine(a[2]) # procedure call
-# end main
-
-def main() -> None:
   a = ["foo", "bar", "yon"] # variable definition
   a = a.subList(1, a.length()) # assignment
   printNoLine(a) # procedure call
@@ -589,12 +510,6 @@ return [main, _tests];}`;
 
   test("Pass_AddAndReadElements", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["foo", "bar", "yon"] # variable definition
-  a = a.subList(1, a.length()) # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -637,14 +552,6 @@ return [main, _tests];}`;
 
   test("Pass_SetFromIndex", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  a.append("foo") # procedure call
-  a.append("yon") # procedure call
-  printNoLine(a[3]) # procedure call
-  printNoLine(a[4]) # procedure call
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -697,18 +604,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  a.append("foo") # procedure call
-  a.append("yon") # procedure call
-  c = "" # variable definition
-  d = "" # variable definition
-  c = a[3] # assignment
-  d = a[4] # assignment
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
-# end main
-
-def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a.insert(1, "foo") # procedure call
   a.insert(3, "yon") # procedure call
@@ -747,13 +642,6 @@ return [main, _tests];}`;
 
   test("Pass_removeAt", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  a.insert(1, "foo") # procedure call
-  a.insert(3, "yon") # procedure call
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -796,13 +684,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  a.removeAt(0) # procedure call
-  a.removeAt(1) # procedure call
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
   a.removeFirst("two") # procedure call
   printNoLine(a) # procedure call
@@ -842,12 +723,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a.removeFirst("two") # procedure call
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three", "one", "two", "three"] # variable definition
   a.removeAll("two") # procedure call
   printNoLine(a) # procedure call
 # end main
@@ -883,12 +758,6 @@ return [main, _tests];}`;
 
   test("Pass_EmptyListByValue", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a.removeAll("two") # procedure call
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = list[int]() # variable definition
@@ -939,17 +808,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = list[int]() # variable definition
-  b = list[int]() # variable definition
-  a.append(3) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(a.equals(b)) # procedure call
-  printNoLine(a.equals(list[int]())) # procedure call
-  printNoLine(b.equals(list[int]())) # procedure call
-# end main
-
-def main() -> None:
   a = [2, 2] # variable definition
   a[0] = 1 # assignment
   print(a[0])
@@ -986,12 +844,6 @@ return [main, _tests];}`;
 
   test("Pass_SetInProcedure", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [2, 2] # variable definition
-  a[0] = 1 # assignment
-  print(a[0])
-# end main
 
 def main() -> None:
   foo() # procedure call
@@ -1041,10 +893,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
-# end main
-
-def main() -> None:
   print(foo())
 # end main
 
@@ -1078,10 +926,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  print(foo())
-# end main
-
-def main() -> None:
   a = [2, 2] # variable definition
   a[0] = "fred" # assignment
   print(a[0])
@@ -1111,12 +955,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [2, 2] # variable definition
-  a[0] = "fred" # assignment
-  print(a[0])
-# end main
-
-def main() -> None:
   a = list[int]() # variable definition
   a[0] = 3 # assignment
 # end main
@@ -1142,11 +980,6 @@ main()
 
   test("Fail_UseRoundBracketsForIndex", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[int]() # variable definition
-  a[0] = 3 # assignment
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -1177,11 +1010,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  b = a(0) # variable definition
-# end main
-
-def main() -> None:
   a = 3 # variable definition
   b = a[0] # variable definition
 # end main
@@ -1206,11 +1034,6 @@ main()
 
   test("Fail_ApplyIndexToUnknown", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3 # variable definition
-  b = a[0] # variable definition
-# end main
 
 def main() -> None:
   b = a[0] # variable definition
@@ -1238,10 +1061,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = a[0] # variable definition
-# end main
-
-def main() -> None:
   a = new List<of String>[3][4] # variable definition
 # end main
 
@@ -1264,10 +1083,6 @@ main()
 
   test("Fail_OutOfRange", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = new List<of String>[3][4] # variable definition
-# end main
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
@@ -1298,11 +1113,6 @@ main()
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
-  b = a[3] # variable definition
-# end main
-
-def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
   a[0] = True # assignment
 # end main
 
@@ -1330,11 +1140,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3, "") # variable definition
-  a[0] = True # assignment
-# end main
-
-def main() -> None:
   a = list[int]() # variable definition
   printNoLine(a[0, 0]) # procedure call
 # end main
@@ -1358,11 +1163,6 @@ main()
 
   test("Fail_IndexTypeIncompatibility", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[int]() # variable definition
-  printNoLine(a[0, 0]) # procedure call
-# end main
 
 def main() -> None:
   a = list[str]() # variable definition
@@ -1397,14 +1197,6 @@ main()
 
 def main() -> None:
   a = list[str]() # variable definition
-  a[0] = "fred" # assignment
-  a[1] = "bill" # assignment
-  b = 0 # variable definition
-  b = a[0] # assignment
-# end main
-
-def main() -> None:
-  a = list[str]() # variable definition
   a.append(1) # procedure call
 # end main
 
@@ -1430,11 +1222,6 @@ main()
 
   test("Fail_IndexWrongType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list[str]() # variable definition
-  a.append(1) # procedure call
-# end main
 
 def main() -> None:
   a = list[str]() # variable definition
@@ -1465,11 +1252,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = list[str]() # variable definition
-  a["b"] = "fred" # assignment
-# end main
-
-def main() -> None:
   a = createPopulatedList(3.1, 1) # variable definition
 # end main
 
@@ -1497,10 +1279,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createPopulatedList(3.1, 1) # variable definition
-# end main
-
-def main() -> None:
   a = new List<of String>[3] # variable definition
 # end main
 
@@ -1526,10 +1304,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = new List<of String>[3] # variable definition
-# end main
-
-def main() -> None:
   a = new List<of String>() {"foo","bar","yon"} # variable definition
 # end main
 
@@ -1552,10 +1326,6 @@ main()
 
   test("Fail_getRange", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = new List<of String>() {"foo","bar","yon"} # variable definition
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -1584,11 +1354,6 @@ main()
 
   test("Pass_withPut", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  printNoLine(a.getRange(1, 2)) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -1634,14 +1399,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a = a.withPut(1, "TWO") # assignment
-  b = a.withPut(0, "ONE") # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
   a = a.withPut(3, "THREE") # assignment
   printNoLine(a) # procedure call
 # end main
@@ -1677,12 +1434,6 @@ return [main, _tests];}`;
 
   test("Pass_withInsertAt", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  a = a.withPut(3, "THREE") # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -1728,14 +1479,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a = a.withInsert(1, "TWO") # assignment
-  b = a.withInsert(0, "ONE") # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
   a = a.withRemove(1) # assignment
   printNoLine(a) # procedure call
 # end main
@@ -1762,12 +1505,6 @@ main()
 
   test("Fail_appendWithPlus", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  a = a.withRemove(1) # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -1800,12 +1537,6 @@ main()
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a = a + "four" # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
   a = "four" + a # assignment
   printNoLine(a) # procedure call
 # end main
@@ -1834,12 +1565,6 @@ main()
 
   test("Pass_withRemoveFirst", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  a = "four" + a # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
@@ -1881,12 +1606,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a = a.withRemoveFirst("two") # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three", "one", "two", "three"] # variable definition
   a = a.withRemoveAll("two") # assignment
   printNoLine(a) # procedure call
 # end main
@@ -1922,12 +1641,6 @@ return [main, _tests];}`;
 
   test("Pass_withRemoveAt", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a = a.withRemoveAll("two") # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -1973,14 +1686,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a = a.withRemoveAt(1) # assignment
-  b = a.withRemoveAt(0) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
   b = "" # variable definition
   b = a.head() # assignment
   printNoLine(b) # procedure call
@@ -2018,13 +1723,6 @@ return [main, _tests];}`;
 
   test("Pass_tail", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  b = "" # variable definition
-  b = a.head() # assignment
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -2067,13 +1765,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  b = [""] # variable definition
-  b = a.tail() # assignment
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
   foo1 = foo # variable definition
   body = [foo, foo1] # variable definition
   foo2 = body[0] # variable definition
@@ -2107,13 +1798,6 @@ main()
 
   test("Pass_addElementToList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  foo1 = foo # variable definition
-  body = [foo, foo1] # variable definition
-  foo2 = body[0] # variable definition
-  printNoLine(foo2(1)) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -2154,13 +1838,6 @@ return [main, _tests];}`;
 
   test("Pass_addListToList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = a.withAppend(9) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -2206,14 +1883,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
-  b = [1, 2, 3, 4, 5] # variable definition
-  c = a.withAppendList(b) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(c) # procedure call
-# end main
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
   b = a.withPrepend(9) # variable definition
   printNoLine(a) # procedure call
   printNoLine(b) # procedure call
@@ -2251,13 +1920,6 @@ return [main, _tests];}`;
 
   test("Pass_prependListToList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = a.withPrepend(9) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
@@ -2302,14 +1964,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = [1, 2, 3, 4, 5] # variable definition
-  c = a.withPrependList(b) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(c) # procedure call
-# end main
-
-def main() -> None:
   a = list() # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -2336,11 +1990,6 @@ main()
 
   ignore_test("Fail_assignRange", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = list() # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition
@@ -2372,11 +2021,6 @@ main()
 
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition
-  a.subList(1, 2) =  # assignment
-# end main
-
-def main() -> None:
-  a = [1, 2, 3, 4] # variable definition
   b = a[-1] # variable definition
   printNoLine(b) # procedure call
 # end main
@@ -2401,12 +2045,6 @@ main()
 
   test("Fail_negativeIndexRuntime", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [1, 2, 3, 4] # variable definition
-  b = a[-1] # variable definition
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition
@@ -2437,13 +2075,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = [1, 2, 3, 4] # variable definition
-  b = -1 # variable definition
-  c = a[b] # variable definition
-  printNoLine(c) # procedure call
-# end main
-
-def main() -> None:
   body = [getKey] # variable definition
 # end main
 
@@ -2469,10 +2100,6 @@ main()
 
   test("Fail_listOfClassFunction", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  body = [getKey] # variable definition
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -2519,11 +2146,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = Foo() # variable definition
-  body = [f.bar] # variable definition
-# end main
-
-def main() -> None:
   f = list() # variable definition
 # end main
 
@@ -2549,10 +2171,6 @@ main()
 
   test("Fail_appendTuple1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = list() # variable definition
-# end main
 
 def main() -> None:
   points = list[tuple[int, int]]() # variable definition
@@ -2585,12 +2203,6 @@ main()
 
 def main() -> None:
   points = list[tuple[int, int]]() # variable definition
-  points = points + (1, 2) # assignment
-  printNoLine(points) # procedure call
-# end main
-
-def main() -> None:
-  points = list[tuple[int, int]]() # variable definition
   points.appendList((1, 2)) # procedure call
   printNoLine(points) # procedure call
 # end main
@@ -2617,12 +2229,6 @@ main()
 
   test("Fail_withPutOutOfRange", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  points = list[tuple[int, int]]() # variable definition
-  points.appendList((1, 2)) # procedure call
-  printNoLine(points) # procedure call
-# end main
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
@@ -2663,12 +2269,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["one", "two", "three"] # variable definition
-  b = a.withPut(3, "THREE") # variable definition
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = a[5] # variable definition
 # end main
@@ -2694,11 +2294,6 @@ main()
 
   test("Fail_NegativeIndex", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [4, 5, 6, 7, 8] # variable definition
-  b = a[5] # variable definition
-# end main
 
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition

@@ -17,23 +17,6 @@ suite("Python Input", () => {
   test("Pass_InputString", async () => {
     const code = `${testPythonHeader}
 
-class Foo(Bar): # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "undefined"
-  # end function
-
-# end class
-
-class Foo(Bar): # abstract class
-
-
-# end class
-
 def main() -> None:
   a = input("") # variable definition
   printNoLine(a) # procedure call
@@ -70,11 +53,6 @@ return [main, _tests];}`;
   test("Pass_InputStringWithPrompt", async () => {
     const code = `${testPythonHeader}
 
-class Foo(Bar): # abstract class
-
-
-# end class
-
 def main() -> None:
   a = input("Your name") # variable definition
   printNoLine(a) # procedure call
@@ -110,11 +88,6 @@ return [main, _tests];}`;
 
   test("Pass_InputInt", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = input("Your name") # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 0 # variable definition
@@ -155,12 +128,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 0 # variable definition
-  a = inputInt("") # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = 0.0 # variable definition
   a = inputFloat("") # assignment
   printNoLine(a) # procedure call
@@ -197,12 +164,6 @@ return [main, _tests];}`;
 
   test("Pass_ReuseVariable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 0.0 # variable definition
-  a = inputFloat("") # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = "value" # variable definition
@@ -247,14 +208,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "value" # variable definition
-  b = "value1" # variable definition
-  a = input("") # assignment
-  b = a # assignment
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
   a = inputStringWithLimits("aprompt", 3, 7) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -291,11 +244,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = inputStringWithLimits("aprompt", 3, 7) # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = inputStringFromOptions("aprompt", ["y", "n"]) # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -330,11 +278,6 @@ return [main, _tests];}`;
 
   test("Pass_InputInt1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = inputStringFromOptions("aprompt", ["y", "n"]) # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 0 # variable definition
@@ -376,12 +319,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 0 # variable definition
-  a = inputInt("aprompt") # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = 0 # variable definition
   a = inputIntBetween("aprompt", 3, 7) # assignment
   printNoLine(a) # procedure call
 # end main
@@ -417,12 +354,6 @@ return [main, _tests];}`;
 
   test("Pass_InputFloat1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 0 # variable definition
-  a = inputIntBetween("aprompt", 3, 7) # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 0.0 # variable definition
@@ -464,12 +395,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 0.0 # variable definition
-  a = inputFloat("aprompt") # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
-  a = 0.0 # variable definition
   a = inputFloatBetween("aprompt", 0, 1) # assignment
   printNoLine(a) # procedure call
 # end main
@@ -507,12 +432,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 0.0 # variable definition
-  a = inputFloatBetween("aprompt", 0, 1) # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = "" # variable definition
   a = inputInt("") # assignment
   printNoLine(a) # procedure call
@@ -541,12 +460,6 @@ main()
 
   test("Pass_InputInExpression", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "" # variable definition
-  a = inputInt("") # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = "Hello " + input("") # variable definition
