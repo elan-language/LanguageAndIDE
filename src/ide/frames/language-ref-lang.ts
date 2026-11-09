@@ -163,7 +163,7 @@ export class LanguageRefLang extends LanguageAbstract {
   }
 
   ghost(frame: Frame) {
-    return frame.isGhostedExplicitly() ? `${this.COMMENT_MARKER} ${this.GHOSTED} ` : ``;
+    return frame.isGhostedExplicitly() ? `${this.GHOSTED} ` : ``;
   }
 
   renderTopAsHtml(frame: Frame): string {
@@ -171,31 +171,31 @@ export class LanguageRefLang extends LanguageAbstract {
     if (frame instanceof AbstractClass) {
       html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `${this.ghost(frame)}<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
+      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
-      html = `${this.ghost(frame)}<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
+      html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof CatchClause) {
-      html = `${this.ghost(frame)}<el-kw>${this.CATCH} </el-kw>${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
+      html = `<el-kw>${this.CATCH} </el-kw>${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof ElseIfClause) {
-      html = `${this.ghost(frame)}<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
+      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
     } else if (frame instanceof ElseClause) {
-      html = `${this.ghost(frame)}<el-kw>${this.ELSE}`;
+      html = `<el-kw>${this.ELSE}`;
     } else if (frame instanceof ForLoop) {
-      html = `${this.ghost(frame)}<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${this.ghost(frame)}${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
-      html = `${this.ghost(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `${this.ghost(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
+      html = `<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${this.ghost(frame)}${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
-      html = `${this.ghost(frame)}<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
+      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
     } else if (frame instanceof MainRoutine) {
-      html = `${this.ghost(frame)}<el-kw>${this.MAIN}</el-kw>`;
+      html = `<el-kw>${this.MAIN}</el-kw>`;
     } else if (frame instanceof TestFrame) {
-      html = `${this.ghost(frame)}<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof ThenClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
@@ -203,7 +203,7 @@ export class LanguageRefLang extends LanguageAbstract {
     } else if (frame instanceof TryStatement) {
       html = `<el-kw>${this.TRY} </el-kw>`;
     } else if (frame instanceof WhileLoop) {
-      html = `${this.ghost(frame)}<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
+      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
   }
