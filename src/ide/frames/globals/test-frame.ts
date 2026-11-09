@@ -49,7 +49,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   updateTestStatus(): void {
     const tests = this.getChildren()
-      .filter((c) => c instanceof AssertStatement && !c.isGhosted())
+      .filter((c) => c instanceof AssertStatement && !c.isGhostedExplicitly())
       .map((c) => c as AssertStatement);
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);

@@ -34,7 +34,6 @@ import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
-import { CatchStatementContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
 import { FunctionMethodContext } from "./RefLangParser.js";
@@ -309,12 +308,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
-  /**
-   * Visit a parse tree produced by `RefLangParser.catchStatement`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitCatchStatement?: (ctx: CatchStatementContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.constructorMember`.
    * @param ctx the parse tree

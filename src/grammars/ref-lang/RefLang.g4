@@ -129,8 +129,6 @@ assert:
 
 returnStatement: RETURN expression NL; // not ghostable
 
-catchStatement: GHOSTED? CATCH identifierDef AS typeName NL;
-
 // Members
 constructorMember:
     GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END CONSTRUCTOR

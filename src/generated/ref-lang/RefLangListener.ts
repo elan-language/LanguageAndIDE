@@ -34,7 +34,6 @@ import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
-import { CatchStatementContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
 import { FunctionMethodContext } from "./RefLangParser.js";
@@ -434,16 +433,6 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `RefLangParser.catchStatement`.
-   * @param ctx the parse tree
-   */
-  enterCatchStatement?: (ctx: CatchStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `RefLangParser.catchStatement`.
-   * @param ctx the parse tree
-   */
-  exitCatchStatement?: (ctx: CatchStatementContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.constructorMember`.
    * @param ctx the parse tree

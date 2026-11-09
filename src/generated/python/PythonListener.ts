@@ -35,7 +35,6 @@ import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
-import { CatchStatementContext } from "./PythonParser.js";
 import { ConstructorMemberContext } from "./PythonParser.js";
 import { PropertyContext } from "./PythonParser.js";
 import { FunctionMethodContext } from "./PythonParser.js";
@@ -447,16 +446,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.catchStatement`.
-   * @param ctx the parse tree
-   */
-  enterCatchStatement?: (ctx: CatchStatementContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.catchStatement`.
-   * @param ctx the parse tree
-   */
-  exitCatchStatement?: (ctx: CatchStatementContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.constructorMember`.
    * @param ctx the parse tree
