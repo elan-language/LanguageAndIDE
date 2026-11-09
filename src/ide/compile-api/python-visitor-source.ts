@@ -72,7 +72,7 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   override visitTypeFunc = (ctx: TypeFuncContext) => {
     const [inTypes, returnType] = getFuncTypes(this, ctx);
-    return `Callable[[${inTypes}]${returnType}]`;
+    return `Callable[[${inTypes}], ${returnType}]`;
   };
 
   override visitType = (context: TypeContext) => visitTypeHelper<string>(this, context);

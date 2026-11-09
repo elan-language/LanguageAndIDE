@@ -19,18 +19,10 @@ suite("Python Function as HOF", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  ids = 10 # variable definition
-  for id in range(0, id + 1):
-    printNoLine(id) # procedure call
-  # end for
-  printNoLine(ids) # procedure call
-# end main
-
-def main() -> None:
   printModified(3, twice) # procedure call
 # end main
 
-def printModified(i: float, f: Callable[[float]float]) -> None: # procedure
+def printModified(i: float, f: Callable[[float], float]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -135,19 +127,11 @@ return [main, _tests];}`;
   test("Pass_PassAsParam2", async () => {
     const code = `${testPythonHeader}
 
-def twice(x: float) -> float: # function
-  return x*2
-# end function
-
-def printModified(i as Float, f as Func<of => Float>) -> None: # procedure
-
-# end procedure
-
 def main() -> None:
   printIt("Hello", "e", find) # procedure call
 # end main
 
-def printIt(s: str, c: str, f: Callable[[str, str]int]) -> None: # procedure
+def printIt(s: str, c: str, f: Callable[[str, str], int]) -> None: # procedure
   printNoLine(f(s, c)) # procedure call
 # end procedure
 
@@ -195,20 +179,12 @@ return [main, _tests];}`;
   test("Fail_ReturnAFunction", async () => {
     const code = `${testPythonHeader}
 
-def printModified(i as Float, f as Func<of => Float>) -> None: # procedure
-
-# end procedure
-
-def printIt(s: str, c: str, f: Callable[[str, str]int]) -> None: # procedure
-  printNoLine(f(s, c)) # procedure call
-# end procedure
-
 def main() -> None:
   f = getFunc() # variable definition
   printNoLine(f(5)) # procedure call
 # end main
 
-def getFunc() -> Callable[[float]float]: # function
+def getFunc() -> Callable[[float], float]: # function
   return twice
 # end function
 
@@ -255,14 +231,6 @@ return [main, _tests];}`;
   test("Fail_SetAsVariable", async () => {
     const code = `${testPythonHeader}
 
-def printIt(s: str, c: str, f: Callable[[str, str]int]) -> None: # procedure
-  printNoLine(f(s, c)) # procedure call
-# end procedure
-
-def getFunc() -> Callable[[float]float]: # function
-  return twice
-# end function
-
 def main() -> None:
   f = twice # variable definition
   printNoLine(f(5)) # procedure call
@@ -296,14 +264,6 @@ main()
   test("Pass_SetAsProperty", async () => {
     const code = `${testPythonHeader}
 
-def getFunc() -> Callable[[float]float]: # function
-  return twice
-# end function
-
-def twice(x: float) -> float: # function
-  return x*2
-# end function
-
 def main() -> None:
   f = Foo(ff) # variable definition
   printNoLine(f.pf(5)) # procedure call
@@ -315,7 +275,7 @@ def ff(a: int) -> int: # function
 
 class Foo: # concrete class
 
-  def __init__(self: Foo, f: Callable[[int]int]) -> None:
+  def __init__(self: Foo, f: Callable[[int], int]) -> None:
     self.pf = f # assignment
   # end constructor
 
@@ -323,7 +283,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  pf: Callable[[int]int] # property
+  pf: Callable[[int], int] # property
 
 # end class
 
@@ -379,14 +339,6 @@ return [main, _tests];}`;
   test("Pass_Print", async () => {
     const code = `${testPythonHeader}
 
-def twice(x: float) -> float: # function
-  return x*2
-# end function
-
-def ff(a: int) -> int: # function
-  return a
-# end function
-
 def main() -> None:
   printNoLine(ff) # procedure call
 # end main
@@ -430,14 +382,6 @@ return [main, _tests];}`;
   test("Fail_SetAsVariableWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def ff(a: int) -> int: # function
-  return a
-# end function
-
-def ff(a: int) -> int: # function
-  return a
-# end function
-
 def main() -> None:
   f = twice # variable definition
   printNoLine(f(5)) # procedure call
@@ -471,19 +415,11 @@ main()
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
     const code = `${testPythonHeader}
 
-def ff(a: int) -> int: # function
-  return a
-# end function
-
-def twice(x: float) -> float: # function
-  return x*2
-# end function
-
 def main() -> None:
   printModified(3, pow2) # procedure call
 # end main
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -514,19 +450,11 @@ main()
   test("Fail_FunctionSignatureDoesntMatch2", async () => {
     const code = `${testPythonHeader}
 
-def twice(x: float) -> float: # function
-  return x*2
-# end function
-
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
 def main() -> None:
   printModified(3, pow) # procedure call
 # end main
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -557,20 +485,12 @@ main()
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {
     const code = `${testPythonHeader}
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
 def main() -> None:
   a = getFunc() # variable definition
   printNoLine(a()) # procedure call
 # end main
 
-def getFunc() -> Callable[[int]int]: # function
+def getFunc() -> Callable[[int], int]: # function
   return twice
 # end function
 
@@ -601,19 +521,11 @@ main()
   test("Pass_PassAsParamWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
-def getFunc() -> Callable[[int]int]: # function
-  return twice
-# end function
-
 def main() -> None:
   printModified(3, twice) # procedure call
 # end main
 
-def printModified(i: float, f: Callable[[float]float]) -> None: # procedure
+def printModified(i: float, f: Callable[[float], float]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -661,20 +573,12 @@ return [main, _tests];}`;
   test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def getFunc() -> Callable[[int]int]: # function
-  return twice
-# end function
-
-def printModified(i: float, f: Callable[[float]float]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
 def main() -> None:
   f = getFunc() # variable definition
   printNoLine(f(5)) # procedure call
 # end main
 
-def getFunc() -> Callable[[float]float]: # function
+def getFunc() -> Callable[[float], float]: # function
   return twice
 # end function
 
@@ -706,14 +610,6 @@ main()
   test("Pass_SetAsPropertyWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
-def printModified(i: float, f: Callable[[float]float]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
-def getFunc() -> Callable[[float]float]: # function
-  return twice
-# end function
-
 def main() -> None:
   f = Foo(ff) # variable definition
   printNoLine(f.pf(5)) # procedure call
@@ -725,7 +621,7 @@ def ff(a: int) -> int: # function
 
 class Foo: # concrete class
 
-  def __init__(self: Foo, f: Callable[[int]int]) -> None:
+  def __init__(self: Foo, f: Callable[[int], int]) -> None:
     self.pf = f # assignment
   # end constructor
 
@@ -733,7 +629,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  pf: Callable[[int]int] # property
+  pf: Callable[[int], int] # property
 
 # end class
 
@@ -789,14 +685,6 @@ return [main, _tests];}`;
   test("Fail_InExpression1", async () => {
     const code = `${testPythonHeader}
 
-def getFunc() -> Callable[[float]float]: # function
-  return twice
-# end function
-
-def ff(a: int) -> int: # function
-  return a
-# end function
-
 def main() -> None:
   f = 1 + ff # variable definition
 # end main
@@ -828,14 +716,6 @@ main()
 
   test("Fail_InExpression2", async () => {
     const code = `${testPythonHeader}
-
-def ff(a: int) -> int: # function
-  return a
-# end function
-
-def ff(a: int) -> int: # function
-  return a
-# end function
 
 def main() -> None:
   f = 1 + ff # variable definition

@@ -18,14 +18,6 @@ suite("Python Function Expressions", () => {
   test("Pass_LibraryConst", async () => {
     const code = `${testPythonHeader}
 
-def ff(a: int) -> int: # function
-  return a
-# end function
-
-def ff(a: int) -> int: # function
-  return a
-# end function
-
 def main() -> None:
   printNoLine(pi) # procedure call
 # end main
@@ -59,10 +51,6 @@ return [main, _tests];}`;
 
   test("Pass_SingleFunctionCall", async () => {
     const code = `${testPythonHeader}
-
-def ff(a: int) -> int: # function
-  return a
-# end function
 
 def main() -> None:
   x = sin(pi/180*30) # variable definition
@@ -99,11 +87,6 @@ return [main, _tests];}`;
 
   test("Pass_Sin", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = sin(pi/180*30) # variable definition
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   x = pi/180*30 # variable definition
@@ -145,12 +128,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = pi/180*30 # variable definition
-  y = sin(x) # variable definition
-  printNoLine(y) # procedure call
-# end main
-
-def main() -> None:
-  x = pi/180*30 # variable definition
   y = sin(x) + cos(x) # variable definition
   printNoLine(y) # procedure call
 # end main
@@ -186,12 +163,6 @@ return [main, _tests];}`;
 
   test("Pass_MoreComplexExpression", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = pi/180*30 # variable definition
-  y = sin(x) + cos(x) # variable definition
-  printNoLine(y) # procedure call
-# end main
 
 def main() -> None:
   x = 0.7 # variable definition
@@ -232,12 +203,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 0.7 # variable definition
-  y = pow(sin(x), 2) + pow(cos(x), 2) # variable definition
-  printNoLine(y) # procedure call
-# end main
-
-def main() -> None:
   x = min([3.1, 3]) # variable definition
   printNoLine(x) # procedure call
 # end main
@@ -272,11 +237,6 @@ return [main, _tests];}`;
 
   test("Pass_MultiParamCallUsingDotSyntax", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = min([3.1, 3]) # variable definition
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   i = ["a", "b"] # variable definition
@@ -317,12 +277,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  i = ["a", "b"] # variable definition
-  x = i.contains("b") # variable definition
-  printNoLine(x) # procedure call
-# end main
-
-def main() -> None:
   x = "hello".max() # variable definition
 # end main
 
@@ -342,16 +296,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'max' is not defined for type 'String'.ErrorMessages.html#compile_error",
+      "'max' is not defined for type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_UnconsumedExpressionResult1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = "hello".max() # variable definition
-# end main
 
 def main() -> None:
   sin(1) # procedure call
@@ -381,10 +331,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  sin(1) # procedure call
-# end main
-
-def main() -> None:
 
 # end main
 
@@ -407,10 +353,6 @@ main()
 
   test("Fail_UnconsumedExpressionResult3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   a = [1, 2] # variable definition
