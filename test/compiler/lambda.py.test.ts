@@ -20,14 +20,10 @@ suite("Python Lambda", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(f"{Fruit.apple}") # procedure call
-# end main
-
-def main() -> None:
   printModified(4, lambda x: int: x*3) # procedure call
 # end main
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -67,10 +63,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda x: int: x*3) # procedure call
-# end main
-
-def main() -> None:
   printModified((4, 5), lambda t: tuple[int, int]: first(t)) # procedure call
 # end main
 
@@ -79,7 +71,7 @@ def first(t: tuple[int, int]) -> int: # function
   return a
 # end function
 
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
+def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -125,18 +117,10 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified((4, 5), lambda t: tuple[int, int]: first(t)) # procedure call
-# end main
-
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
-def main() -> None:
   printModified((4, 5), lambda t: tuple[int, int]: t.item_0) # procedure call
 # end main
 
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
+def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -175,14 +159,6 @@ return [main, _tests];}`;
   test("Fail_AssignALambdaToAVariable", async () => {
     const code = `${testPythonHeader}
 
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
-
 def main() -> None:
   l = lambda x => x * 5 # variable definition
 # end main
@@ -206,10 +182,6 @@ main()
 
   test("Fail_AssignALambdaToAProperty", async () => {
     const code = `${testPythonHeader}
-
-def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]]int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
-# end procedure
 
 def main() -> None:
   foo = Foo() # variable definition
@@ -237,11 +209,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo = Foo() # variable definition
-  foo.setP1(lambda x => x) # procedure call
-# end main
-
-def main() -> None:
   l = lambda x => x * 5 # variable definition
 # end main
 
@@ -266,15 +233,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  l = lambda x => x * 5 # variable definition
-# end main
-
-def main() -> None:
   l = getFunc() # variable definition
   printNoLine(l(5)) # procedure call
 # end main
 
-def getFunc() -> Callable[[int]int]: # function
+def getFunc() -> Callable[[int], int]: # function
   return lambda x => x * 5
 # end function
 
@@ -297,11 +260,6 @@ main()
 
   test("Fail_ParameterlessLambda", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  l = getFunc() # variable definition
-  printNoLine(l(5)) # procedure call
-# end main
 
 def main() -> None:
   x = 3 # variable definition
@@ -327,11 +285,6 @@ main()
 
   test("Fail ReturnAParameterLessLambda", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 3 # variable definition
-  l = lambda => x * 5 # variable definition
-# end main
 
 def main() -> None:
   l = getFunc(5) # variable definition
@@ -364,15 +317,10 @@ main()
 
 def main() -> None:
   l = getFunc(5) # variable definition
-  printNoLine(l()) # procedure call
-# end main
-
-def main() -> None:
-  l = getFunc(5) # variable definition
   printNoLine(l([5])) # procedure call
 # end main
 
-def getFunc(x: int) -> Callable[[list[int]]list[int]]: # function
+def getFunc(x: int) -> Callable[[list[int]], list[int]]: # function
   return lambda y<of Int> => [x * y[0]]
 # end function
 
@@ -395,11 +343,6 @@ main()
 
   test("Fail_Lambda WithLambdaParam", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  l = getFunc(5) # variable definition
-  printNoLine(l([5])) # procedure call
-# end main
 
 def main() -> None:
   l = lambda x<of Int => Int> => x(2) # variable definition
@@ -426,10 +369,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  l = lambda x<of Int => Int> => x(2) # variable definition
-# end main
-
-def main() -> None:
   l = getFunc()(5) # variable definition
 # end main
 
@@ -454,14 +393,10 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  l = getFunc()(5) # variable definition
-# end main
-
-def main() -> None:
   printModified(4, lambda x: int: x.toString()) # procedure call
 # end main
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -489,14 +424,10 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda x: int: x.toString()) # procedure call
-# end main
-
-def main() -> None:
   printModified("4", lambda x: int: x + 3) # procedure call
 # end main
 
-def printModified(i: str, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: str, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(i)) # procedure call
 # end procedure
 
@@ -560,14 +491,10 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda x: int: x) # procedure call
-# end main
-
-def main() -> None:
   printModified(4, lambda : 0) # procedure call
 # end main
 
-def printModified(i: int, f: Callable[[int]int]) -> None: # procedure
+def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
   printNoLine(f(5)) # procedure call
 # end procedure
 
@@ -631,10 +558,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda : 0) # procedure call
-# end main
-
-def main() -> None:
   aa = lambda x => aa # variable definition
 # end main
 
@@ -657,10 +580,6 @@ main()
 
   test("Fail_ReturnSameNameAsVariable1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  aa = lambda x => aa # variable definition
-# end main
 
 def main() -> None:
   l = lambda x => if_(x is 1, x, l(x-1)) # variable definition
