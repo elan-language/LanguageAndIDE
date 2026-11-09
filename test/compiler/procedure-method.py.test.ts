@@ -18,41 +18,6 @@ suite("Python Procedure Method", () => {
   test("Pass_HappyCase", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-    self.p2 = "Apple" # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  p2: str # private property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def ff(self: Foo) -> int: # private function method
-    return p1
-  # end function
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.p1) # procedure call
@@ -131,42 +96,6 @@ return [main, _tests];}`;
   test("Pass_ProcedureCanContainSystemCall", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def ff(self: Foo) -> int: # private function method
-    return p1
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def setP1(self: Foo, value: float) -> None: # procedure method
-    self.p1 = value # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   f.display() # procedure call
@@ -240,42 +169,6 @@ return [main, _tests];}`;
 
   test("Pass_ProcedureMethodMayCallOtherClassProcedureMethod", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def setP1(self: Foo, value: float) -> None: # procedure method
-    self.p1 = value # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def display(self: Foo) -> None: # procedure method
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -405,49 +298,6 @@ return [main, _tests];}`;
   test("Fail_ProcedureMethodCannotBeCalledDirectly", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def display(self: Foo) -> None: # procedure method
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def times(self: Foo, b: Bar) -> None: # procedure method
-    b.p1PlusOne() # procedure call
-    self.p1PlusOne() # procedure call
-    self.p1 = self.p1 + b.p1 # assignment
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def p1PlusOne(self: Foo) -> None: # procedure method
-    self.p1 = self.p1 + 1 # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   show(f) # procedure call
@@ -491,49 +341,6 @@ main()
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def times(self: Foo, b: Bar) -> None: # procedure method
-    b.p1PlusOne() # procedure call
-    self.p1PlusOne() # procedure call
-    self.p1 = self.p1 + b.p1 # assignment
-    printNoLine(self.p1) # procedure call
-  # end procedure
-
-  def p1PlusOne(self: Foo) -> None: # procedure method
-    self.p1 = self.p1 + 1 # assignment
-  # end procedure
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def show(self: Foo) -> None: # procedure method
-    printNoLine(p1) # procedure call
-  # end procedure
-
-# end class
 
 def main() -> None:
   x = Foo() # variable definition
@@ -579,40 +386,6 @@ main()
   test("Fail_ParameterUnknownType", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  def show(self: Foo) -> None: # procedure method
-    printNoLine(p1) # procedure call
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: str # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -655,38 +428,6 @@ main()
   test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: str # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def changeValue(self: Foo, a: Bar) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -725,38 +466,6 @@ main()
 
   test("Fail_UseOfReservedWordAsName", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def changeValue(self: Foo, a: Bar) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def if_(self: Foo) -> None: # procedure method
-
-  # end procedure
-
-# end class
 
 def main() -> None:
 
@@ -800,38 +509,6 @@ main()
   test("Fail_UseOfLangTypeAsName", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def if_(self: Foo) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def break(self: Foo, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -873,38 +550,6 @@ main()
 
   test("Fail_NotUniqueParameterName", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def break(self: Foo, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def short(self: Foo, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
 
 def main() -> None:
 
@@ -949,38 +594,6 @@ main()
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def short(self: Foo, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def foo(self: Foo, a: int, b: str, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
 
 def main() -> None:
 
@@ -1028,40 +641,6 @@ main()
   test("Fail_standaloneLibProcedureAsExtension", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def foo(self: Foo, a: int, b: str, a: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def foo(self: Foo) -> None: # procedure method
-    p1 = 4 # assignment
-  # end procedure
-
-  p1: int # property
-
-# end class
-
 def main() -> None:
   x = 3 # variable definition
   x.clearPrintedText() # procedure call
@@ -1090,24 +669,6 @@ main()
 
   test("Fail_standaloneProcedureAsExtension", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def foo(self: Foo) -> None: # procedure method
-    p1 = 4 # assignment
-  # end procedure
-
-  p1: int # property
-
-# end class
 
 def main() -> None:
   x = 3 # variable definition
@@ -1141,11 +702,6 @@ main()
 
   test("Fail_ParameterNameClash1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 3 # variable definition
-  x.foo(x) # procedure call
-# end main
 
 class Foo: # concrete class
 
@@ -1186,22 +742,6 @@ main()
 
   test("Fail_ParameterNameClash2", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def foo(self: Foo, foo: int) -> None: # procedure method
-
-  # end procedure
-
-# end class
 
 class Foo: # concrete class
 

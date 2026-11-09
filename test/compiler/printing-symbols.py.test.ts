@@ -17,10 +17,6 @@ suite("Python Printing Symbols", () => {
   test("Pass_PrintWithNoArgument", async () => {
     const code = `${testPythonHeader}
 
-def foo(p: Maybe[int]) -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   printNoLine("") # procedure call
 # end main
@@ -53,10 +49,6 @@ return [main, _tests];}`;
   });
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine("") # procedure call
-# end main
 
 def main() -> None:
   printNoLine("¬!£$%^&*()@~#|<>'") # procedure call
@@ -93,10 +85,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("¬!£$%^&*()@~#|<>'") # procedure call
-# end main
-
-def main() -> None:
   printNoLine("\\b\\n") # procedure call
 # end main
 
@@ -131,10 +119,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("\\b\\n") # procedure call
-# end main
-
-def main() -> None:
   printTab(5, "Foo") # procedure call
 # end main
 
@@ -166,10 +150,6 @@ return [main, _tests];}`;
   });
   test("Pass_CallClearPrintedText", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printTab(5, "Foo") # procedure call
-# end main
 
 def main() -> None:
   printNoLine("Foo") # procedure call
@@ -208,11 +188,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Foo") # procedure call
-  clearPrintedText() # procedure call
-# end main
-
-def main() -> None:
   i = ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") # variable definition
   i = i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar") # assignment
   printNoLine(i) # procedure call
@@ -248,12 +223,6 @@ return [main, _tests];}`;
   });
   test("Pass_PrintUncloseHtmlTag", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  i = ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") # variable definition
-  i = i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar") # assignment
-  printNoLine(i) # procedure call
-# end main
 
 def main() -> None:
   printNoLine("<3") # procedure call
