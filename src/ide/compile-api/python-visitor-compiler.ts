@@ -133,7 +133,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     new IdentifierDefAsn(ctx.NAME_STARTING_LC().getText(), this.fieldId, this.scope);
 
   override visitTestName = (ctx: TestNameContext) =>
-    new IdentifierDefAsn(ctx.NAME_STARTING_TEST_().getText(), this.fieldId, this.scope);
+    new IdentifierDefAsn(ctx.NAME_STARTING_LC_TEST_().getText(), this.fieldId, this.scope);
 
   // typeName
   override visitIntTypeName = (_ctx: TypeNameContext) =>

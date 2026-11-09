@@ -19,11 +19,6 @@ suite("Python Stack", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
-# end main
-
-def main() -> None:
   st = Stack[str]() # variable definition
   printNoLine(st.length()) # procedure call
   st.push("apple") # procedure call
@@ -80,22 +75,6 @@ return [main, _tests];}`;
 
   test("Pass Stack using functional approach", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st = Stack[str]() # variable definition
-  printNoLine(st.length()) # procedure call
-  st.push("apple") # procedure call
-  st.push("pear") # procedure call
-  printNoLine(st) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st.peek()) # procedure call
-  fruit = st.pop() # variable definition
-  printNoLine(fruit) # procedure call
-  fruit = st.pop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
-# end main
 
 def main() -> None:
   st = Stack[str]() # variable definition
@@ -165,26 +144,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.length()) # procedure call
-  st = st.withPush("apple") # assignment
-  st = st.withPush("pear") # assignment
-  printNoLine(st) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st.peek()) # procedure call
-  fruit = st.peek() # variable definition
-  st = st.withPop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
-  fruit = st.peek() # assignment
-  st = st.withPop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
-# end main
-
-def main() -> None:
-  st = Stack[str]() # variable definition
   st = st.withPush("apple") # assignment
   st = st.withPush(3) # assignment
 # end main
@@ -212,12 +171,6 @@ main()
 
   test("Fail_Stack_peek_incompatible_type", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st = Stack[str]() # variable definition
-  st = st.withPush("apple") # assignment
-  st = st.withPush(3) # assignment
-# end main
 
 def main() -> None:
   st = Stack[str]() # variable definition
@@ -249,13 +202,6 @@ main()
 
   test("Fail_Stack_peek_empty_stack", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st = Stack[str]() # variable definition
-  st.push("apple") # procedure call
-  a = 1 # variable definition
-  a = st.peek() # assignment
-# end main
 
 def main() -> None:
   st = Stack[str]() # variable definition
@@ -298,11 +244,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.peek()) # procedure call
-# end main
-
-def main() -> None:
-  st = Stack[str]() # variable definition
   printNoLine(st.pop()) # procedure call
 # end main
 
@@ -341,11 +282,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st = Stack[str]() # variable definition
-  printNoLine(st.pop()) # procedure call
-# end main
-
-def main() -> None:
   st = Stack() # variable definition
 # end main
 
@@ -374,17 +310,13 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st = Stack() # variable definition
-# end main
-
-def main() -> None:
   st = Stack[Foo]() # variable definition
 # end main
 
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
-
+  
   # end constructor
 
   def toString(self: Foo) -> str: # function method

@@ -19,10 +19,6 @@ suite("Python StdLib HOFs", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st = Stack[Foo]() # variable definition
-# end main
-
-def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
   printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
@@ -61,13 +57,6 @@ return [main, _tests];}`;
 
   test("Pass_filterStringViaSplit", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
-  printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
-  printNoLine(source.filter(lambda x: int: (x < 3) or (x > 35))) # procedure call
-# end main
 
 source = "onetwo" # constant
 
@@ -109,8 +98,6 @@ return [main, _tests];}`;
 
   test("Pass_filterInFunction", async () => {
     const code = `${testPythonHeader}
-
-source = "onetwo" # constant
 
 def main() -> None:
   printNoLine(filterIt(source())) # procedure call
@@ -165,14 +152,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(filterIt(source())) # procedure call
-# end main
-
-def source() -> list[int]: # function
-  return [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-# end function
-
-def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.map(lambda x: int: x + 1)) # procedure call
   printNoLine(source.map(lambda x: int: x.toString() + "*")) # procedure call
@@ -212,10 +191,6 @@ return [main, _tests];}`;
 
   test("Pass_mapStringViaSplit", async () => {
     const code = `${testPythonHeader}
-
-def source() -> list[int]: # function
-  return [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
-# end function
 
 source = "onetwo" # constant
 
@@ -258,8 +233,6 @@ return [main, _tests];}`;
   test("Pass_mapTestType", async () => {
     const code = `${testPythonHeader}
 
-source = "onetwo" # constant
-
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   source = source.map(lambda x: int: x + 1) # assignment
@@ -300,12 +273,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  source = source.map(lambda x: int: x + 1) # assignment
-  printNoLine(source) # procedure call
-# end main
-
-def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.reduce(0, lambda s: int, x: int: s + x)) # procedure call
   printNoLine(source.reduce(100, lambda s: int, x: int: s + x)) # procedure call
   printNoLine(source.reduce("Concat:", lambda s: str, x: int: s + x.toString())) # procedure call
@@ -343,13 +310,6 @@ return [main, _tests];}`;
 
   test("Pass_reduceString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.reduce(0, lambda s: int, x: int: s + x)) # procedure call
-  printNoLine(source.reduce(100, lambda s: int, x: int: s + x)) # procedure call
-  printNoLine(source.reduce("Concat:", lambda s: str, x: int: s + x.toString())) # procedure call
-# end main
 
 source = "onetwo" # constant
 
@@ -392,8 +352,6 @@ return [main, _tests];}`;
   test("Pass_maxByList", async () => {
     const code = `${testPythonHeader}
 
-source = "onetwo" # constant
-
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.maxBy(lambda x: int: x % 5)) # procedure call
@@ -431,11 +389,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.maxBy(lambda x: int: x % 5)) # procedure call
-# end main
-
-def main() -> None:
   source = [[1], [2, 2]] # variable definition
   printNoLine(source.maxBy(lambda x: list[int]: x.length())) # procedure call
 # end main
@@ -470,11 +423,6 @@ return [main, _tests];}`;
 
   test("Pass_maxBy2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [[1], [2, 2]] # variable definition
-  printNoLine(source.maxBy(lambda x: list[int]: x.length())) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(source().maxBy(lambda t: str: t.length())) # procedure call
@@ -519,10 +467,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(source().maxBy(lambda t: str: t.length())) # procedure call
-# end main
-
-def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.length()) # procedure call
 # end main
@@ -557,11 +501,6 @@ return [main, _tests];}`;
 
   test("Pass_min", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.length()) # procedure call
-# end main
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
@@ -600,11 +539,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(min(source)) # procedure call
-# end main
-
-def main() -> None:
   source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(min(source)) # procedure call
 # end main
@@ -639,11 +573,6 @@ return [main, _tests];}`;
 
   test("Pass_max", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(min(source)) # procedure call
-# end main
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
@@ -682,11 +611,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(max(source)) # procedure call
-# end main
-
-def main() -> None:
   source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(max(source)) # procedure call
 # end main
@@ -723,11 +647,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(max(source)) # procedure call
-# end main
-
-def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   printNoLine(source.minBy(lambda x: int: x % 5)) # procedure call
 # end main
@@ -761,11 +680,6 @@ return [main, _tests];}`;
   });
   test("Pass_orderByList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.minBy(lambda x: int: x % 5)) # procedure call
-# end main
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
@@ -809,12 +723,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.orderBy(lambda x: int, y: int: x < y)) # procedure call
-  printNoLine(source) # procedure call
-# end main
-
-def main() -> None:
   source = ["apple", "orange", "pair", "apple"] # variable definition
   printNoLine(source.asHashSet()) # procedure call
 # end main
@@ -850,11 +758,6 @@ return [main, _tests];}`;
   // Ignored only because it often times out
   ignore_test("Pass_complexHof", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = ["apple", "orange", "pair", "apple"] # variable definition
-  printNoLine(source.asHashSet()) # procedure call
-# end main
 
 numberChars = "-.0123456789" # constant
 
@@ -914,12 +817,6 @@ return [main, _tests];}`;
   test("Pass_MaxOnNonNumeric", async () => {
     const code = `${testPythonHeader}
 
-numberChars = "-.0123456789" # constant
-
-def getTrailingNumber(s: str) -> str: # function
-  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()])
-# end function
-
 def main() -> None:
   source = ["apple", "orange", "pair"] # variable definition
   printNoLine(max(source)) # procedure call
@@ -957,10 +854,6 @@ return [main, _tests];}`;
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
     const code = `${testPythonHeader}
 
-def getTrailingNumber(s: str) -> str: # function
-  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()])
-# end function
-
 def main() -> None:
   printNoLine(source().maxBy(lambda t: str: t)) # procedure call
 # end main
@@ -985,16 +878,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: lambdaOrFunctionRef (function that takes parameter - String - returning a Float), Provided: lambda that takes parameter - String - returning a String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: lambdaOrFunctionRef (function that takes parameter - str - returning a float), Provided: lambda that takes parameter - str - returning a str.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Pass_sumByList", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(source().maxBy(lambda t: str: t)) # procedure call
-# end main
 
 def main() -> None:
   source = [2.3, 3.4, 5.6, 7.8] # variable definition
@@ -1033,12 +922,6 @@ return [main, _tests];}`;
 
   test("Pass_sumByListOfStringLengths", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  source = [2.3, 3.4, 5.6, 7.8] # variable definition
-  printNoLine(source.sumBy(lambda x: float: x).round(2)) # procedure call
-  printNoLine(source.sumBy(lambda x: float: x*x).round(2)) # procedure call
-# end main
 
 def main() -> None:
   source = ["a", "bb", "ccc"] # variable definition

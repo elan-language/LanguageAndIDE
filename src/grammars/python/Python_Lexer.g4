@@ -118,7 +118,8 @@ DOUBLE_QUOTES: '"';
 WS: [ \t]+ -> skip;
 NL: [\r\n\f]+;
 
-NAME_STARTING_TEST_: 'test_' IdentifierPartCharacter*;
+NAME_STARTING_LC_TEST_: 'test_' IdentifierPartCharacter*;
+NAME_STARTING_UC_TEST_: 'Test_' IdentifierPartCharacter*;
 NAME_STARTING_LC: UnicodeClassLL IdentifierPartCharacter*;
 NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
 
@@ -140,6 +141,7 @@ GHOSTED_BLOCK_END: '\'\'\'';
 END_MAIN: '# end main';
 END_FUNCTION: '# end function';
 END_TEST: '# end test';
+END_TEST_CLASS: '# end test class';
 END_PROCEDURE: '# end procedure';
 END_ENUM: '# end enum';
 END_CLASS: '# end class';

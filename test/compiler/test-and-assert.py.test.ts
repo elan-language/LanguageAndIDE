@@ -22,12 +22,6 @@ suite("Python Test and Assert", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "abcde" # variable definition
-  a = 2.1 + 3.4 # assignment
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
 
 # end main
 
@@ -36,12 +30,13 @@ def square(x: float) -> float: # function
 # end function
 
 class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  self.assertEqual(square(3), 9)
-  actual = square(4) # variable definition
-  expected = 16 # variable definition
-  self.assertEqual(actual, expected)
-# end test
+  def test_square(self : Test_square) -> None:
+    self.assertEqual(square(3), 9)
+    actual = square(4) # variable definition
+    expected = 16 # variable definition
+    self.assertEqual(actual, expected)
+  # end test
+# end test class
 
 main()
 `;
@@ -97,18 +92,6 @@ def main() -> None:
 
 # end main
 
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  self.assertEqual(square(3), 9)
-  actual = square(4) # variable definition
-  expected = 16 # variable definition
-  self.assertEqual(actual, expected)
-# end test
-
-def main() -> None:
-
-# end main
-
 class Test_foo(unittest.TestCase):
  def test_foo(self) -> None:
   self.assertEqual((3 + 4), 7)
@@ -149,19 +132,6 @@ return [main, _tests];}`;
 
   test("Pass_AssertTuple", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  self.assertEqual(square(3), 9)
-  actual = square(4) # variable definition
-  expected = 16 # variable definition
-  self.assertEqual(actual, expected)
-# end test
-
-class Test_foo(unittest.TestCase):
- def test_foo(self) -> None:
-  self.assertEqual((3 + 4), 7)
-# end test
 
 def main() -> None:
 
@@ -212,17 +182,6 @@ return [main, _tests];}`;
 
   test("Pass_AssertSimpleVarRef", async () => {
     const code = `${testPythonHeader}
-
-class Test_foo(unittest.TestCase):
- def test_foo(self) -> None:
-  self.assertEqual((3 + 4), 7)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  t = ("one", "two") # variable definition
-  self.assertEqual(t, ("one", "two"))
-# end test
 
 def main() -> None:
 
@@ -275,19 +234,6 @@ return [main, _tests];}`;
 
   test("Pass_AssertCompoundVarRef1", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  t = ("one", "two") # variable definition
-  self.assertEqual(t, ("one", "two"))
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  t1 = ("one", "two") # variable definition
-  t2 = ("one", "two") # variable definition
-  self.assertEqual(t1, t2)
-# end test
 
 def main() -> None:
 
@@ -368,20 +314,6 @@ return [main, _tests];}`;
   test("Pass_AssertCompoundVarRef2", async () => {
     const code = `${testPythonHeader}
 
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  t1 = ("one", "two") # variable definition
-  t2 = ("one", "two") # variable definition
-  self.assertEqual(t1, t2)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  f = Foo() # variable definition
-  t2 = 10 # variable definition
-  self.assertEqual(f.p1, t2)
-# end test
-
 def main() -> None:
 
 # end main
@@ -461,20 +393,6 @@ return [main, _tests];}`;
   test("Pass_FailingTest", async () => {
     const code = `${testPythonHeader}
 
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  f = Foo() # variable definition
-  t2 = 10 # variable definition
-  self.assertEqual(f.p1, t2)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  f = Foo() # variable definition
-  t2 = 10 # variable definition
-  self.assertEqual(t2, f.p1)
-# end test
-
 def main() -> None:
 
 # end main
@@ -536,17 +454,6 @@ return [main, _tests];}`;
   test("Pass_ErrorTest1", async () => {
     const code = `${testPythonHeader}
 
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  f = Foo() # variable definition
-  t2 = 10 # variable definition
-  self.assertEqual(t2, f.p1)
-# end test
-
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
 def main() -> None:
 
 # end main
@@ -604,16 +511,6 @@ return [main, _tests];}`;
   test("Pass_ErrorTest2", async () => {
     const code = `${testPythonHeader}
 
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  self.assertEqual(arr[1], "Out of range index: 1 size: 0")
-# end test
-
 def main() -> None:
 
 # end main
@@ -662,18 +559,6 @@ return [main, _tests];}`;
   });
   test("Pass_ErrorTest3", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  self.assertEqual(arr[1], "Out of range index: 1 size: 0")
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  self.assertEqual(arr[1], 0)
-# end test
 
 def main() -> None:
 
@@ -725,19 +610,6 @@ return [main, _tests];}`;
   });
   test("Pass_VariousTestsOnAssert", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  self.assertEqual(arr[1], 0)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  b = arr[1] # variable definition
-  self.assertEqual(b, 0)
-# end test
 
 def main() -> None:
 
@@ -886,40 +758,6 @@ return [main, _tests];}`;
   test("Pass_TestUseOfRoundForFloats", async () => {
     const code = `${testPythonHeader}
 
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  arr = list[int]() # variable definition
-  b = arr[1] # variable definition
-  self.assertEqual(b, 0)
-# end test
-
-class Test_list_(unittest.TestCase):
- def test_list_(self) -> None:
-  a = [3, 2, 4, 0] # variable definition
-  b = [3, 2, 4, 0] # variable definition
-  self.assertEqual(a, b)
-# end test
-
-class Test_string_(unittest.TestCase):
- def test_string_(self) -> None:
-  a = "Hello World" # variable definition
-  b = "Hello" + " " + "World" # variable definition
-  self.assertEqual(a, b)
-# end test
-
-class Test_constant_(unittest.TestCase):
- def test_constant_(self) -> None:
-  b = "Hello" # variable definition
-  self.assertEqual(hello, b)
-# end test
-
-class Test_class1(unittest.TestCase):
- def test_class1(self) -> None:
-  a = Foo(3) # variable definition
-  b = Foo(3) # variable definition
-  self.assertEqual(a, b)
-# end test
-
 def main() -> None:
 
 # end main
@@ -1011,37 +849,6 @@ return [main, _tests];}`;
   test("Fail_TestWithProcedure", async () => {
     const code = `${testPythonHeader}
 
-class Test_list_(unittest.TestCase):
- def test_list_(self) -> None:
-  a = [3, 2, 4, 0] # variable definition
-  b = [3, 2, 4, 0] # variable definition
-  self.assertEqual(a, b)
-# end test
-
-class Test_constant_(unittest.TestCase):
- def test_constant_(self) -> None:
-  b = "Hello" # variable definition
-  self.assertEqual(hello, b)
-# end test
-
-def main() -> None:
-
-# end main
-
-class Test_round2(unittest.TestCase):
- def test_round2(self) -> None:
-  a = 0.9999 # variable definition
-  b = a.round(2) # variable definition
-  self.assertEqual(b, 1)
-# end test
-
-class Test_round4(unittest.TestCase):
- def test_round4(self) -> None:
-  a = 44.444 # variable definition
-  b = a.round(2) # variable definition
-  self.assertEqual(b, 44.44)
-# end test
-
 def main() -> None:
 
 # end main
@@ -1068,23 +875,6 @@ main()
 
   test("Pass_expressionForExpected", async () => {
     const code = `${testPythonHeader}
-
-class Test_constant_(unittest.TestCase):
- def test_constant_(self) -> None:
-  b = "Hello" # variable definition
-  self.assertEqual(hello, b)
-# end test
-
-class Test_round2(unittest.TestCase):
- def test_round2(self) -> None:
-  a = 0.9999 # variable definition
-  b = a.round(2) # variable definition
-  self.assertEqual(b, 1)
-# end test
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
 
@@ -1140,22 +930,6 @@ return [main, _tests];}`;
   test("Fail_AssertOutsideAtest", async () => {
     const code = `${testPythonHeader}
 
-class Test_round2(unittest.TestCase):
- def test_round2(self) -> None:
-  a = 0.9999 # variable definition
-  b = a.round(2) # variable definition
-  self.assertEqual(b, 1)
-# end test
-
-def main() -> None:
-
-# end main
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  self.assertEqual(square(3), 3*3)
-# end test
-
 def main() -> None:
 
 # end main
@@ -1179,14 +953,6 @@ main()
 
   test("Fail_callATest", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   test_squareTest() # procedure call
@@ -1224,14 +990,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-
-# end main
-
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
-def main() -> None:
   a = test_squareTest # variable definition
 # end main
 
@@ -1266,14 +1024,6 @@ main()
   test("Fail_assertWithinAMultiline", async () => {
     const code = `${testPythonHeader}
 
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
 def main() -> None:
 
 # end main
@@ -1303,15 +1053,6 @@ main()
   test("Fail_assertWithinAMultiline2", async () => {
     const code = `${testPythonHeader}
 
-def square(x: float) -> float: # function
-  return pow(x, 2)
-# end function
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  a = 1 # variable definition
-# end test
-
 def main() -> None:
 
 # end main
@@ -1340,16 +1081,6 @@ main()
 
   test("Pass_HtmlEscapedString", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  a = 1 # variable definition
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  a = 1 # variable definition
-# end test
 
 def main() -> None:
 
@@ -1405,18 +1136,6 @@ return [main, _tests];}`;
 
 class Test_square(unittest.TestCase):
  def test_square(self) -> None:
-  a = 1 # variable definition
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  actual = " 1  2   3    " # variable definition
-  expected = " 1  2   3    " # variable definition
-  self.assertEqual(actual, expected)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
 
 # end test
 
@@ -1445,18 +1164,6 @@ class Test_square(unittest.TestCase):
 
   test("Fail_DuplicateTestName2", async () => {
     const code = `${testPythonHeader}
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-  actual = " 1  2   3    " # variable definition
-  expected = " 1  2   3    " # variable definition
-  self.assertEqual(actual, expected)
-# end test
-
-class Test_square(unittest.TestCase):
- def test_square(self) -> None:
-
-# end test
 
 def test_proc() -> None: # procedure
 

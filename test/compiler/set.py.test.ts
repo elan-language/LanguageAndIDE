@@ -18,10 +18,6 @@ suite("Python Set", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  r = /[/ # variable definition
-# end main
-
-def main() -> None:
   st = HashSet[int]() # variable definition
   st = st.add(3).add(7).add(5) # assignment
   printNoLine(st.length()) # procedure call
@@ -74,19 +70,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st = HashSet[int]() # variable definition
-  st = st.add(3).add(7).add(5) # assignment
-  printNoLine(st.length()) # procedure call
-  st = st.add(7) # assignment
-  printNoLine(st.length()) # procedure call
-  st = st.remove(3) # assignment
-  printNoLine(st.length()) # procedure call
-  st = st.remove(3) # assignment
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
-# end main
-
-def main() -> None:
   st1 = HashSet[int]() # variable definition
   st2 = HashSet[int]() # variable definition
   st1 = st1.add(2).add(4).add(6) # assignment
@@ -129,15 +112,6 @@ return [main, _tests];}`;
 
   test("Pass_SetIntersection", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st1 = HashSet[int]() # variable definition
-  st2 = HashSet[int]() # variable definition
-  st1 = st1.add(2).add(4).add(6) # assignment
-  st2 = st2.add(1).add(4).add(9) # assignment
-  st3 = st1.union(st2) # variable definition
-  printNoLine(st3) # procedure call
-# end main
 
 def main() -> None:
   st1 = HashSet[int]() # variable definition
@@ -188,15 +162,6 @@ def main() -> None:
   st2 = HashSet[int]() # variable definition
   st1 = st1.add(2).add(4).add(6).add(3) # assignment
   st2 = st2.add(3).add(1).add(4).add(9) # assignment
-  st3 = st1.intersection(st2) # variable definition
-  printNoLine(st3) # procedure call
-# end main
-
-def main() -> None:
-  st1 = HashSet[int]() # variable definition
-  st2 = HashSet[int]() # variable definition
-  st1 = st1.add(2).add(4).add(6).add(3) # assignment
-  st2 = st2.add(3).add(1).add(4).add(9) # assignment
   st3 = st1.difference(st2) # variable definition
   printNoLine(st3) # procedure call
 # end main
@@ -235,15 +200,6 @@ return [main, _tests];}`;
 
   test("Pass_IsDisjointFrom", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st1 = HashSet[int]() # variable definition
-  st2 = HashSet[int]() # variable definition
-  st1 = st1.add(2).add(4).add(6).add(3) # assignment
-  st2 = st2.add(3).add(1).add(4).add(9) # assignment
-  st3 = st1.difference(st2) # variable definition
-  printNoLine(st3) # procedure call
-# end main
 
 def main() -> None:
   st0 = HashSet[int]() # variable definition
@@ -290,16 +246,6 @@ return [main, _tests];}`;
 
   test("Pass_IsSubsetOfIsSupersetOf", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  st0 = HashSet[int]() # variable definition
-  st1 = st0.add(2).add(4).add(6).add(3) # variable definition
-  st2 = st0.add(3).add(1).add(4).add(9) # variable definition
-  st3 = st0.add(8).add(9) # variable definition
-  printNoLine(st1.isDisjointFrom(st2)) # procedure call
-  printNoLine(st1.isDisjointFrom(st3)) # procedure call
-  printNoLine(st2.isDisjointFrom(st3)) # procedure call
-# end main
 
 def main() -> None:
   st0 = HashSet[int]() # variable definition
@@ -354,19 +300,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   st0 = HashSet[int]() # variable definition
-  st1 = st0.add(2).add(4).add(6).add(3) # variable definition
-  st2 = st0.add(4).add(6) # variable definition
-  st3 = st0.add(4).add(6).add(1) # variable definition
-  printNoLine(st2.isSubsetOf(st1)) # procedure call
-  printNoLine(st2.isSupersetOf(st1)) # procedure call
-  printNoLine(st1.isSupersetOf(st2)) # procedure call
-  printNoLine(st1.isSupersetOf(st3)) # procedure call
-  printNoLine(st3.isSupersetOf(st0)) # procedure call
-  printNoLine(st0.isSubsetOf(st3)) # procedure call
-# end main
-
-def main() -> None:
-  st0 = HashSet[int]() # variable definition
   st1 = st0.addFromList([2, 4, 6, 3]) # variable definition
   printNoLine(st1) # procedure call
   st2 = st1.addFromList([2, 5, 6]) # variable definition
@@ -408,14 +341,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st0 = HashSet[int]() # variable definition
-  st1 = st0.addFromList([2, 4, 6, 3]) # variable definition
-  printNoLine(st1) # procedure call
-  st2 = st1.addFromList([2, 5, 6]) # variable definition
-  printNoLine(st2) # procedure call
-# end main
-
-def main() -> None:
   a = HashSet[str]() # variable definition
   a = a.add("foo") # assignment
   printNoLine(a.contains("foo")) # procedure call
@@ -455,12 +380,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = HashSet[str]() # variable definition
-  a = a.add("foo") # assignment
-  printNoLine(a.contains("foo")) # procedure call
-# end main
-
-def main() -> None:
-  a = HashSet[str]() # variable definition
   a = a.add("bar") # assignment
   printNoLine(a.contains("foo")) # procedure call
 # end main
@@ -496,12 +415,6 @@ return [main, _tests];}`;
 
   test("Fail_SetOfMutable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = HashSet[str]() # variable definition
-  a = a.add("bar") # assignment
-  printNoLine(a.contains("foo")) # procedure call
-# end main
 
 def main() -> None:
   st = HashSet[Foo]() # variable definition

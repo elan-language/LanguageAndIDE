@@ -100,7 +100,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitParamDef = (ctx: ParamDefContext) =>
     `${this.visit(ctx.identifierDef() ?? ctx.THIS_INSTANCE()!)}: ${this.visit(ctx.type())}`;
 
-  override visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_TEST_().getText());
+  override visitTestName = (ctx: TestNameContext) => method(ctx.NAME_STARTING_LC_TEST_().getText());
 
   override visitCommentText = (ctx: CommentTextContext) =>
     escapeMultipleSpaces(escapeHtmlChars(ctx.getText()));

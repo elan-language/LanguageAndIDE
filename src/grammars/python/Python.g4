@@ -10,7 +10,7 @@ file: comment? global* mainCall? NL* EOF;
 global:
     main
     | function
-    | test
+    | testClass
     | procedure
     | constant
     | enum
@@ -31,8 +31,13 @@ function:
         returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
 ;
 
+testClass:
+    GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL test* END_TEST_CLASS GHOSTED_BLOCK_END? NL
+;
+
 test:
-    GHOSTED_BLOCK_START? CLASS testName OPEN_BRACKET TESTCASE CLOSE_BRACKET COMMENT NL testStatement* END_TEST GHOSTED_BLOCK_END? NL
+    GHOSTED_BLOCK_START? DEF testName OPEN_BRACKET THIS_INSTANCE COLON testClassName CLOSE_BRACKET ARROW NONE COLON commentText? NL
+      testStatement* END_TEST NL
 ;
 
 testStatement: assert | variableDefinition | comment;
@@ -186,7 +191,9 @@ assignable:
 ;
 
 methodName: NAME_STARTING_LC;
-testName: NAME_STARTING_TEST_;
+testName: NAME_STARTING_LC_TEST_;
+testClassName: NAME_STARTING_UC_TEST_;
+
 typeName:
     INT_NAME           # intTypeName
     | FLOAT_NAME       # floatTypeName

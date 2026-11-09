@@ -19,11 +19,6 @@ suite("Python Strings", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "Hello " + input("") # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   printNoLine("'Hello,' she said.") # procedure call
 # end main
 
@@ -55,10 +50,6 @@ return [main, _tests];}`;
   });
   test("Pass_InterpolatedAndNonInterpolatedString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine("'Hello,' she said.") # procedure call
-# end main
 
 def main() -> None:
   a = 1 # variable definition
@@ -104,13 +95,6 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine(f"{a} {b} {c}") # procedure call
-# end main
-
-def main() -> None:
-  a = 1 # variable definition
-  b = "Apple" # variable definition
-  c = [1, 2, 3] # variable definition
   printNoLine($"{a {b} {c}") # procedure call
 # end main
 
@@ -138,13 +122,6 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine($"{a {b} {c}") # procedure call
-# end main
-
-def main() -> None:
-  a = 1 # variable definition
-  b = "Apple" # variable definition
-  c = [1, 2, 3] # variable definition
   printNoLine($"{a} {b} {{c}") # procedure call
 # end main
 
@@ -167,13 +144,6 @@ main()
 
   test("Pass_InterpolatedEmpty", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 1 # variable definition
-  b = "Apple" # variable definition
-  c = [1, 2, 3] # variable definition
-  printNoLine($"{a} {b} {{c}") # procedure call
-# end main
 
 def main() -> None:
   a = f"" # variable definition
@@ -209,11 +179,6 @@ return [main, _tests];}`;
   });
   test("Pass_InterpolatedOneSpace", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = f"" # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = f" " # variable definition
@@ -252,11 +217,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = f" " # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(f"{Fruit.apple}") # procedure call
 # end main
 
@@ -264,6 +224,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;

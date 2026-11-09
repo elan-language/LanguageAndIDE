@@ -7,6 +7,7 @@ import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
 import { MainCallContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
+import { TestClassContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
 import { TestStatementContext } from "./PythonParser.js";
 import { ProcedureContext } from "./PythonParser.js";
@@ -48,6 +49,7 @@ import { IndexedAssignableContext } from "./PythonParser.js";
 import { ThisAssignableContext } from "./PythonParser.js";
 import { MethodNameContext } from "./PythonParser.js";
 import { TestNameContext } from "./PythonParser.js";
+import { TestClassNameContext } from "./PythonParser.js";
 import { IntTypeNameContext } from "./PythonParser.js";
 import { FloatTypeNameContext } from "./PythonParser.js";
 import { BoolTypeNameContext } from "./PythonParser.js";
@@ -166,6 +168,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitFunction?: (ctx: FunctionContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.testClass`.
+   * @param ctx the parse tree
+   */
+  enterTestClass?: (ctx: TestClassContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.testClass`.
+   * @param ctx the parse tree
+   */
+  exitTestClass?: (ctx: TestClassContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.test`.
    * @param ctx the parse tree
@@ -582,6 +594,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTestName?: (ctx: TestNameContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.testClassName`.
+   * @param ctx the parse tree
+   */
+  enterTestClassName?: (ctx: TestClassNameContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.testClassName`.
+   * @param ctx the parse tree
+   */
+  exitTestClassName?: (ctx: TestClassNameContext) => void;
   /**
    * Enter a parse tree produced by the `intTypeName`
    * labeled alternative in `PythonParser.typeName`.

@@ -19,10 +19,6 @@ suite("Python Shadowing", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  st = HashSet[Foo]() # variable definition
-# end main
-
-def main() -> None:
   pi = 4 # variable definition
   printNoLine(pi) # procedure call
 # end main
@@ -57,11 +53,6 @@ return [main, _tests];}`;
 
   test("Pass_LocalVariableFromGlobalConstant", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  pi = 4 # variable definition
-  printNoLine(pi) # procedure call
-# end main
 
 f = 1 # constant
 
@@ -103,8 +94,6 @@ return [main, _tests];}`;
 
   test("Pass_GlobalAndInstanceFunctionsShadowGlobals", async () => {
     const code = `${testPythonHeader}
-
-f = 1 # constant
 
 def main() -> None:
   f = Foo() # variable definition
@@ -189,28 +178,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.sin(1)) # procedure call
-  printNoLine(sin(1)) # procedure call
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def sin(self: Foo, x: float) -> float: # function method
-    return 222
-  # end function
-
-# end class
-
-def main() -> None:
-  f = Foo() # variable definition
   f.sleep_ms(1) # procedure call
   sleep_ms(1) # procedure call
 # end main
@@ -290,26 +257,6 @@ return [main, _tests];}`;
   test("Pass_Can'tDisambiguateGlobalFunctionFromLocalVar", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def sin(self: Foo, x: float) -> float: # function method
-    return 222
-  # end function
-
-# end class
-
-def sleep_ms(x: float) -> None: # procedure
-  printNoLine(111) # procedure call
-# end procedure
-
 def main() -> None:
   sin = 2 # variable definition
   printNoLine(sin) # procedure call
@@ -343,14 +290,6 @@ main()
 
   test("Pass_LocalVarShadowsGlobalFunction", async () => {
     const code = `${testPythonHeader}
-
-def sleep_ms(x: float) -> None: # procedure
-  printNoLine(111) # procedure call
-# end procedure
-
-def sin(x: float) -> float: # function
-  return 111
-# end function
 
 def main() -> None:
   add2 = add2(1) # variable definition
@@ -397,14 +336,6 @@ return [main, _tests];}`;
   test("Pass_LocalShadowsConstant", async () => {
     const code = `${testPythonHeader}
 
-def sin(x: float) -> float: # function
-  return 111
-# end function
-
-def add2(x: float) -> float: # function
-  return x + 2
-# end function
-
 a = 4 # constant
 
 def main() -> None:
@@ -445,15 +376,6 @@ return [main, _tests];}`;
 
   test("Pass_IdShadowsFunction", async () => {
     const code = `${testPythonHeader}
-
-def add2(x: float) -> float: # function
-  return x + 2
-# end function
-
-def main() -> None:
-  a = 3 # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   printNoLine(foo()) # procedure call
@@ -510,15 +432,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def foo() -> int: # function
-  return 1
-# end function
-
-def main() -> None:
   foo() # procedure call
 # end main
 
@@ -572,14 +485,6 @@ return [main, _tests];}`;
   test("Fail_IdShadowsParameter", async () => {
     const code = `${testPythonHeader}
 
-def foo() -> int: # function
-  return 1
-# end function
-
-def foo() -> None: # procedure
-  printNoLine(1) # procedure call
-# end procedure
-
 def main() -> None:
   foo(1) # procedure call
 # end main
@@ -612,14 +517,6 @@ main()
   test("Fail_IdShadowsVariable", async () => {
     const code = `${testPythonHeader}
 
-def foo() -> None: # procedure
-  printNoLine(1) # procedure call
-# end procedure
-
-def foo(a: int) -> None: # procedure
-  a = a # variable definition
-# end procedure
-
 def main() -> None:
   a = 1 # variable definition
   a = 2 # variable definition
@@ -648,10 +545,6 @@ main()
 
   test("Pass_ParameterShadowsConst", async () => {
     const code = `${testPythonHeader}
-
-def foo(a: int) -> None: # procedure
-  a = a # variable definition
-# end procedure
 
 x = 1 # constant
 
@@ -725,10 +618,6 @@ def foo(x: int) -> int: # function
   test("Fail_ShadowParameter1", async () => {
     const code = `${testPythonHeader}
 
-def foo(x: int) -> int: # function
-  return x
-# end function
-
 def main() -> None:
   result = foo(3, 4) # variable definition
   printNoLine(result) # procedure call
@@ -761,11 +650,6 @@ main()
 
   test("Fail_ShadowParameter2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
-# end main
 
 def main() -> None:
   result = foo(3, 4) # variable definition

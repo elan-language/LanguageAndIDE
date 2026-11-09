@@ -19,16 +19,6 @@ suite("Python String Manipulation", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 1.equals(1) # variable definition
-  b = "".equals("") # variable definition
-  c = True.equals(True) # variable definition
-  d = 1.notEqualTo(2) # variable definition
-  e = "".notEqualTo("1") # variable definition
-  f = True.notEqualTo(False) # variable definition
-  printNoLine(a and b and c and d and e and f) # procedure call
-# end main
-
-def main() -> None:
   a = "Hello" # variable definition
   b = "World!" # variable definition
   printNoLine(a + " " + b) # procedure call
@@ -67,12 +57,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = "Hello" # variable definition
-  b = "World!" # variable definition
-  printNoLine(a + " " + b) # procedure call
-# end main
-
-def main() -> None:
   printNoLine("_" + "Hello" + "!") # procedure call
 # end main
 
@@ -107,10 +91,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("_" + "Hello" + "!") # procedure call
-# end main
-
-def main() -> None:
   printNoLine("Hello" + 3.1) # procedure call
 # end main
 
@@ -139,10 +119,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello" + 3.1) # procedure call
-# end main
-
-def main() -> None:
   printNoLine("Hello" + 3) # procedure call
 # end main
 
@@ -169,10 +145,6 @@ main()
 
   test("Pass_Indexing", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine("Hello" + 3) # procedure call
-# end main
 
 def main() -> None:
   a = "abcde" # variable definition
@@ -209,11 +181,6 @@ return [main, _tests];}`;
 
   test("Pass_IndexingAndAppend", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  printNoLine(a[2]) # procedure call
-# end main
 
 def main() -> None:
   a = "abcde" # variable definition
@@ -258,13 +225,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = "abcde" # variable definition
   b = "z" # variable definition
-  b = b + a[0] # assignment
-  printNoLine(b) # procedure call
-# end main
-
-def main() -> None:
-  a = "abcde" # variable definition
-  b = "z" # variable definition
   b = a[0] # assignment
   printNoLine(b) # procedure call
 # end main
@@ -301,13 +261,6 @@ return [main, _tests];}`;
 
   test("Pass_Ranges", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  b = "z" # variable definition
-  b = a[0] # assignment
-  printNoLine(b) # procedure call
-# end main
 
 def main() -> None:
   a = "abcde" # variable definition
@@ -348,13 +301,6 @@ return [main, _tests];}`;
 
   test("Pass_ValueEqualityTesting", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  printNoLine(a.subString(1, 3)) # procedure call
-  printNoLine(a.subString(2, a.length())) # procedure call
-  printNoLine(a.subString(0, 2)) # procedure call
-# end main
 
 def main() -> None:
   printNoLine("abc".equals("abc")) # procedure call
@@ -403,16 +349,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("abc".equals("abc")) # procedure call
-  printNoLine("abc".equals("abcd")) # procedure call
-  printNoLine("abc".equals("Abc")) # procedure call
-  printNoLine("abc".equals("abc")) # procedure call
-  printNoLine(not "abc".equals("abcd")) # procedure call
-  printNoLine(not "abc".equals("abcd")) # procedure call
-  printNoLine(not "abc".equals("Abc")) # procedure call
-# end main
-
-def main() -> None:
   printNoLine("abc".isBefore("abC")) # procedure call
   printNoLine("abcd".isAfter("abc")) # procedure call
   printNoLine("abc".isAfterOrSameAs("abc")) # procedure call
@@ -457,15 +393,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("abc".isBefore("abC")) # procedure call
-  printNoLine("abcd".isAfter("abc")) # procedure call
-  printNoLine("abc".isAfterOrSameAs("abc")) # procedure call
-  printNoLine("abc".isBeforeOrSameAs("abc")) # procedure call
-  printNoLine("abcd".isAfterOrSameAs("abc")) # procedure call
-  printNoLine("abcd".isBeforeOrSameAs("abc")) # procedure call
-# end main
-
-def main() -> None:
   a = "abcde" # variable definition
   b = 2.1 + 3.4 # variable definition
   a = b.toString() # assignment
@@ -504,13 +431,6 @@ return [main, _tests];}`;
 
   test("Pass_Interpolation", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  b = 2.1 + 3.4 # variable definition
-  a = b.toString() # assignment
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 3 # variable definition
@@ -553,13 +473,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-  b = 4 # variable definition
-  c = f"{a} x {b} = {a*b}" # variable definition
-  printNoLine(c) # procedure call
-# end main
-
-def main() -> None:
   a = 3.1 + "Hello" # variable definition
   printNoLine(a) # procedure call
 # end main
@@ -587,11 +500,6 @@ main()
 
   test("Fail_AppendStringToInt", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 3.1 + "Hello" # variable definition
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   a = 3 + "Hello" # variable definition
@@ -623,11 +531,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 + "Hello" # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = "abcde" # variable definition
   printNoLine(a[5]) # procedure call
 # end main
@@ -653,11 +556,6 @@ main()
 
   test("Fail_SetIndex", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  printNoLine(a[5]) # procedure call
-# end main
 
 def main() -> None:
   a = "abcde" # variable definition
@@ -688,12 +586,6 @@ main()
 
   test("Fail_ComparisonOperators", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = "abcde" # variable definition
-  a.put(0, "b") # procedure call
-  printNoLine(a) # procedure call
-# end main
 
 def main() -> None:
   printNoLine("abc" < "abC") # procedure call
