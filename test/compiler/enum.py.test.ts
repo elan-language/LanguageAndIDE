@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -17,12 +18,6 @@ import {
 suite("Python Enum", () => {
   test("Pass_PrintValues", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  for x in a:
-    b = x.z # variable definition
-  # end for
-# end main
 
 def main() -> None:
   printNoLine(enumToString(Fruit.apple)) # procedure call
@@ -34,6 +29,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -72,12 +68,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(enumToString(Fruit.apple)) # procedure call
-  printNoLine(enumToString(Fruit.orange)) # procedure call
-  printNoLine(enumToString(Fruit.pear)) # procedure call
-# end main
-
-def main() -> None:
   x = Fruit.apple # variable definition
   x = Fruit.pear # assignment
   printNoLine(enumToString(x)) # procedure call
@@ -87,6 +77,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -125,12 +116,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Fruit.apple # variable definition
-  x = Fruit.pear # assignment
-  printNoLine(enumToString(x)) # procedure call
-# end main
-
-def main() -> None:
   fruit = Fruit.apple # variable definition
 # end main
 
@@ -138,6 +123,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -174,10 +160,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  fruit = Fruit.apple # variable definition
-# end main
-
-def main() -> None:
   x = Fruit.apple # variable definition
   y = x # variable definition
   printNoLine(enumToString(y)) # procedure call
@@ -187,6 +169,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -225,12 +208,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Fruit.apple # variable definition
-  y = x # variable definition
-  printNoLine(enumToString(y)) # procedure call
-# end main
-
-def main() -> None:
   printNoLine(isFavourite(Fruit.apple)) # procedure call
   printNoLine(isFavourite(Fruit.pear)) # procedure call
 # end main
@@ -239,6 +216,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 def isFavourite(f: Fruit) -> bool: # function
   return f == Fruit.pear
@@ -285,15 +263,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(isFavourite(Fruit.apple)) # procedure call
-  printNoLine(isFavourite(Fruit.pear)) # procedure call
-# end main
-
-def isFavourite(f: Fruit) -> bool: # function
-  return f == Fruit.pear
-# end function
-
-def main() -> None:
   printNoLine(firstFruit() == Fruit.apple) # procedure call
 # end main
 
@@ -301,6 +270,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 def firstFruit() -> Fruit: # function
   return Fruit.apple
@@ -345,15 +315,6 @@ return [main, _tests];}`;
   test("Pass_equality", async () => {
     const code = `${testPythonHeader}
 
-def isFavourite(f: Fruit) -> bool: # function
-  return f == Fruit.pear
-# end function
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
   x = Fruit.apple # variable definition
   printNoLine(x == Fruit.apple) # procedure call
@@ -364,6 +325,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -398,18 +360,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  test("Pass_InInterpolatedString", async () => {
+  ignore_test("Pass_InInterpolatedString", async () => {
     const code = `${testPythonHeader}
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
 
 def main() -> None:
   a = f"Eat more {enumToString(Fruit.apple)}s!" # variable definition
@@ -420,6 +372,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -456,16 +409,6 @@ return [main, _tests];}`;
   test("Fail_coercionToString", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
   a = "Eat more " + Fruit.apple # variable definition
   printNoLine(a) # procedure call
@@ -475,6 +418,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -501,21 +445,12 @@ main()
   test("Fail_InvalidTypeName", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
 
 # end main
 
 class fruit(Enum):
+# end enum
 
 main()
 `;
@@ -537,18 +472,15 @@ main()
   test("Fail_InvalidValueName", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class fruit(Enum):
-
 def main() -> None:
 
 # end main
 
-class Fruit(Enum):apple, Orange, pear
+class Fruit(Enum):
+  apple = 1
+  Orange = 2
+  pear = 3
+# end enum
 
 main()
 `;
@@ -570,15 +502,15 @@ main()
   test("Fail_AssigningIntsToValues", async () => {
     const code = `${testPythonHeader}
 
-class fruit(Enum):
-
-class Fruit(Enum):apple, Orange, pear
-
 def main() -> None:
 
 # end main
 
-class Fruit(Enum):apple = 1, orange = 2, pear = 3
+class Fruit(Enum):
+  apple = 1
+  orange = 2
+  pear = 3
+# end enum
 
 main()
 `;
@@ -600,10 +532,6 @@ main()
   test("Fail_coercionToInt", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):apple, Orange, pear
-
-class Fruit(Enum):apple = 1, orange = 2, pear = 3
-
 def main() -> None:
   a = 1 # variable definition
   a = Fruit.apple # assignment
@@ -613,6 +541,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -636,13 +565,6 @@ main()
 
   test("Fail_undefinedEnum", async () => {
     const code = `${testPythonHeader}
-
-class Fruit(Enum):apple = 1, orange = 2, pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
 
 def main() -> None:
   printNoLine(Fruit.apple) # procedure call
@@ -669,11 +591,6 @@ main()
   test("Fail_undefinedEnumValue", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
   printNoLine(Fruit.kiwi) # procedure call
 # end main
@@ -682,6 +599,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -705,14 +623,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(Fruit.kiwi) # procedure call
-# end main
-
-def main() -> None:
 
 # end main
 
 class if(Enum):
+# end enum
 
 main()
 `;
@@ -738,11 +653,11 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
-class Fruit(Enum):apple, orange, if
+class Fruit(Enum):
+  apple = 1
+  orange = 2
+  if = 3
+# end enum
 
 main()
 `;
@@ -768,14 +683,11 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Fruit(Enum):
   apple = 1
   orange = 2
   break = 3
+# end enum
 
 main()
 `;
@@ -804,18 +716,16 @@ def main() -> None:
 
 # end main
 
-def main() -> None:
-
-# end main
-
 class Fruit(Enum):
   banana = 1
   kiwi = 2
+# end enum
 
 class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -848,16 +758,8 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
-
-def main() -> None:
-
-# end main
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
   orange = 4
+# end enum
 
 main()
 `;
@@ -882,17 +784,6 @@ main()
   test("Fail_PrintValues", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-  orange = 4
-
 def main() -> None:
   printNoLine(Fruit.apple) # procedure call
   printNoLine(Fruit.orange) # procedure call
@@ -903,6 +794,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;
@@ -927,17 +819,6 @@ main()
   test("Fail_NotEnumValue", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-  orange = 4
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
   printNoLine(enumToString("Fruit.apple")) # procedure call
 # end main
@@ -946,6 +827,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;

@@ -48,7 +48,7 @@ constant:
 ;
 
 enum:
-    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL identifierList
+    GHOSTED? CLASS typeName OPEN_BRACKET ENUM CLOSE_BRACKET COLON commentText? NL enumList NL
         END_ENUM NL
 ;
 

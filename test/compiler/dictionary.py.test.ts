@@ -4,23 +4,24 @@ import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
+  assertStatusIsValid,
   testHash,
   testPythonHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Python Dictionary", () => {
-  /*
   test("Pass_LiteralDictionary", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = DeprecatedClass1[int]() # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a)
 # end main
 
 main()
@@ -55,11 +56,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
+  a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
+  printNoLine(a)
 # end main
 
 main()
@@ -93,17 +91,14 @@ return [main, _tests];}`;
   test("Pass_LiteralEnumKey", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
-# end main
-
 class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
 
 def main() -> None:
-  a = [Fruit.apple:1, Fruit.orange:3, Fruit.pear:10] # variable definition
+  a = {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10} # variable definition
+  printNoLine(a)
 # end main
 
 main()
@@ -141,13 +136,9 @@ return [main, _tests];}`;
   test("Pass_AccessByKey", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a["z"])
 # end main
 
 main()
@@ -182,11 +173,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
+  a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
+  printNoLine(a["b"]["z"])
 # end main
 
 main()
@@ -221,11 +209,10 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
+  b = list[str]()
+  b = a.keys()
+  printNoLine(b)
 # end main
 
 main()
@@ -262,11 +249,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -302,11 +285,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -341,11 +320,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -384,11 +359,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
+  a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
 # end main
 
 main()
@@ -427,11 +398,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -467,11 +434,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
+  a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
 # end main
 
 main()
@@ -507,11 +470,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":["a":1], "b":["b":3, "z":10]] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -545,10 +504,6 @@ return [main, _tests];}`;
 
   test("Pass_CreateEmptyDictionary", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
 
 def main() -> None:
   a = Dictionary[str, int]() # variable definition
@@ -599,16 +554,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[str, int]() # variable definition
-  a.put("Foo", 1) # procedure call
-  a.put("Bar", 3) # procedure call
-  k = a.keys() # variable definition
-  printNoLine(k.length()) # procedure call
-  printNoLine(a["Foo"]) # procedure call
-  printNoLine(a["Bar"]) # procedure call
-# end main
-
-def main() -> None:
   a = Dictionary[str, Dictionary[str, int]]() # variable definition
   a.put("Foo", ["ff":1]) # procedure call
 # end main
@@ -651,11 +596,6 @@ return [main, _tests];}`;
 
   test("Pass_EnumKey", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = Dictionary[str, Dictionary[str, int]]() # variable definition
-  a.put("Foo", ["ff":1]) # procedure call
-# end main
 
 class Fruit(Enum):
   apple = 1
@@ -714,11 +654,6 @@ return [main, _tests];}`;
   test("Pass_SetInMain", async () => {
     const code = `${testPythonHeader}
 
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-
 def main() -> None:
   a = ["a":2, "b":2] # variable definition
 # end main
@@ -756,15 +691,11 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":2, "b":2] # variable definition
-# end main
-
-def main() -> None:
   foo() # procedure call
 # end main
 
 def foo() -> None: # procedure
-  a = ["a":2,"b":2] # variable definition
+  a = {"a":2,"b":2} # variable definition
 # end procedure
 
 main()
@@ -808,12 +739,8 @@ def main() -> None:
   foo() # procedure call
 # end main
 
-def main() -> None:
-  foo() # procedure call
-# end main
-
 def foo() -> None: # procedure
-  a = ["a":["c":2],"b":["d":3]] # variable definition
+  a = {"a":{"c":2},"b":{"d":3}} # variable definition
 # end procedure
 
 main()
@@ -857,12 +784,8 @@ def main() -> None:
   foo() # procedure call
 # end main
 
-def main() -> None:
-  foo() # procedure call
-# end main
-
 def foo() -> None: # procedure
-  a = ["a":["c":["e":""]],"b":["d":["f":""]]] # variable definition
+  a = {"a":{"c":{"e":""}},"b":{"d":{"f":""}}} # variable definition
 # end procedure
 
 main()
@@ -906,12 +829,8 @@ def main() -> None:
   foo() # procedure call
 # end main
 
-def main() -> None:
-  foo() # procedure call
-# end main
-
 def foo() -> None: # procedure
-  a = ["a":["c":2],"b":["d":3]] # variable definition
+  a = {"a":{"c":2},"b":{"d":3}} # variable definition
 # end procedure
 
 main()
@@ -938,15 +857,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
-# end main
-
-def main() -> None:
   print(foo())
 # end main
 
 def foo() -> int: # function
-  a = ["a":2,"b":2] # variable definition
+  a = {"a":2,"b":2} # variable definition
   return 
 # end function
 
@@ -974,11 +889,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  print(foo())
-# end main
-
-def main() -> None:
-  a = ["a":2,"b":2] # variable definition
+  a = {"a":2,"b":2} # variable definition
 # end main
 
 main()
@@ -1005,11 +916,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":2,"b":2] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "a":10] # variable definition
+  a = {"a":1, "b":3, "a":10} # variable definition
 # end main
 
 main()
@@ -1036,11 +943,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "a":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3.1, "c":10] # variable definition
+  a = {"a":1, "b":3.1, "c":10} # variable definition
 # end main
 
 main()
@@ -1067,11 +970,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3.1, "c":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, 10:10] # variable definition
+  a = {"a":1, "b":3, 10:10} # variable definition
 # end main
 
 main()
@@ -1098,11 +997,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, 10:10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1127,11 +1022,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1158,11 +1049,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1189,11 +1076,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1231,11 +1114,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1270,10 +1149,6 @@ return [main, _tests];}`;
 
   test("Pass_checkKeys(#1196)", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
 
 def main() -> None:
   di = Dictionary[int, int]() # variable definition
@@ -1328,19 +1203,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  di = Dictionary[int, int]() # variable definition
-  ds = Dictionary[str, int]() # variable definition
-  i42 = 42 # variable definition
-  s42 = "42" # variable definition
-  di.put(i42, 99) # procedure call
-  ds.put(s42, 98) # procedure call
-  printNoLine(f"{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}") # procedure call
-  printNoLine(f"{di} {ds}") # procedure call
-  printNoLine(f"{di.keys()} {di.keys().contains(42)}") # procedure call
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1375,11 +1238,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
+  a = {"a":1, "b":3, "z":10} # variable definition
 # end main
 
 main()
@@ -1404,10 +1263,6 @@ main()
 
   test("Fail_withoutGenericType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = ["a":1, "b":3, "z":10] # variable definition
-# end main
 
 def main() -> None:
   a = Dictionary() # variable definition
@@ -1438,11 +1293,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary() # variable definition
-  printNoLine(a) # procedure call
-# end main
-
-def main() -> None:
   a = ["a":1, "d":2] # variable definition
 # end main
 
@@ -1470,11 +1320,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":1, "d":2] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1, "d":2]] # variable definition
+  a = {"a":{"a":1, "d":2}} # variable definition
 # end main
 
 main()
@@ -1501,11 +1347,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":["a":1, "d":2]] # variable definition
-# end main
-
-def main() -> None:
-  a = ["a":["a":1, "d":2]] # variable definition
+  a = {"a":{"a":1, "d":2}} # variable definition
 # end main
 
 main()
@@ -1532,11 +1374,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":["a":1, "d":2]] # variable definition
-# end main
-
-def main() -> None:
-  f = ["a":1] # variable definition
+  f = {"a":1} # variable definition
 # end main
 
 main()
@@ -1563,12 +1401,8 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = ["a":1] # variable definition
-# end main
-
-def main() -> None:
   f = list[int]() # variable definition
-  a = [f:1] # variable definition
+  a = {f:1} # variable definition
 # end main
 
 main()
@@ -1595,13 +1429,8 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = list[int]() # variable definition
-  a = [f:1] # variable definition
-# end main
-
-def main() -> None:
   f = Foo() # variable definition
-  a = [f:1] # variable definition
+  a = {f:1} # variable definition
 # end main
 
 main()
@@ -1623,14 +1452,9 @@ main()
       "Dictionary cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
-*/
+
   test("Fail_DictionaryOfDictionaryKey", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  a = [f:1] # variable definition
-# end main
 
 def main() -> None:
   a = Dictionary[Dictionary[int, int], int]() # variable definition
@@ -1658,10 +1482,6 @@ main()
 
   test("Fail_DictionaryOfDictionaryKey", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = Dictionary[Dictionary[int, int], int]() # variable definition
-# end main
 
 def main() -> None:
   a = Dictionary[Dictionary[int, int], int]() # variable definition

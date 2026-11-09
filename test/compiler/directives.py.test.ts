@@ -73,10 +73,6 @@ suite("Python Directives", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[Foo, int]() # variable definition
-# end main
-
-def main() -> None:
   x = 0.0 # variable definition
   x = simpleFunction() # assignment
   printNoLine(x) # procedure call
@@ -105,12 +101,6 @@ main()
 
   test("Pass_Bug2576_1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = 0.0 # variable definition
-  x = simpleFunction() # assignment
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   x = list[VectorGraphic]() # variable definition
@@ -143,12 +133,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = list[VectorGraphic]() # variable definition
-  x = createVectorGraphics() # assignment
-  printNoLine(x) # procedure call
-# end main
-
-def main() -> None:
   x = list[list[int]]() # variable definition
   y = list[list[str]]() # variable definition
   initialise(x, 2, 2, 2) # procedure call
@@ -178,13 +162,6 @@ main()
 
   test("Pass_Bug2576_3", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = list[list[int]]() # variable definition
-  y = list[list[str]]() # variable definition
-  initialise(x, 2, 2, 2) # procedure call
-  initialise(y, 2, 2, "") # procedure call
-# end main
 
 def main() -> None:
   x = list[list[int]]() # variable definition

@@ -8,6 +8,8 @@ import {
   ChainableTermContext,
   CommentTextContext,
   DictionaryContext,
+  EnumDefValueContext,
+  EnumListContext,
   EnumValueContext,
   IdentifierDefContext,
   IdentifierListContext,
@@ -203,6 +205,17 @@ export class PythonVisitorSource extends PythonVisitor<string> {
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     return ids.join(", ");
+  };
+
+  override visitEnumDefValue = (ctx: EnumDefValueContext) => {
+    const id = this.visit(ctx.identifierDef());
+    const val = this.visit(ctx.litInt());
+    return `${id} = ${val}`;
+  };
+
+  override visitEnumList = (ctx: EnumListContext) => {
+    const ids = ctx.enumDefValue().map((id) => this.visit(id)!);
+    return ids.join("\n");
   };
 
   override visitIndexedTerm = (ctx: IndexedTermContext) =>

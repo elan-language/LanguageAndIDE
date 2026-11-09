@@ -7,7 +7,6 @@ lexer grammar Python_Lexer;
 CLASS: 'class';
 ELIF: 'elif';
 ELSE: 'else';
-ENUM: 'enum';
 FOR: 'for';
 IF: 'if';
 IN: 'in';
@@ -65,6 +64,7 @@ NONE: 'None';
 PASS: 'pass';
 RAISE: 'raise';
 ABC: 'ABC';
+ENUM: 'Enum';
 TESTCASE: 'unittest.TestCase';
 TUPLE: 'tuple';
 //END Python-specific tokens

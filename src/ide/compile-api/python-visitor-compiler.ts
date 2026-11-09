@@ -76,6 +76,8 @@ import {
   IfExpressionContext,
   IndexedTermContext,
   ChainableTermContext,
+  EnumListContext,
+  EnumDefValueContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
@@ -178,6 +180,15 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const identifierDefs = ctx.identifierDef().map((id) => this.visit(id)!);
+    return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
+  };
+
+  override visitEnumDefValue = (ctx: EnumDefValueContext) => {
+    return this.visit(ctx.identifierDef()!)!;
+  };
+
+  override visitEnumList = (ctx: EnumListContext) => {
+    const identifierDefs = ctx.enumDefValue().map((id) => this.visit(id)!);
     return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
   };
 
