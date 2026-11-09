@@ -18,10 +18,6 @@ suite("Python Maybe", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 3 # variable definition
-# end main
-
-def main() -> None:
   foo = Maybe[Foo]() # variable definition
 # end main
 
@@ -82,10 +78,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo = Maybe[Foo]() # variable definition
-# end main
-
-def main() -> None:
   foo = Maybe[list[int]]() # variable definition
 # end main
 
@@ -120,10 +112,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo = Maybe[list[int]]() # variable definition
-# end main
-
-def main() -> None:
   foo = Maybe[str]() # variable definition
 # end main
 
@@ -144,16 +132,12 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Maybe cannot be of value type 'String'.ErrorMessages.html#compile_error",
+      "Maybe cannot be of value type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_ValueType2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  foo = Maybe[str]() # variable definition
-# end main
 
 def foo(p: Maybe[int]) -> int: # function
   return 0
@@ -176,7 +160,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Maybe cannot be of value type 'Int'.ErrorMessages.html#compile_error",
+      "Maybe cannot be of value type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 });

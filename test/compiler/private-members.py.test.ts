@@ -18,13 +18,6 @@ suite("Python Private Members", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("<3") # procedure call
-  printNoLine("a < b ") # procedure call
-  printNoLine("c <d> ") # procedure call
-  printNoLine("e <f ") # procedure call
-# end main
-
-def main() -> None:
   x = Foo() # variable definition
   printNoLine(x) # procedure call
 # end main
@@ -95,11 +88,6 @@ return [main, _tests];}`;
 
   test("Pass_PrivateProcedureCanBeDeclared", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo() # variable definition
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   x = Foo() # variable definition
@@ -186,12 +174,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = Foo() # variable definition
-  x.testSetP1(5) # procedure call
-  printNoLine(x.p1) # procedure call
-# end main
-
-def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.testFf("test")) # procedure call
 # end main
@@ -271,11 +253,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.testFf("test")) # procedure call
-# end main
-
-def main() -> None:
-  f = Foo() # variable definition
   s = f.p2 # variable definition
 # end main
 
@@ -318,11 +295,6 @@ main()
 
   test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  s = f.p2 # variable definition
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -373,25 +345,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = Foo() # variable definition
-  s = f.p2 # variable definition
-# end main
-
-class Foo(Bar): # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
-
-def main() -> None:
   foo = Foo() # variable definition
   foo.setP1(5) # procedure call
 # end main
@@ -436,38 +389,6 @@ main()
 
   test("Fail_PrivateFunctionCannotBeAccessed", async () => {
     const code = `${testPythonHeader}
-
-class Foo(Bar): # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def setP1(self: Foo, a: int) -> None: # private procedure method
-    self.p1 = a # assignment
-  # end procedure
-
-# end class
 
 def main() -> None:
   foo = Foo() # variable definition
@@ -515,42 +436,6 @@ main()
   test("Fail_PrivatePropertyCannotBePrinted", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def setP1(self: Foo, a: int) -> None: # private procedure method
-    self.p1 = a # assignment
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def ff(self: Foo) -> int: # private function method
-    return p1
-  # end function
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.p2) # procedure call
@@ -596,40 +481,6 @@ main()
   test("Fail_PrivateFunctionCannotBePrinted", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def ff(self: Foo) -> int: # private function method
-    return p1
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 5 # assignment
-    self.p2 = "Apple" # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-  p2: str # private property
-
-# end class
 
 def main() -> None:
   foo = Foo() # variable definition

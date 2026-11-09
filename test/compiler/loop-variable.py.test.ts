@@ -15,12 +15,6 @@ suite("Python Loop Variable", () => {
   test("Pass_Pattern1", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  a = "fred" # variable definition
-  b = -a # variable definition
-  printNoLine(b) # procedure call
-# end main
-
 def removeLetters(wordAsPlayed: str) -> None: # procedure
   for letter in wordAsPlayed:
     x = letter # variable definition
@@ -42,8 +36,8 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  const elan_iterelan_for5 = [...wordAsPlayed];
-  for (const letter of elan_iterelan_for5) {
+  const elan_iterpython_for5 = [...wordAsPlayed];
+  for (const letter of elan_iterpython_for5) {
     let x = letter;
     await removeLetter(x);
   }
@@ -81,17 +75,6 @@ return [main, _tests];}`;
 
 def removeLetters(wordAsPlayed: str) -> None: # procedure
   for letter in wordAsPlayed:
-    x = letter # variable definition
-    removeLetter(x) # procedure call
-  # end for
-# end procedure
-
-def main() -> None:
-
-# end main
-
-def removeLetters(wordAsPlayed: str) -> None: # procedure
-  for letter in wordAsPlayed:
     removeLetter(letter) # procedure call
   # end for
 # end procedure
@@ -110,8 +93,8 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function removeLetters(wordAsPlayed) {
-  const elan_iterelan_for5 = [...wordAsPlayed];
-  for (const letter of elan_iterelan_for5) {
+  const elan_iterpython_for5 = [...wordAsPlayed];
+  for (const letter of elan_iterpython_for5) {
     await removeLetter(letter);
   }
 }

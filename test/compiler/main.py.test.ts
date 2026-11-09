@@ -21,14 +21,6 @@ def main() -> None:
 
 # end main
 
-def removeLetter(l: str) -> None: # procedure
-
-# end procedure
-
-def main() -> None:
-
-# end main
-
 main()
 `;
 
@@ -58,10 +50,6 @@ return [main, _tests];}`;
 
   test("Fail_TwoMain", async () => {
     const code = `${testPythonHeader}
-
-def removeLetter(l: str) -> None: # procedure
-
-# end procedure
 
 def main() -> None:
   a = 3 # variable definition

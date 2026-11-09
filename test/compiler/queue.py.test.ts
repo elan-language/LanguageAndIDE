@@ -18,10 +18,6 @@ suite("Python Queue", () => {
   test("Pass_Queue using conventional methods", async () => {
     const code = `${testPythonHeader}
 
-def foo(a: int, foo: int) -> None: # procedure
-
-# end procedure
-
 def main() -> None:
   q = Queue[str]() # variable definition
   printNoLine(q.length()) # procedure call
@@ -87,24 +83,6 @@ return [main, _tests];}`;
 def main() -> None:
   q = Queue[str]() # variable definition
   printNoLine(q.length()) # procedure call
-  q.enqueue("apple") # procedure call
-  q.enqueue("pear") # procedure call
-  printNoLine(q) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q.peek()) # procedure call
-  fruit = q.dequeue() # variable definition
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
-  fruit = q.dequeue() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
-# end main
-
-def main() -> None:
-  q = Queue[str]() # variable definition
-  printNoLine(q.length()) # procedure call
   q = q.withEnqueue("apple") # assignment
   q = q.withEnqueue("pear") # assignment
   printNoLine(q) # procedure call
@@ -166,24 +144,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.length()) # procedure call
-  q = q.withEnqueue("apple") # assignment
-  q = q.withEnqueue("pear") # assignment
-  printNoLine(q) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q.peek()) # procedure call
-  fruit = q.peek() # variable definition
-  q = q.withDequeue() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
-  q = q.withDequeue() # assignment
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
-# end main
-
-def main() -> None:
-  q = Queue[str]() # variable definition
   q = q.withEnqueue("apple") # assignment
   q = q.withEnqueue(3) # assignment
 # end main
@@ -214,12 +174,6 @@ main()
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  q = q.withEnqueue("apple") # assignment
-  q = q.withEnqueue(3) # assignment
-# end main
-
-def main() -> None:
-  q = Queue[str]() # variable definition
   q = q.withEnqueue(3) # assignment
 # end main
 
@@ -246,11 +200,6 @@ main()
 
   test("Fail_Queue_peek_empty_Queue", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  q = Queue[str]() # variable definition
-  q = q.withEnqueue(3) # assignment
-# end main
 
 def main() -> None:
   q = Queue[str]() # variable definition
@@ -293,11 +242,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.peek()) # procedure call
-# end main
-
-def main() -> None:
-  q = Queue[str]() # variable definition
   printNoLine(q.dequeue()) # procedure call
 # end main
 
@@ -336,11 +280,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  q = Queue[str]() # variable definition
-  printNoLine(q.dequeue()) # procedure call
-# end main
-
-def main() -> None:
   q = Queue() # variable definition
 # end main
 
@@ -367,10 +306,6 @@ main()
 
   test("Fail_QueueOfMutable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  q = Queue() # variable definition
-# end main
 
 def main() -> None:
   st = Queue[Foo]() # variable definition
