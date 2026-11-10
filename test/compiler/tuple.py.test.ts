@@ -19,14 +19,6 @@ suite("Python Tuple", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  try:
-    raise CustomError("fail")
-  except FooException as e: # catch
-    printNoLine("") # procedure call
-  # end try
-# end main
-
-def main() -> None:
   x = (3, "Apple") # variable definition
   printNoLine(x) # procedure call
   f = x.item_0 # variable definition
@@ -69,15 +61,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionReturnsTupleItem", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = (3, "Apple") # variable definition
-  printNoLine(x) # procedure call
-  f = x.item_0 # variable definition
-  s = x.item_1 # variable definition
-  printNoLine(f) # procedure call
-  printNoLine(s) # procedure call
-# end main
 
 def main() -> None:
   x = f() # variable definition
@@ -133,15 +116,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = f() # variable definition
-  printNoLine(x) # procedure call
-  fst = x.item_0 # variable definition
-  snd = x.item_1 # variable definition
-  printNoLine(fst) # procedure call
-  printNoLine(snd) # procedure call
-# end main
-
-def main() -> None:
   t = f() # variable definition
   fst = t.item_0 # variable definition
   printNoLine(fst) # procedure call
@@ -189,12 +163,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  t = f() # variable definition
-  fst = t.item_0 # variable definition
-  printNoLine(fst) # procedure call
-# end main
-
-def main() -> None:
   a = [(1, 2)] # variable definition
   t = a.reduce((1, 1), lambda i: tuple[int, int], j: tuple[int, int]: j) # variable definition
   fst = t.item_0 # variable definition
@@ -233,13 +201,6 @@ return [main, _tests];}`;
 
   test("Pass_FunctionTupleParameter", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = [(1, 2)] # variable definition
-  t = a.reduce((1, 1), lambda i: tuple[int, int], j: tuple[int, int]: j) # variable definition
-  fst = t.item_0 # variable definition
-  printNoLine(fst) # procedure call
-# end main
 
 def main() -> None:
   x = "one" # variable definition
@@ -291,12 +252,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = "one" # variable definition
-  y = "two" # variable definition
-  printNoLine(f((x, y))) # procedure call
-# end main
-
-def main() -> None:
   x = (3, "Apple") # variable definition
   x = (4, "Pear") # assignment
   printNoLine(x) # procedure call
@@ -333,12 +288,6 @@ return [main, _tests];}`;
 
   test("Pass_item in expression", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = (3, "Apple") # variable definition
-  x = (4, "Pear") # assignment
-  printNoLine(x) # procedure call
-# end main
 
 def main() -> None:
   p = [1, 2, 3, 4, 5] # variable definition
@@ -393,19 +342,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  p = [1, 2, 3, 4, 5] # variable definition
-  x = (3, 4) # variable definition
-  y = x.item_0 + x.item_1 # variable definition
-  z = p[x.item_0] # variable definition
-  q = abs(x.item_1) # variable definition
-  s = abs(p[x.item_1]) # variable definition
-  printNoLine(y) # procedure call
-  printNoLine(z) # procedure call
-  printNoLine(q) # procedure call
-  printNoLine(s) # procedure call
-# end main
-
-def main() -> None:
   x = (3, "Apple") # variable definition
   y = 4 # variable definition
   y = x.item_1 # assignment
@@ -429,19 +365,12 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = (3, "Apple") # variable definition
-  y = 4 # variable definition
-  y = x.item_1 # assignment
-  printNoLine(y) # procedure call
-# end main
 
 def main() -> None:
   x = (3, "Apple") # variable definition
@@ -470,11 +399,6 @@ main()
 
 def main() -> None:
   x = (3, "Apple") # variable definition
-  x.item_0 =  # assignment
-# end main
-
-def main() -> None:
-  x = (3, "Apple") # variable definition
   x = ("4", "Pear") # assignment
 # end main
 
@@ -495,7 +419,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String), Provided: (String, String).ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: (int, str), Provided: (str, str).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -503,11 +427,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = (3, "Apple") # variable definition
-  x = ("4", "Pear") # assignment
-# end main
-
-def main() -> None:
   x = (3, "Apple", 4) # variable definition
   x = (4, "Pear") # assignment
 # end main
@@ -529,7 +448,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String, Int), Provided: (Int, String).ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: (int, str, int), Provided: (int, str).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -537,11 +456,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = (3, "Apple", 4) # variable definition
-  x = (4, "Pear") # assignment
-# end main
-
-def main() -> None:
   x = (3, "Apple") # variable definition
   x = (4, "Pear", 3) # assignment
 # end main
@@ -563,17 +477,12 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: (Int, String), Provided: (Int, String, Int).ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: (int, str), Provided: (int, str, int).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
   test("Fail_itemOutOfRange", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = (3, "Apple") # variable definition
-  x = (4, "Pear", 3) # assignment
-# end main
 
 def main() -> None:
   x = (3, "Apple") # variable definition
@@ -597,7 +506,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'item_2' is not defined for type '(Int, String)'.ErrorMessages.html#compile_error",
+      "'item_2' is not defined for type '(int, str)'.ErrorMessages.html#compile_error",
     ]);
   });
 });

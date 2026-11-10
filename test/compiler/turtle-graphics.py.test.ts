@@ -17,11 +17,6 @@ suite("Python Turtle Graphics", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = (3, "Apple") # variable definition
-  y = x.item_2 # variable definition
-# end main
-
-def main() -> None:
   t = Turtle() # variable definition
   t.turn(30) # procedure call
   t.move(40) # procedure call
@@ -72,17 +67,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(30) # procedure call
-  t.move(40) # procedure call
-  printNoLine(t.x.round(2)) # procedure call
-  printNoLine(" ") # procedure call
-  printNoLine(t.y.round(2)) # procedure call
-  printNoLine(" ") # procedure call
-  printNoLine(t.heading) # procedure call
-# end main
-
-def main() -> None:
-  t = Turtle() # variable definition
   t.turn(90) # procedure call
   t.turn(1000) # procedure call
   printNoLine(t.heading) # procedure call
@@ -119,13 +103,6 @@ return [main, _tests];}`;
   });
   test("Pass_HeadingNormalisedMinus", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.turn(1000) # procedure call
-  printNoLine(t.heading) # procedure call
-# end main
 
 def main() -> None:
   t = Turtle() # variable definition
@@ -168,13 +145,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.turn(-1000) # procedure call
-  printNoLine(t.heading) # procedure call
-# end main
-
-def main() -> None:
-  t = Turtle() # variable definition
   printNoLine(t.x) # procedure call
   printNoLine(t.y) # procedure call
   printNoLine(t.heading) # procedure call
@@ -211,13 +181,6 @@ return [main, _tests];}`;
   });
   test("Pass_AsHtml", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = Turtle() # variable definition
-  printNoLine(t.x) # procedure call
-  printNoLine(t.y) # procedure call
-  printNoLine(t.heading) # procedure call
-# end main
 
 def main() -> None:
   t = Turtle() # variable definition
@@ -269,15 +232,6 @@ return [main, _tests];}`;
   });
   test("Pass_PenUpDown", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.penWidth(3) # procedure call
-  t.penColour(red) # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
 
 def main() -> None:
   t = Turtle() # variable definition
@@ -337,17 +291,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  t.penUp() # procedure call
-  t.move(5) # procedure call
-  t.penDown() # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
-
-def main() -> None:
-  t = Turtle() # variable definition
   t.show() # procedure call
   t.turn(90) # procedure call
   t.move(10) # procedure call
@@ -394,14 +337,6 @@ return [main, _tests];}`;
   });
   test("Pass_Hide", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = Turtle() # variable definition
-  t.show() # procedure call
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
 
 def main() -> None:
   t = Turtle() # variable definition
@@ -455,15 +390,6 @@ return [main, _tests];}`;
 def main() -> None:
   t = Turtle() # variable definition
   t.show() # procedure call
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  t.hide() # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
-
-def main() -> None:
-  t = Turtle() # variable definition
-  t.show() # procedure call
   t.placeAt(20, 30) # procedure call
   printNoLine(t.asHtml()) # procedure call
 # end main
@@ -506,13 +432,6 @@ return [main, _tests];}`;
   });
   test("Pass_moveTo", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  t = Turtle() # variable definition
-  t.show() # procedure call
-  t.placeAt(20, 30) # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
 
 def main() -> None:
   t = Turtle() # variable definition

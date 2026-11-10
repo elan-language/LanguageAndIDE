@@ -280,6 +280,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 main()
 `;

@@ -18,13 +18,6 @@ suite("Python Unique Identifiers", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  t = Turtle() # variable definition
-  t.show() # procedure call
-  t.moveTo(20, 30) # procedure call
-  printNoLine(t.asHtml()) # procedure call
-# end main
-
-def main() -> None:
   foo = Foo() # variable definition
   printNoLine(foo) # procedure call
 # end main
@@ -87,11 +80,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo = Foo() # variable definition
-  printNoLine(foo) # procedure call
-# end main
-
-def main() -> None:
   bReak = 1 # variable definition
 # end main
 
@@ -117,10 +105,6 @@ main()
 
   test("Fail_SameVariableNameInScope", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  bReak = 1 # variable definition
-# end main
 
 def main() -> None:
   id = 1 # variable definition
