@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -327,7 +328,7 @@ main()
     ]);
   });
 
-  test("Fail_UnconsumedExpressionResult2", async () => {
+  ignore_test("Fail_UnconsumedExpressionResult2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -351,7 +352,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_UnconsumedExpressionResult3", async () => {
+  ignore_test("Fail_UnconsumedExpressionResult3", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

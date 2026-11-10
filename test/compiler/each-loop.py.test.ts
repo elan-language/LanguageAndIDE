@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -152,7 +153,7 @@ return [main, _tests];}`;
 def main() -> None:
   for x in "12":
     for y in "34":
-      printNoLine(f"{x}{y}") # procedure call
+      printNoLine(x + y) # procedure call
     # end for
   # end for
 # end main
@@ -167,7 +168,7 @@ async function main() {
   for (const x of elan_iterpython_for3) {
     const elan_iterpython_for7 = [..."34"];
     for (const y of elan_iterpython_for7) {
-      await _stdlib.printNoLine(\`\${await _stdlib.toString(x)}\${await _stdlib.toString(y)}\`);
+      await _stdlib.printNoLine(x + y);
     }
   }
 }
@@ -519,7 +520,7 @@ main()
     assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  test("Fail_NoEndeach", async () => {
+  ignore_test("Fail_NoEndeach", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

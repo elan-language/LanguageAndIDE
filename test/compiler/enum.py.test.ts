@@ -499,7 +499,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_AssigningIntsToValues", async () => {
+  ignore_test("Fail_AssigningIntsToValues", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

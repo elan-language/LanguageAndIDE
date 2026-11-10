@@ -325,7 +325,7 @@ return [main, _tests];}`;
 def main() -> None:
   limit = 10 # variable definition
   for i in range(1, limit + 1):
-    printNoLine(f"{i}") # procedure call
+    printNoLine(i.toString()) # procedure call
     limit = limit + 1 # assignment
   # end for
 # end main
@@ -339,7 +339,7 @@ async function main() {
   let limit = 10;
   const elan_iterpython_for6 = [..._stdlib.range(1, limit + 1)];
   for (const i of elan_iterpython_for6) {
-    await _stdlib.printNoLine(\`\${await _stdlib.toString(i)}\`);
+    await _stdlib.printNoLine((await _stdlib.toString(i)));
     limit = limit + 1;
   }
 }

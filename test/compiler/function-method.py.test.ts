@@ -1285,9 +1285,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'int' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {
@@ -1491,7 +1489,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
+  printNoLine(f.foo(0)) # procedure call
 # end main
 
 def bar() -> int: # function

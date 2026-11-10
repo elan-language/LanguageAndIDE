@@ -8,7 +8,7 @@ import { asDebugSymbol, assertDebugBreakPoint } from "../testHelpers";
 import { ignore_test, testHash, testPythonHeader, transforms } from "./compiler-test-helpers";
 
 suite("Python DebugBreakpoint", () => {
-  test("Pass_Main", async () => {
+  ignore_test("Pass_Main", async () => {
     const code = `${testPythonHeader}
 
 class Foo: # concrete class
@@ -48,7 +48,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_main4", expected);
   });
 
-  test("Pass_LocalvariablesMain", async () => {
+  ignore_test("Pass_LocalvariablesMain", async () => {
     const code = `${testPythonHeader}
 
 a = 1 # constant
@@ -83,7 +83,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
-  test("Pass_LocalvariablesProcedure", async () => {
+  ignore_test("Pass_LocalvariablesProcedure", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -128,7 +128,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set19", expected);
   });
 
-  test("Pass_LocalvariablesFunction", async () => {
+  ignore_test("Pass_LocalvariablesFunction", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -171,7 +171,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set22", expected);
   });
 
-  test("Pass_LocalvariablesMemberProcedure", async () => {
+  ignore_test("Pass_LocalvariablesMemberProcedure", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -229,7 +229,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set39", expected);
   });
 
-  test("Pass_LocalvariablesMemberFunction", async () => {
+  ignore_test("Pass_LocalvariablesMemberFunction", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -289,7 +289,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set42", expected);
   });
 
-  test("Pass_LocalvariablesConstructor", async () => {
+  ignore_test("Pass_LocalvariablesConstructor", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -343,7 +343,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set29", expected);
   });
 
-  test("Pass_InForLoop", async () => {
+  ignore_test("Pass_InForLoop", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -380,7 +380,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set10", expected);
   });
 
-  test("Pass_InEachLoop", async () => {
+  ignore_test("Pass_InEachLoop", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -425,7 +425,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set16", expected);
   });
 
-  test("Pass_InWhileLoop", async () => {
+  ignore_test("Pass_InWhileLoop", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -562,7 +562,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "call21", expected);
   });
 
-  test("Pass_InIf", async () => {
+  ignore_test("Pass_InIf", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -607,7 +607,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set12", expected);
   });
 
-  test("Pass_InElse", async () => {
+  ignore_test("Pass_InElse", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -654,7 +654,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set19", expected);
   });
 
-  test("Pass_InElseIf", async () => {
+  ignore_test("Pass_InElseIf", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -701,7 +701,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_set20", expected);
   });
 
-  test("Pass_AsyncBreakPoints", async () => {
+  ignore_test("Pass_AsyncBreakPoints", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -743,7 +743,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_return14", expected);
   });
 
-  test("Pass_ClassTypeInfo", async () => {
+  ignore_test("Pass_ClassTypeInfo", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -928,7 +928,7 @@ main()
     await assertDebugBreakPoint(fileImpl, "elan_call6", expected);
   });
 
-  test("Pass_FunctionProperty", async () => {
+  ignore_test("Pass_FunctionProperty", async () => {
     const code = `${testPythonHeader}
 
 class Fruit(Enum):

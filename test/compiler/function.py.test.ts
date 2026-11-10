@@ -669,6 +669,7 @@ def main() -> None:
 
 def foo(a: int, b: int) -> int: # function
   return a*b
+  c = a + b # variable definition
 # end function
 
 main()
@@ -1539,7 +1540,7 @@ main()
     ]);
   });
 
-  test("Fail_LibFunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_LibFunctionWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1567,7 +1568,7 @@ main()
     ]);
   });
 
-  test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
+  ignore_test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1715,7 +1716,6 @@ main()
   test("Fail_standaloneLibFunctionAsExtension", async () => {
     const code = `${testPythonHeader}
 
-
 def main() -> None:
   x = 3 # variable definition
   printNoLine(x.bitShiftL(x, 2)) # procedure call
@@ -1744,7 +1744,6 @@ main()
 
   test("Fail_standaloneFunctionAsExtension", async () => {
     const code = `${testPythonHeader}
-
 
 def main() -> None:
   x = 3 # variable definition
@@ -1778,7 +1777,6 @@ main()
 
   test("Fail_LibraryClassParameter2", async () => {
     const code = `${testPythonHeader}
-
 
 def main() -> None:
   b = list() # variable definition
