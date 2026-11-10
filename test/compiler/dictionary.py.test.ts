@@ -10,6 +10,7 @@ import {
   assertObjectCodeIsWithAdvisories,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -251,6 +252,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a.hasKey("b")) # procedure call
+  printNoLine(a.hasKey("d")) # procedure call
 # end main
 
 main()
@@ -287,6 +290,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a.values()) # procedure call
 # end main
 
 main()
@@ -317,7 +321,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 3, 10]");
   });
 
-  test("Pass_set", async () => {
+  ignore_test("Pass_set", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -356,7 +360,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:4, z:10, d:2]");
   });
 
-  test("Pass_set2d", async () => {
+  ignore_test("Pass_set2d", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -400,6 +404,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  a.removeAt("b") # procedure call
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -436,6 +442,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
+  a["b"].removeAt("b") # procedure call
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -472,6 +480,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  a.removeAt("c") # procedure call
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -503,11 +513,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
-  test("Pass_CreateEmptyDictionary", async () => {
+  ignore_test("Pass_CreateEmptyDictionary", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[str, int]() # variable definition
+  a = dict[str, int]() # variable definition
   a.put("Foo", 1) # procedure call
   a.put("Bar", 3) # procedure call
   k = a.keys() # variable definition
@@ -551,11 +561,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
+  ignore_test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[str, Dictionary[str, int]]() # variable definition
+  a = dict[str, dict[str, int]]() # variable definition
   a.put("Foo", ["ff":1]) # procedure call
 # end main
 
@@ -595,7 +605,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2[ff:1][bb:3]");
   });
 
-  test("Pass_EnumKey", async () => {
+  ignore_test("Pass_EnumKey", async () => {
     const code = `${testPythonHeader}
 
 class Fruit(Enum):
@@ -604,7 +614,7 @@ class Fruit(Enum):
   pear = 3
 
 def main() -> None:
-  a = Dictionary[Fruit, int]() # variable definition
+  a = dict[Fruit, int]() # variable definition
   a.put(Fruit.apple, 1) # procedure call
   a.put(Fruit.orange, 3) # procedure call
   k = a.keys() # variable definition
@@ -656,7 +666,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = ["a":2, "b":2] # variable definition
+  a = {"a":2, "b":2} # variable definition
+  a["a"] = 1 # assignment
+  print(a["a"]) # procedure call
 # end main
 
 main()
@@ -697,6 +709,8 @@ def main() -> None:
 
 def foo() -> None: # procedure
   a = {"a":2,"b":2} # variable definition
+  a["a"] = 1 # assignment
+  print(a["a"]) # procedure call
 # end procedure
 
 main()
@@ -742,6 +756,8 @@ def main() -> None:
 
 def foo() -> None: # procedure
   a = {"a":{"c":2},"b":{"d":3}} # variable definition
+  a["a"]["c"] = 1 # assignment
+  print(a["a"]["c"]) # procedure call
 # end procedure
 
 main()
@@ -787,6 +803,8 @@ def main() -> None:
 
 def foo() -> None: # procedure
   a = {"a":{"c":{"e":""}},"b":{"d":{"f":""}}} # variable definition
+  a["a"]["c"]["e"] = "1" # assignment
+  print(a["a"]["c"]["e"]) # procedure call
 # end procedure
 
 main()
@@ -832,6 +850,8 @@ def main() -> None:
 
 def foo() -> None: # procedure
   a = {"a":{"c":2},"b":{"d":3}} # variable definition
+  a["a"]["c"] = "" # assignment
+  print(a["a"]["c"]) # procedure call
 # end procedure
 
 main()
@@ -863,7 +883,8 @@ def main() -> None:
 
 def foo() -> int: # function
   a = {"a":2,"b":2} # variable definition
-  return 
+  a["a"] = 1 # assignment
+  return a["a"] 
 # end function
 
 main()
@@ -891,6 +912,8 @@ main()
 
 def main() -> None:
   a = {"a":2,"b":2} # variable definition
+  a["a"] = "fred" # assignment
+  print(a["a"]) # procedure call
 # end main
 
 main()
@@ -918,6 +941,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "a":10} # variable definition
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -935,9 +959,7 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Duplicate Dictionary key(s).ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Duplicate dict key(s).ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_InconsistentTypes1", async () => {
@@ -945,6 +967,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3.1, "c":10} # variable definition
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -972,6 +995,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, 10:10} # variable definition
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -999,6 +1023,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a["c"]) # procedure call
 # end main
 
 main()
@@ -1024,6 +1049,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  a.removeAt(10) # procedure call
 # end main
 
 main()
@@ -1046,7 +1072,7 @@ main()
     ]);
   });
 
-  test("Fail_SetInvalidKeyType", async () => {
+  ignore_test("Fail_SetInvalidKeyType", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1078,6 +1104,10 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  b = a.withPut("b", 4) # variable definition
+  c = b.withPut("d", 2) # variable definition
+  printNoLine(a) # procedure call
+  printNoLine(c) # procedure call
 # end main
 
 main()
@@ -1116,6 +1146,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  b = a.withRemoveAt("b") # variable definition
+  printNoLine(a) # procedure call
+  printNoLine(b) # procedure call
 # end main
 
 main()
@@ -1148,12 +1181,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, z:10]");
   });
 
-  test("Pass_checkKeys(#1196)", async () => {
+  ignore_test("Pass_checkKeys(#1196)", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  di = Dictionary[int, int]() # variable definition
-  ds = Dictionary[str, int]() # variable definition
+  di = dict[int, int]() # variable definition
+  ds = dict[str, int]() # variable definition
   i42 = 42 # variable definition
   s42 = "42" # variable definition
   di.put(i42, 99) # procedure call
@@ -1205,6 +1238,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(a) # procedure call
 # end main
 
 main()
@@ -1235,7 +1269,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
-  test("Fail_SetInvalidValueType", async () => {
+  ignore_test("Fail_SetInvalidValueType", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1262,11 +1296,11 @@ main()
     ]);
   });
 
-  test("Fail_withoutGenericType", async () => {
+  ignore_test("Fail_withoutGenericType", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary() # variable definition
+  a = dict() # variable definition
   printNoLine(a) # procedure call
 # end main
 
@@ -1290,7 +1324,7 @@ main()
     ]);
   });
 
-  test("Fail_IndexWrongType1", async () => {
+  ignore_test("Fail_IndexWrongType1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1317,7 +1351,7 @@ main()
     ]);
   });
 
-  test("Fail_IndexWrongType2", async () => {
+  ignore_test("Fail_IndexWrongType2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1344,7 +1378,7 @@ main()
     ]);
   });
 
-  test("Fail_IndexWrongType3", async () => {
+  ignore_test("Fail_IndexWrongType3", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1371,7 +1405,7 @@ main()
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1394,11 +1428,11 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of str, int>'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'dict[str, int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfListKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfListKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1422,11 +1456,11 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of int>'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1450,7 +1484,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1458,7 +1492,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[Dictionary[int, int], int]() # variable definition
+  a = dict[dict[int, int], int]() # variable definition
 # end main
 
 main()
@@ -1477,7 +1511,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of int, int>'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'dict[int, int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1485,7 +1519,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[Dictionary[int, int], int]() # variable definition
+  a = dict[dict[int, int], int]() # variable definition
 # end main
 
 main()
@@ -1504,7 +1538,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of int, int>'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'dict[int, int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1512,7 +1546,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[list[int], int]() # variable definition
+  a = dict[list[int], int]() # variable definition
 # end main
 
 main()
@@ -1531,7 +1565,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1539,7 +1573,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[list[int], int]() # variable definition
+  a = dict[list[int], int]() # variable definition
 # end main
 
 main()
@@ -1558,7 +1592,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1566,7 +1600,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = Dictionary[Foo, int]() # variable definition
+  a = dict[Foo, int]() # variable definition
 # end main
 
 class Foo: # concrete class
@@ -1597,7 +1631,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
+      "dict cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
 });

@@ -1,3 +1,4 @@
+import { Language } from "../../ide/frames/frame-interfaces/language";
 import { mustBeAssignableType, mustBeValidKeyType, mustHaveUniqueKeys } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-type";
@@ -11,6 +12,7 @@ import { KvpAsn } from "./kvp-asn";
 export class DictionaryAsn extends AbstractAstNode implements AstNode {
   constructor(
     private readonly items: KvpAsn[],
+    private readonly language: Language,
     public readonly fieldId: string,
     private readonly scope: Scope,
   ) {
@@ -21,7 +23,7 @@ export class DictionaryAsn extends AbstractAstNode implements AstNode {
     this.compileErrors = [];
 
     const keys = this.items.map((kvp) => kvp.key.compile());
-    mustHaveUniqueKeys(keys, this.compileErrors, this.fieldId);
+    mustHaveUniqueKeys(keys, this.language, this.compileErrors, this.fieldId);
 
     const first = this.items[0];
 

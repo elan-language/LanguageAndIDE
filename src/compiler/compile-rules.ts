@@ -1287,12 +1287,13 @@ export function mustBeIterable(
 
 export function mustHaveUniqueKeys(
   keys: string[],
+  l: Language,
   compileErrors: CompileError[],
   location: string,
 ) {
   const set = new Set(keys);
   if (set.size !== keys.length) {
-    compileErrors.push(new DuplicateKeyCompileError(location));
+    compileErrors.push(new DuplicateKeyCompileError(location, l));
   }
 }
 

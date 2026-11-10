@@ -321,6 +321,7 @@ export class LanguagePython extends LanguageAbstract {
   BOOL_NAME: string = "bool";
   STRING_NAME: string = "str";
   LIST_NAME: string = "list";
+  DICT_NAME: string = "dict";
   FUNC_NAME: string = "Callable";
 
   TUPLE_START = "tuple[";

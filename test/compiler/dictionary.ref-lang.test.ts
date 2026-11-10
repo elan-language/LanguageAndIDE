@@ -4,14 +4,19 @@ import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertObjectCodeIsWithAdvisories,
   assertParses,
+  assertStatusIsValid,
+  ignore_test,
   testHash,
   testHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Dictionary", () => {
-  /*
   test("Pass_LiteralDictionary", async () => {
     const code = `${testHeader}
 
@@ -288,7 +293,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 3, 10]");
   });
 
-  test("Pass_set", async () => {
+  ignore_test("Pass_set", async () => {
     const code = `${testHeader}
 
 main
@@ -327,7 +332,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:4, z:10, d:2]");
   });
 
-  test("Pass_set2d", async () => {
+  ignore_test("Pass_set2d", async () => {
     const code = `${testHeader}
 
 main
@@ -471,7 +476,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
-  test("Pass_CreateEmptyDictionary", async () => {
+  ignore_test("Pass_CreateEmptyDictionary", async () => {
     const code = `${testHeader}
 
 main
@@ -516,7 +521,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "213");
   });
 
-  test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
+  ignore_test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
     const code = `${testHeader}
 
 main
@@ -563,7 +568,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2[ff:1][bb:3]");
   });
 
-  test("Pass_EnumKey", async () => {
+  ignore_test("Pass_EnumKey", async () => {
     const code = `${testHeader}
 
     enum Fruit apple, orange, pear  
@@ -1002,7 +1007,7 @@ end main
     ]);
   });
 
-  test("Fail_SetInvalidKeyType", async () => {
+  ignore_test("Fail_SetInvalidKeyType", async () => {
     const code = `${testHeader}
 
 main
@@ -1104,7 +1109,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10][a:1, z:10]");
   });
 
-  test("Pass_checkKeys(#1196)", async () => {
+  ignore_test("Pass_checkKeys(#1196)", async () => {
     const code = `${testHeader}
 
 main
@@ -1186,7 +1191,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a:1, b:3, z:10]");
   });
 
-  test("Fail_SetInvalidValueType", async () => {
+  ignore_test("Fail_SetInvalidValueType", async () => {
     const code = `${testHeader}
 
 main
@@ -1212,7 +1217,7 @@ end main
     ]);
   });
 
-  test("Fail_withoutGenericType", async () => {
+  ignore_test("Fail_withoutGenericType", async () => {
     const code = `${testHeader}
 
 main
@@ -1237,7 +1242,7 @@ end main`;
     ]);
   });
 
-  test("Fail_IndexWrongType1", async () => {
+  ignore_test("Fail_IndexWrongType1", async () => {
     const code = `${testHeader}
 
 main
@@ -1263,7 +1268,7 @@ end main
     ]);
   });
 
-  test("Fail_IndexWrongType2", async () => {
+  ignore_test("Fail_IndexWrongType2", async () => {
     const code = `${testHeader}
 
 main
@@ -1289,7 +1294,7 @@ end main
     ]);
   });
 
-  test("Fail_IndexWrongType3", async () => {
+  ignore_test("Fail_IndexWrongType3", async () => {
     const code = `${testHeader}
 
 main
@@ -1315,7 +1320,7 @@ end main
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
     const code = `${testHeader}
 
 main
@@ -1343,7 +1348,7 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfListKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfListKey", async () => {
     const code = `${testHeader}
 
 main
@@ -1371,7 +1376,7 @@ end class`;
     ]);
   });
 
-  test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
+  ignore_test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
     const code = `${testHeader}
 
 main
@@ -1398,7 +1403,7 @@ end class`;
       "Dictionary cannot have key of type 'Foo'.ErrorMessages.html#compile_error",
     ]);
   });
-*/
+
   test("Fail_DictionaryOfDictionaryKey", async () => {
     const code = `${testHeader}
 
