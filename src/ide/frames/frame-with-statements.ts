@@ -1,7 +1,6 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { Regexes } from "./fields/regexes";
 import { isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
@@ -190,21 +189,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   moveSelectedChildrenDownOne(): void {
     parentHelper_moveSelectedChildrenDownOne(this);
   }
-
-  parseFrom(source: CodeSource): void {
-    this.parseTop(source);
-    while (!this.parseBottom(source)) {
-      if (source.isMatchRegEx(Regexes.newLine)) {
-        source.removeRegEx(Regexes.newLine, false);
-      } else {
-        this.getFirstSelectorAsDirectChild().parseFrom(source);
-      }
-      source.removeIndent();
-    }
-  }
-
-  abstract parseTop(source: CodeSource): void;
-  abstract parseBottom(source: CodeSource): boolean;
 
   protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
     source.removeIndent();

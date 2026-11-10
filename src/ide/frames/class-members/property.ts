@@ -1,10 +1,8 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
-import { asKeyword, privateKeyword, propertyKeyword } from "../../../compiler/elan-keywords";
 import { ClassType } from "../../../compiler/symbols/class-type";
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { addPrivateToggleToContextMenu, togglePrivatePublic } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -54,19 +52,6 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   isGlobalClass(st: SymbolType) {
     // todo rework when tests working
     return st instanceof ClassType && !st.typeOptions.isIndexable;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    const priv = `${privateKeyword} `;
-    if (source.isMatch(priv)) {
-      source.remove(priv);
-      this.isPrivate = true;
-    }
-    source.remove(`${propertyKeyword} `);
-    this.name.parseFrom(source);
-    source.remove(` ${asKeyword} `);
-    this.type.parseFrom(source);
   }
 
   makePublic = () => {

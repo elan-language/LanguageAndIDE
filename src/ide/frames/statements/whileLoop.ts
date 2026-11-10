@@ -1,7 +1,5 @@
-import { endKeyword, whileKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
@@ -30,12 +28,4 @@ export class WhileLoop extends FrameWithStatements {
   }
 
   outerHtmlTag: string = "el-statement";
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${whileKeyword} `);
-    this.condition.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, `${endKeyword} ${whileKeyword}`);
-  }
 }

@@ -7,7 +7,6 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -78,14 +77,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   indent(): string {
     return "";
-  }
-
-  parseTop(source: CodeSource): void {
-    source.remove("test ");
-    this.testName.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end test");
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {

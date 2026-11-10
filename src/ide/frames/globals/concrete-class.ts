@@ -1,8 +1,6 @@
 import { classKeyword, endKeyword } from "../../../compiler/elan-keywords";
 import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
-import { MemberSelector } from "../class-members/member-selector";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { FrameType } from "../frame-type";
@@ -56,21 +54,5 @@ export class ConcreteClass extends ClassFrame {
 
   bottomKeywords(): string {
     return `${endKeyword} ${classKeyword}`;
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    if (source.isMatchRegEx(/^constructor\(/)) {
-      this.constr.parseFrom(source);
-      this.removeChild(this.getFirstSelectorAsDirectChild());
-      this.addChildAfter(new MemberSelector(this), this.constr); //So that parsing will continue from the selector *after* the catch
-    }
-    source.removeIndent();
-    if (source.isMatchRegEx(/^function toString\(/)) {
-      this.toString.parseFrom(source);
-      this.removeChild(this.getFirstSelectorAsDirectChild()); //So that parsing will continue from the selector *after* the catch
-      this.addChildAfter(new MemberSelector(this), this.toString);
-    }
-    return super.parseBottom(source);
   }
 }

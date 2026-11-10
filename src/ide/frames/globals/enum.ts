@@ -1,6 +1,5 @@
 import { FieldImpl } from "../fields/field-impl";
 import { typeNameFieldSpec, enumValuesFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -42,11 +41,5 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
 
   indent(): string {
     return "";
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.remove("enum ");
-    this.name.parseFrom(source);
-    this.values.parseFrom(source);
   }
 }

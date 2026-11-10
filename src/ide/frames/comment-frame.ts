@@ -1,7 +1,6 @@
 import { FieldImpl } from "./fields/field-impl";
 import { commentFieldSpec } from "./fields/field-spec";
 import { singleIndent } from "./frame-helpers";
-import { CodeSource } from "./frame-interfaces/code-source";
 import { Field } from "./frame-interfaces/field";
 import { Parent } from "./frame-interfaces/parent";
 import { Statement } from "./frame-interfaces/statement";
@@ -28,12 +27,6 @@ export class CommentFrame extends SingleLineFrame implements Statement {
 
   helpId(): string {
     return "Comment"; // U/c for historial reasons
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    this.text.parseFrom(source);
-    source.removeNewLine();
   }
 
   getFields(): Field[] {

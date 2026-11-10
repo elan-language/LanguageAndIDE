@@ -1,6 +1,5 @@
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -16,7 +15,6 @@ export abstract class AbstractDefinitionStatement extends SingleLineFrame implem
     this.name = new FieldImpl(this, identifierFieldSpec);
     this.expr = new FieldImpl(this, expressionFieldSpec);
   }
-  abstract parseFrom(source: CodeSource): void;
 
   abstract getIdPrefix(): string;
 

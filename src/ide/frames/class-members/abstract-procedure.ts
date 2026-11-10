@@ -1,7 +1,6 @@
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
@@ -42,14 +41,6 @@ export class AbstractProcedure extends SingleLineFrame {
   }
 
   override outerHtmlTag: string = "el-proc";
-
-  parseFrom(source: CodeSource): void {
-    source.remove("abstract procedure ");
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(")");
-  }
 
   renderAsSource(): string {
     return `${super.renderAsSource()}\r

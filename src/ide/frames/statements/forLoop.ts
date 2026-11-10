@@ -1,7 +1,5 @@
-import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
@@ -35,14 +33,4 @@ export class ForLoop extends FrameWithStatements implements Statement {
   }
 
   outerHtmlTag: string = "el-statement";
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${forKeyword} `);
-    this.variable.parseFrom(source);
-    source.remove(` ${inKeyword} `);
-    this.iter.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, `${endKeyword} ${forKeyword}`);
-  }
 }

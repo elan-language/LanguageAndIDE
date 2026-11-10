@@ -1,6 +1,5 @@
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
@@ -28,16 +27,4 @@ export abstract class ProcedureFrame extends FrameWithStatements {
   }
 
   override outerHtmlTag: string = "el-proc";
-
-  parseTop(source: CodeSource): void {
-    source.remove("procedure ");
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(")");
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end procedure");
-  }
 }

@@ -1,5 +1,3 @@
-import { setKeyword, toKeyword, variableKeyword } from "../../../compiler/elan-keywords";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
 import { FrameType } from "../frame-type";
@@ -14,15 +12,6 @@ export class VariableDefinition extends AbstractDefinitionStatement implements S
 
   override helpId(): string {
     return "variableDefinition";
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${variableKeyword} `);
-    this.name.parseFrom(source);
-    source.remove(` ${setKeyword} ${toKeyword} `);
-    this.expr.parseFrom(source);
-    source.removeNewLine();
   }
 
   getIdPrefix(): string {

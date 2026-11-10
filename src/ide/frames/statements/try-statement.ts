@@ -39,10 +39,10 @@ export class TryStatement extends FrameWithStatements {
     source.removeIndent();
     source.remove(tryKeyword);
     source.removeNewLine();
-    const tryClause = this.getChildren()[0];
-    tryClause.parseFrom(source);
-    const firstCatch = this.getChildren()[1];
-    firstCatch.parseFrom(source);
+    //const tryClause = this.getChildren()[0];
+    //tryClause.parseFrom(source);
+    //const firstCatch = this.getChildren()[1];
+    //firstCatch.parseFrom(source);
   }
 
   parseBottom(source: CodeSource): boolean {

@@ -13,7 +13,6 @@ import { Property } from "../class-members/property";
 import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
-import { Regexes } from "../fields/regexes";
 import { isConstructor } from "../frame-helpers";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
@@ -229,25 +228,13 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
 
-  parseFrom(source: CodeSource): void {
-    this.parseTop(source);
-    while (!this.parseBottom(source)) {
-      if (source.isMatchRegEx(Regexes.newLine)) {
-        source.removeRegEx(Regexes.newLine, false);
-        source.removeIndent();
-      } else {
-        this.getFirstSelectorAsDirectChild().parseFrom(source);
-      }
-    }
-  }
-
   abstract topKeywords(): string;
 
   parseTop(source: CodeSource): boolean {
     source.remove(this.topKeywords());
-    this.name.parseFrom(source);
+    //this.name.parseFrom(source);
     source.removeRegEx(/^\sinherits\s/, true);
-    this.inheritance.parseFrom(source);
+    //this.inheritance.parseFrom(source);
     return true;
   }
 

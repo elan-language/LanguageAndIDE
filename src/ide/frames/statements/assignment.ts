@@ -1,7 +1,5 @@
-import { assignKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { assignableFieldSpec, expressionFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -24,14 +22,6 @@ export class Assignment extends SingleLineFrame implements Statement {
     return "assignment";
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${assignKeyword} `);
-    this.assignable.parseFrom(source);
-    source.remove(` ${toKeyword} `);
-    this.expr.parseFrom(source);
-    source.removeNewLine();
-  }
   getFields(): Field[] {
     return [this.assignable, this.expr];
   }

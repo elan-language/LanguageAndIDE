@@ -1,6 +1,4 @@
-import { privateKeyword } from "../../../compiler/elan-keywords";
 import { addPrivateToggleToContextMenu, singleIndent, togglePrivatePublic } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
@@ -47,20 +45,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   public override indent(): string {
     return singleIndent();
   }
-
-  parseTop(source: CodeSource): void {
-    source.removeIndent();
-    const priv = `${privateKeyword} `;
-    if (source.isMatch(priv)) {
-      source.remove(priv);
-      this.isPrivate = true;
-    }
-    super.parseTop(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return super.parseBottom(source);
-  }
-
   makePublic = () => {
     this.isPrivate = false;
     return true;

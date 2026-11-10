@@ -125,17 +125,6 @@ export class FieldImpl implements Selectable, Field {
     this._parserErrorMessages = [];
   }
 
-  parseFrom(source: CodeSource): void {
-    this.holder.hasBeenAddedTo();
-    const text = this.readToDelimiter!(source);
-    this.parseCompleteText(text);
-    if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
-      this._parseStatus = ParseStatus.valid;
-    } else if (this._parseStatus === ParseStatus.invalid) {
-      throw new Error(`Parse error at ${source.getRemainingCode()}`);
-    }
-  }
-
   getCompletion(): string {
     return ""; // Syntax completion disabled by default, pending new, simpler approach #3491
   }
