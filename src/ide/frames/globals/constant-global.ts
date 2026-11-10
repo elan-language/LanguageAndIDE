@@ -1,6 +1,5 @@
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, constantValueFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -29,13 +28,6 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
     return "constant";
   }
 
-  parseFrom(source: CodeSource): void {
-    source.remove("constant ");
-    this.name.parseFrom(source);
-    source.remove(" set to ");
-    this.value.parseFrom(source);
-  }
-
   protected setClasses() {
     super.setClasses();
     this.pushClass(true, "multiline");
@@ -47,10 +39,6 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_const`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "constant";
   }
 
   override outerHtmlTag: string = "el-const";

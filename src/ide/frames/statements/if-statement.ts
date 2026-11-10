@@ -1,8 +1,5 @@
-import { ifKeyword, thenKeyword } from "../../../compiler/elan-keywords";
-import { CodeSourceFromString } from "../code-source-from-string";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -35,26 +32,7 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return `${this.language().languageHtmlClass}_if`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "if statement";
-  }
-
   outerHtmlTag: string = "el-statement";
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${ifKeyword}`);
-    const condition = source.readUntil(/\sthen/);
-    this.condition.parseFrom(new CodeSourceFromString(condition));
-    source.remove(` ${thenKeyword}`);
-    source.removeNewLine();
-    const thenClause = this.getChildren()[0];
-    thenClause.parseFrom(source);
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    return this.parseStandardEnding(source, "end if");
-  }
 
   override insertSelectorAfterLastField(): void {
     this.getFirstChild().select(true, false);

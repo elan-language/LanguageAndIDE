@@ -8,7 +8,6 @@ import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { FrameType } from "./frame-type";
 import { FrameWithStatements } from "./frame-with-statements";
-import { Overtyper } from "./overtyper";
 import { Paradigm } from "./paradigm";
 import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
@@ -18,7 +17,6 @@ export abstract class AbstractSelector extends AbstractFrame {
   isSelector = true;
   isStatement = true;
   text: string = "";
-  overtyper = new Overtyper();
   sourcePasting = false;
 
   constructor(parent: Parent) {
@@ -127,10 +125,6 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_select`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "";
   }
 
   override deselect(): void {

@@ -12,7 +12,6 @@ import {
   isParent,
   singleIndent,
 } from "./frame-helpers";
-import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
@@ -667,8 +666,6 @@ export abstract class AbstractFrame implements Frame {
     const worstField = this.worstCompileStatusOfFields();
     return Math.min(own, worstField);
   }
-
-  abstract parseFrom(source: CodeSource): void;
 
   compileMsgAsHtml() {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);

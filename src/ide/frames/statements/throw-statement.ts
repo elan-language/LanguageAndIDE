@@ -1,7 +1,5 @@
-import { throwKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionMessageFieldSpec, exceptionTypeFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -24,14 +22,6 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
     return "throw"; // 'then' clause has no visible manifestation
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${throwKeyword} `);
-    this.type.parseFrom(source);
-    source.remove(" ");
-    this.text.parseFrom(source);
-    source.removeNewLine();
-  }
   getFields(): Field[] {
     return [this.type, this.text];
   }
@@ -43,9 +33,5 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_throw`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "throw statement";
   }
 }

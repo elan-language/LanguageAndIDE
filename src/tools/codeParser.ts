@@ -1,28 +1,12 @@
-import { matchesElanKeyword } from "../compiler/elan-keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
 import { transform } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
-import { AbstractSelector } from "../ide/frames/abstract-selector";
-import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
-import { FieldImpl } from "../ide/frames/fields/field-impl";
-import {
-  expressionFieldSpec,
-  paramListFieldSpec,
-  typeFieldSpec,
-} from "../ide/frames/fields/field-spec";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
-import { AbstractClass } from "../ide/frames/globals/abstract-class";
-import { ConcreteClass } from "../ide/frames/globals/concrete-class";
-import { GlobalFunction } from "../ide/frames/globals/global-function";
-import { GlobalSelector } from "../ide/frames/globals/global-selector";
-import { MainRoutine } from "../ide/frames/globals/main-routine";
 import { LanguagePython } from "../ide/frames/language-python";
 import { LanguageRefLang } from "../ide/frames/language-ref-lang";
 import { Paradigm } from "../ide/frames/paradigm";
-import { StatementSelector } from "../ide/frames/statements/statement-selector";
-import { VariableDefinition } from "../ide/frames/statements/variable-definition";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
@@ -160,7 +144,7 @@ export async function parseAs(
   }
 }
 
-function parseAsKeyword(code: string): TransformedCode | undefined {
+/* function parseAsKeyword(code: string): TransformedCode | undefined {
   // const ms = Date.now();
   const trimmed = code.trim();
   // console.log(`    Parse as keyword '${trimmed}'`);
@@ -264,7 +248,7 @@ function FileWithHeaderParserAndRender(
 ): [FileImpl, { textAsHtml(): Promise<string> }] {
   file.getChildren().push(file.newChildSelector());
   return [file, { textAsHtml: async () => await file.renderAsHtml(false) }];
-}
+} */
 
 export function FileParserAndRender(file: FileImpl): [
   {
@@ -280,7 +264,7 @@ export function FileParserAndRender(file: FileImpl): [
   ];
 }
 
-function failedToParse(code: string) {
+function _failedToParse(code: string) {
   log(` - Failed to parse code: '${code}'`);
   return languages.map(() => `Code does not parse as Elan.`) as TransformedCode;
 }
@@ -295,10 +279,11 @@ function failedToParse(code: string) {
 export async function processInnerCode(code: string): Promise<TransformedCode> {
   code = (code.startsWith("#") ? code : code.trim()) + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-  const hasHeader = code.includes("guest default_profile valid");
-  return (
-    parseAsKeyword(code) ||
-    (await parseAs("Type", TypeParserAndRender, code, true)) ||
+  const _hasHeader = code.includes("guest default_profile valid");
+  throw new Error("Needs re-writing to use ANTLR");
+  /*   return (
+    parseAsKeyword(code)   ||
+    (await parseAs("Type", TypeParserAndRender, code, true)) ||claer
     (await parseAs("Expression", ExpressionrParserAndRender, code, true)) ||
     (await parseAs("Statement", StatementParserAndRender, code, true)) ||
     (await parseAs("Function", FunctionParserAndRender, code, true)) ||
@@ -312,7 +297,7 @@ export async function processInnerCode(code: string): Promise<TransformedCode> {
       ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code, true)
       : await parseAs("File", FileParserAndRender, code, true)) ||
     failedToParse(code)
-  );
+  ); */
 }
 
 function ct(tag: string) {

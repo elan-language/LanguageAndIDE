@@ -1,8 +1,6 @@
-import { asKeyword, catchKeyword, endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { Clause } from "../clause";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionTypeFieldSpec, identifierFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
@@ -49,22 +47,6 @@ export class CatchClause extends Clause {
   }
 
   getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_${catchKeyword}`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${catchKeyword} `);
-    this.variable.parseFrom(source);
-    source.remove(` ${asKeyword} `);
-    this.exceptionType.parseFrom(source);
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    return source.isMatch(`${endKeyword} ${tryKeyword}`);
+    return `${this.language().languageHtmlClass}_catch`;
   }
 }

@@ -1,4 +1,3 @@
-import { abstractClassKeywords, classKeyword, endKeyword } from "../../../compiler/elan-keywords";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { FrameType } from "../frame-type";
@@ -29,16 +28,5 @@ export class AbstractClass extends ClassFrame {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_class`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "abstract class";
-  }
-  topKeywords(): string {
-    return `${abstractClassKeywords} `;
-  }
-
-  bottomKeywords(): string {
-    return `${endKeyword} ${classKeyword}`;
   }
 }

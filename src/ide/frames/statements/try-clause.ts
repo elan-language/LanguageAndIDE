@@ -1,6 +1,4 @@
-import { catchKeyword, tryKeyword } from "../../../compiler/elan-keywords";
 import { Clause } from "../clause";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Frame } from "../frame-interfaces/frame";
 import { FrameType } from "../frame-type";
@@ -43,20 +41,7 @@ export class TryClause extends Clause {
   }
 
   getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_${tryKeyword}`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
-  parseTop(_source: CodeSource): void {
-    // no top, so does nothing
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    return source.isMatch(catchKeyword);
+    return `${this.language().languageHtmlClass}_try`;
   }
 
   renderAsSource(): string {

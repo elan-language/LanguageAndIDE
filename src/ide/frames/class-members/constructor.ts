@@ -1,6 +1,5 @@
 import { FieldImpl } from "../fields/field-impl";
 import { paramListFieldSpec } from "../fields/field-spec";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
@@ -52,21 +51,7 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return `${this.language().languageHtmlClass}_constructor`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "constructor";
-  }
-
   override outerHtmlTag: string = "el-constructor";
-
-  parseTop(source: CodeSource): void {
-    source.removeIndent();
-    source.remove("constructor(");
-    this.params.parseFrom(source);
-    source.remove(")");
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end constructor");
-  }
 
   renderAsSource(): string {
     return `${super.renderAsSource()}\r

@@ -7,7 +7,6 @@ import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -73,22 +72,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_test`;
   }
-  frameSpecificAnnotation(): string {
-    return "test";
-  }
 
   override outerHtmlTag: string = "el-test";
 
   indent(): string {
     return "";
-  }
-
-  parseTop(source: CodeSource): void {
-    source.remove("test ");
-    this.testName.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end test");
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {

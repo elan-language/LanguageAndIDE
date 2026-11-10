@@ -1,10 +1,8 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { FieldImpl } from "../fields/field-impl";
 import { assertActualFieldSpec, assertExpectedFieldSpec } from "../fields/field-spec";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -29,28 +27,12 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     return "assert";
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${assertKeyword} `);
-    this.actual.parseFrom(source);
-    if (source.isMatch(" is ")) {
-      source.remove(" is ");
-    } else {
-      source.remove(` ${evaluatesKeyword} ${toKeyword} `);
-    }
-    this.expected.parseFrom(source);
-    source.removeNewLine();
-  }
   getFields(): Field[] {
     return this.language().getFields(this);
   }
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_assert`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "assert";
   }
 
   setOutcome(outcome: AssertOutcome) {

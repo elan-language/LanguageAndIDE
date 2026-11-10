@@ -1,8 +1,6 @@
-import { abstractKeyword, functionKeyword, returnsKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
@@ -42,24 +40,11 @@ export class AbstractFunction extends SingleLineFrame {
     return `${this.language().languageHtmlClass}_func`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract function";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
   override outerHtmlTag: string = "el-func";
-
-  parseFrom(source: CodeSource): void {
-    source.remove(`${abstractKeyword} ${functionKeyword} `);
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(`) ${returnsKeyword} `);
-    this.returnType.parseFrom(source);
-  }
 
   renderAsSource(): string {
     return `${super.renderAsSource()}\r

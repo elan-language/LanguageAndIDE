@@ -15,14 +15,12 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Language } from "../frame-interfaces/language";
 import { Selectable } from "../frame-interfaces/selectable";
-import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import {
   getFilteredSymbols,
@@ -36,7 +34,6 @@ import { FieldSpec } from "./field-spec";
 export class FieldImpl implements Selectable, Field {
   // interface Field
   public readonly isField: boolean = true;
-  public readonly overtyper = new Overtyper();
   public allPossibleSymbolCompletions: SymbolWrapper[] = [];
   public helpActive: boolean = false;
 
@@ -68,7 +65,6 @@ export class FieldImpl implements Selectable, Field {
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
-    this.readToDelimiter = fieldSpec.readToDelimiter;
     this.setOptional(fieldSpec.optional);
     this._placeholder = fieldSpec.placeholder;
   }
@@ -97,8 +93,6 @@ export class FieldImpl implements Selectable, Field {
     return this.htmlId;
   }
 
-  readToDelimiter?: (source: CodeSource) => string;
-
   showHelp() {
     this.helpActive = true;
   }
@@ -123,17 +117,6 @@ export class FieldImpl implements Selectable, Field {
 
   resetParserErrors() {
     this._parserErrorMessages = [];
-  }
-
-  parseFrom(source: CodeSource): void {
-    this.holder.hasBeenAddedTo();
-    const text = this.readToDelimiter!(source);
-    this.parseCompleteText(text);
-    if (this.isOptional() && this._parseStatus === ParseStatus.empty) {
-      this._parseStatus = ParseStatus.valid;
-    } else if (this._parseStatus === ParseStatus.invalid) {
-      throw new Error(`Parse error at ${source.getRemainingCode()}`);
-    }
   }
 
   getCompletion(): string {
@@ -367,16 +350,14 @@ export class FieldImpl implements Selectable, Field {
   }
 
   private processInput(key: string) {
-    if (this.overtyper.hasNotConsumed(key)) {
-      if (this.isEndMarker(key)) {
-        this.enter();
-      } else {
-        this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
-        const preParse = this.text.length;
-        this.parseCurrentText();
-        const afterParse = this.text.length;
-        this.setSelection(this.cursorPos + 1 + afterParse - preParse);
-      }
+    if (this.isEndMarker(key)) {
+      this.enter();
+    } else {
+      this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
+      const preParse = this.text.length;
+      this.parseCurrentText();
+      const afterParse = this.text.length;
+      this.setSelection(this.cursorPos + 1 + afterParse - preParse);
     }
   }
 

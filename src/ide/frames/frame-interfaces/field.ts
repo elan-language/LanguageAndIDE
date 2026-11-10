@@ -1,4 +1,3 @@
-import { Overtyper } from "../overtyper";
 import { CompileStatus } from "../status-enums";
 import { SymbolWrapper } from "../symbol-wrapper";
 import { File } from "./file";
@@ -9,7 +8,6 @@ export interface Field extends Selectable {
   isField: boolean;
   getHolder(): Frame | File; //File because of GlobalSelector
   readCompileStatus(): CompileStatus;
-  overtyper: Overtyper;
   allPossibleSymbolCompletions: SymbolWrapper[];
   helpActive: boolean;
   resetText(): void;
