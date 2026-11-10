@@ -874,9 +874,7 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean.ErrorMessages.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be bool.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_ElseConditionNotBool", async () => {
@@ -908,9 +906,7 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expression must be Boolean.ErrorMessages.html#TypeCompileError",
-    ]);
+    assertDoesNotCompile(fileImpl, ["Expression must be bool.ErrorMessages.html#TypeCompileError"]);
   });
 
   test("Fail_RedefineVariable in if", async () => {

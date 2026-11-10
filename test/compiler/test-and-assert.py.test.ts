@@ -52,9 +52,9 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["python_test12", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "python_assert15", _stdlib, false));
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "float"], [9, "int"], "python_assert15", _stdlib, false));
   let actual = (await global.square(4));
-  _outcomes.push(await system.assert([async () => actual, "Float"], [16, "Int"], "python_assert21", _stdlib, false));
+  _outcomes.push(await system.assert([async () => actual, "float"], [16, "int"], "python_assert21", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -106,7 +106,7 @@ async function main() {
 }
 
 _tests.push(["python_test3", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (3 + 4), "Int"], [7, "Int"], "python_assert6", _stdlib, false));
+  _outcomes.push(await system.assert([async () => (3 + 4), "int"], [7, "int"], "python_assert6", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -154,7 +154,7 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let t = system.tuple(["one", "two"]);
-  _outcomes.push(await system.assert([async () => t, "(String, String)"], [system.tuple(["one", "two"]), "(String, String)"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => t, "(str, str)"], [system.tuple(["one", "two"]), "(str, str)"], "python_assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -219,7 +219,7 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let f = system.initialise(await new Foo()._initialise());
-  _outcomes.push(await system.assert([async () => f.p1, "Int"], [10, "Int"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => f.p1, "int"], [10, "int"], "python_assert9", _stdlib, false));
 }]);
 
 class Foo {
@@ -291,8 +291,8 @@ async function square(x) {
 global["square"] = square;
 
 _tests.push(["python_test12", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [10, "Int"], "python_assert15", _stdlib, false));
-  _outcomes.push(await system.assert([async () => (await global.square(4)), "Float"], [16, "Int"], "python_assert18", _stdlib, false));
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "float"], [10, "int"], "python_assert15", _stdlib, false));
+  _outcomes.push(await system.assert([async () => (await global.square(4)), "float"], [16, "int"], "python_assert18", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -314,7 +314,7 @@ return [main, _tests];}`;
       [
         "python_test12",
         [
-          new AssertOutcome(TestStatus.fail, "Float expected: Int", "10", "python_assert15"),
+          new AssertOutcome(TestStatus.fail, "float expected: int", "10", "python_assert15"),
           new AssertOutcome(TestStatus.pass, "16", "16", "python_assert18"),
         ],
       ],
@@ -345,7 +345,7 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let arr = system.initialise(await new _stdlib.List()._initialise());
-  _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "Int"], ["Out of range index: 1 size: 0", "String"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "int"], ["Out of range index: 1 size: 0", "str"], "python_assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -403,7 +403,7 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let arr = system.initialise(await new _stdlib.List()._initialise());
-  _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "Int"], [0, "Int"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => system.safeIndex(arr, 1), "int"], [0, "int"], "python_assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -462,7 +462,7 @@ async function main() {
 _tests.push(["python_test3", async (_outcomes) => {
   let arr = system.initialise(await new _stdlib.List()._initialise());
   let b = system.safeIndex(arr, 1);
-  _outcomes.push(await system.assert([async () => b, "Int"], [0, "Int"], "python_assert12", _stdlib, false));
+  _outcomes.push(await system.assert([async () => b, "int"], [0, "int"], "python_assert12", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -537,21 +537,21 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let a = system.list([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "List<of Int>"], [system.list([3, 2, 4, 0]), "List<of Int>"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "List<of int>"], [system.list([3, 2, 4, 0]), "List<of int>"], "python_assert9", _stdlib, false));
 }]);
 
 _tests.push(["python_test12", async (_outcomes) => {
   let a = system.list([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "List<of Int>"], [system.list([3, 2, 4, 0]), "List<of Int>"], "python_assert18", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "List<of int>"], [system.list([3, 2, 4, 0]), "List<of int>"], "python_assert18", _stdlib, false));
 }]);
 
 _tests.push(["python_test21", async (_outcomes) => {
   let a = "Hello World";
-  _outcomes.push(await system.assert([async () => a, "String"], ["Hello World", "String"], "python_assert27", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "str"], ["Hello World", "str"], "python_assert27", _stdlib, false));
 }]);
 
 _tests.push(["python_test33", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => global.hello, "String"], ["Hello", "String"], "python_assert36", _stdlib, false));
+  _outcomes.push(await system.assert([async () => global.hello, "str"], ["Hello", "str"], "python_assert36", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -637,25 +637,25 @@ async function main() {
 _tests.push(["python_test3", async (_outcomes) => {
   let a = 1 / 3;
   let b = _stdlib.round(a, 4);
-  _outcomes.push(await system.assert([async () => b, "Float"], [0.3333, "Float"], "python_assert12", _stdlib, false));
+  _outcomes.push(await system.assert([async () => b, "float"], [0.3333, "float"], "python_assert12", _stdlib, false));
 }]);
 
 _tests.push(["python_test15", async (_outcomes) => {
   let a = 0.9999;
   let b = _stdlib.round(a, 2);
-  _outcomes.push(await system.assert([async () => b, "Float"], [1, "Int"], "python_assert24", _stdlib, false));
+  _outcomes.push(await system.assert([async () => b, "float"], [1, "int"], "python_assert24", _stdlib, false));
 }]);
 
 _tests.push(["python_test27", async (_outcomes) => {
   let a = 1.25;
   let b = _stdlib.round(a, 1);
-  _outcomes.push(await system.assert([async () => b, "Float"], [1.3, "Float"], "python_assert36", _stdlib, false));
+  _outcomes.push(await system.assert([async () => b, "float"], [1.3, "float"], "python_assert36", _stdlib, false));
 }]);
 
 _tests.push(["python_test39", async (_outcomes) => {
   let a = 44.444;
   let b = _stdlib.round(a, 2);
-  _outcomes.push(await system.assert([async () => b, "Float"], [44.44, "Float"], "python_assert48", _stdlib, false));
+  _outcomes.push(await system.assert([async () => b, "float"], [44.44, "float"], "python_assert48", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -923,7 +923,7 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let actual = " 1  2   3    ";
-  _outcomes.push(await system.assert([async () => actual, "String"], [" 1  2   3    ", "String"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => actual, "str"], [" 1  2   3    ", "str"], "python_assert9", _stdlib, false));
 }]);
 return [main, _tests];}`;
 

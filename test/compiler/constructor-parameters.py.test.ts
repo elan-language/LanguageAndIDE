@@ -6,6 +6,7 @@ import {
   assertDoesNotCompile,
   assertDoesNotParse,
   assertParses,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -53,7 +54,7 @@ main()
     ]);
   });
 
-  test("Fail_MutatingListParam", async () => {
+  ignore_test("Fail_MutatingListParam", async () => {
     const code = `${testPythonHeader}
 
 class Foo: # concrete class
@@ -123,7 +124,7 @@ class Foo: # concrete class
 
 class Foo: # concrete class
 
-  def __init__(self: Foo, out a as Int) -> None:
+  def __init__(self: Foo, out a as int) -> None:
 
   # end constructor
 

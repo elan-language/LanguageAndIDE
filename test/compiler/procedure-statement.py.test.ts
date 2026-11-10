@@ -1024,7 +1024,7 @@ main()
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
     const code = `${testPythonHeader}
 
-def foo(Int a) -> None: # procedure
+def foo(int a) -> None: # procedure
 
 # end procedure
 
@@ -1137,7 +1137,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (String).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: a (int), b (str).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1166,8 +1166,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
-      "Too many argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: value (int).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: value (int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1199,7 +1199,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (String), Provided: Int, Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: a (int), b (str), Provided: int, int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1286,8 +1286,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
-      "Missing argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: p (float).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: p (float).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1319,8 +1319,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int), Provided: Boolean.ErrorMessages.html#compile_error",
-      "Argument types. Expected: p (Int), Provided: Float.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (int), Provided: bool.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (int), Provided: float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1549,7 +1549,7 @@ def main() -> None:
 
 # end main
 
-def fun(if as Int) -> None: # procedure
+def fun(if as int) -> None: # procedure
 
 # end procedure
 
@@ -1693,8 +1693,8 @@ main()
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1723,7 +1723,7 @@ main()
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot call procedure 'append' within an expression.ErrorMessages.html#compile_error",
-      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of int>, Provided: Procedure (int).ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1796,7 +1796,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'.ErrorMessages.html#compile_error",
+      "'reverse' is not defined for type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 

@@ -633,7 +633,7 @@ def main() -> None:
   s = foo("s") # variable definition
 # end main
 
-def foo(x String) -> : # function
+def foo(x str) -> : # function
   return 
 # end function
 

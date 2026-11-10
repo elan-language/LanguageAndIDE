@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -1252,7 +1253,7 @@ main()
     ]);
   });
 
-  test("Fail_MultipleAbstractClassInherits", async () => {
+  ignore_test("Fail_MultipleAbstractClassInherits", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

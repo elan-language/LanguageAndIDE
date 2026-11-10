@@ -1983,8 +1983,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'setP1' must be of type Procedure (Int).ErrorMessages.html#MemberTypeCompileError",
-      "Member 'product' must be of type function that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
+      "Member 'setP1' must be of type Procedure (int).ErrorMessages.html#MemberTypeCompileError",
+      "Member 'product' must be of type function that takes no parameters - returning a int.ErrorMessages.html#MemberTypeCompileError",
     ]);
   });
 
@@ -2048,7 +2048,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Member 'product' must be of type function that takes no parameters - returning a Int.ErrorMessages.html#MemberTypeCompileError",
+      "Member 'product' must be of type function that takes no parameters - returning a int.ErrorMessages.html#MemberTypeCompileError",
     ]);
   });
 
@@ -2432,7 +2432,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Dictionary<of String, Foo>), Provided: Dictionary<of String, Bar>.ErrorMessages.html#compile_error",
+      "Argument types. Expected: l (Dictionary<of str, Foo>), Provided: Dictionary<of str, Bar>.ErrorMessages.html#compile_error",
     ]);
   });
 

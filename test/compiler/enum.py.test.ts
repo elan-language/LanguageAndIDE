@@ -437,8 +437,8 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: Fruit.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: Fruit.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -559,7 +559,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Fruit.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: Fruit.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -845,7 +845,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: enum value (AnyEnum), Provided: String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: enum value (AnyEnum), Provided: str.ErrorMessages.html#compile_error",
     ]);
   });
 });

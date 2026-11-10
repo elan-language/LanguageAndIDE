@@ -57,7 +57,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "123,",
       false,
-      //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
+      //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("InputArgList", () => {
@@ -80,7 +80,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       `"age?",`,
       false,
-      //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
+      //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("ParamList", () => {
@@ -131,7 +131,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "a",
       false,
-      //"mismatched input 'a' expecting {'Int', 'Float', 'Boolean', 'String', 'List', NAME_STARTING_UC}",
+      //"mismatched input 'a' expecting {'int', 'float', 'bool', 'str', 'List', NAME_STARTING_UC}",
     );
   });
   test("ExceptionMessage", () => {
@@ -162,7 +162,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "foo",
       false,
-      //"mismatched input 'foo' expecting {'Int', 'Float', 'Boolean', 'String', 'List', NAME_STARTING_UC}",
+      //"mismatched input 'foo' expecting {'int', 'float', 'bool', 'str', 'List', NAME_STARTING_UC}",
     );
   });
   test("Comment", () => {
@@ -254,7 +254,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "+",
       false,
-      //"mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
+      //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("PrintExpression", () => {
@@ -273,7 +273,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "+",
       false,
-      //"mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
+      //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("AssertActual", () => {
@@ -292,7 +292,7 @@ suite("Parsing Fields (New) Python", () => {
       field,
       "+",
       false,
-      //"mismatched input '+' expecting {'if_', 'new', 'Int', 'Float', 'Boolean', 'String', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
+      //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("AssertExpected", () => {

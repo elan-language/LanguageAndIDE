@@ -242,7 +242,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String firstErrorMessages.html#compile_error",
+      "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a str firstErrorMessages.html#compile_error",
     ]);
   });
 });

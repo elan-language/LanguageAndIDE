@@ -2,8 +2,8 @@ import { ParserRuleContext } from "antlr4ng";
 import { RefLangParser } from "../../src/generated/ref-lang/RefLangParser";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { Parser, testAntlrParse } from "../testHelpers";
 import { ignore_test } from "../compiler/compiler-test-helpers";
+import { Parser, testAntlrParse } from "../testHelpers";
 
 suite("Parsing Rules Python", () => {
   ignore_test("Expression", () => {
@@ -126,7 +126,7 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(identifier, `()_a`, false);
   });
 
-  test("Lit String", () => {
+  test("Lit str", () => {
     const litString: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litString(),
@@ -230,7 +230,7 @@ suite("Parsing Rules Python", () => {
   //   });
   //  });
 
-  ignore_test("Lit Int", () => {
+  ignore_test("Lit int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litInt(),
@@ -293,7 +293,7 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(litInt, "&B0110", false); //VB syntax
   });
 
-  test("Lit Float", () => {
+  test("Lit float", () => {
     const litFloat: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litFloat(),
@@ -323,7 +323,7 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(litFloat, "1.1E-5", true, "1.1E-5", "1.1e-5", "<el-lit>1.1e-5</el-lit>");
   });
 
-  test("Lit Boolean", () => {
+  test("Lit bool", () => {
     const litBoolean: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litBoolean(),
@@ -695,12 +695,12 @@ suite("Parsing Rules Python", () => {
   //     LanguagePython.Instance,
   //     (p: Parser) => p.lambda(),
   //   ];
-  //   testAntlrParse(lambda, `lambda x: int: x * x`, true, "lambda x as Int => x * x", "", "");
+  //   testAntlrParse(lambda, `lambda x: int: x * x`, true, "lambda x as int => x * x", "", "");
   //   testAntlrParse(lambda, `lambda x`, false);
   //   //testAntlrParse(lambda, `lambda x => x * x`, true); // parameter types are optional!
   //   testAntlrParse(
   //     lambda,
-  //     `lambda bestSoFar as String, newWord as String => betterOf(bestSoFar, newWord, possAnswers)`,
+  //     `lambda bestSoFar as str, newWord as str => betterOf(bestSoFar, newWord, possAnswers)`,
   //     true,
   //     "",
   //     "",
@@ -708,11 +708,11 @@ suite("Parsing Rules Python", () => {
   //   );
   //   testAntlrParse(
   //     lambda,
-  //     `lambda a as (String, String), x as Int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
+  //     `lambda a as (str, str), x as int => (setAttemptIfGreen(a.attempt, a.target, x), setTargetIfGreen(a.attempt, a.target, x))`,
   //     true,
   //     "",
   //     "",
-  //     "<el-kw>lambda</el-kw> <el-id>a</el-id> <el-kw>as</el-kw> (<el-type>String</el-type>, <el-type>String</el-type>), <el-id>x</el-id> <el-kw>as</el-kw> <el-type>Int</el-type> => (<el-method>setAttemptIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>), <el-method>setTargetIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>))",
+  //     "<el-kw>lambda</el-kw> <el-id>a</el-id> <el-kw>as</el-kw> (<el-type>str</el-type>, <el-type>str</el-type>), <el-id>x</el-id> <el-kw>as</el-kw> <el-type>int</el-type> => (<el-method>setAttemptIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>), <el-method>setTargetIfGreen</el-method>(<el-id>a</el-id>.<el-id>attempt</el-id>, <el-id>a</el-id>.<el-id>target</el-id>, <el-id>x</el-id>))",
   //   );
   // });
 
@@ -788,7 +788,7 @@ suite("Parsing Rules Python", () => {
       `a: int, b: str`,
       true,
       `a: int, b: str`,
-      "a as Int, b as String",
+      "a as int, b as str",
       `<el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type>`,
       "a: int, b: str",
     );

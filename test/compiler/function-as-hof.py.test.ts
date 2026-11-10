@@ -83,7 +83,7 @@ def main() -> None:
   printModified(3, twice) # procedure call
 # end main
 
-def printModified(i as Float, f as Func<of => Float>) -> None: # procedure
+def printModified(i as float, f as Func<of => float>) -> None: # procedure
 
 # end procedure
 
@@ -443,7 +443,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, function that takes parameters - Int, Int - returning a Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (int), f (function that takes parameter - int - returning a int), Provided: int, function that takes parameters - int, int - returning a int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -478,7 +478,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, function that takes parameter - Int - returning a String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (int), f (function that takes parameter - int - returning a int), Provided: int, function that takes parameter - int - returning a str.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -710,7 +710,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes parameter - int - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -742,7 +742,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes parameter - Int - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes parameter - int - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

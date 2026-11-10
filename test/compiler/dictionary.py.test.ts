@@ -95,6 +95,7 @@ class Fruit(Enum):
   apple = 1
   orange = 2
   pear = 3
+# end enum
 
 def main() -> None:
   a = {Fruit.apple:1, Fruit.orange:3, Fruit.pear:10} # variable definition
@@ -210,8 +211,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  b = list[str]()
-  b = a.keys()
+  b = list[str]() # variable definition
+  b = a.keys() # assignment
   printNoLine(b)
 # end main
 
@@ -849,7 +850,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -908,7 +909,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -962,7 +963,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -989,7 +990,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1041,7 +1042,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), Provided: Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: key (str), Provided: int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1068,7 +1069,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int), Provided: Int, Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: key (str), value (int), Provided: int, int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1257,7 +1258,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int), Provided: String, Float.ErrorMessages.html#compile_error",
+      "Argument types. Expected: key (str), value (int), Provided: str, float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1312,7 +1313,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int), Provided: Int, Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: key (str), value (int), Provided: int, int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1339,7 +1340,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1366,7 +1367,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: key (String), value (Int), Provided: Int, Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: key (str), value (int), Provided: int, int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1393,7 +1394,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of String, Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of str, int>'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1421,7 +1422,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'List<of int>'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1476,7 +1477,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of int, int>'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1503,7 +1504,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'Dictionary<of Int, Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'Dictionary<of int, int>'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1530,7 +1531,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1557,7 +1558,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Dictionary cannot have key of type 'List<of Int>'.ErrorMessages.html#compile_error",
+      "Dictionary cannot have key of type 'list[int]'.ErrorMessages.html#compile_error",
     ]);
   });
 

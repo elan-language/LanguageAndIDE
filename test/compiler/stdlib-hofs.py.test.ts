@@ -766,7 +766,7 @@ def main() -> None:
 # end main
 
 def getTrailingNumber(s: str) -> str: # function
-  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n as Int => not isnumberchar(s[n]))) + 1..s.length()])
+  return if_(s.equals(""), "", s[last(range(0, s.length()).filter(lambda n as int => not isnumberchar(s[n]))) + 1..s.length()])
 # end function
 
 main()
