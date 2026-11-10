@@ -72,6 +72,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitBoolTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
   override visitStringTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
   override visitListTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitDictTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
   override visitUdtTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>

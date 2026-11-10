@@ -52,6 +52,7 @@ import { FloatTypeNameContext } from "./RefLangParser.js";
 import { BoolTypeNameContext } from "./RefLangParser.js";
 import { StringTypeNameContext } from "./RefLangParser.js";
 import { ListTypeNameContext } from "./RefLangParser.js";
+import { DictTypeNameContext } from "./RefLangParser.js";
 import { UdtTypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
@@ -629,6 +630,18 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `dictTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterDictTypeName?: (ctx: DictTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `dictTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitDictTypeName?: (ctx: DictTypeNameContext) => void;
   /**
    * Enter a parse tree produced by the `udtTypeName`
    * labeled alternative in `RefLangParser.typeName`.

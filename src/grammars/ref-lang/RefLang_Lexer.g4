@@ -77,6 +77,7 @@ FLOAT_NAME: 'Float';
 BOOL_NAME: 'Boolean';
 STRING_NAME: 'String';
 LIST_NAME: 'List';
+DICT_NAME: 'Dictionary';
 FUNC_NAME: 'Func';
 
 TRUE: 'true';

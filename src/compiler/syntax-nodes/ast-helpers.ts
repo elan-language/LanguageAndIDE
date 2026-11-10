@@ -30,6 +30,7 @@ import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { BoolTypeNameAsn } from "./bool-type-name-asn";
 import { ConstructorMemberAsn } from "./class-members/constructor-member-asn";
+import { DictTypeNameAsn } from "./dict-type-name-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
@@ -504,6 +505,8 @@ export function getTypeName(l: Language, name: string, fieldId: string, scope: S
       return new BoolTypeNameAsn(l, fieldId);
     case l.LIST_NAME:
       return new ListTypeNameAsn(l, fieldId, scope);
+    case l.DICT_NAME:
+      return new DictTypeNameAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
   }
@@ -527,6 +530,8 @@ export function getTypeNameById(
       return new BoolTypeNameAsn(l, fieldId);
     case RefLangLexer.LIST_NAME:
       return new ListTypeNameAsn(l, fieldId, scope);
+    case RefLangLexer.DICT_NAME:
+      return new DictTypeNameAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
   }

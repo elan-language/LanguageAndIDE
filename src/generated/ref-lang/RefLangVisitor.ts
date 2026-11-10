@@ -52,6 +52,7 @@ import { FloatTypeNameContext } from "./RefLangParser.js";
 import { BoolTypeNameContext } from "./RefLangParser.js";
 import { StringTypeNameContext } from "./RefLangParser.js";
 import { ListTypeNameContext } from "./RefLangParser.js";
+import { DictTypeNameContext } from "./RefLangParser.js";
 import { UdtTypeNameContext } from "./RefLangParser.js";
 import { ConstantValueContext } from "./RefLangParser.js";
 import { ArgListContext } from "./RefLangParser.js";
@@ -424,6 +425,13 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitListTypeName?: (ctx: ListTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictTypeName?: (ctx: DictTypeNameContext) => Result;
   /**
    * Visit a parse tree produced by the `udtTypeName`
    * labeled alternative in `RefLangParser.typeName`.

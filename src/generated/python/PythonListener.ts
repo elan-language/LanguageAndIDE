@@ -55,6 +55,7 @@ import { FloatTypeNameContext } from "./PythonParser.js";
 import { BoolTypeNameContext } from "./PythonParser.js";
 import { StringTypeNameContext } from "./PythonParser.js";
 import { ListTypeNameContext } from "./PythonParser.js";
+import { DictTypeNameContext } from "./PythonParser.js";
 import { UdtTypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
@@ -664,6 +665,18 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitListTypeName?: (ctx: ListTypeNameContext) => void;
+  /**
+   * Enter a parse tree produced by the `dictTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  enterDictTypeName?: (ctx: DictTypeNameContext) => void;
+  /**
+   * Exit a parse tree produced by the `dictTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   */
+  exitDictTypeName?: (ctx: DictTypeNameContext) => void;
   /**
    * Enter a parse tree produced by the `udtTypeName`
    * labeled alternative in `PythonParser.typeName`.

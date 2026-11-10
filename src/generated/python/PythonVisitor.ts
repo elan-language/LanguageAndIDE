@@ -55,6 +55,7 @@ import { FloatTypeNameContext } from "./PythonParser.js";
 import { BoolTypeNameContext } from "./PythonParser.js";
 import { StringTypeNameContext } from "./PythonParser.js";
 import { ListTypeNameContext } from "./PythonParser.js";
+import { DictTypeNameContext } from "./PythonParser.js";
 import { UdtTypeNameContext } from "./PythonParser.js";
 import { ConstantValueContext } from "./PythonParser.js";
 import { ArgListContext } from "./PythonParser.js";
@@ -447,6 +448,13 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitListTypeName?: (ctx: ListTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictTypeName`
+   * labeled alternative in `PythonParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictTypeName?: (ctx: DictTypeNameContext) => Result;
   /**
    * Visit a parse tree produced by the `udtTypeName`
    * labeled alternative in `PythonParser.typeName`.

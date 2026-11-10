@@ -75,6 +75,7 @@ FLOAT_NAME: 'float';
 BOOL_NAME: 'bool';
 STRING_NAME: 'str';
 LIST_NAME: 'list';
+DICT_NAME: 'dict';
 FUNC_NAME: 'Callable';
 
 TRUE: 'True';

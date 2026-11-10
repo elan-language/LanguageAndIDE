@@ -63,6 +63,7 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   override visitBoolTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
   override visitStringTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
   override visitListTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
+  override visitDictTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
   override visitUdtTypeName = (ctx: TypeNameContext) => this.visitChildren(ctx)!;
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>

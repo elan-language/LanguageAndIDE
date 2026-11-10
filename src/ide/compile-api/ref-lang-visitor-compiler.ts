@@ -7,6 +7,7 @@ import { BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expressi
 import { BoolTypeNameAsn } from "../../compiler/syntax-nodes/bool-type-name-asn";
 import { BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-expression-asn";
 import { CsvAsn } from "../../compiler/syntax-nodes/csv-asn";
+import { DictTypeNameAsn } from "../../compiler/syntax-nodes/dict-type-name-asn";
 import { DictionaryAsn } from "../../compiler/syntax-nodes/dictionary-asn";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
 import { EnumValueAsn } from "../../compiler/syntax-nodes/enum-value-asn";
@@ -149,6 +150,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitListTypeName = (_ctx: TypeNameContext) =>
     new ListTypeNameAsn(this.language, this.fieldId, this.scope);
+
+  override visitDictTypeName = (_ctx: TypeNameContext) =>
+    new DictTypeNameAsn(this.language, this.fieldId, this.scope);
 
   override visitUdtTypeName = (ctx: TypeNameContext) =>
     new TypeNameAsn(ctx.getText(), this.fieldId, this.scope);

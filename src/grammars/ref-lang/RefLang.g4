@@ -173,6 +173,7 @@ typeName:
     | BOOL_NAME        # boolTypeName
     | STRING_NAME      # stringTypeName
     | LIST_NAME        # listTypeName
+    | DICT_NAME        # dictTypeName
     | NAME_STARTING_UC # udtTypeName
 ;
 
