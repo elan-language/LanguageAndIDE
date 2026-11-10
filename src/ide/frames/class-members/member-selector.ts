@@ -60,6 +60,8 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
   }
 
   createFrame(type: FrameType, _parent: Parent): Frame {
-    return this.class.createMemberFrame(type);
+    const frame = this.class.createMemberFrame(type);
+    frame.setNewlyCreatedTrue();
+    return frame;
   }
 }

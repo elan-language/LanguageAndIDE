@@ -55,6 +55,8 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   }
 
   createFrame(type: FrameType, _parent: Parent): Frame {
-    return this.file.createGlobalFrame(type);
+    const frame = this.file.createGlobalFrame(type);
+    frame.setNewlyCreatedTrue();
+    return frame;
   }
 }

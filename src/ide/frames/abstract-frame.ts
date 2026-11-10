@@ -29,7 +29,7 @@ import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 export abstract class AbstractFrame implements Frame {
   abstract frameType: FrameType;
   isFrame = true;
-  isNewlyCreated = true;
+  private newlyCreated = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   pasteError: string = "";
   pasteErrCounter: number = 0;
@@ -81,8 +81,16 @@ export abstract class AbstractFrame implements Frame {
     this.helpActive = true;
   }
 
-  hasBeenAddedTo(): void {
-    this.isNewlyCreated = false;
+  isNewlyCreated(): boolean {
+    return this.newlyCreated;
+  }
+
+  setNewlyCreatedTrue(): void {
+    this.newlyCreated = true;
+  }
+
+  setNewlyCreatedFalse(): void {
+    this.newlyCreated = false;
   }
 
   isMovable(): boolean {
@@ -296,7 +304,7 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Backspace": {
-        if (e.modKey.control || this.isNewlyCreated) {
+        if (e.modKey.control || this.newlyCreated) {
           this.deleteSelected();
           codeHasChanged = true;
         }

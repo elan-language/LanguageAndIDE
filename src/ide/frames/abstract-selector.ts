@@ -164,7 +164,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "Backspace": {
         // Apologies for the wild casting.  Perhaps it can be done another way.
         const par = this.getParent() as unknown as AbstractFrame;
-        if (this.deleteParentOnBackspace && par.isNewlyCreated) {
+        if (this.deleteParentOnBackspace && par.isNewlyCreated()) {
           // it is the first selector in a new TryStatement, delete the whole TryStatement
           par.deleteIfPermissible();
         }
