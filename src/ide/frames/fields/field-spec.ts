@@ -1,7 +1,6 @@
 import { ParserRuleContext } from "antlr4ng";
 import { PythonParser } from "../../../generated/python/PythonParser";
 import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
-import { CodeSource } from "../frame-interfaces/code-source";
 
 export enum FieldType {
   argList,
@@ -34,7 +33,6 @@ export class FieldSpec {
     public symbolCompletion: boolean,
     public optional: boolean,
     getRuleContextByField: (parser: PythonParser | RefLangParser) => ParserRuleContext,
-    public readToDelimiter: (source: CodeSource) => string,
   ) {
     this.getRuleContextByField = getRuleContextByField;
   }
@@ -48,7 +46,6 @@ export const typeFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.type_(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const argListFieldSpec: FieldSpec = new FieldSpec(
@@ -59,7 +56,6 @@ export const argListFieldSpec: FieldSpec = new FieldSpec(
   true,
   true,
   (parser: PythonParser | RefLangParser) => parser.argList(),
-  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
 );
 
 export const inputArgListFieldSpec: FieldSpec = new FieldSpec(
@@ -70,7 +66,6 @@ export const inputArgListFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.argList(),
-  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
 );
 
 export const paramListFieldSpec: FieldSpec = new FieldSpec(
@@ -81,7 +76,6 @@ export const paramListFieldSpec: FieldSpec = new FieldSpec(
   true,
   true,
   (parser: PythonParser | RefLangParser) => parser.paramList(),
-  (source: CodeSource) => source.readToNonMatchingCloseBracket(),
 );
 
 export const identifierFieldSpec: FieldSpec = new FieldSpec(
@@ -92,7 +86,6 @@ export const identifierFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.identifierDef(),
-  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
 );
 
 export const testNameFieldSpec: FieldSpec = new FieldSpec(
@@ -103,7 +96,6 @@ export const testNameFieldSpec: FieldSpec = new FieldSpec(
   false,
   false,
   (parser: PythonParser | RefLangParser) => parser.testName(),
-  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
 );
 
 export const exceptionTypeFieldSpec: FieldSpec = new FieldSpec(
@@ -114,7 +106,6 @@ export const exceptionTypeFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.typeName(),
-  (source: CodeSource) => source.readUntil(/\s/),
 );
 
 export const exceptionMessageFieldSpec: FieldSpec = new FieldSpec(
@@ -125,7 +116,6 @@ export const exceptionMessageFieldSpec: FieldSpec = new FieldSpec(
   false,
   false,
   (parser: PythonParser | RefLangParser) => parser.errorMessage(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const typeNameFieldSpec: FieldSpec = new FieldSpec(
@@ -136,7 +126,6 @@ export const typeNameFieldSpec: FieldSpec = new FieldSpec(
   false,
   false,
   (parser: PythonParser | RefLangParser) => parser.typeName(),
-  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
 );
 
 export const commentFieldSpec: FieldSpec = new FieldSpec(
@@ -147,7 +136,6 @@ export const commentFieldSpec: FieldSpec = new FieldSpec(
   false,
   false,
   (parser: PythonParser | RefLangParser) => parser.commentText(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
@@ -158,7 +146,6 @@ export const inheritsFromFieldSpec: FieldSpec = new FieldSpec(
   true,
   true,
   (parser: PythonParser | RefLangParser) => parser.typeName(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const methodNameFieldSpec: FieldSpec = new FieldSpec(
@@ -169,7 +156,6 @@ export const methodNameFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.methodName(),
-  (source: CodeSource) => source.readUntil(/[^a-zA-Z0-9_]/),
 );
 
 export const procRefFieldSpec: FieldSpec = new FieldSpec(
@@ -180,7 +166,6 @@ export const procRefFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.term(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
@@ -193,7 +178,6 @@ export const enumValuesFieldSpec: FieldSpec = new FieldSpec(
   (parser: PythonParser | RefLangParser) => {
     return parser instanceof PythonParser ? parser.enumList() : parser.identifierList();
   },
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const expressionFieldSpec: FieldSpec = new FieldSpec(
@@ -204,7 +188,6 @@ export const expressionFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.expression(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );
 
 export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
@@ -215,7 +198,6 @@ export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.expression(),
-  (source: CodeSource) => source.readUntil(/\)\r?\n/),
 );
 
 export const assertActualFieldSpec: FieldSpec = new FieldSpec(
@@ -226,7 +208,6 @@ export const assertActualFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertActual(),
-  (source: CodeSource) => source.readUntil(/\sevaluates\sto\s/),
 );
 
 export const assertExpectedFieldSpec: FieldSpec = new FieldSpec(
@@ -237,7 +218,6 @@ export const assertExpectedFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assertExpected(),
-  (source: CodeSource) => source.readUntil(/\r|\n/),
 );
 
 export const assignableFieldSpec: FieldSpec = new FieldSpec(
@@ -248,7 +228,6 @@ export const assignableFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.assignable(),
-  (source: CodeSource) => source.readUntil(/\s/), //TODO: needs confirmation
 );
 
 export const constantValueFieldSpec: FieldSpec = new FieldSpec(
@@ -259,5 +238,4 @@ export const constantValueFieldSpec: FieldSpec = new FieldSpec(
   false,
   false,
   (parser: PythonParser | RefLangParser) => parser.constantValue(),
-  (source: CodeSource) => source.readToEndOfLine(),
 );

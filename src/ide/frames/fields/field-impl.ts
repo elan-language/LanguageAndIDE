@@ -15,7 +15,6 @@ import {
   helper_deriveCompileStatusFromErrors,
   isCollapsible,
 } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { editorEvent } from "../frame-interfaces/editor-event";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -68,7 +67,6 @@ export class FieldImpl implements Selectable, Field {
     map.set(this.htmlId, this);
     this.map = map;
     this._parseStatus = ParseStatus.incomplete; // (see setOptional)
-    this.readToDelimiter = fieldSpec.readToDelimiter;
     this.setOptional(fieldSpec.optional);
     this._placeholder = fieldSpec.placeholder;
   }
@@ -96,8 +94,6 @@ export class FieldImpl implements Selectable, Field {
   getHtmlId(): string {
     return this.htmlId;
   }
-
-  readToDelimiter?: (source: CodeSource) => string;
 
   showHelp() {
     this.helpActive = true;
