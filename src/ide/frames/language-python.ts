@@ -12,7 +12,6 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
-import { Parent } from "./frame-interfaces/parent";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
@@ -402,19 +401,20 @@ export class LanguagePython extends LanguageAbstract {
     `nonetype`,
   ]);
 
-  customiseStatementOptions(
-    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
-  ): void {
-    const throwFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
-      options.filter((o) => o[0] === FrameType.throwStatement)[0];
+  customiseStatementOptions(options: [FrameType, string, string, boolean][]): void {
+    const throwFrame: [FrameType, string, string, boolean] = options.filter(
+      (o) => o[0] === FrameType.throwStatement,
+    )[0];
     throwFrame[1] = "r";
     throwFrame[2] = "<b>r</b>aise";
-    const catchFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
-      options.filter((o) => o[0] === FrameType.catchClause)[0];
+    const catchFrame: [FrameType, string, string, boolean] = options.filter(
+      (o) => o[0] === FrameType.catchClause,
+    )[0];
     catchFrame[1] = "x";
     catchFrame[2] = "e<b>x</b>cept";
-    const elseIfFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
-      options.filter((o) => o[0] === FrameType.elseIfClause)[0];
+    const elseIfFrame: [FrameType, string, string, boolean] = options.filter(
+      (o) => o[0] === FrameType.elseIfClause,
+    )[0];
     elseIfFrame[1] = "l";
     elseIfFrame[2] = "e<b>l</b>if";
   }

@@ -4,6 +4,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { TestStatus } from "../../../compiler/test-status";
+import { FrameType } from "../frame-type";
 import { Paradigm } from "../paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
@@ -71,15 +72,7 @@ export interface File extends Parent {
   getRunStatusColour(): string;
 
   //Internal use only
-  createMain(): Frame;
-  createFunction(): Frame;
-  createProcedure(): Frame;
-  createEnum(): Frame;
-  createConcreteClass(): Frame;
-  createAbstractClass(): Frame;
-  createComment(): Frame;
-  createConstant(): Frame;
-  createTest(): Frame;
+  createGlobalFrame(type: FrameType): Frame;
 
   parseFrom(source: CodeSource): Promise<void>;
 

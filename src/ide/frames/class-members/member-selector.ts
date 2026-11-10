@@ -27,48 +27,17 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+  defaultOptions(): [FrameType, string, string, boolean][] {
     return [
-      [
-        FrameType.property,
-        "p",
-        "<b>p</b>roperty",
-        (_parent: Parent) => this.class.createProperty(),
-        true,
-      ],
-      [
-        FrameType.procedureMethod,
-        "c",
-        "pro<b>c</b>edure method",
-        (_parent: Parent) => this.class.createProcedure(),
-        true,
-      ],
-      [
-        FrameType.functionMethod,
-        "f",
-        "<b>f</b>unction method",
-        (_parent: Parent) => this.class.createFunction(),
-        true,
-      ],
-      [
-        FrameType.abstractProcedure,
-        "",
-        "abstract procedure",
-        (_parent: Parent) => this.class.createAbstractProcedure(),
-        true,
-      ],
-      [
-        FrameType.abstractFunction,
-        "",
-        "abstract function",
-        (_parent: Parent) => this.class.createAbstractFunction(),
-        true,
-      ],
+      [FrameType.property, "p", "<b>p</b>roperty", true],
+      [FrameType.procedureMethod, "c", "pro<b>c</b>edure method", true],
+      [FrameType.functionMethod, "f", "<b>f</b>unction method", true],
+      [FrameType.abstractProcedure, "", "abstract procedure", true],
+      [FrameType.abstractFunction, "", "abstract function", true],
       [
         FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.class.createComment(),
         true,
       ],
     ];
@@ -88,5 +57,9 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
 
   indent(): string {
     return singleIndent();
+  }
+
+  createFrame(type: FrameType, _parent: Parent): Frame {
+    return this.class.createMemberFrame(type);
   }
 }

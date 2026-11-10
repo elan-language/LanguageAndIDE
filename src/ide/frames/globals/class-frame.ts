@@ -23,6 +23,7 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { FrameType } from "../frame-type";
 import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
@@ -211,32 +212,28 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return seenNames.filter((s) => s === name).length > 1;
   }
 
-  createConstructor(): Frame {
-    return new Constructor(this);
-  }
-
-  createFunction(priv: boolean = false): Frame {
-    return new FunctionMethod(this, priv);
-  }
-  createProperty(priv: boolean = false): Frame {
-    return new Property(this, priv);
-  }
-  createProcedure(priv: boolean = false): Frame {
-    return new ProcedureMethod(this, priv);
-  }
-  createAbstractFunction(): Frame {
-    return new AbstractFunction(this);
-  }
-  createAbstractProcedure(): Frame {
-    return new AbstractProcedure(this);
-  }
-  createComment(): Frame {
-    return new CommentFrame(this);
+  createMemberFrame(type: FrameType): Frame {
+    if (type === FrameType.functionMethod) {
+      return new FunctionMethod(this);
+    } else if (type === FrameType.property) {
+      return new Property(this);
+    } else if (type === FrameType.procedureMethod) {
+      return new ProcedureMethod(this);
+    } else if (type === FrameType.abstractFunction) {
+      return new AbstractFunction(this);
+    } else if (type === FrameType.abstractProcedure) {
+      return new AbstractProcedure(this);
+    } else if (type === FrameType.commentFrame) {
+      return new CommentFrame(this);
+    } else {
+      throw new Error(`FrameType: ${type.toString()} not supported`);
+    }
   }
 
   public getConstructor(): Constructor {
     return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
+
   parseFrom(source: CodeSource): void {
     this.parseTop(source);
     while (!this.parseBottom(source)) {
@@ -248,6 +245,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
       }
     }
   }
+
   abstract topKeywords(): string;
 
   parseTop(source: CodeSource): boolean {

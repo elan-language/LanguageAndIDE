@@ -5,7 +5,6 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { Parent } from "./frame-interfaces/parent";
 import { FrameType } from "./frame-type";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -223,9 +222,7 @@ export class LanguageCSharp extends LanguageCfamily {
     `while`,
   ]);
 
-  customiseStatementOptions(
-    _options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
-  ): void {
+  customiseStatementOptions(_options: [FrameType, string, string, boolean][]): void {
     // does nothinh
   }
 }
