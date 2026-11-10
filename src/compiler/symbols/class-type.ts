@@ -33,7 +33,9 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     const className =
       this.className.trim().toUpperCase() === language.LIST_NAME.toUpperCase()
         ? language.LIST_NAME
-        : this.className.trim();
+        : this.className.trim().toUpperCase() === "DICTIONARY"
+          ? language.DICT_NAME
+          : this.className.trim();
 
     if (this.ofTypes.length === 1) {
       return `${className}${language.START_OF_GENERIC}${this.ofTypes[0].languageSpecificName(language)}${language.END_OF_GENERIC}`;

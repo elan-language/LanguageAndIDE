@@ -47,8 +47,7 @@ export class DictionaryAsn extends AbstractAstNode implements AstNode {
       );
     }
 
-    const st = this.symbolType();
-    mustBeValidKeyType(st, ofKeyType, this.compileErrors, this.fieldId, this.scope);
+    mustBeValidKeyType(ofKeyType, this.compileErrors, this.fieldId, this.scope);
 
     const itemList = this.items.map((p) => p.compile()).join(", ");
 

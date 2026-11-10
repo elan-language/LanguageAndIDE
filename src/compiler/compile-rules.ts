@@ -885,7 +885,6 @@ export function mustBeReferenceGenericType(
 }
 
 export function mustBeValidKeyType(
-  type: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
@@ -899,7 +898,7 @@ export function mustBeValidKeyType(
     const language = getGlobalScope(scope).language;
     compileErrors.push(
       new SyntaxCompileError(
-        `${type} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
+        `${language.DICT_NAME} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
         location,
       ),
     );

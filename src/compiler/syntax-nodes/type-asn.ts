@@ -81,7 +81,6 @@ export class TypeAsn extends AbstractAstNode implements AstTypeNode {
 
     if (isAnyDictionary(rootSt.typeOptions) && this.genericParameters.length > 0) {
       mustBeValidKeyType(
-        rootSt,
         this.genericParameters[0].symbolType(),
         this.compileErrors,
         this.fieldId,
