@@ -44,8 +44,4 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_throw`;
   }
-
-  frameSpecificAnnotation(): string {
-    return "throw statement";
-  }
 }

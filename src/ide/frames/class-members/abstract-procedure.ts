@@ -37,10 +37,6 @@ export class AbstractProcedure extends SingleLineFrame {
     return `${this.language().languageHtmlClass}_proc`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract procedure";
-  }
-
   public override indent(): string {
     return singleIndent();
   }

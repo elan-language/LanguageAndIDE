@@ -31,9 +31,6 @@ export class AbstractClass extends ClassFrame {
     return `${this.language().languageHtmlClass}_class`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract class";
-  }
   topKeywords(): string {
     return `${abstractClassKeywords} `;
   }

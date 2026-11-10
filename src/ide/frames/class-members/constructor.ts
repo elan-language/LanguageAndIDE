@@ -52,10 +52,6 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return `${this.language().languageHtmlClass}_constructor`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "constructor";
-  }
-
   override outerHtmlTag: string = "el-constructor";
 
   parseTop(source: CodeSource): void {

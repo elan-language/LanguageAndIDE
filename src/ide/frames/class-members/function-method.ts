@@ -48,11 +48,6 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
     return singleIndent();
   }
 
-  frameSpecificAnnotation(): string {
-    const priv = this.isPrivate ? "private " : "";
-    return `${priv}function method`;
-  }
-
   parseTop(source: CodeSource): void {
     source.removeIndent();
     const priv = `${privateKeyword} `;

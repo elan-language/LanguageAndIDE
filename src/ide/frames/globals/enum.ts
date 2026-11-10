@@ -38,10 +38,6 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     return `${this.language().languageHtmlClass}_enum`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "enum";
-  }
-
   override outerHtmlTag: string = "el-enum";
 
   indent(): string {

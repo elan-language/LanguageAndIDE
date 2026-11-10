@@ -34,11 +34,6 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
     return singleIndent();
   }
 
-  frameSpecificAnnotation(): string {
-    const priv = this.isPrivate ? "private " : "";
-    return `${priv}procedure method`;
-  }
-
   parseTop(source: CodeSource): void {
     source.removeIndent();
     const priv = `${privateKeyword} `;

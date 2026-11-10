@@ -34,10 +34,6 @@ export class ForLoop extends FrameWithStatements implements Statement {
     return `${this.language().languageHtmlClass}_for`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "for";
-  }
-
   outerHtmlTag: string = "el-statement";
 
   parseTop(source: CodeSource): void {

@@ -27,10 +27,6 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     return `${this.language().languageHtmlClass}_proc`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "procedure";
-  }
-
   override outerHtmlTag: string = "el-proc";
 
   parseTop(source: CodeSource): void {

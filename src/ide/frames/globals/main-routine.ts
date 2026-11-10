@@ -27,10 +27,6 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
     return `${this.language().languageHtmlClass}_main`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "main routine";
-  }
-
   get symbolId() {
     return "__main";
   }

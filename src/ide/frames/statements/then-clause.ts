@@ -46,10 +46,6 @@ export class ThenClause extends Clause {
     return `${this.language().languageHtmlClass}_then`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   parseTop(_source: CodeSource): void {
     // does nothing
   }

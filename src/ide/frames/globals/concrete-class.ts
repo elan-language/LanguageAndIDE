@@ -50,10 +50,6 @@ export class ConcreteClass extends ClassFrame {
     return `${this.language().languageHtmlClass}_class`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "concrete class";
-  }
-
   topKeywords(): string {
     return `${classKeyword} `;
   }

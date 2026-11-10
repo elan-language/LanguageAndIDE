@@ -46,10 +46,6 @@ export class TryClause extends Clause {
     return `${this.language().languageHtmlClass}_${tryKeyword}`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   parseTop(_source: CodeSource): void {
     // no top, so does nothing
   }

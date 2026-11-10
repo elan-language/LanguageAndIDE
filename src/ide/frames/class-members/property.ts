@@ -49,11 +49,6 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     return `${this.language().languageHtmlClass}_prop`;
   }
 
-  frameSpecificAnnotation(): string {
-    const priv = this.isPrivate ? "private " : "";
-    return `${priv}property`;
-  }
-
   override outerHtmlTag: string = "el-prop";
 
   isGlobalClass(st: SymbolType) {

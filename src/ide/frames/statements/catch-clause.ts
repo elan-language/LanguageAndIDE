@@ -52,10 +52,6 @@ export class CatchClause extends Clause {
     return `${this.language().languageHtmlClass}_${catchKeyword}`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   parseTop(source: CodeSource): void {
     source.remove(`${catchKeyword} `);
     this.variable.parseFrom(source);

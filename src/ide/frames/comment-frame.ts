@@ -44,10 +44,6 @@ export class CommentFrame extends SingleLineFrame implements Statement {
     return `${this.language().languageHtmlClass}_com`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   private isGlobalComment() {
     return "isFile" in this.getParent();
   }

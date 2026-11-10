@@ -45,10 +45,6 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return `${this.language().languageHtmlClass}_func`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "function";
-  }
-
   override outerHtmlTag: string = "el-func";
 
   parseTop(source: CodeSource): void {

@@ -39,8 +39,4 @@ export class Assignment extends SingleLineFrame implements Statement {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_set`;
   }
-
-  frameSpecificAnnotation(): string {
-    return "assignment";
-  }
 }

@@ -49,10 +49,6 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     return `${this.language().languageHtmlClass}_assert`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "assert";
-  }
-
   setOutcome(outcome: AssertOutcome) {
     this.outcome = outcome;
   }

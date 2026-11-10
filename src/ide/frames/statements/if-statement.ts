@@ -35,10 +35,6 @@ export class IfStatement extends FrameWithStatements implements Statement {
     return `${this.language().languageHtmlClass}_if`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "if statement";
-  }
-
   outerHtmlTag: string = "el-statement";
 
   parseTop(source: CodeSource): void {

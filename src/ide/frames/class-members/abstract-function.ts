@@ -42,10 +42,6 @@ export class AbstractFunction extends SingleLineFrame {
     return `${this.language().languageHtmlClass}_func`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract function";
-  }
-
   public override indent(): string {
     return singleIndent();
   }

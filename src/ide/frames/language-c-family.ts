@@ -3,7 +3,6 @@ import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
-import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { selfTypeAsHtml, selfTypeAsSource } from "./frame-helpers";
 import { Field } from "./frame-interfaces/field";
@@ -16,7 +15,6 @@ import { FunctionFrame } from "./globals/function-frame";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { MainRoutine } from "./globals/main-routine";
-import { ProcedureFrame } from "./globals/procedure-frame";
 import { LanguageAbstract } from "./language-abstract";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -45,22 +43,6 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   abstract languageFullName: string;
   abstract defaultFileExtension: string;
   abstract defaultMimeType: string;
-
-  common_Annotation(frame: Frame): string {
-    let annotation = "";
-    if (
-      frame instanceof ProcedureFrame ||
-      frame instanceof FunctionFrame ||
-      frame instanceof ProcedureCall ||
-      frame instanceof Assignment ||
-      frame instanceof Property ||
-      frame instanceof AbstractProcedure ||
-      frame instanceof AbstractFunction
-    ) {
-      annotation = frame.frameSpecificAnnotation();
-    }
-    return annotation;
-  }
 
   common_renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;

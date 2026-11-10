@@ -129,10 +129,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.language().languageHtmlClass}_select`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   override deselect(): void {
     super.deselect();
     this.text = "";

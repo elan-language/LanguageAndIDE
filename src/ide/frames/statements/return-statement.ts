@@ -40,10 +40,6 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     return `${this.language().languageHtmlClass}_return`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "return";
-  }
-
   parseFrom(source: CodeSource): void {
     source.removeIndent();
     source.remove("return ");

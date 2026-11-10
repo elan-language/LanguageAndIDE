@@ -29,10 +29,6 @@ export class WhileLoop extends FrameWithStatements {
     return `${this.language().languageHtmlClass}_while`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   outerHtmlTag: string = "el-statement";
 
   parseTop(source: CodeSource): void {

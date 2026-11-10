@@ -14,8 +14,4 @@ export abstract class Clause extends FrameWithStatements implements Statement {
   indent() {
     return this.getParent()!.indent(); //overrides the additional indent added for most child statements
   }
-
-  frameSpecificAnnotation(): string {
-    return "";
-  }
 }

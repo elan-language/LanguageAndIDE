@@ -28,8 +28,4 @@ export class VariableDefinition extends AbstractDefinitionStatement implements S
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_var`;
   }
-
-  frameSpecificAnnotation(): string {
-    return "variable definition";
-  }
 }

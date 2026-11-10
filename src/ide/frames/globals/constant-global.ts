@@ -49,10 +49,6 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
     return `${this.language().languageHtmlClass}_const`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "constant";
-  }
-
   override outerHtmlTag: string = "el-const";
 
   renderAsHtml(): string {

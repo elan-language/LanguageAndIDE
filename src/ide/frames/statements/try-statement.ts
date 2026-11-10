@@ -33,10 +33,6 @@ export class TryStatement extends FrameWithStatements {
     return `${this.language().languageHtmlClass}_try`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "try statement";
-  }
-
   outerHtmlTag: string = "el-statement";
 
   parseTop(source: CodeSource): void {

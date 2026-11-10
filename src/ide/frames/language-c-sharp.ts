@@ -25,16 +25,6 @@ export class LanguageCSharp extends LanguageCfamily {
   defaultFileExtension: string = "cs";
   defaultMimeType: string = "text/plain";
 
-  annotation(frame: Frame): string {
-    let annotation = "";
-    if (frame instanceof Property) {
-      annotation = frame.frameSpecificAnnotation();
-    } else {
-      annotation = this.common_Annotation(frame);
-    }
-    return annotation;
-  }
-
   renderSingleLineAsHtml(frame: Frame): string {
     let html = "";
     if (frame instanceof AssertStatement) {

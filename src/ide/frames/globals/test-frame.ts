@@ -73,9 +73,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_test`;
   }
-  frameSpecificAnnotation(): string {
-    return "test";
-  }
 
   override outerHtmlTag: string = "el-test";
 

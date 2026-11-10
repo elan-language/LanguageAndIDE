@@ -36,8 +36,4 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_call`;
   }
-
-  frameSpecificAnnotation(): string {
-    return this.procRef.text.startsWith("print") ? "" : "procedure call";
-  }
 }
