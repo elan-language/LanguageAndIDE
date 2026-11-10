@@ -1,4 +1,3 @@
-import { commentMarker } from "../../compiler/elan-keywords";
 import { FieldImpl } from "./fields/field-impl";
 import { commentFieldSpec } from "./fields/field-spec";
 import { singleIndent } from "./frame-helpers";
@@ -25,10 +24,6 @@ export class CommentFrame extends SingleLineFrame implements Statement {
     this.text = new FieldImpl(this, commentFieldSpec);
     const commentMarker = this.getParent().language().COMMENT_MARKER + " ";
     this.text.setFieldToKnownValidText(commentMarker);
-  }
-
-  initialKeywords(): string {
-    return commentMarker;
   }
 
   helpId(): string {

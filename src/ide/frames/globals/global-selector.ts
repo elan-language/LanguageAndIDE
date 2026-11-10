@@ -1,5 +1,4 @@
 import { AbstractSelector } from "../abstract-selector";
-import { isGlobal } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -53,14 +52,6 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
 
   indent(): string {
     return "";
-  }
-
-  override canBePastedIn(frame: Frame): boolean {
-    if (isGlobal(frame)) {
-      return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
-    } else {
-      return false;
-    }
   }
 
   createFrame(type: FrameType, _parent: Parent): Frame {

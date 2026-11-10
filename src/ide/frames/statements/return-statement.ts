@@ -1,4 +1,3 @@
-import { returnKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { expressionFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -17,9 +16,6 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
     super(parent);
     this.ghostable = false;
     this.expr = new FieldImpl(this, expressionFieldSpec);
-  }
-  initialKeywords(): string {
-    return returnKeyword;
   }
 
   helpId(): string {

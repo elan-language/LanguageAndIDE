@@ -1,4 +1,3 @@
-import { enumKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { typeNameFieldSpec, enumValuesFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -32,9 +31,6 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     return "enum";
   }
 
-  initialKeywords(): string {
-    return enumKeyword;
-  }
   getFields(): Field[] {
     return [this.name, this.values];
   }

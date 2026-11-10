@@ -28,9 +28,6 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     this.returnType = new FieldImpl(this, typeFieldSpec);
     this.getChildren().push(new ReturnStatement(this));
   }
-  initialKeywords(): string {
-    return functionKeyword;
-  }
 
   getParadigm(): Paradigm {
     return this.getFile().getParadigm();

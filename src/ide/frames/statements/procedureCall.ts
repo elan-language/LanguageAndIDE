@@ -1,4 +1,3 @@
-import { callKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { procRefFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -18,10 +17,6 @@ export class ProcedureCall extends SingleLineFrame implements Statement {
     super(parent);
     this.procRef = new FieldImpl(this, procRefFieldSpec);
     this.procRef.setPlaceholder("<i>procedureName</i>");
-  }
-
-  initialKeywords(): string {
-    return callKeyword;
   }
 
   helpId(): string {

@@ -34,10 +34,6 @@ export class ThenClause extends Clause {
     return "";
   }
 
-  initialKeywords(): string {
-    return "";
-  }
-
   helpId(): string {
     return ""; // 'then' clause has no visible manifestation
   }

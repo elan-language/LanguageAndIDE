@@ -1,4 +1,3 @@
-import { constantKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { identifierFieldSpec, constantValueFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -24,9 +23,6 @@ export class ConstantGlobal extends SingleLineFrame implements GlobalFrame, Coll
     this.value = new FieldImpl(this, constantValueFieldSpec);
     this.value.setPlaceholder("<i>literal value or data structure</i>");
     this.canHaveBreakPoint = false;
-  }
-  initialKeywords(): string {
-    return constantKeyword;
   }
 
   helpId(): string {

@@ -98,8 +98,6 @@ export abstract class AbstractFrame implements Frame {
     return this.getParent().getFile();
   }
 
-  abstract initialKeywords(): string;
-
   getHtmlId(): string {
     return this.htmlId;
   }

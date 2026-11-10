@@ -30,10 +30,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.getFile().getParadigm();
   }
 
-  initialKeywords(): string {
-    return "selector";
-  }
-
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
@@ -81,16 +77,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     } else {
       throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
     } */
-  }
-
-  private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === this.ghostedAnnotation) {
-      frame.setGhosted(true);
-    }
-  }
-
-  optionsMatchingUserInput(match: string): [FrameType, string, string, boolean][] {
-    return this.optionsFilteredByContext(true).filter((o) => o[1] === match);
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -309,17 +295,15 @@ export abstract class AbstractSelector extends AbstractFrame {
   };
 
   canBePastedIn(frame: Frame): boolean {
-    return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
+    return this.optionsFilteredByContext(true).filter((o) => o[0] === frame.frameType).length === 1;
   }
 
   processOptions(key: string | undefined) {
-    if (this.overtyper.hasNotConsumed(key)) {
-      const options = this.optionsMatchingUserInput(this.text + key);
-      if (options.length === 1) {
-        const typeToAdd = options[0][0];
-        this.addFrame(typeToAdd);
-        this.text = "";
-      }
+    const options = this.optionsFilteredByContext(true).filter((o) => o[1] === key);
+    if (options.length === 1) {
+      const typeToAdd = options[0][0];
+      this.addFrame(typeToAdd);
+      this.text = "";
     }
   }
 

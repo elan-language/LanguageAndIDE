@@ -16,9 +16,6 @@ export class WhileLoop extends FrameWithStatements {
     this.condition = new FieldImpl(this, expressionFieldSpec);
     this.condition.setPlaceholder("<i>condition</i>");
   }
-  initialKeywords(): string {
-    return whileKeyword;
-  }
 
   helpId(): string {
     return "while"; // 'then' clause has no visible manifestation

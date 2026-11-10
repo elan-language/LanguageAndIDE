@@ -1,4 +1,3 @@
-import { mainKeyword } from "../../../compiler/elan-keywords";
 import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -14,10 +13,6 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-  }
-
-  initialKeywords(): string {
-    return mainKeyword;
   }
 
   helpId(): string {

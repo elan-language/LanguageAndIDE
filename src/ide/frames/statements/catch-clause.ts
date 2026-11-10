@@ -40,10 +40,6 @@ export class CatchClause extends Clause {
     }
   }
 
-  initialKeywords(): string {
-    return catchKeyword;
-  }
-
   helpId(): string {
     return "catch";
   }

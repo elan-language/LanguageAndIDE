@@ -1,9 +1,4 @@
-import {
-  abstractFunctionKeywords,
-  abstractKeyword,
-  functionKeyword,
-  returnsKeyword,
-} from "../../../compiler/elan-keywords";
+import { abstractKeyword, functionKeyword, returnsKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
@@ -29,10 +24,6 @@ export class AbstractFunction extends SingleLineFrame {
     this.params = new FieldImpl(this, paramListFieldSpec);
     this.returnType = new FieldImpl(this, typeFieldSpec);
     this.canHaveBreakPoint = false;
-  }
-
-  initialKeywords(): string {
-    return abstractFunctionKeywords;
   }
 
   override helpDocument(): string {

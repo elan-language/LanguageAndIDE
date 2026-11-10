@@ -47,7 +47,6 @@ export interface Frame extends Selectable {
   insertPeerSelector(before: boolean): void;
   selectNextFrame(): void;
 
-  initialKeywords(): string;
   setParent(parent: Parent): void;
 
   deleteIfPermissible(): void;

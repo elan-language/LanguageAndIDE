@@ -25,10 +25,6 @@ export class AssertStatement extends SingleLineFrame implements Statement {
     this.expected.setPlaceholder("<i>expected value</i>");
   }
 
-  initialKeywords(): string {
-    return assertKeyword;
-  }
-
   helpId(): string {
     return "assert";
   }

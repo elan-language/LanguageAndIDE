@@ -19,9 +19,6 @@ export class ThrowStatement extends SingleLineFrame implements Statement {
     this.type = new FieldImpl(this, exceptionTypeFieldSpec);
     this.type.setFieldToKnownValidText("ElanRuntimeError");
   }
-  initialKeywords(): string {
-    return throwKeyword;
-  }
 
   helpId(): string {
     return "throw"; // 'then' clause has no visible manifestation

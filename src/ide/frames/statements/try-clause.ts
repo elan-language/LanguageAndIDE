@@ -34,10 +34,6 @@ export class TryClause extends Clause {
     return "";
   }
 
-  initialKeywords(): string {
-    return "";
-  }
-
   helpId(): string {
     return ""; // try *clause* has no visible manifestation
   }
