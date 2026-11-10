@@ -59,7 +59,11 @@ export class StatementSelector extends AbstractSelector {
       result =
         parent.frameType === FrameType.tryStatement || parent.frameType === FrameType.catchClause;
     } else if (type === FrameType.procedureCall) {
-      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
+      result = !(
+        this.isWithinAFunction(parent) ||
+        this.isWithinATest() ||
+        this.isWithinAConstructor()
+      );
     } else if (type === FrameType.assertStatement) {
       result = this.isWithinATest();
     }
@@ -72,7 +76,7 @@ export class StatementSelector extends AbstractSelector {
     }
     // Then apply paradigm rules
     if (this.getParadigm().isFunctional() && userEntry) {
-      if (this.isWithinAFunction()) {
+      if (this.isWithinAFunction(parent)) {
         result = type === FrameType.variableDefinition || type === FrameType.commentFrame;
       } else if (this.isWithinATest()) {
         result =
@@ -85,27 +89,28 @@ export class StatementSelector extends AbstractSelector {
   }
 
   private isWithinThenOrElseIfClause() {
-    const prefix = this.getParent().getIdPrefix();
-    return prefix.endsWith("_then") || prefix.endsWith("_elseIf");
+    const parentType = this.getParent().frameType;
+    return parentType === FrameType.thenClause || parentType === FrameType.elseIfClause;
   }
 
-  private isWithinAFunction(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
+  private isWithinAFunction(givenParent: Parent): boolean {
+    const parentType = givenParent.frameType;
+    const isDirectlyWithinFunction =
+      parentType === FrameType.globalFunction || parentType === FrameType.functionMethod;
+    return isDirectlyWithinFunction
+      ? true
+      : givenParent.hasParent() && this.isWithinAFunction(givenParent.getParent());
   }
 
   private isWithinATest(): boolean {
-    return this.getParent().getIdPrefix().includes("_test");
+    return this.getParent().frameType === FrameType.test;
   }
 
   private isWithinAConstructor(): boolean {
-    return this.isWithinContext(this.getParent(), "constructor");
+    const parentType = this.getParent().frameType;
+    return parentType === FrameType.constructor;
   }
 
-  private isWithinContext(parent: Parent, parentPrefix: string): boolean {
-    return parent.getIdPrefix().includes(`_${parentPrefix}`)
-      ? true
-      : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
-  }
   outerHtmlTag: string = "el-statement";
 
   createFrame(type: FrameType, parent: Parent): Frame {
