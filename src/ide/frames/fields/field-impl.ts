@@ -21,7 +21,6 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { Language } from "../frame-interfaces/language";
 import { Selectable } from "../frame-interfaces/selectable";
-import { Overtyper } from "../overtyper";
 import { CompileStatus, DisplayColour, ParseStatus } from "../status-enums";
 import {
   getFilteredSymbols,
@@ -35,7 +34,6 @@ import { FieldSpec } from "./field-spec";
 export class FieldImpl implements Selectable, Field {
   // interface Field
   public readonly isField: boolean = true;
-  public readonly overtyper = new Overtyper();
   public allPossibleSymbolCompletions: SymbolWrapper[] = [];
   public helpActive: boolean = false;
 
@@ -352,16 +350,14 @@ export class FieldImpl implements Selectable, Field {
   }
 
   private processInput(key: string) {
-    if (this.overtyper.hasNotConsumed(key)) {
-      if (this.isEndMarker(key)) {
-        this.enter();
-      } else {
-        this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
-        const preParse = this.text.length;
-        this.parseCurrentText();
-        const afterParse = this.text.length;
-        this.setSelection(this.cursorPos + 1 + afterParse - preParse);
-      }
+    if (this.isEndMarker(key)) {
+      this.enter();
+    } else {
+      this.text = this.text.slice(0, this.cursorPos) + key + this.text.slice(this.cursorPos);
+      const preParse = this.text.length;
+      this.parseCurrentText();
+      const afterParse = this.text.length;
+      this.setSelection(this.cursorPos + 1 + afterParse - preParse);
     }
   }
 
