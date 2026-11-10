@@ -95,7 +95,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Pass_emptyClassAsString", async () => {
+  test("Pass_emptyClassToString", async () => {
     const code = `${testHeader}
 
 main
@@ -166,7 +166,7 @@ return [main, _tests];}`;
   });
 
   // this behaviour has changed from c# compiler
-  test("Pass_emptyClassReplacesAsString", async () => {
+  test("Pass_emptyClassReplacesToString", async () => {
     const code = `${testHeader}
 
 main
@@ -241,7 +241,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Custom toStringa Maybe");
   });
 
-  test("Pass_AsStringMayBeCalled", async () => {
+  test("Pass_ToStringMayBeCalled", async () => {
     const code = `${testHeader}
 
 main
@@ -311,7 +311,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test("Pass_AsStringCalledWhenObjectPrinted", async () => {
+  test("Pass_ToStringCalledWhenObjectPrinted", async () => {
     const code = `${testHeader}
 
 main
@@ -379,7 +379,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test("Pass_AsStringOnVariousDataTypes", async () => {
+  test("Pass_ToStringOnVariousDataTypes", async () => {
     const code = `${testHeader}
 
 main

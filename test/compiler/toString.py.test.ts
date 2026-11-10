@@ -16,8 +16,6 @@ suite("Python toString", () => {
   test("Pass_SimpleExtension", async () => {
     const code = `${testPythonHeader}
 
-aa = 1 # constant
-
 def main() -> None:
   f = 1 # variable definition
   printNoLine(f.toString()) # procedure call
@@ -53,11 +51,6 @@ return [main, _tests];}`;
 
   test("Pass_EmptyClassIsCreatedWithDefaultConstructorAndToString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = 1 # variable definition
-  printNoLine(f.toString()) # procedure call
-# end main
 
 def main() -> None:
 
@@ -115,12 +108,8 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
   });
 
-  test("Pass_emptyClassAsString", async () => {
+  test("Pass_emptyClassToString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -196,15 +185,8 @@ return [main, _tests];}`;
   });
 
   // this behaviour has changed from c# compiler
-  test("Pass_emptyClassReplacesAsString", async () => {
+  test("Pass_emptyClassReplacesToString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  p = f.p1 # variable definition
-  s = p.toString() # variable definition
-  printNoLine(s) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -283,17 +265,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Custom toStringa Maybe");
   });
 
-  test("Pass_AsStringMayBeCalled", async () => {
+  test("Pass_ToStringMayBeCalled", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  s1 = f.toString() # variable definition
-  p = f.p1 # variable definition
-  s2 = p.toString() # variable definition
-  printNoLine(s1) # procedure call
-  printNoLine(s2) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -366,14 +339,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test("Pass_AsStringCalledWhenObjectPrinted", async () => {
+  test("Pass_ToStringCalledWhenObjectPrinted", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  s = f.toString() # variable definition
-  printNoLine(s) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -444,13 +411,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Apple");
   });
 
-  test("Pass_AsStringOnVariousDataTypes", async () => {
+  test("Pass_ToStringOnVariousDataTypes", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f) # procedure call
-# end main
 
 def main() -> None:
   l = [1, 2, 3] # variable definition
