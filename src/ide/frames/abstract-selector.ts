@@ -43,12 +43,10 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][];
+  abstract defaultOptions(): [FrameType, string, string, boolean][];
   abstract validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(
-    userEntry: boolean,
-  ): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+  optionsFilteredByContext(userEntry: boolean): [FrameType, string, string, boolean][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
@@ -91,9 +89,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  optionsMatchingUserInput(
-    match: string,
-  ): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+  optionsMatchingUserInput(match: string): [FrameType, string, string, boolean][] {
     return this.optionsFilteredByContext(true).filter((o) => o[1] === match);
   }
 
@@ -110,12 +106,13 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
+  abstract createFrame(type: FrameType, parent: Parent): Frame;
+
   addFrame(type: FrameType): Frame {
     const option = this.defaultOptions().filter((o) => o[0] === type)[0];
-    const func = option[3];
-    const addAtPeerLevel = option[4];
+    const addAtPeerLevel = option[3];
     const parent = this.getParent();
-    const newFrame: Frame = func(parent);
+    const newFrame: Frame = this.createFrame(type, parent);
     if (addAtPeerLevel) {
       parent.addChildBefore(newFrame, this);
     } else {

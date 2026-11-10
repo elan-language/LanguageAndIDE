@@ -20,57 +20,20 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return "GlobalInstructions";
   }
 
-  defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+  defaultOptions(): [FrameType, string, string, boolean][] {
     return [
-      [
-        FrameType.mainRoutine,
-        "m",
-        "<b>m</b>ain routine",
-        (_parent: Parent) => this.file.createMain(),
-        true,
-      ],
-      [
-        FrameType.globalFunction,
-        "f",
-        "<b>f</b>unction",
-        (_parent: Parent) => this.file.createFunction(),
-        true,
-      ],
-      [FrameType.test, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest(), true],
-      [
-        FrameType.globalProcedure,
-        "p",
-        "<b>p</b>rocedure",
-        (_parent: Parent) => this.file.createProcedure(),
-        true,
-      ],
-      [
-        FrameType.constant,
-        "k",
-        "<b>k</b> constant",
-        (_parent: Parent) => this.file.createConstant(),
-        true,
-      ],
-      [FrameType.enum, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum(), true],
-      [
-        FrameType.concreteClass,
-        "c",
-        "<b>c</b>oncrete class",
-        (_parent: Parent) => this.file.createConcreteClass(),
-        true,
-      ],
-      [
-        FrameType.abstractClass,
-        "a",
-        "<b>a</b>bstract class",
-        (_parent: Parent) => this.file.createAbstractClass(),
-        true,
-      ],
+      [FrameType.mainRoutine, "m", "<b>m</b>ain routine", true],
+      [FrameType.globalFunction, "f", "<b>f</b>unction", true],
+      [FrameType.test, "t", "<b>t</b>est", true],
+      [FrameType.globalProcedure, "p", "<b>p</b>rocedure", true],
+      [FrameType.constant, "k", "<b>k</b> constant", true],
+      [FrameType.enum, "e", "<b>e</b>num", true],
+      [FrameType.concreteClass, "c", "<b>c</b>oncrete class", true],
+      [FrameType.abstractClass, "a", "<b>a</b>bstract class", true],
       [
         FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.file.createComment(),
         true,
       ],
     ];
@@ -98,5 +61,9 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     } else {
       return false;
     }
+  }
+
+  createFrame(type: FrameType, _parent: Parent): Frame {
+    return this.file.createGlobalFrame(type);
   }
 }

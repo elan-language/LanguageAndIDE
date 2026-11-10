@@ -54,7 +54,6 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
-import { Parent } from "./frame-interfaces/parent";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
@@ -510,9 +509,7 @@ export class LanguageRefLang extends LanguageAbstract {
     `yield`,
   ]);
 
-  customiseStatementOptions(
-    _options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
-  ): void {
+  customiseStatementOptions(_options: [FrameType, string, string, boolean][]): void {
     // does nothinh
   }
 }

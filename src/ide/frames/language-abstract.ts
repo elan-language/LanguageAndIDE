@@ -6,7 +6,6 @@ import { FileImpl } from "./file-impl";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
-import { Parent } from "./frame-interfaces/parent";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
@@ -181,7 +180,5 @@ export abstract class LanguageAbstract implements Language {
     return source;
   }
 
-  abstract customiseStatementOptions(
-    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
-  ): void;
+  abstract customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 }

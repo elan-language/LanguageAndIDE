@@ -2,7 +2,6 @@ import { FileImpl } from "../file-impl";
 import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { Frame } from "./frame";
-import { Parent } from "./parent";
 
 export interface Language {
   languageHtmlClass: string;
@@ -71,7 +70,5 @@ export interface Language {
   // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
   reservedWords: Set<string>;
 
-  customiseStatementOptions(
-    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
-  ): void;
+  customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 }

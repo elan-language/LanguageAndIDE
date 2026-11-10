@@ -597,32 +597,28 @@ export class FileImpl implements File {
     return this._factory;
   }
 
-  createMain(): Frame {
-    return new MainRoutine(this);
-  }
-  createFunction(): Frame {
-    return new GlobalFunction(this);
-  }
-  createProcedure(): Frame {
-    return new GlobalProcedure(this);
-  }
-  createEnum(): Frame {
-    return new Enum(this);
-  }
-  createConcreteClass(): Frame {
-    return new ConcreteClass(this);
-  }
-  createAbstractClass(): Frame {
-    return new AbstractClass(this);
-  }
-  createComment(): Frame {
-    return new CommentFrame(this);
-  }
-  createConstant(): Frame {
-    return new ConstantGlobal(this);
-  }
-  createTest(): Frame {
-    return new TestFrame(this);
+  createGlobalFrame(type: FrameType): Frame {
+    if (type === FrameType.mainRoutine) {
+      return new MainRoutine(this);
+    } else if (type === FrameType.globalFunction) {
+      return new GlobalFunction(this);
+    } else if (type === FrameType.globalProcedure) {
+      return new GlobalProcedure(this);
+    } else if (type === FrameType.enum) {
+      return new Enum(this);
+    } else if (type === FrameType.concreteClass) {
+      return new ConcreteClass(this);
+    } else if (type === FrameType.abstractClass) {
+      return new AbstractClass(this);
+    } else if (type === FrameType.commentFrame) {
+      return new CommentFrame(this);
+    } else if (type === FrameType.constant) {
+      return new ConstantGlobal(this);
+    } else if (type === FrameType.test) {
+      return new TestFrame(this);
+    } else {
+      throw new Error(`FrameType: ${type.toString()} not supported`);
+    }
   }
 
   getNextSelector(mode: ParseMode) {

@@ -2,6 +2,7 @@ import { CommentFrame } from "./comment-frame";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { FrameType } from "./frame-type";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
 import { CatchClause } from "./statements/catch-clause";
@@ -16,47 +17,35 @@ import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
 export class StatementFactoryImpl implements StatementFactory {
-  public newAssert(parent: Parent): Frame {
-    return new AssertStatement(parent);
-  }
-  public newCall(parent: Parent, procName = ""): Frame {
-    const call = new ProcedureCall(parent);
-    if (procName !== "") {
-      call.procRef.setFieldToKnownValidText(procName);
+  createFrame(type: FrameType, parent: Parent): Frame {
+    if (type === FrameType.assertStatement) {
+      return new AssertStatement(parent);
+    } else if (type === FrameType.procedureCall) {
+      return new ProcedureCall(parent);
+    } else if (type === FrameType.catchClause) {
+      return new CatchClause(parent.getParent());
+    } else if (type === FrameType.elseIfClause) {
+      return new ElseIfClause(parent.getParent());
+    } else if (type === FrameType.elseClause) {
+      return new ElseClause(parent.getParent());
+    } else if (type === FrameType.forLoop) {
+      return new ForLoop(parent);
+    } else if (type === FrameType.ifStatement) {
+      return new IfStatement(parent);
+    } else if (type === FrameType.assignment) {
+      return new Assignment(parent);
+    } else if (type === FrameType.throwStatement) {
+      return new ThrowStatement(parent);
+    } else if (type === FrameType.tryStatement) {
+      return new TryStatement(parent);
+    } else if (type === FrameType.variableDefinition) {
+      return new VariableDefinition(parent);
+    } else if (type === FrameType.whileLoop) {
+      return new WhileLoop(parent);
+    } else if (type === FrameType.commentFrame) {
+      return new CommentFrame(parent);
+    } else {
+      throw new Error(`FrameType: ${type.toString()} not supported`);
     }
-    return call;
-  }
-  public newCatch(parent: Parent): Frame {
-    return new CatchClause(parent);
-  }
-  public newElseIf(parent: Parent): Frame {
-    return new ElseIfClause(parent);
-  }
-  public newElse(parent: Parent): Frame {
-    return new ElseClause(parent);
-  }
-  public newFor(parent: Parent): Frame {
-    return new ForLoop(parent);
-  }
-  public newIfStatement(parent: Parent): Frame {
-    return new IfStatement(parent);
-  }
-  public newSet(parent: Parent): Frame {
-    return new Assignment(parent);
-  }
-  public newThrow(parent: Parent): Frame {
-    return new ThrowStatement(parent);
-  }
-  public newTry(parent: Parent): Frame {
-    return new TryStatement(parent);
-  }
-  public newVar(parent: Parent): Frame {
-    return new VariableDefinition(parent);
-  }
-  public newWhile(parent: Parent): Frame {
-    return new WhileLoop(parent);
-  }
-  public newComment(parent: Parent): Frame {
-    return new CommentFrame(parent);
   }
 }

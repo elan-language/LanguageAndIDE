@@ -18,97 +18,24 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
-    const options: [FrameType, string, string, (parent: Parent) => Frame, boolean][] = [
-      [
-        FrameType.assertStatement,
-        "a",
-        "<b>a</b>ssert",
-        (parent: Parent) => this.factory.newAssert(parent),
-        true,
-      ],
-      [
-        FrameType.variableDefinition,
-        "v",
-        "<b>v</b>ariable definition",
-        (parent: Parent) => this.factory.newVar(parent),
-        true,
-      ],
-      [
-        FrameType.assignment,
-        "a",
-        "<b>a</b>ssignment",
-        (parent: Parent) => this.factory.newSet(parent),
-        true,
-      ],
-      [
-        FrameType.catchClause,
-        "h",
-        "catc<b>h</b>",
-        (parent: Parent) => this.factory.newCatch(parent.getParent()),
-        false,
-      ],
-      [
-        FrameType.ifStatement,
-        "i",
-        "<b>i</b>f statement",
-        (parent: Parent) => this.factory.newIfStatement(parent),
-        true,
-      ],
-      [
-        FrameType.elseIfClause,
-        "l",
-        "e<b>l</b>se if clause",
-        (parent: Parent) => this.factory.newElseIf(parent.getParent()),
-        false,
-      ],
-      [
-        FrameType.elseClause,
-        "e",
-        "<b>e</b>lse clause",
-        (parent: Parent) => this.factory.newElse(parent.getParent()),
-        false,
-      ],
-      [
-        FrameType.whileLoop,
-        "w",
-        "<b>w</b>hile loop",
-        (parent: Parent) => this.factory.newWhile(parent),
-        true,
-      ],
-      [
-        FrameType.forLoop,
-        "f",
-        "<b>f</b>or loop",
-        (parent: Parent) => this.factory.newFor(parent),
-        true,
-      ],
-      [
-        FrameType.procedureCall,
-        "c",
-        "procedure <b>c</b>all",
-        (parent: Parent) => this.factory.newCall(parent, ""),
-        true,
-      ],
-      [
-        FrameType.tryStatement,
-        "y",
-        "tr<b>y</b> statement",
-        (parent: Parent) => this.factory.newTry(parent),
-        true,
-      ],
-      [
-        FrameType.throwStatement,
-        "t",
-        "<b>t</b>hrow statement",
-        (parent: Parent) => this.factory.newThrow(parent),
-        true,
-      ],
+  defaultOptions(): [FrameType, string, string, boolean][] {
+    const options: [FrameType, string, string, boolean][] = [
+      [FrameType.assertStatement, "a", "<b>a</b>ssert", true],
+      [FrameType.variableDefinition, "v", "<b>v</b>ariable definition", true],
+      [FrameType.assignment, "a", "<b>a</b>ssignment", true],
+      [FrameType.catchClause, "h", "catc<b>h</b>", false],
+      [FrameType.ifStatement, "i", "<b>i</b>f statement", true],
+      [FrameType.elseIfClause, "l", "e<b>l</b>se if clause", false],
+      [FrameType.elseClause, "e", "<b>e</b>lse clause", false],
+      [FrameType.whileLoop, "w", "<b>w</b>hile loop", true],
+      [FrameType.forLoop, "f", "<b>f</b>or loop", true],
+      [FrameType.procedureCall, "c", "procedure <b>c</b>all", true],
+      [FrameType.tryStatement, "y", "tr<b>y</b> statement", true],
+      [FrameType.throwStatement, "t", "<b>t</b>hrow statement", true],
       [
         FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (parent: Parent) => this.factory.newComment(parent),
         true,
       ],
     ];
@@ -180,4 +107,8 @@ export class StatementSelector extends AbstractSelector {
       : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
   }
   outerHtmlTag: string = "el-statement";
+
+  createFrame(type: FrameType, parent: Parent): Frame {
+    return this.factory.createFrame(type, parent);
+  }
 }
