@@ -16,8 +16,6 @@ export abstract class AbstractDefinitionStatement extends SingleLineFrame implem
     this.name = new FieldImpl(this, identifierFieldSpec);
     this.expr = new FieldImpl(this, expressionFieldSpec);
   }
-  abstract initialKeywords(): string;
-
   abstract parseFrom(source: CodeSource): void;
 
   abstract getIdPrefix(): string;

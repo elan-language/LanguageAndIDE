@@ -21,9 +21,6 @@ export class ForLoop extends FrameWithStatements implements Statement {
     this.iter = new FieldImpl(this, expressionFieldSpec);
     this.iter.setPlaceholder("<i>source</i>");
   }
-  initialKeywords(): string {
-    return forKeyword;
-  }
 
   helpId(): string {
     return "enum";

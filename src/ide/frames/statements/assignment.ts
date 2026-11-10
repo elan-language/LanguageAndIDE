@@ -19,9 +19,7 @@ export class Assignment extends SingleLineFrame implements Statement {
     this.assignable.setPlaceholder("<i>variableName</i>");
     this.expr = new FieldImpl(this, expressionFieldSpec);
   }
-  initialKeywords(): string {
-    return assignKeyword;
-  }
+
   helpId(): string {
     return "assignment";
   }

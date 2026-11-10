@@ -30,10 +30,6 @@ export class ConcreteClass extends ClassFrame {
     this.getChildren().push(this.toString);
   }
 
-  initialKeywords(): string {
-    return classKeyword;
-  }
-
   helpId(): string {
     return "class";
   }

@@ -12,10 +12,6 @@ export class AbstractClass extends ClassFrame {
     this.isAbstract = true;
   }
 
-  initialKeywords(): string {
-    return abstractClassKeywords;
-  }
-
   override helpDocument(): string {
     return "oopRef.html";
   }

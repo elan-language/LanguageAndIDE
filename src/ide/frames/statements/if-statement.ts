@@ -24,10 +24,6 @@ export class IfStatement extends FrameWithStatements implements Statement {
     this.removeChild(selector);
   }
 
-  initialKeywords(): string {
-    return ifKeyword;
-  }
-
   helpId(): string {
     return "if";
   }

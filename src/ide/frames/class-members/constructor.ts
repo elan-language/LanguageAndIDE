@@ -1,4 +1,3 @@
-import { constructorKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -39,10 +38,6 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
 
   isOnAbstractClass(): boolean {
     return false;
-  }
-
-  initialKeywords(): string {
-    return constructorKeyword;
   }
 
   helpId(): string {

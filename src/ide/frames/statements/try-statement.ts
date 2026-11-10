@@ -17,10 +17,6 @@ export class TryStatement extends FrameWithStatements {
     this.removeChild(selector);
   }
 
-  initialKeywords(): string {
-    return tryKeyword;
-  }
-
   helpId(): string {
     return "try"; // 'then' clause has no visible manifestation
   }

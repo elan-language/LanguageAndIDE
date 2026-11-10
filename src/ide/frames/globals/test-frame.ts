@@ -1,6 +1,5 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
 import { FieldImpl } from "../fields/field-impl";
 import { testNameFieldSpec } from "../fields/field-spec";
@@ -61,9 +60,6 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     for (const assert of this.getAsserts()) {
       assert.outcome = undefined;
     }
-  }
-  initialKeywords(): string {
-    return testKeyword;
   }
 
   helpId(): string {

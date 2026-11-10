@@ -30,10 +30,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.getFile().getParadigm();
   }
 
-  initialKeywords(): string {
-    return "selector";
-  }
-
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;

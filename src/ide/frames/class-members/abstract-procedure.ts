@@ -1,4 +1,3 @@
-import { abstractProcedureKeywords } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
@@ -20,10 +19,6 @@ export class AbstractProcedure extends SingleLineFrame {
     this.name = new FieldImpl(this, methodNameFieldSpec);
     this.params = new FieldImpl(this, paramListFieldSpec);
     this.canHaveBreakPoint = false;
-  }
-
-  initialKeywords(): string {
-    return abstractProcedureKeywords;
   }
 
   override helpDocument(): string {

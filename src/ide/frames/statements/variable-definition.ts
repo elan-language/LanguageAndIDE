@@ -12,10 +12,6 @@ export class VariableDefinition extends AbstractDefinitionStatement implements S
     super(parent);
   }
 
-  initialKeywords(): string {
-    return variableKeyword;
-  }
-
   override helpId(): string {
     return "variableDefinition";
   }

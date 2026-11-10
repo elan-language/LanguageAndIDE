@@ -25,10 +25,6 @@ export class ElseClause extends Clause {
     }
   }
 
-  initialKeywords(): string {
-    return elseKeyword;
-  }
-
   helpId(): string {
     return "else";
   }

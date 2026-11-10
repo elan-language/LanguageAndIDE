@@ -1,4 +1,3 @@
-import { procedureKeyword } from "../../../compiler/elan-keywords";
 import { FieldImpl } from "../fields/field-impl";
 import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { CodeSource } from "../frame-interfaces/code-source";
@@ -19,10 +18,6 @@ export abstract class ProcedureFrame extends FrameWithStatements {
     this.params = new FieldImpl(this, paramListFieldSpec);
   }
   isProcedure = true;
-
-  initialKeywords(): string {
-    return procedureKeyword;
-  }
 
   getFields(): Field[] {
     return [this.name, this.params];

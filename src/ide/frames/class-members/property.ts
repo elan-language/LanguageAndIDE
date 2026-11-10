@@ -37,10 +37,6 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
     return this.getParent() instanceof AbstractClass;
   }
 
-  initialKeywords(): string {
-    return propertyKeyword;
-  }
-
   helpId(): string {
     return "property";
   }

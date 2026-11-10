@@ -33,10 +33,6 @@ export class ElseIfClause extends Clause {
     }
   }
 
-  initialKeywords(): string {
-    return elifKeyword;
-  }
-
   helpId(): string {
     return "elif";
   }
