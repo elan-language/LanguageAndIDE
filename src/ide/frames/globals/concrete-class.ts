@@ -23,7 +23,7 @@ export class ConcreteClass extends ClassFrame {
     // remove the isNew flag from the return statement frame to allow
     // Backspace to work on the "undefined" string immediately
     // rather than trying to delete the frame, which is marked as new
-    this.toString.getLastChild().hasBeenAddedTo();
+    this.toString.getLastChild().setNewlyCreatedFalse();
     this.getChildren().push(this.toString);
   }
 

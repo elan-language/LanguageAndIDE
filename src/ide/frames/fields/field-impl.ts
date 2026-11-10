@@ -250,7 +250,7 @@ export class FieldImpl implements Selectable, Field {
         break;
       }
       case "Backspace": {
-        if (this.holder.isNewlyCreated) {
+        if (this.holder.isNewlyCreated()) {
           this.holder.deleteIfPermissible();
           this.codeHasChanged = true;
         } else if (this.hasSelection()) {
@@ -307,7 +307,7 @@ export class FieldImpl implements Selectable, Field {
             this.processInput(c);
           }
           this.codeHasChanged = true;
-          this.holder.hasBeenAddedTo();
+          this.holder.setNewlyCreatedFalse();
           this.editingField();
           this.getFile().removeAllSelectorsThatCanBe();
           break;
@@ -324,7 +324,7 @@ export class FieldImpl implements Selectable, Field {
           this.deleteExistingSelection();
           this.processInput(key);
           this.codeHasChanged = true;
-          this.holder.hasBeenAddedTo();
+          this.holder.setNewlyCreatedFalse();
           this.editingField();
         }
       }
@@ -533,7 +533,7 @@ export class FieldImpl implements Selectable, Field {
     this.parseCurrentText();
     this.setSelection(this.text.length);
     this.codeHasChanged = true;
-    this.holder.hasBeenAddedTo();
+    this.holder.setNewlyCreatedFalse();
   }
 
   private tab(back: boolean) {

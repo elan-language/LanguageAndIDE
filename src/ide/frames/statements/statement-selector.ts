@@ -114,6 +114,8 @@ export class StatementSelector extends AbstractSelector {
   outerHtmlTag: string = "el-statement";
 
   createFrame(type: FrameType, parent: Parent): Frame {
-    return this.factory.createFrame(type, parent);
+    const frame = this.factory.createFrame(type, parent);
+    frame.setNewlyCreatedTrue();
+    return frame;
   }
 }
