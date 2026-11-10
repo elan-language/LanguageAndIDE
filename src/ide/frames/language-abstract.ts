@@ -124,6 +124,7 @@ export abstract class LanguageAbstract implements Language {
   abstract BOOL_NAME: string;
   abstract STRING_NAME: string;
   abstract LIST_NAME: string;
+  abstract DICT_NAME: string;
   abstract NEW_INSTANCE_PREFIX: string;
   abstract FUNC_NAME: string;
 

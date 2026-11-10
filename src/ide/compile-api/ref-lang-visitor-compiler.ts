@@ -335,7 +335,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
       .kvp()
       .map((e) => this.visit(e))
       .filter((e) => e) as KvpAsn[];
-    return new DictionaryAsn(items, this.fieldId, this.scope);
+    return new DictionaryAsn(items, this.language, this.fieldId, this.scope);
   };
 
   override visitKvp = (ctx: KvpContext) =>

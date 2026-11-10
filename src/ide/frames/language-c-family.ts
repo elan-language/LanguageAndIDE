@@ -254,6 +254,7 @@ export abstract class LanguageCfamily extends LanguageAbstract {
   // BOOL_NAME: string = "bool"; // lang specific
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
+  DICT_NAME: string = "Dictionary";
   NEW_INSTANCE_PREFIX = "new";
 
   TRUE: string = "true";

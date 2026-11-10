@@ -1,3 +1,4 @@
+import { Language } from "../ide/frames/frame-interfaces/language";
 import { Deprecation, DeprecationSeverity } from "./compiler-interfaces/elan-type-interfaces";
 
 export enum DisplayPriority {
@@ -492,11 +493,11 @@ export class RedefinedCompileError extends CompileError {
 }
 
 export class DuplicateKeyCompileError extends CompileError {
-  constructor(location: string) {
+  constructor(location: string, l: Language) {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Duplicate Dictionary key(s).`,
+      `Duplicate ${l.DICT_NAME} key(s).`,
       location,
       "ErrorMessages.html#compile_error",
     );
