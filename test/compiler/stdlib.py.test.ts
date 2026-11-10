@@ -517,7 +517,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeDoesNotExecute(fileImpl, "'10.1' does not parse as an integer");
   });
-  test("Pass print (procedure) String", async () => {
+  test("Pass print (procedure) str", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -553,7 +553,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello!"); //Unfortunately, the test methods don't print newlines either way!
   });
 
-  test("Pass print (procedure) Int", async () => {
+  test("Pass print (procedure) int", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -625,7 +625,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Hello     World");
   });
 
-  test("Pass printTab Int", async () => {
+  test("Pass printTab int", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -727,21 +727,21 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 _tests.push(["elan_test1", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => _stdlib.pi, "Float"], [3.141592653589793, "Float"], "elan_assert4", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "Float"], [3.7, "Float"], "elan_assert7", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "Float"], [1.047, "Float"], "elan_assert10", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "Float"], [0.524, "Float"], "elan_assert13", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "Float"], [0.79, "Float"], "elan_assert16", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "Float"], [0.707, "Float"], "elan_assert19", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "Float"], [7.389, "Float"], "elan_assert22", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "Float"], [2, "Int"], "elan_assert25", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "Float"], [3, "Int"], "elan_assert28", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "Float"], [16, "Int"], "elan_assert31", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "Float"], [0.5, "Float"], "elan_assert34", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "Float"], [1.414, "Float"], "elan_assert37", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "Float"], [1, "Int"], "elan_assert40", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "elan_assert43", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "elan_assert46", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.pi, "float"], [3.141592653589793, "float"], "elan_assert4", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "float"], [3.7, "float"], "elan_assert7", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "float"], [1.047, "float"], "elan_assert10", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "float"], [0.524, "float"], "elan_assert13", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "float"], [0.79, "float"], "elan_assert16", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "float"], [0.707, "float"], "elan_assert19", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "float"], [7.389, "float"], "elan_assert22", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "float"], [2, "int"], "elan_assert25", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "float"], [3, "int"], "elan_assert28", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "float"], [16, "int"], "elan_assert31", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "float"], [0.5, "float"], "elan_assert34", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "float"], [1.414, "float"], "elan_assert37", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "float"], [1, "int"], "elan_assert40", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "float"], [1.57, "float"], "elan_assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "float"], [57, "int"], "elan_assert46", _stdlib, false));
 }]);
 
 async function main() {
@@ -2526,7 +2526,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = CircleVG() # variable definition
   b = Dictionary[str, int]() # variable definition
-  d = new HashSet<of Int> # variable definition
+  d = new HashSet<of int> # variable definition
   e = ImageVG("") # variable definition
   f = LineVG() # variable definition
   g = list[int]() # variable definition

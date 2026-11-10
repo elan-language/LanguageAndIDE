@@ -454,7 +454,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 

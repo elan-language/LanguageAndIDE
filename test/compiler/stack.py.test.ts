@@ -165,7 +165,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (String), Provided: Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: parameter0 (str), Provided: int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -196,7 +196,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 

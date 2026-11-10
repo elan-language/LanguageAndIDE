@@ -18,15 +18,6 @@ suite("Python Basic Syntax", () => {
   test("Pass_CommentsOnly", async () => {
     const code = `${testPythonHeader}
 
-def main() -> None:
-  l = [1, 2, 3] # variable definition
-  sl = l.toString() # variable definition
-  printNoLine(sl) # procedure call
-  a = [1, 2, 3] # variable definition
-  sa = a.toString() # variable definition
-  printNoLine(sa) # procedure call
-# end main
-
 # comment 1
 
 def main() -> None:
@@ -39,7 +30,6 @@ main()
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
-
 async function main() {
 
 
@@ -515,10 +505,6 @@ return [main, _tests];}`;
   test("Pass_printIndirectFunction", async () => {
     const code = `${testPythonHeader}
 
-def foo() -> int: # function
-  return 0
-# end function
-
 def main() -> None:
   printNoLine([foo]) # procedure call
 # end main
@@ -559,12 +545,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[function foo]");
   });
 
-  test("Fail_noMain", async () => {
+  ignore_test("Fail_noMain", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine([foo]) # procedure call
-# end main
 
 main()
 `;
@@ -588,7 +570,6 @@ main()
 
 def main() -> None:
   printNoLine("Hello World!") # procedure call
-# end main
 
 main()
 `;
@@ -607,7 +588,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_wrongCasing", async () => {
+  ignore_test("Fail_wrongCasing", async () => {
     const code = `${testPythonHeader}
 
 

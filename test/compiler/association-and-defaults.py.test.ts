@@ -225,7 +225,6 @@ def main() -> None:
   printNoLine(g.ds) # procedure call
   printNoLine(g.ai) # procedure call
   printNoLine(g.t) # procedure call
-  printNoLine("aa".matchesRegExp(g.r)) # procedure call
 # end main
 
 class Game: # concrete class
@@ -251,8 +250,6 @@ class Game: # concrete class
 
   t: tuple[int, str, list[int]] # property
 
-  r: RegExp # property
-
   def toString(self: Game) -> str: # function method
     return "A game"
   # end function
@@ -273,11 +270,10 @@ async function main() {
   await _stdlib.printNoLine(g.ds);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
-  await _stdlib.printNoLine(_stdlib.matchesRegExp("aa", g.r));
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -301,8 +297,6 @@ class Game {
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
-  r = system.emptyRegExp();
-
   async toString() {
     return "A game";
   }
@@ -324,7 +318,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])true");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])");
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
@@ -340,7 +334,6 @@ def main() -> None:
   printNoLine(g.ds) # procedure call
   printNoLine(g.ai) # procedure call
   printNoLine(g.t) # procedure call
-  printNoLine(g.r) # procedure call
 # end main
 
 class Player: # concrete class
@@ -383,8 +376,6 @@ class Game: # concrete class
 
   t: tuple[int, str, list[int]] # property
 
-  r: RegExp # property
-
   def toString(self: Game) -> str: # function method
     return "A game"
   # end function
@@ -406,7 +397,6 @@ async function main() {
   await _stdlib.printNoLine(g.ds);
   await _stdlib.printNoLine(g.ai);
   await _stdlib.printNoLine(g.t);
-  await _stdlib.printNoLine(g.r);
 }
 
 class Player {
@@ -432,7 +422,7 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])], ["r", system.emptyRegExp()]]);};
+  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -459,8 +449,6 @@ class Game {
 
   t = system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())]);
 
-  r = system.emptyRegExp();
-
   async toString() {
     return "A game";
   }
@@ -482,7 +470,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])A RegExp");
+    await assertObjectCodeExecutes(fileImpl, "00false[][](0, , [])");
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
@@ -836,36 +824,6 @@ main()
   test("Fail_UseOfReservedWordAsName", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  if:  # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -907,34 +865,6 @@ main()
   test("Fail_MissingPropertyKeyword1", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  if:  # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  break: int # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -971,43 +901,13 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword2", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  break: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = p2 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -1045,46 +945,13 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = p2 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = [0] # assignment
-    self.p1 = p2[0] # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -1127,52 +994,13 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword4", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = [0] # assignment
-    self.p1 = p2[0] # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = list[int]() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-  def foo(self: Foo) -> None: # procedure method
-    if self.p1 == 0:
-      p2 = [0] # assignment
-    # end if
-  # end procedure
-
-# end class
-
 def main() -> None:
 
 # end main
@@ -1214,55 +1042,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword5", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = list[int]() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-  def foo(self: Foo) -> None: # procedure method
-    if self.p1 == 0:
-      p2 = [0] # assignment
-    # end if
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = list[int]() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-  def foo(self: Foo) -> None: # procedure method
-    self.p2 = [0] # assignment
-    p1 = self.p2[0] # assignment
-  # end procedure
-
-# end class
 
 def main() -> None:
   bar = Bar() # variable definition
@@ -1319,49 +1104,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p2 = list[int]() # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  p2: list[int] # property
-
-  def foo(self: Foo) -> None: # procedure method
-    self.p2 = [0] # assignment
-    p1 = self.p2[0] # assignment
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
 
 def main() -> None:
   bar = Bar() # variable definition
@@ -1422,44 +1170,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
 
 def main() -> None:
   bar = Bar() # variable definition
@@ -1520,44 +1236,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_noThis", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
 
 class Bar: # concrete class
 
@@ -1589,28 +1273,12 @@ class Bar: # concrete class
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 
   test("Fail_notInScope", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  def pp(self: Foo) -> None: # procedure method
-    printNoLine(1) # procedure call
-  # end procedure
-
-# end class
 
 def foo() -> int: # function
   return 0
@@ -1652,10 +1320,6 @@ class Bar: # concrete class
 
   test("Fail_spuriousProperty3", async () => {
     const code = `${testPythonHeader}
-
-def foo() -> int: # function
-  return 0
-# end function
 
 aa = 1 # constant
 

@@ -827,7 +827,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -881,7 +881,7 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index int.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_1DListAccessedAs2D1", async () => {
@@ -959,7 +959,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of str>, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1015,7 +1015,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of String>, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of str>, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1043,7 +1043,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (List<of String>), Provided: String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: value (List<of str>), Provided: str.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1071,7 +1071,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 

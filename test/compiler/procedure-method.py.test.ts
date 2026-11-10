@@ -663,7 +663,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'clearPrintedText' is not defined for type 'Int'.ErrorMessages.html#compile_error",
+      "'clearPrintedText' is not defined for type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -696,7 +696,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'foo' is not defined for type 'Int'.ErrorMessages.html#compile_error",
+      "'foo' is not defined for type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 

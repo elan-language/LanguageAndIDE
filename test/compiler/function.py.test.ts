@@ -322,7 +322,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  b = new library.List<of Int>() # variable definition
+  b = new library.List<of int>() # variable definition
 # end main
 
 main()
@@ -368,8 +368,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: item (String).ErrorMessages.html#compile_error",
-      "Too many argument(s). Expected: item (String).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: item (str).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: item (str).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -401,8 +401,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
-      "Missing argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: p (float).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: p (float).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -434,8 +434,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: p (Int), Provided: Boolean.ErrorMessages.html#compile_error",
-      "Argument types. Expected: p (Int), Provided: Float.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (int), Provided: bool.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (int), Provided: float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -466,7 +466,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -495,7 +495,7 @@ def f(p: int) -> : # function
   test("Fail_noAs", async () => {
     const code = `${testPythonHeader}
 
-def f(p Int) -> : # function
+def f(p int) -> : # function
   return 
 # end function
 `;
@@ -517,7 +517,7 @@ def f(p Int) -> : # function
   test("Fail_noReturn", async () => {
     const code = `${testPythonHeader}
 
-def f(p Int) -> : # function
+def f(p int) -> : # function
   return 
 # end function
 `;
@@ -565,7 +565,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -656,7 +656,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -894,7 +894,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Too many argument(s). Expected: a (Int), b (Int).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: a (int), b (int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -926,7 +926,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: a (Int), b (Int).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: a (int), b (int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -958,7 +958,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: a (Int), b (Int), Provided: Int, String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: a (int), b (int), Provided: int, str.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1113,7 +1113,7 @@ def main() -> None:
 
 # end main
 
-def fun(if as Int) -> : # function
+def fun(if as int) -> : # function
   return 
 # end function
 
@@ -1224,7 +1224,7 @@ def foo(a: int, b: str, a: int) -> int: # function
   test("Fail_OutOnParameter", async () => {
     const code = `${testPythonHeader}
 
-def foo(out a as Int) -> : # function
+def foo(out a as int) -> : # function
   return 
 # end function
 `;
@@ -1274,7 +1274,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes no parameters - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1305,7 +1305,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes no parameters - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1411,7 +1411,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes no parameters - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1442,7 +1442,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: function that takes no parameters - returning a Int.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: function that takes no parameters - returning a int.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1506,7 +1506,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'b' is not defined for type 'function that takes no parameters - returning a Int'.ErrorMessages.html#compile_error",
+      "'b' is not defined for type 'function that takes no parameters - returning a int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1653,7 +1653,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'asBinary' is not defined for type 'String'.ErrorMessages.html#compile_error",
+      "'asBinary' is not defined for type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1682,7 +1682,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'reverse' is not defined for type 'String'.ErrorMessages.html#compile_error",
+      "'reverse' is not defined for type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1738,7 +1738,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'bitShiftL' is not defined for type 'Int'.ErrorMessages.html#compile_error",
+      "'bitShiftL' is not defined for type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1772,7 +1772,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'foo' is not defined for type 'Int'.ErrorMessages.html#compile_error",
+      "'foo' is not defined for type 'int'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1785,7 +1785,7 @@ def main() -> None:
   printNoLine(foo(b)) # procedure call
 # end main
 
-def foo(bar as library.List<of Int>) -> : # function
+def foo(bar as library.List<of int>) -> : # function
   return 
 # end function
 

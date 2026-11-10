@@ -14,7 +14,7 @@ import {
   transforms,
 } from "./compiler-test-helpers";
 
-suite("Python String Manipulation", () => {
+suite("Python str Manipulation", () => {
   test("Pass_AppendStrings", async () => {
     const code = `${testPythonHeader}
 
@@ -111,7 +111,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -139,7 +139,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -494,7 +494,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -523,7 +523,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -580,7 +580,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "'put' is not defined for type 'String'.ErrorMessages.html#compile_error",
+      "'put' is not defined for type 'str'.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -612,12 +612,12 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -655,7 +655,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Float.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
 });

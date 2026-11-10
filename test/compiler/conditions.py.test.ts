@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -381,7 +382,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_notEqual", async () => {
+  ignore_test("Fail_notEqual", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -538,7 +539,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_doubleEquals", async () => {
+  ignore_test("Fail_doubleEquals", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

@@ -1,20 +1,20 @@
 import assert from "assert";
 
+import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../src/ide/frames/file-impl";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
+import { LanguagePython } from "../../src/ide/frames/language-python";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
-import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { LanguagePython } from "../../src/ide/frames/language-python";
+import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(
@@ -128,11 +128,11 @@ main
 
 end main
 
-procedure signIn(password as String)
+procedure signIn(password as str)
 
 end procedure
 
-function hypotenuse(sideB as Float, sideC as Float) returns Float
+function hypotenuse(sideB as float, sideC as float) returns float
   return 0.0
 end function
 
@@ -153,17 +153,17 @@ class Player inherits Foo
 
   end constructor
 
-  function toString() returns String
+  function toString() returns str
     return ""
   end function
 
-  property score as Int
+  property score as int
 
   procedure foo()
     call printNoLine(1)
   end procedure
 
-  function bar() returns Int
+  function bar() returns int
     return 1
   end function
 
@@ -180,13 +180,13 @@ end class
     const code = `${testHeader}
 
 abstract class Foo
-  property p1 as Int
+  property p1 as int
 
-  property p2 as Int
+  property p2 as int
 
-  abstract procedure setP1(v as Int)
+  abstract procedure setP1(v as int)
 
-  abstract function product() returns Int
+  abstract function product() returns int
 
 end class
 `;
@@ -205,13 +205,13 @@ class Player inherits Foo
 
   end constructor
 
-  function toString() returns String
+  function toString() returns str
     return ""
   end function
 
-  property score as Int
+  property score as int
 
-  function with_score(score as Int) returns Player
+  function with_score(score as int) returns Player
     return copyWith(this, "score", score)
   end function
 
@@ -266,7 +266,7 @@ end main
     const code = `${testHeader}
 
 abstract class Card
-  property value as Int
+  property value as int
 
 end class
 `;
@@ -280,7 +280,7 @@ end class
     const code = `${testHeader}
 
 abstract class Card
-  function bar() returns Int
+  function bar() returns int
     return 0
   end function
 
@@ -299,7 +299,7 @@ abstract class Card
   constructor()
 
   end constructor
-  function toString() returns String
+  function toString() returns str
     return ""
   end function
 	  
@@ -318,11 +318,11 @@ class Foo
 
   end constructor
 
-  function toString() returns String
+  function toString() returns str
     return ""
   end function
 
-  private property bar as Int
+  private property bar as int
 
 end class
 `;

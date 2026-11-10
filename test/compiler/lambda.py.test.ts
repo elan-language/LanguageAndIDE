@@ -291,7 +291,7 @@ def main() -> None:
   printNoLine(l()) # procedure call
 # end main
 
-def getFunc(x: int) -> Func<of => Int>: # function
+def getFunc(x: int) -> Func<of => int>: # function
   return 
 # end function
 
@@ -321,7 +321,7 @@ def main() -> None:
 # end main
 
 def getFunc(x: int) -> Callable[[list[int]], list[int]]: # function
-  return lambda y<of Int> => [x * y[0]]
+  return lambda y<of int> => [x * y[0]]
 # end function
 
 main()
@@ -345,7 +345,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  l = lambda x<of Int => Int> => x(2) # variable definition
+  l = lambda x<of int => int> => x(2) # variable definition
 # end main
 
 main()
@@ -416,7 +416,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, lambda that takes parameter - Int - returning a String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (int), f (function that takes parameter - int - returning a int), Provided: int, lambda that takes parameter - int - returning a str.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -447,7 +447,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: parameter0 (Int), Provided: String.ErrorMessages.html#compile_error",
+      "Argument types. Expected: parameter0 (int), Provided: str.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -463,7 +463,7 @@ def main() -> None:
   printModified(4, lambda x: int: x) # procedure call
 # end main
 
-def printModified(i as Int, f as Func<of => Int>) -> None: # procedure
+def printModified(i as int, f as Func<of => int>) -> None: # procedure
 
 # end procedure
 
@@ -483,7 +483,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (function that takes no parameters - returning a Int), Provided: Int, lambda that takes parameter - Int - returning a Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (int), f (function that takes no parameters - returning a int), Provided: int, lambda that takes parameter - int - returning a int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -514,7 +514,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: i (Int), f (function that takes parameter - Int - returning a Int), Provided: Int, lambda that takes no parameters - returning a Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: i (int), f (function that takes parameter - int - returning a int), Provided: int, lambda that takes no parameters - returning a int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -530,7 +530,7 @@ def main() -> None:
   printModified(4, lambda : 0) # procedure call
 # end main
 
-def printModified(i as Int, f as Func<of => Int>) -> None: # procedure
+def printModified(i as int, f as Func<of => int>) -> None: # procedure
 
 # end procedure
 

@@ -553,7 +553,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: s (str).ErrorMessages.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });
@@ -615,7 +615,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: s (String).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: s (str).ErrorMessages.html#compile_error",
       `Code change required. Parameters for method were changed in v0.0.LibRef.html#Xxxx`,
     ]);
   });

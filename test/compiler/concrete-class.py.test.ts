@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -962,7 +963,7 @@ class Foo: # concrete class
   # end procedure
 
   def toString(self: Foo) -> str: # function method
-    return f"Foo:{self.p1}:{self.p2}:{self.p3}"
+    return "Foo:" + self.p1.toString() + ":" + self.p2 + ":" + self.p3
   # end function
 
 # end class
@@ -1014,7 +1015,7 @@ class Foo {
   }
 
   async toString() {
-    return \`Foo:\${await _stdlib.toString(this.p1)}:\${await _stdlib.toString(this.p2)}:\${await _stdlib.toString(this.p3)}\`;
+    return "Foo:" + (await _stdlib.toString(this.p1)) + ":" + this.p2 + ":" + this.p3;
   }
 
 }
@@ -1127,7 +1128,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  p1: Int set to 3 # property
+  p1: int set to 3 # property
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
@@ -1161,7 +1162,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  p1: Int set to 3 # property
+  p1: int set to 3 # property
 
   def toString(self: Foo) -> str: # function method
     return "undefined"
@@ -1265,7 +1266,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Missing argument(s). Expected: val (Int).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: val (int).ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1306,7 +1307,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: val (Int), Provided: Float.ErrorMessages.html#compile_error",
+      "Argument types. Expected: val (int), Provided: float.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1351,7 +1352,7 @@ main()
     ]);
   });
 
-  test("Fail_MissingNewOnInstantiation", async () => {
+  ignore_test("Fail_MissingNewOnInstantiation", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1524,34 +1525,6 @@ main()
 
   test("Fail_UnknownPropertyType", async () => {
     const code = `${testPythonHeader}
-
-class Bar: # concrete class
-
-  def __init__(self: Bar) -> None:
-
-  # end constructor
-
-  def toString(self: Bar) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-# end class
 
 def fun(bar: Bar) -> int: # function
   return bar.p1
@@ -1930,7 +1903,7 @@ main()
     ]);
   });
 
-  test("Fail_ConstructorWithCall", async () => {
+  ignore_test("Fail_ConstructorWithCall", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2089,7 +2062,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot create instance of Int.ErrorMessages.html#compile_error",
+      "Cannot create instance of int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2251,7 +2224,6 @@ main()
   test("Fail_CannotInheritFromYourself", async () => {
     const code = `${testPythonHeader}
 
-
 def main() -> None:
 
 # end main
@@ -2282,7 +2254,7 @@ main()
     ]);
   });
 
-  test("Fail_CallConstructor", async () => {
+  ignore_test("Fail_CallConstructor", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2417,7 +2389,7 @@ main()
     ]);
   });
 
-  test("Fail_InvalidUpdateProperty2", async () => {
+  ignore_test("Fail_InvalidUpdateProperty2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

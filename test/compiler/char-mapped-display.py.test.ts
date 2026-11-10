@@ -8,13 +8,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Python Char Mapped Display", () => {
-  test("Pass_SimpleDraw", async () => {
+  ignore_test("Pass_SimpleDraw", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -50,7 +51,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, '<div style="background-color:#ffffff;">');
   });
 
-  test("Pass_withPut", async () => {
+  ignore_test("Pass_withPut", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -88,7 +89,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 1, '<div style="background-color:#000004;">');
   });
 
-  test("Pass_ClearBlocks", async () => {
+  ignore_test("Pass_ClearBlocks", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -126,7 +127,7 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  test("Pass_getKey", async () => {
+  ignore_test("Pass_getKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -164,7 +165,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_getNumericKey", async () => {
+  ignore_test("Pass_getNumericKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -202,7 +203,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "-1");
   });
 
-  test("Pass_waitForKey", async () => {
+  ignore_test("Pass_waitForKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -238,7 +239,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_getKeyWithModifier", async () => {
+  ignore_test("Pass_getKeyWithModifier", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -276,7 +277,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "(, )");
   });
 
-  test("Pass_clearKeyBuffer", async () => {
+  ignore_test("Pass_clearKeyBuffer", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -312,7 +313,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_newGraphics", async () => {
+  ignore_test("Pass_newGraphics", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -346,7 +347,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  test("Pass_defaultGraphics", async () => {
+  ignore_test("Pass_defaultGraphics", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

@@ -119,7 +119,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of Int>), Provided: Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: other (List<of int>), Provided: int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -947,7 +947,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1029,7 +1029,7 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["Cannot index Int.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["Cannot index int.ErrorMessages.html#compile_error"]);
   });
 
   test("Fail_ApplyIndexToUnknown", async () => {
@@ -1061,7 +1061,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = new List<of String>[3][4] # variable definition
+  a = new List<of str>[3][4] # variable definition
 # end main
 
 main()
@@ -1132,7 +1132,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: String, Provided: Boolean.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1188,7 +1188,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1216,7 +1216,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (String), Provided: Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: value (str), Provided: int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1244,7 +1244,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Int, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1271,7 +1271,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: size (Int), initialValue (Int), Provided: Float, Int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: size (int), initialValue (int), Provided: float, int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1279,7 +1279,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = new List<of String>[3] # variable definition
+  a = new List<of str>[3] # variable definition
 # end main
 
 main()
@@ -1304,7 +1304,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = new List<of String>() {"foo","bar","yon"} # variable definition
+  a = new List<of str>() {"foo","bar","yon"} # variable definition
 # end main
 
 main()
@@ -1528,7 +1528,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1557,9 +1557,9 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: String.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: Float or Int, Provided: List<of String>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: List<of String>, Provided: String.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: List<of str>, Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -2194,7 +2194,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: Float or Int, Provided: List<of (Int, Int)>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: List<of (int, int)>.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -2223,7 +2223,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of (Int, Int)>), Provided: (Int, Int).ErrorMessages.html#compile_error",
+      "Argument types. Expected: other (List<of (int, int)>), Provided: (int, int).ErrorMessages.html#compile_error",
     ]);
   });
 
