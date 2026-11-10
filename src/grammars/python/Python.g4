@@ -119,11 +119,11 @@ elseIfClause:
 elseClause: GHOSTED_BLOCK_START? ELSE COLON commentText? NL ordinaryStatement* GHOSTED_BLOCK_END?;
 
 whileLoop:
-    GHOSTED_BLOCK_START? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE GHOSTED_BLOCK_END NL
+    GHOSTED_BLOCK_START? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE GHOSTED_BLOCK_END? NL
 ;
 
 forLoop:
-    GHOSTED_BLOCK_START? FOR identifierDef IN expression COLON commentText? NL ordinaryStatement* END_FOR GHOSTED_BLOCK_END NL
+    GHOSTED_BLOCK_START? FOR identifierDef IN expression COLON commentText? NL ordinaryStatement* END_FOR GHOSTED_BLOCK_END? NL
 ;
 
 procedureCall: GHOSTED_LINE? term commentText? NL;

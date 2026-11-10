@@ -17,11 +17,6 @@ suite("Python Text Files", () => {
   test("Pass_Create", async () => {
     const code = `${testPythonHeader}
 
-class Test_proc(unittest.TestCase):
- def test_proc(self) -> None:
-
-# end test
-
 def main() -> None:
   fr = TextFileReader() # variable definition
   fw = TextFileWriter() # variable definition
@@ -56,11 +51,6 @@ return [main, _tests];}`;
 
   test("Pass_readWholeFile", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  fr = TextFileReader() # variable definition
-  fw = TextFileWriter() # variable definition
-# end main
 
 def main() -> None:
   tf = openFileForReading() # variable definition
@@ -103,12 +93,6 @@ return [main, _tests];}`;
 def main() -> None:
   tf = openFileForReading() # variable definition
   txt = tf.readWholeFile() # variable definition
-  printNoLine(txt) # procedure call
-# end main
-
-def main() -> None:
-  tf = openFileForReading() # variable definition
-  txt = tf.readWholeFile() # variable definition
   line = tf.readLine() # variable definition
 # end main
 
@@ -143,12 +127,6 @@ return [main, _tests];}`;
 
   test("Pass_ReadLineInLoop", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tf = openFileForReading() # variable definition
-  txt = tf.readWholeFile() # variable definition
-  line = tf.readLine() # variable definition
-# end main
 
 def main() -> None:
   tf = openFileForReading() # variable definition
@@ -192,13 +170,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = openFileForReading() # variable definition
-  while not tf.endOfFile():
-    printNoLine(tf.readLine()) # procedure call
-  # end while
-# end main
-
-def main() -> None:
-  tf = openFileForReading() # variable definition
   tf.close() # procedure call
   line = tf.readLine() # variable definition
 # end main
@@ -234,12 +205,6 @@ return [main, _tests];}`;
 
   test("Pass_write", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tf = openFileForReading() # variable definition
-  tf.close() # procedure call
-  line = tf.readLine() # variable definition
-# end main
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
@@ -280,12 +245,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
-  tf.writeLine("something") # procedure call
-  tf.saveAndClose() # procedure call
-# end main
-
-def main() -> None:
-  tf = createFileForWriting("data.txt") # variable definition
   tf.writeWholeFile("something else") # procedure call
 # end main
 
@@ -318,11 +277,6 @@ return [main, _tests];}`;
   });
   test("Pass_writeWholeFileErrorIfAlreadyWrittenTo", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tf = createFileForWriting("data.txt") # variable definition
-  tf.writeWholeFile("something else") # procedure call
-# end main
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
@@ -363,12 +317,6 @@ return [main, _tests];}`;
   });
   test("Pass_writeWholeFileErrorIfAlreadyClosed", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  tf = createFileForWriting("data.txt") # variable definition
-  tf.writeLine("something") # procedure call
-  tf.writeWholeFile("something else") # procedure call
-# end main
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
