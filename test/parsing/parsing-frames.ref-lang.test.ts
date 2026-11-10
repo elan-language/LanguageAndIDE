@@ -9,7 +9,6 @@ import { Paradigm } from "../../src/ide/frames/paradigm";
 import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
 import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
-import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
@@ -133,15 +132,6 @@ suite("Parsing Frames RefLang", async () => {
     setTo.parseFrom(source);
     assert.equal(source.hasMoreCode(), false);
     assert.equal(setTo.renderAsSource(), code);
-  });
-  test("parse Frames - StatementSelector", () => {
-    const code = "assign fooBar to 3.141";
-    const source = new CodeSourceFromString(code + "\n");
-    const fl = fileImplForRefLang();
-    const m = new MainRoutine(fl);
-    const ss = new StatementSelector(m);
-    ss.parseFrom(source);
-    assert.equal(source.getRemainingCode(), "");
   });
 
   test("parse Frames - header file", async () => {

@@ -6,6 +6,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameType } from "./frame-type";
 import { ClassFrame } from "./globals/class-frame";
 import { ConstantGlobal } from "./globals/constant-global";
 import { FunctionFrame } from "./globals/function-frame";
@@ -223,14 +224,8 @@ export class LanguageCSharp extends LanguageCfamily {
   ]);
 
   customiseStatementOptions(
-    _options: [string, string, string, (parent: Parent) => Frame, boolean][],
-  ): void {}
-  customiseValidWithinCurrentContext(
-    _keyword: string,
-    _userEntry: boolean,
-    _parent: Parent,
-    standardResult: boolean,
-  ): boolean {
-    return standardResult;
+    _options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
+  ): void {
+    // does nothinh
   }
 }

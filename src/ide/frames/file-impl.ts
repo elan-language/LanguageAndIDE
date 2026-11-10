@@ -34,6 +34,7 @@ import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
 import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
@@ -87,6 +88,7 @@ export const cannotLoadFile = `${fileErrorPrefix} it has been created or modifie
 export const cannotLoadUnparseableFile = `${fileErrorPrefix} cannot parse code`;
 
 export class FileImpl implements File {
+  frameType: FrameType = FrameType.file;
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;

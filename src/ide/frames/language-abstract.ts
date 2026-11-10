@@ -7,6 +7,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -150,16 +151,6 @@ export abstract class LanguageAbstract implements Language {
   abstract TUPLE_START: string;
   abstract TUPLE_END: string;
 
-  abstract customiseStatementOptions(
-    options: [string, string, string, (parent: Parent) => Frame, boolean][],
-  ): void;
-  abstract customiseValidWithinCurrentContext(
-    keyword: string,
-    userEntry: boolean,
-    parent: Parent,
-    standardResult: boolean,
-  ): boolean;
-
   protected commonRenderBottom(frame: Frame): string {
     let source = "";
     if (frame instanceof AbstractClass || frame instanceof ConcreteClass) {
@@ -189,4 +180,8 @@ export abstract class LanguageAbstract implements Language {
     }
     return source;
   }
+
+  abstract customiseStatementOptions(
+    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
+  ): void;
 }

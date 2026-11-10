@@ -1,22 +1,8 @@
-import {
-  assertKeyword,
-  assignKeyword,
-  callKeyword,
-  catchKeyword,
-  commentMarker,
-  elifKeyword,
-  elseKeyword,
-  forKeyword,
-  ifKeyword,
-  throwKeyword,
-  tryKeyword,
-  variableKeyword,
-  whileKeyword,
-} from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 import { IfStatement } from "./if-statement";
 
@@ -32,89 +18,94 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
-    const options: [string, string, string, (parent: Parent) => Frame, boolean][] = [
+  defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+    const options: [FrameType, string, string, (parent: Parent) => Frame, boolean][] = [
       [
-        assertKeyword,
+        FrameType.assertStatement,
         "a",
         "<b>a</b>ssert",
         (parent: Parent) => this.factory.newAssert(parent),
         true,
       ],
       [
-        variableKeyword,
+        FrameType.variableDefinition,
         "v",
         "<b>v</b>ariable definition",
         (parent: Parent) => this.factory.newVar(parent),
         true,
       ],
       [
-        assignKeyword,
+        FrameType.assignment,
         "a",
         "<b>a</b>ssignment",
         (parent: Parent) => this.factory.newSet(parent),
         true,
       ],
       [
-        catchKeyword,
+        FrameType.catchClause,
         "h",
         "catc<b>h</b>",
         (parent: Parent) => this.factory.newCatch(parent.getParent()),
         false,
       ],
       [
-        ifKeyword,
+        FrameType.ifStatement,
         "i",
         "<b>i</b>f statement",
         (parent: Parent) => this.factory.newIfStatement(parent),
         true,
       ],
       [
-        elifKeyword,
+        FrameType.elseIfClause,
         "l",
         "e<b>l</b>se if clause",
         (parent: Parent) => this.factory.newElseIf(parent.getParent()),
         false,
       ],
       [
-        elseKeyword,
+        FrameType.elseClause,
         "e",
         "<b>e</b>lse clause",
         (parent: Parent) => this.factory.newElse(parent.getParent()),
         false,
       ],
       [
-        whileKeyword,
+        FrameType.whileLoop,
         "w",
         "<b>w</b>hile loop",
         (parent: Parent) => this.factory.newWhile(parent),
         true,
       ],
-      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent), true],
       [
-        callKeyword,
+        FrameType.forLoop,
+        "f",
+        "<b>f</b>or loop",
+        (parent: Parent) => this.factory.newFor(parent),
+        true,
+      ],
+      [
+        FrameType.procedureCall,
         "c",
         "procedure <b>c</b>all",
         (parent: Parent) => this.factory.newCall(parent, ""),
         true,
       ],
       [
-        tryKeyword,
+        FrameType.tryStatement,
         "y",
         "tr<b>y</b> statement",
         (parent: Parent) => this.factory.newTry(parent),
         true,
       ],
-      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
       [
-        throwKeyword,
+        FrameType.throwStatement,
         "t",
         "<b>t</b>hrow statement",
         (parent: Parent) => this.factory.newThrow(parent),
         true,
       ],
       [
-        this.getCommentMarker(),
+        FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (parent: Parent) => this.factory.newComment(parent),
@@ -125,46 +116,44 @@ export class StatementSelector extends AbstractSelector {
     return options;
   }
 
-  paradigmAllows(_keyword: string): boolean {
-    return true;
-  }
-
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = true;
     // First apply universal instruction-specific rules
-    if (keyword === elifKeyword) {
+    if (type === FrameType.elseIfClause) {
       result = this.isWithinThenOrElseIfClause() && parent.getLastChild() === this;
-    } else if (keyword === elseKeyword) {
+    } else if (type === FrameType.elseClause) {
       result =
         this.isWithinThenOrElseIfClause() &&
         parent.getLastChild() === this &&
         parent.getParent().getLastChild() === (parent as unknown as Frame) &&
         !(parent.getParent() as unknown as IfStatement).hasElseClause();
-    } else if (keyword === catchKeyword) {
+    } else if (type === FrameType.catchClause) {
       result =
-        parent.getIdPrefix().includes(`_${tryKeyword}`) ||
-        parent.getIdPrefix().includes(`_${catchKeyword}`);
-    } else if (keyword === callKeyword) {
+        parent.frameType === FrameType.tryStatement || parent.frameType === FrameType.catchClause;
+    } else if (type === FrameType.procedureCall) {
       result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
-    } else if (keyword === assertKeyword) {
+    } else if (type === FrameType.assertStatement) {
       result = this.isWithinATest();
     }
     //Then apply context-specific rules
     if (this.isWithinATest()) {
       result =
-        keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
+        type === FrameType.assertStatement ||
+        type === FrameType.variableDefinition ||
+        type === FrameType.commentFrame;
     }
     // Then apply paradigm rules
     if (this.getParadigm().isFunctional() && userEntry) {
       if (this.isWithinAFunction()) {
-        result = keyword === variableKeyword || keyword === commentMarker;
+        result = type === FrameType.variableDefinition || type === FrameType.commentFrame;
       } else if (this.isWithinATest()) {
         result =
-          keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
+          type === FrameType.assertStatement ||
+          type === FrameType.variableDefinition ||
+          type === FrameType.commentFrame;
       }
     }
-    result = this.language().customiseValidWithinCurrentContext(keyword, userEntry, parent, result);
     return result;
   }
 

@@ -1,4 +1,5 @@
 import { FileImpl } from "../file-impl";
+import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { Frame } from "./frame";
 import { Parent } from "./parent";
@@ -71,12 +72,6 @@ export interface Language {
   reservedWords: Set<string>;
 
   customiseStatementOptions(
-    options: [string, string, string, (parent: Parent) => Frame, boolean][],
+    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
   ): void;
-  customiseValidWithinCurrentContext(
-    keyword: string,
-    userEntry: boolean,
-    parent: Parent,
-    standardResult: boolean,
-  ): boolean;
 }

@@ -1,4 +1,5 @@
 import { AbstractSelector } from "../abstract-selector";
+import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { File } from "./file";
 import { Frame } from "./frame";
@@ -6,6 +7,7 @@ import { Language } from "./language";
 import { StatementFactory } from "./statement-factory";
 
 export interface Parent {
+  frameType: FrameType;
   //External use
   isParent: boolean;
 

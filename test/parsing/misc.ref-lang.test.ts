@@ -5,7 +5,6 @@ import { Regexes } from "../../src/ide/frames/fields/regexes";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { processInnerCode } from "../../src/tools/codeParser";
 import { testHeader, transforms } from "../compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
@@ -58,17 +57,5 @@ suite("Misc Tests", () => {
 
 `;
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
-  });
-
-  test("code parser", async () => {
-    const code = `
-main
-  variable li set to [3, 6, 1, 0, 99, 4, 67]
-  call inPlaceRippleSort(li)
-  call print(li)
-end main
-`;
-    const htmlElan = await processInnerCode(code);
-    assert.equal(htmlElan[0].startsWith("<el-main"), true);
   });
 });

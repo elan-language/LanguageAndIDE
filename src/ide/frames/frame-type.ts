@@ -31,7 +31,8 @@ export enum FrameType {
   functionMethod,
   procedureMethod,
   property,
-  // common
+  // other
   commentFrame,
   selector,
+  file,
 }

@@ -1,7 +1,6 @@
 import { AbstractFrame } from "./abstract-frame";
 import { CodeSourceFromString } from "./code-source-from-string";
-import { Regexes } from "./fields/regexes";
-import { addDeleteToContextMenu, isFrameWithStatements, isSelector } from "./frame-helpers";
+import { addDeleteToContextMenu, isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
@@ -44,23 +43,18 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][];
-  abstract paradigmAllows(keyword: string): boolean;
-  abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
+  abstract defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][];
+  abstract validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean;
 
   optionsFilteredByContext(
     userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
+  ): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
   }
 
-  optionsFilteredByParadigm(
-    userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
-    return this.optionsFilteredByContext(userEntry).filter((o) => this.paradigmAllows(o[0]));
-  }
-
-  parseFrom(source: CodeSource): Frame {
+  parseFrom(_source: CodeSource): Frame {
+    throw new Error("No longer implemented");
+    /* 
     let compilerDirective = "";
     source.removeIndent();
     if (source.isMatchRegEx(Regexes.compilerDirective)) {
@@ -88,7 +82,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       return frame;
     } else {
       throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
-    }
+    } */
   }
 
   private processCompilerDirective(frame: Frame, compilerDirective: string) {
@@ -99,8 +93,8 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   optionsMatchingUserInput(
     match: string,
-  ): [string, string, string, (parent: Parent) => Frame, boolean][] {
-    return this.optionsFilteredByParadigm(true).filter((o) => o[1] === match);
+  ): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
+    return this.optionsFilteredByContext(true).filter((o) => o[1] === match);
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -116,8 +110,8 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  addFrame(keyword: string, pendingChars: string): Frame {
-    const option = this.defaultOptions().filter((o) => o[0] === keyword)[0];
+  addFrame(type: FrameType): Frame {
+    const option = this.defaultOptions().filter((o) => o[0] === type)[0];
     const func = option[3];
     const addAtPeerLevel = option[4];
     const parent = this.getParent();
@@ -132,16 +126,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     } else if (newFrame instanceof FrameWithStatements) {
       newFrame.selectFirstChild(false);
     }
-    const fields = newFrame.getFields();
-    if (fields.length > 0) {
-      fields[0].overtyper.consumeChars(pendingChars, 500);
-    } else if (isFrameWithStatements(newFrame)) {
-      const ss = newFrame.getFirstChild();
-      if (ss instanceof AbstractSelector) {
-        ss.overtyper.consumeChars(pendingChars, 500);
-      }
-    }
-
     return newFrame;
   }
 
@@ -336,10 +320,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       const options = this.optionsMatchingUserInput(this.text + key);
       if (options.length === 1) {
         const typeToAdd = options[0][0];
-
-        const pendingChars = typeToAdd.slice((this.text + key).length);
-
-        this.addFrame(typeToAdd, pendingChars);
+        this.addFrame(typeToAdd);
         this.text = "";
       }
     }
@@ -365,15 +346,15 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    const allOptions = this.optionsFilteredByParadigm(true);
+    const allOptions = this.optionsFilteredByContext(true);
     allOptions.forEach((o) => {
-      const name = o[0];
+      const type = o[0];
       const action = () => {
-        this.addFrame(name, "");
+        this.addFrame(type);
         return true;
       };
       const html = `${o[2]}`;
-      map.set(name, [html, action]);
+      map.set(type.toString(), [html, action]);
     });
     map.set("paste", ["separator paste <span class='kb'>Ctrl+v</span>", this.paste]);
     addDeleteToContextMenu(this, map);

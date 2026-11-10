@@ -1,4 +1,3 @@
-import { catchKeyword, elifKeyword, throwKeyword } from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -14,6 +13,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
 import { Parent } from "./frame-interfaces/parent";
+import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -403,37 +403,19 @@ export class LanguagePython extends LanguageAbstract {
   ]);
 
   customiseStatementOptions(
-    options: [string, string, string, (parent: Parent) => Frame, boolean][],
+    options: [FrameType, string, string, (parent: Parent) => Frame, boolean][],
   ): void {
-    const throwFrame: [string, string, string, (parent: Parent) => Frame, boolean] = options.filter(
-      (o) => o[0] === throwKeyword,
-    )[0];
-    throwFrame[0] = this.RAISE;
+    const throwFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
+      options.filter((o) => o[0] === FrameType.throwStatement)[0];
     throwFrame[1] = "r";
     throwFrame[2] = "<b>r</b>aise";
-    const catchFrame: [string, string, string, (parent: Parent) => Frame, boolean] = options.filter(
-      (o) => o[0] === catchKeyword,
-    )[0];
-    catchFrame[0] = this.EXCEPT;
+    const catchFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
+      options.filter((o) => o[0] === FrameType.catchClause)[0];
     catchFrame[1] = "x";
     catchFrame[2] = "e<b>x</b>cept";
-    const elseIfFrame: [string, string, string, (parent: Parent) => Frame, boolean] =
-      options.filter((o) => o[0] === elifKeyword)[0];
-    elseIfFrame[0] = this.ELIF;
+    const elseIfFrame: [FrameType, string, string, (parent: Parent) => Frame, boolean] =
+      options.filter((o) => o[0] === FrameType.elseIfClause)[0];
     elseIfFrame[1] = "l";
     elseIfFrame[2] = "e<b>l</b>if";
-  }
-
-  customiseValidWithinCurrentContext(
-    keyword: string,
-    _userEntry: boolean,
-    parent: Parent,
-    standardResult: boolean,
-  ): boolean {
-    let result = standardResult;
-    if (keyword === this.EXCEPT) {
-      result = parent.getIdPrefix().includes(`_${catchKeyword}`);
-    }
-    return result;
   }
 }

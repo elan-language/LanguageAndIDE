@@ -1,22 +1,9 @@
-import {
-  abstractFunctionKeywords,
-  abstractKeyword,
-  abstractProcedureKeywords,
-  commentMarker,
-  constructorKeyword,
-  functionKeyword,
-  privateFunctionKeywords,
-  privateKeyword,
-  privateProcedureKeywords,
-  privatePropertyKeywords,
-  procedureKeyword,
-  propertyKeyword,
-} from "../../../compiler/elan-keywords";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { ClassFrame } from "../globals/class-frame";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
@@ -40,73 +27,45 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return this.getParent() as unknown as ClassFrame;
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame, boolean][] {
+  defaultOptions(): [FrameType, string, string, (parent: Parent) => Frame, boolean][] {
     return [
       [
-        constructorKeyword,
-        "c",
-        "constructor",
-        (_parent: Parent) => this.class.createConstructor(),
-        true,
-      ],
-      [
-        propertyKeyword,
+        FrameType.property,
         "p",
         "<b>p</b>roperty",
         (_parent: Parent) => this.class.createProperty(),
         true,
       ],
       [
-        procedureKeyword,
+        FrameType.procedureMethod,
         "c",
         "pro<b>c</b>edure method",
         (_parent: Parent) => this.class.createProcedure(),
         true,
       ],
       [
-        functionKeyword,
+        FrameType.functionMethod,
         "f",
         "<b>f</b>unction method",
         (_parent: Parent) => this.class.createFunction(),
         true,
       ],
       [
-        abstractProcedureKeywords,
+        FrameType.abstractProcedure,
         "",
         "abstract procedure",
         (_parent: Parent) => this.class.createAbstractProcedure(),
         true,
       ],
       [
-        abstractFunctionKeywords,
+        FrameType.abstractFunction,
         "",
         "abstract function",
         (_parent: Parent) => this.class.createAbstractFunction(),
         true,
       ],
       [
-        privatePropertyKeywords,
-        "",
-        "private property",
-        (_parent: Parent) => this.class.createProperty(true),
-        true,
-      ],
-      [
-        privateProcedureKeywords,
-        "",
-        "private procedure",
-        (_parent: Parent) => this.class.createProcedure(true),
-        true,
-      ],
-      [
-        privateFunctionKeywords,
-        "",
-        "private function",
-        (_parent: Parent) => this.class.createFunction(true),
-        true,
-      ],
-      [
-        this.getCommentMarker(),
+        FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
         (_parent: Parent) => this.class.createComment(),
@@ -115,27 +74,11 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     ];
   }
 
-  paradigmAllows(_keyword: string): boolean {
-    return true;
-  }
-
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     let result = true;
-    // First apply universal instruction-specific rules
-    if (keyword.startsWith(privateKeyword)) {
-      result = !userEntry || this.sourcePasting;
-    } else if (keyword.startsWith(abstractKeyword)) {
-      result = this.class.isAbstract || this.class.isInterface;
-    } else if (this.class.isInterface) {
-      result = keyword === commentMarker;
-    } else if (this.class.isRecord) {
-      result =
-        keyword === propertyKeyword ||
-        keyword === functionKeyword ||
-        keyword === this.getCommentMarker();
-    } else if (keyword === constructorKeyword) {
-      result = this.class.isConcrete && !this.getClass().getConstructor();
-    } else if (keyword === procedureKeyword) {
+    if (type === FrameType.abstractFunction || type === FrameType.abstractProcedure) {
+      result = this.class.isAbstract;
+    } else if (type === FrameType.procedureMethod) {
       result = !(this.getParadigm().isFunctional() && userEntry);
     }
     return result;
