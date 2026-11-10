@@ -33,8 +33,7 @@ class Test_square(unittest.TestCase):
   def test_square(self : Test_square) -> None:
     self.assertEqual(square(3), 9)
     actual = square(4) # variable definition
-    expected = 16 # variable definition
-    self.assertEqual(actual, expected)
+    self.assertEqual(actual, 16)
   # end test
 # end test class
 
@@ -52,11 +51,10 @@ async function square(x) {
 }
 global["square"] = square;
 
-_tests.push(["elan_test10", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "elan_assert13", _stdlib, false));
+_tests.push(["python_test12", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => (await global.square(3)), "Float"], [9, "Int"], "python_assert15", _stdlib, false));
   let actual = (await global.square(4));
-  let expected = 16;
-  _outcomes.push(await system.assert([async () => actual, "Float"], [expected, "Int"], "elan_assert22", _stdlib, false));
+  _outcomes.push(await system.assert([async () => actual, "Float"], [16, "Int"], "python_assert21", _stdlib, false));
 }]);
 return [main, _tests];}`;
 
@@ -76,10 +74,10 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       [
-        "elan_test10",
+        "python_test12",
         [
-          new AssertOutcome(TestStatus.pass, "9", "9", "elan_assert13"),
-          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert22"),
+          new AssertOutcome(TestStatus.pass, "9", "9", "python_assert15"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "python_assert21"),
         ],
       ],
     ]);

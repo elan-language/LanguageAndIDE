@@ -178,9 +178,14 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
     if (ctx.GHOSTED_BLOCK_START()) {
       test.setGhosted(true);
     }
-    test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
+    test.testName.setFieldToKnownValidText(
+      this.sourceVisitor.visit(ctx.testFunction().testName()!)!,
+    );
     this.parent = test;
-    const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
+    const statements = ctx
+      .testFunction()
+      .testStatement()
+      .map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       test.getChildren().push(s);
     }

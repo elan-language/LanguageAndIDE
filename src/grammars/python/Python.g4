@@ -10,7 +10,7 @@ file: comment? global* mainCall? NL* EOF;
 global:
     main
     | function
-    | testClass
+    | test
     | procedure
     | constant
     | enum
@@ -31,11 +31,11 @@ function:
         returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
 ;
 
-testClass:
-    GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL test* END_TEST_CLASS GHOSTED_BLOCK_END? NL
+test:
+    GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL testFunction END_TEST_CLASS GHOSTED_BLOCK_END? NL
 ;
 
-test:
+testFunction:
     GHOSTED_BLOCK_START? DEF testName OPEN_BRACKET THIS_INSTANCE COLON testClassName CLOSE_BRACKET ARROW NONE COLON commentText? NL
       testStatement* END_TEST NL
 ;
