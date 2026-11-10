@@ -1,46 +1,3 @@
-import {
-  abstractKeyword,
-  asKeyword,
-  assertKeyword,
-  assignKeyword,
-  beKeyword,
-  callKeyword,
-  catchKeyword,
-  classKeyword,
-  constantKeyword,
-  constructorKeyword,
-  elifKeyword,
-  elseKeyword,
-  endKeyword,
-  enumKeyword,
-  evaluatesKeyword,
-  forKeyword,
-  functionKeyword,
-  ifKeyword,
-  inheritsKeyword,
-  inKeyword,
-  lambdaKeyword,
-  mainKeyword,
-  newKeyword,
-  ofKeyword,
-  powKeyword,
-  privateKeyword,
-  procedureKeyword,
-  propertyKeyword,
-  returnKeyword,
-  returnsKeyword,
-  setKeyword,
-  stepKeyword,
-  testKeyword,
-  thenKeyword,
-  thisKeyword,
-  throwKeyword,
-  toKeyword,
-  tryKeyword,
-  variableKeyword,
-  whileKeyword,
-  withKeyword,
-} from "../../compiler/elan-keywords";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -290,47 +247,43 @@ export class LanguageRefLang extends LanguageAbstract {
     return html;
   }
 
-  private ABSTRACT = abstractKeyword;
-  private AS = asKeyword;
-  private ASSERT = assertKeyword;
-  private ASSIGN = assignKeyword;
-  private BE = beKeyword;
-  private CALL = callKeyword;
-  private CATCH = catchKeyword;
-  private CLASS = classKeyword;
-  private CONSTANT = constantKeyword;
-  private CONSTRUCTOR = constructorKeyword;
-  private ELIF = elifKeyword;
-  private ELSE = elseKeyword;
-  private END = endKeyword;
-  private ENUM = enumKeyword;
-  private EVALUATES = evaluatesKeyword;
-  private FOR = forKeyword;
-  private FUNCTION = functionKeyword;
-  private IF = ifKeyword;
-  private IN = inKeyword;
-  private INHERITS = inheritsKeyword;
-  private lambdaKeyword = lambdaKeyword;
-  private MAIN = mainKeyword;
-  private NEW = newKeyword;
-  private OF = ofKeyword;
-  private PRIVATE = privateKeyword;
-  private PROCEDURE = procedureKeyword;
-  private PROPERTY = propertyKeyword;
-  private POW = powKeyword;
-  private RETURN = returnKeyword;
-  private RETURNS = returnsKeyword;
-  private SET = setKeyword;
-  private STEP = stepKeyword;
-  private TEST = testKeyword;
-  private THEN = thenKeyword;
-  private THIS = thisKeyword;
-  private THROW = throwKeyword;
-  private TO = toKeyword;
-  private TRY = tryKeyword;
-  private VARIABLE = variableKeyword;
-  private WHILE = whileKeyword;
-  private WITH = withKeyword;
+  private ABSTRACT = "abstract";
+  private AS = "as";
+  private ASSERT = "assert";
+  private ASSIGN = "assign";
+  private CALL = "call";
+  private CATCH = "catch";
+  private CLASS = "class";
+  private CONSTANT = "constant";
+  private CONSTRUCTOR = "constructor";
+  private ELIF = "elif";
+  private ELSE = "else";
+  private END = "end";
+  private ENUM = "enum";
+  private EVALUATES = "evaluates";
+  private FOR = "for";
+  private FUNCTION = "function";
+  private IF = "if";
+  private IN = "in";
+  private INHERITS = "inherits";
+  private LAMBDA = "lambda";
+  private MAIN = "main";
+  private NEW = "new";
+  private OF = "of";
+  private PRIVATE = "private";
+  private PROCEDURE = "procedure";
+  private PROPERTY = "property";
+  private RETURN = "return";
+  private RETURNS = "returns";
+  private SET = "set";
+  private TEST = "test";
+  private THEN = "then";
+  private THIS = "this";
+  private THROW = "throw";
+  private TO = "to";
+  private TRY = "try";
+  private VARIABLE = "variable";
+  private WHILE = "while";
 
   POWER: string = "^";
   EQUAL: string = "is";
@@ -368,10 +321,10 @@ export class LanguageRefLang extends LanguageAbstract {
   OVERRIDES = "";
   IMPLEMENTS = "";
 
-  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.lambdaKeyword, this.THIS, this.NOT];
+  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.LAMBDA, this.THIS, this.NOT];
   DISALLOWED_IDENTIFIERS: string[] = [
     this.NEW,
-    this.lambdaKeyword,
+    this.LAMBDA,
     this.THIS,
     this.NOT,
     this.TRUE,

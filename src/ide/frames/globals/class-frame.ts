@@ -14,7 +14,6 @@ import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { isConstructor } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
@@ -226,28 +225,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   public getConstructor(): Constructor {
     return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
-  }
-
-  abstract topKeywords(): string;
-
-  parseTop(source: CodeSource): boolean {
-    source.remove(this.topKeywords());
-    //this.name.parseFrom(source);
-    source.removeRegEx(/^\sinherits\s/, true);
-    //this.inheritance.parseFrom(source);
-    return true;
-  }
-
-  abstract bottomKeywords(): string;
-
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    if (source.isMatch(this.bottomKeywords())) {
-      source.remove(this.bottomKeywords());
-      result = true;
-    }
-    return result;
   }
 
   newChildSelector(): AbstractSelector {

@@ -144,9 +144,6 @@ export class FileImpl implements File {
     }
   }
 
-  // TODO remove when parsing migrated
-  useAntlr = false;
-
   _parserErrorMessages: string[] = [];
 
   addParseError(msg: string) {

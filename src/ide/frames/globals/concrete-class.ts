@@ -1,4 +1,3 @@
-import { classKeyword, endKeyword } from "../../../compiler/elan-keywords";
 import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
 import { Field } from "../frame-interfaces/field";
@@ -46,13 +45,5 @@ export class ConcreteClass extends ClassFrame {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_class`;
-  }
-
-  topKeywords(): string {
-    return `${classKeyword} `;
-  }
-
-  bottomKeywords(): string {
-    return `${endKeyword} ${classKeyword}`;
   }
 }

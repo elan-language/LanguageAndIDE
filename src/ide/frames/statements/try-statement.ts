@@ -1,5 +1,3 @@
-import { endKeyword, tryKeyword } from "../../../compiler/elan-keywords";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
@@ -34,19 +32,4 @@ export class TryStatement extends FrameWithStatements {
   }
 
   outerHtmlTag: string = "el-statement";
-
-  parseTop(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(tryKeyword);
-    source.removeNewLine();
-    //const tryClause = this.getChildren()[0];
-    //tryClause.parseFrom(source);
-    //const firstCatch = this.getChildren()[1];
-    //firstCatch.parseFrom(source);
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    return this.parseStandardEnding(source, `${endKeyword} ${tryKeyword}`);
-  }
 }

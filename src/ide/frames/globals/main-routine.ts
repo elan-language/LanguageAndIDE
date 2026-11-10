@@ -1,4 +1,3 @@
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
@@ -35,12 +34,5 @@ export class MainRoutine extends FrameWithStatements implements GlobalFrame {
 
   indent(): string {
     return "";
-  }
-
-  parseTop(source: CodeSource) {
-    source.remove("main");
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end main");
   }
 }

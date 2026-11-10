@@ -1,4 +1,3 @@
-import { catchKeyword } from "../../../compiler/elan-keywords";
 import { Clause } from "../clause";
 import { FieldImpl } from "../fields/field-impl";
 import { exceptionTypeFieldSpec, identifierFieldSpec } from "../fields/field-spec";
@@ -48,6 +47,6 @@ export class CatchClause extends Clause {
   }
 
   getIdPrefix(): string {
-    return `${this.language().languageHtmlClass}_${catchKeyword}`;
+    return `${this.language().languageHtmlClass}_catch`;
   }
 }
