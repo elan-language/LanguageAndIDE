@@ -10,7 +10,7 @@ file: comment? global* mainCall? NL* EOF;
 global:
     main
     | function
-    | testClass
+    | test
     | procedure
     | constant
     | enum
@@ -31,11 +31,11 @@ function:
         returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
 ;
 
-testClass:
-    GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL test* END_TEST_CLASS GHOSTED_BLOCK_END? NL
+test:
+    GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL testFunction END_TEST_CLASS GHOSTED_BLOCK_END? NL
 ;
 
-test:
+testFunction:
     GHOSTED_BLOCK_START? DEF testName OPEN_BRACKET THIS_INSTANCE COLON testClassName CLOSE_BRACKET ARROW NONE COLON commentText? NL
       testStatement* END_TEST NL
 ;
@@ -119,11 +119,11 @@ elseIfClause:
 elseClause: GHOSTED_BLOCK_START? ELSE COLON commentText? NL ordinaryStatement* GHOSTED_BLOCK_END?;
 
 whileLoop:
-    GHOSTED_BLOCK_START? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE GHOSTED_BLOCK_END NL
+    GHOSTED_BLOCK_START? WHILE expression COLON commentText? NL ordinaryStatement* END_WHILE GHOSTED_BLOCK_END? NL
 ;
 
 forLoop:
-    GHOSTED_BLOCK_START? FOR identifierDef IN expression COLON commentText? NL ordinaryStatement* END_FOR GHOSTED_BLOCK_END NL
+    GHOSTED_BLOCK_START? FOR identifierDef IN expression COLON commentText? NL ordinaryStatement* END_FOR GHOSTED_BLOCK_END? NL
 ;
 
 procedureCall: GHOSTED_LINE? term commentText? NL;
@@ -153,7 +153,7 @@ returnStatement:
 
 // Members
 constructorMember:
-    GHOSTED_BLOCK_START? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? GHOSTED_BLOCK_END NL
+    GHOSTED_BLOCK_START? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? GHOSTED_BLOCK_END? NL
         ordinaryStatement* END_CONSTRUCTOR NL
 ;
 

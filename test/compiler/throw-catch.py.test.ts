@@ -20,20 +20,6 @@ suite("Python Throw Catch", () => {
   test("Pass_ThrowExceptionInMain", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float) -> None:
-    p1 = p1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
-
 def main() -> None:
   raise ElanRuntimeError("Foo")
 # end main
@@ -67,10 +53,6 @@ return [main, _tests];}`;
 
   ignore_test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  raise ElanRuntimeError("Foo")
-# end main
 
 def main() -> None:
   msg = "Foo" # variable definition
@@ -109,11 +91,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  msg = "Foo" # variable definition
-  raise ElanRuntimeError(msg)
-# end main
-
-def main() -> None:
   bar = 1 # variable definition
   raise ElanRuntimeError(f"{bar}")
 # end main
@@ -148,11 +125,6 @@ return [main, _tests];}`;
 
   test("Pass_ThrowExceptionInProcedure", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  bar = 1 # variable definition
-  raise ElanRuntimeError(f"{bar}")
-# end main
 
 def main() -> None:
   foo() # procedure call
@@ -198,10 +170,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
-# end main
-
-def main() -> None:
   try:
     foo() # procedure call
     printNoLine("not caught") # procedure call
@@ -225,7 +193,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine("Foo");
+      await _stdlib.printNoLine("Foo");
     }
     else {
       throw e;
@@ -263,15 +231,6 @@ def main() -> None:
   try:
     foo() # procedure call
     printNoLine("not caught") # procedure call
-  except ElanRuntimeError as e: # catch
-    printNoLine("Foo") # procedure call
-  # end try
-# end main
-
-def main() -> None:
-  try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
   except CustomError as e: # catch
     printNoLine(e) # procedure call
   # end try
@@ -292,7 +251,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.CustomError) {
-    await _stdlib.printNoLine(e);
+      await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -325,15 +284,6 @@ return [main, _tests];}`;
 
   test("Pass_CatchSystemGeneratedException", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
-  except CustomError as e: # catch
-    printNoLine(e) # procedure call
-  # end try
-# end main
 
 def main() -> None:
   try:
@@ -373,7 +323,7 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(e);
+      await _stdlib.printNoLine(e);
     }
     else {
       throw e;
@@ -420,17 +370,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   try:
-    x = list[Foo]() # variable definition
-    y = x[1] # variable definition
-    z = y.p1 # variable definition
-    printNoLine("not caught") # procedure call
-  except ElanRuntimeError as e: # catch
-    printNoLine(e) # procedure call
-  # end try
-# end main
-
-def main() -> None:
-  try:
     foo() # procedure call
     printNoLine("not caught") # procedure call
   except ElanRuntimeError as e: # catch
@@ -454,8 +393,8 @@ async function main() {
     await _stdlib.printNoLine("not caught");
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let s = (await _stdlib.toString(e));
-    await _stdlib.printNoLine(s);
+      let s = (await _stdlib.toString(e));
+      await _stdlib.printNoLine(s);
     }
     else {
       throw e;
@@ -491,16 +430,6 @@ return [main, _tests];}`;
 
 def main() -> None:
   try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
-  except ElanRuntimeError as e: # catch
-    s = e.toString() # variable definition
-    printNoLine(s) # procedure call
-  # end try
-# end main
-
-def main() -> None:
-  try:
     a = 1 # variable definition
     raise ElanRuntimeError("fail")
   except ElanRuntimeError as e: # catch
@@ -524,8 +453,8 @@ async function main() {
     throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    let a = "fail";
-    await _stdlib.printNoLine(a);
+      let a = "fail";
+      await _stdlib.printNoLine(a);
     }
     else {
       throw e;
@@ -560,16 +489,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  try:
-    a = 1 # variable definition
-    raise ElanRuntimeError("fail")
-  except ElanRuntimeError as e: # catch
-    a = "fail" # variable definition
-    printNoLine(a) # procedure call
-  # end try
-# end main
-
-def main() -> None:
   a = 1 # variable definition
   try:
     raise ElanRuntimeError("fail")
@@ -593,7 +512,7 @@ async function main() {
     throw system.initialise(await new _stdlib.ElanRuntimeError()._initialise("fail"));
   } catch (e) {
     if (e instanceof _stdlib.ElanRuntimeError) {
-    await _stdlib.printNoLine(a);
+      await _stdlib.printNoLine(a);
     }
     else {
       throw e;
@@ -626,15 +545,6 @@ return [main, _tests];}`;
 
   test("Pass_GhostedVariableInCatch", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 1 # variable definition
-  try:
-    raise ElanRuntimeError("fail")
-  except ElanRuntimeError as e: # catch
-    printNoLine(a) # procedure call
-  # end try
-# end main
 
 def main() -> None:
   a = 1 # variable definition
@@ -688,15 +598,6 @@ return [main, _tests];}`;
 def main() -> None:
   a = 1 # variable definition
   try:
-    raise ElanRuntimeError("fail")
-  except ElanRuntimeError as e: # catch
-    a = 1 # variable definition
-  # end try
-# end main
-
-def main() -> None:
-  a = 1 # variable definition
-  try:
     raise exception()
   except CustomError as e: # catch
   # end try
@@ -729,14 +630,6 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = 1 # variable definition
-  try:
-    raise exception()
-  except CustomError as e: # catch
-  # end try
-# end main
-
-def main() -> None:
   s = foo("s") # variable definition
 # end main
 
@@ -763,10 +656,6 @@ main()
 
   test("Fail_catchMissingVariable", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  s = foo("s") # variable definition
-# end main
 
 def main() -> None:
   try:
@@ -797,14 +686,6 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
-  except CustomError as e: # catch
-  # end try
-# end main
-
-def main() -> None:
   msg = "Foo" # variable definition
   raise ElanRuntimeError(msg + bar)
 # end main
@@ -828,11 +709,6 @@ main()
 
   test("Fail_TryVariableOutOfScopeInCatch", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  msg = "Foo" # variable definition
-  raise ElanRuntimeError(msg + bar)
-# end main
 
 def main() -> None:
   try:
@@ -867,15 +743,6 @@ main()
 
   test("Fail_RedefineVariableinCatch1", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  try:
-    a = 1 # variable definition
-    raise ElanRuntimeError("fail")
-  except ElanRuntimeError as e: # catch
-    printNoLine(a) # procedure call
-  # end try
-# end main
 
 def main() -> None:
   a = 1 # variable definition
@@ -914,16 +781,6 @@ main()
 
   test("Fail_ThrowWrongType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  a = 1 # variable definition
-  try:
-    raise ElanRuntimeError("fail")
-  except ElanRuntimeError as e: # catch
-    a = e # variable definition
-    printNoLine(a) # procedure call
-  # end try
-# end main
 
 def main() -> None:
   try:
@@ -971,14 +828,6 @@ main()
 
 def main() -> None:
   try:
-    raise FooException("fail")
-  except ElanRuntimeError as e: # catch
-    printNoLine("") # procedure call
-  # end try
-# end main
-
-def main() -> None:
-  try:
     raise CustomError("fail")
   except ElanRuntimeError as e: # catch
     printNoLine("caught") # procedure call
@@ -1006,14 +855,6 @@ main()
 
   test("Fail_CatchWrongType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  try:
-    raise CustomError("fail")
-  except ElanRuntimeError as e: # catch
-    printNoLine("caught") # procedure call
-  # end try
-# end main
 
 def main() -> None:
   try:

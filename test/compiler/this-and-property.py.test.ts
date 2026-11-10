@@ -19,12 +19,6 @@ suite("Python This and Property", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  tf = createFileForWriting("data.txt") # variable definition
-  tf.writeWholeFile("something else") # procedure call
-  tf.saveAndClose() # procedure call
-# end main
-
-def main() -> None:
   x = Foo(7) # variable definition
   printNoLine(x.p1) # procedure call
 # end main
@@ -89,11 +83,6 @@ return [main, _tests];}`;
 
   test("Pass_UsingThisAsAnInstance", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo(7) # variable definition
-  printNoLine(x.p1) # procedure call
-# end main
 
 def main() -> None:
   f = Foo() # variable definition
@@ -186,29 +175,6 @@ def main() -> None:
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
-    self.p1 = 3 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def bar(self: Foo) -> float: # function method
-    return doubled(self)
-  # end function
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-def main() -> None:
-  f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
-# end main
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
     self.p1 = 1 # assignment
   # end constructor
 
@@ -276,43 +242,6 @@ return [main, _tests];}`;
 
   test("Pass_PrintThis", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 3 # assignment
-  # end constructor
-
-  p1: float # property
-
-  def bar(self: Foo) -> float: # function method
-    return doubled(self)
-  # end function
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def bar(self: Foo) -> int: # function method
-    lst = [1, 2] # variable definition
-    return lst[self.p1]
-  # end function
-
-# end class
 
 def main() -> None:
   f = Foo() # variable definition
@@ -384,41 +313,6 @@ return [main, _tests];}`;
   test("Fail_UsingPropertyAsIndex1", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-    self.p1 = 1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def bar(self: Foo) -> int: # function method
-    lst = [1, 2] # variable definition
-    return lst[self.p1]
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "a Foo"
-  # end function
-
-  def bar(self: Foo) -> None: # procedure method
-    printNoLine(self) # procedure call
-  # end procedure
-
-# end class
-
 def main() -> None:
   f = Foo() # variable definition
   printNoLine(f.bar()) # procedure call
@@ -463,41 +357,6 @@ main()
   test("Fail_NoSuchProperty", async () => {
     const code = `${testPythonHeader}
 
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return "a Foo"
-  # end function
-
-  def bar(self: Foo) -> None: # procedure method
-    printNoLine(self) # procedure call
-  # end procedure
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def bar(self: Foo) -> int: # function method
-    lst = [1, 2] # variable definition
-    return 
-  # end function
-
-# end class
-
 def main() -> None:
   x = Foo(7) # variable definition
   printNoLine(x.p1) # procedure call
@@ -537,39 +396,6 @@ main()
 
   test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo) -> None:
-
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: int # property
-
-  def bar(self: Foo) -> int: # function method
-    lst = [1, 2] # variable definition
-    return 
-  # end function
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float) -> None:
-    self.p = p1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
 
 def main() -> None:
   x = Foo(7) # variable definition
@@ -612,34 +438,6 @@ main()
 
   test("Fail_ThisOutsideClassScope", async () => {
     const code = `${testPythonHeader}
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float) -> None:
-    self.p = p1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
-
-class Foo: # concrete class
-
-  def __init__(self: Foo, p1: float) -> None:
-    p1 = p1 # assignment
-  # end constructor
-
-  def toString(self: Foo) -> str: # function method
-    return ""
-  # end function
-
-  p1: float # property
-
-# end class
 
 def main() -> None:
   printNoLine(self) # procedure call
