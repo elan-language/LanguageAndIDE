@@ -313,6 +313,8 @@ async function main() {
 }
 return [main, _tests];}`;
 
+    ('let a = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);\n  put("b", 4);\n  put("d", 2);\n  await _stdlib.printNoLine(a);\n}\nreturn [main, _tests];}');
+
     const fileImpl = new FileImpl(
       testHash,
       new Paradigm(""),

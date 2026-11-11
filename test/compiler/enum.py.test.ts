@@ -499,7 +499,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_AssigningIntsToValues", async () => {
+  test("Fail_NotAssigningFloatsToValues", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -507,9 +507,9 @@ def main() -> None:
 # end main
 
 class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
+  apple,
+  orange,
+  pear,
 # end enum
 
 main()

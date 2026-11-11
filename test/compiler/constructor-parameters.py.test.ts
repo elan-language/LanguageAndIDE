@@ -6,7 +6,6 @@ import {
   assertDoesNotCompile,
   assertDoesNotParse,
   assertParses,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -54,17 +53,17 @@ main()
     ]);
   });
 
-  ignore_test("Fail_MutatingListParam", async () => {
+  test("Fail_MutatingListParam", async () => {
     const code = `${testPythonHeader}
 
 class Foo: # concrete class
 
   def __init__(self: Foo, a: list[float]) -> None:
-
+    a[0] = 4 # assignment
   # end constructor
 
   def toString(self: Foo) -> str: # function method
-    return "undefined"
+    return ""
   # end function
 
 # end class
@@ -81,7 +80,10 @@ class Foo: # concrete class
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {

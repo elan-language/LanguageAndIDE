@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -520,14 +519,13 @@ main()
     assertDoesNotCompile(fileImpl, ["'id' is not defined.ErrorMessages.html#compile_error"]);
   });
 
-  ignore_test("Fail_NoEndeach", async () => {
+  test("Fail_NoEndFor", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = [7, 8, 9] # variable definition
   for x in a:
     printNoLine(x) # procedure call
-  # end for
 # end main
 
 main()

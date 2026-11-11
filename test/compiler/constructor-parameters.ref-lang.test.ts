@@ -6,7 +6,6 @@ import {
   assertDoesNotCompile,
   assertDoesNotParse,
   assertParses,
-  ignore_test,
   testHash,
   testHeader,
   transforms,
@@ -49,20 +48,18 @@ end class`;
     ]);
   });
 
-  ignore_test("Fail_MutatingListParam", async () => {
+  test("Fail_MutatingListParam", async () => {
     const code = `${testHeader}
 
 class Foo
   constructor(a as List<of Float>)
-    call a.put(0, 4)
+    assign a[0] to 4
   end constructor
-  function toString() returns String
-    return ""
-  end function
 
   function toString() returns String
     return ""
   end function
+
 end class`;
 
     const fileImpl = new FileImpl(
@@ -76,7 +73,10 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
