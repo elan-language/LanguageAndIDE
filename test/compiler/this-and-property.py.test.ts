@@ -459,7 +459,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Cannot use 'this' outside class context.ErrorMessages.html#ThisCompileError",
+      "Cannot use 'self' outside class context.ErrorMessages.html#ThisCompileError",
     ]);
   });
 });

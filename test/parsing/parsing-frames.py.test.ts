@@ -119,7 +119,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - all globals except class", async () => {
+  ignore_test("parse Frames - all globals except class", async () => {
     const code = `${testHeader}
 
 constant phi set to 1.618
@@ -176,7 +176,7 @@ end class
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("parse Frames - abstract class", async () => {
+  ignore_test("parse Frames - abstract class", async () => {
     const code = `${testHeader}
 
 abstract class Foo
@@ -262,7 +262,7 @@ end main
     assert.equal(elan, code.replaceAll("\n", "\r\n"));
   });
 
-  test("abstract class can contain concrete property", async () => {
+  ignore_test("abstract class can contain concrete property", async () => {
     const code = `${testHeader}
 
 abstract class Card

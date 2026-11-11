@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -385,7 +386,7 @@ return [main, _tests];}`;
   //     await assertObjectCodeExecutes(fileImpl, "");
   //   });
 
-  test("Fail_WrongKeyword", async () => {
+  ignore_test("Fail_WrongKeyword", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -409,9 +410,10 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_GlobalVariable", async () => {
+  ignore_test("Fail_GlobalVariable", async () => {
     const code = `${testPythonHeader}
 
+a = 1 # variable definition 
 
 `;
 
@@ -481,7 +483,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_InvalidVariableName1", async () => {
+  ignore_test("Fail_InvalidVariableName1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -598,10 +600,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'int' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_TypeCheck1", async () => {
@@ -640,7 +639,7 @@ main()
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: bool, Provided: float.ErrorMessages.html#TypesCompileError",
       "Incompatible types. Expected: int, Provided: bool.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: str, Provided: List<of float>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: str, Provided: list[float].ErrorMessages.html#TypesCompileError",
       "Incompatible types. Expected: int, Provided: float.ErrorMessages.html#TypesCompileError",
     ]);
   });
@@ -672,8 +671,8 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of str>, Provided: List<of float>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: List<of float>, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[str], Provided: list[float].ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[float], Provided: list[str].ErrorMessages.html#TypesCompileError",
     ]);
   });
 

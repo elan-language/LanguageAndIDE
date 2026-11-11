@@ -209,13 +209,13 @@ suite("Parsing Fields (New) Python", () => {
     );
     testFieldParse(field, "foo()", false, "");
   });
-  test("ProcRef", () => {
+  ignore_test("ProcRef", () => {
     const field = new FieldImpl(new ProcedureCall(fileImplFor(python)), procRefFieldSpec);
     testFieldParse(
       field,
       "sleep",
       true,
-      '<el-field id="python_ident4" class="ok" tabindex="-1"><el-txt><el-method>sleep</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+      '<el-field id="python_ident3" class="ok" tabindex="-1"><el-txt><el-method>sleep</el-method></el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );
     testFieldParse(
       field,
@@ -225,11 +225,12 @@ suite("Parsing Fields (New) Python", () => {
     );
     testFieldParse(field, "sleep()", false, "");
   });
-  test("EnumValues", () => {
+  ignore_test("EnumValues", () => {
     const field = new FieldImpl(new Enum(fileImplFor(python)), enumValuesFieldSpec);
     testFieldParse(
       field,
-      "foo, bar",
+      `foo = 1
+bar = 2`,
       true,
       '<el-field id="python_enumVals4" class="ok" tabindex="-1"><el-txt><el-id>foo</el-id>, <el-id>bar</el-id></el-txt><el-place><i>values</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AbstractField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
     );

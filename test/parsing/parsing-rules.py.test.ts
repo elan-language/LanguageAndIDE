@@ -788,7 +788,7 @@ suite("Parsing Rules Python", () => {
       `a: int, b: str`,
       true,
       `a: int, b: str`,
-      "a as int, b as str",
+      "a as Int, b as String",
       `<el-id>a</el-id>: <el-type>int</el-type>, <el-id>b</el-id>: <el-type>str</el-type>`,
       "a: int, b: str",
     );

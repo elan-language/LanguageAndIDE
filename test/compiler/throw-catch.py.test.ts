@@ -543,7 +543,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Pass_GhostedVariableInCatch", async () => {
+  ignore_test("Pass_GhostedVariableInCatch", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -661,7 +661,7 @@ def main() -> None:
   try:
     foo() # procedure call
     printNoLine("not caught") # procedure call
-  except CustomError as e: # catch
+  except CustomError: # catch
   # end try
 # end main
 

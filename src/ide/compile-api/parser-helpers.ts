@@ -41,8 +41,8 @@ export function getPythonParser(input: string, field?: FieldImpl | File) {
   const lexer = new PythonLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
-  // parser.removeParseListeners();
-  // parser.removeErrorListeners();
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
   if (field) {
     parser.addErrorListener(new ErrorListener(field));
   }
@@ -56,8 +56,8 @@ export function getRefLangParser(input: string, field?: FieldImpl | File) {
   const lexer = new RefLangLexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  // parser.removeParseListeners();
-  // parser.removeErrorListeners();
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
   if (field) {
     parser.addErrorListener(new ErrorListener(field));
   }

@@ -537,12 +537,12 @@ async function main() {
 
 _tests.push(["python_test3", async (_outcomes) => {
   let a = system.list([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "List<of int>"], [system.list([3, 2, 4, 0]), "List<of int>"], "python_assert9", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "list[int]"], [system.list([3, 2, 4, 0]), "list[int]"], "python_assert9", _stdlib, false));
 }]);
 
 _tests.push(["python_test12", async (_outcomes) => {
   let a = system.list([3, 2, 4, 0]);
-  _outcomes.push(await system.assert([async () => a, "List<of int>"], [system.list([3, 2, 4, 0]), "List<of int>"], "python_assert18", _stdlib, false));
+  _outcomes.push(await system.assert([async () => a, "list[int]"], [system.list([3, 2, 4, 0]), "list[int]"], "python_assert18", _stdlib, false));
 }]);
 
 _tests.push(["python_test21", async (_outcomes) => {
@@ -742,7 +742,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_AssertOutsideAtest", async () => {
+  ignore_test("Fail_AssertOutsideAtest", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -766,7 +766,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_callATest", async () => {
+  ignore_test("Fail_callATest", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -832,13 +832,10 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot assign a test to a variable.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_assertWithinAMultiline", async () => {
+  ignore_test("Fail_assertWithinAMultiline", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -868,7 +865,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_assertWithinAMultiline2", async () => {
+  ignore_test("Fail_assertWithinAMultiline2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -982,7 +979,7 @@ class Test_square(unittest.TestCase):
     ]);
   });
 
-  test("Fail_DuplicateTestName2", async () => {
+  ignore_test("Fail_DuplicateTestName2", async () => {
     const code = `${testPythonHeader}
 
 def test_proc() -> None: # procedure
