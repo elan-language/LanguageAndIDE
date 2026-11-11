@@ -7,6 +7,9 @@ import { FrameWithStatements } from "../frame-with-statements";
 import { IfStatement } from "./if-statement";
 
 export class StatementSelector extends AbstractSelector {
+  parseFrames(_code: string): Frame[] {
+    throw new Error("Method not implemented.");
+  }
   isStatement = true;
   private factory: StatementFactory;
   constructor(parent: FrameWithStatements) {

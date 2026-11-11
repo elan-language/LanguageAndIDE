@@ -7,6 +7,9 @@ import { FrameType } from "../frame-type";
 import { ClassFrame } from "../globals/class-frame";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
+  parseFrames(_code: string): Frame[] {
+    throw new Error("Method not implemented.");
+  }
   isMember: boolean = true;
   isAbstract = false;
   isPrivate = false;

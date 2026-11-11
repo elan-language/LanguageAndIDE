@@ -16,6 +16,7 @@ import {
   ForLoopContext,
   FunctionContext,
   FunctionMethodContext,
+  GlobalBlockContext,
   IfStatementContext,
   MainContext,
   ProcedureCallContext,
@@ -86,6 +87,11 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame> {
     }
     this.file.updateAllParseStatus();
     return this.file!;
+  };
+
+  override visitGlobalBlock = (ctx: GlobalBlockContext) => {
+    const globals = ctx.global().map((g) => this.visit(g)) as Frame[];
+    return globals as unknown as Frame;
   };
 
   override visitComment? = (ctx: CommentContext) => {

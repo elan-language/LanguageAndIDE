@@ -247,7 +247,25 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
+  abstract parseFrames(code: string): Frame[];
+
   paste = (code?: string): boolean => {
+    const result = true;
+
+    code = (code ?? "").trim() + "\n";
+
+    const newFrames = this.parseFrames(code);
+
+    for (const frame of newFrames) {
+      if (this.canBePastedIn(frame)) {
+        this.getParent().addChildBefore(frame, this);
+      }
+    }
+
+    return result;
+  };
+
+  pasteOld = (code?: string): boolean => {
     // Get the current language to put back later
     const oldLanguage = this.getFile().language();
     // The text pasted in is always in Elan language

@@ -661,56 +661,7 @@ export class FileImpl implements File {
       this._parseStatus = ParseStatus.invalid;
       this.parseError = "invalid";
     }
-
-    // try {
-    //   while (source.hasMoreCode()) {
-    //     if (source.isMatchRegEx(Regexes.newLine)) {
-    //       source.removeNewLine();
-    //     } else {
-    //       this.getNextSelector(source.mode).parseFrom(source);
-    //     }
-    //   }
-    //   this.removeAllSelectorsThatCanBe();
-    //   this.deselectAll();
-    //   this.getFirstChild().select(true, false);
-    //   this.updateAllParseStatus();
-    // } catch (e) {
-    //   if (e instanceof ElanFileError) {
-    //     this.parseError = e.message;
-    //   } else {
-    //     this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
-    //   }
-    //   this._parseStatus = ParseStatus.invalid;
-    // }
   }
-
-  // parseBodyFrom(source: CodeSource): void {
-  //   if (this.useAntlr) {
-  //     this.antlrParseBodyFrom(source);
-  //     return;
-  //   }
-
-  //   try {
-  //     while (source.hasMoreCode()) {
-  //       if (source.isMatchRegEx(Regexes.newLine)) {
-  //         source.removeNewLine();
-  //       } else {
-  //         this.getNextSelector(source.mode).parseFrom(source);
-  //       }
-  //     }
-  //     this.removeAllSelectorsThatCanBe();
-  //     this.deselectAll();
-  //     this.getFirstChild().select(true, false);
-  //     this.updateAllParseStatus();
-  //   } catch (e) {
-  //     if (e instanceof ElanFileError) {
-  //       this.parseError = e.message;
-  //     } else {
-  //       this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
-  //     }
-  //     this._parseStatus = ParseStatus.invalid;
-  //   }
-  // }
 
   setLanguageFromHeader(l: string) {
     let lang: Language = LanguageRefLang.Instance;

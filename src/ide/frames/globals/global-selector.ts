@@ -1,9 +1,16 @@
+import { GlobalBlockContext as PythonGlobalBlockContext } from "../../../generated/python/PythonParser";
+import { GlobalBlockContext as RefLangGlobalBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
 import { ParseStatus } from "../status-enums";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
@@ -58,5 +65,29 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     const frame = this.file.createGlobalFrame(type);
     frame.setNewlyCreatedTrue();
     return frame;
+  }
+
+  visitGlobalBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonGlobalBlockContext | RefLangGlobalBlockContext,
+  ): Frame | undefined {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitGlobalBlock(
+        context as PythonGlobalBlockContext,
+      ) as Frame;
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitGlobalBlock(
+        context as RefLangGlobalBlockContext,
+      ) as Frame;
+    }
+    return undefined;
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.globalBlock()!;
+    return this.visitGlobalBlock(visitor, ctx) as unknown as Frame[];
   }
 }
