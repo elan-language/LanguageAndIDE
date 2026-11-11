@@ -5,11 +5,11 @@ import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -1253,7 +1253,7 @@ main()
     ]);
   });
 
-  ignore_test("Fail_MultipleAbstractClassInherits", async () => {
+  test("Fail_MultipleAbstractClassInherits", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1319,10 +1319,6 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 });

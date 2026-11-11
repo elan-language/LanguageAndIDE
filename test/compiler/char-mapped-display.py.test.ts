@@ -8,19 +8,18 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
 } from "./compiler-test-helpers";
 
 suite("Python Char Mapped Display", () => {
-  ignore_test("Pass_SimpleDraw", async () => {
+  test("Pass_SimpleDraw", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  g = createBlockGraphics(white) # variable definition
-  displayBlocks(g) # procedure call
+  g = BlockGraphics() # variable definition
+  displayBlockGraphics(g) # procedure call
 # end main
 
 main()
@@ -29,8 +28,8 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  await _stdlib.displayBlockGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -51,13 +50,13 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, '<div style="background-color:#ffffff;">');
   });
 
-  ignore_test("Pass_withPut", async () => {
+  test("Pass_put", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  g = createBlockGraphics(white) # variable definition
-  g[1][0] = 4 # assignment
-  displayBlocks(g) # procedure call
+  g = BlockGraphics() # variable definition
+  g.put(1, 0, 4)
+  displayBlockGraphics(g)
 # end main
 
 main()
@@ -66,9 +65,9 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  system.safeSet(g, 4, [1, 0]);
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  g.put(1, 0, 4);
+  await _stdlib.displayBlockGraphics(g);
 }
 return [main, _tests];}`;
 
@@ -89,13 +88,13 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 1, '<div style="background-color:#000004;">');
   });
 
-  ignore_test("Pass_ClearBlocks", async () => {
+  test("Pass_ClearBlocks", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  g = createBlockGraphics(white) # variable definition
-  displayBlocks(g) # procedure call
-  clearBlocks() # procedure call
+  g = BlockGraphics() # variable definition
+  displayBlockGraphics(g)
+  clearBlocks()
 # end main
 
 main()
@@ -104,8 +103,8 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let g = (await _stdlib.createBlockGraphics(_stdlib.white));
-  await _stdlib.displayBlocks(g);
+  let g = system.initialise(await new _stdlib.BlockGraphics()._initialise());
+  await _stdlib.displayBlockGraphics(g);
   await _stdlib.clearBlocks();
 }
 return [main, _tests];}`;
@@ -127,13 +126,13 @@ return [main, _tests];}`;
     await assertGraphicsContains(fileImpl, 0, "");
   });
 
-  ignore_test("Pass_getKey", async () => {
+  test("Pass_getKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
+  gr = BlockGraphics() # variable definition
   a = getKey() # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
 main()
@@ -142,7 +141,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let a = (await _stdlib.getKey());
   await _stdlib.printNoLine(a);
 }
@@ -165,13 +164,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_getNumericKey", async () => {
+  test("Pass_getNumericKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = 0 # variable definition
   a = getNumericKey() # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
 main()
@@ -203,12 +202,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "-1");
   });
 
-  ignore_test("Pass_waitForKey", async () => {
+  test("Pass_waitForKey", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = waitForKey() # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
 main()
@@ -239,13 +238,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_getKeyWithModifier", async () => {
+  test("Pass_getKeyWithModifier", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
+  gr = BlockGraphics() # variable definition
   a = getKeyWithModifier() # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
 main()
@@ -254,7 +253,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   let a = (await _stdlib.getKeyWithModifier());
   await _stdlib.printNoLine(a);
 }
@@ -277,12 +276,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "(, )");
   });
 
-  ignore_test("Pass_clearKeyBuffer", async () => {
+  test("Pass_clearKeyBuffer", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  gr = createBlockGraphics(white) # variable definition
-  clearKeyBuffer() # procedure call
+  gr = BlockGraphics() # variable definition
+  clearKeyBuffer()
 # end main
 
 main()
@@ -291,7 +290,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let gr = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let gr = system.initialise(await new _stdlib.BlockGraphics()._initialise());
   await _stdlib.clearKeyBuffer();
 }
 return [main, _tests];}`;
@@ -313,11 +312,11 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_newGraphics", async () => {
+  test("Pass_newGraphics", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = createBlockGraphics(white) # variable definition
+  a = BlockGraphics() # variable definition
 # end main
 
 main()
@@ -326,7 +325,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = (await _stdlib.createBlockGraphics(_stdlib.white));
+  let a = system.initialise(await new _stdlib.BlockGraphics()._initialise());
 }
 return [main, _tests];}`;
 
@@ -347,13 +346,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_defaultGraphics", async () => {
+  // RP: not sure how this test came to be in this file?
+  test("Pass_classWithConstructor", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   foo = Foo() # variable definition
   a = foo.p # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
 class Foo: # concrete class

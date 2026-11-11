@@ -3,12 +3,12 @@ import { CodeSourceFromString, FileImpl } from "../../src/ide/frames/file-impl";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import {
+  assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -83,24 +83,15 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
 
-  ignore_test("Pass_PrintWithNoExpression", async () => {
+  test("Fail_PrintWithNoExpression", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   printNoLine() # procedure call
-  PrintNoLine() # procedure call
 # end main
 
 main()
 `;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  await _stdlib.printNoLine("");
-  await _stdlib.printNoLine("");
-}
-return [main, _tests];}`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -115,8 +106,9 @@ return [main, _tests];}`;
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: item (AnyExceptEnum).ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Pass_StringLiteral", async () => {
@@ -545,26 +537,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[function foo]");
   });
 
-  ignore_test("Fail_noMain", async () => {
-    const code = `${testPythonHeader}
-
-main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_noEnd", async () => {
     const code = `${testPythonHeader}
 
@@ -572,26 +544,6 @@ def main() -> None:
   printNoLine("Hello World!") # procedure call
 
 main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
-  ignore_test("Fail_wrongCasing", async () => {
-    const code = `${testPythonHeader}
-
-
 `;
 
     const fileImpl = new FileImpl(
