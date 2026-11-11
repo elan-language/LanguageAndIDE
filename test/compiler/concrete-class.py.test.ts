@@ -16,6 +16,74 @@ import {
 } from "./compiler-test-helpers";
 
 suite("Python Concrete Class", () => {
+  test("Pass_initialiseInConstructor", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  foo = Foo() # variable definition
+  a = foo.p # variable definition
+  printNoLine(a)
+# end main
+
+class Foo: # concrete class
+
+  def __init__(self: Foo) -> None:
+    self.p = list[int]() # assignment
+  # end constructor
+
+  def toString(self: Foo) -> str: # function method
+    return ""
+  # end function
+
+  p: list[int] # property
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let foo = system.initialise(await new Foo()._initialise());
+  let a = foo.p;
+  await _stdlib.printNoLine(a);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p", system.initialise(_stdlib.List.emptyInstance())]]);};
+
+  async _initialise() {
+    this.p = system.initialise(await new _stdlib.List()._initialise());
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  p = system.initialise(_stdlib.List.emptyInstance());
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
   test("Pass_Class_SimpleInstantiation_PropertyAccess_Methods", async () => {
     const code = `${testPythonHeader}
 
@@ -1352,30 +1420,6 @@ main()
     ]);
   });
 
-  ignore_test("Fail_MissingNewOnInstantiation", async () => {
-    const code = `${testPythonHeader}
-
-def main() -> None:
-  x = Foo() # variable definition
-# end main
-
-main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_MissingClassOnInstantiation", async () => {
     const code = `${testPythonHeader}
 
@@ -1903,18 +1947,18 @@ main()
     ]);
   });
 
+  // triage: this should work. It is producing a compile error but the error is 'undefined'
   ignore_test("Fail_ConstructorWithCall", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine(x.b) # procedure call
 # end main
 
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
-
+    sleep(1)
   # end constructor
 
   def toString(self: Foo) -> str: # function method
@@ -1937,7 +1981,8 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["*"]);
   });
 
   test("Fail_UnnecessaryGenericParm1", async () => {
@@ -2254,12 +2299,12 @@ main()
     ]);
   });
 
-  ignore_test("Fail_CallConstructor", async () => {
+  test("Fail_CallConstructor", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   f = Foo() # variable definition
-  f.constructor() # procedure call
+  f.__init__() # procedure call
 # end main
 
 class Foo: # concrete class
@@ -2288,10 +2333,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'constructor' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UpdatePropertyInFunction", async () => {
@@ -2389,12 +2431,12 @@ main()
     ]);
   });
 
-  ignore_test("Fail_InvalidUpdateProperty2", async () => {
+  test("Pass_UpdatePropertyInProc", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   f = Foo() # variable definition
-  f.withP1(1) # procedure call
+  f.setP1(1) # procedure call
 # end main
 
 class Foo: # concrete class
@@ -2409,8 +2451,8 @@ class Foo: # concrete class
 
   p1: int # property
 
-  def withP1(self: Foo, p: int) -> None: # procedure method
-
+  def setP1(self: Foo, p: int) -> None: # procedure method
+    self.p1 = p # assignment
   # end procedure
 
 # end class
@@ -2429,7 +2471,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_PropertyMustBeInitialised", async () => {
