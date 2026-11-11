@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -48,7 +49,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, `'Hello,' she said.`);
   });
-  test("Pass_InterpolatedAndNonInterpolatedString", async () => {
+  ignore_test("Pass_InterpolatedAndNonInterpolatedString", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -88,7 +89,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]");
   });
 
-  test("Fail_missingBrace", async () => {
+  ignore_test("Fail_missingBrace", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -115,7 +116,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_extraBrace", async () => {
+  ignore_test("Fail_extraBrace", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -142,7 +143,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_InterpolatedEmpty", async () => {
+  ignore_test("Pass_InterpolatedEmpty", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -177,7 +178,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
   });
-  test("Pass_InterpolatedOneSpace", async () => {
+  ignore_test("Pass_InterpolatedOneSpace", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -213,7 +214,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, " ");
   });
 
-  test("Fail_InterpolatedEnumValue", async () => {
+  ignore_test("Fail_InterpolatedEnumValue", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

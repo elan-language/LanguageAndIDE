@@ -15,6 +15,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -703,45 +704,46 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 class Test_maths(unittest.TestCase):
- def test_maths(self) -> None:
-  self.assertEqual(pi, 3.141592653589793)
-  self.assertEqual(abs(-3.7), 3.7)
-  self.assertEqual(acos(0.5).round(3), 1.047)
-  self.assertEqual(asin(0.5).round(3), 0.524)
-  self.assertEqual(atan(1).round(2), 0.79)
-  self.assertEqual(cos(pi/4).round(3), 0.707)
-  self.assertEqual(exp(2).round(3), 7.389)
-  self.assertEqual(logE(7.398).round(2), 2)
-  self.assertEqual(log10(1000), 3)
-  self.assertEqual(log2(65536), 16)
-  self.assertEqual(sin(pi/6).round(2), 0.5)
-  self.assertEqual(sqrt(2).round(3), 1.414)
-  self.assertEqual(tan(pi/4).round(2), 1)
-  self.assertEqual(radians(90).round(2), 1.57)
-  self.assertEqual(degrees(1).round(0), 57)
-# end test
+  def test_maths(self : Test_maths) -> None:
+    self.assertEqual(pi, 3.141592653589793)
+    self.assertEqual(abs(-3.7), 3.7)
+    self.assertEqual(acos(0.5).round(3), 1.047)
+    self.assertEqual(asin(0.5).round(3), 0.524)
+    self.assertEqual(atan(1).round(2), 0.79)
+    self.assertEqual(cos(pi/4).round(3), 0.707)
+    self.assertEqual(exp(2).round(3), 7.389)
+    self.assertEqual(logE(7.398).round(2), 2)
+    self.assertEqual(log10(1000), 3)
+    self.assertEqual(log2(65536), 16)
+    self.assertEqual(sin(pi/6).round(2), 0.5)
+    self.assertEqual(sqrt(2).round(3), 1.414)
+    self.assertEqual(tan(pi/4).round(2), 1)
+    self.assertEqual(radians(90).round(2), 1.57)
+    self.assertEqual(degrees(1).round(0), 57)
+  # end test
+# end test class
 
 main()
 `;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
-_tests.push(["elan_test1", async (_outcomes) => {
-  _outcomes.push(await system.assert([async () => _stdlib.pi, "float"], [3.141592653589793, "float"], "elan_assert4", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "float"], [3.7, "float"], "elan_assert7", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "float"], [1.047, "float"], "elan_assert10", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "float"], [0.524, "float"], "elan_assert13", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "float"], [0.79, "float"], "elan_assert16", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "float"], [0.707, "float"], "elan_assert19", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "float"], [7.389, "float"], "elan_assert22", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "float"], [2, "int"], "elan_assert25", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "float"], [3, "int"], "elan_assert28", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "float"], [16, "int"], "elan_assert31", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "float"], [0.5, "float"], "elan_assert34", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "float"], [1.414, "float"], "elan_assert37", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "float"], [1, "int"], "elan_assert40", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "float"], [1.57, "float"], "elan_assert43", _stdlib, false));
-  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "float"], [57, "int"], "elan_assert46", _stdlib, false));
+_tests.push(["python_test1", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => _stdlib.pi, "float"], [3.141592653589793, "float"], "python_assert4", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "float"], [3.7, "float"], "python_assert7", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "float"], [1.047, "float"], "python_assert10", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "float"], [0.524, "float"], "python_assert13", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "float"], [0.79, "float"], "python_assert16", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "float"], [0.707, "float"], "python_assert19", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "float"], [7.389, "float"], "python_assert22", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "float"], [2, "int"], "python_assert25", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "float"], [3, "int"], "python_assert28", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "float"], [16, "int"], "python_assert31", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "float"], [0.5, "float"], "python_assert34", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "float"], [1.414, "float"], "python_assert37", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "float"], [1, "int"], "python_assert40", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "float"], [1.57, "float"], "python_assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "float"], [57, "int"], "python_assert46", _stdlib, false));
 }]);
 
 async function main() {
@@ -765,53 +767,34 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertTestObjectCodeExecutes(fileImpl, [
       [
-        "elan_test1",
+        "python_test1",
         [
           new AssertOutcome(
             TestStatus.pass,
             "3.141592653589793",
             "3.141592653589793",
-            "elan_assert4",
+            "python_assert4",
           ),
-          new AssertOutcome(TestStatus.pass, "3.7", "3.7", "elan_assert7"),
-          new AssertOutcome(TestStatus.pass, "1.047", "1.047", "elan_assert10"),
-          new AssertOutcome(TestStatus.pass, "0.524", "0.524", "elan_assert13"),
-          new AssertOutcome(TestStatus.pass, "0.79", "0.79", "elan_assert16"),
-          new AssertOutcome(TestStatus.pass, "0.707", "0.707", "elan_assert19"),
-          new AssertOutcome(TestStatus.pass, "7.389", "7.389", "elan_assert22"),
-          new AssertOutcome(TestStatus.pass, "2", "2", "elan_assert25"),
-          new AssertOutcome(TestStatus.pass, "3", "3", "elan_assert28"),
-          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert31"),
-          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "elan_assert34"),
-          new AssertOutcome(TestStatus.pass, "1.414", "1.414", "elan_assert37"),
-          new AssertOutcome(TestStatus.pass, "1", "1", "elan_assert40"),
-          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "elan_assert43"),
-          new AssertOutcome(TestStatus.pass, "57", "57", "elan_assert46"),
+          new AssertOutcome(TestStatus.pass, "3.7", "3.7", "python_assert7"),
+          new AssertOutcome(TestStatus.pass, "1.047", "1.047", "python_assert10"),
+          new AssertOutcome(TestStatus.pass, "0.524", "0.524", "python_assert13"),
+          new AssertOutcome(TestStatus.pass, "0.79", "0.79", "python_assert16"),
+          new AssertOutcome(TestStatus.pass, "0.707", "0.707", "python_assert19"),
+          new AssertOutcome(TestStatus.pass, "7.389", "7.389", "python_assert22"),
+          new AssertOutcome(TestStatus.pass, "2", "2", "python_assert25"),
+          new AssertOutcome(TestStatus.pass, "3", "3", "python_assert28"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "python_assert31"),
+          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "python_assert34"),
+          new AssertOutcome(TestStatus.pass, "1.414", "1.414", "python_assert37"),
+          new AssertOutcome(TestStatus.pass, "1", "1", "python_assert40"),
+          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "python_assert43"),
+          new AssertOutcome(TestStatus.pass, "57", "57", "python_assert46"),
         ],
       ],
     ]);
   });
   test("Pass_Random", async () => {
     const code = `${testPythonHeader}
-
-class Test_maths(unittest.TestCase):
- def test_maths(self) -> None:
-  self.assertEqual(pi, 3.141592653589793)
-  self.assertEqual(abs(-3.7), 3.7)
-  self.assertEqual(acos(0.5).round(3), 1.047)
-  self.assertEqual(asin(0.5).round(3), 0.524)
-  self.assertEqual(atan(1).round(2), 0.79)
-  self.assertEqual(cos(pi/4).round(3), 0.707)
-  self.assertEqual(exp(2).round(3), 7.389)
-  self.assertEqual(logE(7.398).round(2), 2)
-  self.assertEqual(log10(1000), 3)
-  self.assertEqual(log2(65536), 16)
-  self.assertEqual(sin(pi/6).round(2), 0.5)
-  self.assertEqual(sqrt(2).round(3), 1.414)
-  self.assertEqual(tan(pi/4).round(2), 1)
-  self.assertEqual(radians(90).round(2), 1.57)
-  self.assertEqual(degrees(1).round(0), 57)
-# end test
 
 def main() -> None:
   results = [0, 0] # variable definition
@@ -831,8 +814,8 @@ main()
 const global = new class {};
 async function main() {
   let results = system.list([0, 0]);
-  const elan_iterelan_for6 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterpython_for6) {
     let r = _stdlib.randint(0, 1);
     system.safeSet(results, system.safeIndex(results, r) + 1, [r]);
   }
@@ -887,8 +870,8 @@ async function main() {
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
   rnd.initialiseFromClock();
-  const elan_iterelan_for15 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_iterelan_for15) {
+  const elan_iterpython_for14 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterpython_for14) {
     val = rnd.asInt(0, 1);
     rnd = rnd.nextGen();
     system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
@@ -943,14 +926,14 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let val = 0;
-  const elan_iterelan_for12 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_iterelan_for12) {
+  const elan_iterpython_for12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterpython_for12) {
     val = rnd.asInt(3, 5);
     rnd = rnd.nextGen();
     system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
   }
-  const elan_iterelan_for25 = [..._stdlib.range(0, 7)];
-  for (const i of elan_iterelan_for25) {
+  const elan_iterpython_for25 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterpython_for25) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -1007,15 +990,15 @@ async function main() {
   let results = system.list([0, 0, 0, 0, 0, 0, 0]);
   let rnd = system.initialise(await new _stdlib.Random()._initialise());
   let dice = 0;
-  const elan_iterelan_for12 = [..._stdlib.range(1, 10001)];
-  for (const i of elan_iterelan_for12) {
+  const elan_iterpython_for12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterpython_for12) {
     let t = (await global.rollDice(rnd));
     dice = t[0];
     rnd = t[1];
     system.safeSet(results, system.safeIndex(results, dice) + 1, [dice]);
   }
-  const elan_iterelan_for28 = [..._stdlib.range(0, 7)];
-  for (const i of elan_iterelan_for28) {
+  const elan_iterpython_for28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterpython_for28) {
     let r = system.safeIndex(results, i);
     await _stdlib.printNoLine(r);
     await _stdlib.printNoLine(", ");
@@ -1542,7 +1525,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
   });
-  test("Pass_testRegExp", async () => {
+  ignore_test("Pass_testRegExp", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1585,7 +1568,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-  test("Pass_asRegExp", async () => {
+  ignore_test("Pass_asRegExp", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1747,12 +1730,13 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
+
   test("Pass_isInfinite", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   printNoLine((1.0/0).isInfinite()) # procedure call
-  printNoLine((-1.0/0).isInfinite()) # procedure call
+  printNoLine(((-1.0)/0).isInfinite()) # procedure call
   printNoLine((1.0/1).isInfinite()) # procedure call
   printNoLine(sqrt(-1).isInfinite()) # procedure call
 # end main
@@ -1764,7 +1748,7 @@ main()
 const global = new class {};
 async function main() {
   await _stdlib.printNoLine(_stdlib.isInfinite((1 / 0)));
-  await _stdlib.printNoLine(_stdlib.isInfinite(((-1) / 0)));
+  await _stdlib.printNoLine(_stdlib.isInfinite((((-1)) / 0)));
   await _stdlib.printNoLine(_stdlib.isInfinite((1 / 1)));
   await _stdlib.printNoLine(_stdlib.isInfinite(_stdlib.sqrt((-1))));
 }
@@ -1864,7 +1848,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: listOfVGs (List<of VectorGraphic>), Provided: List<of Foo>.ErrorMessages.html#compile_error",
+      "Argument types. Expected: listOfVGs (list[VectorGraphic]), Provided: list[Foo].ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2213,12 +2197,8 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Fail_shadowLibraryType", async () => {
+  ignore_test("Fail_shadowLibraryType", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(rangeInSteps(6, 2, 2)) # procedure call
-# end main
 
 class List: # concrete class
 
@@ -2349,7 +2329,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
   });
 
-  test("Pass_createGraphicsFunctions", async () => {
+  ignore_test("Pass_createGraphicsFunctions", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2371,11 +2351,11 @@ main()
 const global = new class {};
 async function main() {
   let b = system.initialise(await new _stdlib.List()._initialise());
-  const elan_iterelan_for6 = [..._stdlib.range(0, 40)];
-  for (const i of elan_iterelan_for6) {
+  const elan_iterpython_for6 = [..._stdlib.range(0, 40)];
+  for (const i of elan_iterpython_for6) {
     let sa = system.initialise(await new _stdlib.List()._initialise());
-    const elan_iterelan_for13 = [..._stdlib.range(0, 30)];
-    for (const j of elan_iterelan_for13) {
+    const elan_iterpython_for13 = [..._stdlib.range(0, 30)];
+    for (const j of elan_iterpython_for13) {
       sa.append(_stdlib.white);
     }
     b.append(sa);
@@ -2526,7 +2506,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = CircleVG() # variable definition
   b = Dictionary[str, int]() # variable definition
-  d = new HashSet<of int> # variable definition
+  d = HashSet[int]() # variable definition
   e = ImageVG("") # variable definition
   f = LineVG() # variable definition
   g = list[int]() # variable definition

@@ -322,7 +322,7 @@ export function transform(
   }
 
   if (node instanceof AssertStatement) {
-    const assertAsn = new AssertStatementAsn(node.getHtmlId(), scope);
+    const assertAsn = new AssertStatementAsn(node.language(), node.getHtmlId(), scope);
     assertAsn.breakpointStatus = node.breakpointStatus;
     assertAsn.expected = transform(node.expected, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;
     assertAsn.actual = transform(node.actual, node.getHtmlId(), assertAsn) ?? EmptyAsn.Instance;

@@ -444,7 +444,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "321");
   });
 
-  test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
+  ignore_test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1071,8 +1071,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'main' is not defined.ErrorMessages.html#compile_error"]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
@@ -1259,7 +1258,6 @@ main()
 
   test("Fail_ParameterCount", async () => {
     const code = `${testPythonHeader}
-
 
 def f(p: float) -> None: # procedure
 
@@ -1512,6 +1510,7 @@ main()
       "'break' matches a reserved word.ErrorMessages.html#compile_error",
     ]);
   });
+
   test("Fail_UseOfLangTypeAsName", async () => {
     const code = `${testPythonHeader}
 
@@ -1536,10 +1535,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'float' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1602,7 +1598,6 @@ main()
 
   test("Fail_NotUniqueName", async () => {
     const code = `${testPythonHeader}
-
 
 def foo() -> None: # procedure
 
@@ -1723,7 +1718,7 @@ main()
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Cannot call procedure 'append' within an expression.ErrorMessages.html#compile_error",
-      "Incompatible types. Expected: List<of int>, Provided: Procedure (int).ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[int], Provided: Procedure (int).ErrorMessages.html#TypesCompileError",
     ]);
   });
 

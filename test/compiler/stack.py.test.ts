@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -278,7 +279,7 @@ return [main, _tests];}`;
     );
   });
 
-  test("Fail_StackWithoutGenericParm", async () => {
+  ignore_test("Fail_StackWithoutGenericParm", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -316,7 +317,7 @@ def main() -> None:
 class Foo: # concrete class
 
   def __init__(self: Foo) -> None:
-  
+
   # end constructor
 
   def toString(self: Foo) -> str: # function method

@@ -1,3 +1,4 @@
+import { Language } from "../../../ide/frames/frame-interfaces/language";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { SymbolType } from "../../compiler-interfaces/symbol-type";
@@ -6,7 +7,11 @@ import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
 export class AssertStatementAsn extends BreakpointAsn implements AstNode {
-  constructor(fieldId: string, scope: Scope) {
+  constructor(
+    private readonly language: Language,
+    fieldId: string,
+    scope: Scope,
+  ) {
     super(fieldId, scope);
   }
 
@@ -26,8 +31,8 @@ export class AssertStatementAsn extends BreakpointAsn implements AstNode {
     const expectedValue = this.expected.compile();
     const actualValue = this.actual.compile();
 
-    const expectedSt = this.expected.symbolType().name;
-    const actualSt = this.actual.symbolType().name;
+    const expectedSt = this.expected.symbolType().languageSpecificName(this.language);
+    const actualSt = this.actual.symbolType().languageSpecificName(this.language);
     const actualFunc = `async () => ${actualValue}`;
     expected = `[${expectedValue}, "${expectedSt}"]`;
     actual = `[${actualFunc}, "${actualSt}"]`;

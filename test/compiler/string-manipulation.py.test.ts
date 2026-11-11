@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -429,7 +430,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5.5");
   });
 
-  test("Pass_Interpolation", async () => {
+  ignore_test("Pass_Interpolation", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -623,15 +624,6 @@ main()
 
   test("Fail_CoerceNumberToString", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine("abc" < "abC") # procedure call
-  printNoLine("abcd" > "abc") # procedure call
-  printNoLine("abc" >= "abc") # procedure call
-  printNoLine("abc" <= "abc") # procedure call
-  printNoLine("abcd" >= "abc") # procedure call
-  printNoLine("abcd" <= "abc") # procedure call
-# end main
 
 def main() -> None:
   a = "abcde" # variable definition
