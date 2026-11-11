@@ -634,7 +634,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+      "Must prefix member with 'self'.ErrorMessages.html#compile_error",
     ]);
   });
 

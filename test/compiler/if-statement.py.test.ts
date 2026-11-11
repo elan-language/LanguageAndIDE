@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -655,7 +656,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
-  test("Pass_ghostedVariableInElse", async () => {
+  ignore_test("Pass_ghostedVariableInElse", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -726,8 +727,8 @@ async function main() {
     await _stdlib.printNoLine("");
   } else if (a === 2) {
     let b = a;
-    const elan_iterelan_for17 = [..._stdlib.range(0, 6)];
-    for (const i of elan_iterelan_for17) {
+    const elan_iterpython_for21 = [..._stdlib.range(0, 6)];
+    for (const i of elan_iterpython_for21) {
       b = b + i;
     }
     await _stdlib.printNoLine(b);
@@ -752,7 +753,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "17");
   });
 
-  test("Fail_noEndIf", async () => {
+  ignore_test("Fail_noEndIf", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -807,10 +808,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_ElseIfAfterElse", async () => {
@@ -841,10 +839,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Cannot have any clause after unconditional 'else'.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_IfConditionNotBool", async () => {

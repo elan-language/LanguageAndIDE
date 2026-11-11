@@ -155,7 +155,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  a = not False and True # variable definition
+  a = (not False) and True # variable definition
   b = not (False and True) # variable definition
   printNoLine(a) # procedure call
   printNoLine(b) # procedure call
@@ -167,7 +167,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = !false && true;
+  let a = (!false) && true;
   let b = !(false && true);
   await _stdlib.printNoLine(a);
   await _stdlib.printNoLine(b);
@@ -361,12 +361,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {

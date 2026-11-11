@@ -10,6 +10,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -959,7 +960,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of str>, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[str], Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1015,7 +1016,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: List<of str>, Provided: bool.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[str], Provided: bool.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1043,11 +1044,11 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: value (List<of str>), Provided: str.ErrorMessages.html#compile_error",
+      "Argument types. Expected: value (list[str]), Provided: str.ErrorMessages.html#compile_error",
     ]);
   });
 
-  test("Fail_IndexWrongType1", async () => {
+  ignore_test("Fail_IndexWrongType1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

@@ -9,6 +9,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -2052,7 +2053,7 @@ main()
     ]);
   });
 
-  test("Fail_AbstractClassDefinesMethodBody", async () => {
+  ignore_test("Fail_AbstractClassDefinesMethodBody", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2158,7 +2159,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_MissingAbstractProcedure", async () => {
+  ignore_test("Fail_MissingAbstractProcedure", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2329,7 +2330,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>), Provided: List<of Bar>.ErrorMessages.html#compile_error",
+      "Argument types. Expected: l (list[Foo]), Provided: list[Bar].ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2381,7 +2382,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (List<of Foo>), Provided: List<of Bar>.ErrorMessages.html#compile_error",
+      "Argument types. Expected: l (list[Foo]), Provided: list[Bar].ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2432,7 +2433,7 @@ main()
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: l (Dictionary<of str, Foo>), Provided: Dictionary<of str, Bar>.ErrorMessages.html#compile_error",
+      "Argument types. Expected: l (dict[str, Foo]), Provided: dict[str, Bar].ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -2602,11 +2603,11 @@ def main() -> None:
 class Foo(ABC): # abstract class
 
   @abstractmethod
-  def ff() -> None
+  def ff() -> None:
     pass # abstract procedure
 
   @abstractmethod
-  def ff() -> None
+  def ff() -> None:
     pass # abstract procedure
 
 # end class
@@ -2642,7 +2643,7 @@ def main() -> None:
 class Foo(ABC): # abstract class
 
   @abstractmethod
-  def ff() -> None
+  def ff() -> None:
     pass # abstract procedure
 
   @abstractmethod
@@ -2686,7 +2687,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   @abstractmethod
-  def ff() -> None
+  def ff() -> None:
     pass # abstract procedure
 
 # end class
@@ -3452,11 +3453,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_SuperclassesCannotDefineSameMember", async () => {

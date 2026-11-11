@@ -10,7 +10,6 @@ ELSE: 'else';
 FOR: 'for';
 IF: 'if';
 IN: 'in';
-INPUT: 'input';
 LAMBDA: 'lambda';
 MAIN: 'main';
 RETURN: 'return';

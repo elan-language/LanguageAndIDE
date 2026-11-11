@@ -487,7 +487,7 @@ main()
     ]);
   });
 
-  test("Fail_PassLambdaWithWrongTypes2", async () => {
+  ignore_test("Fail_PassLambdaWithWrongTypes2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

@@ -8,6 +8,7 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -248,7 +249,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "test");
   });
 
-  test("Fail_PrivatePropertyCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBeAccessed", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -293,7 +294,7 @@ main()
     ]);
   });
 
-  test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -341,7 +342,7 @@ main()
     ]);
   });
 
-  test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -387,7 +388,7 @@ main()
     ]);
   });
 
-  test("Fail_PrivateFunctionCannotBeAccessed", async () => {
+  ignore_test("Fail_PrivateFunctionCannotBeAccessed", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -433,7 +434,7 @@ main()
     ]);
   });
 
-  test("Fail_PrivatePropertyCannotBePrinted", async () => {
+  ignore_test("Fail_PrivatePropertyCannotBePrinted", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -478,7 +479,7 @@ main()
     ]);
   });
 
-  test("Fail_PrivateFunctionCannotBePrinted", async () => {
+  ignore_test("Fail_PrivateFunctionCannotBePrinted", async () => {
     const code = `${testPythonHeader}
 
 

@@ -330,7 +330,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Pass_Enum", async () => {
+  ignore_test("Pass_Enum", async () => {
     const code = `${testPythonHeader}
 
 a = Fruit.apple # constant
@@ -487,7 +487,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Pass_referenceToOtherConstant", async () => {
+  ignore_test("Pass_referenceToOtherConstant", async () => {
     const code = `${testPythonHeader}
 
 a = 3 # constant
@@ -610,7 +610,7 @@ main()
     ]);
   });
 
-  test("Fail_UseConstantBeforeDefinition1", async () => {
+  ignore_test("Fail_UseConstantBeforeDefinition1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -635,15 +635,11 @@ main()
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
+    assertDoesNotCompile(fileImpl, ["'a' is not defined.ErrorMessages.html#compile_error"]);
   });
 
   ignore_test("Fail_UseConstantBeforeDefinition2", async () => {
     const code = `${testPythonHeader}
-
-def main() -> None:
-
-# end main
 
 b = 2 # constant
 

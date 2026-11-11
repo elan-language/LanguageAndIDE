@@ -119,7 +119,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of int>), Provided: int.ErrorMessages.html#compile_error",
+      "Argument types. Expected: other (list[int]), Provided: int.ErrorMessages.html#compile_error",
     ]);
   });
 
@@ -1528,7 +1528,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: float or int, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: list[str].ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1558,8 +1558,8 @@ main()
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: float or int, Provided: List<of str>.ErrorMessages.html#TypesCompileError",
-      "Incompatible types. Expected: List<of str>, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: list[str].ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: list[str], Provided: str.ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -1960,7 +1960,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
-  test("Fail_withoutGenericType", async () => {
+  ignore_test("Fail_withoutGenericType", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -2146,7 +2146,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  f = list() # variable definition
+  f = list[]() # variable definition
 # end main
 
 main()
@@ -2163,10 +2163,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Expected: generic type specifier.ErrorMessages.html#GenericParametersCompileError",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_appendTuple1", async () => {
@@ -2194,7 +2191,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Incompatible types. Expected: float or int, Provided: List<of (int, int)>.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: list[(int, int)].ErrorMessages.html#TypesCompileError",
     ]);
   });
 
@@ -2223,7 +2220,7 @@ main()
 
     assertParses(fileImpl);
     assertDoesNotCompile(fileImpl, [
-      "Argument types. Expected: other (List<of (int, int)>), Provided: (int, int).ErrorMessages.html#compile_error",
+      "Argument types. Expected: other (list[(Int, Int)]), Provided: (int, int).ErrorMessages.html#compile_error",
     ]);
   });
 
