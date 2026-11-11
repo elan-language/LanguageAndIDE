@@ -6,6 +6,8 @@ import Python_Lexer;
 
 file: comment? global* mainCall? NL* EOF;
 
+globalBlock: global+;
+
 // Globals
 global:
     main
@@ -88,6 +90,23 @@ comment: GHOSTED_LINE? commentText NL;
 commentText: COMMENT;
 
 // Statements
+statementBlock: selectableStatement+;
+
+selectableStatement:
+    variableDefinition
+    | assignment
+    | ifStatement
+    | elseIfClause
+    | elseClause
+    | whileLoop
+    | forLoop
+    | procedureCall
+    | tryStatement
+    | catchClause
+    | throwStatement
+    | comment
+; // thenClause and tryClause not included because they can't be selected & hence not cut/copy/pasted
+
 ordinaryStatement:
     variableDefinition
     | assignment
@@ -152,6 +171,16 @@ returnStatement:
 
 
 // Members
+memberBlock: selectableMember+;
+
+selectableMember:
+      property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+; // Does not (currently) include constructor
+
 constructorMember:
     GHOSTED_BLOCK_START? DEF INIT OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? GHOSTED_BLOCK_END? NL
         ordinaryStatement* END_CONSTRUCTOR NL

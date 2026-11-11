@@ -197,6 +197,36 @@ public interface RefLangListener extends ParseTreeListener {
 	 */
 	void exitIfStatement(RefLangParser.IfStatementContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link RefLangParser#thenClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterThenClause(RefLangParser.ThenClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RefLangParser#thenClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitThenClause(RefLangParser.ThenClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RefLangParser#elseIfClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseIfClause(RefLangParser.ElseIfClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RefLangParser#elseIfClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseIfClause(RefLangParser.ElseIfClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RefLangParser#elseClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterElseClause(RefLangParser.ElseClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RefLangParser#elseClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitElseClause(RefLangParser.ElseClauseContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link RefLangParser#whileLoop}.
 	 * @param ctx the parse tree
 	 */
@@ -227,46 +257,6 @@ public interface RefLangListener extends ParseTreeListener {
 	 */
 	void exitProcedureCall(RefLangParser.ProcedureCallContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RefLangParser#procRef}.
-	 * @param ctx the parse tree
-	 */
-	void enterProcRef(RefLangParser.ProcRefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#procRef}.
-	 * @param ctx the parse tree
-	 */
-	void exitProcRef(RefLangParser.ProcRefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#thisProcRef}.
-	 * @param ctx the parse tree
-	 */
-	void enterThisProcRef(RefLangParser.ThisProcRefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#thisProcRef}.
-	 * @param ctx the parse tree
-	 */
-	void exitThisProcRef(RefLangParser.ThisProcRefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#instanceProcRef}.
-	 * @param ctx the parse tree
-	 */
-	void enterInstanceProcRef(RefLangParser.InstanceProcRefContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#instanceProcRef}.
-	 * @param ctx the parse tree
-	 */
-	void exitInstanceProcRef(RefLangParser.InstanceProcRefContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#identifierWithOptIndexes}.
-	 * @param ctx the parse tree
-	 */
-	void enterIdentifierWithOptIndexes(RefLangParser.IdentifierWithOptIndexesContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#identifierWithOptIndexes}.
-	 * @param ctx the parse tree
-	 */
-	void exitIdentifierWithOptIndexes(RefLangParser.IdentifierWithOptIndexesContext ctx);
-	/**
 	 * Enter a parse tree produced by {@link RefLangParser#tryStatement}.
 	 * @param ctx the parse tree
 	 */
@@ -276,6 +266,26 @@ public interface RefLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitTryStatement(RefLangParser.TryStatementContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RefLangParser#tryClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterTryClause(RefLangParser.TryClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RefLangParser#tryClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitTryClause(RefLangParser.TryClauseContext ctx);
+	/**
+	 * Enter a parse tree produced by {@link RefLangParser#catchClause}.
+	 * @param ctx the parse tree
+	 */
+	void enterCatchClause(RefLangParser.CatchClauseContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link RefLangParser#catchClause}.
+	 * @param ctx the parse tree
+	 */
+	void exitCatchClause(RefLangParser.CatchClauseContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RefLangParser#throwStatement}.
 	 * @param ctx the parse tree
@@ -316,36 +326,6 @@ public interface RefLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitReturnStatement(RefLangParser.ReturnStatementContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#elseIfClause}.
-	 * @param ctx the parse tree
-	 */
-	void enterElseIfClause(RefLangParser.ElseIfClauseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#elseIfClause}.
-	 * @param ctx the parse tree
-	 */
-	void exitElseIfClause(RefLangParser.ElseIfClauseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#elseClause}.
-	 * @param ctx the parse tree
-	 */
-	void enterElseClause(RefLangParser.ElseClauseContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#elseClause}.
-	 * @param ctx the parse tree
-	 */
-	void exitElseClause(RefLangParser.ElseClauseContext ctx);
-	/**
-	 * Enter a parse tree produced by {@link RefLangParser#catchStatement}.
-	 * @param ctx the parse tree
-	 */
-	void enterCatchStatement(RefLangParser.CatchStatementContext ctx);
-	/**
-	 * Exit a parse tree produced by {@link RefLangParser#catchStatement}.
-	 * @param ctx the parse tree
-	 */
-	void exitCatchStatement(RefLangParser.CatchStatementContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RefLangParser#constructorMember}.
 	 * @param ctx the parse tree
@@ -542,6 +522,18 @@ public interface RefLangListener extends ParseTreeListener {
 	 * @param ctx the parse tree
 	 */
 	void exitListTypeName(RefLangParser.ListTypeNameContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dictTypeName}
+	 * labeled alternative in {@link RefLangParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void enterDictTypeName(RefLangParser.DictTypeNameContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dictTypeName}
+	 * labeled alternative in {@link RefLangParser#typeName}.
+	 * @param ctx the parse tree
+	 */
+	void exitDictTypeName(RefLangParser.DictTypeNameContext ctx);
 	/**
 	 * Enter a parse tree produced by the {@code udtTypeName}
 	 * labeled alternative in {@link RefLangParser#typeName}.
@@ -751,25 +743,185 @@ public interface RefLangListener extends ParseTreeListener {
 	 */
 	void exitIndex(RefLangParser.IndexContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RefLangParser#expression}.
+	 * Enter a parse tree produced by the {@code newInstanceExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterExpression(RefLangParser.ExpressionContext ctx);
+	void enterNewInstanceExpression(RefLangParser.NewInstanceExpressionContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RefLangParser#expression}.
+	 * Exit a parse tree produced by the {@code newInstanceExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitExpression(RefLangParser.ExpressionContext ctx);
+	void exitNewInstanceExpression(RefLangParser.NewInstanceExpressionContext ctx);
 	/**
-	 * Enter a parse tree produced by {@link RefLangParser#term}.
+	 * Enter a parse tree produced by the {@code unaryExpressionLabel}
+	 * labeled alternative in {@link RefLangParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void enterTerm(RefLangParser.TermContext ctx);
+	void enterUnaryExpressionLabel(RefLangParser.UnaryExpressionLabelContext ctx);
 	/**
-	 * Exit a parse tree produced by {@link RefLangParser#term}.
+	 * Exit a parse tree produced by the {@code unaryExpressionLabel}
+	 * labeled alternative in {@link RefLangParser#expression}.
 	 * @param ctx the parse tree
 	 */
-	void exitTerm(RefLangParser.TermContext ctx);
+	void exitUnaryExpressionLabel(RefLangParser.UnaryExpressionLabelContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code termExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterTermExpression(RefLangParser.TermExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code termExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitTermExpression(RefLangParser.TermExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code binaryExpressionLabel}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterBinaryExpressionLabel(RefLangParser.BinaryExpressionLabelContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code binaryExpressionLabel}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitBinaryExpressionLabel(RefLangParser.BinaryExpressionLabelContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code ifExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void enterIfExpression(RefLangParser.IfExpressionContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code ifExpression}
+	 * labeled alternative in {@link RefLangParser#expression}.
+	 * @param ctx the parse tree
+	 */
+	void exitIfExpression(RefLangParser.IfExpressionContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code identifierUseTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterIdentifierUseTerm(RefLangParser.IdentifierUseTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code identifierUseTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitIdentifierUseTerm(RefLangParser.IdentifierUseTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code methodCallTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterMethodCallTerm(RefLangParser.MethodCallTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code methodCallTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitMethodCallTerm(RefLangParser.MethodCallTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code indexedTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterIndexedTerm(RefLangParser.IndexedTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code indexedTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitIndexedTerm(RefLangParser.IndexedTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code litValueTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterLitValueTerm(RefLangParser.LitValueTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code litValueTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitLitValueTerm(RefLangParser.LitValueTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code dictionaryTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterDictionaryTerm(RefLangParser.DictionaryTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code dictionaryTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitDictionaryTerm(RefLangParser.DictionaryTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code bracketedExpressionTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterBracketedExpressionTerm(RefLangParser.BracketedExpressionTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code bracketedExpressionTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitBracketedExpressionTerm(RefLangParser.BracketedExpressionTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code chainableTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterChainableTerm(RefLangParser.ChainableTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code chainableTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitChainableTerm(RefLangParser.ChainableTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code tupleTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterTupleTerm(RefLangParser.TupleTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code tupleTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitTupleTerm(RefLangParser.TupleTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code thisInstanceTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterThisInstanceTerm(RefLangParser.ThisInstanceTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code thisInstanceTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitThisInstanceTerm(RefLangParser.ThisInstanceTermContext ctx);
+	/**
+	 * Enter a parse tree produced by the {@code listTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void enterListTerm(RefLangParser.ListTermContext ctx);
+	/**
+	 * Exit a parse tree produced by the {@code listTerm}
+	 * labeled alternative in {@link RefLangParser#term}.
+	 * @param ctx the parse tree
+	 */
+	void exitListTerm(RefLangParser.ListTermContext ctx);
 	/**
 	 * Enter a parse tree produced by {@link RefLangParser#chainable}.
 	 * @param ctx the parse tree

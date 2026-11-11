@@ -6,6 +6,8 @@ import RefLang_Lexer;
 
 file: comment? global* NL* EOF;
 
+globalBlock: global+;
+
 // Globals
 global:
     main
@@ -74,7 +76,26 @@ comment: GHOSTED? commentText NL;
 
 commentText: COMMENT;
 
+
 // Statements
+statementBlock: selectableStatement+;
+
+selectableStatement:
+    variableDefinition
+    | assignment
+    | ifStatement
+    | elseIfClause
+    | elseClause
+    | whileLoop
+    | forLoop
+    | procedureCall
+    | tryStatement
+    | catchClause
+    | throwStatement
+    | comment
+; // thenClause and tryClause not included because they can't be selected & hence not cut/copy/pasted
+
+
 ordinaryStatement:
     variableDefinition
     | assignment
@@ -130,6 +151,16 @@ assert:
 returnStatement: RETURN expression NL; // not ghostable
 
 // Members
+memberBlock: selectableMember+;
+
+selectableMember:
+      property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+; // Does not (currently) include constructor
+
 constructorMember:
     GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END CONSTRUCTOR
         NL

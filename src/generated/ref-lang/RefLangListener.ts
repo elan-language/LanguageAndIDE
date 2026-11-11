@@ -3,6 +3,7 @@
 import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "antlr4ng";
 
 import { FileContext } from "./RefLangParser.js";
+import { GlobalBlockContext } from "./RefLangParser.js";
 import { GlobalContext } from "./RefLangParser.js";
 import { MainContext } from "./RefLangParser.js";
 import { FunctionContext } from "./RefLangParser.js";
@@ -17,6 +18,8 @@ import { AbstractClassContext } from "./RefLangParser.js";
 import { AbstractClassMemberContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
 import { CommentTextContext } from "./RefLangParser.js";
+import { StatementBlockContext } from "./RefLangParser.js";
+import { SelectableStatementContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
@@ -34,6 +37,8 @@ import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
+import { MemberBlockContext } from "./RefLangParser.js";
+import { SelectableMemberContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
 import { FunctionMethodContext } from "./RefLangParser.js";
@@ -124,6 +129,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitFile?: (ctx: FileContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.globalBlock`.
+   * @param ctx the parse tree
+   */
+  enterGlobalBlock?: (ctx: GlobalBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.globalBlock`.
+   * @param ctx the parse tree
+   */
+  exitGlobalBlock?: (ctx: GlobalBlockContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.global`.
    * @param ctx the parse tree
@@ -264,6 +279,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitCommentText?: (ctx: CommentTextContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.statementBlock`.
+   * @param ctx the parse tree
+   */
+  enterStatementBlock?: (ctx: StatementBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.statementBlock`.
+   * @param ctx the parse tree
+   */
+  exitStatementBlock?: (ctx: StatementBlockContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.selectableStatement`.
+   * @param ctx the parse tree
+   */
+  enterSelectableStatement?: (ctx: SelectableStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.selectableStatement`.
+   * @param ctx the parse tree
+   */
+  exitSelectableStatement?: (ctx: SelectableStatementContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.ordinaryStatement`.
    * @param ctx the parse tree
@@ -434,6 +469,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.memberBlock`.
+   * @param ctx the parse tree
+   */
+  enterMemberBlock?: (ctx: MemberBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.memberBlock`.
+   * @param ctx the parse tree
+   */
+  exitMemberBlock?: (ctx: MemberBlockContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.selectableMember`.
+   * @param ctx the parse tree
+   */
+  enterSelectableMember?: (ctx: SelectableMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.selectableMember`.
+   * @param ctx the parse tree
+   */
+  exitSelectableMember?: (ctx: SelectableMemberContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.constructorMember`.
    * @param ctx the parse tree

@@ -3,6 +3,7 @@
 import { AbstractParseTreeVisitor } from "antlr4ng";
 
 import { FileContext } from "./RefLangParser.js";
+import { GlobalBlockContext } from "./RefLangParser.js";
 import { GlobalContext } from "./RefLangParser.js";
 import { MainContext } from "./RefLangParser.js";
 import { FunctionContext } from "./RefLangParser.js";
@@ -17,6 +18,8 @@ import { AbstractClassContext } from "./RefLangParser.js";
 import { AbstractClassMemberContext } from "./RefLangParser.js";
 import { CommentContext } from "./RefLangParser.js";
 import { CommentTextContext } from "./RefLangParser.js";
+import { StatementBlockContext } from "./RefLangParser.js";
+import { SelectableStatementContext } from "./RefLangParser.js";
 import { OrdinaryStatementContext } from "./RefLangParser.js";
 import { VariableDefinitionContext } from "./RefLangParser.js";
 import { AssignmentContext } from "./RefLangParser.js";
@@ -34,6 +37,8 @@ import { ThrowStatementContext } from "./RefLangParser.js";
 import { ErrorMessageContext } from "./RefLangParser.js";
 import { AssertContext } from "./RefLangParser.js";
 import { ReturnStatementContext } from "./RefLangParser.js";
+import { MemberBlockContext } from "./RefLangParser.js";
+import { SelectableMemberContext } from "./RefLangParser.js";
 import { ConstructorMemberContext } from "./RefLangParser.js";
 import { PropertyContext } from "./RefLangParser.js";
 import { FunctionMethodContext } from "./RefLangParser.js";
@@ -124,6 +129,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitFile?: (ctx: FileContext) => Result;
   /**
+   * Visit a parse tree produced by `RefLangParser.globalBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitGlobalBlock?: (ctx: GlobalBlockContext) => Result;
+  /**
    * Visit a parse tree produced by `RefLangParser.global`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -207,6 +218,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitCommentText?: (ctx: CommentTextContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.statementBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitStatementBlock?: (ctx: StatementBlockContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.selectableStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSelectableStatement?: (ctx: SelectableStatementContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.ordinaryStatement`.
    * @param ctx the parse tree
@@ -309,6 +332,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.memberBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMemberBlock?: (ctx: MemberBlockContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.selectableMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSelectableMember?: (ctx: SelectableMemberContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.constructorMember`.
    * @param ctx the parse tree

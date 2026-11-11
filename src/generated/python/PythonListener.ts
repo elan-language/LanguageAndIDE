@@ -3,6 +3,7 @@
 import { ErrorNode, ParseTreeListener, ParserRuleContext, TerminalNode } from "antlr4ng";
 
 import { FileContext } from "./PythonParser.js";
+import { GlobalBlockContext } from "./PythonParser.js";
 import { GlobalContext } from "./PythonParser.js";
 import { MainContext } from "./PythonParser.js";
 import { MainCallContext } from "./PythonParser.js";
@@ -19,6 +20,8 @@ import { AbstractClassContext } from "./PythonParser.js";
 import { AbstractClassMemberContext } from "./PythonParser.js";
 import { CommentContext } from "./PythonParser.js";
 import { CommentTextContext } from "./PythonParser.js";
+import { StatementBlockContext } from "./PythonParser.js";
+import { SelectableStatementContext } from "./PythonParser.js";
 import { OrdinaryStatementContext } from "./PythonParser.js";
 import { VariableDefinitionContext } from "./PythonParser.js";
 import { AssignmentContext } from "./PythonParser.js";
@@ -36,6 +39,8 @@ import { ThrowStatementContext } from "./PythonParser.js";
 import { ErrorMessageContext } from "./PythonParser.js";
 import { AssertContext } from "./PythonParser.js";
 import { ReturnStatementContext } from "./PythonParser.js";
+import { MemberBlockContext } from "./PythonParser.js";
+import { SelectableMemberContext } from "./PythonParser.js";
 import { ConstructorMemberContext } from "./PythonParser.js";
 import { PropertyContext } from "./PythonParser.js";
 import { FunctionMethodContext } from "./PythonParser.js";
@@ -129,6 +134,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitFile?: (ctx: FileContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.globalBlock`.
+   * @param ctx the parse tree
+   */
+  enterGlobalBlock?: (ctx: GlobalBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.globalBlock`.
+   * @param ctx the parse tree
+   */
+  exitGlobalBlock?: (ctx: GlobalBlockContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.global`.
    * @param ctx the parse tree
@@ -289,6 +304,26 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitCommentText?: (ctx: CommentTextContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.statementBlock`.
+   * @param ctx the parse tree
+   */
+  enterStatementBlock?: (ctx: StatementBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.statementBlock`.
+   * @param ctx the parse tree
+   */
+  exitStatementBlock?: (ctx: StatementBlockContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.selectableStatement`.
+   * @param ctx the parse tree
+   */
+  enterSelectableStatement?: (ctx: SelectableStatementContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.selectableStatement`.
+   * @param ctx the parse tree
+   */
+  exitSelectableStatement?: (ctx: SelectableStatementContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.ordinaryStatement`.
    * @param ctx the parse tree
@@ -459,6 +494,26 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitReturnStatement?: (ctx: ReturnStatementContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.memberBlock`.
+   * @param ctx the parse tree
+   */
+  enterMemberBlock?: (ctx: MemberBlockContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.memberBlock`.
+   * @param ctx the parse tree
+   */
+  exitMemberBlock?: (ctx: MemberBlockContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.selectableMember`.
+   * @param ctx the parse tree
+   */
+  enterSelectableMember?: (ctx: SelectableMemberContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.selectableMember`.
+   * @param ctx the parse tree
+   */
+  exitSelectableMember?: (ctx: SelectableMemberContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.constructorMember`.
    * @param ctx the parse tree
