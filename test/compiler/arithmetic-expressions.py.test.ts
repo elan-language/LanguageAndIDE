@@ -104,11 +104,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
+  //triage: this should pass - giving 'unexpected compile error'
   ignore_test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 2 + 3 ^ 2 # variable definition
+  x = 2 + 3 ** 2 # variable definition
 # end main
 
 main()
@@ -140,12 +141,12 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
-
+  // triage: this should pass - giving 'unexpected compile error'
   ignore_test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 16.0 / 2 ^ 3 # variable definition
+  x = 16.0 / 2 ** 3 # variable definition
 # end main
 
 main()

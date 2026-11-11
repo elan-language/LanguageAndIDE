@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -382,7 +381,8 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_notEqual", async () => {
+  // triage: this should parse and run
+  test("Pass_notEqual", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -403,7 +403,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_EqualToOrLessThan", async () => {
@@ -539,11 +539,11 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Fail_doubleEquals", async () => {
+  test("Pass_doubleEquals", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 == 3  ) # procedure call
+  printNoLine(3 == 3) # procedure call
 # end main
 
 main()
@@ -560,7 +560,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
   });
 
   test("Fail_combineComparisonWithArithmeticWithoutBrackets", async () => {
