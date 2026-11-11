@@ -257,7 +257,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     const newFrames = this.parseFrames(code);
 
     for (const frame of newFrames) {
-      if (this.canBePastedIn(frame)) {
+      if (this.validWithinCurrentContext(frame.frameType, true)) {
         this.getParent().addChildBefore(frame, this);
       }
     }
