@@ -127,6 +127,10 @@ export class LanguagePython extends LanguageAbstract {
       html = `<el-kw>${this.DEF}</el-kw> <el-method>__init__</el-method>(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof CatchClause) {
       html = `<el-kw>${this.EXCEPT}</el-kw> ${frame.exceptionType.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.variable.renderAsHtml()}:`;
+    } else if (frame instanceof ElseIfClause) {
+      html = `<el-kw>${this.ELIF}</el-kw> ${frame.condition.renderAsHtml()}:`;
+    } else if (frame instanceof ElseClause) {
+      html = `<el-kw>${this.ELSE}</el-kw>:`;
     } else if (frame instanceof ForLoop) {
       html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}:`;
     } else if (frame instanceof GlobalFunction) {
