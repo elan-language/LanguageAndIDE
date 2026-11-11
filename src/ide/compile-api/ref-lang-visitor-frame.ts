@@ -16,7 +16,6 @@ import {
   ForLoopContext,
   FunctionContext,
   FunctionMethodContext,
-  GlobalBlockContext,
   IfStatementContext,
   MainContext,
   ProcedureCallContext,
