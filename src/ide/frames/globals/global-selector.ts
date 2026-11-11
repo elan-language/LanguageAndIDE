@@ -70,24 +70,22 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
   visitGlobalBlock(
     visitor: PythonVisitorFrame | RefLangVisitorFrame,
     context: PythonGlobalBlockContext | RefLangGlobalBlockContext,
-  ): Frame | undefined {
+  ): Frame[] {
     if (this.language() === LanguagePython.Instance) {
-      return (visitor as PythonVisitorFrame).visitGlobalBlock(
-        context as PythonGlobalBlockContext,
-      ) as Frame;
+      return (visitor as PythonVisitorFrame).visitGlobalBlock(context as PythonGlobalBlockContext);
     }
     if (this.language() === LanguageRefLang.Instance) {
       return (visitor as RefLangVisitorFrame).visitGlobalBlock(
         context as RefLangGlobalBlockContext,
-      ) as Frame;
+      );
     }
-    return undefined;
+    return [];
   }
 
   parseFrames(code: string): Frame[] {
     const parser = getParserByLanguage(this.language(), code, this.getFile());
     const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
     const ctx = parser.globalBlock()!;
-    return this.visitGlobalBlock(visitor, ctx) as unknown as Frame[];
+    return this.visitGlobalBlock(visitor, ctx);
   }
 }

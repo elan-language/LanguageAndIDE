@@ -68,7 +68,7 @@ import { VariableDefinition } from "../frames/statements/variable-definition";
 import { WhileLoop } from "../frames/statements/whileLoop";
 import { PythonVisitorSource } from "./python-visitor-source";
 
-export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
+export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
   constructor(private readonly file: File) {
     super();
     this.sourceVisitor = new PythonVisitorSource(file.language());
@@ -91,7 +91,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame> {
 
   override visitGlobalBlock = (ctx: GlobalBlockContext) => {
     const globals = ctx.global().map((g) => this.visit(g)) as Frame[];
-    return globals as unknown as Frame;
+    return globals;
   };
 
   override visitComment? = (ctx: CommentContext) => {
