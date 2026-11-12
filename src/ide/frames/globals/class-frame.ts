@@ -4,7 +4,6 @@ import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Constructor } from "../class-members/constructor";
-import { MemberSelector } from "../class-members/member-selector";
 import { Property } from "../class-members/property";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
@@ -15,6 +14,7 @@ import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
+import { Selector } from "../frame-interfaces/selector";
 import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
@@ -59,7 +59,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     super(parent);
     this.name = new FieldImpl(this, typeNameFieldSpec);
     this.inheritance = new FieldImpl(this, inheritsFromFieldSpec);
-    this.getChildren().push(new MemberSelector(this));
+    const memberSelector = parent.newMemberSelector(this);
+    this.getChildren().push(memberSelector);
     this.canHaveBreakPoint = false;
   }
 
@@ -203,8 +204,8 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
 
-  newChildSelector(): AbstractSelector {
-    return new MemberSelector(this);
+  newChildSelector(): Selector {
+    return this.getFile().newMemberSelector(this);
   }
 
   getClassIndex() {

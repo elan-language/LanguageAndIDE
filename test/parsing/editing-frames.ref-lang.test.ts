@@ -11,6 +11,7 @@ import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { ReturnStatement } from "../../src/ide/frames/statements/return-statement";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
+import { ignore_test } from "../compiler/compiler-test-helpers";
 import {
   createTestRunner,
   ctrl_backspace,
@@ -33,7 +34,6 @@ import {
   T00_emptyFile,
   twoConstants,
 } from "./model-generating-functions";
-import { ignore_test } from "../compiler/compiler-test-helpers";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {

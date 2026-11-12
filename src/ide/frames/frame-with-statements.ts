@@ -7,6 +7,7 @@ import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
 import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
+import { Selector } from "./frame-interfaces/selector";
 import { Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
@@ -34,7 +35,6 @@ import {
   setGhostOnSelectedChildren,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
-import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus } from "./status-enums";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -45,7 +45,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   constructor(parent: Parent) {
     super(parent);
-    this.getChildren().push(new StatementSelector(this));
+    const statementSelector = this.getFile().newStatementSelector(this);
+    this.getChildren().push(statementSelector);
   }
 
   getParadigm(): Paradigm {
@@ -95,10 +96,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
   }
 
-  newChildSelector(): AbstractSelector {
-    return new StatementSelector(this);
+  newChildSelector(): Selector {
+    return this.getFile().newStatementSelector(this);
   }
-  
+
   insertOrGotoChildSelector(after: boolean, child: Frame) {
     parentHelper_insertOrGotoChildSelector(this, after, child);
   }

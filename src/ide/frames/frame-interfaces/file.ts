@@ -14,6 +14,7 @@ import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
+import { Selector } from "./selector";
 
 export enum ParseMode {
   loadNew,
@@ -123,4 +124,6 @@ export interface File extends Parent {
   getShowCompletion(): boolean;
 
   addParseError(msg: string): void;
+  newStatementSelector(parent: Parent): Selector;
+  newMemberSelector(parent: Parent): Selector;
 }

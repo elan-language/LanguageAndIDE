@@ -14,9 +14,11 @@ import { RefLangVisitorFrame } from "../compile-api/ref-lang-visitor-frame";
 import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
+import { MemberSelector } from "./class-members/member-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
 import { CommentFrame } from "./comment-frame";
 import { Regexes } from "./fields/regexes";
+import { FrameFactoryImpl } from "./frame-factory-impl";
 import {
   expandCollapseAll,
   helper_compileStatusAsDisplayStatus,
@@ -34,6 +36,7 @@ import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
+import { Selector } from "./frame-interfaces/selector";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -72,7 +75,7 @@ import {
   setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
-import { FrameFactoryImpl } from "./frame-factory-impl";
+import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
@@ -872,7 +875,7 @@ export class FileImpl implements File {
     this.getFirstChild().selectFirstField();
   }
 
-  newChildSelector(): AbstractSelector {
+  newChildSelector(): Selector {
     return new GlobalSelector(this);
   }
 
@@ -951,5 +954,12 @@ export class FileImpl implements File {
 
   language(): Language {
     return this._language;
+  }
+
+  newStatementSelector(parent: Parent): Selector {
+    return new StatementSelector(parent);
+  }
+  newMemberSelector(parent: Parent): Selector {
+    return new MemberSelector(parent);
   }
 }

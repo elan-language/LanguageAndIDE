@@ -7,16 +7,16 @@ import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
 import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
+import { Selector } from "../frame-interfaces/selector";
 import { FrameType } from "../frame-type";
-import { FrameWithStatements } from "../frame-with-statements";
 import { LanguagePython } from "../language-python";
 import { LanguageRefLang } from "../language-ref-lang";
 import { IfStatement } from "./if-statement";
 
-export class StatementSelector extends AbstractSelector {
+export class StatementSelector extends AbstractSelector implements Selector {
   isStatement = true;
   private factory: FrameFactory;
-  constructor(parent: FrameWithStatements) {
+  constructor(parent: Parent) {
     super(parent);
     this.factory = parent.getFactory();
   }

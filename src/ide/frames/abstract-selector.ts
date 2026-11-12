@@ -6,13 +6,14 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { Selector } from "./frame-interfaces/selector";
 import { FrameType } from "./frame-type";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Paradigm } from "./paradigm";
 import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
 
-export abstract class AbstractSelector extends AbstractFrame {
+export abstract class AbstractSelector extends AbstractFrame implements Selector {
   frameType: FrameType = FrameType.selector;
   isSelector = true;
   isStatement = true;

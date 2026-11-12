@@ -3,6 +3,7 @@ import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { Selector } from "./frame-interfaces/selector";
 import { FrameType } from "./frame-type";
 import { CompileStatus, ParseStatus } from "./status-enums";
 
@@ -122,7 +123,7 @@ export function parentHelper_insertOrGotoChildSelector(
   parent: Parent,
   after: boolean,
   child: Frame,
-): AbstractSelector {
+): Selector {
   if (after) {
     return insertOrGotoChildSelectorAfter(parent, child);
   } else {
@@ -130,7 +131,7 @@ export function parentHelper_insertOrGotoChildSelector(
   }
 }
 
-function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): AbstractSelector {
+function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): Selector {
   const prev = parent.getChildBefore(child);
   if (isSelector(prev)) {
     // if there is a selector before
@@ -144,7 +145,7 @@ function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): Abstract
   }
 }
 
-function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame): AbstractSelector {
+function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame): Selector {
   const follow = parent.getChildAfter(child);
   if (isSelector(follow)) {
     // if there is a selector before
