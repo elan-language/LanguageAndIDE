@@ -3,14 +3,9 @@ import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { AbstractFunction } from "../class-members/abstract-function";
-import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { Constructor } from "../class-members/constructor";
-import { FunctionMethod } from "../class-members/function-method";
 import { MemberSelector } from "../class-members/member-selector";
-import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { CommentFrame } from "../comment-frame";
 import { FieldImpl } from "../fields/field-impl";
 import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
 import { isConstructor } from "../frame-helpers";
@@ -18,9 +13,8 @@ import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
-import { FrameType } from "../frame-type";
 import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
@@ -110,7 +104,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return newStatus;
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this.getParent().getFactory();
   }
 
@@ -203,24 +197,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   protected seenTwice(name: string, seenNames: string[]) {
     return seenNames.filter((s) => s === name).length > 1;
-  }
-
-  createMemberFrame(type: FrameType): Frame {
-    if (type === FrameType.functionMethod) {
-      return new FunctionMethod(this);
-    } else if (type === FrameType.property) {
-      return new Property(this);
-    } else if (type === FrameType.procedureMethod) {
-      return new ProcedureMethod(this);
-    } else if (type === FrameType.abstractFunction) {
-      return new AbstractFunction(this);
-    } else if (type === FrameType.abstractProcedure) {
-      return new AbstractProcedure(this);
-    } else if (type === FrameType.commentFrame) {
-      return new CommentFrame(this);
-    } else {
-      throw new Error(`FrameType: ${type.toString()} not supported`);
-    }
   }
 
   public getConstructor(): Constructor {

@@ -4,7 +4,6 @@ import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FrameType } from "../frame-type";
-import { AbstractClass } from "../globals/abstract-class";
 import { FunctionFrame } from "../globals/function-frame";
 
 export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMember {
@@ -23,7 +22,7 @@ export class FunctionMethod extends FunctionFrame implements PossiblyPrivateMemb
   }
 
   isOnAbstractClass(): boolean {
-    return this.getParent() instanceof AbstractClass;
+    return this.getParent().frameType === FrameType.abstractClass;
   }
 
   setDocument(id: string) {

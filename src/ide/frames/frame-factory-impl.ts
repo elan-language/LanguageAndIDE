@@ -1,7 +1,12 @@
+import { AbstractFunction } from "./class-members/abstract-function";
+import { AbstractProcedure } from "./class-members/abstract-procedure";
+import { FunctionMethod } from "./class-members/function-method";
+import { ProcedureMethod } from "./class-members/procedure-method";
+import { Property } from "./class-members/property";
 import { CommentFrame } from "./comment-frame";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { FrameType } from "./frame-type";
 import { AssertStatement } from "./statements/assert-statement";
 import { Assignment } from "./statements/assignment";
@@ -16,7 +21,7 @@ import { TryStatement } from "./statements/try-statement";
 import { VariableDefinition } from "./statements/variable-definition";
 import { WhileLoop } from "./statements/whileLoop";
 
-export class StatementFactoryImpl implements StatementFactory {
+export class FrameFactoryImpl implements FrameFactory {
   createFrame(type: FrameType, parent: Parent): Frame {
     if (type === FrameType.assertStatement) {
       return new AssertStatement(parent);
@@ -44,6 +49,16 @@ export class StatementFactoryImpl implements StatementFactory {
       return new WhileLoop(parent);
     } else if (type === FrameType.commentFrame) {
       return new CommentFrame(parent);
+    } else if (type === FrameType.functionMethod) {
+      return new FunctionMethod(parent);
+    } else if (type === FrameType.property) {
+      return new Property(parent);
+    } else if (type === FrameType.procedureMethod) {
+      return new ProcedureMethod(parent);
+    } else if (type === FrameType.abstractFunction) {
+      return new AbstractFunction(parent);
+    } else if (type === FrameType.abstractProcedure) {
+      return new AbstractProcedure(parent);
     } else {
       throw new Error(`FrameType: ${type.toString()} not supported`);
     }

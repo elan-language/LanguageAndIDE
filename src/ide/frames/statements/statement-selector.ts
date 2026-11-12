@@ -5,8 +5,8 @@ import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
 import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 import { LanguagePython } from "../language-python";
@@ -14,9 +14,8 @@ import { LanguageRefLang } from "../language-ref-lang";
 import { IfStatement } from "./if-statement";
 
 export class StatementSelector extends AbstractSelector {
-
   isStatement = true;
-  private factory: StatementFactory;
+  private factory: FrameFactory;
   constructor(parent: FrameWithStatements) {
     super(parent);
     this.factory = parent.getFactory();
@@ -127,7 +126,7 @@ export class StatementSelector extends AbstractSelector {
     return frame;
   }
 
-    visitStatementBlock(
+  visitStatementBlock(
     visitor: PythonVisitorFrame | RefLangVisitorFrame,
     context: PythonStatementBlockContext | RefLangStatementBlockContext,
   ): Frame[] {

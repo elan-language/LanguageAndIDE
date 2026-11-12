@@ -3,7 +3,6 @@ import { editorEvent } from "../frame-interfaces/editor-event";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FrameType } from "../frame-type";
-import { AbstractClass } from "../globals/abstract-class";
 import { ProcedureFrame } from "../globals/procedure-frame";
 
 export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMember {
@@ -17,7 +16,7 @@ export class ProcedureMethod extends ProcedureFrame implements PossiblyPrivateMe
   }
 
   isOnAbstractClass(): boolean {
-    return this.getParent() instanceof AbstractClass;
+    return this.getParent().frameType === FrameType.abstractClass;
   }
 
   override helpDocument(): string {

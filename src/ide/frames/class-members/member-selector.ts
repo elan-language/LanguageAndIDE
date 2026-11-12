@@ -1,26 +1,27 @@
 import { MemberBlockContext as PythonMemberBlockContext } from "../../../generated/python/PythonParser";
-import { MemberBlockContext as RefLangMemberBlockContext } from "../../../generated/ref-lang/RefLangParser";import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { MemberBlockContext as RefLangMemberBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
 import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
 import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
-import { ClassFrame } from "../globals/class-frame";
 import { LanguagePython } from "../language-python";
 import { LanguageRefLang } from "../language-ref-lang";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
-
   isMember: boolean = true;
   isAbstract = false;
   isPrivate = false;
-  private class: ClassFrame;
+  private factory: FrameFactory;
+
   constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
+    this.factory = parent.getFactory();
   }
   isOnAbstractClass(): boolean {
     throw new Error("Should not be called");
@@ -28,10 +29,6 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
 
   override helpId(): string {
     return "MemberInstructions";
-  }
-
-  getClass() {
-    return this.getParent() as unknown as ClassFrame;
   }
 
   defaultOptions(): [FrameType, string, string, boolean][] {
@@ -50,10 +47,14 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     ];
   }
 
+  isWithinAbstractClass(): boolean {
+    return this.getParent().frameType === FrameType.abstractClass;
+  }
+
   validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     let result = true;
     if (type === FrameType.abstractFunction || type === FrameType.abstractProcedure) {
-      result = this.class.isAbstract;
+      result = this.isWithinAbstractClass();
     } else if (type === FrameType.procedureMethod) {
       result = !(this.getParadigm().isFunctional() && userEntry);
     }
@@ -66,8 +67,8 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return singleIndent();
   }
 
-  createFrame(type: FrameType, _parent: Parent): Frame {
-    const frame = this.class.createMemberFrame(type);
+  createFrame(type: FrameType, parent: Parent): Frame {
+    const frame = this.factory.createFrame(type, parent);
     frame.setNewlyCreatedTrue();
     return frame;
   }

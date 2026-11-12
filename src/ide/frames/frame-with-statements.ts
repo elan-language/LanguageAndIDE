@@ -5,8 +5,8 @@ import { isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
@@ -57,7 +57,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     this.pushClass(true, "multiline");
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this.getParent().getFactory();
   }
 
@@ -98,6 +98,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   newChildSelector(): AbstractSelector {
     return new StatementSelector(this);
   }
+  
   insertOrGotoChildSelector(after: boolean, child: Frame) {
     parentHelper_insertOrGotoChildSelector(this, after, child);
   }

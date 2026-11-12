@@ -96,7 +96,7 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame | Frame[]> 
     return globals;
   };
 
-   override visitStatementBlock = (ctx: StatementBlockContext) => {
+  override visitStatementBlock = (ctx: StatementBlockContext) => {
     const globals = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
     return globals;
   };

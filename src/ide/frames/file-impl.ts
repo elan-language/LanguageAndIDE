@@ -30,10 +30,10 @@ import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
@@ -72,7 +72,7 @@ import {
   setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
-import { StatementFactoryImpl } from "./statement-factory-impl";
+import { FrameFactoryImpl } from "./frame-factory-impl";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
@@ -104,7 +104,7 @@ export class FileImpl implements File {
   private _fieldBeingEdited: boolean = false;
   private _children: Array<Frame> = new Array<Frame>();
   private _map: Map<string, Selectable>;
-  private _factory: StatementFactory;
+  private _factory: FrameFactory;
   private allowAnyHeader: boolean = false;
   private _stdLibSymbols: StdLibSymbols;
   private _nextId: number = 0;
@@ -129,7 +129,7 @@ export class FileImpl implements File {
   ) {
     this._stdLibSymbols = new StdLibSymbols(stdLib);
     this._map = new Map<string, Selectable>();
-    this._factory = new StatementFactoryImpl();
+    this._factory = new FrameFactoryImpl();
     if (withMain) {
       const main = new MainRoutine(this);
       this.getChildren().push(main);
@@ -590,7 +590,7 @@ export class FileImpl implements File {
     return this._nextId++;
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this._factory;
   }
 

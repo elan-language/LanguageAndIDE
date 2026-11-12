@@ -8,7 +8,6 @@ import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { PossiblyPrivateMember } from "../frame-interfaces/possibly-private-member";
 import { FrameType } from "../frame-type";
-import { AbstractClass } from "../globals/abstract-class";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Property extends SingleLineFrame implements PossiblyPrivateMember {
@@ -32,7 +31,7 @@ export class Property extends SingleLineFrame implements PossiblyPrivateMember {
   }
 
   isOnAbstractClass(): boolean {
-    return this.getParent() instanceof AbstractClass;
+    return this.getParent().frameType === FrameType.abstractClass;
   }
 
   helpId(): string {

@@ -3,8 +3,8 @@ import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { File } from "./file";
 import { Frame } from "./frame";
+import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
-import { StatementFactory } from "./statement-factory";
 
 export interface Parent {
   frameType: FrameType;
@@ -49,7 +49,7 @@ export interface Parent {
   insertOrGotoChildSelector(after: boolean, child: Frame): void;
   newChildSelector(): AbstractSelector;
 
-  getFactory(): StatementFactory;
+  getFactory(): FrameFactory;
 
   isGhostedOrWithinAGhostedFrame(): boolean;
 

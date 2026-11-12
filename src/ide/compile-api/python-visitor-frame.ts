@@ -97,14 +97,14 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
   };
 
   override visitStatementBlock = (ctx: StatementBlockContext) => {
-  const globals = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
-  return globals;
-};
+    const globals = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
+    return globals;
+  };
 
-override visitMemberBlock = (ctx: MemberBlockContext) => {
-  const globals = ctx.selectableMember().map((g) => this.visit(g)) as Frame[];
-  return globals;
-};
+  override visitMemberBlock = (ctx: MemberBlockContext) => {
+    const globals = ctx.selectableMember().map((g) => this.visit(g)) as Frame[];
+    return globals;
+  };
 
   override visitComment? = (ctx: CommentContext) => {
     const com = new CommentFrame(this.parent);
