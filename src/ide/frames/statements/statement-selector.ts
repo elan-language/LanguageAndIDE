@@ -1,15 +1,20 @@
+import { StatementBlockContext as PythonStatementBlockContext } from "../../../generated/python/PythonParser";
+import { StatementBlockContext as RefLangStatementBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
 import { Parent } from "../frame-interfaces/parent";
 import { StatementFactory } from "../frame-interfaces/statement-factory";
 import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
 import { IfStatement } from "./if-statement";
 
 export class StatementSelector extends AbstractSelector {
-  parseFrames(_code: string): Frame[] {
-    throw new Error("Method not implemented.");
-  }
+
   isStatement = true;
   private factory: StatementFactory;
   constructor(parent: FrameWithStatements) {
@@ -120,5 +125,29 @@ export class StatementSelector extends AbstractSelector {
     const frame = this.factory.createFrame(type, parent);
     frame.setNewlyCreatedTrue();
     return frame;
+  }
+
+    visitStatementBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonStatementBlockContext | RefLangStatementBlockContext,
+  ): Frame[] {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitStatementBlock(
+        context as PythonStatementBlockContext,
+      );
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitStatementBlock(
+        context as RefLangStatementBlockContext,
+      );
+    }
+    return [];
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.statementBlock()!;
+    return this.visitStatementBlock(visitor, ctx);
   }
 }

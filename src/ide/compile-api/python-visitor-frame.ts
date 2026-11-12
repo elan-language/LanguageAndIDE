@@ -19,11 +19,13 @@ import {
   GlobalBlockContext,
   IfStatementContext,
   MainContext,
+  MemberBlockContext,
   ProcedureCallContext,
   ProcedureContext,
   ProcedureMethodContext,
   PropertyContext,
   ReturnStatementContext,
+  StatementBlockContext,
   TestContext,
   ThenClauseContext,
   ThrowStatementContext,
@@ -93,6 +95,16 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     const globals = ctx.global().map((g) => this.visit(g)) as Frame[];
     return globals;
   };
+
+  override visitStatementBlock = (ctx: StatementBlockContext) => {
+  const globals = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
+  return globals;
+};
+
+override visitMemberBlock = (ctx: MemberBlockContext) => {
+  const globals = ctx.selectableMember().map((g) => this.visit(g)) as Frame[];
+  return globals;
+};
 
   override visitComment? = (ctx: CommentContext) => {
     const com = new CommentFrame(this.parent);

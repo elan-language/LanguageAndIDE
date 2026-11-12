@@ -1,3 +1,7 @@
+import { MemberBlockContext as PythonMemberBlockContext } from "../../../generated/python/PythonParser";
+import { MemberBlockContext as RefLangMemberBlockContext } from "../../../generated/ref-lang/RefLangParser";import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
@@ -5,11 +9,11 @@ import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
 import { FrameType } from "../frame-type";
 import { ClassFrame } from "../globals/class-frame";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
-  parseFrames(_code: string): Frame[] {
-    throw new Error("Method not implemented.");
-  }
+
   isMember: boolean = true;
   isAbstract = false;
   isPrivate = false;
@@ -66,5 +70,27 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     const frame = this.class.createMemberFrame(type);
     frame.setNewlyCreatedTrue();
     return frame;
+  }
+
+  visitMemberBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonMemberBlockContext | RefLangMemberBlockContext,
+  ): Frame[] {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitMemberBlock(context as PythonMemberBlockContext);
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitMemberBlock(
+        context as RefLangMemberBlockContext,
+      );
+    }
+    return [];
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.memberBlock()!;
+    return this.visitMemberBlock(visitor, ctx);
   }
 }
