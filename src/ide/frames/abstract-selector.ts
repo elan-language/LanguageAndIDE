@@ -1,7 +1,5 @@
 import { AbstractFrame } from "./abstract-frame";
-import { CodeSourceFromString } from "./code-source-from-string";
-import { addDeleteToContextMenu, isSelector } from "./frame-helpers";
-import { CodeSource } from "./frame-interfaces/code-source";
+import { addDeleteToContextMenu } from "./frame-helpers";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
@@ -10,7 +8,6 @@ import { Selector } from "./frame-interfaces/selector";
 import { FrameType } from "./frame-type";
 import { FrameWithStatements } from "./frame-with-statements";
 import { Paradigm } from "./paradigm";
-import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
 
 export abstract class AbstractSelector extends AbstractFrame implements Selector {
@@ -43,39 +40,6 @@ export abstract class AbstractSelector extends AbstractFrame implements Selector
 
   optionsFilteredByContext(userEntry: boolean): [FrameType, string, string, boolean][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
-  }
-
-  parseFrom(_source: CodeSource): Frame {
-    throw new Error("No longer implemented");
-    /* 
-    let compilerDirective = "";
-    source.removeIndent();
-    if (source.isMatchRegEx(Regexes.compilerDirective)) {
-      compilerDirective = source
-        .removeRegEx(Regexes.compilerDirective, false)
-        .replace("[", "")
-        .replace("] ", "");
-    }
-
-    // Pseudo-global variable to minimise changes to optionsFilteredByContext
-    // and the things it calls, in all the selector sub-classes.
-    // If refactoring, make userEntry three-valued (pasting, populating menu, loading file).
-    // This is to allow "private" when pasting but not in the context menu.
-    // Used by MemberSelector, because "private" only applies to members.
-    this.sourcePasting = source.pasting;
-
-    const options = this.optionsFilteredByContext(source.pasting).filter((o) =>
-      source.isMatch(o[0]),
-    );
-    if (options.length === 1) {
-      const typeToAdd = options[0][0];
-      const frame = this.addFrame(typeToAdd, "");
-      this.processCompilerDirective(frame, compilerDirective);
-      frame.parseFrom(source);
-      return frame;
-    } else {
-      throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
-    } */
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -251,65 +215,35 @@ export abstract class AbstractSelector extends AbstractFrame implements Selector
   abstract parseFrames(code: string): Frame[];
 
   paste = (code?: string): boolean => {
-    const result = true;
+    let result = true;
 
     code = (code ?? "").trim() + "\n";
 
-    const newFrames = this.parseFrames(code);
-
-    for (const frame of newFrames) {
-      if (this.validWithinCurrentContext(frame.frameType, true)) {
-        this.getParent().addChildBefore(frame, this);
-      }
-    }
-
-    return result;
-  };
-
-  pasteOld = (code?: string): boolean => {
-    // Get the current language to put back later
-    const oldLanguage = this.getFile().language();
-    // The text pasted in is always in Elan language
-    this.getFile().setLanguageToElan();
-    let result = true;
-
+    let parsedFrames: Frame[] = [];
     try {
-      code = (code ?? "").trim() + "\n";
-
-      const source = new CodeSourceFromString(code, true);
-      source.pasting = true;
-      const newFrame = this.parseFrom(source);
-
-      if (source.hasMoreCode() && source.getRemainingCode().trim()) {
-        const remainingCode = source.getRemainingCode();
-        const frame = this.getParent().getChildAfter(newFrame);
-        const selector = isSelector(frame)
-          ? frame
-          : parentHelper_insertOrGotoChildSelector(this.getParent(), false, frame);
-        result = selector.paste(remainingCode);
-      }
-      // Don't delete selectors on error,
-      // to avoid deleting this selector with the error message
-      if (result) {
-        this.getFile().removeAllSelectorsThatCanBe();
-      }
+      parsedFrames = this.parseFrames(code);
     } catch (_e) {
-      this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
+      this.pasteError = `Paste failed: Pasted code did not parse as ${this.language().languageFullName}`;
       result = false;
     }
 
-    // Set the language back to the original value.
-    // If the language has changed, this also calls
-    // resetFieldText and resetMap to translate the expressions etc
-    // to the current language, and make the map of htmlId's correct.
-    this.getFile().setLanguage(oldLanguage);
+    const rejectedFrames: FrameType[] = [];
+    for (const frame of parsedFrames) {
+      if (this.validWithinCurrentContext(frame.frameType, true)) {
+        this.getParent().addChildBefore(frame, this);
+      } else {
+        rejectedFrames.push(frame.frameType);
+      }
+    }
+
+    if (rejectedFrames.length > 0) {
+      const names = rejectedFrames.reduce((f) => `${f.toString()}`, "");
+      this.pasteError = `The following instructions were not pasted as they are not valid in the selected location: ${names}`;
+      result = false;
+    }
 
     return result;
   };
-
-  canBePastedIn(frame: Frame): boolean {
-    return this.optionsFilteredByContext(true).filter((o) => o[0] === frame.frameType).length === 1;
-  }
 
   processOptions(key: string | undefined) {
     const options = this.optionsFilteredByContext(true).filter((o) => o[1] === key);
