@@ -7,7 +7,7 @@ import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Assignment extends SingleLineFrame implements Statement {
-  frameType: FrameType = FrameType.assertStatement;
+  frameType: FrameType = FrameType.assignment;
   isStatement = true;
   assignable: FieldImpl;
   expr: FieldImpl;

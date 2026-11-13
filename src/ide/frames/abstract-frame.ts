@@ -397,20 +397,20 @@ export abstract class AbstractFrame implements Frame {
 
   cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
-    const nonSelectors = selected.filter((s) => !(s.frameType = FrameType.selector));
+    const nonSelectors = selected.filter((s) => !(s.frameType === FrameType.selector));
     if (nonSelectors.length === 0) {
-      this.pasteError = "Cut Failed: No code to cut";
+      this.pasteError = "Cut Failed: No instructions selected to cut";
       return true;
     }
     const movable = nonSelectors.filter((s) => s.isMovable());
 
     if (movable.length !== nonSelectors.length) {
-      this.pasteError = "Cut Failed: At least one selected frame is not moveable";
+      this.pasteError = "Cut Failed: At least one selected instruction is not moveable";
       return true;
     }
 
     if (!parentHelper_copySelectedChildren(this.getParent(), false)) {
-      this.pasteError = "Cut Failed: At least one selected frame does not parse";
+      this.pasteError = "Cut Failed: At least one selected instruction does not parse";
       return true;
     }
     this.getParent().deleteSelectedChildren();
