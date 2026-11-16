@@ -1,0 +1,140 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertParses,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Constructor Parameters", () => {
+  test("Fail_reassigningIntParam", async () => {
+    const code = `${testHeader}
+
+class Foo
+    constructor(p_1 as Int)
+        assign p_1 to this.p1
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Int
+
+    function toString() returns String
+        return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_MutatingListParam", async () => {
+    const code = `${testHeader}
+
+class Foo
+  constructor(a as List<of Float>)
+    assign a[0] to 4
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_SetPropertyWithoutPrefix", async () => {
+    const code = `${testHeader}
+
+class Foo
+    constructor()
+        assign p1 to 4
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Int
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Must prefix member with 'this'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_OutParameter", async () => {
+    const code = `${testHeader}
+
+class Foo
+    constructor(out a as Int)
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+});

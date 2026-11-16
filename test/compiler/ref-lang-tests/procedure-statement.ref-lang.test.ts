@@ -1,0 +1,1446 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  newFileImpl,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Procedure Statement", () => {
+  test("Pass_BasicOperationIncludingPrint", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(1)
+  call foo()
+  call printNoLine(3)
+end main
+
+procedure foo()
+  call printNoLine(2)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(1);
+  await foo();
+  await _stdlib.printNoLine(3);
+}
+
+async function foo() {
+  await _stdlib.printNoLine(2);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
+
+  test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1, 2]
+  variable b set to [3, 4]
+  call foo(a, b)
+end main
+
+procedure foo(x as List<of Int>, y as List<of Int>)
+  call printNoLine(x)
+  call printNoLine(y)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 2]);
+  let b = system.list([3, 4]);
+  await foo(a, b);
+}
+
+async function foo(x, y) {
+  await _stdlib.printNoLine(x);
+  await _stdlib.printNoLine(y);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1, 2][3, 4]");
+  });
+
+  test("Pass_ExternalCall", async () => {
+    const code = `${testHeader}
+
+main
+  call sleep_ms(1)
+  call printNoLine(1)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.sleep_ms(1);
+  await _stdlib.printNoLine(1);
+}
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_WithParamsPassingVariables", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 2
+  variable b set to "hello"
+  call foo(a, b)
+end main
+
+procedure foo(a as Float, b as String)
+  call printNoLine(a)
+  call printNoLine(b)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 2;
+  let b = "hello";
+  await foo(a, b);
+}
+
+async function foo(a, b) {
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2hello");
+  });
+
+  test("Pass_ReferenceTypesCanBeMutated", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [2, 3]
+  call changeFirst(a)
+  call printNoLine(a)
+end main
+
+procedure changeFirst(a as List<of Int>)
+    assign a[0] to 5
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([2, 3]);
+  await changeFirst(a);
+  await _stdlib.printNoLine(a);
+}
+
+async function changeFirst(a) {
+  system.safeSet(a, 5, [0]);
+}
+global["changeFirst"] = changeFirst;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[5, 3]");
+  });
+
+  test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  call foo(a + 1, "hello")
+end main
+
+procedure foo(a as Int, b as String)
+  call printNoLine(a)
+  call printNoLine(b)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 1;
+  await foo(a + 1, "hello");
+}
+
+async function foo(a, b) {
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2hello");
+  });
+
+  test("Pass_NestedCalls", async () => {
+    const code = `${testHeader}
+
+main
+  call foo()
+  call printNoLine(3)
+end main
+
+procedure foo()
+  call printNoLine(1)
+  call bar()
+end procedure
+
+procedure bar()
+  call printNoLine(2)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo();
+  await _stdlib.printNoLine(3);
+}
+
+async function foo() {
+  await _stdlib.printNoLine(1);
+  await bar();
+}
+global["foo"] = foo;
+
+async function bar() {
+  await _stdlib.printNoLine(2);
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "123");
+  });
+
+  test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
+    const code = `${testHeader}
+
+main
+  call square(3)
+  call square(5)
+end main
+
+procedure square(x as Int)
+  call printNoLine(x * x)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await square(3);
+  await square(5);
+}
+
+async function square(x) {
+  await _stdlib.printNoLine(x * x);
+}
+global["square"] = square;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "925");
+  });
+
+  test("Pass_Recursion", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(3)
+end main
+
+procedure foo(a as Int)
+  if a > 0 then
+      call printNoLine(a)
+      variable b set to a - 1
+      call foo(b)
+  end if
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo(3);
+}
+
+async function foo(a) {
+  if (a > 0) {
+    await _stdlib.printNoLine(a);
+    let b = a - 1;
+    await foo(b);
+  }
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "321");
+  });
+
+  ignore_test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.length()
+end main
+
+class Foo
+    constructor()
+      assign this.p1 to new Bar()
+    end constructor
+
+    property p1 as Bar
+
+    procedure length()
+      variable p1 set to this.p1
+      call p1.length(2)
+    end procedure
+
+    function toString() returns String
+      return ""
+    end function
+
+end class
+
+class Bar
+    constructor()
+      assign this.p1 to 5
+    end constructor
+
+    property p1 as Float
+
+    procedure length(plus as Float)
+      call printNoLine(this.p1 + plus)
+    end procedure
+
+    function toString() returns String
+      return ""
+    end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await f.length();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+    this.p1 = system.initialise(await new Bar()._initialise());
+    return this;
+  }
+
+  elan_p1;
+  get p1() {
+    return this.elan_p1 ??= Bar.emptyInstance();
+  }
+  set p1(p1) {
+    this.elan_p1 = p1;
+  }
+
+  async length() {
+    let p1 = this.p1;
+    await p1.length(2);
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = 5;
+    return this;
+  }
+
+  p1 = 0;
+
+  async length(plus) {
+    await _stdlib.printNoLine(this.p1 + plus);
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7");
+  });
+
+  test("Pass_RefParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new AsRef<of Int>(2)
+  variable b set to new AsRef<of String>("hello")
+  call foo(a, b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
+end main
+
+procedure foo(x as AsRef<of Float>, y as AsRef<of String>)
+  call x.put(3)
+  call y.put("goodbye")
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise("hello"));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
+}
+
+async function foo(x, y) {
+  x.put(3);
+  y.put("goodbye");
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3goodbye");
+  });
+
+  test("Pass_SetFromAsRefParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new AsRef<of Float>(2)
+  variable b set to new AsRef<of Float>(3)
+  call foo(a, b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
+end main
+
+procedure foo(x as AsRef<of Float>, y as AsRef<of Float>)
+  variable c set to x.value()
+  call x.put(y.value())
+  call y.put(c)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(3));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
+}
+
+async function foo(x, y) {
+  let c = x.value();
+  x.put(y.value());
+  y.put(c);
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "32");
+  });
+
+  test("Pass_NestedOutParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new AsRef<of Float>(2)
+  variable b set to new AsRef<of Float>(3)
+  call foo(a, b)
+  call printNoLine(a.value())
+  call printNoLine(b.value())
+end main
+
+procedure foo(a as AsRef<of Float>, b as AsRef<of Float>)
+  call bar(a, b)
+end procedure
+
+procedure bar(a as AsRef<of Float>, b as AsRef<of Float>)
+  variable c set to a.value()
+  call a.put(b.value())
+  call b.put(c)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(2));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(3));
+  await foo(a, b);
+  await _stdlib.printNoLine(a.value());
+  await _stdlib.printNoLine(b.value());
+}
+
+async function foo(a, b) {
+  await bar(a, b);
+}
+global["foo"] = foo;
+
+async function bar(a, b) {
+  let c = a.value();
+  a.put(b.value());
+  b.put(c);
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "32");
+  });
+
+  test("Pass_CallOnOutParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new AsRef<of Foo>(new Foo())
+  variable b set to new AsRef<of Int>(0)
+  call foo(a, b)
+  call printNoLine(b.value())
+end main
+
+procedure foo(f as AsRef<of Foo>, y as AsRef<of Int>)
+  variable ff set to f.value()
+  call ff.bar(y)
+end procedure
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  procedure bar(z as AsRef<of Int>)
+    call z.put(1)
+  end procedure
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(0));
+  await foo(a, b);
+  await _stdlib.printNoLine(b.value());
+}
+
+async function foo(f, y) {
+  let ff = f.value();
+  await ff.bar(y);
+}
+global["foo"] = foo;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async bar(z) {
+    z.put(1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_ExpressionOnOutParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new AsRef<of Foo>(new Foo())
+  variable b set to new AsRef<of Int>(100)
+  call foo(a, b)
+  call printNoLine(b.value())
+end main
+
+procedure foo(f as  AsRef<of Foo>, y as  AsRef<of Int>)
+  call y.put(f.value().ff + y.value())
+end procedure
+
+class Foo
+  constructor()
+    assign this.ff to 1
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property ff as Int
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.AsRef()._initialise(system.initialise(await new Foo()._initialise())));
+  let b = system.initialise(await new _stdlib.AsRef()._initialise(100));
+  await foo(a, b);
+  await _stdlib.printNoLine(b.value());
+}
+
+async function foo(f, y) {
+  y.put(f.value().ff + y.value());
+}
+global["foo"] = foo;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};
+
+  async _initialise() {
+    this.ff = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  ff = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "101");
+  });
+
+  test("Pass_MultipleCallsWithOutParameters", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new AsRef<of Int>(1)
+  call addOne(x)
+  call printNoLine(x.value())
+  call addOne(x)
+  call printNoLine(x.value())
+end main
+
+procedure addOne(n as AsRef<of Int>)
+  call n.put(n.value() + 1)
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new _stdlib.AsRef()._initialise(1));
+  await addOne(x);
+  await _stdlib.printNoLine(x.value());
+  await addOne(x);
+  await _stdlib.printNoLine(x.value());
+}
+
+async function addOne(n) {
+  n.put(n.value() + 1);
+}
+global["addOne"] = addOne;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "23");
+  });
+
+  test("Pass_PrintOutParameter", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new AsRef<of Int>(1)
+  call printParameter(x)
+end main
+
+procedure printParameter(n as AsRef<of Int>)
+  call printNoLine(n.value())
+end procedure`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new _stdlib.AsRef()._initialise(1));
+  await printParameter(x);
+}
+
+async function printParameter(n) {
+  await _stdlib.printNoLine(n.value());
+}
+global["printParameter"] = printParameter;
+return [main, _tests];}`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Fail_CallingUndeclaredProc", async () => {
+    const code = `${testHeader}
+
+main
+  call bar()
+end main
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'bar' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_TypeSpecifiedBeforeParamName", async () => {
+    const code = `${testHeader}
+
+main
+end main
+    
+procedure foo(Int a) 
+  call printNoLine(a)
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
+  });
+
+  ignore_test("Fail_CannotCallMain", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(1)
+  call foo()
+  call printNoLine(3)
+end main
+
+procedure foo()
+  call main()
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'main' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_PassingUnnecessaryParameter", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(1)
+  call foo(3)
+  call printNoLine(3)
+end main
+
+procedure foo()
+  call printNoLine(2)
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: none.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_PassingTooFewParams", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  call foo(a + 1)
+end main
+
+procedure foo(a as Int, b as String)
+  call printNoLine(a)
+  call printNoLine(b)
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: a (Int), b (String).ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ExtensionParameterCount", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1]
+  call a.append()
+  call a.append(1, 2)
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Missing argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
+      "Too many argument(s). Expected: value (Int).ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_PassingWrongType", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(1, 2)
+end main
+
+procedure foo(a as Int, b as String)
+  call printNoLine(a)
+  call printNoLine(b)
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: a (Int), b (String), Provided: Int, Int.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UnterminatedRecursion", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(3)
+end main
+
+procedure foo(a as Int)
+  call foo(a)
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    await assertObjectCodeDoesNotExecute(fileImpl, "Maximum call stack size exceeded");
+  });
+
+  test("Fail_CannotCallPrintAsAProcedure", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(""Hello World!"")
+end main
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_ParameterCount", async () => {
+    const code = `${testHeader}
+
+procedure f(p as Float)
+
+end procedure
+
+main
+  call f(1, 2)
+  call f()
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Too many argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+      "Missing argument(s). Expected: p (Float).ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterType", async () => {
+    const code = `${testHeader}
+
+procedure f(p as Int)
+
+end procedure
+
+main
+  call f(true)
+  call f(1.0)
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: p (Int), Provided: Boolean.ErrorMessages.html#compile_error",
+      "Argument types. Expected: p (Int), Provided: Float.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [2, 3]
+  call changeAll(a)
+  call printNoLine(a)
+end main
+
+procedure changeAll(a as List<of Int>)
+  assign a to [1, 2, 3]
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fai_ListParamMayNotBeReassigned", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [2, 3]
+  call changeAll(a)
+  call printNoLine(a)
+end main
+
+procedure changeAll(a as List<of Int>)
+  assign a to [1, 2, 3]
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 4
+  call changeValue(a)
+  call printNoLine(a)
+end main
+
+procedure changeValue(a as Int)
+    assign a to 3
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not reassign the parameter 'a'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterUnknownType", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure changeValue(a as Bar)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Bar' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_UseOfKeywordAsName", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure if_(a as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_UseOfReservedwordAsName", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure break(a as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
+  });
+  test("Fail_UseOfLangTypeAsName", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure float(a as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'float' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UseOfKeywordAsParamName", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure fun(if as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_UseOfReservedwordAsParamName", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+procedure fun(break as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'break' matches a reserved word.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_NotUniqueName", async () => {
+    const code = `${testHeader}
+
+procedure foo()
+
+end procedure
+
+procedure foo()
+
+end procedure
+`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'foo' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_NotUniqueParameterName", async () => {
+    const code = `${testHeader}
+
+procedure foo(a as Int, b as String, a as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'a' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_OperatorsAndProcedures", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to p2.equals(p2)
+  variable b set to p1 + p2
+  variable c set to -p1
+end main
+
+procedure p1()
+
+end procedure
+procedure p2()
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot do equality operations on Procedures or Functions.LangRef.html#CannotCompareProcFunc",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: Float or Int, Provided: Procedure ().ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_ProcedureInExpression", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  assign a to a.append(3)
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call procedure 'append' within an expression.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: List<of Int>, Provided: Procedure (Int).ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_IncorrectScope", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.bar()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'bar' is not defined for type 'Foo'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_CallNonProcedure", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'f' as a method.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_CallNonProcedure1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.p1()
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+end class
+
+procedure bar()
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke property 'p1' as a method.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_noMatchingExtension2", async () => {
+    const code = `${testHeader}
+
+main
+  variable s set to "hello"
+  call s.reverse()
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'reverse' is not defined for type 'String'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_onUndefined", async () => {
+    const code = `${testHeader}
+
+main
+  call s.reverse()
+end main`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'s' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_ParameterNameClash1", async () => {
+    const code = `${testHeader}
+
+procedure foo(foo as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ParameterNameClash2", async () => {
+    const code = `${testHeader}
+
+procedure foo(a as Int, foo as Int)
+
+end procedure`;
+
+    const fileImpl = newFileImpl(LanguageRefLang.Instance);
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
+    ]);
+  });
+});
