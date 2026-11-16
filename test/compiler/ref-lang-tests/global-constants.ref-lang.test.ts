@@ -4,6 +4,7 @@ import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -433,14 +434,14 @@ end main
     ]);
   });
 
-  ignore_test("Fail_UseConstantBeforeDefinition1", async () => {
+  test("Pass_UseConstantBeforeDefinition1", async () => {
     const code = `${testHeader}
 
-constant a set to b
-constant b set to 2
 main
   call printNoLine(a)
 end main
+
+constant a set to 3
 `;
 
     const fileImpl = newFileImpl(LanguageRefLang.Instance);
@@ -448,25 +449,7 @@ end main
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
-  });
-
-  ignore_test("Fail_UseConstantBeforeDefinition2", async () => {
-    const code = `${testHeader}
-
-constant a set to b
-constant b set to 2
-main
-  call printNoLine(a)
-end main
-`;
-
-    const fileImpl = newFileImpl(LanguageRefLang.Instance);
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
+    assertCompiles(fileImpl);
   });
 
   test("Fail_NotValueType", async () => {

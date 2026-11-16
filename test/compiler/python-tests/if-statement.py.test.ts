@@ -656,6 +656,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
 
+  // triage: (not sure why this test is *here*, but doesn't like the [ghosted] annotation)
   ignore_test("Pass_ghostedVariableInElse", async () => {
     const code = `${testPythonHeader}
 
@@ -664,7 +665,7 @@ def main() -> None:
   if a == 1:
     printNoLine("") # procedure call
   else:
-    b = 2 # variable definition
+    [ghosted] b = 2 # variable definition
   # end if
 # end main
 
@@ -753,14 +754,13 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "17");
   });
 
-  ignore_test("Fail_noEndIf", async () => {
+  test("Fail_noEndIf", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = True # variable definition
   if a:
-
-  # end if
+    printNoLine(a)
 # end main
 
 main()
