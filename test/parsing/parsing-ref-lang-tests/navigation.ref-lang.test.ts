@@ -1,9 +1,12 @@
 import assert from "assert";
-import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
-import { isParent } from "../../src/ide/frames/frame-helpers";
-import { assertClasses, end, home, right, shift_tab, tab, up } from "../testHelpers";
-import { T03_mainWithAllStatements, T04_allGlobalsExceptClass } from "./model-generating-functions";
-import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
+import { FieldImpl } from "../../../src/ide/frames/fields/field-impl";
+import { isParent } from "../../../src/ide/frames/frame-helpers";
+import { VariableDefinition } from "../../../src/ide/frames/statements/variable-definition";
+import { assertClasses, end, home, right, shift_tab, tab, up } from "../../testHelpers";
+import {
+  T03_mainWithAllStatements,
+  T04_allGlobalsExceptClass,
+} from "../model-generating-functions";
 
 suite("Navigation", () => {
   test("Selectable Select", async () => {

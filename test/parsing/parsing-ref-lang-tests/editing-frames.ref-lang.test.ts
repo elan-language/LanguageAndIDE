@@ -1,17 +1,17 @@
 import assert from "assert";
 
-import { Constructor } from "../../src/ide/frames/class-members/constructor";
-import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
-import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
-import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
-import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
-import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
-import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
-import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
-import { ReturnStatement } from "../../src/ide/frames/statements/return-statement";
-import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { ParseStatus } from "../../src/ide/frames/status-enums";
-import { ignore_test } from "../compiler/compiler-test-helpers";
+import { Constructor } from "../../../src/ide/frames/class-members/constructor";
+import { MemberSelector } from "../../../src/ide/frames/class-members/member-selector";
+import { FieldImpl } from "../../../src/ide/frames/fields/field-impl";
+import { ConcreteClass } from "../../../src/ide/frames/globals/concrete-class";
+import { ConstantGlobal } from "../../../src/ide/frames/globals/constant-global";
+import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
+import { GlobalSelector } from "../../../src/ide/frames/globals/global-selector";
+import { MainRoutine } from "../../../src/ide/frames/globals/main-routine";
+import { ReturnStatement } from "../../../src/ide/frames/statements/return-statement";
+import { StatementSelector } from "../../../src/ide/frames/statements/statement-selector";
+import { ParseStatus } from "../../../src/ide/frames/status-enums";
+import { ignore_test } from "../../compiler/compiler-test-helpers";
 import {
   createTestRunner,
   ctrl_backspace,
@@ -25,7 +25,7 @@ import {
   loadFileAsModel,
   shift_tab,
   tab,
-} from "../testHelpers";
+} from "../../testHelpers";
 import {
   classWithConstructor,
   emptyFunctionOnly,
@@ -33,7 +33,7 @@ import {
   oneConstant,
   T00_emptyFile,
   twoConstants,
-} from "./model-generating-functions";
+} from "../model-generating-functions";
 
 suite("Editing Frames", () => {
   test("Enter on a frame to Insert new code - creating a selector", () => {

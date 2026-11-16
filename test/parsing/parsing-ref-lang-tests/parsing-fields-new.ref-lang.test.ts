@@ -1,5 +1,5 @@
-import { CommentFrame } from "../../src/ide/frames/comment-frame";
-import { FieldImpl } from "../../src/ide/frames/fields/field-impl";
+import { CommentFrame } from "../../../src/ide/frames/comment-frame";
+import { FieldImpl } from "../../../src/ide/frames/fields/field-impl";
 import {
   argListFieldSpec,
   assertActualFieldSpec,
@@ -20,19 +20,19 @@ import {
   procRefFieldSpec,
   testNameFieldSpec,
   typeNameFieldSpec,
-} from "../../src/ide/frames/fields/field-spec";
-import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
-import { Enum } from "../../src/ide/frames/globals/enum";
-import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
-import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
-import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { CatchClause } from "../../src/ide/frames/statements/catch-clause";
-import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
-import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
+} from "../../../src/ide/frames/fields/field-spec";
+import { Language } from "../../../src/ide/frames/frame-interfaces/language";
+import { ConcreteClass } from "../../../src/ide/frames/globals/concrete-class";
+import { Enum } from "../../../src/ide/frames/globals/enum";
+import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
+import { TestFrame } from "../../../src/ide/frames/globals/test-frame";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { Assignment } from "../../../src/ide/frames/statements/assignment";
+import { CatchClause } from "../../../src/ide/frames/statements/catch-clause";
+import { ProcedureCall } from "../../../src/ide/frames/statements/procedureCall";
+import { ThrowStatement } from "../../../src/ide/frames/statements/throw-statement";
 
-import { fileImplFor, testFieldParse } from "../testHelpers";
+import { fileImplFor, testFieldParse } from "../../testHelpers";
 
 const refLang: Language = LanguageRefLang.Instance;
 

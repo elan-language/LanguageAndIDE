@@ -1,18 +1,11 @@
 import assert from "assert";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
-import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { LanguageRefLang } from "../../src/ide/frames/language-ref-lang";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { AssertStatement } from "../../src/ide/frames/statements/assert-statement";
-import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
-import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
-import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import { ignore_test, testHeader, transforms } from "../../compiler/compiler-test-helpers";
 
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(

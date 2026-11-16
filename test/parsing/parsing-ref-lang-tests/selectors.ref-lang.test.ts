@@ -1,23 +1,23 @@
 import assert from "assert";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { MemberSelector } from "../../src/ide/frames/class-members/member-selector";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { AbstractClass } from "../../src/ide/frames/globals/abstract-class";
-import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
-import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
-import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
-import { GlobalSelector } from "../../src/ide/frames/globals/global-selector";
-import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
-import { TestFrame } from "../../src/ide/frames/globals/test-frame";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
-import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { hash } from "../../src/ide/util";
-import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
-import { assertOptions, key, selectOption } from "../testHelpers";
-import { emptyMainOnly } from "./model-generating-functions";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { MemberSelector } from "../../../src/ide/frames/class-members/member-selector";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { AbstractClass } from "../../../src/ide/frames/globals/abstract-class";
+import { ConcreteClass } from "../../../src/ide/frames/globals/concrete-class";
+import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
+import { GlobalProcedure } from "../../../src/ide/frames/globals/global-procedure";
+import { GlobalSelector } from "../../../src/ide/frames/globals/global-selector";
+import { MainRoutine } from "../../../src/ide/frames/globals/main-routine";
+import { TestFrame } from "../../../src/ide/frames/globals/test-frame";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { IfStatement } from "../../../src/ide/frames/statements/if-statement";
+import { StatementSelector } from "../../../src/ide/frames/statements/statement-selector";
+import { WhileLoop } from "../../../src/ide/frames/statements/whileLoop";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import { hash } from "../../../src/ide/util";
+import { ignore_test, transforms } from "../../compiler/compiler-test-helpers";
+import { assertOptions, key, selectOption } from "../../testHelpers";
+import { emptyMainOnly } from "../model-generating-functions";
 
 suite("Selector tests", () => {
   test("Options within main", () => {

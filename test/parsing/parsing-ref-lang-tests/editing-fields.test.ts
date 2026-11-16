@@ -1,16 +1,16 @@
 import assert from "assert";
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { CommentFrame } from "../../src/ide/frames/comment-frame";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
-import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { IfStatement } from "../../src/ide/frames/statements/if-statement";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { hash } from "../../src/ide/util";
-import { ignore_test, transforms } from "../compiler/compiler-test-helpers";
-import { fileWithCS, fileWithPython, key, tab } from "../testHelpers";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CommentFrame } from "../../../src/ide/frames/comment-frame";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
+import { MainRoutine } from "../../../src/ide/frames/globals/main-routine";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { Assignment } from "../../../src/ide/frames/statements/assignment";
+import { IfStatement } from "../../../src/ide/frames/statements/if-statement";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import { hash } from "../../../src/ide/util";
+import { ignore_test, transforms } from "../../compiler/compiler-test-helpers";
+import { fileWithCS, fileWithPython, key, tab } from "../../testHelpers";
 
 suite("Editing Fields Tests", () => {
   ignore_test("Entry of text with formatting", () => {

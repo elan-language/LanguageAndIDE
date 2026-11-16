@@ -1,12 +1,12 @@
 import assert from "assert";
 
-import { StdLib } from "../../src/compiler/standard-library/std-lib";
-import { CodeSourceFromString } from "../../src/ide/frames/code-source-from-string";
-import { FileImpl } from "../../src/ide/frames/file-impl";
-import { LanguagePython } from "../../src/ide/frames/language-python";
-import { Paradigm } from "../../src/ide/frames/paradigm";
-import { StubInputOutput } from "../../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "../compiler/compiler-test-helpers";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { LanguagePython } from "../../../src/ide/frames/language-python";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import { ignore_test, testHeader, transforms } from "../../compiler/compiler-test-helpers";
 
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(
