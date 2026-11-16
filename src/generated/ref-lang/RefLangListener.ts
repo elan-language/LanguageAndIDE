@@ -75,6 +75,8 @@ import { LitBinaryContext } from "./RefLangParser.js";
 import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
+import { SegmentContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
@@ -875,6 +877,26 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitLitString?: (ctx: LitStringContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  enterInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  exitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.segment`.
+   * @param ctx the parse tree
+   */
+  enterSegment?: (ctx: SegmentContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.segment`.
+   * @param ctx the parse tree
+   */
+  exitSegment?: (ctx: SegmentContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree

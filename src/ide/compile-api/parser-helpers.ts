@@ -11,7 +11,6 @@ import {
   PythonParser,
   TypeContext as PythonTypeContext,
 } from "../../generated/python/PythonParser";
-import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
 import {
   ArgumentContext as RefLangArgumentContext,
   ExpressionContext as RefLangExpressionContext,
@@ -33,6 +32,7 @@ import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
+import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
 
 export function getPythonParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
@@ -53,11 +53,11 @@ export function getRefLangParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
 
   const chars = CharStream.fromString(input);
-  const lexer = new RefLangLexer(chars);
+  const lexer = new RefLang_Lexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  parser.removeParseListeners();
-  parser.removeErrorListeners();
+  // parser.removeParseListeners();
+  // parser.removeErrorListeners();
   if (field) {
     parser.addErrorListener(new ErrorListener(field));
   }

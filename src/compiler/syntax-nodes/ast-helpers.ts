@@ -22,7 +22,7 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { RefLangLexer } from "../../generated/ref-lang/RefLangLexer";
+import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
@@ -520,17 +520,17 @@ export function getTypeNameById(
   scope: Scope,
 ): AstNode {
   switch (tokenId) {
-    case RefLangLexer.INT_NAME:
+    case RefLangParser.INT_NAME:
       return new IntTypeNameAsn(l, fieldId);
-    case RefLangLexer.FLOAT_NAME:
+    case RefLangParser.FLOAT_NAME:
       return new FloatTypeNameAsn(l, fieldId);
-    case RefLangLexer.STRING_NAME:
+    case RefLangParser.STRING_NAME:
       return new StringTypeNameAsn(l, fieldId);
-    case RefLangLexer.BOOL_NAME:
+    case RefLangParser.BOOL_NAME:
       return new BoolTypeNameAsn(l, fieldId);
-    case RefLangLexer.LIST_NAME:
+    case RefLangParser.LIST_NAME:
       return new ListTypeNameAsn(l, fieldId, scope);
-    case RefLangLexer.DICT_NAME:
+    case RefLangParser.DICT_NAME:
       return new DictTypeNameAsn(l, fieldId, scope);
     default:
       return new TypeNameAsn(name, fieldId, scope);
