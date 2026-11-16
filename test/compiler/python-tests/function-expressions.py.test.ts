@@ -4,12 +4,10 @@ import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -328,11 +326,11 @@ main()
     ]);
   });
 
-  ignore_test("Fail_UnconsumedExpressionResult2", async () => {
+  test("Fail_UnconsumedExpressionResult2", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-
+  sin(1)
 # end main
 
 main()
@@ -349,10 +347,13 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call a function as a procedure.ErrorMessages.html#compile_error",
+    ]);
   });
 
-  ignore_test("Fail_UnconsumedExpressionResult3", async () => {
+  test("Fail_UnconsumedExpressionResult3", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

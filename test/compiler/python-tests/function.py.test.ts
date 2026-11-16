@@ -1346,6 +1346,7 @@ main()
     ]);
   });
 
+  // triage: this test needs to be revised once #3553 is completed
   ignore_test("Fail_OperatorsAndProcedures1", async () => {
     const code = `${testPythonHeader}
 
@@ -1537,62 +1538,6 @@ main()
     assertStatusIsValid(fileImpl);
     assertDoesNotCompile(fileImpl, [
       "Library or class function 'length' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
-    ]);
-  });
-
-  ignore_test("Fail_LibFunctionWithoutRefKeyword", async () => {
-    const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(abs.b) # procedure call
-# end main
-
-main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Library or class function 'abs' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
-    ]);
-  });
-
-  ignore_test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
-    const code = `${testPythonHeader}
-
-def main() -> None:
-  printNoLine(abs) # procedure call
-# end main
-
-main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "Library or class function 'abs' cannot be used without bracketsErrorMessages.html#NotGlobalFunctionRefCompileError",
     ]);
   });
 

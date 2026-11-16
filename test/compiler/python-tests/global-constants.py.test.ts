@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-imp
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -330,55 +331,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  ignore_test("Pass_Enum", async () => {
-    const code = `${testPythonHeader}
-
-a = Fruit.apple # constant
-
-def main() -> None:
-  printNoLine(enumToString(a)) # procedure call
-# end main
-
-class Fruit(Enum):
-  apple = 1
-  orange = 2
-  pear = 3
-# end enum
-
-main()
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const Fruit = {
-  _default : "apple", apple : "apple", orange : "orange", pear : "pear"
-};
-
-const global = new class {
-  a = Fruit.apple;
-
-};
-async function main() {
-  await _stdlib.printNoLine((await _stdlib.enumToString(global.a)));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "apple");
-  });
-
   test("Fail_incorrectKeyword", async () => {
     const code = `${testPythonHeader}
 
@@ -487,48 +439,6 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Pass_referenceToOtherConstant", async () => {
-    const code = `${testPythonHeader}
-
-a = 3 # constant
-
-b = a # constant
-
-def main() -> None:
-  printNoLine(b) # procedure call
-# end main
-
-main()
-`;
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {
-  a = 3;
-
-  b = this.a;
-
-};
-async function main() {
-  await _stdlib.printNoLine(global.b);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "3");
-  });
-
   test("Fail_UseOfKeywordAsName", async () => {
     const code = `${testPythonHeader}
 
@@ -610,14 +520,14 @@ main()
     ]);
   });
 
-  ignore_test("Fail_UseConstantBeforeDefinition1", async () => {
+  test("Pass_UseConstantBeforeDefinition1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a)
 # end main
 
-a = 1 # constant
+a = 3
 
 main()
 `;
@@ -635,39 +545,7 @@ main()
 
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'a' is not defined.ErrorMessages.html#compile_error"]);
-  });
-
-  ignore_test("Fail_UseConstantBeforeDefinition2", async () => {
-    const code = `${testPythonHeader}
-
-b = 2 # constant
-
-a = b # constant
-
-b = 2 # constant
-
-def main() -> None:
-  printNoLine(a) # procedure call
-# end main
-
-main()
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertDoesNotCompile(fileImpl, ["'b' is not defined.ErrorMessages.html#compile_error"]);
+    assertCompiles(fileImpl);
   });
 
   test("Fail_NotValueType", async () => {
