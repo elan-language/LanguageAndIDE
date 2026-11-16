@@ -31,13 +31,13 @@ class Foo: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def setP1(self: Foo, value: float) -> None: # procedure method
+  def setP1(self: Foo, value: float) -> None:
     self.p1 = value # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -107,13 +107,13 @@ class Foo: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def display(self: Foo) -> None: # procedure method
+  def display(self: Foo) -> None:
     printNoLine(self.p1) # procedure call
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -182,20 +182,20 @@ class Foo: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def times(self: Foo, b: Bar) -> None: # procedure method
+  def times(self: Foo, b: Bar) -> None:
     b.p1PlusOne() # procedure call
     self.p1PlusOne() # procedure call
     self.p1 = self.p1 + b.p1 # assignment
     printNoLine(self.p1) # procedure call
   # end procedure
 
-  def p1PlusOne(self: Foo) -> None: # procedure method
+  def p1PlusOne(self: Foo) -> None:
     self.p1 = self.p1 + 1 # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -207,13 +207,13 @@ class Bar: # concrete class
     self.p1 = 1 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def p1PlusOne(self: Bar) -> None: # procedure method
+  def p1PlusOne(self: Bar) -> None:
     self.p1 = self.p1 + 1 # assignment
   # end procedure
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
@@ -309,13 +309,13 @@ class Foo: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
-  def show(self: Foo) -> None: # procedure method
+  def show(self: Foo) -> None:
     printNoLine(p1) # procedure call
   # end procedure
 
@@ -353,13 +353,13 @@ class Foo: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  p2: str # property
+  p2: str
 
 # end class
 
@@ -396,11 +396,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def changeValue(self: Foo, a: Bar) -> None: # procedure method
+  def changeValue(self: Foo, a: Bar) -> None:
 
   # end procedure
 
@@ -438,11 +438,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def if_(self: Foo) -> None: # procedure method
+  def if_(self: Foo) -> None:
 
   # end procedure
 
@@ -477,11 +477,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def break(self: Foo, a: int) -> None: # procedure method
+  def break(self: Foo, a: int) -> None:
 
   # end procedure
 
@@ -519,11 +519,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def short(self: Foo, a: int) -> None: # procedure method
+  def short(self: Foo, a: int) -> None:
 
   # end procedure
 
@@ -561,11 +561,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def foo(self: Foo, a: int, b: str, a: int) -> None: # procedure method
+  def foo(self: Foo, a: int, b: str, a: int) -> None:
 
   # end procedure
 
@@ -605,15 +605,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def foo(self: Foo) -> None: # procedure method
+  def foo(self: Foo) -> None:
     p1 = 4 # assignment
   # end procedure
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -709,11 +709,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def foo(self: Foo, foo: int) -> None: # procedure method
+  def foo(self: Foo, foo: int) -> None:
 
   # end procedure
 
@@ -749,11 +749,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def foo(self: Foo, a: int, foo: int) -> None: # procedure method
+  def foo(self: Foo, a: int, foo: int) -> None:
 
   # end procedure
 

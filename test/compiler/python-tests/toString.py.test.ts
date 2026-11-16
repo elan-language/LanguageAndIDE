@@ -62,7 +62,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -124,11 +124,11 @@ class Foo: # concrete class
     self.p1 = Maybe[Foo]() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: Maybe[Foo] # property
+  p1: Maybe[Foo]
 
 # end class
 
@@ -203,9 +203,9 @@ class Foo: # concrete class
     self.p1 = Maybe[Foo]() # assignment
   # end constructor
 
-  p1: Maybe[Foo] # property
+  p1: Maybe[Foo]
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "Custom toString"
   # end function
 
@@ -281,11 +281,11 @@ class Foo: # concrete class
     self.p2 = "Apple" # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # property
+  p2: str
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return self.p2
   # end function
 
@@ -354,11 +354,11 @@ class Foo: # concrete class
     self.p2 = "Apple" # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # property
+  p2: str
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return self.p2
   # end function
 

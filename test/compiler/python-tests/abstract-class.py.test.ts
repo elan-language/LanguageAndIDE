@@ -44,19 +44,19 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def func(self: Bar) -> int: # function method
+  def func(self: Bar) -> int:
     return 1
   # end function
 
-  def proc(self: Bar) -> None: # procedure method
+  def proc(self: Bar) -> None:
     printNoLine(2) # procedure call
   # end procedure
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -137,15 +137,15 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  def func(self: Foo) -> int: # function method
+  def func(self: Foo) -> int:
     return 1
   # end function
 
-  def proc(self: Foo) -> None: # procedure method
+  def proc(self: Foo) -> None:
     printNoLine(2) # procedure call
   # end procedure
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -155,7 +155,7 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
@@ -229,15 +229,15 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  def func(self: Foo) -> int: # function method
+  def func(self: Foo) -> int:
     return self.prop
   # end function
 
-  def proc(self: Foo) -> None: # procedure method
+  def proc(self: Foo) -> None:
     printNoLine(self.func()) # procedure call
   # end procedure
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -247,7 +247,7 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
@@ -323,11 +323,11 @@ class Foo(ABC): # abstract class
   def func() -> int:
     pass # abstract function
 
-  def proc(self: Foo) -> None: # procedure method
+  def proc(self: Foo) -> None:
     printNoLine(self.func()) # procedure call
   # end procedure
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -337,11 +337,11 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def func(self: Bar) -> int: # function method
+  def func(self: Bar) -> int:
     return self.prop
   # end function
 
@@ -435,7 +435,7 @@ class Foo1(Foo): # abstract class
 
 class Foo2(Foo1): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -445,15 +445,15 @@ class Bar(Foo2): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def func(self: Bar) -> int: # function method
+  def func(self: Bar) -> int:
     return 1
   # end function
 
-  def proc(self: Bar) -> None: # procedure method
+  def proc(self: Bar) -> None:
     printNoLine(2) # procedure call
   # end procedure
 
@@ -571,15 +571,15 @@ class Bar(Foo2): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff1(self: Bar) -> int: # function method
+  def ff1(self: Bar) -> int:
     return 1
   # end function
 
-  def ff2(self: Bar) -> int: # function method
+  def ff2(self: Bar) -> int:
     return 2
   # end function
 
@@ -701,15 +701,15 @@ class Bar(Foo2): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff1(self: Bar) -> int: # function method
+  def ff1(self: Bar) -> int:
     return 1
   # end function
 
-  def ff2(self: Bar) -> int: # function method
+  def ff2(self: Bar) -> int:
     return 2
   # end function
 
@@ -803,13 +803,13 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  f: Foo2 # property
+  f: Foo2
 
 # end class
 
 class Foo2(ABC): # abstract class
 
-  f2: Foo # property
+  f2: Foo
 
 # end class
 
@@ -819,11 +819,11 @@ class Bar: # concrete class
     self.foo = Maybe[Foo]() # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  foo: Maybe[Foo] # property
+  foo: Maybe[Foo]
 
 # end class
 
@@ -929,15 +929,15 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def proc(self: Bar) -> None: # procedure method
+  def proc(self: Bar) -> None:
     printNoLine(2) # procedure call
   # end procedure
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -988,15 +988,15 @@ class Bar(Foo): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def func(self: Bar) -> int: # function method
+  def func(self: Bar) -> int:
     return 1
   # end function
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -1029,7 +1029,7 @@ def main() -> None:
 
 class Foo(Foo): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -1062,19 +1062,19 @@ def main() -> None:
 
 class Yon(Foo): # abstract class
 
-  prop1: int # property
+  prop1: int
 
 # end class
 
 class Bar(Yon): # abstract class
 
-  prop2: int # property
+  prop2: int
 
 # end class
 
 class Foo(Bar): # abstract class
 
-  prop3: int # property
+  prop3: int
 
 # end class
 
@@ -1107,13 +1107,13 @@ def main() -> None:
 
 class Foo(ABC): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
 class Bar(Foo): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -1150,17 +1150,17 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  prop1: int # property
+  prop1: int
 
 # end class
 
 class Bar(Foo): # abstract class
 
-  prop2: int # property
+  prop2: int
 
 # end class
 
@@ -1218,15 +1218,15 @@ class Bar(Foo2): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff1(self: Bar) -> int: # function method
+  def ff1(self: Bar) -> int:
     return 1
   # end function
 
-  def ff2(self: Bar) -> int: # function method
+  def ff2(self: Bar) -> int:
     return 2
   # end function
 
@@ -1281,7 +1281,7 @@ class Foo1(ABC): # abstract class
 
 class Foo2(ABC): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -1291,15 +1291,15 @@ class Bar(Foo, Foo1, Foo2): # concrete class
     self.prop = 3 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def func(self: Bar) -> int: # function method
+  def func(self: Bar) -> int:
     return 1
   # end function
 
-  def proc(self: Bar) -> None: # procedure method
+  def proc(self: Bar) -> None:
     printNoLine(2) # procedure call
   # end procedure
 

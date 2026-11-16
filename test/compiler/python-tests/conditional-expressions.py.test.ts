@@ -236,7 +236,7 @@ class Bar(Foo): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "a Bar"
   # end function
 
@@ -319,7 +319,7 @@ class Bar(Foo): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "a Bar"
   # end function
 
@@ -546,7 +546,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -558,7 +558,7 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -601,7 +601,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -613,7 +613,7 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -660,7 +660,7 @@ class Bar(Foo): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -711,7 +711,7 @@ class Bar(Foo): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 

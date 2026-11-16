@@ -29,9 +29,9 @@ class Foo: # concrete class
     self.p1 = p1 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -99,13 +99,13 @@ class Foo: # concrete class
     self.p1 = 3 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  def bar(self: Foo) -> float: # function method
+  def bar(self: Foo) -> float:
     return doubled(self)
   # end function
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -178,13 +178,13 @@ class Foo: # concrete class
     self.p1 = 1 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def bar(self: Foo) -> int: # function method
+  def bar(self: Foo) -> int:
     lst = [1, 2] # variable definition
     return lst[self.p1]
   # end function
@@ -254,11 +254,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "a Foo"
   # end function
 
-  def bar(self: Foo) -> None: # procedure method
+  def bar(self: Foo) -> None:
     printNoLine(self) # procedure call
   # end procedure
 
@@ -324,13 +324,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def bar(self: Foo) -> int: # function method
+  def bar(self: Foo) -> int:
     lst = [1, 2] # variable definition
     return 
   # end function
@@ -368,11 +368,11 @@ class Foo: # concrete class
     self.p = p1 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
 # end class
 
@@ -408,11 +408,11 @@ class Foo: # concrete class
     p1 = p1 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
 # end class
 

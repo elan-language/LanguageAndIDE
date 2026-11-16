@@ -1960,6 +1960,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
+  // triage: this fails but not in the required way
   ignore_test("Fail_withoutGenericType", async () => {
     const code = `${testPythonHeader}
 
@@ -1988,12 +1989,13 @@ main()
     ]);
   });
 
+  //triage: test should be re-written when we support index ranges again
   ignore_test("Fail_assignRange", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition
-  a.subList(1, 2) =  # assignment
+  a.subList(1, 2) = a # assignment
 # end main
 
 main()
@@ -2112,11 +2114,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def bar(self: Foo) -> int: # function method
+  def bar(self: Foo) -> int:
     return 0
   # end function
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 

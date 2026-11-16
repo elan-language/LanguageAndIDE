@@ -31,11 +31,11 @@ class Foo: # concrete class
     self.p = list[int]() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p: list[int] # property
+  p: list[int]
 
 # end class
 
@@ -101,11 +101,11 @@ class Foo: # concrete class
     self.p2 = "" # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # property
+  p2: str
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -176,11 +176,11 @@ class Foo: # concrete class
     self.p2 = p_2 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # property
+  p2: str
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -250,11 +250,11 @@ class Foo: # concrete class
     self.b = bar # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  b: Bar # property
+  b: Bar
 
 # end class
 
@@ -264,13 +264,13 @@ class Bar: # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def printP1(self: Bar) -> None: # procedure method
+  def printP1(self: Bar) -> None:
     printNoLine(self.p1) # procedure call
   # end procedure
 
@@ -370,9 +370,9 @@ class Foo: # concrete class
     self.bar = Bar() # assignment
   # end constructor
 
-  bar: Bar # property
+  bar: Bar
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -385,13 +385,13 @@ class Bar: # concrete class
     self.foo = Maybe[Foo]() # assignment
   # end constructor
 
-  p1: int # property
+  p1: int
 
-  p2: str # property
+  p2: str
 
-  foo: Maybe[Foo] # property
+  foo: Maybe[Foo]
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
@@ -497,11 +497,11 @@ class Foo: # concrete class
     self.strArr = ["apple", "orange", "pair"] # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  strArr: list[str] # property
+  strArr: list[str]
 
 # end class
 
@@ -564,11 +564,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -639,13 +639,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def updateP1(self: Foo) -> None: # procedure method
+  def updateP1(self: Foo) -> None:
     self.p1 = 0 # assignment
   # end procedure
 
@@ -713,7 +713,7 @@ return [main, _tests];}`;
 
 class Foo(ABC): # abstract class
 
-  prop_1: str # property
+  prop_1: str
 
 # end class
 
@@ -723,7 +723,7 @@ class Bar(Foo): # concrete class
     self.prop_1 = "" # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return self.prop_1
   # end function
 
@@ -783,13 +783,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def updateP1(self: Foo) -> None: # procedure method
+  def updateP1(self: Foo) -> None:
     self.p1 = 0 # assignment
   # end procedure
 
@@ -801,7 +801,7 @@ class Bar(Foo): # concrete class
     self.prop_1 = "" # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return self.prop_1
   # end function
 
@@ -813,11 +813,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  p1: int # property
+  p1: int
 
-  p2: str # property
+  p2: str
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -852,13 +852,13 @@ class Foo: # concrete class
     self.p1 = self.ff() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def ff(self: Foo) -> int: # function method
+  def ff(self: Foo) -> int:
     return 0
   # end function
 
@@ -927,13 +927,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def with_P1(self: Foo, p: int) -> Foo: # function method
+  def with_P1(self: Foo, p: int) -> Foo:
     return copyWith(self, "p1", p)
   # end function
 
@@ -1010,27 +1010,27 @@ class Foo: # concrete class
     self.p3 = "" # assignment
   # end constructor
 
-  p1: int # property
+  p1: int
 
-  p2: str # property
+  p2: str
 
-  p3: str # property
+  p3: str
 
-  def withP1(self: Foo, p: int) -> Foo: # function method
+  def withP1(self: Foo, p: int) -> Foo:
     return copyWith(self, "p1", p)
   # end function
 
-  def withP2(self: Foo, p: str) -> Foo: # function method
+  def withP2(self: Foo, p: str) -> Foo:
     return copyWith(self, "p2", p)
   # end function
 
-  def setup(self: Foo, pI: int, pS: str) -> None: # procedure method
+  def setup(self: Foo, pI: int, pS: str) -> None:
     self.p1 = pI # assignment
     self.p2 = pS # assignment
     self.p3 = "unchanged" # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "Foo:" + self.p1.toString() + ":" + self.p2 + ":" + self.p3
   # end function
 
@@ -1123,13 +1123,13 @@ class Foo: # concrete class
     self.p1 = list[int]() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: list[int] # property
+  p1: list[int]
 
-  def append(self: Foo) -> None: # procedure method
+  def append(self: Foo) -> None:
     p1 = self.p1 # variable definition
     p1.append(1) # procedure call
     printNoLine(self.p1) # procedure call
@@ -1196,9 +1196,9 @@ class Foo: # concrete class
 
   # end constructor
 
-  p1: int set to 3 # property
+  p1: int set to 3
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -1230,9 +1230,9 @@ class Foo: # concrete class
 
   # end constructor
 
-  p1: int set to 3 # property
+  p1: int set to 3
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -1274,7 +1274,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -1310,11 +1310,11 @@ class Foo: # concrete class
     self.p1 = val # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1351,11 +1351,11 @@ class Foo: # concrete class
     self.p1 = val # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1392,11 +1392,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1459,11 +1459,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1473,11 +1473,11 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1520,11 +1520,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1534,11 +1534,11 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1584,11 +1584,11 @@ class Foo: # concrete class
     self.p1 = Bar() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: Bar # property
+  p1: Bar
 
 # end class
 
@@ -1624,11 +1624,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1638,11 +1638,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1680,13 +1680,13 @@ class Foo: # concrete class
     self.p1 = "" # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: str # property
+  p1: str
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -1724,15 +1724,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> int: # function method
+  def ff(self: Foo) -> int:
     return 0
   # end function
 
-  def ff(self: Foo) -> int: # function method
+  def ff(self: Foo) -> int:
     return 0
   # end function
 
@@ -1772,15 +1772,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> None: # procedure method
+  def ff(self: Foo) -> None:
 
   # end procedure
 
-  def ff(self: Foo) -> None: # procedure method
+  def ff(self: Foo) -> None:
 
   # end procedure
 
@@ -1820,15 +1820,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> None: # procedure method
+  def ff(self: Foo) -> None:
 
   # end procedure
 
-  ff: int # property
+  ff: int
 
 # end class
 
@@ -1866,15 +1866,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> int: # function method
+  def ff(self: Foo) -> int:
     return 0
   # end function
 
-  ff: int # property
+  ff: int
 
 # end class
 
@@ -1912,15 +1912,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> int: # function method
+  def ff(self: Foo) -> int:
     return 0
   # end function
 
-  def ff(self: Foo) -> None: # procedure method
+  def ff(self: Foo) -> None:
 
   # end procedure
 
@@ -1961,7 +1961,7 @@ class Foo: # concrete class
     sleep(1)
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -1998,7 +1998,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -2124,13 +2124,13 @@ class Foo: # concrete class
     self.vg = CircleVG() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  vg: CircleVG # property
+  vg: CircleVG
 
-  def bar(self: Foo) -> None: # procedure method
+  def bar(self: Foo) -> None:
     self.vg = self.vg.noSuch # assignment
   # end procedure
 
@@ -2169,9 +2169,9 @@ class Foo(Foo): # concrete class
 
   # end constructor
 
-  prop: int # property
+  prop: int
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -2210,9 +2210,9 @@ class Yon(Foo): # concrete class
 
   # end constructor
 
-  prop: int # property
+  prop: int
 
-  def toString(self: Yon) -> str: # function method
+  def toString(self: Yon) -> str:
     return "undefined"
   # end function
 
@@ -2224,9 +2224,9 @@ class Bar(Yon): # concrete class
 
   # end constructor
 
-  prop: int # property
+  prop: int
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -2238,9 +2238,9 @@ class Foo(Bar): # concrete class
 
   # end constructor
 
-  prop: int # property
+  prop: int
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -2275,7 +2275,7 @@ def main() -> None:
 
 class Bar(Bar): # abstract class
 
-  prop: int # property
+  prop: int
 
 # end class
 
@@ -2313,7 +2313,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -2351,13 +2351,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def withP1(self: Foo, p: int) -> Foo: # function method
+  def withP1(self: Foo, p: int) -> Foo:
     self.p1 = p # assignment
     return self
   # end function
@@ -2398,13 +2398,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def withP1(self: Foo, p: int) -> Foo: # function method
+  def withP1(self: Foo, p: int) -> Foo:
     self.p1 = p # assignment
     return self
   # end function
@@ -2445,13 +2445,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def setP1(self: Foo, p: int) -> None: # procedure method
+  def setP1(self: Foo, p: int) -> None:
     self.p1 = p # assignment
   # end procedure
 
@@ -2483,13 +2483,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def withP1(self: Foo, p: int) -> None: # procedure method
+  def withP1(self: Foo, p: int) -> None:
 
   # end procedure
 
@@ -2501,9 +2501,9 @@ class Bar: # concrete class
 
   # end constructor
 
-  prop_1: str # property
+  prop_1: str
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -2532,7 +2532,7 @@ class Bar: # concrete class
 
 class Foo(ABC): # abstract class
 
-  prop_1: str # property
+  prop_1: str
 
 # end class
 
@@ -2542,7 +2542,7 @@ class Bar(Foo): # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return self.prop_1
   # end function
 

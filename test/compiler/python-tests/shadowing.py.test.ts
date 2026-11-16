@@ -112,11 +112,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def sin(self: Foo, x: float) -> float: # function method
+  def sin(self: Foo, x: float) -> float:
     return 222
   # end function
 
@@ -193,11 +193,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def sleep_ms(self: Foo, x: float) -> None: # procedure method
+  def sleep_ms(self: Foo, x: float) -> None:
     printNoLine(222) # procedure call
   # end procedure
 

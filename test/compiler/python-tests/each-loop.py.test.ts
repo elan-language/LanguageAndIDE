@@ -364,13 +364,13 @@ class Bar: # concrete class
     self.l = li # assignment
   # end constructor
 
-  l: list[int] # private property
+  l: list[int] # private
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def display(self: Bar) -> None: # procedure method
+  def display(self: Bar) -> None:
     for item in li:
       printNoLine(item) # procedure call
     # end for

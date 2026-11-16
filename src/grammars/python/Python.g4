@@ -186,27 +186,27 @@ constructorMember:
         ordinaryStatement* END_CONSTRUCTOR NL
 ;
 
-property: GHOSTED_LINE? identifierDef COLON type commentText? NL;
+property: GHOSTED_LINE? identifierDef COLON type PRIVATE_ANNOTATION? commentText? NL;
 
 functionMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON commentText? NL (
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON PRIVATE_ANNOTATION? NL (
         ordinaryStatement
     )* returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
 ;
 
 procedureMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON commentText? NL
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON PRIVATE_ANNOTATION? NL
         ordinaryStatement* END_PROCEDURE GHOSTED_BLOCK_END? NL
 ;
 
 abstractFunction:
     GHOSTED_LINE? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type
-       COLON NL PASS commentText? NL
+       COLON PRIVATE_ANNOTATION? NL PASS commentText? NL
 ;
 
 abstractProcedure:
     GHOSTED_LINE? ABSTRACT_METHOD NL DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE
-        COLON NL PASS commentText? NL
+        COLON PRIVATE_ANNOTATION? NL PASS commentText? NL
 ;
 // END Frames
 

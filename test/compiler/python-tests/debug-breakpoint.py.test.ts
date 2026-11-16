@@ -17,7 +17,7 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return "undefined"
   # end function
 
@@ -189,16 +189,16 @@ class Foo: # concrete class
 
   # end constructor
 
-  f: int # property
+  f: int
 
-  def pp(self: Foo, e: int) -> None: # procedure method
+  def pp(self: Foo, e: int) -> None:
     a = 1 # variable definition
     b = [1, 2] # variable definition
     c = "fred" # variable definition
     a = 2 # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -248,9 +248,9 @@ class Foo: # concrete class
 
   # end constructor
 
-  f: int # property
+  f: int
 
-  def ff(self: Foo, e: int) -> int: # function method
+  def ff(self: Foo, e: int) -> int:
     a = 1 # variable definition
     b = [1, 2] # variable definition
     c = "fred" # variable definition
@@ -258,7 +258,7 @@ class Foo: # concrete class
     return a
   # end function
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
@@ -310,11 +310,11 @@ class Foo: # concrete class
     a = 2 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  f: int # property
+  f: int
 
 # end class
 
@@ -762,9 +762,9 @@ class Bar: # concrete class
 
   # end constructor
 
-  barA: str # property
+  barA: str
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return "undefined"
   # end function
 
@@ -778,15 +778,15 @@ class Foo: # concrete class
     self.c = [1, 2] # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  a: int # property
+  a: int
 
-  b: Bar # property
+  b: Bar
 
-  c: list[int] # property
+  c: list[int]
 
 # end class
 
@@ -831,15 +831,15 @@ class Foo: # concrete class
     self.c = [1, 2] # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  a: int # property
+  a: int
 
-  b: Bar # property
+  b: Bar
 
-  c: list[int] # property
+  c: list[int]
 
 # end class
 
@@ -882,15 +882,15 @@ class Foo: # concrete class
     self.c = [1, 2] # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  a: int # property
+  a: int
 
-  b: Bar # property
+  b: Bar
 
-  c: list[int] # property
+  c: list[int]
 
 # end class
 
@@ -945,13 +945,13 @@ class Foo: # concrete class
     self.ff = f # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  ff: Callable[[Foo]int] # property
+  ff: Callable[[Foo]int]
 
-  def df(self: Foo) -> int: # function method
+  def df(self: Foo) -> int:
     return ff(self)
   # end function
 

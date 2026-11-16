@@ -1849,14 +1849,11 @@ main
 end main
 
 abstract class Foo
-    abstract property p1 as Int
-    abstract property p2 as Int
 
     abstract procedure setP1(v as Int)
         assign this.p1 to p1
     end procedure
 
-    abstract function product() returns Int
 end class`;
 
     const fileImpl = new FileImpl(

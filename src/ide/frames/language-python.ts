@@ -12,6 +12,7 @@ import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { MemberFrame } from "./frame-interfaces/member-frame";
+import { PossiblyPrivateMember } from "./frame-interfaces/possibly-private-member";
 import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ClassFrame } from "./globals/class-frame";
@@ -70,7 +71,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Enum) {
       html = `<el-kw>${this.CLASS}</el-kw> ${frame.name.renderAsHtml()}(<el-type>Enum</el-type>):${frame.values.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()}: ${frame.type.renderAsHtml()}${this.privateHtml(frame)}`;
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
@@ -100,7 +101,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof Enum) {
       source = `${this.ghostSingle(frame)}${this.CLASS} ${frame.name.renderAsSource()}(Enum):${frame.values.renderAsSource()}`;
     } else if (frame instanceof Property) {
-      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()}: ${frame.type.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()}: ${frame.type.renderAsSource()}${this.privateSource(frame)}`;
     } else if (frame instanceof ReturnStatement) {
       source = `${frame.indent()}${this.ghostSingle(frame)}${this.RETURN} ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
@@ -111,6 +112,14 @@ export class LanguagePython extends LanguageAbstract {
       source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
     }
     return source;
+  }
+
+  private privateHtml(frame: PossiblyPrivateMember) {
+    return frame.isPrivate ? " <el-comment># private</el-comment>" : "";
+  }
+
+  private privateSource(frame: PossiblyPrivateMember) {
+    return frame.isPrivate ? " # private" : "";
   }
 
   ghostSingle(frame: Frame) {
@@ -142,9 +151,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof MainRoutine) {
       html = `<el-kw>${this.DEF} </el-kw><el-method>main</el-method>() -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof FunctionMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> ${frame.returnType.renderAsHtml()}:${this.privateHtml(frame)}`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:`;
+      html = `<el-kw>${this.DEF} </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>${this.NONE}</el-kw>:${this.privateHtml(frame)}`;
     } else if (frame instanceof TestFrame) {
       html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):&nbsp;<el-kw>${this.DEF}</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>${this.SELF}</el-kw>) -> <el-kw>${this.NONE}</el-kw>:`;
     } else if (frame instanceof ThenClause) {
@@ -184,9 +193,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof MainRoutine) {
       source = `${this.ghostTop(frame)}${this.DEF} main() -> ${this.NONE}:`;
     } else if (frame instanceof FunctionMethod) {
-      source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${frame.returnType.renderAsSource()}:`;
+      source = `${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${frame.returnType.renderAsSource()}:${this.privateSource(frame)}`;
     } else if (frame instanceof ProcedureMethod) {
-      source = `${this.ghostTop(frame)}${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${this.NONE}:`;
+      source = `${this.ghostTop(frame)}${this.DEF} ${frame.name.renderAsSource()}(${this.memberParamListAsSource(frame, frame.params)}) -> ${this.NONE}:${this.privateSource(frame)}`;
     } else if (frame instanceof TestFrame) {
       source = `${this.ghostTop(frame)}class ${this.testClassNameAsSource(frame)}(unittest.TestCase): ${this.DEF} ${frame.testName.renderAsSource()}(${this.SELF}) -> ${this.NONE}:`;
     } else if (frame instanceof ThenClause) {

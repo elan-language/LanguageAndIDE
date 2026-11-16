@@ -438,6 +438,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     if (ctx.GHOSTED_LINE()) {
       prop.setGhosted(true);
     }
+    if (ctx.PRIVATE_ANNOTATION()) {
+      prop.makePrivate();
+    }
     prop.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.identifierDef()!)!);
     prop.type.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.type()!)!);
     prop.updateParseStatus();
@@ -448,6 +451,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     const func = new FunctionMethod(this.parent);
     if (ctx.GHOSTED_BLOCK_START()) {
       func.setGhosted(true);
+    }
+    if (ctx.PRIVATE_ANNOTATION()) {
+      func.makePrivate();
     }
     func.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     func.params.setFieldToKnownValidText(
@@ -476,6 +482,9 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     const proc = new ProcedureMethod(this.parent);
     if (ctx.GHOSTED_BLOCK_START()) {
       proc.setGhosted(true);
+    }
+    if (ctx.PRIVATE_ANNOTATION()) {
+      proc.makePrivate();
     }
     proc.name.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.methodName()!)!);
     proc.params.setFieldToKnownValidText(

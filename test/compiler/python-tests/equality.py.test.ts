@@ -34,15 +34,15 @@ class Foo: # concrete class
     self.p2 = p2 # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # property
+  p2: str
 
-  def setP1(self: Foo, v: float) -> None: # procedure method
+  def setP1(self: Foo, v: float) -> None:
     self.p1 = v # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return self.p1.toString() + self.p2
   # end function
 
@@ -123,15 +123,15 @@ class Foo: # concrete class
     self.p2 = p2 # assignment
   # end constructor
 
-  p1: int # property
+  p1: int
 
-  p2: str # property
+  p2: str
 
-  def setP1(self: Foo, v: int) -> None: # procedure method
+  def setP1(self: Foo, v: int) -> None:
     self.p1 = v # assignment
   # end procedure
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return self.p1.toString() + self.p2
   # end function
 
@@ -207,11 +207,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: Callable[[int]int] # property
+  p1: Callable[[int]int]
 
 # end class
 
@@ -260,13 +260,13 @@ class Foo: # concrete class
     self.p = p # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p: int # property
+  p: int
 
-  def setP(self: Foo, value: int) -> None: # procedure method
+  def setP(self: Foo, value: int) -> None:
     self.p = value # assignment
   # end procedure
 
@@ -350,9 +350,9 @@ class Foo: # concrete class
     self.p = p # assignment
   # end constructor
 
-  p: int # property
+  p: int
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 

@@ -30,11 +30,11 @@ class Foo: # concrete class
     self.p2 = "Apple" # assignment
   # end constructor
 
-  p1: float # property
+  p1: float
 
-  p2: str # private property
+  p2: str # private
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return self.p2
   # end function
 
@@ -102,17 +102,17 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def setP1(self: Foo, a: int) -> None: # private procedure method
+  def setP1(self: Foo, a: int) -> None: # private
     self.p1 = a # assignment
   # end procedure
 
-  def testSetP1(self: Foo, a: int) -> None: # procedure method
+  def testSetP1(self: Foo, a: int) -> None:
     self.setP1(a) # procedure call
   # end procedure
 
@@ -185,15 +185,15 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo, f: str) -> str: # private function method
+  def ff(self: Foo, f: str) -> str: # private
     return f
   # end function
 
-  def testFf(self: Foo, f: str) -> str: # function method
+  def testFf(self: Foo, f: str) -> str:
     return self.ff(f)
   # end function
 
@@ -249,6 +249,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "test");
   });
 
+  //triage: should be correct - not yet working in RefLang
   ignore_test("Fail_PrivatePropertyCannotBeAccessed", async () => {
     const code = `${testPythonHeader}
 
@@ -264,13 +265,13 @@ class Foo: # concrete class
     self.p2 = "Apple" # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
-  p2: str # private property
+  p2: str # private
 
 # end class
 
@@ -304,7 +305,7 @@ def main() -> None:
 
 class Bar(ABC): # abstract class
 
-  p2: str # private property
+  p2: str # private
 
 # end class
 
@@ -314,11 +315,11 @@ class Foo(Bar): # concrete class
     self.p1 = 5 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
 # end class
 
@@ -356,13 +357,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def setP1(self: Foo, a: int) -> None: # private procedure method
+  def setP1(self: Foo, a: int) -> None: # private
     self.p1 = a # assignment
   # end procedure
 
@@ -402,13 +403,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def ff(self: Foo) -> int: # private function method
+  def ff(self: Foo) -> int: # private
     return p1
   # end function
 
@@ -449,13 +450,13 @@ class Foo: # concrete class
     self.p2 = "Apple" # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: float # property
+  p1: float
 
-  p2: str # private property
+  p2: str # private
 
 # end class
 
@@ -494,13 +495,13 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
-  def ff(self: Foo) -> int: # private function method
+  def ff(self: Foo) -> int: # private
     return p1
   # end function
 

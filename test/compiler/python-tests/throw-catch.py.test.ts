@@ -302,11 +302,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 
@@ -796,7 +796,7 @@ class FooException: # concrete class
 
   # end constructor
 
-  def toString(self: FooException) -> str: # function method
+  def toString(self: FooException) -> str:
     return "Foo"
   # end function
 
@@ -870,7 +870,7 @@ class FooException: # concrete class
 
   # end constructor
 
-  def toString(self: FooException) -> str: # function method
+  def toString(self: FooException) -> str:
     return "Foo"
   # end function
 

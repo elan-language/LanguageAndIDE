@@ -1048,12 +1048,40 @@ main()
     ]);
   });
 
-  ignore_test("Fail_IndexWrongType1", async () => {
+  test("Fail_IndexWrongType1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
-  a["b"].put(0, 5) # procedure call
+  a["b"].removeFirst()
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: int, Provided: str.ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_IndexWrongType2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = [[1, 2], [3, 4]] # variable definition
+  a["b"][5] # procedure call
 # end main
 
 main()

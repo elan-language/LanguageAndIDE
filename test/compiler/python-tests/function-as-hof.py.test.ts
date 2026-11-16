@@ -279,11 +279,11 @@ class Foo: # concrete class
     self.pf = f # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  pf: Callable[[int], int] # property
+  pf: Callable[[int], int]
 
 # end class
 
@@ -625,11 +625,11 @@ class Foo: # concrete class
     self.pf = f # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  pf: Callable[[int], int] # property
+  pf: Callable[[int], int]
 
 # end class
 

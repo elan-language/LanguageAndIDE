@@ -200,11 +200,11 @@ class Foo: # concrete class
     self.p1 = 10 # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  p1: int # property
+  p1: int
 
 # end class
 

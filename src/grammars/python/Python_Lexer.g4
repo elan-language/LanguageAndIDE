@@ -40,7 +40,6 @@ FUNCTION: 'function';
 INHERITS: 'inherits';
 LET: 'let';
 NEW: 'new';
-PRIVATE: 'private';
 PROCEDURE: 'procedure';
 PROPERTY: 'property';
 RETURNS: 'returns';
@@ -154,7 +153,9 @@ END_FUNCTION_METHOD: '# end function method';
 END_PROCEDURE_METHOD: '# end procedure method';
 ASSIGNMENT_ANNOTATION: '# assignment';
 VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
+PRIVATE_ANNOTATION: '# private';
 ABSTRACT_METHOD: '@abstractmethod';
+
 
 COMMENT: '#' (' '|'\t')* | '#'~('['|'\r'|'\n')~('\r' | '\n')*;
 

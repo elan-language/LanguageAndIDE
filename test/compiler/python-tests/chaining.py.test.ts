@@ -105,11 +105,11 @@ class Foo: # concrete class
     self.a = [1] # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  a: list[int] # property
+  a: list[int]
 
 # end class
 
@@ -174,11 +174,11 @@ class Foo: # concrete class
     self.b = Bar() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  b: Bar # property
+  b: Bar
 
 # end class
 
@@ -188,11 +188,11 @@ class Bar: # concrete class
     self.y = Yon() # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  y: Yon # property
+  y: Yon
 
 # end class
 
@@ -202,11 +202,11 @@ class Yon: # concrete class
     self.z = 2 # assignment
   # end constructor
 
-  def toString(self: Yon) -> str: # function method
+  def toString(self: Yon) -> str:
     return ""
   # end function
 
-  z: int # property
+  z: int
 
 # end class
 
@@ -316,11 +316,11 @@ class Foo: # concrete class
     self.b = Bar() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  b: Bar # property
+  b: Bar
 
 # end class
 
@@ -330,11 +330,11 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff(self: Bar) -> int: # function method
+  def ff(self: Bar) -> int:
     return 4
   # end function
 
@@ -426,11 +426,11 @@ class Foo: # concrete class
     self.b = Bar() # assignment
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  b: Bar # property
+  b: Bar
 
 # end class
 
@@ -440,11 +440,11 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff(self: Bar) -> int: # function method
+  def ff(self: Bar) -> int:
     return 4
   # end function
 
@@ -612,11 +612,11 @@ class Bar: # concrete class
     self.strArr = ["apple", "orange", "pair"] # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  strArr: list[str] # property
+  strArr: list[str]
 
 # end class
 
@@ -680,11 +680,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def createLst(self: Foo, n: int) -> list[int]: # function method
+  def createLst(self: Foo, n: int) -> list[int]:
     return createPopulatedList(n, 7)
   # end function
 
@@ -754,11 +754,11 @@ class Bar: # concrete class
     self.foo = Foo() # assignment
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  foo: Foo # property
+  foo: Foo
 
 # end class
 
@@ -768,11 +768,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def create2DList(self: Foo) -> list[list[int]]: # function method
+  def create2DList(self: Foo) -> list[list[int]]:
     return [[8, 8, 8, 8], [8, 8, 8, 8], [8, 8, 8, 8]]
   # end function
 
@@ -967,11 +967,11 @@ class Foo: # concrete class
 
   # end constructor
 
-  def toString(self: Foo) -> str: # function method
+  def toString(self: Foo) -> str:
     return ""
   # end function
 
-  def ff(self: Foo) -> Bar: # function method
+  def ff(self: Foo) -> Bar:
     return Bar()
   # end function
 
@@ -983,11 +983,11 @@ class Bar: # concrete class
 
   # end constructor
 
-  def toString(self: Bar) -> str: # function method
+  def toString(self: Bar) -> str:
     return ""
   # end function
 
-  def ff(self: Bar) -> int: # function method
+  def ff(self: Bar) -> int:
     return 0
   # end function
 
