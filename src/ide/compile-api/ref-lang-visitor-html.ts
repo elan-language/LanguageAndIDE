@@ -16,6 +16,8 @@ import {
   IndexContext,
   IndexedAssignableContext,
   IndexedTermContext,
+  InterpolatedStringContext,
+  InterpolatedStringExpressionContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -216,5 +218,17 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   override visitIdentifierList = (ctx: IdentifierListContext) => {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     return ids.join(", ");
+  };
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
+    return "{" + this.visit(ctx.expression())! + "}";
+  };
+
+  override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
+    const s = ctx
+      .segment()
+      .map((s) => this.visit(s))
+      .join("");
+    return '$"' + s + '"';
   };
 }

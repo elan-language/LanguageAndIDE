@@ -587,8 +587,7 @@ export function testAntlrParse(
   const parsedText =  context.getText().replaceAll(" ", "");
   const errors = parser.numberOfSyntaxErrors;
   
-
-  assert.equal(parses, errors === 0, `Parsing: '${text}'`);
+  assert.equal(errors === 0, parses, `Parsing: '${text}'`);
 
   if (matchedText !== "") {
     assert.equal(parsedText, matchedText.replaceAll(" ", ""));

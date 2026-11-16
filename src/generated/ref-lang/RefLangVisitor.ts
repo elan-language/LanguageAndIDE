@@ -75,6 +75,8 @@ import { LitBinaryContext } from "./RefLangParser.js";
 import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
+import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
+import { SegmentContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
@@ -573,6 +575,18 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLitString?: (ctx: LitStringContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.segment`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSegment?: (ctx: SegmentContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree

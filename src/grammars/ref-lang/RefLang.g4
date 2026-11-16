@@ -2,7 +2,10 @@
 
 
 grammar RefLang;
-import RefLang_Lexer;
+
+options {
+    tokenVocab = RefLang_Lexer;
+}
 
 file: comment? global* NL* EOF;
 
@@ -76,7 +79,6 @@ comment: GHOSTED? commentText NL;
 
 commentText: COMMENT;
 
-
 // Statements
 statementBlock: selectableStatement+;
 
@@ -93,8 +95,8 @@ selectableStatement:
     | catchClause
     | throwStatement
     | comment
-; // thenClause and tryClause not included because they can't be selected & hence not cut/copy/pasted
-
+;
+// thenClause and tryClause not included because they can't be selected & hence not cut/copy/pasted
 
 ordinaryStatement:
     variableDefinition
@@ -154,7 +156,7 @@ returnStatement: RETURN expression NL; // not ghostable
 memberBlock: selectableMember+;
 
 selectableMember:
-      property
+    property
     | functionMethod
     | procedureMethod
     | abstractFunction
@@ -246,7 +248,15 @@ litInt:
 
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING;
-interpolatedString: INTERPOLATED_STRING;
+
+interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
+
+segment: StringSegment | interpolatedStringExpression;
+
+interpolatedString:
+    START_INTERPOLATED_STRING segment* DOUBLE_QUOTES
+;
+
 enumValue: typeName DOT identifierUse;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;

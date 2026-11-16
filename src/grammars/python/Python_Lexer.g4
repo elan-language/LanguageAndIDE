@@ -156,7 +156,10 @@ ASSIGNMENT_ANNOTATION: '# assignment';
 VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
 ABSTRACT_METHOD: '@abstractmethod';
 
-COMMENT: '#' (' '|'\t')* | '#'~('['|'\r'|'\n')~('\r' | '\n')*;
+COMMENT:
+    '#' (' ' | '\t')*
+    | '#' ~('[' | '\r' | '\n') ~('\r' | '\n')*
+;
 
 fragment InputCharacter: ~[\r\n\u0085];
 

@@ -132,8 +132,11 @@ LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
 LITERAL_FLOAT: [0-9][0-9]* DOT [0-9]+ ExponentPart?;
 
+START_INTERPOLATED_STRING:
+    '$"' -> pushMode(InterpolatedString)
+;
+
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
-INTERPOLATED_STRING: '$"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;
@@ -248,3 +251,11 @@ fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
 //END Common token names; common definitions
+
+mode InterpolatedString;
+
+EscapedLeftBrace: '\\{' -> type(StringSegment);
+EscapedDoubleQuotes: '\\"' -> type(StringSegment);
+ExprStart: '{' -> type(OPEN_BRACE), pushMode(DEFAULT_MODE);
+End: '}' -> type(START_INTERPOLATED_STRING), popMode;
+StringSegment: ~('{' | '"');
