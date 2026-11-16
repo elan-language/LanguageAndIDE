@@ -324,7 +324,7 @@ export class RefLangParser extends antlr.Parser {
     "'>'",
     "'<='",
     "'>='",
-    "'\"'",
+    null,
     null,
     null,
     null,

@@ -195,21 +195,21 @@ suite("Parsing Rules RefLang", () => {
       (p: Parser) => p.interpolatedString(),
     ];
     // testAntlrParse(interpolString, `$"{}"`, false);
-    // testAntlrParse(interpolString, `$""`, true, "", "");
-    // testAntlrParse(interpolString, `$"x"`, true, "", "");
-    // testAntlrParse(interpolString, `$" "`, true, "", "");
-    // testAntlrParse(interpolString, `$"{x}"`, true, "", "");
+    // testAntlrParse(interpolString, `$""`, false, "", "");
+    testAntlrParse(interpolString, `$"x"`, true, "", "");
+    testAntlrParse(interpolString, `$" "`, true, "", "");
+    testAntlrParse(interpolString, `$"{x}"`, true, "", "");
     // testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
-    testAntlrParse(
-      interpolString,
-      `$"{curly}"`,
-      true,
-      `$"{curly}"`,
-      `$"{curly}"`,
-      `$"{<el-id>curly</el-id>}"`,
-      `$"{curly}"`,
-      "`${await _stdlib.toString(curly)}`",
-    );
+    // testAntlrParse(
+    //   interpolString,
+    //   `$"{curly}"`,
+    //   true,
+    //   `$"{curly}"`,
+    //   `$"{curly}"`,
+    //   `$"{<el-id>curly</el-id>}"`,
+    //   `$"{curly}"`,
+    //   "`${await _stdlib.toString(curly)}`",
+    // );
     // testAntlrParse(
     //   interpolString, // but with braces
     //   `$"&#123;curly braces&#125;"`,

@@ -258,4 +258,5 @@ EscapedLeftBrace: '\\{' -> type(StringSegment);
 EscapedDoubleQuotes: '\\"' -> type(StringSegment);
 ExprStart: '{' -> type(OPEN_BRACE), pushMode(DEFAULT_MODE);
 End: '}' -> type(START_INTERPOLATED_STRING), popMode;
-StringSegment: ~('{' | '"');
+EndString: '"' -> type(DOUBLE_QUOTES), popMode;
+StringSegment: CommonCharacter+;

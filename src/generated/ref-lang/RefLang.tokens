@@ -217,7 +217,6 @@ EscapedDoubleQuotes=127
 '>'=91
 '<='=92
 '>='=93
-'"'=94
 '$"'=104
 '[ghosted]'=108
 '# function'=109
