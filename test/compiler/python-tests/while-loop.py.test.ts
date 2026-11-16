@@ -24,7 +24,7 @@ def main() -> None:
   while x < 10:
     x = x + 1 # assignment
   # end while
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -72,7 +72,7 @@ def main() -> None:
     # end while
     x = x + 1 # assignment
   # end while
-  printNoLine(t) # procedure call
+  printNoLine(t) 
 # end main
 
 main()
@@ -249,7 +249,7 @@ main()
 def main() -> None:
   a = 3 # variable definition
   while a:
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end while
 # end main
 
@@ -276,7 +276,7 @@ main()
 
 def main() -> None:
   while a:
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end while
 # end main
 

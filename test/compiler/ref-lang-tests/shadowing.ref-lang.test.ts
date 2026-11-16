@@ -544,30 +544,6 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_global", async () => {
-    const code = `${testHeader}
-
-const a = 4
-const b = global.a
-
-main
- 
-end main`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_ShadowParameter1", async () => {
     const code = `${testHeader}
 

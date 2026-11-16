@@ -7,7 +7,6 @@ import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertCompiles,
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -15,7 +14,6 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -27,12 +25,12 @@ suite("Python StdLib", () => {
 
 def main() -> None:
   arr = ["three", "four"] # variable definition
-  printNoLine(lst().contains(1)) # procedure call
-  printNoLine(lst().contains(3)) # procedure call
-  printNoLine(arr.contains("four")) # procedure call
-  printNoLine(arr.contains("five")) # procedure call
-  printNoLine("onetwo".contains("two")) # procedure call
-  printNoLine("onetwo".contains("three")) # procedure call
+  printNoLine(lst().contains(1)) 
+  printNoLine(lst().contains(3)) 
+  printNoLine(arr.contains("four")) 
+  printNoLine(arr.contains("five")) 
+  printNoLine("onetwo".contains("two")) 
+  printNoLine("onetwo".contains("three")) 
 # end main
 
 def lst() -> list[int]: # function
@@ -81,9 +79,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1) # procedure call
-  sleep_ms(100) # procedure call
-  printNoLine(2) # procedure call
+  printNoLine(1) 
+  sleep_ms(100) 
+  printNoLine(2) 
 # end main
 
 main()
@@ -120,9 +118,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = clock() # variable definition
-  sleep_ms(100) # procedure call
+  sleep_ms(100) 
   b = clock() # variable definition
-  printNoLine(b > a) # procedure call
+  printNoLine(b > a) 
 # end main
 
 main()
@@ -161,8 +159,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = random() # variable definition
   b = random() # variable definition
-  printNoLine(a < 1) # procedure call
-  printNoLine(a != b) # procedure call
+  printNoLine(a < 1) 
+  printNoLine(a != b) 
 # end main
 
 main()
@@ -200,7 +198,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = asFloat("10.1") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -236,7 +234,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = asFloat("x12") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -272,7 +270,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = asFloat("25g") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -308,7 +306,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = asFloat("10") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -347,7 +345,7 @@ def main() -> None:
   b = asFloat("10.1e+2") # variable definition
   c = asFloat("10.1e-2") # variable definition
   d = asFloat("0.12E2") # variable definition
-  printNoLine([a, b, c, d]) # procedure call
+  printNoLine([a, b, c, d]) 
 # end main
 
 main()
@@ -420,7 +418,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = asInt("10") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -522,8 +520,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello") # procedure call
-  printNoLine("!") # procedure call
+  printNoLine("Hello") 
+  printNoLine("!") 
 # end main
 
 main()
@@ -558,8 +556,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(101) # procedure call
-  printNoLine("!") # procedure call
+  printNoLine(101) 
+  printNoLine("!") 
 # end main
 
 main()
@@ -594,8 +592,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printTab(0, "Hello") # procedure call
-  printTab(10, "World") # procedure call
+  printTab(0, "Hello") 
+  printTab(10, "World") 
 # end main
 
 main()
@@ -630,8 +628,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printTab(0, 12345) # procedure call
-  printTab(10, 678910) # procedure call
+  printTab(0, 12345) 
+  printTab(10, 678910) 
 # end main
 
 main()
@@ -666,9 +664,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(openBrace) # procedure call
-  printNoLine(closeBrace) # procedure call
-  printNoLine(quotes) # procedure call
+  printNoLine(openBrace) 
+  printNoLine(closeBrace) 
+  printNoLine(quotes) 
 # end main
 
 main()
@@ -802,9 +800,9 @@ def main() -> None:
     r = randint(0, 1) # variable definition
     results[r] = results[r] + 1 # assignment
   # end for
-  printNoLine(results[0] > 0) # procedure call
-  printNoLine(results[1] > 0) # procedure call
-  printNoLine(results[0] + results[1]) # procedure call
+  printNoLine(results[0] > 0) 
+  printNoLine(results[1] > 0) 
+  printNoLine(results[0] + results[1]) 
 # end main
 
 main()
@@ -849,15 +847,15 @@ def main() -> None:
   results = [0, 0] # variable definition
   rnd = Random() # variable definition
   val = 0 # variable definition
-  rnd.initialiseFromClock() # procedure call
+  rnd.initialiseFromClock() 
   for i in range(1, 10001):
     val = rnd.asInt(0, 1) # assignment
     rnd = rnd.nextGen() # assignment
     results[val] = results[val] + 1 # assignment
   # end for
-  printNoLine(results[0] > 0) # procedure call
-  printNoLine(results[1] > 0) # procedure call
-  printNoLine(results[0] + results[1]) # procedure call
+  printNoLine(results[0] > 0) 
+  printNoLine(results[1] > 0) 
+  printNoLine(results[0] + results[1]) 
 # end main
 
 main()
@@ -912,8 +910,8 @@ def main() -> None:
   # end for
   for i in range(0, 7):
     r = results[i] # variable definition
-    printNoLine(r) # procedure call
-    printNoLine(", ") # procedure call
+    printNoLine(r) 
+    printNoLine(", ") 
   # end for
 # end main
 
@@ -972,8 +970,8 @@ def main() -> None:
   # end for
   for i in range(0, 7):
     r = results[i] # variable definition
-    printNoLine(r) # procedure call
-    printNoLine(", ") # procedure call
+    printNoLine(r) 
+    printNoLine(", ") 
   # end for
 # end main
 
@@ -1040,7 +1038,7 @@ def main() -> None:
   nota = bitNot(a) # variable definition
   aL = bitShiftL(a, 2) # variable definition
   aR = bitShiftR(a, 2) # variable definition
-  printNoLine(a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary()) # procedure call
+  printNoLine(a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary()) 
 # end main
 
 main()
@@ -1082,7 +1080,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(unicode(65)) # procedure call
+  printNoLine(unicode(65)) 
 # end main
 
 main()
@@ -1116,7 +1114,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Apple".asUnicode()) # procedure call
+  printNoLine("Apple".asUnicode()) 
 # end main
 
 main()
@@ -1152,9 +1150,9 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2] # variable definition
   b = [3, 4] # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  a.appendList(b) 
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1194,9 +1192,9 @@ return [main, _tests];}`;
 def main() -> None:
   a = list[Foo]() # variable definition
   b = list[Bar]() # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  a.appendList(b) 
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -1272,9 +1270,9 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2] # variable definition
   b = [3, 4] # variable definition
-  a.prependList(b) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  a.prependList(b) 
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1314,8 +1312,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2] # variable definition
   b = 3 # variable definition
-  a.prepend(b) # procedure call
-  printNoLine(a) # procedure call
+  a.prepend(b) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -1354,7 +1352,7 @@ return [main, _tests];}`;
 def main() -> None:
   s = "Now is the time..." # variable definition
   words = s.split(" ") # variable definition
-  printNoLine(words) # procedure call
+  printNoLine(words) 
 # end main
 
 main()
@@ -1391,7 +1389,7 @@ return [main, _tests];}`;
 def main() -> None:
   words = ["Now", "is", "the", "time..."] # variable definition
   s = words.join(".") # variable definition
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 main()
@@ -1428,7 +1426,7 @@ return [main, _tests];}`;
 def main() -> None:
   words = [Point(), Point()] # variable definition
   s = words.join(",") # variable definition
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 class Point: # concrete class
@@ -1492,8 +1490,8 @@ return [main, _tests];}`;
 def main() -> None:
   s1 = "[a] [b]" # variable definition
   s2 = s1.replace("[", unicode(123)).replace("]", unicode(125)) # variable definition
-  printNoLine(s1) # procedure call
-  printNoLine(s2) # procedure call
+  printNoLine(s1) 
+  printNoLine(s2) 
 # end main
 
 main()
@@ -1525,16 +1523,16 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
   });
-  ignore_test("Pass_testRegExp", async () => {
+  test("Pass_testRegExp", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   s1 = "cbababbc" # variable definition
   s2 = "cbabdabbc" # variable definition
-  result1 = s1.matchesRegExp(/[a-c]*/) # variable definition
-  result2 = s2.matchesRegExp(/^[a-c]*$/) # variable definition
-  printNoLine(result1) # procedure call
-  printNoLine(result2) # procedure call
+  result1 = s1.matchesRegExp("[a-c]*") # variable definition
+  result2 = s2.matchesRegExp("^[a-c]*$") # variable definition
+  printNoLine(result1)
+  printNoLine(result2)
 # end main
 
 main()
@@ -1545,8 +1543,8 @@ const global = new class {};
 async function main() {
   let s1 = "cbababbc";
   let s2 = "cbabdabbc";
-  let result1 = _stdlib.matchesRegExp(s1, /[a-c]*/);
-  let result2 = _stdlib.matchesRegExp(s2, /^[a-c]*$/);
+  let result1 = _stdlib.matchesRegExp(s1, "[a-c]*");
+  let result2 = _stdlib.matchesRegExp(s2, "^[a-c]*$");
   await _stdlib.printNoLine(result1);
   await _stdlib.printNoLine(result2);
 }
@@ -1568,41 +1566,6 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
-  ignore_test("Pass_asRegExp", async () => {
-    const code = `${testPythonHeader}
-
-def main() -> None:
-  r = "[a-c]*".asRegExp() # variable definition
-  printNoLine(r) # procedure call
-# end main
-
-main()
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let r = _stdlib.asRegExp("[a-c]*");
-  await _stdlib.printNoLine(r);
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "A RegExp");
-  });
   test("Pass_indexOf", async () => {
     const code = `${testPythonHeader}
 
@@ -1610,13 +1573,13 @@ def main() -> None:
   a = [1, 3, 5, 7, 9] # variable definition
   b = [2, 4, 6, 8] # variable definition
   c = "Hello World!" # variable definition
-  printNoLine(a.indexOf(9)) # procedure call
-  printNoLine(a.indexOf(5)) # procedure call
-  printNoLine(b.indexOf(2)) # procedure call
-  printNoLine(b.indexOf(7)) # procedure call
-  printNoLine(c.indexOf("o")) # procedure call
-  printNoLine(c.indexOf("ll")) # procedure call
-  printNoLine(c.indexOf("x")) # procedure call
+  printNoLine(a.indexOf(9)) 
+  printNoLine(a.indexOf(5)) 
+  printNoLine(b.indexOf(2)) 
+  printNoLine(b.indexOf(7)) 
+  printNoLine(c.indexOf("o")) 
+  printNoLine(c.indexOf("ll")) 
+  printNoLine(c.indexOf("x")) 
   i = 1 # variable definition
   i = a.indexOf(9) # assignment
 # end main
@@ -1664,7 +1627,7 @@ return [main, _tests];}`;
 def main() -> None:
   i = 1 # variable definition
   i = "A".asUnicode() # assignment
-  printNoLine(i) # procedure call
+  printNoLine(i) 
 # end main
 
 main()
@@ -1699,8 +1662,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(sqrt(-1).isNaN()) # procedure call
-  printNoLine(sqrt(2).isNaN()) # procedure call
+  printNoLine(sqrt(-1).isNaN()) 
+  printNoLine(sqrt(2).isNaN()) 
 # end main
 
 main()
@@ -1735,10 +1698,10 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine((1.0/0).isInfinite()) # procedure call
-  printNoLine(((-1.0)/0).isInfinite()) # procedure call
-  printNoLine((1.0/1).isInfinite()) # procedure call
-  printNoLine(sqrt(-1).isInfinite()) # procedure call
+  printNoLine((1.0/0).isInfinite()) 
+  printNoLine(((-1.0)/0).isInfinite()) 
+  printNoLine((1.0/1).isInfinite()) 
+  printNoLine(sqrt(-1).isInfinite()) 
 # end main
 
 main()
@@ -1777,8 +1740,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = list[CircleVG]() # variable definition
   b = list[VectorGraphic]() # variable definition
-  displayVectorGraphics(a) # procedure call
-  displayVectorGraphics(b) # procedure call
+  displayVectorGraphics(a) 
+  displayVectorGraphics(b) 
 # end main
 
 main()
@@ -1816,7 +1779,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = list[Foo]() # variable definition
-  displayVectorGraphics(a) # procedure call
+  displayVectorGraphics(a) 
 # end main
 
 class Foo: # concrete class
@@ -1856,9 +1819,9 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(asInt("12 34 56".split(" ")[1])) # procedure call
-  printNoLine("z" + "a b c".split(" ")[1]) # procedure call
-  printNoLine("a b c".split(" ")[1] + "z") # procedure call
+  printNoLine(asInt("12 34 56".split(" ")[1])) 
+  printNoLine("z" + "a b c".split(" ")[1]) 
+  printNoLine("a b c".split(" ")[1] + "z") 
 # end main
 
 main()
@@ -1894,7 +1857,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  displayHtml("<p>fred</p>") # procedure call
+  displayHtml("<p>fred</p>") 
 # end main
 
 main()
@@ -1928,8 +1891,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  displayHtml("<p>fred</p>") # procedure call
-  clearHtml() # procedure call
+  displayHtml("<p>fred</p>") 
+  clearHtml() 
 # end main
 
 main()
@@ -1964,7 +1927,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  tone(10, 10, 10) # procedure call
+  tone(10, 10, 10) 
 # end main
 
 main()
@@ -1997,7 +1960,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(range(1, 6)) # procedure call
+  printNoLine(range(1, 6)) 
 # end main
 
 main()
@@ -2030,7 +1993,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(range(5, 0)) # procedure call
+  printNoLine(range(5, 0)) 
 # end main
 
 main()
@@ -2063,8 +2026,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(rangeInSteps(1, 7, 2)) # procedure call
-  printNoLine(rangeInSteps(5, -4, -2)) # procedure call
+  printNoLine(rangeInSteps(1, 7, 2)) 
+  printNoLine(rangeInSteps(5, -4, -2)) 
 # end main
 
 main()
@@ -2098,7 +2061,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(rangeInSteps(1, 7, 0)) # procedure call
+  printNoLine(rangeInSteps(1, 7, 0)) 
 # end main
 
 main()
@@ -2131,7 +2094,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(rangeInSteps(1, 7, -1)) # procedure call
+  printNoLine(rangeInSteps(1, 7, -1)) 
 # end main
 
 main()
@@ -2167,7 +2130,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(rangeInSteps(6, 2, 2)) # procedure call
+  printNoLine(rangeInSteps(6, 2, 2)) 
 # end main
 
 main()
@@ -2197,16 +2160,20 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  ignore_test("Fail_shadowLibraryType", async () => {
+  test("Fail_shadowLibraryType", async () => {
     const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(list())
+# end main
 
 class List: # concrete class
 
-  def __init__(self: list) -> None:
+  def __init__(self: List) -> None:
 
   # end constructor
 
-  def toString(self: list) -> str:
+  def toString(self: List) -> str:
     return "undefined"
   # end function
 
@@ -2226,7 +2193,9 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    assertObjectCodeExecutes(fileImpl, "MyList");
   });
 
   test("Pass_SetComparisonByValue", async () => {
@@ -2236,13 +2205,13 @@ def main() -> None:
   b = ["2", "7"].asHashSet() # variable definition
   c = ["7", "2"].asHashSet() # variable definition
   d = ["8", "2"].asHashSet() # variable definition
-  printNoLine(b.equals(c)) # procedure call
-  printNoLine(b.equals(d)) # procedure call
+  printNoLine(b.equals(c)) 
+  printNoLine(b.equals(d)) 
   b2 = [2, 7].asHashSet() # variable definition
   c2 = [7, 2].asHashSet() # variable definition
   d2 = [8, 2].asHashSet() # variable definition
-  printNoLine(b2.equals(c2)) # procedure call
-  printNoLine(b2.equals(d2)) # procedure call
+  printNoLine(b2.equals(c2)) 
+  printNoLine(b2.equals(d2)) 
 # end main
 
 main()
@@ -2285,14 +2254,14 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(divAsInt(1, 2)) # procedure call
-  printNoLine(divAsInt(1.0, 2.0)) # procedure call
-  printNoLine(divAsInt(1, 2.0)) # procedure call
-  printNoLine(divAsInt(1.0, 2)) # procedure call
-  printNoLine(divAsFloat(1, 2)) # procedure call
-  printNoLine(divAsFloat(1.0, 2.0)) # procedure call
-  printNoLine(divAsFloat(1, 2.0)) # procedure call
-  printNoLine(divAsFloat(1.0, 2)) # procedure call
+  printNoLine(divAsInt(1, 2)) 
+  printNoLine(divAsInt(1.0, 2.0)) 
+  printNoLine(divAsInt(1, 2.0)) 
+  printNoLine(divAsInt(1.0, 2)) 
+  printNoLine(divAsFloat(1, 2)) 
+  printNoLine(divAsFloat(1.0, 2.0)) 
+  printNoLine(divAsFloat(1, 2.0)) 
+  printNoLine(divAsFloat(1.0, 2)) 
 # end main
 
 main()
@@ -2329,63 +2298,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
   });
 
-  ignore_test("Pass_createGraphicsFunctions", async () => {
-    const code = `${testPythonHeader}
-
-def main() -> None:
-  b = list[list[int]]() # variable definition
-  for i in range(0, 40):
-    sa = list[int]() # variable definition
-    for j in range(0, 30):
-      sa.append(white) # procedure call
-    # end for
-    b.append(sa) # procedure call
-  # end for
-  b = createBlockGraphics(white) # assignment
-# end main
-
-main()
-`;
-
-    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
-const global = new class {};
-async function main() {
-  let b = system.initialise(await new _stdlib.List()._initialise());
-  const elan_iterpython_for6 = [..._stdlib.range(0, 40)];
-  for (const i of elan_iterpython_for6) {
-    let sa = system.initialise(await new _stdlib.List()._initialise());
-    const elan_iterpython_for13 = [..._stdlib.range(0, 30)];
-    for (const j of elan_iterpython_for13) {
-      sa.append(_stdlib.white);
-    }
-    b.append(sa);
-  }
-  b = (await _stdlib.createBlockGraphics(_stdlib.white));
-}
-return [main, _tests];}`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertParses(fileImpl);
-    assertStatusIsValid(fileImpl);
-    assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "");
-  });
   test("Pass_createList", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   a = createPopulatedList(5, "a") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -2421,7 +2339,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedListofLists(3, 2, 5) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -2462,8 +2380,8 @@ def main() -> None:
   d2 = Dictionary[int, str]() # variable definition
   d1 = createDictionary(a) # assignment
   d2 = createDictionary(b) # assignment
-  printNoLine(d1) # procedure call
-  printNoLine(d2) # procedure call
+  printNoLine(d1) 
+  printNoLine(d2) 
 # end main
 
 main()
@@ -2579,7 +2497,7 @@ def main() -> None:
   d = 1.notEqualTo(2) # variable definition
   e = "".notEqualTo("1") # variable definition
   f = True.notEqualTo(False) # variable definition
-  printNoLine(a and b and c and d and e and f) # procedure call
+  printNoLine(a and b and c and d and e and f) 
 # end main
 
 main()

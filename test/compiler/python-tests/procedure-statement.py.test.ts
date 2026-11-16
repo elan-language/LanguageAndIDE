@@ -21,13 +21,13 @@ suite("Python Procedure Statement", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1) # procedure call
-  foo() # procedure call
-  printNoLine(3) # procedure call
+  printNoLine(1) 
+  foo() 
+  printNoLine(3) 
 # end main
 
 def foo() -> None: # procedure
-  printNoLine(2) # procedure call
+  printNoLine(2) 
 # end procedure
 
 main()
@@ -70,12 +70,12 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2] # variable definition
   b = [3, 4] # variable definition
-  foo(a, b) # procedure call
+  foo(a, b) 
 # end main
 
 def foo(x: list[int], y: list[int]) -> None: # procedure
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
+  printNoLine(x) 
+  printNoLine(y) 
 # end procedure
 
 main()
@@ -117,8 +117,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  sleep_ms(1) # procedure call
-  printNoLine(1) # procedure call
+  sleep_ms(1) 
+  printNoLine(1) 
 # end main
 
 main()
@@ -155,12 +155,12 @@ return [main, _tests];}`;
 def main() -> None:
   a = 2 # variable definition
   b = "hello" # variable definition
-  foo(a, b) # procedure call
+  foo(a, b) 
 # end main
 
 def foo(a: float, b: str) -> None: # procedure
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end procedure
 
 main()
@@ -203,8 +203,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [2, 3] # variable definition
-  changeFirst(a) # procedure call
-  printNoLine(a) # procedure call
+  changeFirst(a) 
+  printNoLine(a) 
 # end main
 
 def changeFirst(a: list[int]) -> None: # procedure
@@ -250,12 +250,12 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 1 # variable definition
-  foo(a + 1, "hello") # procedure call
+  foo(a + 1, "hello") 
 # end main
 
 def foo(a: int, b: str) -> None: # procedure
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end procedure
 
 main()
@@ -296,17 +296,17 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
-  printNoLine(3) # procedure call
+  foo() 
+  printNoLine(3) 
 # end main
 
 def foo() -> None: # procedure
-  printNoLine(1) # procedure call
-  bar() # procedure call
+  printNoLine(1) 
+  bar() 
 # end procedure
 
 def bar() -> None: # procedure
-  printNoLine(2) # procedure call
+  printNoLine(2) 
 # end procedure
 
 main()
@@ -352,12 +352,12 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  square(3) # procedure call
-  square(5) # procedure call
+  square(3) 
+  square(5) 
 # end main
 
 def square(x: int) -> None: # procedure
-  printNoLine(x*x) # procedure call
+  printNoLine(x*x) 
 # end procedure
 
 main()
@@ -397,14 +397,14 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo(3) # procedure call
+  foo(3) 
 # end main
 
 def foo(a: int) -> None: # procedure
   if a > 0:
-    printNoLine(a) # procedure call
+    printNoLine(a) 
     b = a - 1 # variable definition
-    foo(b) # procedure call
+    foo(b) 
   # end if
 # end procedure
 
@@ -449,7 +449,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.length() # procedure call
+  f.length() 
 # end main
 
 class Foo: # concrete class
@@ -462,7 +462,7 @@ class Foo: # concrete class
 
   def length(self: Foo) -> None:
     p1 = self.p1 # variable definition
-    p1.length(2) # procedure call
+    p1.length(2) 
   # end procedure
 
   def toString(self: Foo) -> str:
@@ -480,7 +480,7 @@ class Bar: # concrete class
   p1: float
 
   def length(self: Bar, plus: float) -> None:
-    printNoLine(self.p1 + plus) # procedure call
+    printNoLine(self.p1 + plus) 
   # end procedure
 
   def toString(self: Bar) -> str:
@@ -570,14 +570,14 @@ return [main, _tests];}`;
 def main() -> None:
   a = AsRef[int](2) # variable definition
   b = AsRef[str]("hello") # variable definition
-  foo(a, b) # procedure call
-  printNoLine(a.value()) # procedure call
-  printNoLine(b.value()) # procedure call
+  foo(a, b) 
+  printNoLine(a.value()) 
+  printNoLine(b.value()) 
 # end main
 
 def foo(x: AsRef[float], y: AsRef[str]) -> None: # procedure
-  x.put(3) # procedure call
-  y.put("goodbye") # procedure call
+  x.put(3) 
+  y.put("goodbye") 
 # end procedure
 
 main()
@@ -623,15 +623,15 @@ return [main, _tests];}`;
 def main() -> None:
   a = AsRef[float](2) # variable definition
   b = AsRef[float](3) # variable definition
-  foo(a, b) # procedure call
-  printNoLine(a.value()) # procedure call
-  printNoLine(b.value()) # procedure call
+  foo(a, b) 
+  printNoLine(a.value()) 
+  printNoLine(b.value()) 
 # end main
 
 def foo(x: AsRef[float], y: AsRef[float]) -> None: # procedure
   c = x.value() # variable definition
-  x.put(y.value()) # procedure call
-  y.put(c) # procedure call
+  x.put(y.value()) 
+  y.put(c) 
 # end procedure
 
 main()
@@ -678,19 +678,19 @@ return [main, _tests];}`;
 def main() -> None:
   a = AsRef[float](2) # variable definition
   b = AsRef[float](3) # variable definition
-  foo(a, b) # procedure call
-  printNoLine(a.value()) # procedure call
-  printNoLine(b.value()) # procedure call
+  foo(a, b) 
+  printNoLine(a.value()) 
+  printNoLine(b.value()) 
 # end main
 
 def foo(a: AsRef[float], b: AsRef[float]) -> None: # procedure
-  bar(a, b) # procedure call
+  bar(a, b) 
 # end procedure
 
 def bar(a: AsRef[float], b: AsRef[float]) -> None: # procedure
   c = a.value() # variable definition
-  a.put(b.value()) # procedure call
-  b.put(c) # procedure call
+  a.put(b.value()) 
+  b.put(c) 
 # end procedure
 
 main()
@@ -742,13 +742,13 @@ return [main, _tests];}`;
 def main() -> None:
   a = AsRef[Foo](Foo()) # variable definition
   b = AsRef[int](0) # variable definition
-  foo(a, b) # procedure call
-  printNoLine(b.value()) # procedure call
+  foo(a, b) 
+  printNoLine(b.value()) 
 # end main
 
 def foo(f: AsRef[Foo], y: AsRef[int]) -> None: # procedure
   ff = f.value() # variable definition
-  ff.bar(y) # procedure call
+  ff.bar(y) 
 # end procedure
 
 class Foo: # concrete class
@@ -762,7 +762,7 @@ class Foo: # concrete class
   # end function
 
   def bar(self: Foo, z: AsRef[int]) -> None:
-    z.put(1) # procedure call
+    z.put(1) 
   # end procedure
 
 # end class
@@ -827,12 +827,12 @@ return [main, _tests];}`;
 def main() -> None:
   a = AsRef[Foo](Foo()) # variable definition
   b = AsRef[int](100) # variable definition
-  foo(a, b) # procedure call
-  printNoLine(b.value()) # procedure call
+  foo(a, b) 
+  printNoLine(b.value()) 
 # end main
 
 def foo(f: AsRef[Foo], y: AsRef[int]) -> None: # procedure
-  y.put(f.value().ff + y.value()) # procedure call
+  y.put(f.value().ff + y.value()) 
 # end procedure
 
 class Foo: # concrete class
@@ -905,14 +905,14 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = AsRef[int](1) # variable definition
-  addOne(x) # procedure call
-  printNoLine(x.value()) # procedure call
-  addOne(x) # procedure call
-  printNoLine(x.value()) # procedure call
+  addOne(x) 
+  printNoLine(x.value()) 
+  addOne(x) 
+  printNoLine(x.value()) 
 # end main
 
 def addOne(n: AsRef[int]) -> None: # procedure
-  n.put(n.value() + 1) # procedure call
+  n.put(n.value() + 1) 
 # end procedure
 
 main()
@@ -956,11 +956,11 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = AsRef[int](1) # variable definition
-  printParameter(x) # procedure call
+  printParameter(x) 
 # end main
 
 def printParameter(n: AsRef[int]) -> None: # procedure
-  printNoLine(n.value()) # procedure call
+  printNoLine(n.value()) 
 # end procedure
 
 main()
@@ -1000,7 +1000,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  bar() # procedure call
+  bar() 
 # end main
 
 main()
@@ -1048,13 +1048,13 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1) # procedure call
-  foo() # procedure call
-  printNoLine(3) # procedure call
+  printNoLine(1) 
+  foo() 
+  printNoLine(3) 
 # end main
 
 def foo() -> None: # procedure
-  main() # procedure call
+  main() 
 # end procedure
 
 main()
@@ -1078,13 +1078,13 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1) # procedure call
-  foo(3) # procedure call
-  printNoLine(3) # procedure call
+  printNoLine(1) 
+  foo(3) 
+  printNoLine(3) 
 # end main
 
 def foo() -> None: # procedure
-  printNoLine(2) # procedure call
+  printNoLine(2) 
 # end procedure
 
 main()
@@ -1112,12 +1112,12 @@ main()
 
 def main() -> None:
   a = 1 # variable definition
-  foo(a + 1) # procedure call
+  foo(a + 1) 
 # end main
 
 def foo(a: int, b: str) -> None: # procedure
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end procedure
 
 main()
@@ -1145,8 +1145,8 @@ main()
 
 def main() -> None:
   a = [1] # variable definition
-  a.append() # procedure call
-  a.append(1, 2) # procedure call
+  a.append() 
+  a.append(1, 2) 
 # end main
 
 main()
@@ -1174,12 +1174,12 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo(1, 2) # procedure call
+  foo(1, 2) 
 # end main
 
 def foo(a: int, b: str) -> None: # procedure
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end procedure
 
 main()
@@ -1206,11 +1206,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo(3) # procedure call
+  foo(3) 
 # end main
 
 def foo(a: int) -> None: # procedure
-  foo(a) # procedure call
+  foo(a) 
 # end procedure
 
 main()
@@ -1236,7 +1236,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(""Hello World!"") # procedure call
+  printNoLine(""Hello World!"") 
 # end main
 
 main()
@@ -1264,8 +1264,8 @@ def f(p: float) -> None: # procedure
 # end procedure
 
 def main() -> None:
-  f(1, 2) # procedure call
-  f() # procedure call
+  f(1, 2) 
+  f() 
 # end main
 
 main()
@@ -1297,8 +1297,8 @@ def f(p: int) -> None: # procedure
 # end procedure
 
 def main() -> None:
-  f(True) # procedure call
-  f(1.0) # procedure call
+  f(True) 
+  f(1.0) 
 # end main
 
 main()
@@ -1327,8 +1327,8 @@ main()
 
 def main() -> None:
   a = [2, 3] # variable definition
-  changeAll(a) # procedure call
-  printNoLine(a) # procedure call
+  changeAll(a) 
+  printNoLine(a) 
 # end main
 
 def changeAll(a: list[int]) -> None: # procedure
@@ -1361,8 +1361,8 @@ main()
 
 def main() -> None:
   a = [2, 3] # variable definition
-  changeAll(a) # procedure call
-  printNoLine(a) # procedure call
+  changeAll(a) 
+  printNoLine(a) 
 # end main
 
 def changeAll(a: list[int]) -> None: # procedure
@@ -1395,8 +1395,8 @@ main()
 
 def main() -> None:
   a = 4 # variable definition
-  changeValue(a) # procedure call
-  printNoLine(a) # procedure call
+  changeValue(a) 
+  printNoLine(a) 
 # end main
 
 def changeValue(a: int) -> None: # procedure
@@ -1654,6 +1654,7 @@ def foo(a: int, b: str, a: int) -> None: # procedure
     ]);
   });
 
+  // triage: dependent upon sorting out value/reference equality
   ignore_test("Fail_OperatorsAndProcedures", async () => {
     const code = `${testPythonHeader}
 
@@ -1727,7 +1728,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  f.bar() # procedure call
+  f.bar() 
 # end main
 
 class Foo: # concrete class
@@ -1771,7 +1772,7 @@ main()
 
 def main() -> None:
   s = "hello" # variable definition
-  s.reverse() # procedure call
+  s.reverse() 
 # end main
 
 main()
@@ -1799,7 +1800,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  s.reverse() # procedure call
+  s.reverse() 
 # end main
 
 main()

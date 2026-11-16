@@ -20,7 +20,7 @@ suite("Python Function", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(foo(3, 4)) # procedure call
+  printNoLine(foo(3, 4)) 
 # end main
 
 def foo(a: float, b: float) -> float: # function
@@ -64,7 +64,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = foo(1, 2)[0] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 def foo(a: int, b: int) -> list[int]: # function
@@ -109,7 +109,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = foo(1, 2).subList(0, 1) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 def foo(a: int, b: int) -> list[int]: # function
@@ -153,7 +153,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(foo(3, 4)) # procedure call
+  printNoLine(foo(3, 4)) 
 # end main
 
 def foo(a: int, b: int) -> list[int]: # function
@@ -196,7 +196,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(factorial(5)) # procedure call
+  printNoLine(factorial(5)) 
 # end main
 
 def factorial(a: int) -> int: # function
@@ -252,7 +252,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   b = Bar() # variable definition
-  printNoLine(foo(b)) # procedure call
+  printNoLine(foo(b)) 
 # end main
 
 def foo(bar: Bar) -> str: # function
@@ -750,7 +750,7 @@ main()
 
 def main() -> None:
   result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -783,7 +783,7 @@ main()
 
 def main() -> None:
   result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -872,7 +872,7 @@ main()
 
 def main() -> None:
   result = foo(3, 4, 5) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -904,7 +904,7 @@ main()
 
 def main() -> None:
   result = foo(3) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -936,7 +936,7 @@ main()
 
 def main() -> None:
   result = foo(3, "b") # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -1484,7 +1484,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(a.b) # procedure call
+  printNoLine(a.b) 
 # end main
 
 def a() -> int: # function
@@ -1663,7 +1663,7 @@ main()
 
 def main() -> None:
   x = 3 # variable definition
-  printNoLine(x.bitShiftL(x, 2)) # procedure call
+  printNoLine(x.bitShiftL(x, 2)) 
 # end main
 
 main()
@@ -1692,7 +1692,7 @@ main()
 
 def main() -> None:
   x = 3 # variable definition
-  printNoLine(x.foo(x)) # procedure call
+  printNoLine(x.foo(x)) 
 # end main
 
 def foo(x: int) -> int: # function
@@ -1725,7 +1725,7 @@ main()
 
 def main() -> None:
   b = list() # variable definition
-  printNoLine(foo(b)) # procedure call
+  printNoLine(foo(b)) 
 # end main
 
 def foo(bar as library.List<of int>) -> : # function

@@ -21,7 +21,7 @@ suite("Python Variables", () => {
 
 def main() -> None:
   a = 3 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -58,7 +58,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   b = a # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -95,7 +95,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 3 + 4 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -132,7 +132,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   a = 4 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -170,7 +170,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3.1 # variable definition
   a = 4 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -215,15 +215,15 @@ def main() -> None:
   g = 3 != 4 # variable definition
   h = not False # variable definition
   k = 4.0/3 # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
-  printNoLine(e) # procedure call
-  printNoLine(f) # procedure call
-  printNoLine(g) # procedure call
-  printNoLine(h) # procedure call
-  printNoLine(k) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(c) 
+  printNoLine(d) 
+  printNoLine(e) 
+  printNoLine(f) 
+  printNoLine(g) 
+  printNoLine(h) 
+  printNoLine(k) 
 # end main
 
 main()
@@ -274,7 +274,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = Fruit.apple # variable definition
-  printNoLine(enumToString(a)) # procedure call
+  printNoLine(enumToString(a)) 
 # end main
 
 class Fruit(Enum):
@@ -322,7 +322,7 @@ def main() -> None:
   a = [1, 2] # variable definition
   b = a.map(lambda x: int: x) # variable definition
   b = [1, 2] # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -362,7 +362,7 @@ return [main, _tests];}`;
   //   a = [1, 2] # variable definition
   //   b = a.map(lambda x: int: x) # variable definition
   //   b = [1, 2] # assignment
-  //   printNoLine(b) # procedure call
+  //   printNoLine(b)
   // # end main
 
   // main()
@@ -864,7 +864,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ((((3)))) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

@@ -4,12 +4,10 @@ import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -21,7 +19,7 @@ suite("Python Shadowing", () => {
 
 def main() -> None:
   pi = 4 # variable definition
-  printNoLine(pi) # procedure call
+  printNoLine(pi) 
 # end main
 
 main()
@@ -59,7 +57,7 @@ f = 1 # constant
 
 def main() -> None:
   f = 2 # variable definition
-  printNoLine(f) # procedure call
+  printNoLine(f) 
 # end main
 
 main()
@@ -98,8 +96,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.sin(1)) # procedure call
-  printNoLine(sin(1)) # procedure call
+  printNoLine(f.sin(1)) 
+  printNoLine(sin(1)) 
 # end main
 
 def sin(x: float) -> float: # function
@@ -179,12 +177,12 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.sleep_ms(1) # procedure call
-  sleep_ms(1) # procedure call
+  f.sleep_ms(1) 
+  sleep_ms(1) 
 # end main
 
 def sleep_ms(x: float) -> None: # procedure
-  printNoLine(111) # procedure call
+  printNoLine(111) 
 # end procedure
 
 class Foo: # concrete class
@@ -198,7 +196,7 @@ class Foo: # concrete class
   # end function
 
   def sleep_ms(self: Foo, x: float) -> None:
-    printNoLine(222) # procedure call
+    printNoLine(222) 
   # end procedure
 
 # end class
@@ -260,8 +258,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   sin = 2 # variable definition
-  printNoLine(sin) # procedure call
-  printNoLine(sin(1)) # procedure call
+  printNoLine(sin) 
+  printNoLine(sin(1)) 
 # end main
 
 def sin(x: float) -> float: # function
@@ -294,7 +292,7 @@ main()
 
 def main() -> None:
   add2 = add2(1) # variable definition
-  printNoLine(add2) # procedure call
+  printNoLine(add2) 
 # end main
 
 def add2(x: float) -> float: # function
@@ -341,7 +339,7 @@ a = 4 # constant
 
 def main() -> None:
   a = 3 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -379,7 +377,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(foo()) # procedure call
+  printNoLine(foo()) 
 # end main
 
 def foo() -> int: # function
@@ -433,11 +431,11 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
-  printNoLine(1) # procedure call
+  printNoLine(1) 
 # end procedure
 
 def bar() -> int: # function
@@ -487,7 +485,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo(1) # procedure call
+  foo(1) 
 # end main
 
 def foo(a: int) -> None: # procedure
@@ -550,7 +548,7 @@ main()
 x = 1 # constant
 
 def main() -> None:
-  printNoLine(foo(1)) # procedure call
+  printNoLine(foo(1)) 
 # end main
 
 def foo(x: int) -> int: # function
@@ -592,36 +590,12 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  ignore_test("Fail_global", async () => {
-    const code = `${testPythonHeader}
-
-x = 1 # constant
-
-def foo(x: int) -> int: # function
-  return x
-# end function
-`;
-
-    const fileImpl = new FileImpl(
-      testHash,
-      new Paradigm(""),
-      "",
-      transforms(),
-      new StdLib(new StubInputOutput()),
-      false,
-      true,
-    );
-    await fileImpl.parseFrom(new CodeSourceFromString(code));
-
-    assertDoesNotParse(fileImpl);
-  });
-
   test("Fail_ShadowParameter1", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function
@@ -654,7 +628,7 @@ main()
 
 def main() -> None:
   result = foo(3, 4) # variable definition
-  printNoLine(result) # procedure call
+  printNoLine(result) 
 # end main
 
 def foo(a: int, b: int) -> int: # function

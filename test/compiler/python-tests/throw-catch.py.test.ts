@@ -127,7 +127,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
@@ -171,10 +171,10 @@ return [main, _tests];}`;
 
 def main() -> None:
   try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
+    foo() 
+    printNoLine("not caught") 
   except ElanRuntimeError as e: # catch
-    printNoLine("Foo") # procedure call
+    printNoLine("Foo") 
   # end try
 # end main
 
@@ -229,10 +229,10 @@ return [main, _tests];}`;
 
 def main() -> None:
   try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
+    foo() 
+    printNoLine("not caught") 
   except CustomError as e: # catch
-    printNoLine(e) # procedure call
+    printNoLine(e) 
   # end try
 # end main
 
@@ -290,9 +290,9 @@ def main() -> None:
     x = list[Foo]() # variable definition
     y = x[1] # variable definition
     z = y.p1 # variable definition
-    printNoLine("not caught") # procedure call
+    printNoLine("not caught") 
   except ElanRuntimeError as e: # catch
-    printNoLine(e) # procedure call
+    printNoLine(e) 
   # end try
 # end main
 
@@ -370,11 +370,11 @@ return [main, _tests];}`;
 
 def main() -> None:
   try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
+    foo() 
+    printNoLine("not caught") 
   except ElanRuntimeError as e: # catch
     s = e.toString() # variable definition
-    printNoLine(s) # procedure call
+    printNoLine(s) 
   # end try
 # end main
 
@@ -434,7 +434,7 @@ def main() -> None:
     raise ElanRuntimeError("fail")
   except ElanRuntimeError as e: # catch
     a = "fail" # variable definition
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end try
 # end main
 
@@ -493,7 +493,7 @@ def main() -> None:
   try:
     raise ElanRuntimeError("fail")
   except ElanRuntimeError as e: # catch
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end try
 # end main
 
@@ -659,8 +659,8 @@ main()
 
 def main() -> None:
   try:
-    foo() # procedure call
-    printNoLine("not caught") # procedure call
+    foo() 
+    printNoLine("not caught") 
   except CustomError: # catch
   # end try
 # end main
@@ -715,7 +715,7 @@ def main() -> None:
     a = 1 # variable definition
     raise ElanRuntimeError("fail")
   except ElanRuntimeError as e: # catch
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end try
 # end main
 
@@ -750,7 +750,7 @@ def main() -> None:
     raise ElanRuntimeError("fail")
   except ElanRuntimeError as e: # catch
     a = e # variable definition
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end try
 # end main
 
@@ -786,7 +786,7 @@ def main() -> None:
   try:
     raise FooException("fail")
   except ElanRuntimeError as e: # catch
-    printNoLine("") # procedure call
+    printNoLine("") 
   # end try
 # end main
 
@@ -830,7 +830,7 @@ def main() -> None:
   try:
     raise CustomError("fail")
   except ElanRuntimeError as e: # catch
-    printNoLine("caught") # procedure call
+    printNoLine("caught") 
   # end try
 # end main
 
@@ -860,7 +860,7 @@ def main() -> None:
   try:
     raise CustomError("fail")
   except FooException as e: # catch
-    printNoLine("") # procedure call
+    printNoLine("") 
   # end try
 # end main
 

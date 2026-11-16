@@ -94,7 +94,7 @@ def main() -> None:
 # end main
 
 def main() -> None:
-  pp(3) # procedure call
+  pp(3) 
 # end main
 
 def pp(e: int) -> None: # procedure
@@ -132,7 +132,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  pp(3) # procedure call
+  pp(3) 
 # end main
 
 def main() -> None:
@@ -180,7 +180,7 @@ def main() -> None:
 
 def main() -> None:
   f = Foo() # variable definition
-  f.pp(3) # procedure call
+  f.pp(3) 
 # end main
 
 class Foo: # concrete class
@@ -234,7 +234,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  f.pp(3) # procedure call
+  f.pp(3) 
 # end main
 
 def main() -> None:
@@ -355,7 +355,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -388,7 +388,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 def main() -> None:
@@ -398,7 +398,7 @@ def main() -> None:
     z = 101 # variable definition
     n = n + x # assignment
   # end for
-  printNoLine(n) # procedure call
+  printNoLine(n) 
 # end main
 
 main()
@@ -435,7 +435,7 @@ def main() -> None:
     z = 101 # variable definition
     n = n + x # assignment
   # end for
-  printNoLine(n) # procedure call
+  printNoLine(n) 
 # end main
 
 def main() -> None:
@@ -449,7 +449,7 @@ def main() -> None:
     # end while
     x = x + 1 # assignment
   # end while
-  printNoLine(t) # procedure call
+  printNoLine(t) 
 # end main
 
 main()
@@ -489,7 +489,7 @@ def main() -> None:
     # end while
     x = x + 1 # assignment
   # end while
-  printNoLine(t) # procedure call
+  printNoLine(t) 
 # end main
 
 def main() -> None:
@@ -717,7 +717,7 @@ def main() -> None:
 
 def main() -> None:
   a = [ff(1), ff(2)] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 def ff(a: int) -> int: # function
@@ -748,12 +748,12 @@ main()
 
 def main() -> None:
   a = [ff(1), ff(2)] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Bar: # concrete class
@@ -820,7 +820,7 @@ main()
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Foo: # concrete class
@@ -845,7 +845,7 @@ class Foo: # concrete class
 
 def main() -> None:
   x = Fruit.apple # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Fruit(Enum):
@@ -900,7 +900,7 @@ class Fruit(Enum):
 
 def main() -> None:
   x = (1, "fred") # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()

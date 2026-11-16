@@ -20,9 +20,9 @@ suite("Python Associations and Defaults", () => {
 
 def main() -> None:
   g = Game() # variable definition
-  printNoLine(g.p2) # procedure call
-  printNoLine(g.p1) # procedure call
-  printNoLine(g.previousScores) # procedure call
+  printNoLine(g.p2) 
+  printNoLine(g.p1) 
+  printNoLine(g.previousScores) 
 # end main
 
 class Game: # concrete class
@@ -144,8 +144,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   g = Foo() # variable definition
-  printNoLine(g.p1) # procedure call
-  printNoLine(g.p2) # procedure call
+  printNoLine(g.p1) 
+  printNoLine(g.p2) 
 # end main
 
 class Foo: # concrete class
@@ -218,13 +218,13 @@ return [main, _tests];}`;
 
 def main() -> None:
   g = Game() # variable definition
-  printNoLine(g.i) # procedure call
-  printNoLine(g.f) # procedure call
-  printNoLine(g.b) # procedure call
-  printNoLine(g.s) # procedure call
-  printNoLine(g.ds) # procedure call
-  printNoLine(g.ai) # procedure call
-  printNoLine(g.t) # procedure call
+  printNoLine(g.i) 
+  printNoLine(g.f) 
+  printNoLine(g.b) 
+  printNoLine(g.s) 
+  printNoLine(g.ds) 
+  printNoLine(g.ai) 
+  printNoLine(g.t) 
 # end main
 
 class Game: # concrete class
@@ -327,13 +327,13 @@ return [main, _tests];}`;
 def main() -> None:
   p = Player() # variable definition
   g = p.g # variable definition
-  printNoLine(g.i) # procedure call
-  printNoLine(g.f) # procedure call
-  printNoLine(g.b) # procedure call
-  printNoLine(g.s) # procedure call
-  printNoLine(g.ds) # procedure call
-  printNoLine(g.ai) # procedure call
-  printNoLine(g.t) # procedure call
+  printNoLine(g.i) 
+  printNoLine(g.f) 
+  printNoLine(g.b) 
+  printNoLine(g.s) 
+  printNoLine(g.ds) 
+  printNoLine(g.ai) 
+  printNoLine(g.t) 
 # end main
 
 class Player: # concrete class
@@ -478,8 +478,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   g = Game() # variable definition
-  printNoLine(g.p1) # procedure call
-  printNoLine(g.previousGame) # procedure call
+  printNoLine(g.p1) 
+  printNoLine(g.previousGame) 
 # end main
 
 class Game: # concrete class
@@ -594,7 +594,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   g = Game() # variable definition
-  g.something() # procedure call
+  g.something() 
 # end main
 
 class Game: # concrete class
@@ -612,7 +612,7 @@ class Game: # concrete class
   def something(self: Game) -> None:
     a = 1 # variable definition
     a = self.p1[0] # assignment
-    printNoLine(a) # procedure call
+    printNoLine(a) 
   # end procedure
 
 # end class
@@ -672,7 +672,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   bar = Bar() # variable definition
-  bar.p() # procedure call
+  bar.p() 
 # end main
 
 class Foo: # concrete class
@@ -686,7 +686,7 @@ class Foo: # concrete class
   # end function
 
   def pp(self: Foo) -> None:
-    printNoLine(1) # procedure call
+    printNoLine(1) 
   # end procedure
 
 # end class
@@ -703,7 +703,7 @@ class Bar: # concrete class
 
   def p(self: Bar) -> None:
     p1 = self.p1 # variable definition
-    p1.pp() # procedure call
+    p1.pp() 
   # end procedure
 
   p1: Foo
@@ -1051,7 +1051,7 @@ main()
 
 def main() -> None:
   bar = Bar() # variable definition
-  bar.p() # procedure call
+  bar.p() 
 # end main
 
 class Foo: # concrete class
@@ -1065,7 +1065,7 @@ class Foo: # concrete class
   # end function
 
   def pp(self: Foo) -> None:
-    printNoLine(1) # procedure call
+    printNoLine(1) 
   # end procedure
 
 # end class
@@ -1081,7 +1081,7 @@ class Bar: # concrete class
   # end function
 
   def p(self: Bar) -> None:
-    p1.pp() # procedure call
+    p1.pp() 
   # end procedure
 
   p1: Foo
@@ -1113,7 +1113,7 @@ main()
 
 def main() -> None:
   bar = Bar() # variable definition
-  bar.p() # procedure call
+  bar.p() 
 # end main
 
 class Foo: # concrete class
@@ -1127,7 +1127,7 @@ class Foo: # concrete class
   # end function
 
   def pp(self: Foo) -> None:
-    printNoLine(1) # procedure call
+    printNoLine(1) 
   # end procedure
 
 # end class
@@ -1144,7 +1144,7 @@ class Bar: # concrete class
 
   def p(self: Bar) -> None:
     if self.p2:
-      p1.pp() # procedure call
+      p1.pp() 
     # end if
   # end procedure
 
@@ -1179,7 +1179,7 @@ main()
 
 def main() -> None:
   bar = Bar() # variable definition
-  bar.p() # procedure call
+  bar.p() 
 # end main
 
 class Foo: # concrete class
@@ -1193,7 +1193,7 @@ class Foo: # concrete class
   # end function
 
   def pp(self: Foo) -> None:
-    printNoLine(1) # procedure call
+    printNoLine(1) 
   # end procedure
 
 # end class

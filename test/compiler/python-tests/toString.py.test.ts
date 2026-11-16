@@ -18,7 +18,7 @@ suite("Python toString", () => {
 
 def main() -> None:
   f = 1 # variable definition
-  printNoLine(f.toString()) # procedure call
+  printNoLine(f.toString()) 
 # end main
 
 main()
@@ -115,7 +115,7 @@ def main() -> None:
   f = Foo() # variable definition
   p = f.p1 # variable definition
   s = p.toString() # variable definition
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 class Foo: # concrete class
@@ -193,8 +193,8 @@ def main() -> None:
   s1 = f.toString() # variable definition
   p = f.p1 # variable definition
   s2 = p.toString() # variable definition
-  printNoLine(s1) # procedure call
-  printNoLine(s2) # procedure call
+  printNoLine(s1) 
+  printNoLine(s2) 
 # end main
 
 class Foo: # concrete class
@@ -271,7 +271,7 @@ return [main, _tests];}`;
 def main() -> None:
   f = Foo() # variable definition
   s = f.toString() # variable definition
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 class Foo: # concrete class
@@ -344,7 +344,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f) # procedure call
+  printNoLine(f) 
 # end main
 
 class Foo: # concrete class
@@ -417,10 +417,10 @@ return [main, _tests];}`;
 def main() -> None:
   l = [1, 2, 3] # variable definition
   sl = l.toString() # variable definition
-  printNoLine(sl) # procedure call
+  printNoLine(sl) 
   a = [1, 2, 3] # variable definition
   sa = a.toString() # variable definition
-  printNoLine(sa) # procedure call
+  printNoLine(sa) 
 # end main
 
 main()

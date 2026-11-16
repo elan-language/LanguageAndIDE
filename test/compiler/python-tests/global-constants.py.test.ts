@@ -10,7 +10,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -23,7 +22,7 @@ suite("Python Global Constants", () => {
 a = 3 # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -62,7 +61,7 @@ return [main, _tests];}`;
 a = 0xFF # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -101,7 +100,7 @@ return [main, _tests];}`;
 a = 0b10101 # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -140,7 +139,7 @@ return [main, _tests];}`;
 a = 3.1 # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -179,7 +178,7 @@ return [main, _tests];}`;
 a = "hell0" # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -218,8 +217,8 @@ return [main, _tests];}`;
 a = "" # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
-  printNoLine(a.equals("")) # procedure call
+  printNoLine(a) 
+  printNoLine(a.equals("")) 
 # end main
 
 main()
@@ -259,7 +258,7 @@ return [main, _tests];}`;
 a = " " # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -298,7 +297,7 @@ return [main, _tests];}`;
 a = True # constant
 
 def main() -> None:
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -364,7 +363,7 @@ a = 3 # constant
 
 def main() -> None:
   a = 4 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -394,7 +393,7 @@ a = 3 # constant
 
 def main() -> None:
   pi = 4 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

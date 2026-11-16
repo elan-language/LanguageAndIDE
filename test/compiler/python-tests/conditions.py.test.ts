@@ -19,9 +19,9 @@ suite("Python Conditions", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 < 4) # procedure call
-  printNoLine(3 < 2) # procedure call
-  printNoLine(3 < 3) # procedure call
+  printNoLine(3 < 4) 
+  printNoLine(3 < 2) 
+  printNoLine(3 < 3) 
 # end main
 
 main()
@@ -57,9 +57,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 > 4) # procedure call
-  printNoLine(3 > 2) # procedure call
-  printNoLine(3 > 3) # procedure call
+  printNoLine(3 > 4) 
+  printNoLine(3 > 2) 
+  printNoLine(3 > 3) 
 # end main
 
 main()
@@ -95,9 +95,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 <= 4) # procedure call
-  printNoLine(3 <= 2) # procedure call
-  printNoLine(3 <= 3) # procedure call
+  printNoLine(3 <= 4) 
+  printNoLine(3 <= 2) 
+  printNoLine(3 <= 3) 
 # end main
 
 main()
@@ -133,9 +133,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 >= 4) # procedure call
-  printNoLine(3 >= 2) # procedure call
-  printNoLine(3 >= 3) # procedure call
+  printNoLine(3 >= 4) 
+  printNoLine(3 >= 2) 
+  printNoLine(3 >= 3) 
 # end main
 
 main()
@@ -171,9 +171,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 != 4) # procedure call
-  printNoLine(3 != 2) # procedure call
-  printNoLine(3 != 3) # procedure call
+  printNoLine(3 != 4) 
+  printNoLine(3 != 2) 
+  printNoLine(3 != 3) 
 # end main
 
 main()
@@ -209,9 +209,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 == 4) # procedure call
-  printNoLine(3 == 2) # procedure call
-  printNoLine(3 == 3) # procedure call
+  printNoLine(3 == 4) 
+  printNoLine(3 == 2) 
+  printNoLine(3 == 3) 
 # end main
 
 main()
@@ -247,16 +247,16 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 < 3.1) # procedure call
-  printNoLine(3 <= 3.1) # procedure call
-  printNoLine(3 > 3.1) # procedure call
-  printNoLine(3 >= 3.1) # procedure call
-  printNoLine(3 == 3.0) # procedure call
-  printNoLine(3 != 3.0) # procedure call
-  printNoLine(3.1 < 3) # procedure call
-  printNoLine(3.1 <= 3) # procedure call
-  printNoLine(3.1 > 3) # procedure call
-  printNoLine(3.1 >= 3) # procedure call
+  printNoLine(3 < 3.1) 
+  printNoLine(3 <= 3.1) 
+  printNoLine(3 > 3.1) 
+  printNoLine(3 >= 3.1) 
+  printNoLine(3 == 3.0) 
+  printNoLine(3 != 3.0) 
+  printNoLine(3.1 < 3) 
+  printNoLine(3.1 <= 3) 
+  printNoLine(3.1 > 3) 
+  printNoLine(3.1 >= 3) 
 # end main
 
 main()
@@ -299,9 +299,9 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine((5 + 3) > (4 + 2)) # procedure call
-  printNoLine((5 + 3) == (4 + 4)) # procedure call
-  printNoLine((5 + 3) > (4 + 6)) # procedure call
+  printNoLine((5 + 3) > (4 + 2)) 
+  printNoLine((5 + 3) == (4 + 4)) 
+  printNoLine((5 + 3) > (4 + 6)) 
 # end main
 
 main()
@@ -337,7 +337,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 not is 3) # procedure call
+  printNoLine(3 not is 3) 
 # end main
 
 main()
@@ -361,7 +361,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 not 3) # procedure call
+  printNoLine(3 not 3) 
 # end main
 
 main()
@@ -386,7 +386,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 != 3) # procedure call
+  printNoLine(3 != 3) 
 # end main
 
 main()
@@ -410,7 +410,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 =< 3) # procedure call
+  printNoLine(3 =< 3) 
 # end main
 
 main()
@@ -434,7 +434,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 > or = 3) # procedure call
+  printNoLine(3 > or = 3) 
 # end main
 
 main()
@@ -458,7 +458,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 = 4) # procedure call
+  printNoLine(3 = 4) 
 # end main
 
 main()
@@ -482,12 +482,12 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3.equals("3")) # procedure call
-  printNoLine(not 3.equals("3")) # procedure call
-  printNoLine(3 < "3") # procedure call
-  printNoLine(3 <= "3") # procedure call
-  printNoLine(3 > "3") # procedure call
-  printNoLine(3 >= "3") # procedure call
+  printNoLine(3.equals("3")) 
+  printNoLine(not 3.equals("3")) 
+  printNoLine(3 < "3") 
+  printNoLine(3 <= "3") 
+  printNoLine(3 > "3") 
+  printNoLine(3 >= "3") 
 # end main
 
 main()
@@ -519,7 +519,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 <> 3  ) # procedure call
+  printNoLine(3 <> 3  ) 
 # end main
 
 main()
@@ -543,7 +543,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 == 3) # procedure call
+  printNoLine(3 == 3) 
 # end main
 
 main()
@@ -567,7 +567,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(5 + 3 > 4 + 2) # procedure call
+  printNoLine(5 + 3 > 4 + 2) 
 # end main
 
 main()

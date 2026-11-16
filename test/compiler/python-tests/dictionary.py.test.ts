@@ -252,8 +252,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  printNoLine(a.hasKey("b")) # procedure call
-  printNoLine(a.hasKey("d")) # procedure call
+  printNoLine(a.hasKey("b")) 
+  printNoLine(a.hasKey("d")) 
 # end main
 
 main()
@@ -290,7 +290,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  printNoLine(a.values()) # procedure call
+  printNoLine(a.values()) 
 # end main
 
 main()
@@ -404,8 +404,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  a.removeAt("b") # procedure call
-  printNoLine(a) # procedure call
+  a.removeAt("b") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -442,8 +442,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":{"a":1}, "b":{"b":3, "z":10}} # variable definition
-  a["b"].removeAt("b") # procedure call
-  printNoLine(a) # procedure call
+  a["b"].removeAt("b") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -480,8 +480,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  a.removeAt("c") # procedure call
-  printNoLine(a) # procedure call
+  a.removeAt("c") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -518,12 +518,12 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = dict[str, int]() # variable definition
-  a.put("Foo", 1) # procedure call
-  a.put("Bar", 3) # procedure call
+  a.put("Foo", 1) 
+  a.put("Bar", 3) 
   k = a.keys() # variable definition
-  printNoLine(k.length()) # procedure call
-  printNoLine(a["Foo"]) # procedure call
-  printNoLine(a["Bar"]) # procedure call
+  printNoLine(k.length()) 
+  printNoLine(a["Foo"]) 
+  printNoLine(a["Bar"]) 
 # end main
 
 main()
@@ -566,7 +566,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = dict[str, dict[str, int]]() # variable definition
-  a.put("Foo", ["ff":1]) # procedure call
+  a.put("Foo", ["ff":1]) 
 # end main
 
 main()
@@ -615,12 +615,12 @@ class Fruit(Enum):
 
 def main() -> None:
   a = dict[Fruit, int]() # variable definition
-  a.put(Fruit.apple, 1) # procedure call
-  a.put(Fruit.orange, 3) # procedure call
+  a.put(Fruit.apple, 1) 
+  a.put(Fruit.orange, 3) 
   k = a.keys() # variable definition
-  printNoLine(k.length()) # procedure call
-  printNoLine(a[Fruit.apple]) # procedure call
-  printNoLine(a[Fruit.orange]) # procedure call
+  printNoLine(k.length()) 
+  printNoLine(a[Fruit.apple]) 
+  printNoLine(a[Fruit.orange]) 
 # end main
 
 main()
@@ -668,7 +668,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = {"a":2, "b":2} # variable definition
   a["a"] = 1 # assignment
-  print(a["a"]) # procedure call
+  print(a["a"]) 
 # end main
 
 main()
@@ -704,13 +704,13 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
   a = {"a":2,"b":2} # variable definition
   a["a"] = 1 # assignment
-  print(a["a"]) # procedure call
+  print(a["a"]) 
 # end procedure
 
 main()
@@ -751,13 +751,13 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
   a = {"a":{"c":2},"b":{"d":3}} # variable definition
   a["a"]["c"] = 1 # assignment
-  print(a["a"]["c"]) # procedure call
+  print(a["a"]["c"]) 
 # end procedure
 
 main()
@@ -798,13 +798,13 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
   a = {"a":{"c":{"e":""}},"b":{"d":{"f":""}}} # variable definition
   a["a"]["c"]["e"] = "1" # assignment
-  print(a["a"]["c"]["e"]) # procedure call
+  print(a["a"]["c"]["e"]) 
 # end procedure
 
 main()
@@ -845,13 +845,13 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
   a = {"a":{"c":2},"b":{"d":3}} # variable definition
   a["a"]["c"] = "" # assignment
-  print(a["a"]["c"]) # procedure call
+  print(a["a"]["c"]) 
 # end procedure
 
 main()
@@ -913,7 +913,7 @@ main()
 def main() -> None:
   a = {"a":2,"b":2} # variable definition
   a["a"] = "fred" # assignment
-  print(a["a"]) # procedure call
+  print(a["a"]) 
 # end main
 
 main()
@@ -941,7 +941,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "a":10} # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -967,7 +967,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3.1, "c":10} # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -995,7 +995,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, 10:10} # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1023,7 +1023,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  printNoLine(a["c"]) # procedure call
+  printNoLine(a["c"]) 
 # end main
 
 main()
@@ -1049,7 +1049,7 @@ main()
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  a.removeAt(10) # procedure call
+  a.removeAt(10) 
 # end main
 
 main()
@@ -1106,8 +1106,8 @@ def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
   b = a.withPut("b", 4) # variable definition
   c = b.withPut("d", 2) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(c) # procedure call
+  printNoLine(a) 
+  printNoLine(c) 
 # end main
 
 main()
@@ -1147,8 +1147,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
   b = a.withRemoveAt("b") # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1189,11 +1189,11 @@ def main() -> None:
   ds = dict[str, int]() # variable definition
   i42 = 42 # variable definition
   s42 = "42" # variable definition
-  di.put(i42, 99) # procedure call
-  ds.put(s42, 98) # procedure call
-  printNoLine(f"{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}") # procedure call
-  printNoLine(f"{di} {ds}") # procedure call
-  printNoLine(f"{di.keys()} {di.keys().contains(42)}") # procedure call
+  di.put(i42, 99) 
+  ds.put(s42, 98) 
+  printNoLine(f"{di.hasKey(i42)} {di[i42]} {ds.hasKey(s42)} {ds[s42]}") 
+  printNoLine(f"{di} {ds}") 
+  printNoLine(f"{di.keys()} {di.keys().contains(42)}") 
 # end main
 
 main()
@@ -1238,7 +1238,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = {"a":1, "b":3, "z":10} # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1301,7 +1301,7 @@ main()
 
 def main() -> None:
   a = dict() # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

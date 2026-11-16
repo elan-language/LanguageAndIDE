@@ -24,7 +24,7 @@ def main() -> None:
   for x in a:
     n = n + x # assignment
   # end for
-  printNoLine(n) # procedure call
+  printNoLine(n) 
 # end main
 
 main()
@@ -69,7 +69,7 @@ def main() -> None:
   for x in a:
     n = n + x # assignment
   # end for
-  printNoLine(n) # procedure call
+  printNoLine(n) 
 # end main
 
 main()
@@ -111,7 +111,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = "hello" # variable definition
   for x in a:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
 # end main
 
@@ -152,7 +152,7 @@ return [main, _tests];}`;
 def main() -> None:
   for x in "12":
     for y in "34":
-      printNoLine(x + y) # procedure call
+      printNoLine(x + y) 
     # end for
   # end for
 # end main
@@ -195,7 +195,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   for x in fruit():
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
 # end main
 
@@ -285,8 +285,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2, 3] # variable definition
   for item in a:
-    a.append(item) # procedure call
-    printNoLine(item) # procedure call
+    a.append(item) 
+    printNoLine(item) 
   # end for
 # end main
 
@@ -355,7 +355,7 @@ main()
 
 def main() -> None:
   bar = Bar([1, 2]) # variable definition
-  bar.display() # procedure call
+  bar.display() 
 # end main
 
 class Bar: # concrete class
@@ -372,7 +372,7 @@ class Bar: # concrete class
 
   def display(self: Bar) -> None:
     for item in li:
-      printNoLine(item) # procedure call
+      printNoLine(item) 
     # end for
   # end procedure
 
@@ -404,9 +404,9 @@ def main() -> None:
   a = [7, 8, 9] # variable definition
   x = "hello" # variable definition
   for x in a:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -435,9 +435,9 @@ main()
 def main() -> None:
   a = [7, 8, 9] # variable definition
   for x in a:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -465,9 +465,9 @@ def main() -> None:
   a = [7, 8, 9] # variable definition
   xx = "hello" # variable definition
   for xX in a:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -496,9 +496,9 @@ main()
 def main() -> None:
   ids = [7, 8, 9] # variable definition
   for id in id:
-    printNoLine(id) # procedure call
+    printNoLine(id) 
   # end for
-  printNoLine(ids) # procedure call
+  printNoLine(ids) 
 # end main
 
 main()
@@ -525,7 +525,7 @@ main()
 def main() -> None:
   a = [7, 8, 9] # variable definition
   for x in a:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
 # end main
 
 main()
@@ -551,7 +551,7 @@ main()
 def main() -> None:
   y = 10 # variable definition
   for x in y:
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
 # end main
 
@@ -581,7 +581,7 @@ main()
 def main() -> None:
   s = "hello" # variable definition
   for ch in s:
-    printNoLine(ch) # procedure call
+    printNoLine(ch) 
     s = "fred" # assignment
   # end for
 # end main
@@ -625,7 +625,7 @@ def main() -> None:
   a = [1, 2, 3, 4, 5] # variable definition
   for x in a:
     a = a.withAppend(x) # assignment
-    printNoLine(x) # procedure call
+    printNoLine(x) 
   # end for
 # end main
 

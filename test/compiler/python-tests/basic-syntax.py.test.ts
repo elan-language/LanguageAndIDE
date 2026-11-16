@@ -87,7 +87,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine() # procedure call
+  printNoLine() 
 # end main
 
 main()
@@ -115,7 +115,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello World!") # procedure call
+  printNoLine("Hello World!") 
 # end main
 
 main()
@@ -149,7 +149,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(("Hello World!")) # procedure call
+  printNoLine(("Hello World!")) 
 # end main
 
 main()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1) # procedure call
+  printNoLine(1) 
 # end main
 
 main()
@@ -217,7 +217,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2.1) # procedure call
+  printNoLine(2.1) 
 # end main
 
 main()
@@ -251,7 +251,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2.1e4) # procedure call
+  printNoLine(2.1e4) 
 # end main
 
 main()
@@ -285,7 +285,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2.1e100) # procedure call
+  printNoLine(2.1e100) 
 # end main
 
 main()
@@ -319,7 +319,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2.1e-4) # procedure call
+  printNoLine(2.1e-4) 
 # end main
 
 main()
@@ -353,7 +353,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("%") # procedure call
+  printNoLine("%") 
 # end main
 
 main()
@@ -387,7 +387,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(True) # procedure call
+  printNoLine(True) 
 # end main
 
 main()
@@ -421,7 +421,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("") # procedure call
+  printNoLine("") 
 # end main
 
 main()
@@ -455,7 +455,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(foo) # procedure call
+  printNoLine(foo) 
 # end main
 
 def foo() -> int: # function
@@ -498,7 +498,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine([foo]) # procedure call
+  printNoLine([foo]) 
 # end main
 
 def foo() -> int: # function
@@ -541,7 +541,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello World!") # procedure call
+  printNoLine("Hello World!") 
 
 main()
 `;

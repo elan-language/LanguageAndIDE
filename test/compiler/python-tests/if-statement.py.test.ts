@@ -22,9 +22,9 @@ suite("Python If Statement", () => {
 def main() -> None:
   a = True # variable definition
   if a:
-    printNoLine("yes") # procedure call
+    printNoLine("yes") 
   else:
-    printNoLine("no") # procedure call
+    printNoLine("no") 
   # end if
 # end main
 
@@ -66,9 +66,9 @@ return [main, _tests];}`;
 def main() -> None:
   a = False # variable definition
   if a:
-    printNoLine("yes") # procedure call
+    printNoLine("yes") 
   else:
-    printNoLine("no") # procedure call
+    printNoLine("no") 
   # end if
 # end main
 
@@ -110,11 +110,11 @@ return [main, _tests];}`;
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -158,11 +158,11 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -206,7 +206,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = True # variable definition
   if a:
-    printNoLine("yes") # procedure call
+    printNoLine("yes") 
   # end if
 # end main
 
@@ -246,13 +246,13 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   elif a == 3: # else if
-    printNoLine("three") # procedure call
+    printNoLine("three") 
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -298,11 +298,11 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   elif a == 3: # else if
-    printNoLine("three") # procedure call
+    printNoLine("three") 
   # end if
 # end main
 
@@ -388,7 +388,7 @@ def main() -> None:
   if a == 1:
     b = a # variable definition
     b = 2 # assignment
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   # end if
 # end main
 
@@ -430,7 +430,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   else:
     a = 3 # assignment
   # end if
@@ -474,11 +474,11 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   else:
     b = a # variable definition
     b = 2 # assignment
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   # end if
 # end main
 
@@ -523,10 +523,10 @@ def main() -> None:
   a = 3 # variable definition
   if a == 1:
     b = 1 # variable definition
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   else:
     b = a # variable definition
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   # end if
 # end main
 
@@ -570,7 +570,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   elif a == 2: # else if
     a = 3 # assignment
   # end if
@@ -614,11 +614,11 @@ return [main, _tests];}`;
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   elif a == 2: # else if
     b = a # variable definition
     b = 2 # assignment
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   # end if
 # end main
 
@@ -663,7 +663,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   else:
     [ghosted] b = 2 # variable definition
   # end if
@@ -707,13 +707,13 @@ return [main, _tests];}`;
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("") # procedure call
+    printNoLine("") 
   elif a == 2: # else if
     b = a # variable definition
     for i in range(0, 6):
       b = b + i # assignment
     # end for
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   # end if
 # end main
 
@@ -786,11 +786,11 @@ main()
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   else:
-    printNoLine("not one") # procedure call
+    printNoLine("not one") 
   else:
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   # end if
 # end main
 
@@ -817,11 +817,11 @@ main()
 def main() -> None:
   a = 3 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   else:
-    printNoLine("not one") # procedure call
+    printNoLine("not one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   # end if
 # end main
 
@@ -848,9 +848,9 @@ main()
 def main() -> None:
   a = 3 # variable definition
   if a:
-    printNoLine("yes") # procedure call
+    printNoLine("yes") 
   else:
-    printNoLine("no") # procedure call
+    printNoLine("no") 
   # end if
 # end main
 
@@ -878,11 +878,11 @@ main()
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -912,9 +912,9 @@ def main() -> None:
   if a == 1:
     a = 3 # variable definition
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -944,11 +944,11 @@ main()
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
     a = 3 # variable definition
   else:
-    printNoLine("neither") # procedure call
+    printNoLine("neither") 
   # end if
 # end main
 
@@ -978,9 +978,9 @@ main()
 def main() -> None:
   a = 2 # variable definition
   if a == 1:
-    printNoLine("one") # procedure call
+    printNoLine("one") 
   elif a == 2: # else if
-    printNoLine("two") # procedure call
+    printNoLine("two") 
   else:
     a = 3 # variable definition
   # end if
@@ -1014,7 +1014,7 @@ def main() -> None:
   if a == 1:
     b = 2 # variable definition
   elif a == 2: # else if
-    printNoLine(b) # procedure call
+    printNoLine(b) 
   else:
     c = 2 # variable definition
   # end if

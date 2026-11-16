@@ -19,7 +19,7 @@ suite("Python Input", () => {
 
 def main() -> None:
   a = input("") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -55,7 +55,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = input("Your name") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -92,7 +92,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0 # variable definition
   a = inputInt("") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -130,7 +130,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0.0 # variable definition
   a = inputFloat("") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -170,7 +170,7 @@ def main() -> None:
   b = "value1" # variable definition
   a = input("") # assignment
   b = a # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -209,7 +209,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = inputStringWithLimits("aprompt", 3, 7) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -245,7 +245,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = inputStringFromOptions("aprompt", ["y", "n"]) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -282,7 +282,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0 # variable definition
   a = inputInt("aprompt") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -320,7 +320,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0 # variable definition
   a = inputIntBetween("aprompt", 3, 7) # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -358,7 +358,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0.0 # variable definition
   a = inputFloat("aprompt") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -396,7 +396,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 0.0 # variable definition
   a = inputFloatBetween("aprompt", 0, 1) # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -434,7 +434,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = "" # variable definition
   a = inputInt("") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -463,7 +463,7 @@ main()
 
 def main() -> None:
   a = "Hello " + input("") # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

@@ -21,18 +21,18 @@ suite("Python Stack", () => {
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.length()) # procedure call
-  st.push("apple") # procedure call
-  st.push("pear") # procedure call
-  printNoLine(st) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st.peek()) # procedure call
+  printNoLine(st.length()) 
+  st.push("apple") 
+  st.push("pear") 
+  printNoLine(st) 
+  printNoLine(st.length()) 
+  printNoLine(st.peek()) 
   fruit = st.pop() # variable definition
-  printNoLine(fruit) # procedure call
+  printNoLine(fruit) 
   fruit = st.pop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
+  printNoLine(fruit) 
+  printNoLine(st.length()) 
+  printNoLine(st) 
 # end main
 
 main()
@@ -79,22 +79,22 @@ return [main, _tests];}`;
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.length()) # procedure call
+  printNoLine(st.length()) 
   st = st.withPush("apple") # assignment
   st = st.withPush("pear") # assignment
-  printNoLine(st) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st.peek()) # procedure call
+  printNoLine(st) 
+  printNoLine(st.length()) 
+  printNoLine(st.peek()) 
   fruit = st.peek() # variable definition
   st = st.withPop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
+  printNoLine(fruit) 
+  printNoLine(st.length()) 
+  printNoLine(st) 
   fruit = st.peek() # assignment
   st = st.withPop() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(st.length()) # procedure call
-  printNoLine(st) # procedure call
+  printNoLine(fruit) 
+  printNoLine(st.length()) 
+  printNoLine(st) 
 # end main
 
 main()
@@ -175,7 +175,7 @@ main()
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  st.push("apple") # procedure call
+  st.push("apple") 
   a = 1 # variable definition
   a = st.peek() # assignment
 # end main
@@ -206,7 +206,7 @@ main()
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.peek()) # procedure call
+  printNoLine(st.peek()) 
 # end main
 
 main()
@@ -245,7 +245,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   st = Stack[str]() # variable definition
-  printNoLine(st.pop()) # procedure call
+  printNoLine(st.pop()) 
 # end main
 
 main()
@@ -279,6 +279,7 @@ return [main, _tests];}`;
     );
   });
 
+  // triage: should be OK
   ignore_test("Fail_StackWithoutGenericParm", async () => {
     const code = `${testPythonHeader}
 

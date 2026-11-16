@@ -182,7 +182,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  hiddenDeprecatedProcedure() # procedure call
+  hiddenDeprecatedProcedure() 
 # end main
 
 main()
@@ -266,7 +266,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters1() # procedure call
+  deprecatedProcedureWithParameters1() 
 # end main
 
 main()
@@ -294,7 +294,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters2("fred") # procedure call
+  deprecatedProcedureWithParameters2("fred") 
 # end main
 
 main()
@@ -410,7 +410,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedure() # procedure call
+  deprecatedProcedure() 
 # end main
 
 main()
@@ -562,7 +562,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters1("fred") # procedure call
+  deprecatedProcedureWithParameters1("fred") 
 # end main
 
 main()
@@ -593,7 +593,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  deprecatedProcedureWithParameters2() # procedure call
+  deprecatedProcedureWithParameters2() 
 # end main
 
 main()

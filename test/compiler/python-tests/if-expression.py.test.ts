@@ -17,12 +17,12 @@ suite("Python if Expression", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1 if True else 2) # procedure call
-  printNoLine(3 if False else 4) # procedure call
-  printNoLine("A" if True else "B" if True else "C" if True else "D") # procedure call
-  printNoLine(("A" if False else "B") if True else ("C" if True else "D")) # procedure call
-  printNoLine(("A" if True else "B") if False else ("C" if True else "D")) # procedure call
-  printNoLine(("A" if True else "B") if False else ("C" if False else "D")) # procedure call
+  printNoLine(1 if True else 2) 
+  printNoLine(3 if False else 4) 
+  printNoLine("A" if True else "B" if True else "C" if True else "D") 
+  printNoLine(("A" if False else "B") if True else ("C" if True else "D")) 
+  printNoLine(("A" if True else "B") if False else ("C" if True else "D")) 
+  printNoLine(("A" if True else "B") if False else ("C" if False else "D")) 
 # end main
 
 main()

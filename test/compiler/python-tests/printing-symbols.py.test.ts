@@ -18,7 +18,7 @@ suite("Python Printing Symbols", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("") # procedure call
+  printNoLine("") 
 # end main
 
 main()
@@ -51,7 +51,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("¬!£$%^&*()@~#|<>'") # procedure call
+  printNoLine("¬!£$%^&*()@~#|<>'") 
 # end main
 
 main()
@@ -85,7 +85,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("\\b\\n") # procedure call
+  printNoLine("\\b\\n") 
 # end main
 
 main()
@@ -119,7 +119,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printTab(5, "Foo") # procedure call
+  printTab(5, "Foo") 
 # end main
 
 main()
@@ -152,8 +152,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Foo") # procedure call
-  clearPrintedText() # procedure call
+  printNoLine("Foo") 
+  clearPrintedText() 
 # end main
 
 main()
@@ -190,7 +190,7 @@ return [main, _tests];}`;
 def main() -> None:
   i = ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") # variable definition
   i = i.withWidth(50).withHeight(50).withTitle("foo").withAlt("bar") # assignment
-  printNoLine(i) # procedure call
+  printNoLine(i) 
 # end main
 
 main()
@@ -225,10 +225,10 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("<3") # procedure call
-  printNoLine("a < b ") # procedure call
-  printNoLine("c <d> ") # procedure call
-  printNoLine("e <f ") # procedure call
+  printNoLine("<3") 
+  printNoLine("a < b ") 
+  printNoLine("c <d> ") 
+  printNoLine("e <f ") 
 # end main
 
 main()

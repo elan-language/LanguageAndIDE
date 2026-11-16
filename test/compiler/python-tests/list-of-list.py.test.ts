@@ -10,7 +10,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -24,7 +23,7 @@ def main() -> None:
   a = [1, 2] # variable definition
   b = [3, 4] # variable definition
   c = [a, b] # variable definition
-  printNoLine(c) # procedure call
+  printNoLine(c) 
 # end main
 
 main()
@@ -62,7 +61,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(0, "") # variable definition
-  printNoLine(a.length()) # procedure call
+  printNoLine(a.length()) 
 # end main
 
 main()
@@ -100,8 +99,8 @@ def main() -> None:
   a = [[""], [""], [""]] # variable definition
   a[0] = ["bar", "foo"] # assignment
   a[2] = ["yon", "xan"] # assignment
-  printNoLine(a[0][1]) # procedure call
-  printNoLine(a[2][0]) # procedure call
+  printNoLine(a[0][1]) 
+  printNoLine(a[2][0]) 
 # end main
 
 main()
@@ -142,7 +141,7 @@ def main() -> None:
   a = [["", ""], ["", ""], ["", ""]] # variable definition
   a[0] = ["bar", "foo"] # assignment
   a[0][1] = "yon" # assignment
-  printNoLine(a[0][1]) # procedure call
+  printNoLine(a[0][1]) 
 # end main
 
 main()
@@ -180,10 +179,10 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [[""], [""], [""]] # variable definition
-  a.append(["foo"]) # procedure call
-  a.append(["yon"]) # procedure call
-  printNoLine(a[3]) # procedure call
-  printNoLine(a[4]) # procedure call
+  a.append(["foo"]) 
+  a.append(["yon"]) 
+  printNoLine(a[3]) 
+  printNoLine(a[4]) 
 # end main
 
 main()
@@ -222,9 +221,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [[""], [""], [""]] # variable definition
-  a[1].append("foo") # procedure call
-  a[2].append("yon") # procedure call
-  printNoLine(a) # procedure call
+  a[1].append("foo") 
+  a[2].append("yon") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -262,9 +261,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"]] # variable definition
-  a.insert(1, ["foo"]) # procedure call
-  a.insert(3, ["yon"]) # procedure call
-  printNoLine(a) # procedure call
+  a.insert(1, ["foo"]) 
+  a.insert(3, ["yon"]) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -302,9 +301,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"]] # variable definition
-  a[0].insert(0, "foo") # procedure call
-  a[2].insert(1, "yon") # procedure call
-  printNoLine(a) # procedure call
+  a[0].insert(0, "foo") 
+  a[2].insert(1, "yon") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -342,9 +341,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"]] # variable definition
-  a.removeAt(0) # procedure call
-  a.removeAt(1) # procedure call
-  printNoLine(a) # procedure call
+  a.removeAt(0) 
+  a.removeAt(1) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -382,9 +381,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"]] # variable definition
-  a[0].removeAt(0) # procedure call
-  a[2].removeAt(0) # procedure call
-  printNoLine(a) # procedure call
+  a[0].removeAt(0) 
+  a[2].removeAt(0) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -422,8 +421,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]] # variable definition
-  a.removeFirst(["two"]) # procedure call
-  printNoLine(a) # procedure call
+  a.removeFirst(["two"]) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -460,8 +459,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]] # variable definition
-  a[1].removeFirst("two") # procedure call
-  printNoLine(a) # procedure call
+  a[1].removeFirst("two") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -498,8 +497,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two"], ["three"], ["one"], ["two"], ["three"]] # variable definition
-  a.removeAll(["two"]) # procedure call
-  printNoLine(a) # procedure call
+  a.removeAll(["two"]) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -536,8 +535,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [["one"], ["two", "two"], ["three"], ["one"], ["two"], ["three"]] # variable definition
-  a[1].removeAll("two") # procedure call
-  printNoLine(a) # procedure call
+  a[1].removeAll("two") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -575,12 +574,12 @@ return [main, _tests];}`;
 def main() -> None:
   a = list[list[int]]() # variable definition
   b = list[list[int]]() # variable definition
-  a.append([3]) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(a.equals(b)) # procedure call
-  printNoLine(a.equals(list[list[int]]())) # procedure call
-  printNoLine(b.equals(list[list[int]]())) # procedure call
+  a.append([3]) 
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(a.equals(b)) 
+  printNoLine(a.equals(list[list[int]]())) 
+  printNoLine(b.equals(list[list[int]]())) 
 # end main
 
 main()
@@ -622,7 +621,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [createPopulatedList(2, 0), createPopulatedList(2, 0), createPopulatedList(2, 0)] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -658,7 +657,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [createPopulatedList(2, 1), createPopulatedList(2, 1)] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -695,7 +694,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   a[0][0] = 0 # assignment
-  printNoLine(a[0][0]) # procedure call
+  printNoLine(a[0][0]) 
 # end main
 
 main()
@@ -733,7 +732,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]] # variable definition
   a[0][0][0] = 0 # assignment
-  printNoLine(a[0][0][0]) # procedure call
+  printNoLine(a[0][0][0]) 
 # end main
 
 main()
@@ -771,7 +770,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [[[1, 2], [3, 4]], [[5, 6], [7, 8]]] # variable definition
   a[0][0] = [9, 10] # assignment
-  printNoLine(a[0][0][0]) # procedure call
+  printNoLine(a[0][0][0]) 
 # end main
 
 main()
@@ -809,7 +808,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   a[0][0] = "" # assignment
-  printNoLine(a[0][0]) # procedure call
+  printNoLine(a[0][0]) 
 # end main
 
 main()
@@ -916,7 +915,7 @@ main()
 
 def main() -> None:
   a = [[1], [1]] # variable definition
-  printNoLine(a[0, 0]) # procedure call
+  printNoLine(a[0, 0]) 
 # end main
 
 main()
@@ -1025,7 +1024,7 @@ main()
 
 def main() -> None:
   a = list[list[str]]() # variable definition
-  a.append("foo") # procedure call
+  a.append("foo") 
 # end main
 
 main()
@@ -1081,7 +1080,7 @@ main()
 
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
-  a["b"][5] # procedure call
+  a["b"][5] 
 # end main
 
 main()

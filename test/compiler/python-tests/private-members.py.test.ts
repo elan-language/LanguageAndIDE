@@ -20,7 +20,7 @@ suite("Python Private Members", () => {
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Foo: # concrete class
@@ -92,8 +92,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Foo() # variable definition
-  x.testSetP1(5) # procedure call
-  printNoLine(x.p1) # procedure call
+  x.testSetP1(5) 
+  printNoLine(x.p1) 
 # end main
 
 class Foo: # concrete class
@@ -113,7 +113,7 @@ class Foo: # concrete class
   # end procedure
 
   def testSetP1(self: Foo, a: int) -> None:
-    self.setP1(a) # procedure call
+    self.setP1(a) 
   # end procedure
 
 # end class
@@ -176,7 +176,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.testFf("test")) # procedure call
+  printNoLine(f.testFf("test")) 
 # end main
 
 class Foo: # concrete class
@@ -348,7 +348,7 @@ main()
 
 def main() -> None:
   foo = Foo() # variable definition
-  foo.setP1(5) # procedure call
+  foo.setP1(5) 
 # end main
 
 class Foo: # concrete class
@@ -440,7 +440,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.p2) # procedure call
+  printNoLine(f.p2) 
 # end main
 
 class Foo: # concrete class
@@ -486,7 +486,7 @@ main()
 
 def main() -> None:
   foo = Foo() # variable definition
-  printNoLine(foo.ff()) # procedure call
+  printNoLine(foo.ff()) 
 # end main
 
 class Foo: # concrete class

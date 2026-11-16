@@ -19,11 +19,11 @@ suite("Python Function as HOF", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(3, twice) # procedure call
+  printModified(3, twice) 
 # end main
 
 def printModified(i: float, f: Callable[[float], float]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 def twice(x: float) -> float: # function
@@ -72,7 +72,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(3, twice) # procedure call
+  printModified(3, twice) 
 # end main
 
 def twice(x: float) -> float: # function
@@ -80,7 +80,7 @@ def twice(x: float) -> float: # function
 # end function
 
 def main() -> None:
-  printModified(3, twice) # procedure call
+  printModified(3, twice) 
 # end main
 
 def printModified(i as float, f as Func<of => float>) -> None: # procedure
@@ -128,11 +128,11 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printIt("Hello", "e", find) # procedure call
+  printIt("Hello", "e", find) 
 # end main
 
 def printIt(s: str, c: str, f: Callable[[str, str], int]) -> None: # procedure
-  printNoLine(f(s, c)) # procedure call
+  printNoLine(f(s, c)) 
 # end procedure
 
 def find(x: str, y: str) -> int: # function
@@ -181,7 +181,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = getFunc() # variable definition
-  printNoLine(f(5)) # procedure call
+  printNoLine(f(5)) 
 # end main
 
 def getFunc() -> Callable[[float], float]: # function
@@ -233,7 +233,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = twice # variable definition
-  printNoLine(f(5)) # procedure call
+  printNoLine(f(5)) 
 # end main
 
 def twice(x: float) -> float: # function
@@ -266,7 +266,7 @@ main()
 
 def main() -> None:
   f = Foo(ff) # variable definition
-  printNoLine(f.pf(5)) # procedure call
+  printNoLine(f.pf(5)) 
 # end main
 
 def ff(a: int) -> int: # function
@@ -340,7 +340,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(ff) # procedure call
+  printNoLine(ff) 
 # end main
 
 def ff(a: int) -> int: # function
@@ -384,7 +384,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = twice # variable definition
-  printNoLine(f(5)) # procedure call
+  printNoLine(f(5)) 
 # end main
 
 def twice(x: float) -> float: # function
@@ -416,11 +416,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(3, pow2) # procedure call
+  printModified(3, pow2) 
 # end main
 
 def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 def pow2(x: int, y: int) -> int: # function
@@ -451,11 +451,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(3, pow) # procedure call
+  printModified(3, pow) 
 # end main
 
 def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 def pow(x: int) -> str: # function
@@ -487,7 +487,7 @@ main()
 
 def main() -> None:
   a = getFunc() # variable definition
-  printNoLine(a()) # procedure call
+  printNoLine(a()) 
 # end main
 
 def getFunc() -> Callable[[int], int]: # function
@@ -522,11 +522,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(3, twice) # procedure call
+  printModified(3, twice) 
 # end main
 
 def printModified(i: float, f: Callable[[float], float]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 def twice(x: float) -> float: # function
@@ -575,7 +575,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = getFunc() # variable definition
-  printNoLine(f(5)) # procedure call
+  printNoLine(f(5)) 
 # end main
 
 def getFunc() -> Callable[[float], float]: # function
@@ -612,7 +612,7 @@ main()
 
 def main() -> None:
   f = Foo(ff) # variable definition
-  printNoLine(f.pf(5)) # procedure call
+  printNoLine(f.pf(5)) 
 # end main
 
 def ff(a: int) -> int: # function

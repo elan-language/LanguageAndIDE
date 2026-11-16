@@ -20,11 +20,11 @@ suite("Python Inheritance", () => {
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
-  printNoLine(x.product()) # procedure call
-  x.setP1(4) # procedure call
-  printNoLine(x.product()) # procedure call
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
+  printNoLine(x.product()) 
+  x.setP1(4) 
+  printNoLine(x.product()) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -139,8 +139,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Yon() # variable definition
-  printNoLine(f(x)) # procedure call
-  printNoLine(b(x)) # procedure call
+  printNoLine(f(x)) 
+  printNoLine(b(x)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -247,7 +247,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Bar() # variable definition
-  proc(f) # procedure call
+  proc(f) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -269,7 +269,7 @@ class Bar(Foo): # concrete class
 # end class
 
 def proc(foo: Foo) -> None: # procedure
-  printNoLine(foo.p1) # procedure call
+  printNoLine(foo.p1) 
 # end procedure
 
 main()
@@ -331,7 +331,7 @@ return [main, _tests];}`;
 def main() -> None:
   b = Bar() # variable definition
   lst = [b] # variable definition
-  printNoLine(fun(lst)) # procedure call
+  printNoLine(fun(lst)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -415,7 +415,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Bar() # variable definition
-  printNoLine(fun(f)) # procedure call
+  printNoLine(fun(f)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -498,7 +498,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -526,9 +526,9 @@ class Bar(Foo): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.ff()) # procedure call
-    printNoLine(self.p1) # procedure call
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
   # end procedure
 
 # end class
@@ -600,7 +600,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -642,12 +642,12 @@ class Bar(Yon): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.ff()) # procedure call
-    printNoLine(self.p1) # procedure call
-    self.setP2(a + 1) # procedure call
-    printNoLine(self.ff2()) # procedure call
-    printNoLine(self.p2) # procedure call
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
+    self.setP2(a + 1) 
+    printNoLine(self.ff2()) 
+    printNoLine(self.p2) 
   # end procedure
 
 # end class
@@ -736,7 +736,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -778,12 +778,12 @@ class Bar(Yon): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.ff()) # procedure call
-    printNoLine(self.p1) # procedure call
-    self.setP2(a + 1) # procedure call
-    printNoLine(self.ff2()) # procedure call
-    printNoLine(self.p2) # procedure call
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
+    self.setP2(a + 1) 
+    printNoLine(self.ff2()) 
+    printNoLine(self.p2) 
   # end procedure
 
 # end class
@@ -872,7 +872,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -892,9 +892,9 @@ class Bar(Foo): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    printNoLine(self.p1) # procedure call
+    printNoLine(self.p1) 
     self.p1 = a # assignment
-    printNoLine(self.p1) # procedure call
+    printNoLine(self.p1) 
   # end procedure
 
 # end class
@@ -958,7 +958,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -968,7 +968,7 @@ class Foo(ABC): # abstract class
     pass # abstract procedure
 
   def setP1(self: Foo, a: int) -> None: # private
-    self.setP(a) # procedure call
+    self.setP(a) 
   # end procedure
 
 # end class
@@ -986,8 +986,8 @@ class Bar(Foo): # concrete class
   p1: int
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.p1) # procedure call
+    self.setP1(a) 
+    printNoLine(self.p1) 
   # end procedure
 
   def setP(self: Bar, a: int) -> None:
@@ -1065,7 +1065,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -1075,7 +1075,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   def setP1(self: Foo, a: int) -> None: # private
-    printNoLine(self.ff(a)) # procedure call
+    printNoLine(self.ff(a)) 
   # end procedure
 
 # end class
@@ -1093,8 +1093,8 @@ class Bar(Foo): # concrete class
   p1: int
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.p1) # procedure call
+    self.setP1(a) 
+    printNoLine(self.p1) 
   # end procedure
 
   def ff(self: Bar, a: int) -> int:
@@ -1173,7 +1173,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -1201,8 +1201,8 @@ class Bar(Foo): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
-    printNoLine(self.p1) # procedure call
+    self.setP1(a) 
+    printNoLine(self.p1) 
   # end procedure
 
 # end class
@@ -1273,7 +1273,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.testPrivate(3) # procedure call
+  x.testPrivate(3) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -1287,7 +1287,7 @@ class Yon(ABC): # abstract class
 class Foo(Yon): # abstract class
 
   def setP1(self: Foo, a: int) -> None: # private
-    self.setP(a) # procedure call
+    self.setP(a) 
   # end procedure
 
 # end class
@@ -1303,7 +1303,7 @@ class Bar(Foo): # concrete class
   # end function
 
   def testPrivate(self: Bar, a: int) -> None:
-    self.setP1(a) # procedure call
+    self.setP1(a) 
   # end procedure
 
 # end class
@@ -1375,7 +1375,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.testPrivate(3)) # procedure call
+  printNoLine(x.testPrivate(3)) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -1477,7 +1477,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
+  printNoLine(x.ff()) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -1575,7 +1575,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
+  printNoLine(x.ff()) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -1673,7 +1673,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.ff()) # procedure call
+  printNoLine(x.ff()) 
 # end main
 
 class Yon(ABC): # abstract class
@@ -2233,7 +2233,7 @@ main()
 def main() -> None:
   b = Bar() # variable definition
   f = upcast(b) # variable definition
-  printNoLine(fun(f)) # procedure call
+  printNoLine(fun(f)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -2289,7 +2289,7 @@ main()
 def main() -> None:
   b = Bar() # variable definition
   lst = [b] # variable definition
-  printNoLine(fun(lst)) # procedure call
+  printNoLine(fun(lst)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -2341,7 +2341,7 @@ main()
 def main() -> None:
   b = Bar() # variable definition
   lst = [b] # variable definition
-  fun(lst) # procedure call
+  fun(lst) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -2363,7 +2363,7 @@ class Bar(Foo): # concrete class
 # end class
 
 def fun(l: list[Foo]) -> None: # procedure
-  printNoLine(l[0]) # procedure call
+  printNoLine(l[0]) 
 # end procedure
 
 main()
@@ -2392,7 +2392,7 @@ main()
 
 def main() -> None:
   lst = Dictionary[str, Bar]() # variable definition
-  printNoLine(fun(lst)) # procedure call
+  printNoLine(fun(lst)) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -2443,7 +2443,7 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.p1) # procedure call
+  printNoLine(x.p1) 
 # end main
 
 class Bar(Foo): # concrete class
@@ -3512,11 +3512,11 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
-  printNoLine(x.product()) # procedure call
-  x.setP1(4) # procedure call
-  printNoLine(x.product()) # procedure call
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
+  printNoLine(x.product()) 
+  x.setP1(4) 
+  printNoLine(x.product()) 
 # end main
 
 class Foo(ABC): # abstract class

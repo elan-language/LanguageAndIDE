@@ -20,7 +20,7 @@ suite("Python This and Property", () => {
 
 def main() -> None:
   x = Foo(7) # variable definition
-  printNoLine(x.p1) # procedure call
+  printNoLine(x.p1) 
 # end main
 
 class Foo: # concrete class
@@ -86,7 +86,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
+  printNoLine(f.bar()) 
 # end main
 
 def doubled(f: Foo) -> float: # function
@@ -169,7 +169,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
+  printNoLine(f.bar()) 
 # end main
 
 class Foo: # concrete class
@@ -245,7 +245,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.bar() # procedure call
+  f.bar() 
 # end main
 
 class Foo: # concrete class
@@ -259,7 +259,7 @@ class Foo: # concrete class
   # end function
 
   def bar(self: Foo) -> None:
-    printNoLine(self) # procedure call
+    printNoLine(self) 
   # end procedure
 
 # end class
@@ -315,7 +315,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
+  printNoLine(f.bar()) 
 # end main
 
 class Foo: # concrete class
@@ -359,7 +359,7 @@ main()
 
 def main() -> None:
   x = Foo(7) # variable definition
-  printNoLine(x.p1) # procedure call
+  printNoLine(x.p1) 
 # end main
 
 class Foo: # concrete class
@@ -399,7 +399,7 @@ main()
 
 def main() -> None:
   x = Foo(7) # variable definition
-  printNoLine(x.p1) # procedure call
+  printNoLine(x.p1) 
 # end main
 
 class Foo: # concrete class
@@ -440,7 +440,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(self) # procedure call
+  printNoLine(self) 
 # end main
 
 main()

@@ -20,7 +20,7 @@ suite("Python Arithmetic Operators", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 + 4) # procedure call
+  printNoLine(3 + 4) 
 # end main
 
 main()
@@ -54,7 +54,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3 - 4) # procedure call
+  printNoLine(3 - 4) 
 # end main
 
 main()
@@ -88,7 +88,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3*4) # procedure call
+  printNoLine(3*4) 
 # end main
 
 main()
@@ -123,7 +123,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 3 # variable definition
-  printNoLine(a + 4) # procedure call
+  printNoLine(a + 4) 
 # end main
 
 main()
@@ -158,7 +158,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(3/2) # procedure call
+  printNoLine(3/2) 
 # end main
 
 main()
@@ -185,7 +185,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(divAsFloat(7, 2).floor()) # procedure call
+  printNoLine(divAsFloat(7, 2).floor()) 
 # end main
 
 main()
@@ -219,7 +219,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(divAsInt(7, 2)) # procedure call
+  printNoLine(divAsInt(7, 2)) 
 # end main
 
 main()
@@ -253,7 +253,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(divAsFloat(7, 2)) # procedure call
+  printNoLine(divAsFloat(7, 2)) 
 # end main
 
 main()
@@ -287,7 +287,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(11 % 3) # procedure call
+  printNoLine(11 % 3) 
 # end main
 
 main()
@@ -321,7 +321,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1 if (25 % 20) < 19 else 2) # procedure call
+  printNoLine(1 if (25 % 20) < 19 else 2) 
 # end main
 
 main()
@@ -355,7 +355,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(pow(3, 3)) # procedure call
+  printNoLine(pow(3, 3)) 
 # end main
 
 main()
@@ -395,8 +395,8 @@ def main() -> None:
   b = pow(2, 2) # assignment
   b = pow(2, 0.5) # assignment
   b = pow(0.5, 2) # assignment
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -439,7 +439,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = 3 # variable definition
   a = a + 1 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -592,7 +592,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(11 % 3.2) # procedure call
+  printNoLine(11 % 3.2) 
 # end main
 
 main()
@@ -620,7 +620,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(11.7 % 3) # procedure call
+  printNoLine(11.7 % 3) 
 # end main
 
 main()

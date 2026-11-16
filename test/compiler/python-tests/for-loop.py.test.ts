@@ -23,7 +23,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -67,7 +67,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -98,7 +98,7 @@ def main() -> None:
   for i in rangeInSteps(1, 11, 2):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -141,7 +141,7 @@ def main() -> None:
   for i in rangeInSteps(10, 3, -1):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -186,7 +186,7 @@ def main() -> None:
       tot = tot + 1 # assignment
     # end for
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -233,7 +233,7 @@ def main() -> None:
   for i in rangeInSteps(lower, upper + 1, 2):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -274,14 +274,14 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(11, 0) # variable definition
-  foo(a) # procedure call
+  foo(a) 
 # end main
 
 def foo(arr: list[int]) -> None: # procedure
   for i in range(0, 11):
     arr[i] = 1 # assignment
   # end for
-  printNoLine(arr[0]) # procedure call
+  printNoLine(arr[0]) 
 # end procedure
 
 main()
@@ -325,7 +325,7 @@ return [main, _tests];}`;
 def main() -> None:
   limit = 10 # variable definition
   for i in range(1, limit + 1):
-    printNoLine(i.toString()) # procedure call
+    printNoLine(i.toString()) 
     limit = limit + 1 # assignment
   # end for
 # end main
@@ -371,7 +371,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = tot + i # assignment
   # end for
-  printNoLine(tot) # procedure call
+  printNoLine(tot) 
 # end main
 
 main()
@@ -460,7 +460,7 @@ def main() -> None:
   for i in range(1, 11):
     tot = 10 # assignment
   # end for
-  printNoLine(i) # procedure call
+  printNoLine(i) 
 # end main
 
 main()
@@ -597,9 +597,9 @@ main()
 def main() -> None:
   ids = 10 # variable definition
   for id in range(id, 12):
-    printNoLine(id) # procedure call
+    printNoLine(id) 
   # end for
-  printNoLine(ids) # procedure call
+  printNoLine(ids) 
 # end main
 
 main()
@@ -626,9 +626,9 @@ main()
 def main() -> None:
   ids = 10 # variable definition
   for id in range(0, id + 1):
-    printNoLine(id) # procedure call
+    printNoLine(id) 
   # end for
-  printNoLine(ids) # procedure call
+  printNoLine(ids) 
 # end main
 
 main()

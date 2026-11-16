@@ -20,7 +20,7 @@ suite("Python Strings", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("'Hello,' she said.") # procedure call
+  printNoLine("'Hello,' she said.") 
 # end main
 
 main()
@@ -56,7 +56,7 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine(f"{a} {b} {c}") # procedure call
+  printNoLine(f"{a} {b} {c}") 
 # end main
 
 main()
@@ -96,7 +96,7 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine($"{a {b} {c}") # procedure call
+  printNoLine($"{a {b} {c}") 
 # end main
 
 main()
@@ -123,7 +123,7 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine($"{a} {b} {{c}") # procedure call
+  printNoLine($"{a} {b} {{c}") 
 # end main
 
 main()
@@ -148,7 +148,7 @@ main()
 
 def main() -> None:
   a = f"" # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -183,7 +183,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = f" " # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -218,7 +218,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(f"{Fruit.apple}") # procedure call
+  printNoLine(f"{Fruit.apple}") 
 # end main
 
 class Fruit(Enum):

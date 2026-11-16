@@ -18,7 +18,7 @@ suite("Python Function Expressions", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(pi) # procedure call
+  printNoLine(pi) 
 # end main
 
 main()
@@ -53,7 +53,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = sin(pi/180*30) # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -90,7 +90,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = pi/180*30 # variable definition
   y = sin(x) # variable definition
-  printNoLine(y) # procedure call
+  printNoLine(y) 
 # end main
 
 main()
@@ -128,7 +128,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = pi/180*30 # variable definition
   y = sin(x) + cos(x) # variable definition
-  printNoLine(y) # procedure call
+  printNoLine(y) 
 # end main
 
 main()
@@ -166,7 +166,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = 0.7 # variable definition
   y = pow(sin(x), 2) + pow(cos(x), 2) # variable definition
-  printNoLine(y) # procedure call
+  printNoLine(y) 
 # end main
 
 main()
@@ -203,7 +203,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = min([3.1, 3]) # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -240,7 +240,7 @@ return [main, _tests];}`;
 def main() -> None:
   i = ["a", "b"] # variable definition
   x = i.contains("b") # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -303,7 +303,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  sin(1) # procedure call
+  sin(1) 
 # end main
 
 main()
@@ -358,7 +358,7 @@ main()
 
 def main() -> None:
   a = [1, 2] # variable definition
-  max(a) # procedure call
+  max(a) 
 # end main
 
 main()

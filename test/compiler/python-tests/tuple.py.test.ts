@@ -20,11 +20,11 @@ suite("Python Tuple", () => {
 
 def main() -> None:
   x = (3, "Apple") # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
   f = x.item_0 # variable definition
   s = x.item_1 # variable definition
-  printNoLine(f) # procedure call
-  printNoLine(s) # procedure call
+  printNoLine(f) 
+  printNoLine(s) 
 # end main
 
 main()
@@ -64,11 +64,11 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = f() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
   fst = x.item_0 # variable definition
   snd = x.item_1 # variable definition
-  printNoLine(fst) # procedure call
-  printNoLine(snd) # procedure call
+  printNoLine(fst) 
+  printNoLine(snd) 
 # end main
 
 def f() -> tuple[str, str]: # function
@@ -118,7 +118,7 @@ return [main, _tests];}`;
 def main() -> None:
   t = f() # variable definition
   fst = t.item_0 # variable definition
-  printNoLine(fst) # procedure call
+  printNoLine(fst) 
 # end main
 
 def f() -> tuple[str, str]: # function
@@ -166,7 +166,7 @@ def main() -> None:
   a = [(1, 2)] # variable definition
   t = a.reduce((1, 1), lambda i: tuple[int, int], j: tuple[int, int]: j) # variable definition
   fst = t.item_0 # variable definition
-  printNoLine(fst) # procedure call
+  printNoLine(fst) 
 # end main
 
 main()
@@ -205,7 +205,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = "one" # variable definition
   y = "two" # variable definition
-  printNoLine(f((x, y))) # procedure call
+  printNoLine(f((x, y))) 
 # end main
 
 def f(t: tuple[str, str]) -> str: # function
@@ -254,7 +254,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = (3, "Apple") # variable definition
   x = (4, "Pear") # assignment
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -296,10 +296,10 @@ def main() -> None:
   z = p[x.item_0] # variable definition
   q = abs(x.item_1) # variable definition
   s = abs(p[x.item_1]) # variable definition
-  printNoLine(y) # procedure call
-  printNoLine(z) # procedure call
-  printNoLine(q) # procedure call
-  printNoLine(s) # procedure call
+  printNoLine(y) 
+  printNoLine(z) 
+  printNoLine(q) 
+  printNoLine(s) 
 # end main
 
 main()
@@ -345,7 +345,7 @@ def main() -> None:
   x = (3, "Apple") # variable definition
   y = 4 # variable definition
   y = x.item_1 # assignment
-  printNoLine(y) # procedure call
+  printNoLine(y) 
 # end main
 
 main()

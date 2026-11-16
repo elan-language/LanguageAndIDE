@@ -20,7 +20,7 @@ suite("Python Chaining", () => {
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   b = a[1][1] # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -58,7 +58,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   b = a[1][1] # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -96,7 +96,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = Foo() # variable definition
   b = a.a[0] # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -165,7 +165,7 @@ def main() -> None:
   f = Foo() # variable definition
   b = 0 # variable definition
   b = f.b.y.z # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -307,7 +307,7 @@ def main() -> None:
   f = [Foo()] # variable definition
   b = 0 # variable definition
   b = f[0].b.ff() # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -417,7 +417,7 @@ def main() -> None:
   f = [Foo()] # variable definition
   b = 0 # variable definition
   b = f[0].b.ff() # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -526,7 +526,7 @@ return [main, _tests];}`;
 def main() -> None:
   s = "" # variable definition
   s = "Hello World!".lowerCase().subString(0, 1).upperCase() # assignment
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 main()
@@ -565,7 +565,7 @@ def main() -> None:
   aStringVar = "abcdexefg" # variable definition
   s = "" # variable definition
   s = aStringVar.upperCase().subString(1, 7).subString(2, 6).indexOf("X").toString() # assignment
-  printNoLine(s) # procedure call
+  printNoLine(s) 
 # end main
 
 main()
@@ -603,7 +603,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = "" # variable definition
   a = (Bar()).strArr[0].upperCase()[0] # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 class Bar: # concrete class
@@ -671,7 +671,7 @@ def main() -> None:
   aFoo = Foo() # variable definition
   b = 0 # variable definition
   b = aFoo.createLst(10).subList(1, 5).length() + 3 # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -745,7 +745,7 @@ def main() -> None:
   aBar = Bar() # variable definition
   b = 0 # variable definition
   b = 5 + aBar.foo.create2DList()[2][1] - 2 # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Bar: # concrete class
@@ -853,7 +853,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [1, 2, 3, 4, 5, 6] # variable definition
-  printNoLine(a.filter(lambda x: int: x > 2).map(lambda x: int: x*x).reduce(0, lambda s: int, x: int: s + x)) # procedure call
+  printNoLine(a.filter(lambda x: int: x > 2).map(lambda x: int: x*x).reduce(0, lambda s: int, x: int: s + x)) 
 # end main
 
 main()
@@ -890,7 +890,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2, 3, 4, 5, 6] # variable definition
   c = a.subList(0, 5).map(lambda x: int: x*x) # variable definition
-  printNoLine(c.subList(2, c.length()).reduce(0, lambda s: int, x: int: s + x)) # procedure call
+  printNoLine(c.subList(2, c.length()).reduce(0, lambda s: int, x: int: s + x)) 
 # end main
 
 main()
@@ -929,7 +929,7 @@ def main() -> None:
   a = [[1, 2], [3, 4]] # variable definition
   b = "" # variable definition
   b = a[1][1] # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -958,7 +958,7 @@ main()
 def main() -> None:
   a = Foo() # variable definition
   b = a.ff().fd() # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class

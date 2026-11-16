@@ -18,13 +18,13 @@ suite("Python Turtle Graphics", () => {
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(30) # procedure call
-  t.move(40) # procedure call
-  printNoLine(t.x.round(2)) # procedure call
-  printNoLine(" ") # procedure call
-  printNoLine(t.y.round(2)) # procedure call
-  printNoLine(" ") # procedure call
-  printNoLine(t.heading) # procedure call
+  t.turn(30) 
+  t.move(40) 
+  printNoLine(t.x.round(2)) 
+  printNoLine(" ") 
+  printNoLine(t.y.round(2)) 
+  printNoLine(" ") 
+  printNoLine(t.heading) 
 # end main
 
 main()
@@ -67,9 +67,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.turn(1000) # procedure call
-  printNoLine(t.heading) # procedure call
+  t.turn(90) 
+  t.turn(1000) 
+  printNoLine(t.heading) 
 # end main
 
 main()
@@ -106,9 +106,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.turn(-1000) # procedure call
-  printNoLine(t.heading) # procedure call
+  t.turn(90) 
+  t.turn(-1000) 
+  printNoLine(t.heading) 
 # end main
 
 main()
@@ -145,9 +145,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  printNoLine(t.x) # procedure call
-  printNoLine(t.y) # procedure call
-  printNoLine(t.heading) # procedure call
+  printNoLine(t.x) 
+  printNoLine(t.y) 
+  printNoLine(t.heading) 
 # end main
 
 main()
@@ -184,11 +184,11 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.penWidth(3) # procedure call
-  t.penColour(red) # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.turn(90) 
+  t.penWidth(3) 
+  t.penColour(red) 
+  t.move(10) 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()
@@ -235,13 +235,13 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  t.penUp() # procedure call
-  t.move(5) # procedure call
-  t.penDown() # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.turn(90) 
+  t.move(10) 
+  t.penUp() 
+  t.move(5) 
+  t.penDown() 
+  t.move(10) 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()
@@ -291,10 +291,10 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.show() # procedure call
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.show() 
+  t.turn(90) 
+  t.move(10) 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()
@@ -340,11 +340,11 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.show() # procedure call
-  t.turn(90) # procedure call
-  t.move(10) # procedure call
-  t.hide() # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.show() 
+  t.turn(90) 
+  t.move(10) 
+  t.hide() 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()
@@ -389,9 +389,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.show() # procedure call
-  t.placeAt(20, 30) # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.show() 
+  t.placeAt(20, 30) 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()
@@ -435,9 +435,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   t = Turtle() # variable definition
-  t.show() # procedure call
-  t.moveTo(20, 30) # procedure call
-  printNoLine(t.asHtml()) # procedure call
+  t.show() 
+  t.moveTo(20, 30) 
+  printNoLine(t.asHtml()) 
 # end main
 
 main()

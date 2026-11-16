@@ -23,10 +23,10 @@ def main() -> None:
   b = False and True # variable definition
   c = True and False # variable definition
   d = True and True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(c) 
+  printNoLine(d) 
 # end main
 
 main()
@@ -71,10 +71,10 @@ def main() -> None:
   b = False or True # variable definition
   c = True or False # variable definition
   d = True or True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(c) 
+  printNoLine(d) 
 # end main
 
 main()
@@ -117,8 +117,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = not False # variable definition
   b = not True # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -157,8 +157,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = (not False) and True # variable definition
   b = not (False and True) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -197,9 +197,9 @@ def main() -> None:
   a = (4 > 3) and (6 > 5) # variable definition
   b = (3 > 4) or (6 == 6) # variable definition
   c = not (4 > 3) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(c) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(c) 
 # end main
 
 main()
@@ -238,7 +238,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = (True and False) == (True or False) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -314,7 +314,7 @@ main()
 
 def main() -> None:
   a = 4 > 3 and 6 > 5 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -344,7 +344,7 @@ main()
 
 def main() -> None:
   a = not 4 > 3 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -369,7 +369,7 @@ main()
 
 def main() -> None:
   a = True and False == True or False # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -453,7 +453,7 @@ main()
 
 def main() -> None:
   a = not 1 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -483,7 +483,7 @@ main()
 def main() -> None:
   a = "fred" # variable definition
   b = not a # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -512,7 +512,7 @@ main()
 
 def main() -> None:
   a = -True # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -541,7 +541,7 @@ main()
 def main() -> None:
   a = "fred" # variable definition
   b = -a # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()

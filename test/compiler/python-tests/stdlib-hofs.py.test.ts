@@ -20,9 +20,9 @@ suite("Python StdLib HOFs", () => {
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
-  printNoLine(source.filter(lambda x: int: x > 20)) # procedure call
-  printNoLine(source.filter(lambda x: int: (x < 3) or (x > 35))) # procedure call
+  printNoLine(source.filter(lambda x: int: x > 20)) 
+  printNoLine(source.filter(lambda x: int: x > 20)) 
+  printNoLine(source.filter(lambda x: int: (x < 3) or (x > 35))) 
 # end main
 
 main()
@@ -62,7 +62,7 @@ source = "onetwo" # constant
 
 def main() -> None:
   li = source.split("") # variable definition
-  printNoLine(li.filter(lambda x: str: x.equals("o"))) # procedure call
+  printNoLine(li.filter(lambda x: str: x.equals("o"))) 
 # end main
 
 main()
@@ -100,7 +100,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(filterIt(source())) # procedure call
+  printNoLine(filterIt(source())) 
 # end main
 
 def filterIt(tofilter: list[int]) -> list[int]: # function
@@ -153,8 +153,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.map(lambda x: int: x + 1)) # procedure call
-  printNoLine(source.map(lambda x: int: x.toString() + "*")) # procedure call
+  printNoLine(source.map(lambda x: int: x + 1)) 
+  printNoLine(source.map(lambda x: int: x.toString() + "*")) 
 # end main
 
 main()
@@ -196,7 +196,7 @@ source = "onetwo" # constant
 
 def main() -> None:
   li = source.split("") # variable definition
-  printNoLine(li.map(lambda x: str: x + "*")) # procedure call
+  printNoLine(li.map(lambda x: str: x + "*")) 
 # end main
 
 main()
@@ -236,7 +236,7 @@ return [main, _tests];}`;
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
   source = source.map(lambda x: int: x + 1) # assignment
-  printNoLine(source) # procedure call
+  printNoLine(source) 
 # end main
 
 main()
@@ -273,9 +273,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.reduce(0, lambda s: int, x: int: s + x)) # procedure call
-  printNoLine(source.reduce(100, lambda s: int, x: int: s + x)) # procedure call
-  printNoLine(source.reduce("Concat:", lambda s: str, x: int: s + x.toString())) # procedure call
+  printNoLine(source.reduce(0, lambda s: int, x: int: s + x)) 
+  printNoLine(source.reduce(100, lambda s: int, x: int: s + x)) 
+  printNoLine(source.reduce("Concat:", lambda s: str, x: int: s + x.toString())) 
 # end main
 
 main()
@@ -315,7 +315,7 @@ source = "onetwo" # constant
 
 def main() -> None:
   li = source.split("") # variable definition
-  printNoLine(li.reduce("Concat:", lambda s: str, x: str: s + "*" + x)) # procedure call
+  printNoLine(li.reduce("Concat:", lambda s: str, x: str: s + "*" + x)) 
 # end main
 
 main()
@@ -354,7 +354,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.maxBy(lambda x: int: x % 5)) # procedure call
+  printNoLine(source.maxBy(lambda x: int: x % 5)) 
 # end main
 
 main()
@@ -390,7 +390,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [[1], [2, 2]] # variable definition
-  printNoLine(source.maxBy(lambda x: list[int]: x.length())) # procedure call
+  printNoLine(source.maxBy(lambda x: list[int]: x.length())) 
 # end main
 
 main()
@@ -425,7 +425,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(source().maxBy(lambda t: str: t.length())) # procedure call
+  printNoLine(source().maxBy(lambda t: str: t.length())) 
 # end main
 
 def source() -> list[str]: # function
@@ -468,7 +468,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.length()) # procedure call
+  printNoLine(source.length()) 
 # end main
 
 main()
@@ -504,7 +504,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(min(source)) # procedure call
+  printNoLine(min(source)) 
 # end main
 
 main()
@@ -540,7 +540,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(min(source)) # procedure call
+  printNoLine(min(source)) 
 # end main
 
 main()
@@ -576,7 +576,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(max(source)) # procedure call
+  printNoLine(max(source)) 
 # end main
 
 main()
@@ -612,7 +612,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(max(source)) # procedure call
+  printNoLine(max(source)) 
 # end main
 
 main()
@@ -648,7 +648,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.minBy(lambda x: int: x % 5)) # procedure call
+  printNoLine(source.minBy(lambda x: int: x % 5)) 
 # end main
 
 main()
@@ -683,8 +683,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37] # variable definition
-  printNoLine(source.orderBy(lambda x: int, y: int: x < y)) # procedure call
-  printNoLine(source) # procedure call
+  printNoLine(source.orderBy(lambda x: int, y: int: x < y)) 
+  printNoLine(source) 
 # end main
 
 main()
@@ -724,7 +724,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = ["apple", "orange", "pair", "apple"] # variable definition
-  printNoLine(source.asHashSet()) # procedure call
+  printNoLine(source.asHashSet()) 
 # end main
 
 main()
@@ -762,7 +762,7 @@ return [main, _tests];}`;
 numberChars = "-.0123456789" # constant
 
 def main() -> None:
-  printNoLine(getTrailingNumber("aa1")) # procedure call
+  printNoLine(getTrailingNumber("aa1")) 
 # end main
 
 def getTrailingNumber(s: str) -> str: # function
@@ -819,7 +819,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = ["apple", "orange", "pair"] # variable definition
-  printNoLine(max(source)) # procedure call
+  printNoLine(max(source)) 
 # end main
 
 main()
@@ -855,7 +855,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(source().maxBy(lambda t: str: t)) # procedure call
+  printNoLine(source().maxBy(lambda t: str: t)) 
 # end main
 
 def source() -> list[str]: # function
@@ -887,8 +887,8 @@ main()
 
 def main() -> None:
   source = [2.3, 3.4, 5.6, 7.8] # variable definition
-  printNoLine(source.sumBy(lambda x: float: x).round(2)) # procedure call
-  printNoLine(source.sumBy(lambda x: float: x*x).round(2)) # procedure call
+  printNoLine(source.sumBy(lambda x: float: x).round(2)) 
+  printNoLine(source.sumBy(lambda x: float: x*x).round(2)) 
 # end main
 
 main()
@@ -925,7 +925,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   source = ["a", "bb", "ccc"] # variable definition
-  printNoLine(source.sumBy(lambda x: str: x.length())) # procedure call
+  printNoLine(source.sumBy(lambda x: str: x.length())) 
 # end main
 
 main()

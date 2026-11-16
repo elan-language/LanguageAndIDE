@@ -55,7 +55,7 @@ return [main, _tests];}`;
 def main() -> None:
   tf = openFileForReading() # variable definition
   txt = tf.readWholeFile() # variable definition
-  printNoLine(txt) # procedure call
+  printNoLine(txt) 
 # end main
 
 main()
@@ -131,7 +131,7 @@ return [main, _tests];}`;
 def main() -> None:
   tf = openFileForReading() # variable definition
   while not tf.endOfFile():
-    printNoLine(tf.readLine()) # procedure call
+    printNoLine(tf.readLine()) 
   # end while
 # end main
 
@@ -170,7 +170,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = openFileForReading() # variable definition
-  tf.close() # procedure call
+  tf.close() 
   line = tf.readLine() # variable definition
 # end main
 
@@ -208,8 +208,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
-  tf.writeLine("something") # procedure call
-  tf.saveAndClose() # procedure call
+  tf.writeLine("something") 
+  tf.saveAndClose() 
 # end main
 
 main()
@@ -245,7 +245,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
-  tf.writeWholeFile("something else") # procedure call
+  tf.writeWholeFile("something else") 
 # end main
 
 main()
@@ -280,8 +280,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
-  tf.writeLine("something") # procedure call
-  tf.writeWholeFile("something else") # procedure call
+  tf.writeLine("something") 
+  tf.writeWholeFile("something else") 
 # end main
 
 main()
@@ -320,8 +320,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   tf = createFileForWriting("data.txt") # variable definition
-  tf.writeWholeFile("something else") # procedure call
-  tf.saveAndClose() # procedure call
+  tf.writeWholeFile("something else") 
+  tf.saveAndClose() 
 # end main
 
 main()

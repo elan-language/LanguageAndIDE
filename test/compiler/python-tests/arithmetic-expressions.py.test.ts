@@ -23,9 +23,9 @@ def main() -> None:
   x = 2 + 3*5 + 1 # variable definition
   y = (2 + 3)*5 + 1 # variable definition
   z = (2 + 3)*(5 + 1) # variable definition
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
-  printNoLine(z) # procedure call
+  printNoLine(x) 
+  printNoLine(y) 
+  printNoLine(z) 
 # end main
 
 main()
@@ -67,9 +67,9 @@ def main() -> None:
   x = 2 + (3*5) + 1 # variable definition
   y = ((2 + 3))*5 + (1) # variable definition
   z = ((2 + 3)*(5 + 1)) # variable definition
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
-  printNoLine(z) # procedure call
+  printNoLine(x) 
+  printNoLine(y) 
+  printNoLine(z) 
 # end main
 
 main()
@@ -224,8 +224,8 @@ def main() -> None:
   y = 0 # variable definition
   x = -4.7 # assignment
   y = 5*-3 # assignment
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
+  printNoLine(x) 
+  printNoLine(y) 
 # end main
 
 main()
@@ -266,8 +266,8 @@ return [main, _tests];}`;
 def main() -> None:
   x = 11 % 3 # variable definition
   y = (5 + 6) % 3 # variable definition
-  printNoLine(x) # procedure call
-  printNoLine(y) # procedure call
+  printNoLine(x) 
+  printNoLine(y) 
 # end main
 
 main()
@@ -352,8 +352,8 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(2*12/3.0 + 190) # procedure call
-  printNoLine(24/6/2.0) # procedure call
+  printNoLine(2*12/3.0 + 190) 
+  printNoLine(24/6/2.0) 
 # end main
 
 main()
@@ -387,7 +387,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(sqrt(-1)) # procedure call
+  printNoLine(sqrt(-1)) 
 # end main
 
 main()
@@ -420,7 +420,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(1.0/0) # procedure call
+  printNoLine(1.0/0) 
 # end main
 
 main()
@@ -455,9 +455,9 @@ return [main, _tests];}`;
 def main() -> None:
   h = 0xfffe # variable definition
   b = 0b111011 # variable definition
-  printNoLine(h) # procedure call
-  printNoLine(" ") # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(h) 
+  printNoLine(" ") 
+  printNoLine(b) 
 # end main
 
 main()

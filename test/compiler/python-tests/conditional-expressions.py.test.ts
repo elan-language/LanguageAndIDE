@@ -19,10 +19,10 @@ suite("Python Conditional Expressions", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(grade(90)) # procedure call
-  printNoLine(grade(70)) # procedure call
-  printNoLine(grade(50)) # procedure call
-  printNoLine(grade(30)) # procedure call
+  printNoLine(grade(90)) 
+  printNoLine(grade(70)) 
+  printNoLine(grade(50)) 
+  printNoLine(grade(30)) 
 # end main
 
 def grade(score: float) -> str: # function
@@ -70,7 +70,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = 70 # variable definition
   grade = "Distinction" if score > 80 else "Merit" if score > 60 else "Pass" if score > 40 else "Fail"  # variable definition
-  printNoLine(grade) # procedure call
+  printNoLine(grade) 
 # end main
 
 main()
@@ -108,7 +108,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = 70 # variable definition
   score = score + 1 if score == 70 else 2 # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 main()
@@ -146,7 +146,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = 70.1 # variable definition
   score = 60.1 if True else 60 # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 main()
@@ -184,7 +184,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = 70.1 # variable definition
   score = 60 if False else 60.1 # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 main()
@@ -222,7 +222,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = cast(Bar()) # variable definition
   score = Bar() if False else cast(Bar()) # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -305,7 +305,7 @@ return [main, _tests];}`;
 def main() -> None:
   score = cast(Bar()) # variable definition
   score = cast(Bar()) if False else Bar() # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -386,10 +386,10 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(grade(90)) # procedure call
-  printNoLine(grade(70)) # procedure call
-  printNoLine(grade(50)) # procedure call
-  printNoLine(grade(30)) # procedure call
+  printNoLine(grade(90)) 
+  printNoLine(grade(70)) 
+  printNoLine(grade(50)) 
+  printNoLine(grade(30)) 
 # end main
 
 def grade(score: int) -> : # function
@@ -418,7 +418,7 @@ main()
 
 def main() -> None:
   a = 2 if 5 else 7 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -447,7 +447,7 @@ main()
 
 def main() -> None:
   a = "five" if True else 7 # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -477,7 +477,7 @@ main()
 def main() -> None:
   a = 10 # variable definition
   a = 0.5 if True else 10 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -507,7 +507,7 @@ main()
 def main() -> None:
   a = 10 # variable definition
   a = 10 if True else 0.5 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -537,7 +537,7 @@ main()
 def main() -> None:
   score = Bar() # variable definition
   score = Foo() if False else Bar() # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo: # concrete class
@@ -592,7 +592,7 @@ main()
 def main() -> None:
   score = Bar() # variable definition
   score = Bar() if False else Foo() # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo: # concrete class
@@ -646,7 +646,7 @@ main()
 def main() -> None:
   score = Bar() # variable definition
   score =  Bar() if False else cast(Bar()) # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -697,7 +697,7 @@ main()
 def main() -> None:
   score = Bar() # variable definition
   score = cast(Bar()) if False else Bar() # assignment
-  printNoLine(score) # procedure call
+  printNoLine(score) 
 # end main
 
 class Foo(ABC): # abstract class

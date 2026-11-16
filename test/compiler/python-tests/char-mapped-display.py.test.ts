@@ -19,7 +19,7 @@ suite("Python Char Mapped Display", () => {
 
 def main() -> None:
   g = BlockGraphics() # variable definition
-  displayBlockGraphics(g) # procedure call
+  displayBlockGraphics(g) 
 # end main
 
 main()

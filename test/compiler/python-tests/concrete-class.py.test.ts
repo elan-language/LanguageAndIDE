@@ -89,9 +89,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
-  printNoLine(x.toString()) # procedure call
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
+  printNoLine(x.toString()) 
 # end main
 
 class Foo: # concrete class
@@ -165,8 +165,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Foo(7, "Apple") # variable definition
-  printNoLine(x.p1) # procedure call
-  printNoLine(x.p2) # procedure call
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
 # end main
 
 class Foo: # concrete class
@@ -240,7 +240,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = Foo() # variable definition
   y = x.b # variable definition
-  y.printP1() # procedure call
+  y.printP1() 
 # end main
 
 class Foo: # concrete class
@@ -271,7 +271,7 @@ class Bar: # concrete class
   p1: int
 
   def printP1(self: Bar) -> None:
-    printNoLine(self.p1) # procedure call
+    printNoLine(self.p1) 
   # end procedure
 
 # end class
@@ -354,14 +354,14 @@ return [main, _tests];}`;
 def main() -> None:
   foo = Foo() # variable definition
   bar = foo.bar # variable definition
-  printNoLine(bar.p1) # procedure call
-  printNoLine(bar.p2) # procedure call
+  printNoLine(bar.p1) 
+  printNoLine(bar.p2) 
   opt = bar.foo # variable definition
-  opt.put(foo) # procedure call
+  opt.put(foo) 
   foo2 = bar.foo.getValue() # variable definition
   bar2 = foo2.bar # variable definition
-  printNoLine(bar2.p1) # procedure call
-  printNoLine(bar2.p2) # procedure call
+  printNoLine(bar2.p1) 
+  printNoLine(bar2.p2) 
 # end main
 
 class Foo: # concrete class
@@ -488,7 +488,7 @@ return [main, _tests];}`;
 def main() -> None:
   foo = Foo() # variable definition
   b = foo.strArr[0] # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 class Foo: # concrete class
@@ -555,7 +555,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  proc(f) # procedure call
+  proc(f) 
 # end main
 
 class Foo: # concrete class
@@ -573,7 +573,7 @@ class Foo: # concrete class
 # end class
 
 def proc(foo: Foo) -> None: # procedure
-  printNoLine(foo.p1) # procedure call
+  printNoLine(foo.p1) 
 # end procedure
 
 main()
@@ -630,7 +630,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(fun(f)) # procedure call
+  printNoLine(fun(f)) 
 # end main
 
 class Foo: # concrete class
@@ -843,7 +843,7 @@ class Foo: # concrete class
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.p1) # procedure call
+  printNoLine(f.p1) 
 # end main
 
 class Foo: # concrete class
@@ -918,7 +918,7 @@ return [main, _tests];}`;
 def main() -> None:
   f = Foo() # variable definition
   f = f.with_P1(1) # assignment
-  printNoLine(f.p1) # procedure call
+  printNoLine(f.p1) 
 # end main
 
 class Foo: # concrete class
@@ -993,14 +993,14 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.setup(100, "initial") # procedure call
+  f.setup(100, "initial") 
   f1 = f.withP1(101) # variable definition
   f2 = f1.withP2("updated") # variable definition
   f3 = f2.withP1(102).withP2("updated2") # variable definition
-  printNoLine(f) # procedure call
-  printNoLine(f1) # procedure call
-  printNoLine(f2) # procedure call
-  printNoLine(f3) # procedure call
+  printNoLine(f) 
+  printNoLine(f1) 
+  printNoLine(f2) 
+  printNoLine(f3) 
 # end main
 
 class Foo: # concrete class
@@ -1114,7 +1114,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.append() # procedure call
+  f.append() 
 # end main
 
 class Foo: # concrete class
@@ -1131,8 +1131,8 @@ class Foo: # concrete class
 
   def append(self: Foo) -> None:
     p1 = self.p1 # variable definition
-    p1.append(1) # procedure call
-    printNoLine(self.p1) # procedure call
+    p1.append(1) 
+    printNoLine(self.p1) 
   # end procedure
 
 # end class
@@ -1450,7 +1450,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  proc(f) # procedure call
+  proc(f) 
 # end main
 
 class Foo: # concrete class
@@ -1482,7 +1482,7 @@ class Bar: # concrete class
 # end class
 
 def proc(bar: Bar) -> None: # procedure
-  printNoLine(bar.p1) # procedure call
+  printNoLine(bar.p1) 
 # end procedure
 
 main()
@@ -1511,7 +1511,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(fun(f)) # procedure call
+  printNoLine(fun(f)) 
 # end main
 
 class Foo: # concrete class
@@ -2304,7 +2304,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  f.__init__() # procedure call
+  f.__init__() 
 # end main
 
 class Foo: # concrete class
@@ -2342,7 +2342,7 @@ main()
 def main() -> None:
   f = Foo() # variable definition
   f = f.withP1(1) # assignment
-  printNoLine(f.p1) # procedure call
+  printNoLine(f.p1) 
 # end main
 
 class Foo: # concrete class
@@ -2389,7 +2389,7 @@ main()
 def main() -> None:
   f = Foo() # variable definition
   f = f.withP1(1) # assignment
-  printNoLine(f.p1) # procedure call
+  printNoLine(f.p1) 
 # end main
 
 class Foo: # concrete class
@@ -2436,7 +2436,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  f.setP1(1) # procedure call
+  f.setP1(1) 
 # end main
 
 class Foo: # concrete class

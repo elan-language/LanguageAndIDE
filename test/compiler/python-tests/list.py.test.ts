@@ -22,7 +22,7 @@ suite("Python List", () => {
 
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -59,8 +59,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = [9, 10, 11] # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
+  a.appendList(b) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -99,8 +99,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = 9 # variable definition
-  a.appendList(b) # procedure call
-  printNoLine(a) # procedure call
+  a.appendList(b) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -129,8 +129,8 @@ main()
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = [9, 10, 11] # variable definition
-  a.prependList(b) # procedure call
-  printNoLine(a) # procedure call
+  a.prependList(b) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -168,7 +168,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = [[4], [5]] # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -204,7 +204,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = list[str]() # variable definition
-  printNoLine(a.length()) # procedure call
+  printNoLine(a.length()) 
 # end main
 
 main()
@@ -240,8 +240,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
-  printNoLine(a[0].length()) # procedure call
-  printNoLine(a) # procedure call
+  printNoLine(a[0].length()) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -278,7 +278,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(3, Fruit.apple) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 class Fruit(Enum):
@@ -325,7 +325,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = [1, 2, 3] # variable definition
   a[0] = a[1] # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -364,9 +364,9 @@ def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = list[int]() # variable definition
   b = a.subList(2, 5) # assignment
-  printNoLine(b) # procedure call
-  printNoLine(a.subList(1, 3)) # procedure call
-  printNoLine(a.subList(0, 2)) # procedure call
+  printNoLine(b) 
+  printNoLine(a.subList(1, 3)) 
+  printNoLine(a.subList(0, 2)) 
 # end main
 
 main()
@@ -406,7 +406,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(3, list[int]()) # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -435,8 +435,8 @@ def main() -> None:
   a = createPopulatedList(3, "") # variable definition
   a[0] = "foo" # assignment
   a[2] = "yon" # assignment
-  printNoLine(a[0]) # procedure call
-  printNoLine(a[2]) # procedure call
+  printNoLine(a[0]) 
+  printNoLine(a[2]) 
 # end main
 
 main()
@@ -476,7 +476,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = ["foo", "bar", "yon"] # variable definition
   a = a.subList(1, a.length()) # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -513,10 +513,10 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
-  a.append("foo") # procedure call
-  a.append("yon") # procedure call
-  printNoLine(a[3]) # procedure call
-  printNoLine(a[4]) # procedure call
+  a.append("foo") 
+  a.append("yon") 
+  printNoLine(a[3]) 
+  printNoLine(a[4]) 
 # end main
 
 main()
@@ -555,14 +555,14 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = createPopulatedList(3, "") # variable definition
-  a.append("foo") # procedure call
-  a.append("yon") # procedure call
+  a.append("foo") 
+  a.append("yon") 
   c = "" # variable definition
   d = "" # variable definition
   c = a[3] # assignment
   d = a[4] # assignment
-  printNoLine(c) # procedure call
-  printNoLine(d) # procedure call
+  printNoLine(c) 
+  printNoLine(d) 
 # end main
 
 main()
@@ -605,9 +605,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a.insert(1, "foo") # procedure call
-  a.insert(3, "yon") # procedure call
-  printNoLine(a) # procedure call
+  a.insert(1, "foo") 
+  a.insert(3, "yon") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -645,9 +645,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  a.removeAt(0) # procedure call
-  a.removeAt(1) # procedure call
-  printNoLine(a) # procedure call
+  a.removeAt(0) 
+  a.removeAt(1) 
+  printNoLine(a) 
 # end main
 
 main()
@@ -685,8 +685,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a.removeFirst("two") # procedure call
-  printNoLine(a) # procedure call
+  a.removeFirst("two") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -723,8 +723,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
-  a.removeAll("two") # procedure call
-  printNoLine(a) # procedure call
+  a.removeAll("two") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -762,12 +762,12 @@ return [main, _tests];}`;
 def main() -> None:
   a = list[int]() # variable definition
   b = list[int]() # variable definition
-  a.append(3) # procedure call
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
-  printNoLine(a.equals(b)) # procedure call
-  printNoLine(a.equals(list[int]())) # procedure call
-  printNoLine(b.equals(list[int]())) # procedure call
+  a.append(3) 
+  printNoLine(a) 
+  printNoLine(b) 
+  printNoLine(a.equals(b)) 
+  printNoLine(a.equals(list[int]())) 
+  printNoLine(b.equals(list[int]())) 
 # end main
 
 main()
@@ -846,7 +846,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  foo() # procedure call
+  foo() 
 # end main
 
 def foo() -> None: # procedure
@@ -1141,7 +1141,7 @@ main()
 
 def main() -> None:
   a = list[int]() # variable definition
-  printNoLine(a[0, 0]) # procedure call
+  printNoLine(a[0, 0]) 
 # end main
 
 main()
@@ -1197,7 +1197,7 @@ main()
 
 def main() -> None:
   a = list[str]() # variable definition
-  a.append(1) # procedure call
+  a.append(1) 
 # end main
 
 main()
@@ -1329,7 +1329,7 @@ main()
 
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
-  printNoLine(a.getRange(1, 2)) # procedure call
+  printNoLine(a.getRange(1, 2)) 
 # end main
 
 main()
@@ -1359,8 +1359,8 @@ def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a.withPut(1, "TWO") # assignment
   b = a.withPut(0, "ONE") # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1400,7 +1400,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a.withPut(3, "THREE") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1439,8 +1439,8 @@ def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a.withInsert(1, "TWO") # assignment
   b = a.withInsert(0, "ONE") # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1480,7 +1480,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a.withRemove(1) # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1509,7 +1509,7 @@ main()
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a + "four" # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1538,7 +1538,7 @@ main()
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = "four" + a # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1569,7 +1569,7 @@ main()
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
   a = a.withRemoveFirst("two") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1607,7 +1607,7 @@ return [main, _tests];}`;
 def main() -> None:
   a = ["one", "two", "three", "one", "two", "three"] # variable definition
   a = a.withRemoveAll("two") # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -1646,8 +1646,8 @@ def main() -> None:
   a = ["one", "two", "three"] # variable definition
   a = a.withRemoveAt(1) # assignment
   b = a.withRemoveAt(0) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1688,7 +1688,7 @@ def main() -> None:
   a = ["one", "two", "three"] # variable definition
   b = "" # variable definition
   b = a.head() # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -1728,7 +1728,7 @@ def main() -> None:
   a = ["one", "two", "three"] # variable definition
   b = [""] # variable definition
   b = a.tail() # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -1768,7 +1768,7 @@ def main() -> None:
   foo1 = foo # variable definition
   body = [foo, foo1] # variable definition
   foo2 = body[0] # variable definition
-  printNoLine(foo2(1)) # procedure call
+  printNoLine(foo2(1)) 
 # end main
 
 def foo(i: int) -> int: # function
@@ -1802,8 +1802,8 @@ main()
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = a.withAppend(9) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1843,8 +1843,8 @@ def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = [1, 2, 3, 4, 5] # variable definition
   c = a.withAppendList(b) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(c) # procedure call
+  printNoLine(a) 
+  printNoLine(c) 
 # end main
 
 main()
@@ -1884,8 +1884,8 @@ return [main, _tests];}`;
 def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = a.withPrepend(9) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(b) # procedure call
+  printNoLine(a) 
+  printNoLine(b) 
 # end main
 
 main()
@@ -1925,8 +1925,8 @@ def main() -> None:
   a = [4, 5, 6, 7, 8] # variable definition
   b = [1, 2, 3, 4, 5] # variable definition
   c = a.withPrependList(b) # variable definition
-  printNoLine(a) # procedure call
-  printNoLine(c) # procedure call
+  printNoLine(a) 
+  printNoLine(c) 
 # end main
 
 main()
@@ -1966,7 +1966,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = list() # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -2024,7 +2024,7 @@ main()
 def main() -> None:
   a = [1, 2, 3, 4] # variable definition
   b = a[-1] # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -2052,7 +2052,7 @@ def main() -> None:
   a = [1, 2, 3, 4] # variable definition
   b = -1 # variable definition
   c = a[b] # variable definition
-  printNoLine(c) # procedure call
+  printNoLine(c) 
 # end main
 
 main()
@@ -2174,7 +2174,7 @@ main()
 def main() -> None:
   points = list[tuple[int, int]]() # variable definition
   points = points + (1, 2) # assignment
-  printNoLine(points) # procedure call
+  printNoLine(points) 
 # end main
 
 main()
@@ -2202,8 +2202,8 @@ main()
 
 def main() -> None:
   points = list[tuple[int, int]]() # variable definition
-  points.appendList((1, 2)) # procedure call
-  printNoLine(points) # procedure call
+  points.appendList((1, 2)) 
+  printNoLine(points) 
 # end main
 
 main()
@@ -2232,7 +2232,7 @@ main()
 def main() -> None:
   a = ["one", "two", "three"] # variable definition
   b = a.withPut(3, "THREE") # variable definition
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -2298,7 +2298,7 @@ def main() -> None:
   a = [1, 2, 3, 4] # variable definition
   b = -1 # variable definition
   a[b] = 3 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

@@ -20,11 +20,11 @@ suite("Python Lambda", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda x: int: x*3) # procedure call
+  printModified(4, lambda x: int: x*3) 
 # end main
 
 def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 main()
@@ -63,7 +63,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified((4, 5), lambda t: tuple[int, int]: first(t)) # procedure call
+  printModified((4, 5), lambda t: tuple[int, int]: first(t)) 
 # end main
 
 def first(t: tuple[int, int]) -> int: # function
@@ -72,7 +72,7 @@ def first(t: tuple[int, int]) -> int: # function
 # end function
 
 def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 main()
@@ -117,11 +117,11 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified((4, 5), lambda t: tuple[int, int]: t.item_0) # procedure call
+  printModified((4, 5), lambda t: tuple[int, int]: t.item_0) 
 # end main
 
 def printModified(i: tuple[int, int], f: Callable[[tuple[int, int]], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 main()
@@ -185,7 +185,7 @@ main()
 
 def main() -> None:
   foo = Foo() # variable definition
-  foo.setP1(lambda x => x) # procedure call
+  foo.setP1(lambda x => x) 
 # end main
 
 main()
@@ -234,7 +234,7 @@ main()
 
 def main() -> None:
   l = getFunc() # variable definition
-  printNoLine(l(5)) # procedure call
+  printNoLine(l(5)) 
 # end main
 
 def getFunc() -> Callable[[int], int]: # function
@@ -288,7 +288,7 @@ main()
 
 def main() -> None:
   l = getFunc(5) # variable definition
-  printNoLine(l()) # procedure call
+  printNoLine(l()) 
 # end main
 
 def getFunc(x: int) -> Func<of => int>: # function
@@ -317,7 +317,7 @@ main()
 
 def main() -> None:
   l = getFunc(5) # variable definition
-  printNoLine(l([5])) # procedure call
+  printNoLine(l([5])) 
 # end main
 
 def getFunc(x: int) -> Callable[[list[int]], list[int]]: # function
@@ -393,11 +393,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda x: int: x.toString()) # procedure call
+  printModified(4, lambda x: int: x.toString()) 
 # end main
 
 def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 main()
@@ -424,11 +424,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified("4", lambda x: int: x + 3) # procedure call
+  printModified("4", lambda x: int: x + 3) 
 # end main
 
 def printModified(i: str, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(i)) # procedure call
+  printNoLine(f(i)) 
 # end procedure
 
 main()
@@ -456,11 +456,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified("4", lambda x: int: x + 3) # procedure call
+  printModified("4", lambda x: int: x + 3) 
 # end main
 
 def main() -> None:
-  printModified(4, lambda x: int: x) # procedure call
+  printModified(4, lambda x: int: x) 
 # end main
 
 def printModified(i as int, f as Func<of => int>) -> None: # procedure
@@ -491,11 +491,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda : 0) # procedure call
+  printModified(4, lambda : 0) 
 # end main
 
 def printModified(i: int, f: Callable[[int], int]) -> None: # procedure
-  printNoLine(f(5)) # procedure call
+  printNoLine(f(5)) 
 # end procedure
 
 main()
@@ -523,11 +523,11 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printModified(4, lambda : 0) # procedure call
+  printModified(4, lambda : 0) 
 # end main
 
 def main() -> None:
-  printModified(4, lambda : 0) # procedure call
+  printModified(4, lambda : 0) 
 # end main
 
 def printModified(i as int, f as Func<of => int>) -> None: # procedure

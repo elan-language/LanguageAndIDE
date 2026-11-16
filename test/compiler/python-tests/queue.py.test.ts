@@ -21,20 +21,20 @@ suite("Python Queue", () => {
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.length()) # procedure call
-  q.enqueue("apple") # procedure call
-  q.enqueue("pear") # procedure call
-  printNoLine(q) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q.peek()) # procedure call
+  printNoLine(q.length()) 
+  q.enqueue("apple") 
+  q.enqueue("pear") 
+  printNoLine(q) 
+  printNoLine(q.length()) 
+  printNoLine(q.peek()) 
   fruit = q.dequeue() # variable definition
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
+  printNoLine(fruit) 
+  printNoLine(q.length()) 
+  printNoLine(q) 
   fruit = q.dequeue() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
+  printNoLine(fruit) 
+  printNoLine(q.length()) 
+  printNoLine(q) 
 # end main
 
 main()
@@ -83,20 +83,20 @@ return [main, _tests];}`;
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.length()) # procedure call
+  printNoLine(q.length()) 
   q = q.withEnqueue("apple") # assignment
   q = q.withEnqueue("pear") # assignment
-  printNoLine(q) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q.peek()) # procedure call
+  printNoLine(q) 
+  printNoLine(q.length()) 
+  printNoLine(q.peek()) 
   fruit = q.peek() # variable definition
   q = q.withDequeue() # assignment
-  printNoLine(fruit) # procedure call
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
+  printNoLine(fruit) 
+  printNoLine(q.length()) 
+  printNoLine(q) 
   q = q.withDequeue() # assignment
-  printNoLine(q.length()) # procedure call
-  printNoLine(q) # procedure call
+  printNoLine(q.length()) 
+  printNoLine(q) 
 # end main
 
 main()
@@ -204,7 +204,7 @@ main()
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.peek()) # procedure call
+  printNoLine(q.peek()) 
 # end main
 
 main()
@@ -243,7 +243,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   q = Queue[str]() # variable definition
-  printNoLine(q.dequeue()) # procedure call
+  printNoLine(q.dequeue()) 
 # end main
 
 main()
@@ -277,6 +277,7 @@ return [main, _tests];}`;
     );
   });
 
+  // triage: should be OK
   ignore_test("Fail_QueueWithoutGenericParm", async () => {
     const code = `${testPythonHeader}
 

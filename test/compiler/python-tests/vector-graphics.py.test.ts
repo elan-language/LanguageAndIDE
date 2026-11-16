@@ -50,7 +50,7 @@ def main() -> None:
   vg = createVectorGraphics() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
   vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
+  printNoLine(vg2.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -96,7 +96,7 @@ def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
   vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
+  printNoLine(vg2.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -141,8 +141,8 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  vg.append(circ) 
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -187,31 +187,31 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = CircleVG() # variable definition
-  vg.append(circ) # procedure call
-  circ.setRadius(20) # procedure call
-  circ.setCentreX(30) # procedure call
-  circ.setCentreY(40) # procedure call
-  circ.setFillColour(blue) # procedure call
-  circ.setStrokeColour(yellow) # procedure call
-  circ.setStrokeWidth(2) # procedure call
+  vg.append(circ) 
+  circ.setRadius(20) 
+  circ.setCentreX(30) 
+  circ.setCentreY(40) 
+  circ.setFillColour(blue) 
+  circ.setStrokeColour(yellow) 
+  circ.setStrokeWidth(2) 
   line = LineVG() # variable definition
-  vg.append(line) # procedure call
-  line.setX1(10) # procedure call
-  line.setY1(15) # procedure call
-  line.setX2(20) # procedure call
-  line.setY2(30) # procedure call
-  line.setStrokeColour(blue) # procedure call
-  line.setStrokeWidth(3) # procedure call
+  vg.append(line) 
+  line.setX1(10) 
+  line.setY1(15) 
+  line.setX2(20) 
+  line.setY2(30) 
+  line.setStrokeColour(blue) 
+  line.setStrokeWidth(3) 
   rect = RectangleVG() # variable definition
-  vg.append(rect) # procedure call
-  rect.setX(10) # procedure call
-  rect.setY(15) # procedure call
-  rect.setWidth(20) # procedure call
-  rect.setHeight(30) # procedure call
-  rect.setFillColour(green) # procedure call
-  rect.setStrokeColour(blue) # procedure call
-  rect.setStrokeWidth(3) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  vg.append(rect) 
+  rect.setX(10) 
+  rect.setY(15) 
+  rect.setWidth(20) 
+  rect.setHeight(30) 
+  rect.setFillColour(green) 
+  rect.setStrokeColour(blue) 
+  rect.setStrokeWidth(3) 
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -305,7 +305,7 @@ def main() -> None:
   rect = rect.withStrokeColour(blue) # assignment
   rect = rect.withStrokeWidth(3) # assignment
   vg = vg.withAppend(rect) # assignment
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -374,7 +374,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withFillColour(black).withStrokeWidth(1) # variable definition
-  printNoLine(circ.centreX) # procedure call
+  printNoLine(circ.centreX) 
 # end main
 
 main()
@@ -412,7 +412,7 @@ def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(transparent).withStrokeWidth(1) # variable definition
   vg2 = vg.withAppend(circ) # variable definition
-  printNoLine(vg2.vectorGraphicsAsHtml()) # procedure call
+  printNoLine(vg2.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -457,8 +457,8 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withStrokeColour(transparent).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  vg.append(circ) 
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -500,8 +500,8 @@ return [main, _tests];}`;
 def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   circ = (CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(white + 1).withStrokeWidth(1) # variable definition
-  vg.append(circ) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  vg.append(circ) 
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -543,8 +543,8 @@ def main() -> None:
   vg = list[VectorGraphic]() # variable definition
   i = ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png") # variable definition
   i = i.withX(50).withY(50).withWidth(50).withHeight(50) # assignment
-  vg.append(i) # procedure call
-  printNoLine(vg.vectorGraphicsAsHtml()) # procedure call
+  vg.append(i) 
+  printNoLine(vg.vectorGraphicsAsHtml()) 
 # end main
 
 main()
@@ -590,7 +590,7 @@ return [main, _tests];}`;
 def main() -> None:
   c = CircleVG() # variable definition
   x = c.centreX # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()

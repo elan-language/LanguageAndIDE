@@ -75,7 +75,7 @@ suite("Python Directives", () => {
 def main() -> None:
   x = 0.0 # variable definition
   x = simpleFunction() # assignment
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -105,7 +105,7 @@ main()
 def main() -> None:
   x = list[VectorGraphic]() # variable definition
   x = createVectorGraphics() # assignment
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 main()
@@ -135,8 +135,8 @@ main()
 def main() -> None:
   x = list[list[int]]() # variable definition
   y = list[list[str]]() # variable definition
-  initialise(x, 2, 2, 2) # procedure call
-  initialise(y, 2, 2, "") # procedure call
+  initialise(x, 2, 2, 2) 
+  initialise(y, 2, 2, "") 
 # end main
 
 main()
@@ -166,8 +166,8 @@ main()
 def main() -> None:
   x = list[list[int]]() # variable definition
   y = list[list[str]]() # variable definition
-  x.initialiseExt(2, 2, 2) # procedure call
-  y.initialiseExt(2, 2, "") # procedure call
+  x.initialiseExt(2, 2, 2) 
+  y.initialiseExt(2, 2, "") 
 # end main
 
 main()

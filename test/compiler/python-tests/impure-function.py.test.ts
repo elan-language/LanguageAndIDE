@@ -22,7 +22,7 @@ def main() -> None:
   k = getKey() # variable definition
   r = randint(1, 6) # variable definition
   r = randint(1, 6)*10 # assignment
-  bar(randint(1, 6)) # procedure call
+  bar(randint(1, 6)) 
 # end main
 
 def foo() -> None: # procedure
@@ -112,7 +112,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  square(3) # procedure call
+  square(3) 
 # end main
 
 def square(x: int) -> int: # function

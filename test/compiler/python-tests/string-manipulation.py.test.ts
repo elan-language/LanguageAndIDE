@@ -22,7 +22,7 @@ suite("Python str Manipulation", () => {
 def main() -> None:
   a = "Hello" # variable definition
   b = "World!" # variable definition
-  printNoLine(a + " " + b) # procedure call
+  printNoLine(a + " " + b) 
 # end main
 
 main()
@@ -58,7 +58,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("_" + "Hello" + "!") # procedure call
+  printNoLine("_" + "Hello" + "!") 
 # end main
 
 main()
@@ -92,7 +92,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello" + 3.1) # procedure call
+  printNoLine("Hello" + 3.1) 
 # end main
 
 main()
@@ -120,7 +120,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("Hello" + 3) # procedure call
+  printNoLine("Hello" + 3) 
 # end main
 
 main()
@@ -149,7 +149,7 @@ main()
 
 def main() -> None:
   a = "abcde" # variable definition
-  printNoLine(a[2]) # procedure call
+  printNoLine(a[2]) 
 # end main
 
 main()
@@ -187,7 +187,7 @@ def main() -> None:
   a = "abcde" # variable definition
   b = "z" # variable definition
   b = b + a[0] # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -227,7 +227,7 @@ def main() -> None:
   a = "abcde" # variable definition
   b = "z" # variable definition
   b = a[0] # assignment
-  printNoLine(b) # procedure call
+  printNoLine(b) 
 # end main
 
 main()
@@ -265,9 +265,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = "abcde" # variable definition
-  printNoLine(a.subString(1, 3)) # procedure call
-  printNoLine(a.subString(2, a.length())) # procedure call
-  printNoLine(a.subString(0, 2)) # procedure call
+  printNoLine(a.subString(1, 3)) 
+  printNoLine(a.subString(2, a.length())) 
+  printNoLine(a.subString(0, 2)) 
 # end main
 
 main()
@@ -304,13 +304,13 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("abc".equals("abc")) # procedure call
-  printNoLine("abc".equals("abcd")) # procedure call
-  printNoLine("abc".equals("Abc")) # procedure call
-  printNoLine("abc".equals("abc")) # procedure call
-  printNoLine(not "abc".equals("abcd")) # procedure call
-  printNoLine(not "abc".equals("abcd")) # procedure call
-  printNoLine(not "abc".equals("Abc")) # procedure call
+  printNoLine("abc".equals("abc")) 
+  printNoLine("abc".equals("abcd")) 
+  printNoLine("abc".equals("Abc")) 
+  printNoLine("abc".equals("abc")) 
+  printNoLine(not "abc".equals("abcd")) 
+  printNoLine(not "abc".equals("abcd")) 
+  printNoLine(not "abc".equals("Abc")) 
 # end main
 
 main()
@@ -350,12 +350,12 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("abc".isBefore("abC")) # procedure call
-  printNoLine("abcd".isAfter("abc")) # procedure call
-  printNoLine("abc".isAfterOrSameAs("abc")) # procedure call
-  printNoLine("abc".isBeforeOrSameAs("abc")) # procedure call
-  printNoLine("abcd".isAfterOrSameAs("abc")) # procedure call
-  printNoLine("abcd".isBeforeOrSameAs("abc")) # procedure call
+  printNoLine("abc".isBefore("abC")) 
+  printNoLine("abcd".isAfter("abc")) 
+  printNoLine("abc".isAfterOrSameAs("abc")) 
+  printNoLine("abc".isBeforeOrSameAs("abc")) 
+  printNoLine("abcd".isAfterOrSameAs("abc")) 
+  printNoLine("abcd".isBeforeOrSameAs("abc")) 
 # end main
 
 main()
@@ -397,7 +397,7 @@ def main() -> None:
   a = "abcde" # variable definition
   b = 2.1 + 3.4 # variable definition
   a = b.toString() # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -437,7 +437,7 @@ def main() -> None:
   a = 3 # variable definition
   b = 4 # variable definition
   c = f"{a} x {b} = {a*b}" # variable definition
-  printNoLine(c) # procedure call
+  printNoLine(c) 
 # end main
 
 main()
@@ -475,7 +475,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = 3.1 + "Hello" # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -504,7 +504,7 @@ main()
 
 def main() -> None:
   a = 3 + "Hello" # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()
@@ -533,7 +533,7 @@ main()
 
 def main() -> None:
   a = "abcde" # variable definition
-  printNoLine(a[5]) # procedure call
+  printNoLine(a[5]) 
 # end main
 
 main()
@@ -560,8 +560,8 @@ main()
 
 def main() -> None:
   a = "abcde" # variable definition
-  a.put(0, "b") # procedure call
-  printNoLine(a) # procedure call
+  a.put(0, "b") 
+  printNoLine(a) 
 # end main
 
 main()
@@ -589,12 +589,12 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine("abc" < "abC") # procedure call
-  printNoLine("abcd" > "abc") # procedure call
-  printNoLine("abc" >= "abc") # procedure call
-  printNoLine("abc" <= "abc") # procedure call
-  printNoLine("abcd" >= "abc") # procedure call
-  printNoLine("abcd" <= "abc") # procedure call
+  printNoLine("abc" < "abC") 
+  printNoLine("abcd" > "abc") 
+  printNoLine("abc" >= "abc") 
+  printNoLine("abc" <= "abc") 
+  printNoLine("abcd" >= "abc") 
+  printNoLine("abcd" <= "abc") 
 # end main
 
 main()
@@ -628,7 +628,7 @@ main()
 def main() -> None:
   a = "abcde" # variable definition
   a = 2.1 + 3.4 # assignment
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 main()

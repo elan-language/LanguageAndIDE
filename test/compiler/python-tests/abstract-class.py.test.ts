@@ -21,9 +21,9 @@ suite("Python Abstract Class", () => {
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-  x.proc() # procedure call
+  printNoLine(x.prop) 
+  printNoLine(x.func()) 
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -53,7 +53,7 @@ class Bar(Foo): # concrete class
   # end function
 
   def proc(self: Bar) -> None:
-    printNoLine(2) # procedure call
+    printNoLine(2) 
   # end procedure
 
   prop: int
@@ -130,9 +130,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-  x.proc() # procedure call
+  printNoLine(x.prop) 
+  printNoLine(x.func()) 
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -142,7 +142,7 @@ class Foo(ABC): # abstract class
   # end function
 
   def proc(self: Foo) -> None:
-    printNoLine(2) # procedure call
+    printNoLine(2) 
   # end procedure
 
   prop: int
@@ -224,7 +224,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.proc() # procedure call
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -234,7 +234,7 @@ class Foo(ABC): # abstract class
   # end function
 
   def proc(self: Foo) -> None:
-    printNoLine(self.func()) # procedure call
+    printNoLine(self.func()) 
   # end procedure
 
   prop: int
@@ -314,7 +314,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  x.proc() # procedure call
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -324,7 +324,7 @@ class Foo(ABC): # abstract class
     pass # abstract function
 
   def proc(self: Foo) -> None:
-    printNoLine(self.func()) # procedure call
+    printNoLine(self.func()) 
   # end procedure
 
   prop: int
@@ -412,9 +412,9 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-  x.proc() # procedure call
+  printNoLine(x.prop) 
+  printNoLine(x.func()) 
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -454,7 +454,7 @@ class Bar(Foo2): # concrete class
   # end function
 
   def proc(self: Bar) -> None:
-    printNoLine(2) # procedure call
+    printNoLine(2) 
   # end procedure
 
 # end class
@@ -537,8 +537,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-  printNoLine(func2(x)) # procedure call
+  printNoLine(func1(x)) 
+  printNoLine(func2(x)) 
 # end main
 
 def func1(f: Foo1) -> int: # function
@@ -667,8 +667,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
-  printNoLine(func2(x)) # procedure call
+  printNoLine(func1(x)) 
+  printNoLine(func2(x)) 
 # end main
 
 def func1(f: Foo1) -> int: # function
@@ -797,8 +797,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.foo) # procedure call
-  printNoLine(x.foo.hasValue()) # procedure call
+  printNoLine(x.foo) 
+  printNoLine(x.foo.hasValue()) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -907,8 +907,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  x.proc() # procedure call
+  printNoLine(x.prop) 
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -934,7 +934,7 @@ class Bar(Foo): # concrete class
   # end function
 
   def proc(self: Bar) -> None:
-    printNoLine(2) # procedure call
+    printNoLine(2) 
   # end procedure
 
   prop: int
@@ -966,8 +966,8 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
+  printNoLine(x.prop) 
+  printNoLine(x.func()) 
 # end main
 
 class Foo(ABC): # abstract class
@@ -1189,7 +1189,7 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(func1(x)) # procedure call
+  printNoLine(func1(x)) 
 # end main
 
 def func1(f: Foo1) -> int: # function
@@ -1258,9 +1258,9 @@ main()
 
 def main() -> None:
   x = Bar() # variable definition
-  printNoLine(x.prop) # procedure call
-  printNoLine(x.func()) # procedure call
-  x.proc() # procedure call
+  printNoLine(x.prop) 
+  printNoLine(x.func()) 
+  x.proc() 
 # end main
 
 class Foo(ABC): # abstract class
@@ -1300,7 +1300,7 @@ class Bar(Foo, Foo1, Foo2): # concrete class
   # end function
 
   def proc(self: Bar) -> None:
-    printNoLine(2) # procedure call
+    printNoLine(2) 
   # end procedure
 
 # end class

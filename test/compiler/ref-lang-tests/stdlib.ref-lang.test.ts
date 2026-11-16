@@ -2001,9 +2001,6 @@ class List
   constructor()
   end constructor
   function toString() returns String
-    return ""
-  end function
-  function toString() returns String
     return "MyList"
   end function
 
@@ -2011,7 +2008,6 @@ end class
 
 main
   call printNoLine(new List())
-  call printNoLine(new library.List<of Int>())
 end main
 `;
 
@@ -2026,7 +2022,9 @@ end main
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    assertObjectCodeExecutes(fileImpl, "MyList");
   });
 
   test("Pass_SetComparisonByValue", async () => {

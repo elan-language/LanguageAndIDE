@@ -20,9 +20,9 @@ suite("Python Procedure Method", () => {
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.p1) # procedure call
-  f.setP1(7) # procedure call
-  printNoLine(f.p1) # procedure call
+  printNoLine(f.p1) 
+  f.setP1(7) 
+  printNoLine(f.p1) 
 # end main
 
 class Foo: # concrete class
@@ -98,7 +98,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.display() # procedure call
+  f.display() 
 # end main
 
 class Foo: # concrete class
@@ -110,7 +110,7 @@ class Foo: # concrete class
   p1: float
 
   def display(self: Foo) -> None:
-    printNoLine(self.p1) # procedure call
+    printNoLine(self.p1) 
   # end procedure
 
   def toString(self: Foo) -> str:
@@ -173,7 +173,7 @@ return [main, _tests];}`;
 def main() -> None:
   f = Foo() # variable definition
   b = Bar() # variable definition
-  f.times(b) # procedure call
+  f.times(b) 
 # end main
 
 class Foo: # concrete class
@@ -185,10 +185,10 @@ class Foo: # concrete class
   p1: float
 
   def times(self: Foo, b: Bar) -> None:
-    b.p1PlusOne() # procedure call
-    self.p1PlusOne() # procedure call
+    b.p1PlusOne() 
+    self.p1PlusOne() 
     self.p1 = self.p1 + b.p1 # assignment
-    printNoLine(self.p1) # procedure call
+    printNoLine(self.p1) 
   # end procedure
 
   def p1PlusOne(self: Foo) -> None:
@@ -300,7 +300,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  show(f) # procedure call
+  show(f) 
 # end main
 
 class Foo: # concrete class
@@ -316,7 +316,7 @@ class Foo: # concrete class
   p1: float
 
   def show(self: Foo) -> None:
-    printNoLine(p1) # procedure call
+    printNoLine(p1) 
   # end procedure
 
 # end class
@@ -344,7 +344,7 @@ main()
 
 def main() -> None:
   x = Foo() # variable definition
-  x.calculate() # procedure call
+  x.calculate() 
 # end main
 
 class Foo: # concrete class
@@ -643,7 +643,7 @@ main()
 
 def main() -> None:
   x = 3 # variable definition
-  x.clearPrintedText() # procedure call
+  x.clearPrintedText() 
 # end main
 
 main()
@@ -672,7 +672,7 @@ main()
 
 def main() -> None:
   x = 3 # variable definition
-  x.foo(x) # procedure call
+  x.foo(x) 
 # end main
 
 def foo(x: int) -> None: # procedure

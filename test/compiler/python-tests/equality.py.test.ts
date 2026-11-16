@@ -22,9 +22,9 @@ def main() -> None:
   x = Foo(7, "Apple") # variable definition
   y = Foo(7, "Orange") # variable definition
   z = Foo(7, "Orange") # variable definition
-  printNoLine(x.equals(x)) # procedure call
-  printNoLine(x.equals(y)) # procedure call
-  printNoLine(y.equals(z)) # procedure call
+  printNoLine(x.equals(x)) 
+  printNoLine(x.equals(y)) 
+  printNoLine(y.equals(z)) 
 # end main
 
 class Foo: # concrete class
@@ -109,11 +109,11 @@ return [main, _tests];}`;
 def main() -> None:
   x = Foo(7, "Apple") # variable definition
   y = x # variable definition
-  y.setP1(3) # procedure call
+  y.setP1(3) 
   z = Foo(8, "Orange") # variable definition
-  printNoLine(x.equals(x)) # procedure call
-  printNoLine(x.equals(y)) # procedure call
-  printNoLine(x.equals(z)) # procedure call
+  printNoLine(x.equals(x)) 
+  printNoLine(x.equals(y)) 
+  printNoLine(x.equals(z)) 
 # end main
 
 class Foo: # concrete class
@@ -198,7 +198,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Foo() # variable definition
-  printNoLine((x.p1).equals(x.p1)) # procedure call
+  printNoLine((x.p1).equals(x.p1)) 
 # end main
 
 class Foo: # concrete class
@@ -245,13 +245,13 @@ def main() -> None:
   f2 = Foo(2) # variable definition
   l1 = [f1, f2] # variable definition
   l2 = [f1, f2] # variable definition
-  printNoLine(l1.equals(l2)) # procedure call
+  printNoLine(l1.equals(l2)) 
   l3 = [f2, f1] # variable definition
-  printNoLine(l1.equals(l3)) # procedure call
+  printNoLine(l1.equals(l3)) 
   l4 = [Foo(1), Foo(2)] # variable definition
-  printNoLine(l4.equals(l1)) # procedure call
-  l4[0].setP(3) # procedure call
-  printNoLine(l4.equals(l1)) # procedure call
+  printNoLine(l4.equals(l1)) 
+  l4[0].setP(3) 
+  printNoLine(l4.equals(l1)) 
 # end main
 
 class Foo: # concrete class
@@ -337,11 +337,11 @@ def main() -> None:
   f2 = Foo(2) # variable definition
   l1 = [f1, f2] # variable definition
   l2 = [f1, f2] # variable definition
-  printNoLine(l1.equals(l2)) # procedure call
+  printNoLine(l1.equals(l2)) 
   l3 = [f2, f1] # variable definition
-  printNoLine(l1.equals(l3)) # procedure call
+  printNoLine(l1.equals(l3)) 
   l4 = [Foo(1), Foo(2)] # variable definition
-  printNoLine(l4.equals(l1)) # procedure call
+  printNoLine(l4.equals(l1)) 
 # end main
 
 class Foo: # concrete class

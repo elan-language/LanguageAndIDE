@@ -18,7 +18,7 @@ suite("Python Loop Variable", () => {
 def removeLetters(wordAsPlayed: str) -> None: # procedure
   for letter in wordAsPlayed:
     x = letter # variable definition
-    removeLetter(x) # procedure call
+    removeLetter(x) 
   # end for
 # end procedure
 
@@ -75,7 +75,7 @@ return [main, _tests];}`;
 
 def removeLetters(wordAsPlayed: str) -> None: # procedure
   for letter in wordAsPlayed:
-    removeLetter(letter) # procedure call
+    removeLetter(letter) 
   # end for
 # end procedure
 

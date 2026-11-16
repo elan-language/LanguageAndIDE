@@ -20,9 +20,9 @@ suite("Python Enum", () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(enumToString(Fruit.apple)) # procedure call
-  printNoLine(enumToString(Fruit.orange)) # procedure call
-  printNoLine(enumToString(Fruit.pear)) # procedure call
+  printNoLine(enumToString(Fruit.apple)) 
+  printNoLine(enumToString(Fruit.orange)) 
+  printNoLine(enumToString(Fruit.pear)) 
 # end main
 
 class Fruit(Enum):
@@ -70,7 +70,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = Fruit.apple # variable definition
   x = Fruit.pear # assignment
-  printNoLine(enumToString(x)) # procedure call
+  printNoLine(enumToString(x)) 
 # end main
 
 class Fruit(Enum):
@@ -162,7 +162,7 @@ return [main, _tests];}`;
 def main() -> None:
   x = Fruit.apple # variable definition
   y = x # variable definition
-  printNoLine(enumToString(y)) # procedure call
+  printNoLine(enumToString(y)) 
 # end main
 
 class Fruit(Enum):
@@ -208,8 +208,8 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(isFavourite(Fruit.apple)) # procedure call
-  printNoLine(isFavourite(Fruit.pear)) # procedure call
+  printNoLine(isFavourite(Fruit.apple)) 
+  printNoLine(isFavourite(Fruit.pear)) 
 # end main
 
 class Fruit(Enum):
@@ -263,7 +263,7 @@ return [main, _tests];}`;
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(firstFruit() == Fruit.apple) # procedure call
+  printNoLine(firstFruit() == Fruit.apple) 
 # end main
 
 class Fruit(Enum):
@@ -317,8 +317,8 @@ return [main, _tests];}`;
 
 def main() -> None:
   x = Fruit.apple # variable definition
-  printNoLine(x == Fruit.apple) # procedure call
-  printNoLine(x == Fruit.pear) # procedure call
+  printNoLine(x == Fruit.apple) 
+  printNoLine(x == Fruit.pear) 
 # end main
 
 class Fruit(Enum):
@@ -365,7 +365,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = f"Eat more {enumToString(Fruit.apple)}s!" # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 class Fruit(Enum):
@@ -411,7 +411,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   a = "Eat more " + Fruit.apple # variable definition
-  printNoLine(a) # procedure call
+  printNoLine(a) 
 # end main
 
 class Fruit(Enum):
@@ -567,7 +567,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(Fruit.apple) # procedure call
+  printNoLine(Fruit.apple) 
 # end main
 
 main()
@@ -592,7 +592,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(Fruit.kiwi) # procedure call
+  printNoLine(Fruit.kiwi) 
 # end main
 
 class Fruit(Enum):
@@ -785,9 +785,9 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(Fruit.apple) # procedure call
-  printNoLine(Fruit.orange) # procedure call
-  printNoLine(Fruit.pear) # procedure call
+  printNoLine(Fruit.apple) 
+  printNoLine(Fruit.orange) 
+  printNoLine(Fruit.pear) 
 # end main
 
 class Fruit(Enum):
@@ -820,7 +820,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  printNoLine(enumToString("Fruit.apple")) # procedure call
+  printNoLine(enumToString("Fruit.apple")) 
 # end main
 
 class Fruit(Enum):

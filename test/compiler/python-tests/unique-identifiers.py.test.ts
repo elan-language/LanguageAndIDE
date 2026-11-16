@@ -19,7 +19,7 @@ suite("Python Unique Identifiers", () => {
 
 def main() -> None:
   foo = Foo() # variable definition
-  printNoLine(foo) # procedure call
+  printNoLine(foo) 
 # end main
 
 class Foo: # concrete class

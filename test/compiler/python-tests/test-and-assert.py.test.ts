@@ -689,7 +689,7 @@ def main() -> None:
 # end main
 
 def square(x: int, y: list[int]) -> None: # procedure
-  y.put(0,  x ^ 2) # procedure call
+  y.put(0,  x ^ 2) 
 # end procedure
 
 main()
@@ -770,7 +770,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  test_squareTest() # procedure call
+  test_squareTest() 
 # end main
 
 def square(x: float) -> float: # function

@@ -20,7 +20,7 @@ suite("Python Function Method", () => {
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.times(2)) # procedure call
+  printNoLine(f.times(2)) 
 # end main
 
 class Foo: # concrete class
@@ -96,7 +96,7 @@ def main() -> None:
   f = Foo() # variable definition
   x = 1.1 # variable definition
   x = f.times(x) # assignment
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Foo: # concrete class
@@ -174,7 +174,7 @@ def main() -> None:
   f = Foo() # variable definition
   x = list[float]() # variable definition
   x = f.times(2) # assignment
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Foo: # concrete class
@@ -251,7 +251,7 @@ return [main, _tests];}`;
 def main() -> None:
   b = Bar() # variable definition
   x = b.getTimes() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Bar: # concrete class
@@ -375,7 +375,7 @@ return [main, _tests];}`;
 def main() -> None:
   b = Bar() # variable definition
   x = b.getTimes() # variable definition
-  printNoLine(x) # procedure call
+  printNoLine(x) 
 # end main
 
 class Bar: # concrete class
@@ -524,7 +524,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.length()) # procedure call
+  printNoLine(f.length()) 
 # end main
 
 class Foo: # concrete class
@@ -643,7 +643,7 @@ return [main, _tests];}`;
 def main() -> None:
   f = Foo() # variable definition
   b = Bar() # variable definition
-  printNoLine(f.times(b)) # procedure call
+  printNoLine(f.times(b)) 
 # end main
 
 class Foo: # concrete class
@@ -764,7 +764,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  f.prt() # procedure call
+  f.prt() 
 # end main
 
 class Foo: # concrete class
@@ -776,7 +776,7 @@ class Foo: # concrete class
   p1: float
 
   def prt(self: Foo) -> None:
-    printNoLine(self.toString()) # procedure call
+    printNoLine(self.toString()) 
   # end procedure
 
   def toString(self: Foo) -> str:
@@ -838,7 +838,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.yon()) # procedure call
+  printNoLine(f.yon()) 
 # end main
 
 class Foo: # concrete class
@@ -924,7 +924,7 @@ return [main, _tests];}`;
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(times(f, 2)) # procedure call
+  printNoLine(times(f, 2)) 
 # end main
 
 class Foo: # concrete class
@@ -1337,7 +1337,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.foo()) # procedure call
+  printNoLine(f.foo()) 
 # end main
 
 class Foo: # concrete class
@@ -1389,7 +1389,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.foo()) # procedure call
+  printNoLine(f.foo()) 
 # end main
 
 class Foo: # concrete class
@@ -1445,7 +1445,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.bar()) # procedure call
+  printNoLine(f.bar()) 
 # end main
 
 class Foo: # concrete class
@@ -1489,7 +1489,7 @@ main()
 
 def main() -> None:
   f = Foo() # variable definition
-  printNoLine(f.foo(0)) # procedure call
+  printNoLine(f.foo(0)) 
 # end main
 
 def bar() -> int: # function
