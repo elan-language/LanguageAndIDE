@@ -380,16 +380,12 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return lambda;
   };
 
-  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
-    return new InterpolatedAsn(this.visit(ctx.expression())!, this.fieldId, this.scope);
-  };
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) =>
+    new InterpolatedAsn(this.visit(ctx.expression())!, this.language, this.fieldId, this.scope);
 
   override visitSegment = (ctx: SegmentContext) => {
     const expr = ctx.interpolatedStringExpression();
-    if (expr) {
-      return this.visit(expr)!;
-    }
-    return new LitStringAsn(ctx.Grapheme()!.getText(), this.fieldId);
+    return expr ? this.visit(expr)! : new LitStringAsn(ctx.Grapheme()!.getText(), this.fieldId);
   };
 
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {

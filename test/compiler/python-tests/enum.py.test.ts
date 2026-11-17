@@ -360,7 +360,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  ignore_test("Pass_InInterpolatedString", async () => {
+  test("Pass_InInterpolatedString", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

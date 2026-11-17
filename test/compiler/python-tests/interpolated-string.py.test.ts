@@ -49,7 +49,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, `'Hello,' she said.`);
   });
-  ignore_test("Pass_InterpolatedAndNonInterpolatedString", async () => {
+  test("Pass_InterpolatedAndNonInterpolatedString", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -143,7 +143,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  ignore_test("Pass_InterpolatedEmpty", async () => {
+  test("Pass_InterpolatedEmpty", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -168,7 +168,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = "";
+  let a = \`\`;
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -178,7 +178,7 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "");
   });
-  ignore_test("Pass_InterpolatedOneSpace", async () => {
+  test("Pass_InterpolatedOneSpace", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -203,7 +203,7 @@ main()
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 async function main() {
-  let a = " ";
+  let a = \` \`;
   await _stdlib.printNoLine(a);
 }
 return [main, _tests];}`;
@@ -214,7 +214,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, " ");
   });
 
-  ignore_test("Fail_InterpolatedEnumValue", async () => {
+  test("Fail_InterpolatedEnumValue", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

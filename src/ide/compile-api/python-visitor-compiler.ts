@@ -19,6 +19,7 @@ import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn
 import { IfExpressionAsn } from "../../compiler/syntax-nodes/if-expression-asn";
 import { IndexAsn } from "../../compiler/syntax-nodes/index-asn";
 import { IntTypeNameAsn } from "../../compiler/syntax-nodes/int-type-name-asn";
+import { InterpolatedAsn } from "../../compiler/syntax-nodes/interpolated-asn";
 import { KvpAsn } from "../../compiler/syntax-nodes/kvp-asn";
 import { LambdaAsn } from "../../compiler/syntax-nodes/lambda-asn";
 import { LambdaSigAsn } from "../../compiler/syntax-nodes/lambda-sig-asn";
@@ -31,6 +32,7 @@ import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
+import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
@@ -79,6 +81,9 @@ import {
   ChainableTermContext,
   EnumListContext,
   EnumDefValueContext,
+  InterpolatedStringExpressionContext,
+  InterpolatedStringContext,
+  SegmentContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
@@ -388,5 +393,22 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
     this.scope = currentScope;
     return lambda;
+  };
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) =>
+    new InterpolatedAsn(this.visit(ctx.expression())!, this.language, this.fieldId, this.scope);
+
+  override visitSegment = (ctx: SegmentContext) => {
+    const expr = ctx.interpolatedStringExpression();
+    return expr ? this.visit(expr)! : new LitStringAsn(ctx.Grapheme()!.getText(), this.fieldId);
+  };
+
+  override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
+    const segments = ctx
+      .segment()
+      .map((c) => this.visit(c))
+      .filter((s) => s !== null) as AstNode[];
+
+    return new SegmentedStringAsn(segments, this.fieldId);
   };
 }

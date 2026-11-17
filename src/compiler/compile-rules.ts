@@ -200,13 +200,14 @@ export function mustNotBeKeyword(id: string, compileErrors: CompileError[], loca
 
 export function mustNotBeEnum(
   symbolType: SymbolType,
+  language: Language,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbolType instanceof EnumType) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String first",
+        `Cannot use an Enum value here. Use enumToString(...) function to convert enum to a ${language.STRING_NAME} first`,
         location,
       ),
     );

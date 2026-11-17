@@ -10,7 +10,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   newFileImpl,
   testHash,
   testHeader,

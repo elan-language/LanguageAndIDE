@@ -430,7 +430,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5.5");
   });
 
-  ignore_test("Pass_Interpolation", async () => {
+  test("Pass_Interpolation", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
