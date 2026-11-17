@@ -1,3 +1,4 @@
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -431,5 +432,35 @@ export class LanguagePython extends LanguageAbstract {
     )[0];
     elseIfFrame[1] = "l";
     elseIfFrame[2] = "e<b>l</b>if";
+  }
+
+  private opMap = new Map<OperationSymbol, string>([
+    [OperationSymbol.Add, "+"],
+    [OperationSymbol.Minus, "-"],
+    [OperationSymbol.Not, "not"],
+    [OperationSymbol.Multiply, "*"],
+    [OperationSymbol.And, "and"],
+    [OperationSymbol.Equals, "=="],
+    [OperationSymbol.LT, "<"],
+    [OperationSymbol.GT, ">"],
+    [OperationSymbol.GTE, ">="],
+    [OperationSymbol.LTE, "<="],
+    [OperationSymbol.Div, "//"],
+    [OperationSymbol.Divide, "/"],
+    [OperationSymbol.NotEquals, "!="],
+    [OperationSymbol.Or, "or"],
+    [OperationSymbol.Power, "**"],
+    [OperationSymbol.Mod, "%"],
+  ]);
+
+  override mapOperation(op: string): OperationSymbol {
+    op = op.trim();
+
+    for (const e of this.opMap.entries()) {
+      if (e[1] === op) {
+        return e[0];
+      }
+    }
+    return OperationSymbol.Unknown;
   }
 }

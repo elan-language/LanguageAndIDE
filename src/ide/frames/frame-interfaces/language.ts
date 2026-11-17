@@ -1,3 +1,4 @@
+import { OperationSymbol } from "../../../compiler/syntax-nodes/operation-symbol";
 import { FileImpl } from "../file-impl";
 import { FrameType } from "../frame-type";
 import { Field } from "./field";
@@ -72,4 +73,6 @@ export interface Language {
   reservedWords: Set<string>;
 
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
+
+  mapOperation(op: string): OperationSymbol;
 }

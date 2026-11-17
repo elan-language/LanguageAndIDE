@@ -1,4 +1,5 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -182,4 +183,8 @@ export abstract class LanguageAbstract implements Language {
   }
 
   abstract customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
+
+  mapOperation(_op: string): OperationSymbol {
+    return OperationSymbol.Unknown;
+  }
 }

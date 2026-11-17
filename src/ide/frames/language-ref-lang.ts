@@ -1,3 +1,4 @@
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -465,5 +466,35 @@ export class LanguageRefLang extends LanguageAbstract {
 
   customiseStatementOptions(_options: [FrameType, string, string, boolean][]): void {
     // does nothinh
+  }
+
+  private opMap = new Map<OperationSymbol, string>([
+    [OperationSymbol.Add, "+"],
+    [OperationSymbol.Minus, "-"],
+    [OperationSymbol.Not, "not"],
+    [OperationSymbol.Multiply, "*"],
+    [OperationSymbol.And, "and"],
+    [OperationSymbol.Equals, "is"],
+    [OperationSymbol.LT, "<"],
+    [OperationSymbol.GT, ">"],
+    [OperationSymbol.GTE, ">="],
+    [OperationSymbol.LTE, "<="],
+    [OperationSymbol.Div, "div"],
+    [OperationSymbol.Mod, "mod"],
+    [OperationSymbol.Divide, "/"],
+    [OperationSymbol.NotEquals, "isnt"],
+    [OperationSymbol.Or, "or"],
+    [OperationSymbol.Power, "^"],
+  ]);
+
+  override mapOperation(op: string): OperationSymbol {
+    op = op.trim();
+
+    for (const e of this.opMap.entries()) {
+      if (e[1] === op) {
+        return e[0];
+      }
+    }
+    return OperationSymbol.Unknown;
   }
 }

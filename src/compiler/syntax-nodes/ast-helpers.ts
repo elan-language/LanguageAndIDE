@@ -40,7 +40,6 @@ import { ClassAsn } from "./globals/class-asn";
 import { IndexAsn } from "./index-asn";
 import { IntTypeNameAsn } from "./int-type-name-asn";
 import { ListTypeNameAsn } from "./list-type-name-asn";
-import { OperationSymbol } from "./operation-symbol";
 import { StringTypeNameAsn } from "./string-type-name-asn";
 import { TypeNameAsn } from "./type-name-asn";
 
@@ -325,63 +324,6 @@ export function matchParametersAndTypes(
     location,
     scope,
   );
-}
-
-// todo move to language
-const opMapReflang = new Map<OperationSymbol, string>([
-  [OperationSymbol.Add, "+"],
-  [OperationSymbol.Minus, "-"],
-  [OperationSymbol.Not, "not"],
-  [OperationSymbol.Multiply, "*"],
-  [OperationSymbol.And, "and"],
-  [OperationSymbol.Equals, "is"],
-  [OperationSymbol.LT, "<"],
-  [OperationSymbol.GT, ">"],
-  [OperationSymbol.GTE, ">="],
-  [OperationSymbol.LTE, "<="],
-  [OperationSymbol.Div, "div"],
-  [OperationSymbol.Mod, "mod"],
-  [OperationSymbol.Divide, "/"],
-  [OperationSymbol.NotEquals, "isnt"],
-  [OperationSymbol.Or, "or"],
-  [OperationSymbol.Power, "^"],
-]);
-
-const opMapPython = new Map<OperationSymbol, string>([
-  [OperationSymbol.Add, "+"],
-  [OperationSymbol.Minus, "-"],
-  [OperationSymbol.Not, "not"],
-  [OperationSymbol.Multiply, "*"],
-  [OperationSymbol.And, "and"],
-  [OperationSymbol.Equals, "=="],
-  [OperationSymbol.LT, "<"],
-  [OperationSymbol.GT, ">"],
-  [OperationSymbol.GTE, ">="],
-  [OperationSymbol.LTE, "<="],
-  [OperationSymbol.Div, "div"],
-  [OperationSymbol.Divide, "/"],
-  [OperationSymbol.NotEquals, "!="],
-  [OperationSymbol.Or, "or"],
-  [OperationSymbol.Power, "^"],
-  [OperationSymbol.Mod, "%"],
-]);
-
-export function mapOperation(op: string, l: Language): OperationSymbol {
-  op = op.trim();
-
-  const opMap =
-    l.languageFullName === "Python"
-      ? opMapPython
-      : l.languageFullName === "Reference Language"
-        ? opMapReflang
-        : new Map<OperationSymbol, string>();
-
-  for (const e of opMap.entries()) {
-    if (e[1] === op) {
-      return e[0];
-    }
-  }
-  return OperationSymbol.Unknown;
 }
 
 function getOfType(type: SymbolType, index: number, depth: number) {

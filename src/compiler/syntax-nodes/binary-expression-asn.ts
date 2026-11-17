@@ -22,7 +22,6 @@ import {
   mostPreciseSymbol,
 } from "../symbols/symbol-helpers";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { mapOperation } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
 export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
@@ -136,7 +135,7 @@ export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
     const lst = this.lhs.symbolType();
     const rst = this.rhs.symbolType();
 
-    const opSymbol = mapOperation(this.op, this.language);
+    const opSymbol = this.language.mapOperation(this.op);
 
     if (opSymbol === OperationSymbol.Unknown) {
       mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
@@ -194,7 +193,7 @@ export class BinaryExpressionAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    const opSymbol = mapOperation(this.op, this.language);
+    const opSymbol = this.language.mapOperation(this.op);
     switch (opSymbol) {
       case OperationSymbol.Add:
         return mostPreciseSymbol(this.lhs.symbolType(), this.rhs.symbolType());

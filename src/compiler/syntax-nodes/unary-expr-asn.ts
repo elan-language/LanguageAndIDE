@@ -11,7 +11,6 @@ import {
   mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
 } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
-import { mapOperation } from "./ast-helpers";
 import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
@@ -28,7 +27,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   compileErrors: CompileError[] = [];
 
   isNegativeOperation() {
-    return mapOperation(this.op, this.language) === OperationSymbol.Minus;
+    return this.language.mapOperation(this.op) === OperationSymbol.Minus;
   }
 
   private opToJs(opSymbol: OperationSymbol) {
@@ -49,7 +48,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
       mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
     }
 
-    const opSymbol = mapOperation(this.op, this.language);
+    const opSymbol = this.language.mapOperation(this.op);
 
     if (opSymbol === OperationSymbol.Unknown) {
       mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
@@ -73,7 +72,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    const opSymbol = mapOperation(this.op, this.language);
+    const opSymbol = this.language.mapOperation(this.op);
 
     switch (opSymbol) {
       case OperationSymbol.Not:

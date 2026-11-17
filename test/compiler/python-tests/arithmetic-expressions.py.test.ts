@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -104,12 +103,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "182630");
   });
 
-  //triage: this should pass - giving 'unexpected compile error'
-  ignore_test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
+  test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   x = 2 + 3 ** 2 # variable definition
+  y = (2 + 3) ** 2 # variable definition
+  printNoLine(x)
+  printNoLine(y)
 # end main
 
 main()
@@ -141,12 +142,15 @@ return [main, _tests];}`;
     assertObjectCodeIs(fileImpl, objectCode);
     await assertObjectCodeExecutes(fileImpl, "1125");
   });
-  // triage: this should pass - giving 'unexpected compile error'
-  ignore_test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
+
+  test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
   x = 16.0 / 2 ** 3 # variable definition
+  y = (16.0 / 2) ** 3 # variable definition
+  printNoLine(x)
+  printNoLine(y)
 # end main
 
 main()
@@ -179,11 +183,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2512");
   });
 
-  ignore_test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
+  test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
-  x = 16.0 / 2 ^ 3 # variable definition
+  x = 16.0 / 2 ** 3 # variable definition
+  y = (16.0 / 2) ** 3 # variable definition
+  printNoLine(x)
+  printNoLine(y)
 # end main
 
 main()
