@@ -96,7 +96,7 @@ THIS_INSTANCE: 'self';
 //START Common token names; common definitions
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
-CLOSE_BRACE: '}';
+CLOSE_BRACE: '}' { if (this.modeStack.length > 0) { this.popMode(); } };
 OPEN_SQ_BRACKET: '[';
 CLOSE_SQ_BRACKET: ']';
 OPEN_BRACKET: '(';
@@ -126,8 +126,12 @@ LITERAL_BINARY: BINARY_PREFIX [01]+;
 LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
 LITERAL_INTEGER: [0-9][0-9]*;
 LITERAL_FLOAT: [0-9][0-9]* DOT [0-9]+ ExponentPart?;
+
+START_INTERPOLATED_STRING:
+    'f"' -> pushMode(InterpolatedString)
+;
+
 LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
-INTERPOLATED_STRING: 'f"' (~["\u0085] | CommonCharacter)* '"';
 
 WHITESPACES: (Whitespace)+ -> skip;
 TEXT: CommonCharacter+;
@@ -252,3 +256,12 @@ fragment UnicodeClassLU: '\u0041' ..'\u005a';
 fragment UnicodeClassLL: '\u0061' ..'\u007A';
 fragment UnicodeClassND: '\u0030' ..'\u0039';
 //END Common token names; common definitions
+
+mode InterpolatedString;
+
+EscapedLeftBrace: '\\{' -> type(Grapheme);
+EscapedDoubleQuotes: '\\"' -> type(Grapheme);
+ExprStart: '{' -> type(OPEN_BRACE), pushMode(DEFAULT_MODE);
+End: '}' -> type(START_INTERPOLATED_STRING), popMode;
+EndString: '"' -> type(DOUBLE_QUOTES), popMode;
+Grapheme: ~('{' | '"');

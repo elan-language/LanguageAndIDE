@@ -283,7 +283,16 @@ litInt:
     | LITERAL_HEX    # litHex
 ;
 litFloat: LITERAL_FLOAT;
-litString: LITERAL_STRING | INTERPOLATED_STRING;
+litString: LITERAL_STRING;
+
+interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
+
+segment: Grapheme | interpolatedStringExpression;
+
+interpolatedString:
+    START_INTERPOLATED_STRING segment* DOUBLE_QUOTES
+;
+
 enumValue: typeName DOT identifierUse;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
@@ -367,5 +376,5 @@ lambda:
     LAMBDA paramList COLON expression
 ; // TODO should change to identiferList
 
-interpolatedString: INTERPOLATED_STRING;
+
 // END SubNodes
