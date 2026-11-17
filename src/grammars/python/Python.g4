@@ -2,7 +2,10 @@
 
 
 grammar Python;
-import Python_Lexer;
+
+options {
+    tokenVocab = Python_Lexer;
+}
 
 file: comment? global* mainCall? NL* EOF;
 

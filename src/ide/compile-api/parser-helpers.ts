@@ -2,7 +2,6 @@ import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "a
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
-import { PythonLexer } from "../../generated/python/PythonLexer";
 import {
   ArgumentContext as PythonArgumentContext,
   ExpressionContext as PythonExpressionContext,
@@ -33,12 +32,13 @@ import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
+import { Python_Lexer } from "../../generated/python/Python_Lexer";
 
 export function getPythonParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
 
   const chars = CharStream.fromString(input);
-  const lexer = new PythonLexer(chars);
+  const lexer = new Python_Lexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new PythonParser(tokens);
   parser.removeParseListeners();
@@ -56,8 +56,8 @@ export function getRefLangParser(input: string, field?: FieldImpl | File) {
   const lexer = new RefLang_Lexer(chars);
   const tokens = new CommonTokenStream(lexer);
   const parser = new RefLangParser(tokens);
-  // parser.removeParseListeners();
-  // parser.removeErrorListeners();
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
   if (field) {
     parser.addErrorListener(new ErrorListener(field));
   }
