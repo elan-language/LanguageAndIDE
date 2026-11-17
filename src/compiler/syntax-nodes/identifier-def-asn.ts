@@ -1,4 +1,3 @@
-import { mustNotBeKeyword } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { getGlobalScope } from "../symbols/symbol-helpers";
@@ -15,8 +14,6 @@ export class IdentifierDefAsn extends AbstractAstNode implements AstIdNode {
 
   compile(): string {
     this.compileErrors = [];
-    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
-
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return this.id;

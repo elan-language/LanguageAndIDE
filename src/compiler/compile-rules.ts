@@ -47,7 +47,6 @@ import {
 } from "./compile-error";
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { ReservedWords } from "./reserved-words";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
@@ -189,12 +188,6 @@ export function mustBeKnownSymbolType(
 ) {
   if (symbolType instanceof UnknownType) {
     compileErrors.push(new UndefinedSymbolCompileError(originalName, "", location));
-  }
-}
-
-export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (ReservedWords.Instance.matchesIgnoringCase(id)) {
-    compileErrors.push(new SyntaxCompileError(`'${id}' matches a reserved word.`, location));
   }
 }
 

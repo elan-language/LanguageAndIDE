@@ -1138,16 +1138,13 @@ main
 
 end main
 
-procedure break(a as Int)
+procedure while(a as Int)
 
 end procedure`;
 
     const fileImpl = newFileImpl(LanguageRefLang.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
   test("Fail_UseOfLangTypeAsName", async () => {
     const code = `${testHeader}
@@ -1156,16 +1153,13 @@ main
 
 end main
 
-procedure float(a as Int)
+procedure Boolean(a as Int)
 
 end procedure`;
 
     const fileImpl = newFileImpl(LanguageRefLang.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'float' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1192,16 +1186,13 @@ main
 
 end main
 
-procedure fun(break as Int)
+procedure fun(in as Int)
 
 end procedure`;
 
     const fileImpl = newFileImpl(LanguageRefLang.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

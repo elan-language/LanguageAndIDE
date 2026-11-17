@@ -838,7 +838,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  break: int
+  self: int
 
 # end class
 
@@ -856,10 +856,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {

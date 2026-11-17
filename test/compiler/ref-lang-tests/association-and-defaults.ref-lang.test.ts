@@ -772,7 +772,7 @@ class Foo
     return ""
   end function
 
-  property break as Int
+  property class as Int
 
 end class`;
 
@@ -787,10 +787,7 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {

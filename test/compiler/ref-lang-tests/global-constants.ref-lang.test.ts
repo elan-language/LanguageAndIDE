@@ -399,7 +399,7 @@ end main
   test("Fail_UseOfReservedAsName", async () => {
     const code = `${testHeader}
 
-constant break set to 3
+constant assert set to 3
 
 main
 
@@ -408,10 +408,8 @@ end main
 
     const fileImpl = newFileImpl(LanguageRefLang.Instance);
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

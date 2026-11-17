@@ -1488,7 +1488,7 @@ def main() -> None:
 
 # end main
 
-def break(a: int) -> None: # procedure
+def if(a: int) -> None: # procedure
 
 # end procedure
 
@@ -1505,10 +1505,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
@@ -1573,7 +1570,7 @@ def main() -> None:
 
 # end main
 
-def fun(break: int) -> None: # procedure
+def fun(while: int) -> None: # procedure
 
 # end procedure
 
@@ -1590,10 +1587,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

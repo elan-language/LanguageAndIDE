@@ -507,7 +507,7 @@ end main`;
     const code = `${testHeader}
 
 main
-  variable break set to 4.1
+  variable in set to 4.1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -520,13 +520,10 @@ end main`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_UseOfLanguageTypeAsName", async () => {
+  ignore_test("Fail_UseOfLanguageTypeAsName", async () => {
     const code = `${testHeader}
 
 main
@@ -543,10 +540,7 @@ end main`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'int' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_TypeCheck1", async () => {

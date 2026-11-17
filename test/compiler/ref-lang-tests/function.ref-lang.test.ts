@@ -1032,7 +1032,7 @@ main
   
 end main
 
-function break(a as Int) returns Int
+function main(a as Int) returns Int
   return 0
 end function`;
 
@@ -1046,9 +1046,7 @@ end function`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1083,7 +1081,7 @@ main
   
 end main
 
-function fun(break as Int) returns Int
+function fun(test as Int) returns Int
   return 0
 end function`;
 
@@ -1097,9 +1095,7 @@ end function`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

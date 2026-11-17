@@ -462,7 +462,7 @@ main()
   test("Fail_UseOfReservedAsName", async () => {
     const code = `${testPythonHeader}
 
-break = 3 # constant
+def = 3 # constant
 
 def main() -> None:
 
@@ -481,10 +481,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

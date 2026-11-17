@@ -1,4 +1,4 @@
-import { getId, mustBeUniqueValueInScope, mustNotBeKeyword } from "../../compile-rules";
+import { getId, mustBeUniqueValueInScope } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { Scope } from "../../compiler-interfaces/scope";
 import { EnumValueType } from "../../symbols/enum-value-type";
@@ -36,8 +36,6 @@ export class IdentifierListAsn extends AbstractAstNode implements AstNode {
       const ids = this.identifierDefs.map((i) => i.compile());
 
       for (const id of ids) {
-        mustNotBeKeyword(id, this.compileErrors, this.fieldId);
-
         if (ids.indexOf(id) !== ids.lastIndexOf(id)) {
           mustBeUniqueValueInScope(id, this.compileErrors, this.fieldId);
         }

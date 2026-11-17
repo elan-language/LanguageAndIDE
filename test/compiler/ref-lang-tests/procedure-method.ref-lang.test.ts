@@ -445,7 +445,7 @@ class Foo
     return ""
   end function
 
-  procedure break(a as Int)
+  procedure then(a as Int)
 
   end procedure
 end class`;
@@ -460,10 +460,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
@@ -480,7 +477,7 @@ class Foo
     return ""
   end function
 
-  procedure short(a as Int)
+  procedure List(a as Int)
 
   end procedure
 end class`;
@@ -495,10 +492,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'short' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

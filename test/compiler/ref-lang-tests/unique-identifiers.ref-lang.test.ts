@@ -4,6 +4,7 @@ import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
+  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
@@ -74,7 +75,7 @@ return [main, _tests];}`;
     const code = `${testHeader}
 
 main
-  variable bReak set to 1
+  variable fOr set to 1
 end main`;
 
     const fileImpl = new FileImpl(
@@ -89,9 +90,6 @@ end main`;
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'bReak' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
   });
 
   test("Fail_SameVariableNameInScope", async () => {

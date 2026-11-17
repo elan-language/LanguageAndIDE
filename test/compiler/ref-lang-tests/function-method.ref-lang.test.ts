@@ -1149,7 +1149,7 @@ class Foo
     return ""
   end function
 
-  function break(a as Int) returns Int
+  function for(a as Int) returns Int
     return 0
   end function
 end class`;
@@ -1164,10 +1164,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
@@ -1184,7 +1181,7 @@ class Foo
     return ""
   end function
 
-  function int(a as Int) returns Int
+  function Int(a as Int) returns Int
     return 0
   end function
 end class`;
@@ -1199,9 +1196,7 @@ end class`;
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'int' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

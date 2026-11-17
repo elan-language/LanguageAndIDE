@@ -1085,7 +1085,7 @@ def main() -> None:
 
 # end main
 
-def break(a: int) -> int: # function
+def else(a: int) -> int: # function
   return 0
 # end function
 
@@ -1102,9 +1102,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
@@ -1142,7 +1140,7 @@ def main() -> None:
 
 # end main
 
-def fun(break: int) -> int: # function
+def fun(def: int) -> int: # function
   return 0
 # end function
 
@@ -1159,9 +1157,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueName", async () => {

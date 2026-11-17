@@ -4,7 +4,6 @@ import {
   mustBePropertyPrefixedOnMember,
   mustBePublicMember,
   mustNotBeGlobalFunctionIfRef,
-  mustNotBeKeyword,
 } from "../compile-rules";
 import { AstIdNode } from "../compiler-interfaces/ast-id-node";
 import { AstNode } from "../compiler-interfaces/ast-node";
@@ -89,8 +88,6 @@ export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
 
     const symbol = this.getSymbol();
     const searchScope = this.getCurrentScope();
-
-    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
 
     mustBeKnownSymbol(
       symbol,

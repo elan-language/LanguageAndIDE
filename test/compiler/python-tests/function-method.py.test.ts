@@ -1224,7 +1224,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  def break(self: Foo, a: int) -> int:
+  def self(self: Foo, a: int) -> int:
     return 0
   # end function
 
@@ -1243,10 +1243,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {

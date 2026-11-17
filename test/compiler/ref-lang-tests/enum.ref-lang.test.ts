@@ -566,7 +566,7 @@ main
 
 end main
 
-enum Fruit apple, orange, break`;
+enum Fruit apple, orange, function`;
 
     const fileImpl = new FileImpl(
       testHash,
@@ -579,10 +579,7 @@ enum Fruit apple, orange, break`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_DuplicateNames", async () => {

@@ -481,7 +481,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  def break(self: Foo, a: int) -> None:
+  def return(self: Foo, a: int) -> None:
 
   # end procedure
 
@@ -500,10 +500,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
@@ -523,7 +520,7 @@ class Foo: # concrete class
     return ""
   # end function
 
-  def short(self: Foo, a: int) -> None:
+  def list(self: Foo, a: int) -> None:
 
   # end procedure
 
@@ -542,10 +539,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'short' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_NotUniqueParameterName", async () => {

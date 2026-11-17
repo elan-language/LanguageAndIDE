@@ -686,7 +686,7 @@ def main() -> None:
 class Fruit(Enum):
   apple = 1
   orange = 2
-  break = 3
+  if = 3
 # end enum
 
 main()
@@ -703,10 +703,7 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_DuplicateNames", async () => {

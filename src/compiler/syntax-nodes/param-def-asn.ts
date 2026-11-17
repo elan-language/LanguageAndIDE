@@ -2,7 +2,7 @@ import { AstIdNode } from "../../compiler/compiler-interfaces/ast-id-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { getGlobalScope, match, symbolMatches } from "../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../compiler/symbols/symbol-scope";
-import { mustBeKnownSymbolType, mustNotBeKeyword } from "../compile-rules";
+import { mustBeKnownSymbolType } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { UnknownSymbol } from "../symbols/unknown-symbol";
@@ -33,7 +33,6 @@ export class ParamDefAsn extends AbstractAstNode implements AstIdNode {
 
     const typeId = isAstIdNode(this.type) ? this.type.id : "";
 
-    mustNotBeKeyword(this.id, this.compileErrors, this.fieldId);
     mustBeKnownSymbolType(this.symbolType(), typeId, this.compileErrors, this.fieldId);
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
     return `${this.id}`;

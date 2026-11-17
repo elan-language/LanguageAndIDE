@@ -12,7 +12,6 @@ import {
   getId,
   mustBeCompatibleDefinitionNode,
   mustConformToCopyOfThisBoilerPlate,
-  mustNotBeKeyword,
   mustNotBeRedefined,
 } from "../../compile-rules";
 import { Definition } from "../../compiler-interfaces/definition";
@@ -44,7 +43,6 @@ export abstract class AbstractDefinitionAsn extends BreakpointAsn implements Def
     this.compileErrors = [];
     const id = getId(this.identifierDef);
 
-    mustNotBeKeyword(id, this.compileErrors, this.fieldId);
     const symbol = this.getScope().resolveSymbol(id, true, this);
     const caseInsensitiveSymbol = this.getScope().resolveSymbol(id, false, this);
     mustNotBeRedefined(caseInsensitiveSymbol, symbol, this.compileErrors, this.fieldId);

@@ -558,7 +558,7 @@ main()
     const code = `${testPythonHeader}
 
 def main() -> None:
-  break = 4.1 # variable definition
+  for = 4.1 # variable definition
 # end main
 
 main()
@@ -574,10 +574,7 @@ main()
       true,
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
-    assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, [
-      "'break' matches a reserved word.ErrorMessages.html#compile_error",
-    ]);
+    assertDoesNotParse(fileImpl);
   });
 
   test("Fail_UseOfLanguageTypeAsName", async () => {
