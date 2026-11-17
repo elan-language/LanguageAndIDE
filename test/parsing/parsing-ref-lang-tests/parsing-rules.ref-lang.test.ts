@@ -194,45 +194,36 @@ suite("Parsing Rules RefLang", () => {
       LanguageRefLang.Instance,
       (p: Parser) => p.interpolatedString(),
     ];
-    // testAntlrParse(interpolString, `$"{}"`, false);
-    // testAntlrParse(interpolString, `$""`, false, "", "");
+    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, `$"{}"`, false);
+    testAntlrParse(interpolString, `$""`, true, "", "");
     testAntlrParse(interpolString, `$"x"`, true, "", "");
     testAntlrParse(interpolString, `$" "`, true, "", "");
     testAntlrParse(interpolString, `$"{x}"`, true, "", "");
-    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
-    // testAntlrParse(
-    //   interpolString,
-    //   `$"{curly}"`,
-    //   true,
-    //   `$"{curly}"`,
-    //   `$"{curly}"`,
-    //   `$"{<el-id>curly</el-id>}"`,
-    //   `$"{curly}"`,
-    //   "`${await _stdlib.toString(curly)}`",
-    // );
-    // testAntlrParse(
-    //   interpolString, // but with braces
-    //   `$"&#123;curly braces&#125;"`,
-    //   true,
-    //   `$"&#123;curly braces&#125;"`,
-    //   "",
-    //   `$"&#123;curly braces&#125;"`,
-    //   `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-    // );
-    // testAntlrParse(interpolString, ``, false);
-    // testAntlrParse(interpolString, "{x + 1}", true, "{x + 1}", "", "", "");
-    // testAntlrParse(interpolString, "{x", false, "{x", "", "", "");
-    // testAntlrParse(interpolString, "{}", false);
-    // testAntlrParse(
-    //   interpolString,
-    //   `$"{a} plus {b} equals {a + b}"`,
-    //   true,
-    //   '$"{a} plus {b} equals {a + b}"',
-    //   "",
-    //   '$"{a} plus {b} equals {a + b}"',
-    //   "",
-    //   '$"{a} plus {b} equals {a + b}"',
-    // );
+
+    testAntlrParse(
+      interpolString,
+      `$"{curly}"`,
+      true,
+      `$"{curly}"`,
+      `$"{curly}"`,
+      `$"{<el-id>curly</el-id>}"`,
+      `$"{curly}"`,
+      "`${await _stdlib.toString(curly)}`",
+    );
+    testAntlrParse(interpolString, ``, false);
+    testAntlrParse(interpolString, "{x + 1}", false);
+    testAntlrParse(interpolString, "{x", false);
+    testAntlrParse(interpolString, "{}", false);
+    testAntlrParse(
+      interpolString,
+      `$"{a} plus {b} equals {a + b}"`,
+      true,
+      '$"{a} plus {b} equals {a + b}"',
+      "",
+      '$"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
+    );
   });
 
   test("Lit Int", () => {
