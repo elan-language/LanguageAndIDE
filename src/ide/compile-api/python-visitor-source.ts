@@ -18,6 +18,8 @@ import {
   IndexContext,
   IndexedAssignableContext,
   IndexedTermContext,
+  InterpolatedStringContext,
+  InterpolatedStringExpressionContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -230,4 +232,16 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
     `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
+    return "{" + this.visit(ctx.expression())! + "}";
+  };
+
+  override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
+    const s = ctx
+      .segment()
+      .map((s) => this.visit(s))
+      .join("");
+    return 'f"' + s + '"';
+  };
 }

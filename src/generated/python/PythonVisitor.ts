@@ -80,6 +80,9 @@ import { LitBinaryContext } from "./PythonParser.js";
 import { LitHexContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
+import { InterpolatedStringExpressionContext } from "./PythonParser.js";
+import { SegmentContext } from "./PythonParser.js";
+import { InterpolatedStringContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { UnaryExpressionLabelContext } from "./PythonParser.js";
@@ -117,7 +120,6 @@ import { TypeGenericContext } from "./PythonParser.js";
 import { TypeFuncContext } from "./PythonParser.js";
 import { TypeTupleContext } from "./PythonParser.js";
 import { LambdaContext } from "./PythonParser.js";
-import { InterpolatedStringContext } from "./PythonParser.js";
 
 /**
  * This interface defines a complete generic visitor for a parse tree produced
@@ -609,6 +611,24 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitString?: (ctx: LitStringContext) => Result;
   /**
+   * Visit a parse tree produced by `PythonParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.segment`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSegment?: (ctx: SegmentContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.interpolatedString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
+  /**
    * Visit a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree
    * @return the visitor result
@@ -845,10 +865,4 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitLambda?: (ctx: LambdaContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.interpolatedString`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
 }

@@ -195,7 +195,6 @@ suite("Parsing Rules RefLang", () => {
       (p: Parser) => p.interpolatedString(),
     ];
     testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
-    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(interpolString, `$"{}"`, false);
     testAntlrParse(interpolString, `$""`, true, "", "");
     testAntlrParse(interpolString, `$"x"`, true, "", "");

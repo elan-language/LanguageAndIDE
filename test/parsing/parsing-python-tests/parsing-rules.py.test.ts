@@ -145,28 +145,6 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(litString, `'abc'`, false);
     testAntlrParse(litString, `'abc"`, false);
     testAntlrParse(litString, `"abc'`, false);
-    // Interpolated strings
-    testAntlrParse(litString, `$""`, true, "", "");
-    testAntlrParse(litString, `$"x"`, true, "", "");
-    testAntlrParse(litString, `$" "`, true, "", "");
-    testAntlrParse(litString, `$"{x}"`, true, "", "");
-    testAntlrParse(litString, `$"{a} times {b} equals{c}"`, true, "", "");
-    testAntlrParse(
-      litString,
-      `"{curly braces}"`,
-      true,
-      `"{curly braces}"`,
-      `"{curly braces}"`,
-      `"<el-lit>{curly braces}</el-lit>"`,
-    );
-    testAntlrParse(
-      litString,
-      `"&#123;curly braces&#125;"`,
-      true,
-      `"&#123;curly braces&#125;"`,
-      `"&#123;curly braces&#125;"`,
-      `"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-    );
     testAntlrParse(
       litString,
       `"<p>abc</p>"`,
@@ -177,58 +155,46 @@ suite("Parsing Rules Python", () => {
     );
   });
 
-  // TODO Interpolated strings
-  // testAntlrParse(getLitStringRule, `$"{}"`, false);
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule,
-  //       `$"{curly}"`,
-  //       true,
-  //       `$"{curly}"`,
-  //       "",
-  //       `$"{curly}"`,
-  //       `$"{<el-id>curly</el-id>}"`,
-  //     );
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule, // but with braces
-  //       `$"&#123;curly braces&#125;"`,
-  //       true,
-  //       `$"&#123;curly braces&#125;"`,
-  //       "",
-  //       `$"&#123;curly braces&#125;"`,
-  //       `$"<el-lit>&#123;curly braces&#125;</el-lit>"`,
-  //     );
-  //    testAntlrParse(getLitStringInterpolatedInsertRule, ``, false);
-  //     testAntlrParse(
-  //       getLitStringInterpolatedInsertRule,
-  //       "{x + 1}",
-  //       true,
-  //       "{x + 1}",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(
-  //       getLitStringInterpolatedInsertRule,
-  //       "{x",
-  //       false,
-  //       "{x",
-  //       "",
-  //       "",
-  //       "",
-  //     );
-  //     testAntlrParse(getLitStringInterpolatedInsertRule, "{}", false);
-  //     testAntlrParse(
-  //       getLitStringInterpolatedRule,
-  //       `$"{a} plus {b} equals {a + b}"`,
-  //       true,
-  //       '$"{a} plus {b} equals {a + b}"',
-  //       "",
-  //       '$"{a} plus {b} equals {a + b}"',
-  //       "",
-  //       '$"{a} plus {b} equals {a + b}"',
-  //     );
-  //   });
-  //  });
+  test("Interpolated String", () => {
+    const interpolString: [Language, rule: (parser: Parser) => ParserRuleContext] = [
+      LanguagePython.Instance,
+      (p: Parser) => p.interpolatedString(),
+    ];
+    testAntlrParse(interpolString, `""`, false, "", "");
+    testAntlrParse(interpolString, `f""`, true, "", "");
+    testAntlrParse(interpolString, `f"x"`, true, "", "");
+    testAntlrParse(interpolString, `f" "`, true, "", "");
+    testAntlrParse(interpolString, `f"{x}"`, true, "", "");
+    testAntlrParse(interpolString, `f"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, `f"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, `f"{}"`, false);
+
+    testAntlrParse(interpolString, `f"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, ``, false);
+    testAntlrParse(interpolString, "{x + 1}", false);
+    testAntlrParse(interpolString, "{x", false);
+    testAntlrParse(interpolString, "{}", false);
+    // testAntlrParse(
+    //   interpolString,
+    //   `f"{curly}"`,
+    //   true,
+    //   `f"{curly}"`,
+    //   "",
+    //   `f"{<el-id>curly</el-id>}"`,
+    //   `f"{curly}"`,
+    //   "`${await _stdlib.toString(curly)}`",
+    // );
+    // testAntlrParse(
+    //   interpolString,
+    //   `f"{a} plus {b} equals {a + b}"`,
+    //   true,
+    //   'f"{a} plus {b} equals {a + b}"',
+    //   "",
+    //   'f"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
+    //   "",
+    //   "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
+    // );
+  });
 
   ignore_test("Lit int", () => {
     const litInt: [Language, rule: (parser: Parser) => ParserRuleContext] = [
