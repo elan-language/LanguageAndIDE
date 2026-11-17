@@ -199,7 +199,7 @@ suite("Parsing Rules RefLang", () => {
     testAntlrParse(interpolString, `$"x"`, true, "", "");
     testAntlrParse(interpolString, `$" "`, true, "", "");
     testAntlrParse(interpolString, `$"{x}"`, true, "", "");
-    // testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
+    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
     // testAntlrParse(
     //   interpolString,
     //   `$"{curly}"`,
