@@ -1,18 +1,18 @@
-# 1b2be32e190427cc258b7a1a2722285a684e6ec66305c87eeceb44becec9199a Elan 2.0.0-beta5 valid
+# faf995114e831fedf3e22569d0df25964242667397864c2ac6d9e422272a78cd Elan 2.0.0-beta5 valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
   variable done set to false
   while not done
-    variable wanted set to inputString("What type of fruit do you want ('x' to exit)? ")
+    variable wanted set to input("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x") then
       assign done to true
     else
       variable result set to binarySearch(fruit, wanted)
       if result then
-        call print($"\nWe can supply a {wanted}")
+        call print($"We can supply a {wanted}")
       else
-        call print($"\nSorry, we cannot supply a {wanted}")
+        call print($"Sorry, we cannot supply a {wanted}")
       end if
     end if
   end while

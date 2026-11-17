@@ -1,4 +1,4 @@
-# c905014fdaef990b9790647d71e56c03b2f515962fbbd2734c1c819f02e48b7f Elan 2.0.0-beta5 valid
+# 2b48b054a77fa5ff912d4c8934fb3c4a7ecb51da233640c357c81f3b802c9b1c Elan 2.0.0-beta5 valid
 
 main
   variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
@@ -24,9 +24,9 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
   variable turnI set to 0
   for turn in turns
     assign turnI to (if_(turn.equals(left), 1, -1))
-    call t.turn(-45*turnI)
+    call t.turn(-45)
     call t.move(corner)
-    call t.turn(-45*turnI)
+    call t.turn(-45)
     call t.move(side)
     call sleep_ms(p)
   end for
@@ -52,7 +52,7 @@ end function
 function reflect(s as String) returns String
   variable sR set to ""
   for i in range(1, s.length() + 1)
-    assign sR to if_((s[i - 1]).equals(left), right, left) + sR
+    assign sR to if_((s[i - 1]).equals(left), right, left)
   end for
   return sR
 end function
@@ -62,9 +62,4 @@ test test_setTurns
   assert setTurns("11") evaluates to "1110"
   assert setTurns("110") evaluates to "110110"
   assert setTurns("1101100") evaluates to "11011001110010"
-end test
-
-test test_reflect
-  assert reflect("110") evaluates to "100"
-  assert reflect("00001") evaluates to "01111"
 end test

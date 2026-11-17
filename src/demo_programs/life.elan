@@ -1,4 +1,4 @@
-# be661e1ae2c05ccb25e87410af6ffdf84736585bf03cd458c8b5c2c64d519bd8 Elan 2.0.0-beta5 valid
+# 923e3bf34862d5d38adc7d46e0274a10b149ce50efac63c32ea6ca2a39413234 Elan 2.0.0-beta5 valid
 
 main
   variable grid set to new BlockGraphics()
@@ -15,7 +15,7 @@ end main
 procedure fillRandom(grid as BlockGraphics)
   variable colours set to [black, white]
   for cell in range(0, 1199)
-    variable colour set to colours[randint(0, 2)]
+    variable colour set to colours[randint(0, 1)]
     call grid.putBlockNo(cell, colour)
   end for
 end procedure
@@ -225,10 +225,10 @@ end function
 
 test test_nextCellValue
   variable grid set to createTestGrid()
-  assert nextCellValue(grid, 0) evaluates to white
-  assert nextCellValue(grid, 41) evaluates to white
-  assert nextCellValue(grid, 1) evaluates to black
-  assert nextCellValue(grid, 42) evaluates to black
+  assert nextCellValue(grid, 0) evaluates to 16777215
+  assert nextCellValue(grid, 41) evaluates to 16777215
+  assert nextCellValue(grid, 1) evaluates to 0
+  assert nextCellValue(grid, 42) evaluates to 0
 end test
 
 function createTestGrid() returns BlockGraphics
