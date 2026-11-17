@@ -254,9 +254,9 @@ fragment UnicodeClassND: '\u0030' ..'\u0039';
 
 mode InterpolatedString;
 
-EscapedLeftBrace: '\\{' -> type(StringSegment);
-EscapedDoubleQuotes: '\\"' -> type(StringSegment);
+EscapedLeftBrace: '\\{' -> type(Grapheme);
+EscapedDoubleQuotes: '\\"' -> type(Grapheme);
 ExprStart: '{' -> type(OPEN_BRACE), pushMode(DEFAULT_MODE);
 End: '}' -> type(START_INTERPOLATED_STRING), popMode;
 EndString: '"' -> type(DOUBLE_QUOTES), popMode;
-StringSegment: CommonCharacter+;
+Grapheme: ~('{' | '"');

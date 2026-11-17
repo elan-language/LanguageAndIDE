@@ -251,7 +251,7 @@ litString: LITERAL_STRING;
 
 interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
 
-segment: StringSegment | interpolatedStringExpression;
+segment: Grapheme | interpolatedStringExpression;
 
 interpolatedString:
     START_INTERPOLATED_STRING segment* DOUBLE_QUOTES
