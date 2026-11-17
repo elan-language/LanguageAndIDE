@@ -307,14 +307,14 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
 
-  ignore_test("Pass_InInterpolatedString", async () => {
+  test("Pass_InInterpolatedString", async () => {
     const code = `${testHeader}
 
 main
   variable a set to $"Eat more {enumToString(Fruit.apple)}s!"
   call printNoLine(a)
 end main
-   
+
 enum Fruit apple, orange, pear`;
 
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
