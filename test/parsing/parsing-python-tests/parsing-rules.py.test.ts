@@ -165,6 +165,7 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(interpolString, `f"x"`, true, "", "");
     testAntlrParse(interpolString, `f" "`, true, "", "");
     testAntlrParse(interpolString, `f"{x}"`, true, "", "");
+    testAntlrParse(interpolString, `f"{{"a":1, "b":3, "z":10}}"`, false); //literal dictionary inside an interp expression
     testAntlrParse(interpolString, `f"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(interpolString, `f"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(interpolString, `f"{}"`, false);
@@ -174,26 +175,26 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(interpolString, "{x + 1}", false);
     testAntlrParse(interpolString, "{x", false);
     testAntlrParse(interpolString, "{}", false);
-    // testAntlrParse(
-    //   interpolString,
-    //   `f"{curly}"`,
-    //   true,
-    //   `f"{curly}"`,
-    //   "",
-    //   `f"{<el-id>curly</el-id>}"`,
-    //   `f"{curly}"`,
-    //   "`${await _stdlib.toString(curly)}`",
-    // );
-    // testAntlrParse(
-    //   interpolString,
-    //   `f"{a} plus {b} equals {a + b}"`,
-    //   true,
-    //   'f"{a} plus {b} equals {a + b}"',
-    //   "",
-    //   'f"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
-    //   "",
-    //   "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
-    // );
+    testAntlrParse(
+      interpolString,
+      `f"{curly}"`,
+      true,
+      `f"{curly}"`,
+      "",
+      `f"{<el-id>curly</el-id>}"`,
+      `f"{curly}"`,
+      "`${await _stdlib.toString(curly)}`",
+    );
+    testAntlrParse(
+      interpolString,
+      `f"{a} plus {b} equals {a + b}"`,
+      true,
+      'f"{a} plus {b} equals {a + b}"',
+      "",
+      'f"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
+      "",
+      "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
+    );
   });
 
   ignore_test("Lit int", () => {

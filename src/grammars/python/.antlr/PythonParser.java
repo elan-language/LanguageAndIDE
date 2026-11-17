@@ -106,7 +106,7 @@ public class PythonParser extends Parser {
 			"'and'", "'or'", "'not'", "'=='", "'!='", "'%'", "'->'", "'**'", "'0b'", 
 			"'0x'", "'self'", "'='", "'{'", null, "'['", "']'", "'('", "')'", "'.'", 
 			"','", "':'", "'+'", "'-'", "'*'", "'/'", "'<'", "'>'", "'<='", "'>='", 
-			null, null, null, null, null, null, null, null, null, null, null, "'$\"'", 
+			null, null, null, null, null, null, null, null, null, null, null, "'f\"'", 
 			null, null, null, "'#[ghosted] '", "''''[ghosted] '", "'''''", "'# end main'", 
 			"'# end function'", "'# end test'", "'# end test class'", "'# end procedure'", 
 			"'# end enum'", "'# end class'", "'# end if'", "'# end while'", "'# end for'", 
