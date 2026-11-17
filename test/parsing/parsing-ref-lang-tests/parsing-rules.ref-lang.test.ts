@@ -213,8 +213,8 @@ suite("Parsing Rules RefLang", () => {
       "`${await _stdlib.toString(curly)}`",
     );
     testAntlrParse(interpolString, ``, false);
-    testAntlrParse(interpolString, "{x + 1}", true, "{x + 1}", "", "", "");
-    testAntlrParse(interpolString, "{x", false, "{x", "", "", "");
+    testAntlrParse(interpolString, "{x + 1}", false);
+    testAntlrParse(interpolString, "{x", false);
     testAntlrParse(interpolString, "{}", false);
     testAntlrParse(
       interpolString,
