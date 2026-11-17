@@ -231,7 +231,7 @@ suite("Parsing Rules RefLang", () => {
       "",
       '$"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
       "",
-      "`${await _stdlib.toString(a)}${await _stdlib.toString(b)}${await _stdlib.toString(a + b)}`",
+      "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
     );
   });
 

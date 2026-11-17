@@ -73,6 +73,7 @@ import {
   NewInstanceContext,
   ParamDefContext,
   ParamListContext,
+  SegmentContext,
   SimpleAssignableContext,
   TestNameContext,
   ThisAssignableContext,
@@ -383,11 +384,19 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new InterpolatedAsn(this.visit(ctx.expression())!, this.fieldId, this.scope);
   };
 
+  override visitSegment = (ctx: SegmentContext) => {
+    const expr = ctx.interpolatedStringExpression();
+    if (expr) {
+      return this.visit(expr)!;
+    }
+    return new LitStringAsn(ctx.Grapheme()!.getText(), this.fieldId);
+  };
+
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
     const segments = ctx
       .segment()
       .map((c) => this.visit(c))
-      .filter((s) => s) as AstNode[];
+      .filter((s) => s !== null) as AstNode[];
 
     return new SegmentedStringAsn(segments, this.fieldId);
   };
