@@ -56,7 +56,8 @@ def main() -> None:
   a = 1 # variable definition
   b = "Apple" # variable definition
   c = [1, 2, 3] # variable definition
-  printNoLine(f"{a} {b} {c}") 
+  d = {"a":1, "b":3, "z":10} # variable definition
+  printNoLine(f"{a} {b} {c} {d}") 
 # end main
 
 main()
@@ -68,7 +69,8 @@ async function main() {
   let a = 1;
   let b = "Apple";
   let c = system.list([1, 2, 3]);
-  await _stdlib.printNoLine(\`\${await _stdlib.toString(a)} \${await _stdlib.toString(b)} \${await _stdlib.toString(c)}\`);
+  let d = system.dictionary([["a", 1], ["b", 3], ["z", 10]]);
+  await _stdlib.printNoLine(\`\${await _stdlib.toString(a)} \${await _stdlib.toString(b)} \${await _stdlib.toString(c)} \${await _stdlib.toString(d)}\`);
 }
 return [main, _tests];}`;
 
@@ -86,7 +88,7 @@ return [main, _tests];}`;
     assertParses(fileImpl);
     assertStatusIsValid(fileImpl);
     assertObjectCodeIs(fileImpl, objectCode);
-    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3]");
+    await assertObjectCodeExecutes(fileImpl, "1 Apple [1, 2, 3] [a:1, b:3, z:10]");
   });
 
   ignore_test("Fail_missingBrace", async () => {
