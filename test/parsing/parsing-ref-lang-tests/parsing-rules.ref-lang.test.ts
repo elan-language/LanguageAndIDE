@@ -201,7 +201,7 @@ suite("Parsing Rules RefLang", () => {
     testAntlrParse(interpolString, `$"x"`, true, "", "");
     testAntlrParse(interpolString, `$" "`, true, "", "");
     testAntlrParse(interpolString, `$"{x}"`, true, "", "");
-
+    testAntlrParse(interpolString, `$"{a} times {b} equals{c}"`, true, "", "");
     testAntlrParse(
       interpolString,
       `$"{curly}"`,
@@ -213,8 +213,8 @@ suite("Parsing Rules RefLang", () => {
       "`${await _stdlib.toString(curly)}`",
     );
     testAntlrParse(interpolString, ``, false);
-    testAntlrParse(interpolString, "{x + 1}", false);
-    testAntlrParse(interpolString, "{x", false);
+    testAntlrParse(interpolString, "{x + 1}", true, "{x + 1}", "", "", "");
+    testAntlrParse(interpolString, "{x", false, "{x", "", "", "");
     testAntlrParse(interpolString, "{}", false);
     testAntlrParse(
       interpolString,
@@ -223,6 +223,8 @@ suite("Parsing Rules RefLang", () => {
       '$"{a} plus {b} equals {a + b}"',
       "",
       '$"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
+      "",
+      "`${await _stdlib.toString(a)}${await _stdlib.toString(b)}${await _stdlib.toString(a + b)}`",
     );
   });
 
