@@ -384,7 +384,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   };
 
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
-    const segments = ctx.segment().map((c) => this.visit(c)) as AstNode[];
+    const segments = ctx
+      .segment()
+      .map((c) => this.visit(c))
+      .filter((s) => s) as AstNode[];
 
     return new SegmentedStringAsn(segments, this.fieldId);
   };
