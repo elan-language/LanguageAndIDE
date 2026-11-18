@@ -99,11 +99,11 @@ suite("RefLang Demo compile", () => {
     await testElanFile("tower-of-hanoi-recursive");
   });
 
-  ignore_test("test turtle-snowflake", async () => {
+  test("test turtle-snowflake", async () => {
     await testElanFile("turtle-snowflake");
   });
 
-  ignore_test("test turtle-spiral", async () => {
+  test("test turtle-spiral", async () => {
     await testElanFile("turtle-spiral");
   });
 

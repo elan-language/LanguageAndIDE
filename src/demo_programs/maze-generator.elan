@@ -1,4 +1,4 @@
-# 3d09e98c8d1df3dbb2c1d34e141bb737956f7438199ab19ff719b9f7b190d156 Elan 2.0.0-beta5 valid
+# 3cfde5d8d3a43b48f89e1974ab252ffd8cce5bf43ff4542c5889f24384a75bc0 Elan 2.0.0-beta5 valid
 
 main
   variable blocks set to new BlockGraphics()
@@ -16,7 +16,7 @@ main
     end if
   end for
   call displayBlockGraphics(blocks)
-  variable name set to inputString("File name to save: ")
+  variable name set to input("File name to save: ")
   if not name.equals("x") then
     call saveAsFile(name, blocks)
   end if
@@ -61,6 +61,7 @@ function addRectangle(b as BlockGraphics, startX as Int, startY as Int, width as
 end function
 
 # colour: 0 for black, 1 for white
+
 function okToSet(p as Point, colour as Int, g as BlockGraphics) returns Boolean
   variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
   variable q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
