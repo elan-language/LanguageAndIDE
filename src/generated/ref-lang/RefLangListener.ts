@@ -65,6 +65,7 @@ import { ArgumentContext } from "./RefLangParser.js";
 import { ParamListContext } from "./RefLangParser.js";
 import { IdentifierListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
+import { TypeNonGenericContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { AssertExpectedContext } from "./RefLangParser.js";
@@ -771,6 +772,16 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitExpressionList?: (ctx: ExpressionListContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   */
+  enterTypeNonGeneric?: (ctx: TypeNonGenericContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   */
+  exitTypeNonGeneric?: (ctx: TypeNonGenericContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree

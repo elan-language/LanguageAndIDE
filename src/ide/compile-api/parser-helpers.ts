@@ -133,7 +133,7 @@ export function visitTypeHelper<T>(
   context: PythonTypeContext | RefLangTypeContext,
 ) {
   const typeTuple = context.typeTuple();
-  const typeName = context.typeName();
+  const typeName = context.typeNonGeneric();
   const typeGeneric = context.typeGeneric();
   const typeFunc = context.typeFunc();
 

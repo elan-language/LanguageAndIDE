@@ -65,6 +65,7 @@ import { ArgumentContext } from "./RefLangParser.js";
 import { ParamListContext } from "./RefLangParser.js";
 import { IdentifierListContext } from "./RefLangParser.js";
 import { ExpressionListContext } from "./RefLangParser.js";
+import { TypeNonGenericContext } from "./RefLangParser.js";
 import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { AssertExpectedContext } from "./RefLangParser.js";
@@ -512,6 +513,12 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeNonGeneric?: (ctx: TypeNonGenericContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.type`.
    * @param ctx the parse tree

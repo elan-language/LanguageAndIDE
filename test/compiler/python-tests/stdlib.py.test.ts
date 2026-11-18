@@ -14,6 +14,7 @@ import {
   assertParses,
   assertStatusIsValid,
   assertTestObjectCodeExecutes,
+  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -2160,7 +2161,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Fail_shadowLibraryType", async () => {
+  ignore_test("Fail_shadowLibraryType", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

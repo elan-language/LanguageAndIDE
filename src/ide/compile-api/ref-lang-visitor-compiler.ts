@@ -82,6 +82,7 @@ import {
   TypeFuncContext,
   TypeGenericContext,
   TypeNameContext,
+  TypeNonGenericContext,
   TypeTupleContext,
 } from "../../generated/ref-lang/RefLangParser";
 import { RefLangVisitor } from "../../generated/ref-lang/RefLangVisitor";
@@ -191,7 +192,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
     return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
   };
 
-  // type: typeTuple | typeName | typeGeneric | typeFunc;
+  // type: typeTuple | typeNonGeneric | typeGeneric | typeFunc;
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -202,6 +203,9 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);
+
+  override visitTypeNonGeneric = (ctx: TypeNonGenericContext) =>
+    new TypeAsn(this.visit(ctx.typeName())!, [], this.fieldId, this.scope);
 
   override visitTypeFunc = (ctx: TypeFuncContext) =>
     new TypeAsn(

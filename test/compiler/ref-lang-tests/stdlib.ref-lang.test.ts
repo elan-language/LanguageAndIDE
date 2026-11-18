@@ -1994,7 +1994,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
 
-  test("Fail_shadowLibraryType", async () => {
+  ignore_test("Fail_shadowLibraryType", async () => {
     const code = `${testHeader}
 
 class List

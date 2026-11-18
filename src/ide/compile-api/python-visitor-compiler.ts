@@ -84,6 +84,7 @@ import {
   InterpolatedStringExpressionContext,
   InterpolatedStringContext,
   SegmentContext,
+  TypeNonGenericContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
@@ -201,7 +202,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     return new IdentifierListAsn(identifierDefs, this.fieldId, this.scope);
   };
 
-  // type: typeTuple | typeName | typeGeneric | typeFunc;
+  // type: typeTuple | typeNonGeneric | typeGeneric | typeFunc;
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
       getTypeName(this.language, "Tuple", this.fieldId, this.scope),
@@ -209,6 +210,9 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
       this.fieldId,
       this.scope,
     );
+
+  override visitTypeNonGeneric = (ctx: TypeNonGenericContext) =>
+    new TypeAsn(this.visit(ctx.typeName())!, [], this.fieldId, this.scope);
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     new TypeAsn(this.visit(ctx.typeName())!, getTypes(this, ctx), this.fieldId, this.scope);

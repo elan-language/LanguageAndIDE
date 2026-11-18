@@ -197,17 +197,19 @@ constructorMember:
         ? GHOSTED_BLOCK_END? NL ordinaryStatement* END_CONSTRUCTOR NL
 ;
 
-property: GHOSTED_LINE? identifierDef COLON type PRIVATE_ANNOTATION? commentText? NL;
+property:
+    GHOSTED_LINE? identifierDef COLON type PRIVATE_ANNOTATION? commentText? NL
+;
 
 functionMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON PRIVATE_ANNOTATION? NL (
-        ordinaryStatement
-    )* returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
+        PRIVATE_ANNOTATION? NL (ordinaryStatement)* returnStatement END_FUNCTION GHOSTED_BLOCK_END?
+        NL
 ;
 
 procedureMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON PRIVATE_ANNOTATION? NL
-        ordinaryStatement* END_PROCEDURE GHOSTED_BLOCK_END? NL
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
+        PRIVATE_ANNOTATION? NL ordinaryStatement* END_PROCEDURE GHOSTED_BLOCK_END? NL
 ;
 
 abstractFunction:
@@ -255,7 +257,9 @@ expressionList: expression (COMMA expression)*;
 enumDefValue: identifierDef SINGLE_EQUALS litInt;
 enumList: enumDefValue (NL enumDefValue)*;
 
-type: typeTuple | typeName | typeGeneric | typeFunc;
+typeNonGeneric: typeName;
+
+type: typeTuple | typeNonGeneric | typeGeneric | typeFunc;
 
 assertActual: expression;
 assertExpected:
@@ -375,6 +379,5 @@ typeTuple:
 lambda:
     LAMBDA paramList COLON expression
 ; // TODO should change to identiferList
-
 
 // END SubNodes

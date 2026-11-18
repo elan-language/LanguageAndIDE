@@ -277,8 +277,7 @@ return [main, _tests];}`;
     );
   });
 
-  // triage: should be OK
-  ignore_test("Fail_QueueWithoutGenericParm", async () => {
+  test("Fail_QueueWithoutGenericParm", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:

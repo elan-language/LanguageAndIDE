@@ -101,7 +101,9 @@ THIS_INSTANCE: 'this';
 
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
-CLOSE_BRACE: '}' { if (this.modeStack.length > 0) { this.popMode(); } };
+CLOSE_BRACE:
+    '}' { if (this.modeStack.length > 0) { this.popMode(); } }
+;
 OPEN_SQ_BRACKET: '[';
 CLOSE_SQ_BRACKET: ']';
 OPEN_BRACKET: '(';

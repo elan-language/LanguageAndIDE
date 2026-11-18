@@ -218,7 +218,9 @@ paramList: paramDef (COMMA paramDef)*;
 identifierList: identifierDef (COMMA identifierDef)+;
 expressionList: expression (COMMA expression)*;
 
-type: typeTuple | typeName | typeGeneric | typeFunc;
+typeNonGeneric: typeName;
+
+type: typeTuple | typeNonGeneric | typeGeneric | typeFunc;
 
 assertActual: expression;
 assertExpected:

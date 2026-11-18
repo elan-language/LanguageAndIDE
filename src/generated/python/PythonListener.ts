@@ -70,6 +70,7 @@ import { IdentifierListContext } from "./PythonParser.js";
 import { ExpressionListContext } from "./PythonParser.js";
 import { EnumDefValueContext } from "./PythonParser.js";
 import { EnumListContext } from "./PythonParser.js";
+import { TypeNonGenericContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
@@ -826,6 +827,16 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitEnumList?: (ctx: EnumListContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   */
+  enterTypeNonGeneric?: (ctx: TypeNonGenericContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   */
+  exitTypeNonGeneric?: (ctx: TypeNonGenericContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.type`.
    * @param ctx the parse tree

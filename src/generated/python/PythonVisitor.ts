@@ -70,6 +70,7 @@ import { IdentifierListContext } from "./PythonParser.js";
 import { ExpressionListContext } from "./PythonParser.js";
 import { EnumDefValueContext } from "./PythonParser.js";
 import { EnumListContext } from "./PythonParser.js";
+import { TypeNonGenericContext } from "./PythonParser.js";
 import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
@@ -547,6 +548,12 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitEnumList?: (ctx: EnumListContext) => Result;
+  /**
+   * Visit a parse tree produced by `PythonParser.typeNonGeneric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeNonGeneric?: (ctx: TypeNonGenericContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.type`.
    * @param ctx the parse tree
