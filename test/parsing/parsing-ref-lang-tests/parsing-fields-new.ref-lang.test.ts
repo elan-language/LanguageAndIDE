@@ -33,6 +33,7 @@ import { ProcedureCall } from "../../../src/ide/frames/statements/procedureCall"
 import { ThrowStatement } from "../../../src/ide/frames/statements/throw-statement";
 
 import { fileImplFor, testFieldParse } from "../../testHelpers";
+import { AssertStatement } from "../../../src/ide/frames/statements/assert-statement";
 
 const refLang: Language = LanguageRefLang.Instance;
 
@@ -288,7 +289,7 @@ suite("Parsing Field Fields (New) RefLang", () => {
     );
   });
   test("AssertExpected", () => {
-    const field = new FieldImpl(new Assignment(fileImplFor(refLang)), assertExpectedFieldSpec);
+    const field = new FieldImpl(new AssertStatement(fileImplFor(refLang)), assertExpectedFieldSpec);
 
     testFieldParse(
       field,
@@ -308,8 +309,8 @@ suite("Parsing Field Fields (New) RefLang", () => {
       "[1, 2]",
     );
 
-    testFieldParse(field, "foo()", false, "");
-    testFieldParse(field, "3 + 4", false, "");
+    testFieldParse(field, "foo()", true, "");
+    testFieldParse(field, "3 + 4", true, "");
   });
   test("Assignable", () => {
     const field = new FieldImpl(new Assignment(fileImplFor(refLang)), assignableFieldSpec);

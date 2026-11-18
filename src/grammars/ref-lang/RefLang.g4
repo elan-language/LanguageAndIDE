@@ -221,13 +221,8 @@ expressionList: expression (COMMA expression)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
-assertExpected:
-    litValue
-    | list
-    | dictionary
-    | unaryExpression
-    | tuple
-;
+assertExpected: expression;
+
 // END Fields
 
 // START SubNodes

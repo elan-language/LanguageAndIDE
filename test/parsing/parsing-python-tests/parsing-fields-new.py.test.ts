@@ -27,6 +27,7 @@ import { Enum } from "../../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../../src/ide/frames/globals/test-frame";
 import { LanguagePython } from "../../../src/ide/frames/language-python";
+import { AssertStatement } from "../../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../../src/ide/frames/statements/procedureCall";
@@ -297,7 +298,7 @@ bar = 2`,
     );
   });
   test("AssertExpected", () => {
-    const field = new FieldImpl(new Assignment(fileImplFor(python)), assertExpectedFieldSpec);
+    const field = new FieldImpl(new AssertStatement(fileImplFor(python)), assertExpectedFieldSpec);
 
     testFieldParse(
       field,
@@ -317,8 +318,8 @@ bar = 2`,
       "[1, 2]",
     );
 
-    testFieldParse(field, "foo()", false, "");
-    testFieldParse(field, "3 + 4", false, "");
+    testFieldParse(field, "foo()", true, "");
+    testFieldParse(field, "3 + 4", true, "");
   });
   test("Assignable", () => {
     const field = new FieldImpl(new Assignment(fileImplFor(python)), assignableFieldSpec);

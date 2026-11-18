@@ -258,13 +258,7 @@ enumList: enumDefValue (NL enumDefValue)*;
 type: typeTuple | typeName | typeGeneric | typeFunc;
 
 assertActual: expression;
-assertExpected:
-    litValue
-    | list
-    | dictionary
-    | unaryExpression
-    | tuple
-;
+assertExpected: expression;
 // END Fields
 
 // START SubNodes

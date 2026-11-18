@@ -1,4 +1,4 @@
-# 50d6bb7f82e11311b28c9c7a84eb97c9479f126865ba8f0198a71ab3123bd36c Elan 2.0.0-beta5 valid
+# dc74caa8cfa72a0b9137270c5534c09f1b4273769c00a64e3e2ffe0279851b2c Elan 2.0.0-beta5 valid
 
 constant nDiscs set to 7
 
@@ -62,7 +62,7 @@ end function
 test test_createDisc
   # Normal cases
   variable d set to createDisc(5, 2, 4)
-  assert d.fillColour evaluates to 32768
+  assert d.fillColour evaluates to green
   assert d.strokeWidth evaluates to 0.25
   assert d.height evaluates to 3
   assert d.width evaluates to 12
@@ -70,7 +70,7 @@ test test_createDisc
   assert d.y evaluates to 38
   # Edge cases
   variable d2 set to createDisc(1, 1, 0)
-  assert d2.fillColour evaluates to 16711680
+  assert d2.fillColour evaluates to red
   assert d2.strokeWidth evaluates to 0.25
   assert d2.height evaluates to 3
   assert d2.width evaluates to 4
@@ -86,23 +86,16 @@ function create3Stacks(nDiscs as Int) returns List<of List<of Int>>
   return [s0, s1, s2]
 end function
 
-# test test_create3Stacks
-
-#  # Normal case(s)
-
-#  assert create3Stacks(7) evaluates to [[7, 6, 5, 4, 3, 2, 1], new List<of Int>(), new List<of Int>()]
-
-#  # Edge case(s)
-
-#  assert create3Stacks(1) evaluates to [[1], new List<of Int>(), new List<of Int>()]
-
-#  assert create3Stacks(0) evaluates to [new List<of Int>(), new List<of Int>(), new List<of Int>()]
-
-#  # Error case(s)
-
-#  assert create3Stacks(-1) evaluates to "Loop will not terminate when start < end start with negative step"
-
-# end test
+test test_create3Stacks
+  variable empty set to new List<of Int>()
+  # Normal case(s)
+  assert create3Stacks(7) evaluates to [[7, 6, 5, 4, 3, 2, 1], empty, empty]
+  # Edge case(s)
+  assert create3Stacks(1) evaluates to [[1], empty, empty]
+  assert create3Stacks(0) evaluates to [empty, empty, empty]
+  # Error case(s)
+  assert create3Stacks(-1) evaluates to "Loop will not terminate when start < end start with negative step"
+end test
 
 function colour(disc as Int) returns Int
   variable colours set to [red, yellow, blue, brown, green, 0xff9900, 0x6600ff, 0x00cc00, 0x3399ff, 0xff99cc]
@@ -111,9 +104,9 @@ end function
 
 test test_colour
   # Normal cases
-  assert colour(5) evaluates to 32768
+  assert colour(5) evaluates to green
   # Edge cases
-  assert colour(1) evaluates to 16711680
+  assert colour(1) evaluates to red
   assert colour(10) evaluates to 0xff99cc
   # Error cases
   assert colour(11) evaluates to "Out of range index: 10 size: 10"

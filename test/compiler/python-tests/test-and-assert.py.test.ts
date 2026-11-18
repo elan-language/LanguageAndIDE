@@ -5,6 +5,7 @@ import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-imp
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeIs,
@@ -708,7 +709,7 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
-  test("Fail_expressionForExpected", async () => {
+  test("Pass_expressionForExpected", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -739,7 +740,10 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      ["python_test12", [new AssertOutcome(TestStatus.pass, "9", "9", "python_assert15")]],
+    ]);
   });
 
   ignore_test("Fail_AssertOutsideAtest", async () => {

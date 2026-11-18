@@ -225,10 +225,10 @@ end function
 
 test test_nextCellValue
   variable grid set to createTestGrid()
-  assert nextCellValue(grid, 0) evaluates to 16777215
-  assert nextCellValue(grid, 41) evaluates to 16777215
-  assert nextCellValue(grid, 1) evaluates to 0
-  assert nextCellValue(grid, 42) evaluates to 0
+  assert nextCellValue(grid, 0) evaluates to white
+  assert nextCellValue(grid, 41) evaluates to white
+  assert nextCellValue(grid, 1) evaluates to black
+  assert nextCellValue(grid, 42) evaluates to black
 end test
 
 function createTestGrid() returns BlockGraphics
