@@ -6,7 +6,7 @@ suite("Python Demo compile", () => {
     await testElanFile("best-fit");
   });
 
-  ignore_test("test binary-search", async () => {
+  test("test binary-search", async () => {
     await testElanFile("binary-search");
   });
 
@@ -14,7 +14,7 @@ suite("Python Demo compile", () => {
     await testElanFile("blackjack");
   });
 
-  ignore_test("test bubbles", async () => {
+  test("test bubbles", async () => {
     await testElanFile("bubbles");
   });
 

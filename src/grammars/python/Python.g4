@@ -232,8 +232,8 @@ assignable:
 ;
 
 methodName: NAME_STARTING_LC;
-testName: NAME_STARTING_LC_TEST_;
-testClassName: NAME_STARTING_UC_TEST_;
+testName: NAME_STARTING_TEST_;
+testClassName: NAME_STARTING_UC;
 
 typeName:
     INT_NAME           # intTypeName

@@ -1,55 +1,58 @@
-# Python with Elan 2.0.0-beta5
+# 013241eed2c5b3146f6cd99d33004a254861be4665c37a1f83300bda54fa6058 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
-  fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition
-  done = False # variable definition
+  fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
+  done = false
   while not done:
-    wanted = input("What type of fruit do you want ('x' to exit)? ") # input statement
+    wanted = input("What type of fruit do you want ('x' to exit)? ")
     if wanted.equals("x"):
-      done = True # assignment
+      done = true
     else:
-      result = binarySearch(fruit, wanted) # variable definition
+      result = binarySearch(fruit, wanted)
       if result:
-        print(f"\nWe can supply a {wanted}")
+        print(f"We can supply a {wanted}")
       else:
-        print(f"\nSorry, we cannot supply a {wanted}")
-      # end if
-    # end if
-  # end while
-# end main
+        print(f"Sorry, we cannot supply a {wanted}")
+       
+      # end if 
+     
+    # end if 
+  # end while 
+# end main 
 
-def binarySearch(li: list[str], item: str) -> bool: # function
-  result = False # variable definition
+def binarySearch(li: list[str], item: str) -> bool:
+  result = false
   if li.length() > 0:
-    mid = divAsInt(li.length(), 2) # variable definition
-    value = li[mid] # variable definition
+    mid = divAsInt(li.length(), 2)
+    value = li[mid]
     if item.equals(value):
-      result = True # assignment
-    elif item.isBefore(value): # else if
-      result = binarySearch(li.subList(0, mid), item) # assignment
+      result = true
+    elif item.isBefore(value):
+      result = binarySearch(li.subList(0, mid), item)
+     
     else:
-      result = binarySearch(li.subList(mid + 1, li.length()), item) # assignment
-    # end if
-  # end if
+      result = binarySearch(li.subList(mid + 1, li.length()), item)
+     
+    # end if 
+  # end if 
   return result
-# end function
+# end function 
 
-class Test_binarySearch(unittest.TestCase):
- def test_binarySearch(self) -> None:
-  li1 = ["lemon", "lime", "orange"] # variable definition
-  self.assertEqual(binarySearch(li1, "lemon"), True)
-  self.assertEqual(binarySearch(li1, "lime"), True)
-  self.assertEqual(binarySearch(li1, "orange"), True)
-  self.assertEqual(binarySearch(li1, "pear"), False)
-  li2 = ["lemon", "orange"] # variable definition
-  self.assertEqual(binarySearch(li2, "lemon"), True)
-  self.assertEqual(binarySearch(li2, "orange"), True)
-  self.assertEqual(binarySearch(li2, "pear"), False)
-  li3 = ["lemon"] # variable definition
-  self.assertEqual(binarySearch(li3, "lemon"), True)
-  self.assertEqual(binarySearch(li3, "lime"), False)
-  li4 = list[str]() # variable definition
-  self.assertEqual(binarySearch(li4, "pear"), False)
-# end test
+class Test_binarySearch(unittest.TestCase): def test_binarySearch(self) -> None:
+  li1 = ["lemon", "lime", "orange"]
+  self.assertEqual(binarySearch(li1, "lemon"), true)
+  self.assertEqual(binarySearch(li1, "lime"), true)
+  self.assertEqual(binarySearch(li1, "orange"), true)
+  self.assertEqual(binarySearch(li1, "pear"), false)
+  li2 = ["lemon", "orange"]
+  self.assertEqual(binarySearch(li2, "lemon"), true)
+  self.assertEqual(binarySearch(li2, "orange"), true)
+  self.assertEqual(binarySearch(li2, "pear"), false)
+  li3 = ["lemon"]
+  self.assertEqual(binarySearch(li3, "lemon"), true)
+  self.assertEqual(binarySearch(li3, "lime"), false)
+  li4 = list[str]()
+  self.assertEqual(binarySearch(li4, "pear"), false)
+# end test 
 
 main()

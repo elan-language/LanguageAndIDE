@@ -1,12 +1,12 @@
 import { testElanFile } from "../../testHelpers";
 import { ignore_test } from "../compiler-test-helpers";
 
-suite("Demo compile", () => {
+suite("RefLang Demo compile", () => {
   ignore_test("test best-fit", async () => {
     await testElanFile("best-fit");
   });
 
-  ignore_test("test binary-search", async () => {
+  test("test binary-search", async () => {
     await testElanFile("binary-search");
   });
 
@@ -14,7 +14,7 @@ suite("Demo compile", () => {
     await testElanFile("blackjack");
   });
 
-  ignore_test("test bubbles", async () => {
+  test("test bubbles", async () => {
     await testElanFile("bubbles");
   });
 
