@@ -1,10 +1,10 @@
-import { mustBeProcedure } from "../../compile-rules";
+import { FailNotInConstructorOrFunction, mustBeProcedure } from "../../compile-rules";
 import { AstNode } from "../../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../../compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler-interfaces/scope";
 import { FunctionType } from "../../symbols/function-type";
 import { getGlobalScope } from "../../symbols/symbol-helpers";
-import { isAstIdNode } from "../ast-helpers";
+import { isAstIdNode, isInsideFunctionOrConstructor } from "../ast-helpers";
 import { BreakpointAsn } from "../breakpoint-asn";
 import { EmptyAsn } from "../empty-asn";
 
@@ -24,6 +24,10 @@ export class ProcedureCallAsn extends BreakpointAsn {
     const termSymbolType = this.scope.resolveSymbol(id, true, this.scope).symbolType();
     if (termSymbolType instanceof FunctionType) {
       mustBeProcedure(id, termSymbolType, this.symbolScope, this.compileErrors, this.fieldId);
+    }
+
+    if (isInsideFunctionOrConstructor(this.scope)) {
+      FailNotInConstructorOrFunction(this.compileErrors, this.fieldId);
     }
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);

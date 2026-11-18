@@ -1947,8 +1947,7 @@ main()
     ]);
   });
 
-  // triage: this should work. It is producing a compile error but the error is 'undefined'
-  ignore_test("Fail_ConstructorWithCall", async () => {
+  test("Fail_ConstructorWithCall", async () => {
     const code = `${testPythonHeader}
 
 def main() -> None:
@@ -1982,7 +1981,9 @@ main()
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
     assertParses(fileImpl);
-    assertDoesNotCompile(fileImpl, ["*"]);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call Procedure in Constructor or Function.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UnnecessaryGenericParm1", async () => {

@@ -695,6 +695,12 @@ function FailNotNumber(
   }
 }
 
+export function FailNotInConstructorOrFunction(compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError("Cannot call Procedure in Constructor or Function.", location),
+  );
+}
+
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
   compileErrors.push(
     new SyntaxCompileError(
