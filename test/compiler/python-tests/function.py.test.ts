@@ -745,6 +745,42 @@ main()
     assertDoesNotParse(fileImpl);
   });
 
+  test("Fail_CanNotContainProcedure", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = foo(0, 1) # variable definition
+# end main
+
+def foo(a: int, b: int) -> int: # function
+  bar(a, b) # procedure call
+  return 0
+# end function
+
+def bar(a: int, b: int) -> None: # procedure
+
+# end procedure
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call Procedure in Constructor or Function.ErrorMessages.html#compile_error",
+    ]);
+  });
+
   test("Fail_CannotModifyParam", async () => {
     const code = `${testPythonHeader}
 

@@ -1706,18 +1706,19 @@ main
 end main
 
 class Foo
-    constructor()
-      call setP1(5)
-    end constructor
+  constructor()
+    call setP1(5)
+  end constructor
+
   function toString() returns String
     return ""
   end function
 
-    procedure setP1(a as Int)
-      assign this.b to a
-    end procedure
-    
-    property b as Int
+  procedure setP1(a as Int)
+    assign this.b to a
+  end procedure
+
+  property b as Int
 
 end class`;
 
@@ -1732,7 +1733,10 @@ end class`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call Procedure in Constructor or Function.ErrorMessages.html#compile_error",
+    ]);
   });
 
   test("Fail_UnnecessaryGenericParm1", async () => {
