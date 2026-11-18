@@ -241,7 +241,7 @@ export abstract class AbstractSelector extends AbstractFrame implements Selector
       this.pasteError = `The following instructions were not pasted as they are not valid in the selected location: ${names}`;
       result = false;
     }
-
+    this.getFile().removeAllSelectorsThatCanBe();
     return result;
   };
 

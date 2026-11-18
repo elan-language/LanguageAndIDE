@@ -221,7 +221,7 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
-    return "{" + this.visit(ctx.expression())! + "}";
+    return "</el-lit>{" + this.visit(ctx.expression())! + "}<el-lit>";
   };
 
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
@@ -229,6 +229,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
       .segment()
       .map((s) => this.visit(s))
       .join("");
-    return '$"' + s + '"';
+    return '$"<el-lit>' + s + '</el-lit>"';
   };
 }
