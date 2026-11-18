@@ -99,6 +99,7 @@ statementBlock: selectableStatement+;
 
 selectableStatement:
     variableDefinition
+    | assert
     | assignment
     | ifStatement
     | elseIfClause

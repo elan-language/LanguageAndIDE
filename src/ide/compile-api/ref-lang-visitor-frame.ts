@@ -97,13 +97,13 @@ export class RefLangVisitorFrame extends RefLangVisitor<File | Frame | Frame[]> 
   };
 
   override visitStatementBlock = (ctx: StatementBlockContext) => {
-    const globals = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
-    return globals;
+    const statements = ctx.selectableStatement().map((g) => this.visit(g)) as Frame[];
+    return statements;
   };
 
   override visitMemberBlock = (ctx: MemberBlockContext) => {
-    const globals = ctx.selectableMember().map((g) => this.visit(g)) as Frame[];
-    return globals;
+    const members = ctx.selectableMember().map((g) => this.visit(g)) as Frame[];
+    return members;
   };
 
   override visitComment? = (ctx: CommentContext) => {
