@@ -1219,7 +1219,7 @@ end main
     ]);
   });
 
-  ignore_test("Fail_withoutGenericType", async () => {
+  test("Fail_withoutGenericType", async () => {
     const code = `${testHeader}
 
 main

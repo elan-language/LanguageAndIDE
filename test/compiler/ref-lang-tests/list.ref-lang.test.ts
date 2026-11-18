@@ -1815,7 +1815,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[4, 5, 6, 7, 8][1, 2, 3, 4, 5, 4, 5, 6, 7, 8]");
   });
 
-  ignore_test("Fail_withoutGenericType", async () => {
+  test("Fail_withoutGenericType", async () => {
     const code = `${testHeader}
 
 main

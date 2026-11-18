@@ -259,7 +259,7 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Fail_QueueWithoutGenericParm", async () => {
+  test("Fail_QueueWithoutGenericParm", async () => {
     const code = `${testHeader}
 
 main

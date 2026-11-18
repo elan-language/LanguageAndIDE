@@ -261,7 +261,7 @@ return [main, _tests];}`;
     );
   });
 
-  ignore_test("Fail_StackWithoutGenericParm", async () => {
+  test("Fail_StackWithoutGenericParm", async () => {
     const code = `${testHeader}
 
 main
