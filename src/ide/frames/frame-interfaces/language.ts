@@ -66,12 +66,6 @@ export interface Language {
   TUPLE_START: string;
   TUPLE_END: string;
 
-  EXPRESSION_KEYWORDS: string[];
-  DISALLOWED_IDENTIFIERS: string[];
-
-  // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
-  reservedWords: Set<string>;
-
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
   mapOperation(op: string): OperationSymbol;

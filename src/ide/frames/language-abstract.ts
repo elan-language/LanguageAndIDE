@@ -140,14 +140,9 @@ export abstract class LanguageAbstract implements Language {
   abstract OVERRIDES: string;
   abstract IMPLEMENTS: string;
 
-  abstract EXPRESSION_KEYWORDS: string[];
-  abstract DISALLOWED_IDENTIFIERS: string[];
-
   protected spaced(text: string): string {
     return ` ${text} `;
   }
-
-  abstract reservedWords: Set<string>;
 
   abstract TUPLE_START: string;
   abstract TUPLE_END: string;
@@ -187,4 +182,6 @@ export abstract class LanguageAbstract implements Language {
   mapOperation(_op: string): OperationSymbol {
     return OperationSymbol.Unknown;
   }
+
+  GHOSTED = "[ghosted]";
 }

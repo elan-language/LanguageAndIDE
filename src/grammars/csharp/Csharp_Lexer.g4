@@ -13,8 +13,6 @@ STRING_NAME: 'string';
 LIST_NAME: 'List';
 FUNC_NAME: 'Func';
 
-TRUE: 'true';
-FALSE: 'false';
 AND: '&&';
 OR: '||';
 NOT: '!';
@@ -30,50 +28,104 @@ THIS_INSTANCE: 'this';
 //END common token names; custom definitions
 
 // START C#-specific tokens
-STATIC: 'static';
-VOID: 'void';
 TEST_CLASS_ANNOT: OPEN_SQ_BRACKET 'TestClass' CLOSE_SQ_BRACKET;
 TEST_METHOD_ANNOT:
     OPEN_SQ_BRACKET 'TestMethod' CLOSE_SQ_BRACKET
 ;
-CONST: 'const';
-ENUM: 'enum';
-ABSTRACT: 'abstract';
-FOREACH: 'foreach';
 VAR: 'var';
 ASSERT: 'Assert'; // u/c because it is a type
 ARE_EQUAL: 'areEqual';
 SEMI_COLON: ';';
-THROW: 'throw';
-NEW: 'new';
-CATCH: 'catch';
-PUBLIC: 'public';
-PRIVATE: 'private';
-GET: 'get';
-SET: 'set';
 GET_SET:
     OPEN_BRACE GET SEMI_COLON PRIVATE SEMI_COLON SET SEMI_COLON CLOSE_BRACE
 ;
 
-CLASS: 'class';
-ELSE: 'else';
-FOR: 'for';
-IF: 'if';
-IN: 'in';
-INPUT: 'input';
-LAMBDA: 'lambda';
 MAIN: 'main';
-RETURN: 'return';
-TRY: 'try';
-WHILE: 'while';
-
-POWER: '^';
 TUPLE: 'tuple';
-IF_:
-    'if_'
-; // Temporary solution - to be replaced by language-specific implementation
 
 // END C#-specific tokens
+
+// START common C-family reserved words
+ABSTRACT: 'abstract';
+AS: 'as';
+BASE: 'base';
+BOOL: BOOL_NAME;
+BREAK: 'break';
+BYTE: 'byte';
+CASE: 'case';
+CATCH: 'catch';
+CHAR: 'char';
+CHECKED: 'checked';
+CLASS: 'class';
+CONST: 'const';
+CONTINUE: 'continue';
+DECIMAL: 'decimal';
+DEFAULT: 'default';
+DELEGATE: 'delegate';
+DO: 'do';
+DOUBLE: FLOAT_NAME;
+ELSE: 'else';
+ENUM: 'enum';
+EVENT: 'event';
+EXPLICIT: 'explicit';
+EXTERN: 'extern';
+FALSE: 'false';
+FINALLY: 'finally';
+FIXED: 'fixed';
+FLOAT: 'float';
+FOR: 'for';
+FOREACH: 'foreach';
+GET: 'get';
+GOTO: 'goto';
+IF: 'if';
+IMPLICIT: 'implicit';
+IN: 'in';
+INT: INT_NAME;
+INTERFACE: 'interface';
+INTERNAL: 'internal';
+IS: 'is';
+LOCK: 'lock';
+LONG: 'long';
+NAMESPACE: 'namespace';
+NEW: 'new';
+NULL: 'null';
+OBJECT: 'object';
+OPERATOR: 'operator';
+OUT: 'out';
+OVERRIDE: 'override';
+PARAMS: 'params';
+PRIVATE: 'private';
+PROTECTED: 'protected';
+PUBLIC: 'public';
+READONLY: 'readonly';
+REF: 'ref';
+RETURN: 'return';
+SBYTE: 'sbyte';
+SEALED: 'sealed';
+SET: 'set';
+SHORT: 'short';
+SIZEOF: 'sizeof';
+STACKALLOC: 'stackalloc';
+STATIC: 'static';
+STRING: STRING_NAME;
+STRUCT: 'struct';
+SWITCH: 'switch';
+THIS: THIS_INSTANCE;
+THROW: 'throw';
+TRUE: 'true';
+TRY: 'try';
+TYPEOF: 'typeof';
+UINT: 'uint';
+ULONG: 'ulong';
+UNCHECKED: 'unchecked';
+UNSAFE: 'unsafe';
+USHORT: 'ushort';
+USING: 'using';
+VIRTUAL: 'virtual';
+VOID: 'void';
+VOLATILE: 'volatile';
+WHILE: 'while';
+// END common C-family tokens
 
 //START Common token names; common definitions
 COMMENT:

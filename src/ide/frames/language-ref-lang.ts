@@ -62,30 +62,30 @@ export class LanguageRefLang extends LanguageAbstract {
   renderSingleLineAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      html = `<el-kw>${this.ASSERT} </el-kw>${frame.actual.renderAsHtml()}<el-kw> ${this.EVALUATES} ${this.TO} </el-kw>${frame.expected.renderAsHtml()}`;
+      html = `<el-kw>assert </el-kw>${frame.actual.renderAsHtml()}<el-kw> evaluates to </el-kw>${frame.expected.renderAsHtml()}`;
     } else if (frame instanceof ProcedureCall) {
-      html = `<el-kw>${this.CALL} </el-kw>${frame.procRef.renderAsHtml()}`;
+      html = `<el-kw>call </el-kw>${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
       html = frame.text.renderAsHtml();
     } else if (frame instanceof ConstantGlobal) {
       // special case because the </el-top> needs to be placed part way through the line
-      html = `<el-kw>${this.CONSTANT} </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
+      html = `<el-kw>constant </el-kw>${frame.name.renderAsHtml()}</el-top><el-kw> set to </el-kw>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Enum) {
-      html = `<el-kw>${this.ENUM} </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
+      html = `<el-kw>enum </el-kw>${frame.name.renderAsHtml()} ${frame.values.renderAsHtml()}`;
     } else if (frame instanceof Property) {
-      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROPERTY} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.AS} </el-kw>${frame.type.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>property </el-kw>${frame.name.renderAsHtml()}<el-kw> as </el-kw>${frame.type.renderAsHtml()}`;
     } else if (frame instanceof ReturnStatement) {
-      html = `<el-kw>${this.RETURN} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>return </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
-      html = `<el-kw>${this.ASSIGN} </el-kw>${frame.assignable.renderAsHtml()}<el-kw> ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>assign </el-kw>${frame.assignable.renderAsHtml()}<el-kw> to </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof ThrowStatement) {
-      html = `<el-kw>${this.THROW}</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
+      html = `<el-kw>throw</el-kw> ${frame.type.renderAsHtml()} ${frame.text.renderAsHtml()}`;
     } else if (frame instanceof VariableDefinition) {
-      html = `<el-kw>${this.VARIABLE} </el-kw>${frame.name.renderAsHtml()}<el-kw> ${this.SET} ${this.TO} </el-kw>${frame.expr.renderAsHtml()}`;
+      html = `<el-kw>variable </el-kw>${frame.name.renderAsHtml()}<el-kw> set to </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof AbstractFunction) {
-      html = `<el-kw>${this.ABSTRACT} ${this.FUNCTION} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>abstract function </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})<el-kw> returns </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof AbstractProcedure) {
-      html = `<el-kw>${this.ABSTRACT} ${this.PROCEDURE} </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})`;
+      html = `<el-kw>abstract procedure </el-kw><el-method>${frame.name.renderAsHtml()}</el-method>(${frame.params.renderAsHtml()})`;
     }
     return html;
   }
@@ -93,75 +93,75 @@ export class LanguageRefLang extends LanguageAbstract {
   renderSingleLineAsSource(frame: Frame): string {
     let source = `Source not specified for this frame`;
     if (frame instanceof AssertStatement) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.ASSERT} ${frame.actual.renderAsSource()} ${this.EVALUATES} ${this.TO} ${frame.expected.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}assert ${frame.actual.renderAsSource()} evaluates to ${frame.expected.renderAsSource()}`;
     } else if (frame instanceof ProcedureCall) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.CALL} ${frame.procRef.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}call ${frame.procRef.renderAsSource()}`;
     } else if (frame instanceof CommentFrame) {
       source = `${frame.indent()}${this.ghost(frame)}${frame.text.renderAsSource()}`;
     } else if (frame instanceof ConstantGlobal) {
-      source = `${this.ghost(frame)}${this.CONSTANT} ${frame.name.renderAsSource()} set to ${frame.value.renderAsSource()}`;
+      source = `${this.ghost(frame)}constant ${frame.name.renderAsSource()} set to ${frame.value.renderAsSource()}`;
     } else if (frame instanceof Enum) {
-      source = `${this.ghost(frame)}${this.ENUM} ${frame.name.renderAsSource()} ${frame.values.renderAsSource()}`;
+      source = `${this.ghost(frame)}enum ${frame.name.renderAsSource()} ${frame.values.renderAsSource()}`;
     } else if (frame instanceof Property) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.modifierAsSource(frame)}${this.PROPERTY} ${frame.name.renderAsSource()} ${this.AS} ${frame.type.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}${this.modifierAsSource(frame)}property ${frame.name.renderAsSource()} as ${frame.type.renderAsSource()}`;
     } else if (frame instanceof ReturnStatement) {
-      source = `${frame.indent()}${this.RETURN} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}return ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.ASSIGN} ${frame.assignable.renderAsSource()} ${this.TO} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}assign ${frame.assignable.renderAsSource()} to ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof ThrowStatement) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.THROW} ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}throw ${frame.type.renderAsSource()} ${frame.text.renderAsSource()}`;
     } else if (frame instanceof VariableDefinition) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.VARIABLE} ${frame.name.renderAsSource()} ${this.SET} ${this.TO} ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}variable ${frame.name.renderAsSource()} set to ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof AbstractFunction) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.ABSTRACT} ${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghost(frame)}abstract function ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) returns ${frame.returnType.renderAsSource()}`;
     } else if (frame instanceof AbstractProcedure) {
-      source = `${frame.indent()}${this.ghost(frame)}${this.ABSTRACT} ${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+      source = `${frame.indent()}${this.ghost(frame)}abstract procedure ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
     }
     return source;
   }
 
   ghost(frame: Frame) {
-    return frame.isGhostedExplicitly() ? `${this.GHOSTED} ` : ``;
+    return frame.isGhostedExplicitly() ? `ghosted ` : ``;
   }
 
   renderTopAsHtml(frame: Frame): string {
     let html = `Html not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      html = `<el-kw>${this.ABSTRACT} ${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
+      html = `<el-kw>abstract class </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      html = `<el-kw>${this.CLASS} </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
+      html = `<el-kw>class </el-kw>${frame.name.renderAsHtml()}${this.inheritsFromTextAsHtml(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
-      html = `<el-kw>${this.CONSTRUCTOR}</el-kw>(${frame.params.renderAsHtml()})`;
+      html = `<el-kw>constructor</el-kw>(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof CatchClause) {
-      html = `<el-kw>${this.CATCH} </el-kw>${frame.variable.renderAsHtml()} <el-kw>${this.AS}</el-kw> ${frame.exceptionType.renderAsHtml()}`;
+      html = `<el-kw>catch </el-kw>${frame.variable.renderAsHtml()} <el-kw>as</el-kw> ${frame.exceptionType.renderAsHtml()}`;
     } else if (frame instanceof ElseIfClause) {
-      html = `<el-kw>${this.ELIF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}`;
+      html = `<el-kw>elif </el-kw>${frame.condition.renderAsHtml()}<el-kw> then`;
     } else if (frame instanceof ElseClause) {
-      html = `<el-kw>${this.ELSE}`;
+      html = `<el-kw>else`;
     } else if (frame instanceof ForLoop) {
-      html = `<el-kw>${this.FOR} </el-kw>${frame.variable.renderAsHtml()}<el-kw> ${this.IN} </el-kw>${frame.iter.renderAsHtml()}`;
+      html = `<el-kw>for </el-kw>${frame.variable.renderAsHtml()}<el-kw> in </el-kw>${frame.iter.renderAsHtml()}`;
     } else if (frame instanceof FunctionMethod) {
-      html = `${this.modifierAsHtml(frame)}<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>function </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> returns </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalFunction) {
-      html = `<el-kw>${this.FUNCTION} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> ${this.RETURNS} </el-kw>${frame.returnType.renderAsHtml()}`;
+      html = `<el-kw>function </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})<el-kw> returns </el-kw>${frame.returnType.renderAsHtml()}`;
     } else if (frame instanceof GlobalProcedure) {
-      html = `<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
+      html = `<el-kw>procedure </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof ProcedureMethod) {
-      html = `${this.modifierAsHtml(frame)}<el-kw>${this.PROCEDURE} </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
+      html = `${this.modifierAsHtml(frame)}<el-kw>procedure </el-kw>${frame.name.renderAsHtml()}(${frame.params.renderAsHtml()})`;
     } else if (frame instanceof IfStatement) {
-      html = `<el-kw>${this.IF} </el-kw>${frame.condition.renderAsHtml()}<el-kw> ${this.THEN}</el-kw>`;
+      html = `<el-kw>if </el-kw>${frame.condition.renderAsHtml()}<el-kw> then</el-kw>`;
     } else if (frame instanceof MainRoutine) {
-      html = `<el-kw>${this.MAIN}</el-kw>`;
+      html = `<el-kw>main</el-kw>`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>${this.TEST} </el-kw>${frame.testName.renderAsHtml()}`;
+      html = `<el-kw>test </el-kw>${frame.testName.renderAsHtml()}`;
     } else if (frame instanceof ThenClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
-      html = `<el-kw>${this.TRY} </el-kw>`;
+      html = `<el-kw>try </el-kw>`;
     } else if (frame instanceof WhileLoop) {
-      html = `<el-kw>${this.WHILE} </el-kw>${frame.condition.renderAsHtml()}`;
+      html = `<el-kw>while </el-kw>${frame.condition.renderAsHtml()}`;
     }
     return html;
   }
@@ -169,53 +169,53 @@ export class LanguageRefLang extends LanguageAbstract {
   renderTopAsSource(frame: Frame): string {
     let source = `Source not specified for this frame`;
     if (frame instanceof AbstractClass) {
-      source = `${this.ghost(frame)}${this.ABSTRACT} ${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
+      source = `${this.ghost(frame)}abstract class ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
     } else if (frame instanceof ConcreteClass) {
-      source = `${this.ghost(frame)}${this.CLASS} ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
+      source = `${this.ghost(frame)}class ${frame.name.renderAsSource()}${this.inheritsFromTextAsSource(frame.inheritance)}`;
     } else if (frame instanceof Constructor) {
-      source = `${this.ghost(frame)}${this.CONSTRUCTOR}(${frame.params.renderAsSource()})`;
+      source = `${this.ghost(frame)}constructor(${frame.params.renderAsSource()})`;
     } else if (frame instanceof CatchClause) {
-      source = `${this.ghost(frame)}${this.CATCH} ${frame.variable.renderAsSource()} ${this.AS} ${frame.exceptionType.renderAsSource()}`;
+      source = `${this.ghost(frame)}catch ${frame.variable.renderAsSource()} as ${frame.exceptionType.renderAsSource()}`;
     } else if (frame instanceof ElseIfClause) {
-      source = `${this.ghost(frame)}${this.ELIF} ${frame.condition.renderAsSource()} ${this.THEN}`;
+      source = `${this.ghost(frame)}elif ${frame.condition.renderAsSource()} then`;
     } else if (frame instanceof ElseClause) {
-      source = `${this.ghost(frame)}${this.ELSE}`;
+      source = `${this.ghost(frame)}else`;
     } else if (frame instanceof ForLoop) {
-      source = `${this.ghost(frame)}${this.FOR} ${frame.variable.renderAsSource()} ${this.IN} ${frame.iter.renderAsSource()}`;
+      source = `${this.ghost(frame)}for ${frame.variable.renderAsSource()} in ${frame.iter.renderAsSource()}`;
     } else if (frame instanceof FunctionMethod) {
-      source = `${this.ghost(frame)}${this.modifierAsSource(frame)}${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+      source = `${this.ghost(frame)}${this.modifierAsSource(frame)}function ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) returns ${frame.returnType.renderAsSource()}`;
     } else if (frame instanceof GlobalFunction) {
-      source = `${this.ghost(frame)}${this.FUNCTION} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) ${this.RETURNS} ${frame.returnType.renderAsSource()}`;
+      source = `${this.ghost(frame)}function ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) returns ${frame.returnType.renderAsSource()}`;
     } else if (frame instanceof GlobalProcedure) {
-      source = `${this.ghost(frame)}${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+      source = `${this.ghost(frame)}procedure ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
     } else if (frame instanceof ProcedureMethod) {
-      source = `${this.ghost(frame)}${this.modifierAsSource(frame)}${this.PROCEDURE} ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
+      source = `${this.ghost(frame)}${this.modifierAsSource(frame)}procedure ${frame.name.renderAsSource()}(${frame.params.renderAsSource()})`;
     } else if (frame instanceof IfStatement) {
-      source = `${this.ghost(frame)}${this.IF} ${frame.condition.renderAsSource()} ${this.THEN}`;
+      source = `${this.ghost(frame)}if ${frame.condition.renderAsSource()} then`;
     } else if (frame instanceof MainRoutine) {
-      source = `${this.ghost(frame)}${this.MAIN}`;
+      source = `${this.ghost(frame)}main`;
     } else if (frame instanceof TestFrame) {
-      source = `${this.ghost(frame)}${this.TEST} ${frame.testName.renderAsSource()}`;
+      source = `${this.ghost(frame)}test ${frame.testName.renderAsSource()}`;
     } else if (frame instanceof ThenClause) {
       source = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
       source = ``; // no top to ThenClause
     } else if (frame instanceof TryStatement) {
-      source = `${this.ghost(frame)}${this.TRY}`;
+      source = `${this.ghost(frame)}try`;
     } else if (frame instanceof WhileLoop) {
-      source = `${this.ghost(frame)}${this.WHILE} ${frame.condition.renderAsSource()}`;
+      source = `${this.ghost(frame)}while ${frame.condition.renderAsSource()}`;
     }
     return source;
   }
 
   inheritsFromTextAsHtml(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit() ? ` <el-kw>${this.INHERITS}</el-kw> ${field.renderAsHtml()}` : ``;
+    return frame.doesInherit() ? ` <el-kw>inherits</el-kw> ${field.renderAsHtml()}` : ``;
   }
 
   inheritsFromTextAsSource(field: FieldImpl): string {
     const frame = field.getHolder() as ClassFrame;
-    return frame.doesInherit() ? ` ${this.INHERITS} ${field.renderAsSource()}` : ``;
+    return frame.doesInherit() ? ` inherits ${field.renderAsSource()}` : ``;
   }
 
   renderBottomAsHtml(frame: Frame): string {
@@ -248,44 +248,6 @@ export class LanguageRefLang extends LanguageAbstract {
     return html;
   }
 
-  private ABSTRACT = "abstract";
-  private AS = "as";
-  private ASSERT = "assert";
-  private ASSIGN = "assign";
-  private CALL = "call";
-  private CATCH = "catch";
-  private CLASS = "class";
-  private CONSTANT = "constant";
-  private CONSTRUCTOR = "constructor";
-  private ELIF = "elif";
-  private ELSE = "else";
-  private END = "end";
-  private ENUM = "enum";
-  private EVALUATES = "evaluates";
-  private FOR = "for";
-  private FUNCTION = "function";
-  private IF = "if";
-  private IN = "in";
-  private INHERITS = "inherits";
-  private LAMBDA = "lambda";
-  private MAIN = "main";
-  private NEW = "new";
-  private OF = "of";
-  private PRIVATE = "private";
-  private PROCEDURE = "procedure";
-  private PROPERTY = "property";
-  private RETURN = "return";
-  private RETURNS = "returns";
-  private SET = "set";
-  private TEST = "test";
-  private THEN = "then";
-  private THIS = "this";
-  private THROW = "throw";
-  private TO = "to";
-  private TRY = "try";
-  private VARIABLE = "variable";
-  private WHILE = "while";
-
   POWER: string = "^";
   EQUAL: string = "is";
   NOT_EQUAL: string = "isnt";
@@ -299,7 +261,7 @@ export class LanguageRefLang extends LanguageAbstract {
   LIST_START: string = "[";
   LIST_END: string = "]";
   INTERPOLATED_STRING_PREFIX: string = "$";
-  NEW_INSTANCE_PREFIX = this.NEW;
+  NEW_INSTANCE_PREFIX = "new";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
@@ -317,21 +279,11 @@ export class LanguageRefLang extends LanguageAbstract {
   TUPLE_START = "tuple[";
   TUPLE_END = "]";
 
-  START_OF_GENERIC: string = `<${this.OF} `;
+  START_OF_GENERIC: string = `<of `;
   END_OF_GENERIC: string = `>`;
-  THIS_INSTANCE: string = this.THIS;
+  THIS_INSTANCE: string = "this";
   OVERRIDES = "";
   IMPLEMENTS = "";
-
-  EXPRESSION_KEYWORDS: string[] = [this.NEW, this.IF, this.LAMBDA, this.THIS, this.NOT];
-  DISALLOWED_IDENTIFIERS: string[] = [
-    this.NEW,
-    this.LAMBDA,
-    this.THIS,
-    this.NOT,
-    this.TRUE,
-    this.FALSE,
-  ];
 
   functionFrameFields(frame: FunctionFrame): Field[] {
     return this.default_functionFrameFields(frame);
@@ -342,130 +294,14 @@ export class LanguageRefLang extends LanguageAbstract {
   }
 
   private modifierAsHtml(member: MemberFrame): string {
-    return member.isPrivate ? `<el-kw>${this.PRIVATE} </el-kw>` : "";
+    return member.isPrivate ? `<el-kw>private </el-kw>` : "";
   }
   private modifierAsSource(member: MemberFrame): string {
-    return member.isPrivate ? `${this.PRIVATE} ` : "";
+    return member.isPrivate ? `private ` : "";
   }
 
-  // Elan keywords followed by JavaScript keywords
-  reservedWords: Set<string> = new Set<string>([
-    `abstract`,
-    `and`,
-    `as`,
-    `assert`,
-    `be`,
-    `call`,
-    `catch`,
-    `class`,
-    `constant`,
-    `constructor`,
-    `each`,
-    `elif`,
-    `else`,
-    `end`,
-    `enum`,
-    `exception`,
-    `for`,
-    `from`,
-    `function`,
-    `global`,
-    `if`,
-    `if_`,
-    `in`,
-    `inherits`,
-    `interface`,
-    `is`,
-    `isnt`,
-    `lambda`,
-    `library`,
-    `main`,
-    `mod`,
-    `new`,
-    `not`,
-    `of`,
-    `or`,
-    `private`,
-    `procedure`,
-    `property`,
-    `return`,
-    `returns`,
-    `set`,
-    `step`,
-    `test`,
-    `then`,
-    `this`,
-    `throw`,
-    `to`,
-    `try`,
-    `variable`,
-    `while`,
-    `action`,
-    `arguments`,
-    `array`,
-    `async`,
-    `await`,
-    `boolean`,
-    `break`,
-    `by`,
-    `byte`,
-    `case`,
-    `catch`,
-    `char`,
-    `const`,
-    `continue`,
-    `debugger`,
-    `default`,
-    `delete`,
-    `do`,
-    `double`,
-    `eval`,
-    `export`,
-    `extends`,
-    `final`,
-    `finally`,
-    `float`,
-    `goto`,
-    `implements`,
-    `instanceof`,
-    `int`,
-    `into`,
-    `list`,
-    `long`,
-    `match`,
-    `mock`,
-    `namespace`,
-    `native`,
-    `null`,
-    `on`,
-    `otherwise`,
-    `record`,
-    `package`,
-    `partial`,
-    `pattern`,
-    `protected`,
-    `public`,
-    `scenario`,
-    `short`,
-    `static`,
-    `stdlib`,
-    `string`,
-    `super`,
-    `switch`,
-    `system`,
-    `synchronized`,
-    `throws`,
-    `transient`,
-    `typeof`,
-    `void`,
-    `volatile`,
-    `var`,
-    `when`,
-    `yield`,
-  ]);
-
   customiseStatementOptions(_options: [FrameType, string, string, boolean][]): void {
-    // does nothinh
+    // does nothing
   }
 
   private opMap = new Map<OperationSymbol, string>([
