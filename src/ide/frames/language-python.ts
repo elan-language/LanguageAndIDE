@@ -156,7 +156,7 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ProcedureMethod) {
       html = `<el-kw>def </el-kw>${frame.name.renderAsHtml()}(${this.paramListAsHtml(frame, frame.params)}) -> <el-kw>None</el-kw>:${this.privateHtml(frame)}`;
     } else if (frame instanceof TestFrame) {
-      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):&nbsp;<el-kw>def</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>self</el-kw>) -> <el-kw>None</el-kw>:`;
+      html = `<el-kw>class</el-kw> ${this.testClassNameAsHtml(frame)}(<el-id>unittest<el-id>.<el-type>TestCase</el-type>):<br>&nbsp;<el-kw>def</el-kw> ${this.testMethodNameAsHtml(frame)}(<el-kw>self</el-kw>) -> <el-kw>None</el-kw>:`;
     } else if (frame instanceof ThenClause) {
       html = ``; // no top to ThenClause
     } else if (frame instanceof TryClause) {
