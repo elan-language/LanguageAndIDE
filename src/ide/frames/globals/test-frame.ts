@@ -27,6 +27,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
     super(parent);
     this.file = parent;
     this.testName = new FieldImpl(this, testNameFieldSpec);
+    this.testName.setFieldToKnownValidText("test_");
     this._testStatus = TestStatus.default;
   }
 

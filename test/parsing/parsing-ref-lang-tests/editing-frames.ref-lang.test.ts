@@ -272,11 +272,6 @@ suite("Editing Frames", () => {
     const sel0 = file.getById("elan_select0");
     sel0.processKey(key("t"));
     const desc = file.getById("elan_ident3") as FieldImpl;
-    desc.processKey(key("t"));
-    desc.processKey(key("e"));
-    desc.processKey(key("s"));
-    desc.processKey(key("t"));
-    desc.processKey(key("_"));
     desc.processKey(key("x"));
     assert.equal(desc.readParseStatus(), ParseStatus.valid);
     assert.equal(desc.renderAsSource(), "test_x");
