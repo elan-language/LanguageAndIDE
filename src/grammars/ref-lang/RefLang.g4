@@ -304,6 +304,8 @@ methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 binaryOperator:
     EQUAL       # opEQUAL
     | NOT_EQUAL # opNOT_EQUAL
+    | EQUAL     # opREF_EQUAL
+    | NOT_EQUAL # opREF_NOT_EQUAL
     | GT        # opGT
     | LT        # opLT
     | GE        # opGE

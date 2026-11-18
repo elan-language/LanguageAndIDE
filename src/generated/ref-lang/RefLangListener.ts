@@ -110,6 +110,8 @@ import { KvpContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
 import { OpEQUALContext } from "./RefLangParser.js";
 import { OpNOT_EQUALContext } from "./RefLangParser.js";
+import { OpREF_EQUALContext } from "./RefLangParser.js";
+import { OpREF_NOT_EQUALContext } from "./RefLangParser.js";
 import { OpGTContext } from "./RefLangParser.js";
 import { OpLTContext } from "./RefLangParser.js";
 import { OpGEContext } from "./RefLangParser.js";
@@ -1274,6 +1276,30 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
   /**
    * Enter a parse tree produced by the `opGT`
    * labeled alternative in `RefLangParser.binaryOperator`.
