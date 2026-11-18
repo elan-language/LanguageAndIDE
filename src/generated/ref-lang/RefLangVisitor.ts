@@ -108,7 +108,20 @@ import { DictionaryContext } from "./RefLangParser.js";
 import { KvpListContext } from "./RefLangParser.js";
 import { KvpContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
-import { BinaryOperatorContext } from "./RefLangParser.js";
+import { OpEQUALContext } from "./RefLangParser.js";
+import { OpNOT_EQUALContext } from "./RefLangParser.js";
+import { OpGTContext } from "./RefLangParser.js";
+import { OpLTContext } from "./RefLangParser.js";
+import { OpGEContext } from "./RefLangParser.js";
+import { OpLEContext } from "./RefLangParser.js";
+import { OpMULTContext } from "./RefLangParser.js";
+import { OpDIVIDEContext } from "./RefLangParser.js";
+import { OpPLUSContext } from "./RefLangParser.js";
+import { OpMINUSContext } from "./RefLangParser.js";
+import { OpANDContext } from "./RefLangParser.js";
+import { OpORContext } from "./RefLangParser.js";
+import { OpMODContext } from "./RefLangParser.js";
+import { OpPOWERContext } from "./RefLangParser.js";
 import { NewInstanceContext } from "./RefLangParser.js";
 import { ParamDefContext } from "./RefLangParser.js";
 import { TypeGenericContext } from "./RefLangParser.js";
@@ -789,11 +802,103 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitMethodCall?: (ctx: MethodCallContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.binaryOperator`.
+   * Visit a parse tree produced by the `opEQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitBinaryOperator?: (ctx: BinaryOperatorContext) => Result;
+  visitOpEQUAL?: (ctx: OpEQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opGT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpGT?: (ctx: OpGTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opLT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpLT?: (ctx: OpLTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opGE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpGE?: (ctx: OpGEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opLE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpLE?: (ctx: OpLEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMULT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMULT?: (ctx: OpMULTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpDIVIDE?: (ctx: OpDIVIDEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opPLUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpPLUS?: (ctx: OpPLUSContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMINUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMINUS?: (ctx: OpMINUSContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opAND`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpAND?: (ctx: OpANDContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opOR`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpOR?: (ctx: OpORContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMOD`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMOD?: (ctx: OpMODContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opPOWER`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpPOWER?: (ctx: OpPOWERContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.newInstance`.
    * @param ctx the parse tree

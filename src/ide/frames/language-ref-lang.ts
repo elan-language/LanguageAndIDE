@@ -333,4 +333,12 @@ export class LanguageRefLang extends LanguageAbstract {
     }
     return OperationSymbol.Unknown;
   }
+
+  override mapOperationSymbol(op: OperationSymbol): string {
+    if (op === OperationSymbol.Multiply || op === OperationSymbol.Divide) {
+      return this.opMap.get(op)!;
+    }
+
+    return ` ${this.opMap.get(op) ?? ""} `;
+  }
 }

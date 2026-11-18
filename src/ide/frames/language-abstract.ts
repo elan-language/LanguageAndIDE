@@ -183,5 +183,9 @@ export abstract class LanguageAbstract implements Language {
     return OperationSymbol.Unknown;
   }
 
+  mapOperationSymbol(_op: OperationSymbol): string {
+    return "";
+  }
+
   GHOSTED = "[ghosted]";
 }

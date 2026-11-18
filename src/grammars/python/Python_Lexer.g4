@@ -55,7 +55,6 @@ lexer grammar Python_Lexer;
 //     `memoryview`,
 //     `nonetype`,
 
-
 // START common keywords
 CLASS: 'class';
 ELIF: 'elif';
@@ -149,7 +148,9 @@ THIS_INSTANCE: 'self';
 //START Common token names; common definitions
 SINGLE_EQUALS: '=';
 OPEN_BRACE: '{';
-CLOSE_BRACE: '}' { if (this.modeStack.length > 0) { this.popMode(); } };
+CLOSE_BRACE:
+    '}' { if (this.modeStack.length > 0) { this.popMode(); } }
+;
 OPEN_SQ_BRACKET: '[';
 CLOSE_SQ_BRACKET: ']';
 OPEN_BRACKET: '(';

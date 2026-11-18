@@ -50,6 +50,7 @@ import {
   getParamDefs,
   visitTypeHelper,
 } from "./parser-helpers";
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 
 export class RefLangVisitorSource extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -122,10 +123,34 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   override visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;
 
-  override visitBinaryOperator = (ctx: BinaryOperatorContext) => {
-    const txt = ctx.getText();
-    return txt !== "*" && txt !== "/" ? ` ${txt} ` : txt;
-  };
+  override visitOpEQUAL = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Equals);
+  override visitOpNOT_EQUAL = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.NotEquals);
+  override visitOpGT = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.GT);
+  override visitOpLT = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.LT);
+  override visitOpGE = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.GTE);
+  override visitOpLE = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.LTE);
+  override visitOpMULT = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Multiply);
+  override visitOpDIVIDE = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Divide);
+  override visitOpPLUS = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Add);
+  override visitOpMINUS = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Minus);
+  override visitOpAND = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.And);
+  override visitOpOR = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Or);
+  override visitOpMOD = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Mod);
+  override visitOpPOWER = (_ctx: BinaryOperatorContext) =>
+    this.language.mapOperationSymbol(OperationSymbol.Power);
 
   override visitBinaryExpression = (ctx: BinaryExpressionContext) =>
     `${this.visit(ctx.term())}${this.visit(ctx.binaryOperator())}${this.visit(ctx.expression())}`;
