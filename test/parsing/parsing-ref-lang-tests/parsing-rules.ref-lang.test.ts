@@ -207,7 +207,7 @@ suite("Parsing Rules RefLang", () => {
       true,
       `$"{curly}"`,
       `$"{curly}"`,
-      `$"{<el-id>curly</el-id>}"`,
+      `$"<el-lit></el-lit>{<el-id>curly</el-id>}<el-lit></el-lit>"`,
       `$"{curly}"`,
       "`${await _stdlib.toString(curly)}`",
     );
@@ -221,7 +221,7 @@ suite("Parsing Rules RefLang", () => {
       true,
       '$"{a} plus {b} equals {a + b}"',
       "",
-      '$"{<el-id>a</el-id>} plus {<el-id>b</el-id>} equals {<el-id>a</el-id> + <el-id>b</el-id>}"',
+      '$"<el-lit></el-lit>{<el-id>a</el-id>}<el-lit> plus </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id> + <el-id>b</el-id>}<el-lit></el-lit>"',
       "",
       "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
     );

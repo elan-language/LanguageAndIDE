@@ -244,7 +244,7 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     return ids.join(", ");
   };
   override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
-    return "{" + this.visit(ctx.expression())! + "}";
+    return "</el-lit>{" + this.visit(ctx.expression())! + "}<el-lit>";
   };
 
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
@@ -252,6 +252,6 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
       .segment()
       .map((s) => this.visit(s))
       .join("");
-    return 'f"' + s + '"';
+    return 'f"<el-lit>' + s + '</el-lit>"';
   };
 }
