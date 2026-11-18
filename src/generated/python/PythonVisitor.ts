@@ -115,6 +115,8 @@ import { KvpContext } from "./PythonParser.js";
 import { MethodCallContext } from "./PythonParser.js";
 import { OpEQUALContext } from "./PythonParser.js";
 import { OpNOT_EQUALContext } from "./PythonParser.js";
+import { OpREF_EQUALContext } from "./PythonParser.js";
+import { OpREF_NOT_EQUALContext } from "./PythonParser.js";
 import { OpGTContext } from "./PythonParser.js";
 import { OpLTContext } from "./PythonParser.js";
 import { OpGEContext } from "./PythonParser.js";
@@ -850,6 +852,20 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => Result;
   /**
    * Visit a parse tree produced by the `opGT`
    * labeled alternative in `PythonParser.binaryOperator`.

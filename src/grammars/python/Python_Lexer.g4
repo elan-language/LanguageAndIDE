@@ -135,6 +135,8 @@ OR: 'or';
 NOT: 'not';
 EQUAL: '==';
 NOT_EQUAL: '!=';
+REF_EQUAL: 'is';
+REF_NOT_EQUAL: 'not is';
 MOD: '%';
 ARROW: '->';
 POWER: '**';

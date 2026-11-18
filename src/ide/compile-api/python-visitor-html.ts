@@ -155,6 +155,10 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     this.handleKeyword(this.language.mapOperationSymbol(OperationSymbol.Equals));
   override visitOpNOT_EQUAL = (_ctx: BinaryOperatorContext) =>
     this.handleKeyword(this.language.mapOperationSymbol(OperationSymbol.NotEquals));
+  override visitOpREF_EQUAL = (_ctx: BinaryOperatorContext) =>
+    this.handleKeyword(this.language.mapOperationSymbol(OperationSymbol.RefEquals));
+  override visitOpREF_NOT_EQUAL = (_ctx: BinaryOperatorContext) =>
+    this.handleKeyword(this.language.mapOperationSymbol(OperationSymbol.RefNotEquals));
   override visitOpGT = (_ctx: BinaryOperatorContext) =>
     this.handleKeyword(this.language.mapOperationSymbol(OperationSymbol.GT));
   override visitOpLT = (_ctx: BinaryOperatorContext) =>

@@ -361,6 +361,8 @@ export class LanguagePython extends LanguageAbstract {
     [OperationSymbol.Multiply, "*"],
     [OperationSymbol.And, "and"],
     [OperationSymbol.Equals, "=="],
+    [OperationSymbol.RefEquals, "is"],
+    [OperationSymbol.RefNotEquals, "is not"],
     [OperationSymbol.LT, "<"],
     [OperationSymbol.GT, ">"],
     [OperationSymbol.GTE, ">="],

@@ -115,6 +115,8 @@ import { KvpContext } from "./PythonParser.js";
 import { MethodCallContext } from "./PythonParser.js";
 import { OpEQUALContext } from "./PythonParser.js";
 import { OpNOT_EQUALContext } from "./PythonParser.js";
+import { OpREF_EQUALContext } from "./PythonParser.js";
+import { OpREF_NOT_EQUALContext } from "./PythonParser.js";
 import { OpGTContext } from "./PythonParser.js";
 import { OpLTContext } from "./PythonParser.js";
 import { OpGEContext } from "./PythonParser.js";
@@ -1329,6 +1331,30 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
   /**
    * Enter a parse tree produced by the `opGT`
    * labeled alternative in `PythonParser.binaryOperator`.
