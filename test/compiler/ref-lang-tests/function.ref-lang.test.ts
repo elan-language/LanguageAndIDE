@@ -1727,4 +1727,37 @@ end function`;
       "Parameter 'foo' may not have the same name as the method in which it is defined.ErrorMessages.html#compile_error",
     ]);
   });
+
+  test("Fail_CanNotContainProcedure", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to foo(0, 1)
+end main
+
+function foo(a as Int, b as Int) returns String
+  call bar(a, b)
+  return ""
+end function
+
+procedure bar(a as Int, b as Int)
+
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot call Procedure in Constructor or Function.ErrorMessages.html#compile_error",
+    ]);
+  });
 });

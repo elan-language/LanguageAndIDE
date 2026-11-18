@@ -302,20 +302,20 @@ kvp: key = expression COLON value = expression;
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
 binaryOperator:
-    EQUAL
-    | NOT_EQUAL
-    | GT
-    | LT
-    | GE
-    | LE
-    | MULT
-    | DIVIDE
-    | PLUS
-    | MINUS
-    | AND
-    | OR
-    | MOD
-    | POWER
+    EQUAL       # opEQUAL
+    | NOT_EQUAL # opNOT_EQUAL
+    | GT        # opGT
+    | LT        # opLT
+    | GE        # opGE
+    | LE        # opLE
+    | MULT      # opMULT
+    | DIVIDE    # opDIVIDE
+    | PLUS      # opPLUS
+    | MINUS     # opMINUS
+    | AND       # opAND
+    | OR        # opOR
+    | MOD       # opMOD
+    | POWER     # opPOWER
 ;
 
 newInstance: NEW type OPEN_BRACKET argList? CLOSE_BRACKET;

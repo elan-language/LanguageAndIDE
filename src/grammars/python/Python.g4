@@ -198,17 +198,19 @@ constructorMember:
         ? GHOSTED_BLOCK_END? NL ordinaryStatement* END_CONSTRUCTOR NL
 ;
 
-property: GHOSTED_LINE? identifierDef COLON type PRIVATE_ANNOTATION? commentText? NL;
+property:
+    GHOSTED_LINE? identifierDef COLON type PRIVATE_ANNOTATION? commentText? NL
+;
 
 functionMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON PRIVATE_ANNOTATION? NL (
-        ordinaryStatement
-    )* returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
+        PRIVATE_ANNOTATION? NL (ordinaryStatement)* returnStatement END_FUNCTION GHOSTED_BLOCK_END?
+        NL
 ;
 
 procedureMethod:
-    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON PRIVATE_ANNOTATION? NL
-        ordinaryStatement* END_PROCEDURE GHOSTED_BLOCK_END? NL
+    GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW NONE COLON
+        PRIVATE_ANNOTATION? NL ordinaryStatement* END_PROCEDURE GHOSTED_BLOCK_END? NL
 ;
 
 abstractFunction:
@@ -334,20 +336,22 @@ kvp: key = expression COLON value = expression;
 methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
 
 binaryOperator:
-    EQUAL
-    | NOT_EQUAL
-    | GT
-    | LT
-    | GE
-    | LE
-    | MULT
-    | DIVIDE
-    | PLUS
-    | MINUS
-    | AND
-    | OR
-    | MOD
-    | POWER
+    EQUAL       # opEQUAL
+    | NOT_EQUAL # opNOT_EQUAL
+    | REF_EQUAL       # opREF_EQUAL
+    | REF_NOT_EQUAL # opREF_NOT_EQUAL
+    | GT        # opGT
+    | LT        # opLT
+    | GE        # opGE
+    | LE        # opLE
+    | MULT      # opMULT
+    | DIVIDE    # opDIVIDE
+    | PLUS      # opPLUS
+    | MINUS     # opMINUS
+    | AND       # opAND
+    | OR        # opOR
+    | MOD       # opMOD
+    | POWER     # opPOWER
 ;
 
 newInstance: type OPEN_BRACKET argList? CLOSE_BRACKET;
@@ -370,6 +374,5 @@ typeTuple:
 lambda:
     LAMBDA paramList COLON expression
 ; // TODO should change to identiferList
-
 
 // END SubNodes

@@ -361,6 +361,8 @@ export class LanguagePython extends LanguageAbstract {
     [OperationSymbol.Multiply, "*"],
     [OperationSymbol.And, "and"],
     [OperationSymbol.Equals, "=="],
+    [OperationSymbol.RefEquals, "is"],
+    [OperationSymbol.RefNotEquals, "is not"],
     [OperationSymbol.LT, "<"],
     [OperationSymbol.GT, ">"],
     [OperationSymbol.GTE, ">="],
@@ -382,5 +384,13 @@ export class LanguagePython extends LanguageAbstract {
       }
     }
     return OperationSymbol.Unknown;
+  }
+
+  override mapOperationSymbol(op: OperationSymbol): string {
+    if (op === OperationSymbol.Multiply || op === OperationSymbol.Divide) {
+      return this.opMap.get(op)!;
+    }
+
+    return ` ${this.opMap.get(op) ?? ""} `;
   }
 }

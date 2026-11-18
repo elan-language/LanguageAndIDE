@@ -108,7 +108,20 @@ import { DictionaryContext } from "./RefLangParser.js";
 import { KvpListContext } from "./RefLangParser.js";
 import { KvpContext } from "./RefLangParser.js";
 import { MethodCallContext } from "./RefLangParser.js";
-import { BinaryOperatorContext } from "./RefLangParser.js";
+import { OpEQUALContext } from "./RefLangParser.js";
+import { OpNOT_EQUALContext } from "./RefLangParser.js";
+import { OpGTContext } from "./RefLangParser.js";
+import { OpLTContext } from "./RefLangParser.js";
+import { OpGEContext } from "./RefLangParser.js";
+import { OpLEContext } from "./RefLangParser.js";
+import { OpMULTContext } from "./RefLangParser.js";
+import { OpDIVIDEContext } from "./RefLangParser.js";
+import { OpPLUSContext } from "./RefLangParser.js";
+import { OpMINUSContext } from "./RefLangParser.js";
+import { OpANDContext } from "./RefLangParser.js";
+import { OpORContext } from "./RefLangParser.js";
+import { OpMODContext } from "./RefLangParser.js";
+import { OpPOWERContext } from "./RefLangParser.js";
 import { NewInstanceContext } from "./RefLangParser.js";
 import { ParamDefContext } from "./RefLangParser.js";
 import { TypeGenericContext } from "./RefLangParser.js";
@@ -1238,15 +1251,173 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitMethodCall?: (ctx: MethodCallContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.binaryOperator`.
+   * Enter a parse tree produced by the `opEQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
    * @param ctx the parse tree
    */
-  enterBinaryOperator?: (ctx: BinaryOperatorContext) => void;
+  enterOpEQUAL?: (ctx: OpEQUALContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.binaryOperator`.
+   * Exit a parse tree produced by the `opEQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
    * @param ctx the parse tree
    */
-  exitBinaryOperator?: (ctx: BinaryOperatorContext) => void;
+  exitOpEQUAL?: (ctx: OpEQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opGT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpGT?: (ctx: OpGTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opGT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpGT?: (ctx: OpGTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opLT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpLT?: (ctx: OpLTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opLT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpLT?: (ctx: OpLTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opGE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpGE?: (ctx: OpGEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opGE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpGE?: (ctx: OpGEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opLE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpLE?: (ctx: OpLEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opLE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpLE?: (ctx: OpLEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMULT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMULT?: (ctx: OpMULTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMULT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMULT?: (ctx: OpMULTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpDIVIDE?: (ctx: OpDIVIDEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpDIVIDE?: (ctx: OpDIVIDEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opPLUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpPLUS?: (ctx: OpPLUSContext) => void;
+  /**
+   * Exit a parse tree produced by the `opPLUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpPLUS?: (ctx: OpPLUSContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMINUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMINUS?: (ctx: OpMINUSContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMINUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMINUS?: (ctx: OpMINUSContext) => void;
+  /**
+   * Enter a parse tree produced by the `opAND`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpAND?: (ctx: OpANDContext) => void;
+  /**
+   * Exit a parse tree produced by the `opAND`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpAND?: (ctx: OpANDContext) => void;
+  /**
+   * Enter a parse tree produced by the `opOR`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpOR?: (ctx: OpORContext) => void;
+  /**
+   * Exit a parse tree produced by the `opOR`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpOR?: (ctx: OpORContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMOD`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMOD?: (ctx: OpMODContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMOD`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMOD?: (ctx: OpMODContext) => void;
+  /**
+   * Enter a parse tree produced by the `opPOWER`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpPOWER?: (ctx: OpPOWERContext) => void;
+  /**
+   * Exit a parse tree produced by the `opPOWER`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpPOWER?: (ctx: OpPOWERContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.newInstance`.
    * @param ctx the parse tree

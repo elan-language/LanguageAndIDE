@@ -69,4 +69,6 @@ export interface Language {
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
   mapOperation(op: string): OperationSymbol;
+
+  mapOperationSymbol(op: OperationSymbol): string;
 }

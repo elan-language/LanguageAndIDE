@@ -113,7 +113,22 @@ import { DictionaryContext } from "./PythonParser.js";
 import { KvpListContext } from "./PythonParser.js";
 import { KvpContext } from "./PythonParser.js";
 import { MethodCallContext } from "./PythonParser.js";
-import { BinaryOperatorContext } from "./PythonParser.js";
+import { OpEQUALContext } from "./PythonParser.js";
+import { OpNOT_EQUALContext } from "./PythonParser.js";
+import { OpREF_EQUALContext } from "./PythonParser.js";
+import { OpREF_NOT_EQUALContext } from "./PythonParser.js";
+import { OpGTContext } from "./PythonParser.js";
+import { OpLTContext } from "./PythonParser.js";
+import { OpGEContext } from "./PythonParser.js";
+import { OpLEContext } from "./PythonParser.js";
+import { OpMULTContext } from "./PythonParser.js";
+import { OpDIVIDEContext } from "./PythonParser.js";
+import { OpPLUSContext } from "./PythonParser.js";
+import { OpMINUSContext } from "./PythonParser.js";
+import { OpANDContext } from "./PythonParser.js";
+import { OpORContext } from "./PythonParser.js";
+import { OpMODContext } from "./PythonParser.js";
+import { OpPOWERContext } from "./PythonParser.js";
 import { NewInstanceContext } from "./PythonParser.js";
 import { ParamDefContext } from "./PythonParser.js";
 import { TypeGenericContext } from "./PythonParser.js";
@@ -1293,15 +1308,197 @@ export class PythonListener implements ParseTreeListener {
    */
   exitMethodCall?: (ctx: MethodCallContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.binaryOperator`.
+   * Enter a parse tree produced by the `opEQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
    * @param ctx the parse tree
    */
-  enterBinaryOperator?: (ctx: BinaryOperatorContext) => void;
+  enterOpEQUAL?: (ctx: OpEQUALContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.binaryOperator`.
+   * Exit a parse tree produced by the `opEQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
    * @param ctx the parse tree
    */
-  exitBinaryOperator?: (ctx: BinaryOperatorContext) => void;
+  exitOpEQUAL?: (ctx: OpEQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
+  /**
+   * Exit a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => void;
+  /**
+   * Enter a parse tree produced by the `opGT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpGT?: (ctx: OpGTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opGT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpGT?: (ctx: OpGTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opLT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpLT?: (ctx: OpLTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opLT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpLT?: (ctx: OpLTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opGE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpGE?: (ctx: OpGEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opGE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpGE?: (ctx: OpGEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opLE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpLE?: (ctx: OpLEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opLE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpLE?: (ctx: OpLEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMULT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMULT?: (ctx: OpMULTContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMULT`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMULT?: (ctx: OpMULTContext) => void;
+  /**
+   * Enter a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpDIVIDE?: (ctx: OpDIVIDEContext) => void;
+  /**
+   * Exit a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpDIVIDE?: (ctx: OpDIVIDEContext) => void;
+  /**
+   * Enter a parse tree produced by the `opPLUS`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpPLUS?: (ctx: OpPLUSContext) => void;
+  /**
+   * Exit a parse tree produced by the `opPLUS`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpPLUS?: (ctx: OpPLUSContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMINUS`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMINUS?: (ctx: OpMINUSContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMINUS`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMINUS?: (ctx: OpMINUSContext) => void;
+  /**
+   * Enter a parse tree produced by the `opAND`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpAND?: (ctx: OpANDContext) => void;
+  /**
+   * Exit a parse tree produced by the `opAND`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpAND?: (ctx: OpANDContext) => void;
+  /**
+   * Enter a parse tree produced by the `opOR`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpOR?: (ctx: OpORContext) => void;
+  /**
+   * Exit a parse tree produced by the `opOR`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpOR?: (ctx: OpORContext) => void;
+  /**
+   * Enter a parse tree produced by the `opMOD`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpMOD?: (ctx: OpMODContext) => void;
+  /**
+   * Exit a parse tree produced by the `opMOD`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpMOD?: (ctx: OpMODContext) => void;
+  /**
+   * Enter a parse tree produced by the `opPOWER`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  enterOpPOWER?: (ctx: OpPOWERContext) => void;
+  /**
+   * Exit a parse tree produced by the `opPOWER`
+   * labeled alternative in `PythonParser.binaryOperator`.
+   * @param ctx the parse tree
+   */
+  exitOpPOWER?: (ctx: OpPOWERContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.newInstance`.
    * @param ctx the parse tree
