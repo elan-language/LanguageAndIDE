@@ -293,6 +293,6 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
       .Grapheme()
       .map((g) => this.visit(g))
       .join("");
-    return txt && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
+    return txt !== null && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
   };
 }

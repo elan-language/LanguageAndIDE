@@ -18,6 +18,7 @@ import {
   IndexedTermContext,
   InterpolatedStringContext,
   InterpolatedStringExpressionContext,
+  InterpolatedStringTextContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -225,5 +226,13 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
       .map((s) => this.visit(s))
       .join("");
     return '$"' + s + '"';
+  };
+
+  override visitInterpolatedStringText = (ctx: InterpolatedStringTextContext) => {
+    const txt = ctx
+      .Grapheme()
+      .map((g) => this.visit(g))
+      .join("");
+    return txt ?? "";
   };
 }

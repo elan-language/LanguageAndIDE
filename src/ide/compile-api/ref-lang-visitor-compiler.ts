@@ -392,7 +392,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   override visitInterpolatedStringText = (ctx: InterpolatedStringTextContext) => {
     const txt = ctx
       .Grapheme()
-      .map((g) => this.visit(g))
+      .map((g) => g.getText())
       .join("");
     return new LitStringAsn(txt, this.fieldId);
   };

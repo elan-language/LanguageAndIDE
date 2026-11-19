@@ -265,6 +265,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
       .Grapheme()
       .map((g) => this.visit(g))
       .join("");
-    return txt && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
+    return txt !== null && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
   };
 }
