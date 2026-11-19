@@ -143,6 +143,21 @@ export async function assertExportsAll(fl: FileImpl, path: string) {
   return "";
 }
 
+export async function testPythonFile(fn: string) {
+  const [fl, source, sourceFile, testPath] = await getPythonFile(fn);
+  await assertParsesAndCompilesAndTests(fl);
+
+  const msgs = [];
+  msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
+  msgs.push(await assertGeneratesHtml(fl, testPath));
+  msgs.push(await assertExportsAll(fl, testPath));
+
+  if (msgs.some(m => m)) {
+    throw new Error(msgs.join(", "));
+  }
+}
+
+
 export async function testElanFile(fn: string) {
   const [fl, source, sourceFile, testPath] = await getFile(fn);
   await assertParsesAndCompilesAndTests(fl);
@@ -204,6 +219,17 @@ export async function getFile(sf: string): Promise<[FileImpl, string, string, st
   await fl.parseFrom(codeSource);
   return [fl, source, sourceFile, testPath];
 }
+
+export async function getPythonFile(sf: string): Promise<[FileImpl, string, string, string]> {
+  const sourceFile = `./out/test/files/${sf}.py`;
+  const testPath = `./out/test/files/${sf}`;
+  const source = loadFileAsSource(sourceFile);
+  const codeSource = new CodeSourceFromString(source);
+  const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  await fl.parseFrom(codeSource);
+  return [fl, source, sourceFile, testPath];
+}
+
 
 export function loadFileAsHtml(sourceFile: string): string {
   return loadFileAsSource(sourceFile);
