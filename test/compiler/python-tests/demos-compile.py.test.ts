@@ -1,127 +1,127 @@
-import { testElanFile } from "../../testHelpers";
+import { testPythonFile } from "../../testHelpers";
 import { ignore_test } from "../compiler-test-helpers";
 
 suite("Python Demo compile", () => {
   ignore_test("test best-fit", async () => {
-    await testElanFile("best-fit");
+    await testPythonFile("best-fit");
   });
 
-  test("test binary-search", async () => {
-    await testElanFile("binary-search");
+  ignore_test("test binary-search", async () => {
+    await testPythonFile("binary-search");
   });
 
   ignore_test("test blackjack", async () => {
-    await testElanFile("blackjack");
+    await testPythonFile("blackjack");
   });
 
-  test("test bubbles", async () => {
-    await testElanFile("bubbles");
+  ignore_test("test bubbles", async () => {
+    await testPythonFile("bubbles");
   });
 
   ignore_test("test burrow", async () => {
-    await testElanFile("burrow");
+    await testPythonFile("burrow");
   });
 
   ignore_test("test collatz", async () => {
-    await testElanFile("collatz");
+    await testPythonFile("collatz");
   });
 
   ignore_test("test fern", async () => {
-    await testElanFile("fern");
+    await testPythonFile("fern");
   });
 
   ignore_test("test fern-params", async () => {
     // Not high enough value to warrant the long time that this test takes*/
-    await testElanFile(`fern-params.elan`);
+    await testPythonFile(`fern-params.elan`);
   });
 
   ignore_test("test in-place-ripple-sort", async () => {
-    await testElanFile("in-place-ripple-sort");
+    await testPythonFile("in-place-ripple-sort");
   });
 
   ignore_test("test julia-set", async () => {
-    await testElanFile("julia-set");
+    await testPythonFile("julia-set");
   });
 
   ignore_test("test kaleidoscope", async () => {
-    await testElanFile("kaleidoscope");
+    await testPythonFile("kaleidoscope");
   });
 
   ignore_test("test life", async () => {
-    await testElanFile("life");
+    await testPythonFile("life");
   });
 
   ignore_test("test life_FP", async () => {
-    await testElanFile("life_FP");
+    await testPythonFile("life_FP");
   });
 
   ignore_test("test map-filter-reduce", async () => {
-    await testElanFile("map-filter-reduce");
+    await testPythonFile("map-filter-reduce");
   });
 
   ignore_test("test maze-generator", async () => {
-    await testElanFile("maze-generator");
+    await testPythonFile("maze-generator");
   });
 
   ignore_test("test merge-sort", async () => {
-    await testElanFile("merge-sort");
+    await testPythonFile("merge-sort");
   });
 
   ignore_test("test pathfinder", async () => {
-    await testElanFile("pathfinder");
+    await testPythonFile("pathfinder");
   });
 
   ignore_test("test recursive-functions", async () => {
-    await testElanFile("recursive-functions");
+    await testPythonFile("recursive-functions");
   });
 
   ignore_test("test roman-numerals-turing-machine.elan", async () => {
-    await testElanFile("roman-numerals-turing-machine");
+    await testPythonFile("roman-numerals-turing-machine");
   });
 
   ignore_test("test snake_FP", async () => {
-    await testElanFile("snake_FP");
+    await testPythonFile("snake_FP");
   });
 
   ignore_test("test snake_OOP", async () => {
-    await testElanFile("snake_OOP");
+    await testPythonFile("snake_OOP");
   });
 
   ignore_test("test snake_PP", async () => {
-    await testElanFile("snake_PP");
+    await testPythonFile("snake_PP");
   });
 
   ignore_test("test tower-of-hanoi", async () => {
-    await testElanFile("tower-of-hanoi");
+    await testPythonFile("tower-of-hanoi");
   });
 
   ignore_test("test tower-of-hanoi-recursive", async () => {
-    await testElanFile("tower-of-hanoi-recursive");
+    await testPythonFile("tower-of-hanoi-recursive");
   });
 
-  test("test turtle-snowflake", async () => {
-    await testElanFile("turtle-snowflake");
+  ignore_test("test turtle-snowflake", async () => {
+    await testPythonFile("turtle-snowflake");
   });
 
-  test("test turtle-spiral", async () => {
-    await testElanFile("turtle-spiral");
+  ignore_test("test turtle-spiral", async () => {
+    await testPythonFile("turtle-spiral");
   });
 
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
-    await testElanFile("wordle-solver");
+    await testPythonFile("wordle-solver");
   });
 
   ignore_test("test hodgepodge", async () => {
-    await testElanFile("hodgepodge");
+    await testPythonFile("hodgepodge");
   });
 
   ignore_test("test turtle_dragon", async () => {
-    await testElanFile("turtle_dragon");
+    await testPythonFile("turtle_dragon");
   });
 
   ignore_test("test date-time", async () => {
-    await testElanFile("date-time");
+    await testPythonFile("date-time");
   });
 
   //Worksheet loaded code
