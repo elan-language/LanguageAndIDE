@@ -1,4 +1,4 @@
-# 013241eed2c5b3146f6cd99d33004a254861be4665c37a1f83300bda54fa6058 Python with Elan 2.0.0-beta5 valid
+# 2be70c2019582dc122d83f7eebcd6436e5bd755490c39ea133c2f9c86bfc4f62 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -10,9 +10,9 @@ def main() -> None:
     else:
       result = binarySearch(fruit, wanted)
       if result:
-        print(f"We can supply a {wanted}")
+        print(f" {wanted}")
       else:
-        print(f"Sorry, we cannot supply a {wanted}")
+        print(f" {wanted}")
        
       # end if 
      

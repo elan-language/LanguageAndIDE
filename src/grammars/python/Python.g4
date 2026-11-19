@@ -282,14 +282,15 @@ litInt:
 litFloat: LITERAL_FLOAT;
 litString: LITERAL_STRING;
 
-interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
-
-segment: Grapheme | interpolatedStringExpression;
-
 interpolatedString:
     START_INTERPOLATED_STRING segment* DOUBLE_QUOTES
 ;
 
+segment: interpolatedStringText | interpolatedStringExpression;
+
+interpolatedStringText: Grapheme+;
+
+interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
 enumValue: typeName DOT identifierUse;
 
 index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;

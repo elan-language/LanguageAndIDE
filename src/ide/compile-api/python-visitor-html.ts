@@ -1,5 +1,6 @@
 import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import {
   ArgListContext,
   BinaryExpressionContext,
@@ -18,6 +19,7 @@ import {
   IndexedTermContext,
   InterpolatedStringContext,
   InterpolatedStringExpressionContext,
+  InterpolatedStringTextContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -60,7 +62,6 @@ import {
   type,
   visitTypeHelper,
 } from "./parser-helpers";
-import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 
 export class PythonVisitorHtml extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -274,15 +275,24 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
     const ids = ctx.identifierDef().map((id) => this.visit(id)!);
     return ids.join(", ");
   };
-  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
-    return "</el-lit>{" + this.visit(ctx.expression())! + "}<el-lit>";
-  };
 
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
     const s = ctx
       .segment()
       .map((s) => this.visit(s))
       .join("");
-    return 'f"<el-lit>' + s + '</el-lit>"';
+    return 'f"' + s + '"';
+  };
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
+    return "{" + this.visit(ctx.expression())! + "}";
+  };
+
+  override visitInterpolatedStringText = (ctx: InterpolatedStringTextContext) => {
+    const txt = ctx
+      .Grapheme()
+      .map((g) => this.visit(g))
+      .join("");
+    return txt && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
   };
 }

@@ -1,4 +1,4 @@
-# faf995114e831fedf3e22569d0df25964242667397864c2ac6d9e422272a78cd Elan 2.0.0-beta5 valid
+# 317d92ffb8ca597c96e7ec7d3df7e4ffb54ee65771b54475ee2022812fa1f76e Elan 2.0.0-beta5 valid
 
 main
   variable fruit set to ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"]
@@ -10,9 +10,9 @@ main
     else
       variable result set to binarySearch(fruit, wanted)
       if result then
-        call print($"We can supply a {wanted}")
+        call print($" {wanted}")
       else
-        call print($"Sorry, we cannot supply a {wanted}")
+        call print($" {wanted}")
       end if
     end if
   end while

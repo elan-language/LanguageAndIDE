@@ -181,7 +181,7 @@ suite("Parsing Rules Python", () => {
       true,
       `f"{curly}"`,
       "",
-      `f"<el-lit></el-lit>{<el-id>curly</el-id>}<el-lit></el-lit>"`,
+      `f"{<el-id>curly</el-id>}"`,
       `f"{curly}"`,
       "`${await _stdlib.toString(curly)}`",
     );
@@ -191,7 +191,7 @@ suite("Parsing Rules Python", () => {
       true,
       'f"{a} plus {b} equals {a + b}"',
       "",
-      'f"<el-lit></el-lit>{<el-id>a</el-id>}<el-lit> plus </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id> + <el-id>b</el-id>}<el-lit></el-lit>"',
+      'f"{<el-id>a</el-id>}<el-lit> plus </el-lit>{<el-id>b</el-id>}<el-lit> equals </el-lit>{<el-id>a</el-id> + <el-id>b</el-id>}"',
       "",
       "`${await _stdlib.toString(a)} plus ${await _stdlib.toString(b)} equals ${await _stdlib.toString(a + b)}`",
     );

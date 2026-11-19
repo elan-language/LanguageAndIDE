@@ -80,9 +80,10 @@ import { LitBinaryContext } from "./PythonParser.js";
 import { LitHexContext } from "./PythonParser.js";
 import { LitFloatContext } from "./PythonParser.js";
 import { LitStringContext } from "./PythonParser.js";
-import { InterpolatedStringExpressionContext } from "./PythonParser.js";
-import { SegmentContext } from "./PythonParser.js";
 import { InterpolatedStringContext } from "./PythonParser.js";
+import { SegmentContext } from "./PythonParser.js";
+import { InterpolatedStringTextContext } from "./PythonParser.js";
+import { InterpolatedStringExpressionContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
 import { UnaryExpressionLabelContext } from "./PythonParser.js";
@@ -948,15 +949,15 @@ export class PythonListener implements ParseTreeListener {
    */
   exitLitString?: (ctx: LitStringContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.interpolatedStringExpression`.
+   * Enter a parse tree produced by `PythonParser.interpolatedString`.
    * @param ctx the parse tree
    */
-  enterInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.interpolatedStringExpression`.
+   * Exit a parse tree produced by `PythonParser.interpolatedString`.
    * @param ctx the parse tree
    */
-  exitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.segment`.
    * @param ctx the parse tree
@@ -968,15 +969,25 @@ export class PythonListener implements ParseTreeListener {
    */
   exitSegment?: (ctx: SegmentContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.interpolatedString`.
+   * Enter a parse tree produced by `PythonParser.interpolatedStringText`.
    * @param ctx the parse tree
    */
-  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  enterInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.interpolatedString`.
+   * Exit a parse tree produced by `PythonParser.interpolatedStringText`.
    * @param ctx the parse tree
    */
-  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  exitInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => void;
+  /**
+   * Enter a parse tree produced by `PythonParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  enterInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by `PythonParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  exitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.enumValue`.
    * @param ctx the parse tree

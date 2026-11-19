@@ -83,7 +83,7 @@ import {
   EnumDefValueContext,
   InterpolatedStringExpressionContext,
   InterpolatedStringContext,
-  SegmentContext,
+  InterpolatedStringTextContext,
 } from "../../generated/python/PythonParser";
 import { PythonVisitor } from "../../generated/python/PythonVisitor";
 import { Language } from "../frames/frame-interfaces/language";
@@ -395,14 +395,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     return lambda;
   };
 
-  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) =>
-    new InterpolatedAsn(this.visit(ctx.expression())!, this.language, this.fieldId, this.scope);
-
-  override visitSegment = (ctx: SegmentContext) => {
-    const expr = ctx.interpolatedStringExpression();
-    return expr ? this.visit(expr)! : new LitStringAsn(ctx.Grapheme()!.getText(), this.fieldId);
-  };
-
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
     const segments = ctx
       .segment()
@@ -411,4 +403,15 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
 
     return new SegmentedStringAsn(segments, this.fieldId);
   };
+
+  override visitInterpolatedStringText = (ctx: InterpolatedStringTextContext) => {
+    const txt = ctx
+      .Grapheme()
+      .map((g) => this.visit(g))
+      .join("");
+    return new LitStringAsn(txt, this.fieldId);
+  };
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) =>
+    new InterpolatedAsn(this.visit(ctx.expression())!, this.language, this.fieldId, this.scope);
 }

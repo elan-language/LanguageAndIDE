@@ -75,9 +75,10 @@ import { LitBinaryContext } from "./RefLangParser.js";
 import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
-import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
-import { SegmentContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
+import { SegmentContext } from "./RefLangParser.js";
+import { InterpolatedStringTextContext } from "./RefLangParser.js";
+import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { NewInstanceExpressionContext } from "./RefLangParser.js";
@@ -893,15 +894,15 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitString?: (ctx: LitStringContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * Enter a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree
    */
-  enterInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * Exit a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree
    */
-  exitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.segment`.
    * @param ctx the parse tree
@@ -913,15 +914,25 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitSegment?: (ctx: SegmentContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.interpolatedString`.
+   * Enter a parse tree produced by `RefLangParser.interpolatedStringText`.
    * @param ctx the parse tree
    */
-  enterInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  enterInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.interpolatedString`.
+   * Exit a parse tree produced by `RefLangParser.interpolatedStringText`.
    * @param ctx the parse tree
    */
-  exitInterpolatedString?: (ctx: InterpolatedStringContext) => void;
+  exitInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => void;
+  /**
+   * Enter a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  enterInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
+  /**
+   * Exit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   */
+  exitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => void;
   /**
    * Enter a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree

@@ -75,9 +75,10 @@ import { LitBinaryContext } from "./RefLangParser.js";
 import { LitHexContext } from "./RefLangParser.js";
 import { LitFloatContext } from "./RefLangParser.js";
 import { LitStringContext } from "./RefLangParser.js";
-import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
-import { SegmentContext } from "./RefLangParser.js";
 import { InterpolatedStringContext } from "./RefLangParser.js";
+import { SegmentContext } from "./RefLangParser.js";
+import { InterpolatedStringTextContext } from "./RefLangParser.js";
+import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { NewInstanceExpressionContext } from "./RefLangParser.js";
@@ -591,11 +592,11 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitString?: (ctx: LitStringContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * Visit a parse tree produced by `RefLangParser.interpolatedString`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => Result;
+  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.segment`.
    * @param ctx the parse tree
@@ -603,11 +604,17 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitSegment?: (ctx: SegmentContext) => Result;
   /**
-   * Visit a parse tree produced by `RefLangParser.interpolatedString`.
+   * Visit a parse tree produced by `RefLangParser.interpolatedStringText`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
+  visitInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => Result;
   /**
    * Visit a parse tree produced by `RefLangParser.enumValue`.
    * @param ctx the parse tree

@@ -18,6 +18,7 @@ import {
   IndexedTermContext,
   InterpolatedStringContext,
   InterpolatedStringExpressionContext,
+  InterpolatedStringTextContext,
   KvpContext,
   LambdaContext,
   ListContext,
@@ -247,15 +248,23 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     return ids.join(", ");
   };
 
-  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
-    return "</el-lit>{" + this.visit(ctx.expression())! + "}<el-lit>";
-  };
-
   override visitInterpolatedString = (ctx: InterpolatedStringContext) => {
     const s = ctx
       .segment()
       .map((s) => this.visit(s))
       .join("");
-    return '$"<el-lit>' + s + '</el-lit>"';
+    return '$"' + s + '"';
+  };
+
+  override visitInterpolatedStringExpression = (ctx: InterpolatedStringExpressionContext) => {
+    return "{" + this.visit(ctx.expression())! + "}";
+  };
+
+  override visitInterpolatedStringText = (ctx: InterpolatedStringTextContext) => {
+    const txt = ctx
+      .Grapheme()
+      .map((g) => this.visit(g))
+      .join("");
+    return txt && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
   };
 }
