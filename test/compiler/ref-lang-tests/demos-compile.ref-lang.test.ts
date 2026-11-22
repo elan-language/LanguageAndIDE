@@ -18,11 +18,11 @@ suite("RefLang Demo compile", () => {
     await testElanFile("bubbles");
   });
 
-  ignore_test("test burrow", async () => {
+  test("test burrow", async () => {
     await testElanFile("burrow");
   });
 
-  ignore_test("test collatz", async () => {
+  test("test collatz", async () => {
     await testElanFile("collatz");
   });
 
@@ -35,7 +35,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile(`fern-params.elan`);
   });
 
-  ignore_test("test in-place-ripple-sort", async () => {
+  test("test in-place-ripple-sort", async () => {
     await testElanFile("in-place-ripple-sort");
   });
 
@@ -47,7 +47,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile("kaleidoscope");
   });
 
-  ignore_test("test life", async () => {
+  test("test life", async () => {
     await testElanFile("life");
   });
 
@@ -87,23 +87,23 @@ suite("RefLang Demo compile", () => {
     await testElanFile("snake_OOP");
   });
 
-  ignore_test("test snake_PP", async () => {
+  test("test snake_PP", async () => {
     await testElanFile("snake_PP");
   });
 
-  ignore_test("test tower-of-hanoi", async () => {
+  test("test tower-of-hanoi", async () => {
     await testElanFile("tower-of-hanoi");
   });
 
-  ignore_test("test tower-of-hanoi-recursive", async () => {
+  test("test tower-of-hanoi-recursive", async () => {
     await testElanFile("tower-of-hanoi-recursive");
   });
 
-  ignore_test("test turtle-snowflake", async () => {
+  test("test turtle-snowflake", async () => {
     await testElanFile("turtle-snowflake");
   });
 
-  ignore_test("test turtle-spiral", async () => {
+  test("test turtle-spiral", async () => {
     await testElanFile("turtle-spiral");
   });
 
@@ -116,7 +116,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile("hodgepodge");
   });
 
-  ignore_test("test turtle_dragon", async () => {
+  test("test turtle_dragon", async () => {
     await testElanFile("turtle_dragon");
   });
 

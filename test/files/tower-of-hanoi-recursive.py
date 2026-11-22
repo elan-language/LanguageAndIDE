@@ -1,58 +1,58 @@
-# Python with Elan 2.0.0-beta5
+# cf3183ab29ea0948f3f368fbf898f971a96e3e8ca97fb2965ec47680a29bd57a Python with Elan 2.0.0-beta5 valid
 
-nDiscs = 7 # constant
+nDiscs = 7
 
-delay_ms = 300 # constant
+delay_ms = 300
 
 def main() -> None:
-  stacks = create3Stacks(nDiscs) # variable definition
-  display(stacks) # procedure call
-  moveMultiple(nDiscs, stacks, 0, 2, 1) # procedure call
-# end main
+  stacks = create3Stacks(nDiscs)
+  display(stacks)
+  moveMultiple(nDiscs, stacks, 0, 2, 1)
+# end main 
 
-def moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int) -> None: # procedure
+def moveMultiple(n: int, stacks: list[list[int]], fromStack: int, toStack: int, spare: int) -> None:
   if n == 1:
-    moveOne(stacks, fromStack, toStack) # procedure call
+    moveOne(stacks, fromStack, toStack)
   else:
-    moveMultiple(n - 1, stacks, fromStack, spare, toStack) # procedure call
-    moveOne(stacks, fromStack, toStack) # procedure call
-    moveMultiple(n - 1, stacks, spare, toStack, fromStack) # procedure call
-  # end if
-# end procedure
+    moveMultiple(n - 1, stacks, fromStack, spare, toStack)
+    moveOne(stacks, fromStack, toStack)
+    moveMultiple(n - 1, stacks, spare, toStack, fromStack)
+   
+  # end if 
+# end procedure 
 
-def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None: # procedure
-  disc = top(stacks[fromStack]) # variable definition
-  stacks[fromStack].removeFirst(disc) # procedure call
-  stacks[toStack].append(disc) # procedure call
-  display(stacks) # procedure call
-# end procedure
+def moveOne(stacks: list[list[int]], fromStack: int, toStack: int) -> None:
+  disc = top(stacks[fromStack])
+  stacks[fromStack].removeFirst(disc)
+  stacks[toStack].append(disc)
+  display(stacks)
+# end procedure 
 
-def display(stacks: list[list[int]]) -> None: # procedure
-  clearAllDisplays() # procedure call
-  vg = createVectorGraphics() # variable definition
+def display(stacks: list[list[int]]) -> None:
+  clearAllDisplays()
+  vg = createVectorGraphics()
   for i in range(0, 3):
-    drawStack(stacks[i], i + 1, vg) # procedure call
-  # end for
-  displayVectorGraphics(vg) # procedure call
-  sleep_ms(delay_ms) # procedure call
-# end procedure
+    drawStack(stacks[i], i + 1, vg)
+  # end for 
+  displayVectorGraphics(vg)
+  sleep_ms(delay_ms)
+# end procedure 
 
-def drawStack(s: list[int], peg: int, vg: list[VectorGraphic]) -> None: # procedure
+def drawStack(s: list[int], peg: int, vg: list[VectorGraphic]) -> None:
   for n in range(0, s.length()):
-    discVG = createDisc(s[n], peg, n) # variable definition
-    vg.append(discVG) # procedure call
-  # end for
-# end procedure
+    discVG = createDisc(s[n], peg, n)
+    vg.append(discVG)
+  # end for 
+# end procedure 
 
-def createDisc(disc: int, peg: int, vertical: int) -> RectangleVG: # function
-  r = RectangleVG() # variable definition
+def createDisc(disc: int, peg: int, vertical: int) -> RectangleVG:
+  r = RectangleVG()
   return r.withFillColour(colour(disc)).withHeight(3).withWidth(disc*2 + 2).withX((peg - 1)*30 + 20 - disc).withY(50 - vertical*3).withStrokeWidth(0.25)
-# end function
+# end function 
 
-class Test_createDisc(unittest.TestCase):
- def test_createDisc(self) -> None:
+class Test_createDisc(unittest.TestCase): def test_createDisc(self) -> None:
   # Normal cases
-  d = createDisc(5, 2, 4) # variable definition
+  d = createDisc(5, 2, 4)
   self.assertEqual(d.fillColour, green)
   self.assertEqual(d.strokeWidth, 0.25)
   self.assertEqual(d.height, 3)
@@ -60,7 +60,7 @@ class Test_createDisc(unittest.TestCase):
   self.assertEqual(d.x, 45)
   self.assertEqual(d.y, 38)
   # Edge cases
-  d2 = createDisc(1, 1, 0) # variable definition
+  d2 = createDisc(1, 1, 0)
   self.assertEqual(d2.fillColour, red)
   self.assertEqual(d2.strokeWidth, 0.25)
   self.assertEqual(d2.height, 3)
@@ -68,18 +68,17 @@ class Test_createDisc(unittest.TestCase):
   self.assertEqual(d2.x, 19)
   self.assertEqual(d2.y, 50)
   # Error cases - none identified
-# end test
+# end test 
 
-def create3Stacks(nDiscs: int) -> list[list[int]]: # function
-  s0 = rangeInSteps(nDiscs, 0, -1) # variable definition
-  s1 = list[int]() # variable definition
-  s2 = list[int]() # variable definition
+def create3Stacks(nDiscs: int) -> list[list[int]]:
+  s0 = rangeInSteps(nDiscs, 0, -1)
+  s1 = list[int]()
+  s2 = list[int]()
   return [s0, s1, s2]
-# end function
+# end function 
 
-class Test_create3Stacks(unittest.TestCase):
- def test_create3Stacks(self) -> None:
-  emptyStack = list[int]() # variable definition
+class Test_create3Stacks(unittest.TestCase): def test_create3Stacks(self) -> None:
+  emptyStack = list[int]()
   # Normal case(s)
   self.assertEqual(create3Stacks(7), [[7, 6, 5, 4, 3, 2, 1], emptyStack, emptyStack])
   # Edge case(s)
@@ -87,36 +86,34 @@ class Test_create3Stacks(unittest.TestCase):
   self.assertEqual(create3Stacks(0), [emptyStack, emptyStack, emptyStack])
   # Error case(s)
   self.assertEqual(create3Stacks(-1), "Loop will not terminate when start < end start with negative step")
-# end test
+# end test 
 
-def colour(disc: int) -> int: # function
-  colours = [red, yellow, blue, brown, green, 0xFF9900, 0x6600FF, 0x00CC00, 0x3399FF, 0xFF99CC] # variable definition
+def colour(disc: int) -> int:
+  colours = [red, yellow, blue, brown, green, 0xff9900, 0x6600ff, 0x00cc00, 0x3399ff, 0xff99cc]
   return colours[disc - 1]
-# end function
+# end function 
 
-class Test_colour(unittest.TestCase):
- def test_colour(self) -> None:
+class Test_colour(unittest.TestCase): def test_colour(self) -> None:
   # Normal cases
   self.assertEqual(colour(5), green)
   # Edge cases
   self.assertEqual(colour(1), red)
-  self.assertEqual(colour(10), 0xFF99CC)
+  self.assertEqual(colour(10), 0xff99cc)
   # Error cases
   self.assertEqual(colour(11), "Out of range index: 10 size: 10")
-# end test
+# end test 
 
-def top(s: list[int]) -> int: # function
+def top(s: list[int]) -> int:
   return s[s.length() - 1]
-# end function
+# end function 
 
-class Test_top(unittest.TestCase):
- def test_top(self) -> None:
+class Test_top(unittest.TestCase): def test_top(self) -> None:
   # Normal cases
   self.assertEqual(top([3, 2, 1]), 1)
   # Edge cases
   self.assertEqual(top([7]), 7)
   # Error cases
   self.assertEqual(top(list[int]()), "Out of range index: -1 size: 0")
-# end test
+# end test 
 
 main()

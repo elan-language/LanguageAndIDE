@@ -1,7 +1,5 @@
-# fd4a07a9bd1171c0f3de6e5d0071206941a2206129f10656e58a08d6e5c285ea Elan 2.0.0-beta5 valid
+# e5d3fb484cd9736269398668150990154084b648ad62885963622fe4197d8413 Elan 2.0.0-beta5 valid
 
-# A program to investigate the Collatz Conjecture
-# https://en.wikipedia.org/wiki/Collatz_conjecture
 main
   variable x set to 1
   while x > 0
@@ -35,13 +33,17 @@ main
 end main
 
 # scale x.  We pass in p just to get its length
+
 function scx(i as Int, p as List<of Int>) returns Float
   return divAsFloat(i*100, p.length())
 end function
 
 # scale y
+
 # subtract from 70 because y increases down the canvas
+
 # subtract 1 so that 1 is always at the same place on the canvas
+
 function scy(pi as Int, max as Int) returns Float
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
 end function

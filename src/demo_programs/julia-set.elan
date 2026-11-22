@@ -1,13 +1,15 @@
-# 419bd437791c63d2a9af43ecef61b02315e5b980a4ecb569a2d8a2d79c950911 Elan 2.0.0-beta5 valid
+# 4f9e4e7b392308c1246a7278f1b4f971c9ac5fc0f6375028b1d44b1e8103b486 Elan 2.0.0-beta5 valid
 
-# After image is displayed, press: 
-# - z to zoom in, x to zoom out
-# - arrow keys to pan
 # - g, j and y, h to change shape
+
 # 
+
 # Acknowledgements:
+
 # https://mathworld.wolfram.com/JuliaSet.html
+
 # Implemented in Elan by Charles Wicksteed
+
 main
   variable p set to new Coords()
   while true

@@ -1,7 +1,5 @@
-# 6b6a6146684e5ad879a310ffe493b2e0e79071e69e1fac114b07753c835a451c Elan 2.0.0-beta5 valid
+# 9107d25b7db00c928cbf5f17c996891ab75763cb964efe2fc2d5312058a24b9e Elan 2.0.0-beta5 valid
 
-# https://en.wikipedia.org/wiki/Barnsley_fern
-# Draws a fractal image
 main
   variable vg set to createVectorGraphics()
   variable s set to new State(new RectangleVG(), 0.0, 0.16, new Random())
@@ -19,9 +17,13 @@ main
 end main
 
 # The State class is used as a convenient way to pass multiple
+
 # items in and out.
+
 # The RectangleVG s.rect is ignored when passed in;
+
 # it is just the RectangleVG from last time.
+
 function onepoint(s as State) returns State
   # s.r.asFloat() is the current random number between 0 and 1
   variable nx_ny set to onestep(s.x, s.y, s.r.asFloat())
@@ -33,8 +35,11 @@ function onepoint(s as State) returns State
 end function
 
 # r is random Float 0.0 <= r < 1.0
+
 # returns new x and y
+
 # written in a data-driven style
+
 function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
   # Currently you can't make the params into one long line
   # as it makes the browser use 100% CPU
@@ -51,9 +56,13 @@ function onestep(x as Float, y as Float, r as Float) returns (Float, Float)
 end function
 
 # select a parameter set depending on random number
+
 # check the first element, cumulate the probability
+
 # return the element when the cumulative probability reaches r
+
 # otherwise recurse with the rest of the list of params
+
 function getparams(r as Float, prms as List<of List<of Float>>, cumuprob as Float) returns List<of Float>
   variable head set to prms.head()
   variable cp2 set to cumuprob + head[6]
@@ -61,6 +70,7 @@ function getparams(r as Float, prms as List<of List<of Float>>, cumuprob as Floa
 end function
 
 # class to hold the working data passed in and out of onepoint()
+
 class State
   constructor(rect as RectangleVG, x as Float, y as Float, r as Random)
     assign this.rect to rect
@@ -96,6 +106,7 @@ test test_one
 end test
 
 # two approaches to rounding a tuple to N decimal places
+
 function roundtuple1(n as (Float, Float)) returns (Float, Float)
   return (n.item_0.round(8), n.item_1.round(8))
 end function
