@@ -1,4 +1,4 @@
-# 923e3bf34862d5d38adc7d46e0274a10b149ce50efac63c32ea6ca2a39413234 Elan 2.0.0-beta5 valid
+# 85f10c2b4821f2c4b220d6f5f2e9c7e5a4f77d70b38a8f56204a012902e3773a Elan 2.0.0-beta5 valid
 
 main
   variable grid set to new BlockGraphics()
@@ -63,7 +63,10 @@ end test
 function north(cell as Int) returns Int
   variable x set to x(cell)
   variable y set to y(cell)
-  variable y2 set to if_(y is 0, 29, y - 1)
+  variable y2 set to y - 1
+  if y2 is -1 then
+    assign y2 to 29
+  end if
   return cellNo(x, y2)
 end function
 
@@ -78,7 +81,10 @@ end test
 function south(cell as Int) returns Int
   variable x set to x(cell)
   variable y set to y(cell)
-  variable y2 set to if_(y is 29, 0, y + 1)
+  variable y2 set to y + 1
+  if y2 is 30 then
+    assign y2 to 0
+  end if
   return cellNo(x, y2)
 end function
 
@@ -93,7 +99,10 @@ end test
 function east(cell as Int) returns Int
   variable x set to x(cell)
   variable y set to y(cell)
-  variable x2 set to if_(x is 39, 0, x + 1)
+  variable x2 set to x + 1
+  if x2 is 40 then
+    assign x2 to 0
+  end if
   return cellNo(x2, y)
 end function
 
@@ -108,7 +117,10 @@ end test
 function west(cell as Int) returns Int
   variable x set to x(cell)
   variable y set to y(cell)
-  variable x2 set to if_(x is 0, 39, x - 1)
+  variable x2 set to x - 1
+  if x2 is -1 then
+    assign x2 to 39
+  end if
   return cellNo(x2, y)
 end function
 
@@ -177,8 +189,13 @@ test test_neighbourCells
 end test
 
 function liveNeighbours(grid as BlockGraphics, cell as Int) returns Int
-  variable neighbours set to neighbourCells(cell)
-  return neighbours.filter(lambda c as Int => grid.getBlockNo(c) is black).length()
+  variable live set to 0
+  for c in neighbourCells(cell)
+    if grid.getBlockNo(c) is black then
+      assign live to live + 1
+    end if
+  end for
+  return live
 end function
 
 test test_liveNeighbours
