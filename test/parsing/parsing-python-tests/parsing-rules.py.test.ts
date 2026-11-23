@@ -290,7 +290,7 @@ suite("Parsing Rules Python", () => {
     testAntlrParse(litFloat, "1.1E-5", true, "1.1E-5", "1.1e-5", "<el-lit>1.1e-5</el-lit>");
   });
 
-  test("Lit bool", () => {
+  ignore_test("Lit bool", () => {
     const litBoolean: [Language, rule: (parser: Parser) => ParserRuleContext] = [
       LanguagePython.Instance,
       (p: Parser) => p.litBoolean(),

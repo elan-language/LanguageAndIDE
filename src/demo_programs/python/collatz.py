@@ -1,43 +1,42 @@
-# fbb128072dd48d6cc6a1f13740dcc35d83105961e0b046773da6e0a8d736ff35 Python with Elan 2.0.0-beta5 valid
+# 2e283c02b6b83b8311c2d392ebb7b71e0275d1ff35ad65886acb89fe62f595a0 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
-  x = 1
+  x = 1 # variable definition
   while x > 0:
-    x = inputInt("Enter a starting number (0 to quit)")
+    x = inputInt("Enter a starting number (0 to quit)") # assignment
     # Array of the values we have seen so far
-    p = [x]
+    p = [x] # variable definition
     # capture the max value so we can scale the graph
-    max = x
+    max = x # variable definition
     while x > 1:
       # Collatz sequence
       if (x % 2) == 0:
-        x = divAsInt(x, 2)
+        x = divAsInt(x, 2) # assignment
       else:
-        x = x*3 + 1
-       
-      # end if 
+        x = x*3 + 1 # assignment
+      # end if
       if x > max:
-        max = x
-      # end if 
+        max = x # assignment
+      # end if
       p.append(x)
       # draw what we have got so far, scaled to the canvas
-      vg = createVectorGraphics()
+      vg = createVectorGraphics() # variable definition
       for i in range(0, p.length() - 1):
-        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1))
-      # end for 
+        vg = vg.withAppend((LineVG()).withX1(scx(i, p)).withY1(scy(p[i], max)).withX2(scx(i + 1, p)).withY2(scy(p[i + 1], max)).withStrokeWidth(1)) # assignment
+      # end for
       displayVectorGraphics(vg)
       print(x)
       sleep_ms(100)
-    # end while 
-  # end while 
+    # end while
+  # end while
   print("Finished")
-# end main 
+# end main
 
 # scale x.  We pass in p just to get its length
 
-def scx(i: int, p: list[int]) -> float:
+def scx(i: int, p: list[int]) -> float: # function
   return divAsFloat(i*100, p.length())
-# end function 
+# end function
 
 # scale y
 
@@ -45,9 +44,9 @@ def scx(i: int, p: list[int]) -> float:
 
 # subtract 1 so that 1 is always at the same place on the canvas
 
-def scy(pi: int, max: int) -> float:
+def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
-# end function 
+# end function
 
 grey = 0x808080
 
