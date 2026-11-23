@@ -211,7 +211,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
 }
 
 export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
-  const sourceFile = `./out/test/demo_programs/${sf}.elan`;
+  const sourceFile = `./out/test/demo_programs/ref-lang/${sf}.elan`;
   const testPath = `./out/test/files/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
@@ -221,7 +221,7 @@ export async function getFile(sf: string): Promise<[FileImpl, string, string, st
 }
 
 export async function getPythonFile(sf: string): Promise<[FileImpl, string, string, string]> {
-  const sourceFile = `./out/test/files/${sf}.py`;
+  const sourceFile = `./out/test/demo_programs/python/${sf}.py`;
   const testPath = `./out/test/files/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
