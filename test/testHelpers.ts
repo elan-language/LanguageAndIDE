@@ -56,29 +56,6 @@ export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   }
 }
 
-export async function assertGeneratesSamesource(fl : FileImpl, source: string, sourceFile: string) {
- 
-  const renderedSource = await fl.renderAsSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = source.replaceAll("\r", "");
-  let msg = "";
-
-  try {
-    assert.strictEqual(actualSource, expectedSource);
-  }
-  catch {
-    msg = `rendered ${fl.language().languageFullName} incorrect`;
-    if (updateTestFiles) {
-      // update original not copied 
-      sourceFile = sourceFile.replace("out\/test", "src");
-
-      updateTestFile(sourceFile, actualSource);
-      msg = msg + ": test file updated";
-    }
-  }
-  return msg;
-}
-
 function getDirName(l : Language) {
   return l.languageFullName === "Python" ? "python" : "ref-lang";
 }
@@ -128,7 +105,7 @@ export async function assertRendersAs(fl: FileImpl, path: string, language: Lang
     assert.strictEqual(actual, expected);
   }
   catch {
-    msg = `${language.languageFullName} export incorrect`;
+    msg = `${language.languageFullName} render incorrect`;
     if (updateTestFiles) {
       file = file.replace("out\/test", "src");
       updateTestFile(file, actual);

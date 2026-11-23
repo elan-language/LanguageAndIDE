@@ -1,4 +1,4 @@
-# b137bead15b5949377f78dc21e2022134376c49f96eb4b5d04c9479344e348a6 Python with Elan 2.0.0-beta5 valid
+# 2e283c02b6b83b8311c2d392ebb7b71e0275d1ff35ad65886acb89fe62f595a0 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   x = 1 # variable definition
@@ -38,11 +38,11 @@ def scx(i: int, p: list[int]) -> float: # function
   return divAsFloat(i*100, p.length())
 # end function
 
-  # scale y
+# scale y
 
-  # subtract from 70 because y increases down the canvas
+# subtract from 70 because y increases down the canvas
 
-  # subtract 1 so that 1 is always at the same place on the canvas
+# subtract 1 so that 1 is always at the same place on the canvas
 
 def scy(pi: int, max: int) -> float: # function
   return 70 - divAsFloat((pi - 1)*65, (max - 1))

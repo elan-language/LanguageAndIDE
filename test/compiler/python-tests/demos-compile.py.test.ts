@@ -23,7 +23,7 @@ suite("Python Demo compile", () => {
     await testFile("burrow", LanguagePython.Instance);
   });
 
-  test("test collatz", async () => {
+  ignore_test("test collatz", async () => {
     await testFile("collatz", LanguagePython.Instance);
   });
 

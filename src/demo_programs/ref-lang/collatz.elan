@@ -1,4 +1,4 @@
-# 5f8bd16b1ac09a678b93dada8091a605041e56f6bbf2f7db6c3be0ac5cfdc3bd Elan 2.0.0-beta5 valid
+# e5d3fb484cd9736269398668150990154084b648ad62885963622fe4197d8413 Elan 2.0.0-beta5 valid
 
 main
   variable x set to 1
@@ -38,11 +38,11 @@ function scx(i as Int, p as List<of Int>) returns Float
   return divAsFloat(i*100, p.length())
 end function
 
-  # scale y
+# scale y
 
-  # subtract from 70 because y increases down the canvas
+# subtract from 70 because y increases down the canvas
 
-  # subtract 1 so that 1 is always at the same place on the canvas
+# subtract 1 so that 1 is always at the same place on the canvas
 
 function scy(pi as Int, max as Int) returns Float
   return 70 - divAsFloat((pi - 1)*65, (max - 1))
