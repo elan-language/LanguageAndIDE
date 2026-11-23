@@ -14,7 +14,7 @@ suite("Python Demo compile", () => {
     await testPythonFile("blackjack");
   });
 
-  ignore_test("test bubbles", async () => {
+  test("test bubbles", async () => {
     await testPythonFile("bubbles");
   });
 
