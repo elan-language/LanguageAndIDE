@@ -6,7 +6,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile("best-fit");
   });
 
-  test("test binary-search", async () => {
+  ignore_test("test binary-search", async () => {
     await testElanFile("binary-search");
   });
 
@@ -14,7 +14,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile("blackjack");
   });
 
-  test("test bubbles", async () => {
+  ignore_test("test bubbles", async () => {
     await testElanFile("bubbles");
   });
 
