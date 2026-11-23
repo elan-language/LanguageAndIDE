@@ -41,7 +41,7 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 // flag to update test files
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 export async function assertParsesAndCompilesAndTests(f: FileImpl) {
   const runner = await createTestRunner();
@@ -84,13 +84,12 @@ function getDirName(l : Language) {
 }
 
 function getHtmlSubDir(l : Language) {
-  return  `.${getDirName(l)}-html`;
+  return  `${getDirName(l)}-html`;
 }
-
 
 export async function assertGeneratesHtml(fl: FileImpl, path: string) {
   let actualHtml = "";
-  let htmlFile = path + getHtmlSubDir(fl.language()) + ".html";
+  let htmlFile = path + ".html";
   let msg = "";
   
   try {  
@@ -176,7 +175,7 @@ export async function testElanFile(fn: string) {
   const msgs = [];
   msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExportsAll(fl, sourceFile.slice(0, sourceFile.lastIndexOf("."))));
+  msgs.push(await assertExports(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguagePython.Instance));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));
@@ -223,7 +222,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
 
 export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
   const sourceFile = `./out/test/demo_programs/ref-lang/${sf}.elan`;
-  const testPath = `./out/test/files/${sf}`;
+  const testPath = `./out/test/files/${getHtmlSubDir(LanguageRefLang.Instance)}/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
@@ -233,7 +232,7 @@ export async function getFile(sf: string): Promise<[FileImpl, string, string, st
 
 export async function getPythonFile(sf: string): Promise<[FileImpl, string, string, string]> {
   const sourceFile = `./out/test/demo_programs/python/${sf}.py`;
-  const testPath = `./out/test/files/${sf}`;
+  const testPath = `./out/test/files/${getHtmlSubDir(LanguagePython.Instance)}/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
