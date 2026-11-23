@@ -1,127 +1,128 @@
-import { testElanFile } from "../../testHelpers";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { testFile } from "../../testHelpers";
 import { ignore_test } from "../compiler-test-helpers";
 
 suite("RefLang Demo compile", () => {
   ignore_test("test best-fit", async () => {
-    await testElanFile("best-fit");
+    await testFile("best-fit", LanguageRefLang.Instance);
   });
 
   ignore_test("test binary-search", async () => {
-    await testElanFile("binary-search");
+    await testFile("binary-search", LanguageRefLang.Instance);
   });
 
   ignore_test("test blackjack", async () => {
-    await testElanFile("blackjack");
+    await testFile("blackjack", LanguageRefLang.Instance);
   });
 
   test("test bubbles", async () => {
-    await testElanFile("bubbles");
+    await testFile("bubbles", LanguageRefLang.Instance);
   });
 
   test("test burrow", async () => {
-    await testElanFile("burrow");
+    await testFile("burrow", LanguageRefLang.Instance);
   });
 
   test("test collatz", async () => {
-    await testElanFile("collatz");
+    await testFile("collatz", LanguageRefLang.Instance);
   });
 
   ignore_test("test fern", async () => {
-    await testElanFile("fern");
+    await testFile("fern", LanguageRefLang.Instance);
   });
 
   ignore_test("test fern-params", async () => {
     // Not high enough value to warrant the long time that this test takes*/
-    await testElanFile(`fern-params.elan`);
+    await testFile("fern-params.elan", LanguageRefLang.Instance);
   });
 
   test("test in-place-ripple-sort", async () => {
-    await testElanFile("in-place-ripple-sort");
+    await testFile("in-place-ripple-sort", LanguageRefLang.Instance);
   });
 
   ignore_test("test julia-set", async () => {
-    await testElanFile("julia-set");
+    await testFile("julia-set", LanguageRefLang.Instance);
   });
 
   ignore_test("test kaleidoscope", async () => {
-    await testElanFile("kaleidoscope");
+    await testFile("kaleidoscope", LanguageRefLang.Instance);
   });
 
   test("test life", async () => {
-    await testElanFile("life");
+    await testFile("life", LanguageRefLang.Instance);
   });
 
   ignore_test("test life_FP", async () => {
-    await testElanFile("life_FP");
+    await testFile("life_FP", LanguageRefLang.Instance);
   });
 
   ignore_test("test map-filter-reduce", async () => {
-    await testElanFile("map-filter-reduce");
+    await testFile("map-filter-reduce", LanguageRefLang.Instance);
   });
 
   ignore_test("test maze-generator", async () => {
-    await testElanFile("maze-generator");
+    await testFile("maze-generator", LanguageRefLang.Instance);
   });
 
   ignore_test("test merge-sort", async () => {
-    await testElanFile("merge-sort");
+    await testFile("merge-sort", LanguageRefLang.Instance);
   });
 
   ignore_test("test pathfinder", async () => {
-    await testElanFile("pathfinder");
+    await testFile("pathfinder", LanguageRefLang.Instance);
   });
 
   ignore_test("test recursive-functions", async () => {
-    await testElanFile("recursive-functions");
+    await testFile("recursive-functions", LanguageRefLang.Instance);
   });
 
   ignore_test("test roman-numerals-turing-machine.elan", async () => {
-    await testElanFile("roman-numerals-turing-machine");
+    await testFile("roman-numerals-turing-machine", LanguageRefLang.Instance);
   });
 
   ignore_test("test snake_FP", async () => {
-    await testElanFile("snake_FP");
+    await testFile("snake_FP", LanguageRefLang.Instance);
   });
 
   ignore_test("test snake_OOP", async () => {
-    await testElanFile("snake_OOP");
+    await testFile("snake_OOP", LanguageRefLang.Instance);
   });
 
   test("test snake_PP", async () => {
-    await testElanFile("snake_PP");
+    await testFile("snake_PP", LanguageRefLang.Instance);
   });
 
   test("test tower-of-hanoi", async () => {
-    await testElanFile("tower-of-hanoi");
+    await testFile("tower-of-hanoi", LanguageRefLang.Instance);
   });
 
   test("test tower-of-hanoi-recursive", async () => {
-    await testElanFile("tower-of-hanoi-recursive");
+    await testFile("tower-of-hanoi-recursive", LanguageRefLang.Instance);
   });
 
   test("test turtle-snowflake", async () => {
-    await testElanFile("turtle-snowflake");
+    await testFile("turtle-snowflake", LanguageRefLang.Instance);
   });
 
   test("test turtle-spiral", async () => {
-    await testElanFile("turtle-spiral");
+    await testFile("turtle-spiral", LanguageRefLang.Instance);
   });
 
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
-    await testElanFile("wordle-solver");
+    await testFile("wordle-solver", LanguageRefLang.Instance);
   });
 
   ignore_test("test hodgepodge", async () => {
-    await testElanFile("hodgepodge");
+    await testFile("hodgepodge", LanguageRefLang.Instance);
   });
 
   test("test turtle_dragon", async () => {
-    await testElanFile("turtle_dragon");
+    await testFile("turtle_dragon", LanguageRefLang.Instance);
   });
 
   ignore_test("test date-time", async () => {
-    await testElanFile("date-time");
+    await testFile("date-time", LanguageRefLang.Instance);
   });
 
   //Worksheet loaded code

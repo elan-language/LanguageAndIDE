@@ -1,127 +1,128 @@
-import { testPythonFile } from "../../testHelpers";
+import { LanguagePython } from "../../../src/ide/frames/language-python";
+import { testFile } from "../../testHelpers";
 import { ignore_test } from "../compiler-test-helpers";
 
 suite("Python Demo compile", () => {
   ignore_test("test best-fit", async () => {
-    await testPythonFile("best-fit");
+    await testFile("best-fit", LanguagePython.Instance);
   });
 
   ignore_test("test binary-search", async () => {
-    await testPythonFile("binary-search");
+    await testFile("binary-search", LanguagePython.Instance);
   });
 
   ignore_test("test blackjack", async () => {
-    await testPythonFile("blackjack");
+    await testFile("blackjack", LanguagePython.Instance);
   });
 
   test("test bubbles", async () => {
-    await testPythonFile("bubbles");
+    await testFile("bubbles", LanguagePython.Instance);
   });
 
   ignore_test("test burrow", async () => {
-    await testPythonFile("burrow");
+    await testFile("burrow", LanguagePython.Instance);
   });
 
   ignore_test("test collatz", async () => {
-    await testPythonFile("collatz");
+    await testFile("collatz", LanguagePython.Instance);
   });
 
   ignore_test("test fern", async () => {
-    await testPythonFile("fern");
+    await testFile("fern", LanguagePython.Instance);
   });
 
   ignore_test("test fern-params", async () => {
     // Not high enough value to warrant the long time that this test takes*/
-    await testPythonFile(`fern-params.elan`);
+    await testFile("fern-params.elan", LanguagePython.Instance);
   });
 
   ignore_test("test in-place-ripple-sort", async () => {
-    await testPythonFile("in-place-ripple-sort");
+    await testFile("in-place-ripple-sort", LanguagePython.Instance);
   });
 
   ignore_test("test julia-set", async () => {
-    await testPythonFile("julia-set");
+    await testFile("julia-set", LanguagePython.Instance);
   });
 
   ignore_test("test kaleidoscope", async () => {
-    await testPythonFile("kaleidoscope");
+    await testFile("kaleidoscope", LanguagePython.Instance);
   });
 
   ignore_test("test life", async () => {
-    await testPythonFile("life");
+    await testFile("life", LanguagePython.Instance);
   });
 
   ignore_test("test life_FP", async () => {
-    await testPythonFile("life_FP");
+    await testFile("life_FP", LanguagePython.Instance);
   });
 
   ignore_test("test map-filter-reduce", async () => {
-    await testPythonFile("map-filter-reduce");
+    await testFile("map-filter-reduce", LanguagePython.Instance);
   });
 
   ignore_test("test maze-generator", async () => {
-    await testPythonFile("maze-generator");
+    await testFile("maze-generator", LanguagePython.Instance);
   });
 
   ignore_test("test merge-sort", async () => {
-    await testPythonFile("merge-sort");
+    await testFile("merge-sort", LanguagePython.Instance);
   });
 
   ignore_test("test pathfinder", async () => {
-    await testPythonFile("pathfinder");
+    await testFile("pathfinder", LanguagePython.Instance);
   });
 
   ignore_test("test recursive-functions", async () => {
-    await testPythonFile("recursive-functions");
+    await testFile("recursive-functions", LanguagePython.Instance);
   });
 
   ignore_test("test roman-numerals-turing-machine.elan", async () => {
-    await testPythonFile("roman-numerals-turing-machine");
+    await testFile("roman-numerals-turing-machine", LanguagePython.Instance);
   });
 
   ignore_test("test snake_FP", async () => {
-    await testPythonFile("snake_FP");
+    await testFile("snake_FP", LanguagePython.Instance);
   });
 
   ignore_test("test snake_OOP", async () => {
-    await testPythonFile("snake_OOP");
+    await testFile("snake_OOP", LanguagePython.Instance);
   });
 
   ignore_test("test snake_PP", async () => {
-    await testPythonFile("snake_PP");
+    await testFile("snake_PP", LanguagePython.Instance);
   });
 
   ignore_test("test tower-of-hanoi", async () => {
-    await testPythonFile("tower-of-hanoi");
+    await testFile("tower-of-hanoi", LanguagePython.Instance);
   });
 
   ignore_test("test tower-of-hanoi-recursive", async () => {
-    await testPythonFile("tower-of-hanoi-recursive");
+    await testFile("tower-of-hanoi-recursive", LanguagePython.Instance);
   });
 
   ignore_test("test turtle-snowflake", async () => {
-    await testPythonFile("turtle-snowflake");
+    await testFile("turtle-snowflake", LanguagePython.Instance);
   });
 
   ignore_test("test turtle-spiral", async () => {
-    await testPythonFile("turtle-spiral");
+    await testFile("turtle-spiral", LanguagePython.Instance);
   });
 
   // Ignored just becasuse these are very slow tests
   ignore_test("test wordle-solver", async () => {
-    await testPythonFile("wordle-solver");
+    await testFile("wordle-solver", LanguagePython.Instance);
   });
 
   ignore_test("test hodgepodge", async () => {
-    await testPythonFile("hodgepodge");
+    await testFile("hodgepodge", LanguagePython.Instance);
   });
 
   ignore_test("test turtle_dragon", async () => {
-    await testPythonFile("turtle_dragon");
+    await testFile("turtle_dragon", LanguagePython.Instance);
   });
 
   ignore_test("test date-time", async () => {
-    await testPythonFile("date-time");
+    await testFile("date-time", LanguagePython.Instance);
   });
 
   //Worksheet loaded code

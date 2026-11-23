@@ -113,7 +113,7 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
    return msg;
 }
 
-export async function assertExports(fl: FileImpl, path: string, language: Language) {
+export async function assertRendersAs(fl: FileImpl, path: string, language: Language) {
  
   let actual = "";
   let msg = "";
@@ -142,7 +142,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
 export async function assertExportsAll(fl: FileImpl, path: string) {
   const msgs = [];
 
-  msgs.push(await assertExports(fl, path, LanguagePython.Instance));
+  msgs.push(await assertRendersAs(fl, path, LanguagePython.Instance));
   // msgs.push(await assertExports(fl, path, LanguageVB.Instance));
   // msgs.push(await assertExports(fl, path, LanguageCS.Instance));
   // msgs.push(await assertExports(fl, path, LanguageJava.Instance));
@@ -153,6 +153,20 @@ export async function assertExportsAll(fl: FileImpl, path: string) {
   return "";
 }
 
+export async function testFile(fn: string, l : Language) {
+  const [fl, source, sourceFile, testPath] = await getFile(fn, l);
+  await assertParsesAndCompilesAndTests(fl);
+
+  const msgs = [];
+  msgs.push(await assertGeneratesHtml(fl, testPath));
+  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguageRefLang.Instance));
+  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguagePython.Instance));
+
+  if (msgs.some(m => m)) {
+    throw new Error(msgs.join(", "));
+  }
+}
+
 export async function testPythonFile(fn: string) {
   const [fl, source, sourceFile, testPath] = await getPythonFile(fn);
   await assertParsesAndCompilesAndTests(fl);
@@ -160,7 +174,7 @@ export async function testPythonFile(fn: string) {
   const msgs = [];
   msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExports(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguageRefLang.Instance));
+  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguageRefLang.Instance));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));
@@ -169,13 +183,13 @@ export async function testPythonFile(fn: string) {
 
 
 export async function testElanFile(fn: string) {
-  const [fl, source, sourceFile, testPath] = await getFile(fn);
+  const [fl, source, sourceFile, testPath] = await getRefLangFile(fn);
   await assertParsesAndCompilesAndTests(fl);
 
   const msgs = [];
   msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExports(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguagePython.Instance));
+  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguagePython.Instance));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));
@@ -220,7 +234,7 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   return fl;
 }
 
-export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
+export async function getRefLangFile(sf: string): Promise<[FileImpl, string, string, string]> {
   const sourceFile = `./out/test/demo_programs/ref-lang/${sf}.elan`;
   const testPath = `./out/test/files/${getHtmlSubDir(LanguageRefLang.Instance)}/${sf}`;
   const source = loadFileAsSource(sourceFile);
@@ -240,6 +254,15 @@ export async function getPythonFile(sf: string): Promise<[FileImpl, string, stri
   return [fl, source, sourceFile, testPath];
 }
 
+export async function getFile(sf: string, l : Language): Promise<[FileImpl, string, string, string]> {
+  const sourceFile = `./out/test/demo_programs/${getDirName(l)}/${sf}.${l.defaultFileExtension}`;
+  const testPath = `./out/test/files/${getHtmlSubDir(l)}/${sf}`;
+  const source = loadFileAsSource(sourceFile);
+  const codeSource = new CodeSourceFromString(source);
+  const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
+  await fl.parseFrom(codeSource);
+  return [fl, source, sourceFile, testPath];
+}
 
 export function loadFileAsHtml(sourceFile: string): string {
   return loadFileAsSource(sourceFile);
