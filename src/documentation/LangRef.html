@@ -45,10 +45,8 @@
 
 <p>To start programming with Elan, first familiarise yourself with using the Elan IDE, especially for
   entering and editing code. Do this by watching the videos <a href="StartHere.html#Videos">here <i class="fa">&#xf08e;</i></a>.
-  You will learn that Elan supports programming in <b>Python</b>, <b>VB</b>, <b>C#</b>, and <b>Java</b>
-  (as well as the Reference Language Elan),
-  and offers the option of immediate translation between these languages.
-  If you have previously programmed in any of the languages you will find that Elan enforces
+  
+  If you have previously programmed in <span class="python">Python</span><span class="cs">C#</span> you will find that Elan enforces
   best practice by means of the following constraints on how code is written.
   There are three forms of constraint, which are described in more detail in these sections:</p>
 
@@ -91,19 +89,15 @@ together with this seventh best practice that is supported and encouraged by Ela
   instruction only within the <b>main routine</b>, <b>functions</b>, and <b>procedures</b>. At global level the only permitted definition of a named value
   is a <a href="#constant"><b>constant</b></a> and that, too, is constrained to be of a type that cannot be mutated by any instruction in the program.</p>
 
-  <p class="java">In Java, <i>all</i> code must be within a class. Elan provides a boilerplate class named <b>Global</b> to adhere to this rule,
-  and all code must be within this. Everything added <i>immediately</i> within this class is deemed, in Elan terms, to be
-  global, so you will not be able to add a variable, even in the form of a class property there.</p>
-
 <h3 class="no-TOC" id="StaticTyping">Static typing</h3>
 <p>Static typing means that the <i>type</i> of every variable, parameter, or value returned by a function, is known at <i>compile</i> time,
- and that type never changes, even though the value may change. VB, C#, and Java, are  statically typed. but Python is inherently dynamically typed.
- Python 3.5 offers the option to add 'type hints' that assist working in a statically typed manner.</p>
-<p>While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that
+ and that type never changes, even though the value may change.</p>
+
+<p class="python">Python is dynamically typed, but since Python 3.5 it has become possible to emulate static typing by adding Python 'type hints'.
+Python with Elan therefore enforces the use of these type hints. While some programmers like the idea of dynamic typing, there is almost no need for it in most forms of programming, and it is well established that
  dynamic typing does not work well when building large, complex systems. Moreover, in a purely educational context, using static typing gives a stronger
- understanding that, in all modern languages (with static or dynamic types) all data items always have an associated type, and static typing helps
- you to understand the nature of those types.</p>
-  <p class="Python">When entering and editing Python, Elan therefore <i>enforces</i> the use of type hints.</p>
+ understanding that, in all modern languages (whether with static or dynamic types), all data items always have an associated type, and static typing makes clearer the nature of those types.</p>
+
 <p>Elan does not require the type to be specified explicitly for any variable (or constant) because its type is <i>inferred</i> from the
 initial value given to it.</p>
 
@@ -122,8 +116,8 @@ initial value given to it.</p>
 
 <h3 class="no-TOC" id="NoEarlyBreaks">No breaking out of loops before they have completed</h3>
 
-<p>Python, C#, and Java all have a <b>break</b> instruction (the VB equivalent is <b>exit</b>) which allows you to break out of
-a loop before its completion. Elan does not permit any of those instructions to be used for the following reasons.</p>
+<p><span class="python">Python</span><span class="cs">C#</span> has a <b>break</b> instruction which allows you to break out of
+a loop before its completion. Elan does not permit that instruction to be used for the following reasons.</p>
 <p>The <b>break</b> instruction was invented when the only possible kind of loop that a programming language
 offered executed a specified number of times; there were no 'conditional loops'. With the advent of structured programming
 came proper <i>conditional</i> loops, of which the most common form is the <b>while loop</b>.
@@ -237,9 +231,8 @@ or <i>mutating</i> a data structure passed into it, such as sorting a <code>List
   which offers identical functions in each of the supported languages. The Elan library has been designed to find as much common ground as possible but,
    inevitably, it is not identical to the standard library for any of the supported languages.</p>
 
-<p>One consequence of this is that even though the Python, C#, VB, or Java code generated within Elan is always syntactically valid for the language,
-  you won't <i>typically</i> be able to run exported code in another environment without editing the library calls. (We hope to provide automated, or
-  semi-automated, tools for this in the future).</p>
+<p>One consequence of this is that even though the <span class="python">Python</span><span class="cs">C#</span> code generated within Elan is always syntactically valid for the language,
+  you won't <i>typically</i> be able to run exported code in another environment without editing the library calls.</p>
 </div>
 
 <div id="OtherConstraints">
@@ -255,10 +248,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
   <li>All languages disallow the use of certain reserved words as identifiers. Elan deliberately disallows the reserved words from all the supported languages,
    so translations are guaranteed to run.</li>
   <li>Literal strings must be bounded by double quotes, not by single quotes</li>
-  <li>Some languages distinguish between a 'for loop' and a 'for each loop'. Elan, like Python, uses the same syntax for both.
-    When you use a <b>for loop</b> in Elan, the syntax in VB, C#, and Java will be that of a 'for each' loop.</li>
-  <li>Raising a number to a power must be done with the <el-method>pow</el-method> function: the 'power operator' symbol in the supported languages
-  will not be recognised.</li>
+  <li class="cs">C# distinguishes between a 'for loop' and a 'for each loop'. When you add a <b>for loop</b> in Elan, the syntax will be that of a C# 'for each' loop.</li>
   <li>Individual values are extracted from a tuple using the syntax <code>myTuple.item_0</code>, <code>myTuple.item_1</code>, etc.
      Special 'tuple deconstruction' syntax is not recognised for any of the languages.</li>
   <li>Equality testing of <i>value types</i> uses the equality operator for each language e.g. <code>a is b</code>, but if the types
@@ -276,10 +266,7 @@ where you might encounter one, <i>you will get a clear error message that gives 
 
 <div id="GlobalInstructions">
 <h1>Global instructions</h1>
-<p>In Python, VB, C#, and the Reference Language, global instructions are placed <em>directly</em> in your code file, not within other code,
-  and are therefore not indented.</p>
-<div class="java"><img src="images/icon_java.png" height="30" style="float:left;" alt="java"><b>Java note</b><p><i>All</i> Java code must be within a class so, when writing Java with Elan, the editor
-generates a non-editable class named Global, and all global instructions are created directly within that (and automatically indented).</p></div>
+<p>Global instructions are placed <em>directly</em> in your code file, not within other code, and are therefore not indented.</p>
 
 <div id="main">
 <h2>Main routine</h2>
@@ -1279,7 +1266,7 @@ end procedure
 <h3 class="no-TOC acc-title">What you need to know about a for loop</h3>
 <div class="acc-body">
   <ul>
-    <li class="vb cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C# and VB.</li>
+    <li class="cs">The Elan concept of a <b>for loop</b> is equivalent to a 'for each' loop in C#.</li>
      <li>It should be used when you know (or can work out), in advance, how many times you need it to be repeated.</li>
     <li>The <b>for loop</b> specifies that a block of instructions that is repeated, once for each value in a sequence.</li>
     <li>The value is held in a variable &ndash; which is defined in the first editable field when you create a new for instruction.</li>
@@ -1808,29 +1795,8 @@ We hope to remove this requirement in a future version &ndash; to make the synta
   <li>An 'if expression' may form part of a more complex expression.</li>
 </ul>
 
-<p>All modern languages, including Python, VB, C#, and Java, support this concept, though sometimes by another name such as 'conditional expression', or even 'ternary operator' (because it has three terms).
-  The syntax varies significantly between those languages. When coding with Elan in any of the supported languages, this functionality is provided by a 'pseudo function' named <el-method>if_</el-method>,
-  The reason for the underscore is to distinguish the name from the <el-kw>if</el-kw> <i>keyword</i> used by all the languages as the start of an <b>if statement</b>.
-  (This is consistent the standard advice
-  that if you define your own identifier that classes with a <i>reserved word</i>, the simplest fix is to add an underscore on the end.)
-</p>
-
-<p>The <el-method>if_</el-method> function returns one of two values dependent upon the evaluation of a Boolean value:</p>
-<p>Its syntax is shown here:</p>
-<code>variable isBigger set to if_(a >= b, true, false)</code>
-<p>Similarly, but returning an evaluated expression:</p>
-  <code>variable d set to if_(c < 580, c - 40, c + 60)</code>
-<p>in which variable <code>d</code> takes the value of <code> c - 40</code> if <code>c < 580</code>, or <code>c + 60</code> otherwise.</p>
-<p>An <el-method>if_</el-method> function may be used within an <el-method>if_</el-method> function but may be hard to read and understand.</p>
-
-<p>Why do we refer to <el-method>if_</el-method> as a 'pseudo function'. At first glance it looks to operate like any function: it requires three arguments and returns a result that depends on them.
-But it does one thing very differently: if either or both of the second and third arguments are themselves defined by expressions, they are evaluated <i>lazily</i> &ndash; only the one that is
-is needed (depending on the evaluation of the condition argument) will be evaluated. It turns out that this is very important &ndash; without it can be very easy to end up with lots of 'Stack overflow errors'.
-So though <el-method>if_</el-method> <i>looks</i> like any other library function, it is actually special syntax. And that is why you don't see <el-method>if_</el-method> offered in the
-drop-down list of library function names.</p>
-
 <div class="accordion">
-<h3 class="no-TOC acc-title">Examples using <el-method>if_</el-method> function:</h3>
+<h3 class="no-TOC acc-title">Examples using an 'if expression':</h3>
 <div class="acc-body">
 <p>&nbsp;&nbsp;&nbsp;&#x25cf; Choice in a <b>return</b> instruction:</p>
 <codeblock>function foo() returns Int
@@ -1838,7 +1804,7 @@ drop-down list of library function names.</p>
 end function
 </codeblock>
 <hr>
-<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an <el-method>if_</el-method> function in a <b>procedure call</b> <el-method>print</el-method>:</p>
+<p>&nbsp;&nbsp;&nbsp;&#x25cf; Using an 'if expression' in a <b>procedure call</b> <el-method>print</el-method>:</p>
 <table class="tablePlain">
 <tr>
  <td>

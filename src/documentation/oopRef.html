@@ -47,8 +47,7 @@ This will still allow you to do procedural programming, but changes two things: 
 <h1>Principles of object-oriented programming</h1>
 
 <p><b>Important</b>. Every textbook on OOP differs <i>slightly</i> in the definition of core principles, and every language that supports OOP differs in the rules that it enforces.
-  The following 10 principles are based on widely recognised best practices in OOP. When coding with Elan, in whichever of the supported languages
-  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling.
+  The following 10 principles are based on widely recognised best practices in OOP. When coding with Elan these principles are, wherever possible, enforced by the Elan tooling.
   The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library.
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
@@ -201,7 +200,7 @@ end class
   <li>A property is initialised within the construction using an <b>assignment</b> instruction - since a property may be thought of as
     a named variable that holds a value specific to each instance of the class.</li>
   <li>the name of the property being reassigned must be prefixed by
-<el-kw class="refLang">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw>
+<el-kw class="refLang">this</el-kw><el-kw class="python">self</el-kw><el-kw class="cs">this</el-kw>
  followed by a dot.</li>
 </ul>
 
@@ -261,7 +260,7 @@ end class
         <li>they are invoked on an instance using 'dot syntax' as we shown in the previous example</li>
         <li>they have access to all the properties belonging to that same instance, and  can also invoke other
             methods on the same object, in both cases prefixed by
-            <el-kw class="refLang">this</el-kw><el-kw class="python">self</el-kw><el-kw class="vb">Me</el-kw><el-kw class="cs">this</el-kw><el-kw class="java">Me</el-kw> dot.
+            <el-kw class="refLang">this</el-kw><el-kw class="python">self</el-kw><el-kw class="cs">this</el-kw> dot.
     </ul>
 
     <p>Properties on a class define the <i>data</i> (or 'state') for each instance of the class; methods define the <i>behaviour</i> for the object.</p>
@@ -436,10 +435,6 @@ For that reason, irrespective of the programming language being used, Elan delib
 <h2>Application logic should be well-distributed across classes</h2>
 
 <p>In Elan, an object-oriented program still needs a procedural main method to execute.</p>
-
-<p class="java">The Java language is unusual in that even the main routine must defined within a class - Elan handles this by including a class named <b>Global</b> as part of the file boilerplate,
-   but treats the instructions directly within this class as being 'global' in nature. Any user-defined classes are added <i>within</i> this, and Elan does not allow properties to be added
-   <i>directly</i> within that <b>Global</b> class since these would be, effectively, just <i>global variables in disguise</i>.</p>
 
 <p>In general good OOP design means aiming to keep the functionality well-distributed among the user-defined classes.
    Inevitably, some classes are going to define more methods, and/or more-complex methods, than others. But you should be wary of a situation where one class is doing most
