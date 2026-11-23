@@ -67,7 +67,7 @@ export async function assertGeneratesSamesource(fl : FileImpl, source: string, s
     assert.strictEqual(actualSource, expectedSource);
   }
   catch {
-    msg = `rendered elan incorrect`;
+    msg = `rendered ${fl.language().languageFullName} incorrect`;
     if (updateTestFiles) {
       // update original not copied 
       sourceFile = sourceFile.replace("out\/test", "src");
@@ -79,9 +79,18 @@ export async function assertGeneratesSamesource(fl : FileImpl, source: string, s
   return msg;
 }
 
+function getDirName(l : Language) {
+  return l.languageFullName === "Python" ? "python" : "ref-lang";
+}
+
+function getHtmlSubDir(l : Language) {
+  return  `.${getDirName(l)}-html`;
+}
+
+
 export async function assertGeneratesHtml(fl: FileImpl, path: string) {
   let actualHtml = "";
-  let htmlFile = path + ".html";
+  let htmlFile = path + getHtmlSubDir(fl.language()) + ".html";
   let msg = "";
   
   try {  
@@ -110,7 +119,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
   let actual = "";
   let msg = "";
 
-  let file = path = path.replace("ref-lang", language.languageFullName.toLowerCase()) + "." + language.defaultFileExtension;
+  let file = path.replace(getDirName(fl.language()), getDirName(language)) + "." + language.defaultFileExtension;
 
   try {
     fl.setLanguage(language);
@@ -122,7 +131,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
   catch {
     msg = `${language.languageFullName} export incorrect`;
     if (updateTestFiles) {
-      file = file.replace("out\/", "");
+      file = file.replace("out\/test", "src");
       updateTestFile(file, actual);
       msg = msg + ": test file updated";
     }
@@ -130,9 +139,9 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
   return msg;
 }
 
+
 export async function assertExportsAll(fl: FileImpl, path: string) {
   const msgs = [];
-
 
   msgs.push(await assertExports(fl, path, LanguagePython.Instance));
   // msgs.push(await assertExports(fl, path, LanguageVB.Instance));
@@ -152,7 +161,7 @@ export async function testPythonFile(fn: string) {
   const msgs = [];
   msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExportsAll(fl, testPath));
+  msgs.push(await assertExports(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguageRefLang.Instance));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));
