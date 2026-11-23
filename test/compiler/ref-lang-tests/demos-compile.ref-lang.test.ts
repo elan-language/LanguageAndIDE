@@ -7,7 +7,7 @@ suite("RefLang Demo compile", () => {
     await testFile("best-fit", LanguageRefLang.Instance);
   });
 
-  ignore_test("test binary-search", async () => {
+  test("test binary-search", async () => {
     await testFile("binary-search", LanguageRefLang.Instance);
   });
 
@@ -29,11 +29,6 @@ suite("RefLang Demo compile", () => {
 
   ignore_test("test fern", async () => {
     await testFile("fern", LanguageRefLang.Instance);
-  });
-
-  ignore_test("test fern-params", async () => {
-    // Not high enough value to warrant the long time that this test takes*/
-    await testFile("fern-params.elan", LanguageRefLang.Instance);
   });
 
   test("test in-place-ripple-sort", async () => {

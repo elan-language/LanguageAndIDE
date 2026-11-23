@@ -76,11 +76,11 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>return </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
-      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()} # assignment`;
+      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()} <el-comment># assignment</el-comment>`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>raise</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableDefinition) {
-      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()} # variable definition`;
+      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()} <el-comment># variable definition</el-comment>`;
     }
     return html;
   }
