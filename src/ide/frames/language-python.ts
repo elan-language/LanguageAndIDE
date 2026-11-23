@@ -76,11 +76,11 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       html = `<el-kw>return </el-kw>${frame.expr.renderAsHtml()}`;
     } else if (frame instanceof Assignment) {
-      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
+      html = `${frame.assignable.renderAsHtml()} = ${frame.expr.renderAsHtml()} # assignment`;
     } else if (frame instanceof ThrowStatement) {
       html = `<el-kw>raise</el-kw> ${frame.type.renderAsHtml()}(${frame.text.renderAsHtml()})`;
     } else if (frame instanceof VariableDefinition) {
-      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()}`;
+      html = `${frame.name.renderAsHtml()} = ${frame.expr.renderAsHtml()} # variable definition`;
     }
     return html;
   }
@@ -106,11 +106,11 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ReturnStatement) {
       source = `${frame.indent()}${this.ghostSingle(frame)}return ${frame.expr.renderAsSource()}`;
     } else if (frame instanceof Assignment) {
-      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.assignable.renderAsSource()} = ${frame.expr.renderAsSource()} # assignment`;
     } else if (frame instanceof ThrowStatement) {
       source = `${frame.indent()}${this.ghostSingle(frame)}raise ${frame.type.renderAsSource()}(${frame.text.renderAsSource()})`;
     } else if (frame instanceof VariableDefinition) {
-      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()}`;
+      source = `${frame.indent()}${this.ghostSingle(frame)}${frame.name.renderAsSource()} = ${frame.expr.renderAsSource()} # variable definition`;
     }
     return source;
   }
@@ -186,9 +186,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof ForLoop) {
       source = `${this.ghostTop(frame)}for ${frame.variable.renderAsSource()} in ${frame.iter.renderAsSource()}:`;
     } else if (frame instanceof GlobalFunction) {
-      source = `${this.ghostTop(frame)}def ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}:`;
+      source = `${this.ghostTop(frame)}def ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> ${frame.returnType.renderAsSource()}: # function`;
     } else if (frame instanceof GlobalProcedure) {
-      source = `${this.ghostTop(frame)}def ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> None:`;
+      source = `${this.ghostTop(frame)}def ${frame.name.renderAsSource()}(${frame.params.renderAsSource()}) -> None: # procedure`;
     } else if (frame instanceof IfStatement) {
       source = `${this.ghostTop(frame)}if ${frame.condition.renderAsSource()}:`;
     } else if (frame instanceof MainRoutine) {
@@ -263,7 +263,7 @@ export class LanguagePython extends LanguageAbstract {
     if (common.length > 0) {
       common = `# ${common}`;
     }
-    return `${common} ${this.ghostBottom(frame)}`;
+    return `${common}${this.ghostBottom(frame)}`;
   }
 
   ghostBottom(frame: Frame) {

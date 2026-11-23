@@ -1,4 +1,4 @@
-# dfc81cda92c4f8e108bcb4d1f06d7a7e93b5f81416631a9baedbc4193ad5f235 Python with Elan 2.0.0-beta5 valid
+# c129faed5ab2e4d541b9fbfbcfa18f8023e532315cf1df4ac534e050abfe875a Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   bubbles = list[CircleVG]() # variable definition
@@ -13,7 +13,7 @@ def main() -> None:
   # end while
 # end main
 
-def moveGrowBurst(bubbles: list[CircleVG]) -> None:  # procedure
+def moveGrowBurst(bubbles: list[CircleVG]) -> None: # procedure
   for b in bubbles:
     if random() < 0.05:
       # 5% chance bubble 'bursts' and starts again tiny at bottom
@@ -23,7 +23,6 @@ def moveGrowBurst(bubbles: list[CircleVG]) -> None:  # procedure
       # bubble rises and grows slightly
       b.setCentreY(b.centreY - 1)
       b.setRadius(b.radius + 0.2)
-
     # end if
   # end for
   displayVectorGraphics(bubbles)
