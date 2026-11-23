@@ -19,11 +19,11 @@ suite("Python Demo compile", () => {
     await testFile("bubbles", LanguagePython.Instance);
   });
 
-  ignore_test("test burrow", async () => {
+  test("test burrow", async () => {
     await testFile("burrow", LanguagePython.Instance);
   });
 
-  ignore_test("test collatz", async () => {
+  test("test collatz", async () => {
     await testFile("collatz", LanguagePython.Instance);
   });
 
@@ -36,7 +36,7 @@ suite("Python Demo compile", () => {
     await testFile("fern-params.elan", LanguagePython.Instance);
   });
 
-  ignore_test("test in-place-ripple-sort", async () => {
+  test("test in-place-ripple-sort", async () => {
     await testFile("in-place-ripple-sort", LanguagePython.Instance);
   });
 
@@ -100,11 +100,11 @@ suite("Python Demo compile", () => {
     await testFile("tower-of-hanoi-recursive", LanguagePython.Instance);
   });
 
-  ignore_test("test turtle-snowflake", async () => {
+  test("test turtle-snowflake", async () => {
     await testFile("turtle-snowflake", LanguagePython.Instance);
   });
 
-  ignore_test("test turtle-spiral", async () => {
+  test("test turtle-spiral", async () => {
     await testFile("turtle-spiral", LanguagePython.Instance);
   });
 
