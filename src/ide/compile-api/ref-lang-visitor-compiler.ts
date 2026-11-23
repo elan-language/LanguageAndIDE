@@ -164,8 +164,10 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   // constantValue
 
-  override visitLitBoolean = (ctx: LitBooleanContext) =>
-    new LitBooleanAsn(ctx.TRUE() !== null, this.fieldId);
+  override visitLitBooleanTrue = (_ctx: LitBooleanContext) => new LitBooleanAsn(true, this.fieldId);
+
+  override visitLitBooleanFalse = (_ctx: LitBooleanContext) =>
+    new LitBooleanAsn(false, this.fieldId);
 
   override visitLitInteger = (ctx: LitIntegerContext) =>
     new LitIntAsn(ctx.LITERAL_INTEGER().getText(), false, false, this.fieldId);

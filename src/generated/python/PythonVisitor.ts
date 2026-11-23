@@ -74,7 +74,8 @@ import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
-import { LitBooleanContext } from "./PythonParser.js";
+import { LitBooleanTrueContext } from "./PythonParser.js";
+import { LitBooleanFalseContext } from "./PythonParser.js";
 import { LitIntegerContext } from "./PythonParser.js";
 import { LitBinaryContext } from "./PythonParser.js";
 import { LitHexContext } from "./PythonParser.js";
@@ -588,11 +589,19 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitLitValue?: (ctx: LitValueContext) => Result;
   /**
-   * Visit a parse tree produced by `PythonParser.litBoolean`.
+   * Visit a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `PythonParser.litBoolean`.
    * @param ctx the parse tree
    * @return the visitor result
    */
-  visitLitBoolean?: (ctx: LitBooleanContext) => Result;
+  visitLitBooleanTrue?: (ctx: LitBooleanTrueContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `PythonParser.litBoolean`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBooleanFalse?: (ctx: LitBooleanFalseContext) => Result;
   /**
    * Visit a parse tree produced by the `litInteger`
    * labeled alternative in `PythonParser.litInt`.

@@ -22,6 +22,7 @@ import {
   KvpContext,
   LambdaContext,
   ListContext,
+  LitBooleanContext,
   LitFloatContext,
   LitIntContext,
   MethodCallContext,
@@ -99,6 +100,10 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   override visitTestName = (ctx: TestNameContext) => ctx.NAME_STARTING_TEST_().getText();
 
   override visitCommentText = (ctx: CommentTextContext) => ctx.getText();
+
+  override visitLitBooleanTrue = (_ctx: LitBooleanContext) => this.language.TRUE;
+
+  override visitLitBooleanFalse = (_ctx: LitBooleanContext) => this.language.FALSE;
 
   override visitLitInteger = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
   override visitLitBinary = (ctx: LitIntContext) => (this.visitChildren(ctx) ?? "").toLowerCase();

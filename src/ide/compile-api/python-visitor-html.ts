@@ -134,7 +134,9 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitLitFloat = (ctx: LitFloatContext) =>
     lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  override visitLitBoolean = (ctx: LitBooleanContext) => kw(this.visitChildren(ctx) ?? "");
+  override visitLitBooleanTrue = (_ctx: LitBooleanContext) => kw(this.language.TRUE);
+
+  override visitLitBooleanFalse = (_ctx: LitBooleanContext) => kw(this.language.FALSE);
 
   override visitLitString = (ctx: LitStringContext) =>
     this.visitChildren(ctx)

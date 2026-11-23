@@ -74,7 +74,8 @@ import { TypeContext } from "./PythonParser.js";
 import { AssertActualContext } from "./PythonParser.js";
 import { AssertExpectedContext } from "./PythonParser.js";
 import { LitValueContext } from "./PythonParser.js";
-import { LitBooleanContext } from "./PythonParser.js";
+import { LitBooleanTrueContext } from "./PythonParser.js";
+import { LitBooleanFalseContext } from "./PythonParser.js";
 import { LitIntegerContext } from "./PythonParser.js";
 import { LitBinaryContext } from "./PythonParser.js";
 import { LitHexContext } from "./PythonParser.js";
@@ -883,15 +884,29 @@ export class PythonListener implements ParseTreeListener {
    */
   exitLitValue?: (ctx: LitValueContext) => void;
   /**
-   * Enter a parse tree produced by `PythonParser.litBoolean`.
+   * Enter a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `PythonParser.litBoolean`.
    * @param ctx the parse tree
    */
-  enterLitBoolean?: (ctx: LitBooleanContext) => void;
+  enterLitBooleanTrue?: (ctx: LitBooleanTrueContext) => void;
   /**
-   * Exit a parse tree produced by `PythonParser.litBoolean`.
+   * Exit a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `PythonParser.litBoolean`.
    * @param ctx the parse tree
    */
-  exitLitBoolean?: (ctx: LitBooleanContext) => void;
+  exitLitBooleanTrue?: (ctx: LitBooleanTrueContext) => void;
+  /**
+   * Enter a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `PythonParser.litBoolean`.
+   * @param ctx the parse tree
+   */
+  enterLitBooleanFalse?: (ctx: LitBooleanFalseContext) => void;
+  /**
+   * Exit a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `PythonParser.litBoolean`.
+   * @param ctx the parse tree
+   */
+  exitLitBooleanFalse?: (ctx: LitBooleanFalseContext) => void;
   /**
    * Enter a parse tree produced by the `litInteger`
    * labeled alternative in `PythonParser.litInt`.

@@ -69,7 +69,8 @@ import { TypeContext } from "./RefLangParser.js";
 import { AssertActualContext } from "./RefLangParser.js";
 import { AssertExpectedContext } from "./RefLangParser.js";
 import { LitValueContext } from "./RefLangParser.js";
-import { LitBooleanContext } from "./RefLangParser.js";
+import { LitBooleanTrueContext } from "./RefLangParser.js";
+import { LitBooleanFalseContext } from "./RefLangParser.js";
 import { LitIntegerContext } from "./RefLangParser.js";
 import { LitBinaryContext } from "./RefLangParser.js";
 import { LitHexContext } from "./RefLangParser.js";
@@ -828,15 +829,29 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitLitValue?: (ctx: LitValueContext) => void;
   /**
-   * Enter a parse tree produced by `RefLangParser.litBoolean`.
+   * Enter a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `RefLangParser.litBoolean`.
    * @param ctx the parse tree
    */
-  enterLitBoolean?: (ctx: LitBooleanContext) => void;
+  enterLitBooleanTrue?: (ctx: LitBooleanTrueContext) => void;
   /**
-   * Exit a parse tree produced by `RefLangParser.litBoolean`.
+   * Exit a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `RefLangParser.litBoolean`.
    * @param ctx the parse tree
    */
-  exitLitBoolean?: (ctx: LitBooleanContext) => void;
+  exitLitBooleanTrue?: (ctx: LitBooleanTrueContext) => void;
+  /**
+   * Enter a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `RefLangParser.litBoolean`.
+   * @param ctx the parse tree
+   */
+  enterLitBooleanFalse?: (ctx: LitBooleanFalseContext) => void;
+  /**
+   * Exit a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `RefLangParser.litBoolean`.
+   * @param ctx the parse tree
+   */
+  exitLitBooleanFalse?: (ctx: LitBooleanFalseContext) => void;
   /**
    * Enter a parse tree produced by the `litInteger`
    * labeled alternative in `RefLangParser.litInt`.

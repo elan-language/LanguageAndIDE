@@ -235,7 +235,9 @@ litValue:
     | interpolatedString
     | enumValue
 ;
-litBoolean: TRUE | FALSE;
+
+litBoolean: TRUE # litBooleanTrue | FALSE # litBooleanFalse;
+
 litInt:
     LITERAL_INTEGER  # litInteger
     | LITERAL_BINARY # litBinary
