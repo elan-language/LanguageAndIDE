@@ -4,7 +4,6 @@ import { RefLangParser } from "../../../generated/ref-lang/RefLangParser";
 
 export enum FieldType {
   argList,
-  assertActual,
   assignable,
   comment,
   constantValue,
@@ -55,16 +54,6 @@ export const argListFieldSpec: FieldSpec = new FieldSpec(
   "_args",
   true,
   true,
-  (parser: PythonParser | RefLangParser) => parser.argList(),
-);
-
-export const inputArgListFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.argList,
-  "<i>prompt message</i>",
-  "ArgListField",
-  "_args",
-  true,
-  false,
   (parser: PythonParser | RefLangParser) => parser.argList(),
 );
 
@@ -188,36 +177,6 @@ export const expressionFieldSpec: FieldSpec = new FieldSpec(
   true,
   false,
   (parser: PythonParser | RefLangParser) => parser.expression(),
-);
-
-export const printExpressionFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.expression,
-  "<i>value or expression</i>",
-  "ExpressionField",
-  "_expr",
-  true,
-  false,
-  (parser: PythonParser | RefLangParser) => parser.expression(),
-);
-
-export const assertActualFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.expression,
-  "<i>actual (computed) value</i>",
-  "AssertActualField",
-  "_expr",
-  true,
-  false,
-  (parser: PythonParser | RefLangParser) => parser.assertActual(),
-);
-
-export const assertExpectedFieldSpec: FieldSpec = new FieldSpec(
-  FieldType.expression,
-  "<i>expected value or expression</i>",
-  "ExpressionField",
-  "_expr",
-  true,
-  false,
-  (parser: PythonParser | RefLangParser) => parser.assertExpected(),
 );
 
 export const assignableFieldSpec: FieldSpec = new FieldSpec(

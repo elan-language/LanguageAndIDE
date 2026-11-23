@@ -2,8 +2,6 @@ import { CommentFrame } from "../../../src/ide/frames/comment-frame";
 import { FieldImpl } from "../../../src/ide/frames/fields/field-impl";
 import {
   argListFieldSpec,
-  assertActualFieldSpec,
-  assertExpectedFieldSpec,
   assignableFieldSpec,
   commentFieldSpec,
   constantValueFieldSpec,
@@ -13,10 +11,8 @@ import {
   expressionFieldSpec,
   identifierFieldSpec,
   inheritsFromFieldSpec,
-  inputArgListFieldSpec,
   methodNameFieldSpec,
   paramListFieldSpec,
-  printExpressionFieldSpec,
   procRefFieldSpec,
   testNameFieldSpec,
   typeNameFieldSpec,
@@ -27,7 +23,6 @@ import { Enum } from "../../../src/ide/frames/globals/enum";
 import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
 import { TestFrame } from "../../../src/ide/frames/globals/test-frame";
 import { LanguagePython } from "../../../src/ide/frames/language-python";
-import { AssertStatement } from "../../../src/ide/frames/statements/assert-statement";
 import { Assignment } from "../../../src/ide/frames/statements/assignment";
 import { CatchClause } from "../../../src/ide/frames/statements/catch-clause";
 import { ProcedureCall } from "../../../src/ide/frames/statements/procedureCall";
@@ -59,29 +54,6 @@ suite("Parsing Fields (New) Python", () => {
       "123,",
       false,
       //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, '$"', 'LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
-    );
-  });
-  test("InputArgList", () => {
-    const field = new FieldImpl(new Assignment(fileImplFor(python)), inputArgListFieldSpec);
-    testFieldParse(
-      field,
-      `"age?", a`,
-      true,
-      '<el-field id="python_args4" class="ok" tabindex="-1"><el-txt>"<el-lit>age?</el-lit>", <el-id>a</el-id></el-txt><el-place><i>prompt message</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-    );
-    testFieldParse(
-      field,
-      "a",
-      true,
-      '<el-field id="python_args4" class="ok" tabindex="-1"><el-txt><el-id>a</el-id></el-txt><el-place><i>prompt message</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ArgListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-    );
-
-    testFieldParse(field, "123 a", false, "");
-    testFieldParse(
-      field,
-      `"age?",`,
-      false,
-      //"mismatched input '<EOF>' expecting {'lambda', 'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, '$"', LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
   });
   test("ParamList", () => {
@@ -258,68 +230,6 @@ bar = 2`,
       false,
       //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, '$"', LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
     );
-  });
-  test("PrintExpression", () => {
-    const field = new FieldImpl(new Assignment(fileImplFor(python)), printExpressionFieldSpec);
-
-    testFieldParse(
-      field,
-      "123",
-      true,
-      '<el-field id="python_expr4" class="ok" tabindex="-1"><el-txt><el-lit>123</el-lit></el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "123",
-      "123",
-    ); // litInt
-
-    testFieldParse(
-      field,
-      "+",
-      false,
-      //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, '$"', LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
-    );
-  });
-  test("AssertActual", () => {
-    const field = new FieldImpl(new Assignment(fileImplFor(python)), assertActualFieldSpec);
-
-    testFieldParse(
-      field,
-      "sqrt(2)",
-      true,
-      '<el-field id="python_expr4" class="ok" tabindex="-1"><el-txt><el-method>sqrt</el-method>(<el-lit>2</el-lit>)</el-txt><el-place><i>actual (computed) value</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#AssertActualField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "sqrt(2)",
-      "sqrt(2)",
-    );
-
-    testFieldParse(
-      field,
-      "+",
-      false,
-      //"mismatched input '+' expecting {'if_', 'new', 'int', 'float', 'bool', 'str', 'List', 'true', 'false', 'not', 'this', '[', '(', '-', NAME_STARTING_LC, NAME_STARTING_UC, LITERAL_BINARY, LITERAL_HEX, LITERAL_INTEGER, '$"', LITERAL_FLOAT, LITERAL_STRING, INTERPOLATED_STRING}",
-    );
-  });
-  test("AssertExpected", () => {
-    const field = new FieldImpl(new AssertStatement(fileImplFor(python)), assertExpectedFieldSpec);
-
-    testFieldParse(
-      field,
-      "1.4142135623730951",
-      true,
-      '<el-field id="python_expr4" class="ok" tabindex="-1"><el-txt><el-lit>1.4142135623730951</el-lit></el-txt><el-place><i>expected value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "1.4142135623730951",
-      "1.4142135623730951",
-    );
-
-    testFieldParse(
-      field,
-      "[1, 2]",
-      true,
-      '<el-field id="python_expr4" class="ok" tabindex="-1"><el-txt>[<el-lit>1</el-lit>, <el-lit>2</el-lit>]</el-txt><el-place><i>expected value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
-      "[1, 2]",
-      "[1, 2]",
-    );
-
-    testFieldParse(field, "foo()", true, "");
-    testFieldParse(field, "3 + 4", true, "");
   });
   test("Assignable", () => {
     const field = new FieldImpl(new Assignment(fileImplFor(python)), assignableFieldSpec);

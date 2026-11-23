@@ -1,7 +1,7 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { TestStatus } from "../../../compiler/test-status";
 import { FieldImpl } from "../fields/field-impl";
-import { assertActualFieldSpec, assertExpectedFieldSpec } from "../fields/field-spec";
+import { expressionFieldSpec } from "../fields/field-spec";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
@@ -18,8 +18,9 @@ export class AssertStatement extends SingleLineFrame implements Statement {
   outcome?: AssertOutcome;
   constructor(parent: Parent) {
     super(parent);
-    this.actual = new FieldImpl(this, assertActualFieldSpec);
-    this.expected = new FieldImpl(this, assertExpectedFieldSpec);
+    this.actual = new FieldImpl(this, expressionFieldSpec);
+    this.actual.setPlaceholder("<i>actual (computed) value</i>");
+    this.expected = new FieldImpl(this, expressionFieldSpec);
     this.expected.setPlaceholder("<i>expected value</i>");
   }
 
