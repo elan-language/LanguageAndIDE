@@ -52,8 +52,7 @@ This changes two things: </p>
 <h1>Principles of functional programming</h1>
 <p><b>Important</b>. Every textbook on FP differs <i>slightly</i> in the definition of core principles, 
   and every language that supports FP differs in the rules that it enforces.
-  The following 10 principles are based on widely recognised best practices in FP. When coding with Elan, in whichever of the supported languages
-  - Python, VB, C#, or Java (or the Elan Reference Language) - these principles are, wherever possible, enforced by the Elan tooling.
+  The following  principles are based on widely recognised best practices in FP. When coding with Elan these principles are, wherever possible, enforced by the Elan tooling.
   The resulting code is always valid syntax for the chosen language - but may depend upon common library methods defined in the Elan library.
   Also, if you go on to write code in any of those languages <i>outside</i> Elan, you will find that the same principles are not
   necessarily enforced. Though that might appear to offer you more freedom, sticking voluntarily to the principles that you learned in
@@ -76,13 +75,13 @@ This changes two things: </p>
     &ndash; including Python, VB, C#, and Java &ndash; do not enforce them. However, if any of those languages are used within Elan, then the
 Elan editor enforces the rules automatically.</p>
 <p>This means that every function you see within Elan, and every function you have ever written within Elan
-(in Python, VB, C#, or Java), <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> paradigms
+   <b>is</b> a pure function. That is the reason why, even when you are using the <b>procedural</b> or <b>object-oriented</b> paradigms
 and you are <i>within a function</i>, you cannot add a <b>procedure call</b>, nor can you make use of system methods such as <el-method>input</el-method>,
 <el-method>random</el-method>, or <el-method>clock</el-method>. This experience gives you a huge advantage in transitioning to FP.</p>
 
 <h2>As much of the code as possible should be in functions</h2>
 
-<p>When using FP in Python, VB, C#, or Java, every program still needs a  main routine, which is necessarily procedural in nature,
+<p>When using FP in Elan every program still needs a  main routine, which is necessarily procedural in nature,
   because it cannot work without dependencies on the system, and it generates <i>side effects</i> such as output to a display.</p>
 <p>To avoid your main routine becoming difficult to read, and to avoid duplicated code, you may still define procedures
   (which also, inherently, use procedural programming to manage input/output and other system operations).
@@ -150,8 +149,8 @@ functionality. Without unit tests, bugs might go unnoticed and surface only late
      But such tests are much harder to write than unit tests, and notoriously 'brittle' &ndash; meaning that a tiny change to code can break
      many existing tests and take hours to fix. Changes external to your program, such as a routine upgrade to the browser or operating system,
      can easily render such tests invalid. Elan does not currently support those kind of tests.</p>
-     <p>Note, however, that <i>outside Elan</i>,  Python, VB, C#, and Java, have <i>unit testing</i> frameworks
-     that can theoretically allow unit tests to run <i>any</i> method. This can be dangerous because running the tests might,
+     <p>Note, however, that <i>outside Elan</i>, the <span class="python">Python</span><span class="cs">C#</span> unit testing framework
+     primesFromList unit tests to run <i>any</i> method. This can be dangerous because running the tests might,
      without your awareness, be updating a file or database, or sending Internet messages. Unit tests are safe only when applied to
      safe (i.e. pure) functions.</p>
 

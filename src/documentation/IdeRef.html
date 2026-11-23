@@ -41,48 +41,6 @@
 <div id="CustomiseIDE">
 <h1>Customising the IDE</h1>
 
-<p>(If you haven't already done so, watch the video <b>Selecting the language and paradigm</b> in <a href="./StartHere.html">Start Here</a>.)</p>
-
-<h2>Select the programming language</h2>
-<p>When the public Elan IDE is accessed - via <b>https://codewithelan.org</b> - it will be set up for programming in Python.</p>
-<p>This may be changed via the <b>languages</b> button - and the dialog that it opens - to any of:</p>
-
-<ul>
-  <li>Python</li>
-  <li>C#</li>
-  <li>Java</li>
-  <li>Reference Language</li>
-</ul>
-
-<p><b>VB.NET</b> is currently offered as an option only within the <a href="#QuadView">Quad View <i class="fa">&#xf08e;</i></a> &ndash; for <i>viewing only</i>.
-  We hope to make VB.NET an option for entering and editing code in a future release.</p>
-
-<p>It is possible to create a link that will open Elan with the preferred language option already selected:</p>
-
-<ul>
- <li><b>Python</b> <i class="fa">&#xf08e;</i> &ndash; https://codewithelan.org?#lang=python</li>
- <li><b>C#</b> <i class="fa">&#xf08e;</i> &ndash; https://codewithelan.org?#lang=cs</li>
- <li><b>Java</b> <i class="fa">&#xf08e;</i> &ndash; https://codewithelan.org?#lang=java</li>
-</ul>
-
-<p>See also <a href="#CopyURL">copy Url for this code</a></p>
-
-<h2 id="QuadView">Quad view</h2>
-
-<p>The dialog returned by the <b>languages</b> button also offers a check-box for <b>Quad View</b>. If selected, this replaces the main code editor
-with four 'quadrants', which will typically be used to show the same code in four different languages at the same time. Please note that:</p>
-
-<ul>
-  <li>In Quad View, the top-left quadrant is the <i>active</i> editor. The other three quadrants offer a <i>passive</i> view of the translated code</li>
-  <li>The language that was selected in the regular (single-pane) view will, by default be the language selected for the active editor. The other
-    three panes will each have a different default language. The language for each of the quadrants may be selected individually from the drop down list -
-    and you may even show the same language in more than one pane, though there would be little point. </li>
-  <li>For any given program, the total number of instructions is identical in each language, and when an instruction is highlighted in the active editor,
-    the corresponding instruction (with same instruction number) will be highlighted in the other three panes.</li>
-  <li>When a <i>field</i> (within an instruction) is being entered or edited in the active editor, the fields in the three passive editors will
-  be automatically updated - having been translated if necessary - but only when that field contains <i>valid</i> code in the active editor.</li>
-  <li>In the current release <b>VB.NET</b> may be shown only as a passive view, not in the active quadrant.</li>
-</ul>
 
 <h2 id="Paradigm">The programming paradigm</h2>
 
@@ -111,7 +69,6 @@ with four 'quadrants', which will typically be used to show the same code in fou
 the configuration that has been selected via menu actions:</p>
 
 <ul>
-  <li>The programming language (as used in the single editor, or active editor in Quad View)</li>
   <li>The programming <a href="StartHere.html#Paradigm">paradigm</a></li>
   <li>The CVD <a href="#ColourScheme">colour scheme</a> if selected</li>
 </ul>
@@ -154,9 +111,8 @@ shows these options, any one of which may then be clicked on to do the action:</
 <table style="tableMenu">
  <tbody><tr><th width="150px&quot;">do</th><th width="100px">undo</th><th width="100px">keyboard</th><th>Notes</th></tr>
  <tr><td>ghost</td><td>unghost</td><td>see <a href="#Ghosting">Ghosting</a></td></tr>
- <tr><td>cut for internal use</td><td></td><td><b>Ctrl+x</b></td><td>option to paste within the editor. If pasted <i>outside</i> Elan, code will be in <b>Reference Language</b></td></tr>
- <tr><td>copy for internal use</td><td></td><td><b>Ctrl+c</b></td><td>as above</td></tr>
-<tr><td>copy for export</td><td></td><td></td><td>copies as source code <i>for the current language</i> e.g. to paste into a document.</td></tr>
+ <tr><td>cut</td><td></td><td><b>Ctrl+x</b></td><td>option to paste within the editor.</tr>
+ <tr><td>copy</td><td></td><td><b>Ctrl+c</b></td><td>as above</td></tr>
  <tr><td>delete</td><td></td><td><b>Ctrl+Delete</b> or<br><b>Ctrl+Backspace</b></td><td></td></tr>
  <tr><td>insert new code below</td><td></td><td><b>Enter</b></td><td>inserts a <b>new code</b> prompt</td></tr>
  <tr><td>insert new code above</td><td></td><td><b>Shift+Enter</b></td><td>inserts a <b>new code</b> prompt</td></tr>
