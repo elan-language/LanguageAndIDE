@@ -109,7 +109,8 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
  
   let actual = "";
   let msg = "";
-  let file = path = path + "." + language.defaultFileExtension;
+
+  let file = path = path.replace("ref-lang", language.languageFullName.toLowerCase()) + "." + language.defaultFileExtension;
 
   try {
     fl.setLanguage(language);
@@ -131,6 +132,7 @@ export async function assertExports(fl: FileImpl, path: string, language: Langua
 
 export async function assertExportsAll(fl: FileImpl, path: string) {
   const msgs = [];
+
 
   msgs.push(await assertExports(fl, path, LanguagePython.Instance));
   // msgs.push(await assertExports(fl, path, LanguageVB.Instance));
@@ -165,7 +167,7 @@ export async function testElanFile(fn: string) {
   const msgs = [];
   msgs.push(await assertGeneratesSamesource(fl, source, sourceFile));
   msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExportsAll(fl, testPath));
+  msgs.push(await assertExportsAll(fl, sourceFile.slice(0, sourceFile.lastIndexOf("."))));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));

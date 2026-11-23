@@ -14,7 +14,7 @@ suite("RefLang Demo compile", () => {
     await testElanFile("blackjack");
   });
 
-  ignore_test("test bubbles", async () => {
+  test("test bubbles", async () => {
     await testElanFile("bubbles");
   });
 
