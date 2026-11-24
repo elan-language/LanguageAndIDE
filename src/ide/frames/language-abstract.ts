@@ -110,8 +110,7 @@ export abstract class LanguageAbstract implements Language {
   }
 
   abstract COMMENT_MARKER: string;
-  abstract LIST_START: string;
-  abstract LIST_END: string;
+
   abstract INTERPOLATED_STRING_PREFIX: string;
 
   abstract INT_NAME: string;
@@ -126,18 +125,12 @@ export abstract class LanguageAbstract implements Language {
   abstract BINARY_PREFIX: string;
   abstract HEX_PREFIX: string;
 
-  abstract START_OF_GENERIC: string;
-  abstract END_OF_GENERIC: string;
-  abstract THIS_INSTANCE: string;
   abstract OVERRIDES: string;
   abstract IMPLEMENTS: string;
 
   protected spaced(text: string): string {
     return ` ${text} `;
   }
-
-  abstract TUPLE_START: string;
-  abstract TUPLE_END: string;
 
   protected commonRenderBottom(frame: Frame): string {
     let source = "";

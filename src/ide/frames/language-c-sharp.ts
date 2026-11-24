@@ -273,8 +273,6 @@ export class LanguageCSharp extends LanguageAbstract {
   IMPLEMENTS = ""; // not used
 
   COMMENT_MARKER: string = "//";
-  LIST_START: string = "{";
-  LIST_END: string = "}";
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";
@@ -285,11 +283,4 @@ export class LanguageCSharp extends LanguageAbstract {
 
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
-
-  START_OF_GENERIC: string = "<";
-  END_OF_GENERIC: string = ">";
-  THIS_INSTANCE: string = "this";
-
-  TUPLE_START = "(";
-  TUPLE_END = ")";
 }

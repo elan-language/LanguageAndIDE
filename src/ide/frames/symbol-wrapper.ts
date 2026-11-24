@@ -12,6 +12,7 @@ import {
   isProperty,
   isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { File } from "./frame-interfaces/file";
 import { KeywordCompletion } from "./symbol-completion-helpers";
 
@@ -45,7 +46,7 @@ export class SymbolWrapper {
     const symbol = this.wrapped as ElanSymbol;
 
     if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.scope)) {
-      const thisInstance = this.file.language().THIS_INSTANCE;
+      const thisInstance = this.file.language().mapTerminalSymbol(TerminalSymbol.ThisInstance);
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
@@ -115,7 +116,7 @@ export class SymbolWrapper {
       let toInsert = this.langSpecificTypeName(this.name);
       if (isGenericClass(symbol)) {
         const lang = this.file.language();
-        toInsert += lang.START_OF_GENERIC;
+        toInsert += lang.mapTerminalSymbol(TerminalSymbol.GenericStart);
       }
       return toInsert;
     }
@@ -133,7 +134,7 @@ export class SymbolWrapper {
     }
 
     if (isMemberOnFieldsClass(symbol, this.scope)) {
-      const thisInstance = this.file.language().THIS_INSTANCE;
+      const thisInstance = this.file.language().mapTerminalSymbol(TerminalSymbol.ThisInstance);
       return `${thisInstance}.${symbol.symbolId}`;
     }
 

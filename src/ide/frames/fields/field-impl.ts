@@ -30,6 +30,7 @@ import {
 } from "../symbol-completion-helpers";
 import { SymbolWrapper } from "../symbol-wrapper";
 import { FieldSpec } from "./field-spec";
+import { TerminalSymbol } from "../../../compiler/syntax-nodes/terminal-symbol";
 
 export class FieldImpl implements Selectable, Field {
   // interface Field
@@ -515,7 +516,7 @@ export class FieldImpl implements Selectable, Field {
       this.text = this.text.slice(0, li);
     }
 
-    const thisInstance = this.language().THIS_INSTANCE;
+    const thisInstance = this.language().mapTerminalSymbol(TerminalSymbol.ThisInstance);
     const propertyPrefix = `${thisInstance}.`;
     const appendText = this.selectedSymbolCompletion?.insertedText ?? "";
 

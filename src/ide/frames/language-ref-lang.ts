@@ -253,8 +253,7 @@ export class LanguageRefLang extends LanguageAbstract {
 
   GHOSTED = "[ghosted]";
   COMMENT_MARKER = "#";
-  LIST_START: string = "[";
-  LIST_END: string = "]";
+
   INTERPOLATED_STRING_PREFIX: string = "$";
   NEW_INSTANCE_PREFIX = "new";
 
@@ -269,12 +268,6 @@ export class LanguageRefLang extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
-  TUPLE_START = "tuple[";
-  TUPLE_END = "]";
-
-  START_OF_GENERIC: string = `<of `;
-  END_OF_GENERIC: string = `>`;
-  THIS_INSTANCE: string = "this";
   OVERRIDES = "";
   IMPLEMENTS = "";
 
@@ -319,6 +312,9 @@ export class LanguageRefLang extends LanguageAbstract {
   private terminalMap = new Map<TerminalSymbol, string>([
     [TerminalSymbol.True, "true"],
     [TerminalSymbol.False, "false"],
+    [TerminalSymbol.GenericStart, "<of "],
+    [TerminalSymbol.GenericEnd, ">"],
+    [TerminalSymbol.ThisInstance, "this"],
   ]);
 
   override mapOperation(op: string): OperationSymbol {
