@@ -4,15 +4,17 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { Semver } from "../../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
 import { TestStatus } from "../../../compiler/test-status";
+import { FrameType } from "../frame-type";
 import { Paradigm } from "../paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../status-enums";
 import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 import { Frame } from "./frame";
+import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
 import { Parent } from "./parent";
 import { Selectable } from "./selectable";
-import { StatementFactory } from "./statement-factory";
+import { Selector } from "./selector";
 
 export enum ParseMode {
   loadNew,
@@ -24,10 +26,7 @@ export interface File extends Parent {
   isFile: boolean;
   getById(id: string): Selectable;
   renderAsHtml(): Promise<string>;
-
   renderAsSource(): Promise<string>;
-  renderAsElanSource(): Promise<string>;
-  renderAsExport(): Promise<string>;
 
   compile(): string;
 
@@ -35,16 +34,18 @@ export interface File extends Parent {
 
   compileAsTestWorker(base: string): string;
 
-  fileName: string;
+  getFileName(): string;
+  setFileName(newName: string): void;
   readonly defaultFileName: string;
   doingExport: boolean;
 
   addChildBefore(g: Frame, before: Frame): void;
   addChildAfter(g: Frame, after: Frame): void;
+  addChild(g: Frame): void;
 
   getMap(): Map<string, Selectable>;
   getNextId(): number;
-  getFactory(): StatementFactory;
+  getFactory(): FrameFactory;
   getParadigm(): Paradigm;
   setParadigm(p: Paradigm): void;
 
@@ -73,15 +74,7 @@ export interface File extends Parent {
   getRunStatusColour(): string;
 
   //Internal use only
-  createMain(): Frame;
-  createFunction(): Frame;
-  createProcedure(): Frame;
-  createEnum(): Frame;
-  createConcreteClass(): Frame;
-  createAbstractClass(): Frame;
-  createGlobalComment(): Frame;
-  createConstant(): Frame;
-  createTest(): Frame;
+  createGlobalFrame(type: FrameType): Frame;
 
   parseFrom(source: CodeSource): Promise<void>;
 
@@ -130,4 +123,8 @@ export interface File extends Parent {
 
   showCompletion(show: boolean): void;
   getShowCompletion(): boolean;
+
+  addParseError(msg: string): void;
+  newStatementSelector(parent: Parent): Selector;
+  newMemberSelector(parent: Parent): Selector;
 }

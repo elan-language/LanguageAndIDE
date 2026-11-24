@@ -1,11 +1,13 @@
-import { AbstractSelector } from "../abstract-selector";
+import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { File } from "./file";
 import { Frame } from "./frame";
+import { FrameFactory } from "./frame-factory";
 import { Language } from "./language";
-import { StatementFactory } from "./statement-factory";
+import { Selector } from "./selector";
 
 export interface Parent {
+  frameType: FrameType;
   //External use
   isParent: boolean;
 
@@ -45,9 +47,9 @@ export interface Parent {
   unghostSelectedChildren(): void;
 
   insertOrGotoChildSelector(after: boolean, child: Frame): void;
-  newChildSelector(): AbstractSelector;
+  newChildSelector(): Selector;
 
-  getFactory(): StatementFactory;
+  getFactory(): FrameFactory;
 
   isGhostedOrWithinAGhostedFrame(): boolean;
 

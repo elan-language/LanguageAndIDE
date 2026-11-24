@@ -1,0 +1,2349 @@
+import { AssertOutcome } from "../../../src/compiler/assert-outcome";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { TestStatus } from "../../../src/compiler/test-status";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertCompiles,
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertGraphicsContains,
+  assertObjectCodeDoesNotExecute,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  assertTestObjectCodeExecutes,
+  ignore_test,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("StdLib", () => {
+  test("Pass_contains", async () => {
+    const code = `${testHeader}
+
+main
+  variable arr set to ["three", "four"]
+  call printNoLine(lst().contains(1))
+  call printNoLine(lst().contains(3))
+  call printNoLine(arr.contains("four"))
+  call printNoLine(arr.contains("five"))
+  call printNoLine("onetwo".contains("two"))
+  call printNoLine("onetwo".contains("three"))
+end main
+
+function lst() returns List<of Int>
+  return [1, 2]
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let arr = system.list(["three", "four"]);
+  await _stdlib.printNoLine((await global.lst()).contains(1));
+  await _stdlib.printNoLine((await global.lst()).contains(3));
+  await _stdlib.printNoLine(arr.contains("four"));
+  await _stdlib.printNoLine(arr.contains("five"));
+  await _stdlib.printNoLine(_stdlib.contains("onetwo", "two"));
+  await _stdlib.printNoLine(_stdlib.contains("onetwo", "three"));
+}
+
+async function lst() {
+  return system.list([1, 2]);
+}
+global["lst"] = lst;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruefalse");
+  });
+
+  test("Pass_pause", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(1)
+  call sleep_ms(100)
+  call printNoLine(2)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(1);
+  await _stdlib.sleep_ms(100);
+  await _stdlib.printNoLine(2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_clock", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to clock()
+  call sleep_ms(100)
+  variable b set to clock()
+  call printNoLine(b > a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.clock();
+  await _stdlib.sleep_ms(100);
+  let b = _stdlib.clock();
+  await _stdlib.printNoLine(b > a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+
+  test("Pass_random1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to random()
+  variable b set to random()
+  call printNoLine(a < 1)
+  call printNoLine(a isnt b)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.random();
+  let b = _stdlib.random();
+  await _stdlib.printNoLine(a < 1);
+  await _stdlib.printNoLine(a !== b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetrue");
+  });
+
+  test("Pass_float1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to  asFloat("10.1")
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asFloat("10.1");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10.1");
+  });
+
+  test("Pass_float2", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asFloat("x12")
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asFloat("x12");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'x12' does not parse as a float");
+  });
+
+  test("Pass_float3", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asFloat("25g")
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asFloat("25g");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'25g' does not parse as a float");
+  });
+
+  test("Pass_float4", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to  asFloat("10")
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asFloat("10");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10");
+  });
+
+  test("Pass_floatExponent", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to  asFloat("10.1e2")
+  variable b set to  asFloat("10.1e+2")
+  variable c set to  asFloat("10.1e-2")
+  variable d set to  asFloat("0.12E2")
+  call printNoLine([a, b, c, d])
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asFloat("10.1e2");
+  let b = _stdlib.asFloat("10.1e+2");
+  let c = _stdlib.asFloat("10.1e-2");
+  let d = _stdlib.asFloat("0.12E2");
+  await _stdlib.printNoLine(system.list([a, b, c, d]));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1010, 1010, 0.101, 12]");
+  });
+
+  test("Fail_int0", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asInt("25g")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asInt("25g");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'25g' does not parse as an integer");
+  });
+
+  test("Pass_int1", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asInt("10")
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asInt("10");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "10");
+  });
+
+  test("fail_int2", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asInt("")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asInt("");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'' does not parse as an integer");
+  });
+
+  test("Fail_int3", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to asInt("10.1")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.asInt("10.1");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "'10.1' does not parse as an integer");
+  });
+  test("Pass print (procedure) String", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine("Hello")
+  call printNoLine("!")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine("Hello");
+  await _stdlib.printNoLine("!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello!"); //Unfortunately, the test methods don't print newlines either way!
+  });
+
+  test("Pass print (procedure) Int", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(101)
+  call printNoLine("!")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(101);
+  await _stdlib.printNoLine("!");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "101!"); //Unfortunately, the test methods don't print newlines either way!
+  });
+
+  test("Pass printTab", async () => {
+    const code = `${testHeader}
+
+main
+  call printTab(0,"Hello")
+  call printTab(10,"World")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printTab(0, "Hello");
+  await _stdlib.printTab(10, "World");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello     World");
+  });
+
+  test("Pass printTab Int", async () => {
+    const code = `${testHeader}
+
+main
+  call printTab(0,12345)
+  call printTab(10,678910)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printTab(0, 12345);
+  await _stdlib.printTab(10, 678910);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12345     678910");
+  });
+
+  test("Pass lib constants", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(openBrace)
+  call printNoLine(closeBrace)
+  call printNoLine(quotes)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.openBrace);
+  await _stdlib.printNoLine(_stdlib.closeBrace);
+  await _stdlib.printNoLine(_stdlib.quotes);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, `{}"`);
+  });
+
+  test("Pass_maths_tests", async () => {
+    const code = `${testHeader}
+
+test test_maths
+  assert pi evaluates to 3.141592653589793
+  assert abs(-3.7) evaluates to 3.7
+  assert acos(0.5).round(3) evaluates to 1.047
+  assert asin(0.5).round(3) evaluates to 0.524
+  assert atan(1).round(2) evaluates to 0.79
+  assert cos(pi/4).round(3) evaluates to 0.707
+  assert exp(2).round(3) evaluates to 7.389
+  assert logE(7.398).round(2) evaluates to 2
+  assert log10(1000) evaluates to 3
+  assert log2(65536) evaluates to 16
+  assert sin(pi/6).round(2) evaluates to 0.5
+  assert sqrt(2).round(3) evaluates to 1.414
+  assert tan(pi/4).round(2) evaluates to 1
+  assert radians(90).round(2) evaluates to 1.57
+  assert degrees(1).round(0) evaluates to 57
+end test`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+_tests.push(["elan_test1", async (_outcomes) => {
+  _outcomes.push(await system.assert([async () => _stdlib.pi, "Float"], [3.141592653589793, "Float"], "elan_assert4", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.abs((-3.7)), "Float"], [3.7, "Float"], "elan_assert7", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.acos(0.5), 3), "Float"], [1.047, "Float"], "elan_assert10", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.asin(0.5), 3), "Float"], [0.524, "Float"], "elan_assert13", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.atan(1), 2), "Float"], [0.79, "Float"], "elan_assert16", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.cos(_stdlib.pi / 4), 3), "Float"], [0.707, "Float"], "elan_assert19", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.exp(2), 3), "Float"], [7.389, "Float"], "elan_assert22", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.logE(7.398), 2), "Float"], [2, "Int"], "elan_assert25", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log10(1000), "Float"], [3, "Int"], "elan_assert28", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.log2(65536), "Float"], [16, "Int"], "elan_assert31", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sin(_stdlib.pi / 6), 2), "Float"], [0.5, "Float"], "elan_assert34", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.sqrt(2), 3), "Float"], [1.414, "Float"], "elan_assert37", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.tan(_stdlib.pi / 4), 2), "Float"], [1, "Int"], "elan_assert40", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.radians(90), 2), "Float"], [1.57, "Float"], "elan_assert43", _stdlib, false));
+  _outcomes.push(await system.assert([async () => _stdlib.round(_stdlib.degrees(1), 0), "Float"], [57, "Int"], "elan_assert46", _stdlib, false));
+}]);
+
+async function main() {
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertTestObjectCodeExecutes(fileImpl, [
+      [
+        "elan_test1",
+        [
+          new AssertOutcome(
+            TestStatus.pass,
+            "3.141592653589793",
+            "3.141592653589793",
+            "elan_assert4",
+          ),
+          new AssertOutcome(TestStatus.pass, "3.7", "3.7", "elan_assert7"),
+          new AssertOutcome(TestStatus.pass, "1.047", "1.047", "elan_assert10"),
+          new AssertOutcome(TestStatus.pass, "0.524", "0.524", "elan_assert13"),
+          new AssertOutcome(TestStatus.pass, "0.79", "0.79", "elan_assert16"),
+          new AssertOutcome(TestStatus.pass, "0.707", "0.707", "elan_assert19"),
+          new AssertOutcome(TestStatus.pass, "7.389", "7.389", "elan_assert22"),
+          new AssertOutcome(TestStatus.pass, "2", "2", "elan_assert25"),
+          new AssertOutcome(TestStatus.pass, "3", "3", "elan_assert28"),
+          new AssertOutcome(TestStatus.pass, "16", "16", "elan_assert31"),
+          new AssertOutcome(TestStatus.pass, "0.5", "0.5", "elan_assert34"),
+          new AssertOutcome(TestStatus.pass, "1.414", "1.414", "elan_assert37"),
+          new AssertOutcome(TestStatus.pass, "1", "1", "elan_assert40"),
+          new AssertOutcome(TestStatus.pass, "1.57", "1.57", "elan_assert43"),
+          new AssertOutcome(TestStatus.pass, "57", "57", "elan_assert46"),
+        ],
+      ],
+    ]);
+  });
+  test("Pass_Random", async () => {
+    const code = `${testHeader}
+
+main
+  variable results set to [0, 0]
+  for i in range(1, 10001)
+    variable r set to randint(0, 1)
+    assign results[r] to results[r] + 1
+  end for
+  call printNoLine(results[0] > 0)
+  call printNoLine(results[1] > 0)
+  call printNoLine(results[0] + results[1])
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let results = system.list([0, 0]);
+  const elan_iterelan_for6 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterelan_for6) {
+    let r = _stdlib.randint(0, 1);
+    system.safeSet(results, system.safeIndex(results, r) + 1, [r]);
+  }
+  await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetrue10000");
+  });
+
+  test("RandomInitialised", async () => {
+    const code = `${testHeader}
+
+main
+  variable results set to [0, 0]
+  variable rnd set to new Random()
+  variable val set to 0
+  call rnd.initialiseFromClock()
+  for i in range(1, 10001)
+    assign val to rnd.asInt(0, 1)
+    assign rnd to rnd.nextGen()
+    assign results[val] to results[val] + 1
+  end for
+  call printNoLine(results[0] > 0)
+  call printNoLine(results[1] > 0)
+  call printNoLine(results[0] + results[1])
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let results = system.list([0, 0]);
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
+  let val = 0;
+  rnd.initialiseFromClock();
+  const elan_iterelan_for14 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterelan_for14) {
+    val = rnd.asInt(0, 1);
+    rnd = rnd.nextGen();
+    system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
+  }
+  await _stdlib.printNoLine(system.safeIndex(results, 0) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 1) > 0);
+  await _stdlib.printNoLine(system.safeIndex(results, 0) + system.safeIndex(results, 1));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetrue10000");
+  });
+  test("RandomInFixedSequence", async () => {
+    const code = `${testHeader}
+
+main
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable rnd set to new Random()
+  variable val set to 0
+  for i in range(1, 10001)
+    assign val to rnd.asInt(3, 5)
+    assign rnd to rnd.nextGen()
+    assign results[val] to results[val] + 1
+  end for
+  for i in range(0, 7)
+    variable r set to results[i]
+    call printNoLine(r)
+    call printNoLine(", ")
+  end for
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
+  let val = 0;
+  const elan_iterelan_for12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterelan_for12) {
+    val = rnd.asInt(3, 5);
+    rnd = rnd.nextGen();
+    system.safeSet(results, system.safeIndex(results, val) + 1, [val]);
+  }
+  const elan_iterelan_for25 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterelan_for25) {
+    let r = system.safeIndex(results, i);
+    await _stdlib.printNoLine(r);
+    await _stdlib.printNoLine(", ");
+  }
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
+  });
+  test("Pass_RandomType", async () => {
+    const code = `${testHeader}
+
+main
+  variable results set to [0, 0, 0, 0, 0, 0, 0]
+  variable rnd set to new Random()
+  variable dice set to 0
+  for i in range(1, 10001)
+    variable t set to rollDice(rnd)
+    assign dice to t.item_0
+    assign rnd to t.item_1
+    assign results[dice] to results[dice] + 1
+  end for
+  for i in range(0, 7)
+    variable r set to results[i]
+    call printNoLine(r)
+    call printNoLine(", ")
+  end for
+end main
+
+function rollDice(rnd as Random) returns (Int, Random)
+  return (rnd.asInt(1, 6), rnd.nextGen())
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let results = system.list([0, 0, 0, 0, 0, 0, 0]);
+  let rnd = system.initialise(await new _stdlib.Random()._initialise());
+  let dice = 0;
+  const elan_iterelan_for12 = [..._stdlib.range(1, 10001)];
+  for (const i of elan_iterelan_for12) {
+    let t = (await global.rollDice(rnd));
+    dice = t[0];
+    rnd = t[1];
+    system.safeSet(results, system.safeIndex(results, dice) + 1, [dice]);
+  }
+  const elan_iterelan_for28 = [..._stdlib.range(0, 7)];
+  for (const i of elan_iterelan_for28) {
+    let r = system.safeIndex(results, i);
+    await _stdlib.printNoLine(r);
+    await _stdlib.printNoLine(", ");
+  }
+}
+
+async function rollDice(rnd) {
+  return system.tuple([rnd.asInt(1, 6), rnd.nextGen()]);
+}
+global["rollDice"] = rollDice;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0, 1688, 1677, 1683, 1585, 1680, 1687, ");
+  });
+
+  test("bitwise operations", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 13
+  variable b set to 30
+  variable anb set to bitAnd(a, b)
+  variable aob set to bitOr(a, b)
+  variable axb set to bitXor(a, b)
+  variable nota set to bitNot(a)
+  variable aL set to bitShiftL(a, 2)
+  variable aR set to bitShiftR(a, 2)
+  call printNoLine(a.asBinary() + " " + b.asBinary() + " " + anb.asBinary() + " " + aob.asBinary() + " " + axb.asBinary() + " " + nota.asBinary() + " " + aL.asBinary() + " " + aR.asBinary())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = 13;
+  let b = 30;
+  let anb = _stdlib.bitAnd(a, b);
+  let aob = _stdlib.bitOr(a, b);
+  let axb = _stdlib.bitXor(a, b);
+  let nota = _stdlib.bitNot(a);
+  let aL = _stdlib.bitShiftL(a, 2);
+  let aR = _stdlib.bitShiftR(a, 2);
+  await _stdlib.printNoLine(_stdlib.asBinary(a) + " " + _stdlib.asBinary(b) + " " + _stdlib.asBinary(anb) + " " + _stdlib.asBinary(aob) + " " + _stdlib.asBinary(axb) + " " + _stdlib.asBinary(nota) + " " + _stdlib.asBinary(aL) + " " + _stdlib.asBinary(aR));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1101 11110 1100 11111 10011 -1110 110100 11");
+  });
+
+  test("Pass_stringForUnicode", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(unicode(65))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.unicode(65));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "A");
+  });
+
+  test("Pass_asUnicode", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine("Apple".asUnicode())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.asUnicode("Apple"));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "65");
+  });
+
+  test("Pass_appendList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  variable b set to [3,4]
+  call a.appendList(b)
+  call printNoLine(a)
+  call printNoLine(b)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 2]);
+  let b = system.list([3, 4]);
+  a.appendList(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4][3, 4]");
+  });
+
+  test("Pass_appendListOfSubclass", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of Foo>()
+  variable b set to new List<of Bar>()
+  call a.appendList(b)
+  call printNoLine(a)
+  call printNoLine(b)
+end main
+
+abstract class Foo
+end class
+
+class Bar inherits Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+end class
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  let b = system.initialise(await new _stdlib.List()._initialise());
+  a.appendList(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[][]");
+  });
+
+  test("Pass_prependList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  variable b set to [3,4]
+  call a.prependList(b)
+  call printNoLine(a)
+  call printNoLine(b)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 2]);
+  let b = system.list([3, 4]);
+  a.prependList(b);
+  await _stdlib.printNoLine(a);
+  await _stdlib.printNoLine(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[3, 4, 1, 2][3, 4]");
+  });
+
+  test("Pass_prepend", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1,2]
+  variable b set to 3
+  call a.prepend(b)
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 2]);
+  let b = 3;
+  a.prepend(b);
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[3, 1, 2]");
+  });
+
+  test("Pass_split", async () => {
+    const code = `${testHeader}
+
+main
+  variable s set to "Now is the time..."
+  variable words set to s.split(" ")
+  call printNoLine(words)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let s = "Now is the time...";
+  let words = _stdlib.split(s, " ");
+  await _stdlib.printNoLine(words);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[Now, is, the, time...]");
+  });
+  test("Pass_joinListOfString", async () => {
+    const code = `${testHeader}
+
+main
+  variable words set to ["Now", "is","the","time..."]
+  variable s set to words.join(".")
+  call printNoLine(s)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let words = system.list(["Now", "is", "the", "time..."]);
+  let s = (await words.join("."));
+  await _stdlib.printNoLine(s);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
+  });
+  test("Pass_joinListOfObjects", async () => {
+    const code = `${testHeader}
+
+main
+  variable words set to [new Point(), new Point()]
+  variable s set to words.join(",")
+  call printNoLine(s)
+end main
+
+class Point
+  constructor()
+  end constructor
+  function toString() returns String
+    return "a Point"
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let words = system.list([system.initialise(await new Point()._initialise()), system.initialise(await new Point()._initialise())]);
+  let s = (await words.join(","));
+  await _stdlib.printNoLine(s);
+}
+
+class Point {
+  static emptyInstance() { return system.emptyClass(Point, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "a Point";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Point,a Point");
+  });
+
+  test("Pass_replace", async () => {
+    const code = `${testHeader}
+
+main
+  variable s1 set to "[a] [b]"
+  variable s2 set to s1.replace("[",unicode(123)).replace("]", unicode(125))
+  call printNoLine(s1)
+  call printNoLine(s2)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let s1 = "[a] [b]";
+  let s2 = _stdlib.replace(_stdlib.replace(s1, "[", _stdlib.unicode(123)), "]", _stdlib.unicode(125));
+  await _stdlib.printNoLine(s1);
+  await _stdlib.printNoLine(s2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
+  });
+  test("Pass_testRegExp", async () => {
+    const code = `${testHeader}
+
+main
+  variable s1 set to "cbababbc"
+  variable s2 set to "cbabdabbc"
+  variable result1 set to s1.matchesRegExp("[a-c]*")
+  variable result2 set to s2.matchesRegExp("^[a-c]*$")
+  call printNoLine(result1)
+  call printNoLine(result2)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let s1 = "cbababbc";
+  let s2 = "cbabdabbc";
+  let result1 = _stdlib.matchesRegExp(s1, "[a-c]*");
+  let result2 = _stdlib.matchesRegExp(s2, "^[a-c]*$");
+  await _stdlib.printNoLine(result1);
+  await _stdlib.printNoLine(result2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
+  });
+  test("Pass_indexOf", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [1, 3, 5, 7, 9]
+  variable b set to [2, 4, 6, 8]
+  variable c set to "Hello World!"
+  call printNoLine(a.indexOf(9))
+  call printNoLine(a.indexOf(5))
+  call printNoLine(b.indexOf(2))
+  call printNoLine(b.indexOf(7))
+  call printNoLine(c.indexOf("o"))
+  call printNoLine(c.indexOf("ll"))
+  call printNoLine(c.indexOf("x"))
+  variable i set to 1
+  assign i to a.indexOf(9)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([1, 3, 5, 7, 9]);
+  let b = system.list([2, 4, 6, 8]);
+  let c = "Hello World!";
+  await _stdlib.printNoLine(a.indexOf(9));
+  await _stdlib.printNoLine(a.indexOf(5));
+  await _stdlib.printNoLine(b.indexOf(2));
+  await _stdlib.printNoLine(b.indexOf(7));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "o"));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "ll"));
+  await _stdlib.printNoLine(_stdlib.indexOf(c, "x"));
+  let i = 1;
+  i = a.indexOf(9);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "420-142-1");
+  });
+  test("Pass_asUnicodeReturnsInt#1061", async () => {
+    const code = `${testHeader}
+
+main
+  variable i set to 1
+  assign i to "A".asUnicode()
+  call printNoLine(i)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let i = 1;
+  i = _stdlib.asUnicode("A");
+  await _stdlib.printNoLine(i);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "65");
+  });
+  test("Pass_isNaN", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(sqrt(-1).isNaN())
+  call printNoLine(sqrt(2).isNaN())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.isNaN(_stdlib.sqrt((-1))));
+  await _stdlib.printNoLine(_stdlib.isNaN(_stdlib.sqrt(2)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalse");
+  });
+  ignore_test("Pass_isInfinite", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine((1.0/0).isInfinite())
+  call printNoLine((-1.0/0).isInfinite())
+  call printNoLine((1.0/1).isInfinite())
+  call printNoLine(sqrt(-1).isInfinite())
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.isInfinite((1 / 0)));
+  await _stdlib.printNoLine(_stdlib.isInfinite(((-1) / 0)));
+  await _stdlib.printNoLine(_stdlib.isInfinite((1 / 1)));
+  await _stdlib.printNoLine(_stdlib.isInfinite(_stdlib.sqrt((-1))));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalsefalse");
+  });
+
+  test("Pass_Constraint", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of CircleVG>()
+  variable b set to new List<of VectorGraphic>()
+  call displayVectorGraphics(a)
+  call displayVectorGraphics(b)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.initialise(await new _stdlib.List()._initialise());
+  let b = system.initialise(await new _stdlib.List()._initialise());
+  await _stdlib.displayVectorGraphics(a);
+  await _stdlib.displayVectorGraphics(b);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Fail_Constraint", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new List<of Foo>()
+  call displayVectorGraphics(a)
+end main
+
+class Foo
+  constructor()
+  end constructor
+
+  function toString() returns String
+    return "foo"
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: listOfVGs (List<of VectorGraphic>), Provided: List<of Foo>.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Pass_split", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(asInt("12 34 56".split(" ")[1]))
+  call printNoLine("z" + "a b c".split(" ")[1])
+  call printNoLine("a b c".split(" ")[1] + "z")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.asInt(system.safeIndex(_stdlib.split("12 34 56", " "), 1)));
+  await _stdlib.printNoLine("z" + system.safeIndex(_stdlib.split("a b c", " "), 1));
+  await _stdlib.printNoLine(system.safeIndex(_stdlib.split("a b c", " "), 1) + "z");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "34zbbz");
+  });
+
+  test("Pass_drawHtml", async () => {
+    const code = `${testHeader}
+
+main
+  call displayHtml("<p>fred</p>")
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.displayHtml("<p>fred</p>");
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(fileImpl, 0, "<p>fred</p>");
+  });
+
+  test("Pass_clearHtml", async () => {
+    const code = `${testHeader}
+
+main
+  call displayHtml("<p>fred</p>")
+  call clearHtml()
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.displayHtml("<p>fred</p>");
+  await _stdlib.clearHtml();
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertGraphicsContains(fileImpl, 0, "");
+  });
+
+  test("Pass_tone", async () => {
+    const code = `${testHeader}
+
+main
+  call tone(10, 10, 10)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.tone(10, 10, 10);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
+
+  test("Pass_range", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(range(1, 6))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.range(1, 6));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4, 5]");
+  });
+  test("Pass_range_EmptyIfEnd<Start", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(range(5, 0))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.range(5, 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+  test("Pass_rangeInSteps", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(rangeInSteps(1, 7, 2))
+  call printNoLine(rangeInSteps(5, -4, -2))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, 2));
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(5, (-4), (-2)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[1, 3, 5][5, 3, 1, -1, -3]");
+  });
+  test("Pass_rangeInStepsError1", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(rangeInSteps(1, 7, 0))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, 0));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(fileImpl, "value for step cannot be zero");
+  });
+  test("Pass_rangeInStepsError2", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(rangeInSteps(1, 7, -1))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(1, 7, (-1)));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeDoesNotExecute(
+      fileImpl,
+      "Loop will not terminate when start < end start with negative step",
+    );
+  });
+  test("Pass_rangeInStepsError3", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(rangeInSteps(6, 2, 2))
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.rangeInSteps(6, 2, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[]");
+  });
+
+  test("Fail_shadowLibraryType", async () => {
+    const code = `${testHeader}
+
+class List
+  constructor()
+  end constructor
+  function toString() returns String
+    return "MyList"
+  end function
+
+end class
+
+main
+  call printNoLine(new List())
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    assertObjectCodeExecutes(fileImpl, "MyList");
+  });
+
+  test("Pass_SetComparisonByValue", async () => {
+    const code = `${testHeader}
+
+main
+  variable b set to ["2", "7"].asHashSet()
+  variable c set to ["7", "2"].asHashSet()
+  variable d set to ["8", "2"].asHashSet()
+  call printNoLine(b.equals(c))
+  call printNoLine(b.equals(d))
+  variable b2 set to [2, 7].asHashSet()
+  variable c2 set to [7, 2].asHashSet()
+  variable d2 set to [8, 2].asHashSet()
+  call printNoLine(b2.equals(c2))
+  call printNoLine(b2.equals(d2))
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let b = system.list(["2", "7"]).asHashSet();
+  let c = system.list(["7", "2"]).asHashSet();
+  let d = system.list(["8", "2"]).asHashSet();
+  await _stdlib.printNoLine(_stdlib.equals(b, c));
+  await _stdlib.printNoLine(_stdlib.equals(b, d));
+  let b2 = system.list([2, 7]).asHashSet();
+  let c2 = system.list([7, 2]).asHashSet();
+  let d2 = system.list([8, 2]).asHashSet();
+  await _stdlib.printNoLine(_stdlib.equals(b2, c2));
+  await _stdlib.printNoLine(_stdlib.equals(b2, d2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetruefalse");
+  });
+
+  test("Pass_divideFunctions", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(divAsInt(1, 2))
+  call printNoLine(divAsInt(1.0, 2.0))
+  call printNoLine(divAsInt(1, 2.0))
+  call printNoLine(divAsInt(1.0, 2))
+  call printNoLine(divAsFloat(1, 2))
+  call printNoLine(divAsFloat(1.0, 2.0))
+  call printNoLine(divAsFloat(1, 2.0))
+  call printNoLine(divAsFloat(1.0, 2))
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsInt(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+  await _stdlib.printNoLine(_stdlib.divAsFloat(1, 2));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "00000.50.50.50.5");
+  });
+
+  test("Pass_createList", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createPopulatedList(5, "a")
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.createPopulatedList(5, "a");
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a, a, a, a, a]");
+  });
+
+  test("Pass_createListOfLists", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to createPopulatedListofLists(3, 2, 5)
+  call printNoLine(a)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = (await _stdlib.createPopulatedListofLists(3, 2, 5));
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[[5, 5], [5, 5], [5, 5]]");
+  });
+
+  test("Pass_createDictionary", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to [("a", 1), ("b", 2)]
+  variable b set to [(1, "a"), (2, "b")]
+  variable d1 set to new Dictionary<of String, Int>()
+  variable d2 set to new Dictionary<of Int, String>()
+  assign d1 to createDictionary(a)
+  assign d2 to createDictionary(b)
+  call printNoLine(d1)
+  call printNoLine(d2)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = system.list([system.tuple(["a", 1]), system.tuple(["b", 2])]);
+  let b = system.list([system.tuple([1, "a"]), system.tuple([2, "b"])]);
+  let d1 = system.initialise(await new _stdlib.Dictionary()._initialise());
+  let d2 = system.initialise(await new _stdlib.Dictionary()._initialise());
+  d1 = (await _stdlib.createDictionary(a));
+  d2 = (await _stdlib.createDictionary(b));
+  await _stdlib.printNoLine(d1);
+  await _stdlib.printNoLine(d2);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "[a:1, b:2][1:a, 2:b]");
+  });
+
+  ignore_test("Pass_allLibraryTypeNamesValid", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to new CircleVG()
+  variable b set to new Dictionary<of String, Int>()
+
+  variable d set to new HashSet<of Int>
+  variable e set to new ImageVG("")
+  variable f set to new LineVG()
+  variable g set to new List<of Int>()
+  variable h set to new Maybe<of ImageVG>()
+  variable i set to new Queue<of Int>()
+  variable j set to new Random()
+  variable k set to new RawVG()
+  variable l set to new RectangleVG()
+  variable m set to new AsRef<of Int>(1)
+  variable n set to new Stack<of Int>()
+  variable o set to new TextFileReader()
+  variable p set to new TextFileWriter()
+  variable q set to new Turtle()
+end main
+
+procedure foo(r as VectorGraphic)
+
+end procedure
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_allLibraryProceduresValid", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+  });
+
+  test("Pass_Equals", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1.equals(1)
+  variable b set to "".equals("")
+  variable c set to true.equals(true)
+  variable d set to 1.notEqualTo(2)
+  variable e set to "".notEqualTo("1")
+  variable f set to true.notEqualTo(false)
+  call printNoLine(a and b and c and d and e and f)
+end main
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let a = _stdlib.equals(1, 1);
+  let b = _stdlib.equals("", "");
+  let c = _stdlib.equals(true, true);
+  let d = _stdlib.notEqualTo(1, 2);
+  let e = _stdlib.notEqualTo("", "1");
+  let f = _stdlib.notEqualTo(true, false);
+  await _stdlib.printNoLine(a && b && c && d && e && f);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "true");
+  });
+});

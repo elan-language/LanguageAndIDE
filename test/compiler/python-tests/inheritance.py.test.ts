@@ -1,0 +1,3698 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testPythonHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Python Inheritance", () => {
+  test("Pass_DefineAbstractClassAndInheritFromIt", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
+  printNoLine(x.product()) 
+  x.setP1(4) 
+  printNoLine(x.product()) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+  @abstractmethod
+  def setP1(v: float) -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def product() -> float:
+    pass # abstract function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 3 # assignment
+    self.p2 = 4 # assignment
+  # end constructor
+
+  p2: float
+
+  def setP1(self: Bar, p1: float) -> None:
+    self.p1 = p1 # assignment
+  # end procedure
+
+  def product(self: Bar) -> float:
+    return self.p1*self.p2
+  # end function
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine(x.p1);
+  await _stdlib.printNoLine(x.p2);
+  await _stdlib.printNoLine((await x.product()));
+  await x.setP1(4);
+  await _stdlib.printNoLine((await x.product()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  setP1(v) {
+  }
+
+  async product() {
+    return 0;
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
+
+  async _initialise() {
+    this.p1 = 3;
+    this.p2 = 4;
+    return this;
+  }
+
+  p2 = 0;
+
+  async setP1(p1) {
+    this.p1 = p1;
+  }
+
+  async product() {
+    return this.p1 * this.p2;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "341216");
+  });
+
+  test("Pass_PassAsAbstractClassIntoFunction", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Yon() # variable definition
+  printNoLine(f(x)) 
+  printNoLine(b(x)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+# end class
+
+class Bar(Foo): # abstract class
+
+  p2: str
+
+# end class
+
+class Yon(Bar): # concrete class
+
+  def __init__(self: Yon) -> None:
+    self.p1 = 3 # assignment
+    self.p2 = "apple" # assignment
+  # end constructor
+
+  def toString(self: Yon) -> str:
+    return ""
+  # end function
+
+# end class
+
+def b(bar: Bar) -> str: # function
+  return bar.p2
+# end function
+
+def f(foo: Foo) -> float: # function
+  return foo.p1
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Yon()._initialise());
+  await _stdlib.printNoLine((await global.f(x)));
+  await _stdlib.printNoLine((await global.b(x)));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["p2", ""]]);};
+  p2 = "";
+
+}
+
+class Yon extends Bar {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+
+  async _initialise() {
+    this.p1 = 3;
+    this.p2 = "apple";
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+
+async function b(bar) {
+  return bar.p2;
+}
+global["b"] = b;
+
+async function f(foo) {
+  return foo.p1;
+}
+global["f"] = f;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3apple");
+  });
+
+  test("Pass_AbstractMutableClassAsProcedureParameter", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  f = Bar() # variable definition
+  proc(f) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def proc(foo: Foo) -> None: # procedure
+  printNoLine(foo.p1) 
+# end procedure
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Bar()._initialise());
+  await proc(f);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+
+async function proc(foo) {
+  await _stdlib.printNoLine(foo.p1);
+}
+global["proc"] = proc;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
+  test("Pass_Invariance", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  b = Bar() # variable definition
+  lst = [b] # variable definition
+  printNoLine(fun(lst)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return "a Bar"
+  # end function
+
+# end class
+
+def fun(l: list[Bar]) -> Bar: # function
+  return l[0]
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let b = system.initialise(await new Bar()._initialise());
+  let lst = system.list([b]);
+  await _stdlib.printNoLine((await global.fun(lst)));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "a Bar";
+  }
+
+}
+
+async function fun(l) {
+  return system.safeIndex(l, 0);
+}
+global["fun"] = fun;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Bar");
+  });
+
+  test("Pass_AbstractMutableClassAsFunctionParameter", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  f = Bar() # variable definition
+  printNoLine(fun(f)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def fun(foo: Foo) -> int: # function
+  return foo.p1
+# end function
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await global.fun(f)));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+
+async function fun(foo) {
+  return foo.p1;
+}
+global["fun"] = fun;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "0");
+  });
+
+  test("Pass_DefineAbstractWithPrivateMembers", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int # private
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.p1 = a # assignment
+  # end procedure
+
+  def ff(self: Foo) -> int: # private
+    return self.p1
+  # end function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 1 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  async ff() {
+    return this.p1;
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.p1 = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "33");
+  });
+
+  test("Pass_DefineAbstractWithPrivateMembersMultipleInheritance", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int # private
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.p1 = a # assignment
+  # end procedure
+
+  def ff(self: Foo) -> int: # private
+    return self.p1
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p2: int # private
+
+  def setP2(self: Yon, a: int) -> None: # private
+    self.p2 = a # assignment
+  # end procedure
+
+  def ff2(self: Yon) -> int: # private
+    return self.p2
+  # end function
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
+    self.setP2(a + 1) 
+    printNoLine(self.ff2()) 
+    printNoLine(self.p2) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  async ff() {
+    return this.p1;
+  }
+
+}
+
+class Yon extends Foo {
+  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
+  p2 = 0;
+
+  async setP2(a) {
+    this.p2 = a;
+  }
+
+  async ff2() {
+    return this.p2;
+  }
+
+}
+
+class Bar extends Yon {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
+    await this.setP2(a + 1);
+    await _stdlib.printNoLine((await this.ff2()));
+    await _stdlib.printNoLine(this.p2);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3344");
+  });
+
+  test("Pass_DefineAbstractWithPrivateMembersIndirectInheritance", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int # private
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.p1 = a # assignment
+  # end procedure
+
+  def ff(self: Foo) -> int: # private
+    return self.p1
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p2: int # private
+
+  def setP2(self: Yon, a: int) -> None: # private
+    self.p2 = a # assignment
+  # end procedure
+
+  def ff2(self: Yon) -> int: # private
+    return self.p2
+  # end function
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.ff()) 
+    printNoLine(self.p1) 
+    self.setP2(a + 1) 
+    printNoLine(self.ff2()) 
+    printNoLine(self.p2) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  async ff() {
+    return this.p1;
+  }
+
+}
+
+class Yon extends Foo {
+  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
+  p2 = 0;
+
+  async setP2(a) {
+    this.p2 = a;
+  }
+
+  async ff2() {
+    return this.p2;
+  }
+
+}
+
+class Bar extends Yon {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine((await this.ff()));
+    await _stdlib.printNoLine(this.p1);
+    await this.setP2(a + 1);
+    await _stdlib.printNoLine((await this.ff2()));
+    await _stdlib.printNoLine(this.p2);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3344");
+  });
+
+  test("Pass_SetInheritedProperty", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int # private
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 1 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    printNoLine(self.p1) 
+    self.p1 = a # assignment
+    printNoLine(self.p1) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.p1 = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await _stdlib.printNoLine(this.p1);
+    this.p1 = a;
+    await _stdlib.printNoLine(this.p1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "13");
+  });
+
+  test("Pass_AccessAbstractProcedureFromPrivate", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def setP(a: int) -> None:
+    pass # abstract procedure
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.setP(a) 
+  # end procedure
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 1 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p1: int
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.p1) 
+  # end procedure
+
+  def setP(self: Bar, a: int) -> None:
+    self.p1 = a # assignment
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  setP(a) {
+  }
+
+  async setP1(a) {
+    await this.setP(a);
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  p1 = 0;
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine(this.p1);
+  }
+
+  async setP(a) {
+    this.p1 = a;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_AccessAbstractFunctionFromPrivate", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def ff(a: int) -> int:
+    pass # abstract function
+
+  def setP1(self: Foo, a: int) -> None: # private
+    printNoLine(self.ff(a)) 
+  # end procedure
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 1 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p1: int
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.p1) 
+  # end procedure
+
+  def ff(self: Bar, a: int) -> int:
+    return a
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async ff(a) {
+    return 0;
+  }
+
+  async setP1(a) {
+    await _stdlib.printNoLine((await this.ff(a)));
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  p1 = 0;
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine(this.p1);
+  }
+
+  async ff(a) {
+    return a;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "31");
+  });
+
+  test("Pass_AccessInheritedPropertyFromPrivate", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: int # private
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.p1 = a # assignment
+  # end procedure
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+    printNoLine(self.p1) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
+  p1 = 0;
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+    await _stdlib.printNoLine(this.p1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_AccessInheritedProcedureFromPrivate", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  x.testPrivate(3) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  def setP(self: Yon, a: int) -> None: # private
+
+  # end procedure
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def setP1(self: Foo, a: int) -> None: # private
+    self.setP(a) 
+  # end procedure
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> None:
+    self.setP1(a) 
+  # end procedure
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.testPrivate(3);
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  async setP(a) {
+
+  }
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async setP1(a) {
+    await this.setP(a);
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    await this.setP1(a);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "");
+  });
+
+  test("Pass_AccessInheritedFunctionFromPrivate", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.testPrivate(3)) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  def ff(self: Yon) -> int: # private
+    return 6
+  # end function
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def fff(self: Foo) -> int: # private
+    return self.ff()
+  # end function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def testPrivate(self: Bar, a: int) -> int:
+    return self.fff()
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await x.testPrivate(3)));
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  async ff() {
+    return 6;
+  }
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async fff() {
+    return (await this.ff());
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async testPrivate(a) {
+    return (await this.fff());
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
+
+  test("Pass_InheritImplementation", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.ff()) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def ff(self: Foo) -> int:
+    return self.prop
+  # end function
+
+  prop: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.prop = 3 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await x.ff()));
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  async ff() {
+    return 0;
+  }
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async ff() {
+    return this.prop;
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_InheritImplementation1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.ff()) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def ff(self: Foo) -> int:
+    return self.prop
+  # end function
+
+  prop: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.prop = 3 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await x.ff()));
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  async ff() {
+    return 0;
+  }
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async ff() {
+    return this.prop;
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_InheritImplementation2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.ff()) 
+# end main
+
+class Yon(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  def ff(self: Foo) -> int:
+    return self.prop
+  # end function
+
+  prop: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.prop = 3 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await x.ff()));
+}
+
+class Yon {
+  static emptyInstance() { return system.emptyClass(Yon, []);};
+  async ff() {
+    return 0;
+  }
+
+}
+
+class Foo extends Yon {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async ff() {
+    return this.prop;
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Fail_AbstractClassCannotInheritFromConcreteClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo: # concrete class
+
+  def __init__(self: Foo) -> None:
+
+  # end constructor
+
+  def toString(self: Foo) -> str:
+    return ""
+  # end function
+
+# end class
+
+class Bar(Foo): # abstract class
+
+  p1: int
+
+  p2: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_MustImplementAllInheritedMethods", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+  p2: float
+
+  @abstractmethod
+  def setP1(v: float) -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def product() -> float:
+    pass # abstract function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 3 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.setP1.ErrorMessages.html#compile_error",
+      "Bar must implement Foo.product.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_CannotInheritFromConcreteClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo: # concrete class
+
+  def __init__(self: Foo) -> None:
+
+  # end constructor
+
+  def toString(self: Foo) -> str:
+    return ""
+  # end function
+
+  p1: int
+
+  p2: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_MustCorrectlyImplementAllInheritedMethods", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def setP1(v: int) -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def product() -> int:
+    pass # abstract function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 3 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def setP1(self: Bar, v: str) -> None:
+
+  # end procedure
+
+  def product(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Member 'setP1' must be of type Procedure (int).ErrorMessages.html#MemberTypeCompileError",
+      "Member 'product' must be of type function that takes no parameters - returning a int.ErrorMessages.html#MemberTypeCompileError",
+    ]);
+  });
+
+  test("Fail_ImplementedMethodMustHaveSameSignature", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+  p2: float
+
+  @abstractmethod
+  def setP1(v: float) -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def product() -> int:
+    pass # abstract function
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 3 # assignment
+    self.p2 = 4 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  def setP1(self: Bar, p1: float) -> None:
+    self.p1 = p1 # assignment
+  # end procedure
+
+  def product(self: Bar) -> float:
+    return self.p1*self.p2
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Member 'product' must be of type function that takes no parameters - returning a int.ErrorMessages.html#MemberTypeCompileError",
+    ]);
+  });
+
+  test("Fail_AbstractClassDefinesMethodBody", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  
+# end main
+
+class Foo(ABC): # abstract class
+  
+  @abstractmethod
+  def setPt(self: Foo, v: int):
+    self.p1 = v
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Pass_ConcretePropertyInAbstractClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+  p1 = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+  });
+
+  test("Fail_MissingAbstractFunction", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  def product(self: Foo) -> int:
+    return 
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_MissingAbstractProcedure", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  def setP1(self: Foo, v: int) -> None:
+    pass
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_CannotInstantiateAbstractClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  a = Bar() # variable definition
+# end main
+
+class Bar(ABC): # abstract class
+
+  p1: int
+
+  p2: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must be concrete to create instance.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_SuperClassAsFunctionParameter", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  b = Bar() # variable definition
+  f = upcast(b) # variable definition
+  printNoLine(fun(f)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def upcast(bar: Bar) -> Foo: # function
+  return foo
+# end function
+
+def fun(bar: Bar) -> int: # function
+  return foo.p1
+# end function
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: bar (Bar), Provided: Foo.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_Invariance1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  b = Bar() # variable definition
+  lst = [b] # variable definition
+  printNoLine(fun(lst)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def fun(l: list[Foo]) -> Foo: # function
+  return l[0]
+# end function
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: l (list[Foo]), Provided: list[Bar].ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_Invariance2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  b = Bar() # variable definition
+  lst = [b] # variable definition
+  fun(lst) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def fun(l: list[Foo]) -> None: # procedure
+  printNoLine(l[0]) 
+# end procedure
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: l (list[Foo]), Provided: list[Bar].ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_Invariance3", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  lst = Dictionary[str, Bar]() # variable definition
+  printNoLine(fun(lst)) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+def fun(l: Dictionary[str, Foo]) -> Foo: # function
+  return l["id"]
+# end function
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: l (dict[str, Foo]), Provided: dict[str, Bar].ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InheritFromNonexistentClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.p1) 
+# end main
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p1: float
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'Foo' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_DuplicateNames", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'Foo' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePropertyNames", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+  p1: str
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateFunctionNames", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateProcedureNames", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def ff() -> None:
+    pass # abstract procedure
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMemberNames1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMemberNames3", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  @abstractmethod
+  def ff() -> int:
+    pass # abstract function
+
+  @abstractmethod
+  def ff() -> None:
+    pass # abstract procedure
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'ff' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int # private
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> None: # private
+
+  # end procedure
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers3", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> int: # private
+    return 0
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers4", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> int: # private
+    return 0
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers5", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 0 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p1: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicatePrivateMembers6", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: str # private
+
+  p1: str
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers2", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> None:
+
+  # end procedure
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers3", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> int:
+    return 0
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers4", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  def p1(self: Foo) -> int:
+    return 0
+  # end function
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p3: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers5", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: str # private
+
+# end class
+
+class Bar(Yon): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 0 # assignment
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p1: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateMembers6", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: str
+
+  p1: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_StdLibSuperClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Bar(VectorGraphic): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p2: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_UnknownSuperClass", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Bar(BaseVg): # concrete class
+
+  def __init__(self: Bar) -> None:
+
+  # end constructor
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+  p2: int
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'BaseVg' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_OnlyOneAbstract Class", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Yon() # variable definition
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+# end class
+
+class Bar(ABC): # abstract class
+
+  p2: str
+
+# end class
+
+class Yon(Foo, Bar): # concrete class
+
+  def __init__(self: Yon) -> None:
+    self.p1 = 3 # assignment
+    self.p2 = "apple" # assignment
+  # end constructor
+
+  def toString(self: Yon) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_SuperclassesCannotDefineSameMember", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+  p2: float
+
+# end class
+
+class Yon(Foo): # abstract class
+
+  p1: float
+
+  @abstractmethod
+  def setP1(v: float) -> None:
+    pass # abstract procedure
+
+  @abstractmethod
+  def product() -> float:
+    pass # abstract function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_SuperclassesCannotDefineSameMember1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Bar() # variable definition
+  printNoLine(x.p1) 
+  printNoLine(x.p2) 
+  printNoLine(x.product()) 
+  x.setP1(4) 
+  printNoLine(x.product()) 
+# end main
+
+class Foo(ABC): # abstract class
+
+  p1: float
+
+  p2: float
+
+# end class
+
+class Bar(Foo): # concrete class
+
+  def __init__(self: Bar) -> None:
+    self.p1 = 3 # assignment
+    self.p2 = 4 # assignment
+  # end constructor
+
+  p1: float
+
+  p2: float
+
+  def setP1(self: Bar, p1: float) -> None:
+    self.p1 = p1 # assignment
+  # end procedure
+
+  def product(self: Bar) -> float:
+    return self.p1*self.p2
+  # end function
+
+  def toString(self: Bar) -> str:
+    return ""
+  # end function
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_PrivateMemberDuplicateId", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Yon(ABC): # abstract class
+
+  p1: int
+
+# end class
+
+class Foo(Yon): # abstract class
+
+  p1: int # private
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'p1' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_SuperClassUsedBeforeDeclared", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  x = Foo() # variable definition
+# end main
+
+class Foo(Bar): # concrete class
+
+  def __init__(self: Foo) -> None:
+
+  # end constructor
+
+  def toString(self: Foo) -> str:
+    return "undefined"
+  # end function
+
+# end class
+
+class Bar(ABC): # abstract class
+
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Abstract Class 'Bar' must be declared before it is used.ErrorMessages.html#DeclaredAboveCompileError",
+    ]);
+  });
+
+  test("Fail_SuperClassUsedBeforeDeclared1", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+
+# end main
+
+class Foo(Bar): # abstract class
+
+
+# end class
+
+class Bar(ABC): # abstract class
+
+
+# end class
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Abstract Class 'Bar' must be declared before it is used.ErrorMessages.html#DeclaredAboveCompileError",
+    ]);
+  });
+});

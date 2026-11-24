@@ -1,0 +1,12 @@
+# 390a4c9d66330167e28e22cfa6b57301bbf15e02f6d4d399495139bc8bc07dcf Elan 2.0.0-beta4 valid
+
+#  Tetris 1: Paint display black
+main
+  variable bg set to new BlockGraphics()
+  for row in range(0, 30)
+    for col in range(0, 40)
+      call bg.put(col, row, black)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end main

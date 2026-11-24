@@ -1,18 +1,17 @@
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { FunctionMethod } from "../../src/ide/frames/class-members/function-method";
 import { Property } from "../../src/ide/frames/class-members/property";
+import { CommentFrame } from "../../src/ide/frames/comment-frame";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { ConcreteClass } from "../../src/ide/frames/globals/concrete-class";
 import { ConstantGlobal } from "../../src/ide/frames/globals/constant-global";
 import { Enum } from "../../src/ide/frames/globals/enum";
-import { GlobalComment } from "../../src/ide/frames/globals/global-comment";
 import { GlobalFunction } from "../../src/ide/frames/globals/global-function";
 import { GlobalProcedure } from "../../src/ide/frames/globals/global-procedure";
 import { MainRoutine } from "../../src/ide/frames/globals/main-routine";
 import { TestFrame } from "../../src/ide/frames/globals/test-frame";
 import { Paradigm } from "../../src/ide/frames/paradigm";
 import { Assignment } from "../../src/ide/frames/statements/assignment";
-import { CommentStatement } from "../../src/ide/frames/statements/comment-statement";
 import { ElseClause } from "../../src/ide/frames/statements/else-clause";
 import { ElseIfClause } from "../../src/ide/frames/statements/elseIf-clause";
 import { ForLoop } from "../../src/ide/frames/statements/forLoop";
@@ -21,7 +20,7 @@ import { ProcedureCall } from "../../src/ide/frames/statements/procedureCall";
 import { StatementSelector } from "../../src/ide/frames/statements/statement-selector";
 import { ThrowStatement } from "../../src/ide/frames/statements/throw-statement";
 import { TryStatement } from "../../src/ide/frames/statements/try-statement";
-import { VariableStatement } from "../../src/ide/frames/statements/variable-statement";
+import { VariableDefinition } from "../../src/ide/frames/statements/variable-definition";
 import { WhileLoop } from "../../src/ide/frames/statements/whileLoop";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { hash } from "../../src/ide/util";
@@ -38,12 +37,11 @@ export function T01_helloWorld() {
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
-  const comment = new CommentStatement(m);
+  const comment = new CommentFrame(m);
   comment.text.setFieldToKnownValidText(`My first program`);
   m.addChildBefore(comment, ss);
   const pr = new ProcedureCall(m);
-  pr.proc.setFieldToKnownValidText('printNoLine')
-  pr.args.setFieldToKnownValidText(`"Hello World!"`);
+  pr.procRef.setFieldToKnownValidText('printNoLine("Hello World!")');
   m.addChildBefore(pr, ss);
   f.updateAllParseStatus();
   return f;
@@ -52,14 +50,14 @@ export function T01_helloWorld() {
 export function T02_comments() {
   const f = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   const gs = f.getFirstSelectorAsDirectChild();
-  const gc = new GlobalComment(f);
-  gc.text.setFieldToKnownValidText("Comment 1");
+  const gc = new CommentFrame(f);
+  gc.text.setFieldToKnownValidText("# Comment 1");
   f.addChildBefore(gc, gs);
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ss = m.getFirstSelectorAsDirectChild();
-  const sc2 = new CommentStatement(m);
-  sc2.text.setFieldToKnownValidText("Comment 2");
+  const sc2 = new CommentFrame(m);
+  sc2.text.setFieldToKnownValidText("# Comment 2");
   m.addChildBefore(sc2, ss);
   f.updateAllParseStatus();
   return f;
@@ -71,7 +69,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   const m = new MainRoutine(f);
   f.addChildBefore(m, gs);
   const ssm = m.getFirstSelectorAsDirectChild();
-  const v = new VariableStatement(m);
+  const v = new VariableDefinition(m);
   m.addChildBefore(v, ssm);
   const s = new Assignment(m);
   s.assignable.setFieldToKnownValidText("a");
@@ -80,8 +78,7 @@ export function T03_mainWithAllStatements(): FileImpl {
   const t = new ThrowStatement(m);
   m.addChildBefore(t, ssm);
   const ca = new ProcedureCall(m);
-  ca.proc.setFieldToKnownValidText("signIn");
-  ca.args.setFieldToKnownValidText(`rwp, password`);
+  ca.procRef.setFieldToKnownValidText("signIn(rwp, password)");
   m.addChildBefore(ca, ssm);
   const w = new WhileLoop(m);
   w.condition.setFieldToKnownValidText("newGame");
@@ -105,7 +102,6 @@ export function T03_mainWithAllStatements(): FileImpl {
   const ss_if3 = if3.getFirstSelectorAsDirectChild();
   if3.condition.setFieldToKnownValidText("y > 4");
   const el2 = new ElseIfClause(if3);
-  el2.hasIf = true;
   el2.condition.setFieldToKnownValidText("y > 10");
   if3.addChildBefore(el2, ss_if3);
   if3.addChildBefore(new ElseClause(if3), ss_if3);
@@ -173,7 +169,7 @@ export function T05_classes() {
 
   const cl2 = new ConcreteClass(f);
   const ms2 = cl2.getFirstSelectorAsDirectChild();
-  cl2.inheritance.setFieldToKnownValidText("inherits Foo, Bar");
+  cl2.inheritance.setFieldToKnownValidText("inherits Foo");
   f.addChildBefore(cl2, gs);
   cl2.name.setFieldToKnownValidText("Card");
   const p2 = new Property(cl2);
@@ -202,7 +198,7 @@ export function T09_emptyMainAndClassWithGlobalSelector() {
 export function getTestFrame(fn: string): FileImpl {
   try {
     return eval(`${fn}()`);
-  } catch (e) {
+  } catch (_e) {
     return new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()), false);
   }
 }

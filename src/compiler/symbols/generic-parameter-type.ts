@@ -1,6 +1,7 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../compiler-interfaces/type-options";
+import { getTokenTextByName } from "../syntax-nodes/ast-helpers";
 
 export class GenericParameterType implements SymbolType {
   constructor(
@@ -8,8 +9,8 @@ export class GenericParameterType implements SymbolType {
     public constraint?: SymbolType,
   ) {}
 
-  languageSpecificName(_language: Language): string {
-    return this.name;
+  languageSpecificName(language: Language): string {
+    return getTokenTextByName(language, this.name);
   }
 
   typeOptions = noTypeOptions;

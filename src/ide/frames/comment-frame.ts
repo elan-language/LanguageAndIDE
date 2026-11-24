@@ -1,0 +1,61 @@
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
+import { FieldImpl } from "./fields/field-impl";
+import { commentFieldSpec } from "./fields/field-spec";
+import { singleIndent } from "./frame-helpers";
+import { Field } from "./frame-interfaces/field";
+import { Parent } from "./frame-interfaces/parent";
+import { Statement } from "./frame-interfaces/statement";
+import { FrameType } from "./frame-type";
+import { SingleLineFrame } from "./single-line-frame";
+
+export class CommentFrame extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.commentFrame;
+  isStatement = true;
+  isMember = true;
+  isGlobal = true;
+  isAbstract = false;
+  private = false;
+  protected canHaveBreakPoint = false;
+
+  public text: FieldImpl;
+
+  constructor(parent: Parent) {
+    super(parent);
+    this.text = new FieldImpl(this, commentFieldSpec);
+    const commentMarker =
+      this.getParent().language().mapTerminalSymbol(TerminalSymbol.Comment) + " ";
+    this.text.setFieldToKnownValidText(commentMarker);
+  }
+
+  helpId(): string {
+    return "Comment"; // U/c for historial reasons
+  }
+
+  getFields(): Field[] {
+    return [this.text];
+  }
+
+  getIdPrefix(): string {
+    return `${this.language().languageHtmlClass}_com`;
+  }
+
+  private isGlobalComment() {
+    return "isFile" in this.getParent();
+  }
+
+  renderAsHtml(): string {
+    //Special case - does not have many of the capabilities of instructions
+    const startTag = this.isGlobalComment() ? "<el-global>" : "<el-statement>";
+    const endTag = this.isGlobalComment() ? "</el-global>" : "</el-statement>";
+    return `${startTag}${this.contextMenu()}<el-comment class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}><el-top>${this.language().renderSingleLineAsHtml(this)}</el-top></el-comment>${endTag}`;
+  }
+
+  override indent(): string {
+    return this.isGlobalComment() ? "" : this.getParent().indent() + singleIndent();
+  }
+
+  override deleteIfPermissible(): void {
+    this.insertNewSelectorIfNecessary();
+    this.delete();
+  }
+}

@@ -5,6 +5,7 @@ export enum OperationSymbol {
   Multiply,
   And,
   Equals,
+  RefEquals,
   LT,
   GT,
   GTE,
@@ -13,6 +14,8 @@ export enum OperationSymbol {
   Mod,
   Divide,
   NotEquals,
+  RefNotEquals,
   Or,
+  Power,
   Unknown,
 }

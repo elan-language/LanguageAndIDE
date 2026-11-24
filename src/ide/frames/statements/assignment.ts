@@ -1,47 +1,32 @@
-import { assignKeyword, toKeyword } from "../../../compiler/elan-keywords";
-import { AssignableField } from "../fields/assignableField";
-import { ExpressionField } from "../fields/expression-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { assignableFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Assignment extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.assignment;
   isStatement = true;
-  assignable: AssignableField;
-  expr: ExpressionField;
+  assignable: FieldImpl;
+  expr: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.assignable = new AssignableField(this);
+    this.assignable = new FieldImpl(this, assignableFieldSpec);
     this.assignable.setPlaceholder("<i>variableName</i>");
-    this.expr = new ExpressionField(this);
-  }
-  initialKeywords(): string {
-    return assignKeyword;
+    this.expr = new FieldImpl(this, expressionFieldSpec);
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${assignKeyword} `);
-    this.assignable.parseFrom(source);
-    source.remove(` ${toKeyword} `);
-    this.expr.parseFrom(source);
-    source.removeNewLine();
+  helpId(): string {
+    return "assignment";
   }
+
   getFields(): Field[] {
     return [this.assignable, this.expr];
   }
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_set`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "assignment";
-  }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${assignKeyword} ${this.assignable.renderAsElanSource()} ${toKeyword} ${this.expr.renderAsElanSource()}`;
   }
 }

@@ -1,0 +1,68 @@
+import {
+  mustBeCompatibleNode,
+  mustNotBeConstant,
+  mustNotBeCopyOfThis,
+  mustNotBeCounter,
+  mustNotBeParameter,
+  mustNotBePropertyOnFunctionMethod,
+  mustNotSetIndexInFunctionMethod,
+} from "../../compile-rules";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
+import { getGlobalScope } from "../../symbols/symbol-helpers";
+import { AssignableAsn } from "../assignable-asn";
+import { BreakpointAsn } from "../breakpoint-asn";
+import { EmptyAsn } from "../empty-asn";
+
+export class AssignmentAsn extends BreakpointAsn {
+  constructor(fieldId: string, scope: Scope) {
+    super(fieldId, scope);
+  }
+
+  assignable: AstNode = EmptyAsn.Instance;
+  expression: AstNode = EmptyAsn.Instance;
+
+  symbolType() {
+    const st = this.expression.symbolType();
+    return st;
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    const assignableAstNode = this.assignable;
+    const exprAstNode = this.expression;
+
+    mustNotBePropertyOnFunctionMethod(assignableAstNode, this, this.compileErrors, this.fieldId);
+
+    mustBeCompatibleNode(
+      assignableAstNode,
+      exprAstNode,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+    mustNotBeParameter(assignableAstNode, this.getParentScope(), this.compileErrors, this.fieldId);
+    mustNotBeConstant(assignableAstNode, this.compileErrors, this.fieldId);
+    mustNotBeCounter(assignableAstNode, this.compileErrors, this.fieldId);
+    mustNotBeCopyOfThis(assignableAstNode, this.compileErrors, this.fieldId);
+
+    if (this.assignable instanceof AssignableAsn) {
+      if (this.assignable.isSimpleSubscript()) {
+        mustNotSetIndexInFunctionMethod(this.scope, this.compileErrors, this.fieldId);
+
+        this.assignable.setRHS(exprAstNode.compile());
+        const code = this.assignable.compile();
+        getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+        return `${this.indent()}${this.breakPoint(this.debugSymbols())}${code};`;
+      }
+    }
+
+    const lhs = assignableAstNode.compile();
+
+    const rhs = exprAstNode.compile();
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return `${this.indent()}${this.breakPoint(this.debugSymbols())}${lhs} = ${rhs};`;
+  }
+}

@@ -14,34 +14,34 @@ import { IntType } from "../../compiler/symbols/int-type";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
 import { StringType } from "../../compiler/symbols/string-type";
 import {
-  getIdsFromString,
-  handleDeconstruction,
   isClass,
   isClassType,
   isGenericSymbolType,
   isReifyableSymbolType,
-  isSymbol,
   parameterNamesWithTypes,
-  symbolMatches,
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
+import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
-import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
-import { ConstructorAsn } from "./class-members/constructor-asn";
+import { BoolTypeNameAsn } from "./bool-type-name-asn";
+import { ConstructorMemberAsn } from "./class-members/constructor-member-asn";
+import { DictTypeNameAsn } from "./dict-type-name-asn";
 import { EmptyAsn } from "./empty-asn";
-import { EnumValuesAsn } from "./fields/enum-values-asn";
+import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
+import { FloatTypeNameAsn } from "./float-type-name-asn";
+import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
-import { FunctionAsn } from "./globals/function-asn";
-import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { IndexAsn } from "./index-asn";
-import { OperationSymbol } from "./operation-symbol";
-import { QualifierAsn } from "./qualifier-asn";
+import { IntTypeNameAsn } from "./int-type-name-asn";
+import { ListTypeNameAsn } from "./list-type-name-asn";
+import { StringTypeNameAsn } from "./string-type-name-asn";
+import { TypeNameAsn } from "./type-name-asn";
 
 // interface type guards
 
@@ -53,15 +53,11 @@ export function isAstQualifiedNode(n: AstNode): n is AstQualifiedNode {
   return !!n && "qualifier" in n;
 }
 
-export function isAstQualifierNode(n: AstNode): n is AstQualifierNode {
-  return n instanceof QualifierAsn;
-}
-
 export function isAstIndexableNode(n: AstNode): n is AstIndexableNode {
   return !!n && "rootSymbolType" in n;
 }
 
-export function isAstCollectionNode(n: AstNode): n is AstCollectionNode {
+export function isAstCollectionNode(n: AstNode | undefined): n is AstCollectionNode {
   return !!n && "items" in n;
 }
 
@@ -79,24 +75,24 @@ export function isAstTypeNode(n?: AstNode): n is AstTypeNode {
 
 // type type-guards
 
-export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorAsn {
-  return n instanceof ConstructorAsn;
+export function isConstructor(n?: AstNode | Scope | ElanSymbol): n is ConstructorMemberAsn {
+  return n instanceof ConstructorMemberAsn;
 }
 
 export function isEmptyNode(n: AstNode): n is EmptyAsn {
   return n instanceof EmptyAsn;
 }
 
-export function isFunctionScope(scope?: Scope): scope is FunctionAsn {
-  return scope instanceof FunctionAsn;
+export function isFunctionScope(scope?: Scope): scope is AbstractFunctionAsn {
+  return scope instanceof AbstractFunctionAsn;
 }
 
 export function isFileScope(scope?: Scope): scope is FileAsn {
   return scope instanceof FileAsn;
 }
 
-export function isEnumValuesAsn(n: AstNode): n is EnumValuesAsn {
-  return n instanceof EnumValuesAsn;
+export function isEnumValuesAsn(n: AstNode): n is IdentifierListAsn {
+  return n instanceof IdentifierListAsn;
 }
 
 export function inFunctionScope(start: Scope): boolean {
@@ -330,35 +326,6 @@ export function matchParametersAndTypes(
   );
 }
 
-const opMap = new Map<OperationSymbol, string>([
-  [OperationSymbol.Add, "+"],
-  [OperationSymbol.Minus, "-"],
-  [OperationSymbol.Not, "not"],
-  [OperationSymbol.Multiply, "*"],
-  [OperationSymbol.And, "and"],
-  [OperationSymbol.Equals, "is"],
-  [OperationSymbol.LT, "<"],
-  [OperationSymbol.GT, ">"],
-  [OperationSymbol.GTE, ">="],
-  [OperationSymbol.LTE, "<="],
-  [OperationSymbol.Div, "div"],
-  [OperationSymbol.Mod, "mod"],
-  [OperationSymbol.Divide, "/"],
-  [OperationSymbol.NotEquals, "isnt"],
-  [OperationSymbol.Or, "or"],
-]);
-
-export function mapOperation(op: string): OperationSymbol {
-  op = op.trim();
-
-  for (const e of opMap.entries()) {
-    if (e[1] === op) {
-      return e[0];
-    }
-  }
-  return OperationSymbol.Unknown;
-}
-
 function getOfType(type: SymbolType, index: number, depth: number) {
   if (isClassType(type) && isClass(type.scope)) {
     if (depth === 0) {
@@ -395,7 +362,7 @@ export function wrapSimpleSubscript(code: string): string {
 export function compileSimpleSubscript(
   id: string,
   rootType: SymbolType,
-  indices: AstCollectionNode,
+  indices: AstNode[],
   prefix: string,
   code: string,
   postfix: string,
@@ -403,9 +370,9 @@ export function compileSimpleSubscript(
   fieldId: string,
   scope: Scope,
 ) {
-  const index = indices.items[indices.items.length - 1] as IndexAsn;
+  const index = indices[indices.length - 1] as IndexAsn;
 
-  const [indexType] = getIndexAndOfType(rootType, indices.items.length - 1);
+  const [indexType] = getIndexAndOfType(rootType, indices.length - 1);
   mustBeIndexableType(id, rootType, true, compileErrors, fieldId, scope);
   mustBeAssignableType(indexType, index.index.symbolType(), compileErrors, fieldId, scope);
   return wrapSimpleSubscript(`${prefix}${code}, ${postfix}`);
@@ -424,7 +391,7 @@ export function compileNodes(nodes: AstNode[]): string {
 }
 
 export function isInsideFunction(scope: Scope): boolean {
-  if (scope instanceof FunctionAsn) {
+  if (scope instanceof AbstractFunctionAsn) {
     return true;
   }
   if (scope instanceof FileAsn) {
@@ -433,8 +400,8 @@ export function isInsideFunction(scope: Scope): boolean {
   return isInsideFunction(scope.getParentScope());
 }
 
-export function getInnerMostFunction(scope: Scope): FunctionAsn | undefined {
-  if (scope instanceof FunctionAsn) {
+export function getInnerMostFunction(scope: Scope): AbstractFunctionAsn | undefined {
+  if (scope instanceof AbstractFunctionAsn) {
     return scope;
   }
   if (scope instanceof FileAsn) {
@@ -444,26 +411,16 @@ export function getInnerMostFunction(scope: Scope): FunctionAsn | undefined {
 }
 
 export function isInsideFunctionOrConstructor(scope: Scope): boolean {
-  if (scope instanceof FunctionAsn) {
+  if (scope instanceof AbstractFunctionAsn) {
     return true;
   }
-  if (scope instanceof ConstructorAsn) {
+  if (scope instanceof ConstructorMemberAsn) {
     return true;
   }
   if (scope instanceof FileAsn) {
     return false;
   }
   return isInsideFunctionOrConstructor(scope.getParentScope());
-}
-
-export function isInsideConstant(scope: Scope): boolean {
-  if (scope instanceof GlobalConstantAsn) {
-    return true;
-  }
-  if (scope instanceof FileAsn) {
-    return false;
-  }
-  return isInsideConstant(scope.getParentScope());
 }
 
 export function getChildRange(compileChildren: AstNode[], initialScope: Scope) {
@@ -474,53 +431,75 @@ export function getChildRange(compileChildren: AstNode[], initialScope: Scope) {
   return fi < li ? compileChildren.slice(fi, li + 1) : compileChildren.slice(li, fi + 1);
 }
 
-export function childSymbolMatches(
-  compileChildren: AstNode[],
-  id: string,
-  all: boolean,
-  matches: ElanSymbol[],
-  initialScope: Scope,
-): ElanSymbol[] {
-  let localMatches: ElanSymbol[] = [];
-
-  if (compileChildren.length > 0) {
-    let range = getChildRange(compileChildren, initialScope);
-
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-      const symbols = handleDeconstruction(range.filter((r) => isSymbol(r)));
-      localMatches = localMatches.concat(symbolMatches(id, all, symbols));
-    }
-  }
-  return localMatches.concat(matches);
-}
-
-export function getChildSymbol(
-  compileChildren: AstNode[],
-  id: string,
-  _caseSensitive: boolean,
-  initialScope: Scope,
-) {
-  if (compileChildren.length > 0) {
-    let range = getChildRange(compileChildren, initialScope);
-
-    if (range.length > 1) {
-      range = range.slice(0, range.length - 1);
-
-      for (const f of range) {
-        if (isSymbol(f) && id) {
-          const sids = getIdsFromString(f.symbolId);
-          if (sids.includes(id)) {
-            return f;
-          }
-        }
-      }
-    }
-  }
-
-  return undefined;
-}
-
 export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
+}
+
+export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
+  switch (name) {
+    case l.INT_NAME:
+      return new IntTypeNameAsn(l, fieldId);
+    case l.FLOAT_NAME:
+      return new FloatTypeNameAsn(l, fieldId);
+    case l.STRING_NAME:
+      return new StringTypeNameAsn(l, fieldId);
+    case l.BOOL_NAME:
+      return new BoolTypeNameAsn(l, fieldId);
+    case l.LIST_NAME:
+      return new ListTypeNameAsn(l, fieldId, scope);
+    case l.DICT_NAME:
+      return new DictTypeNameAsn(l, fieldId, scope);
+    default:
+      return new TypeNameAsn(name, fieldId, scope);
+  }
+}
+
+export function getTypeNameById(
+  l: Language,
+  tokenId: number,
+  name: string,
+  fieldId: string,
+  scope: Scope,
+): AstNode {
+  switch (tokenId) {
+    case RefLangParser.INT_NAME:
+      return new IntTypeNameAsn(l, fieldId);
+    case RefLangParser.FLOAT_NAME:
+      return new FloatTypeNameAsn(l, fieldId);
+    case RefLangParser.STRING_NAME:
+      return new StringTypeNameAsn(l, fieldId);
+    case RefLangParser.BOOL_NAME:
+      return new BoolTypeNameAsn(l, fieldId);
+    case RefLangParser.LIST_NAME:
+      return new ListTypeNameAsn(l, fieldId, scope);
+    case RefLangParser.DICT_NAME:
+      return new DictTypeNameAsn(l, fieldId, scope);
+    default:
+      return new TypeNameAsn(name, fieldId, scope);
+  }
+}
+
+export function getTokenTextByName(l: Language, name: string): string {
+  switch (name) {
+    case "int":
+    case "Int":
+      return l.INT_NAME;
+    case "float":
+    case "Float":
+      return l.FLOAT_NAME;
+    case "str":
+    case "String":
+      return l.STRING_NAME;
+    case "bool":
+    case "Boolean":
+      return l.BOOL_NAME;
+    case "List":
+    case "list":
+      return l.LIST_NAME;
+    case "Callable":
+    case "Func":
+      return l.FUNC_NAME;
+    default:
+      return name;
+  }
 }

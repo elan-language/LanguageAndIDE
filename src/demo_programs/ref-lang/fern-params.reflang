@@ -1,0 +1,91 @@
+# 517d4d18ebc4dfea0b091b612ec9edd06893e7244c0e91fe92dddbfa08067923 Elan 2.0.0-beta5 valid
+
+# Program to extract the parameters for the Barnsley Fern from the Wikipedia page
+# https://en.wikipedia.org/wiki/Barnsley_fern
+# Prints a string suitable for pasting into the main program
+# for generating the Barnsley Fern.
+# Save the Wikipedia page HTML to a file, to be processed by this program
+# In Chrome do:
+# - [three dots top right] -> Cast, save and share -> Save page as...
+# - change "Web Page, Complete" to "Web  Page, HTML Only" bottom right
+# - change the file name to end ".txt" and click Save.
+# These instructions may not apply exactly to all versions of Chrome.
+# When this program is run, select the saved file to open.
+# Note that this program only does string manipulation:
+# at no time in this program does it create an actual "List of List of Float",
+# only a string presentation of one.
+# In case it doesn't work in the future, the output is supposed to be:
+# (split into two lines here)
+# [[0.0, 0.0, 0.0, 0.16, 0.0, 0.0, 0.01], [0.85, 0.04, -0.04, 0.85, 0.0, 1.60, 0.85],
+# [0.20, -0.26, 0.23, 0.22, 0.0, 1.60, 0.07], [-0.15, 0.28, 0.26, 0.24, 0.0, 0.44, 0.07]]
+main
+  variable file set to openFileForReading()
+  variable result set to new AsRef<of String>("[[")
+  variable skipping set to new AsRef<of Boolean>(true)
+  while not file.endOfFile()
+    variable line set to file.readLine()
+    call processoneline(line, result, skipping)
+  end while
+  call file.close()
+  call print(result.value())
+end main
+
+procedure processoneline(line as String, result as AsRef<of String>, skippingRef as AsRef<of Boolean>)
+  variable skipping set to skippingRef.value()
+  if line.contains("Portion generated") then
+    # start of the part we are interested in
+    assign skipping to false
+  end if
+  if not skipping then
+    # change Unicode Minus Sign to ASCII hyphen-minus
+    variable linem set to line
+    assign linem to linem.replace(unicode(0x2212), "-")
+    # remove the </td> at the end of the lines with numbers
+    assign linem to linem.replace("</td>", "")
+    # fetch the number at the end of the line
+    # note that the number is held as a string at all times in this program
+    variable num set to gettrailingnumber(linem)
+    if not num.equals("") then
+      if num.equals("0") then
+        # all values must be Floats
+        assign num to "0.0"
+      end if
+      call result.put(result.value() + num + ", ")
+    end if
+    if linem.contains("texhtml") then
+      # next row of parameters
+      call result.put(result.value() + "], [")
+    end if
+    if linem.contains("Largest right-hand") then
+      # end of parameters
+      call result.put(result.value() + "]]")
+      assign skipping to true
+      # we are done, tidy up result to remove excess separators
+      call result.put(result.value().replace("[], ", "").replace(", ]", "]"))
+    end if
+  end if
+  call skippingRef.put(skipping)
+end procedure
+
+# find any number at the end of the given string
+# if no number, return empty string
+# for our purposes
+# a number is just any string of digit, full stop or minus sign in any order
+# written in a functional style, see if you can work out how it works
+function gettrailingnumber(s as String) returns String
+  return s.subString(range(0, s.length()).reduce(-1, lambda c as Int, n as Int => if_(isnumberchar(s[n]), c, n)) + 1, s.length())
+end function
+
+function isnumberchar(s as String) returns Boolean
+  return numberChars.contains(s)
+end function
+
+test test_strings
+  assert isnumberchar("5") evaluates to true
+  assert gettrailingnumber("abc123") evaluates to "123"
+  assert gettrailingnumber("abc") evaluates to ""
+  assert gettrailingnumber("3a-1.63") evaluates to "-1.63"
+  assert gettrailingnumber("") evaluates to ""
+end test
+
+constant numberChars set to "-.0123456789"

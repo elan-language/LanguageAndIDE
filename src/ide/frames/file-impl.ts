@@ -4,13 +4,22 @@ import { Semver } from "../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { TestStatus } from "../../compiler/test-status";
 import { elanVersion, isElanProduction } from "../../environment";
+import { FileContext as PythonFileContext } from "../../generated/python/PythonParser";
+import { FileContext as RefLangFileContext } from "../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../compile-api/ref-lang-visitor-frame";
 import { Transforms } from "../compile-api/transforms";
 import { ElanFileError } from "../elan-file-error";
 import { AbstractSelector } from "./abstract-selector";
+import { MemberSelector } from "./class-members/member-selector";
 import { CodeSourceFromString } from "./code-source-from-string";
+import { CommentFrame } from "./comment-frame";
 import { Regexes } from "./fields/regexes";
+import { FrameFactoryImpl } from "./frame-factory-impl";
 import {
   expandCollapseAll,
   helper_compileStatusAsDisplayStatus,
@@ -18,34 +27,31 @@ import {
   helper_testStatusAsDisplayStatus,
   isMain,
   isSelector,
-  removeHtmlTagsAndEscChars,
 } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File, ParseMode } from "./frame-interfaces/file";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { Selector } from "./frame-interfaces/selector";
+import { FrameType } from "./frame-type";
 import { AbstractClass } from "./globals/abstract-class";
 import { ConcreteClass } from "./globals/concrete-class";
 import { ConstantGlobal } from "./globals/constant-global";
 import { Enum } from "./globals/enum";
-import { GlobalComment } from "./globals/global-comment";
 import { GlobalFunction } from "./globals/global-function";
 import { GlobalProcedure } from "./globals/global-procedure";
 import { GlobalSelector } from "./globals/global-selector";
 import { MainRoutine } from "./globals/main-routine";
-import { defaultUsername, Paradigm } from "./paradigm";
-
 import { TestFrame } from "./globals/test-frame";
-import { LanguageCS } from "./language-cs";
-import { LanguageElan } from "./language-elan";
-import { LanguageJava } from "./language-java";
+import { LanguageCSharp } from "./language-c-sharp";
 import { LanguagePython } from "./language-python";
-import { LanguageVB } from "./language-vb";
+import { LanguageRefLang } from "./language-ref-lang";
+import { defaultUsername, Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -63,15 +69,14 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsElanSource,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
   worstParseStatus,
 } from "./parent-helpers";
-import { StatementFactoryImpl } from "./statement-factory-impl";
+import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus, DisplayColour, ParseStatus, RunStatus } from "./status-enums";
 
 // for web editor bundle
@@ -87,13 +92,14 @@ export const cannotLoadFile = `${fileErrorPrefix} it has been created or modifie
 export const cannotLoadUnparseableFile = `${fileErrorPrefix} cannot parse code`;
 
 export class FileImpl implements File {
+  frameType: FrameType = FrameType.file;
   currentHash: string = "";
   isParent: boolean = true;
   hasFields: boolean = true;
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
-  fileName: string = this.defaultFileName;
+  private fileName: string = "";
   doingExport: boolean = false;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
@@ -102,14 +108,14 @@ export class FileImpl implements File {
   private _fieldBeingEdited: boolean = false;
   private _children: Array<Frame> = new Array<Frame>();
   private _map: Map<string, Selectable>;
-  private _factory: StatementFactory;
+  private _factory: FrameFactory;
   private allowAnyHeader: boolean = false;
   private _stdLibSymbols: StdLibSymbols;
   private _nextId: number = 0;
   private _testError?: Error;
   private _frNo: number = 0;
   private _showFrameNos: boolean = true;
-  private _language: Language = LanguageElan.Instance;
+  private _language: Language = LanguageRefLang.Instance;
   ast: RootAstNode | undefined;
 
   private copiedSource: string[] = [];
@@ -127,7 +133,7 @@ export class FileImpl implements File {
   ) {
     this._stdLibSymbols = new StdLibSymbols(stdLib);
     this._map = new Map<string, Selectable>();
-    this._factory = new StatementFactoryImpl();
+    this._factory = new FrameFactoryImpl();
     if (withMain) {
       const main = new MainRoutine(this);
       this.getChildren().push(main);
@@ -140,6 +146,31 @@ export class FileImpl implements File {
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
+  }
+
+  getDefaultFileName(): string {
+    return `code.${this.language().defaultFileExtension}`;
+  }
+
+  getFileName(): string {
+    return this.fileName.length > 0 ? this.fileName : this.getDefaultFileName();
+  }
+  setFileName(newName: string): void {
+    this.fileName = newName;
+  }
+
+  _parserErrorMessages: string[] = [];
+
+  addParseError(msg: string) {
+    this._parserErrorMessages.push(msg);
+  }
+
+  getParserErrors() {
+    return this._parserErrorMessages.join("\n");
+  }
+
+  resetParserErrors() {
+    this._parserErrorMessages = [];
   }
 
   showCompletion(show: boolean): void {
@@ -193,7 +224,7 @@ export class FileImpl implements File {
   }
 
   get hasTests() {
-    return this._children.some((g) => g instanceof TestFrame && !g.isGhosted());
+    return this._children.some((g) => g instanceof TestFrame && !g.isGhostedExplicitly());
   }
 
   deleteSelectedChildren(): void {
@@ -246,38 +277,23 @@ export class FileImpl implements File {
     const trailer = this.language().renderFileTrailerAsHtml(this);
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${languageSpecificHeader}${globals}${trailer}`
+      ? `<el-header>${this._language.mapTerminalSymbol(TerminalSymbol.Comment)} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${languageSpecificHeader}${globals}${trailer}`
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
   async renderAsSource(): Promise<string> {
-    const content = this.renderHashableContentAsElanSource(this.language().languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${this._language.COMMENT_MARKER} ${this.currentHash} ${content}`;
-  }
-
-  async renderAsElanSource(): Promise<string> {
-    const languageElan = LanguageElan.Instance;
-    const langToRestore = this.language();
-    const content = this.renderHashableContentAsElanSource(langToRestore.languageFullName);
-    this.currentHash = await this.getHash(content);
-    return `${languageElan.COMMENT_MARKER} ${this.currentHash} ${content}`;
-  }
-
-  async renderAsExport(): Promise<string> {
-    const oldde = this.doingExport;
-    this.doingExport = true;
-    const globals = parentHelper_renderChildrenAsExport(this);
-    this.doingExport = oldde;
+    const globals = parentHelper_renderChildrenAsSource(this);
     // No need to remove HTML as this has none as it is for export only
     const imports = this.language().renderFileImportsAsHtml();
-    const languageSpecificHeader = removeHtmlTagsAndEscChars(
-      this.language().renderSpecificHeaderAsHtml(this),
-    );
-    const trailer = removeHtmlTagsAndEscChars(this.language().renderFileTrailerAsHtml(this));
+    const languageSpecificHeader = this.language().renderSpecificHeaderAsSource(this);
+    const trailer = this.language().renderFileTrailerAsSource(this);
     const lang = this.language().languageFullName;
-    return `${this.language().COMMENT_MARKER} ${this.getVersionString(lang)}\n\n${imports}${languageSpecificHeader}${globals}${trailer}
-`;
+    let content = `${this.getVersionString(lang)} ${this.getParseStatusLabel()}\r\n\r\n${imports}${languageSpecificHeader}${globals}${trailer}`;
+    this.currentHash = await this.getHash(content);
+    if (!content.endsWith("\r\n")) {
+      content += "\r\n";
+    }
+    return `${this.language().mapTerminalSymbol(TerminalSymbol.Comment)} ${this.currentHash} ${content}`;
   }
 
   public indent(): string {
@@ -285,7 +301,7 @@ export class FileImpl implements File {
   }
 
   private async getHash(body?: string): Promise<string> {
-    body = (body || this.renderHashableContentAsElanSource(this.language().languageFullName))
+    body = (body || this.renderHashableContentAsSource(this.language().languageFullName))
       .trim()
       .replaceAll("\r", "");
     return await this.hash(body);
@@ -356,8 +372,8 @@ export class FileImpl implements File {
     return ast?.compile() ?? "";
   }
 
-  renderHashableContentAsElanSource(lang: string): string {
-    const globals = parentHelper_renderChildrenAsElanSource(this);
+  renderHashableContentAsSource(lang: string): string {
+    const globals = parentHelper_renderChildrenAsSource(this);
     return this.renderHashableContent(globals, lang);
   }
 
@@ -402,6 +418,12 @@ export class FileImpl implements File {
     parentHelper_insertOrGotoChildSelector(this, after, child);
   }
 
+  addChild(child: Frame): void {
+    const lastChild = this._children[this._children.length - 1];
+
+    parentHelper_addChildAfter(this, child, lastChild);
+  }
+
   defocusAll() {
     for (const f of this._map.values()) {
       if (f.isFocused()) {
@@ -433,6 +455,10 @@ export class FileImpl implements File {
   }
   setRunStatus(s: RunStatus) {
     this._runStatus = s;
+  }
+
+  getParseStatus() {
+    return this._parseStatus;
   }
 
   readParseStatus(): ParseStatus {
@@ -562,7 +588,7 @@ export class FileImpl implements File {
 
   private getTestFrames(): TestFrame[] {
     return this.getChildren()
-      .filter((c) => c instanceof TestFrame && !c.isGhosted())
+      .filter((c) => c instanceof TestFrame && !c.isGhostedExplicitly())
       .map((c) => c as TestFrame);
   }
 
@@ -583,36 +609,32 @@ export class FileImpl implements File {
     return this._nextId++;
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this._factory;
   }
 
-  createMain(): Frame {
-    return new MainRoutine(this);
-  }
-  createFunction(): Frame {
-    return new GlobalFunction(this);
-  }
-  createProcedure(): Frame {
-    return new GlobalProcedure(this);
-  }
-  createEnum(): Frame {
-    return new Enum(this);
-  }
-  createConcreteClass(): Frame {
-    return new ConcreteClass(this);
-  }
-  createAbstractClass(): Frame {
-    return new AbstractClass(this);
-  }
-  createGlobalComment(): Frame {
-    return new GlobalComment(this);
-  }
-  createConstant(): Frame {
-    return new ConstantGlobal(this);
-  }
-  createTest(): Frame {
-    return new TestFrame(this);
+  createGlobalFrame(type: FrameType): Frame {
+    if (type === FrameType.mainRoutine) {
+      return new MainRoutine(this);
+    } else if (type === FrameType.globalFunction) {
+      return new GlobalFunction(this);
+    } else if (type === FrameType.globalProcedure) {
+      return new GlobalProcedure(this);
+    } else if (type === FrameType.enum) {
+      return new Enum(this);
+    } else if (type === FrameType.concreteClass) {
+      return new ConcreteClass(this);
+    } else if (type === FrameType.abstractClass) {
+      return new AbstractClass(this);
+    } else if (type === FrameType.commentFrame) {
+      return new CommentFrame(this);
+    } else if (type === FrameType.constant) {
+      return new ConstantGlobal(this);
+    } else if (type === FrameType.test) {
+      return new TestFrame(this);
+    } else {
+      throw new Error(`FrameType: ${type.toString()} not supported`);
+    }
   }
 
   getNextSelector(mode: ParseMode) {
@@ -627,34 +649,44 @@ export class FileImpl implements File {
     }
   }
 
+  visitFile(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonFileContext | RefLangFileContext,
+  ) {
+    if (this.language() === LanguagePython.Instance) {
+      (visitor as PythonVisitorFrame).visitFile(context as PythonFileContext);
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      (visitor as RefLangVisitorFrame).visitFile(context as RefLangFileContext);
+    }
+  }
+
   parseBodyFrom(source: CodeSource): void {
-    try {
-      while (source.hasMoreCode()) {
-        if (source.isMatchRegEx(Regexes.newLine)) {
-          source.removeNewLine();
-        } else {
-          this.getNextSelector(source.mode).parseFrom(source);
-        }
-      }
-      this.removeAllSelectorsThatCanBe();
-      this.deselectAll();
-      this.getFirstChild().select(true, false);
-      this.updateAllParseStatus();
-    } catch (e) {
-      if (e instanceof ElanFileError) {
-        this.parseError = e.message;
-      } else {
-        this.parseError = `Parse error before: ${source.getRemainingCode().substring(0, 100)}: ${e instanceof Error ? e.message : e}`;
-      }
+    this.resetParserErrors();
+
+    const parser = getParserByLanguage(this.language(), source.getRemainingCode(), this);
+    const visitor = getVisitorFrameByLanguage(this.language(), this);
+
+    const fileContext = parser.file()!;
+
+    this.visitFile(visitor, fileContext);
+
+    this.removeAllSelectorsThatCanBe();
+    this.deselectAll();
+    this.getFirstChild().select(true, false);
+    this.updateAllParseStatus();
+
+    if (parser.numberOfSyntaxErrors > 0) {
       this._parseStatus = ParseStatus.invalid;
+      this.parseError = "invalid";
     }
   }
 
   setLanguageFromHeader(l: string) {
-    let lang: Language = LanguageElan.Instance;
+    let lang: Language = LanguageRefLang.Instance;
     switch (l) {
       case "Elan": {
-        lang = LanguageElan.Instance;
+        lang = LanguageRefLang.Instance;
         break;
       }
       case "Python": {
@@ -662,15 +694,7 @@ export class FileImpl implements File {
         break;
       }
       case "C#": {
-        lang = LanguageCS.Instance;
-        break;
-      }
-      case "VB.NET": {
-        lang = LanguageVB.Instance;
-        break;
-      }
-      case "Java": {
-        lang = LanguageJava.Instance;
+        lang = LanguageCSharp.Instance;
         break;
       }
     }
@@ -692,14 +716,13 @@ export class FileImpl implements File {
 
       const language = await this.validateHeader(source.getRemainingCode());
 
-      if (source.isMatch(LanguageElan.Instance.COMMENT_MARKER)) {
-        source.removeRegEx(LanguageElan.Instance.commentRegex(), false);
+      if (source.isMatch(LanguageRefLang.Instance.mapTerminalSymbol(TerminalSymbol.Comment))) {
+        source.removeRegEx(LanguageRefLang.Instance.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
       }
-      this._language = LanguageElan.Instance;
-      this.parseBodyFrom(source);
       this.setLanguageFromHeader(language);
+      this.parseBodyFrom(source);
     } catch (e) {
       if (e instanceof ElanFileError) {
         this.parseError = e.message;
@@ -779,7 +802,7 @@ export class FileImpl implements File {
   }
 
   validateHeaderComment(tokens: string[]) {
-    if (tokens[0] !== LanguageElan.Instance.COMMENT_MARKER) {
+    if (tokens[0] !== LanguageRefLang.Instance.mapTerminalSymbol(TerminalSymbol.Comment)) {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
   }
@@ -868,7 +891,7 @@ export class FileImpl implements File {
     this.getFirstChild().selectFirstField();
   }
 
-  newChildSelector(): AbstractSelector {
+  newChildSelector(): Selector {
     return new GlobalSelector(this);
   }
 
@@ -938,7 +961,7 @@ export class FileImpl implements File {
   // A short function needed by AbstractSelector because importing
   // LanguageElan.Instance there causes a dependency loop.
   setLanguageToElan() {
-    this.setLanguage(LanguageElan.Instance);
+    this.setLanguage(LanguageRefLang.Instance);
   }
 
   private resetFieldText(): void {
@@ -947,5 +970,12 @@ export class FileImpl implements File {
 
   language(): Language {
     return this._language;
+  }
+
+  newStatementSelector(parent: Parent): Selector {
+    return new StatementSelector(parent);
+  }
+  newMemberSelector(parent: Parent): Selector {
+    return new MemberSelector(parent);
   }
 }

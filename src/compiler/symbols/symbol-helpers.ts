@@ -1,8 +1,7 @@
-import { MethodNameField } from "../../ide/frames/fields/method-name-field";
+import { FieldImpl } from "../../ide/frames/fields/field-impl";
 import { ClassFrame } from "../../ide/frames/globals/class-frame";
 import { CompileError } from "../compile-error";
 import { AstNode } from "../compiler-interfaces/ast-node";
-import { AstQualifierNode } from "../compiler-interfaces/ast-qualifier-node";
 import { Class } from "../compiler-interfaces/class";
 import { Definition } from "../compiler-interfaces/definition";
 import { ElanSymbol, ElanSymbolByLanguage } from "../compiler-interfaces/elan-symbol";
@@ -15,21 +14,14 @@ import { RootAstNode } from "../compiler-interfaces/root-ast-node";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { ElanCompilerError } from "../elan-compiler-error";
-import {
-  getSuperClasses,
-  isAstIdNode,
-  isAstQualifiedNode,
-  isEmptyNode,
-  isRootNode,
-} from "../syntax-nodes/ast-helpers";
+import { getSuperClasses, isAstIdNode, isRootNode } from "../syntax-nodes/ast-helpers";
 import { EmptyAsn } from "../syntax-nodes/empty-asn";
 import { ClassAsn } from "../syntax-nodes/globals/class-asn";
 import { EnumAsn } from "../syntax-nodes/globals/enum-asn";
-import { TupleAsn } from "../syntax-nodes/globals/tuple-asn";
+import { TupleScopeAsn } from "../syntax-nodes/globals/tuple-scope-asn";
 import { AbstractDefinitionAsn } from "../syntax-nodes/statements/abstract-definition-asn";
-import { CallAsn } from "../syntax-nodes/statements/call-asn";
 import { DefinitionAdapter } from "../syntax-nodes/statements/definition-adapter";
-import { EachAsn } from "../syntax-nodes/statements/each-asn";
+import { ForLoopAsn } from "../syntax-nodes/statements/for-loop-asn";
 import { BooleanType } from "./boolean-type";
 import { ClassSubType, ClassType } from "./class-type";
 import { ListName } from "./elan-type-names";
@@ -41,7 +33,6 @@ import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
 import { ProcedureType } from "./procedure-type";
-import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
@@ -98,8 +89,8 @@ export function isEnum(s?: ElanSymbol): s is EnumAsn {
   return s instanceof EnumAsn;
 }
 
-export function isCall(s?: ElanSymbol | Scope): s is CallAsn {
-  return s instanceof CallAsn;
+export function isCall(s?: ElanSymbol | Scope): boolean {
+  return !!s && "isCall" in s;
 }
 
 export function isListType(s?: SymbolType): s is ClassType {
@@ -160,12 +151,12 @@ export function isKnownType(s: SymbolType): boolean {
   return !(s instanceof UnknownType);
 }
 
-export function isTuple(s: Scope): s is TupleAsn {
-  return s instanceof TupleAsn;
+export function isTuple(s: Scope): s is TupleScopeAsn {
+  return s instanceof TupleScopeAsn;
 }
 
 export function isDefinitionScope(s: Scope): boolean {
-  return s instanceof AbstractDefinitionAsn || s instanceof EachAsn;
+  return s instanceof AbstractDefinitionAsn || s instanceof ForLoopAsn;
 }
 
 export function isValueType(type: SymbolType): boolean {
@@ -174,8 +165,7 @@ export function isValueType(type: SymbolType): boolean {
     type instanceof FloatType ||
     type instanceof BooleanType ||
     type instanceof StringType ||
-    type instanceof EnumType ||
-    type instanceof RegExpType
+    type instanceof EnumType
   );
 }
 
@@ -184,8 +174,7 @@ export function isValueTypeExcludingString(type: SymbolType): boolean {
     type instanceof IntType ||
     type instanceof FloatType ||
     type instanceof BooleanType ||
-    type instanceof EnumType ||
-    type instanceof RegExpType
+    type instanceof EnumType
   );
 }
 
@@ -291,7 +280,7 @@ export function scopePrefix(
   }
 
   if (symbol.symbolScope === SymbolScope.member) {
-    return isAstIdNode(qualifier) ? `${qualifier.id}.` : "this.";
+    return qualifier instanceof EmptyAsn ? "this." : `${qualifier?.compile()}.`;
   }
 
   if (isFunction(symbol) && symbol.symbolScope === SymbolScope.program) {
@@ -299,53 +288,6 @@ export function scopePrefix(
   }
 
   return "";
-}
-
-function internalUpdateScopeAndQualifier(
-  qualifierScope: SymbolType,
-  currentScope: Scope,
-  _value: AstNode,
-  qualifier: AstNode,
-): [AstNode, Scope] {
-  if (qualifierScope instanceof ClassType) {
-    const classSymbol = currentScope.resolveSymbol(qualifierScope.className, true, currentScope);
-    // replace scope with class scope
-    currentScope = isScope(classSymbol) ? classSymbol : currentScope;
-
-    if (isClass(currentScope)) {
-      if (isClass(qualifierScope.scope)) {
-        currentScope = currentScope.updateOfTypes(qualifierScope.scope.ofTypes);
-      }
-    }
-  } else if (qualifierScope instanceof TupleType) {
-    currentScope = new TupleAsn(qualifierScope, currentScope);
-  } else if (!isEmptyNode(qualifier)) {
-    currentScope = getGlobalScope(currentScope).libraryScope;
-  } else {
-    currentScope = currentScope.getParentScope();
-  }
-  return [qualifier, currentScope];
-}
-
-export function updateScopeAndQualifier(rootNode: AstNode, currentScope: Scope): [AstNode, Scope] {
-  const qualifier = isAstQualifiedNode(rootNode) ? rootNode.qualifier : EmptyAsn.Instance;
-  const qualifierScope = qualifier.symbolType();
-  const value = qualifier.value;
-
-  return internalUpdateScopeAndQualifier(qualifierScope, currentScope, value, qualifier);
-}
-
-export function updateScopeInChain(qualifier: AstNode, currentScope: Scope): Scope {
-  const qualifierScope = qualifier?.symbolType();
-
-  const [, newScope] = internalUpdateScopeAndQualifier(
-    qualifierScope,
-    currentScope,
-    qualifier,
-    qualifier,
-  );
-
-  return newScope;
 }
 
 export function getGlobalScope(start: Scope): RootAstNode {
@@ -432,7 +374,7 @@ export function matchingSymbolsWithQualifier(
   }
 
   if (qualSt instanceof TupleType) {
-    qualifiedSymbols = new TupleAsn(qualSt, scope).symbolMatches(
+    qualifiedSymbols = new TupleScopeAsn(qualSt, scope).symbolMatches(
       propId,
       !propId,
       NullScope.Instance,
@@ -457,7 +399,7 @@ export function orderSymbol(s1: ElanSymbol, s2: ElanSymbol) {
   return s1.symbolId.localeCompare(s2.symbolId);
 }
 
-export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScope: Scope) {
+export function updateScope(qualifier: AstNode, originalScope: Scope) {
   let currentScope = originalScope;
   const classScope = qualifier.symbolType();
   if (classScope instanceof ClassType) {
@@ -465,7 +407,7 @@ export function updateScope(qualifier: AstQualifierNode | EmptyAsn, originalScop
     // replace scope with class scope
     currentScope = isScope(classSymbol) ? classSymbol : originalScope;
   } else if (classScope instanceof TupleType) {
-    currentScope = new TupleAsn(classScope, currentScope);
+    currentScope = new TupleScopeAsn(classScope, currentScope);
   } else {
     currentScope = originalScope.getParentScope();
   }
@@ -546,27 +488,8 @@ export function parameterNamesWithTypes(st: SymbolType, scope: Scope, actualType
   return [];
 }
 
-export function parameterNames(st: SymbolType) {
-  if (st instanceof ProcedureType || st instanceof FunctionType) {
-    const parameterNames = st.isExtension ? st.parameterNames.slice(1) : st.parameterNames;
-    const descriptions = parameterNames.map((n) => `${n}`);
-    return descriptions;
-  }
-  return [];
-}
-
 export function allScopedSymbols(scope: Scope, initialScope: Scope) {
   return scope.symbolMatches("", true, initialScope).filter((s) => isNotFuncOrProcOrType(s));
-}
-
-export function getIdsFromString(sid: string) {
-  if (sid.includes(",")) {
-    return sid.split(",").map((s) => s.trim());
-  }
-  if (sid.includes(":")) {
-    return sid.split(":").map((s) => s.trim());
-  }
-  return [sid];
 }
 
 export function handleDeconstruction(ss: ElanSymbol[]) {
@@ -619,11 +542,11 @@ export function getClassType(className: string, rootNode: RootAstNode): ClassSub
 
 //Returns the name of the abstract class or interface defining the member, or "" if neither. Boolean value is true for an abstract class, false for an interface
 export function implementsAbstractMethodOnClassOrInterface(
-  nameField: MethodNameField,
+  nameField: FieldImpl,
   classFrame: ClassFrame,
 ): [string, boolean] {
-  const methodName = nameField.renderAsElanSource();
-  const className = classFrame.name.renderAsElanSource();
+  const methodName = nameField.renderAsSource();
+  const className = classFrame.name.renderAsSource();
   const rootNode = classFrame.getFile().getAst(false)!;
   const cls = rootNode.resolveSymbol(className, false, rootNode);
 

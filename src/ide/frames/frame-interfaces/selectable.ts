@@ -1,5 +1,4 @@
 import { ParseStatus } from "../status-enums";
-import { CodeSource } from "./code-source";
 import { editorEvent } from "./editor-event";
 
 export interface Selectable {
@@ -15,10 +14,9 @@ export interface Selectable {
   //returning true indicates that code has changed, and so status should be aggregated from the file down
   processKey(keyEvent: editorEvent): boolean;
   renderAsHtml(): string;
-  renderAsElanSource(): string;
+  renderAsSource(): string;
 
   readParseStatus(): ParseStatus;
 
-  parseFrom(source: CodeSource): void;
   getHtmlId(): string;
 }

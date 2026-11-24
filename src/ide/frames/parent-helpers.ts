@@ -3,6 +3,8 @@ import { AbstractSelector } from "./abstract-selector";
 import { isSelector } from "./frame-helpers";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
+import { Selector } from "./frame-interfaces/selector";
+import { FrameType } from "./frame-type";
 import { CompileStatus, ParseStatus } from "./status-enums";
 
 export function worstParseStatus(prev: ParseStatus, cur: ParseStatus) {
@@ -35,7 +37,7 @@ export function parentHelper_removeChild(parent: Parent, child: Frame): void {
 
 export function parentHelper_removeAllSelectedChildren(parent: Parent): Frame[] {
   const selected = parentHelper_getAllSelectedChildren(parent);
-  const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+  const nonSelectors = selected.filter((s) => !(s.frameType === FrameType.selector));
   for (const child of nonSelectors) {
     parentHelper_removeChild(parent, child);
   }
@@ -103,24 +105,12 @@ export function isNotSelectorFrame(f: Frame) {
   return !!f && !("isSelector" in f);
 }
 
-export function parentHelper_renderChildrenAsElanSource(parent: Parent): string {
+export function parentHelper_renderChildrenAsSource(parent: Parent): string {
   let result = "";
   if (parent.getChildren().length > 0) {
     const ss: Array<string> = [];
     for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
-      ss.push(frame.renderAsElanSource());
-    }
-    result = ss.join("\r\n");
-  }
-  return result;
-}
-
-export function parentHelper_renderChildrenAsExport(parent: Parent): string {
-  let result = "";
-  if (parent.getChildren().length > 0) {
-    const ss: Array<string> = [];
-    for (const frame of parent.getChildren().filter(isNotSelectorFrame)) {
-      ss.push(frame.renderAsExport());
+      ss.push(frame.renderAsSource());
     }
     const joiner = parent.hasParent() ? "\r\n" : "\r\n\r\n";
     result = ss.join(joiner);
@@ -133,7 +123,7 @@ export function parentHelper_insertOrGotoChildSelector(
   parent: Parent,
   after: boolean,
   child: Frame,
-): AbstractSelector {
+): Selector {
   if (after) {
     return insertOrGotoChildSelectorAfter(parent, child);
   } else {
@@ -141,7 +131,7 @@ export function parentHelper_insertOrGotoChildSelector(
   }
 }
 
-function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): AbstractSelector {
+function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): Selector {
   const prev = parent.getChildBefore(child);
   if (isSelector(prev)) {
     // if there is a selector before
@@ -155,7 +145,7 @@ function insertOrGotoChildSelectorBefore(parent: Parent, child: Frame): Abstract
   }
 }
 
-function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame): AbstractSelector {
+function insertOrGotoChildSelectorAfter(parent: Parent, child: Frame): Selector {
   const follow = parent.getChildAfter(child);
   if (isSelector(follow)) {
     // if there is a selector before

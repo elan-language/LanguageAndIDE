@@ -1,23 +1,23 @@
-import { enumKeyword } from "../../../compiler/elan-keywords";
-import { EnumValuesField } from "../fields/enum-values-field";
-import { TypeNameField } from "../fields/type-name-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { typeNameFieldSpec, enumValuesFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class Enum extends SingleLineFrame implements GlobalFrame {
+  frameType: FrameType = FrameType.enum;
   isGlobal = true;
-  name: TypeNameField;
-  values: EnumValuesField;
+  name: FieldImpl;
+  values: FieldImpl;
   file: File;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.name = new TypeNameField(this);
+    this.name = new FieldImpl(this, typeNameFieldSpec);
     this.name.setPlaceholder("<i>Name</i>");
-    this.values = new EnumValuesField(this);
+    this.values = new FieldImpl(this, enumValuesFieldSpec);
     this.canHaveBreakPoint = false;
   }
 
@@ -26,9 +26,10 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     this.pushClass(true, "multiline");
   }
 
-  initialKeywords(): string {
-    return enumKeyword;
+  helpId(): string {
+    return "enum";
   }
+
   getFields(): Field[] {
     return [this.name, this.values];
   }
@@ -36,23 +37,9 @@ export class Enum extends SingleLineFrame implements GlobalFrame {
     return `${this.language().languageHtmlClass}_enum`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "enum";
-  }
-
   override outerHtmlTag: string = "el-enum";
 
   indent(): string {
     return "";
-  }
-  renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}enum ${this.name.renderAsElanSource()} ${this.values.renderAsElanSource()}\r
-`;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.remove("enum ");
-    this.name.parseFrom(source);
-    this.values.parseFrom(source);
   }
 }

@@ -1,0 +1,340 @@
+
+
+
+grammar RefLang;
+
+options {
+    tokenVocab = RefLang_Lexer;
+}
+
+file: comment? global* NL* EOF;
+
+globalBlock: global+;
+
+// Globals
+global:
+    main
+    | function
+    | test
+    | procedure
+    | constant
+    | enum
+    | concreteClass
+    | abstractClass
+    | comment
+;
+
+main: GHOSTED? MAIN NL ordinaryStatement* END MAIN NL;
+
+function:
+    GHOSTED? FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL (
+        ordinaryStatement
+    )* /* statements with side-effects prevented by editor and/or compiler */ returnStatement END
+        FUNCTION NL
+;
+
+test: GHOSTED? TEST testName NL testStatement* END TEST NL;
+
+testStatement: assert | variableDefinition | comment;
+
+procedure:
+    GHOSTED? PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END
+        PROCEDURE NL
+;
+
+constant:
+    GHOSTED? CONSTANT identifierDef SET TO constantValue NL
+;
+enum: GHOSTED? ENUM typeName identifierList NL;
+
+concreteClass:
+    GHOSTED? CLASS classTypeName = typeName (
+        INHERITS inheritsTypeName = typeName
+    )? NL constructorMember concreteClassMember* END CLASS NL
+;
+
+concreteClassMember:
+    property
+    | functionMethod
+    | procedureMethod
+    | comment
+;
+
+abstractClass:
+    GHOSTED? ABSTRACT CLASS classTypeName = typeName (
+        INHERITS inheritsTypeName = typeName
+    )? NL abstractClassMember* END CLASS NL
+;
+
+abstractClassMember:
+    property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+    | comment
+;
+
+comment: GHOSTED? commentText NL;
+
+commentText: COMMENT;
+
+// Statements
+statementBlock: selectableStatement+;
+
+selectableStatement:
+    variableDefinition
+    | assert
+    | assignment
+    | ifStatement
+    | elseIfClause
+    | elseClause
+    | whileLoop
+    | forLoop
+    | procedureCall
+    | tryStatement
+    | catchClause
+    | throwStatement
+    | comment
+;
+// thenClause and tryClause not included because they can't be selected & hence not cut/copy/pasted
+
+ordinaryStatement:
+    variableDefinition
+    | assignment
+    | ifStatement
+    | whileLoop
+    | forLoop
+    | procedureCall
+    | tryStatement
+    | throwStatement
+    | comment
+;
+
+variableDefinition:
+    GHOSTED? VARIABLE identifierDef SET TO expression NL
+;
+assignment: GHOSTED? ASSIGN assignable TO expression NL;
+
+ifStatement:
+    GHOSTED? IF condition = expression THEN NL thenClause elseIfClause* elseClause? END IF NL
+;
+thenClause: ordinaryStatement*;
+
+elseIfClause:
+    GHOSTED? ELIF expression THEN NL ordinaryStatement*
+;
+
+elseClause: GHOSTED? ELSE NL ordinaryStatement*;
+
+whileLoop:
+    GHOSTED? WHILE condition = expression NL ordinaryStatement* END WHILE NL
+;
+
+forLoop:
+    GHOSTED? FOR identifierDef IN expression NL ordinaryStatement* END FOR NL
+;
+
+procedureCall: GHOSTED? CALL term NL;
+
+tryStatement: GHOSTED? TRY NL tryClause catchClause+ END TRY NL;
+tryClause: ordinaryStatement*;
+catchClause:
+    GHOSTED? CATCH identifierDef AS typeName NL ordinaryStatement*
+;
+
+throwStatement: GHOSTED? THROW typeName errorMessage NL;
+
+errorMessage: litString | identifierUse;
+
+assert:
+    GHOSTED? ASSERT assertActual EVALUATES TO assertExpected NL
+;
+
+returnStatement: RETURN expression NL; // not ghostable
+
+// Members
+memberBlock: selectableMember+;
+
+selectableMember:
+    property
+    | functionMethod
+    | procedureMethod
+    | abstractFunction
+    | abstractProcedure
+; // Does not (currently) include constructor
+
+constructorMember:
+    GHOSTED? CONSTRUCTOR OPEN_BRACKET paramList? CLOSE_BRACKET NL ordinaryStatement* END CONSTRUCTOR
+        NL
+;
+
+property: GHOSTED? PRIVATE? PROPERTY identifierDef AS type NL;
+
+functionMethod:
+    GHOSTED? PRIVATE? FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL (
+        ordinaryStatement
+    )* returnStatement END FUNCTION NL
+;
+
+procedureMethod:
+    GHOSTED? PRIVATE? PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL
+        ordinaryStatement* END PROCEDURE NL
+;
+
+abstractFunction:
+    GHOSTED? ABSTRACT FUNCTION methodName OPEN_BRACKET paramList? CLOSE_BRACKET RETURNS type NL
+;
+abstractProcedure:
+    GHOSTED? ABSTRACT PROCEDURE methodName OPEN_BRACKET paramList? CLOSE_BRACKET NL
+;
+// END Frames
+
+// START Fields
+identifierDef: NAME_STARTING_LC;
+identifierUse: NAME_STARTING_LC;
+assignable:
+    identifierUse                     # simpleAssignable
+    | THIS_INSTANCE DOT identifierUse # thisAssignable
+    | assignable index                # indexedAssignable
+;
+
+methodName: NAME_STARTING_LC;
+testName: NAME_STARTING_TEST_;
+typeName:
+    INT_NAME           # intTypeName
+    | FLOAT_NAME       # floatTypeName
+    | BOOL_NAME        # boolTypeName
+    | STRING_NAME      # stringTypeName
+    | LIST_NAME        # listTypeName
+    | DICT_NAME        # dictTypeName
+    | NAME_STARTING_UC # udtTypeName
+;
+
+constantValue: litBoolean | litInt | litFloat | litString;
+
+argList: argument (COMMA argument)*;
+argument: lambda | expression;
+paramList: paramDef (COMMA paramDef)*;
+identifierList: identifierDef (COMMA identifierDef)+;
+expressionList: expression (COMMA expression)*;
+
+type: typeTuple | typeName | typeGeneric | typeFunc;
+
+assertActual: expression;
+assertExpected: expression;
+
+// END Fields
+
+// START SubNodes
+litValue:
+    litBoolean
+    | litInt
+    | litFloat
+    | litString
+    | interpolatedString
+    | enumValue
+;
+
+litBoolean: TRUE # litBooleanTrue | FALSE # litBooleanFalse;
+
+litInt:
+    LITERAL_INTEGER  # litInteger
+    | LITERAL_BINARY # litBinary
+    | LITERAL_HEX    # litHex
+;
+
+litFloat: LITERAL_FLOAT;
+litString: LITERAL_STRING;
+
+interpolatedString:
+    START_INTERPOLATED_STRING segment* DOUBLE_QUOTES
+;
+
+segment: interpolatedStringText | interpolatedStringExpression;
+
+interpolatedStringText: Grapheme+;
+
+interpolatedStringExpression: OPEN_BRACE expression CLOSE_BRACE;
+
+enumValue: typeName DOT identifierUse;
+
+index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
+
+expression:
+    newInstance        # newInstanceExpression
+    | unaryExpression  # unaryExpressionLabel
+    | term             # termExpression
+    | binaryExpression # binaryExpressionLabel
+    | IF_ OPEN_BRACKET condition = expression COMMA trueExpr = expression COMMA falseExpr =
+        expression CLOSE_BRACKET # ifExpression
+;
+
+term:
+    thisInstance          # thisInstanceTerm
+    | bracketedExpression # bracketedExpressionTerm
+    | litValue            # litValueTerm
+    | list                # listTerm
+    | dictionary          # dictionaryTerm
+    | tuple               # tupleTerm
+    | identifierUse       # identifierUseTerm
+    | methodCall          # methodCallTerm
+    | term index          # indexedTerm
+    | term DOT chainable  # chainableTerm
+;
+
+chainable: identifierUse | methodCall;
+
+thisInstance: THIS_INSTANCE;
+bracketedExpression: OPEN_BRACKET expression CLOSE_BRACKET;
+unaryExpression: negateNumeric | negateLogical;
+negateNumeric: MINUS term;
+negateLogical: NOT term;
+
+binaryExpression:
+    left = term binaryOperator right = expression
+; // ? expression binaryOperator expression ?
+
+list: OPEN_SQ_BRACKET expressionList CLOSE_SQ_BRACKET;
+
+tuple: OPEN_BRACKET expressionList CLOSE_BRACKET;
+
+dictionary: OPEN_SQ_BRACKET kvpList CLOSE_SQ_BRACKET;
+kvpList: kvp (COMMA kvp)*;
+kvp: key = expression COLON value = expression;
+
+methodCall: methodName OPEN_BRACKET argList? CLOSE_BRACKET;
+
+binaryOperator:
+    EQUAL       # opEQUAL
+    | NOT_EQUAL # opNOT_EQUAL
+    | EQUAL     # opREF_EQUAL
+    | NOT_EQUAL # opREF_NOT_EQUAL
+    | GT        # opGT
+    | LT        # opLT
+    | GE        # opGE
+    | LE        # opLE
+    | MULT      # opMULT
+    | DIVIDE    # opDIVIDE
+    | PLUS      # opPLUS
+    | MINUS     # opMINUS
+    | AND       # opAND
+    | OR        # opOR
+    | MOD       # opMOD
+    | POWER     # opPOWER
+;
+
+newInstance: NEW type OPEN_BRACKET argList? CLOSE_BRACKET;
+
+paramDef: identifierDef AS type;
+
+typeGeneric: typeName LT OF type (COMMA type)* GT;
+
+typeFunc: FUNC_NAME LT OF type (COMMA type)* ARROW type GT;
+
+typeTuple: OPEN_BRACKET type (COMMA type)+ CLOSE_BRACKET;
+
+lambda:
+    LAMBDA paramList ARROW expression
+; // TODO should change to identiferList
+// END SubNodes

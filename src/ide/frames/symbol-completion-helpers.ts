@@ -1,7 +1,6 @@
 import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../../compiler/compiler-interfaces/root-ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
-import { thisKeyword } from "../../compiler/elan-keywords";
 import { FunctionType } from "../../compiler/symbols/function-type";
 import { NullScope } from "../../compiler/symbols/null-scope";
 import { ProcedureType } from "../../compiler/symbols/procedure-type";
@@ -167,6 +166,7 @@ export function getFilteredSymbols(
   ast: RootAstNode | undefined,
   htmlId: string,
 ) {
+  const thisKeyword = "this"; //TODO: anomaly - specific to RefLang & C#
   const scope = ast?.getScopeById(htmlId) ?? NullScope.Instance;
   let symbols = filteredSymbols(spec, scope);
   if (isInsideClass(scope)) {

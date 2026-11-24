@@ -1,19 +1,30 @@
-import { elseKeyword } from "../../../compiler/elan-keywords";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { Clause } from "../clause";
 import { Field } from "../frame-interfaces/field";
-import { Statement } from "../frame-interfaces/statement";
-import { SingleLineFrame } from "../single-line-frame";
+import { Frame } from "../frame-interfaces/frame";
+import { FrameType } from "../frame-type";
+import { FrameWithStatements } from "../frame-with-statements";
 
-export class ElseClause extends SingleLineFrame implements Statement {
-  isStatement: boolean = true;
+export class ElseClause extends Clause {
+  frameType: FrameType = FrameType.elseClause;
 
-  protected setClasses() {
-    super.setClasses();
-    this.pushClass(true, "outdent");
+  override isMovable(): boolean {
+    return false;
+  }
+  override canInsertAfter(): boolean {
+    return false;
+  }
+  insertPeerSelector(before: boolean): void {
+    //Not strictly a peer selector - inserts either a child of itself or child of predecessor
+    if (before) {
+      const parent = this.getParent();
+      const previousChild = parent.getChildBefore(this) as unknown as FrameWithStatements;
+      const lastStatementInPrevious = previousChild.getLastChild() as unknown as Frame;
+      previousChild.insertOrGotoChildSelector(true, lastStatementInPrevious);
+    }
   }
 
-  initialKeywords(): string {
-    return elseKeyword;
+  helpId(): string {
+    return "else";
   }
 
   getFields(): Field[] {
@@ -22,21 +33,5 @@ export class ElseClause extends SingleLineFrame implements Statement {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_else`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
-  indent() {
-    return this.getParent()!.indent(); //overrides the additional indent added for most child statements
-  }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${elseKeyword}`;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.remove("else");
   }
 }

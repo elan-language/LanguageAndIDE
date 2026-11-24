@@ -1,6 +1,5 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { BreakpointStatus } from "../../compiler/debugging/breakpoint-status";
-import { ghostedAnnotation } from "../../compiler/elan-keywords";
 import {
   addDeleteToContextMenu,
   escapeHtmlChars,
@@ -13,7 +12,6 @@ import {
   isParent,
   singleIndent,
 } from "./frame-helpers";
-import { CodeSource } from "./frame-interfaces/code-source";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { File } from "./frame-interfaces/file";
@@ -21,6 +19,7 @@ import { Frame } from "./frame-interfaces/frame";
 import { Language } from "./frame-interfaces/language";
 import { Parent } from "./frame-interfaces/parent";
 import { Selectable } from "./frame-interfaces/selectable";
+import { FrameType } from "./frame-type";
 import {
   parentHelper_copySelectedChildren,
   parentHelper_getAllSelectedChildren,
@@ -28,8 +27,9 @@ import {
 import { CompileStatus, DisplayColour, ParseStatus } from "./status-enums";
 
 export abstract class AbstractFrame implements Frame {
+  abstract frameType: FrameType;
   isFrame = true;
-  isNew = true;
+  private newlyCreated = false;
   breakpointStatus: BreakpointStatus = BreakpointStatus.none;
   pasteError: string = "";
   pasteErrCounter: number = 0;
@@ -49,6 +49,7 @@ export abstract class AbstractFrame implements Frame {
   private _movable: boolean = true;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _ghosted: boolean = false;
+  protected ghostedAnnotation = "ghosted";
 
   constructor(parent: Parent) {
     this._parent = parent;
@@ -64,9 +65,9 @@ export abstract class AbstractFrame implements Frame {
   helpDocument(): string {
     return "LangRef.html";
   }
-  helpId(): string {
-    return this.initialKeywords().replace(/\s/g, "");
-  }
+
+  abstract helpId(): string;
+
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
@@ -80,8 +81,16 @@ export abstract class AbstractFrame implements Frame {
     this.helpActive = true;
   }
 
-  hasBeenAddedTo(): void {
-    this.isNew = false;
+  isNewlyCreated(): boolean {
+    return this.newlyCreated;
+  }
+
+  setNewlyCreatedTrue(): void {
+    this.newlyCreated = true;
+  }
+
+  setNewlyCreatedFalse(): void {
+    this.newlyCreated = false;
   }
 
   isMovable(): boolean {
@@ -95,8 +104,6 @@ export abstract class AbstractFrame implements Frame {
   getFile(): File {
     return this.getParent().getFile();
   }
-
-  abstract initialKeywords(): string;
 
   getHtmlId(): string {
     return this.htmlId;
@@ -297,7 +304,7 @@ export abstract class AbstractFrame implements Frame {
         break;
       }
       case "Backspace": {
-        if (e.modKey.control || this.isNew) {
+        if (e.modKey.control || this.newlyCreated) {
           this.deleteSelected();
           codeHasChanged = true;
         }
@@ -390,20 +397,20 @@ export abstract class AbstractFrame implements Frame {
 
   cutSelected = () => {
     const selected = parentHelper_getAllSelectedChildren(this.getParent());
-    const nonSelectors = selected.filter((s) => !(s.initialKeywords() === "selector"));
+    const nonSelectors = selected.filter((s) => !(s.frameType === FrameType.selector));
     if (nonSelectors.length === 0) {
-      this.pasteError = "Cut Failed: No code to cut";
+      this.pasteError = "Cut Failed: No instructions selected to cut";
       return true;
     }
     const movable = nonSelectors.filter((s) => s.isMovable());
 
     if (movable.length !== nonSelectors.length) {
-      this.pasteError = "Cut Failed: At least one selected frame is not moveable";
+      this.pasteError = "Cut Failed: At least one selected instruction is not moveable";
       return true;
     }
 
     if (!parentHelper_copySelectedChildren(this.getParent(), false)) {
-      this.pasteError = "Cut Failed: At least one selected frame does not parse";
+      this.pasteError = "Cut Failed: At least one selected instruction does not parse";
       return true;
     }
     this.getParent().deleteSelectedChildren();
@@ -513,7 +520,7 @@ export abstract class AbstractFrame implements Frame {
     this.pushClass(this._focused, "focused");
     this.pushClass(this.breakpointStatus !== BreakpointStatus.none, "breakpoint");
     this.pushClass(this.paused, "paused");
-    this.pushClass(this.isGhosted(), ghostedAnnotation);
+    this.pushClass(this.isGhostedExplicitly(), this.ghostedAnnotation);
     this._classes.push(DisplayColour[this.readDisplayStatus()]);
   }
 
@@ -528,7 +535,7 @@ export abstract class AbstractFrame implements Frame {
 
   abstract renderAsHtml(): string;
 
-  abstract renderAsExport(): string;
+  abstract renderAsSource(): string;
 
   indent(): string {
     if (this.hasParent()) {
@@ -537,8 +544,6 @@ export abstract class AbstractFrame implements Frame {
       return singleIndent();
     }
   }
-
-  abstract renderAsElanSource(): string;
 
   isSelected(): boolean {
     return this._selected;
@@ -670,20 +675,18 @@ export abstract class AbstractFrame implements Frame {
     return Math.min(own, worstField);
   }
 
-  abstract parseFrom(source: CodeSource): void;
-
   compileMsgAsHtml() {
     return helper_compileMsgAsHtmlNew(this.getFile(), this);
   }
 
   copy = (encode: boolean) => {
-    const source = this.renderAsElanSource();
+    const source = this.renderAsSource();
     this.getFile().addCopiedSource(encode ? escapeHtmlChars(source) : source);
     return false;
   };
 
   export = () => {
-    const source = this.renderAsExport();
+    const source = this.renderAsSource();
     this.getFile().addCopiedSource(source);
     return false;
   };
@@ -781,12 +784,12 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  isGhosted() {
+  isGhostedExplicitly() {
     return this._ghosted;
   }
 
   isGhostedOrWithinAGhostedFrame(): boolean {
-    return this.isGhosted() || this.getParent().isGhostedOrWithinAGhostedFrame();
+    return this.isGhostedExplicitly() || this.getParent().isGhostedOrWithinAGhostedFrame();
   }
 
   deleteAllGhostedInFile = () => {
@@ -794,13 +797,9 @@ export abstract class AbstractFrame implements Frame {
     return true;
   };
 
-  sourceAnnotations(): string {
-    return this.isGhosted() ? `[${ghostedAnnotation}] ` : "";
-  }
-
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       map.set("unghost", ["unghost", this.unGhost]);
     }
     if (this.canInsertAfter()) {
@@ -812,7 +811,7 @@ export abstract class AbstractFrame implements Frame {
     if (this.isDeletable()) {
       addDeleteToContextMenu(this, map);
     }
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       map.set("deleteGhosted", ["delete ALL ghosted code", this.deleteAllGhostedInFile]);
     }
     if (this.isMovable()) {
@@ -820,19 +819,16 @@ export abstract class AbstractFrame implements Frame {
       map.set("down", ["move down <span class='kb'>Ctrl+↓</span>", this.down]);
     }
     if (this.isDeletable()) {
-      map.set("cut", ["cut for internal use <span class='kb'>Ctrl+x</span>", this.cutSelected]);
+      map.set("cut", ["cut <span class='kb'>Ctrl+x</span>", this.cutSelected]);
     }
     map.set("copyInternal", [
-      "copy for internal use <span class='kb'>Ctrl+c</span>",
+      "copy <span class='kb'>Ctrl+c</span>",
       () => this.copySelected(false),
     ]);
-    if (!(this.language().languageHtmlClass === "elan")) {
-      map.set("copyExport", ["copy for export", this.exportSelected]);
-    }
-    if (!this.isGhosted() && this.isGhostable()) {
+    if (!this.isGhostedExplicitly() && this.isGhostable()) {
       map.set("ghost", ["ghost", this.ghost]);
     }
-    if (this.canHaveBreakPoint && !this.isGhosted()) {
+    if (this.canHaveBreakPoint && !this.isGhostedExplicitly()) {
       if (this.hasBreakpoint()) {
         map.set("clearBP", ["clear breakpoint", this.clearBreakPoint]);
         map.set("clearAllBP", ["clear all breakpoints", this.clearAllBreakPoints]);
@@ -875,27 +871,15 @@ export abstract class AbstractFrame implements Frame {
   }
 
   deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.insertNewSelectorIfNecessary();
       this.delete();
     }
   }
 
-  annotationAsHtml() {
-    const source = this.annotationAsSource();
-    return source.length > 0 ? `<el-comment>${source}</el-comment>` : ``;
-  }
-
-  annotationAsSource() {
-    const annotation = this.language().annotation(this).trim();
-    return annotation.length > 0 ? ` ${this.language().COMMENT_MARKER} ${annotation}` : ``;
-  }
-
   language(): Language {
     return this._parent.language();
   }
-
-  abstract frameSpecificAnnotation(): string;
 
   resetFieldText(): void {
     for (const field of this.getFields()) {

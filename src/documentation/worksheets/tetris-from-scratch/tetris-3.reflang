@@ -1,0 +1,20 @@
+# f6cb8741a5e346190c5eee3149cb99ba234ebb9cea71d1ac92aa008c5f319333 Elan 2.0.0-beta4 valid
+
+#  Tetris 3: Refactor - factor out the drawBackground procedure
+main
+  variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+end main
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure

@@ -1,27 +1,23 @@
-import { abstractProcedureKeywords } from "../../../compiler/elan-keywords";
-import { MethodNameField } from "../fields/method-name-field";
-import { ParamListField } from "../fields/param-list-field";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class AbstractProcedure extends SingleLineFrame {
+  frameType: FrameType = FrameType.abstractProcedure;
   isAbstract = true;
   isMember: boolean = true;
   private = false;
-  public name: MethodNameField;
-  public params: ParamListField;
+  public name: FieldImpl;
+  public params: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.name = new MethodNameField(this);
-    this.params = new ParamListField(this);
+    this.name = new FieldImpl(this, methodNameFieldSpec);
+    this.params = new FieldImpl(this, paramListFieldSpec);
     this.canHaveBreakPoint = false;
-  }
-
-  initialKeywords(): string {
-    return abstractProcedureKeywords;
   }
 
   override helpDocument(): string {
@@ -40,31 +36,14 @@ export class AbstractProcedure extends SingleLineFrame {
     return `${this.language().languageHtmlClass}_proc`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract procedure";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
   override outerHtmlTag: string = "el-proc";
 
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}abstract procedure ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()})\r
-`;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.remove("abstract procedure ");
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(")");
-  }
-
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

@@ -1,32 +1,27 @@
-import {
-  abstractFunctionKeywords,
-  abstractKeyword,
-  abstractProcedureKeywords,
-  commentMarker,
-  constructorKeyword,
-  functionKeyword,
-  privateFunctionKeywords,
-  privateKeyword,
-  privateProcedureKeywords,
-  privatePropertyKeywords,
-  procedureKeyword,
-  propertyKeyword,
-} from "../../../compiler/elan-keywords";
+import { MemberBlockContext as PythonMemberBlockContext } from "../../../generated/python/PythonParser";
+import { MemberBlockContext as RefLangMemberBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { singleIndent } from "../frame-helpers";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
-import { ClassFrame } from "../globals/class-frame";
+import { FrameType } from "../frame-type";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
 
 export class MemberSelector extends AbstractSelector implements MemberFrame {
   isMember: boolean = true;
   isAbstract = false;
   isPrivate = false;
-  private class: ClassFrame;
+  private factory: FrameFactory;
+
   constructor(parent: Parent) {
     super(parent);
-    this.class = parent as ClassFrame;
+    this.factory = parent.getFactory();
   }
   isOnAbstractClass(): boolean {
     throw new Error("Should not be called");
@@ -36,86 +31,31 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
     return "MemberInstructions";
   }
 
-  getClass() {
-    return this.getParent() as unknown as ClassFrame;
-  }
-
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [FrameType, string, string, boolean][] {
     return [
-      [constructorKeyword, "c", "constructor", (_parent: Parent) => this.class.createConstructor()],
-      [propertyKeyword, "p", "<b>p</b>roperty", (_parent: Parent) => this.class.createProperty()],
+      [FrameType.property, "p", "<b>p</b>roperty", true],
+      [FrameType.procedureMethod, "c", "pro<b>c</b>edure method", true],
+      [FrameType.functionMethod, "f", "<b>f</b>unction method", true],
+      [FrameType.abstractProcedure, "", "abstract procedure", true],
+      [FrameType.abstractFunction, "", "abstract function", true],
       [
-        procedureKeyword,
-        "c",
-        "pro<b>c</b>edure method",
-        (_parent: Parent) => this.class.createProcedure(),
-      ],
-      [
-        functionKeyword,
-        "f",
-        "<b>f</b>unction method",
-        (_parent: Parent) => this.class.createFunction(),
-      ],
-      [
-        abstractProcedureKeywords,
-        "",
-        "abstract procedure",
-        (_parent: Parent) => this.class.createAbstractProcedure(),
-      ],
-      [
-        abstractFunctionKeywords,
-        "",
-        "abstract function",
-        (_parent: Parent) => this.class.createAbstractFunction(),
-      ],
-      [
-        privatePropertyKeywords,
-        "",
-        "private property",
-        (_parent: Parent) => this.class.createProperty(true),
-      ],
-      [
-        privateProcedureKeywords,
-        "",
-        "private procedure",
-        (_parent: Parent) => this.class.createProcedure(true),
-      ],
-      [
-        privateFunctionKeywords,
-        "",
-        "private function",
-        (_parent: Parent) => this.class.createFunction(true),
-      ],
-      [
-        this.getCommentMarker(),
+        FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.class.createComment(),
+        true,
       ],
     ];
   }
 
-  paradigmAllows(_keyword: string): boolean {
-    return true;
+  isWithinAbstractClass(): boolean {
+    return this.getParent().frameType === FrameType.abstractClass;
   }
 
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     let result = true;
-    // First apply universal instruction-specific rules
-    if (keyword.startsWith(privateKeyword)) {
-      result = !userEntry || this.sourcePasting;
-    } else if (keyword.startsWith(abstractKeyword)) {
-      result = this.class.isAbstract || this.class.isInterface;
-    } else if (this.class.isInterface) {
-      result = keyword === commentMarker;
-    } else if (this.class.isRecord) {
-      result =
-        keyword === propertyKeyword ||
-        keyword === functionKeyword ||
-        keyword === this.getCommentMarker();
-    } else if (keyword === constructorKeyword) {
-      result = this.class.isConcrete && !this.getClass().getConstructor();
-    } else if (keyword === procedureKeyword) {
+    if (type === FrameType.abstractFunction || type === FrameType.abstractProcedure) {
+      result = this.isWithinAbstractClass();
+    } else if (type === FrameType.procedureMethod) {
       result = !(this.getParadigm().isFunctional() && userEntry);
     }
     return result;
@@ -125,5 +65,33 @@ export class MemberSelector extends AbstractSelector implements MemberFrame {
 
   indent(): string {
     return singleIndent();
+  }
+
+  createFrame(type: FrameType, parent: Parent): Frame {
+    const frame = this.factory.createFrame(type, parent);
+    frame.setNewlyCreatedTrue();
+    return frame;
+  }
+
+  visitMemberBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonMemberBlockContext | RefLangMemberBlockContext,
+  ): Frame[] {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitMemberBlock(context as PythonMemberBlockContext);
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitMemberBlock(
+        context as RefLangMemberBlockContext,
+      );
+    }
+    return [];
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.memberBlock()!;
+    return this.visitMemberBlock(visitor, ctx);
   }
 }

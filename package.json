@@ -14,17 +14,20 @@
     "Education"
   ],
   "scripts": {
+    "generatePythonTests": "node ./out/src/build-scripts/generate-python-tests.js",
+    "generateg4": "node ./src/build-scripts/generate.mjs",
+    "formatg4": "antlr-format -c antlrformatrc -v src/grammars/**/*.g4",
     "preprocess-worksheets": "node ./out/src/build-scripts/preprocess-worksheets.js",
     "update-documentation": "node ./out/src/build-scripts/update-documentation.js",
     "update-build-script": "node ./out/src/build-scripts/update-build-files.js",
     "update-elan-files-script": "node ./out/src/build-scripts/update-elan-files.js",
     "copy-web-files": "cpr ./src/ide/web-content ./out/website -o && cpr ./src/ide/styles ./out/website/styles -o",
-    "copy-static-files": "npm run update-elan-files-script  && npm run copy-web-files && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o && npm run update-documentation",
+    "copy-static-files": "npm run copy-web-files && cpr ./src/demo_programs ./out/website/demo -o && cpr ./src/documentation ./out/website/documentation -f .*\\.raw\\.html -o",
     "build-website": "npm run copy-static-files && npm run compile-web",
     "compile-test-api": "esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/test/elan-api.js",
     "compile-web": "esbuild ./out/src/ide/web/web-scripts.js --bundle --outfile=out/website/web-scripts.js && esbuild ./src/ide/web/elan-api.ts --bundle --format=esm --outfile=out/website/elan-api.js && esbuild ./src/ide/web/standalone.ts --bundle --outfile=out/website/standalone.js && esbuild ./src/ide/web/worksheet-scripts.ts --bundle --outfile=out/website/worksheet-scripts.js && esbuild ./src/ide/web/worksheet-model-scripts.ts --bundle --outfile=out/website/worksheet-model-scripts.js",
     "compile-test": "tsc -p ./test && npm run format-test",
-    "compile-src": "tsc -p ./",
+    "compile-src": "npm run generateg4 && tsc -p ./",
     "compile-base": "npm run compile-src && npm run format-src && npm run lint",
     "dev-compile": "cpr ./src/environments/environment.ts ./src/environment.ts -o && npm run compile-base && npm run build-website",
     "production-compile": "cpr ./src/environments/environment.prod.ts ./src/environment.ts -o && npm run compile-base && npm run update-build-script && npm run build-website",
@@ -39,6 +42,7 @@
   },
   "dependencies": {
     "@types/wicg-file-system-access": "^2023.10.5",
+    "antlr4ng": "^3.0.4",
     "async-file": "2.0.2",
     "reflect-metadata": "^0.2.2"
   },
@@ -52,6 +56,7 @@
     "@types/node": "22.x",
     "@typescript-eslint/eslint-plugin": "^8.46.0",
     "@typescript-eslint/parser": "^8.46.0",
+    "antlr-format-cli": "^1.2.8",
     "cpr": "~3.0.1",
     "diffable-html": "^6.0.1",
     "esbuild": "^0.25.0",

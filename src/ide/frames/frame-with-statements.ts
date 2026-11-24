@@ -1,13 +1,13 @@
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
-import { Regexes } from "./fields/regexes";
-import { isSelector, removeHtmlTagsAndEscChars } from "./frame-helpers";
+import { isSelector } from "./frame-helpers";
 import { CodeSource } from "./frame-interfaces/code-source";
 import { Collapsible } from "./frame-interfaces/collapsible";
 import { Frame } from "./frame-interfaces/frame";
+import { FrameFactory } from "./frame-interfaces/frame-factory";
 import { Parent } from "./frame-interfaces/parent";
-import { StatementFactory } from "./frame-interfaces/statement-factory";
+import { Selector } from "./frame-interfaces/selector";
 import { Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
@@ -27,16 +27,14 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsElanSource,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_selectFirstChild,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "./parent-helpers";
 import { AssertStatement } from "./statements/assert-statement";
-import { StatementSelector } from "./statements/statement-selector";
 import { CompileStatus } from "./status-enums";
 
 export abstract class FrameWithStatements extends AbstractFrame implements Parent, Collapsible {
@@ -47,7 +45,8 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
 
   constructor(parent: Parent) {
     super(parent);
-    this.getChildren().push(new StatementSelector(this));
+    const statementSelector = this.getFile().newStatementSelector(this);
+    this.getChildren().push(statementSelector);
   }
 
   getParadigm(): Paradigm {
@@ -59,7 +58,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     this.pushClass(true, "multiline");
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this.getParent().getFactory();
   }
 
@@ -97,9 +96,10 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     }
   }
 
-  newChildSelector(): AbstractSelector {
-    return new StatementSelector(this);
+  newChildSelector(): Selector {
+    return this.getFile().newStatementSelector(this);
   }
+
   insertOrGotoChildSelector(after: boolean, child: Frame) {
     parentHelper_insertOrGotoChildSelector(this, after, child);
   }
@@ -142,24 +142,20 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     return parentHelper_selectFirstChild(this, multiSelect);
   }
   addChildBefore(child: Frame, before: Frame): void {
-    this.hasBeenAddedTo();
+    this.setNewlyCreatedFalse();
     parentHelper_addChildBefore(this, child, before);
   }
   addChildAfter(child: Frame, before: Frame): void {
-    this.hasBeenAddedTo();
+    this.setNewlyCreatedFalse();
     parentHelper_addChildAfter(this, child, before);
   }
 
   protected renderChildrenAsHtml(): string {
     return parentHelper_renderChildrenAsHtml(this);
   }
-  protected renderChildrenAsElanSource(): string {
-    return parentHelper_renderChildrenAsElanSource(this);
+  protected renderChildrenAsSource(): string {
+    return parentHelper_renderChildrenAsSource(this);
   }
-  protected renderChildrenAsExport(): string {
-    return parentHelper_renderChildrenAsExport(this);
-  }
-
   selectFirstField(): boolean {
     let result = super.selectFirstField();
     if (!result) {
@@ -196,21 +192,6 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
     parentHelper_moveSelectedChildrenDownOne(this);
   }
 
-  parseFrom(source: CodeSource): void {
-    this.parseTop(source);
-    while (!this.parseBottom(source)) {
-      if (source.isMatchRegEx(Regexes.newLine)) {
-        source.removeRegEx(Regexes.newLine, false);
-      } else {
-        this.getFirstSelectorAsDirectChild().parseFrom(source);
-      }
-      source.removeIndent();
-    }
-  }
-
-  abstract parseTop(source: CodeSource): void;
-  abstract parseBottom(source: CodeSource): boolean;
-
   protected parseStandardEnding(source: CodeSource, keywords: string): boolean {
     source.removeIndent();
     let result = false;
@@ -228,7 +209,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   getAsserts() {
     const children = this.getChildren();
     let asserts = children.filter(
-      (c) => c instanceof AssertStatement && !c.isGhosted(),
+      (c) => c instanceof AssertStatement && !c.isGhostedExplicitly(),
     ) as AssertStatement[];
 
     for (const f of children.filter((c) => c instanceof FrameWithStatements)) {
@@ -251,7 +232,7 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   }
 
   override deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.delete();
     } else {
       const children = this._children.slice();
@@ -264,18 +245,17 @@ export abstract class FrameWithStatements extends AbstractFrame implements Paren
   renderAsHtml(): string {
     return `<${this.outerHtmlTag} class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
 <el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}
-${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${this.renderChildrenAsHtml()}
 ${this.language().renderBottomAsHtml(this)}
 </${this.outerHtmlTag}>`;
   }
 
-  renderAsExport(): string {
-    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
-    const bottom = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
-    const bottomAsExport = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}
-${this.renderChildrenAsExport()}${bottomAsExport}`;
+  renderAsSource(): string {
+    const topAsSource = this.language().renderTopAsSource(this);
+    const bottom = this.language().renderBottomAsSource(this);
+    const bottomAsSource = bottom === `` ? `` : `\r\n${this.indent()}${bottom}`;
+    return `${this.indent()}${topAsSource}\r\n${this.renderChildrenAsSource()}${bottomAsSource}`;
   }
 
   resetFieldText(): void {

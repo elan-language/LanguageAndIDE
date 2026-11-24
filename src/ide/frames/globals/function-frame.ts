@@ -1,13 +1,5 @@
-import {
-  endKeyword,
-  functionKeyword,
-  returnKeyword,
-  returnsKeyword,
-} from "../../../compiler/elan-keywords";
-import { MethodNameField } from "../fields/method-name-field";
-import { ParamListField } from "../fields/param-list-field";
-import { TypeField } from "../fields/type-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
@@ -16,21 +8,18 @@ import { Paradigm } from "../paradigm";
 import { ReturnStatement } from "../statements/return-statement";
 
 export abstract class FunctionFrame extends FrameWithStatements implements Parent {
-  public name: MethodNameField;
-  public params: ParamListField;
-  public returnType: TypeField;
+  public name: FieldImpl;
+  public params: FieldImpl;
+  public returnType: FieldImpl;
   isFunction = true;
   abstract file: File;
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new MethodNameField(this);
-    this.params = new ParamListField(this);
-    this.returnType = new TypeField(this);
+    this.name = new FieldImpl(this, methodNameFieldSpec);
+    this.params = new FieldImpl(this, paramListFieldSpec);
+    this.returnType = new FieldImpl(this, typeFieldSpec);
     this.getChildren().push(new ReturnStatement(this));
-  }
-  initialKeywords(): string {
-    return functionKeyword;
   }
 
   getParadigm(): Paradigm {
@@ -49,30 +38,5 @@ export abstract class FunctionFrame extends FrameWithStatements implements Paren
     return `${this.language().languageHtmlClass}_func`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "function";
-  }
-
   override outerHtmlTag: string = "el-func";
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${functionKeyword} `);
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(`) ${returnsKeyword} `);
-    this.returnType.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    if (source.isMatch(`${returnKeyword} `)) {
-      const ret = this.getLastChild() as ReturnStatement;
-      ret.parseFrom(source);
-      source.removeNewLine().removeIndent();
-      this.parseStandardEnding(source, `${endKeyword} ${functionKeyword}`);
-      result = true;
-    }
-    return result;
-  }
 }

@@ -2,7 +2,7 @@
 
 import { editorEvent } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
-import { LanguageElan } from "../frames/language-elan";
+import { LanguageRefLang } from "../frames/language-ref-lang";
 import { ParseStatus } from "../frames/status-enums";
 import { TestRunner } from "./test-runner";
 import { cursorWait, ICodeEditorViewModel, IIDEViewModel, lastDirId } from "./ui-helpers";
@@ -122,7 +122,7 @@ export class FileManager {
     const name = newName ?? cvm.fileName;
     const html = name.endsWith(".html");
     const nameWithoutExt = name.slice(0, name.lastIndexOf("."));
-    const language = cvm.isExporting() ? cvm.getLanguage() : LanguageElan.Instance;
+    const language = cvm.getLanguage();
     const ext = html ? "html" : language.defaultFileExtension;
     const mime = html ? "text/html" : language.defaultMimeType;
 
@@ -157,14 +157,9 @@ export class FileManager {
     }
   }
 
-  async doDownLoad(cvm: ICodeEditorViewModel, vm: IIDEViewModel) {
-    const isSaving = !cvm.isExporting();
-    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
-    await this.chromeSave(cvm, code, isSaving);
-    if (isSaving) {
-      this.resetHash(cvm);
-      await vm.renderAsHtml(false);
-    }
+  async doDownLoad(cvm: ICodeEditorViewModel, _vm: IIDEViewModel) {
+    const code = await cvm.renderAsSource();
+    await this.chromeSave(cvm, code, false);
   }
 
   getLastCodeVersion() {
@@ -301,10 +296,9 @@ export class FileManager {
   }
 
   async doGenericDownload(cvm: ICodeEditorViewModel, vm: IIDEViewModel, fm: FileManager) {
-    const isSaving = !cvm.isExporting();
-    const language = isSaving ? LanguageElan.Instance : cvm.getLanguage();
+    const language = cvm.getLanguage();
     cvm.updateFileName(`.${language.defaultFileExtension}`);
-    const code = isSaving ? await cvm.renderAsSource() : await cvm.renderAsExport();
+    const code = await cvm.renderAsSource();
     const blob = new Blob([code], { type: "plain/text" });
     const aElement = document.createElement("a");
     aElement.setAttribute("download", cvm.fileName!);
@@ -327,14 +321,14 @@ export class FileManager {
     try {
       const [fileHandle] = await window.showOpenFilePicker({
         startIn: "documents",
-        types: [{ accept: { "text/elan": ".elan" } }],
+        types: [{ accept: { "text/plain": `.${cvm.getLanguage().defaultFileExtension}` } }],
         id: lastDirId,
       });
       const codeFile = await fileHandle.getFile();
       const fileName = mode === ParseMode.loadNew ? codeFile.name : cvm.fileName;
       const rawCode = await codeFile.text();
       if (mode === ParseMode.loadNew) {
-        cvm.recreateFile(vm, false, LanguageElan.Instance);
+        cvm.recreateFile(vm, false, LanguageRefLang.Instance);
         this.reset();
       }
       await cvm.readAndParse(vm, this, tr, rawCode, fileName, mode);

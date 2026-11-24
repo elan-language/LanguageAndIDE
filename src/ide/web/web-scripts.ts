@@ -8,11 +8,9 @@ import { cannotLoadUnparseableFile, fileErrorPrefix, parseErrorPrefix } from "..
 import { editorEvent, toDebugString } from "../frames/frame-interfaces/editor-event";
 import { ParseMode } from "../frames/frame-interfaces/file";
 import { Language } from "../frames/frame-interfaces/language";
-import { LanguageCS } from "../frames/language-cs";
-import { LanguageElan } from "../frames/language-elan";
-import { LanguageJava } from "../frames/language-java";
+import { LanguageCSharp } from "../frames/language-c-sharp";
 import { LanguagePython } from "../frames/language-python";
-import { LanguageVB } from "../frames/language-vb";
+import { LanguageRefLang } from "../frames/language-ref-lang";
 import { Paradigm } from "../frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { CodeEditorViewModel } from "./code-editor-view-model";
@@ -72,10 +70,8 @@ const language2Menu = document.getElementById("language2-menu") as HTMLDivElemen
 const language3Menu = document.getElementById("language3-menu") as HTMLDivElement;
 
 const pythonButton = document.querySelectorAll(".python-language") as NodeListOf<HTMLDivElement>;
-const vbButton = document.querySelectorAll(".vb-language") as NodeListOf<HTMLDivElement>;
 const csButton = document.querySelectorAll(".cs-language") as NodeListOf<HTMLDivElement>;
-const javaButton = document.querySelectorAll(".java-language") as NodeListOf<HTMLDivElement>;
-const elanButton = document.querySelectorAll(".elan-language") as NodeListOf<HTMLDivElement>;
+const elanButton = document.querySelectorAll(".ref-language") as NodeListOf<HTMLDivElement>;
 
 const paradigmMenu = document.getElementById("paradigm-menu") as HTMLDivElement;
 const proceduralButton = document.getElementById("paradigm-procedural") as HTMLDivElement;
@@ -86,7 +82,6 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
 const appendButton = document.getElementById("append") as HTMLDivElement;
 const saveButton = document.getElementById("save") as HTMLDivElement;
-const exportButton = document.getElementById("export") as HTMLDivElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
@@ -268,7 +263,6 @@ class IDEViewModel implements IIDEViewModel {
           loadButton,
           appendButton,
           saveButton,
-          exportButton,
           copyAsUrlButton,
           autoSaveButton,
           newButton,
@@ -317,19 +311,14 @@ class IDEViewModel implements IIDEViewModel {
       }
 
       if (isEmpty) {
-        this.disable(
-          [saveButton, exportButton, copyAsUrlButton],
-          "Some code must be added in order to save",
-        );
+        this.disable([saveButton, copyAsUrlButton], "Some code must be added in order to save");
       } else if (!(isParsing || isIncomplete)) {
-        this.disable([saveButton, exportButton, copyAsUrlButton], "Invalid code cannot be saved");
+        this.disable([saveButton, copyAsUrlButton], "Invalid code cannot be saved");
       } else if (fileManager.isAutosaving()) {
         this.disable([saveButton], "Autosave is enabled- cancel to manual save");
-        this.enable(exportButton, "Export the code into a file");
         this.enable(copyAsUrlButton, "Copy the code into a url");
       } else {
         this.enable(saveButton, "Save the code into a file");
-        this.enable(exportButton, "Export the code into a file");
         this.enable(copyAsUrlButton, "Copy the code into a url");
       }
 
@@ -762,13 +751,6 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   setDisplayLanguage(l: Language) {
-    if (l instanceof LanguageElan) {
-      exportButton.setAttribute("hidden", "");
-    } else {
-      exportButton.removeAttribute("hidden");
-      exportButton.textContent = `export as .${l.defaultFileExtension} file`;
-    }
-
     if (!document.querySelector("body")!.classList.contains("quad-editor")) {
       codeContainers[0].classList.remove("elan", "python", "cs", "vb", "java");
       codeContainers[0].classList.add(l.languageHtmlClass);
@@ -895,31 +877,17 @@ pythonButton.forEach((b) =>
   }),
 );
 
-vbButton.forEach((b) =>
-  b.addEventListener("click", async (_event: Event) => {
-    const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageVB.Instance, pane);
-  }),
-);
-
 csButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageCS.Instance, pane);
-  }),
-);
-
-javaButton.forEach((b) =>
-  b.addEventListener("click", async (_event: Event) => {
-    const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageJava.Instance, pane);
+    await setLanguage(LanguageCSharp.Instance, pane);
   }),
 );
 
 elanButton.forEach((b) =>
   b.addEventListener("click", async (_event: Event) => {
     const pane = parseInt(b.id.slice(-1));
-    await setLanguage(LanguageElan.Instance, pane);
+    await setLanguage(LanguageRefLang.Instance, pane);
   }),
 );
 
@@ -946,12 +914,6 @@ loadButton.addEventListener("click", chooser(getUploader(), false));
 appendButton.addEventListener("click", chooser(getAppender(), true));
 
 saveButton.addEventListener("click", async (e: Event) => {
-  codeViewModel.setExporting(false);
-  await getDownloader()(e);
-});
-
-exportButton.addEventListener("click", async (e: Event) => {
-  codeViewModel.setExporting(true);
   await getDownloader()(e);
 });
 
@@ -1326,7 +1288,7 @@ function chooser(uploader: (event: Event) => void, noCheck: boolean) {
       } else {
         f.type = "file";
         f.name = "file";
-        f.accept = ".elan";
+        f.accept = ".*";
         f.addEventListener("change", uploader);
       }
 

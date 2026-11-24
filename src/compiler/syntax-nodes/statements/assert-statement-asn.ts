@@ -1,0 +1,42 @@
+import { Language } from "../../../ide/frames/frame-interfaces/language";
+import { AstNode } from "../../compiler-interfaces/ast-node";
+import { Scope } from "../../compiler-interfaces/scope";
+import { SymbolType } from "../../compiler-interfaces/symbol-type";
+import { UnknownType } from "../../symbols/unknown-type";
+import { BreakpointAsn } from "../breakpoint-asn";
+import { EmptyAsn } from "../empty-asn";
+
+export class AssertStatementAsn extends BreakpointAsn implements AstNode {
+  constructor(
+    private readonly language: Language,
+    fieldId: string,
+    scope: Scope,
+  ) {
+    super(fieldId, scope);
+  }
+
+  expected: AstNode = EmptyAsn.Instance;
+  actual: AstNode = EmptyAsn.Instance;
+
+  symbolType(): SymbolType {
+    return UnknownType.Instance;
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    const emptyString = `""`;
+    const emptyTuple = `[${emptyString}, ${emptyString}]`;
+    let expected = emptyTuple;
+    let actual = emptyTuple;
+    const expectedValue = this.expected.compile();
+    const actualValue = this.actual.compile();
+
+    const expectedSt = this.expected.symbolType().languageSpecificName(this.language);
+    const actualSt = this.actual.symbolType().languageSpecificName(this.language);
+    const actualFunc = `async () => ${actualValue}`;
+    expected = `[${expectedValue}, "${expectedSt}"]`;
+    actual = `[${actualFunc}, "${actualSt}"]`;
+
+    return `${this.indent()}_outcomes.push(await system.assert(${actual}, ${expected}, "${this.fieldId}", _stdlib, false));`;
+  }
+}

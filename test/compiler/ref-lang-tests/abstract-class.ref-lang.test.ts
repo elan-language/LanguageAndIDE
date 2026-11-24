@@ -1,0 +1,1150 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Abstract Class", () => {
+  test("Pass_SimpleAbstractClass", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+  abstract procedure proc()
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function func() returns Int
+    return 1
+  end function
+
+  procedure proc()
+    call printNoLine(2)
+  end procedure
+
+  property prop as Int
+end class
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async func() {
+    return 0;
+  }
+
+  proc() {
+  }
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async func() {
+    return 1;
+  }
+
+  async proc() {
+    await _stdlib.printNoLine(2);
+  }
+
+  prop = 0;
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "312");
+  });
+
+  test("Pass_AbstractClassWithConcreteMembers", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
+  call x.proc()
+end main
+
+abstract class Foo
+  function func() returns Int
+    return 1
+  end function
+
+  procedure proc()
+    call printNoLine(2)
+  end procedure
+
+  property prop as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+end class
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async func() {
+    return 1;
+  }
+
+  async proc() {
+    await _stdlib.printNoLine(2);
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "312");
+  });
+
+  test("Pass_AbstractClassWithConcreteMembers1", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call x.proc()
+end main
+
+abstract class Foo
+  function func() returns Int
+    return this.prop
+  end function
+
+  procedure proc()
+    call printNoLine(this.func())
+  end procedure
+
+  property prop as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+end class
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async func() {
+    return this.prop;
+  }
+
+  async proc() {
+    await _stdlib.printNoLine((await this.func()));
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_AbstractClassWithConcreteMembers2", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+
+  procedure proc()
+    call printNoLine(this.func())
+  end procedure
+
+  property prop as Int
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function func() returns Int
+    return this.prop
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
+  async func() {
+    return 0;
+  }
+
+  async proc() {
+    await _stdlib.printNoLine((await this.func()));
+  }
+
+  prop = 0;
+
+}
+
+class Bar extends Foo {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async func() {
+    return this.prop;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_AbstractClassInheritsAbstractClass", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+end class
+
+abstract class Foo1 inherits Foo
+  abstract procedure proc()
+end class
+
+abstract class Foo2 inherits Foo1
+  property prop as Int
+end class
+
+class Bar inherits Foo2
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function func() returns Int
+    return 1
+  end function
+
+  procedure proc()
+    call printNoLine(2)
+  end procedure
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine(x.prop);
+  await _stdlib.printNoLine((await x.func()));
+  await x.proc();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  async func() {
+    return 0;
+  }
+
+}
+
+class Foo1 extends Foo {
+  static emptyInstance() { return system.emptyClass(Foo1, []);};
+  proc() {
+  }
+
+}
+
+class Foo2 extends Foo1 {
+  static emptyInstance() { return system.emptyClass(Foo2, [["prop", 0]]);};
+  prop = 0;
+
+}
+
+class Bar extends Foo2 {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.prop = 3;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async func() {
+    return 1;
+  }
+
+  async proc() {
+    await _stdlib.printNoLine(2);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "312");
+  });
+
+  test("Pass_DifferentAbstractClassIntoFunction1", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(func1(x))
+  call printNoLine(func2(x))
+end main
+
+function func1(f as Foo1) returns Int
+  return f.ff1()
+end function 
+
+function func2(f as Foo2) returns Int
+  return f.ff2()
+end function 
+
+abstract class Foo1
+  abstract function ff1() returns Int
+end class
+
+abstract class Foo2 inherits Foo1
+  abstract function ff2() returns Int
+end class
+
+class Bar inherits Foo2
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function ff1() returns Int
+    return 1
+  end function
+
+  function ff2() returns Int
+    return 2
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await global.func1(x)));
+  await _stdlib.printNoLine((await global.func2(x)));
+}
+
+async function func1(f) {
+  return (await f.ff1());
+}
+global["func1"] = func1;
+
+async function func2(f) {
+  return (await f.ff2());
+}
+global["func2"] = func2;
+
+class Foo1 {
+  static emptyInstance() { return system.emptyClass(Foo1, []);};
+  async ff1() {
+    return 0;
+  }
+
+}
+
+class Foo2 extends Foo1 {
+  static emptyInstance() { return system.emptyClass(Foo2, []);};
+  async ff2() {
+    return 0;
+  }
+
+}
+
+class Bar extends Foo2 {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async ff1() {
+    return 1;
+  }
+
+  async ff2() {
+    return 2;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "12");
+  });
+
+  test("Pass_DifferentAbstractClassIntoFunction2", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(func1(x))
+  call printNoLine(func2(x))
+end main
+
+function func1(f as Foo1) returns Int
+  return f.ff1()
+end function 
+
+function func2(f as Foo2) returns Int
+  return f.ff1()
+end function 
+
+abstract class Foo1
+  abstract function ff1() returns Int
+end class
+
+abstract class Foo2 inherits Foo1
+  abstract function ff2() returns Int
+end class
+
+class Bar inherits Foo2
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function ff1() returns Int
+    return 1
+  end function
+
+  function ff2() returns Int
+    return 2
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine((await global.func1(x)));
+  await _stdlib.printNoLine((await global.func2(x)));
+}
+
+async function func1(f) {
+  return (await f.ff1());
+}
+global["func1"] = func1;
+
+async function func2(f) {
+  return (await f.ff1());
+}
+global["func2"] = func2;
+
+class Foo1 {
+  static emptyInstance() { return system.emptyClass(Foo1, []);};
+  async ff1() {
+    return 0;
+  }
+
+}
+
+class Foo2 extends Foo1 {
+  static emptyInstance() { return system.emptyClass(Foo2, []);};
+  async ff2() {
+    return 0;
+  }
+
+}
+
+class Bar extends Foo2 {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async ff1() {
+    return 1;
+  }
+
+  async ff2() {
+    return 2;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "11");
+  });
+
+  test("Pass_Default", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.foo)
+  call printNoLine(x.foo.hasValue())
+end main
+
+abstract class Foo
+  property f as Foo2
+end class
+
+abstract class Foo2
+  property f2 as Foo
+end class
+
+class Bar
+  constructor()
+    assign this.foo to new Maybe<of Foo>()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property foo as Maybe<of Foo> 
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Bar()._initialise());
+  await _stdlib.printNoLine(x.foo);
+  await _stdlib.printNoLine(x.foo.hasValue());
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+  elan_f;
+  get f() {
+    return this.elan_f ??= Foo2.emptyInstance();
+  }
+  set f(f) {
+    this.elan_f = f;
+  }
+
+}
+
+class Foo2 {
+  static emptyInstance() { return system.emptyClass(Foo2, []);};
+  elan_f2;
+  get f2() {
+    return this.elan_f2 ??= Foo.emptyInstance();
+  }
+  set f2(f2) {
+    this.elan_f2 = f2;
+  }
+
+}
+
+class Bar {
+  static emptyInstance() { return system.emptyClass(Bar, []);};
+
+  async _initialise() {
+    this.foo = system.initialise(await new _stdlib.Maybe()._initialise());
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  elan_foo;
+  get foo() {
+    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
+  }
+  set foo(foo) {
+    this.elan_foo = foo;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Maybefalse");
+  });
+
+  test("Fail_DoesntImplementFunc", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+  abstract procedure proc()
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  procedure proc()
+    call printNoLine(2)
+  end procedure
+
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.func.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DoesntImplementProc", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+  abstract procedure proc()
+end class
+
+class Bar inherits Foo
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function func() returns Int
+    return 1
+  end function
+
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Bar must implement Foo.proc.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InheritSelf", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+abstract class Foo inherits Foo
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Foo' cannot inherit from itself.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InheritSelfIndirect", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+abstract class Yon inherits Foo
+  property prop1 as Int
+end class
+
+abstract class Bar inherits Yon
+  property prop2 as Int
+end class
+
+abstract class Foo inherits Bar
+  property prop3 as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Class/interface 'Yon' cannot inherit from itself.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DuplicateProperty", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+abstract class Foo
+  property prop as Int
+end class
+
+abstract class Bar inherits Foo
+  property prop as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Name 'prop' not unique in scope.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_InheritConcreteClass", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+  property prop1 as Int
+end class
+
+abstract class Bar inherits Foo
+  property prop2 as Int
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May inherit from one abstract superclass only.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_DifferentAbstractClassIntoFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(func1(x))
+end main
+
+function func1(f as Foo1) returns Int
+  return f.ff2()
+end function 
+
+abstract class Foo1
+  abstract function ff1() returns Int
+end class
+
+abstract class Foo2 inherits Foo1
+  abstract function ff2() returns Int
+end class
+
+class Bar inherits Foo2
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function ff1() returns Int
+    return 1
+  end function
+
+  function ff2() returns Int
+    return 2
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "'ff2' is not defined for type 'Foo1'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_MultipleAbstractClassInherits", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Bar()
+  call printNoLine(x.prop)
+  call printNoLine(x.func())
+  call x.proc()
+end main
+
+abstract class Foo
+  abstract function func() returns Int
+end class
+
+abstract class Foo1
+  abstract procedure proc()
+end class
+
+abstract class Foo2
+  property prop as Int
+end class
+
+class Bar inherits Foo, Foo1, Foo2
+  constructor()
+    assign this.prop to 3
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function func() returns Int
+    return 1
+  end function
+
+  procedure proc()
+    call printNoLine(2)
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+});

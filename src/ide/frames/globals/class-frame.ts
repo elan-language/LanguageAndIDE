@@ -1,27 +1,20 @@
 import { SymbolType } from "../../../compiler/compiler-interfaces/symbol-type";
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
-import { classKeyword, inheritsKeyword } from "../../../compiler/elan-keywords";
 import { ClassSubType } from "../../../compiler/symbols/class-type";
 import { AbstractFrame } from "../abstract-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { AbstractFunction } from "../class-members/abstract-function";
-import { AbstractProcedure } from "../class-members/abstract-procedure";
 import { Constructor } from "../class-members/constructor";
-import { FunctionMethod } from "../class-members/function-method";
-import { MemberSelector } from "../class-members/member-selector";
-import { ProcedureMethod } from "../class-members/procedure-method";
 import { Property } from "../class-members/property";
-import { InheritsFromField } from "../fields/inherits-from-field";
-import { Regexes } from "../fields/regexes";
-import { TypeNameField } from "../fields/type-name-field";
-import { isConstructor, removeHtmlTagsAndEscChars } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { inheritsFromFieldSpec, typeNameFieldSpec } from "../fields/field-spec";
+import { isConstructor } from "../frame-helpers";
 import { Collapsible } from "../frame-interfaces/collapsible";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
+import { Selector } from "../frame-interfaces/selector";
 import { Paradigm } from "../paradigm";
 import {
   parentHelper_addChildAfter,
@@ -41,13 +34,12 @@ import {
   parentHelper_readWorstCompileStatusOfChildren,
   parentHelper_readWorstParseStatusOfChildren,
   parentHelper_removeChild,
-  parentHelper_renderChildrenAsExport,
   parentHelper_renderChildrenAsHtml,
+  parentHelper_renderChildrenAsSource,
   parentHelper_resetFieldTextOnChildren,
   parentHelper_updateBreakpoints,
   setGhostOnSelectedChildren,
 } from "../parent-helpers";
-import { CommentStatement } from "../statements/comment-statement";
 import { CompileStatus } from "../status-enums";
 
 export abstract class ClassFrame extends AbstractFrame implements Frame, Parent, Collapsible {
@@ -58,16 +50,17 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
   isConcrete: boolean = false;
   isRecord: boolean = false;
   isInterface: boolean = false;
-  public name: TypeNameField;
+  public name: FieldImpl;
   public isNotInheritable = false;
-  public inheritance: InheritsFromField;
+  public inheritance: FieldImpl;
   private _children: Array<Frame> = new Array<Frame>();
 
   constructor(parent: File) {
     super(parent);
-    this.name = new TypeNameField(this);
-    this.inheritance = new InheritsFromField(this);
-    this.getChildren().push(new MemberSelector(this));
+    this.name = new FieldImpl(this, typeNameFieldSpec);
+    this.inheritance = new FieldImpl(this, inheritsFromFieldSpec);
+    const memberSelector = parent.newMemberSelector(this);
+    this.getChildren().push(memberSelector);
     this.canHaveBreakPoint = false;
   }
 
@@ -87,10 +80,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   getFile(): File {
     return this.getParent() as File;
-  }
-
-  initialKeywords(): string {
-    return classKeyword;
   }
 
   getParadigm(): Paradigm {
@@ -116,7 +105,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return newStatus;
   }
 
-  getFactory(): StatementFactory {
+  getFactory(): FrameFactory {
     return this.getParent().getFactory();
   }
 
@@ -199,10 +188,6 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return this.inheritance.renderAsHtml();
   }
 
-  public inheritanceAsElanSource(): string {
-    return this.doesInherit() ? ` ${inheritsKeyword} ${this.inheritance.renderAsElanSource()}` : ``;
-  }
-
   indent(): string {
     return "";
   }
@@ -215,67 +200,12 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     return seenNames.filter((s) => s === name).length > 1;
   }
 
-  createConstructor(): Frame {
-    return new Constructor(this);
-  }
-
-  createFunction(priv: boolean = false): Frame {
-    return new FunctionMethod(this, priv);
-  }
-  createProperty(priv: boolean = false): Frame {
-    return new Property(this, priv);
-  }
-  createProcedure(priv: boolean = false): Frame {
-    return new ProcedureMethod(this, priv);
-  }
-  createAbstractFunction(): Frame {
-    return new AbstractFunction(this);
-  }
-  createAbstractProcedure(): Frame {
-    return new AbstractProcedure(this);
-  }
-  createComment(): Frame {
-    return new CommentStatement(this);
-  }
-
   public getConstructor(): Constructor {
     return this.getChildren().filter((m) => isConstructor(m))[0] as Constructor;
   }
-  parseFrom(source: CodeSource): void {
-    this.parseTop(source);
-    while (!this.parseBottom(source)) {
-      if (source.isMatchRegEx(Regexes.newLine)) {
-        source.removeRegEx(Regexes.newLine, false);
-        source.removeIndent();
-      } else {
-        this.getFirstSelectorAsDirectChild().parseFrom(source);
-      }
-    }
-  }
-  abstract topKeywords(): string;
 
-  parseTop(source: CodeSource): boolean {
-    source.remove(this.topKeywords());
-    this.name.parseFrom(source);
-    source.removeRegEx(/^\sinherits\s/, true);
-    this.inheritance.parseFrom(source);
-    return true;
-  }
-
-  abstract bottomKeywords(): string;
-
-  parseBottom(source: CodeSource): boolean {
-    let result = false;
-    source.removeIndent();
-    if (source.isMatch(this.bottomKeywords())) {
-      source.remove(this.bottomKeywords());
-      result = true;
-    }
-    return result;
-  }
-
-  newChildSelector(): AbstractSelector {
-    return new MemberSelector(this);
+  newChildSelector(): Selector {
+    return this.getFile().newMemberSelector(this);
   }
 
   getClassIndex() {
@@ -294,7 +224,7 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
     setGhostOnSelectedChildren(this, false);
   }
   override deleteAllGhosted(): void {
-    if (this.isGhosted()) {
+    if (this.isGhostedExplicitly()) {
       this.delete();
     } else {
       for (const child of this._children) {
@@ -307,19 +237,18 @@ export abstract class ClassFrame extends AbstractFrame implements Frame, Parent,
 
   public renderAsHtml(): string {
     return `<el-class class="${this.cls()}" id='${this.htmlId}' tabindex="-1" ${this.toolTip()}>
-<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.annotationAsHtml()}${this.getFrNo()}</el-top>
+<el-top>${this.contextMenu()}${this.bpAsHtml()}<el-expand>+</el-expand>${this.language().renderTopAsHtml(this)}${this.helpAsHtml()}${this.compileMsgAsHtml()}${this.getFrNo()}</el-top>
 ${parentHelper_renderChildrenAsHtml(this)}
 ${this.language().renderBottomAsHtml(this)}
 </el-class>`;
   }
 
-  public renderAsExport(): string {
-    const topAsExport = removeHtmlTagsAndEscChars(this.language().renderTopAsHtml(this));
-    const bottomAsExport = removeHtmlTagsAndEscChars(this.language().renderBottomAsHtml(this));
-    return `${this.indent()}${this.sourceAnnotations()}${topAsExport}${this.annotationAsSource()}\r\n
-${parentHelper_renderChildrenAsExport(this)}
-${bottomAsExport}`;
+  public renderAsSource(): string {
+    const topAsSource = this.language().renderTopAsSource(this);
+    const bottomAsSource = this.language().renderBottomAsSource(this);
+    return `${this.indent()}${topAsSource}\r\n${parentHelper_renderChildrenAsSource(this)}\r\n${bottomAsSource}`;
   }
+
   resetFieldText(): void {
     super.resetFieldText();
     parentHelper_resetFieldTextOnChildren(this);

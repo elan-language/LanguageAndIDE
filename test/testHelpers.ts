@@ -1,4 +1,5 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ParserRuleContext } from "antlr4ng";
 import assert from "assert";
 import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
@@ -11,91 +12,88 @@ import { FloatType } from "../src/compiler/symbols/float-type";
 import { IntType } from "../src/compiler/symbols/int-type";
 import { StringType } from "../src/compiler/symbols/string-type";
 import { UnknownType } from "../src/compiler/symbols/unknown-type";
+import { FileAsn } from "../src/compiler/syntax-nodes/file-asn";
 import { TestStatus } from "../src/compiler/test-status";
+import { PythonParser } from "../src/generated/python/PythonParser";
+import { RefLangParser } from "../src/generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorCompilerByLanguage, getVisitorHtmlByLanguage, getVisitorSourceByLanguage } from "../src/ide/compile-api/parser-helpers";
 import { AbstractFrame } from "../src/ide/frames/abstract-frame";
 import { AbstractSelector } from "../src/ide/frames/abstract-selector";
 import { CodeSourceFromString } from "../src/ide/frames/code-source-from-string";
-import { AbstractField } from "../src/ide/frames/fields/abstract-field";
+import { FieldImpl } from "../src/ide/frames/fields/field-impl";
 import { FileImpl } from "../src/ide/frames/file-impl";
 import { editorEvent } from "../src/ide/frames/frame-interfaces/editor-event";
 import { File } from "../src/ide/frames/frame-interfaces/file";
 import { Language } from "../src/ide/frames/frame-interfaces/language";
-import { ParseNode } from "../src/ide/frames/frame-interfaces/parse-node";
 import { MainRoutine } from "../src/ide/frames/globals/main-routine";
-import { LanguageCS } from "../src/ide/frames/language-cs";
-import { LanguageJava } from "../src/ide/frames/language-java";
+import { LanguageCSharp } from "../src/ide/frames/language-c-sharp";
 import { LanguagePython } from "../src/ide/frames/language-python";
-import { LanguageVB } from "../src/ide/frames/language-vb";
+import { LanguageRefLang } from "../src/ide/frames/language-ref-lang";
 import { Paradigm } from "../src/ide/frames/paradigm";
-import { VariableStatement } from "../src/ide/frames/statements/variable-statement";
-import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
-import { TokenType } from "../src/ide/frames/symbol-completion-helpers";
+import { VariableDefinition } from "../src/ide/frames/statements/variable-definition";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { encodeCode } from "../src/ide/web/web-helpers";
 import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
-import { assertParses, transforms } from "./compiler/compiler-test-helpers";
+import { assertParses, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { RootAstNode } from "../src/compiler/compiler-interfaces/root-ast-node";
 
 // flag to update test files
 const updateTestFiles = false;
 
-export async function assertParsesAndCompilesAndTests(f: FileImpl) {
+function compiles(ast : RootAstNode | undefined) {
+   return ast && ast.getAllCompileErrors().length == 0;
+}
+
+
+export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   const runner = await createTestRunner();
-  f.refreshParseAndCompileStatuses(false);
-  assert.equal(f.readParseStatus(), ParseStatus.valid, "failed parse");
-  assert.equal(f.readCompileStatus(), CompileStatus.ok, "failed compile");
-  const outcomes = await runner(f.compile());
-  f.refreshTestStatuses(outcomes);
-  const ts = f.readTestStatus();
+    
+  const parserErrors = file._parserErrorMessages.join("\n");
+
+  assert.equal(file.getParseStatus(), ParseStatus.valid, "failed parse " + parserErrors);
+
+  const code = file.compile();
+  const ast = file.getAst(false);
+
+  assert.equal(compiles(ast), true, "failed compile " + ast?.getAllCompileErrors().join("\n"));
+  const outcomes = await runner(code);
+  file.refreshTestStatuses(outcomes);
+  const ts = file.readTestStatus();
   if (ts !== TestStatus.default) {
     assert.equal(ts, TestStatus.pass, "failed tests");
   }
 }
 
-export async function assertGeneratesSameElanSource(fl : FileImpl, source: string, sourceFile: string) {
- 
-  const renderedSource = await fl.renderAsElanSource();
-  const actualSource = renderedSource.replaceAll("\r", "");
-  const expectedSource = source.replaceAll("\r", "");
-  let msg = "";
-
-  try {
-    assert.strictEqual(actualSource, expectedSource);
-  }
-  catch {
-    msg = `rendered elan incorrect`;
-    if (updateTestFiles) {
-      // update original not copied 
-      sourceFile = sourceFile.replace("out\/test", "src");
-
-      updateTestFile(sourceFile, actualSource);
-      msg = msg + ": test file updated";
-    }
-  }
-  return msg;
+function getDirName(l : Language) {
+  return l.languageFullName === "Python" ? "python" : "ref-lang";
 }
 
-export async function assertGeneratesHtml(fl: FileImpl, path: string) {
+function getHtmlSubDir(l : Language) {
+  return  `${getDirName(l)}-html`;
+}
+
+export async function assertGeneratesHtml(file: FileImpl, testPath: string) {
   let actualHtml = "";
-  let htmlFile = path + ".html";
+  let htmlPath = testPath + ".html";
   let msg = "";
   
   try {  
-    const renderedHtml = await fl.renderAsHtml();
+    const renderedHtml = await file.renderAsHtml();
     actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-    const htm = loadFileAsHtml(htmlFile);
-    const expectedHtml = htm.replaceAll("\r", "");
+    const expectedHtml = loadFileAsHtml(htmlPath).replaceAll("\r", "");
     assert.strictEqual(actualHtml, expectedHtml);
   }
   catch {
     msg = `rendered html incorrect`;
-    if (updateTestFiles) {
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && compiles(file.getAst(false))) {
       // update original not copied 
-      htmlFile = htmlFile.replace("out\/", "");
+      htmlPath = htmlPath.replace("out\/", "");
 
-      updateTestFile(htmlFile, actualHtml);
+      updateTestFile(htmlPath, actualHtml);
       msg = msg + ": test file updated";
     }
    
@@ -103,55 +101,42 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
    return msg;
 }
 
-export async function assertExports(fl: FileImpl, path: string, language: Language) {
+export async function assertRendersAs(file: FileImpl, sourcePath: string, language: Language) {
  
   let actual = "";
   let msg = "";
-  let file = path = path + "." + language.defaultFileExtension;
+
+  let toSourcePath = sourcePath.replace(getDirName(file.language()), getDirName(language)) + "." + language.defaultFileExtension;
 
   try {
-    fl.setLanguage(language);
+    file.setLanguage(language);
     
-    actual = (await fl.renderAsExport()).replaceAll("\r", "");;
-    const expected = loadFileAsSource(file).replaceAll("\r", "");
+    actual = (await file.renderAsSource()).replaceAll("\r", "");;
+    const expected = loadFileAsSource(toSourcePath).replaceAll("\r", "");
     assert.strictEqual(actual, expected);
   }
   catch {
-    msg = `${language.languageFullName} export incorrect`;
-    if (updateTestFiles) {
-      file = file.replace("out\/", "");
-      updateTestFile(file, actual);
+    msg = `${language.languageFullName} render incorrect`;
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && compiles(file.getAst(false))) {
+      toSourcePath = toSourcePath.replace("out\/test", "src");
+      updateTestFile(toSourcePath, actual);
       msg = msg + ": test file updated";
     }
   }
   return msg;
 }
 
-export async function assertExportsAll(fl: FileImpl, path: string) {
+export async function testFile(fileName: string, language : Language) {
+  const [file, sourcePath, testPath] = await getFile(fileName, language);
+  await assertParsesAndCompilesAndTests(file);
+
   const msgs = [];
-
-  msgs.push(await assertExports(fl, path, LanguagePython.Instance));
-  msgs.push(await assertExports(fl, path, LanguageVB.Instance));
-  msgs.push(await assertExports(fl, path, LanguageCS.Instance));
-  msgs.push(await assertExports(fl, path, LanguageJava.Instance));
+  msgs.push(await assertGeneratesHtml(file, testPath));
+  msgs.push(await assertRendersAs(file, sourcePath.slice(0, sourcePath.lastIndexOf(".")), LanguageRefLang.Instance));
+  msgs.push(await assertRendersAs(file, sourcePath.slice(0, sourcePath.lastIndexOf(".")), LanguagePython.Instance));
 
   if (msgs.some(m => m)) {
-    return msgs.join(", ");
-  }
-  return "";
-}
-
-export async function testElanFile(fn: string) {
-  const [fl, source, sourceFile, testPath] = await getFile(fn);
-  await assertParsesAndCompilesAndTests(fl);
-
-  let msgs = [];
-  msgs.push(await assertGeneratesSameElanSource(fl, source, sourceFile));
-  msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertExportsAll(fl, testPath));
-
-  if (msgs.some(m => m)) {
-    throw new Error(msgs.join(", "))
+    throw new Error(msgs.join(", "));
   }
 }
 
@@ -193,14 +178,14 @@ export async function loadFileAsModel(sourceFile: string): Promise<FileImpl> {
   return fl;
 }
 
-export async function getFile(sf: string): Promise<[FileImpl, string, string, string]> {
-  const sourceFile = `./out/test/demo_programs/${sf}.elan`;
-  const testPath = `./out/test/files/${sf}`;
+export async function getFile(sf: string, l : Language): Promise<[FileImpl, string, string]> {
+  const sourceFile = `./out/test/demo_programs/${getDirName(l)}/${sf}.${l.defaultFileExtension}`;
+  const testPath = `./out/test/files/${getHtmlSubDir(l)}/${sf}`;
   const source = loadFileAsSource(sourceFile);
   const codeSource = new CodeSourceFromString(source);
   const fl = new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, true);
   await fl.parseFrom(codeSource);
-  return [fl, source, sourceFile, testPath];
+  return [fl, sourceFile, testPath];
 }
 
 export function loadFileAsHtml(sourceFile: string): string {
@@ -240,7 +225,7 @@ function getEvent(char: string) {
   } as editorEvent;
 }
 
-async function assertStartsWith(f: FileImpl, fld: AbstractField, startsWith: [string, string, string][]) {
+async function assertStartsWith(f: FileImpl, fld: FieldImpl, startsWith: [string, string, string][]) {
   await f.renderAsHtml();
   const symbols = fld.allPossibleSymbolCompletions;
 
@@ -253,7 +238,7 @@ async function assertStartsWith(f: FileImpl, fld: AbstractField, startsWith: [st
   }
 }
 
-async function doAsserts(f: FileImpl, fld: AbstractField, expected: [string, string, string][] | number) {
+async function doAsserts(f: FileImpl, fld: FieldImpl, expected: [string, string, string][] | number) {
   await f.renderAsHtml();
   const symbols = fld.allPossibleSymbolCompletions;
 
@@ -292,7 +277,7 @@ export async function assertAutocompletes(
 ): Promise<void> {
   assertParses(f);
 
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   if (clear) {
     fld.text = "";
@@ -404,7 +389,7 @@ export async function assertSymbolCompletionWithString(
   expected: [string, string, string][] | number,
 ): Promise<void> {
   assertParses(f);
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   assert.notStrictEqual(fld, undefined, `${id} not found`);
 
@@ -427,7 +412,7 @@ export async function assertSymbolCompletionMenuStartsWith(
   expected: [string, string, string][],
 ): Promise<void> {
   assertParses(f);
-  const fld = f.getById(id) as AbstractField;
+  const fld = f.getById(id) as FieldImpl;
 
   assert.notStrictEqual(fld, undefined, `${id} not found`);
 
@@ -551,49 +536,99 @@ export function ctrl_v() {
   return key("v", false, true);
 }
 
-export function testNodeParse(
-  node: ParseNode,
+
+
+export type Parser = RefLangParser | PythonParser;
+
+const file = new FileImpl(
+  hash,
+  new Paradigm(""),
+  "",
+  transforms(),
+  new StdLib(new StubInputOutput()),
+  false,
+  true,
+);
+
+const rootScope = new FileAsn(file.libraryScope, file.getVersion(), file.language());
+
+
+export function testAntlrParse(
+  languageAndRule :  [Language,
+      rule: (parser: Parser) => ParserRuleContext],
   text: string,
-  status: ParseStatus,
-  matchedText: string,
-  remainingText: string,
-  elanSource = "",
+  parses: boolean,
+  matchedText = "",
+  source = "",
   html = "",
   exprt = "",
+  objectCode = ""
 ) {
-  node.parseText(text);
-  assert.equal(node.status, status);
+  const [language, rule] = languageAndRule;
+  const parser = getParserByLanguage(language, text);
+  const context = rule(parser); 
+  const parsedText =  context.getText().replaceAll(" ", "");
+  const errors = parser.numberOfSyntaxErrors;
+  
+  assert.equal(errors === 0, parses, `Parsing: '${text}'`);
+
   if (matchedText !== "") {
-    assert.equal(node.matchedText, matchedText);
+    assert.equal(parsedText, matchedText.replaceAll(" ", ""));
   }
-  if (remainingText !== "") {
-    assert.equal(node.remainingText, remainingText);
+
+  if (source !== "") {
+    assert.equal(getVisitorSourceByLanguage(LanguageRefLang.Instance).visit(context), source);
   }
-  if (elanSource !== "") {
-    assert.equal(node.renderAsElanSource(), elanSource);
-  }
+
   if (html && html !== "") {
-    assert.equal(node.renderAsHtml(), html);
+    assert.equal(getVisitorHtmlByLanguage(language).visit(context), html);
   }
+
   if (exprt && exprt !== "") {
-    assert.equal(node.renderAsExport(), exprt);
+    assert.equal(getVisitorSourceByLanguage(language).visit(context), exprt);
   }
+
+  if (objectCode && objectCode !== "") {
+    assert.equal(getVisitorCompilerByLanguage(language, "", rootScope).visit(context)?.compile(), objectCode);
+  }
+}
+
+export function testFieldParse(
+  field: FieldImpl,
+  text: string,
+  parses: boolean,
+  html = "",
+  source = "",
+  exprt = "",
+) { 
+  field.parseCompleteText(text);
+
+  const errors = field.getParserErrors();
+
+  const parsed  = field.readParseStatus() === ParseStatus.valid;
+
+  if (html && html !== "") {
+    assert.equal(parsed ? field.renderAsHtml() : errors, html);
+  }
+
+   if (source !== "") {
+    assert.equal(field.renderAsSource(), source);
+  }
+
+  if (exprt && exprt !== "") {
+    assert.equal(field.renderAsSource(), exprt);
+  }
+
+  assert.equal(parses, parsed, `Parsing: '${text}'`);
 }
 
 export function fileWithPython(): FileImpl {
   return fileWithLanguage(LanguagePython.Instance);
 }
 
-export function fileWithVB(): FileImpl {
-  return fileWithLanguage(LanguageVB.Instance);
-}
 
 export function fileWithCS(): FileImpl {
-  return fileWithLanguage(LanguageCS.Instance);
-}
-
-export function fileWithJava(): FileImpl {
-  return fileWithLanguage(LanguageJava.Instance);
+  return fileWithLanguage(LanguageCSharp.Instance);
 }
 
 function fileWithLanguage(language: Language): FileImpl {
@@ -611,52 +646,12 @@ function fileWithLanguage(language: Language): FileImpl {
 
 export function testExtractContextForExpression(text: string, context: string) {
   const main = new MainRoutine(new FileImpl(hash, new Paradigm(""), "", transforms(), new StdLib(new StubInputOutput()),false, false));
-  const v = new VariableStatement(main);
+  const v = new VariableDefinition(main);
   const expr = v.expr;
   expr.setFieldToKnownValidText(text);
   expr.parseCurrentText();
   assert.equal(expr.extractContextFromText(), context);
 
-}
-
-export function testActiveNodeAndDone(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  activeNodeType: string,
-  done = false,
-) {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  const active = node.getActiveNode();
-  const cls = active.constructor.name;
-  assert.equal(cls, activeNodeType);
-  assert.equal(node.isDone(), done);
-}
-
-export function testSymbolCompletionSpec(node: ParseNode, text: string, status: ParseStatus, activeNode: string,
-  toMatch = "", tokenTypes: TokenType[], keywords: string[] = [], constrainingId: string = "") {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  const active = node.getActiveNode();
-  const cls = active.constructor.name;
-  const spec = node.symbolCompletion_getSpec();
-  assert.equal(cls, activeNode);
-  assert.equal(spec.toMatch, toMatch);
-  assert.equal(Array.from(spec.tokenTypes).join(","), tokenTypes.join(","));
-  assert.equal(Array.from(spec.keywords).map(kc => kc.keyword).join(","), keywords.join(","));
-  assert.equal(spec.context, constrainingId);
-}
-
-export function testCompletion(
-  node: ParseNode,
-  text: string,
-  status: ParseStatus,
-  completion: string,
-) {
-  node.parseText(text);
-  assert.equal(node.status, status);
-  assert.equal(node.getSyntaxCompletionAsHtml(), completion);
 }
 
 export const intType = IntType.Instance;
@@ -725,3 +720,16 @@ export function assertOptions(selector : AbstractSelector, options : string[]) {
   }
 }
 
+export function fileImplFor(language: Language) {
+  const file = new FileImpl(
+    testHash,
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
+  file.setLanguage(language);
+  return file;
+}

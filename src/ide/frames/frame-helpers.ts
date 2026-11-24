@@ -1,5 +1,4 @@
 import { CompileError, Severity } from "../../compiler/compile-error";
-import { privateKeyword } from "../../compiler/elan-keywords";
 import { TestStatus } from "../../compiler/test-status";
 import { AbstractFrame } from "./abstract-frame";
 import { AbstractSelector } from "./abstract-selector";
@@ -353,30 +352,11 @@ export function togglePrivatePublic(member: PossiblyPrivateMember) {
 }
 
 export function selfTypeAsHtml(member: MemberFrame): string {
-  const typeNode = (member.getParent() as ClassFrame).name.getRootNode();
-  return typeNode?.renderAsHtml() ?? "<el-type></el-type>";
+  const source = selfTypeAsSource(member);
+  return source === "" ? source : `<el-type>${source}</el-type>`;
 }
 
-export function modifierAsElanSource(member: MemberFrame): string {
-  return member.isPrivate ? `${privateKeyword} ` : "";
-}
-
-export function removeHtmlTagsAndEscChars(html: string): string {
-  //First remove tag-pairs *and contents* for things that aren't source
-  let result = html;
-  result = result.replace(/<script.*?<\/el-place>/gm, ""); //Added to avoid
-  result = result.replace(/<el-place.*?<\/el-place>/gm, "");
-  result = result.replace(/<el-compl.*?<\/el-compl>/gm, "");
-  result = result.replace(/<el-msg.*?<\/el-msg>/gm, "");
-  result = result.replace(/<el-help.*?<\/el-help>/gm, "");
-  result = result.replace(/<el-fr>.*?<\/el-fr>/gm, "");
-  result = result.replace(/<el-expand>.*?<\/el-expand>/gm, "");
-  result = result.replace(/<br>/gm, "\n");
-  while (result.match(/<[[a-z\/][^>]*>/gm)) {
-    result = result.replace(/<[^>]*>/gm, ""); // remove all remaining tags, leaving contents
-  }
-  result = result.replace(/&nbsp;/gm, " ");
-  result = result.replace(/&gt;/gm, ">");
-  result = result.replace(/&lt;/gm, "<");
-  return result;
+export function selfTypeAsSource(member: MemberFrame): string {
+  const typeNode = (member.getParent() as ClassFrame).name;
+  return typeNode?.renderAsSource() ?? "";
 }

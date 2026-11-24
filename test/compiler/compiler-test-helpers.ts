@@ -4,16 +4,15 @@ import { AssertOutcome } from "../../src/compiler/assert-outcome";
 import { Severity } from "../../src/compiler/compile-error";
 import { StdLib } from "../../src/compiler/standard-library/std-lib";
 import { elanVersion } from "../../src/environment";
-import { transform, transformMany } from "../../src/ide/compile-api/ast-visitor";
+import { transform } from "../../src/ide/compile-api/ast-visitor";
 import { Transforms } from "../../src/ide/compile-api/transforms";
 import { FileImpl } from "../../src/ide/frames/file-impl";
 import { Field } from "../../src/ide/frames/frame-interfaces/field";
 import { Frame } from "../../src/ide/frames/frame-interfaces/frame";
 import { Language } from "../../src/ide/frames/frame-interfaces/language";
-import { LanguageCS } from "../../src/ide/frames/language-cs";
-import { LanguageJava } from "../../src/ide/frames/language-java";
+import { LanguageCSharp } from "../../src/ide/frames/language-c-sharp";
 import { LanguagePython } from "../../src/ide/frames/language-python";
-import { LanguageVB } from "../../src/ide/frames/language-vb";
+import { Paradigm } from "../../src/ide/frames/paradigm";
 import { ParseStatus } from "../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../src/ide/stub-input-output";
 import { encodeCode } from "../../src/ide/web/web-helpers";
@@ -22,7 +21,7 @@ import { TestInputOutput } from "./test-input-output";
 import { getTestSystem } from "./test-system";
 
 export function assertParses(file: FileImpl) {
-  assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError);
+  assert.strictEqual(file.parseError, undefined, "Unexpected parse error: " + file.parseError + " Antlr: " + file.getParserErrors());
 }
 
 export function assertDoesNotParse(file: FileImpl) {
@@ -72,7 +71,7 @@ export function assertObjectCodeIsWithAdvisories(file: FileImpl, objectCode: str
     
     const m = msgs[i];
     const e = errors[i];
-    const id = e.locationId; // to help test migration
+    const _id = e.locationId; // to help test migration
     const em = e.message + (e.link ?? "");
     assert.strictEqual(em, m);
   }
@@ -92,7 +91,7 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
   for (let i = 0; i < msgs.length; i++) {
     const m = msgs[i];
     const e = errors[i];
-    const id = e.locationId; // to help test migration
+    const _id = e.locationId; // to help test migration
     const em = e.message + (e.link ?? "");
     assert.strictEqual(em, m);
   }
@@ -101,7 +100,7 @@ export function assertDoesNotCompile(file: FileImpl, msgs: string[]) {
 export function assertDoesNotCompileWithId(file: FileImpl, id: string, msgs: string[]) {
   file.compile();
 
-  const hasErrors = file.getById(id) as Frame | Field;
+  const _hasErrors = file.getById(id) as Frame | Field;
   const errors = file.ast?.getCompileErrorsFor(id) || [];
 
   for (let i = 0; i < msgs.length; i++) {
@@ -237,16 +236,15 @@ export async function assertObjectCodeDoesNotExecute(file: FileImpl, msg?: strin
   }
 }
 
-export function ignore_test(name: string, test: (done: Done) => void) {}
+export function ignore_test(_name: string, _test: (done: Done) => void) {}
 
-export function testHash(s: string) {
+export function testHash(_s: string) {
   return Promise.resolve("");
 }
 
 export function transforms() {
   return {
     transform: transform,
-    transformMany: transformMany,
   } as Transforms;
 }
 
@@ -256,17 +254,17 @@ export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}
 
 export const testHeader = `# FFFF ${testHeaderVersion} valid`;
 
-export const testPythonHeader = `# Python with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testJavaHeader = `// Java with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testCSHeader = `// C# with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-export const testVBHeader = `' VB.NET with Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
+export const testPythonHeader = `# FFFF Python with ${testHeaderVersion} valid`;
+export const testJavaHeader = `// FFFF Java with ${testHeaderVersion} valid`;
+export const testCSHeader = `// FFFF C# with ${testHeaderVersion} valid`;
+export const testVBHeader = `' FFFF VB.NET with ${testHeaderVersion} valid`;
 
 export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
   let actual;
 
   try {
     assert.ok(file.setLanguage(language), "Failed to set language");
-    actual = await file.renderAsExport();   
+    actual = await file.renderAsSource();   
 
   } catch (e) {
     assert.fail((e as { message: string }).message ?? "");
@@ -278,14 +276,21 @@ export async function assertExportedPythonIs(file: FileImpl, code : string) {
   await assertExportedFileIs(file, LanguagePython.Instance, code);
 }
 
-export async function assertExportedJavaIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageJava.Instance, code);
-}
-
 export async function assertExportedCSIs(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageCS.Instance, code);
+  await assertExportedFileIs(file, LanguageCSharp.Instance, code);
 }
 
-export async function assertExportedVBis(file: FileImpl, code : string) {
-  await assertExportedFileIs(file, LanguageVB.Instance, code);
+
+export function newFileImpl(language: Language): FileImpl {
+      const file = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    file.setLanguage(language);
+    return file;
 }

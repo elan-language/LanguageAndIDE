@@ -1,0 +1,52 @@
+# 103c9e4f3501af7d010876c6e48ec73316894cedae7fb45f6353c8884e3871fd Elan 2.0.0-beta4 valid
+
+#  Tetris 8: Write emptyAndWithinBounds function
+main
+  variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  call drawBackground(bg)
+  variable moving set to true
+  while moving
+    call drawShape(shape, position, green, bg)
+    call sleep(0.5)
+    call eraseShape(shape, position, bg)
+    assign position to position + 40
+  end while
+end main
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+procedure eraseShape(shape as List<of Int>, position as Int, bg as BlockGraphics)
+  call drawShape(shape, position, black, bg)
+end procedure
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+function emptyAndWithinBounds(blockNo as Int, bg as BlockGraphics) returns Boolean
+  return (blockNo < 1200) and (bg.getBlockNo(blockNo) is black)
+end function
+
+test test_emptyAndWithinBounds
+  variable bg set to (new BlockGraphics()).withPutBlockNo(971, green).withPutBlockNo(735, black)
+  assert emptyAndWithinBounds(735, bg) evaluates to true
+  assert emptyAndWithinBounds(971, bg) evaluates to false
+  assert emptyAndWithinBounds(1218, bg) evaluates to false
+end test

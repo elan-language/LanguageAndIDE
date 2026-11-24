@@ -1,6 +1,5 @@
-import { ExpressionField } from "../fields/expression-field";
-import { IdentifierField } from "../fields/identifier-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
@@ -8,21 +7,16 @@ import { SingleLineFrame } from "../single-line-frame";
 
 export abstract class AbstractDefinitionStatement extends SingleLineFrame implements Statement {
   isStatement = true;
-  name: IdentifierField;
-  expr: ExpressionField;
+  name: FieldImpl;
+  expr: FieldImpl;
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new IdentifierField(this);
-    this.expr = new ExpressionField(this);
+    this.name = new FieldImpl(this, identifierFieldSpec);
+    this.expr = new FieldImpl(this, expressionFieldSpec);
   }
-  abstract initialKeywords(): string;
-
-  abstract parseFrom(source: CodeSource): void;
 
   abstract getIdPrefix(): string;
-
-  abstract renderAsElanSource(): string;
 
   getFields(): Field[] {
     return [this.name, this.expr];

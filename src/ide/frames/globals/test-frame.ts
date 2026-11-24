@@ -1,31 +1,33 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
 import { BreakpointStatus } from "../../../compiler/debugging/breakpoint-status";
-import { testKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { TestNameField } from "../fields/test-name-field";
+import { FieldImpl } from "../fields/field-impl";
+import { testNameFieldSpec } from "../fields/field-spec";
 import {
   helper_CompileOrParseAsDisplayStatus,
   helper_testStatusAsDisplayStatus,
 } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 import { AssertStatement } from "../statements/assert-statement";
 import { DisplayColour } from "../status-enums";
 
 export class TestFrame extends FrameWithStatements implements GlobalFrame {
+  frameType: FrameType = FrameType.test;
   isTest = true;
   isGlobal = true;
-  public testName: TestNameField;
+  public testName: FieldImpl;
   file: File;
   private _testStatus: TestStatus;
   protected canHaveBreakPoint = false;
   constructor(parent: File) {
     super(parent);
     this.file = parent;
-    this.testName = new TestNameField(this);
+    this.testName = new FieldImpl(this, testNameFieldSpec);
+    this.testName.setFieldToKnownValidText("test_");
     this._testStatus = TestStatus.default;
   }
 
@@ -46,7 +48,7 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
 
   updateTestStatus(): void {
     const tests = this.getChildren()
-      .filter((c) => c instanceof AssertStatement && !c.isGhosted())
+      .filter((c) => c instanceof AssertStatement && !c.isGhostedExplicitly())
       .map((c) => c as AssertStatement);
     const worstOf = (a: TestStatus, b: TestStatus) => (a < b ? a : b);
     const worst = tests.reduce((prev, t) => worstOf(t.getTestStatus(), prev), TestStatus.default);
@@ -59,9 +61,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
       assert.outcome = undefined;
     }
   }
-  initialKeywords(): string {
-    return testKeyword;
+
+  helpId(): string {
+    return "test";
   }
+
   getFields(): Field[] {
     return [this.testName];
   }
@@ -69,28 +73,11 @@ export class TestFrame extends FrameWithStatements implements GlobalFrame {
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_test`;
   }
-  frameSpecificAnnotation(): string {
-    return "test";
-  }
 
   override outerHtmlTag: string = "el-test";
 
   indent(): string {
     return "";
-  }
-
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}test ${this.testName.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-end test\r
-`;
-  }
-  parseTop(source: CodeSource): void {
-    source.remove("test ");
-    this.testName.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end test");
   }
 
   setAssertOutcomes(outcomes: AssertOutcome[]) {

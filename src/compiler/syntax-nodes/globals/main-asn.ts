@@ -3,6 +3,7 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { DuplicateSymbol } from "../../../compiler/symbols/duplicate-symbol";
 import { allScopedSymbols, getGlobalScope } from "../../../compiler/symbols/symbol-helpers";
 import { mustNotHaveDuplicateMain } from "../../compile-rules";
+import { mainWellKnownId } from "../../well-known-ids";
 import { CompoundAsn } from "../compound-asn";
 
 export class MainAsn extends CompoundAsn implements AstNode {
@@ -18,7 +19,7 @@ export class MainAsn extends CompoundAsn implements AstNode {
   }
 
   get symbolId() {
-    return "__main";
+    return mainWellKnownId;
   }
 
   debugSymbols() {
@@ -28,7 +29,7 @@ export class MainAsn extends CompoundAsn implements AstNode {
   compile(): string {
     this.compileErrors = [];
 
-    const existingMain = this.resolveSymbol("__main", true, this);
+    const existingMain = this.resolveSymbol(mainWellKnownId, true, this);
 
     if (existingMain instanceof DuplicateSymbol) {
       mustNotHaveDuplicateMain(this.compileErrors, this.fieldId);

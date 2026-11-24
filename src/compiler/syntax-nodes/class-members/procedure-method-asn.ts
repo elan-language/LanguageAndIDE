@@ -4,9 +4,9 @@ import { Scope } from "../../../compiler/compiler-interfaces/scope";
 import { getClassScope, getGlobalScope, match } from "../../../compiler/symbols/symbol-helpers";
 import { SymbolScope } from "../../../compiler/symbols/symbol-scope";
 import { getId, mustBeUniqueNameInScope } from "../../compile-rules";
-import { ProcedureAsn } from "../globals/procedure-asn";
+import { AbstractProcedureAsn } from "../globals/abstract-procedure-asn";
 
-export class ProcedureMethodAsn extends ProcedureAsn {
+export class ProcedureMethodAsn extends AbstractProcedureAsn {
   isMember: boolean = true;
 
   isAbstract = false;
@@ -30,7 +30,7 @@ export class ProcedureMethodAsn extends ProcedureAsn {
   public override compile(): string {
     this.compileErrors = [];
 
-    const name = this.name.compile();
+    const name = this.methodName.compile();
     mustBeUniqueNameInScope(name, getClassScope(this), this.compileErrors, this.fieldId);
 
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
@@ -41,7 +41,7 @@ ${this.indent()}}\r
   }
 
   resolveSymbol(id: string, caseSensitive: boolean, initialScope: Scope): ElanSymbol {
-    if (match(getId(this.name), id, caseSensitive)) {
+    if (match(getId(this.methodName), id, caseSensitive)) {
       return this;
     }
 
@@ -49,7 +49,7 @@ ${this.indent()}}\r
   }
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.methodName);
   }
 
   symbolScope = SymbolScope.member;

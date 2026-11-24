@@ -1,0 +1,63 @@
+import { mustBeKnownSymbol } from "../compile-rules";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { EnumType } from "../symbols/enum-type";
+import { NullScope } from "../symbols/null-scope";
+import { getGlobalScope, isScope } from "../symbols/symbol-helpers";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { isAstIdNode } from "./ast-helpers";
+
+export class EnumValueAsn extends AbstractAstNode implements AstNode {
+  constructor(
+    private readonly idNode: AstNode,
+    private readonly type: EnumType,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+  }
+
+  get value() {
+    return isAstIdNode(this.idNode) ? this.idNode.id : "";
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+
+    const symbol = this.scope.resolveSymbol(this.type.name, true, this.scope);
+
+    mustBeKnownSymbol(
+      symbol,
+      NullScope.Instance,
+      symbol.symbolId,
+      UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+
+    if (isScope(symbol)) {
+      const value = symbol.resolveSymbol(this.value, true, symbol);
+      mustBeKnownSymbol(
+        value,
+        NullScope.Instance,
+        value.symbolId,
+        UnknownType.Instance,
+        this.compileErrors,
+        this.fieldId,
+        this.scope,
+      );
+    }
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+    return `${this.type.name}.${this.value}`;
+  }
+
+  symbolType() {
+    return this.type;
+  }
+
+  toString() {
+    return `${this.type.name}.${this.value}`;
+  }
+}

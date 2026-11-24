@@ -1,37 +1,27 @@
-import {
-  abstractFunctionKeywords,
-  abstractKeyword,
-  functionKeyword,
-  returnsKeyword,
-} from "../../../compiler/elan-keywords";
-import { MethodNameField } from "../fields/method-name-field";
-import { ParamListField } from "../fields/param-list-field";
-import { TypeField } from "../fields/type-field";
+import { FieldImpl } from "../fields/field-impl";
+import { methodNameFieldSpec, paramListFieldSpec, typeFieldSpec } from "../fields/field-spec";
 import { singleIndent } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class AbstractFunction extends SingleLineFrame {
+  frameType: FrameType = FrameType.abstractFunction;
   isAbstract = true;
   isMember: boolean = true;
   private = false;
-  public name: MethodNameField;
-  public params: ParamListField;
-  public returnType: TypeField;
+  public name: FieldImpl;
+  public params: FieldImpl;
+  public returnType: FieldImpl;
   hrefForFrameHelp: string = "oopRef.html#Abstract_function";
 
   constructor(parent: Parent) {
     super(parent);
-    this.name = new MethodNameField(this);
-    this.params = new ParamListField(this);
-    this.returnType = new TypeField(this);
+    this.name = new FieldImpl(this, methodNameFieldSpec);
+    this.params = new FieldImpl(this, paramListFieldSpec);
+    this.returnType = new FieldImpl(this, typeFieldSpec);
     this.canHaveBreakPoint = false;
-  }
-
-  initialKeywords(): string {
-    return abstractFunctionKeywords;
   }
 
   override helpDocument(): string {
@@ -50,32 +40,14 @@ export class AbstractFunction extends SingleLineFrame {
     return `${this.language().languageHtmlClass}_func`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "abstract function";
-  }
-
   public override indent(): string {
     return singleIndent();
   }
 
   override outerHtmlTag: string = "el-func";
 
-  public override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${abstractKeyword} ${functionKeyword} ${this.name.renderAsElanSource()}(${this.params.renderAsElanSource()}) ${returnsKeyword} ${this.returnType.renderAsElanSource()}\r
-`;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.remove(`${abstractKeyword} ${functionKeyword} `);
-    this.name.parseFrom(source);
-    source.remove("(");
-    this.params.parseFrom(source);
-    source.remove(`) ${returnsKeyword} `);
-    this.returnType.parseFrom(source);
-  }
-
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

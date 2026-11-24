@@ -1,27 +1,27 @@
-import { endKeyword, forKeyword, inKeyword } from "../../../compiler/elan-keywords";
-
-import { ExpressionField } from "../fields/expression-field";
-import { IdentifierField } from "../fields/identifier-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { identifierFieldSpec, expressionFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class ForLoop extends FrameWithStatements implements Statement {
+  frameType: FrameType = FrameType.forLoop;
   isStatement = true;
-  variable: IdentifierField;
-  iter: ExpressionField;
+  variable: FieldImpl;
+  iter: FieldImpl;
   constructor(parent: File | Parent) {
     super(parent);
-    this.variable = new IdentifierField(this);
+    this.variable = new FieldImpl(this, identifierFieldSpec);
     this.variable.setPlaceholder("<i>item</i>");
-    this.iter = new ExpressionField(this);
+    this.iter = new FieldImpl(this, expressionFieldSpec);
     this.iter.setPlaceholder("<i>source</i>");
   }
-  initialKeywords(): string {
-    return forKeyword;
+
+  helpId(): string {
+    return "enum";
   }
 
   getFields(): Field[] {
@@ -32,25 +32,5 @@ export class ForLoop extends FrameWithStatements implements Statement {
     return `${this.language().languageHtmlClass}_for`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "for";
-  }
-
   outerHtmlTag: string = "el-statement";
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${forKeyword} ${this.variable.renderAsElanSource()} in ${this.iter.renderAsElanSource()}\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}${endKeyword} ${forKeyword}`;
-  }
-
-  parseTop(source: CodeSource): void {
-    source.remove(`${forKeyword} `);
-    this.variable.parseFrom(source);
-    source.remove(` ${inKeyword} `);
-    this.iter.parseFrom(source);
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, `${endKeyword} ${forKeyword}`);
-  }
 }

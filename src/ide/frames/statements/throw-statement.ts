@@ -1,44 +1,37 @@
-import { throwKeyword } from "../../../compiler/elan-keywords";
-import { ExceptionMessageField } from "../fields/exception-message-field";
-import { ExceptionTypeField } from "../fields/exception-type-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { exceptionMessageFieldSpec, exceptionTypeFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ThrowStatement extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.throwStatement;
   isStatement = true;
-  type: ExceptionTypeField;
-  text: ExceptionMessageField;
+  type: FieldImpl;
+  text: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.text = new ExceptionMessageField(this);
-    this.type = new ExceptionTypeField(this);
+    this.text = new FieldImpl(this, exceptionMessageFieldSpec);
+    this.type = new FieldImpl(this, exceptionTypeFieldSpec);
+    this.type.setFieldToKnownValidText("ElanRuntimeError");
   }
-  initialKeywords(): string {
-    return throwKeyword;
+
+  helpId(): string {
+    return "throw"; // 'then' clause has no visible manifestation
   }
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${throwKeyword} `);
-    this.type.parseFrom(source);
-    source.remove(" ");
-    this.text.parseFrom(source);
-    source.removeNewLine();
-  }
+
   getFields(): Field[] {
     return [this.type, this.text];
   }
+
+  override selectFirstField(): boolean {
+    this.text.select();
+    return true;
+  }
+
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_throw`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "throw statement";
-  }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${throwKeyword} ${this.type.renderAsElanSource()} ${this.text.renderAsElanSource()}`;
   }
 }

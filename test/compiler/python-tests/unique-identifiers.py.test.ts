@@ -1,0 +1,131 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testPythonHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Python Unique Identifiers", () => {
+  test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  foo = Foo() # variable definition
+  printNoLine(foo) 
+# end main
+
+class Foo: # concrete class
+
+  def __init__(self: Foo) -> None:
+
+  # end constructor
+
+  def toString(self: Foo) -> str:
+    return "Hello World!"
+  # end function
+
+# end class
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let foo = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine(foo);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "Hello World!";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Hello World!");
+  });
+
+  test("Fail_KeywordWithDifferentCaseAsIdentifier", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  whiLE = 1 # variable definition
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+  });
+
+  test("Fail_SameVariableNameInScope", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  id = 1 # variable definition
+  id = 1 # variable definition
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'id' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
+    ]);
+  });
+});

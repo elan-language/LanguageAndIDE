@@ -1,0 +1,274 @@
+import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "antlr4ng";
+import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
+import { Scope } from "../../compiler/compiler-interfaces/scope";
+import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import {
+  ArgumentContext as PythonArgumentContext,
+  ExpressionContext as PythonExpressionContext,
+  KvpContext as PythonKvpContext,
+  ParamDefContext as PythonParamDefContext,
+  PythonParser,
+  TypeContext as PythonTypeContext,
+} from "../../generated/python/PythonParser";
+import {
+  ArgumentContext as RefLangArgumentContext,
+  ExpressionContext as RefLangExpressionContext,
+  KvpContext as RefLangKvpContext,
+  ParamDefContext as RefLangParamDefContext,
+  RefLangParser,
+  TypeContext as RefLangTypeContext,
+} from "../../generated/ref-lang/RefLangParser";
+import { FieldImpl } from "../frames/fields/field-impl";
+import { File } from "../frames/frame-interfaces/file";
+import { Frame } from "../frames/frame-interfaces/frame";
+import { Language } from "../frames/frame-interfaces/language";
+import { ErrorListener } from "./error-listener";
+import { PythonVisitorCompiler } from "./python-visitor-compiler";
+import { PythonVisitorFrame } from "./python-visitor-frame";
+import { PythonVisitorHtml } from "./python-visitor-html";
+import { PythonVisitorSource } from "./python-visitor-source";
+import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
+import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
+import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
+import { RefLangVisitorSource } from "./ref-lang-visitor-source";
+import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
+import { Python_Lexer } from "../../generated/python/Python_Lexer";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
+
+export function getPythonParser(input: string, field?: FieldImpl | File) {
+  input = input + "\n";
+
+  const chars = CharStream.fromString(input);
+  const lexer = new Python_Lexer(chars);
+  const tokens = new CommonTokenStream(lexer);
+  const parser = new PythonParser(tokens);
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
+  if (field) {
+    parser.addErrorListener(new ErrorListener(field));
+  }
+  return parser;
+}
+
+export function getRefLangParser(input: string, field?: FieldImpl | File) {
+  input = input + "\n";
+
+  const chars = CharStream.fromString(input);
+  const lexer = new RefLang_Lexer(chars);
+  const tokens = new CommonTokenStream(lexer);
+  const parser = new RefLangParser(tokens);
+  parser.removeParseListeners();
+  parser.removeErrorListeners();
+  if (field) {
+    parser.addErrorListener(new ErrorListener(field));
+  }
+  return parser;
+}
+
+export function getParserByLanguage(l: Language, input: string, field?: FieldImpl | File) {
+  switch (l.languageFullName) {
+    case "Python":
+      return getPythonParser(input, field);
+    case "Reference Language":
+      return getRefLangParser(input, field);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope: Scope) {
+  switch (l.languageFullName) {
+    case "Python":
+      return new PythonVisitorCompiler(l, scope, fieldId);
+    case "Reference Language":
+      return new RefLangVisitorCompiler(l, scope, fieldId);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getVisitorHtmlByLanguage(l: Language) {
+  switch (l.languageFullName) {
+    case "Python":
+      return new PythonVisitorHtml(l);
+    case "Reference Language":
+      return new RefLangVisitorHtml(l);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getVisitorFrameByLanguage(l: Language, file: File) {
+  switch (l.languageFullName) {
+    case "Python":
+      return new PythonVisitorFrame(file);
+    case "Reference Language":
+      return new RefLangVisitorFrame(file);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getVisitorSourceByLanguage(l: Language) {
+  switch (l.languageFullName) {
+    case "Python":
+      return new PythonVisitorSource(l);
+    case "Reference Language":
+      return new RefLangVisitorSource(l);
+    default:
+      throw Error("Unsupported language " + l.languageFullName);
+  }
+}
+
+export function getTokenText(ll: (string | null)[], ctx: TerminalNode) {
+  const literals = ll.map((ln) => (ln ? ln.replaceAll("'", "") : ln));
+  return literals[ctx.symbol.type] ?? ctx.getText();
+}
+
+export function filterTokens(s: string | null) {
+  return s && s.trim() && s !== "(" && s !== ")" && s !== ",";
+}
+
+export function visitTypeHelper<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: PythonTypeContext | RefLangTypeContext,
+) {
+  const typeTuple = context.typeTuple();
+  const typeName = context.typeName();
+  const typeGeneric = context.typeGeneric();
+  const typeFunc = context.typeFunc();
+
+  if (typeTuple) {
+    return visitor.visit(typeTuple)!;
+  }
+
+  if (typeName) {
+    return visitor.visit(typeName)!;
+  }
+
+  if (typeGeneric) {
+    return visitor.visit(typeGeneric)!;
+  }
+
+  if (typeFunc) {
+    return visitor.visit(typeFunc)!;
+  }
+
+  throw new Error(context.getText());
+}
+
+export function getTypes<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  return context.type_().map((t) => visitor.visit(t)!);
+}
+
+export function getParamDefs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { paramDef: () => (PythonParamDefContext | RefLangParamDefContext)[] },
+): AstNode[] {
+  return (context
+    .paramDef()
+    ?.map((t) => visitor.visit(t))
+    .filter((t) => !(t instanceof EmptyAsn)) ?? []) as AstNode[];
+}
+
+export function getArgs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { argument: () => (PythonArgumentContext | RefLangArgumentContext)[] } | null,
+) {
+  return (
+    (context
+      ?.argument()
+      ?.map((t) => visitor.visit(t))
+      .filter((a) => a) as T[]) ?? []
+  );
+}
+
+export function getExpressions<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { expression: () => (PythonExpressionContext | RefLangExpressionContext)[] },
+) {
+  return context.expression()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
+export function getKVPs<T>(
+  visitor: ParseTreeVisitor<T>,
+  context: { kvp: () => (PythonKvpContext | RefLangKvpContext)[] }, //TODO add Python equiv
+) {
+  return context.kvp()?.map((t) => visitor.visit(t)!) ?? [];
+}
+
+export function getFilteredTypes(
+  visitor: ParseTreeVisitor<string | File | Frame>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  return getTypes<string | File | Frame>(visitor, context).filter((s) => filterTokens(s as string));
+}
+
+export function getFuncTypes(
+  visitor: ParseTreeVisitor<string | File | Frame>,
+  context: { type_: () => (PythonTypeContext | RefLangTypeContext)[] },
+) {
+  const types = getFilteredTypes(visitor, context);
+  const returnType = types[types.length - 1];
+  const inTypes = types.slice(0, -1).join(", ");
+
+  return [inTypes, returnType];
+}
+
+export function handleLeadingAndMultipleSpaces(raw: string): string {
+  const words = raw.split(" ");
+  const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+  return withNbsp.join("").trimEnd();
+}
+
+export function escapeMultipleSpaces(raw: string): string {
+  const words = raw.split(" ");
+  const withNbsp = words.map((w) => (w === "" ? "&nbsp;" : w + " "));
+  return withNbsp.join("").trimEnd();
+}
+
+export function wrap(s: string, tag: string) {
+  return `<${tag}>${s}</${tag}>`;
+}
+
+export function lit(s: string) {
+  return wrap(s, "el-lit");
+}
+
+export function type(s: string) {
+  return wrap(s, "el-type");
+}
+
+export function kw(s: string) {
+  return wrap(s, "el-kw");
+}
+
+export function id(s: string) {
+  return wrap(s, "el-id");
+}
+
+export function method(s: string) {
+  return wrap(s, "el-method");
+}
+
+export function regex(s: string) {
+  return wrap(s, "el-regex");
+}
+
+export function getConstantType(text: string, language: Language) {
+  let typeName = "";
+  const term = language.mapTerminal(text);
+  if (text.startsWith(`"`)) {
+    typeName = language.STRING_NAME;
+  } else if (term === TerminalSymbol.True || term === TerminalSymbol.False) {
+    typeName = language.BOOL_NAME;
+  } else if (/[0-9]\..*/.test(text)) {
+    typeName = language.FLOAT_NAME;
+  } else if (/[0-9].*/.test(text)) {
+    typeName = language.INT_NAME;
+  }
+  return typeName;
+}

@@ -20,8 +20,8 @@ import { BreakpointEvent } from "../debugging/breakpoint-event";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { getChildRange } from "./ast-helpers";
 import { BreakpointAsn } from "./breakpoint-asn";
+import { ConstantAsn } from "./globals/constant-asn";
 import { EnumAsn } from "./globals/enum-asn";
-import { GlobalConstantAsn } from "./globals/global-constant-asn";
 import { MainAsn } from "./globals/main-asn";
 import { TestAsn } from "./globals/test-asn";
 
@@ -155,7 +155,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
       ss.push(child.compile());
     }
 
-    const constants = this.children.filter((g) => g instanceof GlobalConstantAsn);
+    const constants = this.children.filter((g) => g instanceof ConstantAsn);
 
     if (constants.length > 0) {
       ss.push("const global = new class {");
@@ -168,7 +168,7 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
     }
 
     for (const child of this.children.filter(
-      (g) => !(g instanceof EnumAsn || g instanceof GlobalConstantAsn),
+      (g) => !(g instanceof EnumAsn || g instanceof ConstantAsn),
     )) {
       ss.push(child.compile());
     }
@@ -259,9 +259,9 @@ export class FileAsn extends AbstractAstNode implements RootAstNode, Scope {
 
     let globalSymbols: ElanSymbol[] = [];
 
-    if (initialScope instanceof GlobalConstantAsn) {
-      const constChildren = this.children.filter((c) => c instanceof GlobalConstantAsn);
-      const otherChildren = this.children.filter((c) => !(c instanceof GlobalConstantAsn));
+    if (initialScope instanceof ConstantAsn) {
+      const constChildren = this.children.filter((c) => c instanceof ConstantAsn);
+      const otherChildren = this.children.filter((c) => !(c instanceof ConstantAsn));
       const range = getChildRange(constChildren, initialScope);
 
       const all = range.concat(otherChildren).filter((c) => isSymbol(c)) as ElanSymbol[];

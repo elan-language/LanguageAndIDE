@@ -1,0 +1,433 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("This and Property", () => {
+  test("Pass_DisambiguateParamAndProperty", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Foo(7)
+  call printNoLine(x.p1)
+end main
+
+class Foo
+  constructor(p1 as Float)
+    assign this.p1 to p1
+  end constructor
+
+  property p1 as Float
+
+  function toString() returns String
+    return ""
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Foo()._initialise(7));
+  await _stdlib.printNoLine(x.p1);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
+  async _initialise(p1) {
+    this.p1 = p1;
+    return this;
+  }
+
+  p1 = 0;
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "7");
+  });
+
+  test("Pass_UsingThisAsAnInstance", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.bar())
+end main
+
+function doubled(f as Foo) returns Float
+    return 2 * f.p1
+end function
+
+class Foo
+    constructor()
+        assign this.p1 to 3
+    end constructor
+
+    property p1 as Float
+
+    function bar() returns Float
+        return doubled(this)
+    end function
+
+    function toString() returns String
+        return ""
+    end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.bar()));
+}
+
+async function doubled(f) {
+  return 2 * f.p1;
+}
+global["doubled"] = doubled;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = 3;
+    return this;
+  }
+
+  p1 = 0;
+
+  async bar() {
+    return (await global.doubled(this));
+  }
+
+  async toString() {
+    return "";
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "6");
+  });
+
+  test("Pass_UsingPropertyAsIndex", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.bar())
+end main
+
+class Foo
+  constructor()
+    assign this.p1 to 1
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  function bar() returns Int
+    variable lst set to [1, 2]
+    return lst[this.p1]
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.bar()));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
+  async _initialise() {
+    this.p1 = 1;
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  p1 = 0;
+
+  async bar() {
+    let lst = system.list([1, 2]);
+    return system.safeIndex(lst, this.p1);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_PrintThis", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.bar()
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return "a Foo"
+  end function
+  procedure bar()
+    call printNoLine(this)
+  end procedure
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await f.bar();
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "a Foo";
+  }
+
+  async bar() {
+    await _stdlib.printNoLine(this);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "a Foo");
+  });
+
+  ignore_test("Fail_UsingPropertyAsIndex1", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.bar())
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  function bar() returns Int
+    variable lst set to [1, 2]
+    call lst.setAt(p1, 3)
+    return lst[0]
+  end function
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_NoSuchProperty", async () => {
+    const code = `${testHeader}
+
+main
+    variable x set to new Foo(7)
+    call printNoLine(x.p1)
+end main
+
+class Foo
+    constructor(p1 as Float)
+        assign this.p to p1
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Float
+
+    function toString() returns String
+        return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, ["'p' is not defined.ErrorMessages.html#compile_error"]);
+  });
+
+  test("Fail_MissingSelfCausesCompileErrorDueToAssigningToParam", async () => {
+    const code = `${testHeader}
+
+main
+    variable x set to new Foo(7)
+    call printNoLine(x.p1)
+end main
+
+class Foo
+    constructor(p1 as Float)
+        assign p1 to p1
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Float
+
+    function toString() returns String
+        return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "May not mutate a parameter within a function or constructor.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ThisOutsideClassScope", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(this)
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot use 'this' outside class context.ErrorMessages.html#ThisCompileError",
+    ]);
+  });
+});

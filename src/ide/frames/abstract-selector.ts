@@ -1,23 +1,21 @@
-import { ghostedAnnotation } from "../../compiler/elan-keywords";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { AbstractFrame } from "./abstract-frame";
-import { CodeSourceFromString } from "./code-source-from-string";
-import { Regexes } from "./fields/regexes";
-import { addDeleteToContextMenu, isFrameWithStatements, isSelector } from "./frame-helpers";
-import { CodeSource } from "./frame-interfaces/code-source";
+import { addDeleteToContextMenu } from "./frame-helpers";
 import { editorEvent } from "./frame-interfaces/editor-event";
 import { Field } from "./frame-interfaces/field";
 import { Frame } from "./frame-interfaces/frame";
 import { Parent } from "./frame-interfaces/parent";
-import { Overtyper } from "./overtyper";
+import { Selector } from "./frame-interfaces/selector";
+import { FrameType } from "./frame-type";
+import { FrameWithStatements } from "./frame-with-statements";
 import { Paradigm } from "./paradigm";
-import { parentHelper_insertOrGotoChildSelector } from "./parent-helpers";
 import { ParseStatus } from "./status-enums";
 
-export abstract class AbstractSelector extends AbstractFrame {
+export abstract class AbstractSelector extends AbstractFrame implements Selector {
+  frameType: FrameType = FrameType.selector;
   isSelector = true;
   isStatement = true;
   text: string = "";
-  overtyper = new Overtyper();
   sourcePasting = false;
 
   constructor(parent: Parent) {
@@ -29,10 +27,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return this.getFile().getParadigm();
   }
 
-  initialKeywords(): string {
-    return "selector";
-  }
-
   helpAsHtml(): string {
     const active = this.helpActive ? ` class="active"` : "";
     this.helpActive = false;
@@ -42,61 +36,11 @@ export abstract class AbstractSelector extends AbstractFrame {
       : ``;
   }
 
-  abstract defaultOptions(): [string, string, string, (parent: Parent) => Frame][];
-  abstract paradigmAllows(keyword: string): boolean;
-  abstract validWithinCurrentContext(keyword: string, userEntry: boolean): boolean;
+  abstract defaultOptions(): [FrameType, string, string, boolean][];
+  abstract validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean;
 
-  optionsFilteredByContext(
-    userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame][] {
+  optionsFilteredByContext(userEntry: boolean): [FrameType, string, string, boolean][] {
     return this.defaultOptions().filter((o) => this.validWithinCurrentContext(o[0], userEntry));
-  }
-
-  optionsFilteredByParadigm(
-    userEntry: boolean,
-  ): [string, string, string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByContext(userEntry).filter((o) => this.paradigmAllows(o[0]));
-  }
-
-  parseFrom(source: CodeSource): Frame {
-    let compilerDirective = "";
-    source.removeIndent();
-    if (source.isMatchRegEx(Regexes.compilerDirective)) {
-      compilerDirective = source
-        .removeRegEx(Regexes.compilerDirective, false)
-        .replace("[", "")
-        .replace("] ", "");
-    }
-
-    // Pseudo-global variable to minimise changes to optionsFilteredByContext
-    // and the things it calls, in all the selector sub-classes.
-    // If refactoring, make userEntry three-valued (pasting, populating menu, loading file).
-    // This is to allow "private" when pasting but not in the context menu.
-    // Used by MemberSelector, because "private" only applies to members.
-    this.sourcePasting = source.pasting;
-
-    const options = this.optionsFilteredByContext(source.pasting).filter((o) =>
-      source.isMatch(o[0]),
-    );
-    if (options.length === 1) {
-      const typeToAdd = options[0][0];
-      const frame = this.addFrame(typeToAdd, "");
-      this.processCompilerDirective(frame, compilerDirective);
-      frame.parseFrom(source);
-      return frame;
-    } else {
-      throw new Error(`${options.length} matches found at ${source.readToEndOfLine()} `);
-    }
-  }
-
-  private processCompilerDirective(frame: Frame, compilerDirective: string) {
-    if (compilerDirective === ghostedAnnotation) {
-      frame.setGhosted(true);
-    }
-  }
-
-  optionsMatchingUserInput(match: string): [string, string, string, (parent: Parent) => Frame][] {
-    return this.optionsFilteredByParadigm(true).filter((o) => o[1] === match);
   }
 
   adjusted(kw: string, input: string, soFar: string): string {
@@ -112,22 +56,23 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
-  addFrame(keyword: string, pendingChars: string): Frame {
-    const func = this.defaultOptions().filter((o) => o[0] === keyword)[0][3];
-    const parent = this.getParent();
-    const newFrame: Frame = func(parent);
-    parent.addChildBefore(newFrame, this);
-    newFrame.selectFirstField();
-    const fields = newFrame.getFields();
-    if (fields.length > 0) {
-      fields[0].overtyper.consumeChars(pendingChars, 500);
-    } else if (isFrameWithStatements(newFrame)) {
-      const ss = newFrame.getFirstChild();
-      if (ss instanceof AbstractSelector) {
-        ss.overtyper.consumeChars(pendingChars, 500);
-      }
-    }
+  abstract createFrame(type: FrameType, parent: Parent): Frame;
 
+  addFrame(type: FrameType): Frame {
+    const option = this.defaultOptions().filter((o) => o[0] === type)[0];
+    const addAtPeerLevel = option[3];
+    const parent = this.getParent();
+    const newFrame: Frame = this.createFrame(type, parent);
+    if (addAtPeerLevel) {
+      parent.addChildBefore(newFrame, this);
+    } else {
+      parent.getParent().addChildAfter(newFrame, parent as unknown as Frame);
+    }
+    if (newFrame.getFields().length > 0) {
+      newFrame.selectFirstField();
+    } else if (newFrame instanceof FrameWithStatements) {
+      newFrame.selectFirstChild(false);
+    }
     return newFrame;
   }
 
@@ -148,10 +93,6 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `${this.language().languageHtmlClass}_select`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "";
-  }
-
   override deselect(): void {
     super.deselect();
     this.text = "";
@@ -164,11 +105,7 @@ export abstract class AbstractSelector extends AbstractFrame {
     return `<${this.outerHtmlTag} contenteditable spellcheck="false" class="${this.cls()}" id='${this.htmlId}' tabindex="-1">${this.contextMenu()}<el-top class="newcode">${message}</el-top>${this.compileMsgAsHtml()}</${this.outerHtmlTag}>`;
   }
 
-  renderAsElanSource(): string {
-    return `${this.indent()}`;
-  }
-
-  renderAsExport(): string {
+  renderAsSource(): string {
     return `${this.indent()}`;
   }
 
@@ -193,7 +130,7 @@ export abstract class AbstractSelector extends AbstractFrame {
       case "Backspace": {
         // Apologies for the wild casting.  Perhaps it can be done another way.
         const par = this.getParent() as unknown as AbstractFrame;
-        if (this.deleteParentOnBackspace && par.isNew) {
+        if (this.deleteParentOnBackspace && par.isNewlyCreated()) {
           // it is the first selector in a new TryStatement, delete the whole TryStatement
           par.deleteIfPermissible();
         }
@@ -276,62 +213,48 @@ export abstract class AbstractSelector extends AbstractFrame {
     }
   }
 
+  abstract parseFrames(code: string): Frame[];
+
   paste = (code?: string): boolean => {
-    // Get the current language to put back later
-    const oldLanguage = this.getFile().language();
-    // The text pasted in is always in Elan language
-    this.getFile().setLanguageToElan();
     let result = true;
 
+    code = (code ?? "").trim() + "\n";
+
+    let parsedFrames: Frame[] = [];
     try {
-      code = (code ?? "").trim() + "\n";
-
-      const source = new CodeSourceFromString(code, true);
-      source.pasting = true;
-      const newFrame = this.parseFrom(source);
-
-      if (source.hasMoreCode() && source.getRemainingCode().trim()) {
-        const remainingCode = source.getRemainingCode();
-        const frame = this.getParent().getChildAfter(newFrame);
-        const selector = isSelector(frame)
-          ? frame
-          : parentHelper_insertOrGotoChildSelector(this.getParent(), false, frame);
-        result = selector.paste(remainingCode);
-      }
-      // Don't delete selectors on error,
-      // to avoid deleting this selector with the error message
-      if (result) {
-        this.getFile().removeAllSelectorsThatCanBe();
-      }
+      parsedFrames = this.parseFrames(code);
     } catch (_e) {
-      this.pasteError = `Paste failed: Cannot paste '${code}' into prompt`;
+      this.pasteError = `Paste failed: Pasted code did not parse as ${this.language().languageFullName}`;
       result = false;
     }
 
-    // Set the language back to the original value.
-    // If the language has changed, this also calls
-    // resetFieldText and resetMap to translate the expressions etc
-    // to the current language, and make the map of htmlId's correct.
-    this.getFile().setLanguage(oldLanguage);
+    const rejectedFrames: FrameType[] = [];
+    for (const frame of parsedFrames) {
+      if (this.validWithinCurrentContext(frame.frameType, true)) {
+        this.getParent().addChildBefore(frame, this);
+      } else {
+        rejectedFrames.push(frame.frameType);
+      }
+    }
 
+    if (rejectedFrames.length > 0) {
+      const names = rejectedFrames.reduce((f) => `${f.toString()}`, "");
+      this.pasteError = `The following instructions were not pasted as they are not valid in the selected location: ${names}`;
+      result = false;
+    }
+    const framesAdded = parsedFrames.length - rejectedFrames.length;
+    if (framesAdded > 0) {
+      this.getFile().removeAllSelectorsThatCanBe();
+    }
     return result;
   };
 
-  canBePastedIn(frame: Frame): boolean {
-    return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
-  }
-
   processOptions(key: string | undefined) {
-    if (this.overtyper.hasNotConsumed(key)) {
-      const options = this.optionsMatchingUserInput(this.text + key);
-      if (options.length === 1) {
-        const typeToAdd = options[0][0];
-
-        const pendingChars = typeToAdd.slice((this.text + key).length);
-
-        this.addFrame(typeToAdd, pendingChars);
-        this.text = "";
-      }
+    const options = this.optionsFilteredByContext(true).filter((o) => o[1] === key);
+    if (options.length === 1) {
+      const typeToAdd = options[0][0];
+      this.addFrame(typeToAdd);
+      this.text = "";
     }
   }
 
@@ -355,15 +278,15 @@ export abstract class AbstractSelector extends AbstractFrame {
 
   getContextMenuItems() {
     const map = new Map<string, [string, (s?: string) => boolean]>();
-    const allOptions = this.optionsFilteredByParadigm(true);
+    const allOptions = this.optionsFilteredByContext(true);
     allOptions.forEach((o) => {
-      const name = o[0];
+      const type = o[0];
       const action = () => {
-        this.addFrame(name, "");
+        this.addFrame(type);
         return true;
       };
       const html = `${o[2]}`;
-      map.set(name, [html, action]);
+      map.set(type.toString(), [html, action]);
     });
     map.set("paste", ["separator paste <span class='kb'>Ctrl+v</span>", this.paste]);
     addDeleteToContextMenu(this, map);
@@ -371,6 +294,6 @@ export abstract class AbstractSelector extends AbstractFrame {
   }
 
   protected getCommentMarker() {
-    return this.getFile().language().COMMENT_MARKER;
+    return this.getFile().language().mapTerminalSymbol(TerminalSymbol.Comment);
   }
 }

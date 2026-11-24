@@ -1,0 +1,26 @@
+# 530ae607b0f936f5121268ef61df8c339c46e02262aa9757ceecbe7edd44eef1 Elan 2.0.0-beta4 valid
+
+#  Tetris 5: Redefine shape using relative positions and add a position variable
+main
+  variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, green)
+  end for
+  call displayBlockGraphics(bg)
+end main
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure

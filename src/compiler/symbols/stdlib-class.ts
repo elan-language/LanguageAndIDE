@@ -4,8 +4,8 @@ import { Deprecated } from "../compiler-interfaces/elan-type-interfaces";
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { TypeOptions } from "../compiler-interfaces/type-options";
-import { thisKeyword } from "../elan-keywords";
 import { generateType } from "../syntax-nodes/ast-helpers";
+import { thisWellKnownId } from "../well-known-ids";
 import { ClassSubType, ClassType } from "./class-type";
 import { DuplicateSymbol } from "./duplicate-symbol";
 import { isMember, isProperty, isSymbol, match, symbolMatches } from "./symbol-helpers";
@@ -87,7 +87,7 @@ export class StdLibClass implements Class {
   }
 
   resolveOwnSymbol(id: string, caseSensitive: boolean): ElanSymbol {
-    if (id === thisKeyword) {
+    if (id === thisWellKnownId) {
       return this;
     }
 

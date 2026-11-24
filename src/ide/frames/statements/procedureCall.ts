@@ -1,50 +1,32 @@
-import { callKeyword } from "../../../compiler/elan-keywords";
-import { ArgListField } from "../fields/arg-list-field";
-import { ProcRefField } from "../fields/proc-ref-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { procRefFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ProcedureCall extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.procedureCall;
   isStatement = true;
   isCall = true;
-  proc: ProcRefField;
-  args: ArgListField;
+  procRef: FieldImpl;
+
   constructor(parent: Parent) {
     super(parent);
-    this.proc = new ProcRefField(this);
-    this.proc.setPlaceholder("<i>procedureName</i>");
-    this.args = new ArgListField(this);
+    this.procRef = new FieldImpl(this, procRefFieldSpec);
+    this.procRef.setPlaceholder("<i>procedureName</i>");
   }
 
-  initialKeywords(): string {
-    return callKeyword;
+  helpId(): string {
+    return "call";
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove("call ");
-    this.proc.parseFrom(source);
-    source.remove("(");
-    this.args.parseFrom(source);
-    source.remove(")");
-    source.removeNewLine();
-  }
   getFields(): Field[] {
-    return [this.proc, this.args];
+    return [this.procRef];
   }
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_call`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return this.proc.text === "print" ? "" : "procedure call";
-  }
-
-  override renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}call ${this.proc.renderAsElanSource()}(${this.args.renderAsElanSource()})`;
   }
 }

@@ -1,0 +1,140 @@
+import {
+  getQualifierId,
+  mustBeKnownSymbol,
+  mustBePropertyPrefixedOnMember,
+  mustBePublicMember,
+  mustNotBeGlobalFunctionIfRef,
+} from "../compile-rules";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { AstNode } from "../compiler-interfaces/ast-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { ClassType } from "../symbols/class-type";
+import {
+  getGlobalScope,
+  isClass,
+  isDefinitionScope,
+  isMemberOnFieldsClass,
+  isTuple,
+  scopePrefix,
+} from "../symbols/symbol-helpers";
+import { SymbolScope } from "../symbols/symbol-scope";
+import { TupleType } from "../symbols/tuple-type";
+import { UnknownType } from "../symbols/unknown-type";
+import { AbstractAstNode } from "./abstract-ast-node";
+import { EmptyAsn } from "./empty-asn";
+import { TupleScopeAsn } from "./globals/tuple-scope-asn";
+
+export class IdentifierUseAsn extends AbstractAstNode implements AstIdNode {
+  constructor(
+    public readonly id: string,
+    public readonly precedingNode: AstNode,
+    public readonly fieldId: string,
+    private scope: Scope,
+  ) {
+    super();
+  }
+
+  isAsync: boolean = false;
+
+  getCurrentScope() {
+    const lhsSt = this.precedingNode.symbolType();
+
+    if (lhsSt instanceof TupleType) {
+      return new TupleScopeAsn(lhsSt, this.scope);
+    }
+
+    if (lhsSt instanceof ClassType) {
+      return lhsSt.scope;
+    }
+
+    return this.scope;
+  }
+
+  getSymbol() {
+    let searchScope = this.getCurrentScope();
+    if (isClass(searchScope)) {
+      return searchScope.resolveOwnSymbol(this.id, true);
+    }
+
+    if (isTuple(searchScope)) {
+      return searchScope.resolveOwnSymbol(this.id);
+    }
+
+    if (isDefinitionScope(this.scope)) {
+      searchScope = this.scope.getParentScope();
+    }
+
+    return searchScope.resolveSymbol(this.id, true, this.scope);
+  }
+
+  get symbolScope() {
+    return this.getSymbol().symbolScope;
+  }
+
+  getCode(prefix: string) {
+    const searchScope = this.getCurrentScope();
+    if (searchScope instanceof TupleScopeAsn) {
+      const [ok, index] = searchScope.parseId(this.id);
+      if (ok) {
+        return `${prefix.slice(0, -1)}[${index}]`;
+      }
+    }
+
+    return `${prefix}${this.id}`;
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+
+    const symbol = this.getSymbol();
+    const searchScope = this.getCurrentScope();
+
+    mustBeKnownSymbol(
+      symbol,
+      searchScope,
+      this.precedingNode ? getQualifierId(this.precedingNode) : symbol.symbolId,
+      this.precedingNode ? this.precedingNode.symbolType() : UnknownType.Instance,
+      this.compileErrors,
+      this.fieldId,
+      this.scope,
+    );
+
+    if (!isMemberOnFieldsClass(symbol, searchScope)) {
+      mustBePublicMember(symbol, this.compileErrors, this.fieldId);
+    }
+
+    if (symbol.symbolScope === SymbolScope.member && this.precedingNode instanceof EmptyAsn) {
+      mustBePropertyPrefixedOnMember(this.scope, this.compileErrors, this.fieldId);
+    }
+
+    mustNotBeGlobalFunctionIfRef(symbol, this.compileErrors, this.fieldId);
+
+    const prefix = scopePrefix(
+      symbol,
+      this.precedingNode,
+      this.compileErrors,
+      searchScope,
+      this.fieldId,
+    );
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    const tupleScope = this.getCurrentScope();
+    if (tupleScope instanceof TupleScopeAsn) {
+      const [ok, index] = tupleScope.parseId(this.id);
+      if (ok) {
+        return `${prefix.slice(0, -1)}[${index}]`;
+      }
+    }
+
+    return `${prefix}${this.id}`;
+  }
+
+  symbolType() {
+    return this.getSymbol().symbolType();
+  }
+
+  toString() {
+    return this.id;
+  }
+}

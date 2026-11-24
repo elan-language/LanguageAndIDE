@@ -1,0 +1,592 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testPythonHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Python Conditions", () => {
+  test("Pass_lessThan", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 < 4) 
+  printNoLine(3 < 2) 
+  printNoLine(3 < 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 < 4);
+  await _stdlib.printNoLine(3 < 2);
+  await _stdlib.printNoLine(3 < 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsefalse");
+  });
+
+  test("Pass_greaterThan", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 > 4) 
+  printNoLine(3 > 2) 
+  printNoLine(3 > 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 > 4);
+  await _stdlib.printNoLine(3 > 2);
+  await _stdlib.printNoLine(3 > 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsetruefalse");
+  });
+
+  test("Pass_lessThanOrEqual", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 <= 4) 
+  printNoLine(3 <= 2) 
+  printNoLine(3 <= 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 <= 4);
+  await _stdlib.printNoLine(3 <= 2);
+  await _stdlib.printNoLine(3 <= 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truefalsetrue");
+  });
+
+  test("Pass_greaterThanOrEqual", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 >= 4) 
+  printNoLine(3 >= 2) 
+  printNoLine(3 >= 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 >= 4);
+  await _stdlib.printNoLine(3 >= 2);
+  await _stdlib.printNoLine(3 >= 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsetruetrue");
+  });
+
+  test("Pass_isnt", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 != 4) 
+  printNoLine(3 != 2) 
+  printNoLine(3 != 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 !== 4);
+  await _stdlib.printNoLine(3 !== 2);
+  await _stdlib.printNoLine(3 !== 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+  });
+
+  test("Pass_is", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 == 4) 
+  printNoLine(3 == 2) 
+  printNoLine(3 == 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 === 4);
+  await _stdlib.printNoLine(3 === 2);
+  await _stdlib.printNoLine(3 === 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "falsefalsetrue");
+  });
+
+  test("Pass_canCompareCoercibleTypes", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 < 3.1) 
+  printNoLine(3 <= 3.1) 
+  printNoLine(3 > 3.1) 
+  printNoLine(3 >= 3.1) 
+  printNoLine(3 == 3.0) 
+  printNoLine(3 != 3.0) 
+  printNoLine(3.1 < 3) 
+  printNoLine(3.1 <= 3) 
+  printNoLine(3.1 > 3) 
+  printNoLine(3.1 >= 3) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine(3 < 3.1);
+  await _stdlib.printNoLine(3 <= 3.1);
+  await _stdlib.printNoLine(3 > 3.1);
+  await _stdlib.printNoLine(3 >= 3.1);
+  await _stdlib.printNoLine(3 === 3);
+  await _stdlib.printNoLine(3 !== 3);
+  await _stdlib.printNoLine(3.1 < 3);
+  await _stdlib.printNoLine(3.1 <= 3);
+  await _stdlib.printNoLine(3.1 > 3);
+  await _stdlib.printNoLine(3.1 >= 3);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalsefalsetruefalsefalsefalsetruetrue");
+  });
+
+  test("Pass_combineComparisonWithArithmetic", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine((5 + 3) > (4 + 2)) 
+  printNoLine((5 + 3) == (4 + 4)) 
+  printNoLine((5 + 3) > (4 + 6)) 
+# end main
+
+main()
+`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine((5 + 3) > (4 + 2));
+  await _stdlib.printNoLine((5 + 3) === (4 + 4));
+  await _stdlib.printNoLine((5 + 3) > (4 + 6));
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "truetruefalse");
+  });
+
+  ignore_test("Fail_not_is", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 not is 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_not", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 not 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  // triage: this should parse and run
+  test("Pass_notEqual", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 != 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+  });
+
+  test("Fail_EqualToOrLessThan", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 =< 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_Greater_Or_Equal", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 > or = 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_SingleEquals", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 = 4) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Fail_compareDifferentTypesByValue", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3.equals("3")) 
+  printNoLine(not 3.equals("3")) 
+  printNoLine(3 < "3") 
+  printNoLine(3 <= "3") 
+  printNoLine(3 > "3") 
+  printNoLine(3 >= "3") 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Argument types. Expected: parameter1 (int), Provided: str.ErrorMessages.html#compile_error",
+      "Argument types. Expected: parameter1 (int), Provided: str.ErrorMessages.html#compile_error",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+      "Incompatible types. Expected: float or int, Provided: str.ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+
+  test("Fail_greaterOrLessThan", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 <> 3  ) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertDoesNotParse(fileImpl);
+  });
+
+  test("Pass_doubleEquals", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(3 == 3) 
+# end main
+
+main()
+`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+  });
+
+  test("Fail_combineComparisonWithArithmeticWithoutBrackets", async () => {
+    const code = `${testPythonHeader}
+
+def main() -> None:
+  printNoLine(5 + 3 > 4 + 2) 
+# end main
+
+main()
+`;
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: float or int, Provided: bool.ErrorMessages.html#TypesCompileError",
+    ]);
+  });
+});

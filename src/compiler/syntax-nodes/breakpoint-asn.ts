@@ -1,4 +1,3 @@
-import { getId } from "../compile-rules";
 import { AstNode } from "../compiler-interfaces/ast-node";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { Scope } from "../compiler-interfaces/scope";
@@ -8,13 +7,18 @@ import { BreakpointStatus } from "../debugging/breakpoint-status";
 import { TypeDict } from "../debugging/type-dict";
 import { ClassType } from "../symbols/class-type";
 import { EnumType } from "../symbols/enum-type";
-import { allScopedSymbols, getGlobalScope, orderSymbol } from "../symbols/symbol-helpers";
+import {
+  allScopedSymbols,
+  getGlobalScope,
+  isProperty,
+  orderSymbol,
+} from "../symbols/symbol-helpers";
 import { SymbolScope } from "../symbols/symbol-scope";
 import { TupleType } from "../symbols/tuple-type";
 import { UnknownType } from "../symbols/unknown-type";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { isAstNode } from "./ast-helpers";
-import { PropertyAsn } from "./class-members/property-asn";
+//import { PropertyAsn } from "./class-members/property-asn";
 
 export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
   constructor(
@@ -118,7 +122,7 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
 
       return typeDict;
     } else if (type instanceof ClassType && !type.typeOptions.isIndexable) {
-      const childSymbols = type.childSymbols().filter((s) => s instanceof PropertyAsn);
+      const childSymbols = type.childSymbols().filter((s) => isProperty(s));
       const className = type.name;
 
       const typeDict: TypeDict = { Type: className };
@@ -132,9 +136,7 @@ export class BreakpointAsn extends AbstractAstNode implements AstNode, Scope {
       seenClasses.push(className);
 
       for (const s of childSymbols) {
-        typeDict["Properties"][getId(s.name)] = this.getClassTypeMap(s.symbolType(), [
-          ...seenClasses,
-        ]);
+        typeDict["Properties"][s.symbolId] = this.getClassTypeMap(s.symbolType(), [...seenClasses]);
       }
 
       return typeDict;

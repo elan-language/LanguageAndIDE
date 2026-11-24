@@ -1,0 +1,246 @@
+import assert from "assert";
+import { CommentFrame } from "../../../src/ide/frames/comment-frame";
+import { Language } from "../../../src/ide/frames/frame-interfaces/language";
+import { ConstantGlobal } from "../../../src/ide/frames/globals/constant-global";
+import { GlobalFunction } from "../../../src/ide/frames/globals/global-function";
+import { MainRoutine } from "../../../src/ide/frames/globals/main-routine";
+import { TestFrame } from "../../../src/ide/frames/globals/test-frame";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { AssertStatement } from "../../../src/ide/frames/statements/assert-statement";
+import { ProcedureCall } from "../../../src/ide/frames/statements/procedureCall";
+import { VariableDefinition } from "../../../src/ide/frames/statements/variable-definition";
+import { ParseStatus } from "../../../src/ide/frames/status-enums";
+import { ignore_test } from "../../compiler/compiler-test-helpers";
+import { fileImplFor, testExtractContextForExpression } from "../../testHelpers";
+
+const refLang: Language = LanguageRefLang.Instance;
+
+suite("Parsing Fields (Old) RefLang", () => {
+  test("parse CommentField", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const comment = new CommentFrame(main);
+    const text = comment.text;
+    assert.equal(text.textAsSource(), "# ");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    text.setFieldToKnownValidText("#");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    text.setFieldToKnownValidText("");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.incomplete);
+    text.setFieldToKnownValidText("# Hello");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    assert.equal(
+      text.renderAsHtml(),
+      `<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt># Hello</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+  });
+  test("parse CommentFieldWithSpaces", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const comment = new CommentFrame(main);
+    const text = comment.text;
+    assert.equal(text.textAsSource(), "# ");
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    text.setFieldToKnownValidText("#   Hello   World ");
+    text.parseCurrentText();
+    assert.equal(text.readParseStatus(), ParseStatus.valid);
+    assert.equal(
+      text.renderAsHtml(),
+      '<el-field id="elan_comment4" class="ok" tabindex="-1"><el-txt># &nbsp;&nbsp;Hello &nbsp;&nbsp;World &nbsp;</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>',
+    );
+  });
+  test("parse varDefField", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const variable = new VariableDefinition(main);
+    const id = variable.name;
+    assert.equal(id.textAsSource(), "");
+    assert.equal(id.readParseStatus(), ParseStatus.incomplete);
+    id.setFieldToKnownValidText("ab_1");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.valid);
+    assert.equal(
+      id.renderAsHtml(),
+      `<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+    id.setFieldToKnownValidText("Ab_1");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+    id.setFieldToKnownValidText("new");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+  });
+
+  test("parse VarDefField 2", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const v = new VariableDefinition(main);
+    const id = v.name;
+    assert.equal(id.textAsSource(), "");
+    assert.equal(id.readParseStatus(), ParseStatus.incomplete);
+    id.setFieldToKnownValidText("ab_1");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.valid);
+    assert.equal(
+      id.renderAsHtml(),
+      `<el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>ab_1</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>`,
+    );
+    id.setFieldToKnownValidText("Ab_1");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+    id.setFieldToKnownValidText("new");
+    id.parseCurrentText();
+    assert.equal(id.readParseStatus(), ParseStatus.invalid);
+  });
+  test("parse  procRefField", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const call = new ProcedureCall(main);
+    const procRef = call.procRef;
+    procRef.setFieldToKnownValidText("foo(3,4,5)");
+    procRef.parseCurrentText();
+    assert.equal(procRef.readParseStatus(), ParseStatus.valid);
+    procRef.setFieldToKnownValidText(`foo(s, a, "hello", b[5])`);
+    procRef.parseCurrentText();
+    assert.equal(procRef.readParseStatus(), ParseStatus.valid);
+    procRef.setFieldToKnownValidText(`a.foo(5, 3 + 4)`);
+    procRef.parseCurrentText();
+    assert.equal(procRef.readParseStatus(), ParseStatus.valid);
+    procRef.setFieldToKnownValidText(`a[2].bar().foo(5, (3 + 4))`);
+    procRef.parseCurrentText();
+    assert.equal(procRef.readParseStatus(), ParseStatus.valid);
+  });
+
+  test("parse ProcRefField 2", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const call = new ProcedureCall(main);
+    const procRef = call.procRef;
+    procRef.setFieldToKnownValidText("foo[2].bar().qux.yon(3, 4)");
+    procRef.parseCurrentText();
+    assert.equal(procRef.readParseStatus(), ParseStatus.valid);
+  });
+
+  test("parse TypeField invalid", () => {
+    const func = new GlobalFunction(fileImplFor(refLang));
+    const type = func.returnType;
+    type.setFieldToKnownValidText("Foo<of bar");
+    type.parseCurrentText();
+    assert.equal(type.readParseStatus(), ParseStatus.invalid);
+    assert.equal(type.textAsSource(), "Foo<of bar");
+    assert.equal(type.textAsHtml(), "Foo&lt;of bar");
+    type.setFieldToKnownValidText(`foo`);
+    type.parseCurrentText();
+    assert.equal(type.readParseStatus(), ParseStatus.invalid);
+  });
+
+  ignore_test("parse ExpressionField - literal string with interpolations", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const v = new VariableDefinition(main);
+    const expr = v.expr;
+    expr.setFieldToKnownValidText(`$"{op} times {op2} equals {op1*op2}"`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
+    assert.equal(expr.textAsSource(), `$"{op} times {op2} equals {op1*op2}"`);
+    assert.equal(
+      expr.textAsHtml(),
+      `$"<el-lit></el-lit>{<el-id>op</el-id>}<el-lit> times </el-lit>{<el-id>op2</el-id>}<el-lit> equals </el-lit>{<el-id>op1</el-id>*<el-id>op2</el-id>}<el-lit></el-lit>"`,
+    );
+  });
+
+  ignore_test("parse ExpressionField - non-interpolated string", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const v = new VariableDefinition(main);
+    const expr = v.expr;
+    expr.setFieldToKnownValidText(`'{a}"b"'`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
+    assert.equal(expr.textAsSource(), `'{a}"b"'`);
+    assert.equal(expr.textAsHtml(), `'<el-lit>{a}"b"</el-lit>'`);
+  });
+  ignore_test("parse ExpressionField - mixed strings", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const v = new VariableDefinition(main);
+    const expr = v.expr;
+    expr.setFieldToKnownValidText(`''+""+'ab{c}"d"'+"ab{c}'d'"`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.valid);
+    assert.equal(expr.textAsSource(), `'' + "" + 'ab{c}"d"' + "ab{c}'d'"`);
+    assert.equal(
+      expr.textAsHtml(),
+      `'<el-lit></el-lit>' + "" + '<el-lit>ab{c}"d"</el-lit>' + "<el-lit>ab</el-lit>{<el-id>c</el-id>}<el-lit>'d'</el-lit>"`,
+    );
+  });
+
+  test("parse ValueRefField", () => {
+    const test = new TestFrame(fileImplFor(refLang));
+    const a = new AssertStatement(test);
+    const expected = a.expected;
+    expected.setFieldToKnownValidText(`[4, 5, 6, 24, 26, 44, 45, 46]`);
+    expected.parseCurrentText();
+    assert.equal(expected.readParseStatus(), ParseStatus.valid);
+    assert.equal(expected.textAsSource(), `[4, 5, 6, 24, 26, 44, 45, 46]`);
+    assert.equal(
+      expected.textAsHtml(),
+      `[<el-lit>4</el-lit>, <el-lit>5</el-lit>, <el-lit>6</el-lit>, <el-lit>24</el-lit>, <el-lit>26</el-lit>, <el-lit>44</el-lit>, <el-lit>45</el-lit>, <el-lit>46</el-lit>]`,
+    );
+  });
+  ignore_test("parse instance dot method", () => {
+    const test = new TestFrame(fileImplFor(refLang));
+    const a = new VariableDefinition(test);
+    const expr = a.expr;
+    expr.setFieldToKnownValidText(`foo.`);
+    expr.parseCurrentText();
+    assert.equal(expr.readParseStatus(), ParseStatus.incomplete);
+    const spec = expr.getSymbolCompletionSpec();
+    assert.equal(spec?.context, "foo");
+  });
+  ignore_test("parse paramDefs with closing bracket #855", () => {
+    const test = new TestFrame(fileImplFor(refLang));
+    const fn = new GlobalFunction(test);
+    const params = fn.params;
+    params.setFieldToKnownValidText(`a as Int)`);
+    params.parseCurrentText();
+    assert.equal(params.readParseStatus(), ParseStatus.valid);
+    assert.equal(params.textAsSource(), `a as Int`);
+  });
+  test("#950 space at start of var-def-field is ignored", () => {
+    const main = new MainRoutine(fileImplFor(refLang));
+    const v = new VariableDefinition(main);
+    const name = v.name;
+    name.setFieldToKnownValidText(" ");
+    name.parseCurrentText();
+    assert.equal(name.readParseStatus(), ParseStatus.incomplete);
+    assert.equal(name.textAsSource(), ``);
+  });
+  ignore_test("parse list of listof floats", () => {
+    const c = new ConstantGlobal(fileImplFor(refLang));
+    const v = c.value;
+    v.setFieldToKnownValidText(
+      `[[0.0,0.0,0.0,0.16,0.0,0.0,0.01],[0.85,0.04,-0.04,0.85,0.0,1.60,0.85],[0.20,-0.26,0.23,0.22,0.0,1.60,0.07],[-0.15,0.28,0.26,0.24,0.0,0.44,0.07]]`,
+    );
+    v.parseCurrentText();
+    assert.equal(v.readParseStatus(), ParseStatus.valid);
+  });
+  test("parse ExpressionField - extractContextForExpression", () => {
+    testExtractContextForExpression(`foo`, ``);
+    testExtractContextForExpression(`foo.`, `foo`);
+    testExtractContextForExpression(`foo.bar`, `foo`);
+    testExtractContextForExpression(`foo123.bar`, `foo123`);
+    testExtractContextForExpression(`foo().bar`, `foo`);
+    testExtractContextForExpression(`foo(1,2,a).bar`, `foo`);
+    testExtractContextForExpression(`123.bar`, ``);
+    testExtractContextForExpression(`123.456`, ``);
+    testExtractContextForExpression(`qux.foo().bar`, `foo`);
+    // testExtractContextForExpression(
+    //   `{{0.0,0.0,0.0,0.16,0.0,0.0,0.01},{0.85,0.04,-0.04,0.85,0.0,1.60,0.85},{0.20,-0.26,0.23,0.22,0.0,1.60,0.07},{-0.15,0.28,0.26,0.24,0.0,0.44,0.07`,
+    //   ``,
+    // );
+  });
+  ignore_test("parse Actual field cannot contain ' is '", () => {
+    const test = new TestFrame(fileImplFor(refLang));
+    const assertStatement = new AssertStatement(test);
+    const actual = assertStatement.actual!;
+    actual.setFieldToKnownValidText("a is b");
+    actual.parseCurrentText();
+    assert.equal(actual.readParseStatus(), ParseStatus.invalid);
+  });
+});

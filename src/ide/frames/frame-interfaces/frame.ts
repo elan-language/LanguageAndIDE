@@ -1,4 +1,5 @@
 import { BreakpointEvent } from "../../../compiler/debugging/breakpoint-event";
+import { FrameType } from "../frame-type";
 import { CompileStatus, ParseStatus } from "../status-enums";
 import { Field } from "./field";
 import { File } from "./file";
@@ -6,17 +7,17 @@ import { Parent } from "./parent";
 import { Selectable } from "./selectable";
 
 export interface Frame extends Selectable {
-  isFrame: boolean;
-  isNew: boolean; //A frame is 'New' until any field has been edited or any child added
-  hasBeenAddedTo(): void;
+  frameType: FrameType;
+  isNewlyCreated(): boolean; //A frame is 'New' until any field has been edited or any child added
+  setNewlyCreatedFalse(): void;
+  setNewlyCreatedTrue(): void;
 
   getFile(): File;
   getParent(): Parent;
   getMap(): Map<string, Selectable>;
 
   renderAsHtml(): string;
-  renderAsElanSource(): string;
-  renderAsExport(): string;
+  renderAsSource(): string;
 
   indent(): string;
 
@@ -47,7 +48,6 @@ export interface Frame extends Selectable {
   insertPeerSelector(before: boolean): void;
   selectNextFrame(): void;
 
-  initialKeywords(): string;
   setParent(parent: Parent): void;
 
   deleteIfPermissible(): void;
@@ -61,13 +61,12 @@ export interface Frame extends Selectable {
 
   isGhostable(): boolean;
   setGhosted(flag: boolean): void;
+  isGhostedExplicitly(): boolean;
   isGhostedOrWithinAGhostedFrame(): boolean;
 
   export(): boolean;
   copy(encode: boolean): boolean;
   deleteAllGhosted(): void;
-
-  frameSpecificAnnotation(): string;
 
   resetFieldText(): void;
 }

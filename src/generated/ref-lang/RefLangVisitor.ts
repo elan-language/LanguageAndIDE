@@ -1,0 +1,970 @@
+// Generated from src/grammars/ref-lang/RefLang.g4 by ANTLR 4.13.1
+
+import { AbstractParseTreeVisitor } from "antlr4ng";
+
+import { FileContext } from "./RefLangParser.js";
+import { GlobalBlockContext } from "./RefLangParser.js";
+import { GlobalContext } from "./RefLangParser.js";
+import { MainContext } from "./RefLangParser.js";
+import { FunctionContext } from "./RefLangParser.js";
+import { TestContext } from "./RefLangParser.js";
+import { TestStatementContext } from "./RefLangParser.js";
+import { ProcedureContext } from "./RefLangParser.js";
+import { ConstantContext } from "./RefLangParser.js";
+import { EnumContext } from "./RefLangParser.js";
+import { ConcreteClassContext } from "./RefLangParser.js";
+import { ConcreteClassMemberContext } from "./RefLangParser.js";
+import { AbstractClassContext } from "./RefLangParser.js";
+import { AbstractClassMemberContext } from "./RefLangParser.js";
+import { CommentContext } from "./RefLangParser.js";
+import { CommentTextContext } from "./RefLangParser.js";
+import { StatementBlockContext } from "./RefLangParser.js";
+import { SelectableStatementContext } from "./RefLangParser.js";
+import { OrdinaryStatementContext } from "./RefLangParser.js";
+import { VariableDefinitionContext } from "./RefLangParser.js";
+import { AssignmentContext } from "./RefLangParser.js";
+import { IfStatementContext } from "./RefLangParser.js";
+import { ThenClauseContext } from "./RefLangParser.js";
+import { ElseIfClauseContext } from "./RefLangParser.js";
+import { ElseClauseContext } from "./RefLangParser.js";
+import { WhileLoopContext } from "./RefLangParser.js";
+import { ForLoopContext } from "./RefLangParser.js";
+import { ProcedureCallContext } from "./RefLangParser.js";
+import { TryStatementContext } from "./RefLangParser.js";
+import { TryClauseContext } from "./RefLangParser.js";
+import { CatchClauseContext } from "./RefLangParser.js";
+import { ThrowStatementContext } from "./RefLangParser.js";
+import { ErrorMessageContext } from "./RefLangParser.js";
+import { AssertContext } from "./RefLangParser.js";
+import { ReturnStatementContext } from "./RefLangParser.js";
+import { MemberBlockContext } from "./RefLangParser.js";
+import { SelectableMemberContext } from "./RefLangParser.js";
+import { ConstructorMemberContext } from "./RefLangParser.js";
+import { PropertyContext } from "./RefLangParser.js";
+import { FunctionMethodContext } from "./RefLangParser.js";
+import { ProcedureMethodContext } from "./RefLangParser.js";
+import { AbstractFunctionContext } from "./RefLangParser.js";
+import { AbstractProcedureContext } from "./RefLangParser.js";
+import { IdentifierDefContext } from "./RefLangParser.js";
+import { IdentifierUseContext } from "./RefLangParser.js";
+import { SimpleAssignableContext } from "./RefLangParser.js";
+import { IndexedAssignableContext } from "./RefLangParser.js";
+import { ThisAssignableContext } from "./RefLangParser.js";
+import { MethodNameContext } from "./RefLangParser.js";
+import { TestNameContext } from "./RefLangParser.js";
+import { IntTypeNameContext } from "./RefLangParser.js";
+import { FloatTypeNameContext } from "./RefLangParser.js";
+import { BoolTypeNameContext } from "./RefLangParser.js";
+import { StringTypeNameContext } from "./RefLangParser.js";
+import { ListTypeNameContext } from "./RefLangParser.js";
+import { DictTypeNameContext } from "./RefLangParser.js";
+import { UdtTypeNameContext } from "./RefLangParser.js";
+import { ConstantValueContext } from "./RefLangParser.js";
+import { ArgListContext } from "./RefLangParser.js";
+import { ArgumentContext } from "./RefLangParser.js";
+import { ParamListContext } from "./RefLangParser.js";
+import { IdentifierListContext } from "./RefLangParser.js";
+import { ExpressionListContext } from "./RefLangParser.js";
+import { TypeContext } from "./RefLangParser.js";
+import { AssertActualContext } from "./RefLangParser.js";
+import { AssertExpectedContext } from "./RefLangParser.js";
+import { LitValueContext } from "./RefLangParser.js";
+import { LitBooleanTrueContext } from "./RefLangParser.js";
+import { LitBooleanFalseContext } from "./RefLangParser.js";
+import { LitIntegerContext } from "./RefLangParser.js";
+import { LitBinaryContext } from "./RefLangParser.js";
+import { LitHexContext } from "./RefLangParser.js";
+import { LitFloatContext } from "./RefLangParser.js";
+import { LitStringContext } from "./RefLangParser.js";
+import { InterpolatedStringContext } from "./RefLangParser.js";
+import { SegmentContext } from "./RefLangParser.js";
+import { InterpolatedStringTextContext } from "./RefLangParser.js";
+import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
+import { EnumValueContext } from "./RefLangParser.js";
+import { IndexContext } from "./RefLangParser.js";
+import { NewInstanceExpressionContext } from "./RefLangParser.js";
+import { UnaryExpressionLabelContext } from "./RefLangParser.js";
+import { TermExpressionContext } from "./RefLangParser.js";
+import { BinaryExpressionLabelContext } from "./RefLangParser.js";
+import { IfExpressionContext } from "./RefLangParser.js";
+import { IdentifierUseTermContext } from "./RefLangParser.js";
+import { MethodCallTermContext } from "./RefLangParser.js";
+import { IndexedTermContext } from "./RefLangParser.js";
+import { LitValueTermContext } from "./RefLangParser.js";
+import { DictionaryTermContext } from "./RefLangParser.js";
+import { BracketedExpressionTermContext } from "./RefLangParser.js";
+import { ChainableTermContext } from "./RefLangParser.js";
+import { TupleTermContext } from "./RefLangParser.js";
+import { ThisInstanceTermContext } from "./RefLangParser.js";
+import { ListTermContext } from "./RefLangParser.js";
+import { ChainableContext } from "./RefLangParser.js";
+import { ThisInstanceContext } from "./RefLangParser.js";
+import { BracketedExpressionContext } from "./RefLangParser.js";
+import { UnaryExpressionContext } from "./RefLangParser.js";
+import { NegateNumericContext } from "./RefLangParser.js";
+import { NegateLogicalContext } from "./RefLangParser.js";
+import { BinaryExpressionContext } from "./RefLangParser.js";
+import { ListContext } from "./RefLangParser.js";
+import { TupleContext } from "./RefLangParser.js";
+import { DictionaryContext } from "./RefLangParser.js";
+import { KvpListContext } from "./RefLangParser.js";
+import { KvpContext } from "./RefLangParser.js";
+import { MethodCallContext } from "./RefLangParser.js";
+import { OpEQUALContext } from "./RefLangParser.js";
+import { OpNOT_EQUALContext } from "./RefLangParser.js";
+import { OpREF_EQUALContext } from "./RefLangParser.js";
+import { OpREF_NOT_EQUALContext } from "./RefLangParser.js";
+import { OpGTContext } from "./RefLangParser.js";
+import { OpLTContext } from "./RefLangParser.js";
+import { OpGEContext } from "./RefLangParser.js";
+import { OpLEContext } from "./RefLangParser.js";
+import { OpMULTContext } from "./RefLangParser.js";
+import { OpDIVIDEContext } from "./RefLangParser.js";
+import { OpPLUSContext } from "./RefLangParser.js";
+import { OpMINUSContext } from "./RefLangParser.js";
+import { OpANDContext } from "./RefLangParser.js";
+import { OpORContext } from "./RefLangParser.js";
+import { OpMODContext } from "./RefLangParser.js";
+import { OpPOWERContext } from "./RefLangParser.js";
+import { NewInstanceContext } from "./RefLangParser.js";
+import { ParamDefContext } from "./RefLangParser.js";
+import { TypeGenericContext } from "./RefLangParser.js";
+import { TypeFuncContext } from "./RefLangParser.js";
+import { TypeTupleContext } from "./RefLangParser.js";
+import { LambdaContext } from "./RefLangParser.js";
+
+/**
+ * This interface defines a complete generic visitor for a parse tree produced
+ * by `RefLangParser`.
+ *
+ * @param <Result> The return type of the visit operation. Use `void` for
+ * operations with no return type.
+ */
+export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
+  /**
+   * Visit a parse tree produced by `RefLangParser.file`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFile?: (ctx: FileContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.globalBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitGlobalBlock?: (ctx: GlobalBlockContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.global`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitGlobal?: (ctx: GlobalContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.main`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMain?: (ctx: MainContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.function`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFunction?: (ctx: FunctionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.test`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTest?: (ctx: TestContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.testStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTestStatement?: (ctx: TestStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.procedure`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProcedure?: (ctx: ProcedureContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.constant`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConstant?: (ctx: ConstantContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.enum`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitEnum?: (ctx: EnumContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.concreteClass`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConcreteClass?: (ctx: ConcreteClassContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.concreteClassMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConcreteClassMember?: (ctx: ConcreteClassMemberContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.abstractClass`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAbstractClass?: (ctx: AbstractClassContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.abstractClassMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAbstractClassMember?: (ctx: AbstractClassMemberContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.comment`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitComment?: (ctx: CommentContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.commentText`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCommentText?: (ctx: CommentTextContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.statementBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitStatementBlock?: (ctx: StatementBlockContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.selectableStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSelectableStatement?: (ctx: SelectableStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.ordinaryStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOrdinaryStatement?: (ctx: OrdinaryStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.variableDefinition`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitVariableDefinition?: (ctx: VariableDefinitionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assignment`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssignment?: (ctx: AssignmentContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.ifStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfStatement?: (ctx: IfStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thenClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThenClause?: (ctx: ThenClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.elseIfClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseIfClause?: (ctx: ElseIfClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.elseClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitElseClause?: (ctx: ElseClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.whileLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitWhileLoop?: (ctx: WhileLoopContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.forLoop`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitForLoop?: (ctx: ForLoopContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.procedureCall`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProcedureCall?: (ctx: ProcedureCallContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.tryStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryStatement?: (ctx: TryStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.tryClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTryClause?: (ctx: TryClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.catchClause`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitCatchClause?: (ctx: CatchClauseContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.throwStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThrowStatement?: (ctx: ThrowStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.errorMessage`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitErrorMessage?: (ctx: ErrorMessageContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assert`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssert?: (ctx: AssertContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.returnStatement`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitReturnStatement?: (ctx: ReturnStatementContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.memberBlock`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMemberBlock?: (ctx: MemberBlockContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.selectableMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSelectableMember?: (ctx: SelectableMemberContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.constructorMember`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConstructorMember?: (ctx: ConstructorMemberContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.property`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProperty?: (ctx: PropertyContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.functionMethod`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFunctionMethod?: (ctx: FunctionMethodContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.procedureMethod`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitProcedureMethod?: (ctx: ProcedureMethodContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.abstractFunction`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAbstractFunction?: (ctx: AbstractFunctionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.abstractProcedure`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAbstractProcedure?: (ctx: AbstractProcedureContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.identifierDef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierDef?: (ctx: IdentifierDefContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.identifierUse`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUse?: (ctx: IdentifierUseContext) => Result;
+  /**
+   * Visit a parse tree produced by the `simpleAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSimpleAssignable?: (ctx: SimpleAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedAssignable?: (ctx: IndexedAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisAssignable`
+   * labeled alternative in `RefLangParser.assignable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisAssignable?: (ctx: ThisAssignableContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.methodName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMethodName?: (ctx: MethodNameContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.testName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTestName?: (ctx: TestNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `intTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIntTypeName?: (ctx: IntTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `floatTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitFloatTypeName?: (ctx: FloatTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `boolTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBoolTypeName?: (ctx: BoolTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `stringTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitStringTypeName?: (ctx: StringTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTypeName?: (ctx: ListTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictTypeName?: (ctx: DictTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by the `udtTypeName`
+   * labeled alternative in `RefLangParser.typeName`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUdtTypeName?: (ctx: UdtTypeNameContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.constantValue`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitConstantValue?: (ctx: ConstantValueContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.argList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitArgList?: (ctx: ArgListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.argument`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitArgument?: (ctx: ArgumentContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.paramList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitParamList?: (ctx: ParamListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.identifierList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierList?: (ctx: IdentifierListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.expressionList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitExpressionList?: (ctx: ExpressionListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.type`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitType?: (ctx: TypeContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assertActual`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssertActual?: (ctx: AssertActualContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.assertExpected`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitAssertExpected?: (ctx: AssertExpectedContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.litValue`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitValue?: (ctx: LitValueContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBooleanTrue`
+   * labeled alternative in `RefLangParser.litBoolean`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBooleanTrue?: (ctx: LitBooleanTrueContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBooleanFalse`
+   * labeled alternative in `RefLangParser.litBoolean`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBooleanFalse?: (ctx: LitBooleanFalseContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litInteger`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitInteger?: (ctx: LitIntegerContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litBinary`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitBinary?: (ctx: LitBinaryContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litHex`
+   * labeled alternative in `RefLangParser.litInt`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitHex?: (ctx: LitHexContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.litFloat`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitFloat?: (ctx: LitFloatContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.litString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitString?: (ctx: LitStringContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedString`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedString?: (ctx: InterpolatedStringContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.segment`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitSegment?: (ctx: SegmentContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedStringText`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedStringText?: (ctx: InterpolatedStringTextContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.interpolatedStringExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitInterpolatedStringExpression?: (ctx: InterpolatedStringExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.enumValue`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitEnumValue?: (ctx: EnumValueContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.index`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndex?: (ctx: IndexContext) => Result;
+  /**
+   * Visit a parse tree produced by the `newInstanceExpression`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `unaryExpressionLabel`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => Result;
+  /**
+   * Visit a parse tree produced by the `termExpression`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTermExpression?: (ctx: TermExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `binaryExpressionLabel`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBinaryExpressionLabel?: (ctx: BinaryExpressionLabelContext) => Result;
+  /**
+   * Visit a parse tree produced by the `ifExpression`
+   * labeled alternative in `RefLangParser.expression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIfExpression?: (ctx: IfExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by the `identifierUseTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIdentifierUseTerm?: (ctx: IdentifierUseTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `methodCallTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMethodCallTerm?: (ctx: MethodCallTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `indexedTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitIndexedTerm?: (ctx: IndexedTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `litValueTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLitValueTerm?: (ctx: LitValueTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `dictionaryTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionaryTerm?: (ctx: DictionaryTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `bracketedExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBracketedExpressionTerm?: (ctx: BracketedExpressionTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `chainableTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitChainableTerm?: (ctx: ChainableTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `tupleTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTupleTerm?: (ctx: TupleTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `thisInstanceTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstanceTerm?: (ctx: ThisInstanceTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `listTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitListTerm?: (ctx: ListTermContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.chainable`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitChainable?: (ctx: ChainableContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.thisInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitThisInstance?: (ctx: ThisInstanceContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.bracketedExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBracketedExpression?: (ctx: BracketedExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.unaryExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUnaryExpression?: (ctx: UnaryExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.negateNumeric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateNumeric?: (ctx: NegateNumericContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.negateLogical`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNegateLogical?: (ctx: NegateLogicalContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.binaryExpression`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitBinaryExpression?: (ctx: BinaryExpressionContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.list`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitList?: (ctx: ListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.tuple`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTuple?: (ctx: TupleContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.dictionary`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitDictionary?: (ctx: DictionaryContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.kvpList`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvpList?: (ctx: KvpListContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.kvp`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitKvp?: (ctx: KvpContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.methodCall`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitMethodCall?: (ctx: MethodCallContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opEQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpEQUAL?: (ctx: OpEQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opNOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpNOT_EQUAL?: (ctx: OpNOT_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opREF_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpREF_EQUAL?: (ctx: OpREF_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opREF_NOT_EQUAL`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpREF_NOT_EQUAL?: (ctx: OpREF_NOT_EQUALContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opGT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpGT?: (ctx: OpGTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opLT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpLT?: (ctx: OpLTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opGE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpGE?: (ctx: OpGEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opLE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpLE?: (ctx: OpLEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMULT`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMULT?: (ctx: OpMULTContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opDIVIDE`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpDIVIDE?: (ctx: OpDIVIDEContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opPLUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpPLUS?: (ctx: OpPLUSContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMINUS`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMINUS?: (ctx: OpMINUSContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opAND`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpAND?: (ctx: OpANDContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opOR`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpOR?: (ctx: OpORContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opMOD`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpMOD?: (ctx: OpMODContext) => Result;
+  /**
+   * Visit a parse tree produced by the `opPOWER`
+   * labeled alternative in `RefLangParser.binaryOperator`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitOpPOWER?: (ctx: OpPOWERContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.newInstance`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitNewInstance?: (ctx: NewInstanceContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.paramDef`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitParamDef?: (ctx: ParamDefContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.typeGeneric`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeGeneric?: (ctx: TypeGenericContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.typeFunc`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeFunc?: (ctx: TypeFuncContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.typeTuple`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitTypeTuple?: (ctx: TypeTupleContext) => Result;
+  /**
+   * Visit a parse tree produced by `RefLangParser.lambda`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitLambda?: (ctx: LambdaContext) => Result;
+}

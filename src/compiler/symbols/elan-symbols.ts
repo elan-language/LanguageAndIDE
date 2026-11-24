@@ -8,7 +8,6 @@ import { FloatType } from "./float-type";
 import { FunctionType } from "./function-type";
 import { GenericParameterType } from "./generic-parameter-type";
 import { IntType } from "./int-type";
-import { RegExpType } from "./regexp-type";
 import { StringType } from "./string-type";
 import { SymbolScope } from "./symbol-scope";
 import { TupleType } from "./tuple-type";
@@ -89,15 +88,6 @@ const booleanSymbol: ElanSymbolByLanguage = {
   },
 };
 
-const regExpSymbol: ElanSymbol = {
-  symbolId: RegExpType.Instance.name,
-  symbolType: function (): SymbolType {
-    return RegExpType.Instance;
-  },
-  symbolScope: SymbolScope.program,
-  symbolIsType: true,
-};
-
 const tupleSymbol: ClassSymbol = {
   symbolId: TupleName,
   symbolType: function (): SymbolType {
@@ -137,17 +127,9 @@ export const elanSymbols = [
   floatSymbol,
   stringSymbol,
   booleanSymbol,
-  regExpSymbol,
   tupleSymbol,
   funcSymbol,
 ];
 
 // without func symbol so that it doesn't show in symbol completion
-export const elanSymbolMatches = [
-  intSymbol,
-  floatSymbol,
-  stringSymbol,
-  booleanSymbol,
-  regExpSymbol,
-  tupleSymbol,
-];
+export const elanSymbolMatches = [intSymbol, floatSymbol, stringSymbol, booleanSymbol, tupleSymbol];

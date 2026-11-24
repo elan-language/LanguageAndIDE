@@ -1,13 +1,7 @@
-import { EnumValuesField } from "../fields/enum-values-field";
-import { InheritsFromField } from "../fields/inherits-from-field";
+import { OperationSymbol } from "../../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../../compiler/syntax-nodes/terminal-symbol";
 import { FileImpl } from "../file-impl";
-import { Lambda } from "../parse-nodes/lambda";
-import { ListNode } from "../parse-nodes/list-node";
-import { LitStringInterpolated } from "../parse-nodes/lit-string-interpolated";
-import { NewInstance } from "../parse-nodes/new-instance";
-import { ParamDefNode } from "../parse-nodes/param-def-node";
-import { TypeGenericNode } from "../parse-nodes/type-generic-node";
-import { TypeTupleNode } from "../parse-nodes/type-tuple-node";
+import { FrameType } from "../frame-type";
 import { Field } from "./field";
 import { Frame } from "./frame";
 
@@ -17,75 +11,44 @@ export interface Language {
   defaultFileExtension: string;
   defaultMimeType: string;
 
-  annotation(frame: Frame): string;
-
   commentRegex(): RegExp;
 
   renderSingleLineAsHtml(frame: Frame): string;
+  renderSingleLineAsSource(frame: Frame): string;
 
   renderTopAsHtml(frame: Frame): string;
+  renderTopAsSource(frame: Frame): string;
 
   renderBottomAsHtml(frame: Frame): string;
+  renderBottomAsSource(frame: Frame): string;
 
   renderFileImportsAsHtml(): string;
-  renderSpecificHeaderAsHtml(f: FileImpl): string;
-  renderFileTrailerAsHtml(f: FileImpl): string;
 
-  translateExpression(expr: string): string;
+  renderSpecificHeaderAsHtml(f: FileImpl): string;
+  renderSpecificHeaderAsSource(f: FileImpl): string;
+
+  renderFileTrailerAsHtml(f: FileImpl): string;
+  renderFileTrailerAsSource(f: FileImpl): string;
 
   getFields(node: Frame): Field[];
 
-  addNodesForNewInstance(node: NewInstance): void;
-  addNodesForParamDef(node: ParamDefNode): void;
-  addNodesForTypeGeneric(node: TypeGenericNode): void;
-  addNodesForTypeTuple(node: TypeTupleNode): void;
-  addNodesForLambda(node: Lambda): void;
-  addNodesForList(node: ListNode): void;
-  parseInterpolatedString(node: LitStringInterpolated, text: string): void;
-
-  paramDefAsHtml(node: ParamDefNode): string;
-  typeGenericAsHtml(node: TypeGenericNode): string;
-  newInstanceAsHtml(node: NewInstance): string;
-  litStringInterpolatedAsHtml(node: LitStringInterpolated): string;
-  typeTupleAsHtml(node: TypeTupleNode): string;
-  enumValuesListAsHtml(field: EnumValuesField): string;
-  inheritsFromTextAsHtml(field: InheritsFromField): string;
-  lambdaAsHtml(node: Lambda): string;
-  listAsHtml(node: ListNode): string;
-
   postProcessHtml(html: string): string;
-
-  MOD: string;
-  EQUAL: string;
-  NOT_EQUAL: string;
-  AND: string;
-  OR: string;
-  NOT: string;
-
-  COMMENT_MARKER: string; //e.g. `#`
-  LIST_START: string;
-  LIST_END: string;
-  INTERPOLATED_STRING_PREFIX: string;
-  NEW_INSTANCE_PREFIX: string;
 
   INT_NAME: string;
   FLOAT_NAME: string;
   BOOL_NAME: string;
   STRING_NAME: string;
   LIST_NAME: string;
+  DICT_NAME: string;
+  FUNC_NAME: string;
 
-  TRUE: string;
-  FALSE: string;
-  BINARY_PREFIX: string;
-  HEX_PREFIX: string;
+  customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
-  START_OF_GENERIC: string;
-  END_OF_GENERIC: string;
-  THIS_INSTANCE: string;
+  mapOperation(op: string): OperationSymbol;
 
-  EXPRESSION_KEYWORDS: string[];
-  DISALLOWED_IDENTIFIERS: string[];
+  mapOperationSymbol(op: OperationSymbol): string;
 
-  // All keywords, incl. standard types, defined in the language (not just the ones used by Elan)
-  reservedWords: Set<string>;
+  mapTerminal(term: string): TerminalSymbol;
+
+  mapTerminalSymbol(termSymbol: TerminalSymbol): string;
 }

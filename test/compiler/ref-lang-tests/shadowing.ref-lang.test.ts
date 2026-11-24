@@ -1,0 +1,606 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertDoesNotParse,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Shadowing", () => {
+  test("Pass_LocalVariableShadowsLibConstant", async () => {
+    const code = `${testHeader}
+
+main
+  variable pi set to 4
+  call printNoLine(pi)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let pi = 4;
+  await _stdlib.printNoLine(pi);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "4");
+  });
+
+  test("Pass_LocalVariableFromGlobalConstant", async () => {
+    const code = `${testHeader}
+
+constant f set to 1
+
+main
+  variable f set to 2
+  call printNoLine(f)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  f = 1;
+
+};
+async function main() {
+  let f = 2;
+  await _stdlib.printNoLine(f);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "2");
+  });
+
+  test("Pass_GlobalAndInstanceFunctionsShadowGlobals", async () => {
+    const code = `${testHeader}
+
+main
+    variable f set to new Foo()
+    call printNoLine(f.sin(1))
+    call printNoLine(sin(1))
+end main
+
+function sin(x as Float) returns Float
+    return 111
+end function
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  function sin(x as Float) returns Float
+    return 222
+  end function
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.sin(1)));
+  await _stdlib.printNoLine((await global.sin(1)));
+}
+
+async function sin(x) {
+  return 111;
+}
+global["sin"] = sin;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async sin(x) {
+    return 222;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "222111");
+  });
+
+  test("Pass_DisambiguateLibProcedureFromLocalAndInstanceProcedures", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call f.sleep_ms(1)
+  call sleep_ms(1)
+end main
+
+procedure sleep_ms(x as Float)
+    call printNoLine(111)
+end procedure
+
+class Foo
+    constructor()
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    procedure sleep_ms(x as Float)
+      call printNoLine(222)
+    end procedure
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await f.sleep_ms(1);
+  await sleep_ms(1);
+}
+
+async function sleep_ms(x) {
+  await _stdlib.printNoLine(111);
+}
+global["sleep_ms"] = sleep_ms;
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async sleep_ms(x) {
+    await _stdlib.printNoLine(222);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "222111");
+  });
+
+  test("Pass_Can'tDisambiguateGlobalFunctionFromLocalVar", async () => {
+    const code = `${testHeader}
+
+main
+    variable sin set to 2
+    call printNoLine(sin)
+    call printNoLine(sin(1))
+end main
+
+function sin(x as Float) returns Float
+    return 111
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot invoke identifier 'sin' as a method.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Pass_LocalVarShadowsGlobalFunction", async () => {
+    const code = `${testHeader}
+
+main
+  variable add2 set to add2(1)
+  call printNoLine(add2)
+end main
+
+function add2(x as Float) returns Float
+  return x + 2
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let add2 = (await global.add2(1));
+  await _stdlib.printNoLine(add2);
+}
+
+async function add2(x) {
+  return x + 2;
+}
+global["add2"] = add2;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_LocalShadowsConstant", async () => {
+    const code = `${testHeader}
+
+constant a set to 4
+
+main
+  variable a set to 3
+  call printNoLine(a)
+end main`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  a = 4;
+
+};
+async function main() {
+  let a = 3;
+  await _stdlib.printNoLine(a);
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "3");
+  });
+
+  test("Pass_IdShadowsFunction", async () => {
+    const code = `${testHeader}
+
+main
+  call printNoLine(foo())
+end main
+function foo() returns Int
+  return 1
+end function
+
+function bar() returns Int
+  variable foo set to foo()
+  return foo
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await _stdlib.printNoLine((await global.foo()));
+}
+
+async function foo() {
+  return 1;
+}
+global["foo"] = foo;
+
+async function bar() {
+  let foo = (await global.foo());
+  return foo;
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Pass_IdShadowsProcedure", async () => {
+    const code = `${testHeader}
+
+main
+  call foo()
+end main
+procedure foo()
+  call printNoLine(1)
+end procedure
+
+function bar() returns Int
+  variable foo set to 1
+  return foo
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  await foo();
+}
+
+async function foo() {
+  await _stdlib.printNoLine(1);
+}
+global["foo"] = foo;
+
+async function bar() {
+  let foo = 1;
+  return foo;
+}
+global["bar"] = bar;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Fail_IdShadowsParameter", async () => {
+    const code = `${testHeader}
+
+main
+  call foo(1)
+end main
+procedure foo(a as Int)
+  variable a set to a
+end procedure`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_IdShadowsVariable", async () => {
+    const code = `${testHeader}
+
+main
+  variable a set to 1
+  variable a set to 2
+end main`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a variable and cannot be re-defined here.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Pass_ParameterShadowsConst", async () => {
+    const code = `${testHeader}
+
+constant x set to 1
+
+main
+  call printNoLine(foo(1))
+end main
+
+function foo(x as Int) returns Int
+  return x
+end function`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {
+  x = 1;
+
+};
+async function main() {
+  await _stdlib.printNoLine((await global.foo(1)));
+}
+
+async function foo(x) {
+  return x;
+}
+global["foo"] = foo;
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "1");
+  });
+
+  test("Fail_ShadowParameter1", async () => {
+    const code = `${testHeader}
+
+main
+  variable result set to foo(3,4)
+  call printNoLine(result)
+end main
+
+function foo(a as Int, b as Int) returns Int
+  variable a set to 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  test("Fail_ShadowParameter2", async () => {
+    const code = `${testHeader}
+
+main
+  variable result set to foo(3,4)
+  call printNoLine(result)
+end main
+
+function foo(a as Int, b as Int) returns Int
+  variable a set to 1
+  return a * b
+end function`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "The identifier 'a' is already used for a parameter and cannot be re-defined here.ErrorMessages.html#compile_error",
+    ]);
+  });
+});

@@ -1,0 +1,60 @@
+# 068c9ace619559adce72efc5d86a1abb17375b85bb5728db18b971863ebe535f Elan 2.0.0-beta4 valid
+
+#  Tetris 8: Write emptyAndWithinBounds function
+main
+  variable bg set to new BlockGraphics()
+  call drawBackground(bg)
+  variable shape set to [0, 1, 39, 40]
+  variable position set to 17
+  call drawBackground(bg)
+  variable moving set to true
+  while moving
+    call drawShape(shape, position, green, bg)
+    call sleep(0.5)
+    call eraseShape(shape, position, bg)
+    assign position to position + 40
+    # 
+    call drawShape(shape, position, green, bg)
+  end while
+end main
+
+procedure drawShape(shape as List<of Int>, position as Int, colour as Int, bg as BlockGraphics)
+  for blockNo in shape
+    call bg.putBlockNo(blockNo + position, colour)
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+procedure eraseShape(shape as List<of Int>, position as Int, bg as BlockGraphics)
+  call drawShape(shape, position, black, bg)
+end procedure
+
+procedure drawBackground(bg as BlockGraphics)
+  for row in range(0, 30)
+    for col in range(0, 40)
+      variable colour set to 0x004472C4
+      if (col >= 10) and (col <= 25) then
+        assign colour to black
+      end if
+      call bg.put(col, row, colour)
+    end for
+  end for
+  call displayBlockGraphics(bg)
+end procedure
+
+function newPositionIsValid(shape as List<of Int>, position as Int, bg as BlockGraphics) returns Boolean
+  variable result set to true
+  for blockNo in shape
+    variable target set to blockNo + position
+    if (target > 1199) or (bg.getBlockNo(target) isnt black) then
+      assign result to false
+    end if
+  end for
+  return result
+end function
+
+test test_emptyAndWithinBounds
+  variable bg set to (new BlockGraphics()).withPutBlockNo(971, green).withPutBlockNo(735, black)
+  variable shape set to [0, 1, 39, 40]
+  assert newPositionIsValid(shape, 620, bg) evaluates to true
+end test

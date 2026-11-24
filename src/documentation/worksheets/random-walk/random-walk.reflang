@@ -1,0 +1,29 @@
+# 627a46682c4c54d5486bd15608d287b1b27abe8ae526a077eb875b63f941868e Elan 2.0.0-beta5 valid
+
+main
+  variable t set to new Turtle()
+  variable paces set to 0
+  call t.hide()
+  call circle(t, 50)
+  for count in range(1, 21)
+    call t.placeAt(0, 0)
+    variable colour set to randint(red, blue)
+    call t.penColour(colour)
+    while sqrt(pow(t.x, 2) + pow(t.y, 2)) < 50
+      variable angle set to randint(-90, 90)
+      call t.turn(angle)
+      call t.move(5)
+      assign paces to paces + 1
+    end while
+  end for
+  call print($"Average number of paces: {paces/20.0}")
+end main
+
+procedure circle(t as Turtle, radius as Int)
+  variable segment set to radius*pi/180
+  call t.placeAt(-radius, 0)
+  for count in range(1, 361)
+    call t.move(segment)
+    call t.turn(1)
+  end for
+end procedure

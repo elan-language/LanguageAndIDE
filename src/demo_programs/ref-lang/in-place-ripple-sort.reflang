@@ -1,0 +1,25 @@
+# 98d87a0993f5a6481c3a8d909b66243f8a705aed5cf64ca20a93c8af2d634ef4 Elan 2.0.0-beta5 valid
+
+main
+  variable li set to [7, 1, 0, 4, 8, 3, 6]
+  call print(li)
+  call inPlaceRippleSort(li)
+  call print(li)
+end main
+
+procedure inPlaceRippleSort(li as List<of Int>)
+  variable hasChanged set to true
+  variable lastComp set to li.length() - 2
+  while hasChanged is true
+    assign hasChanged to false
+    for i in range(0, lastComp + 1)
+      if li[i] > li[i + 1] then
+        variable temp set to li[i]
+        assign li[i] to li[i + 1]
+        assign li[i + 1] to temp
+        assign hasChanged to true
+      end if
+    end for
+    assign lastComp to lastComp - 1
+  end while
+end procedure

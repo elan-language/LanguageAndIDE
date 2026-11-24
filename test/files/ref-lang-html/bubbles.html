@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link href="..\..\..\media\elanStyle.css" rel="stylesheet" />
+<title>Elan Editor</title>
+</head>
+<body>
+<el-header># <el-hash>31c686458d761d8088768df575ddbc05a69876909e1c225b5f2fcb14bf0c48ed</el-hash> <el-version>Elan 2.0.0-beta5</el-version></el-header>
+<el-main class="selected focused ok multiline" id='elan_main1' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>main</el-kw>
+<el-help title="Click to open Help for this instruction"> <a href="documentation/LangRef.html#main" target="help-iframe" tabindex="-1">?</a></el-help><el-msg></el-msg><el-fr>1</el-fr></el-top>
+<el-statement class="ok" id='elan_var3' tabindex="-1" ><el-top><el-kw>variable </el-kw><el-field id="elan_ident4" class="ok" tabindex="-1"><el-txt><el-id>bubbles</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="elan_expr5" class="ok" tabindex="-1"><el-txt><el-kw>new</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;()</el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>2</el-fr></el-statement>
+<el-statement><el-comment class="ok" id='elan_com6' tabindex="-1" ><el-top><el-field id="elan_comment7" class="ok" tabindex="-1"><el-txt># create 20 small bubbles at the bottom</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top></el-comment></el-statement>
+<el-statement class="ok multiline" id='elan_for8' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="elan_ident10" class="ok" tabindex="-1"><el-txt><el-id>i</el-id></el-txt><el-place><i>item</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> in </el-kw><el-field id="elan_expr11" class="ok" tabindex="-1"><el-txt><el-method>range</el-method>(<el-lit>1</el-lit>, <el-lit>21</el-lit>)</el-txt><el-place><i>source</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>
+<el-msg></el-msg><el-fr>3</el-fr></el-top>
+<el-statement class="ok" id='elan_var12' tabindex="-1" ><el-top><el-kw>variable </el-kw><el-field id="elan_ident13" class="ok" tabindex="-1"><el-txt><el-id>b</el-id></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> set to </el-kw><el-field id="elan_expr14" class="ok" tabindex="-1"><el-txt>(<el-kw>new</el-kw> <el-type>CircleVG</el-type>()).<el-method>withCentreX</el-method>(<el-id>i</el-id>*<el-lit>5</el-lit> + <el-lit>2</el-lit>).<el-method>withCentreY</el-method>(<el-lit>75</el-lit>).<el-method>withRadius</el-method>(<el-lit>0</el-lit>).<el-method>withFillColour</el-method>(<el-id>transparent</el-id>).<el-method>withStrokeColour</el-method>(<el-method>randint</el-method>(<el-lit>0</el-lit>, <el-id>white</el-id>))</el-txt><el-place><i>value or expression</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>4</el-fr></el-statement>
+<el-statement class="ok" id='elan_call15' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident16" class="ok" tabindex="-1"><el-txt><el-id>bubbles</el-id>.<el-method>append</el-method>(<el-id>b</el-id>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>5</el-fr></el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok multiline" id='elan_while17' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>while </el-kw><el-field id="elan_expr19" class="ok" tabindex="-1"><el-txt><el-kw>true</el-kw></el-txt><el-place><i>condition</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>
+<el-msg></el-msg><el-fr>6</el-fr></el-top>
+<el-statement class="ok" id='elan_call20' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident21" class="ok" tabindex="-1"><el-txt><el-method>moveGrowBurst</el-method>(<el-id>bubbles</el-id>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>7</el-fr></el-statement>
+<el-statement class="ok" id='elan_call22' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident23" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method>(<el-lit>100</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>8</el-fr></el-statement>
+<el-kw>end while</el-kw>
+</el-statement>
+<el-kw>end main</el-kw>
+</el-main>
+<el-proc class="ok multiline" id='elan_proc24' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>procedure </el-kw><el-field id="elan_ident26" class="ok" tabindex="-1"><el-txt><el-method>moveGrowBurst</el-method></el-txt><el-place><i>name</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#MethodNameField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>(<el-field id="elan_params27" class="optional ok" tabindex="-1"><el-txt><el-id>bubbles</el-id> <el-kw>as</el-kw> <el-type>List</el-type>&lt;<el-kw>of</el-kw> <el-type>CircleVG</el-type>&gt;</el-txt><el-place><i>parameter definitions</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ParamListField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>)
+<el-msg></el-msg><el-fr>9</el-fr></el-top>
+<el-statement class="ok multiline" id='elan_for28' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>for </el-kw><el-field id="elan_ident30" class="ok" tabindex="-1"><el-txt><el-id>b</el-id></el-txt><el-place><i>item</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#IdentifierField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> in </el-kw><el-field id="elan_expr31" class="ok" tabindex="-1"><el-txt><el-id>bubbles</el-id></el-txt><el-place><i>source</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field>
+<el-msg></el-msg><el-fr>10</el-fr></el-top>
+<el-statement class="ok multiline" id='elan_if32' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>if </el-kw><el-field id="elan_expr34" class="ok" tabindex="-1"><el-txt><el-method>random</el-method>() < <el-lit>0.05</el-lit></el-txt><el-place><i>condition</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ExpressionField" target="help-iframe" tabindex="-1">?</a></el-help></el-field><el-kw> then</el-kw>
+<el-msg></el-msg><el-fr>11</el-fr></el-top>
+<el-statement class="ok multiline outdent" id='elan_then37' tabindex="-1" >
+<el-top><el-expand>+</el-expand>
+<el-msg></el-msg></el-top>
+<el-statement><el-comment class="ok" id='elan_com39' tabindex="-1" ><el-top><el-field id="elan_comment40" class="ok" tabindex="-1"><el-txt># 5% chance bubble 'bursts' and starts again tiny at bottom</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top></el-comment></el-statement>
+<el-statement class="ok" id='elan_call41' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident42" class="ok" tabindex="-1"><el-txt><el-id>b</el-id>.<el-method>setRadius</el-method>(<el-lit>0</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>12</el-fr></el-statement>
+<el-statement class="ok" id='elan_call43' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident44" class="ok" tabindex="-1"><el-txt><el-id>b</el-id>.<el-method>setCentreY</el-method>(<el-lit>75</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>13</el-fr></el-statement>
+
+</el-statement>
+<el-statement class="ok multiline outdent" id='elan_else45' tabindex="-1" >
+<el-top><el-expand>+</el-expand><el-kw>else
+<el-msg></el-msg><el-fr>14</el-fr></el-top>
+<el-statement><el-comment class="ok" id='elan_com47' tabindex="-1" ><el-top><el-field id="elan_comment48" class="ok" tabindex="-1"><el-txt># bubble rises and grows slightly</el-txt><el-place># <i>comment</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#CommentField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top></el-comment></el-statement>
+<el-statement class="ok" id='elan_call49' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident50" class="ok" tabindex="-1"><el-txt><el-id>b</el-id>.<el-method>setCentreY</el-method>(<el-id>b</el-id>.<el-id>centreY</el-id> - <el-lit>1</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>15</el-fr></el-statement>
+<el-statement class="ok" id='elan_call51' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident52" class="ok" tabindex="-1"><el-txt><el-id>b</el-id>.<el-method>setRadius</el-method>(<el-id>b</el-id>.<el-id>radius</el-id> + <el-lit>0.2</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>16</el-fr></el-statement>
+
+</el-statement>
+<el-kw>end if</el-kw>
+</el-statement>
+<el-kw>end for</el-kw>
+</el-statement>
+<el-statement class="ok" id='elan_call53' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident54" class="ok" tabindex="-1"><el-txt><el-method>displayVectorGraphics</el-method>(<el-id>bubbles</el-id>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>17</el-fr></el-statement>
+<el-statement class="ok" id='elan_call55' tabindex="-1" ><el-top><el-kw>call </el-kw><el-field id="elan_ident56" class="ok" tabindex="-1"><el-txt><el-method>sleep_ms</el-method>(<el-lit>5</el-lit>)</el-txt><el-place><i>procedureName</i></el-place><el-msg></el-msg><el-help title="Click to open Help for this field"><a href="documentation/LangRef.html#ProcRefField" target="help-iframe" tabindex="-1">?</a></el-help></el-field></el-top><el-msg></el-msg><el-fr>18</el-fr></el-statement>
+<el-kw>end procedure</el-kw>
+</el-proc>
+</body>
+</html>

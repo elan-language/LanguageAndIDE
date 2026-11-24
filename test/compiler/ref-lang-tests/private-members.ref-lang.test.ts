@@ -1,0 +1,483 @@
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-impl";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import {
+  assertDoesNotCompile,
+  assertObjectCodeExecutes,
+  assertObjectCodeIs,
+  assertParses,
+  assertStatusIsValid,
+  ignore_test,
+  testHash,
+  testHeader,
+  transforms,
+} from "../compiler-test-helpers";
+
+suite("Private Members", () => {
+  test("Pass_PrivatePropertyCanBeDeclared", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Foo()
+  call printNoLine(x)
+end main
+
+class Foo
+    constructor()
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
+    end constructor
+
+    property p1 as Float
+
+    private property p2 as String
+
+    function toString() returns String
+         return this.p2
+    end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine(x);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
+
+  async _initialise() {
+    this.p1 = 5;
+    this.p2 = "Apple";
+    return this;
+  }
+
+  p1 = 0;
+
+  p2 = "";
+
+  async toString() {
+    return this.p2;
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "Apple");
+  });
+
+  test("Pass_PrivateProcedureCanBeDeclared", async () => {
+    const code = `${testHeader}
+
+main
+  variable x set to new Foo()
+  call x.testSetP1(5)
+  call printNoLine(x.p1)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  private procedure setP1(a as Int)
+    assign this.p1 to a
+  end procedure
+
+  procedure testSetP1(a as Int)
+    call this.setP1(a)
+  end procedure
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let x = system.initialise(await new Foo()._initialise());
+  await x.testSetP1(5);
+  await _stdlib.printNoLine(x.p1);
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  p1 = 0;
+
+  async setP1(a) {
+    this.p1 = a;
+  }
+
+  async testSetP1(a) {
+    await this.setP1(a);
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "5");
+  });
+
+  test("Pass_PrivateFunctionCanBeDeclared", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.testFf("test"))
+end main
+
+class Foo
+  constructor()  
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  private function ff(f as String) returns String
+    return f
+  end function
+
+  function testFf(f as String) returns String
+    return this.ff(f)
+  end function
+
+end class`;
+
+    const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
+const global = new class {};
+async function main() {
+  let f = system.initialise(await new Foo()._initialise());
+  await _stdlib.printNoLine((await f.testFf("test")));
+}
+
+class Foo {
+  static emptyInstance() { return system.emptyClass(Foo, []);};
+
+  async _initialise() {
+
+    return this;
+  }
+
+  async toString() {
+    return "";
+  }
+
+  async ff(f) {
+    return f;
+  }
+
+  async testFf(f) {
+    return (await this.ff(f));
+  }
+
+}
+return [main, _tests];}`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertStatusIsValid(fileImpl);
+    assertObjectCodeIs(fileImpl, objectCode);
+    await assertObjectCodeExecutes(fileImpl, "test");
+  });
+
+  ignore_test("Fail_PrivatePropertyCannotBeAccessed", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  variable s set to f.p2
+end main
+
+class Foo
+    constructor()
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Float
+
+    private property p2 as String
+
+    function toString() returns String
+         return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  variable s set to f.p2
+end main
+
+abstract class Bar
+  private property p2 as String
+end class
+
+class Foo inherits Bar
+    constructor()
+      assign this.p1 to 5
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Float
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to new Foo()
+  call foo.setP1(5)
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  private procedure setP1(a as Int)
+    assign this.p1 to a
+  end procedure
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'setP1'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_PrivateFunctionCannotBeAccessed", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to new Foo()
+  variable a set to foo.ff()
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  private function ff() returns Int
+    return p1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'ff'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_PrivatePropertyCannotBePrinted", async () => {
+    const code = `${testHeader}
+
+main
+  variable f set to new Foo()
+  call printNoLine(f.p2)
+end main
+
+class Foo
+    constructor()
+        assign this.p1 to 5
+        assign this.p2 to "Apple"
+    end constructor
+  function toString() returns String
+    return ""
+  end function
+
+    property p1 as Float
+
+    private property p2 as String
+
+    function toString() returns String
+         return ""
+    end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'p2'.ErrorMessages.html#compile_error",
+    ]);
+  });
+
+  ignore_test("Fail_PrivateFunctionCannotBePrinted", async () => {
+    const code = `${testHeader}
+
+main
+  variable foo set to new Foo()
+  call printNoLine(foo.ff())
+end main
+
+class Foo
+  constructor()
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+
+  property p1 as Int
+
+  private function ff() returns Int
+    return p1
+  end function
+
+end class`;
+
+    const fileImpl = new FileImpl(
+      testHash,
+      new Paradigm(""),
+      "",
+      transforms(),
+      new StdLib(new StubInputOutput()),
+      false,
+      true,
+    );
+    await fileImpl.parseFrom(new CodeSourceFromString(code));
+
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Cannot reference private member 'ff'.ErrorMessages.html#compile_error",
+    ]);
+  });
+});

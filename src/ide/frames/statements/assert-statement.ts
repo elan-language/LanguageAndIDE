@@ -1,58 +1,39 @@
 import { AssertOutcome } from "../../../compiler/assert-outcome";
-import { assertKeyword, evaluatesKeyword, toKeyword } from "../../../compiler/elan-keywords";
 import { TestStatus } from "../../../compiler/test-status";
-import { AssertActualField } from "../fields/assert-actual-field";
-import { ExpressionField } from "../fields/expression-field";
+import { FieldImpl } from "../fields/field-impl";
+import { expressionFieldSpec } from "../fields/field-spec";
 import { escapeHtmlChars, helper_compileMsgAsHtmlNew } from "../frame-helpers";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 import { CompileStatus, DisplayColour } from "../status-enums";
 
 export class AssertStatement extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.assertStatement;
   isStatement = true;
-  actual: AssertActualField;
-  expected: ExpressionField;
+  actual: FieldImpl;
+  expected: FieldImpl;
   outcome?: AssertOutcome;
   constructor(parent: Parent) {
     super(parent);
-    this.actual = new AssertActualField(this);
-    this.expected = new ExpressionField(this, /\r|\n/);
+    this.actual = new FieldImpl(this, expressionFieldSpec);
+    this.actual.setPlaceholder("<i>actual (computed) value</i>");
+    this.expected = new FieldImpl(this, expressionFieldSpec);
     this.expected.setPlaceholder("<i>expected value</i>");
   }
 
-  initialKeywords(): string {
-    return assertKeyword;
+  helpId(): string {
+    return "assert";
   }
 
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove(`${assertKeyword} `);
-    this.actual.parseFrom(source);
-    if (source.isMatch(" is ")) {
-      source.remove(" is ");
-    } else {
-      source.remove(` ${evaluatesKeyword} ${toKeyword} `);
-    }
-    this.expected.parseFrom(source);
-    source.removeNewLine();
-  }
   getFields(): Field[] {
     return this.language().getFields(this);
   }
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_assert`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "assert";
-  }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}${assertKeyword} ${this.actual.renderAsElanSource()} ${evaluatesKeyword} ${toKeyword} ${this.expected.renderAsElanSource()}`;
   }
 
   setOutcome(outcome: AssertOutcome) {

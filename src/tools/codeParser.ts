@@ -1,30 +1,12 @@
-import { matchesElanKeyword } from "../compiler/elan-keywords";
 import { StdLib } from "../compiler/standard-library/std-lib";
-import { transform, transformMany } from "../ide/compile-api/ast-visitor";
+import { transform } from "../ide/compile-api/ast-visitor";
 import { Transforms } from "../ide/compile-api/transforms";
-import { AbstractSelector } from "../ide/frames/abstract-selector";
-import { MemberSelector } from "../ide/frames/class-members/member-selector";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
-import { ArgListField } from "../ide/frames/fields/arg-list-field";
-import { ExpressionField } from "../ide/frames/fields/expression-field";
-import { ParamListField } from "../ide/frames/fields/param-list-field";
-import { TypeField } from "../ide/frames/fields/type-field";
 import { FileImpl } from "../ide/frames/file-impl";
 import { CodeSource } from "../ide/frames/frame-interfaces/code-source";
-import { AbstractClass } from "../ide/frames/globals/abstract-class";
-import { ConcreteClass } from "../ide/frames/globals/concrete-class";
-import { GlobalFunction } from "../ide/frames/globals/global-function";
-import { GlobalSelector } from "../ide/frames/globals/global-selector";
-import { MainRoutine } from "../ide/frames/globals/main-routine";
-import { LanguageCS } from "../ide/frames/language-cs";
-import { LanguageElan } from "../ide/frames/language-elan";
-import { LanguageJava } from "../ide/frames/language-java";
 import { LanguagePython } from "../ide/frames/language-python";
-import { LanguageVB } from "../ide/frames/language-vb";
+import { LanguageRefLang } from "../ide/frames/language-ref-lang";
 import { Paradigm } from "../ide/frames/paradigm";
-import { ProcedureCall } from "../ide/frames/statements/procedureCall";
-import { StatementSelector } from "../ide/frames/statements/statement-selector";
-import { VariableStatement } from "../ide/frames/statements/variable-statement";
 import { ParseStatus } from "../ide/frames/status-enums";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
@@ -67,7 +49,6 @@ export function getCounts() {
 function transforms(): Transforms {
   return {
     transform: transform,
-    transformMany: transformMany,
   };
 }
 
@@ -89,7 +70,7 @@ function newFileImpl(): FileImpl {
     fileImpl.removeChild(c);
   }
 
-  fileImpl.setLanguage(LanguageElan.Instance);
+  fileImpl.setLanguage(LanguageRefLang.Instance);
   fileImpl.updateAllParseStatus();
   fileImpl.parseError = undefined;
 
@@ -97,14 +78,14 @@ function newFileImpl(): FileImpl {
 }
 
 const languages = [
-  LanguageElan.Instance,
+  LanguageRefLang.Instance,
   LanguagePython.Instance,
-  LanguageCS.Instance,
-  LanguageVB.Instance,
-  LanguageJava.Instance,
+  // LanguageCS.Instance,
+  // LanguageVB.Instance,
+  // LanguageJava.Instance,
 ];
 
-async function parseAs(
+export async function parseAs(
   _what: string,
   parserFunc: (f: FileImpl) => [
     {
@@ -115,6 +96,7 @@ async function parseAs(
     },
   ],
   code: string,
+  failOnError: boolean,
   delimiter?: string,
 ): Promise<TransformedCode | undefined> {
   // const ms = Date.now();
@@ -132,10 +114,13 @@ async function parseAs(
     }
 
     if (
-      codeSource.getRemainingCode().trim() ||
-      (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid)
+      failOnError &&
+      (codeSource.getRemainingCode().trim() ||
+        (parser instanceof FileImpl && parser.readParseStatus() !== ParseStatus.valid))
     ) {
-      // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
+      // console.log(
+      //  `    Parse as ${_what} failed after ${Date.now() - ms}ms - ${(parser as FileImpl).parseError} - ${codeSource.getRemainingCode().trim()}`,
+      //);
       return undefined;
     }
 
@@ -151,15 +136,15 @@ async function parseAs(
 
     incrementCount(_what);
 
-    // console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
+    //console.log(`    Parse as Type succeeded after ${Date.now() - ms}ms`);
     return allCode as TransformedCode;
   } catch (_e) {
-    // console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
+    //console.log(`    Parse as ${_what} failed after ${Date.now() - ms}ms`);
     return undefined;
   }
 }
 
-function parseAsKeyword(code: string): TransformedCode | undefined {
+/* function parseAsKeyword(code: string): TransformedCode | undefined {
   // const ms = Date.now();
   const trimmed = code.trim();
   // console.log(`    Parse as keyword '${trimmed}'`);
@@ -178,8 +163,8 @@ function parseAsKeyword(code: string): TransformedCode | undefined {
   return undefined;
 }
 
-function TypeParserAndRender(file: FileImpl): [TypeField, { textAsHtml(): Promise<string> }] {
-  const fr = new TypeField(new GlobalFunction(file));
+function TypeParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
+  const fr = new FieldImpl(new GlobalFunction(file), typeFieldSpec);
   return [fr, { textAsHtml: async () => fr.textAsHtml() }];
 }
 
@@ -234,28 +219,28 @@ function AbstractMemberParserAndRender(
 
 function ExpressionrParserAndRender(
   file: FileImpl,
-): [ExpressionField, { textAsHtml(): Promise<string> }] {
+): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const mf = new MainRoutine(file);
-  const ls = new VariableStatement(mf);
-  const expr = new ExpressionField(ls);
+  const ls = new VariableDefinition(mf);
+  const expr = new FieldImpl(ls, expressionFieldSpec);
 
   return [expr, { textAsHtml: async () => expr.textAsHtml() }];
 }
 
-function ParameterParserAndRender(
-  file: FileImpl,
-): [ParamListField, { textAsHtml(): Promise<string> }] {
+function ParameterParserAndRender(file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
   const gf = new GlobalFunction(file);
-  const pp = new ParamListField(gf);
+  const pp = new FieldImpl(gf, paramListFieldSpec);
 
   return [pp, { textAsHtml: async () => pp.textAsHtml() }];
 }
 
-function LambdaParserAndRender(file: FileImpl): [ArgListField, { textAsHtml(): Promise<string> }] {
-  const ss = new ProcedureCall(file);
-  const args = ss.args;
+function LambdaParserAndRender(_file: FileImpl): [FieldImpl, { textAsHtml(): Promise<string> }] {
+  throw new Error("Not implemented");
+  // Old code:
+  // const ss = new ProcedureCall(file);
+  // const args = ss.args;
 
-  return [args, { textAsHtml: async () => args.textAsHtml() }];
+  // return [args, { textAsHtml: async () => args.textAsHtml() }];
 }
 
 function FileWithHeaderParserAndRender(
@@ -263,9 +248,9 @@ function FileWithHeaderParserAndRender(
 ): [FileImpl, { textAsHtml(): Promise<string> }] {
   file.getChildren().push(file.newChildSelector());
   return [file, { textAsHtml: async () => await file.renderAsHtml(false) }];
-}
+} */
 
-function FileParserAndRender(file: FileImpl): [
+export function FileParserAndRender(file: FileImpl): [
   {
     parseFrom(source: CodeSource): void;
   },
@@ -279,7 +264,7 @@ function FileParserAndRender(file: FileImpl): [
   ];
 }
 
-function failedToParse(code: string) {
+function _failedToParse(code: string) {
   log(` - Failed to parse code: '${code}'`);
   return languages.map(() => `Code does not parse as Elan.`) as TransformedCode;
 }
@@ -294,24 +279,25 @@ function failedToParse(code: string) {
 export async function processInnerCode(code: string): Promise<TransformedCode> {
   code = (code.startsWith("#") ? code : code.trim()) + "\n";
   code = code.replaceAll("&lt;", "<").replaceAll("&gt;", ">");
-  const hasHeader = code.includes("guest default_profile valid");
-  return (
-    parseAsKeyword(code) ||
-    (await parseAs("Type", TypeParserAndRender, code)) ||
-    (await parseAs("Expression", ExpressionrParserAndRender, code)) ||
-    (await parseAs("Statement", StatementParserAndRender, code)) ||
-    (await parseAs("Function", FunctionParserAndRender, code)) ||
-    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code)) ||
-    (await parseAs("Main", MainParserAndRender, code)) ||
-    (await parseAs("Member", MemberParserAndRender, code)) ||
-    (await parseAs("AbstractMember", AbstractMemberParserAndRender, code)) ||
-    (await parseAs("Parameter", ParameterParserAndRender, code.trim(), ")")) ||
-    (await parseAs("Lambda", LambdaParserAndRender, code.trim(), ")")) ||
+  const _hasHeader = code.includes("guest default_profile valid");
+  throw new Error("Needs re-writing to use ANTLR");
+  /*   return (
+    parseAsKeyword(code)   ||
+    (await parseAs("Type", TypeParserAndRender, code, true)) ||claer
+    (await parseAs("Expression", ExpressionrParserAndRender, code, true)) ||
+    (await parseAs("Statement", StatementParserAndRender, code, true)) ||
+    (await parseAs("Function", FunctionParserAndRender, code, true)) ||
+    (await parseAs("FunctionStatement", FunctionStatementParserAndRender, code, true)) ||
+    (await parseAs("Main", MainParserAndRender, code, true)) ||
+    (await parseAs("Member", MemberParserAndRender, code, true)) ||
+    (await parseAs("AbstractMember", AbstractMemberParserAndRender, code, true)) ||
+    (await parseAs("Parameter", ParameterParserAndRender, code.trim(), true, ")")) ||
+    (await parseAs("Lambda", LambdaParserAndRender, code.trim(), true, ")")) ||
     (hasHeader
-      ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code)
-      : await parseAs("File", FileParserAndRender, code)) ||
+      ? await parseAs("FileWithHeader", FileWithHeaderParserAndRender, code, true)
+      : await parseAs("File", FileParserAndRender, code, true)) ||
     failedToParse(code)
-  );
+  ); */
 }
 
 function ct(tag: string) {

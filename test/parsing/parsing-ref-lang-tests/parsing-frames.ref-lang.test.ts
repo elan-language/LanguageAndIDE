@@ -1,0 +1,343 @@
+import assert from "assert";
+import { StdLib } from "../../../src/compiler/standard-library/std-lib";
+import { CodeSourceFromString } from "../../../src/ide/frames/code-source-from-string";
+import { FileImpl } from "../../../src/ide/frames/file-impl";
+import { LanguageRefLang } from "../../../src/ide/frames/language-ref-lang";
+import { Paradigm } from "../../../src/ide/frames/paradigm";
+import { StubInputOutput } from "../../../src/ide/stub-input-output";
+import { ignore_test, testHeader, transforms } from "../../compiler/compiler-test-helpers";
+
+export function fileImplForRefLang(): FileImpl {
+  const file = new FileImpl(
+    () => Promise.resolve("FFFF"),
+    new Paradigm(""),
+    "",
+    transforms(),
+    new StdLib(new StubInputOutput()),
+    false,
+    true,
+  );
+  file.setLanguage(LanguageRefLang.Instance);
+  return file;
+}
+
+suite("Parsing Frames RefLang", async () => {
+  test("parse Frames - header file", async () => {
+    const code = `${testHeader}
+
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - constant only", async () => {
+    const code = `${testHeader}
+
+constant pi set to 3.142
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - two constants", async () => {
+    const code = `${testHeader}
+
+constant pi set to 3.142
+
+constant e set to 2.718
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - main only", async () => {
+    const code = `${testHeader}
+
+main
+
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  ignore_test("parse Frames - global comment only", async () => {
+    const code = `${testHeader}
+
+# my comment
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    if (fl.parseError) {
+      throw new Error(fl.parseError);
+    }
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  ignore_test("parse Frames - hello world", async () => {
+    const code = `${testHeader}
+
+# my comment
+main
+  # My first program
+  call printNoLine("Hello World!")
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    if (fl.parseError) {
+      throw new Error(fl.parseError);
+    }
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - main with all single-line statements", async () => {
+    const code = `${testHeader}
+
+main
+  variable name set to value or expression
+  assign a to 3 + 4
+  throw ElanRuntimeError "message"
+  call signIn(rwp, password)
+  call printNoLine("Hello World!")
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - all globals except class", async () => {
+    const code = `${testHeader}
+
+constant phi set to 1.618
+
+main
+
+end main
+
+procedure signIn(password as String)
+
+end procedure
+
+function hypotenuse(sideB as Float, sideC as Float) returns Float
+  return 0.0
+end function
+
+enum Fruit apple, orange, pear
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - class", async () => {
+    const code = `${testHeader}
+
+class Player inherits Foo
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+  property score as Int
+
+  procedure foo()
+    call printNoLine(1)
+  end procedure
+
+  function bar() returns Int
+    return 1
+  end function
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - abstract class", async () => {
+    const code = `${testHeader}
+
+abstract class Foo
+  property p1 as Int
+
+  property p2 as Int
+
+  abstract procedure setP1(v as Int)
+
+  abstract function product() returns Int
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - with method", async () => {
+    const code = `${testHeader}
+
+class Player inherits Foo
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+  property score as Int
+
+  function with_score(score as Int) returns Player
+    return copyWith(this, "score", score)
+  end function
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - else with and without if", async () => {
+    const code = `${testHeader}
+
+main
+  if true then
+
+  elif true then
+
+  else
+
+  end if
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("parse Frames - try catch", async () => {
+    const code = `${testHeader}
+
+main
+  try
+    call print("")
+  catch e as ElanRuntimeError
+    call print("")
+  end try
+end main
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("abstract class can contain concrete property", async () => {
+    const code = `${testHeader}
+
+abstract class Card
+  property value as Int
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("abstract class can contain concrete method", async () => {
+    const code = `${testHeader}
+
+abstract class Card
+  function bar() returns Int
+    return 0
+  end function
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+
+  test("#367 abstract class cannot contain constructor", async () => {
+    const code = `${testHeader}
+
+abstract class Card
+  constructor()
+
+  end constructor
+  function toString() returns String
+    return ""
+  end function
+	  
+ end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    assert.equal(fl.parseError!, "invalid");
+  });
+  test("#942 private members", async () => {
+    const code = `${testHeader}
+
+class Foo
+  constructor()
+
+  end constructor
+
+  function toString() returns String
+    return ""
+  end function
+
+  private property bar as Int
+
+end class
+`;
+    const source = new CodeSourceFromString(code);
+    const fl = fileImplForRefLang();
+    await fl.parseFrom(source);
+    const elan = await fl.renderAsSource();
+    assert.equal(elan, code.replaceAll("\n", "\r\n"));
+  });
+});

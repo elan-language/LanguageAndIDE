@@ -1,20 +1,21 @@
-import { constructorKeyword } from "../../../compiler/elan-keywords";
-import { ParamListField } from "../fields/param-list-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { paramListFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { MemberFrame } from "../frame-interfaces/member-frame";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
 import { FrameWithStatements } from "../frame-with-statements";
 
 export class Constructor extends FrameWithStatements implements MemberFrame {
+  frameType: FrameType = FrameType.constructor;
   isConstructor = true;
   isMember = true;
   isAbstract = false;
   private = false;
-  public params: ParamListField;
+  public params: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
-    this.params = new ParamListField(this);
+    this.params = new FieldImpl(this, paramListFieldSpec);
   }
   isPrivate: boolean = false;
 
@@ -38,8 +39,8 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return false;
   }
 
-  initialKeywords(): string {
-    return constructorKeyword;
+  helpId(): string {
+    return "constructor";
   }
 
   getFields(): Field[] {
@@ -50,31 +51,10 @@ export class Constructor extends FrameWithStatements implements MemberFrame {
     return `${this.language().languageHtmlClass}_constructor`;
   }
 
-  frameSpecificAnnotation(): string {
-    return "constructor";
-  }
-
   override outerHtmlTag: string = "el-constructor";
 
-  public renderAsElanSource(): string {
-    return `${this.indent()}${this.sourceAnnotations()}constructor(${this.params.renderAsElanSource()})\r
-${this.renderChildrenAsElanSource()}\r
-${this.indent()}end constructor\r
-`;
-  }
-
-  parseTop(source: CodeSource): void {
-    source.removeIndent();
-    source.remove("constructor(");
-    this.params.parseFrom(source);
-    source.remove(")");
-  }
-  parseBottom(source: CodeSource): boolean {
-    return this.parseStandardEnding(source, "end constructor");
-  }
-
-  renderAsExport(): string {
-    return `${super.renderAsExport()}\r
+  renderAsSource(): string {
+    return `${super.renderAsSource()}\r
 `;
   }
 }

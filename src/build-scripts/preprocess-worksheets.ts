@@ -46,7 +46,7 @@ function wrapInWorkSheetBoilerPlate(content: string, title: string, version: str
       <title>${title}</title>
   </head>
 
-  <body id="worksheet" class="elan">
+  <body id="worksheet" class="refLang">
     <div class="docTitle">${title}</div>
     <div class="version" hidden="">${version}</div>
 

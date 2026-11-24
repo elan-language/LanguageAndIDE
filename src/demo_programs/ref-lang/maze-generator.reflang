@@ -1,0 +1,143 @@
+# 3cfde5d8d3a43b48f89e1974ab252ffd8cce5bf43ff4542c5889f24384a75bc0 Elan 2.0.0-beta5 valid
+
+main
+  variable blocks set to new BlockGraphics()
+  call blocks.colourAll(black)
+  assign blocks to createStart(blocks)
+  for i in range(0, displayWidth + 1)
+    variable x set to randint(0, 39)
+    variable y set to randint(0, 29)
+    variable p set to new Point(x, y)
+    variable existing set to getValue(p, blocks)
+    variable setTo set to (random() + 0.7).floor()
+    if okToSet(p, setTo, blocks) then
+      variable colour set to if_(setTo is 1, white, black)
+      call blocks.put(p.x, p.y, colour)
+    end if
+  end for
+  call displayBlockGraphics(blocks)
+  variable name set to input("File name to save: ")
+  if not name.equals("x") then
+    call saveAsFile(name, blocks)
+  end if
+end main
+
+constant displayWidth set to 150
+
+procedure saveAsFile(name as String, b as BlockGraphics)
+  variable file set to createFileForWriting(name)
+  for row in range(0, 30)
+    variable line set to ""
+    for col in range(0, 40)
+      variable colour set to b.get(col, row)
+      variable symbol set to if_(colour is white, " ", "X")
+      assign line to line + symbol
+    end for
+    call file.writeLine(line)
+  end for
+  call file.saveAndClose()
+end procedure
+
+function createStart(b as BlockGraphics) returns BlockGraphics
+  variable b2 set to b
+  for i in rangeInSteps(0, 16, 2)
+    assign b2 to addRectangle(b2, i, i, 39 - 2*i, 29 - 2*i)
+  end for
+  return b2
+end function
+
+function addRectangle(b as BlockGraphics, startX as Int, startY as Int, width as Int, depth as Int) returns BlockGraphics
+  variable paint set to white
+  variable b2 set to b
+  for x in range(startX, startX + width + 1)
+    assign b2 to b2.withPut(x, startY, paint)
+    assign b2 to b2.withPut(x, startY + depth, paint)
+  end for
+  for y in range(startY, startY + depth + 1)
+    assign b2 to b2.withPut(startX, y, paint)
+    assign b2 to b2.withPut(startX + width, y, paint)
+  end for
+  return b2
+end function
+
+# colour: 0 for black, 1 for white
+
+function okToSet(p as Point, colour as Int, g as BlockGraphics) returns Boolean
+  variable n set to p.neighbouringPoints().map(lambda p as Point => getValue(p, g))
+  variable q1 set to isValidQuadrant(n[0] + n[1]*2 + colour*4 + n[3]*8)
+  variable q2 set to isValidQuadrant(n[1] + n[2]*2 + n[4]*4 + colour*8)
+  variable q3 set to isValidQuadrant(colour + n[4]*2 + n[7]*4 + n[6]*8)
+  variable q4 set to isValidQuadrant(n[3] + colour*2 + n[6]*4 + n[5]*8)
+  return q1 and q2 and q3 and q4
+end function
+
+function getValue(p as Point, b as BlockGraphics) returns Int
+  variable result set to 0
+  if (p.x > -1) and (p.x < 40) and (p.y > -1) and (p.y < 30) then
+    variable colour set to b.get(p.x, p.y)
+    assign result to if_(colour is black, 0, 1)
+  end if
+  return result
+end function
+
+function flip01(v as Int) returns Int
+  return if_(v is 0, 1, 0)
+end function
+
+test test_flip01
+  assert flip01(0) evaluates to 1
+  assert flip01(1) evaluates to 0
+end test
+
+function isValidQuadrant(q as Int) returns Boolean
+  return (q mod 5) isnt 0
+end function
+
+test test_isValidQuadrant
+  assert isValidQuadrant(0) evaluates to false
+  assert isValidQuadrant(1) evaluates to true
+  assert isValidQuadrant(2) evaluates to true
+  assert isValidQuadrant(3) evaluates to true
+  assert isValidQuadrant(4) evaluates to true
+  assert isValidQuadrant(5) evaluates to false
+  assert isValidQuadrant(6) evaluates to true
+  assert isValidQuadrant(7) evaluates to true
+  assert isValidQuadrant(8) evaluates to true
+  assert isValidQuadrant(9) evaluates to true
+  assert isValidQuadrant(10) evaluates to false
+  assert isValidQuadrant(11) evaluates to true
+  assert isValidQuadrant(12) evaluates to true
+  assert isValidQuadrant(13) evaluates to true
+  assert isValidQuadrant(14) evaluates to true
+  assert isValidQuadrant(15) evaluates to false
+end test
+
+class Point
+  constructor(x as Int, y as Int)
+    assign this.x to x
+    assign this.y to y
+  end constructor
+
+  property x as Int
+
+  property y as Int
+
+  function toString() returns String
+    return $"Point at {this.x}, {this.y}"
+  end function
+
+  # Returns the 8 theoretically-neighbouring points, whether or not within bounds
+  function neighbouringPoints() returns List<of Point>
+    variable x set to this.x
+    variable y set to this.y
+    return [new Point(x - 1, y - 1), new Point(x, y - 1), new Point(x + 1, y - 1), new Point(x - 1, y), new Point(x + 1, y), new Point(x - 1, y + 1), new Point(x, y + 1), new Point(x + 1, y + 1)]
+  end function
+
+end class
+
+test test_neighbouringPoints
+  variable p set to new Point(0, 0)
+  variable n set to p.neighbouringPoints()
+  variable expected set to [new Point(-1, -1), new Point(0, -1), new Point(1, -1), new Point(-1, 0), new Point(1, 0), new Point(-1, 1), new Point(0, 1), new Point(1, 1)]
+  assert n evaluates to expected
+end test

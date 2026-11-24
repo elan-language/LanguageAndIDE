@@ -1,6 +1,6 @@
 {
 	"compilerOptions": {
-		"module": "Node16",
+		"module": "nodenext",
 		"target": "ESNext",
 		"outDir": "out/src",
 		"lib": [
@@ -8,9 +8,10 @@
 		],
 		"sourceMap": true,
 		"rootDir": "src",
-		"resolveJsonModule": true,
+		"moduleResolution": "nodenext",
 		"experimentalDecorators": true,
     	"emitDecoratorMetadata": true,
+		"resolveJsonModule": true,
 		"strict": true,   /* enable all strict type-checking options */
 		/* Additional Checks */
 		"noImplicitReturns": true /* Report error when not all code paths in function return a value. */

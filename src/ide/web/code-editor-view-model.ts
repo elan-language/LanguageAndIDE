@@ -11,8 +11,8 @@ import { File, ParseMode } from "../frames/frame-interfaces/file";
 import { Frame } from "../frames/frame-interfaces/frame";
 import { Language } from "../frames/frame-interfaces/language";
 import { Selectable } from "../frames/frame-interfaces/selectable";
-import { LanguageElan } from "../frames/language-elan";
 import { LanguagePython } from "../frames/language-python";
+import { LanguageRefLang } from "../frames/language-ref-lang";
 import { Paradigm } from "../frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../frames/status-enums";
 import { StubInputOutput } from "../stub-input-output";
@@ -48,17 +48,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
-  private exporting: boolean = false;
-  setExporting(e: boolean) {
-    this.exporting = e;
-  }
-
-  isExporting() {
-    return this.exporting;
-  }
-
   get fileName() {
-    return this.file!.fileName;
+    return this.file!.getFileName();
   }
 
   setParadigm(p: Paradigm) {
@@ -90,7 +81,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   set fileName(fn: string) {
-    this.file!.fileName = fn;
+    this.file!.setFileName(fn);
   }
 
   setRunStatus(s: RunStatus) {
@@ -192,11 +183,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   renderAsSource() {
-    return this.file!.renderAsElanSource();
-  }
-
-  renderAsExport() {
-    return this.file!.renderAsExport();
+    return this.file!.renderAsSource();
   }
 
   parseFrom(source: CodeSource) {
@@ -560,7 +547,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
     const language = this.getLanguage();
     const f = await fetch(fileName, { mode: "same-origin" });
     const rawCode = await f.text();
-    this.recreateFile(vm, false, LanguageElan.Instance);
+    this.recreateFile(vm, false, LanguageRefLang.Instance);
     this.fileName = fileName;
     await this.readAndParse(vm, fm, tr, rawCode, fileName, ParseMode.loadNew);
     fm.reset();
@@ -570,7 +557,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   async loadFromUrl(vm: IIDEViewModel, fm: FileManager, tr: TestRunner, rawCode: string) {
     this.recreateFile(vm, false);
     const code = atob(rawCode);
-    this.recreateFile(vm, false, LanguageElan.Instance);
+    this.recreateFile(vm, false, LanguageRefLang.Instance);
     await this.readAndParse(vm, fm, tr, code, this.fileName, ParseMode.loadNew);
     fm.reset();
   }

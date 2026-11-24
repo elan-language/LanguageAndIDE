@@ -1,30 +1,22 @@
-import {
-  assertKeyword,
-  assignKeyword,
-  callKeyword,
-  catchKeyword,
-  commentMarker,
-  elifKeyword,
-  elseKeyword,
-  forKeyword,
-  ifKeyword,
-  inputKeyword,
-  printKeyword,
-  throwKeyword,
-  tryKeyword,
-  variableKeyword,
-  whileKeyword,
-} from "../../../compiler/elan-keywords";
+import { StatementBlockContext as PythonStatementBlockContext } from "../../../generated/python/PythonParser";
+import { StatementBlockContext as RefLangStatementBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
 import { Frame } from "../frame-interfaces/frame";
+import { FrameFactory } from "../frame-interfaces/frame-factory";
 import { Parent } from "../frame-interfaces/parent";
-import { StatementFactory } from "../frame-interfaces/statement-factory";
-import { FrameWithStatements } from "../frame-with-statements";
+import { Selector } from "../frame-interfaces/selector";
+import { FrameType } from "../frame-type";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
+import { IfStatement } from "./if-statement";
 
-export class StatementSelector extends AbstractSelector {
+export class StatementSelector extends AbstractSelector implements Selector {
   isStatement = true;
-  private factory: StatementFactory;
-  constructor(parent: FrameWithStatements) {
+  private factory: FrameFactory;
+  constructor(parent: Parent) {
     super(parent);
     this.factory = parent.getFactory();
   }
@@ -33,111 +25,128 @@ export class StatementSelector extends AbstractSelector {
     return "StatementInstructions";
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
-    return [
-      [assertKeyword, "a", "<b>a</b>ssert", (parent: Parent) => this.factory.newAssert(parent)],
+  defaultOptions(): [FrameType, string, string, boolean][] {
+    const options: [FrameType, string, string, boolean][] = [
+      [FrameType.assertStatement, "a", "<b>a</b>ssert", true],
+      [FrameType.variableDefinition, "v", "<b>v</b>ariable definition", true],
+      [FrameType.assignment, "a", "<b>a</b>ssignment", true],
+      [FrameType.catchClause, "h", "catc<b>h</b>", false],
+      [FrameType.ifStatement, "i", "<b>i</b>f statement", true],
+      [FrameType.elseIfClause, "l", "e<b>l</b>se if clause", false],
+      [FrameType.elseClause, "e", "<b>e</b>lse clause", false],
+      [FrameType.whileLoop, "w", "<b>w</b>hile loop", true],
+      [FrameType.forLoop, "f", "<b>f</b>or loop", true],
+      [FrameType.procedureCall, "c", "procedure <b>c</b>all", true],
+      [FrameType.tryStatement, "y", "tr<b>y</b> statement", true],
+      [FrameType.throwStatement, "t", "<b>t</b>hrow statement", true],
       [
-        printKeyword,
-        "p",
-        "<b>p</b>rint statement",
-        (parent: Parent) => this.factory.newPrint(parent),
-      ],
-      [
-        variableKeyword,
-        "v",
-        "<b>v</b>ariable definition",
-        (parent: Parent) => this.factory.newVar(parent),
-      ],
-      [assignKeyword, "a", "<b>a</b>ssignment", (parent: Parent) => this.factory.newSet(parent)],
-      [
-        inputKeyword,
-        "n",
-        "i<b>n</b>put statement",
-        (parent: Parent) => this.factory.newInput(parent),
-      ],
-      [ifKeyword, "i", "<b>i</b>f statement", (parent: Parent) => this.factory.newIf(parent)],
-      [elifKeyword, "s", "el<b>s</b>e if clause", (parent: Parent) => this.factory.newElif(parent)],
-      [elseKeyword, "e", "<b>e</b>lse clause", (parent: Parent) => this.factory.newElse(parent)],
-      [whileKeyword, "w", "<b>w</b>hile loop", (parent: Parent) => this.factory.newWhile(parent)],
-      [forKeyword, "f", "<b>f</b>or loop", (parent: Parent) => this.factory.newFor(parent)],
-      [
-        callKeyword,
-        "c",
-        "procedure <b>c</b>all",
-        (parent: Parent) => this.factory.newCall(parent, ""),
-      ],
-      [
-        tryKeyword,
-        "y",
-        "tr<b>y</b> statement",
-        (parent: Parent) => this.factory.newTryCatch(parent),
-      ],
-      // [catchKeyword, (parent: Parent) => this.factory.newCatch(parent)], // add back when multiple catches permitted
-      [
-        throwKeyword,
-        "t",
-        "<b>t</b>hrow statement",
-        (parent: Parent) => this.factory.newThrow(parent),
-      ],
-      [
-        this.getCommentMarker(),
+        FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (parent: Parent) => this.factory.newComment(parent),
+        true,
       ],
     ];
+    this.language().customiseStatementOptions(options);
+    return options;
   }
 
-  paradigmAllows(_keyword: string): boolean {
-    return true;
-  }
-
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     const parent = this.getParent();
     let result = true;
     // First apply universal instruction-specific rules
-    if (keyword === elseKeyword || keyword === elifKeyword) {
-      result = parent.getIdPrefix().includes(`_${ifKeyword}`);
-    } else if (keyword === catchKeyword) {
-      result = parent.getIdPrefix().includes(`_${tryKeyword}`);
-    } else if (keyword === callKeyword || keyword === printKeyword || keyword === inputKeyword) {
-      result = !(this.isWithinAFunction() || this.isWithinATest() || this.isWithinAConstructor());
-    } else if (keyword === assertKeyword) {
+    if (type === FrameType.elseIfClause) {
+      result = this.isWithinThenOrElseIfClause() && parent.getLastChild() === this;
+    } else if (type === FrameType.elseClause) {
+      result =
+        this.isWithinThenOrElseIfClause() &&
+        parent.getLastChild() === this &&
+        parent.getParent().getLastChild() === (parent as unknown as Frame) &&
+        !(parent.getParent() as unknown as IfStatement).hasElseClause();
+    } else if (type === FrameType.catchClause) {
+      result =
+        parent.frameType === FrameType.tryStatement || parent.frameType === FrameType.catchClause;
+    } else if (type === FrameType.procedureCall) {
+      result = !(
+        this.isWithinAFunction(parent) ||
+        this.isWithinATest() ||
+        this.isWithinAConstructor()
+      );
+    } else if (type === FrameType.assertStatement) {
       result = this.isWithinATest();
     }
     //Then apply context-specific rules
     if (this.isWithinATest()) {
       result =
-        keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
+        type === FrameType.assertStatement ||
+        type === FrameType.variableDefinition ||
+        type === FrameType.commentFrame;
     }
     // Then apply paradigm rules
     if (this.getParadigm().isFunctional() && userEntry) {
-      if (this.isWithinAFunction()) {
-        result = keyword === variableKeyword || keyword === commentMarker;
+      if (this.isWithinAFunction(parent)) {
+        result = type === FrameType.variableDefinition || type === FrameType.commentFrame;
       } else if (this.isWithinATest()) {
         result =
-          keyword === assertKeyword || keyword === variableKeyword || keyword === commentMarker;
+          type === FrameType.assertStatement ||
+          type === FrameType.variableDefinition ||
+          type === FrameType.commentFrame;
       }
     }
     return result;
   }
 
-  private isWithinAFunction(): boolean {
-    return this.isWithinContext(this.getParent(), "func");
+  private isWithinThenOrElseIfClause() {
+    const parentType = this.getParent().frameType;
+    return parentType === FrameType.thenClause || parentType === FrameType.elseIfClause;
+  }
+
+  private isWithinAFunction(givenParent: Parent): boolean {
+    const parentType = givenParent.frameType;
+    const isDirectlyWithinFunction =
+      parentType === FrameType.globalFunction || parentType === FrameType.functionMethod;
+    return isDirectlyWithinFunction
+      ? true
+      : givenParent.hasParent() && this.isWithinAFunction(givenParent.getParent());
   }
 
   private isWithinATest(): boolean {
-    return this.getParent().getIdPrefix().includes("_test");
+    return this.getParent().frameType === FrameType.test;
   }
 
   private isWithinAConstructor(): boolean {
-    return this.isWithinContext(this.getParent(), "constructor");
+    const parentType = this.getParent().frameType;
+    return parentType === FrameType.constructor;
   }
 
-  private isWithinContext(parent: Parent, parentPrefix: string): boolean {
-    return parent.getIdPrefix().includes(`_${parentPrefix}`)
-      ? true
-      : parent.hasParent() && this.isWithinContext(parent.getParent(), parentPrefix);
-  }
   outerHtmlTag: string = "el-statement";
+
+  createFrame(type: FrameType, parent: Parent): Frame {
+    const frame = this.factory.createFrame(type, parent);
+    frame.setNewlyCreatedTrue();
+    return frame;
+  }
+
+  visitStatementBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonStatementBlockContext | RefLangStatementBlockContext,
+  ): Frame[] {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitStatementBlock(
+        context as PythonStatementBlockContext,
+      );
+    }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitStatementBlock(
+        context as RefLangStatementBlockContext,
+      );
+    }
+    return [];
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.statementBlock()!;
+    return this.visitStatementBlock(visitor, ctx);
+  }
 }

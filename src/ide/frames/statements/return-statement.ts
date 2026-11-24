@@ -1,27 +1,33 @@
-import { returnKeyword } from "../../../compiler/elan-keywords";
-import { ExpressionField } from "../fields/expression-field";
-import { CodeSource } from "../frame-interfaces/code-source";
+import { FieldImpl } from "../fields/field-impl";
+import { expressionFieldSpec } from "../fields/field-spec";
 import { Field } from "../frame-interfaces/field";
 import { Parent } from "../frame-interfaces/parent";
 import { Statement } from "../frame-interfaces/statement";
+import { FrameType } from "../frame-type";
 import { SingleLineFrame } from "../single-line-frame";
 
 export class ReturnStatement extends SingleLineFrame implements Statement {
+  frameType: FrameType = FrameType.returnStatement;
   isStatement = true;
   isReturnStatement = true;
-  expr: ExpressionField;
+  expr: FieldImpl;
   constructor(parent: Parent) {
     super(parent);
     this.ghostable = false;
-    this.expr = new ExpressionField(this);
+    this.expr = new FieldImpl(this, expressionFieldSpec);
   }
-  initialKeywords(): string {
-    return returnKeyword;
+
+  helpId(): string {
+    return "return";
   }
+
   override isDeletable() {
     return false;
   }
   override isMovable(): boolean {
+    return false;
+  }
+  override canInsertAfter(): boolean {
     return false;
   }
 
@@ -31,23 +37,5 @@ export class ReturnStatement extends SingleLineFrame implements Statement {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_return`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "return";
-  }
-
-  renderAsElanSource(): string {
-    return `${this.indent()}return ${this.expr.renderAsElanSource()}`;
-  }
-
-  parseFrom(source: CodeSource): void {
-    source.removeIndent();
-    source.remove("return ");
-    this.expr.parseFrom(source);
-  }
-
-  canInsertAfter(): boolean {
-    return false;
   }
 }

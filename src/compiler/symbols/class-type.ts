@@ -6,6 +6,7 @@ import { ReifyableSymbolType } from "../compiler-interfaces/reifyable-symbol-typ
 import { Scope } from "../compiler-interfaces/scope";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { TypeOptions } from "../compiler-interfaces/type-options";
+import { TerminalSymbol } from "../syntax-nodes/terminal-symbol";
 import { FloatType } from "./float-type";
 import { IntType } from "./int-type";
 import { NullScope } from "./null-scope";
@@ -33,13 +34,18 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
     const className =
       this.className.trim().toUpperCase() === language.LIST_NAME.toUpperCase()
         ? language.LIST_NAME
-        : this.className.trim();
+        : this.className.trim().toUpperCase() === "DICTIONARY"
+          ? language.DICT_NAME
+          : this.className.trim();
+
+    const startGeneric = language.mapTerminalSymbol(TerminalSymbol.GenericStart);
+    const endGeneric = language.mapTerminalSymbol(TerminalSymbol.GenericEnd);
 
     if (this.ofTypes.length === 1) {
-      return `${className}${language.START_OF_GENERIC}${this.ofTypes[0].languageSpecificName(language)}${language.END_OF_GENERIC}`;
+      return `${className}${startGeneric}${this.ofTypes[0].languageSpecificName(language)}${endGeneric}`;
     }
     if (this.ofTypes.length === 2) {
-      return `${className}${language.START_OF_GENERIC}${this.ofTypes[0].languageSpecificName(language)}, ${this.ofTypes[1].languageSpecificName(language)}${language.END_OF_GENERIC}`;
+      return `${className}${startGeneric}${this.ofTypes[0].languageSpecificName(language)}, ${this.ofTypes[1].languageSpecificName(language)}${endGeneric}`;
     }
 
     return className;

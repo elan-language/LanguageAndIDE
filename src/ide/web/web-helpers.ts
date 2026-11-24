@@ -1,5 +1,5 @@
 import { ElanRuntimeError } from "../../compiler/standard-library/elan-runtime-error";
-import { transform, transformMany } from "../compile-api/ast-visitor";
+import { transform } from "../compile-api/ast-visitor";
 import { Transforms } from "../compile-api/transforms";
 
 export async function hash(toHash: string) {
@@ -13,7 +13,6 @@ export async function hash(toHash: string) {
 export function transforms() {
   return {
     transform: transform,
-    transformMany: transformMany,
   } as Transforms;
 }
 

@@ -32,11 +32,11 @@ export class ConcreteClassAsn extends ClassAsn {
   deprecated: Deprecated | undefined = undefined;
 
   get symbolId() {
-    return getId(this.name);
+    return getId(this.classTypeName);
   }
 
   symbolType() {
-    const [cd] = this.lookForCircularDependencies(this, [getId(this.name)]);
+    const [cd] = this.lookForCircularDependencies(this, [getId(this.classTypeName)]);
 
     return new ClassType(
       this.symbolId,

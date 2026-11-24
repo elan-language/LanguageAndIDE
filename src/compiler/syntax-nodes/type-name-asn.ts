@@ -1,0 +1,45 @@
+import { checkForDeprecation, mustBeKnownSymbolType } from "../compile-rules";
+import { AstIdNode } from "../compiler-interfaces/ast-id-node";
+import { Scope } from "../compiler-interfaces/scope";
+import { ClassType } from "../symbols/class-type";
+import { getGlobalScope } from "../symbols/symbol-helpers";
+import { AbstractAstNode } from "./abstract-ast-node";
+
+export class TypeNameAsn extends AbstractAstNode implements AstIdNode {
+  constructor(
+    public readonly id: string,
+    public readonly fieldId: string,
+    private readonly scope: Scope,
+  ) {
+    super();
+  }
+
+  compile(): string {
+    this.compileErrors = [];
+    const st = this.symbolType();
+
+    mustBeKnownSymbolType(st, this.id, this.compileErrors, this.fieldId);
+
+    if (st instanceof ClassType) {
+      // check after generic parameters
+      checkForDeprecation(st, this.scope, this.compileErrors, this.fieldId);
+    }
+
+    getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
+
+    return this.id;
+  }
+
+  compileToEmptyObjectCode(): string {
+    return this.symbolType().initialValue;
+  }
+
+  symbolType() {
+    const scope = getGlobalScope(this.scope);
+    return scope.resolveSymbol(this.id, true, this.scope).symbolType();
+  }
+
+  toString() {
+    return `${this.id}`;
+  }
+}

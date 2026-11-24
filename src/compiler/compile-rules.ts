@@ -47,7 +47,6 @@ import {
 } from "./compile-error";
 import { Deprecation } from "./compiler-interfaces/elan-type-interfaces";
 import { ElanCompilerError } from "./elan-compiler-error";
-import { ReservedWords } from "./reserved-words";
 import { BooleanType } from "./symbols/boolean-type";
 import { ClassSubType, ClassType } from "./symbols/class-type";
 import { DuplicateSymbol } from "./symbols/duplicate-symbol";
@@ -86,19 +85,15 @@ import {
   isAstIdNode,
   isAstIndexableNode,
   isAstQualifiedNode,
-  isAstQualifierNode,
   isEmptyNode,
   isInsideFunction,
   isInsideFunctionOrConstructor,
 } from "./syntax-nodes/ast-helpers";
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
-import { FixedIdAsn } from "./syntax-nodes/fixed-id-asn";
-import { FuncCallAsn } from "./syntax-nodes/func-call-asn";
-import { ElseAsn } from "./syntax-nodes/statements/else-asn";
-import { LetStatementAsn } from "./syntax-nodes/statements/let-statement-asn";
-import { LocalConstantAsn } from "./syntax-nodes/statements/local-constant-asn";
-import { ThisAsn } from "./syntax-nodes/this-asn";
+import { MethodCallAsn } from "./syntax-nodes/method-call-asn";
+import { TerminalSymbol } from "./syntax-nodes/terminal-symbol";
+import { ThisInstanceAsn } from "./syntax-nodes/this-instance-asn";
 
 function mustBeOfSymbolType(
   exprType: SymbolType,
@@ -157,19 +152,6 @@ export function mustBeBooleanCondition(
   }
 }
 
-export function mustNotHaveConditionalAfterUnconditionalElse(
-  elses: ElseAsn[],
-  compileErrors: CompileError[],
-  location: string,
-) {
-  const unconditionals = elses.filter((s) => !s.hasIf).length;
-  if (unconditionals > 1 || (unconditionals === 1 && elses[elses.length - 1].hasIf)) {
-    compileErrors.push(
-      new SyntaxCompileError(`Cannot have any clause after unconditional 'else'.`, location),
-    );
-  }
-}
-
 export function mustBeKnownSymbol(
   symbol: ElanSymbol,
   scope: Scope,
@@ -210,21 +192,16 @@ export function mustBeKnownSymbolType(
   }
 }
 
-export function mustNotBeKeyword(id: string, compileErrors: CompileError[], location: string) {
-  if (ReservedWords.Instance.matchesIgnoringCase(id)) {
-    compileErrors.push(new SyntaxCompileError(`'${id}' matches a reserved word.`, location));
-  }
-}
-
 export function mustNotBeEnum(
   symbolType: SymbolType,
+  language: Language,
   compileErrors: CompileError[],
   location: string,
 ) {
   if (symbolType instanceof EnumType) {
     compileErrors.push(
       new SyntaxCompileError(
-        "Cannot use an Enum value here. Use enumToString(...) function to convert enum to a String first",
+        `Cannot use an Enum value here. Use enumToString(...) function to convert enum to a ${language.STRING_NAME} first`,
         location,
       ),
     );
@@ -435,7 +412,7 @@ export function mustBePropertyAndPublic(
   location: string,
 ) {
   if (symbol instanceof PropertyAsn && symbol.private === true) {
-    compileErrors.push(new PrivateMemberCompileError(getId(symbol.name), location));
+    compileErrors.push(new PrivateMemberCompileError(getId(symbol.identifierDef), location));
   }
   if (symbol.symbolScope !== SymbolScope.member) {
     compileErrors.push(new UndefinedSymbolCompileError(symbol.symbolId, "", location));
@@ -521,7 +498,9 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
 
 export function mustBeInsideClass(scope: Scope, compileErrors: CompileError[], location: string) {
   const language = getGlobalScope(scope).language;
-  compileErrors.push(new ThisCompileError(language.THIS_INSTANCE, location));
+  compileErrors.push(
+    new ThisCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+  );
 }
 
 export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {
@@ -544,9 +523,7 @@ function qualifierIsFixedIdOrEmpty(qualifier: AstNode) {
     return true;
   }
 
-  return isAstQualifierNode(qualifier)
-    ? qualifier.value instanceof FixedIdAsn
-    : qualifier instanceof FixedIdAsn;
+  return qualifier instanceof ThisInstanceAsn;
 }
 
 export function mustNotCallNonExtensionViaQualifier(
@@ -580,7 +557,9 @@ export function mustbeValidQualifier(
 ) {
   if (qualifier === EmptyAsn.Instance) {
     const language = getGlobalScope(scope).language;
-    compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
+    compileErrors.push(
+      new PropertyCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+    );
   }
 }
 
@@ -719,6 +698,12 @@ function FailNotNumber(
       ),
     );
   }
+}
+
+export function FailNotInConstructorOrFunction(compileErrors: CompileError[], location: string) {
+  compileErrors.push(
+    new SyntaxCompileError("Cannot call Procedure in Constructor or Function.", location),
+  );
 }
 
 function FailCannotCompareProcFunc(compileErrors: CompileError[], location: string) {
@@ -905,7 +890,6 @@ export function mustBeReferenceGenericType(
 }
 
 export function mustBeValidKeyType(
-  type: SymbolType,
   ofType: SymbolType,
   compileErrors: CompileError[],
   location: string,
@@ -919,7 +903,7 @@ export function mustBeValidKeyType(
     const language = getGlobalScope(scope).language;
     compileErrors.push(
       new SyntaxCompileError(
-        `${type} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
+        `${language.DICT_NAME} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
         location,
       ),
     );
@@ -1017,10 +1001,10 @@ export function mustConformToCopyOfThisBoilerPlate(
     const innerFunction = getInnerMostFunction(scope);
     if (
       isVariable &&
-      rhs instanceof FuncCallAsn &&
+      rhs instanceof MethodCallAsn &&
       rhs.id === "copy" &&
       rhs.parameters.length === 1 &&
-      rhs.parameters[0] instanceof ThisAsn &&
+      rhs.parameters[0] instanceof ThisInstanceAsn &&
       innerFunction &&
       isMember(innerFunction)
     ) {
@@ -1056,9 +1040,6 @@ export function getId(astNode: AstNode) {
 }
 
 export function getQualifierId(astNode: AstNode) {
-  if (isAstQualifierNode(astNode)) {
-    return getId(astNode.value);
-  }
   return getId(astNode);
 }
 
@@ -1087,7 +1068,7 @@ export function mustNotBePropertyOnFunctionMethod(
     } else {
       let msg = `Cannot set property: ${getId(assignable)} directly.`;
       if (isAstQualifiedNode(assignable)) {
-        if (assignable.qualifier instanceof ThisAsn) {
+        if (assignable.qualifier instanceof ThisInstanceAsn) {
           return;
         }
         if (assignable.qualifier.symbolType() instanceof TupleType) {
@@ -1125,7 +1106,9 @@ export function mustBePropertyPrefixedOnMember(
   location: string,
 ) {
   const language = getGlobalScope(scope).language;
-  compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
+  compileErrors.push(
+    new PropertyCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+  );
 }
 
 function isIndexed(assignable: AstNode) {
@@ -1238,12 +1221,6 @@ export function mustBeUniqueValueInScope(
   compileErrors.push(new NotUniqueNameCompileError(name, "", location));
 }
 
-export function mustNotBeLet(symbol: ElanSymbol, compileErrors: CompileError[], location: string) {
-  if (symbol instanceof LocalConstantAsn || symbol instanceof LetStatementAsn) {
-    compileErrors.push(new MutateCompileError(symbol.symbolId, mapToPurpose(symbol), location));
-  }
-}
-
 function mapToPurpose(symbol: ElanSymbol) {
   if (symbol.symbolScope === SymbolScope.parameter) {
     return "parameter";
@@ -1316,12 +1293,13 @@ export function mustBeIterable(
 
 export function mustHaveUniqueKeys(
   keys: string[],
+  l: Language,
   compileErrors: CompileError[],
   location: string,
 ) {
   const set = new Set(keys);
   if (set.size !== keys.length) {
-    compileErrors.push(new DuplicateKeyCompileError(location));
+    compileErrors.push(new DuplicateKeyCompileError(location, l));
   }
 }
 

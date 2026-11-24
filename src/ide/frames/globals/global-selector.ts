@@ -1,19 +1,16 @@
-import {
-  abstractKeyword,
-  classKeyword,
-  constantKeyword,
-  enumKeyword,
-  functionKeyword,
-  mainKeyword,
-  procedureKeyword,
-  testKeyword,
-} from "../../../compiler/elan-keywords";
+import { GlobalBlockContext as PythonGlobalBlockContext } from "../../../generated/python/PythonParser";
+import { GlobalBlockContext as RefLangGlobalBlockContext } from "../../../generated/ref-lang/RefLangParser";
+import { getParserByLanguage, getVisitorFrameByLanguage } from "../../compile-api/parser-helpers";
+import { PythonVisitorFrame } from "../../compile-api/python-visitor-frame";
+import { RefLangVisitorFrame } from "../../compile-api/ref-lang-visitor-frame";
 import { AbstractSelector } from "../abstract-selector";
-import { isGlobal } from "../frame-helpers";
 import { File } from "../frame-interfaces/file";
 import { Frame } from "../frame-interfaces/frame";
 import { GlobalFrame } from "../frame-interfaces/global-frame";
 import { Parent } from "../frame-interfaces/parent";
+import { FrameType } from "../frame-type";
+import { LanguagePython } from "../language-python";
+import { LanguageRefLang } from "../language-ref-lang";
 import { ParseStatus } from "../status-enums";
 
 export class GlobalSelector extends AbstractSelector implements GlobalFrame {
@@ -29,46 +26,31 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return "GlobalInstructions";
   }
 
-  defaultOptions(): [string, string, string, (parent: Parent) => Frame][] {
+  defaultOptions(): [FrameType, string, string, boolean][] {
     return [
-      [mainKeyword, "m", "<b>m</b>ain routine", (_parent: Parent) => this.file.createMain()],
-      [functionKeyword, "f", "<b>f</b>unction", (_parent: Parent) => this.file.createFunction()],
-      [testKeyword, "t", "<b>t</b>est", (_parent: Parent) => this.file.createTest()],
-      [procedureKeyword, "p", "<b>p</b>rocedure", (_parent: Parent) => this.file.createProcedure()],
-      [constantKeyword, "k", "<b>k</b> constant", (_parent: Parent) => this.file.createConstant()],
-      [enumKeyword, "e", "<b>e</b>num", (_parent: Parent) => this.file.createEnum()],
+      [FrameType.mainRoutine, "m", "<b>m</b>ain routine", true],
+      [FrameType.globalFunction, "f", "<b>f</b>unction", true],
+      [FrameType.test, "t", "<b>t</b>est", true],
+      [FrameType.globalProcedure, "p", "<b>p</b>rocedure", true],
+      [FrameType.constant, "k", "<b>k</b> constant", true],
+      [FrameType.enum, "e", "<b>e</b>num", true],
+      [FrameType.concreteClass, "c", "<b>c</b>oncrete class", true],
+      [FrameType.abstractClass, "a", "<b>a</b>bstract class", true],
       [
-        classKeyword,
-        "c",
-        "<b>c</b>oncrete class",
-        (_parent: Parent) => this.file.createConcreteClass(),
-      ],
-      [
-        abstractKeyword,
-        "a",
-        "<b>a</b>bstract class",
-        (_parent: Parent) => this.file.createAbstractClass(),
-      ],
-      [
-        this.getCommentMarker(),
+        FrameType.commentFrame,
         this.getCommentMarker(),
         `<b>${this.getCommentMarker()}</b> comment`,
-        (_parent: Parent) => this.file.createGlobalComment(),
+        true,
       ],
     ];
   }
 
-  paradigmAllows(_keyword: string): boolean {
-    return true;
-  }
-
-  validWithinCurrentContext(keyword: string, userEntry: boolean): boolean {
+  validWithinCurrentContext(type: FrameType, userEntry: boolean): boolean {
     let result = true;
-    // First apply universal instruction-specific rules
-    if (keyword === mainKeyword && userEntry) {
+    if (type === FrameType.mainRoutine && userEntry) {
       result = !this.file.containsMain();
     } else if (this.getParadigm().isProcedural() && userEntry) {
-      result = keyword !== classKeyword && keyword !== abstractKeyword;
+      result = type !== FrameType.abstractClass && type !== FrameType.concreteClass;
     }
     return result;
   }
@@ -79,11 +61,31 @@ export class GlobalSelector extends AbstractSelector implements GlobalFrame {
     return "";
   }
 
-  override canBePastedIn(frame: Frame): boolean {
-    if (isGlobal(frame)) {
-      return this.optionsMatchingUserInput(frame.initialKeywords()).length === 1;
-    } else {
-      return false;
+  createFrame(type: FrameType, _parent: Parent): Frame {
+    const frame = this.file.createGlobalFrame(type);
+    frame.setNewlyCreatedTrue();
+    return frame;
+  }
+
+  visitGlobalBlock(
+    visitor: PythonVisitorFrame | RefLangVisitorFrame,
+    context: PythonGlobalBlockContext | RefLangGlobalBlockContext,
+  ): Frame[] {
+    if (this.language() === LanguagePython.Instance) {
+      return (visitor as PythonVisitorFrame).visitGlobalBlock(context as PythonGlobalBlockContext);
     }
+    if (this.language() === LanguageRefLang.Instance) {
+      return (visitor as RefLangVisitorFrame).visitGlobalBlock(
+        context as RefLangGlobalBlockContext,
+      );
+    }
+    return [];
+  }
+
+  parseFrames(code: string): Frame[] {
+    const parser = getParserByLanguage(this.language(), code, this.getFile());
+    const visitor = getVisitorFrameByLanguage(this.language(), this.getFile())!;
+    const ctx = parser.globalBlock()!;
+    return this.visitGlobalBlock(visitor, ctx);
   }
 }

@@ -1,0 +1,321 @@
+
+
+
+lexer grammar Python_Lexer;
+
+// reservedWords:
+//     `false`,
+//     `await`,
+//     `else`,
+//     `import`,
+//     `pass`,
+//     `none`,
+//     `break`,
+//     `except`,
+//     `in`,
+//     `raise`,
+//     `true`,
+//     `class`,
+//     `finally`,
+//     `is`,
+//     `return`,
+//     `and`,
+//     `continue`,
+//     `for`,
+//     `lambda`,
+//     `try`,
+//     `as`,
+//     `def`,
+//     `from`,
+//     `nonlocal`,
+//     `while`,
+//     `assert`,
+//     `del`,
+//     `global`,
+//     `not`,
+//     `with`,
+//     `async`,
+//     `elif`,
+//     `if`,
+//     `or`,
+//     `yield`,
+//     `str`,
+//     `int`,
+//     `float`,
+//     `complex`,
+//     `list`,
+//     `tuple`,
+//     `range`,
+//     `dict`,
+//     `set`,
+//     `frozenset`,
+//     `bool`,
+//     `bytes`,
+//     `bytearray`,
+//     `memoryview`,
+//     `nonetype`,
+
+// START common keywords
+CLASS: 'class';
+ELIF: 'elif';
+ELSE: 'else';
+FOR: 'for';
+IF: 'if';
+IN: 'in';
+LAMBDA: 'lambda';
+MAIN: 'main';
+RETURN: 'return';
+TRY: 'try';
+WHILE: 'while';
+
+IF_:
+    'if_'
+; // Temporary solution - to be replaced by language-specific implementation
+
+// END common keywords
+
+// START RefLang-specifiFc tokens
+ABSTRACT: 'abstract';
+ASSERT: 'assert';
+ASSIGN: 'assign';
+BE: 'be';
+CALL: 'call';
+CATCH: 'catch';
+CONSTANT: 'constant';
+CONSTRUCTOR: 'constructor';
+COPY: 'copy';
+DIV: 'div';
+END: 'end';
+EVALUATES: 'evaluates';
+FROM: 'from';
+FUNCTION: 'function';
+INHERITS: 'inherits';
+LET: 'let';
+NEW: 'new';
+PROCEDURE: 'procedure';
+PROPERTY: 'property';
+RETURNS: 'returns';
+SET: 'set';
+STEP: 'step';
+TEST: 'test';
+THEN: 'then';
+THROW: 'throw';
+TO: 'to';
+VARIABLE: 'variable';
+// END RefLang-specific tokens
+
+// START Python-specific tokens
+ASSERT_EQUAL: 'assertEqual';
+AS: 'as';
+DEF: 'def';
+EXCEPT: 'except';
+INIT: '__init__';
+NONE: 'None';
+PASS: 'pass';
+RAISE: 'raise';
+ABC: 'ABC';
+ENUM: 'Enum';
+TESTCASE: 'unittest.TestCase';
+TUPLE: 'tuple';
+//END Python-specific tokens
+
+//START common token names; custom definitions
+INT_NAME: 'int';
+FLOAT_NAME: 'float';
+BOOL_NAME: 'bool';
+STRING_NAME: 'str';
+LIST_NAME: 'list';
+DICT_NAME: 'dict';
+FUNC_NAME: 'Callable';
+
+TRUE: 'True';
+FALSE: 'False';
+AND: 'and';
+OR: 'or';
+NOT: 'not';
+EQUAL: '==';
+NOT_EQUAL: '!=';
+REF_EQUAL: 'is';
+REF_NOT_EQUAL: 'not is';
+MOD: '%';
+ARROW: '->';
+POWER: '**';
+
+BINARY_PREFIX: '0b';
+HEX_PREFIX: '0x';
+
+THIS_INSTANCE: 'self';
+//END common token names; custom definitions
+
+//START Common token names; common definitions
+SINGLE_EQUALS: '=';
+OPEN_BRACE: '{';
+CLOSE_BRACE:
+    '}' { if (this.modeStack.length > 0) { this.popMode(); } }
+;
+OPEN_SQ_BRACKET: '[';
+CLOSE_SQ_BRACKET: ']';
+OPEN_BRACKET: '(';
+CLOSE_BRACKET: ')';
+DOT: '.';
+COMMA: ',';
+COLON: ':';
+PLUS: '+';
+MINUS: '-';
+MULT: '*';
+DIVIDE: '/';
+LT: '<';
+GT: '>';
+LE: '<=';
+GE: '>=';
+DOUBLE_QUOTES: '"';
+
+WS: [ \t]+ -> skip;
+NL: [\r\n\f]+;
+
+NAME_STARTING_TEST_: 'test_' IdentifierPartCharacter*;
+NAME_STARTING_LC: UnicodeClassLL IdentifierPartCharacter*;
+NAME_STARTING_UC: UnicodeClassLU IdentifierPartCharacter*;
+
+LITERAL_BINARY: BINARY_PREFIX [01]+;
+LITERAL_HEX: HEX_PREFIX [0-9A-Fa-f]+;
+LITERAL_INTEGER: [0-9][0-9]*;
+LITERAL_FLOAT: [0-9][0-9]* DOT [0-9]+ ExponentPart?;
+
+START_INTERPOLATED_STRING:
+    'f"' -> pushMode(InterpolatedString)
+;
+
+LITERAL_STRING: '"' (~["\u0085] | CommonCharacter)* '"';
+
+WHITESPACES: (Whitespace)+ -> skip;
+TEXT: CommonCharacter+;
+
+GHOSTED_LINE: '#[ghosted] ';
+GHOSTED_BLOCK_START: '\'\'\'[ghosted] ';
+GHOSTED_BLOCK_END: '\'\'\'';
+
+//comments & annotations
+END_MAIN: '# end main';
+END_FUNCTION: '# end function';
+END_TEST: '# end test';
+END_PROCEDURE: '# end procedure';
+END_ENUM: '# end enum';
+END_CLASS: '# end class';
+END_IF: '# end if';
+END_WHILE: '# end while';
+END_FOR: '# end for';
+END_TRY: '# end try';
+END_CONSTRUCTOR: '# end constructor';
+END_FUNCTION_METHOD: '# end function method';
+END_PROCEDURE_METHOD: '# end procedure method';
+ASSIGNMENT_ANNOTATION: '# assignment';
+VARIABLE_DEFINITION_ANNOTATION: '# variable definition';
+PRIVATE_ANNOTATION: '# private';
+ABSTRACT_METHOD: '@abstractmethod';
+
+COMMENT:
+    '#' (' ' | '\t')*
+    | '#' ~('[' | '\r' | '\n') ~('\r' | '\n')*
+;
+
+fragment InputCharacter: ~[\r\n\u0085];
+
+fragment NewLineCharacter:
+    '\u000D' // Carriage Return
+    | '\u000A' // Line Feed 
+    | '\u0085' // Next Line 
+;
+
+fragment ExponentPart: ('e' | 'E') (PLUS | MINUS)? LITERAL_INTEGER
+;
+
+fragment CommonCharacter:
+    SimpleEscapeSequence
+    | HexEscapeSequence
+    | UnicodeEscapeSequence
+;
+
+fragment SimpleEscapeSequence:
+    '\\\''
+    | '\\"'
+    | '\\\\'
+    | '\\0'
+    | '\\a'
+    | '\\b'
+    | '\\f'
+    | '\\n'
+    | '\\r'
+    | '\\t'
+    | '\\v'
+;
+
+fragment HexEscapeSequence:
+    '\\x' HexDigit
+    | '\\x' HexDigit HexDigit
+    | '\\x' HexDigit HexDigit HexDigit
+    | '\\x' HexDigit HexDigit HexDigit HexDigit
+;
+
+fragment NewLine: '\r\n' | '\r' | '\n' | '\u0085';
+
+fragment Whitespace:
+    UnicodeClassZS //'<Any Character With Unicode Class Zs>'
+    | '\u0009' // Horizontal Tab 
+    | '\u000B' // Vertical Tab
+    | '\u000C' // Form Feed
+;
+
+fragment UnicodeClassZS:
+    '\u0020' // SPACE
+    | '\u00A0' // NO_BREAK SPACE
+;
+
+fragment IdentifierStartingUCorLC: (
+        UnicodeClassLL
+        | UnicodeClassLU
+    ) IdentifierPartCharacter*
+;
+
+fragment IdentifierPartCharacter:
+    UnicodeClassLU
+    | UnicodeClassLL
+    | DecimalDigitCharacter
+    | '_'
+;
+
+fragment LetterCharacter:
+    UnicodeClassLU
+    | UnicodeClassLL
+    | UnicodeEscapeSequence
+;
+
+fragment DecimalDigitCharacter:
+    UnicodeClassND
+    | UnicodeEscapeSequence
+;
+
+fragment ConnectingCharacter: UnicodeEscapeSequence;
+
+fragment FormattingCharacter: UnicodeEscapeSequence;
+
+fragment UnicodeEscapeSequence:
+    '\\u' HexDigit HexDigit HexDigit HexDigit
+    | '\\U' HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit HexDigit
+;
+
+fragment HexDigit: [0-9] | [A-F] | [a-f];
+
+fragment UnicodeClassLU: '\u0041' ..'\u005a';
+fragment UnicodeClassLL: '\u0061' ..'\u007A';
+fragment UnicodeClassND: '\u0030' ..'\u0039';
+//END Common token names; common definitions
+
+mode InterpolatedString;
+
+EscapedLeftBrace: '\\{' -> type(Grapheme);
+EscapedDoubleQuotes: '\\"' -> type(Grapheme);
+ExprStart: '{' -> type(OPEN_BRACE), pushMode(DEFAULT_MODE);
+End: '}' -> type(START_INTERPOLATED_STRING), popMode;
+EndString: '"' -> type(DOUBLE_QUOTES), popMode;
+Grapheme: ~('{' | '"');

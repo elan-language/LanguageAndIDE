@@ -1,0 +1,129 @@
+# cd7189bff2f2ae267d75681ec6bfec9ad52584e1b1abcef1c7410ecba4c1db48 Elan 2.0.0-beta5 valid
+
+# Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
+# A Cellular Automaton Model of Excitable Media
+# 
+# gW, gH : grid width, height
+constant gW set to 40
+
+constant gH set to 30
+
+# iR : infection rate (1..20)
+constant iR set to 1
+
+# w1, w2 : weighting factors (low integers)
+constant w1 set to 4
+
+constant w2 set to 1
+
+# colours : cellColour.s in descending order of RGB value
+# state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
+# colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
+constant healthy set to 0xffffff
+
+constant ill set to 0x000000
+
+function getColours() returns List<of Int>
+  return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]
+end function
+
+# vN : neighbourhood: von Neumann (4) true, Moore (8) false
+constant vN set to false
+
+main
+  # colour grids: hodge for display, podge for working
+  variable podge set to new BlockGraphics()
+  variable hodge set to new BlockGraphics()
+  variable blank set to new BlockGraphics()
+  # initial colours of grid
+  call updateGrid(hodge, podge, true)
+  while not uniform(hodge)
+    # successive updates to grid in blank podge
+    assign podge to blank
+    call updateGrid(hodge, podge, false)
+  end while
+end main
+
+procedure updateGrid(hodge as BlockGraphics, podge as BlockGraphics, initial as Boolean)
+  variable colours set to getColours()
+  for j in range(0, gH)
+    for i in range(0, gW)
+      if initial then
+        call podge.put(i, j, colours[randint(0, (colours.length()) - 1)])
+        [ghosted] assign podge[1][1] to 0x1a001a
+      else
+        call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j)))
+      end if
+    end for
+  end for
+  variable a set to 0
+  # copy podgeValues into hodge
+  for j in range(0, gH)
+    for i in range(0, gW)
+      variable podgeValue set to podge.get(i, j)
+      call hodge.put(i, j, podgeValue)
+    end for
+  end for
+  call displayBlockGraphics(hodge)
+  call sleep_ms(50)
+end procedure
+
+function uniform(grid as BlockGraphics) returns Boolean
+  variable cell0 set to grid.get(0, 0)
+  variable isUniform set to true
+  for j in range(0, gH)
+    for i in range(0, gW)
+      if grid.get(i, j) is cell0 then
+        assign isUniform to false
+      end if
+    end for
+  end for
+  return isUniform
+end function
+
+function getNeighbourColours(grid as BlockGraphics, i as Int, j as Int) returns List<of Int>
+  # grid wraps around: all cells have the same number of neighbours
+  # H and V neighbours(von Neumann)
+  variable sL set to grid.get((i - 1 + gW) mod gW, j)
+  variable sR set to grid.get((i + 1 + gW) mod gW, j)
+  variable sA set to grid.get(i, (j - 1 + gH) mod gH)
+  variable sB set to grid.get(i, (j + 1 + gH) mod gH)
+  variable neighbourColours set to [sL, sR, sA, sB]
+  if vN is false then
+    # add diagonal neighbours (Moore)
+    variable sLA set to grid.get((i - 1 + gW) mod gW, (j - 1 + gH) mod gH)
+    variable sRA set to grid.get((i + 1 + gW) mod gW, (j - 1 + gH) mod gH)
+    variable sLB set to grid.get((i - 1 + gW) mod gW, (j + 1 + gH) mod gH)
+    variable sRB set to grid.get((i + 1 + gW) mod gW, (j + 1 + gH) mod gH)
+    assign neighbourColours to [sL, sR, sA, sB, sLA, sRA, sLB, sRB]
+  end if
+  return neighbourColours
+end function
+
+function newColour(neighbourColours as List<of Int>, nowColour as Int) returns Int
+  variable colours set to getColours()
+  variable nInfected set to 0
+  variable nIll set to 0
+  variable sumStates set to colours.indexOf(nowColour)
+  for colour in neighbourColours
+    assign sumStates to sumStates + colours.indexOf(colour)
+    if colour < healthy then
+      assign nInfected to nInfected + 1
+      if colour is ill then
+        assign nIll to nIll + 1
+      end if
+    end if
+  end for
+  return updateColour(nowColour, sumStates, nInfected, nIll)
+end function
+
+function updateColour(nowColour as Int, sumStates as Int, nInfected as Int, nIll as Int) returns Int
+  variable colours set to getColours()
+  variable state set to 0
+  if nowColour is healthy then
+    assign state to divAsInt(nInfected, w1) + divAsInt(nIll, w2)
+  elif nowColour isnt ill then
+    assign state to divAsInt(sumStates, (nInfected + 1)) + iR
+  end if
+  return if_(state > (colours.length() - 1), ill, colours[state])
+end function

@@ -1,15 +1,13 @@
-import { classKeyword, endKeyword } from "../../../compiler/elan-keywords";
 import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
-import { MemberSelector } from "../class-members/member-selector";
-import { CodeSource } from "../frame-interfaces/code-source";
 import { Field } from "../frame-interfaces/field";
 import { File } from "../frame-interfaces/file";
-import { parentHelper_renderChildrenAsElanSource } from "../parent-helpers";
+import { FrameType } from "../frame-type";
 import { ReturnStatement } from "../statements/return-statement";
 import { ClassFrame } from "./class-frame";
 
 export class ConcreteClass extends ClassFrame {
+  frameType: FrameType = FrameType.concreteClass;
   private constr: Constructor;
   private toString: FunctionMethod;
 
@@ -25,12 +23,12 @@ export class ConcreteClass extends ClassFrame {
     // remove the isNew flag from the return statement frame to allow
     // Backspace to work on the "undefined" string immediately
     // rather than trying to delete the frame, which is marked as new
-    this.toString.getLastChild().hasBeenAddedTo();
+    this.toString.getLastChild().setNewlyCreatedFalse();
     this.getChildren().push(this.toString);
   }
 
-  initialKeywords(): string {
-    return classKeyword;
+  helpId(): string {
+    return "class";
   }
 
   override helpDocument(): string {
@@ -47,39 +45,5 @@ export class ConcreteClass extends ClassFrame {
 
   getIdPrefix(): string {
     return `${this.language().languageHtmlClass}_class`;
-  }
-
-  frameSpecificAnnotation(): string {
-    return "concrete class";
-  }
-
-  public renderAsElanSource(): string {
-    return `${this.sourceAnnotations()}${classKeyword} ${this.name.renderAsElanSource()}${this.inheritanceAsElanSource()}\r
-${parentHelper_renderChildrenAsElanSource(this)}\r
-${endKeyword} ${classKeyword}\r\n`;
-  }
-
-  topKeywords(): string {
-    return `${classKeyword} `;
-  }
-
-  bottomKeywords(): string {
-    return `${endKeyword} ${classKeyword}`;
-  }
-
-  parseBottom(source: CodeSource): boolean {
-    source.removeIndent();
-    if (source.isMatchRegEx(/^constructor\(/)) {
-      this.constr.parseFrom(source);
-      this.removeChild(this.getFirstSelectorAsDirectChild());
-      this.addChildAfter(new MemberSelector(this), this.constr); //So that parsing will continue from the selector *after* the catch
-    }
-    source.removeIndent();
-    if (source.isMatchRegEx(/^function toString\(/)) {
-      this.toString.parseFrom(source);
-      this.removeChild(this.getFirstSelectorAsDirectChild()); //So that parsing will continue from the selector *after* the catch
-      this.addChildAfter(new MemberSelector(this), this.toString);
-    }
-    return super.parseBottom(source);
   }
 }

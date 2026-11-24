@@ -1,7 +1,6 @@
 // The language-independent code that translates library functions calls
 // in expressions in exported code
 import { LanguageExport } from "./frame-interfaces/language-export";
-import { languageHelper_mathFunctions } from "./language-helpers";
 
 export class LanguageExportHelpers {
   constructor(private readonly languageExport: LanguageExport) {
@@ -33,44 +32,6 @@ export class LanguageExportHelpers {
     this.polyfillsUsed = {};
     // and a blank line if we are returning anything
     return result + (result ? "\n" : "");
-  }
-
-  translateExpression(expr: string): string {
-    // Change of plan, disable all the expression translation for the moment
-    if (!this.enableExportTranslation) {
-      return expr;
-    }
-
-    // add "math." to math library functions
-    const regexp = new RegExp(
-      `(<el-method>)(${languageHelper_mathFunctions.join("|")})(</el-method>)`,
-      "g",
-    );
-    // this is effectively a replaceAll because the regexp has the "g" flag
-    let result = expr.replace(regexp, this.lookupmath);
-
-    // non-math functions which are dot methods and stay dot methods
-    // or standalone and stay standalone
-    // ie just a name change required
-    result = this.translatePlainMethods(result);
-
-    // extension methods (dot methods) which become standalone functions in Python
-    // and the object becomes the argument
-    // eg li.length() becomes len(li)
-    // or the object becomes the first argument
-    // eg num.round(3) becomes round(num, 3)
-    result = this.translateExtension(result);
-
-    // standalone functions with parameters which need moving
-    result = this.translateStandaloneWithParams(result);
-
-    // language-specific oddities function
-    result = this.languageExport.translateOddities(result);
-    // Not sure if I should be acting on expr or result.
-    // There should be no overlap between any of the Elan or other language names.
-    this.registerPolyfills(expr);
-
-    return result;
   }
 
   // 'this' is undefined inside a traditional function definition
