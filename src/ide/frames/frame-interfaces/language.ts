@@ -48,8 +48,6 @@ export interface Language {
   DICT_NAME: string;
   FUNC_NAME: string;
 
-  TRUE: string;
-  FALSE: string;
   BINARY_PREFIX: string;
   HEX_PREFIX: string;
 

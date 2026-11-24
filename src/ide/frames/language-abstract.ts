@@ -123,8 +123,6 @@ export abstract class LanguageAbstract implements Language {
   abstract NEW_INSTANCE_PREFIX: string;
   abstract FUNC_NAME: string;
 
-  abstract TRUE: string;
-  abstract FALSE: string;
   abstract BINARY_PREFIX: string;
   abstract HEX_PREFIX: string;
 

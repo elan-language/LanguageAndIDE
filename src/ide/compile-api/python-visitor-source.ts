@@ -55,6 +55,7 @@ import {
   visitTypeHelper,
 } from "./parser-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 
 export class PythonVisitorSource extends PythonVisitor<string> {
   constructor(private readonly language: Language) {
@@ -108,9 +109,11 @@ export class PythonVisitorSource extends PythonVisitor<string> {
 
   override visitLitFloat = (ctx: LitFloatContext) => (this.visitChildren(ctx) ?? "").toLowerCase();
 
-  override visitLitBooleanTrue = (_ctx: LitBooleanContext) => this.language.TRUE;
+  override visitLitBooleanTrue = (_ctx: LitBooleanContext) =>
+    this.language.mapTerminalSymbol(TerminalSymbol.True);
 
-  override visitLitBooleanFalse = (_ctx: LitBooleanContext) => this.language.FALSE;
+  override visitLitBooleanFalse = (_ctx: LitBooleanContext) =>
+    this.language.mapTerminalSymbol(TerminalSymbol.False);
 
   override visitEnumValue = (ctx: EnumValueContext) =>
     `${this.visit(ctx.typeName())}.${this.visit(ctx.identifierUse())}`;

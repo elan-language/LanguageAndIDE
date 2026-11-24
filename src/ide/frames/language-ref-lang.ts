@@ -1,4 +1,5 @@
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -265,8 +266,6 @@ export class LanguageRefLang extends LanguageAbstract {
   DICT_NAME: string = "Dictionary";
   FUNC_NAME: string = "Func";
 
-  TRUE: string = "true";
-  FALSE: string = "false";
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
@@ -317,6 +316,11 @@ export class LanguageRefLang extends LanguageAbstract {
     [OperationSymbol.Power, "^"],
   ]);
 
+  private terminalMap = new Map<TerminalSymbol, string>([
+    [TerminalSymbol.True, "true"],
+    [TerminalSymbol.False, "false"],
+  ]);
+
   override mapOperation(op: string): OperationSymbol {
     op = op.trim();
 
@@ -334,5 +338,20 @@ export class LanguageRefLang extends LanguageAbstract {
     }
 
     return ` ${this.opMap.get(op) ?? ""} `;
+  }
+
+  mapTerminal(term: string): TerminalSymbol {
+    term = term.trim();
+
+    for (const e of this.terminalMap.entries()) {
+      if (e[1] === term) {
+        return e[0];
+      }
+    }
+    return TerminalSymbol.Unknown;
+  }
+
+  mapTerminalSymbol(termSymbol: TerminalSymbol): string {
+    return this.terminalMap.get(termSymbol) ?? "";
   }
 }

@@ -62,6 +62,7 @@ import {
   visitTypeHelper,
 } from "./parser-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -135,9 +136,11 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   override visitLitFloat = (ctx: LitFloatContext) =>
     lit((this.visitChildren(ctx) ?? "").toLowerCase());
 
-  override visitLitBooleanTrue = (_ctx: LitBooleanContext) => kw(this.language.TRUE);
+  override visitLitBooleanTrue = (_ctx: LitBooleanContext) =>
+    kw(this.language.mapTerminalSymbol(TerminalSymbol.True));
 
-  override visitLitBooleanFalse = (_ctx: LitBooleanContext) => kw(this.language.FALSE);
+  override visitLitBooleanFalse = (_ctx: LitBooleanContext) =>
+    kw(this.language.mapTerminalSymbol(TerminalSymbol.False));
 
   override visitLitString = (ctx: LitStringContext) =>
     this.visitChildren(ctx)

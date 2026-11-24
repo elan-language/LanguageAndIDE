@@ -33,6 +33,7 @@ import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
 import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
 import { Python_Lexer } from "../../generated/python/Python_Lexer";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 
 export function getPythonParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
@@ -259,9 +260,10 @@ export function regex(s: string) {
 
 export function getConstantType(text: string, language: Language) {
   let typeName = "";
+  const term = language.mapTerminal(text);
   if (text.startsWith(`"`)) {
     typeName = language.STRING_NAME;
-  } else if (text === language.TRUE || text === language.FALSE) {
+  } else if (term === TerminalSymbol.True || term === TerminalSymbol.False) {
     typeName = language.BOOL_NAME;
   } else if (/[0-9]\..*/.test(text)) {
     typeName = language.FLOAT_NAME;
