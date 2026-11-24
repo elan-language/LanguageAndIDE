@@ -1,4 +1,4 @@
-// Java with Elan 2.0.0-alpha4
+// Java with Elan 3.0.0-alpha
 
 static final String allWords = "AAHED ZYMIC" // constant
 

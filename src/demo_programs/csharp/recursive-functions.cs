@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-beta5
+// C# with Elan 3.0.0-alpha
 
 static int factorial(int n) { // function
   return if_(n < 2, 1, n*factorial(n - 1));

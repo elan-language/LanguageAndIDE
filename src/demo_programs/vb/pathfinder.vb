@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta5
+' VB.NET with Elan 3.0.0-alpha
 
 Sub main()
   Dim start = New Point(5, 5) ' variable definition

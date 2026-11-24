@@ -55,7 +55,7 @@ export async function processTestFile(fileName: string) {
       const toConvert = code.replace("${testHeader}", "").replaceAll("`", "").trim();
       console.warn(toConvert.slice(0, 20));
       const pyCode = (await convertCode(toConvert)).replace(
-        "# Python with Elan 2.0.0-beta3",
+        "# Python with Elan 3.0.0-alpha",
         "${testPythonHeader}",
       );
 

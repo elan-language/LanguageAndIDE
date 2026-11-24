@@ -1,4 +1,4 @@
-# 6230699f2c7df84e9b9ac8d0a1b57ddf2f54b68316c6ed286a08a10c6d7372db Python with Elan 2.0.0-beta5 valid
+# 551d03b0b6139c205fbe7ec7761c16f2bd421d176b78716ef34680c011846471 Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   head = 620 # variable definition

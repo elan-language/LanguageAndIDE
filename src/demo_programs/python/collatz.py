@@ -1,4 +1,4 @@
-# 2e283c02b6b83b8311c2d392ebb7b71e0275d1ff35ad65886acb89fe62f595a0 Python with Elan 2.0.0-beta5 valid
+# 2e283c02b6b83b8311c2d392ebb7b71e0275d1ff35ad65886acb89fe62f595a0 Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   x = 1 # variable definition

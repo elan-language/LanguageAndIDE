@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-alpha4
+' VB.NET with Elan 3.0.0-alpha
 
 Sub main()
   For Each n In range(1, 21)

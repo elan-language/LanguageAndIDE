@@ -1,4 +1,4 @@
-# bf8c555067d21add58587e68ad1d1c2ee68de7d4529c83c569aa8f7a9dcebbaf Elan 2.0.0-beta5 valid
+# dcfce3c6e2bf7117d49349f549f54ae1371bff081c3aeac967a73981ca4629b3 Elan 3.0.0-alpha valid
 
 main
   variable t set to new Turtle()

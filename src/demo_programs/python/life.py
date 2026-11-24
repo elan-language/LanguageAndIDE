@@ -1,4 +1,4 @@
-# ebafd7ee44a6ec1f81b730496aef9e28209399e8a96b6170e50a6211f50abf02 Python with Elan 2.0.0-beta5 valid
+# f3d87ae625c8baad8102dc3001a69bb17fe951f5bd22e8444d6733b018cc94e9 Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   grid = BlockGraphics() # variable definition

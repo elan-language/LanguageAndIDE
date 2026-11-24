@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-alpha4
+# Python with Elan 3.0.0-alpha
 
 def main() -> None:
   for n in range(1, 21):

@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta5
+' VB.NET with Elan 3.0.0-alpha
 
 ' Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
 
