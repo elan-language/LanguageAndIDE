@@ -321,7 +321,7 @@ export class FileManager {
     try {
       const [fileHandle] = await window.showOpenFilePicker({
         startIn: "documents",
-        types: [{ accept: { "text/elan": `.${cvm.getLanguage().defaultFileExtension}` } }],
+        types: [{ accept: { "text/plain": `.${cvm.getLanguage().defaultFileExtension}` } }],
         id: lastDirId,
       });
       const codeFile = await fileHandle.getFile();
