@@ -1,4 +1,5 @@
 import { OperationSymbol } from "../../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../../compiler/syntax-nodes/terminal-symbol";
 import { FileImpl } from "../file-impl";
 import { FrameType } from "../frame-type";
 import { Field } from "./field";
@@ -64,4 +65,8 @@ export interface Language {
   mapOperation(op: string): OperationSymbol;
 
   mapOperationSymbol(op: OperationSymbol): string;
+
+  mapTerminal(term: string): TerminalSymbol;
+
+  mapTerminalSymbol(termSymbol: TerminalSymbol): string;
 }
