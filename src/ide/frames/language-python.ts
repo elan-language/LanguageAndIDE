@@ -297,7 +297,6 @@ export class LanguagePython extends LanguageAbstract {
   COMMENT_MARKER = "#";
 
   INTERPOLATED_STRING_PREFIX: string = "f";
-  NEW_INSTANCE_PREFIX = ""; // i.e. there is no Python equivalent to 'new' keyword
 
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
@@ -306,9 +305,6 @@ export class LanguagePython extends LanguageAbstract {
   LIST_NAME: string = "list";
   DICT_NAME: string = "dict";
   FUNC_NAME: string = "Callable";
-
-  BINARY_PREFIX: string = "0b";
-  HEX_PREFIX: string = "0x";
 
   OVERRIDES = "";
   IMPLEMENTS = "";

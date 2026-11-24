@@ -279,8 +279,4 @@ export class LanguageCSharp extends LanguageAbstract {
   STRING_NAME: string = "string";
   LIST_NAME: string = "List";
   DICT_NAME: string = "Dictionary";
-  NEW_INSTANCE_PREFIX = "new";
-
-  BINARY_PREFIX: string = "0b";
-  HEX_PREFIX: string = "0x";
 }

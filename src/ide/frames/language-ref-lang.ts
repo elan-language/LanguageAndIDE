@@ -249,13 +249,10 @@ export class LanguageRefLang extends LanguageAbstract {
     return html;
   }
 
-  POWER: string = "^";
-
   GHOSTED = "[ghosted]";
   COMMENT_MARKER = "#";
 
   INTERPOLATED_STRING_PREFIX: string = "$";
-  NEW_INSTANCE_PREFIX = "new";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
@@ -264,9 +261,6 @@ export class LanguageRefLang extends LanguageAbstract {
   LIST_NAME: string = "List";
   DICT_NAME: string = "Dictionary";
   FUNC_NAME: string = "Func";
-
-  BINARY_PREFIX: string = "0b";
-  HEX_PREFIX: string = "0x";
 
   OVERRIDES = "";
   IMPLEMENTS = "";
