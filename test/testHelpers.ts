@@ -49,8 +49,12 @@ export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   console.warn(file._parserErrorMessages.join("\n"));
   
   assert.equal(file.getParseStatus(), ParseStatus.valid, "failed parse");
-  assert.equal(file.readCompileStatus(), CompileStatus.ok, "failed compile");
-  const outcomes = await runner(file.compile());
+
+  const code = file.compile();
+  const ast = file.getAst(false);
+
+  assert.equal(ast && ast.getAllCompileErrors().length == 0, true, "failed compile " + ast?.getAllCompileErrors().join("\n"));
+  const outcomes = await runner(code);
   file.refreshTestStatuses(outcomes);
   const ts = file.readTestStatus();
   if (ts !== TestStatus.default) {
