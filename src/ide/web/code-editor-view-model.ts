@@ -49,7 +49,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   lastEditorEvent: editorEvent | undefined;
 
   get fileName() {
-    return this.file!.fileName;
+    return this.file!.getFileName();
   }
 
   setParadigm(p: Paradigm) {
@@ -81,7 +81,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   set fileName(fn: string) {
-    this.file!.fileName = fn;
+    this.file!.setFileName(fn);
   }
 
   setRunStatus(s: RunStatus) {
