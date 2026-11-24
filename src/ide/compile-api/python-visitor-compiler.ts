@@ -31,6 +31,7 @@ import { LitIntAsn } from "../../compiler/syntax-nodes/lit-int-asn";
 import { LitStringAsn } from "../../compiler/syntax-nodes/lit-string-asn";
 import { MethodCallAsn } from "../../compiler/syntax-nodes/method-call-asn";
 import { NewInstanceAsn } from "../../compiler/syntax-nodes/new-instance-asn";
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { ParamDefAsn } from "../../compiler/syntax-nodes/param-def-asn";
 import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string-asn";
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
@@ -301,7 +302,7 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
   // unary expression
   override visitNegateLogical = (ctx: NegateLogicalContext) =>
     new UnaryExprAsn(
-      this.language.NOT,
+      OperationSymbol.Not,
       this.visit(ctx.term())!,
       this.fieldId,
       this.scope,
@@ -309,7 +310,13 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     );
 
   override visitNegateNumeric = (ctx: NegateNumericContext) =>
-    new UnaryExprAsn("-", this.visit(ctx.term())!, this.fieldId, this.scope, this.language);
+    new UnaryExprAsn(
+      OperationSymbol.Minus,
+      this.visit(ctx.term())!,
+      this.fieldId,
+      this.scope,
+      this.language,
+    );
 
   override visitIndexedTerm = (ctx: IndexedTermContext) => {
     this.precedingNode = this.visit(ctx.term())!;

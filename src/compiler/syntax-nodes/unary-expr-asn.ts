@@ -15,7 +15,7 @@ import { OperationSymbol } from "./operation-symbol";
 
 export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   constructor(
-    public readonly op: string,
+    public readonly opSymbol: OperationSymbol,
     public readonly operand: AstNode,
     public readonly fieldId: string,
     private readonly scope: Scope,
@@ -27,7 +27,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   compileErrors: CompileError[] = [];
 
   isNegativeOperation() {
-    return this.language.mapOperation(this.op) === OperationSymbol.Minus;
+    return this.opSymbol === OperationSymbol.Minus;
   }
 
   private opToJs(opSymbol: OperationSymbol) {
@@ -48,16 +48,14 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
       mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
     }
 
-    const opSymbol = this.language.mapOperation(this.op);
-
-    if (opSymbol === OperationSymbol.Unknown) {
-      mustBeKnownOperation(this.op, this.compileErrors, this.fieldId);
+    if (this.opSymbol === OperationSymbol.Unknown) {
+      mustBeKnownOperation(OperationSymbol[this.opSymbol], this.compileErrors, this.fieldId);
     }
 
-    const code = `${this.opToJs(opSymbol)}${this.operand.compile()}`;
+    const code = `${this.opToJs(this.opSymbol)}${this.operand.compile()}`;
     const opSt = this.operand.symbolType();
 
-    if (opSymbol === OperationSymbol.Minus) {
+    if (this.isNegativeOperation()) {
       mustBeNumberType(opSt, this.compileErrors, this.fieldId, this.scope);
       getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
       // to avoid js compile errors with exponents
@@ -72,9 +70,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   symbolType() {
-    const opSymbol = this.language.mapOperation(this.op);
-
-    switch (opSymbol) {
+    switch (this.opSymbol) {
       case OperationSymbol.Not:
         return BooleanType.Instance;
       default:
@@ -83,6 +79,7 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
   }
 
   toString() {
-    return `${this.op} ${this.operand}`;
+    const op = OperationSymbol[this.opSymbol];
+    return `${op} ${this.operand}`;
   }
 }

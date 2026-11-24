@@ -272,13 +272,6 @@ export class LanguageCSharp extends LanguageAbstract {
   OVERRIDES = "override";
   IMPLEMENTS = ""; // not used
 
-  EQUAL: string = "==";
-  NOT_EQUAL: string = "!=";
-  MOD = "%";
-  AND = "&&";
-  OR = "||";
-  NOT = "!";
-
   COMMENT_MARKER: string = "//";
   LIST_START: string = "{";
   LIST_END: string = "}";

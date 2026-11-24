@@ -33,13 +33,6 @@ export interface Language {
 
   postProcessHtml(html: string): string;
 
-  MOD: string;
-  EQUAL: string;
-  NOT_EQUAL: string;
-  AND: string;
-  OR: string;
-  NOT: string;
-
   COMMENT_MARKER: string; //e.g. `#`
   LIST_START: string;
   LIST_END: string;

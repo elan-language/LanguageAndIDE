@@ -249,12 +249,6 @@ export class LanguageRefLang extends LanguageAbstract {
   }
 
   POWER: string = "^";
-  EQUAL: string = "is";
-  NOT_EQUAL: string = "isnt";
-  MOD = "mod";
-  AND = "and";
-  OR = "or";
-  NOT = "not";
 
   GHOSTED = "[ghosted]";
   COMMENT_MARKER = "#";
