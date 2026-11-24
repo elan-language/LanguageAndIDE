@@ -295,8 +295,7 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   COMMENT_MARKER = "#";
-  LIST_START: string = "[";
-  LIST_END: string = "]";
+
   INTERPOLATED_STRING_PREFIX: string = "f";
   NEW_INSTANCE_PREFIX = ""; // i.e. there is no Python equivalent to 'new' keyword
 
@@ -308,14 +307,9 @@ export class LanguagePython extends LanguageAbstract {
   DICT_NAME: string = "dict";
   FUNC_NAME: string = "Callable";
 
-  TUPLE_START = "tuple[";
-  TUPLE_END = "]";
-
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
-  START_OF_GENERIC: string = "[";
-  END_OF_GENERIC: string = "]";
   THIS_INSTANCE: string = "self";
   OVERRIDES = "";
   IMPLEMENTS = "";
@@ -389,6 +383,8 @@ export class LanguagePython extends LanguageAbstract {
   private terminalMap = new Map<TerminalSymbol, string>([
     [TerminalSymbol.True, "True"],
     [TerminalSymbol.False, "False"],
+    [TerminalSymbol.GenericStart, "["],
+    [TerminalSymbol.GenericEnd, "]"],
   ]);
 
   mapTerminal(term: string): TerminalSymbol {

@@ -12,6 +12,7 @@ import {
   isProperty,
   isTypeSymbol,
 } from "../../compiler/symbols/symbol-helpers";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { File } from "./frame-interfaces/file";
 import { KeywordCompletion } from "./symbol-completion-helpers";
 
@@ -115,7 +116,7 @@ export class SymbolWrapper {
       let toInsert = this.langSpecificTypeName(this.name);
       if (isGenericClass(symbol)) {
         const lang = this.file.language();
-        toInsert += lang.START_OF_GENERIC;
+        toInsert += lang.mapTerminalSymbol(TerminalSymbol.GenericStart);
       }
       return toInsert;
     }

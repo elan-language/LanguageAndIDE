@@ -35,8 +35,7 @@ export interface Language {
   postProcessHtml(html: string): string;
 
   COMMENT_MARKER: string; //e.g. `#`
-  LIST_START: string;
-  LIST_END: string;
+
   INTERPOLATED_STRING_PREFIX: string;
   NEW_INSTANCE_PREFIX: string;
 
@@ -51,12 +50,7 @@ export interface Language {
   BINARY_PREFIX: string;
   HEX_PREFIX: string;
 
-  START_OF_GENERIC: string;
-  END_OF_GENERIC: string;
   THIS_INSTANCE: string;
-
-  TUPLE_START: string;
-  TUPLE_END: string;
 
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
