@@ -34,7 +34,8 @@ export interface File extends Parent {
 
   compileAsTestWorker(base: string): string;
 
-  fileName: string;
+  getFileName(): string;
+  setFileName(newName: string): void;
   readonly defaultFileName: string;
   doingExport: boolean;
 

@@ -98,7 +98,7 @@ export class FileImpl implements File {
   isFile: boolean = true;
   parseError?: string;
   readonly defaultFileName = "code.elan";
-  fileName: string = this.defaultFileName;
+  private fileName: string = "";
   doingExport: boolean = false;
   private _parseStatus: ParseStatus = ParseStatus.default;
   private _compileStatus: CompileStatus = CompileStatus.default;
@@ -145,6 +145,17 @@ export class FileImpl implements File {
     if (allowAnyHeader) {
       this.allowAnyHeader = allowAnyHeader;
     }
+  }
+
+  getDefaultFileName(): string {
+    return `code.${this.language().defaultFileExtension}`;
+  }
+
+  getFileName(): string {
+    return this.fileName.length > 0 ? this.fileName : this.getDefaultFileName();
+  }
+  setFileName(newName: string): void {
+    this.fileName = newName;
   }
 
   _parserErrorMessages: string[] = [];

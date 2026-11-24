@@ -48,17 +48,8 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
-  private exporting: boolean = false;
-  setExporting(e: boolean) {
-    this.exporting = e;
-  }
-
-  isExporting() {
-    return this.exporting;
-  }
-
   get fileName() {
-    return this.file!.fileName;
+    return this.file!.getFileName();
   }
 
   setParadigm(p: Paradigm) {
@@ -90,7 +81,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   }
 
   set fileName(fn: string) {
-    this.file!.fileName = fn;
+    this.file!.setFileName(fn);
   }
 
   setRunStatus(s: RunStatus) {

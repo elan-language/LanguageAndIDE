@@ -228,8 +228,6 @@ export interface ICodeEditorViewModel {
   showCode(): void;
 
   getLanguage(): Language;
-
-  isExporting(): boolean;
 }
 
 export interface ITabViewModel {

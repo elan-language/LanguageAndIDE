@@ -82,7 +82,6 @@ const trimButton = document.getElementById("trim") as HTMLButtonElement;
 const loadButton = document.getElementById("load") as HTMLDivElement;
 const appendButton = document.getElementById("append") as HTMLDivElement;
 const saveButton = document.getElementById("save") as HTMLDivElement;
-const exportButton = document.getElementById("export") as HTMLDivElement;
 const autoSaveButton = document.getElementById("auto-save") as HTMLDivElement;
 const undoButton = document.getElementById("undo") as HTMLButtonElement;
 const redoButton = document.getElementById("redo") as HTMLButtonElement;
@@ -264,7 +263,6 @@ class IDEViewModel implements IIDEViewModel {
           loadButton,
           appendButton,
           saveButton,
-          exportButton,
           copyAsUrlButton,
           autoSaveButton,
           newButton,
@@ -313,19 +311,14 @@ class IDEViewModel implements IIDEViewModel {
       }
 
       if (isEmpty) {
-        this.disable(
-          [saveButton, exportButton, copyAsUrlButton],
-          "Some code must be added in order to save",
-        );
+        this.disable([saveButton, copyAsUrlButton], "Some code must be added in order to save");
       } else if (!(isParsing || isIncomplete)) {
-        this.disable([saveButton, exportButton, copyAsUrlButton], "Invalid code cannot be saved");
+        this.disable([saveButton, copyAsUrlButton], "Invalid code cannot be saved");
       } else if (fileManager.isAutosaving()) {
         this.disable([saveButton], "Autosave is enabled- cancel to manual save");
-        this.enable(exportButton, "Export the code into a file");
         this.enable(copyAsUrlButton, "Copy the code into a url");
       } else {
         this.enable(saveButton, "Save the code into a file");
-        this.enable(exportButton, "Export the code into a file");
         this.enable(copyAsUrlButton, "Copy the code into a url");
       }
 
@@ -758,13 +751,6 @@ class IDEViewModel implements IIDEViewModel {
   }
 
   setDisplayLanguage(l: Language) {
-    if (l instanceof LanguageRefLang) {
-      exportButton.setAttribute("hidden", "");
-    } else {
-      exportButton.removeAttribute("hidden");
-      exportButton.textContent = `export as .${l.defaultFileExtension} file`;
-    }
-
     if (!document.querySelector("body")!.classList.contains("quad-editor")) {
       codeContainers[0].classList.remove("elan", "python", "cs", "vb", "java");
       codeContainers[0].classList.add(l.languageHtmlClass);
@@ -928,12 +914,6 @@ loadButton.addEventListener("click", chooser(getUploader(), false));
 appendButton.addEventListener("click", chooser(getAppender(), true));
 
 saveButton.addEventListener("click", async (e: Event) => {
-  codeViewModel.setExporting(false);
-  await getDownloader()(e);
-});
-
-exportButton.addEventListener("click", async (e: Event) => {
-  codeViewModel.setExporting(true);
   await getDownloader()(e);
 });
 
@@ -1308,7 +1288,7 @@ function chooser(uploader: (event: Event) => void, noCheck: boolean) {
       } else {
         f.type = "file";
         f.name = "file";
-        f.accept = ".elan";
+        f.accept = ".*";
         f.addEventListener("change", uploader);
       }
 
