@@ -45,10 +45,10 @@ const updateTestFiles = false;
 
 export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   const runner = await createTestRunner();
-  
-  console.warn(file._parserErrorMessages.join("\n"));
-  
-  assert.equal(file.getParseStatus(), ParseStatus.valid, "failed parse");
+    
+  const parserErrors = file._parserErrorMessages.join("\n");
+
+  assert.equal(file.getParseStatus(), ParseStatus.valid, "failed parse " + parserErrors);
 
   const code = file.compile();
   const ast = file.getAst(false);
