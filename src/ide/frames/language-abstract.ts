@@ -1,5 +1,6 @@
 import { implementsAbstractMethodOnClassOrInterface } from "../../compiler/symbols/symbol-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { Constructor } from "./class-members/constructor";
 import { FunctionMethod } from "./class-members/function-method";
 import { ProcedureMethod } from "./class-members/procedure-method";
@@ -177,6 +178,14 @@ export abstract class LanguageAbstract implements Language {
   }
 
   mapOperationSymbol(_op: OperationSymbol): string {
+    return "";
+  }
+
+  mapTerminal(_term: string): TerminalSymbol {
+    return TerminalSymbol.Unknown;
+  }
+
+  mapTerminalSymbol(_TermSymbol: TerminalSymbol): string {
     return "";
   }
 
