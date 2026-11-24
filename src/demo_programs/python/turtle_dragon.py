@@ -1,4 +1,4 @@
-# 5326586b8e7b7e3a44dc002b0ac06d340bdfbe25aacc7f982dfddfb1e8ecd987 Python with Elan 2.0.0-beta5 valid
+# 4fff77cf6a0453f8108f64a74c9f0f8f1fd7304f3a8a98bc8b53875b98faf546 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) # variable definition
@@ -59,7 +59,7 @@ def reflect(s: str) -> str: # function
 # end function
 
 class Test_setTurns(unittest.TestCase):
- def test_setTurns(self) -> None:
+ def test_setTurns(self: Test_setTurns) -> None:
   self.assertEqual(setTurns("1"), "11")
   self.assertEqual(setTurns("11"), "1110")
   self.assertEqual(setTurns("110"), "110110")
@@ -67,7 +67,7 @@ class Test_setTurns(unittest.TestCase):
 # end test
 
 class Test_reflect(unittest.TestCase):
- def test_reflect(self) -> None:
+ def test_reflect(self: Test_reflect) -> None:
   self.assertEqual(reflect("110"), "100")
   self.assertEqual(reflect("00001"), "01111")
 # end test

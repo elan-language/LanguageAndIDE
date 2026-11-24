@@ -1,4 +1,4 @@
-# 7e3f9094bed756d0cbcc82a4d50cacf49a5427359870b4236e0f6fb880f15f39 Python with Elan 2.0.0-beta5 valid
+# 6230699f2c7df84e9b9ac8d0a1b57ddf2f54b68316c6ed286a08a10c6d7372db Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   head = 620 # variable definition
@@ -44,7 +44,7 @@ def isValid(key: str) -> bool: # function
 # end function
 
 class Test_isValid(unittest.TestCase):
- def test_isValid(self) -> None:
+ def test_isValid(self: Test_isValid) -> None:
   self.assertEqual(isValid("w"), True)
   self.assertEqual(isValid(""), False)
   self.assertEqual(isValid("x"), False)
@@ -65,7 +65,7 @@ def getAdjacentBlock(block: int, direction: str) -> int: # function
 # end function
 
 class Test_getAdjacentBlock(unittest.TestCase):
- def test_getAdjacentBlock(self) -> None:
+ def test_getAdjacentBlock(self: Test_getAdjacentBlock) -> None:
   self.assertEqual(getAdjacentBlock(621, "w"), 581)
   self.assertEqual(getAdjacentBlock(621, "a"), 620)
   self.assertEqual(getAdjacentBlock(621, "s"), 661)
