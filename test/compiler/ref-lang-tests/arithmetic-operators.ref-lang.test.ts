@@ -11,13 +11,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Arithmetic Operators", () => {
   test("Pass_IntAddition", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 + 4)
@@ -48,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntSubtraction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 - 4)
@@ -79,7 +79,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntMultiplication", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 * 4)
@@ -110,7 +110,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IncludeVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -143,7 +143,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DivideIntegersToFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 / 2)
@@ -167,7 +167,7 @@ end main`;
   });
 
   test("Pass_IntegerDivision1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(divAsFloat(7, 2).floor())
@@ -198,7 +198,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerDivision2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(divAsInt(7, 2))
@@ -229,7 +229,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerDivision3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(divAsFloat(7, 2))
@@ -260,7 +260,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Mod", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(11 mod 3)
@@ -291,7 +291,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ModWithComparison", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(if_((25 mod 20) < 19, 1, 2))
@@ -322,7 +322,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Power", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(pow(3, 3))
@@ -353,7 +353,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1.0
@@ -398,7 +398,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseVariableBothSides", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -433,7 +433,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InvalidExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   let a = 3 4
@@ -454,7 +454,7 @@ end main`;
   });
 
   test("Fail_PlusEquals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -476,7 +476,7 @@ end main`;
   });
 
   test("Fail_PlusPlus", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -498,7 +498,7 @@ end main`;
   });
 
   test("Fail_AddWrongTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 + true
@@ -536,7 +536,7 @@ end class`;
   });
 
   test("Fail_ModWithFloats1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(11 mod 3.2)
@@ -561,7 +561,7 @@ end main`;
   });
 
   test("Fail_ModWithFloats2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(11.7 mod 3)
@@ -586,7 +586,7 @@ end main`;
   });
 
   test("Fail_DoubleMinus1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to --4
@@ -609,7 +609,7 @@ end main`;
   });
 
   test("Fail_DoubleMinus2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 1
@@ -633,7 +633,7 @@ end main`;
   });
 
   test("Fail_DoubleNot1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to not not true
@@ -656,7 +656,7 @@ end main`;
   });
 
   test("Fail_DoubleNot2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to true
@@ -680,7 +680,7 @@ end main`;
   });
 
   test("Fail_PowerType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 1
@@ -706,7 +706,7 @@ end main`;
   });
 
   test("Fail_PowerType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 1

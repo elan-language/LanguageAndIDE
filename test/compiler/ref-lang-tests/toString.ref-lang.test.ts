@@ -9,13 +9,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("toString", () => {
   test("Pass_SimpleExtension", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to 1
@@ -48,7 +48,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_EmptyClassIsCreatedWithDefaultConstructorAndToString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -96,7 +96,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_emptyClassToString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -167,7 +167,7 @@ return [main, _tests];}`;
 
   // this behaviour has changed from c# compiler
   test("Pass_emptyClassReplacesToString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -242,7 +242,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ToStringMayBeCalled", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable f set to new Foo()
@@ -312,7 +312,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ToStringCalledWhenObjectPrinted", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable f set to new Foo()
@@ -380,7 +380,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ToStringOnVariousDataTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable l set to [1,2,3]

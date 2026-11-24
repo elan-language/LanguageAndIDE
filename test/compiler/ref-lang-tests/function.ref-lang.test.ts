@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Function", () => {
   test("Pass_SimpleCase", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(foo(3,4))
@@ -57,7 +57,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexResult", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to foo(1,2)[0]
@@ -99,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RangeResult", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to foo(1,2).subList(0, 1)
@@ -141,7 +141,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReturnCollectionDefault", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine(foo(3,4))
@@ -181,7 +181,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Recursive", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(factorial(5))
@@ -233,7 +233,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GlobalFunctionOnClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to new Bar()
@@ -299,7 +299,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_LibraryClassParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to new library.List<of Int>()
@@ -334,7 +334,7 @@ end class`;
   });
 
   test("Fail_ExtensionParameterCount", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to ""
 
@@ -362,7 +362,7 @@ end main`;
   });
 
   test("Fail_ParameterCount", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p as Float) returns Float
   return 0
@@ -392,7 +392,7 @@ end main`;
   });
 
   test("Fail_ParameterType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p as Int) returns Float
   return 0.0
@@ -422,7 +422,7 @@ end main`;
   });
 
   test("Fail_ReturnType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p as Boolean) returns Int
   return p
@@ -450,7 +450,7 @@ end main`;
   });
 
   test("Fail_noReturnType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p as Int)
   return p
@@ -475,7 +475,7 @@ end main`;
   });
 
   test("Fail_noAs", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p Int) returns Int 
   return p
@@ -500,7 +500,7 @@ end main`;
   });
 
   test("Fail_noReturn", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f(p Int) returns Int 
   variable c set to p
@@ -525,7 +525,7 @@ end main`;
   });
 
   test("Fail_ReturnTypeIncompatible", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ""
@@ -555,7 +555,7 @@ end function`;
   });
 
   test("Fail_NoReturn2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -580,7 +580,7 @@ end function`;
   });
 
   test("Fail_embeddedReturns", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -608,7 +608,7 @@ end function`;
   });
 
   test("Fail_nonMatchingReturn2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -636,7 +636,7 @@ end function`;
   });
 
   test("Fail_statementAfterReturn", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -662,7 +662,7 @@ end function`;
   });
 
   ignore_test("Fail_CanNotContainPrint", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -688,7 +688,7 @@ end function`;
   });
 
   test("Fail_CanNotContainInput", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -714,7 +714,7 @@ end function`;
   });
 
   test("Fail_CannotModifyParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3,4)
@@ -744,7 +744,7 @@ end function`;
   });
 
   test("Fail_CannotModifyParam1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3,4)
@@ -774,7 +774,7 @@ end function`;
   });
 
   ignore_test("Fail_CannotUpdateList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -799,7 +799,7 @@ end function`;
   });
 
   ignore_test("Fail_CannotPassInListMultipleParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -825,7 +825,7 @@ end function`;
   });
 
   test("Fail_TooManyParams", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3, 4, 5)
@@ -854,7 +854,7 @@ end function`;
   });
 
   test("Fail_NotEnoughParams", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3)
@@ -883,7 +883,7 @@ end function`;
   });
 
   test("Fail_WrongParamType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3, "b")
@@ -912,7 +912,7 @@ end function`;
   });
 
   test("Fail_PassMutableTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  
@@ -948,7 +948,7 @@ end class
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -975,7 +975,7 @@ end function`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1002,7 +1002,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1026,7 +1026,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   
@@ -1050,7 +1050,7 @@ end function`;
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   
@@ -1075,7 +1075,7 @@ end function`;
   });
 
   test("Fail_UseOfReservedWordAsParamName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   
@@ -1099,7 +1099,7 @@ end function`;
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo() returns Int
   return 0
@@ -1129,7 +1129,7 @@ end function
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(a as Int, b as String, a as Int) returns Int
   return 0
@@ -1154,7 +1154,7 @@ end function`;
   });
 
   test("Fail_OutOnParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(out a as Int) returns Int
   return 0
@@ -1175,7 +1175,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to p1 + p2
@@ -1206,7 +1206,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable c set to - p1
@@ -1234,7 +1234,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProceduresWithFunctionKeyword4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable d set to p1
@@ -1266,7 +1266,7 @@ end function`;
   });
 
   ignore_test("Fail_OperatorsAndProcedures1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to p1.equals(p2)
@@ -1297,7 +1297,7 @@ end function`;
   });
 
   ignore_test("Fail_OperatorsAndProcedures2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to p1 + p2
@@ -1328,7 +1328,7 @@ end function`;
   });
 
   test("Fail_OperatorsAndProcedures3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable c set to -p1
@@ -1356,7 +1356,7 @@ end function`;
   });
 
   test("Fail_AssignFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to a
@@ -1385,7 +1385,7 @@ end function`;
   });
 
   test("Fail_FunctionWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(a.b)
@@ -1414,7 +1414,7 @@ end function`;
   });
 
   test("Fail_FunctionMethodWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to "xxx"
@@ -1440,7 +1440,7 @@ end main`;
   });
 
   ignore_test("Fail_LibFunctionWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(abs.b)
@@ -1465,7 +1465,7 @@ end main`;
   });
 
   ignore_test("Fail_PrintLibFunctionWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(abs)
@@ -1490,7 +1490,7 @@ end main`;
   });
 
   test("Fail_NoIndexing", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to p1()
@@ -1520,7 +1520,7 @@ end function`;
   });
 
   test("Fail_noMatchingExtension1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to "hello"
@@ -1546,7 +1546,7 @@ end main`;
   });
 
   test("Fail_noMatchingExtension2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to "hello"
@@ -1572,7 +1572,7 @@ end main`;
   });
 
   test("Fail_onUndefined", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to s.reverse()
@@ -1595,7 +1595,7 @@ end main`;
   });
 
   test("Fail_standaloneLibFunctionAsExtension", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 3
@@ -1621,7 +1621,7 @@ end main`;
   });
 
   test("Fail_standaloneFunctionAsExtension", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 3
@@ -1651,7 +1651,7 @@ end function`;
   });
 
   test("Fail_LibraryClassParameter2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to new List()
@@ -1679,7 +1679,7 @@ end class`;
   });
 
   test("Fail_ParameterNameClash1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(foo as Int) returns String
     return ""
@@ -1704,7 +1704,7 @@ end function`;
   });
 
   test("Fail_ParameterNameClash2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(a as Int, foo as Int) returns String
     return ""
@@ -1729,7 +1729,7 @@ end function`;
   });
 
   test("Fail_CanNotContainProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to foo(0, 1)

@@ -7,13 +7,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Loop Variable", () => {
   test("Pass_Pattern1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure removeLetters(wordAsPlayed as String)
    for letter in wordAsPlayed
@@ -66,7 +66,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Pattern2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure removeLetters(wordAsPlayed as String)
    for letter in wordAsPlayed

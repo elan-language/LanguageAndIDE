@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Variables", () => {
   test("Pass_Int", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -50,7 +50,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -85,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Expression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 + 4
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Reassign", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -153,7 +153,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CoerceFloatToIntVar", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3.1
@@ -188,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorCoverage", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 - 4
@@ -252,7 +252,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Enum", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to Fruit.apple
@@ -290,7 +290,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Iter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1, 2]
@@ -352,7 +352,7 @@ return [main, _tests];}`;
   //   });
 
   test("Fail_WrongKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   var a set to 3
@@ -373,7 +373,7 @@ end main`;
   });
 
   test("Fail_GlobalVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 variable a set to 4
 main
@@ -395,7 +395,7 @@ end main`;
   });
 
   test("Fail_AssignIncompatibleType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "astring"
@@ -420,7 +420,7 @@ end main`;
   });
 
   test("Fail_NotInitialized", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a
@@ -442,7 +442,7 @@ end main`;
   });
 
   test("Fail_InvalidVariableName1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   let a = 4.1
@@ -463,7 +463,7 @@ end main`;
   });
 
   ignore_test("Fail_InvalidVariableName2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a@b set to 4.1
@@ -484,7 +484,7 @@ end main`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable if set to 4.1
@@ -504,7 +504,7 @@ end main`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable in set to 4.1
@@ -524,7 +524,7 @@ end main`;
   });
 
   ignore_test("Fail_UseOfLanguageTypeAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable int set to 4.1
@@ -544,7 +544,7 @@ end main`;
   });
 
   test("Fail_TypeCheck1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function f() returns Int
   return 0
@@ -581,7 +581,7 @@ end main`;
   });
 
   test("Fail_TypeCheck2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -610,7 +610,7 @@ end main`;
   });
 
   test("Fail_RecursiveDefinition", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to x + 1
@@ -632,7 +632,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to createFileForWriting
@@ -657,7 +657,7 @@ end main`;
   });
 
   test("Fail_referenceToExtensionFunction1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable i set to 1
@@ -684,7 +684,7 @@ end main`;
   });
 
   test("Fail_invalidCopyOfThisVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable copyOfThis set to 1
@@ -708,7 +708,7 @@ end main`;
   });
 
   test("Fail_differsByCase", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable name set to 1
@@ -733,7 +733,7 @@ end main`;
   });
 
   test("Pass_Redefine", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to foo().item_0
@@ -775,7 +775,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_fourOpenBrackets", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ((((3))))

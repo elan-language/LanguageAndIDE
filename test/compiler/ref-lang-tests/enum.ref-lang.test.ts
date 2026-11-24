@@ -12,13 +12,13 @@ import {
   assertStatusIsValid,
   newFileImpl,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Enum", () => {
   test("Pass_PrintValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(enumToString(Fruit.apple))
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_useInVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to Fruit.apple
@@ -92,7 +92,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableNameSameAsType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable fruit set to Fruit.apple
@@ -129,7 +129,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_useAsType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to Fruit.apple
@@ -170,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_passAsArgument", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(isFavourite(Fruit.apple))
@@ -219,7 +219,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_returnFromFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(firstFruit() is Fruit.apple)
@@ -266,7 +266,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_equality", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to Fruit.apple
@@ -307,7 +307,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InInterpolatedString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to $"Eat more {enumToString(Fruit.apple)}s!"
@@ -346,7 +346,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_coercionToString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "Eat more " + Fruit.apple
@@ -375,7 +375,7 @@ enum Fruit apple, orange, pear`;
   });
 
   test("Fail_InvalidTypeName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -397,7 +397,7 @@ enum fruit apple, orange, pear`;
   });
 
   test("Fail_InvalidValueName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -419,7 +419,7 @@ enum Fruit apple, Orange, pear`;
   });
 
   test("Fail_AssigningIntsToValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -441,7 +441,7 @@ enum Fruit apple = 1, orange = 2, pear = 3`;
   });
 
   test("Fail_coercionToInt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -468,7 +468,7 @@ enum Fruit apple, orange, pear`;
   });
 
   test("Fail_undefinedEnum", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(Fruit.apple)
@@ -490,7 +490,7 @@ end main`;
   });
 
   test("Fail_undefinedEnumValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(Fruit.kiwi)
@@ -514,7 +514,7 @@ enum Fruit apple, orange, pear`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -537,7 +537,7 @@ enum if apple, orange, pear`;
   });
 
   test("Fail_UseOfKeywordAsValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -560,7 +560,7 @@ enum Fruit apple, orange, if`;
   });
 
   test("Fail_UseOfReservedWordAsValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -583,7 +583,7 @@ enum Fruit apple, orange, function`;
   });
 
   test("Fail_DuplicateNames", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -611,7 +611,7 @@ enum Fruit apple, orange, pear`;
   });
 
   test("Fail_DuplicateValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -637,7 +637,7 @@ enum Fruit apple, orange, pear, orange`;
   });
 
   test("Fail_PrintValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(Fruit.apple)
@@ -665,7 +665,7 @@ enum Fruit apple, orange, pear`;
   });
 
   test("Fail_NotEnumValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(enumToString("Fruit.apple"))

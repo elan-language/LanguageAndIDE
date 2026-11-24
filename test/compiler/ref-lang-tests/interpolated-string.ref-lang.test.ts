@@ -9,15 +9,14 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Strings", () => {
   test("Pass_SingleInsideDoubleQuotes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("'Hello,' she said.")
@@ -47,7 +46,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `'Hello,' she said.`);
   });
   test("Pass_InterpolatedAndNonInterpolatedString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -84,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_missingBrace", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -108,7 +107,7 @@ end main`;
   });
 
   test("Fail_extraBrace", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -132,7 +131,7 @@ end main`;
   });
 
   test("Pass_InterpolatedEmpty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to $""
@@ -164,7 +163,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
   test("Pass_InterpolatedOneSpace", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to $" "
@@ -197,7 +196,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InterpolatedEnumValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
    call printNoLine($"{Fruit.apple}")

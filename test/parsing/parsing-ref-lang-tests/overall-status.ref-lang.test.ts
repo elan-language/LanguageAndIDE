@@ -6,11 +6,11 @@ import { FileImpl } from "../../../src/ide/frames/file-impl";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { CompileStatus, ParseStatus, RunStatus } from "../../../src/ide/frames/status-enums";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
-import { testHash, testHeader, transforms } from "../../compiler/compiler-test-helpers";
+import { testHash, testRefLangHeader, transforms } from "../../compiler/compiler-test-helpers";
 
 suite("Overall Status Tests", () => {
   test("Pattern for starting from literal program", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
   
       constant a set to 3
       main

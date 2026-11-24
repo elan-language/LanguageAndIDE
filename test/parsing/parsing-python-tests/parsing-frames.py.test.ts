@@ -6,7 +6,7 @@ import { FileImpl } from "../../../src/ide/frames/file-impl";
 import { LanguagePython } from "../../../src/ide/frames/language-python";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
-import { ignore_test, testHeader, transforms } from "../../compiler/compiler-test-helpers";
+import { ignore_test, testRefLangHeader, transforms } from "../../compiler/compiler-test-helpers";
 
 export function fileImplForRefLang(): FileImpl {
   const file = new FileImpl(
@@ -24,7 +24,7 @@ export function fileImplForRefLang(): FileImpl {
 
 suite("Parsing Frames Python", async () => {
   test("parse Frames - header file", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 `;
     const source = new CodeSourceFromString(code);
@@ -35,7 +35,7 @@ suite("Parsing Frames Python", async () => {
   });
 
   test("parse Frames - constant only", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant pi set to 3.142
 `;
@@ -47,7 +47,7 @@ constant pi set to 3.142
   });
 
   test("parse Frames - two constants", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant pi set to 3.142
 
@@ -61,7 +61,7 @@ constant e set to 2.718
   });
 
   test("parse Frames - main only", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -75,7 +75,7 @@ end main
   });
 
   ignore_test("parse Frames - hello world", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 # my comment
 main
@@ -94,7 +94,7 @@ end main
   });
 
   test("parse Frames - main with all single-line statements", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable name set to value or expression
@@ -112,7 +112,7 @@ end main
   });
 
   ignore_test("parse Frames - all globals except class", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant phi set to 1.618
 
@@ -138,7 +138,7 @@ enum Fruit apple, orange, pear
   });
 
   ignore_test("parse Frames - class", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Player inherits Foo
   constructor()
@@ -169,7 +169,7 @@ end class
   });
 
   ignore_test("parse Frames - abstract class", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 abstract class Foo
   property p1 as int
@@ -190,7 +190,7 @@ end class
   });
 
   ignore_test("parse Frames - with method", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Player inherits Foo
   constructor()
@@ -217,7 +217,7 @@ end class
   });
 
   test("parse Frames - else with and without if", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   if true then
@@ -237,7 +237,7 @@ end main
   });
 
   test("parse Frames - try catch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -255,7 +255,7 @@ end main
   });
 
   ignore_test("abstract class can contain concrete property", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 abstract class Card
   property value as int
@@ -269,7 +269,7 @@ end class
   });
 
   ignore_test("abstract class can contain concrete method", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 abstract class Card
   function bar() returns int
@@ -285,7 +285,7 @@ end class
   });
 
   ignore_test("#367 abstract class cannot contain constructor", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 abstract class Card
   constructor()
@@ -303,7 +303,7 @@ abstract class Card
     assert.equal(fl.parseError!.includes(`0 matches found at constructor()`), true);
   });
   ignore_test("#942 private members", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()

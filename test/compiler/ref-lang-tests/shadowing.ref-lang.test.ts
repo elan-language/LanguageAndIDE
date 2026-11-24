@@ -4,19 +4,18 @@ import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Shadowing", () => {
   test("Pass_LocalVariableShadowsLibConstant", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable pi set to 4
@@ -49,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LocalVariableFromGlobalConstant", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant f set to 1
 
@@ -87,7 +86,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_GlobalAndInstanceFunctionsShadowGlobals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable f set to new Foo()
@@ -161,7 +160,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DisambiguateLibProcedureFromLocalAndInstanceProcedures", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -235,7 +234,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Can'tDisambiguateGlobalFunctionFromLocalVar", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable sin set to 2
@@ -266,7 +265,7 @@ end function`;
   });
 
   test("Pass_LocalVarShadowsGlobalFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable add2 set to add2(1)
@@ -308,7 +307,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LocalShadowsConstant", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 4
 
@@ -346,7 +345,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(foo())
@@ -396,7 +395,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IdShadowsProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo()
@@ -446,7 +445,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_IdShadowsParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo(1)
@@ -474,7 +473,7 @@ end procedure`;
   });
 
   test("Fail_IdShadowsVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -500,7 +499,7 @@ end main`;
   });
 
   test("Pass_ParameterShadowsConst", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant x set to 1
 
@@ -545,7 +544,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ShadowParameter1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3,4)
@@ -575,7 +574,7 @@ end function`;
   });
 
   test("Fail_ShadowParameter2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable result set to foo(3,4)

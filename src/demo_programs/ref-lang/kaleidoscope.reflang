@@ -1,4 +1,4 @@
-# afd607af074bc24578438afb83d90be23b5a986f718f603ddb990990838bdffc Elan 3.0.0-alpha valid
+# afd607af074bc24578438afb83d90be23b5a986f718f603ddb990990838bdffc RefLang with Elan 3.0.0-alpha-alpha valid
 
 main
   variable blocks set to new BlockGraphics()

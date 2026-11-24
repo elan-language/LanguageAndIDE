@@ -1,4 +1,4 @@
-# 71b043403e782ede30badde3f18298f07148bf2be92c8b108800b01dd4c1b3c5 Elan 3.0.0-alpha valid
+# 71b043403e782ede30badde3f18298f07148bf2be92c8b108800b01dd4c1b3c5 RefLang with Elan 3.0.0-alpha valid
 
 main
   variable foo set to 1

@@ -10,13 +10,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Input", () => {
   ignore_test("Pass_InputString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to input("")
@@ -49,7 +49,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_InputStringWithPrompt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to input("Your name")
@@ -82,7 +82,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_InputInt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0
@@ -117,7 +117,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0.0
@@ -152,7 +152,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_ReuseVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "value"
@@ -191,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringWithLimits", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to inputStringWithLimits("aprompt", 3, 7)
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputStringFromOptions", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to inputStringFromOptions("aprompt", ["y", "n"])
@@ -257,7 +257,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputInt1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0
@@ -292,7 +292,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputIntBetween", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0
@@ -327,7 +327,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloat1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0.0
@@ -362,7 +362,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InputFloatBetween", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0.0
@@ -397,7 +397,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ReuseVariableWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ""
@@ -424,7 +424,7 @@ end main`;
   });
 
   ignore_test("Pass_InputInExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "Hello " + input("")

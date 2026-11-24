@@ -8,13 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Complex Types", () => {
   test("Fail_UnknownOfType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Foo>()
@@ -37,7 +37,7 @@ end main`;
   });
 
   test("Fail_UnknowNestedOfType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of List<of Foo>>()
@@ -60,7 +60,7 @@ end main`;
   });
 
   test("Fail_NotType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to 1

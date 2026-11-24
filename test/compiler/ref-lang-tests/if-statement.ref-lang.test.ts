@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("If Statement", () => {
   test("Pass_1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to true
@@ -58,7 +58,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false
@@ -99,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 2
@@ -144,7 +144,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -189,7 +189,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_5", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to true
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_6", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -275,7 +275,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_7_end_with_else_if", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -320,7 +320,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -357,7 +357,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -398,7 +398,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -439,7 +439,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -484,7 +484,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reusevariableInElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -529,7 +529,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_variableInElseIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -570,7 +570,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_localVariableInElseIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 2
@@ -615,7 +615,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_ghostedVariableInElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 2
@@ -656,7 +656,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NestedlocalVariableInElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 2
@@ -706,7 +706,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEndIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to true
@@ -729,7 +729,7 @@ end main`;
   });
 
   test("Fail_TwoElses", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -757,7 +757,7 @@ end main`;
   });
 
   test("Fail_ElseIfAfterElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -785,7 +785,7 @@ end main`;
   });
 
   test("Fail_IfConditionNotBool", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -814,7 +814,7 @@ end main`;
   });
 
   test("Fail_ElseConditionNotBool", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
     variable a set to 2
@@ -845,7 +845,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in if", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
     variable a set to 2
@@ -876,7 +876,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in elif", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
     variable a set to 2
@@ -907,7 +907,7 @@ end main`;
   });
 
   test("Fail_RedefineVariable in else", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
     variable a set to 2
@@ -938,7 +938,7 @@ end main`;
   });
 
   test("Fail_useOutOfScopeVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
     variable a set to 2

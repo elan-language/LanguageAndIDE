@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Basic Syntax", () => {
   test("Pass_CommentsOnly", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 # comment 1
 main
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyFile", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 `;
 
@@ -76,7 +76,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrintWithNoExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("")
@@ -109,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringLiteral", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine("Hello World!")
@@ -140,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BracketsMakeNoDifference", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine(("Hello World!"))
@@ -171,7 +171,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IntegerLiteral", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine(1)
@@ -202,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatLiteral", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine(2.1)
@@ -233,7 +233,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(2.1e4)
@@ -264,7 +264,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(2.1e100)
@@ -295,7 +295,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FloatWithExponent3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(2.1e-4)
@@ -326,7 +326,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CharLiteral", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("%")
@@ -357,7 +357,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BoolLiteral", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine(true)
@@ -388,7 +388,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyLine", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine("")
@@ -419,7 +419,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_printFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(foo)
@@ -460,7 +460,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_printIndirectFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine([foo])
@@ -501,7 +501,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 call printNoLine("hello World!"`;
 
@@ -520,7 +520,7 @@ call printNoLine("hello World!"`;
   });
 
   test("Fail_noEnd", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Hello World!")
@@ -541,7 +541,7 @@ main
   });
 
   test("Fail_wrongCasing", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 MAIN
   call printNoLine("Hello World!")

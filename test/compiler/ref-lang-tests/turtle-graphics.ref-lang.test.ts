@@ -8,13 +8,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Turtle Graphics", () => {
   test("Pass_MethodsUpdateTurtleState", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -60,7 +60,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HeadingNormalised", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -96,7 +96,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `10`);
   });
   test("Pass_HeadingNormalisedMinus", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -132,7 +132,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `170`);
   });
   test("Pass_StartPosition", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -168,7 +168,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `000`);
   });
   test("Pass_AsHtml", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -216,7 +216,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_PenUpDown", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -269,7 +269,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_Show", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -315,7 +315,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_Hide", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -361,7 +361,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_PlaceAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()
@@ -404,7 +404,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_moveTo", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to new Turtle()

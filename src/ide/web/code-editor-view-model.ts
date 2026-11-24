@@ -213,7 +213,7 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   recreateFile(vm: IIDEViewModel, withMain: boolean, language?: Language | undefined) {
     const existingLanguage = language ?? this.file?.language() ?? LanguagePython.Instance;
     const existingParadigm = this.file?.getParadigm() ?? new Paradigm("procedural");
-    this.file = new FileImpl(hash, existingParadigm, undefined, transforms(), stdlib, withMain);
+    this.file = new FileImpl(hash, existingParadigm, "", transforms(), stdlib, withMain);
     this.file.setLanguage(existingLanguage);
     vm.setDisplayLanguage(this.file?.language());
   }

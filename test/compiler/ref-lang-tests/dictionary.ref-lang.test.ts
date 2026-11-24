@@ -12,13 +12,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Dictionary", () => {
   test("Pass_LiteralDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralDictionaryOfDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_LiteralEnumKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 enum Fruit apple, orange, pear
 
@@ -123,7 +123,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -156,7 +156,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AccessByDoubleKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -189,7 +189,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_keys", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_hasKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -261,7 +261,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_values", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -294,7 +294,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_set", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -335,7 +335,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_set2d", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -374,7 +374,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -409,7 +409,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_remove2dKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1], "b":["b":3, "z":10]]
@@ -444,7 +444,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeInvalidKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -479,7 +479,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_CreateEmptyDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of String, Int>()
@@ -524,7 +524,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_CreateEmptyDictionaryOfDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of String, Dictionary<of String, Int>>()
@@ -571,7 +571,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_EnumKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
     enum Fruit apple, orange, pear  
 
@@ -622,7 +622,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetInMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":2, "b":2]
@@ -658,7 +658,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetInProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   call foo()
@@ -703,7 +703,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetDictionaryOfDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   call foo()
@@ -748,7 +748,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetDictionaryOfDictionaryOfDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   call foo()
@@ -793,7 +793,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DictionaryOfDictionaryWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   call foo()
@@ -824,7 +824,7 @@ end procedure
   });
 
   test("Fail_SetInFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call print(foo())
@@ -855,7 +855,7 @@ end function
   });
 
   test("Fail_SetWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":2,"b":2]
@@ -882,7 +882,7 @@ end main
   });
 
   test("Fail_RepeatedKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "a":10]
@@ -908,7 +908,7 @@ end main
   });
 
   test("Fail_InconsistentTypes1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3.1, "c":10]
@@ -934,7 +934,7 @@ end main
   });
 
   test("Fail_InconsistentTypes2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, 10:10]
@@ -960,7 +960,7 @@ end main
   });
 
   test("Fail_AccessByInvalidKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -984,7 +984,7 @@ end main
   });
 
   test("Fail_RemoveInvalidKeyType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1010,7 +1010,7 @@ end main
   });
 
   ignore_test("Fail_SetInvalidKeyType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1036,7 +1036,7 @@ end main
   });
 
   test("Pass_withPutAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1075,7 +1075,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1112,7 +1112,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_checkKeys(#1196)", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable di set to new Dictionary<of Int, Int>()
@@ -1161,7 +1161,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1194,7 +1194,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_SetInvalidValueType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "b":3, "z":10]
@@ -1220,7 +1220,7 @@ end main
   });
 
   ignore_test("Fail_withoutGenericType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to new Dictionary()
@@ -1245,7 +1245,7 @@ end main`;
   });
 
   ignore_test("Fail_IndexWrongType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":1, "d":2]
@@ -1271,7 +1271,7 @@ end main
   });
 
   ignore_test("Fail_IndexWrongType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1, "d":2]]
@@ -1297,7 +1297,7 @@ end main
   });
 
   ignore_test("Fail_IndexWrongType3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["a":["a":1, "d":2]]
@@ -1323,7 +1323,7 @@ end main
   });
 
   ignore_test("Fail_LiteralDictionaryOfDictionaryKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to ["a":1]
@@ -1351,7 +1351,7 @@ end class`;
   });
 
   ignore_test("Fail_LiteralDictionaryOfListKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new List<of Int>()
@@ -1379,7 +1379,7 @@ end class`;
   });
 
   ignore_test("Fail_LiteralDictionaryOfMutableClassKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1407,7 +1407,7 @@ end class`;
   });
 
   test("Fail_DictionaryOfDictionaryKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of Dictionary<of Int, Int>, Int>()
@@ -1431,7 +1431,7 @@ end main`;
   });
 
   test("Fail_DictionaryOfDictionaryKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of Dictionary<of Int, Int>, Int>()
@@ -1455,7 +1455,7 @@ end main`;
   });
 
   test("Fail_DictionaryOfListKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of List<of Int>, Int>()
@@ -1479,7 +1479,7 @@ end main`;
   });
 
   test("Fail_DictionaryOfListKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new Dictionary<of List<of Int>, Int>()
@@ -1503,7 +1503,7 @@ end main`;
   });
 
   test("Fail_DictionaryOfMutableClassKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to new Dictionary<of Foo, Int>()

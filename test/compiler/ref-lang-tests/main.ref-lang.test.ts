@@ -7,12 +7,12 @@ import {
   assertParses,
   assertStatusIsValid,
   newFileImpl,
-  testHeader,
+  testRefLangHeader,
 } from "../compiler-test-helpers";
 
 suite("Main", () => {
   test("Pass_EmptyMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
   main
 
@@ -35,7 +35,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TwoMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3

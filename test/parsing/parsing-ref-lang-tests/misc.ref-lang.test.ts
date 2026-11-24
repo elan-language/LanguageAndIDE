@@ -5,7 +5,7 @@ import { Regexes } from "../../../src/ide/frames/fields/regexes";
 import { FileImpl } from "../../../src/ide/frames/file-impl";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
-import { testHeader, transforms } from "../../compiler/compiler-test-helpers";
+import { testRefLangHeader, transforms } from "../../compiler/compiler-test-helpers";
 
 suite("Misc Tests", () => {
   //RegExp
@@ -53,7 +53,7 @@ suite("Misc Tests", () => {
     );
     await fl.parseFrom(source);
     const elan = await fl.renderAsSource();
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 `;
     assert.equal(elan, code.replaceAll("\n", "\r\n"));

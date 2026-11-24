@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Stack", () => {
   test("Pass Stack using conventional methods", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -72,7 +72,7 @@ return [main, _tests];}`;
   });
 
   test("Pass Stack using functional approach", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_adding_incompatible_type1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -162,7 +162,7 @@ end main`;
   });
 
   test("Fail_Stack_peek_incompatible_type", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -190,7 +190,7 @@ end main`;
   });
 
   test("Fail_Stack_peek_empty_stack", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Stack_pop_empty_stack", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of String>()
@@ -262,7 +262,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_StackWithoutGenericParm", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack()
@@ -287,7 +287,7 @@ end main`;
   });
 
   test("Fail_StackOfMutable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Stack<of Foo>()

@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Associations and Defaults", () => {
   test("Pass_CanHavePropertiesThatAreDataStructuresOrObjects", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new Game()
@@ -134,7 +134,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new Foo()
@@ -201,7 +201,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfAllStandardTypesHaveDefaultValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new Game()
@@ -299,7 +299,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DefaultValuesOnEmptyClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable p set to new Player()
@@ -438,7 +438,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertiesOfClassTypesHaveDefaultValues", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new Game()
@@ -548,7 +548,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyOfListType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new Game()
@@ -621,7 +621,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CallProcedureOnProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to new Bar()
@@ -727,7 +727,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  
@@ -759,7 +759,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -791,7 +791,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -828,7 +828,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -866,7 +866,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -909,7 +909,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -951,7 +951,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword5", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to new Bar()
@@ -1004,7 +1004,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to new Bar()
@@ -1060,7 +1060,7 @@ end class`;
   });
 
   test("Fail_MissingPropertyKeyword6", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to new Bar()
@@ -1115,7 +1115,7 @@ end class`;
   });
 
   test("Fail_noThis", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Bar
   constructor()
@@ -1148,7 +1148,7 @@ end class`;
   });
 
   test("Fail_notInScope", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo() returns Int
   return 0
@@ -1185,7 +1185,7 @@ end class`;
   });
 
   test("Fail_spuriousProperty3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant aa set to 1
 

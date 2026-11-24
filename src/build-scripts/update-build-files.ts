@@ -20,7 +20,7 @@ function updateVersion() {
   const file = new FileImpl(
     hash,
     new Paradigm(""),
-    "guest",
+    "",
     transforms(),
     new StdLib(new StubInputOutput()),
     false,

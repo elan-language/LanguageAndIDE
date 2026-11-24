@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Set", () => {
   test("Pass_SetAddRemoveLength", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new HashSet<of Int>()
@@ -64,7 +64,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetUnion", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st1 set to new HashSet<of Int>()
@@ -105,7 +105,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIntersection", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st1 set to new HashSet<of Int>()
@@ -146,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetDifference", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st1 set to new HashSet<of Int>()
@@ -187,7 +187,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IsDisjointFrom", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st0 set to new HashSet<of Int>()
@@ -230,7 +230,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IsSubsetOfIsSupersetOf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st0 set to new HashSet<of Int>()
@@ -278,7 +278,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalsetruefalsetruetrue");
   });
   test("Pass_AddFromList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st0 set to new HashSet<of Int>()
@@ -317,7 +317,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Contains1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new HashSet<of String>()
@@ -352,7 +352,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Contains2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new HashSet<of String>()
@@ -387,7 +387,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetOfMutable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new HashSet<of Foo>()

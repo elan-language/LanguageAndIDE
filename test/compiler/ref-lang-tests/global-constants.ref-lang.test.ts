@@ -14,13 +14,13 @@ import {
   ignore_test,
   newFileImpl,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Global Constants", () => {
   test("Pass_AntlrParsing", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 123
 constant b set to "Hello"
@@ -47,7 +47,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 3
 main
@@ -74,7 +74,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Hex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 0xFF
 main
@@ -110,7 +110,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Int_Binary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 0b10101
 main
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Float", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 3.1
 main
@@ -166,7 +166,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to "hell0"
 main
@@ -194,7 +194,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyStringByValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to ""
 main
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SpaceAsString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to " "
 main
@@ -252,7 +252,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Bool", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to true
 main
@@ -280,7 +280,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_incorrectKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 const a set to 3
 
@@ -296,7 +296,7 @@ end main
   });
 
   test("Fail_reassignment", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 3
 
@@ -316,7 +316,7 @@ end main
   });
 
   test("Fail_libConstantReassignment", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   assign pi to 4
@@ -334,7 +334,7 @@ end main
   });
 
   test("Fail_expression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 3 + 4
 
@@ -351,7 +351,7 @@ end main
   });
 
   ignore_test("Pass_referenceToOtherConstant", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 3
 constant b set to a
@@ -382,7 +382,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant if set to 3
 
@@ -397,7 +397,7 @@ end main
   });
 
   test("Fail_UseOfReservedAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant assert set to 3
 
@@ -413,7 +413,7 @@ end main
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 1
 constant a set to 2
@@ -433,7 +433,7 @@ end main
   });
 
   test("Pass_UseConstantBeforeDefinition1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(a)
@@ -451,7 +451,7 @@ constant a set to 3
   });
 
   test("Fail_NotValueType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 1 + 2
 main
@@ -466,7 +466,7 @@ end main
   });
 
   test("Fail_Expression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 1 + 2
 main
@@ -481,7 +481,7 @@ end main
   });
 
   test("Fail_Function", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to foo()
 main

@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Printing Symbols", () => {
   test("Pass_PrintWithNoArgument", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("")
@@ -45,7 +45,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "");
   });
   test("Pass_CommonSymbolsAccessibleFromUKKeyboard", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("¬!£$%^&*()@~#|<>'")
@@ -76,7 +76,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_printEscape", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("\\b\\n")
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CallPrintTab", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printTab(5, "Foo")
@@ -137,7 +137,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "     Foo");
   });
   test("Pass_CallClearPrintedText", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Foo")
@@ -170,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrintImage", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable i set to new ImageVG("https://elan-language.github.io/LanguageAndIDE/images/Debug.png")
@@ -204,7 +204,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, `an ImageVG`);
   });
   test("Pass_PrintUncloseHtmlTag", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("<3")

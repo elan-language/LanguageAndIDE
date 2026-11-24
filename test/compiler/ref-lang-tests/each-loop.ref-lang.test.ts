@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Each Loop", () => {
   test("Pass_List1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7,8,9]
@@ -58,7 +58,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_List2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7,8,9]
@@ -100,7 +100,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_String", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "hello"
@@ -138,7 +138,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DoubleLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
    for x in "12"
@@ -179,7 +179,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_functionProvidingList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
    for x in fruit()
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EachOfVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable ints set to [1, 2, 3]
@@ -261,7 +261,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UpdateCollection", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2,3]
@@ -301,7 +301,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UndefinedIterable1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
    for i1 in ints
@@ -325,7 +325,7 @@ end main`;
   });
 
   test("Fail_UndefinedIterable2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to new Bar([1,2])
@@ -367,7 +367,7 @@ end class`;
   });
 
   test("Fail_variableIsScoped", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7, 8, 9]
@@ -397,7 +397,7 @@ end main
   });
 
   test("Fail_variableIsScoped2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7, 8, 9]
@@ -424,7 +424,7 @@ end main
   });
 
   test("Fail_variableIsScoped3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7, 8, 9]
@@ -454,7 +454,7 @@ end main
   });
 
   test("Fail_duplicateId", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable ids set to [7, 8, 9]
@@ -481,7 +481,7 @@ end main
   });
 
   test("Fail_NoEndeach", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7, 8, 9]
@@ -507,7 +507,7 @@ end main
   });
 
   test("Fail_applyToANonIterable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable y set to 10
@@ -535,7 +535,7 @@ end main
   });
 
   test("Pass_ReassignTheIterableWithinLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to "hello"
@@ -576,7 +576,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AlterTheIterableWithinLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1, 2, 3, 4, 5]
@@ -617,7 +617,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_undefinedCollection", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
    for x in a

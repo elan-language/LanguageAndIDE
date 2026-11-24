@@ -2,6 +2,8 @@ import { CharStream, CommonTokenStream, ParseTreeVisitor, TerminalNode } from "a
 import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EmptyAsn } from "../../compiler/syntax-nodes/empty-asn";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
+import { Python_Lexer } from "../../generated/python/Python_Lexer";
 import {
   ArgumentContext as PythonArgumentContext,
   ExpressionContext as PythonExpressionContext,
@@ -10,6 +12,7 @@ import {
   PythonParser,
   TypeContext as PythonTypeContext,
 } from "../../generated/python/PythonParser";
+import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
 import {
   ArgumentContext as RefLangArgumentContext,
   ExpressionContext as RefLangExpressionContext,
@@ -31,9 +34,6 @@ import { RefLangVisitorCompiler } from "./ref-lang-visitor-compiler";
 import { RefLangVisitorFrame } from "./ref-lang-visitor-frame";
 import { RefLangVisitorHtml } from "./ref-lang-visitor-html";
 import { RefLangVisitorSource } from "./ref-lang-visitor-source";
-import { RefLang_Lexer } from "../../generated/ref-lang/RefLang_Lexer";
-import { Python_Lexer } from "../../generated/python/Python_Lexer";
-import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 
 export function getPythonParser(input: string, field?: FieldImpl | File) {
   input = input + "\n";
@@ -69,7 +69,7 @@ export function getParserByLanguage(l: Language, input: string, field?: FieldImp
   switch (l.languageFullName) {
     case "Python":
       return getPythonParser(input, field);
-    case "Reference Language":
+    case "RefLang":
       return getRefLangParser(input, field);
     default:
       throw Error("Unsupported language " + l.languageFullName);
@@ -80,7 +80,7 @@ export function getVisitorCompilerByLanguage(l: Language, fieldId: string, scope
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorCompiler(l, scope, fieldId);
-    case "Reference Language":
+    case "RefLang":
       return new RefLangVisitorCompiler(l, scope, fieldId);
     default:
       throw Error("Unsupported language " + l.languageFullName);
@@ -91,7 +91,7 @@ export function getVisitorHtmlByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorHtml(l);
-    case "Reference Language":
+    case "RefLang":
       return new RefLangVisitorHtml(l);
     default:
       throw Error("Unsupported language " + l.languageFullName);
@@ -102,7 +102,7 @@ export function getVisitorFrameByLanguage(l: Language, file: File) {
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorFrame(file);
-    case "Reference Language":
+    case "RefLang":
       return new RefLangVisitorFrame(file);
     default:
       throw Error("Unsupported language " + l.languageFullName);
@@ -113,7 +113,7 @@ export function getVisitorSourceByLanguage(l: Language) {
   switch (l.languageFullName) {
     case "Python":
       return new PythonVisitorSource(l);
-    case "Reference Language":
+    case "RefLang":
       return new RefLangVisitorSource(l);
     default:
       throw Error("Unsupported language " + l.languageFullName);

@@ -51,7 +51,7 @@ import { TestFrame } from "./globals/test-frame";
 import { LanguageCSharp } from "./language-c-sharp";
 import { LanguagePython } from "./language-python";
 import { LanguageRefLang } from "./language-ref-lang";
-import { defaultUsername, Paradigm } from "./paradigm";
+import { Paradigm } from "./paradigm";
 import {
   parentHelper_addChildAfter,
   parentHelper_addChildBefore,
@@ -125,7 +125,7 @@ export class FileImpl implements File {
   constructor(
     private readonly hash: (toHash: string) => Promise<string>,
     private paradigm: Paradigm,
-    private userName: string | undefined,
+    _unused: string,
     private readonly transform: Transforms,
     stdLib: StdLib,
     withMain: boolean,
@@ -319,8 +319,7 @@ export class FileImpl implements File {
   }
 
   getVersionString(lang: string) {
-    const prefix = lang === "Reference Language" ? "" : `${lang} with `;
-    return `${prefix}Elan ${this.getSemverString()}`;
+    return `${lang} with Elan ${this.getSemverString()}`;
   }
 
   getVersionAsHtml() {
@@ -685,7 +684,7 @@ export class FileImpl implements File {
   setLanguageFromHeader(l: string) {
     let lang: Language = LanguageRefLang.Instance;
     switch (l) {
-      case "Elan": {
+      case "RefLang": {
         lang = LanguageRefLang.Instance;
         break;
       }
@@ -796,8 +795,8 @@ export class FileImpl implements File {
     if (tokens[2 + offset] !== "Elan") {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
+
     this.validateVersion(tokens[3 + offset]);
-    this.userName = tokens[4 + offset] ?? defaultUsername;
     return tokens[2];
   }
 
@@ -814,10 +813,7 @@ export class FileImpl implements File {
       const header = code.substring(0, eol > 0 ? eol : undefined);
       const tokens = header.split(" ");
 
-      if (tokens.length === 5) {
-        await this.validateHash(tokens[1], code);
-        language = this.validateLanguage(tokens, 0);
-      } else if (tokens.length === 7) {
+      if (tokens.length === 7) {
         await this.validateHash(tokens[1], code);
         language = this.validateLanguage(tokens, 2);
       } else {

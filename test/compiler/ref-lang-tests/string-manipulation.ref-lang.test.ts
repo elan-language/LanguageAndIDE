@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("String Manipulation", () => {
   test("Pass_AppendStrings", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "Hello"
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendOrPrependChar", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("_" + "Hello" + "!")
@@ -82,7 +82,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AppendFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Hello" + 3.1)
@@ -107,7 +107,7 @@ end main`;
   });
 
   test("Fail_AppendInt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Hello" + 3)
@@ -132,7 +132,7 @@ end main`;
   });
 
   test("Pass_Indexing", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -165,7 +165,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexingAndAppend", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -202,7 +202,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -239,7 +239,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Ranges", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -276,7 +276,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ValueEqualityTesting", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     call printNoLine("abc".equals("abc"))
@@ -319,7 +319,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ComparisonMethods", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("abc".isBefore("abC"))
@@ -360,7 +360,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseAsStringExplicitly", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -397,7 +397,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Interpolation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -434,7 +434,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AppendStringToFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3.1 + "Hello"
@@ -460,7 +460,7 @@ end main`;
   });
 
   test("Fail_AppendStringToInt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 + "Hello"
@@ -486,7 +486,7 @@ end main`;
   });
 
   test("Fail_IndexOutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -511,7 +511,7 @@ end main
   });
 
   test("Fail_SetIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"
@@ -539,7 +539,7 @@ end main
   });
 
   test("Fail_ComparisonOperators", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("abc" < "abC")
@@ -574,7 +574,7 @@ end main
   });
 
   test("Fail_CoerceNumberToString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "abcde"

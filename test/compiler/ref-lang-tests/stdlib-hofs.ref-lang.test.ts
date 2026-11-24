@@ -10,13 +10,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("StdLib HOFs", () => {
   test("Pass_filterList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -53,7 +53,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterStringViaSplit", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant source set to "onetwo"
 main
@@ -90,7 +90,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_filterInFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(filterIt(source()))
@@ -140,7 +140,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -178,7 +178,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapStringViaSplit", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant source set to "onetwo"
 main
@@ -215,7 +215,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_mapTestType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -250,7 +250,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -287,7 +287,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_reduceString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant source set to "onetwo"
 main
@@ -324,7 +324,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxByList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -357,7 +357,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [[1], [2, 2]]
@@ -390,7 +390,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxBy2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(source().maxBy(lambda t as String => t.length()))
@@ -429,7 +429,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "orange");
   });
   test("Pass_lengthList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -462,7 +462,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_min", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -495,7 +495,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -528,7 +528,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_max", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -561,7 +561,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maxFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2.0, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -594,7 +594,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_minByList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -626,7 +626,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "5");
   });
   test("Pass_orderByList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2, 3, 5, 7, 11, 13, 17, 19, 23, 27, 31, 37]
@@ -664,7 +664,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asSet", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to ["apple", "orange", "pair", "apple"]
@@ -698,7 +698,7 @@ return [main, _tests];}`;
 
   // Ignored only because it often times out
   ignore_test("Pass_complexHof", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant numberChars set to "-.0123456789"
 main
@@ -760,7 +760,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MaxOnNonNumeric", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to ["apple", "orange", "pair"]
@@ -794,7 +794,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_MaxLambdaReturningNonNumeric", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(source().maxBy(lambda t as String => t))
@@ -822,7 +822,7 @@ end function`;
   });
 
   test("Pass_sumByList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to [2.3, 3.4, 5.6, 7.8]
@@ -857,7 +857,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_sumByListOfStringLengths", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable source set to ["a","bb","ccc"]

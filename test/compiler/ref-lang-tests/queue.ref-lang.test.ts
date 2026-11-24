@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Queue", () => {
   test("Pass_Queue using conventional methods", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -76,7 +76,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Queue using functional approach", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_adding_incompatible_type1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -162,7 +162,7 @@ end main`;
   });
 
   test("Fail_Queue_adding_incompatible_type2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -188,7 +188,7 @@ end main`;
   });
 
   test("Fail_Queue_peek_empty_Queue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -224,7 +224,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Queue_dequeue_empty_Queue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue<of String>()
@@ -260,7 +260,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_QueueWithoutGenericParm", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable q set to new Queue()
@@ -285,7 +285,7 @@ end main`;
   });
 
   test("Fail_QueueOfMutable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable st set to new Queue<of Foo>()

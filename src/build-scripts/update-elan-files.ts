@@ -36,7 +36,7 @@ async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
   const fl = new FileImpl(
     hash,
     new Paradigm(""),
-    "guest",
+    "",
     transforms(),
     new StdLib(new StubInputOutput()),
     false,

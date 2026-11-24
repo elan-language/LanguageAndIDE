@@ -22,7 +22,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
@@ -123,7 +123,7 @@ class TestStdLib {
 
 suite("Deprecation", () => {
   test("Pass_notYetDeprecatedMajor", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to notYetDeprecated1()
@@ -148,7 +148,7 @@ end main`;
   });
 
   test("Pass_notYetDeprecatedMinor", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to notYetDeprecated2()
@@ -173,7 +173,7 @@ end main`;
   });
 
   test("Pass_hiddenDeprecated", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call hiddenDeprecatedProcedure()
@@ -198,7 +198,7 @@ end main`;
   });
 
   test("Pass_ParametersChangedWithoutCompileErrors1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedFunctionWithParameters1()
@@ -223,7 +223,7 @@ end main`;
   });
 
   test("Pass_ParametersChangedWithoutCompileErrors2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedFunctionWithParameters2("fred")
@@ -248,7 +248,7 @@ end main`;
   });
 
   test("Pass_ParametersChangedWithoutCompileErrors3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call deprecatedProcedureWithParameters1()
@@ -273,7 +273,7 @@ end main`;
   });
 
   test("Pass_ParametersChangedWithoutCompileErrors4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call deprecatedProcedureWithParameters2("fred")
@@ -298,7 +298,7 @@ end main`;
   });
 
   test("Pass_ParametersChangedWithoutCompileErrorsOnClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new DeprecatedClass1()
@@ -323,7 +323,7 @@ end main`;
   });
 
   test("Pass_FunctionAdvisoryDeprecation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedAdvisoryFunction()
@@ -350,7 +350,7 @@ end main`;
   });
 
   test("Fail_FunctionDeprecation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedFunction()
@@ -377,7 +377,7 @@ end main`;
   });
 
   test("Fail_ProcedureDeprecation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call deprecatedProcedure()
@@ -404,7 +404,7 @@ end main`;
   });
 
   test("Fail_NewClassDeprecation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new DeprecatedClass()
@@ -431,7 +431,7 @@ end main`;
   });
 
   test("Fail_OfClassDeprecation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of DeprecatedClass>()
@@ -458,7 +458,7 @@ end main`;
   });
 
   test("Fail_ParametersChangedWithCompileErrors1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedFunctionWithParameters1("fred")
@@ -486,7 +486,7 @@ end main`;
   });
 
   test("Fail_ParametersChangedWithCompileErrors2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to deprecatedFunctionWithParameters2()
@@ -514,7 +514,7 @@ end main`;
   });
 
   test("Fail_ParametersChangedWithCompileErrors3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call deprecatedProcedureWithParameters1("fred")
@@ -542,7 +542,7 @@ end main`;
   });
 
   test("Fail_ParametersChangedWithCompileErrors4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call deprecatedProcedureWithParameters2()
@@ -570,7 +570,7 @@ end main`;
   });
 
   test("Fail_ParametersChangedWithCompileErrorsOnClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new DeprecatedClass1<of Int>()

@@ -12,13 +12,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Throw Catch", () => {
   test("Pass_ThrowExceptionInMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   throw ElanRuntimeError "Foo"
@@ -49,7 +49,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_ThrowExceptionInMainUsingVariableForMessage", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable msg set to "Foo"
@@ -82,7 +82,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_ThrowExceptionUsingInterpolatedStringForMessage", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable bar set to 1
@@ -115,7 +115,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ThrowExceptionInProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo()
@@ -155,7 +155,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchException", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -210,7 +210,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchUserException", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -265,7 +265,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CatchSystemGeneratedException", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -342,7 +342,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseException", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -399,7 +399,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RedefineVariableinCatch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -456,7 +456,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_UseOuterScopeVariableInCatch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -511,7 +511,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_GhostedVariableInCatch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -557,7 +557,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_MultipleCatches", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -592,7 +592,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ThrowExceptionInFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to foo("s")
@@ -619,7 +619,7 @@ end function
   });
 
   test("Fail_catchMissingVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -650,7 +650,7 @@ end procedure
   });
 
   test("Fail_UseExpressionForMessage", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable msg set to "Foo"
@@ -673,7 +673,7 @@ end main
   });
 
   test("Fail_TryVariableOutOfScopeInCatch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -705,7 +705,7 @@ end procedure
   });
 
   test("Fail_RedefineVariableinCatch1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -740,7 +740,7 @@ end procedure`;
   });
 
   test("Fail_ThrowWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -778,7 +778,7 @@ end class`;
   });
 
   test("Fail_CatchWrongType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -805,7 +805,7 @@ end main`;
   });
 
   test("Fail_CatchWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try

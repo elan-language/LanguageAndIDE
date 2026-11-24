@@ -249,15 +249,11 @@ export function transforms() {
 }
 
 const pre = elanVersion.preRelease === "" ? "" : `-${elanVersion.preRelease}`;
+export const testHeaderVersion = `${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
 
-export const testHeaderVersion = `Elan ${elanVersion.major}.${elanVersion.minor}.${elanVersion.patch}${pre}`;
-
-export const testHeader = `# FFFF ${testHeaderVersion} valid`;
-
-export const testPythonHeader = `# FFFF Python with ${testHeaderVersion} valid`;
-export const testJavaHeader = `// FFFF Java with ${testHeaderVersion} valid`;
-export const testCSHeader = `// FFFF C# with ${testHeaderVersion} valid`;
-export const testVBHeader = `' FFFF VB.NET with ${testHeaderVersion} valid`;
+export const testRefLangHeader = `# FFFF RefLang with Elan ${testHeaderVersion} valid`;
+export const testPythonHeader = `# FFFF Python with Elan ${testHeaderVersion} valid`;
+export const testCSHeader = `// FFFF C# with Elan ${testHeaderVersion} valid`;
 
 export async function assertExportedFileIs(file: FileImpl, language : Language,  code : string) {
   let actual;
