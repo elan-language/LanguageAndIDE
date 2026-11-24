@@ -252,8 +252,6 @@ export class LanguageRefLang extends LanguageAbstract {
   GHOSTED = "[ghosted]";
   COMMENT_MARKER = "#";
 
-  INTERPOLATED_STRING_PREFIX: string = "$";
-
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
   BOOL_NAME: string = "Boolean";

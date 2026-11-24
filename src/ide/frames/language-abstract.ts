@@ -111,8 +111,6 @@ export abstract class LanguageAbstract implements Language {
 
   abstract COMMENT_MARKER: string;
 
-  abstract INTERPOLATED_STRING_PREFIX: string;
-
   abstract INT_NAME: string;
   abstract FLOAT_NAME: string;
   abstract BOOL_NAME: string;

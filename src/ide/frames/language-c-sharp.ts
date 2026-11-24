@@ -266,7 +266,6 @@ export class LanguageCSharp extends LanguageAbstract {
     // does nothing
   }
 
-  INTERPOLATED_STRING_PREFIX = "$";
   BOOL_NAME = "bool";
   FUNC_NAME = "Func";
   OVERRIDES = "override";

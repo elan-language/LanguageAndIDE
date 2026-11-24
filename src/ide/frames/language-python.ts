@@ -296,8 +296,6 @@ export class LanguagePython extends LanguageAbstract {
 
   COMMENT_MARKER = "#";
 
-  INTERPOLATED_STRING_PREFIX: string = "f";
-
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
   BOOL_NAME: string = "bool";
