@@ -250,7 +250,6 @@ export class LanguageRefLang extends LanguageAbstract {
   }
 
   GHOSTED = "[ghosted]";
-  COMMENT_MARKER = "#";
 
   INT_NAME: string = "Int";
   FLOAT_NAME: string = "Float";
@@ -282,6 +281,8 @@ export class LanguageRefLang extends LanguageAbstract {
     // does nothing
   }
 
+  COMMENT_MARKER = "#";
+
   private opMap = new Map<OperationSymbol, string>([
     [OperationSymbol.Add, "+"],
     [OperationSymbol.Minus, "-"],
@@ -307,6 +308,7 @@ export class LanguageRefLang extends LanguageAbstract {
     [TerminalSymbol.GenericStart, "<of "],
     [TerminalSymbol.GenericEnd, ">"],
     [TerminalSymbol.ThisInstance, "this"],
+    [TerminalSymbol.Comment, "#"],
   ]);
 
   override mapOperation(op: string): OperationSymbol {

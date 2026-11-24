@@ -4,6 +4,7 @@ import { Semver } from "../../compiler/compiler-interfaces/semver";
 import { BreakpointEvent } from "../../compiler/debugging/breakpoint-event";
 import { StdLib } from "../../compiler/standard-library/std-lib";
 import { StdLibSymbols } from "../../compiler/standard-library/std-lib-symbols";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { TestStatus } from "../../compiler/test-status";
 import { elanVersion, isElanProduction } from "../../environment";
 import { FileContext as PythonFileContext } from "../../generated/python/PythonParser";
@@ -276,7 +277,7 @@ export class FileImpl implements File {
     const trailer = this.language().renderFileTrailerAsHtml(this);
     this.currentHash = await this.getHash();
     return withHeader
-      ? `<el-header>${this._language.COMMENT_MARKER} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${languageSpecificHeader}${globals}${trailer}`
+      ? `<el-header>${this._language.mapTerminalSymbol(TerminalSymbol.Comment)} ${this.getHashAsHtml()} ${this.getVersionAsHtml()}</el-header>\r\n${languageSpecificHeader}${globals}${trailer}`
       : `${languageSpecificHeader}${globals}${trailer}`;
   }
 
@@ -292,7 +293,7 @@ export class FileImpl implements File {
     if (!content.endsWith("\r\n")) {
       content += "\r\n";
     }
-    return `${this.language().COMMENT_MARKER} ${this.currentHash} ${content}`;
+    return `${this.language().mapTerminalSymbol(TerminalSymbol.Comment)} ${this.currentHash} ${content}`;
   }
 
   public indent(): string {
@@ -715,7 +716,7 @@ export class FileImpl implements File {
 
       const language = await this.validateHeader(source.getRemainingCode());
 
-      if (source.isMatch(LanguageRefLang.Instance.COMMENT_MARKER)) {
+      if (source.isMatch(LanguageRefLang.Instance.mapTerminalSymbol(TerminalSymbol.Comment))) {
         source.removeRegEx(LanguageRefLang.Instance.commentRegex(), false);
         source.removeRegEx(Regexes.newLine, false);
         source.removeRegEx(Regexes.newLine, false);
@@ -801,7 +802,7 @@ export class FileImpl implements File {
   }
 
   validateHeaderComment(tokens: string[]) {
-    if (tokens[0] !== LanguageRefLang.Instance.COMMENT_MARKER) {
+    if (tokens[0] !== LanguageRefLang.Instance.mapTerminalSymbol(TerminalSymbol.Comment)) {
       throw new ElanFileError(cannotLoadInvalidFile);
     }
   }

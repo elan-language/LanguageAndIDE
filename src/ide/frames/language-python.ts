@@ -294,8 +294,6 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  COMMENT_MARKER = "#";
-
   INT_NAME: string = "int";
   FLOAT_NAME: string = "float";
   BOOL_NAME: string = "bool";
@@ -379,6 +377,7 @@ export class LanguagePython extends LanguageAbstract {
     [TerminalSymbol.GenericStart, "["],
     [TerminalSymbol.GenericEnd, "]"],
     [TerminalSymbol.ThisInstance, "self"],
+    [TerminalSymbol.Comment, "#"],
   ]);
 
   mapTerminal(term: string): TerminalSymbol {

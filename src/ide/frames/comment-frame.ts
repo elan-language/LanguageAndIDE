@@ -1,3 +1,4 @@
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { FieldImpl } from "./fields/field-impl";
 import { commentFieldSpec } from "./fields/field-spec";
 import { singleIndent } from "./frame-helpers";
@@ -21,7 +22,8 @@ export class CommentFrame extends SingleLineFrame implements Statement {
   constructor(parent: Parent) {
     super(parent);
     this.text = new FieldImpl(this, commentFieldSpec);
-    const commentMarker = this.getParent().language().COMMENT_MARKER + " ";
+    const commentMarker =
+      this.getParent().language().mapTerminalSymbol(TerminalSymbol.Comment) + " ";
     this.text.setFieldToKnownValidText(commentMarker);
   }
 

@@ -1,3 +1,4 @@
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { AbstractFrame } from "./abstract-frame";
 import { addDeleteToContextMenu } from "./frame-helpers";
 import { editorEvent } from "./frame-interfaces/editor-event";
@@ -293,6 +294,6 @@ export abstract class AbstractSelector extends AbstractFrame implements Selector
   }
 
   protected getCommentMarker() {
-    return this.getFile().language().COMMENT_MARKER;
+    return this.getFile().language().mapTerminalSymbol(TerminalSymbol.Comment);
   }
 }

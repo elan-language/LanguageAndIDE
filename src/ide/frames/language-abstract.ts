@@ -109,8 +109,6 @@ export abstract class LanguageAbstract implements Language {
     return `<el-method>${frame.testName.renderAsHtml()}</el-method>`;
   }
 
-  abstract COMMENT_MARKER: string;
-
   abstract INT_NAME: string;
   abstract FLOAT_NAME: string;
   abstract BOOL_NAME: string;

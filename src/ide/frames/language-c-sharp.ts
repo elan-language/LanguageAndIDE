@@ -271,8 +271,6 @@ export class LanguageCSharp extends LanguageAbstract {
   OVERRIDES = "override";
   IMPLEMENTS = ""; // not used
 
-  COMMENT_MARKER: string = "//";
-
   INT_NAME: string = "int";
   FLOAT_NAME: string = "double";
   STRING_NAME: string = "string";
