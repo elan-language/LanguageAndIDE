@@ -31,7 +31,7 @@ import { LanguagePython } from "../src/ide/frames/language-python";
 import { LanguageRefLang } from "../src/ide/frames/language-ref-lang";
 import { Paradigm } from "../src/ide/frames/paradigm";
 import { VariableDefinition } from "../src/ide/frames/statements/variable-definition";
-import { CompileStatus, ParseStatus } from "../src/ide/frames/status-enums";
+import { ParseStatus } from "../src/ide/frames/status-enums";
 import { StubInputOutput } from "../src/ide/stub-input-output";
 import { hash } from "../src/ide/util";
 import { encodeCode } from "../src/ide/web/web-helpers";
@@ -42,7 +42,7 @@ import { getTestRunner } from "./runner";
 import { RootAstNode } from "../src/compiler/compiler-interfaces/root-ast-node";
 
 // flag to update test files
-const updateTestFiles = true;
+const updateTestFiles = false;
 
 function compiles(ast : RootAstNode | undefined) {
    return ast && ast.getAllCompileErrors().length == 0;

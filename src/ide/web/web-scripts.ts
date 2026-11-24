@@ -1288,7 +1288,7 @@ function chooser(uploader: (event: Event) => void, noCheck: boolean) {
       } else {
         f.type = "file";
         f.name = "file";
-        f.accept = ".elan";
+        f.accept = ".*";
         f.addEventListener("change", uploader);
       }
 
