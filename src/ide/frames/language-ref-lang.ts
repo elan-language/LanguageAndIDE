@@ -53,7 +53,7 @@ export class LanguageRefLang extends LanguageAbstract {
   }
   languageHtmlClass = "elan";
   languageFullName: string = "Reference Language";
-  defaultFileExtension: string = "elan";
+  defaultFileExtension: string = "reflang";
   defaultMimeType: string = "text/plain";
 
   annotation(_frame: Frame): string {

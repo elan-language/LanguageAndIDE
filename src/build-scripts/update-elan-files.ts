@@ -6,9 +6,9 @@ import { Transforms } from "../ide/compile-api/transforms";
 import { CodeSourceFromString } from "../ide/frames/code-source-from-string";
 import { FileImpl } from "../ide/frames/file-impl";
 import { ParseMode } from "../ide/frames/frame-interfaces/file";
+import { Paradigm } from "../ide/frames/paradigm";
 import { StubInputOutput } from "../ide/stub-input-output";
 import { hash } from "../ide/util";
-import { Paradigm } from "../ide/frames/paradigm";
 
 const rootdir = `${__dirname}/../../..`;
 
@@ -27,7 +27,7 @@ function updateTestFileNew(testDoc: string, newContent: string) {
 }
 
 function getElanFiles(sourceDir: string): string[] {
-  return readdirSync(sourceDir).filter((s) => s.endsWith(".elan"));
+  return readdirSync(sourceDir).filter((s) => s.endsWith(".reflang"));
 }
 
 async function loadFileAsModelNew(sourceFile: string): Promise<FileImpl> {
