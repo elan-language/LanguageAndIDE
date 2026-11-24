@@ -1,4 +1,5 @@
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import { AbstractFunction } from "./class-members/abstract-function";
 import { AbstractProcedure } from "./class-members/abstract-procedure";
 import { Constructor } from "./class-members/constructor";
@@ -310,8 +311,6 @@ export class LanguagePython extends LanguageAbstract {
   TUPLE_START = "tuple[";
   TUPLE_END = "]";
 
-  TRUE: string = "True";
-  FALSE: string = "False";
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
@@ -385,5 +384,25 @@ export class LanguagePython extends LanguageAbstract {
     }
 
     return ` ${this.opMap.get(op) ?? ""} `;
+  }
+
+  private terminalMap = new Map<TerminalSymbol, string>([
+    [TerminalSymbol.True, "True"],
+    [TerminalSymbol.False, "False"],
+  ]);
+
+  mapTerminal(term: string): TerminalSymbol {
+    term = term.trim();
+
+    for (const e of this.terminalMap.entries()) {
+      if (e[1] === term) {
+        return e[0];
+      }
+    }
+    return TerminalSymbol.Unknown;
+  }
+
+  mapTerminalSymbol(termSymbol: TerminalSymbol): string {
+    return this.terminalMap.get(termSymbol) ?? "";
   }
 }
