@@ -1,4 +1,4 @@
-# 59f7c897ee3c59a0663819eb9eaffb4e6e28caaa3461ccd496503f5c7a74e7de Python with Elan 2.0.0-beta5 valid
+# ebafd7ee44a6ec1f81b730496aef9e28209399e8a96b6170e50a6211f50abf02 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   grid = BlockGraphics() # variable definition
@@ -32,7 +32,7 @@ def x(cell: int) -> int: # function
 # end function
 
 class Test_x(unittest.TestCase):
- def test_x(self) -> None:
+ def test_x(self: Test_x) -> None:
   self.assertEqual(x(0), 0)
   self.assertEqual(x(39), 39)
   self.assertEqual(x(40), 0)
@@ -44,7 +44,7 @@ def y(cell: int) -> int: # function
 # end function
 
 class Test_y(unittest.TestCase):
- def test_y(self) -> None:
+ def test_y(self: Test_y) -> None:
   self.assertEqual(y(0), 0)
   self.assertEqual(y(39), 0)
   self.assertEqual(y(40), 1)
@@ -56,7 +56,7 @@ def cellNo(x: int, y: int) -> int: # function
 # end function
 
 class Test_cellNo(unittest.TestCase):
- def test_cellNo(self) -> None:
+ def test_cellNo(self: Test_cellNo) -> None:
   self.assertEqual(cellNo(0, 0), 0)
   self.assertEqual(cellNo(39, 0), 39)
   self.assertEqual(cellNo(0, 1), 40)
@@ -74,7 +74,7 @@ def north(cell: int) -> int: # function
 # end function
 
 class Test_north(unittest.TestCase):
- def test_north(self) -> None:
+ def test_north(self: Test_north) -> None:
   self.assertEqual(north(124), 84)
   self.assertEqual(north(0), 1160)
   self.assertEqual(north(39), 1199)
@@ -93,7 +93,7 @@ def south(cell: int) -> int: # function
 # end function
 
 class Test_south(unittest.TestCase):
- def test_south(self) -> None:
+ def test_south(self: Test_south) -> None:
   self.assertEqual(south(124), 164)
   self.assertEqual(south(0), 40)
   self.assertEqual(south(39), 79)
@@ -112,7 +112,7 @@ def east(cell: int) -> int: # function
 # end function
 
 class Test_east(unittest.TestCase):
- def test_east(self) -> None:
+ def test_east(self: Test_east) -> None:
   self.assertEqual(east(124), 125)
   self.assertEqual(east(0), 1)
   self.assertEqual(east(39), 0)
@@ -131,7 +131,7 @@ def west(cell: int) -> int: # function
 # end function
 
 class Test_west(unittest.TestCase):
- def test_west(self) -> None:
+ def test_west(self: Test_west) -> None:
   self.assertEqual(west(124), 123)
   self.assertEqual(west(0), 39)
   self.assertEqual(west(39), 38)
@@ -144,7 +144,7 @@ def northEast(cell: int) -> int: # function
 # end function
 
 class Test_northEast(unittest.TestCase):
- def test_northEast(self) -> None:
+ def test_northEast(self: Test_northEast) -> None:
   self.assertEqual(northEast(124), 85)
   self.assertEqual(northEast(0), 1161)
   self.assertEqual(northEast(39), 1160)
@@ -157,7 +157,7 @@ def northWest(cell: int) -> int: # function
 # end function
 
 class Test_northWest(unittest.TestCase):
- def test_northWest(self) -> None:
+ def test_northWest(self: Test_northWest) -> None:
   self.assertEqual(northWest(124), 83)
   self.assertEqual(northWest(0), 1199)
   self.assertEqual(northWest(39), 1198)
@@ -170,7 +170,7 @@ def southEast(cell: int) -> int: # function
 # end function
 
 class Test_southEast(unittest.TestCase):
- def test_southEast(self) -> None:
+ def test_southEast(self: Test_southEast) -> None:
   self.assertEqual(southEast(124), 165)
   self.assertEqual(southEast(0), 41)
   self.assertEqual(southEast(39), 40)
@@ -183,7 +183,7 @@ def southWest(cell: int) -> int: # function
 # end function
 
 class Test_southWest(unittest.TestCase):
- def test_southWest(self) -> None:
+ def test_southWest(self: Test_southWest) -> None:
   self.assertEqual(southWest(124), 163)
   self.assertEqual(southWest(0), 79)
   self.assertEqual(southWest(39), 78)
@@ -196,7 +196,7 @@ def neighbourCells(c: int) -> list[int]: # function
 # end function
 
 class Test_neighbourCells(unittest.TestCase):
- def test_neighbourCells(self) -> None:
+ def test_neighbourCells(self: Test_neighbourCells) -> None:
   self.assertEqual(neighbourCells(124), [83, 84, 85, 123, 125, 163, 164, 165])
 # end test
 
@@ -211,7 +211,7 @@ def liveNeighbours(grid: BlockGraphics, cell: int) -> int: # function
 # end function
 
 class Test_liveNeighbours(unittest.TestCase):
- def test_liveNeighbours(self) -> None:
+ def test_liveNeighbours(self: Test_liveNeighbours) -> None:
   grid = createTestGrid() # variable definition
   self.assertEqual(liveNeighbours(grid, 0), 1)
   self.assertEqual(liveNeighbours(grid, 41), 4)
@@ -224,7 +224,7 @@ def willLive(cell: int, liveNeighbours: int) -> bool: # function
 # end function
 
 class Test_willLive(unittest.TestCase):
- def test_willLive(self) -> None:
+ def test_willLive(self: Test_willLive) -> None:
   self.assertEqual(willLive(white, 0), False)
   self.assertEqual(willLive(white, 1), False)
   self.assertEqual(willLive(white, 2), False)
@@ -255,7 +255,7 @@ def nextCellValue(grid: BlockGraphics, cell: int) -> int: # function
 # end function
 
 class Test_nextCellValue(unittest.TestCase):
- def test_nextCellValue(self) -> None:
+ def test_nextCellValue(self: Test_nextCellValue) -> None:
   grid = createTestGrid() # variable definition
   self.assertEqual(nextCellValue(grid, 0), white)
   self.assertEqual(nextCellValue(grid, 41), white)

@@ -1,4 +1,4 @@
-# 04ca1e156b41528b94ec64b9dde5fcc8fd017b223b97e78575e99e7251c11021 Python with Elan 2.0.0-beta5 valid
+# 5c1877e40d7edc1cfe3e0b80e3776ec3246258b6cfc4f0f6db4295161e538d8c Python with Elan 2.0.0-beta5 valid
 
 nDiscs = 7
 
@@ -60,7 +60,7 @@ def createDisc(disc: int, peg: int, vertical: int) -> RectangleVG: # function
 # end function
 
 class Test_createDisc(unittest.TestCase):
- def test_createDisc(self) -> None:
+ def test_createDisc(self: Test_createDisc) -> None:
   # Normal cases
   d = createDisc(5, 2, 4) # variable definition
   self.assertEqual(d.fillColour, green)
@@ -88,7 +88,7 @@ def create3Stacks(nDiscs: int) -> list[list[int]]: # function
 # end function
 
 class Test_create3Stacks(unittest.TestCase):
- def test_create3Stacks(self) -> None:
+ def test_create3Stacks(self: Test_create3Stacks) -> None:
   empty = list[int]() # variable definition
   # Normal case(s)
   self.assertEqual(create3Stacks(7), [[7, 6, 5, 4, 3, 2, 1], empty, empty])
@@ -105,7 +105,7 @@ def colour(disc: int) -> int: # function
 # end function
 
 class Test_colour(unittest.TestCase):
- def test_colour(self) -> None:
+ def test_colour(self: Test_colour) -> None:
   # Normal cases
   self.assertEqual(colour(5), green)
   # Edge cases
@@ -120,7 +120,7 @@ def top(s: list[int]) -> int: # function
 # end function
 
 class Test_top(unittest.TestCase):
- def test_top(self) -> None:
+ def test_top(self: Test_top) -> None:
   # Normal cases
   self.assertEqual(top([3, 2, 1]), 1)
   # Edge cases
