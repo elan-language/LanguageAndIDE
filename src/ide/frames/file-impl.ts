@@ -445,6 +445,10 @@ export class FileImpl implements File {
     this._runStatus = s;
   }
 
+  getParseStatus() {
+    return this._parseStatus;
+  }
+
   readParseStatus(): ParseStatus {
     this._parseStatus = ParseStatus.default as ParseStatus;
     this.updateAllParseStatus();

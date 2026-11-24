@@ -41,16 +41,18 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 // flag to update test files
-const updateTestFiles = true;
+const updateTestFiles = false;
 
-export async function assertParsesAndCompilesAndTests(f: FileImpl) {
+export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   const runner = await createTestRunner();
-  f.refreshParseAndCompileStatuses(false);
-  assert.equal(f.readParseStatus(), ParseStatus.valid, "failed parse");
-  assert.equal(f.readCompileStatus(), CompileStatus.ok, "failed compile");
-  const outcomes = await runner(f.compile());
-  f.refreshTestStatuses(outcomes);
-  const ts = f.readTestStatus();
+  
+  console.warn(file._parserErrorMessages.join("\n"));
+  
+  assert.equal(file.getParseStatus(), ParseStatus.valid, "failed parse");
+  assert.equal(file.readCompileStatus(), CompileStatus.ok, "failed compile");
+  const outcomes = await runner(file.compile());
+  file.refreshTestStatuses(outcomes);
+  const ts = file.readTestStatus();
   if (ts !== TestStatus.default) {
     assert.equal(ts, TestStatus.pass, "failed tests");
   }
@@ -64,25 +66,24 @@ function getHtmlSubDir(l : Language) {
   return  `${getDirName(l)}-html`;
 }
 
-export async function assertGeneratesHtml(fl: FileImpl, path: string) {
+export async function assertGeneratesHtml(file: FileImpl, testPath: string) {
   let actualHtml = "";
-  let htmlFile = path + ".html";
+  let htmlPath = testPath + ".html";
   let msg = "";
   
   try {  
-    const renderedHtml = await fl.renderAsHtml();
+    const renderedHtml = await file.renderAsHtml();
     actualHtml = wrap(renderedHtml).replaceAll("\r", "");
-    const htm = loadFileAsHtml(htmlFile);
-    const expectedHtml = htm.replaceAll("\r", "");
+    const expectedHtml = loadFileAsHtml(htmlPath).replaceAll("\r", "");
     assert.strictEqual(actualHtml, expectedHtml);
   }
   catch {
     msg = `rendered html incorrect`;
-    if (updateTestFiles) {
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && file.readCompileStatus() === CompileStatus.ok) {
       // update original not copied 
-      htmlFile = htmlFile.replace("out\/", "");
+      htmlPath = htmlPath.replace("out\/", "");
 
-      updateTestFile(htmlFile, actualHtml);
+      updateTestFile(htmlPath, actualHtml);
       msg = msg + ": test file updated";
     }
    
@@ -90,39 +91,39 @@ export async function assertGeneratesHtml(fl: FileImpl, path: string) {
    return msg;
 }
 
-export async function assertRendersAs(fl: FileImpl, path: string, language: Language) {
+export async function assertRendersAs(file: FileImpl, sourcePath: string, language: Language) {
  
   let actual = "";
   let msg = "";
 
-  let file = path.replace(getDirName(fl.language()), getDirName(language)) + "." + language.defaultFileExtension;
+  let toSourcePath = sourcePath.replace(getDirName(file.language()), getDirName(language)) + "." + language.defaultFileExtension;
 
   try {
-    fl.setLanguage(language);
+    file.setLanguage(language);
     
-    actual = (await fl.renderAsSource()).replaceAll("\r", "");;
-    const expected = loadFileAsSource(file).replaceAll("\r", "");
+    actual = (await file.renderAsSource()).replaceAll("\r", "");;
+    const expected = loadFileAsSource(toSourcePath).replaceAll("\r", "");
     assert.strictEqual(actual, expected);
   }
   catch {
     msg = `${language.languageFullName} render incorrect`;
-    if (updateTestFiles) {
-      file = file.replace("out\/test", "src");
-      updateTestFile(file, actual);
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && file.readCompileStatus() === CompileStatus.ok) {
+      toSourcePath = toSourcePath.replace("out\/test", "src");
+      updateTestFile(toSourcePath, actual);
       msg = msg + ": test file updated";
     }
   }
   return msg;
 }
 
-export async function testFile(fn: string, l : Language) {
-  const [fl, sourceFile, testPath] = await getFile(fn, l);
-  await assertParsesAndCompilesAndTests(fl);
+export async function testFile(fileName: string, language : Language) {
+  const [file, sourcePath, testPath] = await getFile(fileName, language);
+  await assertParsesAndCompilesAndTests(file);
 
   const msgs = [];
-  msgs.push(await assertGeneratesHtml(fl, testPath));
-  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguageRefLang.Instance));
-  msgs.push(await assertRendersAs(fl, sourceFile.slice(0, sourceFile.lastIndexOf(".")), LanguagePython.Instance));
+  msgs.push(await assertGeneratesHtml(file, testPath));
+  msgs.push(await assertRendersAs(file, sourcePath.slice(0, sourcePath.lastIndexOf(".")), LanguageRefLang.Instance));
+  msgs.push(await assertRendersAs(file, sourcePath.slice(0, sourcePath.lastIndexOf(".")), LanguagePython.Instance));
 
   if (msgs.some(m => m)) {
     throw new Error(msgs.join(", "));
