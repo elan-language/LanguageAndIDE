@@ -37,7 +37,6 @@ export interface Language {
   COMMENT_MARKER: string; //e.g. `#`
 
   INTERPOLATED_STRING_PREFIX: string;
-  NEW_INSTANCE_PREFIX: string;
 
   INT_NAME: string;
   FLOAT_NAME: string;
@@ -46,9 +45,6 @@ export interface Language {
   LIST_NAME: string;
   DICT_NAME: string;
   FUNC_NAME: string;
-
-  BINARY_PREFIX: string;
-  HEX_PREFIX: string;
 
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
