@@ -125,7 +125,6 @@ export abstract class LanguageAbstract implements Language {
   abstract BINARY_PREFIX: string;
   abstract HEX_PREFIX: string;
 
-  abstract THIS_INSTANCE: string;
   abstract OVERRIDES: string;
   abstract IMPLEMENTS: string;
 

@@ -283,6 +283,4 @@ export class LanguageCSharp extends LanguageAbstract {
 
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
-
-  THIS_INSTANCE: string = "this";
 }

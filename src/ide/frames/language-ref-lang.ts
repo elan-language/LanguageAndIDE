@@ -268,7 +268,6 @@ export class LanguageRefLang extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
-  THIS_INSTANCE: string = "this";
   OVERRIDES = "";
   IMPLEMENTS = "";
 
@@ -315,6 +314,7 @@ export class LanguageRefLang extends LanguageAbstract {
     [TerminalSymbol.False, "false"],
     [TerminalSymbol.GenericStart, "<of "],
     [TerminalSymbol.GenericEnd, ">"],
+    [TerminalSymbol.ThisInstance, "this"],
   ]);
 
   override mapOperation(op: string): OperationSymbol {

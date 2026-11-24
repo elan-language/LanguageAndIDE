@@ -50,8 +50,6 @@ export interface Language {
   BINARY_PREFIX: string;
   HEX_PREFIX: string;
 
-  THIS_INSTANCE: string;
-
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
   mapOperation(op: string): OperationSymbol;

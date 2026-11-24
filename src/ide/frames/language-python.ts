@@ -310,7 +310,6 @@ export class LanguagePython extends LanguageAbstract {
   BINARY_PREFIX: string = "0b";
   HEX_PREFIX: string = "0x";
 
-  THIS_INSTANCE: string = "self";
   OVERRIDES = "";
   IMPLEMENTS = "";
 
@@ -385,6 +384,7 @@ export class LanguagePython extends LanguageAbstract {
     [TerminalSymbol.False, "False"],
     [TerminalSymbol.GenericStart, "["],
     [TerminalSymbol.GenericEnd, "]"],
+    [TerminalSymbol.ThisInstance, "self"],
   ]);
 
   mapTerminal(term: string): TerminalSymbol {

@@ -92,6 +92,7 @@ import {
 import { PropertyAsn } from "./syntax-nodes/class-members/property-asn";
 import { EmptyAsn } from "./syntax-nodes/empty-asn";
 import { MethodCallAsn } from "./syntax-nodes/method-call-asn";
+import { TerminalSymbol } from "./syntax-nodes/terminal-symbol";
 import { ThisInstanceAsn } from "./syntax-nodes/this-instance-asn";
 
 function mustBeOfSymbolType(
@@ -497,7 +498,9 @@ export function mustBeClass(symbol: ElanSymbol, compileErrors: CompileError[], l
 
 export function mustBeInsideClass(scope: Scope, compileErrors: CompileError[], location: string) {
   const language = getGlobalScope(scope).language;
-  compileErrors.push(new ThisCompileError(language.THIS_INSTANCE, location));
+  compileErrors.push(
+    new ThisCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+  );
 }
 
 export function mustBeDeclaredAbove(name: string, compileErrors: CompileError[], location: string) {
@@ -554,7 +557,9 @@ export function mustbeValidQualifier(
 ) {
   if (qualifier === EmptyAsn.Instance) {
     const language = getGlobalScope(scope).language;
-    compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
+    compileErrors.push(
+      new PropertyCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+    );
   }
 }
 
@@ -1101,7 +1106,9 @@ export function mustBePropertyPrefixedOnMember(
   location: string,
 ) {
   const language = getGlobalScope(scope).language;
-  compileErrors.push(new PropertyCompileError(language.THIS_INSTANCE, location));
+  compileErrors.push(
+    new PropertyCompileError(language.mapTerminalSymbol(TerminalSymbol.ThisInstance), location),
+  );
 }
 
 function isIndexed(assignable: AstNode) {

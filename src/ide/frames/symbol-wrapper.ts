@@ -46,7 +46,7 @@ export class SymbolWrapper {
     const symbol = this.wrapped as ElanSymbol;
 
     if (isProperty(symbol) && isMemberOnFieldsClass(symbol, this.scope)) {
-      const thisInstance = this.file.language().THIS_INSTANCE;
+      const thisInstance = this.file.language().mapTerminalSymbol(TerminalSymbol.ThisInstance);
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
@@ -134,7 +134,7 @@ export class SymbolWrapper {
     }
 
     if (isMemberOnFieldsClass(symbol, this.scope)) {
-      const thisInstance = this.file.language().THIS_INSTANCE;
+      const thisInstance = this.file.language().mapTerminalSymbol(TerminalSymbol.ThisInstance);
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
