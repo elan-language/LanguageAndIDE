@@ -34,17 +34,15 @@ mainCall: MAIN OPEN_BRACKET CLOSE_BRACKET;
 function:
     GHOSTED_BLOCK_START? DEF methodName OPEN_BRACKET paramList? CLOSE_BRACKET ARROW type COLON
         commentText? NL ordinaryStatement* /* statements with side-effects prevented by editor and/or compiler */
-        returnStatement END_FUNCTION GHOSTED_BLOCK_END? NL
+        returnStatement 
+    END_FUNCTION GHOSTED_BLOCK_END? NL
 ;
 
 test:
     GHOSTED_BLOCK_START? CLASS testClassName OPEN_BRACKET TESTCASE CLOSE_BRACKET COLON NL
-        testFunction END_TEST_CLASS GHOSTED_BLOCK_END? NL
-;
-
-testFunction:
-    GHOSTED_BLOCK_START? DEF testName OPEN_BRACKET THIS_INSTANCE COLON testClassName CLOSE_BRACKET
-        ARROW NONE COLON commentText? NL testStatement* END_TEST NL
+     DEF testName OPEN_BRACKET THIS_INSTANCE COLON testClassName CLOSE_BRACKET ARROW NONE COLON commentText? NL 
+      testStatement* 
+    END_TEST GHOSTED_BLOCK_END? NL
 ;
 
 testStatement: assert | variableDefinition | comment;

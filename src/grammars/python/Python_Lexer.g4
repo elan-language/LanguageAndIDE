@@ -199,7 +199,6 @@ GHOSTED_BLOCK_END: '\'\'\'';
 END_MAIN: '# end main';
 END_FUNCTION: '# end function';
 END_TEST: '# end test';
-END_TEST_CLASS: '# end test class';
 END_PROCEDURE: '# end procedure';
 END_ENUM: '# end enum';
 END_CLASS: '# end class';

@@ -5,7 +5,6 @@ import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-imp
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
-  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeIs,
@@ -35,8 +34,7 @@ class Test_square(unittest.TestCase):
     self.assertEqual(square(3), 9)
     actual = square(4) # variable definition
     self.assertEqual(actual, 16)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -92,10 +90,9 @@ def main() -> None:
 # end main
 
 class Test_foo(unittest.TestCase):
-  def test_foo(self: Test_foo) -> None:
-    self.assertEqual((3 + 4), 7)
-  # end test
-# end test class
+ def test_foo(self: Test_foo) -> None:
+  self.assertEqual((3 + 4), 7)
+# end test
 
 main()
 `;
@@ -141,8 +138,7 @@ class Test_square(unittest.TestCase):
   def test_square(self : Test_square) -> None:
     t = ("one", "two") # variable definition
     self.assertEqual(t, ("one", "two"))
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -192,8 +188,7 @@ class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     f = Foo() # variable definition
     self.assertEqual(f.p1, 10)
-  # end test
-# end test class
+# end test
 
 class Foo: # concrete class
 
@@ -274,8 +269,7 @@ class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     self.assertEqual(square(3), 10)
     self.assertEqual(square(4), 16)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -332,8 +326,7 @@ class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     arr = list[int]() # variable definition
     self.assertEqual(arr[1], "Out of range index: 1 size: 0")
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -390,8 +383,7 @@ class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     arr = list[int]() # variable definition
     self.assertEqual(arr[1], 0)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -448,8 +440,7 @@ class Test_square(unittest.TestCase):
     arr = list[int]() # variable definition
     b = arr[1] # variable definition
     self.assertEqual(b, 0)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -499,30 +490,26 @@ class Test_list_(unittest.TestCase):
   def test_list_(self: Test_list) -> None:
     a = [3, 2, 4, 0] # variable definition
     self.assertEqual(a, [3, 2, 4, 0])
-  # end test
-# end test class
+# end test
 
 class Test_list2_(unittest.TestCase):
   def test_list2_(self: Test_list2) -> None:
     a = [3, 2, 4, 0] # variable definition
     self.assertEqual(a, [3, 2, 4, 0])
-  # end test
-# end test class
+# end test
 
 class Test_string_(unittest.TestCase):
   def test_string_(self: Test_string) -> None:
     a = "Hello World" # variable definition
     self.assertEqual(a, "Hello World")
-  # end test
-# end test class
+# end test
 
 hello = "Hello" # constant
 
 class Test_constant_(unittest.TestCase):
   def test_constant_(self: Test_constant) -> None:
     self.assertEqual(hello, "Hello")
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -599,32 +586,28 @@ class Test_round1(unittest.TestCase):
     a = 1/3.0 # variable definition
     b = a.round(4) # variable definition
     self.assertEqual(b, 0.3333)
-  # end test
-# end test class
+# end test
 
 class Test_round2(unittest.TestCase):
   def test_round2(self: Test_round2) -> None:
     a = 0.9999 # variable definition
     b = a.round(2) # variable definition
     self.assertEqual(b, 1)
-  # end test
-# end test class
+# end test
 
 class Test_round3(unittest.TestCase):
   def test_round3(self: Test_round3) -> None:
     a = 1.25 # variable definition
     b = a.round(1) # variable definition
     self.assertEqual(b, 1.3)
-  # end test
-# end test class
+# end test
 
 class Test_round4(unittest.TestCase):
   def test_round4(self: Test_round4) -> None:
     a = 44.444 # variable definition
     b = a.round(2) # variable definition
     self.assertEqual(b, 44.44)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -723,8 +706,7 @@ def square(x: float) -> float: # function
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     self.assertEqual(square(3), 3*3)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -784,8 +766,7 @@ def square(x: float) -> float: # function
 class Test_squareTest(unittest.TestCase):
   def test_squareTest(self: Test_squareTest) -> None:
     self.assertEqual(square(3), 93)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -820,8 +801,7 @@ def square(x: float) -> float: # function
 class Test_squareTest(unittest.TestCase):
   def test_squareTest(self: Test_squareTest) -> None:
     self.assertEqual(square(3), 93)
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -849,8 +829,7 @@ def main() -> None:
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     a = 1 # variable definition
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -879,8 +858,7 @@ def main() -> None:
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     a = 1 # variable definition
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -910,8 +888,7 @@ class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
     actual = " 1  2   3    " # variable definition
     self.assertEqual(actual, " 1  2   3    ")
-  # end test
-# end test class
+# end test
 
 main()
 `;
@@ -956,14 +933,12 @@ return [main, _tests];}`;
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
 
-  # end test
-# end test class
+# end test
 
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
 
-  # end test
-# end test class
+# end test
 `;
 
     const fileImpl = new FileImpl(
@@ -993,8 +968,7 @@ def test_proc() -> None: # procedure
 class Test_proc(unittest.TestCase):
   def test_proc(self : Test_proc) -> None:
 
-  # end test
-# end test class
+# end test
 `;
 
     const fileImpl = new FileImpl(
@@ -1020,14 +994,12 @@ class Test_proc(unittest.TestCase):
 class Test_square(unittest.TestCase):
   def test_square(self: Test_square) -> None:
 
-  # end test
-# end test class
+# end test
 
 class Test_proc(unittest.TestCase):
   def test_proc(self: Test_proc) -> None:
 
-  # end test
-# end test class
+# end test
 
 test_cc =  # constant
 `;
