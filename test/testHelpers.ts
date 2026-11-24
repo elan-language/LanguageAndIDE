@@ -39,9 +39,15 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
+import { RootAstNode } from "../src/compiler/compiler-interfaces/root-ast-node";
 
 // flag to update test files
 const updateTestFiles = true;
+
+function compiles(ast : RootAstNode | undefined) {
+   return ast && ast.getAllCompileErrors().length == 0;
+}
+
 
 export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   const runner = await createTestRunner();
@@ -53,7 +59,7 @@ export async function assertParsesAndCompilesAndTests(file: FileImpl) {
   const code = file.compile();
   const ast = file.getAst(false);
 
-  assert.equal(ast && ast.getAllCompileErrors().length == 0, true, "failed compile " + ast?.getAllCompileErrors().join("\n"));
+  assert.equal(compiles(ast), true, "failed compile " + ast?.getAllCompileErrors().join("\n"));
   const outcomes = await runner(code);
   file.refreshTestStatuses(outcomes);
   const ts = file.readTestStatus();
@@ -83,7 +89,7 @@ export async function assertGeneratesHtml(file: FileImpl, testPath: string) {
   }
   catch {
     msg = `rendered html incorrect`;
-    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && file.readCompileStatus() === CompileStatus.ok) {
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && compiles(file.getAst(false))) {
       // update original not copied 
       htmlPath = htmlPath.replace("out\/", "");
 
@@ -111,7 +117,7 @@ export async function assertRendersAs(file: FileImpl, sourcePath: string, langua
   }
   catch {
     msg = `${language.languageFullName} render incorrect`;
-    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && file.readCompileStatus() === CompileStatus.ok) {
+    if (updateTestFiles && file.getParseStatus() === ParseStatus.valid && compiles(file.getAst(false))) {
       toSourcePath = toSourcePath.replace("out\/test", "src");
       updateTestFile(toSourcePath, actual);
       msg = msg + ": test file updated";
