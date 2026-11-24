@@ -293,13 +293,6 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  MOD: string = "%";
-  EQUAL: string = "==";
-  NOT_EQUAL: string = "!=";
-  AND: string = "and";
-  OR: string = "or";
-  NOT: string = "not";
-
   COMMENT_MARKER = "#";
   LIST_START: string = "[";
   LIST_END: string = "]";

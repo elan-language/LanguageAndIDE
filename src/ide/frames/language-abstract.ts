@@ -108,13 +108,6 @@ export abstract class LanguageAbstract implements Language {
     return `<el-method>${frame.testName.renderAsHtml()}</el-method>`;
   }
 
-  abstract MOD: string;
-  abstract EQUAL: string;
-  abstract NOT_EQUAL: string;
-  abstract AND: string;
-  abstract OR: string;
-  abstract NOT: string;
-
   abstract COMMENT_MARKER: string;
   abstract LIST_START: string;
   abstract LIST_END: string;
