@@ -48,15 +48,6 @@ export class CodeEditorViewModel implements ICodeEditorViewModel {
   lastDOMEvent: Event | undefined;
   lastEditorEvent: editorEvent | undefined;
 
-  private exporting: boolean = false;
-  setExporting(e: boolean) {
-    this.exporting = e;
-  }
-
-  isExporting() {
-    return this.exporting;
-  }
-
   get fileName() {
     return this.file!.fileName;
   }
