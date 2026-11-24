@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("For Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -56,7 +56,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_cannotReuseVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -85,7 +85,7 @@ end main`;
   });
 
   test("Pass_withStep", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 variable tot set to 0
@@ -125,7 +125,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_negativeStep", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -165,7 +165,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -209,7 +209,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_canUseExistingVariablesOfRightType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable lower set to 1
@@ -252,7 +252,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_forInProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(11, 0)
@@ -300,7 +300,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_updateLimit", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable limit set to 10
@@ -340,7 +340,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_reuseVariableDifferentType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -370,7 +370,7 @@ end main`;
   });
 
   test("Fail_useOfFloat", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0.0
@@ -396,7 +396,7 @@ end main
   });
 
   test("Fail_modifyingCounter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -424,7 +424,7 @@ end main
   });
 
   test("Fail_scopeOfCounter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -451,7 +451,7 @@ end main
   });
 
   test("Fail_missingEnd", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -476,7 +476,7 @@ end main
   });
 
   test("Fail_nextVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -500,7 +500,7 @@ end main
   });
 
   test("Fail_break", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -525,7 +525,7 @@ end main
   });
 
   test("Fail_continue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -550,7 +550,7 @@ end main
   });
 
   test("Fail_duplicateId1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable ids set to 10
@@ -576,7 +576,7 @@ end main`;
   });
 
   test("Fail_duplicateId2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable ids set to 10

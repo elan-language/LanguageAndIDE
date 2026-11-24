@@ -52,7 +52,7 @@ export class LanguageRefLang extends LanguageAbstract {
     return /# [^\r\n]*/;
   }
   languageHtmlClass = "elan";
-  languageFullName: string = "Reference Language";
+  languageFullName: string = "RefLang";
   defaultFileExtension: string = "reflang";
   defaultMimeType: string = "text/plain";
 

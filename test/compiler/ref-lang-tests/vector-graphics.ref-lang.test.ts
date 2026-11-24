@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Vector Graphics", () => {
   test("Fail_CannotCreateAbstractClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable svg set to new VectorGraphic()
@@ -41,7 +41,7 @@ end main`;
   });
 
   test("Pass_useCreateVectorGraphics", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to createVectorGraphics()
@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendUsingFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -127,7 +127,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AppendUsingProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -170,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetPropertyOnVG", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -261,7 +261,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithSetPropertyOnVG", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -352,7 +352,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReadPropertyOnObject", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable circ set to (new CircleVG()).withCentreX(50).withCentreY(50).withRadius(10).withFillColour(red).withFillColour(black).withStrokeWidth(1)
@@ -385,7 +385,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TransparentFill", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -428,7 +428,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StrokeCannotBeTransparent", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -468,7 +468,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_colourCannotBeLargerThanFFFFFF", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -507,7 +507,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_Image", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable vg set to new List<of VectorGraphic>()
@@ -552,7 +552,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_propertyAccess", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable c set to new CircleVG()

@@ -1,4 +1,4 @@
-# 48026bac43bdd5237a5e4609aca4fe4bf778cdf9792864802d04ce96a435126e Elan 2.0.0-beta5 valid
+# 48026bac43bdd5237a5e4609aca4fe4bf778cdf9792864802d04ce96a435126e RefLang with Elan 3.0.0-alpha-alpha valid
 
 function merge(a as List<of String>, b as List<of String>) returns List<of String>
   variable result set to new List<of String>()

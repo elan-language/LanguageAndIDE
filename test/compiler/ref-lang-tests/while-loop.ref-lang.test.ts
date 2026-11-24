@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("While Loop", () => {
   test("Pass_minimal", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 0
@@ -55,7 +55,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_innerLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to 0
@@ -106,7 +106,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_noEnd", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   let x = 0
@@ -130,7 +130,7 @@ main
   });
 
   test("Fail_variableNotPredefined", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   while x < 10
@@ -155,7 +155,7 @@ main
   });
 
   test("Fail_variableDefinedInWhile", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   while variable x < 10
@@ -179,7 +179,7 @@ main
   });
 
   test("Fail_noCondition", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 0
@@ -204,7 +204,7 @@ main
   });
 
   test("Fail_while_do", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 0
@@ -229,7 +229,7 @@ main
   });
 
   test("Fail_WhileConditionNotBool", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -256,7 +256,7 @@ end main`;
   });
 
   test("Fail_WhileConditionUnknown", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   while a

@@ -7,13 +7,13 @@ import {
   assertDoesNotParse,
   assertParses,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Constructor Parameters", () => {
   test("Fail_reassigningIntParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
     constructor(p_1 as Int)
@@ -49,7 +49,7 @@ end class`;
   });
 
   test("Fail_MutatingListParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor(a as List<of Float>)
@@ -80,7 +80,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
     constructor()
@@ -112,7 +112,7 @@ end class`;
   });
 
   test("Fail_OutParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
     constructor(out a as Int)

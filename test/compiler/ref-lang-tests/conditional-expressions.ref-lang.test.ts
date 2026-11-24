@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Conditional Expressions", () => {
   test("Pass_InFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(grade(90))
@@ -62,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InVariableDeclaration", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to 70
@@ -98,7 +98,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to 70
@@ -134,7 +134,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MostPreciseType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to 70.1
@@ -170,7 +170,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MostPreciseType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to 70.1
@@ -206,7 +206,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CommonSuperClass1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to cast(new Bar())
@@ -280,7 +280,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CommonSuperClass2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to cast(new Bar())
@@ -354,7 +354,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_EndIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  call printNoLine(grade(90))
@@ -383,7 +383,7 @@ end function
   });
 
   test("Fail_NotBooleanCondition", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  variable a set to if_(2, 5, 7)
@@ -409,7 +409,7 @@ end main`;
   });
 
   test("Fail_BranchesDifferentTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  variable a set to if_(true, "five", 7)
@@ -435,7 +435,7 @@ end main`;
   });
 
   test("Fail_MostPreciseType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  variable a set to 10
@@ -462,7 +462,7 @@ end main`;
   });
 
   test("Fail_MostPreciseType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  variable a set to 10
@@ -489,7 +489,7 @@ end main`;
   });
 
   test("Fail_NoCommonSuperClass1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to new Bar()
@@ -529,7 +529,7 @@ end class`;
   });
 
   test("Fail_NoCommonSuperClass2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to new Bar()
@@ -568,7 +568,7 @@ end class`;
   });
 
   test("Fail_CannotAssignToBaseClass1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to new Bar()
@@ -608,7 +608,7 @@ end function`;
   });
 
   test("Fail_CannotAssignToBaseClass2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable score set to new Bar()

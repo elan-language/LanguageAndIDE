@@ -16,7 +16,7 @@ import {
 // Tests ignored pending moving up to full release 2.0
 suite("Header", () => {
   ignore_test("Pass_hash", async () => {
-    const code = `# e43d5d0bf6773a8624f5fea4e88072965e9003f747aaee775fe35bcaebfcda14 Elan 2.0.0-alpha1 valid
+    const code = `# e43d5d0bf6773a8624f5fea4e88072965e9003f747aaee775fe35bcaebfcda14 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -50,7 +50,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_versionSame", async () => {
-    const code = `# e43d5d0bf6773a8624f5fea4e88072965e9003f747aaee775fe35bcaebfcda14 Elan 2.0.0-alpha1 valid
+    const code = `# e43d5d0bf6773a8624f5fea4e88072965e9003f747aaee775fe35bcaebfcda14 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program

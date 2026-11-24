@@ -14,13 +14,13 @@ import {
   ignore_test,
   newFileImpl,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Procedure Statement", () => {
   test("Pass_BasicOperationIncludingPrint", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(1)
@@ -56,7 +56,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassingInListsUsingShortFormTypeNames", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1, 2]
@@ -94,7 +94,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExternalCall", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call sleep_ms(1)
@@ -119,7 +119,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithParamsPassingVariables", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 2
@@ -157,7 +157,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ReferenceTypesCanBeMutated", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [2, 3]
@@ -193,7 +193,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_WithParamsPassingLiteralsOrExpressions", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -229,7 +229,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NestedCalls", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo()
@@ -274,7 +274,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RepeatedCallToProcedureWithLiteralArgument", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call square(3)
@@ -308,7 +308,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Recursion", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo(3)
@@ -348,7 +348,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_ProcedureMethodMayCallOtherClassProcedureViaProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -455,7 +455,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RefParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new AsRef<of Int>(2)
@@ -497,7 +497,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetFromAsRefParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new AsRef<of Float>(2)
@@ -541,7 +541,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_NestedOutParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new AsRef<of Float>(2)
@@ -594,7 +594,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CallOnOutParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new AsRef<of Foo>(new Foo())
@@ -664,7 +664,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ExpressionOnOutParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new AsRef<of Foo>(new Foo())
@@ -737,7 +737,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MultipleCallsWithOutParameters", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new AsRef<of Int>(1)
@@ -777,7 +777,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrintOutParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new AsRef<of Int>(1)
@@ -811,7 +811,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CallingUndeclaredProc", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call bar()
@@ -826,7 +826,7 @@ end main
   });
 
   test("Fail_TypeSpecifiedBeforeParamName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -842,7 +842,7 @@ end procedure
   });
 
   ignore_test("Fail_CannotCallMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(1)
@@ -863,7 +863,7 @@ end procedure
   });
 
   test("Fail_PassingUnnecessaryParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(1)
@@ -886,7 +886,7 @@ end procedure
   });
 
   test("Fail_PassingTooFewParams", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -909,7 +909,7 @@ end procedure
   });
 
   test("Fail_ExtensionParameterCount", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1]
@@ -928,7 +928,7 @@ end main`;
   });
 
   test("Fail_PassingWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo(1, 2)
@@ -950,7 +950,7 @@ end procedure
   });
 
   test("Fail_UnterminatedRecursion", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call foo(3)
@@ -970,7 +970,7 @@ end procedure
   });
 
   test("Fail_CannotCallPrintAsAProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(""Hello World!"")
@@ -984,7 +984,7 @@ end main
   });
 
   test("Fail_ParameterCount", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure f(p as Float)
 
@@ -1006,7 +1006,7 @@ end main`;
   });
 
   test("Fail_ParameterType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure f(p as Int)
 
@@ -1028,7 +1028,7 @@ end main`;
   });
 
   test("Fail_ReferenceTypeParamMayNotBeReassigned", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [2, 3]
@@ -1051,7 +1051,7 @@ end procedure`;
   });
 
   test("Fai_ListParamMayNotBeReassigned", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [2, 3]
@@ -1074,7 +1074,7 @@ end procedure`;
   });
 
   test("Fail_ValueTypeParamMayNotBeReassigned", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 4
@@ -1097,7 +1097,7 @@ end procedure`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1116,7 +1116,7 @@ end procedure`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1132,7 +1132,7 @@ end procedure`;
   });
 
   test("Fail_UseOfReservedwordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1147,7 +1147,7 @@ end procedure`;
     assertDoesNotParse(fileImpl);
   });
   test("Fail_UseOfLangTypeAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1163,7 +1163,7 @@ end procedure`;
   });
 
   test("Fail_UseOfKeywordAsParamName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1180,7 +1180,7 @@ end procedure`;
   });
 
   test("Fail_UseOfReservedwordAsParamName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1196,7 +1196,7 @@ end procedure`;
   });
 
   test("Fail_NotUniqueName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure foo()
 
@@ -1218,7 +1218,7 @@ end procedure
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure foo(a as Int, b as String, a as Int)
 
@@ -1235,7 +1235,7 @@ end procedure`;
   });
 
   ignore_test("Fail_OperatorsAndProcedures", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to p2.equals(p2)
@@ -1262,7 +1262,7 @@ end procedure`;
   });
 
   test("Fail_ProcedureInExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2]
@@ -1280,7 +1280,7 @@ end main`;
   });
 
   test("Fail_IncorrectScope", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1309,7 +1309,7 @@ end procedure`;
   });
 
   test("Fail_CallNonProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1338,7 +1338,7 @@ end procedure`;
   });
 
   test("Fail_CallNonProcedure1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1369,7 +1369,7 @@ end procedure`;
   });
 
   test("Fail_noMatchingExtension2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to "hello"
@@ -1387,7 +1387,7 @@ end main`;
   });
 
   test("Fail_onUndefined", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call s.reverse()
@@ -1402,7 +1402,7 @@ end main`;
   });
 
   test("Fail_ParameterNameClash1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure foo(foo as Int)
 
@@ -1419,7 +1419,7 @@ end procedure`;
   });
 
   test("Fail_ParameterNameClash2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure foo(a as Int, foo as Int)
 

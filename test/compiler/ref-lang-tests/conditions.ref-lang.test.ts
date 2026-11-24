@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Conditions", () => {
   test("Pass_lessThan", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 < 4)
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_greaterThan", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 > 4)
@@ -86,7 +86,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_lessThanOrEqual", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 <= 4)
@@ -121,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_greaterThanOrEqual", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 >= 4)
@@ -156,7 +156,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_isnt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 isnt 4)
@@ -191,7 +191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_is", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 is 4)
@@ -226,7 +226,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_canCompareCoercibleTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 < 3.1)
@@ -275,7 +275,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_combineComparisonWithArithmetic", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine((5 + 3) > (4 + 2))
@@ -310,7 +310,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_not_is", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 not is 3)
@@ -332,7 +332,7 @@ end main
   });
 
   test("Fail_not", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 not 3)
@@ -354,7 +354,7 @@ end main
   });
 
   test("Fail_notEqual", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 != 3)
@@ -376,7 +376,7 @@ end main
   });
 
   test("Fail_EqualToOrLessThan", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 =< 3)
@@ -398,7 +398,7 @@ end main
   });
 
   test("Fail_Greater_Or_Equal", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 > or = 3)
@@ -420,7 +420,7 @@ end main
   });
 
   test("Fail_SingleEquals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 = 4)
@@ -442,7 +442,7 @@ end main
   });
 
   test("Fail_compareDifferentTypesByValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3.equals("3"))
@@ -477,7 +477,7 @@ end main
   });
 
   test("Fail_greaterOrLessThan", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 <> 3  )
@@ -499,7 +499,7 @@ end main
   });
 
   test("Fail_doubleEquals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(3 == 3  )
@@ -521,7 +521,7 @@ end main
   });
 
   test("Fail_combineComparisonWithArithmeticWithoutBrackets", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(5 + 3 > 4 + 2)

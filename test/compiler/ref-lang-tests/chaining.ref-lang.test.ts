@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Chaining", () => {
   test("Pass_SimplestChain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [1,2]
@@ -50,7 +50,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SimpleChain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [[1,2], [3,4]]
@@ -85,7 +85,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ChainWithIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [[1,2], [3,4]]
@@ -120,7 +120,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to new Foo()
@@ -182,7 +182,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable f set to new Foo()
@@ -312,7 +312,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable f set to [new Foo()]
@@ -412,7 +412,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PropertyChain4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable f set to [new Foo()]
@@ -512,7 +512,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable s set to ""
@@ -547,7 +547,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_StringRange1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable aStringVar set to "abcdexefg"
@@ -583,7 +583,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "2");
   });
   test("Pass_New", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to ""
@@ -645,7 +645,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "A");
   });
   test("Pass_CreateList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable aFoo set to new Foo()
@@ -713,7 +713,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_CreateList1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable aBar set to new Bar()
@@ -815,7 +815,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HoFs1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [1,2,3,4,5,6]
@@ -848,7 +848,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_HoFs2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [1,2,3,4,5,6]
@@ -883,7 +883,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TypeError", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to [[1,2], [3,4]]
@@ -910,7 +910,7 @@ end main`;
   });
 
   test("Fail_TypeError1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to new Foo()

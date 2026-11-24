@@ -23,7 +23,7 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
@@ -70,7 +70,7 @@ class TestStdLib {
 
 suite("Directives", () => {
   test("Pass_SimpleFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 0.0
@@ -97,7 +97,7 @@ end main`;
   });
 
   test("Pass_Bug2576_1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new List<of VectorGraphic>()
@@ -124,7 +124,7 @@ end main`;
   });
 
   test("Pass_Bug2576_2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new List<of List<of Int>>()
@@ -152,7 +152,7 @@ end main`;
   });
 
   test("Pass_Bug2576_3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new List<of List<of Int>>()

@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Tuple", () => {
   test("Pass_CreatingTuplesAndReadingContentsByItem", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable x set to (3, "Apple")
@@ -57,7 +57,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionReturnsTupleItem", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to f()
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexFunctionReturnsTuple", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to f()
@@ -151,7 +151,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_IndexGenericFunctionReturnsTuple", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [(1,2)]
@@ -188,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionTupleParameter", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to "one"
@@ -234,7 +234,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssignANewTupleOfSameType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3,"Apple")
@@ -270,7 +270,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_item in expression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable p set to [1, 2, 3, 4, 5]
@@ -320,7 +320,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AssignItemToWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3,"Apple")
@@ -349,7 +349,7 @@ end main
   });
 
   test("Fail_ImmutableSoCannotAssignAnItem", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3, "Apple")
@@ -372,7 +372,7 @@ end main
   });
 
   test("Fail_AssignANewTupleOfWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3, "Apple")
@@ -399,7 +399,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3, "Apple", 4)
@@ -426,7 +426,7 @@ end main
   });
 
   test("Fail_DifferentSizeTuples2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3, "Apple")
@@ -453,7 +453,7 @@ end main
   });
 
   test("Fail_itemOutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (3, "Apple")

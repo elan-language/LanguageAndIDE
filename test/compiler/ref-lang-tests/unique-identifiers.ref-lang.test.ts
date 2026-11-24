@@ -4,19 +4,18 @@ import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertObjectCodeExecutes,
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Unique Identifiers", () => {
   test("Pass_CanHaveIdentiferSameAsTypeExceptCase", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()
@@ -72,7 +71,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_KeywordWithDifferentCaseAsIdentifier", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable fOr set to 1
@@ -93,7 +92,7 @@ end main`;
   });
 
   test("Fail_SameVariableNameInScope", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable id set to 1

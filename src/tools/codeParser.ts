@@ -61,7 +61,7 @@ export function resetFile() {
 
 function newFileImpl(): FileImpl {
   if (!fileImpl) {
-    fileImpl = new FileImpl(hash, new Paradigm(""), "guest", transforms(), stdLib, false, true);
+    fileImpl = new FileImpl(hash, new Paradigm(""), "", transforms(), stdLib, false, true);
   }
 
   const cc = fileImpl.getChildren();

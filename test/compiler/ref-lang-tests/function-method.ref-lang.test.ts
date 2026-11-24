@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Function Method", () => {
   test("Pass_HappyCase", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -87,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -161,7 +161,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -235,7 +235,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to new Bar()
@@ -352,7 +352,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodReturnTypeOnProperty1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to new Bar()
@@ -491,7 +491,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionViaProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -604,7 +604,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodMayCallOtherClassFunctionMethod", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -721,7 +721,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionMethodNameHidesGlobalFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -791,7 +791,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FunctionOnDifferentInstance1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -872,7 +872,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_FunctionCannotBeCalledDirectly", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -915,7 +915,7 @@ end class`;
   });
 
   test("Fail_FunctionisNotDefined", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -955,7 +955,7 @@ end class`;
   });
 
   test("Fail_FunctionMethodCannotMutateProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()
@@ -992,7 +992,7 @@ end class`;
   });
 
   ignore_test("Fail_FunctionMethodCannotCallProcedureMethod", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()
@@ -1034,7 +1034,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1069,7 +1069,7 @@ end class`;
   });
 
   test("Fail_ReturnUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1104,7 +1104,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1136,7 +1136,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1168,7 +1168,7 @@ end class`;
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1200,7 +1200,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1237,7 +1237,7 @@ end class`;
   });
 
   test("Fail_NestedUpdateProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1281,7 +1281,7 @@ end class`;
   });
 
   test("Fail_NestedUpdateProperty1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1329,7 +1329,7 @@ end class`;
   });
 
   test("Fail_IncorrectScope", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1367,7 +1367,7 @@ end function`;
   });
 
   test("Fail_ParameterNameClash1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()
@@ -1399,7 +1399,7 @@ end class`;
   });
 
   test("Fail_ParameterNameClash2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()

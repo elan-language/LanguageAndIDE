@@ -7,7 +7,6 @@ import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
   assertCompiles,
   assertDoesNotCompile,
-  assertDoesNotParse,
   assertGraphicsContains,
   assertObjectCodeDoesNotExecute,
   assertObjectCodeExecutes,
@@ -17,13 +16,13 @@ import {
   assertTestObjectCodeExecutes,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("StdLib", () => {
   test("Pass_contains", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable arr set to ["three", "four"]
@@ -75,7 +74,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_pause", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(1)
@@ -110,7 +109,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clock", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to clock()
@@ -147,7 +146,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_random1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to random()
@@ -184,7 +183,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_float1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to  asFloat("10.1")
@@ -217,7 +216,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_float2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asFloat("x12")
@@ -250,7 +249,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_float3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asFloat("25g")
@@ -283,7 +282,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_float4", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to  asFloat("10")
@@ -316,7 +315,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_floatExponent", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to  asFloat("10.1e2")
@@ -355,7 +354,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_int0", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asInt("25g")
@@ -386,7 +385,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_int1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asInt("10")
@@ -419,7 +418,7 @@ return [main, _tests];}`;
   });
 
   test("fail_int2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asInt("")
@@ -450,7 +449,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_int3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to asInt("10.1")
@@ -480,7 +479,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "'10.1' does not parse as an integer");
   });
   test("Pass print (procedure) String", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Hello")
@@ -513,7 +512,7 @@ return [main, _tests];}`;
   });
 
   test("Pass print (procedure) Int", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(101)
@@ -546,7 +545,7 @@ return [main, _tests];}`;
   });
 
   test("Pass printTab", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printTab(0,"Hello")
@@ -579,7 +578,7 @@ return [main, _tests];}`;
   });
 
   test("Pass printTab Int", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printTab(0,12345)
@@ -612,7 +611,7 @@ return [main, _tests];}`;
   });
 
   test("Pass lib constants", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(openBrace)
@@ -647,7 +646,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_maths_tests", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 test test_maths
   assert pi evaluates to 3.141592653589793
@@ -735,7 +734,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_Random", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable results set to [0, 0]
@@ -781,7 +780,7 @@ return [main, _tests];}`;
   });
 
   test("RandomInitialised", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable results set to [0, 0]
@@ -834,7 +833,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetrue10000");
   });
   test("RandomInFixedSequence", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -890,7 +889,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "0, 0, 0, 3365, 3268, 3367, 0, ");
   });
   test("Pass_RandomType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable results set to [0, 0, 0, 0, 0, 0, 0]
@@ -958,7 +957,7 @@ return [main, _tests];}`;
   });
 
   test("bitwise operations", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 13
@@ -1005,7 +1004,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_stringForUnicode", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(unicode(65))
@@ -1036,7 +1035,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_asUnicode", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine("Apple".asUnicode())
@@ -1067,7 +1066,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_appendList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2]
@@ -1106,7 +1105,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_appendListOfSubclass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Foo>()
@@ -1176,7 +1175,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prependList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2]
@@ -1215,7 +1214,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prepend", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2]
@@ -1252,7 +1251,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_split", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s set to "Now is the time..."
@@ -1286,7 +1285,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[Now, is, the, time...]");
   });
   test("Pass_joinListOfString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable words set to ["Now", "is","the","time..."]
@@ -1320,7 +1319,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Now.is.the.time...");
   });
   test("Pass_joinListOfObjects", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable words set to [new Point(), new Point()]
@@ -1377,7 +1376,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_replace", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s1 set to "[a] [b]"
@@ -1413,7 +1412,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[a] [b]{a} {b}");
   });
   test("Pass_testRegExp", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable s1 set to "cbababbc"
@@ -1453,7 +1452,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
   test("Pass_indexOf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1, 3, 5, 7, 9]
@@ -1505,7 +1504,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "420-142-1");
   });
   test("Pass_asUnicodeReturnsInt#1061", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable i set to 1
@@ -1539,7 +1538,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "65");
   });
   test("Pass_isNaN", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(sqrt(-1).isNaN())
@@ -1571,7 +1570,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truefalse");
   });
   ignore_test("Pass_isInfinite", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine((1.0/0).isInfinite())
@@ -1608,7 +1607,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Constraint", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of CircleVG>()
@@ -1645,7 +1644,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_Constraint", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Foo>()
@@ -1680,7 +1679,7 @@ end class`;
   });
 
   test("Pass_split", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(asInt("12 34 56".split(" ")[1]))
@@ -1715,7 +1714,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_drawHtml", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call displayHtml("<p>fred</p>")
@@ -1746,7 +1745,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clearHtml", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call displayHtml("<p>fred</p>")
@@ -1779,7 +1778,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_tone", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call tone(10, 10, 10)
@@ -1809,7 +1808,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_range", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(range(1, 6))
@@ -1839,7 +1838,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 2, 3, 4, 5]");
   });
   test("Pass_range_EmptyIfEnd<Start", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(range(5, 0))
@@ -1869,7 +1868,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[]");
   });
   test("Pass_rangeInSteps", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(rangeInSteps(1, 7, 2))
@@ -1901,7 +1900,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "[1, 3, 5][5, 3, 1, -1, -3]");
   });
   test("Pass_rangeInStepsError1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(rangeInSteps(1, 7, 0))
@@ -1931,7 +1930,7 @@ return [main, _tests];}`;
     await assertObjectCodeDoesNotExecute(fileImpl, "value for step cannot be zero");
   });
   test("Pass_rangeInStepsError2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(rangeInSteps(1, 7, -1))
@@ -1964,7 +1963,7 @@ return [main, _tests];}`;
     );
   });
   test("Pass_rangeInStepsError3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(rangeInSteps(6, 2, 2))
@@ -1995,7 +1994,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_shadowLibraryType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class List
   constructor()
@@ -2028,7 +2027,7 @@ end main
   });
 
   test("Pass_SetComparisonByValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to ["2", "7"].asHashSet()
@@ -2078,7 +2077,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_divideFunctions", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(divAsInt(1, 2))
@@ -2124,7 +2123,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_createList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(5, "a")
@@ -2158,7 +2157,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_createListOfLists", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedListofLists(3, 2, 5)
@@ -2192,7 +2191,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_createDictionary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [("a", 1), ("b", 2)]
@@ -2238,7 +2237,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_allLibraryTypeNamesValid", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new CircleVG()
@@ -2281,7 +2280,7 @@ end procedure
   });
 
   test("Pass_allLibraryProceduresValid", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -2304,7 +2303,7 @@ end main
   });
 
   test("Pass_Equals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1.equals(1)

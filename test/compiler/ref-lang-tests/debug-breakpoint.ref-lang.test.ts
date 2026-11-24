@@ -5,11 +5,11 @@ import { FileImpl } from "../../../src/ide/frames/file-impl";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import { asDebugSymbol, assertDebugBreakPoint } from "../../testHelpers";
-import { ignore_test, testHash, testHeader, transforms } from "../compiler-test-helpers";
+import { ignore_test, testHash, testRefLangHeader, transforms } from "../compiler-test-helpers";
 
 suite("DebugBreakpoint", () => {
   test("Pass_Main", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant a set to 1
 
@@ -34,7 +34,7 @@ end main`;
   });
 
   test("Pass_LocalvariablesMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 1
@@ -64,7 +64,7 @@ end main`;
   });
 
   ignore_test("Pass_LocalvariablesProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call pp(3)
@@ -99,7 +99,7 @@ end procedure`;
   });
 
   test("Pass_LocalvariablesFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ff(3)
@@ -135,7 +135,7 @@ end function`;
   });
 
   ignore_test("Pass_LocalvariablesMemberProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -185,7 +185,7 @@ end class`;
   });
 
   ignore_test("Pass_LocalvariablesMemberFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -236,7 +236,7 @@ end class`;
   });
 
   ignore_test("Pass_LocalvariablesConstructor", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo(3)
@@ -281,7 +281,7 @@ end class`;
   });
 
   test("Pass_InForLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable tot set to 0
@@ -311,7 +311,7 @@ end main`;
   });
 
   test("Pass_InEachLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [7,8,9]
@@ -345,7 +345,7 @@ end main`;
   });
 
   test("Pass_InWhileLoop", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable t set to 0
@@ -382,7 +382,7 @@ end main`;
   });
 
   ignore_test("Pass_InTry", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -411,7 +411,7 @@ end main`;
   });
 
   ignore_test("Pass_InCatch", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   try
@@ -443,7 +443,7 @@ end main`;
   });
 
   ignore_test("Pass_InIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to true
@@ -476,7 +476,7 @@ end main`;
   });
 
   ignore_test("Pass_InElse", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false
@@ -509,7 +509,7 @@ end main`;
   });
 
   ignore_test("Pass_InElseIf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false
@@ -542,7 +542,7 @@ end main`;
   });
 
   ignore_test("Pass_AsyncBreakPoints", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [ff(1), ff(2)]
@@ -571,7 +571,7 @@ end function
   });
 
   ignore_test("Pass_ClassTypeInfo", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo()
@@ -620,7 +620,7 @@ end class`;
   });
 
   ignore_test("Pass_Enum", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to Fruit.apple
@@ -646,7 +646,7 @@ enum Fruit apple, pear`;
   });
 
   ignore_test("Pass_Tuple", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to (1, "fred")
@@ -676,7 +676,7 @@ end main`;
   });
 
   ignore_test("Pass_FunctionProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(f as Foo) returns Int
   return 1

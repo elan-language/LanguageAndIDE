@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Procedure Method", () => {
   test("Pass_HappyCase", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -87,7 +87,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureCanContainSystemCall", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -157,7 +157,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ProcedureMethodMayCallOtherClassProcedureMethod", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -280,7 +280,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ProcedureMethodCannotBeCalledDirectly", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -323,7 +323,7 @@ end class`;
   });
 
   test("Fail_CallUnknownMethodOnInstance", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo()
@@ -365,7 +365,7 @@ end class`;
   });
 
   test("Fail_ParameterUnknownType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -400,7 +400,7 @@ end class`;
   });
 
   test("Fail_UseOfKeywordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
  
@@ -432,7 +432,7 @@ end class`;
   });
 
   test("Fail_UseOfReservedWordAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -464,7 +464,7 @@ end class`;
   });
 
   test("Fail_UseOfLangTypeAsName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -496,7 +496,7 @@ end class`;
   });
 
   test("Fail_NotUniqueParameterName", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -533,7 +533,7 @@ end class`;
   });
 
   test("Fail_SetPropertyWithoutPrefix", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -572,7 +572,7 @@ end class`;
   });
 
   test("Fail_standaloneLibProcedureAsExtension", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 3
@@ -598,7 +598,7 @@ end main`;
   });
 
   test("Fail_standaloneProcedureAsExtension", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 3
@@ -627,7 +627,7 @@ end procedure`;
   });
 
   test("Fail_ParameterNameClash1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()
@@ -659,7 +659,7 @@ end class`;
   });
 
   test("Fail_ParameterNameClash2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 class Foo
   constructor()

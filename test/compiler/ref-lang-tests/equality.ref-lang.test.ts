@@ -10,13 +10,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Equality", () => {
   ignore_test("Pass_DifferentInstancesWithSameValuesAreValueEqual", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo(7, "Apple")
@@ -98,7 +98,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ActuallyTheSameReference", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo(7, "Apple")
@@ -182,7 +182,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_CompareLambdas", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo()
@@ -219,7 +219,7 @@ end class`;
   });
 
   test("Pass_ListValueEquality1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f1 set to new Foo(1)
@@ -306,7 +306,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ListValueEquality2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f1 set to new Foo(1)

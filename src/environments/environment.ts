@@ -1,8 +1,8 @@
 export const isElanProduction = false;
 
 export const elanVersion = {
-  major: 2,
+  major: 3,
   minor: 0,
   patch: 0,
-  preRelease: "beta5",
+  preRelease: "alpha",
 };

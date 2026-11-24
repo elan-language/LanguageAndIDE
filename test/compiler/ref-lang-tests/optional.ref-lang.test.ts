@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Maybe", () => {
   test("Pass_Maybe1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Maybe<of Foo>()  
@@ -68,7 +68,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Maybe2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Maybe<of List<of Int>>()  
@@ -99,7 +99,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ValueType1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Maybe<of String>()
@@ -124,7 +124,7 @@ end main`;
   });
 
   test("Fail_ValueType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 function foo(p as Maybe<of Int>) returns Int
   return 0

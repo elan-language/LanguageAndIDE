@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-alpha4
+# Python with Elan 3.0.0-alpha
 
 allWords = "AAHED ZYMIC" # constant
 

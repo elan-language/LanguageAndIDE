@@ -77,13 +77,13 @@ class TestStdLib {
   @elanProcedure([])
   hiddenDeprecatedProcedure() {}
 
-  @elanDeprecated(Deprecation.methodRemoved, 3, 0, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 4, 0, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated1(): number {
     return 0;
   }
 
-  @elanDeprecated(Deprecation.methodRemoved, 2, 20, "LibRef.html#Xxxx")
+  @elanDeprecated(Deprecation.methodRemoved, 3, 99, "LibRef.html#Xxxx")
   @elanFunction([])
   notYetDeprecated2(): number {
     return 0;

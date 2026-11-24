@@ -10,13 +10,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Private Members", () => {
   test("Pass_PrivatePropertyCanBeDeclared", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo()
@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrivateProcedureCanBeDeclared", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Foo()
@@ -162,7 +162,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PrivateFunctionCanBeDeclared", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -234,7 +234,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_PrivatePropertyCannotBeAccessed", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -278,7 +278,7 @@ end class`;
   });
 
   ignore_test("Fail_PrivatePropertyCannotBeAccessedViaAbstract", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -318,7 +318,7 @@ end class`;
   });
 
   ignore_test("Fail_PrivateProcedureCannotBeAccessed", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()
@@ -358,7 +358,7 @@ end class`;
   });
 
   ignore_test("Fail_PrivateFunctionCannotBeAccessed", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()
@@ -398,7 +398,7 @@ end class`;
   });
 
   ignore_test("Fail_PrivatePropertyCannotBePrinted", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -442,7 +442,7 @@ end class`;
   });
 
   ignore_test("Fail_PrivateFunctionCannotBePrinted", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()

@@ -1,4 +1,4 @@
-# 9b4ae9517518461b5c19b4e4fe1f77589363305577f12296ae355cf2d1709c9f Python with Elan 2.0.0-beta5 valid
+# 377db035bd7c981d60cc6230316d34864480d6a66664cf4e417014036704a872 Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   t = Turtle() # variable definition

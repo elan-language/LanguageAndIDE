@@ -10,13 +10,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Function as HOF", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(3, twice)
@@ -66,7 +66,7 @@ return [main, _tests];}`;
 
   // no longer supported
   ignore_test("Pass_PassAsParam1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(3, twice)
@@ -115,7 +115,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PassAsParam2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printIt("Hello", "e", find)
@@ -164,7 +164,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ReturnAFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to getFunc()
@@ -213,7 +213,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetAsVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to twice
@@ -243,7 +243,7 @@ end function`;
   });
 
   test("Pass_SetAsProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo(ff)
@@ -313,7 +313,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Print", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(ff)
@@ -353,7 +353,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetAsVariableWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to twice
@@ -383,7 +383,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(3, pow2)
@@ -415,7 +415,7 @@ end function`;
   });
 
   test("Fail_FunctionSignatureDoesntMatch2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(3, pow)
@@ -447,7 +447,7 @@ end function`;
   });
 
   test("Fail_UsingReturnedFuncWithoutArgs", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to getFunc()
@@ -480,7 +480,7 @@ end function`;
   });
 
   test("Pass_PassAsParamWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(3, twice)
@@ -529,7 +529,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_ReturnAFunctionWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to getFunc()
@@ -563,7 +563,7 @@ end function`;
   });
 
   test("Pass_SetAsPropertyWithoutRefKeyword", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo(ff)
@@ -633,7 +633,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_InExpression1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to 1 + ff
@@ -662,7 +662,7 @@ end function`;
   });
 
   test("Fail_InExpression2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to 1 + ff

@@ -12,13 +12,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("List", () => {
   test("Pass_literalList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -51,7 +51,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_appendList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -88,7 +88,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_appendValueAsList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -115,7 +115,7 @@ end main`;
   });
 
   test("Pass_prependList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -152,7 +152,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_literalListOfList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [[4],[5]]
@@ -185,7 +185,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DeclareAnEmptyListBySizeAndCheckLength", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>()
@@ -218,7 +218,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ConfirmStringElementsInitializedToEmptyStringNotNull", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -253,7 +253,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InitialiseToEnum", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, Fruit.apple)
@@ -293,7 +293,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetAndReadIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2,3]
@@ -328,7 +328,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -369,7 +369,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_CannotinitialiseToReferenceType2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, new List<of Int>())
@@ -393,7 +393,7 @@ end main`;
   });
 
   test("Pass_SetAndReadElements", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -432,7 +432,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Range1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["foo", "bar", "yon"]
@@ -467,7 +467,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AddAndReadElements", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -506,7 +506,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetFromIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -553,7 +553,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_InsertElements", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -590,7 +590,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -627,7 +627,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeFirst", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three", "one", "two", "three"]
@@ -662,7 +662,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_removeAll", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three", "one", "two", "three"]
@@ -697,7 +697,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_EmptyListByValue", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Int>()
@@ -742,7 +742,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetInMain", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [2,2]
@@ -778,7 +778,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_SetInProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   call foo()
@@ -823,7 +823,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_SetInFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call print(foo())
@@ -854,7 +854,7 @@ end function
   });
 
   test("Fail_SetWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [2,2]
@@ -881,7 +881,7 @@ end main
   });
 
   test("Fail_EmptyList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Int>()
@@ -905,7 +905,7 @@ end main`;
   });
 
   test("Fail_UseRoundBracketsForIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -931,7 +931,7 @@ end main
   });
 
   test("Fail_ApplyIndexToANonIndexable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3
@@ -955,7 +955,7 @@ end main
   });
 
   test("Fail_ApplyIndexToUnknown", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable b set to a[0]
@@ -978,7 +978,7 @@ end main
   });
 
   test("Fail_2DListCreatedByDoubleIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>[3][4]
@@ -1002,7 +1002,7 @@ end main
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -1027,7 +1027,7 @@ end main
   });
 
   test("Fail_TypeIncompatibility", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3, "")
@@ -1053,7 +1053,7 @@ end main
   });
 
   test("Fail_DoubleIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of Int>()
@@ -1076,7 +1076,7 @@ end main
   });
 
   test("Fail_IndexTypeIncompatibility", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>()
@@ -1105,7 +1105,7 @@ end main
   });
 
   test("Fail_IndexTypeIncompatibility1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>()
@@ -1131,7 +1131,7 @@ end main
   });
 
   test("Fail_IndexWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>()
@@ -1157,7 +1157,7 @@ end main
   });
 
   test("Fail_SizeWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to createPopulatedList(3.1, 1)
@@ -1182,7 +1182,7 @@ end main
   });
 
   test("Fail_SizeSpecifiedInSquareBrackets", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>[3]
@@ -1205,7 +1205,7 @@ end main
 
   // obsolete code
   test("Fail_SpecifySizeAndInitializer", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to new List<of String>() {"foo","bar","yon"}
@@ -1227,7 +1227,7 @@ end main
   });
 
   test("Fail_getRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -1253,7 +1253,7 @@ end main
   });
 
   test("Pass_withPut", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1292,7 +1292,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_withPutOutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1327,7 +1327,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withInsertAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1366,7 +1366,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_withRemove", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -1393,7 +1393,7 @@ end main
   });
 
   test("Fail_appendWithPlus", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -1420,7 +1420,7 @@ end main
   });
 
   test("Fail_prependWithPlus", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to ["one", "two", "three"]
@@ -1449,7 +1449,7 @@ end main
   });
 
   test("Pass_withRemoveFirst", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three", "one", "two", "three"]
@@ -1484,7 +1484,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAll", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three", "one", "two", "three"]
@@ -1519,7 +1519,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_withRemoveAt", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1558,7 +1558,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_head", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1595,7 +1595,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_tail", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -1632,7 +1632,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_listOfFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo1 set to foo
@@ -1664,7 +1664,7 @@ end function`;
   });
 
   test("Pass_addElementToList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -1701,7 +1701,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_addListToList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -1740,7 +1740,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prependElementToList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -1777,7 +1777,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_prependListToList", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4,5,6,7,8]
@@ -1816,7 +1816,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_withoutGenericType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to new List()
@@ -1841,7 +1841,7 @@ end main`;
   });
 
   ignore_test("Fail_assignRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to [1,2,3,4]
@@ -1867,7 +1867,7 @@ end main`;
   });
 
   test("Fail_negativeIndexCompile", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to [1,2,3,4]
@@ -1891,7 +1891,7 @@ end main`;
   });
 
   test("Fail_negativeIndexRuntime", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to [1,2,3,4]
@@ -1916,7 +1916,7 @@ end main`;
   });
 
   test("Fail_listOfLibFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable body set to [getKey]
@@ -1940,7 +1940,7 @@ end main`;
   });
 
   test("Fail_listOfClassFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new Foo()
@@ -1978,7 +1978,7 @@ end class`;
   });
 
   ignore_test("Fail_EmptyGenericType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable f set to new List()
@@ -2002,7 +2002,7 @@ end main`;
   });
 
   test("Fail_appendTuple1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable points set to new List<of (Int, Int)>()
@@ -2028,7 +2028,7 @@ end main`;
   });
 
   test("Fail_appendTuple2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable points set to new List<of (Int, Int)>()
@@ -2054,7 +2054,7 @@ end main`;
   });
 
   test("Fail_withPutOutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
     variable a set to ["one", "two", "three"]
@@ -2089,7 +2089,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_OutOfRange", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [4, 5, 6, 7, 8]
@@ -2114,7 +2114,7 @@ end main
   });
 
   test("Fail_NegativeIndex", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to [1,2,3,4]

@@ -1,4 +1,4 @@
-# 2b1ac69e9fea0ce19dd5f184ea900db699c3dcee382bfcd99a0fc1327452a543 Python with Elan 2.0.0-beta5 valid
+# 2b1ac69e9fea0ce19dd5f184ea900db699c3dcee382bfcd99a0fc1327452a543 Python with Elan 3.0.0-alpha valid
 
 # - g, j and y, h to change shape
 

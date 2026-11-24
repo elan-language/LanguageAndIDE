@@ -10,13 +10,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Arithmetic Expressions", () => {
   test("Pass_BracketsChangeOperatorEvaluation", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 2 + 3 * 5 + 1
@@ -57,7 +57,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_RedundantBracketsIgnored", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
     main
     variable x set to 2 + (3 * 5) + 1
@@ -98,7 +98,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThatMultiply", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 2 + 3 ^ 2
@@ -135,7 +135,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThanFloatDivision", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 16.0 / 2 ^ 3
@@ -172,7 +172,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_PowerHasHigherPrecedenceThanDivision", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 16.0 / 2 ^ 3
@@ -209,7 +209,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_MinusAsAUnaryOperator", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 0.0
@@ -250,7 +250,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_OperatorPrecedenceForMod", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 11 mod 3
@@ -287,7 +287,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_PlusIsNotUnary", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 * + 4
@@ -308,7 +308,7 @@ end main`;
   });
 
   test("Fail_MultiplyAfterMinus", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 3 - * 4
@@ -329,7 +329,7 @@ end main`;
   });
 
   test("Pass_OperatorOrder#1167", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(2*12/3.0 + 190)
@@ -361,7 +361,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "1982");
   });
   test("Pass_NaN#1167", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(sqrt(-1))
@@ -391,7 +391,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "NaN");
   });
   test("Pass_Infinity#1167", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printNoLine(1.0/0)
@@ -421,7 +421,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "Infinity");
   });
   test("Pass_HexAndBinaryLiterals", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable h set to 0xfffe

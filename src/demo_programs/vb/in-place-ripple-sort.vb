@@ -1,4 +1,4 @@
-' VB.NET with Elan 2.0.0-beta5
+' VB.NET with Elan 3.0.0-alpha
 
 Sub main()
   Dim li = {7, 1, 0, 4, 8, 3, 6} ' variable definition

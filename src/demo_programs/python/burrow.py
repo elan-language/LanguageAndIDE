@@ -1,4 +1,4 @@
-# 9a5622f4c823670c2cb545a5627aa7cf78bb3dfb969918135f74a5a422a047c5 Python with Elan 2.0.0-beta5 valid
+# c645960efdc252939da3a223129f2c58b38e2e252a482bbf4e7b89dfcbc1f77a Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   blocks = BlockGraphics() # variable definition

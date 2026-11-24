@@ -5,6 +5,7 @@ import { readdirSync, readFileSync, writeFileSync } from "fs";
 import * as jsdom from "jsdom";
 import Worker from 'web-worker';
 import { DebugSymbol } from "../src/compiler/compiler-interfaces/debug-symbol";
+import { RootAstNode } from "../src/compiler/compiler-interfaces/root-ast-node";
 import { BreakpointStatus } from "../src/compiler/debugging/breakpoint-status";
 import { StdLib } from "../src/compiler/standard-library/std-lib";
 import { BooleanType } from "../src/compiler/symbols/boolean-type";
@@ -39,7 +40,6 @@ import { WebWorkerMessage } from "../src/ide/web/web-worker-messages";
 import { assertParses, testHash, transforms } from "./compiler/compiler-test-helpers";
 import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
-import { RootAstNode } from "../src/compiler/compiler-interfaces/root-ast-node";
 
 // flag to update test files
 const updateTestFiles = false;

@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Logical Operators", () => {
   test("Pass_and", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false and false
@@ -62,7 +62,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_or", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false or false
@@ -107,7 +107,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_not", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to not false
@@ -144,7 +144,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_Precedence", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to not false and true
@@ -180,7 +180,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetrue");
   });
   ignore_test("Pass_CombineLogicalOpsWithComparison1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to (4 > 3) and (6 > 5)
@@ -220,7 +220,7 @@ return [main, _tests];}`;
     await assertObjectCodeExecutes(fileImpl, "truetruefalse");
   });
   test("Pass_CombineLogicalOpsWithComparison2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to (true and false) is (true or false)
@@ -253,7 +253,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TypeCheck", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false and 1
@@ -290,7 +290,7 @@ end main`;
   });
 
   test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to 4 > 3 and 6 > 5
@@ -317,7 +317,7 @@ end main`;
   });
 
   ignore_test("Fail_CombineLogicalOpsWithComparisonWithoutBrackets2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to not 4 > 3
@@ -344,7 +344,7 @@ end main`;
   });
 
   test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main 
   variable a set to true and false is true or false
@@ -377,7 +377,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_UseNotWithTwoArgs", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to true not false
@@ -398,7 +398,7 @@ end main`;
   });
 
   test("Fail_xor", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to false xor false
@@ -420,7 +420,7 @@ end main`;
   });
 
   test("Fail_notOnNonBoolean1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to not 1
@@ -446,7 +446,7 @@ end main`;
   });
 
   test("Fail_notOnNonBoolean2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "fred"
@@ -473,7 +473,7 @@ end main`;
   });
 
   test("Fail_minusOnNonNumber1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to -true
@@ -498,7 +498,7 @@ end main`;
   });
 
   test("Fail_minusOnNonNumber2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to "fred"

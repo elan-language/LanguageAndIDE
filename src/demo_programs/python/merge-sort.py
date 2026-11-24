@@ -1,4 +1,4 @@
-# Python with Elan 2.0.0-beta5
+# Python with Elan 3.0.0-alpha
 
 # Implementation of the Merge sort algorithm demonstrating
 

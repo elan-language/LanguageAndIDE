@@ -13,13 +13,13 @@ import {
   assertTestObjectCodeExecutes,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Test and Assert", () => {
   test("Pass_PassingTest", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -80,7 +80,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_BracketedExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -121,7 +121,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertTuple", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -167,7 +167,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertSimpleVarRef", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -213,7 +213,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertCompoundVarRef1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -283,7 +283,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AssertCompoundVarRef2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -353,7 +353,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_FailingTest", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -410,7 +410,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_ErrorTest1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -463,7 +463,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ErrorTest2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -508,7 +508,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_ErrorTest3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -555,7 +555,7 @@ return [main, _tests];}`;
     ]);
   });
   test("Pass_VariousTestsOnAssert", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -664,7 +664,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TestUseOfRoundForFloats", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -749,7 +749,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_TestWithProcedure", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -779,7 +779,7 @@ end test
   });
 
   test("Pass_expressionForExpected", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -829,7 +829,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AssertOutsideAtest", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   assert square(3) evaluates to 3 * 3
@@ -855,7 +855,7 @@ end function
   });
 
   ignore_test("Fail_callATest", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call test_squareTest()
@@ -887,7 +887,7 @@ end test
   });
 
   ignore_test("Fail_useTestAsAReference", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to test_squareTest
@@ -919,7 +919,7 @@ end test
   });
 
   test("Fail_assertWithinAMultiline", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -948,7 +948,7 @@ end test
   });
 
   test("Fail_assertWithinAMultiline2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -977,7 +977,7 @@ end test
   });
 
   test("Pass_HtmlEscapedString", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 end main
@@ -1023,7 +1023,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DuplicateTestName1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 test test_square
 
@@ -1052,7 +1052,7 @@ end test
   });
 
   test("Fail_DuplicateTestName2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 procedure test_proc()
  
@@ -1081,7 +1081,7 @@ end test
   });
 
   ignore_test("Fail_DuplicateTestName3", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 constant test_cc set to 1
 

@@ -11,13 +11,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Abstract Class", () => {
   test("Pass_SimpleAbstractClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -114,7 +114,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractClassWithConcreteMembers", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -201,7 +201,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractClassWithConcreteMembers1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -284,7 +284,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractClassWithConcreteMembers2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -372,7 +372,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_AbstractClassInheritsAbstractClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -482,7 +482,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DifferentAbstractClassIntoFunction1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -598,7 +598,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_DifferentAbstractClassIntoFunction2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -714,7 +714,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_Default", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -815,7 +815,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_DoesntImplementFunc", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -861,7 +861,7 @@ end class`;
   });
 
   test("Fail_DoesntImplementProc", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -907,7 +907,7 @@ end class`;
   });
 
   test("Fail_InheritSelf", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -935,7 +935,7 @@ end class`;
   });
 
   test("Fail_InheritSelfIndirect", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -971,7 +971,7 @@ end class`;
   });
 
   test("Fail_DuplicateProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1003,7 +1003,7 @@ end class`;
   });
 
   test("Fail_InheritConcreteClass", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
 
@@ -1040,7 +1040,7 @@ end class`;
   });
 
   test("Fail_DifferentAbstractClassIntoFunction", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()
@@ -1095,7 +1095,7 @@ end class`;
   });
 
   test("Fail_MultipleAbstractClassInherits", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to new Bar()

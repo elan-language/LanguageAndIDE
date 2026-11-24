@@ -9,13 +9,13 @@ import {
   assertParses,
   assertStatusIsValid,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Block Graphics", () => {
   test("Pass_SimpleDraw", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new BlockGraphics()
@@ -48,7 +48,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_put", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new BlockGraphics()
@@ -83,7 +83,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_ClearBlocks", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new BlockGraphics()
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new BlockGraphics()
@@ -153,7 +153,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getNumericKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to 0
@@ -188,7 +188,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_waitForKey", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to waitForKey()
@@ -221,7 +221,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_getKeyWithModifier", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable a set to getKeyWithModifier()
@@ -254,7 +254,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_clearKeyBuffer", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call clearKeyBuffer()
@@ -285,7 +285,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_newGraphics", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable g set to new BlockGraphics()
@@ -316,7 +316,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_defaultGraphics", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()

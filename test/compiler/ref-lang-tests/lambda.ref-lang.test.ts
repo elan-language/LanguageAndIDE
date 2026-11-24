@@ -11,13 +11,13 @@ import {
   assertStatusIsValid,
   ignore_test,
   testHash,
-  testHeader,
+  testRefLangHeader,
   transforms,
 } from "../compiler-test-helpers";
 
 suite("Lambda", () => {
   test("Pass_PassAsParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(4, lambda x as Int => x * 3)
@@ -57,7 +57,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TupleArg", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified((4, 5), lambda t as (Int, Int) => first(t))
@@ -108,7 +108,7 @@ return [main, _tests];}`;
   });
 
   test("Pass_TupleArg1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified((4, 5), lambda t as (Int, Int) => t.item_0)
@@ -148,7 +148,7 @@ return [main, _tests];}`;
   });
 
   test("Fail_AssignALambdaToAVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to lambda x => x * 5
@@ -170,7 +170,7 @@ end main`;
   });
 
   test("Fail_AssignALambdaToAProperty", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable foo set to new Foo()
@@ -209,7 +209,7 @@ end class`;
   });
 
   test("Fail_lambdaInExpression", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to lambda x => x * 5
@@ -231,7 +231,7 @@ end main`;
   });
 
   test("Fail_ReturnALambda", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to getFunc()
@@ -257,7 +257,7 @@ end function`;
   });
 
   test("Fail_ParameterlessLambda", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable x set to 3
@@ -280,7 +280,7 @@ end main`;
   });
 
   test("Fail ReturnAParameterLessLambda", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to getFunc(5)
@@ -306,7 +306,7 @@ end function`;
   });
 
   test("Fail_FuncOfMutableType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to getFunc(5)
@@ -332,7 +332,7 @@ end function`;
   });
 
   test("Fail_Lambda WithLambdaParam", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to lambda x<of Int => Int> => x(2)
@@ -354,7 +354,7 @@ end main`;
   });
 
   test("Fail_ImmediateInvoke", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to getFunc()(5)
@@ -380,7 +380,7 @@ end function`;
   });
 
   test("Fail_PassLambdaWithWrongTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(4, lambda x as Int => x.toString())
@@ -408,7 +408,7 @@ end procedure`;
   });
 
   test("Fail_InvokeLambdaWithWrongType", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified("4", lambda x as Int => x + 3)
@@ -437,7 +437,7 @@ end procedure`;
 
   // no longer supported
   ignore_test("Fail_PassLambdaWithWrongTypes1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(4, lambda x as Int => x)
@@ -465,7 +465,7 @@ end procedure`;
   });
 
   ignore_test("Fail_PassLambdaWithWrongTypes2", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(4, lambda => 0)
@@ -494,7 +494,7 @@ end procedure`;
 
   // no longer supported
   ignore_test("Fail_InvokeLambdaWithWrongTypes", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   call printModified(4, lambda => 0)
@@ -522,7 +522,7 @@ end procedure`;
   });
 
   test("Fail_ReturnSameNameAsVariable", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable aa set to lambda x => aa
@@ -543,7 +543,7 @@ end main`;
   });
 
   test("Fail_ReturnSameNameAsVariable1", async () => {
-    const code = `${testHeader}
+    const code = `${testRefLangHeader}
 
 main
   variable l set to lambda x => if_(x is 1, x, l(x-1))

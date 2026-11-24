@@ -1,4 +1,4 @@
-// C# with Elan 2.0.0-alpha4
+// C# with Elan 3.0.0-alpha
 
 const String allWords = "AAHED ZYMIC"
 
