@@ -718,8 +718,7 @@ class Test_maths(unittest.TestCase):
     self.assertEqual(tan(pi/4).round(2), 1)
     self.assertEqual(radians(90).round(2), 1.57)
     self.assertEqual(degrees(1).round(0), 57)
-  # end test
-# end test class
+# end test
 
 main()
 `;

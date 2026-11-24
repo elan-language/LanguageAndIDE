@@ -9,7 +9,6 @@ import { MainContext } from "./PythonParser.js";
 import { MainCallContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
-import { TestFunctionContext } from "./PythonParser.js";
 import { TestStatementContext } from "./PythonParser.js";
 import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
@@ -188,12 +187,6 @@ export class PythonVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitTest?: (ctx: TestContext) => Result;
-  /**
-   * Visit a parse tree produced by `PythonParser.testFunction`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitTestFunction?: (ctx: TestFunctionContext) => Result;
   /**
    * Visit a parse tree produced by `PythonParser.testStatement`.
    * @param ctx the parse tree

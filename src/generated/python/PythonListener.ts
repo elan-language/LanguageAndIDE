@@ -9,7 +9,6 @@ import { MainContext } from "./PythonParser.js";
 import { MainCallContext } from "./PythonParser.js";
 import { FunctionContext } from "./PythonParser.js";
 import { TestContext } from "./PythonParser.js";
-import { TestFunctionContext } from "./PythonParser.js";
 import { TestStatementContext } from "./PythonParser.js";
 import { ProcedureContext } from "./PythonParser.js";
 import { ConstantContext } from "./PythonParser.js";
@@ -213,16 +212,6 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitTest?: (ctx: TestContext) => void;
-  /**
-   * Enter a parse tree produced by `PythonParser.testFunction`.
-   * @param ctx the parse tree
-   */
-  enterTestFunction?: (ctx: TestFunctionContext) => void;
-  /**
-   * Exit a parse tree produced by `PythonParser.testFunction`.
-   * @param ctx the parse tree
-   */
-  exitTestFunction?: (ctx: TestFunctionContext) => void;
   /**
    * Enter a parse tree produced by `PythonParser.testStatement`.
    * @param ctx the parse tree

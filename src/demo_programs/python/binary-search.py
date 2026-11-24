@@ -1,4 +1,4 @@
-# eb52b2e22238f76ccb9d3f6481f33b382d95e4f9f1ff77d4086fa4dd28df4f4d Python with Elan 2.0.0-beta5 valid
+# 92afd70dc364c0b8b73bdead4df959e45bb01a222af55535a6933225790af9e4 Python with Elan 2.0.0-beta5 valid
 
 def main() -> None:
   fruit = ["apple", "avocado", "banana", "blueberry", "cherry", "fig", "grape", "kiwi", "lemon", "lychee", "mango", "orange", "papaya", "peach", "pear", "pineapple", "plum", "raspberry", "strawberry", "watermelon"] # variable definition
@@ -34,8 +34,22 @@ def binarySearch(li: list[str], item: str) -> bool: # function
   return result
 # end function
 
-class Test_binarySearch(unittest.TestCase): def test_binarySearch(self) -> None:
-
+class Test_binarySearch(unittest.TestCase):
+ def test_binarySearch(self: Test_binarySearch) -> None:
+  li1 = ["lemon", "lime", "orange"] # variable definition
+  self.assertEqual(binarySearch(li1, "lemon"), True)
+  self.assertEqual(binarySearch(li1, "lime"), True)
+  self.assertEqual(binarySearch(li1, "orange"), True)
+  self.assertEqual(binarySearch(li1, "pear"), False)
+  li2 = ["lemon", "orange"] # variable definition
+  self.assertEqual(binarySearch(li2, "lemon"), True)
+  self.assertEqual(binarySearch(li2, "orange"), True)
+  self.assertEqual(binarySearch(li2, "pear"), False)
+  li3 = ["lemon"] # variable definition
+  self.assertEqual(binarySearch(li3, "lemon"), True)
+  self.assertEqual(binarySearch(li3, "lime"), False)
+  li4 = list[str]() # variable definition
+  self.assertEqual(binarySearch(li4, "pear"), False)
 # end test
 
 main()
