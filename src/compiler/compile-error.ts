@@ -1,5 +1,6 @@
 import { Language } from "../ide/frames/frame-interfaces/language";
 import { Deprecation, DeprecationSeverity } from "./compiler-interfaces/elan-type-interfaces";
+import { TerminalSymbol } from "./syntax-nodes/terminal-symbol";
 
 export enum DisplayPriority {
   first,
@@ -497,7 +498,7 @@ export class DuplicateKeyCompileError extends CompileError {
     super(
       DisplayPriority.fourth,
       Severity.error,
-      `Duplicate ${l.DICT_NAME} key(s).`,
+      `Duplicate ${l.mapTerminalSymbol(TerminalSymbol.DictionaryName)} key(s).`,
       location,
       "ErrorMessages.html#compile_error",
     );

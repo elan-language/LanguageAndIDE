@@ -1,6 +1,7 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
+import { TerminalSymbol } from "../syntax-nodes/terminal-symbol";
 import { FloatName } from "./elan-type-names";
 import { IntType } from "./int-type";
 
@@ -8,7 +9,7 @@ export class FloatType implements SymbolType {
   private constructor() {}
 
   languageSpecificName(language: Language): string {
-    return language.FLOAT_NAME;
+    return language.mapTerminalSymbol(TerminalSymbol.FloatName);
   }
 
   initialValue = "0";

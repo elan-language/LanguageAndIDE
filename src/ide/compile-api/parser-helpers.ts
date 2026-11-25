@@ -262,13 +262,13 @@ export function getConstantType(text: string, language: Language) {
   let typeName = "";
   const term = language.mapTerminal(text);
   if (text.startsWith(`"`)) {
-    typeName = language.STRING_NAME;
+    typeName = language.mapTerminalSymbol(TerminalSymbol.StringName);
   } else if (term === TerminalSymbol.True || term === TerminalSymbol.False) {
-    typeName = language.BOOL_NAME;
+    typeName = language.mapTerminalSymbol(TerminalSymbol.BoolName);
   } else if (/[0-9]\..*/.test(text)) {
-    typeName = language.FLOAT_NAME;
+    typeName = language.mapTerminalSymbol(TerminalSymbol.FloatName);
   } else if (/[0-9].*/.test(text)) {
-    typeName = language.INT_NAME;
+    typeName = language.mapTerminalSymbol(TerminalSymbol.IntName);
   }
   return typeName;
 }

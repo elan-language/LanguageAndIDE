@@ -251,14 +251,6 @@ export class LanguageRefLang extends LanguageAbstract {
 
   GHOSTED = "[ghosted]";
 
-  INT_NAME: string = "Int";
-  FLOAT_NAME: string = "Float";
-  BOOL_NAME: string = "Boolean";
-  STRING_NAME: string = "String";
-  LIST_NAME: string = "List";
-  DICT_NAME: string = "Dictionary";
-  FUNC_NAME: string = "Func";
-
   OVERRIDES = "";
   IMPLEMENTS = "";
 
@@ -309,6 +301,15 @@ export class LanguageRefLang extends LanguageAbstract {
     [TerminalSymbol.GenericEnd, ">"],
     [TerminalSymbol.ThisInstance, "this"],
     [TerminalSymbol.Comment, "#"],
+
+    [TerminalSymbol.IntName, "Int"],
+    [TerminalSymbol.FloatName, "Float"],
+    [TerminalSymbol.BoolName, "Boolean"],
+    [TerminalSymbol.StringName, "String"],
+    [TerminalSymbol.ListName, "List"],
+    [TerminalSymbol.DictionaryName, "Dictionary"],
+    [TerminalSymbol.TupleName, "Tuple"],
+    [TerminalSymbol.FuncName, "Func"],
   ]);
 
   override mapOperation(op: string): OperationSymbol {
