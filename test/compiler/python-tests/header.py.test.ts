@@ -84,7 +84,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_versionPatch1", async () => {
-    const code = `# 059b98f737252eb25aef520a8ebaeb7b649dc31f1d3d129ebe43992f7df5bbf3 Elan 1.0.100 valid
+    const code = `# 059b98f737252eb25aef520a8ebaeb7b649dc31f1d3d129ebe43992f7df5bbf3 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -118,7 +118,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_versionPatch2", async () => {
-    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -152,7 +152,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_versionMinor", async () => {
-    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -186,7 +186,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Pass_user", async () => {
-    const code = `# 4949493ed4278e580a9ce6c85933365009324ed49b9a92437d04b027e4613522 Elan 1.0.0 aUser default_paradigm valid
+    const code = `# 4949493ed4278e580a9ce6c85933365009324ed49b9a92437d04b027e4613522 RefLang with Elan 3.0.0-alpha aUser default_paradigm valid
 
 main
   # My first program
@@ -220,7 +220,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_versionMajor1", async () => {
-    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -246,7 +246,7 @@ end main`;
   });
 
   ignore_test("Fail_versionMajor2", async () => {
-    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 Elan 1.0.0 valid
+    const code = `# ff8601fdd724f6654ef14bee767d21a616485dbe53823b5a9df490f2b4cf2c35 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -272,7 +272,7 @@ end main`;
   });
 
   ignore_test("Fail_versionMinor", async () => {
-    const code = `# 4999398e974acfe969ceb831f0f85efc31fb873bb0b7f09d6cd365f547365492 Elan 1.1.0 valid
+    const code = `# 4999398e974acfe969ceb831f0f85efc31fb873bb0b7f09d6cd365f547365492 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -298,7 +298,7 @@ end main`;
   });
 
   ignore_test("Pass_preRelease", async () => {
-    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 Elan 1.1.0-Beta valid
+    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program
@@ -332,7 +332,7 @@ return [main, _tests];}`;
   });
 
   ignore_test("Fail_preReleaseBadSemver", async () => {
-    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 Elan 1.1.0-Beta valid
+    const code = `# 2096eb1fe5463ded352b7d4546b570abccbf5486ff08c57c32e75bbb287fba15 RefLang with Elan 3.0.0-alpha valid
 
 main
   # My first program

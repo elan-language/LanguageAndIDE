@@ -1,141 +1,75 @@
-# Python with Elan 3.0.0-alpha
-
-# Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990)  
-
-# A Cellular Automaton Model of Excitable Media
-
-#  
-
-# gW, gH : grid width, height
-
-gW = 40 # constant
-
-gH = 30 # constant
-
-# iR : infection rate (1..20)
-
-iR = 1 # constant
-
-# w1, w2 : weighting factors (low integers)
-
-w1 = 4 # constant
-
-w2 = 1 # constant
-
-# colours : cellColour.s in descending order of RGB value
-
-# state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
-
-# colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
-
-healthy = 0xffffff # constant
-
-ill = 0x000000 # constant
-
-def getColours() -> list[int]: # function
-  return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]
-# end function
-
-# vN : neighbourhood: von Neumann (4) true, Moore (8) false
-
-vN = False # constant
+# f8f2fbb551559b39d0c4e65c7e1501e2b65f9665c5bb0a28f8307f835442869c Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
-  # colour grids: hodge for display, podge for working
-  podge = BlockGraphics() # variable definition
-  hodge = BlockGraphics() # variable definition
-  blank = BlockGraphics() # variable definition
-  # initial colours of grid
-  updateGrid(hodge, podge, True) # procedure call
-  while not uniform(hodge):
-    # successive updates to grid in blank podge
-    podge = blank # assignment
-    updateGrid(hodge, podge, False) # procedure call
-  # end while
+  order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) # variable definition
+  clearPrintedText()
+  print(f"Dragon of order {order}")
+  side = (75/pow(sqrt(2), order)) # variable definition
+  corner = side/12.0/cos(45) # variable definition
+  turns = left # variable definition
+  for i in range(1, order + 1):
+    turns = setTurns(turns) # assignment
+  # end for
+  t = Turtle() # variable definition
+  setupTurtle(t, order)
+  drawDragon(t, order, turns, side, corner)
 # end main
 
-def updateGrid(hodge: BlockGraphics, podge: BlockGraphics, initial: bool) -> None: # procedure
-  colours = getColours() # variable definition
-  for j in range(0, gH):
-    for i in range(0, gW):
-      if initial:
-        podge.put(i, j, colours[randint(0, (colours.length()) - 1)]) # procedure call
-        podge[1][1] = 0x1a001a # assignment
-      else:
-        podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j))) # procedure call
-      # end if
-    # end for
+left = "1"
+
+right = "0"
+
+def drawDragon(t: Turtle, order: int, turns: str, side: float, corner: float) -> None: # procedure
+  p = (200.0/order).floor() # variable definition
+  turnI = 0 # variable definition
+  for turn in turns:
+    turnI = (-45 if turn.equals(left) else 45) # assignment
+    t.turn(turnI)
+    t.move(corner)
+    t.turn(turnI)
+    t.move(side)
+    sleep_ms(p)
   # end for
-  a = 0 # variable definition
-  # copy podgeValues into hodge
-  for j in range(0, gH):
-    for i in range(0, gW):
-      podgeValue = podge.get(i, j) # variable definition
-      hodge.put(i, j, podgeValue) # procedure call
-    # end for
-  # end for
-  displayBlockGraphics(hodge) # procedure call
-  sleep_ms(50) # procedure call
+  t.penUp()
+  t.hide()
 # end procedure
 
-def uniform(grid: BlockGraphics) -> bool: # function
-  cell0 = grid.get(0, 0) # variable definition
-  isUniform = True # variable definition
-  for j in range(0, gH):
-    for i in range(0, gW):
-      if grid.get(i, j) == cell0:
-        isUniform = False # assignment
-      # end if
-    # end for
+def setupTurtle(t: Turtle, order: int) -> None: # procedure
+  t.turnToHeading(180 + order*45)
+  t.placeAt(-40, 20)
+  t.penColour(red)
+  t.penWidth(10.0/order)
+  t.penDown()
+  t.show()
+# end procedure
+
+def setTurns(turns: str) -> str: # function
+  turnsR = turns + left + reflect(turns) # variable definition
+  # turnsR[0..turnsR.length() - 1]
+  return turnsR.subString(0, turnsR.length() - 1)
+# end function
+
+def reflect(s: str) -> str: # function
+  sR = "" # variable definition
+  for i in range(1, s.length() + 1):
+    inverse = right if (s[i - 1]).equals(left) else left # variable definition
+    sR = inverse + sR # assignment
   # end for
-  return isUniform
+  return sR
 # end function
 
-def getNeighbourColours(grid: BlockGraphics, i: int, j: int) -> list[int]: # function
-  # grid wraps around: all cells have the same number of neighbours
-  # H and V neighbours(von Neumann)
-  sL = grid.get((i - 1 + gW) % gW, j) # variable definition
-  sR = grid.get((i + 1 + gW) % gW, j) # variable definition
-  sA = grid.get(i, (j - 1 + gH) % gH) # variable definition
-  sB = grid.get(i, (j + 1 + gH) % gH) # variable definition
-  neighbourColours = [sL, sR, sA, sB] # variable definition
-  if vN == False:
-    # add diagonal neighbours (Moore)
-    sLA = grid.get((i - 1 + gW) % gW, (j - 1 + gH) % gH) # variable definition
-    sRA = grid.get((i + 1 + gW) % gW, (j - 1 + gH) % gH) # variable definition
-    sLB = grid.get((i - 1 + gW) % gW, (j + 1 + gH) % gH) # variable definition
-    sRB = grid.get((i + 1 + gW) % gW, (j + 1 + gH) % gH) # variable definition
-    neighbourColours = [sL, sR, sA, sB, sLA, sRA, sLB, sRB] # assignment
-  # end if
-  return neighbourColours
-# end function
+class Test_setTurns(unittest.TestCase):
+ def test_setTurns(self: Test_setTurns) -> None:
+  self.assertEqual(setTurns("1"), "11")
+  self.assertEqual(setTurns("11"), "1110")
+  self.assertEqual(setTurns("110"), "110110")
+  self.assertEqual(setTurns("1101100"), "11011001110010")
+# end test
 
-def newColour(neighbourColours: list[int], nowColour: int) -> int: # function
-  colours = getColours() # variable definition
-  nInfected = 0 # variable definition
-  nIll = 0 # variable definition
-  sumStates = colours.indexOf(nowColour) # variable definition
-  for colour in neighbourColours:
-    sumStates = sumStates + colours.indexOf(colour) # assignment
-    if colour < healthy:
-      nInfected = nInfected + 1 # assignment
-      if colour == ill:
-        nIll = nIll + 1 # assignment
-      # end if
-    # end if
-  # end for
-  return updateColour(nowColour, sumStates, nInfected, nIll)
-# end function
-
-def updateColour(nowColour: int, sumStates: int, nInfected: int, nIll: int) -> int: # function
-  colours = getColours() # variable definition
-  state = 0 # variable definition
-  if nowColour == healthy:
-    state = divAsInt(nInfected, w1) + divAsInt(nIll, w2) # assignment
-  elif nowColour != ill: # else if
-    state = divAsInt(sumStates, (nInfected + 1)) + iR # assignment
-  # end if
-  return if_(state > (colours.length() - 1), ill, colours[state])
-# end function
+class Test_reflect(unittest.TestCase):
+ def test_reflect(self: Test_reflect) -> None:
+  self.assertEqual(reflect("110"), "100")
+  self.assertEqual(reflect("00001"), "01111")
+# end test
 
 main()
