@@ -34,7 +34,6 @@ import { FileAsn } from "./file-asn";
 import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
 import { IndexAsn } from "./index-asn";
-import { TerminalSymbol } from "./terminal-symbol";
 
 // interface type guards
 
@@ -426,30 +425,4 @@ export function getChildRange(compileChildren: AstNode[], initialScope: Scope) {
 
 export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
-}
-
-// TODO get rid if this
-export function getTokenTextByName(l: Language, name: string): string {
-  switch (name) {
-    case "int":
-    case "Int":
-      return l.mapTerminalSymbol(TerminalSymbol.IntName);
-    case "float":
-    case "Float":
-      return l.mapTerminalSymbol(TerminalSymbol.FloatName);
-    case "str":
-    case "String":
-      return l.mapTerminalSymbol(TerminalSymbol.StringName);
-    case "bool":
-    case "Boolean":
-      return l.mapTerminalSymbol(TerminalSymbol.BoolName);
-    case "List":
-    case "list":
-      return l.mapTerminalSymbol(TerminalSymbol.ListName);
-    case "Callable":
-    case "Func":
-      return l.mapTerminalSymbol(TerminalSymbol.FuncName);
-    default:
-      return name;
-  }
 }

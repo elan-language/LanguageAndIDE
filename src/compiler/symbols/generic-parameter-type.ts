@@ -1,7 +1,8 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
+import { LanguageRefLang } from "../../ide/frames/language-ref-lang";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { noTypeOptions } from "../compiler-interfaces/type-options";
-import { getTokenTextByName } from "../syntax-nodes/ast-helpers";
+import { TerminalSymbol } from "../syntax-nodes/terminal-symbol";
 
 export class GenericParameterType implements SymbolType {
   constructor(
@@ -10,7 +11,8 @@ export class GenericParameterType implements SymbolType {
   ) {}
 
   languageSpecificName(language: Language): string {
-    return getTokenTextByName(language, this.name);
+    const terminal = LanguageRefLang.Instance.mapTerminal(this.name);
+    return terminal === TerminalSymbol.Unknown ? this.name : language.mapTerminalSymbol(terminal);
   }
 
   typeOptions = noTypeOptions;
