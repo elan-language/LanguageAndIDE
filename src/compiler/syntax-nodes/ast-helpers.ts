@@ -22,26 +22,19 @@ import {
 } from "../../compiler/symbols/symbol-helpers";
 import { TupleType } from "../../compiler/symbols/tuple-type";
 import { UnknownType } from "../../compiler/symbols/unknown-type";
-import { RefLangParser } from "../../generated/ref-lang/RefLangParser";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
 import { mustBeAssignableType, mustBeIndexableType, mustMatchParameters } from "../compile-rules";
 import { ElanSymbol } from "../compiler-interfaces/elan-symbol";
 import { RootAstNode } from "../compiler-interfaces/root-ast-node";
-import { BoolTypeNameAsn } from "./bool-type-name-asn";
 import { ConstructorMemberAsn } from "./class-members/constructor-member-asn";
-import { DictTypeNameAsn } from "./dict-type-name-asn";
 import { EmptyAsn } from "./empty-asn";
 import { IdentifierListAsn } from "./fields/identifier-list-asn";
 import { FileAsn } from "./file-asn";
-import { FloatTypeNameAsn } from "./float-type-name-asn";
 import { AbstractFunctionAsn } from "./globals/abstract-function-asn";
 import { ClassAsn } from "./globals/class-asn";
 import { IndexAsn } from "./index-asn";
-import { IntTypeNameAsn } from "./int-type-name-asn";
-import { ListTypeNameAsn } from "./list-type-name-asn";
-import { StringTypeNameAsn } from "./string-type-name-asn";
-import { TypeNameAsn } from "./type-name-asn";
+import { TerminalSymbol } from "./terminal-symbol";
 
 // interface type guards
 
@@ -435,70 +428,27 @@ export function getSuperClasses(cf: ClassAsn) {
   return cf.getInheritanceItems();
 }
 
-export function getTypeName(l: Language, name: string, fieldId: string, scope: Scope): AstNode {
-  switch (name) {
-    case l.INT_NAME:
-      return new IntTypeNameAsn(l, fieldId);
-    case l.FLOAT_NAME:
-      return new FloatTypeNameAsn(l, fieldId);
-    case l.STRING_NAME:
-      return new StringTypeNameAsn(l, fieldId);
-    case l.BOOL_NAME:
-      return new BoolTypeNameAsn(l, fieldId);
-    case l.LIST_NAME:
-      return new ListTypeNameAsn(l, fieldId, scope);
-    case l.DICT_NAME:
-      return new DictTypeNameAsn(l, fieldId, scope);
-    default:
-      return new TypeNameAsn(name, fieldId, scope);
-  }
-}
-
-export function getTypeNameById(
-  l: Language,
-  tokenId: number,
-  name: string,
-  fieldId: string,
-  scope: Scope,
-): AstNode {
-  switch (tokenId) {
-    case RefLangParser.INT_NAME:
-      return new IntTypeNameAsn(l, fieldId);
-    case RefLangParser.FLOAT_NAME:
-      return new FloatTypeNameAsn(l, fieldId);
-    case RefLangParser.STRING_NAME:
-      return new StringTypeNameAsn(l, fieldId);
-    case RefLangParser.BOOL_NAME:
-      return new BoolTypeNameAsn(l, fieldId);
-    case RefLangParser.LIST_NAME:
-      return new ListTypeNameAsn(l, fieldId, scope);
-    case RefLangParser.DICT_NAME:
-      return new DictTypeNameAsn(l, fieldId, scope);
-    default:
-      return new TypeNameAsn(name, fieldId, scope);
-  }
-}
-
+// TODO get rid if this
 export function getTokenTextByName(l: Language, name: string): string {
   switch (name) {
     case "int":
     case "Int":
-      return l.INT_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.IntName);
     case "float":
     case "Float":
-      return l.FLOAT_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.FloatName);
     case "str":
     case "String":
-      return l.STRING_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.StringName);
     case "bool":
     case "Boolean":
-      return l.BOOL_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.BoolName);
     case "List":
     case "list":
-      return l.LIST_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.ListName);
     case "Callable":
     case "Func":
-      return l.FUNC_NAME;
+      return l.mapTerminalSymbol(TerminalSymbol.FuncName);
     default:
       return name;
   }

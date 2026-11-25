@@ -145,7 +145,7 @@ export function mustBeBooleanCondition(
     const language = getGlobalScope(scope).language;
     compileErrors.push(
       new SyntaxCompileError(
-        `Condition of 'if' expression does not evaluate to a ${language.BOOL_NAME}.`,
+        `Condition of 'if' expression does not evaluate to a ${language.mapTerminalSymbol(TerminalSymbol.BoolName)}.`,
         location,
       ),
     );
@@ -201,7 +201,7 @@ export function mustNotBeEnum(
   if (symbolType instanceof EnumType) {
     compileErrors.push(
       new SyntaxCompileError(
-        `Cannot use an Enum value here. Use enumToString(...) function to convert enum to a ${language.STRING_NAME} first`,
+        `Cannot use an Enum value here. Use enumToString(...) function to convert enum to a ${language.mapTerminalSymbol(TerminalSymbol.StringName)} first`,
         location,
       ),
     );
@@ -692,7 +692,7 @@ function FailNotNumber(
     compileErrors.push(
       new TypesCompileError(
         lhs.languageSpecificName(language),
-        `${language.FLOAT_NAME} or ${language.INT_NAME}`,
+        `${language.mapTerminalSymbol(TerminalSymbol.FloatName)} or ${language.mapTerminalSymbol(TerminalSymbol.IntName)}`,
         "",
         location,
       ),
@@ -903,7 +903,7 @@ export function mustBeValidKeyType(
     const language = getGlobalScope(scope).language;
     compileErrors.push(
       new SyntaxCompileError(
-        `${language.DICT_NAME} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
+        `${language.mapTerminalSymbol(TerminalSymbol.DictionaryName)} cannot have key of type '${ofType.languageSpecificName(language)}'.`,
         location,
       ),
     );

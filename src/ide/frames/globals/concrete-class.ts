@@ -1,3 +1,4 @@
+import { TerminalSymbol } from "../../../compiler/syntax-nodes/terminal-symbol";
 import { Constructor } from "../class-members/constructor";
 import { FunctionMethod } from "../class-members/function-method";
 import { Field } from "../frame-interfaces/field";
@@ -18,7 +19,9 @@ export class ConcreteClass extends ClassFrame {
     this.getChildren().unshift(this.constr);
     this.toString = new FunctionMethod(this);
     this.toString.name.setFieldToKnownValidText("toString");
-    this.toString.returnType.setFieldToKnownValidText(this.language().STRING_NAME);
+    this.toString.returnType.setFieldToKnownValidText(
+      this.language().mapTerminalSymbol(TerminalSymbol.StringName),
+    );
     (this.toString.getLastChild() as ReturnStatement).expr.setFieldToKnownValidText(`"undefined"`);
     // remove the isNew flag from the return statement frame to allow
     // Backspace to work on the "undefined" string immediately

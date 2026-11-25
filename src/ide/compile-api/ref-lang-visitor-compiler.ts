@@ -2,7 +2,6 @@ import { AstNode } from "../../compiler/compiler-interfaces/ast-node";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import { EnumType } from "../../compiler/symbols/enum-type";
 import { AssignableAsn } from "../../compiler/syntax-nodes/assignable-asn";
-import { getTypeName } from "../../compiler/syntax-nodes/ast-helpers";
 import { BinaryExpressionAsn } from "../../compiler/syntax-nodes/binary-expression-asn";
 import { BoolTypeNameAsn } from "../../compiler/syntax-nodes/bool-type-name-asn";
 import { BracketedExpressionAsn } from "../../compiler/syntax-nodes/bracketed-expression-asn";
@@ -14,6 +13,7 @@ import { EnumValueAsn } from "../../compiler/syntax-nodes/enum-value-asn";
 import { IdentifierListAsn } from "../../compiler/syntax-nodes/fields/identifier-list-asn";
 import { ParamListAsn } from "../../compiler/syntax-nodes/fields/param-list-asn";
 import { FloatTypeNameAsn } from "../../compiler/syntax-nodes/float-type-name-asn";
+import { FuncTypeNameAsn } from "../../compiler/syntax-nodes/func-type-name-asn";
 import { IdentifierDefAsn } from "../../compiler/syntax-nodes/identifier-def-asn";
 import { IdentifierUseAsn } from "../../compiler/syntax-nodes/identifier-use-asn";
 import { IfExpressionAsn } from "../../compiler/syntax-nodes/if-expression-asn";
@@ -37,6 +37,7 @@ import { SegmentedStringAsn } from "../../compiler/syntax-nodes/segmented-string
 import { StringTypeNameAsn } from "../../compiler/syntax-nodes/string-type-name-asn";
 import { ThisInstanceAsn } from "../../compiler/syntax-nodes/this-instance-asn";
 import { TupleAsn } from "../../compiler/syntax-nodes/tuple-asn";
+import { TupleTypeNameAsn } from "../../compiler/syntax-nodes/tuple-type-name-asn";
 import { TypeAsn } from "../../compiler/syntax-nodes/type-asn";
 import { TypeNameAsn } from "../../compiler/syntax-nodes/type-name-asn";
 import { UnaryExprAsn } from "../../compiler/syntax-nodes/unary-expr-asn";
@@ -197,7 +198,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
   // type: typeTuple | typeName | typeGeneric | typeFunc;
   override visitTypeTuple = (ctx: TypeTupleContext) =>
     new TypeAsn(
-      getTypeName(this.language, "Tuple", this.fieldId, this.scope),
+      new TupleTypeNameAsn(this.language, this.fieldId, this.scope),
       getTypes(this, ctx),
       this.fieldId,
       this.scope,
@@ -208,7 +209,7 @@ export class RefLangVisitorCompiler extends RefLangVisitor<AstNode> {
 
   override visitTypeFunc = (ctx: TypeFuncContext) =>
     new TypeAsn(
-      getTypeName(this.language, "Func", this.fieldId, this.scope),
+      new FuncTypeNameAsn(this.language, this.fieldId, this.scope),
       getTypes(this, ctx),
       this.fieldId,
       this.scope,

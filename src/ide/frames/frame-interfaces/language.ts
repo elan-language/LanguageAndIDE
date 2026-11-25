@@ -34,14 +34,6 @@ export interface Language {
 
   postProcessHtml(html: string): string;
 
-  INT_NAME: string;
-  FLOAT_NAME: string;
-  BOOL_NAME: string;
-  STRING_NAME: string;
-  LIST_NAME: string;
-  DICT_NAME: string;
-  FUNC_NAME: string;
-
   customiseStatementOptions(options: [FrameType, string, string, boolean][]): void;
 
   mapOperation(op: string): OperationSymbol;

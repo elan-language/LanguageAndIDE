@@ -30,12 +30,12 @@ export class ClassType implements ReifyableSymbolType, Scope, GenericSymbolType 
   ) {}
 
   languageSpecificName(language: Language): string {
-    // kludge for lists
+    // kludge for lists todo fix
     const className =
-      this.className.trim().toUpperCase() === language.LIST_NAME.toUpperCase()
-        ? language.LIST_NAME
+      this.className.trim().toUpperCase() === "LIST"
+        ? language.mapTerminalSymbol(TerminalSymbol.ListName)
         : this.className.trim().toUpperCase() === "DICTIONARY"
-          ? language.DICT_NAME
+          ? language.mapTerminalSymbol(TerminalSymbol.DictionaryName)
           : this.className.trim();
 
     const startGeneric = language.mapTerminalSymbol(TerminalSymbol.GenericStart);
