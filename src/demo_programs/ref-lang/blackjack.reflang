@@ -1,4 +1,4 @@
-# 9fd0efa0e6ffc907d67dc72f54637dc8c57b85dbbb63fc057303f7de11d21eed Elan 2.0.0-beta5 valid
+# 5137af4b4c4ec43c22b1c257e3d209460f615dc2f8777969cc43871167250dda RefLang with Elan 3.0.0-alpha valid
 
 main
   variable game set to new Game(1000)
@@ -386,7 +386,7 @@ abstract class Player
 
   abstract procedure newHand()
 
-  private procedure newHandHelper()
+  procedure newHandHelper()
     assign this.hasTurn to false
     assign this.softAce to false
     assign this.cards to new List<of Card>()
@@ -398,7 +398,7 @@ abstract class Player
 
   abstract function getMessage() returns String
 
-  private function getMessageHelper() returns String
+  function getMessageHelper() returns String
     variable msg set to ""
     variable status set to this.status
     if this.hasTurn then
@@ -513,7 +513,7 @@ class HumanPlayer inherits Player
   end procedure
 
   function getMessage() returns String
-    variable msg set to this.getMessageHelper() + "- hand total: {this.handTotal}"
+    variable msg set to this.getMessageHelper() + $"- hand total: {this.handTotal}"
     if this.hasTurn then
       assign msg to msg + " - press 'd' to draw, 's' to stand"
     end if

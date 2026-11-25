@@ -34,7 +34,7 @@
 //   //   }).timeout(20000);
 
 //   ignore_test("process file with header", async () => {
-//     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de Elan 1.5.1 valid
+//     const code = `# 39dadda3dc0838303aa6ec281b404d197527891272e1abb29369f83f5974a6de RefLang with Elan 3.0.0-alpha valid
 // `;
 
 //     const actual = await processInnerCode(code);
