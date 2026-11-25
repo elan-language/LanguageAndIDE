@@ -42,7 +42,7 @@ import { getTestSystem } from "./compiler/test-system";
 import { getTestRunner } from "./runner";
 
 // flag to update test files
-const updateTestFiles = false;
+const updateTestFiles = true;
 
 function compiles(ast : RootAstNode | undefined) {
    return ast && ast.getAllCompileErrors().length === 0;

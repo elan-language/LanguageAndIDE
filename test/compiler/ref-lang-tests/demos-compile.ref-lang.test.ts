@@ -39,7 +39,7 @@ suite("RefLang Demo compile", () => {
     await testFile("julia-set", LanguageRefLang.Instance);
   });
 
-  ignore_test("test kaleidoscope", async () => {
+  test("test kaleidoscope", async () => {
     await testFile("kaleidoscope", LanguageRefLang.Instance);
   });
 
@@ -79,7 +79,7 @@ suite("RefLang Demo compile", () => {
     await testFile("snake_FP", LanguageRefLang.Instance);
   });
 
-  ignore_test("test snake_OOP", async () => {
+  test("test snake_OOP", async () => {
     await testFile("snake_OOP", LanguageRefLang.Instance);
   });
 

@@ -39,7 +39,7 @@ suite("Python Demo compile", () => {
     await testFile("julia-set", LanguagePython.Instance);
   });
 
-  ignore_test("test kaleidoscope", async () => {
+  test("test kaleidoscope", async () => {
     await testFile("kaleidoscope", LanguagePython.Instance);
   });
 
