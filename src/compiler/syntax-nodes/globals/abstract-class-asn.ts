@@ -62,7 +62,6 @@ export class AbstractClassAsn extends ClassAsn {
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     return `class ${name} ${extendsClause}{\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};\r
 ${compileNodes(this.children)}\r
 }\r\n`;
   }

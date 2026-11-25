@@ -247,7 +247,6 @@ _tests.push(["elan_test3", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 10;
@@ -317,7 +316,6 @@ _tests.push(["elan_test3", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 10;
@@ -614,7 +612,6 @@ _tests.push(["elan_test21", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["bar", 0]]);};
 
   async _initialise(b) {
     this.bar = b;

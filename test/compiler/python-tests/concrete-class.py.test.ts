@@ -9,7 +9,6 @@ import {
   assertObjectCodeIs,
   assertParses,
   assertStatusIsValid,
-  ignore_test,
   testHash,
   testPythonHeader,
   transforms,
@@ -51,7 +50,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p = system.initialise(await new _stdlib.List()._initialise());
@@ -124,7 +122,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
     this.p1 = 5;
@@ -198,7 +195,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""]]);};
 
   async _initialise(p_1, p_2) {
     this.p1 = p_1;
@@ -288,7 +284,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
     let bar = system.initialise(await new Bar()._initialise());
@@ -311,7 +306,6 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 5;
@@ -416,7 +410,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
     this.bar = system.initialise(await new Bar()._initialise());
@@ -438,7 +431,6 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0], ["p2", ""]]);};
 
   async _initialise() {
     this.p2 = "";
@@ -517,7 +509,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["strArr", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.strArr = system.list(["apple", "orange", "pair"]);
@@ -587,7 +578,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
 
@@ -666,7 +656,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
 
@@ -733,13 +722,11 @@ class Bar(Foo): # concrete class
     const objectCode = `let system; let _stdlib; let _tests = []; export function _inject(l,s) { system = l; _stdlib = s; }; export async function program() {
 const global = new class {};
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop_1", ""]]);};
   prop_1 = "";
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop_1 = "";
@@ -875,7 +862,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = (await this.ff());
@@ -951,7 +937,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
 
@@ -1054,7 +1039,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", ""], ["p3", ""]]);};
 
   async _initialise() {
     this.p2 = "";
@@ -1148,7 +1132,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p1 = system.initialise(await new _stdlib.List()._initialise());

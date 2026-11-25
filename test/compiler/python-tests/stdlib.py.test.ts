@@ -1227,12 +1227,10 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -1452,7 +1450,6 @@ async function main() {
 }
 
 class Point {
-  static emptyInstance() { return system.emptyClass(Point, []);};
 
   async _initialise() {
 

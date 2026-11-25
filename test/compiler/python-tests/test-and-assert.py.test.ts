@@ -219,7 +219,6 @@ _tests.push(["python_test3", async (_outcomes) => {
 }]);
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 10;

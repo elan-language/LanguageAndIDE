@@ -267,7 +267,6 @@ async function foo(bar) {
 global["foo"] = foo;
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 

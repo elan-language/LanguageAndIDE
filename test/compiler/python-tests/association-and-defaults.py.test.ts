@@ -72,7 +72,6 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["previousScores", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p2 = system.initialise(await new Player()._initialise("Chloe"));
@@ -106,7 +105,6 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
 
   async _initialise(name) {
     this.name = name;
@@ -177,7 +175,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0], ["p2", 0]]);};
 
   async _initialise() {
     this.p2 = 1;
@@ -273,7 +270,6 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -400,7 +396,6 @@ async function main() {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, []);};
 
   async _initialise() {
     this.g = system.initialise(await new Game()._initialise());
@@ -422,7 +417,6 @@ class Player {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["i", 0], ["f", 0], ["b", false], ["s", ""], ["li", system.initialise(_stdlib.List.emptyInstance())], ["ds", system.initialise(_stdlib.Dictionary.emptyInstance())], ["ai", system.initialise(_stdlib.List.emptyInstance())], ["t", system.emptyTuple([0, "", system.initialise(_stdlib.List.emptyInstance())])]]);};
 
   async _initialise() {
     this.s = "";
@@ -525,7 +519,6 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, []);};
 
   async _initialise() {
     this.p1 = system.initialise(await new Player()._initialise("Player1"));
@@ -556,7 +549,6 @@ class Game {
 }
 
 class Player {
-  static emptyInstance() { return system.emptyClass(Player, [["name", ""]]);};
 
   async _initialise(name) {
     this.name = name;
@@ -628,7 +620,6 @@ async function main() {
 }
 
 class Game {
-  static emptyInstance() { return system.emptyClass(Game, [["p1", system.initialise(_stdlib.List.emptyInstance())]]);};
 
   async _initialise() {
     this.p1 = system.list([1, 2, 3]);
@@ -721,7 +712,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
 
@@ -739,7 +729,6 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.p1 = system.initialise(await new Foo()._initialise());
