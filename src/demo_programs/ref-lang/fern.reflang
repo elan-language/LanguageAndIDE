@@ -1,4 +1,4 @@
-# 9107d25b7db00c928cbf5f17c996891ab75763cb964efe2fc2d5312058a24b9e RefLang with Elan 3.0.0-alpha valid
+# 34270d78cf3578592c7f763a2dfcc01d5c86bba7318990b7de90b58087c9692d RefLang with Elan 3.0.0-alpha valid
 
 main
   variable vg set to createVectorGraphics()
