@@ -1,5 +1,4 @@
 import { TerminalNode } from "antlr4ng";
-import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import {
@@ -238,42 +237,17 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   override visitKvp = (ctx: KvpContext) =>
     `${this.visit(ctx.expression(0)!)}:${this.visit(ctx.expression(1)!)}`;
 
-  // override visitTerm = (ctx: TermContext) =>
-  //   ctx.DOT()
-  //     ? `${this.visit(ctx.term()!)}.${this.visit(ctx.chainable()!)}`
-  //     : ctx.term()
-  //       ? `${this.visit(ctx.term()!)}${this.visit(ctx.index()!)}`
-  //       : (this.visitChildren(ctx) ?? "");
-
-  // override visitThisInstance = (ctx: ThisInstanceContext) =>
-  //   `${kw(this.visit(ctx.THIS_INSTANCE())!)}`;
-
-  // override visitAssignable = (ctx: AssignableContext) => {
-  //   if (ctx.THIS_INSTANCE()) {
-  //     return `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
-  //   } else if (ctx.index()) {
-  //     return `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
-  //   } else {
-  //     return this.visitChildren(ctx)!;
-  //   }
-  // };
-
-  // override visitIdentifierList = (ctx: IdentifierListContext) => {
-  //   const ids = ctx.identifierDef().map((id) => this.visit(id)!);
-  //   return ids.join(", ");
-  // };
-
   override visitIndexedTerm = (ctx: IndexedTermContext) =>
     `${this.visit(ctx.term())}${this.visit(ctx.index())}`;
 
   override visitChainableTerm = (ctx: ChainableTermContext) =>
     `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
 
-  override visitThisInstance = (ctx: ThisInstanceContext) =>
-    `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
+  override visitThisInstance = (_ctx: ThisInstanceContext) =>
+    `<el-kw>${this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance)}</el-kw>`;
 
   override visitThisAssignable = (ctx: ThisAssignableContext) =>
-    `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+    `<el-kw>${this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
     `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
@@ -304,6 +278,6 @@ export class PythonVisitorHtml extends PythonVisitor<string> {
   };
 
   override visitTerminal(ctx: TerminalNode) {
-    return getTokenTextByName(this.language, ctx.getText());
+    return ctx.getText();
   }
 }
