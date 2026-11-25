@@ -11,6 +11,8 @@ suite("Parsing Rules RefLang", () => {
       LanguageRefLang.Instance,
       (p: Parser) => p.expression(),
     ];
+    testAntlrParse(expression, "3*-5", true);
+    testAntlrParse(expression, "-3*5", true);
     testAntlrParse(expression, "bar1_foo", true); // identifier
     testAntlrParse(expression, "123", true); // litInt
     testAntlrParse(expression, "1.0e-4", true); // litFloat
@@ -1018,7 +1020,7 @@ suite("Parsing Rules RefLang", () => {
     );
     testAntlrParse(term, `"Hello World".length()`, true, `"Hello World".length()`);
     testAntlrParse(term, `12.3.toString()`, true, `12.3.toString()`);
-    testAntlrParse(term, `bar.`, false);
+    testAntlrParse(term, `bar.`, true, `bar`); //i.e. valid up to the .
     testAntlrParse(term, `abc`, true, "abc", "");
     testAntlrParse(term, `abc()`, true, "abc()", "");
     testAntlrParse(term, `this`, true, "this", "");
@@ -1036,14 +1038,14 @@ suite("Parsing Rules RefLang", () => {
       "",
       "",
     );
-    testAntlrParse(term, `abc[1, 2]`, false);
+    testAntlrParse(term, `abc[1, 2]`, true, `abc`); // Does not parse the double index
     testAntlrParse(term, `abc(defg, hi)[0]`, true, "abc(defg, hi)[0]", "", "", "abc(defg, hi)[0]");
     testAntlrParse(term, `(defg, hi)`, true, "(defg, hi)", ""); // tuple
     testAntlrParse(term, `[defg, hi]`, true, "[defg, hi]", "");
     testAntlrParse(term, `345`, true, "345", "");
-    testAntlrParse(term, `-345`, false);
-    testAntlrParse(term, `(-345)`, true);
-    testAntlrParse(term, `not a`, false, "not a", "");
+    testAntlrParse(term, `-345`, true, `-345`);
+    testAntlrParse(term, `(-345)`, true, `(-345)`);
+    testAntlrParse(term, `not a`, true, "not a", "");
     testAntlrParse(term, `(not a)`, true, `(not a)`);
     testAntlrParse(term, `(3 + a)`, true, "(3 + a)", "");
     testAntlrParse(term, `this`, true, `this`, "");

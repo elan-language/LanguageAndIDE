@@ -83,7 +83,6 @@ import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { NewInstanceExpressionContext } from "./RefLangParser.js";
-import { UnaryExpressionLabelContext } from "./RefLangParser.js";
 import { TermExpressionContext } from "./RefLangParser.js";
 import { BinaryExpressionLabelContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
@@ -92,6 +91,7 @@ import { MethodCallTermContext } from "./RefLangParser.js";
 import { IndexedTermContext } from "./RefLangParser.js";
 import { LitValueTermContext } from "./RefLangParser.js";
 import { DictionaryTermContext } from "./RefLangParser.js";
+import { UnaryExpressionTermContext } from "./RefLangParser.js";
 import { BracketedExpressionTermContext } from "./RefLangParser.js";
 import { ChainableTermContext } from "./RefLangParser.js";
 import { TupleTermContext } from "./RefLangParser.js";
@@ -981,18 +981,6 @@ export class RefLangListener implements ParseTreeListener {
    */
   exitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => void;
   /**
-   * Enter a parse tree produced by the `unaryExpressionLabel`
-   * labeled alternative in `RefLangParser.expression`.
-   * @param ctx the parse tree
-   */
-  enterUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
-  /**
-   * Exit a parse tree produced by the `unaryExpressionLabel`
-   * labeled alternative in `RefLangParser.expression`.
-   * @param ctx the parse tree
-   */
-  exitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
-  /**
    * Enter a parse tree produced by the `termExpression`
    * labeled alternative in `RefLangParser.expression`.
    * @param ctx the parse tree
@@ -1088,6 +1076,18 @@ export class RefLangListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `unaryExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  enterUnaryExpressionTerm?: (ctx: UnaryExpressionTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `unaryExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   */
+  exitUnaryExpressionTerm?: (ctx: UnaryExpressionTermContext) => void;
   /**
    * Enter a parse tree produced by the `bracketedExpressionTerm`
    * labeled alternative in `RefLangParser.term`.

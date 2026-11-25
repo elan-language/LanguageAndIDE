@@ -3,6 +3,7 @@ import { CodeSourceFromString, FileImpl } from "../../../src/ide/frames/file-imp
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -361,7 +362,10 @@ main()
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
+    assertParses(fileImpl);
+    assertDoesNotCompile(fileImpl, [
+      "Incompatible types. Expected: bool, Provided: int.ErrorMessages.html#TypesCompileError",
+    ]);
   });
 
   test("Fail_CombineLogicalOpsWithComparison2WithoutBrackets", async () => {

@@ -517,7 +517,7 @@ public class PythonParser extends Parser {
 			setState(240);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(237);
@@ -688,7 +688,7 @@ public class PythonParser extends Parser {
 			setState(273);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(270);
@@ -1033,7 +1033,7 @@ public class PythonParser extends Parser {
 			setState(344);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(341);
@@ -1781,7 +1781,7 @@ public class PythonParser extends Parser {
 				setState(468); 
 				_errHandler.sync(this);
 				_la = _input.LA(1);
-			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & 2013258567015992380L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0) );
+			} while ( (((_la) & ~0x3f) == 0 && ((1L << _la) & -7210113469838783428L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0) );
 			}
 		}
 		catch (RecognitionException re) {
@@ -2626,7 +2626,7 @@ public class PythonParser extends Parser {
 			setState(596);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(593);
@@ -2739,7 +2739,7 @@ public class PythonParser extends Parser {
 			setState(620);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(617);
@@ -3585,7 +3585,7 @@ public class PythonParser extends Parser {
 			setState(761);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(758);
@@ -3787,7 +3787,7 @@ public class PythonParser extends Parser {
 			setState(801);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(798);
@@ -3917,7 +3917,7 @@ public class PythonParser extends Parser {
 			setState(831);
 			_errHandler.sync(this);
 			_la = _input.LA(1);
-			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & 2013249770922970160L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163639893L) != 0)) {
+			while ((((_la) & ~0x3f) == 0 && ((1L << _la) & -7210122265931805648L) != 0) || ((((_la - 73)) & ~0x3f) == 0 && ((1L << (_la - 73)) & 9007227163643989L) != 0)) {
 				{
 				{
 				setState(828);
@@ -5750,13 +5750,6 @@ public class PythonParser extends Parser {
 		}
 	}
 	@SuppressWarnings("CheckReturnValue")
-	public static class UnaryExpressionLabelContext extends ExpressionContext {
-		public UnaryExpressionContext unaryExpression() {
-			return getRuleContext(UnaryExpressionContext.class,0);
-		}
-		public UnaryExpressionLabelContext(ExpressionContext ctx) { copyFrom(ctx); }
-	}
-	@SuppressWarnings("CheckReturnValue")
 	public static class BinaryExpressionLabelContext extends ExpressionContext {
 		public BinaryExpressionContext binaryExpression() {
 			return getRuleContext(BinaryExpressionContext.class,0);
@@ -5814,7 +5807,7 @@ public class PythonParser extends Parser {
 			int _alt;
 			enterOuterAlt(_localctx, 1);
 			{
-			setState(1039);
+			setState(1038);
 			_errHandler.sync(this);
 			switch ( getInterpreter().adaptivePredict(_input,130,_ctx) ) {
 			case 1:
@@ -5829,34 +5822,25 @@ public class PythonParser extends Parser {
 				break;
 			case 2:
 				{
-				_localctx = new UnaryExpressionLabelContext(_localctx);
+				_localctx = new TermExpressionContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
 				setState(1036);
-				unaryExpression();
+				term(0);
 				}
 				break;
 			case 3:
 				{
-				_localctx = new TermExpressionContext(_localctx);
-				_ctx = _localctx;
-				_prevctx = _localctx;
-				setState(1037);
-				term(0);
-				}
-				break;
-			case 4:
-				{
 				_localctx = new BinaryExpressionLabelContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(1038);
+				setState(1037);
 				binaryExpression();
 				}
 				break;
 			}
 			_ctx.stop = _input.LT(-1);
-			setState(1056);
+			setState(1055);
 			_errHandler.sync(this);
 			_alt = getInterpreter().adaptivePredict(_input,132,_ctx);
 			while ( _alt!=2 && _alt!=org.antlr.v4.runtime.atn.ATN.INVALID_ALT_NUMBER ) {
@@ -5868,36 +5852,36 @@ public class PythonParser extends Parser {
 					_localctx = new IfExpressionContext(new ExpressionContext(_parentctx, _parentState));
 					((IfExpressionContext)_localctx).trueExpr = _prevctx;
 					pushNewRecursionContext(_localctx, _startState, RULE_expression);
-					setState(1041);
+					setState(1040);
 					if (!(precpred(_ctx, 1))) throw new FailedPredicateException(this, "precpred(_ctx, 1)");
-					setState(1042);
+					setState(1041);
 					match(IF);
-					setState(1043);
+					setState(1042);
 					((IfExpressionContext)_localctx).condition = expression(0);
-					setState(1048);
+					setState(1047);
 					_errHandler.sync(this);
 					_la = _input.LA(1);
 					while (_la==ELIF) {
 						{
 						{
-						setState(1044);
+						setState(1043);
 						match(ELIF);
-						setState(1045);
+						setState(1044);
 						((IfExpressionContext)_localctx).elifCondition = expression(0);
 						}
 						}
-						setState(1050);
+						setState(1049);
 						_errHandler.sync(this);
 						_la = _input.LA(1);
 					}
-					setState(1051);
+					setState(1050);
 					match(ELSE);
-					setState(1052);
+					setState(1051);
 					((IfExpressionContext)_localctx).falseExpr = expression(2);
 					}
 					} 
 				}
-				setState(1058);
+				setState(1057);
 				_errHandler.sync(this);
 				_alt = getInterpreter().adaptivePredict(_input,132,_ctx);
 			}
@@ -5965,6 +5949,13 @@ public class PythonParser extends Parser {
 		public DictionaryTermContext(TermContext ctx) { copyFrom(ctx); }
 	}
 	@SuppressWarnings("CheckReturnValue")
+	public static class UnaryExpressionTermContext extends TermContext {
+		public UnaryExpressionContext unaryExpression() {
+			return getRuleContext(UnaryExpressionContext.class,0);
+		}
+		public UnaryExpressionTermContext(TermContext ctx) { copyFrom(ctx); }
+	}
+	@SuppressWarnings("CheckReturnValue")
 	public static class BracketedExpressionTermContext extends TermContext {
 		public BracketedExpressionContext bracketedExpression() {
 			return getRuleContext(BracketedExpressionContext.class,0);
@@ -6028,7 +6019,7 @@ public class PythonParser extends Parser {
 				_ctx = _localctx;
 				_prevctx = _localctx;
 
-				setState(1060);
+				setState(1059);
 				thisInstance();
 				}
 				break;
@@ -6037,11 +6028,20 @@ public class PythonParser extends Parser {
 				_localctx = new BracketedExpressionTermContext(_localctx);
 				_ctx = _localctx;
 				_prevctx = _localctx;
-				setState(1061);
+				setState(1060);
 				bracketedExpression();
 				}
 				break;
 			case 3:
+				{
+				_localctx = new UnaryExpressionTermContext(_localctx);
+				_ctx = _localctx;
+				_prevctx = _localctx;
+				setState(1061);
+				unaryExpression();
+				}
+				break;
+			case 4:
 				{
 				_localctx = new LitValueTermContext(_localctx);
 				_ctx = _localctx;
@@ -6050,7 +6050,7 @@ public class PythonParser extends Parser {
 				litValue();
 				}
 				break;
-			case 4:
+			case 5:
 				{
 				_localctx = new ListTermContext(_localctx);
 				_ctx = _localctx;
@@ -6059,7 +6059,7 @@ public class PythonParser extends Parser {
 				list();
 				}
 				break;
-			case 5:
+			case 6:
 				{
 				_localctx = new DictionaryTermContext(_localctx);
 				_ctx = _localctx;
@@ -6068,7 +6068,7 @@ public class PythonParser extends Parser {
 				dictionary();
 				}
 				break;
-			case 6:
+			case 7:
 				{
 				_localctx = new TupleTermContext(_localctx);
 				_ctx = _localctx;
@@ -6077,7 +6077,7 @@ public class PythonParser extends Parser {
 				tuple();
 				}
 				break;
-			case 7:
+			case 8:
 				{
 				_localctx = new IdentifierUseTermContext(_localctx);
 				_ctx = _localctx;
@@ -6086,7 +6086,7 @@ public class PythonParser extends Parser {
 				identifierUse();
 				}
 				break;
-			case 8:
+			case 9:
 				{
 				_localctx = new MethodCallTermContext(_localctx);
 				_ctx = _localctx;
@@ -7472,10 +7472,10 @@ public class PythonParser extends Parser {
 		"@\u0001A\u0001A\u0001B\u0001B\u0001C\u0001C\u0005C\u03ef\bC\nC\fC\u03f2"+
 		"\tC\u0001C\u0001C\u0001D\u0001D\u0003D\u03f8\bD\u0001E\u0004E\u03fb\b"+
 		"E\u000bE\fE\u03fc\u0001F\u0001F\u0001F\u0001F\u0001G\u0001G\u0001G\u0001"+
-		"G\u0001H\u0001H\u0001H\u0001H\u0001I\u0001I\u0001I\u0001I\u0001I\u0003"+
-		"I\u0410\bI\u0001I\u0001I\u0001I\u0001I\u0001I\u0005I\u0417\bI\nI\fI\u041a"+
-		"\tI\u0001I\u0001I\u0001I\u0005I\u041f\bI\nI\fI\u0422\tI\u0001J\u0001J"+
-		"\u0001J\u0001J\u0001J\u0001J\u0001J\u0001J\u0001J\u0003J\u042d\bJ\u0001"+
+		"G\u0001H\u0001H\u0001H\u0001H\u0001I\u0001I\u0001I\u0001I\u0003I\u040f"+
+		"\bI\u0001I\u0001I\u0001I\u0001I\u0001I\u0005I\u0416\bI\nI\fI\u0419\tI"+
+		"\u0001I\u0001I\u0001I\u0005I\u041e\bI\nI\fI\u0421\tI\u0001J\u0001J\u0001"+
+		"J\u0001J\u0001J\u0001J\u0001J\u0001J\u0001J\u0001J\u0003J\u042d\bJ\u0001"+
 		"J\u0001J\u0001J\u0001J\u0001J\u0005J\u0434\bJ\nJ\fJ\u0437\tJ\u0001K\u0001"+
 		"K\u0003K\u043b\bK\u0001L\u0001L\u0001M\u0001M\u0001M\u0001M\u0001N\u0001"+
 		"N\u0003N\u0445\bN\u0001O\u0001O\u0001O\u0001P\u0001P\u0001P\u0001Q\u0001"+
@@ -7528,7 +7528,7 @@ public class PythonParser extends Parser {
 		"\u0000\u0086\u03ec\u0001\u0000\u0000\u0000\u0088\u03f7\u0001\u0000\u0000"+
 		"\u0000\u008a\u03fa\u0001\u0000\u0000\u0000\u008c\u03fe\u0001\u0000\u0000"+
 		"\u0000\u008e\u0402\u0001\u0000\u0000\u0000\u0090\u0406\u0001\u0000\u0000"+
-		"\u0000\u0092\u040f\u0001\u0000\u0000\u0000\u0094\u042c\u0001\u0000\u0000"+
+		"\u0000\u0092\u040e\u0001\u0000\u0000\u0000\u0094\u042c\u0001\u0000\u0000"+
 		"\u0000\u0096\u043a\u0001\u0000\u0000\u0000\u0098\u043c\u0001\u0000\u0000"+
 		"\u0000\u009a\u043e\u0001\u0000\u0000\u0000\u009c\u0444\u0001\u0000\u0000"+
 		"\u0000\u009e\u0446\u0001\u0000\u0000\u0000\u00a0\u0449\u0001\u0000\u0000"+
@@ -8012,24 +8012,24 @@ public class PythonParser extends Parser {
 		"Z-\u0000\u0405\u008f\u0001\u0000\u0000\u0000\u0406\u0407\u0005M\u0000"+
 		"\u0000\u0407\u0408\u0003\u0092I\u0000\u0408\u0409\u0005N\u0000\u0000\u0409"+
 		"\u0091\u0001\u0000\u0000\u0000\u040a\u040b\u0006I\uffff\uffff\u0000\u040b"+
-		"\u0410\u0003\u00b2Y\u0000\u040c\u0410\u0003\u009cN\u0000\u040d\u0410\u0003"+
-		"\u0094J\u0000\u040e\u0410\u0003\u00a2Q\u0000\u040f\u040a\u0001\u0000\u0000"+
-		"\u0000\u040f\u040c\u0001\u0000\u0000\u0000\u040f\u040d\u0001\u0000\u0000"+
-		"\u0000\u040f\u040e\u0001\u0000\u0000\u0000\u0410\u0420\u0001\u0000\u0000"+
-		"\u0000\u0411\u0412\n\u0001\u0000\u0000\u0412\u0413\u0005\u0005\u0000\u0000"+
-		"\u0413\u0418\u0003\u0092I\u0000\u0414\u0415\u0005\u0002\u0000\u0000\u0415"+
-		"\u0417\u0003\u0092I\u0000\u0416\u0414\u0001\u0000\u0000\u0000\u0417\u041a"+
-		"\u0001\u0000\u0000\u0000\u0418\u0416\u0001\u0000\u0000\u0000\u0418\u0419"+
-		"\u0001\u0000\u0000\u0000\u0419\u041b\u0001\u0000\u0000\u0000\u041a\u0418"+
-		"\u0001\u0000\u0000\u0000\u041b\u041c\u0005\u0003\u0000\u0000\u041c\u041d"+
-		"\u0003\u0092I\u0002\u041d\u041f\u0001\u0000\u0000\u0000\u041e\u0411\u0001"+
-		"\u0000\u0000\u0000\u041f\u0422\u0001\u0000\u0000\u0000\u0420\u041e\u0001"+
-		"\u0000\u0000\u0000\u0420\u0421\u0001\u0000\u0000\u0000\u0421\u0093\u0001"+
-		"\u0000\u0000\u0000\u0422\u0420\u0001\u0000\u0000\u0000\u0423\u0424\u0006"+
-		"J\uffff\uffff\u0000\u0424\u042d\u0003\u0098L\u0000\u0425\u042d\u0003\u009a"+
-		"M\u0000\u0426\u042d\u0003|>\u0000\u0427\u042d\u0003\u00a4R\u0000\u0428"+
-		"\u042d\u0003\u00a8T\u0000\u0429\u042d\u0003\u00a6S\u0000\u042a\u042d\u0003"+
-		"Z-\u0000\u042b\u042d\u0003\u00aeW\u0000\u042c\u0423\u0001\u0000\u0000"+
+		"\u040f\u0003\u00b2Y\u0000\u040c\u040f\u0003\u0094J\u0000\u040d\u040f\u0003"+
+		"\u00a2Q\u0000\u040e\u040a\u0001\u0000\u0000\u0000\u040e\u040c\u0001\u0000"+
+		"\u0000\u0000\u040e\u040d\u0001\u0000\u0000\u0000\u040f\u041f\u0001\u0000"+
+		"\u0000\u0000\u0410\u0411\n\u0001\u0000\u0000\u0411\u0412\u0005\u0005\u0000"+
+		"\u0000\u0412\u0417\u0003\u0092I\u0000\u0413\u0414\u0005\u0002\u0000\u0000"+
+		"\u0414\u0416\u0003\u0092I\u0000\u0415\u0413\u0001\u0000\u0000\u0000\u0416"+
+		"\u0419\u0001\u0000\u0000\u0000\u0417\u0415\u0001\u0000\u0000\u0000\u0417"+
+		"\u0418\u0001\u0000\u0000\u0000\u0418\u041a\u0001\u0000\u0000\u0000\u0419"+
+		"\u0417\u0001\u0000\u0000\u0000\u041a\u041b\u0005\u0003\u0000\u0000\u041b"+
+		"\u041c\u0003\u0092I\u0002\u041c\u041e\u0001\u0000\u0000\u0000\u041d\u0410"+
+		"\u0001\u0000\u0000\u0000\u041e\u0421\u0001\u0000\u0000\u0000\u041f\u041d"+
+		"\u0001\u0000\u0000\u0000\u041f\u0420\u0001\u0000\u0000\u0000\u0420\u0093"+
+		"\u0001\u0000\u0000\u0000\u0421\u041f\u0001\u0000\u0000\u0000\u0422\u0423"+
+		"\u0006J\uffff\uffff\u0000\u0423\u042d\u0003\u0098L\u0000\u0424\u042d\u0003"+
+		"\u009aM\u0000\u0425\u042d\u0003\u009cN\u0000\u0426\u042d\u0003|>\u0000"+
+		"\u0427\u042d\u0003\u00a4R\u0000\u0428\u042d\u0003\u00a8T\u0000\u0429\u042d"+
+		"\u0003\u00a6S\u0000\u042a\u042d\u0003Z-\u0000\u042b\u042d\u0003\u00ae"+
+		"W\u0000\u042c\u0422\u0001\u0000\u0000\u0000\u042c\u0424\u0001\u0000\u0000"+
 		"\u0000\u042c\u0425\u0001\u0000\u0000\u0000\u042c\u0426\u0001\u0000\u0000"+
 		"\u0000\u042c\u0427\u0001\u0000\u0000\u0000\u042c\u0428\u0001\u0000\u0000"+
 		"\u0000\u042c\u0429\u0001\u0000\u0000\u0000\u042c\u042a\u0001\u0000\u0000"+
@@ -8121,7 +8121,7 @@ public class PythonParser extends Parser {
 		"\u0300\u0306\u0309\u030e\u0314\u031b\u0321\u0327\u032c\u0332\u0339\u033f"+
 		"\u0344\u0349\u0351\u035a\u035f\u0367\u036e\u0373\u0380\u0386\u0396\u039c"+
 		"\u03a3\u03a8\u03af\u03b7\u03be\u03ca\u03d1\u03dd\u03e1\u03e6\u03f0\u03f7"+
-		"\u03fc\u040f\u0418\u0420\u042c\u0433\u0435\u043a\u0444\u0461\u046b\u047f"+
+		"\u03fc\u040e\u0417\u041f\u042c\u0433\u0435\u043a\u0444\u0461\u046b\u047f"+
 		"\u0484\u048a\u0496\u04a3\u04b2";
 	public static final ATN _ATN =
 		new ATNDeserializer().deserialize(_serializedATN.toCharArray());

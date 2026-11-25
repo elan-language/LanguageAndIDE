@@ -3998,7 +3998,7 @@ export class RefLangParser extends antlr.Parser {
     let localContext = new ExpressionContext(this.context, this.state);
     this.enterRule(localContext, 138, RefLangParser.RULE_expression);
     try {
-      this.state = 850;
+      this.state = 849;
       this.errorHandler.sync(this);
       switch (this.interpreter.adaptivePredict(this.tokenStream, 88, this.context)) {
         case 1:
@@ -4010,48 +4010,40 @@ export class RefLangParser extends antlr.Parser {
           }
           break;
         case 2:
-          localContext = new UnaryExpressionLabelContext(localContext);
+          localContext = new TermExpressionContext(localContext);
           this.enterOuterAlt(localContext, 2);
           {
             this.state = 838;
-            this.unaryExpression();
-          }
-          break;
-        case 3:
-          localContext = new TermExpressionContext(localContext);
-          this.enterOuterAlt(localContext, 3);
-          {
-            this.state = 839;
             this.term(0);
           }
           break;
-        case 4:
+        case 3:
           localContext = new BinaryExpressionLabelContext(localContext);
-          this.enterOuterAlt(localContext, 4);
+          this.enterOuterAlt(localContext, 3);
           {
-            this.state = 840;
+            this.state = 839;
             this.binaryExpression();
           }
           break;
-        case 5:
+        case 4:
           localContext = new IfExpressionContext(localContext);
-          this.enterOuterAlt(localContext, 5);
+          this.enterOuterAlt(localContext, 4);
           {
-            this.state = 841;
+            this.state = 840;
             this.match(RefLangParser.IF_);
-            this.state = 842;
+            this.state = 841;
             this.match(RefLangParser.OPEN_BRACKET);
-            this.state = 843;
+            this.state = 842;
             (localContext as IfExpressionContext)._condition = this.expression();
+            this.state = 843;
+            this.match(RefLangParser.COMMA);
             this.state = 844;
-            this.match(RefLangParser.COMMA);
-            this.state = 845;
             (localContext as IfExpressionContext)._trueExpr = this.expression();
-            this.state = 846;
+            this.state = 845;
             this.match(RefLangParser.COMMA);
-            this.state = 847;
+            this.state = 846;
             (localContext as IfExpressionContext)._falseExpr = this.expression();
-            this.state = 848;
+            this.state = 847;
             this.match(RefLangParser.CLOSE_BRACKET);
           }
           break;
@@ -4095,7 +4087,7 @@ export class RefLangParser extends antlr.Parser {
               this.context = localContext;
               previousContext = localContext;
 
-              this.state = 853;
+              this.state = 852;
               this.thisInstance();
             }
             break;
@@ -4104,11 +4096,20 @@ export class RefLangParser extends antlr.Parser {
               localContext = new BracketedExpressionTermContext(localContext);
               this.context = localContext;
               previousContext = localContext;
-              this.state = 854;
+              this.state = 853;
               this.bracketedExpression();
             }
             break;
           case 3:
+            {
+              localContext = new UnaryExpressionTermContext(localContext);
+              this.context = localContext;
+              previousContext = localContext;
+              this.state = 854;
+              this.unaryExpression();
+            }
+            break;
+          case 4:
             {
               localContext = new LitValueTermContext(localContext);
               this.context = localContext;
@@ -4117,7 +4118,7 @@ export class RefLangParser extends antlr.Parser {
               this.litValue();
             }
             break;
-          case 4:
+          case 5:
             {
               localContext = new ListTermContext(localContext);
               this.context = localContext;
@@ -4126,7 +4127,7 @@ export class RefLangParser extends antlr.Parser {
               this.list();
             }
             break;
-          case 5:
+          case 6:
             {
               localContext = new DictionaryTermContext(localContext);
               this.context = localContext;
@@ -4135,7 +4136,7 @@ export class RefLangParser extends antlr.Parser {
               this.dictionary();
             }
             break;
-          case 6:
+          case 7:
             {
               localContext = new TupleTermContext(localContext);
               this.context = localContext;
@@ -4144,7 +4145,7 @@ export class RefLangParser extends antlr.Parser {
               this.tuple();
             }
             break;
-          case 7:
+          case 8:
             {
               localContext = new IdentifierUseTermContext(localContext);
               this.context = localContext;
@@ -4153,7 +4154,7 @@ export class RefLangParser extends antlr.Parser {
               this.identifierUse();
             }
             break;
-          case 8:
+          case 9:
             {
               localContext = new MethodCallTermContext(localContext);
               this.context = localContext;
@@ -5080,7 +5081,7 @@ export class RefLangParser extends antlr.Parser {
     63, 10, 63, 12, 63, 813, 9, 63, 1, 63, 1, 63, 1, 64, 1, 64, 3, 64, 819, 8, 64, 1, 65, 4, 65,
     822, 8, 65, 11, 65, 12, 65, 823, 1, 66, 1, 66, 1, 66, 1, 66, 1, 67, 1, 67, 1, 67, 1, 67, 1, 68,
     1, 68, 1, 68, 1, 68, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1, 69, 1,
-    69, 1, 69, 1, 69, 3, 69, 851, 8, 69, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1,
+    69, 1, 69, 3, 69, 850, 8, 69, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1,
     70, 3, 70, 862, 8, 70, 1, 70, 1, 70, 1, 70, 1, 70, 1, 70, 5, 70, 869, 8, 70, 10, 70, 12, 70,
     872, 9, 70, 1, 71, 1, 71, 3, 71, 876, 8, 71, 1, 72, 1, 72, 1, 73, 1, 73, 1, 73, 1, 73, 1, 74, 1,
     74, 3, 74, 886, 8, 74, 1, 75, 1, 75, 1, 75, 1, 76, 1, 76, 1, 76, 1, 77, 1, 77, 1, 77, 1, 77, 1,
@@ -5112,7 +5113,7 @@ export class RefLangParser extends antlr.Parser {
     110, 780, 1, 0, 0, 0, 112, 782, 1, 0, 0, 0, 114, 784, 1, 0, 0, 0, 116, 792, 1, 0, 0, 0, 118,
     796, 1, 0, 0, 0, 120, 801, 1, 0, 0, 0, 122, 803, 1, 0, 0, 0, 124, 805, 1, 0, 0, 0, 126, 807, 1,
     0, 0, 0, 128, 818, 1, 0, 0, 0, 130, 821, 1, 0, 0, 0, 132, 825, 1, 0, 0, 0, 134, 829, 1, 0, 0, 0,
-    136, 833, 1, 0, 0, 0, 138, 850, 1, 0, 0, 0, 140, 861, 1, 0, 0, 0, 142, 875, 1, 0, 0, 0, 144,
+    136, 833, 1, 0, 0, 0, 138, 849, 1, 0, 0, 0, 140, 861, 1, 0, 0, 0, 142, 875, 1, 0, 0, 0, 144,
     877, 1, 0, 0, 0, 146, 879, 1, 0, 0, 0, 148, 885, 1, 0, 0, 0, 150, 887, 1, 0, 0, 0, 152, 890, 1,
     0, 0, 0, 154, 893, 1, 0, 0, 0, 156, 897, 1, 0, 0, 0, 158, 901, 1, 0, 0, 0, 160, 905, 1, 0, 0, 0,
     162, 909, 1, 0, 0, 0, 164, 917, 1, 0, 0, 0, 166, 921, 1, 0, 0, 0, 168, 944, 1, 0, 0, 0, 170,
@@ -5305,60 +5306,60 @@ export class RefLangParser extends antlr.Parser {
     131, 1, 0, 0, 0, 825, 826, 5, 76, 0, 0, 826, 827, 3, 138, 69, 0, 827, 828, 5, 77, 0, 0, 828,
     133, 1, 0, 0, 0, 829, 830, 3, 96, 48, 0, 830, 831, 5, 82, 0, 0, 831, 832, 3, 88, 44, 0, 832,
     135, 1, 0, 0, 0, 833, 834, 5, 78, 0, 0, 834, 835, 3, 138, 69, 0, 835, 836, 5, 79, 0, 0, 836,
-    137, 1, 0, 0, 0, 837, 851, 3, 170, 85, 0, 838, 851, 3, 148, 74, 0, 839, 851, 3, 140, 70, 0, 840,
-    851, 3, 154, 77, 0, 841, 842, 5, 13, 0, 0, 842, 843, 5, 80, 0, 0, 843, 844, 3, 138, 69, 0, 844,
-    845, 5, 83, 0, 0, 845, 846, 3, 138, 69, 0, 846, 847, 5, 83, 0, 0, 847, 848, 3, 138, 69, 0, 848,
-    849, 5, 81, 0, 0, 849, 851, 1, 0, 0, 0, 850, 837, 1, 0, 0, 0, 850, 838, 1, 0, 0, 0, 850, 839, 1,
-    0, 0, 0, 850, 840, 1, 0, 0, 0, 850, 841, 1, 0, 0, 0, 851, 139, 1, 0, 0, 0, 852, 853, 6, 70, -1,
-    0, 853, 862, 3, 144, 72, 0, 854, 862, 3, 146, 73, 0, 855, 862, 3, 116, 58, 0, 856, 862, 3, 156,
-    78, 0, 857, 862, 3, 160, 80, 0, 858, 862, 3, 158, 79, 0, 859, 862, 3, 88, 44, 0, 860, 862, 3,
-    166, 83, 0, 861, 852, 1, 0, 0, 0, 861, 854, 1, 0, 0, 0, 861, 855, 1, 0, 0, 0, 861, 856, 1, 0, 0,
-    0, 861, 857, 1, 0, 0, 0, 861, 858, 1, 0, 0, 0, 861, 859, 1, 0, 0, 0, 861, 860, 1, 0, 0, 0, 862,
-    870, 1, 0, 0, 0, 863, 864, 10, 2, 0, 0, 864, 869, 3, 136, 68, 0, 865, 866, 10, 1, 0, 0, 866,
-    867, 5, 82, 0, 0, 867, 869, 3, 142, 71, 0, 868, 863, 1, 0, 0, 0, 868, 865, 1, 0, 0, 0, 869, 872,
-    1, 0, 0, 0, 870, 868, 1, 0, 0, 0, 870, 871, 1, 0, 0, 0, 871, 141, 1, 0, 0, 0, 872, 870, 1, 0, 0,
-    0, 873, 876, 3, 88, 44, 0, 874, 876, 3, 166, 83, 0, 875, 873, 1, 0, 0, 0, 875, 874, 1, 0, 0, 0,
-    876, 143, 1, 0, 0, 0, 877, 878, 5, 74, 0, 0, 878, 145, 1, 0, 0, 0, 879, 880, 5, 80, 0, 0, 880,
-    881, 3, 138, 69, 0, 881, 882, 5, 81, 0, 0, 882, 147, 1, 0, 0, 0, 883, 886, 3, 150, 75, 0, 884,
-    886, 3, 152, 76, 0, 885, 883, 1, 0, 0, 0, 885, 884, 1, 0, 0, 0, 886, 149, 1, 0, 0, 0, 887, 888,
-    5, 86, 0, 0, 888, 889, 3, 140, 70, 0, 889, 151, 1, 0, 0, 0, 890, 891, 5, 66, 0, 0, 891, 892, 3,
-    140, 70, 0, 892, 153, 1, 0, 0, 0, 893, 894, 3, 140, 70, 0, 894, 895, 3, 168, 84, 0, 895, 896, 3,
-    138, 69, 0, 896, 155, 1, 0, 0, 0, 897, 898, 5, 78, 0, 0, 898, 899, 3, 108, 54, 0, 899, 900, 5,
-    79, 0, 0, 900, 157, 1, 0, 0, 0, 901, 902, 5, 80, 0, 0, 902, 903, 3, 108, 54, 0, 903, 904, 5, 81,
-    0, 0, 904, 159, 1, 0, 0, 0, 905, 906, 5, 78, 0, 0, 906, 907, 3, 162, 81, 0, 907, 908, 5, 79, 0,
-    0, 908, 161, 1, 0, 0, 0, 909, 914, 3, 164, 82, 0, 910, 911, 5, 83, 0, 0, 911, 913, 3, 164, 82,
-    0, 912, 910, 1, 0, 0, 0, 913, 916, 1, 0, 0, 0, 914, 912, 1, 0, 0, 0, 914, 915, 1, 0, 0, 0, 915,
-    163, 1, 0, 0, 0, 916, 914, 1, 0, 0, 0, 917, 918, 3, 138, 69, 0, 918, 919, 5, 84, 0, 0, 919, 920,
-    3, 138, 69, 0, 920, 165, 1, 0, 0, 0, 921, 922, 3, 92, 46, 0, 922, 924, 5, 80, 0, 0, 923, 925, 3,
-    100, 50, 0, 924, 923, 1, 0, 0, 0, 924, 925, 1, 0, 0, 0, 925, 926, 1, 0, 0, 0, 926, 927, 5, 81,
-    0, 0, 927, 167, 1, 0, 0, 0, 928, 945, 5, 67, 0, 0, 929, 945, 5, 68, 0, 0, 930, 945, 5, 67, 0, 0,
-    931, 945, 5, 68, 0, 0, 932, 945, 5, 90, 0, 0, 933, 945, 5, 89, 0, 0, 934, 945, 5, 92, 0, 0, 935,
-    945, 5, 91, 0, 0, 936, 945, 5, 87, 0, 0, 937, 945, 5, 88, 0, 0, 938, 945, 5, 85, 0, 0, 939, 945,
-    5, 86, 0, 0, 940, 945, 5, 64, 0, 0, 941, 945, 5, 65, 0, 0, 942, 945, 5, 69, 0, 0, 943, 945, 5,
-    71, 0, 0, 944, 928, 1, 0, 0, 0, 944, 929, 1, 0, 0, 0, 944, 930, 1, 0, 0, 0, 944, 931, 1, 0, 0,
-    0, 944, 932, 1, 0, 0, 0, 944, 933, 1, 0, 0, 0, 944, 934, 1, 0, 0, 0, 944, 935, 1, 0, 0, 0, 944,
-    936, 1, 0, 0, 0, 944, 937, 1, 0, 0, 0, 944, 938, 1, 0, 0, 0, 944, 939, 1, 0, 0, 0, 944, 940, 1,
-    0, 0, 0, 944, 941, 1, 0, 0, 0, 944, 942, 1, 0, 0, 0, 944, 943, 1, 0, 0, 0, 945, 169, 1, 0, 0, 0,
-    946, 947, 5, 30, 0, 0, 947, 948, 3, 110, 55, 0, 948, 950, 5, 80, 0, 0, 949, 951, 3, 100, 50, 0,
-    950, 949, 1, 0, 0, 0, 950, 951, 1, 0, 0, 0, 951, 952, 1, 0, 0, 0, 952, 953, 5, 81, 0, 0, 953,
-    171, 1, 0, 0, 0, 954, 955, 3, 86, 43, 0, 955, 956, 5, 45, 0, 0, 956, 957, 3, 110, 55, 0, 957,
-    173, 1, 0, 0, 0, 958, 959, 3, 96, 48, 0, 959, 960, 5, 89, 0, 0, 960, 961, 5, 31, 0, 0, 961, 966,
-    3, 110, 55, 0, 962, 963, 5, 83, 0, 0, 963, 965, 3, 110, 55, 0, 964, 962, 1, 0, 0, 0, 965, 968,
-    1, 0, 0, 0, 966, 964, 1, 0, 0, 0, 966, 967, 1, 0, 0, 0, 967, 969, 1, 0, 0, 0, 968, 966, 1, 0, 0,
-    0, 969, 970, 5, 90, 0, 0, 970, 175, 1, 0, 0, 0, 971, 972, 5, 61, 0, 0, 972, 973, 5, 89, 0, 0,
-    973, 974, 5, 31, 0, 0, 974, 979, 3, 110, 55, 0, 975, 976, 5, 83, 0, 0, 976, 978, 3, 110, 55, 0,
-    977, 975, 1, 0, 0, 0, 978, 981, 1, 0, 0, 0, 979, 977, 1, 0, 0, 0, 979, 980, 1, 0, 0, 0, 980,
-    982, 1, 0, 0, 0, 981, 979, 1, 0, 0, 0, 982, 983, 5, 70, 0, 0, 983, 984, 3, 110, 55, 0, 984, 985,
-    5, 90, 0, 0, 985, 177, 1, 0, 0, 0, 986, 987, 5, 80, 0, 0, 987, 990, 3, 110, 55, 0, 988, 989, 5,
-    83, 0, 0, 989, 991, 3, 110, 55, 0, 990, 988, 1, 0, 0, 0, 991, 992, 1, 0, 0, 0, 992, 990, 1, 0,
-    0, 0, 992, 993, 1, 0, 0, 0, 993, 994, 1, 0, 0, 0, 994, 995, 5, 81, 0, 0, 995, 179, 1, 0, 0, 0,
-    996, 997, 5, 8, 0, 0, 997, 998, 3, 104, 52, 0, 998, 999, 5, 70, 0, 0, 999, 1000, 3, 138, 69, 0,
-    1000, 181, 1, 0, 0, 0, 101, 183, 188, 194, 202, 213, 216, 223, 231, 237, 246, 255, 263, 273,
-    276, 282, 289, 297, 307, 315, 321, 328, 339, 342, 349, 355, 368, 371, 381, 396, 407, 410, 420,
-    429, 439, 443, 452, 456, 465, 469, 476, 480, 488, 496, 506, 514, 521, 529, 538, 542, 552, 556,
-    565, 568, 584, 591, 594, 599, 606, 614, 617, 626, 629, 635, 644, 653, 656, 662, 669, 677, 684,
-    692, 699, 713, 719, 733, 739, 746, 751, 758, 766, 773, 780, 792, 796, 801, 811, 818, 823, 850,
-    861, 868, 870, 875, 885, 914, 924, 944, 950, 966, 979, 992,
+    137, 1, 0, 0, 0, 837, 850, 3, 170, 85, 0, 838, 850, 3, 140, 70, 0, 839, 850, 3, 154, 77, 0, 840,
+    841, 5, 13, 0, 0, 841, 842, 5, 80, 0, 0, 842, 843, 3, 138, 69, 0, 843, 844, 5, 83, 0, 0, 844,
+    845, 3, 138, 69, 0, 845, 846, 5, 83, 0, 0, 846, 847, 3, 138, 69, 0, 847, 848, 5, 81, 0, 0, 848,
+    850, 1, 0, 0, 0, 849, 837, 1, 0, 0, 0, 849, 838, 1, 0, 0, 0, 849, 839, 1, 0, 0, 0, 849, 840, 1,
+    0, 0, 0, 850, 139, 1, 0, 0, 0, 851, 852, 6, 70, -1, 0, 852, 862, 3, 144, 72, 0, 853, 862, 3,
+    146, 73, 0, 854, 862, 3, 148, 74, 0, 855, 862, 3, 116, 58, 0, 856, 862, 3, 156, 78, 0, 857, 862,
+    3, 160, 80, 0, 858, 862, 3, 158, 79, 0, 859, 862, 3, 88, 44, 0, 860, 862, 3, 166, 83, 0, 861,
+    851, 1, 0, 0, 0, 861, 853, 1, 0, 0, 0, 861, 854, 1, 0, 0, 0, 861, 855, 1, 0, 0, 0, 861, 856, 1,
+    0, 0, 0, 861, 857, 1, 0, 0, 0, 861, 858, 1, 0, 0, 0, 861, 859, 1, 0, 0, 0, 861, 860, 1, 0, 0, 0,
+    862, 870, 1, 0, 0, 0, 863, 864, 10, 2, 0, 0, 864, 869, 3, 136, 68, 0, 865, 866, 10, 1, 0, 0,
+    866, 867, 5, 82, 0, 0, 867, 869, 3, 142, 71, 0, 868, 863, 1, 0, 0, 0, 868, 865, 1, 0, 0, 0, 869,
+    872, 1, 0, 0, 0, 870, 868, 1, 0, 0, 0, 870, 871, 1, 0, 0, 0, 871, 141, 1, 0, 0, 0, 872, 870, 1,
+    0, 0, 0, 873, 876, 3, 88, 44, 0, 874, 876, 3, 166, 83, 0, 875, 873, 1, 0, 0, 0, 875, 874, 1, 0,
+    0, 0, 876, 143, 1, 0, 0, 0, 877, 878, 5, 74, 0, 0, 878, 145, 1, 0, 0, 0, 879, 880, 5, 80, 0, 0,
+    880, 881, 3, 138, 69, 0, 881, 882, 5, 81, 0, 0, 882, 147, 1, 0, 0, 0, 883, 886, 3, 150, 75, 0,
+    884, 886, 3, 152, 76, 0, 885, 883, 1, 0, 0, 0, 885, 884, 1, 0, 0, 0, 886, 149, 1, 0, 0, 0, 887,
+    888, 5, 86, 0, 0, 888, 889, 3, 140, 70, 0, 889, 151, 1, 0, 0, 0, 890, 891, 5, 66, 0, 0, 891,
+    892, 3, 140, 70, 0, 892, 153, 1, 0, 0, 0, 893, 894, 3, 140, 70, 0, 894, 895, 3, 168, 84, 0, 895,
+    896, 3, 138, 69, 0, 896, 155, 1, 0, 0, 0, 897, 898, 5, 78, 0, 0, 898, 899, 3, 108, 54, 0, 899,
+    900, 5, 79, 0, 0, 900, 157, 1, 0, 0, 0, 901, 902, 5, 80, 0, 0, 902, 903, 3, 108, 54, 0, 903,
+    904, 5, 81, 0, 0, 904, 159, 1, 0, 0, 0, 905, 906, 5, 78, 0, 0, 906, 907, 3, 162, 81, 0, 907,
+    908, 5, 79, 0, 0, 908, 161, 1, 0, 0, 0, 909, 914, 3, 164, 82, 0, 910, 911, 5, 83, 0, 0, 911,
+    913, 3, 164, 82, 0, 912, 910, 1, 0, 0, 0, 913, 916, 1, 0, 0, 0, 914, 912, 1, 0, 0, 0, 914, 915,
+    1, 0, 0, 0, 915, 163, 1, 0, 0, 0, 916, 914, 1, 0, 0, 0, 917, 918, 3, 138, 69, 0, 918, 919, 5,
+    84, 0, 0, 919, 920, 3, 138, 69, 0, 920, 165, 1, 0, 0, 0, 921, 922, 3, 92, 46, 0, 922, 924, 5,
+    80, 0, 0, 923, 925, 3, 100, 50, 0, 924, 923, 1, 0, 0, 0, 924, 925, 1, 0, 0, 0, 925, 926, 1, 0,
+    0, 0, 926, 927, 5, 81, 0, 0, 927, 167, 1, 0, 0, 0, 928, 945, 5, 67, 0, 0, 929, 945, 5, 68, 0, 0,
+    930, 945, 5, 67, 0, 0, 931, 945, 5, 68, 0, 0, 932, 945, 5, 90, 0, 0, 933, 945, 5, 89, 0, 0, 934,
+    945, 5, 92, 0, 0, 935, 945, 5, 91, 0, 0, 936, 945, 5, 87, 0, 0, 937, 945, 5, 88, 0, 0, 938, 945,
+    5, 85, 0, 0, 939, 945, 5, 86, 0, 0, 940, 945, 5, 64, 0, 0, 941, 945, 5, 65, 0, 0, 942, 945, 5,
+    69, 0, 0, 943, 945, 5, 71, 0, 0, 944, 928, 1, 0, 0, 0, 944, 929, 1, 0, 0, 0, 944, 930, 1, 0, 0,
+    0, 944, 931, 1, 0, 0, 0, 944, 932, 1, 0, 0, 0, 944, 933, 1, 0, 0, 0, 944, 934, 1, 0, 0, 0, 944,
+    935, 1, 0, 0, 0, 944, 936, 1, 0, 0, 0, 944, 937, 1, 0, 0, 0, 944, 938, 1, 0, 0, 0, 944, 939, 1,
+    0, 0, 0, 944, 940, 1, 0, 0, 0, 944, 941, 1, 0, 0, 0, 944, 942, 1, 0, 0, 0, 944, 943, 1, 0, 0, 0,
+    945, 169, 1, 0, 0, 0, 946, 947, 5, 30, 0, 0, 947, 948, 3, 110, 55, 0, 948, 950, 5, 80, 0, 0,
+    949, 951, 3, 100, 50, 0, 950, 949, 1, 0, 0, 0, 950, 951, 1, 0, 0, 0, 951, 952, 1, 0, 0, 0, 952,
+    953, 5, 81, 0, 0, 953, 171, 1, 0, 0, 0, 954, 955, 3, 86, 43, 0, 955, 956, 5, 45, 0, 0, 956, 957,
+    3, 110, 55, 0, 957, 173, 1, 0, 0, 0, 958, 959, 3, 96, 48, 0, 959, 960, 5, 89, 0, 0, 960, 961, 5,
+    31, 0, 0, 961, 966, 3, 110, 55, 0, 962, 963, 5, 83, 0, 0, 963, 965, 3, 110, 55, 0, 964, 962, 1,
+    0, 0, 0, 965, 968, 1, 0, 0, 0, 966, 964, 1, 0, 0, 0, 966, 967, 1, 0, 0, 0, 967, 969, 1, 0, 0, 0,
+    968, 966, 1, 0, 0, 0, 969, 970, 5, 90, 0, 0, 970, 175, 1, 0, 0, 0, 971, 972, 5, 61, 0, 0, 972,
+    973, 5, 89, 0, 0, 973, 974, 5, 31, 0, 0, 974, 979, 3, 110, 55, 0, 975, 976, 5, 83, 0, 0, 976,
+    978, 3, 110, 55, 0, 977, 975, 1, 0, 0, 0, 978, 981, 1, 0, 0, 0, 979, 977, 1, 0, 0, 0, 979, 980,
+    1, 0, 0, 0, 980, 982, 1, 0, 0, 0, 981, 979, 1, 0, 0, 0, 982, 983, 5, 70, 0, 0, 983, 984, 3, 110,
+    55, 0, 984, 985, 5, 90, 0, 0, 985, 177, 1, 0, 0, 0, 986, 987, 5, 80, 0, 0, 987, 990, 3, 110, 55,
+    0, 988, 989, 5, 83, 0, 0, 989, 991, 3, 110, 55, 0, 990, 988, 1, 0, 0, 0, 991, 992, 1, 0, 0, 0,
+    992, 990, 1, 0, 0, 0, 992, 993, 1, 0, 0, 0, 993, 994, 1, 0, 0, 0, 994, 995, 5, 81, 0, 0, 995,
+    179, 1, 0, 0, 0, 996, 997, 5, 8, 0, 0, 997, 998, 3, 104, 52, 0, 998, 999, 5, 70, 0, 0, 999,
+    1000, 3, 138, 69, 0, 1000, 181, 1, 0, 0, 0, 101, 183, 188, 194, 202, 213, 216, 223, 231, 237,
+    246, 255, 263, 273, 276, 282, 289, 297, 307, 315, 321, 328, 339, 342, 349, 355, 368, 371, 381,
+    396, 407, 410, 420, 429, 439, 443, 452, 456, 465, 469, 476, 480, 488, 496, 506, 514, 521, 529,
+    538, 542, 552, 556, 565, 568, 584, 591, 594, 599, 606, 614, 617, 626, 629, 635, 644, 653, 656,
+    662, 669, 677, 684, 692, 699, 713, 719, 733, 739, 746, 751, 758, 766, 773, 780, 792, 796, 801,
+    811, 818, 823, 849, 861, 868, 870, 875, 885, 914, 924, 944, 950, 966, 979, 992,
   ];
 
   private static __ATN: antlr.ATN;
@@ -8852,32 +8853,6 @@ export class ExpressionContext extends antlr.ParserRuleContext {
     super.copyFrom(ctx);
   }
 }
-export class UnaryExpressionLabelContext extends ExpressionContext {
-  public constructor(ctx: ExpressionContext) {
-    super(ctx.parent, ctx.invokingState);
-    super.copyFrom(ctx);
-  }
-  public unaryExpression(): UnaryExpressionContext {
-    return this.getRuleContext(0, UnaryExpressionContext)!;
-  }
-  public override enterRule(listener: RefLangListener): void {
-    if (listener.enterUnaryExpressionLabel) {
-      listener.enterUnaryExpressionLabel(this);
-    }
-  }
-  public override exitRule(listener: RefLangListener): void {
-    if (listener.exitUnaryExpressionLabel) {
-      listener.exitUnaryExpressionLabel(this);
-    }
-  }
-  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
-    if (visitor.visitUnaryExpressionLabel) {
-      return visitor.visitUnaryExpressionLabel(this);
-    } else {
-      return visitor.visitChildren(this);
-    }
-  }
-}
 export class BinaryExpressionLabelContext extends ExpressionContext {
   public constructor(ctx: ExpressionContext) {
     super(ctx.parent, ctx.invokingState);
@@ -9149,6 +9124,32 @@ export class DictionaryTermContext extends TermContext {
   public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
     if (visitor.visitDictionaryTerm) {
       return visitor.visitDictionaryTerm(this);
+    } else {
+      return visitor.visitChildren(this);
+    }
+  }
+}
+export class UnaryExpressionTermContext extends TermContext {
+  public constructor(ctx: TermContext) {
+    super(ctx.parent, ctx.invokingState);
+    super.copyFrom(ctx);
+  }
+  public unaryExpression(): UnaryExpressionContext {
+    return this.getRuleContext(0, UnaryExpressionContext)!;
+  }
+  public override enterRule(listener: RefLangListener): void {
+    if (listener.enterUnaryExpressionTerm) {
+      listener.enterUnaryExpressionTerm(this);
+    }
+  }
+  public override exitRule(listener: RefLangListener): void {
+    if (listener.exitUnaryExpressionTerm) {
+      listener.exitUnaryExpressionTerm(this);
+    }
+  }
+  public override accept<Result>(visitor: RefLangVisitor<Result>): Result | null {
+    if (visitor.visitUnaryExpressionTerm) {
+      return visitor.visitUnaryExpressionTerm(this);
     } else {
       return visitor.visitChildren(this);
     }

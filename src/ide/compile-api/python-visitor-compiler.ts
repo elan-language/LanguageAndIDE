@@ -265,11 +265,6 @@ export class PythonVisitorCompiler extends PythonVisitor<AstNode> {
     return this.visitChildren(ctx)!;
   };
 
-  override visitUnaryExpressionLabel = (ctx: ExpressionContext) => {
-    this.precedingNode = EmptyAsn.Instance;
-    return this.visitChildren(ctx)!;
-  };
-
   override visitTermExpression = (ctx: ExpressionContext) => {
     this.precedingNode = EmptyAsn.Instance;
     return this.visitChildren(ctx)!;

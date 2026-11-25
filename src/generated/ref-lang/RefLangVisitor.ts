@@ -83,7 +83,6 @@ import { InterpolatedStringExpressionContext } from "./RefLangParser.js";
 import { EnumValueContext } from "./RefLangParser.js";
 import { IndexContext } from "./RefLangParser.js";
 import { NewInstanceExpressionContext } from "./RefLangParser.js";
-import { UnaryExpressionLabelContext } from "./RefLangParser.js";
 import { TermExpressionContext } from "./RefLangParser.js";
 import { BinaryExpressionLabelContext } from "./RefLangParser.js";
 import { IfExpressionContext } from "./RefLangParser.js";
@@ -92,6 +91,7 @@ import { MethodCallTermContext } from "./RefLangParser.js";
 import { IndexedTermContext } from "./RefLangParser.js";
 import { LitValueTermContext } from "./RefLangParser.js";
 import { DictionaryTermContext } from "./RefLangParser.js";
+import { UnaryExpressionTermContext } from "./RefLangParser.js";
 import { BracketedExpressionTermContext } from "./RefLangParser.js";
 import { ChainableTermContext } from "./RefLangParser.js";
 import { TupleTermContext } from "./RefLangParser.js";
@@ -644,13 +644,6 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    */
   visitNewInstanceExpression?: (ctx: NewInstanceExpressionContext) => Result;
   /**
-   * Visit a parse tree produced by the `unaryExpressionLabel`
-   * labeled alternative in `RefLangParser.expression`.
-   * @param ctx the parse tree
-   * @return the visitor result
-   */
-  visitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => Result;
-  /**
    * Visit a parse tree produced by the `termExpression`
    * labeled alternative in `RefLangParser.expression`.
    * @param ctx the parse tree
@@ -706,6 +699,13 @@ export class RefLangVisitor<Result> extends AbstractParseTreeVisitor<Result> {
    * @return the visitor result
    */
   visitDictionaryTerm?: (ctx: DictionaryTermContext) => Result;
+  /**
+   * Visit a parse tree produced by the `unaryExpressionTerm`
+   * labeled alternative in `RefLangParser.term`.
+   * @param ctx the parse tree
+   * @return the visitor result
+   */
+  visitUnaryExpressionTerm?: (ctx: UnaryExpressionTermContext) => Result;
   /**
    * Visit a parse tree produced by the `bracketedExpressionTerm`
    * labeled alternative in `RefLangParser.term`.

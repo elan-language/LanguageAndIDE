@@ -86,7 +86,6 @@ import { InterpolatedStringTextContext } from "./PythonParser.js";
 import { InterpolatedStringExpressionContext } from "./PythonParser.js";
 import { EnumValueContext } from "./PythonParser.js";
 import { IndexContext } from "./PythonParser.js";
-import { UnaryExpressionLabelContext } from "./PythonParser.js";
 import { BinaryExpressionLabelContext } from "./PythonParser.js";
 import { NewInstanceExpressionContext } from "./PythonParser.js";
 import { IfExpressionContext } from "./PythonParser.js";
@@ -96,6 +95,7 @@ import { MethodCallTermContext } from "./PythonParser.js";
 import { IndexedTermContext } from "./PythonParser.js";
 import { LitValueTermContext } from "./PythonParser.js";
 import { DictionaryTermContext } from "./PythonParser.js";
+import { UnaryExpressionTermContext } from "./PythonParser.js";
 import { BracketedExpressionTermContext } from "./PythonParser.js";
 import { ChainableTermContext } from "./PythonParser.js";
 import { TupleTermContext } from "./PythonParser.js";
@@ -1013,18 +1013,6 @@ export class PythonListener implements ParseTreeListener {
    */
   exitIndex?: (ctx: IndexContext) => void;
   /**
-   * Enter a parse tree produced by the `unaryExpressionLabel`
-   * labeled alternative in `PythonParser.expression`.
-   * @param ctx the parse tree
-   */
-  enterUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
-  /**
-   * Exit a parse tree produced by the `unaryExpressionLabel`
-   * labeled alternative in `PythonParser.expression`.
-   * @param ctx the parse tree
-   */
-  exitUnaryExpressionLabel?: (ctx: UnaryExpressionLabelContext) => void;
-  /**
    * Enter a parse tree produced by the `binaryExpressionLabel`
    * labeled alternative in `PythonParser.expression`.
    * @param ctx the parse tree
@@ -1132,6 +1120,18 @@ export class PythonListener implements ParseTreeListener {
    * @param ctx the parse tree
    */
   exitDictionaryTerm?: (ctx: DictionaryTermContext) => void;
+  /**
+   * Enter a parse tree produced by the `unaryExpressionTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  enterUnaryExpressionTerm?: (ctx: UnaryExpressionTermContext) => void;
+  /**
+   * Exit a parse tree produced by the `unaryExpressionTerm`
+   * labeled alternative in `PythonParser.term`.
+   * @param ctx the parse tree
+   */
+  exitUnaryExpressionTerm?: (ctx: UnaryExpressionTermContext) => void;
   /**
    * Enter a parse tree produced by the `bracketedExpressionTerm`
    * labeled alternative in `PythonParser.term`.

@@ -4,6 +4,7 @@ import { FileImpl } from "../../../src/ide/frames/file-impl";
 import { Paradigm } from "../../../src/ide/frames/paradigm";
 import { StubInputOutput } from "../../../src/ide/stub-input-output";
 import {
+  assertCompiles,
   assertDoesNotCompile,
   assertDoesNotParse,
   assertObjectCodeExecutes,
@@ -585,11 +586,12 @@ end main`;
     ]);
   });
 
-  test("Fail_DoubleMinus1", async () => {
+  test("Pass_DoubleMinus1", async () => {
     const code = `${testRefLangHeader}
 
 main
   variable x set to --4
+  call printNoLine(x)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -603,17 +605,18 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-    // assertStatusIsValid(fileImpl);
-    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    await assertObjectCodeExecutes(fileImpl, "4");
   });
 
-  test("Fail_DoubleMinus2", async () => {
+  test("Pass_DoubleMinus2", async () => {
     const code = `${testRefLangHeader}
 
 main
   variable x set to 1
   variable y set to --x
+  call printNoLine(y)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -627,16 +630,17 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-    // assertStatusIsValid(fileImpl);
-    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    await assertObjectCodeExecutes(fileImpl, "1");
   });
 
-  test("Fail_DoubleNot1", async () => {
+  test("Pass_DoubleNot1", async () => {
     const code = `${testRefLangHeader}
 
 main
   variable x set to not not true
+  call printNoLine(x)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -650,17 +654,18 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-    // assertStatusIsValid(fileImpl);
-    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
-  test("Fail_DoubleNot2", async () => {
+  test("Pass_DoubleNot2", async () => {
     const code = `${testRefLangHeader}
 
 main
   variable x set to true
   variable y set to not not x
+  call printNoLine(y)
 end main`;
 
     const fileImpl = new FileImpl(
@@ -674,9 +679,9 @@ end main`;
     );
     await fileImpl.parseFrom(new CodeSourceFromString(code));
 
-    assertDoesNotParse(fileImpl);
-    // assertStatusIsValid(fileImpl);
-    // assertDoesNotCompile(fileImpl, ["Unsupported operation.ErrorMessages.html#compile_error"]);
+    assertParses(fileImpl);
+    assertCompiles(fileImpl);
+    await assertObjectCodeExecutes(fileImpl, "true");
   });
 
   test("Fail_PowerType1", async () => {

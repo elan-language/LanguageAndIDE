@@ -1324,10 +1324,6 @@ export function mustNotBeGlobalFunctionIfRef(
   }
 }
 
-export function mustNotBeTwoUnaryExpressions(compileErrors: CompileError[], location: string) {
-  compileErrors.push(new SyntaxCompileError("Unsupported operation.", location));
-}
-
 export function mustBeValidRegExp(
   message: string,
   compileErrors: CompileError[],
