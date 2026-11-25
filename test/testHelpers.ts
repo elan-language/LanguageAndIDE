@@ -45,7 +45,7 @@ import { getTestRunner } from "./runner";
 const updateTestFiles = false;
 
 function compiles(ast : RootAstNode | undefined) {
-   return ast && ast.getAllCompileErrors().length == 0;
+   return ast && ast.getAllCompileErrors().length === 0;
 }
 
 
