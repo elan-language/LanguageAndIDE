@@ -1,4 +1,4 @@
-# 9dbfb78ae1622c067abdb96c3f17d7847269b8f6b0197a7b93f5a581524699c9 Python with Elan 3.0.0-alpha valid
+# f8f2fbb551559b39d0c4e65c7e1501e2b65f9665c5bb0a28f8307f835442869c Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   order = inputIntBetween("Enter order of dragon [1..12]: ", 1, 12) # variable definition
@@ -23,10 +23,10 @@ def drawDragon(t: Turtle, order: int, turns: str, side: float, corner: float) ->
   p = (200.0/order).floor() # variable definition
   turnI = 0 # variable definition
   for turn in turns:
-    turnI = (1 if turn.equals(left) else -1) # assignment
-    t.turn(-45)
+    turnI = (-45 if turn.equals(left) else 45) # assignment
+    t.turn(turnI)
     t.move(corner)
-    t.turn(-45)
+    t.turn(turnI)
     t.move(side)
     sleep_ms(p)
   # end for

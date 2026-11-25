@@ -1,4 +1,4 @@
-# 5fcfccf56627e1870a6fda18ddd7f45c5f64ea268648ccfcc9abbf5a3da66b4a RefLang with Elan 3.0.0-alpha valid
+# a28a3192f6349639c98b1c50722a89c33b0bf13ec5e12c336add1bb148b6f708 RefLang with Elan 3.0.0-alpha valid
 
 main
   variable order set to inputIntBetween("Enter order of dragon [1..12]: ", 1, 12)
@@ -23,10 +23,10 @@ procedure drawDragon(t as Turtle, order as Int, turns as String, side as Float, 
   variable p set to (200.0/order).floor()
   variable turnI set to 0
   for turn in turns
-    assign turnI to (if_(turn.equals(left), 1, -1))
-    call t.turn(-45)
+    assign turnI to (if_(turn.equals(left), -45, 45))
+    call t.turn(turnI)
     call t.move(corner)
-    call t.turn(-45)
+    call t.turn(turnI)
     call t.move(side)
     call sleep_ms(p)
   end for

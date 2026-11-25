@@ -807,7 +807,7 @@ export class FileImpl implements File {
   }
 
   async validateHeader(code: string): Promise<string> {
-    let language = "Elan";
+    let language = "";
     if (!this.isEmpty(code)) {
       const eol = code.indexOf("\n");
       const header = code.substring(0, eol > 0 ? eol : undefined);
