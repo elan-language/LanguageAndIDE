@@ -506,13 +506,7 @@ class Foo {
     return this;
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Bar.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
   async length() {
     let p1 = this.p1;

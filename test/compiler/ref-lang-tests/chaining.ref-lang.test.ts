@@ -243,13 +243,7 @@ class Foo {
     return "";
   }
 
-  elan_b;
-  get b() {
-    return this.elan_b ??= Bar.emptyInstance();
-  }
-  set b(b) {
-    this.elan_b = b;
-  }
+  b;
 
 }
 
@@ -264,13 +258,7 @@ class Bar {
     return "";
   }
 
-  elan_y;
-  get y() {
-    return this.elan_y ??= Yon.emptyInstance();
-  }
-  set y(y) {
-    this.elan_y = y;
-  }
+  y;
 
 }
 
@@ -360,13 +348,7 @@ class Foo {
     return "";
   }
 
-  elan_b;
-  get b() {
-    return this.elan_b ??= Bar.emptyInstance();
-  }
-  set b(b) {
-    this.elan_b = b;
-  }
+  b;
 
 }
 
@@ -458,13 +440,7 @@ class Foo {
     return "";
   }
 
-  elan_b;
-  get b() {
-    return this.elan_b ??= Bar.emptyInstance();
-  }
-  set b(b) {
-    this.elan_b = b;
-  }
+  b;
 
 }
 
@@ -757,13 +733,7 @@ class Bar {
     return "";
   }
 
-  elan_foo;
-  get foo() {
-    return this.elan_foo ??= Foo.emptyInstance();
-  }
-  set foo(foo) {
-    this.elan_foo = foo;
-  }
+  foo;
 
 }
 

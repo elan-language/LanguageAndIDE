@@ -74,21 +74,9 @@ class Game {
     return this;
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Player.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
-  elan_p2;
-  get p2() {
-    return this.elan_p2 ??= Player.emptyInstance();
-  }
-  set p2(p2) {
-    this.elan_p2 = p2;
-  }
+  p2;
 
   previousScores = system.initialise(_stdlib.List.emptyInstance());
 
@@ -370,13 +358,7 @@ class Player {
     return "";
   }
 
-  elan_g;
-  get g() {
-    return this.elan_g ??= Game.emptyInstance();
-  }
-  set g(g) {
-    this.elan_g = g;
-  }
+  g;
 
 }
 
@@ -484,21 +466,9 @@ class Game {
     return this;
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Player.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
-  elan_previousGame;
-  get previousGame() {
-    return this.elan_previousGame ??= system.initialise(_stdlib.Maybe.emptyInstance());
-  }
-  set previousGame(previousGame) {
-    this.elan_previousGame = previousGame;
-  }
+  previousGame;
 
   async toString() {
     return "A game";
@@ -687,13 +657,7 @@ class Bar {
     await p1.pp();
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Foo.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
 }
 return [main, _tests];}`;

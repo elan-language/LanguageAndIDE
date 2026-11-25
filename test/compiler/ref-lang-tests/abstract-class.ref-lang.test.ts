@@ -733,24 +733,12 @@ async function main() {
 }
 
 class Foo {
-  elan_f;
-  get f() {
-    return this.elan_f ??= Foo2.emptyInstance();
-  }
-  set f(f) {
-    this.elan_f = f;
-  }
+  f;
 
 }
 
 class Foo2 {
-  elan_f2;
-  get f2() {
-    return this.elan_f2 ??= Foo.emptyInstance();
-  }
-  set f2(f2) {
-    this.elan_f2 = f2;
-  }
+  f2;
 
 }
 
@@ -765,13 +753,7 @@ class Bar {
     return "";
   }
 
-  elan_foo;
-  get foo() {
-    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
-  }
-  set foo(foo) {
-    this.elan_foo = foo;
-  }
+  foo;
 
 }
 return [main, _tests];}`;
