@@ -1,5 +1,4 @@
 import { TerminalNode } from "antlr4ng";
-import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import {
@@ -36,6 +35,7 @@ import {
   ParamListContext,
   TestNameContext,
   ThisAssignableContext,
+  ThisInstanceContext,
   TupleContext,
   TypeContext,
   TypeFuncContext,
@@ -215,8 +215,11 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   override visitChainableTerm = (ctx: ChainableTermContext) =>
     `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
 
+  override visitThisInstance = (_ctx: ThisInstanceContext) =>
+    this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance);
+
   override visitThisAssignable = (ctx: ThisAssignableContext) =>
-    `${this.visit(ctx.THIS_INSTANCE()!)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+    `${this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance)}${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
     `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
@@ -247,6 +250,6 @@ export class RefLangVisitorSource extends RefLangVisitor<string> {
   };
 
   override visitTerminal(ctx: TerminalNode) {
-    return getTokenTextByName(this.language, ctx.getText());
+    return ctx.getText();
   }
 }

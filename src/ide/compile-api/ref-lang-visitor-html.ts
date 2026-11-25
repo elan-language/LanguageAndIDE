@@ -1,5 +1,4 @@
 import { TerminalNode } from "antlr4ng";
-import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
 import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
 import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import {
@@ -241,11 +240,11 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   override visitChainableTerm = (ctx: ChainableTermContext) =>
     `${this.visit(ctx.term())}.${this.visit(ctx.chainable())}`;
 
-  override visitThisInstance = (ctx: ThisInstanceContext) =>
-    `<el-kw>${this.visit(ctx.THIS_INSTANCE())}</el-kw>`;
+  override visitThisInstance = (_ctx: ThisInstanceContext) =>
+    `<el-kw>${this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance)}</el-kw>`;
 
   override visitThisAssignable = (ctx: ThisAssignableContext) =>
-    `<el-kw>${this.visit(ctx.THIS_INSTANCE()!)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
+    `<el-kw>${this.language.mapTerminalSymbol(TerminalSymbol.ThisInstance)}</el-kw>${this.visit(ctx.DOT()!)}${this.visit(ctx.identifierUse()!)}`;
 
   override visitIndexedAssignable = (ctx: IndexedAssignableContext) =>
     `${this.visit(ctx.assignable()!)}${this.visit(ctx.index()!)}`;
@@ -276,6 +275,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   override visitTerminal(ctx: TerminalNode) {
-    return getTokenTextByName(this.language, ctx.getText());
+    return ctx.getText();
   }
 }
