@@ -73,7 +73,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async func() {
     return 0;
   }
@@ -84,7 +83,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["prop", 0]]);};
 
   async _initialise() {
     this.prop = 3;
@@ -174,7 +172,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async func() {
     return 1;
   }
@@ -188,7 +185,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -264,7 +260,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async func() {
     return this.prop;
   }
@@ -278,7 +273,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -358,7 +352,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async func() {
     return 0;
   }
@@ -372,7 +365,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -472,7 +464,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async func() {
     return 0;
   }
@@ -480,20 +471,17 @@ class Foo {
 }
 
 class Foo1 extends Foo {
-  static emptyInstance() { return system.emptyClass(Foo1, []);};
   proc() {
   }
 
 }
 
 class Foo2 extends Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo2, [["prop", 0]]);};
   prop = 0;
 
 }
 
 class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -607,7 +595,6 @@ async function func2(f) {
 global["func2"] = func2;
 
 class Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo1, []);};
   async ff1() {
     return 0;
   }
@@ -615,7 +602,6 @@ class Foo1 {
 }
 
 class Foo2 extends Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo2, []);};
   async ff2() {
     return 0;
   }
@@ -623,7 +609,6 @@ class Foo2 extends Foo1 {
 }
 
 class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -737,7 +722,6 @@ async function func2(f) {
 global["func2"] = func2;
 
 class Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo1, []);};
   async ff1() {
     return 0;
   }
@@ -745,7 +729,6 @@ class Foo1 {
 }
 
 class Foo2 extends Foo1 {
-  static emptyInstance() { return system.emptyClass(Foo2, []);};
   async ff2() {
     return 0;
   }
@@ -753,7 +736,6 @@ class Foo2 extends Foo1 {
 }
 
 class Bar extends Foo2 {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -839,7 +821,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   elan_f;
   get f() {
     return this.elan_f ??= Foo2.emptyInstance();
@@ -851,7 +832,6 @@ class Foo {
 }
 
 class Foo2 {
-  static emptyInstance() { return system.emptyClass(Foo2, []);};
   elan_f2;
   get f2() {
     return this.elan_f2 ??= Foo.emptyInstance();
@@ -863,7 +843,6 @@ class Foo2 {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.foo = system.initialise(await new _stdlib.Maybe()._initialise());

@@ -45,7 +45,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise(p1) {
     this.p1 = p1;
@@ -120,7 +119,6 @@ async function doubled(f) {
 global["doubled"] = doubled;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 3;
@@ -189,7 +187,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 1;
@@ -254,7 +251,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
 

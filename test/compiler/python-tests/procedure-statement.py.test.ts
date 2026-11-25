@@ -500,7 +500,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
     this.p1 = system.initialise(await new Bar()._initialise());
@@ -527,7 +526,6 @@ class Foo {
 }
 
 class Bar {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 5;
@@ -786,7 +784,6 @@ async function foo(f, y) {
 global["foo"] = foo;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
 
@@ -867,7 +864,6 @@ async function foo(f, y) {
 global["foo"] = foo;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["ff", 0]]);};
 
   async _initialise() {
     this.ff = 1;

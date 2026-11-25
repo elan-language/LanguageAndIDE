@@ -303,7 +303,6 @@ async function ff(a) {
 global["ff"] = ff;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
 
   async _initialise(f) {
     this.pf = f;
@@ -649,7 +648,6 @@ async function ff(a) {
 global["ff"] = ff;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["pf", system.emptyFunc(0)]]);};
 
   async _initialise(f) {
     this.pf = f;

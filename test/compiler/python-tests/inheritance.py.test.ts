@@ -79,7 +79,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
   setP1(v) {
@@ -92,7 +91,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", 0]]);};
 
   async _initialise() {
     this.p1 = 3;
@@ -188,19 +186,16 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p2", ""]]);};
   p2 = "";
 
 }
 
 class Yon extends Bar {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
 
   async _initialise() {
     this.p1 = 3;
@@ -283,13 +278,11 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -368,13 +361,11 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -451,13 +442,11 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -544,7 +533,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
   async setP1(a) {
@@ -558,7 +546,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.p1 = 1;
@@ -663,7 +650,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
   async setP1(a) {
@@ -677,7 +663,6 @@ class Foo {
 }
 
 class Yon extends Foo {
-  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
   p2 = 0;
 
   async setP2(a) {
@@ -691,7 +676,6 @@ class Yon extends Foo {
 }
 
 class Bar extends Yon {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -799,7 +783,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
   async setP1(a) {
@@ -813,7 +796,6 @@ class Foo {
 }
 
 class Yon extends Foo {
-  static emptyInstance() { return system.emptyClass(Yon, [["p2", 0]]);};
   p2 = 0;
 
   async setP2(a) {
@@ -827,7 +809,6 @@ class Yon extends Foo {
 }
 
 class Bar extends Yon {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -910,13 +891,11 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.p1 = 1;
@@ -1007,7 +986,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   setP(a) {
   }
 
@@ -1018,7 +996,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 1;
@@ -1114,7 +1091,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async ff(a) {
     return 0;
   }
@@ -1126,7 +1102,6 @@ class Foo {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, [["p1", 0]]);};
 
   async _initialise() {
     this.p1 = 1;
@@ -1218,13 +1193,11 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, [["p1", 0]]);};
   p1 = 0;
 
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async setP1(a) {
     this.p1 = a;
   }
@@ -1232,7 +1205,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -1319,7 +1291,6 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
   async setP(a) {
 
   }
@@ -1327,7 +1298,6 @@ class Yon {
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async setP1(a) {
     await this.setP(a);
   }
@@ -1335,7 +1305,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -1421,7 +1390,6 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
   async ff() {
     return 6;
   }
@@ -1429,7 +1397,6 @@ class Yon {
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
   async fff() {
     return (await this.ff());
   }
@@ -1437,7 +1404,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
 
@@ -1521,7 +1487,6 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
   async ff() {
     return 0;
   }
@@ -1529,7 +1494,6 @@ class Yon {
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
   }
@@ -1539,7 +1503,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -1619,7 +1582,6 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
   async ff() {
     return 0;
   }
@@ -1627,7 +1589,6 @@ class Yon {
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
   }
@@ -1637,7 +1598,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -1717,7 +1677,6 @@ async function main() {
 }
 
 class Yon {
-  static emptyInstance() { return system.emptyClass(Yon, []);};
   async ff() {
     return 0;
   }
@@ -1725,7 +1684,6 @@ class Yon {
 }
 
 class Foo extends Yon {
-  static emptyInstance() { return system.emptyClass(Foo, [["prop", 0]]);};
   async ff() {
     return this.prop;
   }
@@ -1735,7 +1693,6 @@ class Foo extends Yon {
 }
 
 class Bar extends Foo {
-  static emptyInstance() { return system.emptyClass(Bar, []);};
 
   async _initialise() {
     this.prop = 3;
@@ -2107,7 +2064,6 @@ async function main() {
 }
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, [["p1", 0]]);};
   p1 = 0;
 
 }

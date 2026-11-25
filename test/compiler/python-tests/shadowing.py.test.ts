@@ -137,7 +137,6 @@ async function sin(x) {
 global["sin"] = sin;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
 
@@ -218,7 +217,6 @@ async function sleep_ms(x) {
 global["sleep_ms"] = sleep_ms;
 
 class Foo {
-  static emptyInstance() { return system.emptyClass(Foo, []);};
 
   async _initialise() {
 

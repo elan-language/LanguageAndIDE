@@ -110,7 +110,6 @@ export class ConcreteClassAsn extends ClassAsn {
       : `  ${this.indent()}async _initialise() { return this; }`;
 
     return `class ${name} ${extendsClause}{\r
-  static emptyInstance() { return system.emptyClass(${name}, ${this.propertiesToInit()});};
 ${emptyInitialise}
 ${compileNodes(this.children)}\r
 }\r\n`;
