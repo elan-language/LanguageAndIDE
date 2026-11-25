@@ -297,7 +297,6 @@ index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
 expression:
     newInstance        # newInstanceExpression
-    | unaryExpression  # unaryExpressionLabel
     | term             # termExpression
     | binaryExpression # binaryExpressionLabel
     | trueExpr = expression IF condition = expression (
@@ -308,6 +307,7 @@ expression:
 term:
     thisInstance          # thisInstanceTerm
     | bracketedExpression # bracketedExpressionTerm
+    | unaryExpression     # unaryExpressionTerm
     | litValue            # litValueTerm
     | list                # listTerm
     | dictionary          # dictionaryTerm

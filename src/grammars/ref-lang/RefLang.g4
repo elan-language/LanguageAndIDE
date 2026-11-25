@@ -263,7 +263,6 @@ index: OPEN_SQ_BRACKET expression CLOSE_SQ_BRACKET;
 
 expression:
     newInstance        # newInstanceExpression
-    | unaryExpression  # unaryExpressionLabel
     | term             # termExpression
     | binaryExpression # binaryExpressionLabel
     | IF_ OPEN_BRACKET condition = expression COMMA trueExpr = expression COMMA falseExpr =
@@ -273,6 +272,7 @@ expression:
 term:
     thisInstance          # thisInstanceTerm
     | bracketedExpression # bracketedExpressionTerm
+    | unaryExpression     # unaryExpressionTerm
     | litValue            # litValueTerm
     | list                # listTerm
     | dictionary          # dictionaryTerm
@@ -281,6 +281,7 @@ term:
     | methodCall          # methodCallTerm
     | term index          # indexedTerm
     | term DOT chainable  # chainableTerm
+
 ;
 
 chainable: identifierUse | methodCall;

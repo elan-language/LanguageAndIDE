@@ -4,12 +4,7 @@ import { BooleanType } from "../../compiler/symbols/boolean-type";
 import { getGlobalScope } from "../../compiler/symbols/symbol-helpers";
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { CompileError } from "../compile-error";
-import {
-  mustBeBooleanType,
-  mustBeKnownOperation,
-  mustBeNumberType,
-  mustNotBeTwoUnaryExpressions as mustNotBeSequentialUnaryExpressions,
-} from "../compile-rules";
+import { mustBeBooleanType, mustBeKnownOperation, mustBeNumberType } from "../compile-rules";
 import { AbstractAstNode } from "./abstract-ast-node";
 import { OperationSymbol } from "./operation-symbol";
 
@@ -43,10 +38,6 @@ export class UnaryExprAsn extends AbstractAstNode implements AstNode {
 
   compile(): string {
     this.compileErrors = [];
-
-    if (this.operand instanceof UnaryExprAsn) {
-      mustNotBeSequentialUnaryExpressions(this.compileErrors, this.fieldId);
-    }
 
     if (this.opSymbol === OperationSymbol.Unknown) {
       mustBeKnownOperation(OperationSymbol[this.opSymbol], this.compileErrors, this.fieldId);
