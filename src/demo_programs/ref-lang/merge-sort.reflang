@@ -1,12 +1,13 @@
-# eb60132d1cca2d4ca52058c7573f61b2d848258c795236194eb71dfa3230bcd1 RefLang with Elan 3.0.0-alpha valid
+# 9c808b254a10ae41c2f3e583fe49ecbdac8528fc0c7bfde23cc80cc09e97b4fb RefLang with Elan 3.0.0-alpha valid
 
-# Implementation of the Merge sort algorithm demonstrating
-# - Decomposition of the principal function 'sort' into smaller functions,
-# - Recursive functions. Note that both 'sort' and 'merge' are indirectly 
 #   recursive, because they delegate to other functions that invoke the function
+
 #   they are invoked from
+
 # - Testing. ALL functions are independently unit-tested, with normal ('happy') 
+
 #   cases, and edge cases (where appropriate)
+
 function sort(li as List<of String>) returns List<of String>
   return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
 end function

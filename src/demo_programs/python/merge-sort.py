@@ -1,21 +1,15 @@
-# Python with Elan 3.0.0-alpha
-
-# Implementation of the Merge sort algorithm demonstrating
-
-# - Decomposition of the principal function 'sort' into smaller functions,
-
-# - Recursive functions. Note that both 'sort' and 'merge' are indirectly  
+# fc5b7d8c79f9e421dbf5d162947d10d6ab51e5016921ab33e26c229e77ac898e Python with Elan 3.0.0-alpha valid
 
 #   recursive, because they delegate to other functions that invoke the function
 
 #   they are invoked from
 
-# - Testing. ALL functions are independently unit-tested, with normal ('happy')  
+# - Testing. ALL functions are independently unit-tested, with normal ('happy') 
 
 #   cases, and edge cases (where appropriate)
 
 def sort(li: list[str]) -> list[str]: # function
-  return if_(li.length() < 2, li, merge(sortedFrontHalf(li), sortedBackHalf(li)))
+  return li if li.length() < 2 else merge(sortedFrontHalf(li), sortedBackHalf(li))
 # end function
 
 def sortedFrontHalf(li: list[str]) -> list[str]: # function
@@ -32,7 +26,7 @@ def sortedBackHalf(li: list[str]) -> list[str]: # function
 
 def merge(a: list[str], b: list[str]) -> list[str]: # function
   oneIsEmpty = (a.length() == 0) or (b.length() == 0) # variable definition
-  return if_(oneIsEmpty, a.withAppendList(b), mergeNonEmpty(a, b))
+  return a.withAppendList(b) if oneIsEmpty else mergeNonEmpty(a, b)
 # end function
 
 def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
@@ -40,11 +34,11 @@ def mergeNonEmpty(a: list[str], b: list[str]) -> list[str]: # function
   bHead = b.head() # variable definition
   aTail = a.tail() # variable definition
   bTail = b.tail() # variable definition
-  return if_(aHead.isBefore(bHead), [aHead].withAppendList(merge(aTail, b)), [bHead].withAppendList(merge(a, bTail)))
+  return [aHead].withAppendList(merge(aTail, b)) if aHead.isBefore(bHead) else [bHead].withAppendList(merge(a, bTail))
 # end function
 
 class Test_sort(unittest.TestCase):
- def test_sort(self) -> None:
+ def test_sort(self: Test_sort) -> None:
   # Edge case: empty
   l1 = list[str]() # variable definition
   self.assertEqual(sort(l1), l1)
@@ -65,7 +59,7 @@ class Test_sort(unittest.TestCase):
 # end test
 
 class Test_sortedFrontHalf(unittest.TestCase):
- def test_sortedFrontHalf(self) -> None:
+ def test_sortedFrontHalf(self: Test_sortedFrontHalf) -> None:
   # Edge case: one item - so front half is empty
   li1 = ["plum"] # variable definition
   self.assertEqual(sortedFrontHalf(li1), list[str]())
@@ -81,7 +75,7 @@ class Test_sortedFrontHalf(unittest.TestCase):
 # end test
 
 class Test_sortedBackHalf(unittest.TestCase):
- def test_sortedBackHalf(self) -> None:
+ def test_sortedBackHalf(self: Test_sortedBackHalf) -> None:
   # Edge case: one item - so back half is whole list
   li1 = ["plum"] # variable definition
   self.assertEqual(sortedBackHalf(li1), ["plum"])
@@ -97,7 +91,7 @@ class Test_sortedBackHalf(unittest.TestCase):
 # end test
 
 class Test_merge(unittest.TestCase):
- def test_merge(self) -> None:
+ def test_merge(self: Test_merge) -> None:
   # Happy cases:
   l1 = ["apple", "lime", "pear"] # variable definition
   l2 = ["apricot", "lemon", "plum", "watermelon"] # variable definition
@@ -118,7 +112,7 @@ class Test_merge(unittest.TestCase):
 # end test
 
 class Test_mergeNonEmpty(unittest.TestCase):
- def test_mergeNonEmpty(self) -> None:
+ def test_mergeNonEmpty(self: Test_mergeNonEmpty) -> None:
   l1 = ["apple", "lime", "pear"] # variable definition
   l2 = ["apricot", "lemon", "plum", "watermelon"] # variable definition
   self.assertEqual(mergeNonEmpty(["orange"], ["melon"]), ["melon", "orange"])

@@ -157,12 +157,14 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     proc.params.setFieldToKnownValidText(
       ctx.paramList() ? this.sourceVisitor.visit(ctx.paramList()!)! : "",
     );
+    const previousParent = this.parent;
     this.parent = proc;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       proc.getChildren().push(s);
     }
     proc.updateParseStatus();
+    this.parent = previousParent;
     return proc;
   };
 
@@ -179,6 +181,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
 
     func.getChildren().pop();
 
+    const previousParent = this.parent;
     this.parent = func;
     const statements = ctx.ordinaryStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
@@ -188,6 +191,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     const returnStatement = this.visit(ctx.returnStatement()!) as Frame;
     func.getChildren().push(returnStatement);
     func.updateParseStatus();
+    this.parent = previousParent;
     return func;
   };
 
@@ -197,12 +201,14 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
       test.setGhosted(true);
     }
     test.testName.setFieldToKnownValidText(this.sourceVisitor.visit(ctx.testName()!)!);
+    const previousParent = this.parent;
     this.parent = test;
     const statements = ctx.testStatement().map((s) => this.visit(s)) as Frame[];
     for (const s of statements) {
       test.getChildren().push(s);
     }
     test.updateParseStatus();
+    this.parent = previousParent;
     return test;
   };
 
@@ -228,6 +234,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
     cls.inheritance.setFieldToKnownValidText(
       ctx._inheritsTypeName ? this.sourceVisitor.visit(ctx._inheritsTypeName)! : "",
     );
+    const previousParent = this.parent;
     this.parent = cls;
 
     const ctor = ctx.constructorMember() ? this.visit(ctx.constructorMember()) : undefined;
@@ -241,6 +248,7 @@ export class PythonVisitorFrame extends PythonVisitor<File | Frame | Frame[]> {
       cls.getChildren().push(s);
     }
     cls.updateParseStatus();
+    this.parent = previousParent;
     return cls;
   };
 

@@ -1,6 +1,5 @@
-# 47ca254f540d10fe9fdf09d1db643d84a7eddb0b4f5d2081cfd491854a949758 RefLang with Elan 3.0.0-alpha valid
+# fd07ce6cee92ad309b23c841d4a0d030fcaf01fb36e9d6dc5f137c4a81c10d82 RefLang with Elan 3.0.0-alpha valid
 
-# Use the W,A,S,D keys to change Snake direction
 constant width set to 40
 
 constant height set to 30

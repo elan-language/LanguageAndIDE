@@ -23,7 +23,7 @@ suite("Python Demo compile", () => {
     await testFile("burrow", LanguagePython.Instance);
   });
 
-  ignore_test("test collatz", async () => {
+  test("test collatz", async () => {
     await testFile("collatz", LanguagePython.Instance);
   });
 
@@ -43,7 +43,7 @@ suite("Python Demo compile", () => {
     await testFile("kaleidoscope", LanguagePython.Instance);
   });
 
-  ignore_test("test life", async () => {
+  test("test life", async () => {
     await testFile("life", LanguagePython.Instance);
   });
 
@@ -83,15 +83,15 @@ suite("Python Demo compile", () => {
     await testFile("snake_OOP", LanguagePython.Instance);
   });
 
-  ignore_test("test snake_PP", async () => {
+  test("test snake_PP", async () => {
     await testFile("snake_PP", LanguagePython.Instance);
   });
 
-  ignore_test("test tower-of-hanoi", async () => {
+  test("test tower-of-hanoi", async () => {
     await testFile("tower-of-hanoi", LanguagePython.Instance);
   });
 
-  ignore_test("test tower-of-hanoi-recursive", async () => {
+  test("test tower-of-hanoi-recursive", async () => {
     await testFile("tower-of-hanoi-recursive", LanguagePython.Instance);
   });
 
@@ -112,7 +112,7 @@ suite("Python Demo compile", () => {
     await testFile("hodgepodge", LanguagePython.Instance);
   });
 
-  ignore_test("test turtle_dragon", async () => {
+  test("test turtle_dragon", async () => {
     await testFile("turtle_dragon", LanguagePython.Instance);
   });
 

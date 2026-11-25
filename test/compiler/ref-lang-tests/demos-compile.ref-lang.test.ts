@@ -23,7 +23,7 @@ suite("RefLang Demo compile", () => {
     await testFile("burrow", LanguageRefLang.Instance);
   });
 
-  ignore_test("test collatz", async () => {
+  test("test collatz", async () => {
     await testFile("collatz", LanguageRefLang.Instance);
   });
 
