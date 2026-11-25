@@ -125,7 +125,7 @@ export class LanguagePython extends LanguageAbstract {
   }
 
   ghostSingle(frame: Frame) {
-    return frame.isGhostedExplicitly() ? `# ${this.GHOSTED} ` : ``;
+    return frame.isGhostedExplicitly() ? `#${this.GHOSTED} ` : ``;
   }
 
   renderTopAsHtml(frame: Frame): string {
