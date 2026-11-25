@@ -1,6 +1,4 @@
-# dc2d109b65433837bf6e61a0f236c2a2343d3f1033be80cc8fa6208a126fe5ff Python with Elan 3.0.0-alpha valid
-
-# - Recursive functions. Note that both 'sort' and 'merge' are indirectly 
+# fc5b7d8c79f9e421dbf5d162947d10d6ab51e5016921ab33e26c229e77ac898e Python with Elan 3.0.0-alpha valid
 
 #   recursive, because they delegate to other functions that invoke the function
 

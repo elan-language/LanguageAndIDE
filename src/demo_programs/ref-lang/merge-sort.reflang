@@ -1,6 +1,4 @@
-# 6e09816cf59135b656f356abf67115aed658588ead7403e51572bf427caa417c RefLang with Elan 3.0.0-alpha valid
-
-# - Recursive functions. Note that both 'sort' and 'merge' are indirectly 
+# 9c808b254a10ae41c2f3e583fe49ecbdac8528fc0c7bfde23cc80cc09e97b4fb RefLang with Elan 3.0.0-alpha valid
 
 #   recursive, because they delegate to other functions that invoke the function
 

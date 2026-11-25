@@ -65,9 +65,9 @@ export class LanguagePython extends LanguageAbstract {
     } else if (frame instanceof AssertStatement) {
       html = `<el-kw>self</el-kw>.<el-method>assertEqual</el-method>(${frame.actual.renderAsHtml()}, ${frame.expected.renderAsHtml()})`;
     } else if (frame instanceof ProcedureCall) {
-      html = `${frame.indent()}${frame.procRef.renderAsHtml()}`;
+      html = `${frame.procRef.renderAsHtml()}`;
     } else if (frame instanceof CommentFrame) {
-      html = `${frame.indent()}${frame.text.renderAsHtml()}`;
+      html = `${frame.text.renderAsHtml()}`;
     } else if (frame instanceof ConstantGlobal) {
       html = `${frame.name.renderAsHtml()}</el-top><el-punc> = </el-punc>${frame.value.renderAsHtml()}`;
     } else if (frame instanceof Enum) {

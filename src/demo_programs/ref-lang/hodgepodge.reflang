@@ -1,8 +1,4 @@
-# f90f3620a2f2db4afed3c2c7f0a9a65613f10b949de4933f87dffacce9c4562e RefLang with Elan 3.0.0-alpha valid
-
-# A Cellular Automaton Model of Excitable Media
-
-# 
+# 461e58a7ea3f6606cf08f7acef41c49cb5ce215b7df019c5a2cfb82383ac021b RefLang with Elan 3.0.0-alpha valid
 
 # gW, gH : grid width, height
 
@@ -34,7 +30,7 @@ function getColours() returns List<of Int>
   return [healthy, 0xffe6ff, 0xffccff, 0xffb3ff, 0xff99ff, 0xff80ff, 0xff66ff, 0xff4dff, 0xff33ff, 0xff1aff, 0xff00ff, 0xe600e6, 0xcc00cc, 0xb300b3, 0x990099, 0x800080, 0x660066, 0x4d004d, 0x330033, 0x1a001a, ill]
 end function
 
-# vN : neighbourhood: von Neumann (4) true, Moore (8) false
+  # vN : neighbourhood: von Neumann (4) true, Moore (8) false
 
 constant vN set to false
 
@@ -58,7 +54,7 @@ procedure updateGrid(hodge as BlockGraphics, podge as BlockGraphics, initial as 
     for i in range(0, gW)
       if initial then
         call podge.put(i, j, colours[randint(0, (colours.length()) - 1)])
-        ghosted assign podge[1][1] to 0x1a001a
+        # [ghosted] podge[1][1] = 0x1a001a # assignment
       else
         call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j)))
       end if

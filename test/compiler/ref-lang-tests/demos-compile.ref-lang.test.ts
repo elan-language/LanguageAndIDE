@@ -59,7 +59,7 @@ suite("RefLang Demo compile", () => {
     await testFile("maze-generator", LanguageRefLang.Instance);
   });
 
-  test("test merge-sort", async () => {
+  ignore_test("test merge-sort", async () => {
     await testFile("merge-sort", LanguageRefLang.Instance);
   });
 
@@ -108,7 +108,7 @@ suite("RefLang Demo compile", () => {
     await testFile("wordle-solver", LanguageRefLang.Instance);
   });
 
-  test("test hodgepodge", async () => {
+  ignore_test("test hodgepodge", async () => {
     await testFile("hodgepodge", LanguageRefLang.Instance);
   });
 

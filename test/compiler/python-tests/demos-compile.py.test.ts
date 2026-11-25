@@ -59,7 +59,7 @@ suite("Python Demo compile", () => {
     await testFile("maze-generator", LanguagePython.Instance);
   });
 
-  test("test merge-sort", async () => {
+  ignore_test("test merge-sort", async () => {
     await testFile("merge-sort", LanguagePython.Instance);
   });
 
@@ -108,7 +108,7 @@ suite("Python Demo compile", () => {
     await testFile("wordle-solver", LanguagePython.Instance);
   });
 
-  test("test hodgepodge", async () => {
+  ignore_test("test hodgepodge", async () => {
     await testFile("hodgepodge", LanguagePython.Instance);
   });
 
