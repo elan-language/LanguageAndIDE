@@ -1,13 +1,14 @@
 import { Language } from "../../ide/frames/frame-interfaces/language";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
 import { immutableTypeOptions } from "../compiler-interfaces/type-options";
+import { TerminalSymbol } from "../syntax-nodes/terminal-symbol";
 import { IntName } from "./elan-type-names";
 
 export class IntType implements SymbolType {
   private constructor() {}
 
   languageSpecificName(language: Language): string {
-    return language.INT_NAME;
+    return language.mapTerminalSymbol(TerminalSymbol.IntName);
   }
   initialValue = "0";
 

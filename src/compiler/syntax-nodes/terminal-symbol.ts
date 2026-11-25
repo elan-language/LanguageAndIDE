@@ -20,6 +20,7 @@ export enum TerminalSymbol {
   ListName,
   DictionaryName,
   FuncName,
+  TupleName,
   True,
   False,
   ThisInstance,

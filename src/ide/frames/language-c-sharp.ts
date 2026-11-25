@@ -266,14 +266,6 @@ export class LanguageCSharp extends LanguageAbstract {
     // does nothing
   }
 
-  BOOL_NAME = "bool";
-  FUNC_NAME = "Func";
   OVERRIDES = "override";
   IMPLEMENTS = ""; // not used
-
-  INT_NAME: string = "int";
-  FLOAT_NAME: string = "double";
-  STRING_NAME: string = "string";
-  LIST_NAME: string = "List";
-  DICT_NAME: string = "Dictionary";
 }

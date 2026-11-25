@@ -2,6 +2,7 @@ import { ElanSymbol } from "../../compiler/compiler-interfaces/elan-symbol";
 import { Scope } from "../../compiler/compiler-interfaces/scope";
 import {
   isAbstractTypeName,
+  isByLanguageSymbol,
   isConcreteTypeName,
   isFunction,
   isGenericClass,
@@ -50,28 +51,14 @@ export class SymbolWrapper {
       return `${thisInstance}.${symbol.symbolId}`;
     }
 
-    if (isTypeSymbol(symbol)) {
-      return this.langSpecificTypeName(this.name);
-    }
-
-    return this.name;
+    return this.langSpecificTypeName(symbol);
   }
 
-  langSpecificTypeName(elanName: string): string {
-    const lang = this.file.language();
-    let name = elanName;
-    if (name === "Int") {
-      name = lang.INT_NAME;
-    } else if (name === "Float") {
-      name = lang.FLOAT_NAME;
-    } else if (name === "Boolean") {
-      name = lang.BOOL_NAME;
-    } else if (name === "String") {
-      name = lang.STRING_NAME;
-    } else if (name === "List") {
-      name = lang.LIST_NAME;
+  langSpecificTypeName(symbol: ElanSymbol): string {
+    if (isByLanguageSymbol(symbol)) {
+      return symbol.toLanguage(this.file.language()).symbolId;
     }
-    return name;
+    return this.name;
   }
 
   get class() {
@@ -113,7 +100,7 @@ export class SymbolWrapper {
     const symbol = this.wrapped as ElanSymbol;
 
     if (isTypeSymbol(symbol)) {
-      let toInsert = this.langSpecificTypeName(this.name);
+      let toInsert = this.langSpecificTypeName(symbol);
       if (isGenericClass(symbol)) {
         const lang = this.file.language();
         toInsert += lang.mapTerminalSymbol(TerminalSymbol.GenericStart);

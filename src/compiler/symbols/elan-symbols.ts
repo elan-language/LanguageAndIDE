@@ -2,6 +2,7 @@ import { Language } from "../../ide/frames/frame-interfaces/language";
 import { ClassSymbol } from "../compiler-interfaces/class-symbol";
 import { ElanSymbol, ElanSymbolByLanguage } from "../compiler-interfaces/elan-symbol";
 import { SymbolType } from "../compiler-interfaces/symbol-type";
+import { TerminalSymbol } from "../syntax-nodes/terminal-symbol";
 import { BooleanType } from "./boolean-type";
 import { FuncName, TupleName } from "./elan-type-names";
 import { FloatType } from "./float-type";
@@ -21,7 +22,7 @@ const intSymbol: ElanSymbolByLanguage = {
   symbolIsType: true,
   toLanguage: function (l: Language): ElanSymbol {
     return {
-      symbolId: l.INT_NAME,
+      symbolId: l.mapTerminalSymbol(TerminalSymbol.IntName),
       symbolType: function (): SymbolType {
         return IntType.Instance;
       },
@@ -40,7 +41,7 @@ const floatSymbol: ElanSymbolByLanguage = {
   symbolIsType: true,
   toLanguage: function (l: Language): ElanSymbol {
     return {
-      symbolId: l.FLOAT_NAME,
+      symbolId: l.mapTerminalSymbol(TerminalSymbol.FloatName),
       symbolType: function (): SymbolType {
         return FloatType.Instance;
       },
@@ -59,7 +60,7 @@ const stringSymbol: ElanSymbolByLanguage = {
   symbolIsType: true,
   toLanguage: function (l: Language): ElanSymbol {
     return {
-      symbolId: l.STRING_NAME,
+      symbolId: l.mapTerminalSymbol(TerminalSymbol.StringName),
       symbolType: function (): SymbolType {
         return StringType.Instance;
       },
@@ -78,7 +79,7 @@ const booleanSymbol: ElanSymbolByLanguage = {
   symbolIsType: true,
   toLanguage: function (l: Language): ElanSymbol {
     return {
-      symbolId: l.BOOL_NAME,
+      symbolId: l.mapTerminalSymbol(TerminalSymbol.BoolName),
       symbolType: function (): SymbolType {
         return BooleanType.Instance;
       },

@@ -294,14 +294,6 @@ export class LanguagePython extends LanguageAbstract {
     return html;
   }
 
-  INT_NAME: string = "int";
-  FLOAT_NAME: string = "float";
-  BOOL_NAME: string = "bool";
-  STRING_NAME: string = "str";
-  LIST_NAME: string = "list";
-  DICT_NAME: string = "dict";
-  FUNC_NAME: string = "Callable";
-
   OVERRIDES = "";
   IMPLEMENTS = "";
 
@@ -378,6 +370,15 @@ export class LanguagePython extends LanguageAbstract {
     [TerminalSymbol.GenericEnd, "]"],
     [TerminalSymbol.ThisInstance, "self"],
     [TerminalSymbol.Comment, "#"],
+
+    [TerminalSymbol.IntName, "int"],
+    [TerminalSymbol.FloatName, "float"],
+    [TerminalSymbol.BoolName, "bool"],
+    [TerminalSymbol.StringName, "str"],
+    [TerminalSymbol.ListName, "list"],
+    [TerminalSymbol.DictionaryName, "dict"],
+    [TerminalSymbol.TupleName, "Tuple"],
+    [TerminalSymbol.FuncName, "Callable"],
   ]);
 
   mapTerminal(term: string): TerminalSymbol {

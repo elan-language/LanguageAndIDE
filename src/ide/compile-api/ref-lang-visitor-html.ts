@@ -1,5 +1,7 @@
 import { TerminalNode } from "antlr4ng";
 import { getTokenTextByName } from "../../compiler/syntax-nodes/ast-helpers";
+import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
+import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 import {
   ArgListContext,
   BinaryExpressionContext,
@@ -61,8 +63,6 @@ import {
   type,
   visitTypeHelper,
 } from "./parser-helpers";
-import { OperationSymbol } from "../../compiler/syntax-nodes/operation-symbol";
-import { TerminalSymbol } from "../../compiler/syntax-nodes/terminal-symbol";
 
 export class RefLangVisitorHtml extends RefLangVisitor<string> {
   constructor(private readonly language: Language) {
@@ -73,13 +73,19 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
     `(${getFilteredTypes(this, ctx).join(", ")})`;
 
   // typeName
-  override visitIntTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitFloatTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitBoolTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitStringTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitListTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitDictTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
-  override visitUdtTypeName = (ctx: TypeNameContext) => type(this.visitChildren(ctx) ?? "");
+  override visitIntTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.IntName));
+  override visitFloatTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.FloatName));
+  override visitBoolTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.BoolName));
+  override visitStringTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.StringName));
+  override visitListTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.ListName));
+  override visitDictTypeName = (_ctx: TypeNameContext) =>
+    type(this.language.mapTerminalSymbol(TerminalSymbol.DictionaryName));
+  override visitUdtTypeName = (ctx: TypeNameContext) => type(ctx.getText());
 
   override visitTypeGeneric = (ctx: TypeGenericContext) =>
     `${this.visit(ctx.typeName())}&lt;${kw("of")} ${getFilteredTypes(this, ctx).join(", ")}&gt;`;
@@ -90,10 +96,6 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
   };
 
   override visitType = (ctx: TypeContext) => visitTypeHelper<string>(this, ctx);
-
-  override visitTerminal(ctx: TerminalNode) {
-    return getTokenTextByName(this.language, ctx.getText());
-  }
 
   override visitParamList = (ctx: ParamListContext) =>
     `${getParamDefs<string>(this, ctx).join(", ")}`;
@@ -272,4 +274,8 @@ export class RefLangVisitorHtml extends RefLangVisitor<string> {
       .join("");
     return txt !== null && txt.length > 0 ? lit(escapeHtmlChars(txt)) : "";
   };
+
+  override visitTerminal(ctx: TerminalNode) {
+    return getTokenTextByName(this.language, ctx.getText());
+  }
 }
