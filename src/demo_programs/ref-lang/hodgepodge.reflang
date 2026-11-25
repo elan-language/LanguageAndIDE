@@ -1,24 +1,31 @@
-# cd7189bff2f2ae267d75681ec6bfec9ad52584e1b1abcef1c7410ecba4c1db48 RefLang with Elan 3.0.0-alpha valid
+# f90f3620a2f2db4afed3c2c7f0a9a65613f10b949de4933f87dffacce9c4562e RefLang with Elan 3.0.0-alpha valid
 
-# Hodgepodge, after M.Gerhardt, H.Schuster, J.Tyson (1990) 
 # A Cellular Automaton Model of Excitable Media
+
 # 
+
 # gW, gH : grid width, height
+
 constant gW set to 40
 
 constant gH set to 30
 
 # iR : infection rate (1..20)
+
 constant iR set to 1
 
 # w1, w2 : weighting factors (low integers)
+
 constant w1 set to 4
 
 constant w2 set to 1
 
 # colours : cellColour.s in descending order of RGB value
+
 # state : of a cell is colours.indexOf(cellColour) in [0..colours.length() - 1]
+
 # colours[0] = healthy; colours[colours.length() - 1] = ill, otherwise infected
+
 constant healthy set to 0xffffff
 
 constant ill set to 0x000000
@@ -28,6 +35,7 @@ function getColours() returns List<of Int>
 end function
 
 # vN : neighbourhood: von Neumann (4) true, Moore (8) false
+
 constant vN set to false
 
 main
@@ -50,7 +58,7 @@ procedure updateGrid(hodge as BlockGraphics, podge as BlockGraphics, initial as 
     for i in range(0, gW)
       if initial then
         call podge.put(i, j, colours[randint(0, (colours.length()) - 1)])
-        [ghosted] assign podge[1][1] to 0x1a001a
+        ghosted assign podge[1][1] to 0x1a001a
       else
         call podge.put(i, j, newColour(getNeighbourColours(hodge, i, j), hodge.get(i, j)))
       end if

@@ -1,17 +1,17 @@
-# Python with Elan 2.0.0-beta5
+# 76e3a0271024c7ca6b8bd64d8f9018f2b50948fdbecdf51b057471aaca4395d3 Python with Elan 3.0.0-alpha valid
 
 def main() -> None:
   game = Game(1000) # variable definition
-  game.addPlayer(HumanPlayer("Player A", 1000)) # procedure call
+  game.addPlayer(HumanPlayer("Player A", 1000))
   anotherRound = True # variable definition
   while anotherRound:
-    playOneRound(game) # procedure call
-    game.setMessage("Points updated. Do you want to play another round? (press y or n)") # procedure call
-    clearKeyBuffer() # procedure call
-    display(game) # procedure call
+    playOneRound(game)
+    game.setMessage("Points updated. Do you want to play another round? (press y or n)")
+    clearKeyBuffer()
+    display(game)
     k = waitForKey().lowerCase() # variable definition
     if k.equals("y"):
-      game.setMessage("") # procedure call
+      game.setMessage("")
     else:
       anotherRound = False # assignment
     # end if
@@ -19,31 +19,31 @@ def main() -> None:
 # end main
 
 def playOneRound(game: Game) -> None: # procedure
-  game.newRound() # procedure call
-  display(game) # procedure call
+  game.newRound()
+  display(game)
   dealer = game.dealer # variable definition
   faceCard = dealer.faceCard # variable definition
   for player in game.players:
-    player.startTurn() # procedure call
-    display(game) # procedure call
+    player.startTurn()
+    display(game)
     while player.status == Status.active:
-      player.nextAction(faceCard) # procedure call
-      display(game) # procedure call
+      player.nextAction(faceCard)
+      display(game)
     # end while
   # end for
-  dealer.play() # procedure call
-  display(game) # procedure call
+  dealer.play()
+  display(game)
   while dealer.status == Status.active:
-    dealer.nextAction(faceCard) # procedure call
-    display(game) # procedure call
+    dealer.nextAction(faceCard)
+    display(game)
   # end while
-  game.updatePoints() # procedure call
+  game.updatePoints()
 # end procedure
 
 def display(game: Game) -> None: # procedure
   html = f"<style>{styleSheet}</style>{htmlForGame(game)}" # variable definition
-  displayHtml(html) # procedure call
-  sleep(1.5) # procedure call
+  displayHtml(html)
+  sleep(1.5)
 # end procedure
 
 def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # function
@@ -60,19 +60,19 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
   playerOutcome = draw # variable definition
   if p == bust:
     playerOutcome = lose # assignment
-  elif (p == bj) and (d != bj): # else if
+  elif (p == bj) and (d != bj):
     playerOutcome = winDouble # assignment
-  elif d == bust: # else if
+  elif d == bust:
     playerOutcome = win # assignment
-  elif (d == bj) and (p == bj): # else if
+  elif (d == bj) and (p == bj):
     playerOutcome = draw # assignment
-  elif p == bj: # else if
+  elif p == bj:
     playerOutcome = winDouble # assignment
-  elif d == bj: # else if
+  elif d == bj:
     playerOutcome = lose # assignment
-  elif pTotal > dTotal: # else if
+  elif pTotal > dTotal:
     playerOutcome = win # assignment
-  elif pTotal < dTotal: # else if
+  elif pTotal < dTotal:
     playerOutcome = lose # assignment
   else:
     # strictly, this 'else' clause is redundant - as the variable was initialised to 'draw' - but added for clarity
@@ -82,7 +82,7 @@ def determinePlayerOutcome(dealer: Dealer, player: Player) -> Outcome: # functio
 # end function
 
 class Test_determinePlayerOutcome(unittest.TestCase):
- def test_determinePlayerOutcome(self) -> None:
+ def test_determinePlayerOutcome(self: Test_determinePlayerOutcome) -> None:
   dbj = (Dealer(0)).with_status(Status.blackjack) # variable definition
   self.assertEqual(dbj.status, Status.blackjack)
   d21 = (Dealer(0)).with_status(Status.standing).with_handTotal(21) # variable definition
@@ -115,7 +115,7 @@ def dealCard(random: float) -> Card: # function
 # end function
 
 class Test_dealCard(unittest.TestCase):
- def test_dealCard(self) -> None:
+ def test_dealCard(self: Test_dealCard) -> None:
   c1 = dealCard(0) # variable definition
   self.assertEqual(c1.rank, "2")
   self.assertEqual(c1.suit, Suit.clubs)
@@ -134,16 +134,16 @@ def intAsSuit(n: int) -> Suit: # function
   suit = Suit.clubs # variable definition
   if n == 1:
     suit = Suit.diamonds # assignment
-  elif n == 2: # else if
+  elif n == 2:
     suit = Suit.hearts # assignment
-  elif n == 3: # else if
+  elif n == 3:
     suit = Suit.spades # assignment
   # end if
   return suit
 # end function
 
 class Test_intAsSuit(unittest.TestCase):
- def test_intAsSuit(self) -> None:
+ def test_intAsSuit(self: Test_intAsSuit) -> None:
   self.assertEqual(intAsSuit(0), Suit.clubs)
   self.assertEqual(intAsSuit(1), Suit.diamonds)
   self.assertEqual(intAsSuit(2), Suit.hearts)
@@ -161,7 +161,7 @@ def htmlForGame(game: Game) -> str: # function
 # end function
 
 class Test_htmlForGame(unittest.TestCase):
- def test_htmlForGame(self) -> None:
+ def test_htmlForGame(self: Test_htmlForGame) -> None:
   c1 = Card("3", Suit.clubs, False) # variable definition
   c2 = Card("K", Suit.spades, True) # variable definition
   p = (HumanPlayer("fred", 10)).with_cards([c1, c2]) # variable definition
@@ -183,7 +183,7 @@ def htmlForPlayer(player: Player) -> str: # function
 # end function
 
 class Test_htmlForPlayer(unittest.TestCase):
- def test_htmlForPlayer(self) -> None:
+ def test_htmlForPlayer(self: Test_htmlForPlayer) -> None:
   c1 = Card("3", Suit.clubs, False) # variable definition
   c2 = Card("K", Suit.spades, True) # variable definition
   p = (HumanPlayer("charlie", 10)).with_cards([c1, c2]) # variable definition
@@ -216,7 +216,7 @@ def htmlForCard(card: Card) -> str: # function
 # end function
 
 class Test_htmlForCard(unittest.TestCase):
- def test_htmlForCard(self) -> None:
+ def test_htmlForCard(self: Test_htmlForCard) -> None:
   c1 = Card("3", Suit.clubs, False) # variable definition
   self.assertEqual(htmlForCard(c1), "<div class='card black'><div class='u'>3</div><div class='v'>&clubs;</div><div class='a'>&clubs;</div><div class='b'>&clubs;</div><div class='c'>&clubs;</div></div>")
   c2 = Card("K", Suit.spades, True) # variable definition
@@ -228,344 +228,324 @@ def htmlForSpot(id: str, content: str) -> str: # function
 # end function
 
 class Test_htmlForSpot(unittest.TestCase):
- def test_htmlForSpot(self) -> None:
+ def test_htmlForSpot(self: Test_htmlForSpot) -> None:
   self.assertEqual(htmlForSpot("c", "&hearts;"), "<div class='c'>&hearts;</div>")
   self.assertEqual(htmlForSpot("u", "10"), "<div class='u'>10</div>")
 # end test
 
-class Game: # concrete class
-
-  def __init__(self: Game, dealerStartPoints: int) -> None:
+class Game:
+  def __init__(self: <el-type>Game</el-type>, dealerStartPoints: int) -> None:
     self.dealer = Dealer(dealerStartPoints) # assignment
     self.players = list[Player]() # assignment
     self.message = "" # assignment
   # end constructor
 
-  dealer: Dealer # property
+  dealer: Dealer
 
-  players: list[Player] # property
+  players: list[Player]
 
-  message: str # property
+  message: str
 
-  def with_players(self: Game, players: list[Player]) -> Game: # function method
+  def with_players(self: <el-type>Game</el-type>, players: list[Player]) -> Game:
     return copyWith(self, "players", players)
-  # end function method
+  # end function
 
-  def newRound(self: Game) -> None: # procedure method
+  def newRound(self: <el-type>Game</el-type>, ) -> None:
     dealer = self.dealer # variable definition
-    dealer.newHand() # procedure call
+    dealer.newHand()
     for player in self.players:
-      player.newHand() # procedure call
+      player.newHand()
     # end for
-  # end procedure method
+  # end procedure
 
-  def updatePoints(self: Game) -> None: # procedure method
+  def updatePoints(self: <el-type>Game</el-type>, ) -> None:
     for player in self.players:
-      player.determineOutcomeAndUpdatePoints(self.dealer) # procedure call
+      player.determineOutcomeAndUpdatePoints(self.dealer)
     # end for
-  # end procedure method
+  # end procedure
 
-  def addPlayer(self: Game, player: Player) -> None: # procedure method
+  def addPlayer(self: <el-type>Game</el-type>, player: Player) -> None:
     players = self.players # variable definition
-    players.append(player) # procedure call
-  # end procedure method
+    players.append(player)
+  # end procedure
 
-  def setMessage(self: Game, message: str) -> None: # procedure method
+  def setMessage(self: <el-type>Game</el-type>, message: str) -> None:
     self.message = message # assignment
-  # end procedure method
+  # end procedure
 
-  def toString(self: Game) -> str: # function method
+  def toString(self: <el-type>Game</el-type>, ) -> str:
     return "a Game"
-  # end function method
+  # end function
 
 # end class
 
-class Card: # concrete class
-
-  def __init__(self: Card, rank: str, suit: Suit, facedown: bool) -> None:
+class Card:
+  def __init__(self: <el-type>Card</el-type>, rank: str, suit: Suit, facedown: bool) -> None:
     self.rank = rank # assignment
     self.suit = suit # assignment
     self.faceDown = facedown # assignment
   # end constructor
 
-  def turnFaceUp(self: Card) -> None: # procedure method
+  def turnFaceUp(self: <el-type>Card</el-type>, ) -> None:
     self.faceDown = False # assignment
-  # end procedure method
+  # end procedure
 
-  def turnFaceDown(self: Card) -> None: # procedure method
+  def turnFaceDown(self: <el-type>Card</el-type>, ) -> None:
     self.faceDown = True # assignment
-  # end procedure method
+  # end procedure
 
-  suit: Suit # property
+  suit: Suit
 
-  rank: str # property
+  rank: str
 
-  faceDown: bool # property
+  faceDown: bool
 
-  def toString(self: Card) -> str: # function method
+  def toString(self: <el-type>Card</el-type>, ) -> str:
     return f"{self.rank}{symbolForSuit(self.suit)}"
-  # end function method
+  # end function
 
 # end class
 
-class Player(ABC): # abstract class
+class Player:
+  name: str
 
-  name: str # property
+  points: int
 
-  points: int # property
+  cards: list[Card]
 
-  cards: list[Card] # property
+  handTotal: int
 
-  handTotal: int # property
+  softAce: bool
 
-  softAce: bool # property
+  status: Status
 
-  status: Status # property
+  hasTurn: bool
 
-  hasTurn: bool # property
-
-  def startTurn(self: Player) -> None: # procedure method
+  def startTurn(self: <el-type>Player</el-type>, ) -> None:
     if self.status == Status.active:
       self.hasTurn = True # assignment
     # end if
-  # end procedure method
+  # end procedure
 
-  def determineOutcomeAndUpdatePoints(self: Player, dealer: Dealer) -> None: # procedure method
+  def determineOutcomeAndUpdatePoints(self: <el-type>Player</el-type>, dealer: Dealer) -> None:
     playerOutcome = determinePlayerOutcome(dealer, self) # variable definition
     if playerOutcome == Outcome.winDouble:
-      self.changePointsBy(2) # procedure call
-      dealer.changePointsBy(-2) # procedure call
-    elif playerOutcome == Outcome.win: # else if
-      self.changePointsBy(1) # procedure call
-      dealer.changePointsBy(-1) # procedure call
-    elif playerOutcome == Outcome.lose: # else if
-      self.changePointsBy(-1) # procedure call
-      dealer.changePointsBy(1) # procedure call
+      self.changePointsBy(2)
+      dealer.changePointsBy(-2)
+    elif playerOutcome == Outcome.win:
+      self.changePointsBy(1)
+      dealer.changePointsBy(-1)
+    elif playerOutcome == Outcome.lose:
+      self.changePointsBy(-1)
+      dealer.changePointsBy(1)
     # end if
-  # end procedure method
+  # end procedure
 
-  def evaluateStatus(self: Player, newCard: Card) -> None: # procedure method
+  def evaluateStatus(self: <el-type>Player</el-type>, newCard: Card) -> None:
     if (self.cardCount() == 2) and (self.handTotal == 21):
       self.status = Status.blackjack # assignment
-    elif (self.handTotal > 21) and (self.softAce): # else if
+    elif (self.handTotal > 21) and (self.softAce):
       self.handTotal = self.handTotal - 10 # assignment
       self.softAce = False # assignment
-    elif self.handTotal > 21: # else if
+    elif self.handTotal > 21:
       self.status = Status.bust # assignment
-    elif self.handTotal == 21: # else if
+    elif self.handTotal == 21:
       self.status = Status.standing # assignment
     # end if
     if self.status != Status.active:
       self.hasTurn = False # assignment
     # end if
-  # end procedure method
+  # end procedure
 
-  def stand(self: Player) -> None: # procedure method
+  def stand(self: <el-type>Player</el-type>, ) -> None:
     self.status = Status.standing # assignment
     self.hasTurn = False # assignment
-  # end procedure method
+  # end procedure
 
-  def draw(self: Player) -> None: # procedure method
+  def draw(self: <el-type>Player</el-type>, ) -> None:
     newCard = dealCard(random()) # variable definition
     cards = self.cards # variable definition
-    cards.append(newCard) # procedure call
+    cards.append(newCard)
     if newCard.rank.equals("A"):
-      self.addAce() # procedure call
+      self.addAce()
     else:
       self.handTotal = self.handTotal + valueForRank(newCard.rank) # assignment
     # end if
-    self.evaluateStatus(newCard) # procedure call
-  # end procedure method
+    self.evaluateStatus(newCard)
+  # end procedure
 
-  def addAce(self: Player) -> None: # procedure method
+  def addAce(self: <el-type>Player</el-type>, ) -> None:
     if self.softAce:
       self.handTotal = self.handTotal + 1 # assignment
     else:
       self.handTotal = self.handTotal + 11 # assignment
       self.softAce = True # assignment
     # end if
-  # end procedure method
+  # end procedure
 
-  def cardCount(self: Player) -> int: # function method
+  def cardCount(self: <el-type>Player</el-type>, ) -> int:
     return self.cards.length()
-  # end function method
+  # end function
 
-  def changePointsBy(self: Player, amount: int) -> None: # procedure method
+  def changePointsBy(self: <el-type>Player</el-type>, amount: int) -> None:
     self.points = self.points + amount # assignment
-  # end procedure method
+  # end procedure
 
   @abstractmethod
   def newHand() -> None
-    pass # abstract procedure
+    pass
 
-  def newHandHelper(self: Player) -> None: # private procedure method
+  def newHandHelper(self: <el-type>Player</el-type>, ) -> None:
     self.hasTurn = False # assignment
     self.softAce = False # assignment
     self.cards = list[Card]() # assignment
     self.handTotal = 0 # assignment
     self.status = Status.active # assignment
-    self.draw() # procedure call
-    self.draw() # procedure call
-  # end procedure method
+    self.draw()
+    self.draw()
+  # end procedure
 
   @abstractmethod
   def getMessage() -> str:
-    pass # abstract function
+    pass
 
-  def getMessageHelper(self: Player) -> str: # private function method
+  def getMessageHelper(self: <el-type>Player</el-type>, ) -> str:
     msg = "" # variable definition
     status = self.status # variable definition
     if self.hasTurn:
       msg = msg + " - PLAYING" # assignment
-    elif status == Status.standing: # else if
+    elif status == Status.standing:
       msg = msg + " - STANDING" # assignment
-    elif status == Status.blackjack: # else if
+    elif status == Status.blackjack:
       msg = msg + " - BLACKJACK" # assignment
-    elif status == Status.bust: # else if
+    elif status == Status.bust:
       msg = msg + " - BUST" # assignment
     # end if
     return msg
-  # end function method
+  # end function
 
   @abstractmethod
   def nextAction(dealerFaceCard: Card) -> None
-    pass # abstract procedure
+    pass
 
 # end class
 
-class Dealer(Player): # concrete class
-
-  def __init__(self: Dealer, startingPoints: int) -> None:
+class Dealer(Player):
+  def __init__(self: <el-type>Dealer</el-type>, startingPoints: int) -> None:
     self.name = "Dealer" # assignment
     self.points = startingPoints # assignment
     self.cards = list[Card]() # assignment
     self.faceCard = Card("2", Suit.clubs, True) # assignment
   # end constructor
 
-  faceCard: Card # property
+  faceCard: Card
 
-  hasPlayed: bool # property
+  hasPlayed: bool
 
-  def with_status(self: Dealer, status: Status) -> Dealer: # function method
+  def with_status(self: <el-type>Dealer</el-type>, status: Status) -> Dealer:
     return copyWith(self, "status", status)
-  # end function method
+  # end function
 
-  def with_handTotal(self: Dealer, handTotal: int) -> Dealer: # function method
+  def with_handTotal(self: <el-type>Dealer</el-type>, handTotal: int) -> Dealer:
     return copyWith(self, "handTotal", handTotal)
-  # end function method
+  # end function
 
-  def play(self: Dealer) -> None: # procedure method
-    self.startTurn() # procedure call
+  def play(self: <el-type>Dealer</el-type>, ) -> None:
+    self.startTurn()
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceUp() # procedure call
+    hiddenCard.turnFaceUp()
     self.hasPlayed = True # assignment
-  # end procedure method
+  # end procedure
 
-  def newHand(self: Dealer) -> None: # procedure method
+  def newHand(self: <el-type>Dealer</el-type>, ) -> None:
     self.hasPlayed = False # assignment
-    self.newHandHelper() # procedure call
+    self.newHandHelper()
     self.faceCard = self.cards[0] # assignment
     hiddenCard = self.cards[1] # variable definition
-    hiddenCard.turnFaceDown() # procedure call
-  # end procedure method
+    hiddenCard.turnFaceDown()
+  # end procedure
 
-  def nextAction(self: Dealer, faceCard: Card) -> None: # procedure method
+  def nextAction(self: <el-type>Dealer</el-type>, faceCard: Card) -> None:
     if self.handTotal < 17:
-      self.draw() # procedure call
+      self.draw()
     else:
-      self.stand() # procedure call
+      self.stand()
     # end if
-  # end procedure method
+  # end procedure
 
-  def getMessage(self: Dealer) -> str: # function method
+  def getMessage(self: <el-type>Dealer</el-type>, ) -> str:
     msg = "" # variable definition
     if self.hasPlayed:
       msg = self.getMessageHelper() + f" - hand total: {self.handTotal}" # assignment
     # end if
     return msg
-  # end function method
+  # end function
 
-  def toString(self: Dealer) -> str: # function method
+  def toString(self: <el-type>Dealer</el-type>, ) -> str:
     return "the Dealer"
-  # end function method
+  # end function
 
 # end class
 
-class HumanPlayer(Player): # concrete class
-
-  def __init__(self: HumanPlayer, name: str, startingPoints: int) -> None:
+class HumanPlayer(Player):
+  def __init__(self: <el-type>HumanPlayer</el-type>, name: str, startingPoints: int) -> None:
     self.name = name # assignment
     self.points = startingPoints # assignment
     self.cards = list[Card]() # assignment
   # end constructor
 
-  def with_status(self: HumanPlayer, status: Status) -> HumanPlayer: # function method
+  def with_status(self: <el-type>HumanPlayer</el-type>, status: Status) -> HumanPlayer:
     return copyWith(self, "status", status)
-  # end function method
+  # end function
 
-  def with_handTotal(self: HumanPlayer, handTotal: int) -> HumanPlayer: # function method
+  def with_handTotal(self: <el-type>HumanPlayer</el-type>, handTotal: int) -> HumanPlayer:
     return copyWith(self, "handTotal", handTotal)
-  # end function method
+  # end function
 
-  def with_cards(self: HumanPlayer, cards: list[Card]) -> HumanPlayer: # function method
+  def with_cards(self: <el-type>HumanPlayer</el-type>, cards: list[Card]) -> HumanPlayer:
     return copyWith(self, "cards", cards)
-  # end function method
+  # end function
 
-  def newHand(self: HumanPlayer) -> None: # procedure method
-    self.newHandHelper() # procedure call
-  # end procedure method
+  def newHand(self: <el-type>HumanPlayer</el-type>, ) -> None:
+    self.newHandHelper()
+  # end procedure
 
-  def nextAction(self: HumanPlayer, dealerFaceCard: Card) -> None: # procedure method
+  def nextAction(self: <el-type>HumanPlayer</el-type>, dealerFaceCard: Card) -> None:
     key = "" # variable definition
-    clearKeyBuffer() # procedure call
+    clearKeyBuffer()
     while key.equals(""):
       key = waitForKey() # assignment
       if key.equals("d"):
-        self.draw() # procedure call
-      elif key.equals("s"): # else if
-        self.stand() # procedure call
+        self.draw()
+      elif key.equals("s"):
+        self.stand()
       else:
         key = "" # assignment
       # end if
     # end while
-  # end procedure method
+  # end procedure
 
-  def getMessage(self: HumanPlayer) -> str: # function method
+  def getMessage(self: <el-type>HumanPlayer</el-type>, ) -> str:
     msg = self.getMessageHelper() + f"- hand total: {self.handTotal}" # variable definition
     if self.hasTurn:
       msg = msg + " - press 'd' to draw, 's' to stand" # assignment
     # end if
     return msg
-  # end function method
+  # end function
 
-  def toString(self: HumanPlayer) -> str: # function method
+  def toString(self: <el-type>HumanPlayer</el-type>, ) -> str:
     return f"Player: {self.name}"
-  # end function method
+  # end function
 
 # end class
 
-class Choice(Enum):
-  stand = 1
-  draw = 2
+class Choice(Enum):stand, draw
 
-class Outcome(Enum):
-  undecided = 1
-  lose = 2
-  draw = 3
-  win = 4
-  winDouble = 5
+class Outcome(Enum):undecided, lose, draw, win, winDouble
 
-class Status(Enum):
-  active = 1
-  standing = 2
-  blackjack = 3
-  bust = 4
+class Status(Enum):active, standing, blackjack, bust
 
-class Suit(Enum):
-  clubs = 1
-  diamonds = 2
-  hearts = 3
-  spades = 4
+class Suit(Enum):clubs, diamonds, hearts, spades
 
 def symbolForSuit(suit: Suit) -> str: # function
   suits = [Suit.clubs, Suit.diamonds, Suit.hearts, Suit.spades] # variable definition
@@ -593,6 +573,6 @@ def colourForSuit(suit: Suit) -> str: # function
   return colours[suits.indexOf(suit)]
 # end function
 
-styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}" # constant
+styleSheet = ":root {    background-color: darkgreen;    padding-left: 5px;}.game {    padding: 5px;}.message, .details  {    color: white;    font-family: Arial, Helvetica, sans-serif;}.hand {        margin-top: 5px;        height: 150px;        padding-bottom: 10px;    }    .card {    position: relative;    float: left;    background-color: white;    width: 95px;    height:140px;    margin-right:10px;    padding: 5px;    border-radius: 5px;    font-family: Helvetica, sans-serif; }.royal,.a,.b,.c,.d,.e,.f,.g,.h,.i,.j,.k,.l,.m,.n,.o,.p,.q,.r,.s,.t,.u,.v,.w,.x,.y,.z {position: absolute; text-align:center;}/* Standard spots */     .a,.b,.c,.d,.e,.f,.g,.h,.i,.l,.m,.n,.o,.p,.r,.s,.t  {font-size:  30px;}    /* columns */    .d,.n,.h,.p,.f {left: 18px }    .a,.b,.c,.l,.m,.s,.t {left: 43px;}    .e,.o,.i,.r,.g {left: 68px}    /* rows */    .d,.b,.e {top: 0px}    .suit {top: 20px;}    .l {top: 28px;}    .n,.o {top: 37px;}    .h,.a,.i {top: 57px}    .p,.r {top: 75px;}    .m {top: 86px;}    .t {top: 93px;}    .f,.c,.g {top: 114px;}/* royals */    .royal {        position: absolute;        z-index: 1;        width: 95px;        height: 140px;        line-height: 140px;        font-size: 100px;    }/* corner summary */    .u {font-size: 15px; width: 15px; text-align: center; left: 0px; top: 2px;}    .v {font-size: 20px; width: 15px; text-align: center; left: 0px; top: 12px;}/* suit colors */    .red {color: red}    .black {color: black}/* back */    .card.reversed { background-color: rgba(0, 0, 255, 0.607);}"
 
 main()

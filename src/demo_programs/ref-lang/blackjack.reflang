@@ -1,4 +1,4 @@
-# 5137af4b4c4ec43c22b1c257e3d209460f615dc2f8777969cc43871167250dda RefLang with Elan 3.0.0-alpha valid
+# 96d06aa7b1fa55dbd1f6c8462fffd1d403773b60f8ed32f9b29cd5f0297b4169 RefLang with Elan 3.0.0-alpha valid
 
 main
   variable game set to new Game(1000)
@@ -41,7 +41,7 @@ procedure playOneRound(game as Game)
 end procedure
 
 procedure display(game as Game)
-  variable html set to "<style>{styleSheet}</style>{htmlForGame(game)}"
+  variable html set to $"<style>{styleSheet}</style>{htmlForGame(game)}"
   call displayHtml(html)
   call sleep(1.5)
 end procedure

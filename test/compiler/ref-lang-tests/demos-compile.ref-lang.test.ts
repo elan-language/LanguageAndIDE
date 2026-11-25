@@ -23,7 +23,7 @@ suite("RefLang Demo compile", () => {
     await testFile("burrow", LanguageRefLang.Instance);
   });
 
-  ignore_test("test collatz", async () => {
+  test("test collatz", async () => {
     await testFile("collatz", LanguageRefLang.Instance);
   });
 
@@ -59,7 +59,7 @@ suite("RefLang Demo compile", () => {
     await testFile("maze-generator", LanguageRefLang.Instance);
   });
 
-  ignore_test("test merge-sort", async () => {
+  test("test merge-sort", async () => {
     await testFile("merge-sort", LanguageRefLang.Instance);
   });
 
@@ -108,7 +108,7 @@ suite("RefLang Demo compile", () => {
     await testFile("wordle-solver", LanguageRefLang.Instance);
   });
 
-  ignore_test("test hodgepodge", async () => {
+  test("test hodgepodge", async () => {
     await testFile("hodgepodge", LanguageRefLang.Instance);
   });
 
