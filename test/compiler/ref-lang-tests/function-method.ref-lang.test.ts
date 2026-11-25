@@ -293,13 +293,7 @@ class Bar {
     return "";
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Foo.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
   async getTimes() {
     let x = system.initialise(await new _stdlib.List()._initialise());
@@ -416,13 +410,7 @@ class Bar {
     return "";
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Foo.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
   async getTimes() {
     let x = system.initialise(await new _stdlib.List()._initialise());
@@ -538,13 +526,7 @@ class Foo {
     return this;
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= Bar.emptyInstance();
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
   async length() {
     return (await this.p1.length()) + 2;

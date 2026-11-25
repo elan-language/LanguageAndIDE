@@ -48,13 +48,7 @@ export class PropertyAsn extends BreakpointAsn implements Property, Member {
     getGlobalScope(this.scope).addCompileErrors(this.compileErrors);
 
     if (this.isGlobalClass(st)) {
-      return `${this.indent()}elan_${pName};\r
-${this.indent()}get ${pName}() {\r
-${this.indent()}${this.indent()}return this.elan_${pName} ??= ${this.type.compile()};\r
-${this.indent()}}\r
-${this.indent()}set ${pName}(${pName}) {\r
-${this.indent()}${this.indent()}this.elan_${pName} = ${pName};\r
-${this.indent()}}\r\n`;
+      return `${this.indent()}${pName};\r\n`;
     }
 
     return `${this.indent()}${pName} = ${this.type.compile()};\r\n`;

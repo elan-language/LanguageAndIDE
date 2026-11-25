@@ -295,13 +295,7 @@ class Foo {
     return "";
   }
 
-  elan_b;
-  get b() {
-    return this.elan_b ??= Bar.emptyInstance();
-  }
-  set b(b) {
-    this.elan_b = b;
-  }
+  b;
 
 }
 
@@ -416,13 +410,7 @@ class Foo {
     return this;
   }
 
-  elan_bar;
-  get bar() {
-    return this.elan_bar ??= Bar.emptyInstance();
-  }
-  set bar(bar) {
-    this.elan_bar = bar;
-  }
+  bar;
 
   async toString() {
     return "";
@@ -442,13 +430,7 @@ class Bar {
 
   p2 = "";
 
-  elan_foo;
-  get foo() {
-    return this.elan_foo ??= system.initialise(_stdlib.Maybe.emptyInstance());
-  }
-  set foo(foo) {
-    this.elan_foo = foo;
-  }
+  foo;
 
   async toString() {
     return "";

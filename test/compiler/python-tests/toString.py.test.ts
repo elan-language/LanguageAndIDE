@@ -154,13 +154,7 @@ class Foo {
     return "";
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= system.initialise(_stdlib.Maybe.emptyInstance());
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
 }
 return [main, _tests];}`;
@@ -230,13 +224,7 @@ class Foo {
     return this;
   }
 
-  elan_p1;
-  get p1() {
-    return this.elan_p1 ??= system.initialise(_stdlib.Maybe.emptyInstance());
-  }
-  set p1(p1) {
-    this.elan_p1 = p1;
-  }
+  p1;
 
   async toString() {
     return "Custom toString";
